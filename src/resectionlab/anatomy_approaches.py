@@ -17,7 +17,7 @@ from scipy.spatial import cKDTree
 
 from .patient_anatomy import PatientAnatomySnapshot, PatientImagingCollection, affine, digest, world
 from .geometry import (GEOMETRY_VERSION, GeometryScene, native_backend,
-                       capsule_voxel_indices, point_segment_distances)
+                       capsule_voxel_indices, point_segment_distances, _segment_cell_distances, _EPS)
 from .native_approach_comparison import (sensitivity_config, sample_positions, nominal_objectives,
                                         order_candidates, distinct_alternatives, freeze_scenarios,
                                         assess_sensitivity, candidate_freeze, source_readings,
@@ -29,7 +29,7 @@ SCHEMA = "patient-anatomy-approaches-v1"
 FILENAME = "anatomy-approaches.json"
 MAX_SAVED = 32
 MAX_APPROACH_METADATA_BYTES = 8 * 1024**2
-ASSESSMENT_VERSION = "native-source-capsule-assessment-v3"
+ASSESSMENT_VERSION = "native-source-capsule-assessment-v4"
 
 
 def _forbidden_compartment(row):
@@ -223,6 +223,7 @@ class NativeRouteGeometry:
         boundary_mm = scenario.get("boundaryMm", 0.0)
         zero = np.zeros(3)
         excluded = set(constraints.get("excludedLayerIds", []))
+        minimum_clearance = constraints.get("minClearanceMm", 0)
         c = self.c
         ref_coverage = envelope_coverage(self.patient_affine(self.reference), self.reference["data"]["shape"], start, end, radius_mm)
         unknowns = list(self.missing)
@@ -267,13 +268,14 @@ class NativeRouteGeometry:
                 a = self.patient_affine(row)
                 source = c.series(row["source_series"])
                 lo, hi = start - shift, end - shift
-                field = envelope_coverage(a, row["data"]["shape"], lo, hi, probe_radius)
-                acquisition = envelope_coverage(self.patient_affine(source), source["data"]["shape"], lo, hi, probe_radius)
+                guard_radius = probe_radius + minimum_clearance if critical else probe_radius
+                field = envelope_coverage(a, row["data"]["shape"], lo, hi, guard_radius)
+                acquisition = envelope_coverage(self.patient_affine(source), source["data"]["shape"], lo, hi, guard_radius)
                 item["coverage"] = field
                 item["acquisitionCoverage"] = acquisition
                 source_coverage.append({"layerId": row["id"], **field, "acquisitionCoverage": acquisition})
                 if not field["wholeEnvelopeWithinField"] or not acquisition["wholeEnvelopeWithinField"]:
-                    unknowns.append(row["id"] + ": corridor envelope outside source field")
+                    unknowns.append(row["id"] + ": required envelope outside source field")
                 mask = self.mask(row)
                 count = self.population(row)
                 if not count:
@@ -307,7 +309,29 @@ class NativeRouteGeometry:
                         if distances[closest] < minimum:
                             minimum, nearest = float(distances[closest]), (points[closest] + shift).tolist()
                     lower = minimum - scene._cell_radius_mm - probe_radius
+                    # A centre-minus-circumsphere bound can straddle the
+                    # requested margin even when an orthogonal cell is clear.
+                    # Ask the exact contact kernel at the guarded radius only
+                    # when needed. Keep all contacts and oblique/sheared
+                    # unresolved cases under their existing restrictions.
+                    if orthogonal and not len(hit):
+                        lower = max(lower, 0.)
+                    margin_established = lower >= minimum_clearance
+                    if critical and orthogonal and not len(hit) and not margin_established:
+                        # Search just the supplied foreground. A large margin
+                        # need not materialize the expanded capsule supercover.
+                        foreground = index.data if isinstance(index, cKDTree) else index
+                        margin_established = True
+                        for offset in range(0, len(foreground), 16384):
+                            self.check()
+                            points = foreground[offset:offset + 16384]
+                            nearby = point_segment_distances(points, lo, hi) <= guard_radius + scene._cell_radius_mm + _EPS
+                            voxels = np.rint(scene.world_to_voxel(points[nearby])).astype(np.intp)
+                            if np.any(_segment_cell_distances(scene, voxels, lo, hi) <= guard_radius + _EPS):
+                                margin_established = False
+                                break
                     item.update(available=True, clearanceLowerBoundMm=float(lower),
+                                suppliedClearanceEstablished=bool(margin_established),
                                 intersectsOrUnresolved=bool(len(hit)), confirmedIntersection=bool(len(hit) if orthogonal else center_hits),
                                 intersectionModel="exact capsule / affine voxel cell" if orthogonal else "conservative cell circumsphere; shear",
                                 conservativeOverlapVolumeUpperBoundMm3=float(len(hit) * scene.voxel_volume_mm3),
@@ -316,7 +340,9 @@ class NativeRouteGeometry:
                         unknowns.append(row["id"] + ": conservative sheared-cell contact unresolved")
                     if is_target:
                         endpoint = np.floor(world(np.linalg.inv(a), hi) + .5).astype(int)
-                        endpoint_inside = bool(np.all(endpoint >= 0) and np.all(endpoint < mask.shape) and mask[tuple(endpoint)])
+                        endpoint_inside = bool(np.all(endpoint >= 0) and np.all(endpoint < mask.shape)
+                                               and mask[tuple(endpoint)]
+                                               and points_in_field(self.patient_affine(source), source["data"]["shape"], hi[None])[0])
                         targets.append({**item, "targetPointInsideLabel": endpoint_inside,
                                         "totalVolumeMm3": float(count * scene.voxel_volume_mm3),
                                         "coveredVoxelCenterVolumeMm3": float(center_hits * scene.voxel_volume_mm3),
@@ -351,11 +377,11 @@ class NativeRouteGeometry:
                 source = c.series(tract["source_series"])
                 a = self.patient_affine(source)
                 lo, hi = start - shift, end - shift
-                field = envelope_coverage(a, source["data"]["shape"], lo, hi, radius_mm)
+                field = envelope_coverage(a, source["data"]["shape"], lo, hi, radius_mm + minimum_clearance)
                 item["coverage"] = field
                 source_coverage.append({"layerId": tract["id"], **field})
                 if not field["wholeEnvelopeWithinField"]:
-                    unknowns.append(tract["id"] + ": corridor envelope outside tract source field")
+                    unknowns.append(tract["id"] + ": required envelope outside tract source field")
                 if tract["id"] not in self.tracts:
                     points = world(c.registration_matrix(source["id"]), c.array(tract["points_ras_mm"]))
                     offsets = c.array(tract["offsets"])
@@ -433,8 +459,12 @@ class NativeRouteGeometry:
                             mask = self.mask(target)
                             if not self.population(target):
                                 raise ValueError("empty target label")
-                            selected &= ~self.fully_inside_target(scene, indices, target, shift - target_shift)
                             source_target = c.series(target["source_series"])
+                            acquisition = envelope_coverage(self.patient_affine(source_target),
+                                                            source_target["data"]["shape"],
+                                                            start - target_shift, end - target_shift, radius_mm)
+                            if acquisition["wholeEnvelopeWithinField"]:
+                                selected &= ~self.fully_inside_target(scene, indices, target, shift - target_shift)
                             relative_points = points + shift - target_shift
                             points_in_target_grid = world(np.linalg.inv(self.patient_affine(target)), relative_points)
                             cells = np.floor(points_in_target_grid + .5).astype(int)
@@ -455,7 +485,7 @@ class NativeRouteGeometry:
                               "coverage": envelope_coverage(scene.affine, scene.shape, start - shift, end - shift, radius_mm),
                               "acquisitionCoverage": envelope_coverage(self.patient_affine(source), source["data"]["shape"], start - shift, end - shift, radius_mm),
                               "meaning": "Whole-cell upper bound in supplied brain mask; the centre-sampled non-target quantity requires known target classification. Neither quantity measures tissue removal.",
-                              "targetExclusionModel": "Uncertain and partly labelled cells remain in the upper bound. Subtract only complete transformed brain cells proved inside a selected target."}
+                              "targetExclusionModel": "Subtract only complete transformed brain cells inside a selected target whose acquisition covers the capsule. Uncertain and partly labelled cells remain in the upper bound."}
                 except ValueError as exc:
                     normal["reason"] = str(exc)
             memo[normal_key] = normal
@@ -481,14 +511,17 @@ class NativeRouteGeometry:
         if constraints.get("maxLengthMm") is not None and length > constraints["maxLengthMm"]:
             failures.append("corridor exceeds declared maximum length")
         for item in structures:
-            if item.get("excluded") and item.get("intersectsOrUnresolved"):
-                failures.append(item["label"] + ": intersects or may intersect an excluded structure")
+            if item.get("confirmedIntersection"):
+                failures.append(item["label"] + ": detected capsule contact with supplied anatomy")
+            elif item.get("intersectsOrUnresolved"):
+                failures.append(item["label"] + ": capsule contact unresolved in the supplied geometry")
+            elif item.get("available") and not item.get("suppliedClearanceEstablished",
+                                                       item["clearanceLowerBoundMm"] >= minimum_clearance):
+                failures.append(item["label"] + ": supplied geometry does not establish the declared clearance")
             if item["layerId"] in excluded and (not item["available"] or
                     not item.get("coverage", {}).get("wholeEnvelopeWithinField") or
                     not item.get("acquisitionCoverage", {}).get("wholeEnvelopeWithinField", True)):
-                failures.append(item["label"] + ": explicit exclusion is unassessed over part or all of the capsule")
-            if item.get("available") and item["clearanceLowerBoundMm"] < constraints.get("minClearanceMm", 0):
-                failures.append(item["label"] + ": conservative clearance below declared minimum")
+                failures.append(item["label"] + ": explicit exclusion is unassessed over part or all of the required envelope")
         if target_id and not any(t.get("targetPointInsideLabel") for t in targets):
             failures.append("endpoint is outside or unassessed in the selected target label")
         axis = (end - start) / length
@@ -510,7 +543,8 @@ class NativeRouteGeometry:
                 "status": "known-conflict" if conflicts or failures else "incomplete",
                 "detectedConflictLayerIds": conflicts, "constraintFailures": failures,
                 "labelledAnatomyResult": "detected-conflict" if conflicts else "no-detected-conflict",
-                "unknowns": list(dict.fromkeys(unknowns)), "clinicalDeficitProbability": None,
+                "unknowns": list(dict.fromkeys(unknowns)), "declaredMissingAnatomy": list(self.missing),
+                "clinicalDeficitProbability": None,
                 "simulationExecutionAuthorized": False,
                 "assumptions": ["Static straight capsule in physical patient RAS millimetres; no brain shift or removal.",
                                 "A numerical lower bound is not an exact clinical safety margin.",
@@ -822,7 +856,9 @@ def _measure_frozen(geometry, route, nominal, scenarios):
 def _scenario_guard(sensitivity):
     """Keep a known hard veto distinct from incomplete source support."""
     vetoes = [row["id"] for row in sensitivity["scenarios"] if row["constraintFailures"]]
-    incomplete = [row["id"] for row in sensitivity["scenarios"] if row["missingMetrics"] or row["unknownSourceLayerIds"] or row["status"] == "unassessed"]
+    incomplete = [row["id"] for row in sensitivity["scenarios"]
+                  if row.get("coverageIncomplete") or row["missingMetrics"]
+                  or row["unknownSourceLayerIds"] or row["status"] == "unassessed"]
     disposition = "vetoed" if vetoes else "incomplete-coverage" if incomplete else "no-detected-hard-violation"
     return {"disposition": disposition, "vetoScenarioIds": vetoes, "incompleteScenarioIds": incomplete,
             "meaning": "Guard disposition in declared scenarios. Unknown anatomy and untested scenarios remain unassessed."}
@@ -848,7 +884,8 @@ def suggest_approaches(collection, args, geometry=None):
         results[row["id"]] = {"metrics": sensitivity["metrics"],
                                "violatedScenarioIds": guard["vetoScenarioIds"], "guard": guard,
                                "unassessedScenarioIds": [s["id"] for s in sensitivity["scenarios"] if s["status"] == "unassessed"],
-                               "scenarios": [{key: s[key] for key in ("id", "status", "conflictLayerIds", "constraintFailures", "unknownSourceLayerIds", "missingMetrics")}
+                               "scenarios": [{key: s[key] for key in ("id", "status", "conflictLayerIds", "constraintFailures",
+                                                                    "unknownSourceLayerIds", "missingMetrics", "coverageIncomplete")}
                                              for s in sensitivity["scenarios"]]}
         if guard["vetoScenarioIds"]:
             row["disposition"] = "scenario-vetoed"
@@ -936,7 +973,9 @@ def compare_inputs(collection, args, geometry=None):
         perturbed_vetoes = [sid for sid in guard["vetoScenarioIds"] if sid != "nominal"]
         if perturbed_vetoes:
             reasons.append(f'Declared hard guard failed in {len(perturbed_vetoes)} perturbation scenarios')
-        outcomes[route["id"]] = {"candidateId": route["id"], "status": "refused" if guard["vetoScenarioIds"] else "eligible-static",
+        status = {"vetoed": "refused", "incomplete-coverage": "incomplete-coverage",
+                  "no-detected-hard-violation": "eligible-static"}[guard["disposition"]]
+        outcomes[route["id"]] = {"candidateId": route["id"], "status": status,
                                 "reasons": reasons, "objectives": objectives,
                                 "nominalEligible": nominally_eligible, "scenarioGuard": guard,
                                 "detectedConflictLayerIds": nominal["detectedConflictLayerIds"],

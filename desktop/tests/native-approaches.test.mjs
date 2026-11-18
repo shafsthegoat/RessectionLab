@@ -30,6 +30,11 @@ test('missing, empty, stale and unresolved measurements never become anatomical 
  s=approachAssessment({...measured([{...unresolved,confirmedIntersection:true}]),assessmentStatus:'stale'});assert.equal(s.observed,'unavailable');assert.equal(s.completeness,'stale');assert.equal(s.minimumBoundMm,null);assert.equal(s.intersections.length,0);
 });
 test('comparison quantities preserve measured zero and hide unavailable target and traversal quantities',()=>{
- const a=measured([{layerId:'tract',label:'Tract',available:true,clearanceLowerBoundMm:0}],{targets:[{available:true,coveredVoxelCenterVolumeMm3:0},{available:false,coveredVoxelCenterVolumeMm3:99}],normalTraversal:{available:true,conservativeVolumeUpperBoundMm3:0}});
+ const wholeField={wholeEnvelopeWithinField:true};
+ const target={available:true,coveredVoxelCenterVolumeMm3:0,coverage:wholeField,acquisitionCoverage:wholeField};
+ const a=measured([{layerId:'tract',label:'Tract',available:true,clearanceLowerBoundMm:0}],{targets:[target],normalTraversal:{available:true,conservativeVolumeUpperBoundMm3:0}});
  const s=approachAssessment(a);assert.equal(s.minimumBoundMm,0);assert.equal(s.targetReachedMm3,0);assert.equal(s.traversalMm3,0);
+ assert.equal(approachAssessment({ ...a, measurements:{...a.measurements,targets:[target,target]} }).targetReachedMm3,null);
+ const partial={...target,acquisitionCoverage:{wholeEnvelopeWithinField:false}};
+ assert.equal(approachAssessment({ ...a, measurements:{...a.measurements,targets:[partial]} }).targetReachedMm3,null);
 });

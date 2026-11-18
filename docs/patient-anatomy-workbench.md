@@ -59,18 +59,28 @@ Each comparison card separates the observed geometric finding (detected
 intersection, no detected intersection in assessed anatomy, or unavailable
 measurement) from evidence completeness and declared constraint failures. Missing
 labels, limited coverage and unmeasured registration remain explicit uncertainties.
+Coverage for a critical source includes the declared clearance margin and any
+scenario boundary padding. Contact is measured using the capsule and that
+scenario's boundary padding.
 
 Inspect nominal, worst assessed, and empirical adverse fifth results where
 perturbed measurements are complete. The default design translates registered
 sources in coherent 1 mm scenarios and pads critical voxel boundaries by 0.5 mm,
-distances near the source grid scale. Registration distributions, model
+distances near the source grid scale. Every registration root is stressed in
+each signed cardinal direction. Three or more roots use joint translations to
+keep the evaluation budget bounded. Registration distributions, model
 completeness and postoperative outcomes remain unmeasured. [Uncertainty in path planning](https://scholar.harvard.edu/files/sfrisken/files/incorporating_uncertainty_into_path_planning.pdf) · [Registration uncertainty visualization](https://link.springer.com/article/10.1007/s11548-025-03407-z)
 
 **Compare input sets** freezes rich and restricted nominations on the same task
 and sample budget. The restricted arm receives the reference, selected target,
 brain, head surface and listed brainstem/cerebellar estimates. The same richer
 reference evaluator may veto either arm. Every refusal and abstention is retained
-without replacement. Execution authorization remains with the procedure engine.
+without replacement. Nominations with no hard veto still show incomplete coverage
+when source evidence is missing. Known hard failures and incomplete coverage can
+appear together in the same scenario. Execution authorization remains with the
+procedure engine. Coverage statements apply to the supplied labels, acquisition
+fields and declared missing anatomy. Structures absent from those inputs remain
+unassessed.
 
 A selected approach shows its capsule, entry region and illustrative virtual
 axis. **Along corridor** and **Corridor oblique** reuse the existing camera.

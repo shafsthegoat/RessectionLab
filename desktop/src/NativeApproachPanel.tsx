@@ -10,7 +10,7 @@ import './native-approaches.css';
 const mm=(value:unknown)=>typeof value==='number'&&Number.isFinite(value)?value.toFixed(1):'—';
 const bound=lowerBoundText;
 const ras=(point:Point3)=>point.map(mm).join(', ');
-const fieldCoverage=(field?:ApproachCoverage)=>field?.wholeEnvelopeWithinField===true?'Whole capsule inside':field?.wholeEnvelopeWithinField===false?'Partial · outside unassessed':'Unknown';
+const fieldCoverage=(field?:ApproachCoverage)=>field?.wholeEnvelopeWithinField===true?'Whole required envelope inside':field?.wholeEnvelopeWithinField===false?'Partial · outside unassessed':'Unknown';
 type EditorFields={entry:Point3;target:Point3;radius:number;patchRadius:number;minimum:number;maximum:number;
   targetLayerId?:string;patchCenter?:Point3;patchNormal?:Point3;sensitivityConfig:ApproachSensitivityConfig};
 function editorFields(selected:NativeApproach|null,entry:Point3,target:Point3,targetLayerId?:string):EditorFields{
@@ -159,7 +159,10 @@ export function NativeApproachPanel({workspace:w}:{workspace:NativeWorkspace}){
           <dl className="approach-value-list"><div><dt>Label or streamline grid</dt><dd>{fieldCoverage(s.coverage)}</dd></div><div><dt>Acquired field of view</dt><dd>{fieldCoverage(s.acquisitionCoverage)}</dd></div></dl>
           {s.sourceIdentity?.dataSha256&&<p className="approach-identity">Source SHA-256 {s.sourceIdentity.dataSha256}</p>}</div>)}</details>
         <details><summary>Target reach & tissue traversal</summary>
-          {m.targets.map((t,i)=><p key={i}>{String(t.label??'Target')} · {t.available?`${mm(Number(t.coveredVoxelCenterFraction)*100)}% of labelled voxel centres approached, ${mm(t.coveredVoxelCenterVolumeMm3)} mm³. Endpoint ${t.targetPointInsideLabel?'inside':'outside'} the supplied label.`:'Unassessed'}</p>)}
+          {m.targets.map((t,i)=><p key={i}>{t.label??'Target'} · {t.available&&t.coverage?.wholeEnvelopeWithinField&&t.acquisitionCoverage?.wholeEnvelopeWithinField
+            ?`${mm(Number(t.coveredVoxelCenterFraction)*100)}% of labelled voxel centres approached, ${mm(t.coveredVoxelCenterVolumeMm3)} mm³.`
+            :t.available?'Target reach unassessed over part or all of the capsule.':'Target reach unassessed.'}
+            {t.available&&` ${t.targetPointInsideLabel?'Endpoint inside the supported target label.':'Endpoint outside or unassessed in the target label.'}`}</p>)}
           <p>Supplied brain mask traversal {m.normalTraversal.available?`${mm(m.normalTraversal.conservativeVolumeUpperBoundMm3)} mm³ whole-cell non-target upper bound`:'unassessed'}.</p>
           <dl className="approach-value-list"><div><dt>Supported non-target voxel centres</dt><dd>{typeof m.normalTraversal.supportedNonTargetVoxelCenterVolumeMm3==='number'?`${mm(m.normalTraversal.supportedNonTargetVoxelCenterVolumeMm3)} mm³`:'Unknown'}</dd></div>
             <div><dt>Unclassified brain voxel centres</dt><dd>{typeof m.normalTraversal.unclassifiedBrainVoxelCenterCount==='number'?m.normalTraversal.unclassifiedBrainVoxelCenterCount.toLocaleString():'Unknown'}</dd></div>

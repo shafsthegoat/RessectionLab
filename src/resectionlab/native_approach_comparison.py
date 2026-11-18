@@ -168,31 +168,37 @@ def freeze_scenarios(config, groups):
         axes = np.array([[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]], dtype=float)
         diagonals = np.array([[1, 1, 1], [-1, -1, -1], [1, -1, 1], [-1, 1, -1],
                               [-1, 1, 1], [1, -1, -1], [1, 1, -1], [-1, -1, 1]], dtype=float) / np.sqrt(3)
-        directions = np.concatenate([axes, diagonals])
-        for index in range(16):
-            # For two independent groups, each cardinal direction is tested
-            # separately. Additional fixtures shift the groups simultaneously.
-            if index < 12:
-                offsets = {keys[index % len(keys)]: directions[index // len(keys)]}
+        if len(keys) == 1:
+            shifts = [{keys[0]: direction} for direction in (*axes, *diagonals)]
+        else:
+            if len(keys) == 2:
+                shifts = [{key: direction} for direction in axes for key in keys]
             else:
-                offsets = {key: diagonals[(index - 12 + 3 * num) % len(diagonals)]
-                           for num, key in enumerate(keys)}
+                # Preserve all cardinal directions per root within the same
+                # budget as two roots. Test common and opposing shifts.
+                shifts = [{key: direction for key in keys} for direction in axes]
+                shifts.extend({key: direction * (-1 if rank % 2 else 1)
+                               for rank, key in enumerate(keys)} for direction in axes)
+            shifts.extend({key: diagonals[(index + 3 * rank) % len(diagonals)]
+                           for rank, key in enumerate(keys)} for index in range(4))
+        for index, offsets in enumerate(shifts, 1):
             by_source = {sid: (translations * direction).tolist() for key, direction in offsets.items() for sid in groups[key]}
-            variants.append({"id": f"registration-{index + 1:02d}", "sourceTranslationsMm": by_source, "boundaryMm": 0.})
+            variants.append({"id": f"registration-{index:02d}", "sourceTranslationsMm": by_source, "boundaryMm": 0.})
             if boundary:
-                variants.append({"id": f"combined-{index + 1:02d}", "sourceTranslationsMm": by_source, "boundaryMm": boundary})
+                variants.append({"id": f"combined-{index:02d}", "sourceTranslationsMm": by_source, "boundaryMm": boundary})
     scenarios, seen = [], set()
     for row in variants:
         signature = digest((row["sourceTranslationsMm"], row["boundaryMm"]))
         if signature not in seen:
             scenarios.append(row)
             seen.add(signature)
-    definition = {"version": "shared-native-registration-boundary-v1", "config": config,
+    definition = {"version": "shared-native-registration-boundary-v2", "config": config,
                   "registrationGroups": groups, "scenarios": scenarios,
                   "assumptions": [
                       "The capsule and patient reference are fixed. Registered source fields, labels and streamlines under the same registration root translate together in patient RAS.",
+                      "The design tests all six signed cardinal directions per registration root. With three or more roots, cardinal tests translate roots jointly to keep the scenario budget bounded.",
                       "The configurable 1 mm default translation is near the label grid scale. Rotations and a calibrated registration distribution are unassessed.",
-                      "Boundary sensitivity pads only critical voxel-cell contact by 0.5 mm by default, near half the common 1 mm model grid spacing. The capsule, tract polylines, target and brain traversal stay fixed.",
+                      "Boundary sensitivity pads critical voxel labels by 0.5 mm by default for clearance and contact checks. Boundary padding leaves the capsule, tract polylines, targets and brain traversal geometry unchanged.",
                       "Target reach and brain traversal remain unchanged when both layers are in the patient reference frame.",
                       _DISCLOSURE]}
     return {"id": digest(definition), **definition}
@@ -210,30 +216,30 @@ def assess_sensitivity(nominal, scenario_set, measure, *, check):
     readings = []
     for scenario in scenario_set["scenarios"]:
         check()
-        status = "assessed"
         try:
             measured = nominal if scenario["id"] == "nominal" else measure(scenario)
             values, _ = nominal_objectives(measured)
             failures = measured["constraintFailures"]
-            if not measured["coverage"]["withinReferenceEnvelope"]:
+            reference_covered = measured["coverage"]["withinReferenceEnvelope"]
+            if not reference_covered:
                 failures = [*failures, "whole corridor outside reference image field"]
-            if failures:
-                status = "constraint-violation"
-            elif any(value is None for value in values.values()):
-                status = "partial-coverage"
             conflicts = measured["detectedConflictLayerIds"]
-            outcome = WorldOutcome(costs=values, events={"declaredConstraintViolation": bool(failures)},
-                                   accessible_target_volume_mm3=values["targetReachMm3"], unknowns=tuple(measured["unknowns"]))
             observations = source_readings(measured)
             unknown_sources = _unknown_source_layers(measured)
+            incomplete = (not reference_covered or bool(unknown_sources) or bool(measured.get("declaredMissingAnatomy"))
+                          or any(value is None for value in values.values()))
+            status = "constraint-violation" if failures else "partial-coverage" if incomplete else "assessed"
+            outcome = WorldOutcome(costs=values, events={"declaredConstraintViolation": bool(failures) if failures or not incomplete else None},
+                                   accessible_target_volume_mm3=values["targetReachMm3"], unknowns=tuple(measured["unknowns"]))
         except ValueError as exc:
             status, conflicts, failures = "unassessed", [], []
             observations = {}
             unknown_sources = []
+            incomplete = True
             outcome = WorldOutcome(costs=dict.fromkeys(METRICS), events={"declaredConstraintViolation": None}, unknowns=(str(exc),))
         readings.append({"id": scenario["id"], "status": status, "values": dict(outcome.costs),
                          "unknowns": list(outcome.unknowns), "conflictLayerIds": conflicts, "constraintFailures": failures,
-                         "sourceReadings": observations, "unknownSourceLayerIds": unknown_sources,
+                         "sourceReadings": observations, "unknownSourceLayerIds": unknown_sources, "coverageIncomplete": incomplete,
                          "missingMetrics": [key for key, value in outcome.costs.items() if value is None]})
     metrics = {}
     for name, (units, direction) in METRICS.items():
@@ -250,4 +256,4 @@ def assess_sensitivity(nominal, scenario_set, measure, *, check):
                          "complete": complete}
     return {"scenarioSetId": scenario_set["id"], "scenarioCount": len(readings), "metrics": metrics,
             "scenarios": readings, "sourceReadingFields": SOURCE_READING_FIELDS,
-            "meaning": "Worst assessed includes nominal. Tail mean uses the adverse empirical fifth of nonnominal scenarios when complete and at least five are available. " + _DISCLOSURE}
+            "meaning": "Worst assessed includes nominal. The adverse empirical fifth uses equally weighted perturbations when that metric is observed in every scenario and at least five perturbations are available. " + _DISCLOSURE}

@@ -17,6 +17,7 @@ export interface SensitivityMetric {
 
 export interface SensitivityScenarioResult {
   id:string;status:string;values:Record<string,number|null>;unknowns?:string[];
+  coverageIncomplete?:boolean;
   conflictLayerIds?:string[];constraintFailures?:string[];
   sourceReadings?:Record<string,ApproachSourceReading>;
 }
@@ -45,7 +46,8 @@ export interface ApproachProposalReport {
   reasons:unknown;selectionRule:string;whyFewer?:string|null;targetLayerId?:string|null;
   candidates?:ApproachProposalCandidate[];scenarioSet?:ApproachScenarioSet;
   selectedCandidateIds?:string[];sourceSnapshotId?:string;assessmentStatus?:string;invalidationReason?:string;
-  finalistOutcomes?:Record<string,{metrics:Record<string,SensitivityMetric>;violatedScenarioIds:string[];unassessedScenarioIds:string[]}>;
+  finalistOutcomes?:Record<string,{metrics:Record<string,SensitivityMetric>;
+    scenarios?:Array<Pick<SensitivityScenarioResult,'id'|'constraintFailures'>>}>;
   task?:ApproachTask;
 }
 
@@ -56,7 +58,7 @@ export interface ApproachTask {
 }
 
 export interface ApproachInputNomination {
-  candidateId:string;status:'refused'|'eligible-static';reasons:string[];
+  candidateId:string;status:'refused'|'incomplete-coverage'|'eligible-static';reasons:string[];
   objectives?:Record<string,number|null>;detectedConflictLayerIds?:string[];sensitivity?:ApproachSensitivity;
   scenarioGuard?:ApproachScenarioGuard;
 }
@@ -82,6 +84,10 @@ export interface ApproachStructure {
   closestPointRasMm?:Point3;nearestPoint?:Point3;[key:string]:unknown;
 }
 export interface ApproachCoverage {wholeEnvelopeWithinField?:boolean;outsideFaces?:string[]}
+export interface ApproachTargetMeasurement {
+  label?:string;sourceSeries?:string;available:boolean;coverage?:ApproachCoverage;acquisitionCoverage?:ApproachCoverage;
+  coveredVoxelCenterFraction?:number;coveredVoxelCenterVolumeMm3?:number;targetPointInsideLabel?:boolean;
+}
 export interface NativeApproach {
   id:string;name:string;sourceSnapshotId:string;parameterHash:string;
   entry:Point3;target:Point3;radiusMm:number;direction:Point3;
@@ -90,7 +96,7 @@ export interface NativeApproach {
   constraints:{maxLengthMm?:number;minClearanceMm?:number;excludedLayerIds?:string[]};
   assessmentStatus:'current'|'stale'|'unassessed';
   measurements?:{lengthMm:number;orientation:{azimuthDeg:number;elevationDeg:number};structures:ApproachStructure[];
-    coverage:Record<string,unknown>;targets:Array<Record<string,unknown>>;normalTraversal:Record<string,unknown>&{coverage?:ApproachCoverage;acquisitionCoverage?:ApproachCoverage};
+    coverage:Record<string,unknown>;targets:ApproachTargetMeasurement[];normalTraversal:Record<string,unknown>&{coverage?:ApproachCoverage;acquisitionCoverage?:ApproachCoverage};
     sensitivity?:ApproachSensitivity;
     status:'known-conflict'|'incomplete'|'no-detected-conflict';unknowns:string[];assumptions:string[];constraintFailures?:string[];[key:string]:unknown};
   [key:string]:unknown;
@@ -116,14 +122,18 @@ export function approachAssessment(a:NativeApproach){
   if(m?.coverage?.withinReferenceEnvelope===false&&!limitations.some(text=>text.includes('outside reference')))limitations.push('Corridor envelope extends outside the reference image field');
   const incomplete=!!m&&(m.status==='incomplete'||limitations.length>0||unavailable.length>0||unresolved.length>0);
   const completeness=a.assessmentStatus==='stale'?'stale':!m?'unavailable':incomplete?'incomplete':'complete';
-  const completenessLabel=completeness==='stale'?'Source changed · reassessment required':completeness==='unavailable'?'Assessment unavailable':incomplete?'Incomplete evidence':'Recorded evidence assessed';
+  const completenessLabel=completeness==='stale'?'Reassessment required':completeness==='unavailable'?'Assessment unavailable':incomplete?'Incomplete evidence':'Recorded evidence assessed';
   const finite=(value:unknown):value is number=>typeof value==='number'&&Number.isFinite(value);
   const bounds=assessed.map(s=>s.clearanceLowerBoundMm).filter(finite);
-  const targets=(m?.targets??[]).filter(t=>t.available&&finite(t.coveredVoxelCenterVolumeMm3));
+  const targets=m?.targets??[];
+  const target=targets.length===1?targets[0]:undefined;
+  const routeTargetReached=target?.available&&finite(target.coveredVoxelCenterVolumeMm3)
+    &&target.coverage?.wholeEnvelopeWithinField&&target.acquisitionCoverage?.wholeEnvelopeWithinField
+    ?target.coveredVoxelCenterVolumeMm3:null;
   return {observed,observedLabel,completeness,completenessLabel,assessedCount:assessed.length,totalCount:structures.length,
     intersections,unavailable,unresolved,limitations:limitations.map(text=>structures.reduce((result,s)=>result.replaceAll(`${s.layerId}:`,`${s.label}:`),text)),
     constraintFailures:m?.constraintFailures??[],minimumBoundMm:bounds.length?Math.min(...bounds):null,
-    targetReachedMm3:targets.length?targets.reduce((sum,t)=>sum+Number(t.coveredVoxelCenterVolumeMm3),0):null,
+    targetReachedMm3:routeTargetReached,
     traversalMm3:m?.normalTraversal?.available&&finite(m.normalTraversal.conservativeVolumeUpperBoundMm3)?m.normalTraversal.conservativeVolumeUpperBoundMm3:null};
 }
 

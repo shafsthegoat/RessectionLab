@@ -58,6 +58,80 @@ def test_shear_contact_remains_conservative(native):
     assert row['confirmedIntersection'] and 'shear' in row['intersectionModel'] and row['clearanceLowerBoundMm']<0
 
 
+def test_exact_orthogonal_cell_margin_avoids_circumsphere_false_refusal(native):
+    c = native
+    affine = c.patient_affine(c.series('t1'))
+    start, end = world(affine, [[13, 22, 15], [13, 12, 15]])
+    geometry = NativeRouteGeometry(Snapshot.capture(c))
+    # Cell centres are 1 mm away. The vessel's nearest face is 0.5 mm
+    # away, while its circumsphere extends beyond the 0.2 mm capsule.
+    passed = geometry.measure(start, end, .2, {'minClearanceMm': .25, 'excludedLayerIds': ['artery']})
+    assert passed['constraintFailures'] == []
+    assert passed['structures'][0]['suppliedClearanceEstablished']
+    insufficient = geometry.measure(start, end, .2, {'minClearanceMm': .35})
+    assert not insufficient['detectedConflictLayerIds']
+    assert 'declared clearance' in insufficient['constraintFailures'][0]
+    assert not insufficient['structures'][0]['suppliedClearanceEstablished']
+    assert passed['structures'][0]['clearanceLowerBoundMm'] == insufficient['structures'][0]['clearanceLowerBoundMm']
+    tangent = geometry.measure(start, end, .5, {'minClearanceMm': 0})
+    assert tangent['detectedConflictLayerIds'] == ['artery']
+    assert 'detected capsule contact' in tangent['constraintFailures'][0]
+
+
+def test_declared_clearance_margin_requires_source_field_coverage(native):
+    c = native
+    affine = c.patient_affine(c.series('t1'))
+    mask = np.zeros((16, 32, 32), np.uint8)
+    mask[10, 15, 15] = 1
+    c.add_layer(mask, affine, layer_id='cropped-artery', source_series='t1', kind='artery', role='critical', color='#ff0000')
+    c.save()
+    geometry = NativeRouteGeometry(Snapshot.capture(c))
+    start, end = world(affine, [[15, 22, 15], [15, 12, 15]])
+    unguarded = geometry.measure(start, end, .2)
+    guarded = geometry.measure(start, end, .2, {'minClearanceMm': .5, 'excludedLayerIds': ['cropped-artery']})
+    assert unguarded['structures'][-1]['coverage']['wholeEnvelopeWithinField']
+    row = guarded['structures'][-1]
+    assert row['suppliedClearanceEstablished'] and not row['coverage']['wholeEnvelopeWithinField']
+    assert not guarded['detectedConflictLayerIds']
+    assert any('explicit exclusion is unassessed' in reason for reason in guarded['constraintFailures'])
+
+
+def test_target_label_outside_acquisition_does_not_erase_traversal(native, tmp_path):
+    c = native
+    affine = c.patient_affine(c.series('t1'))
+    image = nib.Nifti1Image(np.ones((8, 32, 32), np.float32), affine)
+    image.header.set_xyzt_units('mm')
+    source = tmp_path / 'limited.nii.gz'
+    nib.save(image, source)
+    c.add_series(source, series_id='limited', modality='FLAIR')
+    c.set_registration('limited', np.eye(4), status='source-provided', method='declared fixture')
+    c.add_layer(np.ones((32, 32, 32), np.uint8), affine, layer_id='unsupported-target',
+                source_series='limited', kind='synthetic-target', role='target', color='#abcdea')
+    c.save()
+    geometry = NativeRouteGeometry(Snapshot.capture(c))
+    start, end = world(affine, [[10, 26, 15], [10, 11, 15]])
+    measured = geometry.measure(start, end, .5, target_id='unsupported-target')
+    assert not measured['targets'][0]['acquisitionCoverage']['wholeEnvelopeWithinField']
+    assert not measured['targets'][0]['targetPointInsideLabel']
+    assert 'endpoint is outside or unassessed in the selected target label' in measured['constraintFailures']
+    traversal = measured['normalTraversal']
+    assert traversal['conservativeVolumeUpperBoundMm3'] > 0
+    assert traversal['supportedNonTargetVoxelCenterVolumeMm3'] is None
+    assert traversal['unclassifiedBrainVoxelCenterCount'] > 0
+
+
+def test_paired_report_calls_incomplete_evidence_incomplete(native):
+    affine = native.patient_affine(native.series('t1'))
+    start, end = world(affine, [[10, 26, 15], [10, 11, 15]])
+    result = dispatch_plan(native, {'action': 'compareInputs', 'start': start.tolist(), 'end': end.tolist(),
+                                    'radiusMm': .5, 'patchRadiusMm': 0, 'targetLayerId': 'target'})
+    for arm in result['inputComparison']['arms'].values():
+        selected, = arm['nominated']
+        assert selected['status'] == 'incomplete-coverage'
+        assert selected['scenarioGuard']['incompleteScenarioIds']
+        assert arm['refusalCount'] == 0
+
+
 def test_streamline_paths_not_bridged_and_segment_math(native):
     c=native;a=c.patient_affine(c.series('t1'))
     points=world(a,np.array([[4,20,15],[6,20,15],[20,20,15],[22,20,15]]))

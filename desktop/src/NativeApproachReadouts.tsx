@@ -28,7 +28,7 @@ function ScenarioGuard({guard}:{guard:ApproachScenarioGuard}){
 function SourceReadings({readings,labels}:{readings:Record<string,ApproachSourceReading>;labels:Record<string,string>}){
   return <details><summary>Per-source clearance, contact and coverage</summary>
     <dl className="approach-value-list approach-source-values">{Object.entries(readings).map(([id,[coverage,clearance,contact,count]])=><div key={id}>
-      <dt>{labels[id]??id}</dt><dd>{coverage==='unavailable'?'Unassessed':<>{measurement('sourceClearanceMm',clearance)} lower bound<br/>{contact==='detected'?'Contact detected':contact==='unresolved'?'Contact unresolved':'No detected contact'}{count!==null&&` (${count.toLocaleString()})`}<br/>{coverage==='full-field'?'Whole envelope in supplied field':'Partial field · outside unassessed'}</>}</dd>
+      <dt>{labels[id]??id}</dt><dd>{coverage==='unavailable'?'Unassessed':<>{measurement('sourceClearanceMm',clearance)} lower bound<br/>{contact==='detected'?'Contact detected':contact==='unresolved'?'Contact unresolved':'No detected contact'}{count!==null&&` (${count.toLocaleString()})`}<br/>{coverage==='full-field'?'Whole required envelope in supplied field':'Partial field · outside unassessed'}</>}</dd>
     </div>)}</dl>
   </details>;
 }
@@ -37,7 +37,7 @@ export function ApproachProposalDetails({report,targetLabel,labels}:{report:Appr
   const reasons=report.reasons;
   return <details className="approach-proposal-report" data-proposal-status={report.assessmentStatus??'current'}>
     <summary>{report.accepted} alternatives retained · sampled entries</summary>
-    {report.assessmentStatus==='stale'&&<p role="status">Recorded comparison refers to older source anatomy. Generate alternatives for this revision.</p>}
+    {report.assessmentStatus==='stale'&&<p role="status">Saved measurements use an earlier source revision or assessment version. Generate alternatives for the current assessment.</p>}
     {report.assessmentStatus==='historical'&&<p role="status">{report.invalidationReason??'The saved corridors have changed since these alternatives were frozen.'}</p>}
     {targetLabel&&<p>Frozen proposal target · {targetLabel}</p>}
     <p>{report.selectionRule}</p>
@@ -46,8 +46,11 @@ export function ApproachProposalDetails({report,targetLabel,labels}:{report:Appr
     {typeof reasons==='string'?<p>{reasons}</p>:reasons&&typeof reasons==='object'?<ul>{Object.entries(reasons).map(([reason,count])=><li key={reason}>{reason} ({String(count)})</li>)}</ul>:null}
     {report.candidates&&<details>
       <summary>All {report.candidates.length} sampled paths</summary>
-      <ol className="approach-diagnostics-list">{report.candidates.map(candidate=><li key={candidate.id} data-sampled-disposition={candidate.disposition}>
-        <details><summary>{candidate.disposition.replaceAll('-', ' ')} · {point(candidate.entry)} RAS mm</summary>
+      <ol className="approach-diagnostics-list">{report.candidates.map(candidate=>{const outcome=report.finalistOutcomes?.[candidate.id];
+        const vetoes=outcome?.scenarios?.filter(row=>row.constraintFailures?.length)??[];
+        const disposition=candidate.disposition==='eligible'?'Nominal guards only · sensitivity untested':candidate.disposition.replaceAll('-', ' ');
+        return <li key={candidate.id} data-sampled-disposition={candidate.disposition}>
+        <details><summary>{disposition} · {point(candidate.entry)} RAS mm</summary>
           <p>Target (RAS mm) {point(candidate.target)} · capsule radius {candidate.radiusMm} mm</p>
           {candidate.pareto===true&&<p>Pareto frontier within its comparable evidence group.</p>}
           {!!candidate.detectedConflictLayerIds?.length&&<p>Detected contact · {candidate.detectedConflictLayerIds.map(id=>labels[id]??id).join(', ')}</p>}
@@ -55,10 +58,12 @@ export function ApproachProposalDetails({report,targetLabel,labels}:{report:Appr
           {candidate.scenarioGuard&&<ScenarioGuard guard={candidate.scenarioGuard}/>}
           {candidate.objectives&&<dl className="approach-value-list">{Object.entries(candidate.objectives).map(([metric,value])=><div key={metric}><dt>{metricLabels[metric]??metric}</dt><dd>{measurement(metric,value)}</dd></div>)}</dl>}
           {candidate.sourceReadings&&<SourceReadings readings={candidate.sourceReadings} labels={labels}/>}
-          {report.finalistOutcomes?.[candidate.id]&&<div><h4>Worst assessed values</h4><dl className="approach-value-list">{Object.entries(report.finalistOutcomes[candidate.id].metrics).map(([metric,value])=><div key={metric}><dt>{metricLabels[metric]??metric}</dt><dd>{measurement(metric,value.worst,value.units)}</dd></div>)}</dl>
-            <p>{report.finalistOutcomes[candidate.id].violatedScenarioIds.length} scenarios with constraint violations · {report.finalistOutcomes[candidate.id].unassessedScenarioIds.length} unassessed scenarios</p></div>}
+          {vetoes.length>0&&<details className="approach-finalist-vetoes"><summary>Scenario constraint failures</summary>
+            <ul>{vetoes.map(scenario=><li key={scenario.id}>{scenario.id} · {scenario.constraintFailures?.join(' · ')}</li>)}</ul>
+          </details>}
+          {outcome&&<div><h4>Worst assessed values</h4><dl className="approach-value-list">{Object.entries(outcome.metrics).map(([metric,value])=><div key={metric}><dt>{metricLabels[metric]??metric}</dt><dd>{measurement(metric,value.worst,value.units)}</dd></div>)}</dl></div>}
         </details>
-      </li>)}</ol>
+      </li>})}</ol>
     </details>}
   </details>;
 }
@@ -88,7 +93,8 @@ export function ApproachSensitivityDetails({sensitivity,scenarioSet,labels,refer
       <ol className="approach-diagnostics-list">{sensitivity.scenarios.map(scenario=>{const definition=nominalSet?.scenarios.find(row=>row.id===scenario.id);return <li key={scenario.id}>
         <details><summary>{scenario.id} · {scenario.status.replaceAll('-', ' ')}</summary>
           {definition&&<p>Critical-label boundary padding {definition.boundaryMm??0} mm{Object.entries(definition.sourceTranslationsMm??{}).map(([source,offset])=><span key={source}><br/>{source} translation (RAS mm) {point(offset)}</span>)}</p>}
-          {scenario.conflictLayerIds?.length? <p>Detected contact · {scenario.conflictLayerIds.map(id=>labels[id]??id).join(', ')}</p>:null}
+          {scenario.coverageIncomplete&&<p>Incomplete anatomical evidence for this scenario.</p>}
+          {scenario.conflictLayerIds?.length? <p>Detected contact in this scenario · {scenario.conflictLayerIds.map(id=>labels[id]??id).join(', ')}</p>:null}
           {scenario.constraintFailures?.map(failure=><p key={failure}>{failure}</p>)}
           {scenario.unknowns?.map((unknown,index)=><p key={index}>{unknown}</p>)}
           <dl className="approach-value-list">{Object.entries(scenario.values).map(([key,value])=><div key={key}><dt>{metricLabels[key]??key}</dt><dd>{measurement(key,value)}</dd></div>)}</dl>
@@ -102,22 +108,28 @@ export function ApproachSensitivityDetails({sensitivity,scenarioSet,labels,refer
 export function ApproachInputComparison({report,labels,targetLabel}:{report:ApproachInputComparisonReport;labels:Record<string,string>;targetLabel?:string}){
   return <details className="approach-input-result" data-input-comparison={report.assessmentStatus??'current'}>
     <summary>Rich and restricted comparison results</summary>
-    {report.assessmentStatus==='stale'&&<p role="status">Recorded comparison refers to older source anatomy. Rerun to assess this revision.</p>}
+    {report.assessmentStatus==='stale'&&<p role="status">Saved measurements use an earlier source revision or assessment version. Rerun for the current assessment.</p>}
     {targetLabel&&<p>Frozen comparison target · {targetLabel}</p>}
     <p>{report.candidateBudget} sampled entries per arm · {report.scenarioSet.scenarios.length} shared scenarios</p>
     {report.candidateFreeze&&<p className="approach-identity">Frozen candidate identity {report.candidateFreeze.id}</p>}
     {report.guardProtection&&<p>{report.guardProtection}</p>}
     <p>Both arms use the same imperfect geometric reference. Operative permissions and clinical outcomes are unassessed.</p>
-    {(['rich','restricted'] as const).map(kind=>{const arm=report.arms[kind];return <section key={kind} data-input-arm={kind}>
+    {(['rich','restricted'] as const).map(kind=>{
+      const arm=report.arms[kind];
+      const incomplete=arm.nominated.filter(candidate=>candidate.status!=='refused'&&
+        (candidate.status==='incomplete-coverage'||candidate.scenarioGuard?.disposition==='incomplete-coverage'));
+      return <section key={kind} data-input-arm={kind}>
       <h3>{kind==='rich'?'Rich inputs':'Restricted inputs'}</h3>
-      <p>{arm.nominated.length} nominated · {arm.refusalCount} reference refusals · {arm.abstentionCount} abstentions</p>
+      <p>{arm.nominated.length} nominated · {arm.refusalCount} reference refusals · {arm.abstentionCount} abstentions{incomplete.length>0&&` · ${incomplete.length} incomplete reference coverage`}</p>
       <details><summary>Inputs available before nomination</summary><ul>{arm.inputWhitelist.map(input=><li key={input}>{input}</li>)}</ul>
         <p>Source scans · {arm.sourceSeriesIds.join(', ')||'None'}</p><p>Labels · {arm.layerIds.map(id=>labels[id]??id).join(', ')||'None'}</p>
         <p>Tract bundles · {arm.tractIds.map(id=>labels[id]??id).join(', ')||'None'}</p>
       </details>
       <ol className="approach-diagnostics-list">{arm.nominated.map((candidate,index)=>{
         const geometry=arm.candidates.find(row=>row.id===candidate.candidateId);
-        return <li key={candidate.candidateId}><details><summary>Nomination {index+1} · {candidate.status==='refused'?'Reference veto':'Geometrically eligible'}</summary>
+        const disposition=candidate.status==='refused'?'Reference veto':
+          incomplete.includes(candidate)?'Incomplete reference coverage':'No detected hard violation in assessed anatomy';
+        return <li key={candidate.candidateId}><details><summary>Nomination {index+1} · {disposition}</summary>
           {geometry&&<p>Entry (RAS mm) {point(geometry.entry)} · capsule radius {geometry.radiusMm} mm</p>}
           {candidate.reasons.map(reason=><p key={reason}>{reason}</p>)}
           {candidate.scenarioGuard&&<ScenarioGuard guard={candidate.scenarioGuard}/>}

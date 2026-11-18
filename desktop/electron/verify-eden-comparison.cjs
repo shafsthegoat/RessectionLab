@@ -151,6 +151,23 @@ app.on('browser-window-created',(_event,win)=>{
       assert(!image.isEmpty(),'Hidden capture is empty');
       fs.writeFileSync(path.join(output,name+'.png'),image.toPNG());
     }
+    async function captureAbstention(proposals,name='02b-abstention-evidence'){
+      const vetoed=proposals.candidates.find(row=>row.disposition==='scenario-vetoed');
+      const refused=vetoed??proposals.candidates.find(row=>row.disposition==='rejected'&&row.detectedConflictLayerIds?.length);
+      if(!refused)return;
+      const selector=`.approach-proposal-report [data-sampled-disposition="${refused.disposition}"]>details`;
+      await js(`(()=>{const row=document.querySelector(${JSON.stringify(selector)});if(!row)throw Error('Abstention row missing');
+        for(let node=row;node;node=node.parentElement)if(node.tagName==='DETAILS')node.open=true;})()`);
+      const details=vetoed?selector+' .approach-finalist-vetoes':selector;
+      if(vetoed){
+        await wait(`!!document.querySelector(${JSON.stringify(details)})`,'displayed scenario failure evidence');
+        if(proposals.candidates.some(row=>row.disposition==='eligible')){
+          const untested=await js(`document.querySelector('[data-sampled-disposition="eligible"]>details>summary')?.textContent`);
+          assert(untested?.includes('Nominal guards only · sensitivity untested'));
+        }
+      }
+      await capture(name,details);
+    }
     async function measure(label,action,button){
       const version=planVersion,start=performance.now();
       await click(button);await until(()=>planVersion>version&&lastPlanAction===action,label);
@@ -179,6 +196,16 @@ app.on('browser-window-created',(_event,win)=>{
       await until(()=>openCount===1,'case selected in library');
       await wait(`[...document.querySelectorAll('.workspace-tabs button')].some(b=>b.textContent==='Anatomy'&&b.classList.contains('selected'))`,'Anatomy selected');
       const anatomy=await ready();assert.equal(displayIdentity(anatomy.identity).snapshotId,document.snapshot_id);
+      if(!prior)await capture('00-study-anatomy');
+      const missing=await js(`(()=>{
+        const heading=[...document.querySelectorAll('summary')].find(row=>row.textContent==='Coverage & unavailable anatomy');
+        const coverage=heading?.parentElement;
+        if(!coverage)return null;
+        coverage.dataset.edenVerificationCoverage='true';
+        return [...coverage.querySelectorAll('p')].map(row=>row.textContent);
+      })()`);
+      assert.deepEqual(missing,document.missing);
+      await capture('00b-unavailable-anatomy','[data-eden-verification-coverage]');
       await click('Plan & compare');await wait(enabledControlScript('Planning target'),'source-backed target options');
       await ready();targetOptions=lastPlan.targetOptions;
       report.timingsMs.casesToPlanning=Math.round(performance.now()-openAt);
@@ -208,6 +235,7 @@ app.on('browser-window-created',(_event,win)=>{
           assert.deepEqual(switched.routes,other.persisted.routes);
           report.restoredOtherTarget={targetLayerId:other.targetLayerId,report:otherFile};
           await capture('other-saved-target','.approach-cards');
+          if(!switched.routes.length)await captureAbstention(lastPlan.proposalReport,'other-target-abstention');
         }
       }else{
         await capture('01-source-anatomy');
@@ -251,13 +279,28 @@ app.on('browser-window-created',(_event,win)=>{
           assert.deepEqual(drawn.entry_mm,route.entry);assert.deepEqual(drawn.target_mm,route.target);assert.equal(drawn.tool.shaft_radius_mm,route.radiusMm);
         }
         await capture('02-alternatives',routes.length?'.approach-cards':'.approach-proposal-report');
+        if(routes.length)await capture('02b-source-coverage','.approach-measurements');
+        else await captureAbstention(proposals);
         const paired=(await measure('compareInputs','compareInputs','Compare input sets')).plan.inputComparison;
         assert.deepEqual(paired.task,proposals.task,'Paired arms must use the exact displayed task');
         assert.equal(paired.candidateBudget,proposals.enumerated);
         assert.equal(paired.arms.rich.candidates.length,paired.arms.restricted.candidates.length);
         assert.equal(paired.arms.restricted.tractIds.length,0);
-        for(const arm of Object.values(paired.arms))assert.equal(arm.abstentionCount+arm.nominated.length,3);
+        for(const arm of Object.values(paired.arms)){
+          assert.equal(arm.abstentionCount+arm.nominated.length,3);
+          for(const nomination of arm.nominated){
+            const expected={'vetoed':'refused','incomplete-coverage':'incomplete-coverage','no-detected-hard-violation':'eligible-static'};
+            assert.equal(nomination.status,expected[nomination.scenarioGuard.disposition]);
+          }
+        }
         await capture('03-rich-restricted','.approach-input-result');
+        for(const [kind,arm] of Object.entries(paired.arms)){
+          const selector=`[data-input-arm="${kind}"]>.approach-diagnostics-list>li>details>summary`;
+          const headings=await js(`[...document.querySelectorAll(${JSON.stringify(selector)})].map(row=>row.textContent)`);
+          assert.equal(headings.length,arm.nominated.length);
+          const labels={'refused':'Reference veto','incomplete-coverage':'Incomplete reference coverage','eligible-static':'No detected hard violation in assessed anatomy'};
+          for(const [index,nomination] of arm.nominated.entries())assert(headings[index].includes(labels[nomination.status]));
+        }
         if(process.env.EDEN_EDIT==='1'){
           const editedPlan=suggestion.plan.selectedId?suggestion.plan:(await measure('manual','upsert','Create manual approach')).plan;
           const before=selected(editedPlan);
