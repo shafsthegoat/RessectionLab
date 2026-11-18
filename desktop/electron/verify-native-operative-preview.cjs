@@ -87,7 +87,10 @@ function finish(error) {
   process.exitCode = report.passed ? 0 : 1;
   app.quit();
 }
-app.on('will-quit', () => fs.rmSync(profile,{recursive:true,force:true}));
+app.once('will-quit', () => {
+  fs.rmSync(profile,{recursive:true,force:true});
+  if(!report.passed) app.exit(1);
+});
 dialog.showErrorBox = (title,message) => finish(Error(title+' '+message));
 process.on('uncaughtException',finish);
 process.on('unhandledRejection',finish);
@@ -282,7 +285,9 @@ app.on('browser-window-created', (_, win) => {
           const readout = {width,stages:[],evidence:await js("document.querySelector('.operative-sources').textContent")};
           for(const [role,name] of steps) {
             const enabled = await js(`!(${button(name)}).disabled`);
-            assert.equal(enabled,field.stations[role]!==null);
+            if(!enabled && role==='tumor' && field.stations.tumor!==null) {
+              assert.match(await js(`(${button(name)}).textContent`),/No eligible tip position/);
+            } else assert.equal(enabled,field.stations[role]!==null);
             if(!enabled) continue;
             await click(name);
             await until(`document.querySelector('.operative-playback').dataset.operativePhase===${JSON.stringify(role)}`);

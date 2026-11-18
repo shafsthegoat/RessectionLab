@@ -143,6 +143,12 @@ Pareto filtering groups paths with comparable evidence. A detected hard violatio
 in a declared scenario vetoes the route. The report explains any shortfall and
 counts nominally eligible paths outside the sensitivity budget.
 
+**Suggest distinct entries** searches five superior-facing directions from the
+selected target for an observed skull or brain surface. It records the source
+layer and native voxel for each entry, applies the same comparison checks,
+and saves the resulting group alongside the existing patch alternatives.
+A cropped field ending inside a label cannot supply its exterior boundary.
+
 Each comparison card separates the observed geometric finding (detected
 intersection, no detected intersection in assessed anatomy, or unavailable
 measurement) from evidence completeness and declared constraint failures. Missing
@@ -190,9 +196,10 @@ approach selections and exact comparison receipts;
 **Save patient study file…** includes them in the existing portable `.rsworkspace`
 format. Source, assessment-engine or parameter changes mark cached assessments
 stale. Geometry lives in `anatomy-approaches.json`, separately from immutable
-anatomy revisions. The existing `anatomyPlan` operation accepts `list`, `suggest`,
-`compareInputs`, `upsert`, `assess` and `delete`. Its original direct-clearance
-request remains available.
+anatomy revisions. The `anatomyPlan` operation supports target selection,
+patch and distinct-entry suggestions, comparison, editing and assessment.
+Its `operativeField` action samples tissue from the saved route and selected
+target at their recorded revision.
 
 `desktop/electron/verify-eden-planning.cjs` drives the actual React/preload/Python
 workflow with hidden windows. Supply `RESSECTIONLAB_DATA_ROOT`, `EDEN_STUDY` and a
