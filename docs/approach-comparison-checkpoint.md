@@ -609,9 +609,12 @@ decisions, and their separate generated mechanism controls. See `final-ucsf`,
 `final-eden` and `final-configured-residual-cold` for hidden desktop captures
 with the exact candidate build.
 Use the prepared study paths from [Launch and reproduce](#launch-and-reproduce)
-or the existing local comparison copies. If the external drive is absent,
-use the local EDEN copy when available and run UCSF and the generated checks
-independently. Choose fresh output directories.
+or the existing local comparison copies. The EDEN copy keeps its manifest,
+approach measurements and `restorable-source-payload.json` checksum list.
+If its duplicate imaging was cleared, restore `arrays`, `originals` and
+`revisions` from the verified CTRL_1277 study using the copy command in
+[Hidden EDEN verification](#hidden-eden-verification). If the drive is absent,
+run UCSF and the generated checks independently. Choose fresh output directories.
 
 ```sh
 export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1
