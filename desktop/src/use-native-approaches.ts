@@ -19,7 +19,8 @@ export function useNativeApproaches(binding:Binding|null,api:NativeAnatomyApi|nu
   liveKey.current=key;
 
   function install(data:ApproachResponse,action:unknown,version:number){
-    setResult(previous=>({key,data:{...(previous?.key===key?previous.data:undefined),...data}}));
+    setResult(previous=>({key,data:{...(previous?.key===key?previous.data:undefined),...data,
+      consequenceEvidence:data.consequenceEvidence??null}}));
     setSelection(current=>{
       if(current?.key===key&&selectionVersion.current!==version)return current;
       const scope=targetKey(data.activeTargetLayerId);
@@ -39,7 +40,8 @@ export function useNativeApproaches(binding:Binding|null,api:NativeAnatomyApi|nu
     const started={key,api},version=selectionVersion.current;
     load.current=started;
     void api.anatomyPlan({collectionId:binding.collectionId,snapshotId:binding.document.snapshot_id,action:'list',
-      ...(savedTarget===undefined?{}:{targetLayerId:savedTarget})}).then(raw=>{
+      ...(savedTarget===undefined?{}:{targetLayerId:savedTarget}),
+      ...(savedSelection?{reviewApproachId:savedSelection}:{})}).then(raw=>{
       if(liveKey.current===key&&load.current===started)install(raw as ApproachResponse,'initial',version);
     }).catch(e=>{
       if(liveKey.current===key&&load.current===started)setError(e instanceof Error?e.message:String(e));
@@ -73,10 +75,14 @@ export function useNativeApproaches(binding:Binding|null,api:NativeAnatomyApi|nu
   }
 
   const approaches=data?.approaches??[],selectedId=selection?.key===key?selection.id:null;
+  const evidence=data?.consequenceEvidence;
+  const consequenceEvidence=evidence&&evidence.sourceSnapshotId===binding?.document.snapshot_id
+    &&evidence.targetLayerId===activeTargetLayerId?evidence:null;
   return {
     approaches,selectedId,select,pending,error,loading:!!binding&&!data&&!error,activeTargetLayerId,targetSelectionIssue:data?.targetSelectionIssue,
     selectedApproachIds:selection?.key===key?selection.byTarget:view?.selectedApproachIds,
-    targetOptions:data?.targetOptions??[],rehearsalOptions:data?.rehearsalOptions,report:data?.proposalReport,inputComparison:data?.inputComparison,request,
+    targetOptions:data?.targetOptions??[],rehearsalOptions:data?.rehearsalOptions,report:data?.proposalReport,inputComparison:data?.inputComparison,
+    consequenceEvidence,request,
     selected:approaches.find(a=>a.id===selectedId)??null,routes:approachRoutes(approaches,selectedId),
   };
 }

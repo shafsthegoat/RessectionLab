@@ -17,6 +17,7 @@ SCHEMA = 'resectionlab.surgical-consequence-comparison.v1'
 VECTOR_SCHEMA = 'resectionlab.surgical-consequence-vector.v1'
 PROCEDURE_VECTOR_SCHEMA = 'resectionlab.surgical-consequence-vector.v2'
 EVIDENCE_VECTOR_SCHEMA = 'resectionlab.surgical-consequence-vector.v3'
+MECHANISM_EVIDENCE_REVISION = 2
 APP_DECLARATION_HASH = 'sha256:cb075f189f9455508a7ec454dda0e2bfe38809b2a0fed0b0a824b225aad3f3f9'
 DECLARATION_KEYS = ('sourceArchiveSha256', 'sourceSceneId', 'sourceGeometryHash', 'prefixBranch', 'prefixActions',
                     'alternativeBranches', 'stopBranch', 'scenarios', 'policies')
@@ -44,6 +45,10 @@ SOURCE_COUNTS = frozenset(('targetRemovedMm3', 'nonTargetRemovedMm3', 'elapsedSe
 EXPOSURE_METRICS = ('brainStrainSquaredMm3S', 'brainStressSquaredPa2Mm3S',
     'thermalPeakC', 'thermalExposureMm3KS', 'bloodGeneratedMm3',
     'supplyDeficitSeconds', 'drainageDeficitSeconds')
+_FLOW_DEFICITS = {'supplyDeficitSeconds': 'supply', 'drainageDeficitSeconds': 'drainage'}
+_FUNCTIONAL_CONTACT = 'recordedContactCellSeconds'
+_CONTINUUM_AGGREGATES = {'brainStrainSquaredMm3S': 'soft_tissue',
+    'brainStressSquaredPa2Mm3S': 'soft_tissue', 'tumorStrainSquaredMm3S': 'tumor'}
 PROCEDURE_PRIORITY = {
     'schema': 'resectionlab.procedure-selection-priority.v2',
     'order': ['declared-hard-bounds', 'maximum-worst-world-target-treatment',
@@ -53,14 +58,19 @@ PROCEDURE_PRIORITY = {
     'thresholdMeaning': 'Declared engineering bounds only; no clinical weights or thresholds.'}
 
 
-def procedure_priority_choice(branches, values, required):
+def procedure_priority_choice(branches, values, required, *, regional_exposures=False):
     """Prioritize checked outcomes without scalarizing neural/exposure effects."""
     remaining = list(branches)
     best = max(values(b, 'targetRemovedMm3') for b in remaining)
     remaining = [b for b in remaining if values(b, 'targetRemovedMm3') == best]
     neural = [k for k in ('neuralRemovedMm3', 'neuralCutSourceMm3', 'protectedRemovedMm3') if k in required]
     neural += sorted(k for k in required if k.startswith('structure:'))
-    for group, label in ((neural, 'neural'), ([k for k in EXPOSURE_METRICS if k in required], 'exposure')):
+    exposures = [k for k in EXPOSURE_METRICS if k in required]
+    if regional_exposures:
+        exposures += sorted(k for k in required if k.startswith(('functional:', 'mechanical:', 'vascular:')))
+        if 'tumorStrainSquaredMm3S' in required:
+            exposures.append('tumorStrainSquaredMm3S')
+    for group, label in ((neural, 'neural'), (exposures, 'exposure')):
         def vector(branch):
             return tuple(values(branch, key) for key in group)
         remaining = [b for b in remaining if not any(
@@ -87,8 +97,10 @@ def _metric_spec(name):
         mechanism, _, region_metric = name.partition(':')
         region, _, metric = region_metric.rpartition(':')
         if 0 < len(region) <= 100:
-            if mechanism == 'vascular' and metric in ('supplyDeficitSeconds', 'drainageDeficitSeconds'):
+            if mechanism == 'vascular' and metric in _FLOW_DEFICITS:
                 return ('s', 'min')
+            if mechanism == 'functional' and metric == _FUNCTIONAL_CONTACT:
+                return ('cell*s', 'min')
             if mechanism == 'mechanical':
                 from .surgical_mechanical_exposure import METRICS as mechanical_metrics
                 if metric in mechanical_metrics:
@@ -98,6 +110,10 @@ def _metric_spec(name):
 
 def _vector_metrics(vector):
     schema = vector.get('schema')
+    revision = vector.get('mechanismEvidenceRevision')
+    if revision is not None and (schema != EVIDENCE_VECTOR_SCHEMA or type(revision) is not int
+                                 or revision != MECHANISM_EVIDENCE_REVISION):
+        raise ValueError('Unsupported mechanism evidence revision')
     if schema == VECTOR_SCHEMA:
         return METRICS
     if schema not in (PROCEDURE_VECTOR_SCHEMA, EVIDENCE_VECTOR_SCHEMA):
@@ -106,8 +122,9 @@ def _vector_metrics(vector):
     regional = {}
     if schema == EVIDENCE_VECTOR_SCHEMA:
         keys = vector.get('regionalMetricIds')
+        prefixes = ('vascular:', 'mechanical:', 'functional:') if revision is not None else ('vascular:', 'mechanical:')
         if (type(keys) is not list or len(keys) > 512 or
-                any(type(k) is not str or not k.startswith(('vascular:', 'mechanical:')) for k in keys)
+                any(type(k) is not str or not k.startswith(prefixes) for k in keys)
                 or len(set(keys)) != len(keys)):
             raise ValueError('Explicit regional mechanism dimensions required')
         regional = {key: _metric_spec(key) for key in keys}
@@ -178,30 +195,84 @@ def _regional_dimension(value, before, unit, *, subject, mechanism, meaning):
             'reason': None if available else 'Measurement is unavailable in this model domain.'}
 
 
-def _mechanism_evidence(engine, baseline, direct):
+def _scope_model_dimension(dimension, before, *, source, aggregation, scope, meaning=None, reason=None):
+    available = dimension['status'] != 'unavailable'
+    dimension.update(evidenceClass='model_estimate', source=source, aggregation=aggregation,
+                     baseline=_finite(before) if available else None, scope=scope)
+    if meaning is not None:
+        dimension['incrementalMeaning'] = meaning
+    if reason is not None and not available:
+        dimension['reason'] = reason
+
+
+def _mechanical_unavailable_reason(row, metric):
+    from .surgical_continuum import SOFT
+
+    if row['material'] not in SOFT:
+        return 'The declared source material is outside the soft mechanics model domain.'
+    if metric in ('retractorForcePeakN', 'retractorForceTimeNs'):
+        return 'Regional retractor force attribution is unavailable for a contact spanning source labels.'
+    return 'The declared mechanics model does not measure this quantity.'
+
+
+def _mechanism_evidence(engine, baseline, direct, *, revised):
     from .functional_evidence import functional_consequence_evidence
     from .surgical_vascular_graph import consequence_evidence as vascular_evidence
     from .surgical_mechanical_exposure import METRICS as mechanical_metrics, summarize
 
     vascular, vascular_before = vascular_evidence(engine), vascular_evidence(baseline)
     mechanical, mechanical_before = summarize(engine), summarize(baseline)
+    functional = functional_consequence_evidence(engine, baseline, direct_dimensions=direct,
+                                                all_declared_neural=revised)
     regional = {}
+    if revised:
+        for subject, row in functional['structures'].items():
+            contact = row[_FUNCTIONAL_CONTACT]
+            source = None if row['source'] is None else {**row['source'], 'sceneId': engine.scene.identity}
+            dimension = _regional_dimension(contact['cumulative'], contact['baseline'], 'cell*s',
+                subject=subject, mechanism=_FUNCTIONAL_CONTACT,
+                meaning='Added source-indexed retained contact cell-time since the comparison prefix.')
+            _scope_model_dimension(dimension, contact['baseline'], source=source,
+                aggregation='time_integral', scope='Logged retained contact in the named source annotation.',
+                reason=contact.get('reason'))
+            regional[f'functional:{subject}:{_FUNCTIONAL_CONTACT}'] = dimension
     for subject, row in vascular['regions'].items():
         before = vascular_before['regions'].get(subject, {})
-        for metric in ('supplyDeficitSeconds', 'drainageDeficitSeconds'):
-            regional[f'vascular:{subject}:{metric}'] = _regional_dimension(
+        for metric, interface in _FLOW_DEFICITS.items():
+            dimension = _regional_dimension(
                 row.get(metric), before.get(metric), 's', subject=subject, mechanism=metric,
                 meaning='Added modeled flow-deficit exposure in the declared region since the comparison prefix.')
+            if revised:
+                source = {'sceneId': engine.scene.identity, 'model': vascular['model'],
+                    'coverage': vascular['coverage'], 'provenance': row['source'], 'regionId': subject,
+                    'edgeTerms': [{**term, 'kind': vascular['segments'][term['edge']]['kind']}
+                                  for term in row[interface]],
+                    'referenceFlowMm3PerSecond': row[f'reference{interface.capitalize()}Mm3PerSecond']}
+                _scope_model_dimension(dimension, before.get(metric), source=source,
+                    aggregation='time_integral', scope=f'Declared regional {interface} interface in the partial graph.')
+            regional[f'vascular:{subject}:{metric}'] = dimension
     if mechanical is not None:
+        regions = {str(region['id']): region for region in engine.scene.regions}
         for subject, row in mechanical['regions'].items():
             before = (mechanical_before or {}).get('regions', {}).get(subject, {})
             for metric, (unit, aggregation) in mechanical_metrics.items():
-                regional[f'mechanical:{subject}:{metric}'] = _regional_dimension(
+                dimension = _regional_dimension(
                     row.get(metric), before.get(metric), unit, subject=subject, mechanism=metric,
                     meaning=('Increase in the recorded cumulative peak since the comparison prefix.' if aggregation == 'peak'
                              else 'Added exposure since the comparison prefix.'))
+                if revised:
+                    region = regions[subject]
+                    source = {'sceneId': engine.scene.identity, 'labelId': region['id'], 'name': region['name'],
+                        'material': row['material'], 'model': mechanical['model'],
+                        'retractorBoundary': mechanical['retractorBoundary'], 'coverage': 'source_region_label'}
+                    _scope_model_dimension(dimension, before.get(metric), source=source,
+                        aggregation='cumulative_peak' if aggregation == 'peak' else 'time_integral',
+                        scope='Logged retained contact in the source region.' if metric == 'contactCellSeconds' else
+                              'Accepted modeled steps in the source region.',
+                        reason=_mechanical_unavailable_reason(row, metric) if dimension['status'] == 'unavailable' else None)
+                regional[f'mechanical:{subject}:{metric}'] = dimension
     return {
-        'functional': functional_consequence_evidence(engine, baseline, direct_dimensions=direct),
+        'functional': functional,
         'vascular': vascular,
         'mechanical': mechanical if mechanical is not None else {
             'status': 'unavailable', 'reason': 'Regional mechanical exposure was not enabled in this source.'},
@@ -209,7 +280,45 @@ def _mechanism_evidence(engine, baseline, direct):
     }, regional
 
 
-def consequence_vector(engine, baseline, *, extended=False):
+def _scope_aggregate_mechanisms(engine, dimensions, before, vascular):
+    graph_source = ({'sceneId': engine.scene.identity, 'model': vascular['model'], 'coverage': vascular['coverage']}
+                    if 'model' in vascular else None)
+    blood_source = graph_source
+    if blood_source is None and dimensions['bloodGeneratedMm3']['status'] != 'unavailable':
+        blood_source = {'sceneId': engine.scene.identity, 'model': 'vesselsV2', 'coverage': 'supplied_vessel_source_labels'}
+    _scope_model_dimension(dimensions['bloodGeneratedMm3'], before['bloodGeneratedMm3'], source=blood_source,
+        aggregation='cumulative_volume', scope='Blood generated into the modeled field by vessel wounds.',
+        meaning='Additional modeled blood generated since the comparison prefix.',
+        reason='No supported bleeding ledger bound to supplied vessel sources.')
+    for metric, interface in _FLOW_DEFICITS.items():
+        _scope_model_dimension(dimensions[metric], before[metric], source=graph_source,
+            aggregation='maximum_regional_integral',
+            scope=f'Maximum cumulative exposure across declared regional {interface} interfaces.',
+            meaning='Change in the maximum cumulative regional deficit since the comparison prefix.',
+            reason=f'No modeled regional {interface} interface with an explicit reference flow.')
+    for metric, material in _CONTINUUM_AGGREGATES.items():
+        labels = [row['id'] for row in engine.scene.regions if row['material'] == material]
+        source = None if dimensions[metric]['status'] == 'unavailable' else {
+            'sceneId': engine.scene.identity, 'model': 'brainContinuumV1', 'material': material,
+            'labelIds': labels, 'coverage': 'source_region_labels'}
+        _scope_model_dimension(dimensions[metric], before[metric], source=source, aggregation='time_integral',
+            scope=f'Volume-time integral over the declared {material} label regions.',
+            meaning='Added volume-time integral since the comparison prefix.',
+            reason=f'No supported continuum ledger for the declared {material} material.')
+
+
+def _scope_functional_counts(dimensions, functional):
+    for subject, row in functional['structures'].items():
+        source = row['source']
+        for effect, scope in (('removedMm3', 'Unique removed source cells in the named annotation.'),
+                              ('cutSourceMm3', 'Unique annotated source cells incident to a recorded cut or transection.')):
+            if row[effect]['status'] == 'source_count':
+                dimension = dimensions[f'structure:{subject}:{effect}']
+                dimension.update(source=source, scope=scope,
+                    evidenceClass='generated_evidence' if source['kind'] == 'generated_annotation' else 'supplied_annotation')
+
+
+def consequence_vector(engine, baseline, *, extended=False, mechanism_revision=MECHANISM_EVIDENCE_REVISION):
     # Reuse authoritative prefix, source-ownership and history validation.
     outcomes = summarize_engine_outcomes(engine, baseline=baseline)
     values, before = _values(engine), _values(baseline)
@@ -249,10 +358,18 @@ def consequence_vector(engine, baseline, *, extended=False):
         'dimensions': dimensions, 'clinicalValidation': False,
         'scope': 'Source annotation counts and explicitly modeled consequences; not injury, histological margins or neurological outcome.'}
     if extended:
-        evidence, regional = _mechanism_evidence(engine, baseline, complete)
+        if mechanism_revision is not None and (type(mechanism_revision) is not int or
+                                               mechanism_revision != MECHANISM_EVIDENCE_REVISION):
+            raise ValueError('Unsupported mechanism evidence revision')
+        revised = mechanism_revision is not None
+        evidence, regional = _mechanism_evidence(engine, baseline, complete, revised=revised)
         vector.update(schema=EVIDENCE_VECTOR_SCHEMA, mechanismEvidence=evidence,
                       regionalMetricIds=sorted(regional))
         dimensions.update(regional)
+        if revised:
+            vector['mechanismEvidenceRevision'] = mechanism_revision
+            _scope_aggregate_mechanisms(engine, dimensions, before, evidence['vascular'])
+            _scope_functional_counts(dimensions, evidence['functional'])
         if procedure:
             from .surgical_treatment_intent import procedure_treatment_intent
             intent = procedure_treatment_intent(engine)
@@ -289,6 +406,37 @@ def validate_policy(policy):
             raise ValueError('Unknown consequence constraint, scope or operator')
         _finite(c['value'])
         _metric_spec(c['metric'])
+
+
+def _validate_mechanism_dimension(name, dimension, scene_id):
+    mechanism, _, suffix = name.partition(':')
+    subject, _, metric = suffix.rpartition(':')
+    if name in _FLOW_DEFICITS:
+        aggregation = 'maximum_regional_integral'
+    elif name == 'bloodGeneratedMm3':
+        aggregation = 'cumulative_volume'
+    elif name in _CONTINUUM_AGGREGATES or mechanism in ('functional', 'vascular'):
+        aggregation = 'time_integral'
+    elif mechanism == 'mechanical':
+        from .surgical_mechanical_exposure import METRICS as mechanical_metrics
+        aggregation = 'cumulative_peak' if mechanical_metrics[metric][1] == 'peak' else 'time_integral'
+    else:
+        return
+
+    source = dimension.get('source')
+    if (dimension.get('aggregation') != aggregation or dimension.get('evidenceClass') != 'model_estimate'
+            or type(dimension.get('scope')) is not str or not dimension['scope']
+            or type(dimension.get('incrementalMeaning')) is not str or not dimension['incrementalMeaning']
+            or (subject and (dimension.get('subjectId') != subject or dimension.get('mechanism') != metric))):
+        raise ValueError('Modeled consequence scope or identity differs from its metric')
+    if source is not None and (type(source) is not dict or source.get('sceneId') != scene_id):
+        raise ValueError('Modeled consequence source differs from its scene')
+    if dimension['status'] == 'unavailable':
+        if dimension.get('baseline') is not None or type(dimension.get('reason')) is not str or not dimension['reason']:
+            raise ValueError('Unavailable mechanism requires an explicit reason and null baseline')
+    elif (source is None or _finite(dimension.get('baseline')) < 0.
+            or dimension['cumulative'] - dimension['baseline'] != dimension['incremental']):
+        raise ValueError('Modeled consequence source or prefix accounting differs')
 
 
 def compare_samples(samples, policy, *, stop_branch, scenario_ids, branch_ids, selection_rule=None,
@@ -338,9 +486,12 @@ def compare_samples(samples, policy, *, stop_branch, scenario_ids, branch_ids, s
         if (len({r['sourceSceneId'] for r in rows}) != 1 or len({r['baselineStateId'] for r in rows}) != 1
                 or len({r['prefixActions'] for r in rows}) != 1):
             raise ValueError('Paired scenarios must share the same scene and exact prefix')
+    revisions = set()
+    mechanism_baselines = {}
     for row in samples:
         v = row['vector']
         metric_contract = _vector_metrics(v)
+        revisions.add(v.get('mechanismEvidenceRevision'))
         if preservation:
             _validate_treatment_vector(v)
         if set(v['dimensions']) != set(metric_contract):
@@ -365,6 +516,14 @@ def compare_samples(samples, policy, *, stop_branch, scenario_ids, branch_ids, s
                 if _finite(d['cumulative']) < 0 or _finite(d['incremental']) < 0:
                     raise ValueError('Source count, time and cumulative exposure cannot be negative')
             else: raise ValueError('Unknown consequence status')
+            if v.get('mechanismEvidenceRevision') == MECHANISM_EVIDENCE_REVISION:
+                _validate_mechanism_dimension(name, d, v['sourceSceneId'])
+                if d['status'] == 'modeled_unvalidated' and 'baseline' in d:
+                    previous = mechanism_baselines.setdefault((row['scenarioId'], name), d['baseline'])
+                    if d['baseline'] != previous:
+                        raise ValueError('Modeled consequences require the same baseline values in each scenario')
+    if len(revisions) > 1:
+        raise ValueError('Compared consequence vectors require the same mechanism evidence revision')
     required = set(policy['objectives']) | set(policy['requiredMetrics']) | {c['metric'] for c in policy['constraints']}
     if any(not required <= row['vector']['dimensions'].keys() for row in samples):
         raise ValueError('Required consequence dimension absent from versioned vector')
@@ -425,7 +584,8 @@ def compare_samples(samples, policy, *, stop_branch, scenario_ids, branch_ids, s
         def worst_value(branch, metric):
             values = [matrix[branch, world]['vector']['dimensions'][metric][objective_scope(metric)] for world in worlds]
             return min(values) if metric == 'targetRemovedMm3' else max(values)
-        selected, selection_reason = procedure_priority_choice(frontier, worst_value, required)
+        selected, selection_reason = procedure_priority_choice(frontier, worst_value, required,
+            regional_exposures=revisions == {MECHANISM_EVIDENCE_REVISION})
         if selected is None and stop_valid:
             selected = stop_branch
     return {'policy': copy.deepcopy(policy), 'scenarios': worlds, 'feasibleContinuations': eligible,
@@ -471,10 +631,12 @@ def _preservation_choice(matrix, branches, worlds, reasons, required, stop_branc
 
     def intent_row(branch):
         rows = {world: matrix[branch, world]['vector']['dimensions'] for world in worlds}
-        missing = any(r['reason'] == 'unknown_required_consequence' for r in reasons[branch])
+        intents = {world: matrix[branch, world]['vector']['treatmentIntent'] for world in worlds}
+        missing = (any(r['reason'] == 'unknown_required_consequence' for r in reasons[branch])
+            or any(not intent['coverageComplete'] for intent in intents.values()))
         return {'id': branch, 'admissible': None if missing else not reasons[branch],
-                    'treatmentMm3': {world: matrix[branch, world]['vector']['treatmentIntent'].get('incrementalEligibleRemovedMm3')
-                                     for world in worlds},
+                'treatmentMm3': {world: intent.get('incrementalEligibleRemovedMm3')
+                                 for world, intent in intents.items()},
                 'harms': {f'{world}/{key}': dims[key]['cumulative']
                           for world, dims in rows.items() for key in harm_keys},
                 'blockingBoundaries': []}
@@ -484,7 +646,8 @@ def _preservation_choice(matrix, branches, worlds, reasons, required, stop_branc
     stop_harm_violation = any(
         row.get('metric') != 'targetRemovedMm3' or row.get('operator') != 'at_least'
         for row in reasons[stop_branch])
-    incumbent = intent_row(stop_branch) if stop_valid and not stop_harm_violation else None
+    complete = all(row['coverageComplete'] for row in stop_intent)
+    incumbent = intent_row(stop_branch) if stop_valid and not stop_harm_violation and complete else None
     if incumbent is not None:
         # The treatment floor applies to continuations, while STOP carries
         # measured prefix harm and the unchanged original lesion denominator.
@@ -493,7 +656,7 @@ def _preservation_choice(matrix, branches, worlds, reasons, required, stop_branc
     return decide_treatment_intent(
         [intent_row(b) for b in branches if b != stop_branch], incumbent=incumbent,
         required_harms=world_harms(harm_keys), preference_harms=world_harms(preference_keys),
-        residual=residual, coverage_complete=all(row['coverageComplete'] for row in stop_intent))
+        residual=residual, coverage_complete=complete)
 
 
 def procedure_comparison_options(scene):
@@ -684,5 +847,6 @@ def validate_saved_comparison(scene, record, report, *, declaration=None):
             from .surgical_engine import SurgicalEngine
             endpoint_engine = SurgicalEngine.restore(scene, snapshot, force_verify=True)
             initial_engine = SurgicalEngine.restore(scene, baseline, force_verify=True)
-            if consequence_vector(endpoint_engine, initial_engine, extended=True) != vector:
+            if consequence_vector(endpoint_engine, initial_engine, extended=True,
+                                   mechanism_revision=vector.get('mechanismEvidenceRevision')) != vector:
                 raise ValueError('Nominal regional or source evidence differs from native replay')

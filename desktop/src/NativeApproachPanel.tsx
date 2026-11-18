@@ -6,6 +6,7 @@ import type {ApproachCoverage,ApproachSensitivityConfig,ApproachTargetOption,Nat
 import {approachAssessment,approachStatus,defaultApproachSensitivity,lowerBoundText} from './native-approaches';
 import {NativeStructureControls} from './NativeStructureControls';
 import {rehearsalAvailability} from './NativeStudyEvidence';
+import {NativeConsequenceReadout} from './NativeConsequenceReadout';
 import {ApproachProposalDetails,ApproachSensitivityDetails,ApproachInputComparison,CorticalAccessReadout} from './NativeApproachReadouts';
 import './native-approaches.css';
 const mm=(value:unknown)=>typeof value==='number'&&Number.isFinite(value)?value.toFixed(1):'—';
@@ -81,7 +82,15 @@ export function NativeApproachPanel({workspace:w}:{workspace:NativeWorkspace}){
       patchRadiusMm:patchRadius,constraints:value.constraints,targetLayerId,sensitivityConfig});
     if(action==='suggest'&&result?.selectedId){w.setCursor(result.approaches.find(a=>a.id===result.selectedId)?.target??target);w.setSelectedStructure(null)}
   }
-  async function selectApproach(a:NativeApproach){if(await commitEdits()){p.select(a.id);w.setCursor(a.target)}}
+  async function selectApproach(a:NativeApproach){
+    if(!await commitEdits())return;
+    p.select(a.id);
+    w.setCursor(a.target);
+    if(a.assessmentStatus==='current'&&p.consequenceEvidence
+      &&!p.consequenceEvidence.routes.some(route=>route.approachId===a.id)){
+      await p.request({action:'list',targetLayerId:p.activeTargetLayerId,reviewApproachId:a.id});
+    }
+  }
   async function selectTarget(option:ApproachTargetOption|undefined){
     if(!await commitEdits())return;
     const result=await p.request(option&&!option.candidateBinding
@@ -157,6 +166,7 @@ export function NativeApproachPanel({workspace:w}:{workspace:NativeWorkspace}){
       <span className="approach-card-metric">Radius <b>{mm(a.radiusMm)} mm</b> · minimum supplied clearance bound <b>{bound(summary.minimumBoundMm)} mm</b></span>
       <span className="approach-card-metric">Target voxel centres reached <b>{mm(summary.targetReachedMm3)} mm³</b> · brain traversal upper bound <b>{mm(summary.traversalMm3)} mm³</b></span>
     </button>})}</div>
+    {!dirty&&p.consequenceEvidence&&<NativeConsequenceReadout packet={p.consequenceEvidence} approaches={p.approaches} selectedId={p.selectedId}/>}
     {p.report&&<ApproachProposalDetails report={p.report} targetLabel={targetLabel(p.report.task?.targetLayerId??p.report.targetLayerId)} labels={layerLabels}/>}
     {assessment&&<section className="approach-measurements" data-assessment-status={status}><h2>Source-bound assessment</h2>
       <p className={`approach-observed ${assessment.observed}`} data-observed-result={assessment.observed}>{assessment.observedLabel}</p>

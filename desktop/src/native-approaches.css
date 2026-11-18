@@ -26,3 +26,12 @@
 .approach-source-row p{margin:3px 0}
 .approach-source-values dt,.approach-source-values dd{min-width:0;max-width:55%;overflow-wrap:anywhere}
 .approach-source-values>div+div{border-top:1px solid #263b45}
+
+.approach-consequence-comparison{display:grid;gap:8px;padding:12px;border:1px solid var(--border,#344655);border-radius:8px;font-size:12px}
+.approach-consequence-comparison :is(h2,p){margin:0}
+.approach-consequence-comparison .approach-consequence-disposition{color:#ebc87a;font-weight:650}
+.approach-consequence-comparison table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
+.approach-consequence-comparison :is(th,td){border-bottom:1px solid var(--border,#344655);padding:6px 4px}
+.approach-consequence-comparison th:first-child{text-align:left}
+.approach-consequence-comparison :is(th:not(:first-child),td){text-align:right}
+.approach-consequence-comparison details>p,.approach-consequence-comparison details>ul{margin-block:7px}

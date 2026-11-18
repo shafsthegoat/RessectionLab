@@ -112,11 +112,33 @@ export interface NativeApproach {
     status:'known-conflict'|'incomplete'|'no-detected-conflict';unknowns:string[];assumptions:string[];constraintFailures?:string[];[key:string]:unknown};
   [key:string]:unknown;
 }
+export interface ApproachConsequenceMetric {
+  label:string;unit:string;status:string;value:number|boolean|null;reason:string|null;evidenceClass:string|null;
+}
+export interface ApproachConsequenceRoute {
+  approachId:string;name:string;parameterHash:string;measurementHash:string;
+  sourceSnapshotId:string;targetLayerId:string|null;targetCandidateBinding:string|null;
+  researchDisposition:{status:'reassess';reasons:string[]};
+  dimensions:Record<string,ApproachConsequenceMetric>;
+  target:{label:string;evidenceClass:string}|null;
+  sources:Array<{layerId:string;label:string;kind:string;evidenceClass:string;contact:string|null;
+    coverage:{status:string};readouts:Record<string,ApproachConsequenceMetric>}>;
+  registrations:Array<{sourceSeriesId:string;status:string;method?:string|null;
+    landmarkResidual:ApproachConsequenceMetric;wholeFieldError:ApproachConsequenceMetric}>;
+  warnings:{criticalContacts:Array<{layerId:string;label:string;contact:string}>;
+    constraintFailures:string[];access:CorticalAccessAssessment|null;missingEvidence:string[]};
+  uncertainty:{scenarioCount:number|null;scenarioSetId?:string|null;limitations:string[]};
+}
+export interface ApproachConsequenceEvidence {
+  schema:'native-approach-consequence-evidence-v1';sourceSnapshotId:string;targetLayerId:string|null;
+  targetCandidateBinding:string|null;simulationExecutionAuthorized:false;clinicalValidation:false;routes:ApproachConsequenceRoute[];
+}
 export interface ApproachResponse {
   rehearsalOptions?:EnvironmentOptions;
   snapshotId:string;approaches:NativeApproach[];selectedId?:string|null;targetOptions?:ApproachTargetOption[];
   activeTargetLayerId?:string|null;targetSelectionIssue?:string|null;
   proposalReport?:ApproachProposalReport|null;inputComparison?:ApproachInputComparisonReport|null;
+  consequenceEvidence?:ApproachConsequenceEvidence|null;
 }
 export const approachStatus=(a:NativeApproach)=>a.assessmentStatus!=='current'?a.assessmentStatus:a.measurements?.status??'unassessed';
 

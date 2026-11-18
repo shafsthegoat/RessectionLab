@@ -186,7 +186,7 @@ def procedure_treatment_intent(engine):
 
 
 def decide_treatment_intent(alternatives, *, incumbent=None, required_harms, preference_harms=(),
-        residual=None, coverage_complete=False):
+        residual=None, coverage_complete=False, projection_complete=True):
     """Select additional treatment by a paired-world partial order.
 
     Each row has an ID, incremental `treatmentMm3` (scalar or keyed by world),
@@ -196,6 +196,7 @@ def decide_treatment_intent(alternatives, *, incumbent=None, required_harms, pre
     All named harms are retained in the full frontier. A declared preference
     can resolve it using a named subset while retaining the complete frontier.
     `coverage_complete` independently attests coverage of stopping evidence.
+    `projection_complete` attests required coverage for comparing continuations.
     """
     required = tuple(dict.fromkeys((*required_harms, *preference_harms)))
     preference = tuple(dict.fromkeys(preference_harms)) or required
@@ -255,7 +256,7 @@ def decide_treatment_intent(alternatives, *, incumbent=None, required_harms, pre
     full_front = frontier(required)
     preferred = frontier(preference)
     result.update(frontierIds=full_front, preferenceFrontierIds=preferred)
-    if unknown:
+    if unknown or not projection_complete:
         return result
     if scenario_dependent_benefit:
         return {**result, 'reason': 'additional_treatment_varies_by_world'}

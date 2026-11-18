@@ -50,6 +50,9 @@ def test_missing_evidence_reassesses_and_paired_worlds_are_never_averaged():
     missing = decide([option('observed-positive', 27.), option('missing-cst', 54., cst=None)],
         preference_harms=(CST,))
     assert missing['status'] == 'reassess' and missing['reason'] == 'required_evidence_unavailable'
+    partial_projection = decide([option('observed-positive', 27.)], projection_complete=False)
+    assert partial_projection['status'] == 'reassess'
+    assert partial_projection['frontierIds'] == ['observed-positive']
     worlds = {'a': 0., 'b': 0.}
     paired = decide_treatment_intent([
         option('biased-a', {'a': 54., 'b': 27.}),
@@ -57,6 +60,97 @@ def test_missing_evidence_reassesses_and_paired_worlds_are_never_averaged():
     ], incumbent=option('exit', worlds), required_harms=(CST,), preference_harms=(CST,))
     assert paired['status'] == 'reassess'
     assert paired['frontierIds'] == ['biased-a', 'biased-b']
+
+
+def test_generated_source_preference_changes_matched_projection_with_full_frontier():
+    from resectionlab.surgical_generated_planning import SourceContactProjection
+    from resectionlab.surgical_recorded_sequential import display_case
+    from resectionlab.surgical_scene import from_case
+    from resectionlab.surgical_sequential_task import (
+        available_mask, generated_preservation_task, generated_task, observation,
+    )
+
+    cst = generated_preservation_task(202, preservation_metrics=[CST])
+    motor = generated_preservation_task(202, preservation_metrics=[MOTOR])
+    legacy = generated_task(202)
+    assert cst.skills == motor.skills == legacy.skills
+    assert np.array_equal(cst.scene.labels, motor.scene.labels)
+    assert cst.scene.properties[PROPERTY]['sourceBinding'] == legacy.scene.properties[PROPERTY]['sourceBinding']
+    assert procedure_preservation_preference(legacy.scene) is None
+    assert cst.scene.identity != motor.scene.identity != legacy.scene.identity
+    assert cst.scene.properties[PROPERTY]['policyHash'] != motor.scene.properties[PROPERTY]['policyHash']
+    assert from_case(display_case(cst), cst.scene.regions).identity == cst.scene.identity
+    receipts = []
+    for task in (cst, motor):
+        engine = task.initial_engine()
+        _, receipt = SourceContactProjection(task).project(
+            observation(task, engine), available_mask(task, engine, set()))
+        assert receipt['projectionComplete'] and receipt['capsuleQueries'] == 8
+        receipts.append(receipt)
+    cst_receipt, motor_receipt = receipts
+    assert cst_receipt['alternatives'] == motor_receipt['alternatives']
+    cst_decision, motor_decision = (receipt['decision'] for receipt in receipts)
+    assert cst_decision['frontierIds'] == motor_decision['frontierIds']
+    assert cst_decision['status'] == 'continue'
+    assert motor_decision['status'] == 'reassess'
+    assert motor_decision['reason'] == 'unresolved_treatment_harm_tradeoff'
+    assert motor_decision['controllingHarmMetrics'] == [MOTOR]
+    positive = [row for row in motor_receipt['alternatives'] if row['admissible']]
+    assert min(row['treatmentMm3'] for row in positive) < max(row['treatmentMm3'] for row in positive)
+    assert any(row['harms'][MOTOR] > motor_receipt['incumbent']['harms'][MOTOR] for row in positive)
+    with pytest.raises(ValueError, match='declared source-removal metrics'):
+        generated_preservation_task(202, preservation_metrics=['structure:unknown:removedMm3'])
+
+
+def test_generated_budget_shortfall_is_distinct_from_independent_residual_evidence():
+    from resectionlab.surgical_generated_planning import SourceContactProjection
+    from resectionlab.surgical_sequential_task import (
+        available_mask, generated_preservation_task, observation,
+    )
+
+    task = generated_preservation_task(201, preservation_metrics=[MOTOR])
+    engine = task.initial_engine()
+    projector = SourceContactProjection(task)
+    observed = observation(task, engine)
+    mask = available_mask(task, engine, set())
+    observed['remaining']['attempts'] = 4
+    _, budget = projector.project(observed, mask)
+    assert budget['decision']['status'] == 'reassess'
+    assert budget['residual']['unexplainedResidualMm3'] > 0.
+    assert any('remaining_attempts_with_stop' in row['projectedExclusions']
+               for row in budget['alternatives'])
+    # Feed the nominal projector a prefix with all independently eligible cells
+    # removed. No candidate contact is needed to establish the remaining boundary.
+    observed['native_state']['removed'] = sorted(projector.intent['eligible'])
+    _, residual = projector.project(observed, mask)
+    assert not residual['alternatives']
+    assert residual['decision']['status'] == 'stop_with_residual'
+    assert residual['decision']['supportingBoundaries'] == residual['residual']['boundaries']
+    assert residual['residual']['residualMm3'] == 81.
+    assert residual['residual']['boundaries'][0]['structure'] == 'cerebellum'
+    assert residual['residual']['boundaries'][0]['evidenceSha256'] == (
+        task.scene.properties[PROPERTY]['structures']['cerebellum']['evidenceSha256'])
+
+
+def test_generated_projection_receipt_is_remeasured_on_cold_admission():
+    from resectionlab.surgical_generated_planning import SourceContactProjection
+    from resectionlab.surgical_planning_evidence import verify_generated_projections
+    from resectionlab.surgical_sequential_task import (
+        available_mask, generated_preservation_task, observation,
+    )
+
+    task = generated_preservation_task(202, preservation_metrics=[CST])
+    engine = task.initial_engine()
+    _, projected = SourceContactProjection(task).project(
+        observation(task, engine), available_mask(task, engine, set()))
+    saved = dict(projected, sourceStateId=engine.state_id, executionStatus='unexecuted')
+    record = dict(branches={'harm-aware': engine.snapshot()}, timeline={'harm-aware': []})
+    packet = dict(alternatives=[
+        dict(branchId='harm-aware', intentDecisions=[saved], attempts=0, refusals=0)])
+    verify_generated_projections(task.scene, record, packet, check=lambda: None)
+    saved['alternatives'][0]['treatmentMm3'] += 27.
+    with pytest.raises(ValueError, match='Recorded nominal projection differs'):
+        verify_generated_projections(task.scene, record, packet, check=lambda: None)
 
 
 def intent_scene():

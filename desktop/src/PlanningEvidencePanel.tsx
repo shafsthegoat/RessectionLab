@@ -1,6 +1,9 @@
 import type {SurgicalController} from './use-surgical';
 
-interface Quantity {cumulative?:number|null;incremental?:number|null;unit:string;status:string;reason?:string|null;incrementalMeaning?:string}
+interface Quantity {
+  cumulative?:number|null;incremental?:number|null;unit:string;status:string;reason?:string|null;
+  incrementalMeaning?:string;source?:{labelName?:string;material?:string};
+}
 interface StructureReading {
   source:{provenance:string;reviewStatus:string}|null;
   removedMm3:Quantity;
@@ -75,9 +78,12 @@ const value=(q:Quantity)=>q.cumulative==null?'Unknown':`${amount(q.cumulative)} 
 
 function DecisionSummary({receipt,current,onInspect}:{receipt:DecisionReceipt;current:boolean;onInspect:()=>void}){
   const d=receipt.decision,chosen=receipt.alternatives.find(row=>row.id===d.selectedId);
+  const projectedHarms=chosen?d.controllingHarmMetrics.filter(key=>Number.isFinite(chosen.harms[key]))
+    .map(key=>`${metric(key)} ${amount(chosen.harms[key])} mm³`):[];
   return <article data-intent={d.status} className="planning-evidence-decision">
     <h4>{intents[d.status]} · action {receipt.sourcePosition}</h4>
-    {d.status==='continue'&&<p>Selected a continuation with {amount(chosen?.treatmentMm3)} mm³ projected additional treatment{chosen&&d.controllingHarmMetrics.includes('structure:corticospinal:removedMm3')?` and ${amount(chosen.harms['structure:corticospinal:removedMm3'])} mm³ projected CST membership removal`:''}.</p>}
+    {d.status==='continue'&&<p>Selected a continuation with {amount(chosen?.treatmentMm3)} mm³ projected additional treatment.</p>}
+    {projectedHarms.length>0&&<p>Projected controlling harm · {projectedHarms.join(', ')}.</p>}
     {d.status==='reassess'&&<p>{d.reason==='unresolved_treatment_harm_tradeoff'?'Remaining treatment trades off against the declared preservation priorities.':'The available evidence does not resolve the remaining treatment choice.'}</p>}
     {d.status==='stop_with_residual'&&<p>Retain {amount(receipt.residual.residualMm3)} mm³ where additional work meets the declared preservation boundary.</p>}
     {d.status==='stop_after_treatment'&&<p>The original target burden has been exhausted in the simulation.</p>}
@@ -95,6 +101,11 @@ function DecisionSummary({receipt,current,onInspect}:{receipt:DecisionReceipt;cu
 
 function Mechanisms({row}:{row:EvidenceRow}){
   const evidence=row.consequences.mechanismEvidence;
+  const regional=(prefix:string)=>row.consequences.regionalMetricIds.filter(key=>key.startsWith(prefix));
+  const details=(keys:string[])=>keys.length>0&&<ul>{keys.map(key=>{
+    const q=row.consequences.dimensions[key];
+    return <li key={key}>{q.source?.labelName&&`${q.source.labelName} · `}{metric(key)} · {value(q)} {q.incrementalMeaning??q.reason}</li>;
+  })}</ul>;
   return <details data-planning-mechanisms><summary>Mechanism evidence · {labels[row.branchId]}</summary>
     <h4>Direct functional-source effects</h4>
     <p>Shared cells can contribute to multiple anatomical memberships. Each quantity covers the named structure separately.</p>
@@ -102,9 +113,13 @@ function Mechanisms({row}:{row:EvidenceRow}){
       <strong>{labels[name]??name}</strong> · removal {value(structure.removedMm3)} · cut-edge incidence {value(structure.cutSourceMm3)} · retained contact {value(structure.recordedContactCellSeconds)}
       {structure.source&&<small> · {structure.source.reviewStatus} · {structure.source.provenance}</small>}
     </li>)}</ul>
-    <h4>Vascular and mechanical exposure</h4>
-    <p>{evidence.vascular.reason??evidence.vascular.status.replaceAll('_',' ')} {evidence.mechanical.reason??evidence.mechanical.status.replaceAll('_',' ')}</p>
-    {row.consequences.regionalMetricIds.length>0&&<ul>{row.consequences.regionalMetricIds.map(key=>{const q=row.consequences.dimensions[key];return <li key={key}>{metric(key)} · {value(q)} {q.incrementalMeaning}</li>;})}</ul>}
+    <h4>Vascular exposure</h4>
+    <p>{evidence.vascular.reason??evidence.vascular.status.replaceAll('_',' ')}</p>
+    {row.consequences.dimensions.bloodGeneratedMm3?.cumulative!=null&&<p>Modeled blood generated · {value(row.consequences.dimensions.bloodGeneratedMm3)}</p>}
+    {details(regional('vascular:'))}
+    <h4>Mechanical exposure</h4>
+    <p>{evidence.mechanical.reason??evidence.mechanical.status.replaceAll('_',' ')}</p>
+    {details(regional('mechanical:'))}
     <h4>Mapping, monitoring and outcome evidence</h4>
     <ul>{Object.entries(evidence.functional.evidence).filter(([,source])=>source.reason).map(([name,source])=><li key={name}>{source.reason}</li>)}</ul>
   </details>;
