@@ -17,7 +17,7 @@ from .anatomy_editor import AnatomyDraft
 from .anatomy_workspace import read_view, save_view, component_review
 from .anatomy_geometry import mesh, normals
 from .anatomy_qa import layer_quality
-from .anatomy_display import display_affine, brain_vessel_display
+from .anatomy_display import display_affine, brain_vessel_display, source_lattice_annotation_preview
 
 
 def _retain(session, result):
@@ -43,7 +43,10 @@ def dispatch(session, operation, args, request, progress):
         session.anatomy_transfer_paths = set()
         session.anatomy_removal = {}
     if operation == "anatomyCreate":
+        session.anatomy_plan_cache = None
+        session.anatomy_plan_target_cache = None
         c = PatientImagingCollection.create(args["path"], args["patientId"], timepoint=args.get("timepoint"))
+        c.document["preparation_workflow"] = "native-adaptive-v1"
         request.begin_commit()
         c.save("create patient imaging collection")
         key = str(uuid.uuid4())
@@ -53,6 +56,8 @@ def dispatch(session, operation, args, request, progress):
         session.anatomy_removal = {}
         return {"collectionId": key, "document": c.document, "viewState": read_view(c)}
     if operation == "anatomyOpen":
+        session.anatomy_plan_cache = None
+        session.anatomy_plan_target_cache = None
         path = Path(args["path"]).resolve()
         package_path = path if path.suffix == ".rsworkspace" else None
         if path.suffix == ".rsworkspace":
@@ -66,7 +71,7 @@ def dispatch(session, operation, args, request, progress):
         session.anatomy_drafts = {}
         session.anatomy_removal = {}
         session.anatomy_transfer_paths = set()
-        session.anatomy_packages = {key: package_path} if package_path else {}
+        session.anatomy_packages = {key: package_path} if package_path and not args.get("readOnlyPackage") else {}
         return {"collectionId": key, "document": c.document, "viewState": read_view(c)}
     key = args.get("collectionId")
     if key not in session.anatomy_collections:
@@ -75,9 +80,38 @@ def dispatch(session, operation, args, request, progress):
     current_id = json.loads((c.root / "patient-anatomy.json").read_text()).get(
         "snapshot_id"
     )
+    if operation == "anatomyPrepare" and args.get("action") == "plan" and args.get("snapshotId") is None:
+        # A cancelled worker may have completed some stages before stopping.
+        if current_id != c.identity():
+            if key in session.anatomy_drafts:
+                raise ValueError("Resolve the active correction before refreshing")
+            c = PatientImagingCollection(c.root)
+            session.anatomy_collections[key] = c
+        args = {**args, "snapshotId": c.identity()}
     if args.get("snapshotId") != c.identity() or current_id != c.identity():
         raise ValueError("Anatomy changed; reload the patient")
     request.check()
+    if operation == "anatomyInspectIntake":
+        from .anatomy_intake import inspect_intake
+        return inspect_intake(args["kind"], args["paths"], check=request.check)
+    if operation in {"anatomyImportBatch", "anatomyPrepare"}:
+        if key in session.anatomy_drafts:
+            raise ValueError("Accept or reject the active correction first")
+        if operation == "anatomyImportBatch":
+            from .anatomy_intake import reviewed_intake
+            c = reviewed_intake(c, args, check=request.check, commit=request.begin_commit, progress=progress)
+            session.anatomy_collections[key] = c
+            return {"document": c.document}
+        from .anatomy_preparation import preparation_plan, prepare_anatomy
+        options = dict(indication=args.get("tumorIndication"),
+                       full_head_confirmed=args.get("fullHeadConfirmed") is True,
+                       include_dural_proxy=args.get("includeDuralProxy") is True)
+        if args.get("action") == "plan":
+            return {"document": c.document, "plan": preparation_plan(c, **options)}
+        if args.get("action") != "run" or not isinstance(args.get("planId"), str):
+            raise ValueError("Review the proposed preparation plan before running")
+        return prepare_anatomy(c, plan_id=args["planId"], cancelled=request.cancelled.is_set,
+                               progress=progress, retry_failed=args.get("retryFailed") is True, **options)
     if operation == "anatomySavePackage":
         if key in session.anatomy_drafts:
             raise ValueError("Accept or reject the correction before saving")
@@ -112,6 +146,11 @@ def dispatch(session, operation, args, request, progress):
             raise ValueError(
                 "Select up to 128 anatomical layers"
             )
+        tract_ids = {row["id"] for row in c.document.get("tractography", [])}
+        known_ids = {row["id"] for row in c.document["layers"]} | tract_ids
+        if not set(requested) <= known_ids:
+            raise ValueError("Unknown anatomical layer or tract bundle")
+        requested = [name for name in requested if name not in tract_ids]
         native = affine(reference["affine"])
         t = c.document["transforms"].get(reference["id"])
         preview_alignment = args.get("previewAlignment") is True
@@ -123,9 +162,22 @@ def dispatch(session, operation, args, request, progress):
             registered = True
         except ValueError:
             displayed, estimated, registered = native, False, False
+        source_displayed = displayed
         alignment_previews = [reference["id"]] if estimated else []
-        shape = tuple(reference["data"]["shape"])
-        cache_key = (key, c.identity(), reference["id"], reference["data"]["sha256"],
+        image_data = reference["data"]
+        preview = next((item for item in reference.get("preview_pyramid", [])
+                        if item.get("factor") == 2), None)
+        # MRI acceleration is reversible and never feeds source measurements.
+        # Native layer geometry is transformed into this displayed voxel frame.
+        if preview and np.prod(reference["data"]["shape"]) > 16_000_000:
+            relative = np.linalg.inv(native) @ affine(preview["affine"])
+            native = affine(preview["affine"])
+            displayed = displayed @ relative
+            image_data = preview["data"]
+        else:
+            preview = None
+        shape = tuple(image_data["shape"])
+        cache_key = (key, c.identity(), reference["id"], image_data["sha256"],
                      displayed.tobytes(), bool(args.get("original")), preview_alignment, vessel_scope)
         cacheable = not (session.anatomy_drafts.get(key) or key in session.anatomy_removal
                          or args.get("highlightComponents"))
@@ -157,12 +209,16 @@ def dispatch(session, operation, args, request, progress):
                 row["edits"] = [{"draft": True}]
                 row["revision"] += 1
             row_previews = []
-            if row["source_series"] == reference["id"]:
-                source = (
-                    affine(row["affine"]) if not registered else display_affine(c, row, preview=preview_alignment)[0]
-                )
-            else:
-                try:
+            source_grid_preview = False
+            try:
+                if row["source_series"] == reference["id"]:
+                    if registered:
+                        source = display_affine(c, row, preview=preview_alignment)[0]
+                    else:
+                        c.require_native_geometry(reference)
+                        c.require_native_geometry(row)
+                        source = affine(row["affine"])
+                else:
                     if not registered:
                         raise ValueError("selected image is unregistered")
                     if c.series(row["source_series"])["timepoint"] != reference["timepoint"]:
@@ -171,9 +227,12 @@ def dispatch(session, operation, args, request, progress):
                     if layer_estimated:
                         row_previews.append(row["source_series"])
                         alignment_previews.extend(row_previews)
-                except ValueError:
+            except ValueError:
+                source_grid_preview = preview_alignment and source_lattice_annotation_preview(c, row, reference)
+                if not source_grid_preview:
                     unavailable.append(name)
                     continue
+                source = source_displayed
             progress(
                 (i + 0.1) / max(1, len(requested)), f"Preparing native {row['label']}"
             )
@@ -194,13 +253,18 @@ def dispatch(session, operation, args, request, progress):
                 row["label_value"] = 1
                 row["edits"] = [{"removal_preview": True}]
             quality = layer_quality(c, row)
-            source_volume = float(c.mask(row).sum() * abs(np.linalg.det(affine(row["affine"])[:3, :3])))
+            source_volume = None if source_grid_preview else float(
+                c.mask(row).sum() * abs(np.linalg.det(affine(row["affine"])[:3, :3]))
+            )
+            if source_grid_preview:
+                message = "Annotation header omits spatial units. Preview on its supplied source grid; physical measurements unavailable."
+                quality = {**quality, "issues": [message, *quality["issues"]]}
             display_filter = None
             # Correction review always shows the complete editable source.
-            if (vessel_scope == "brain" and row["kind"] in {"vessels", "artery", "vein", "sinus"}
+            if (not source_grid_preview and vessel_scope == "brain" and row["kind"] in {"vessels", "artery", "vein", "sinus"}
                     and not draft and not args.get("highlightLayer")):
                 row, display_filter = brain_vessel_display(c, row)
-            if (vessel_scope in {"intracranial", "excluded"} and row["kind"] in {"vessels", "artery", "vein", "sinus"}
+            if (not source_grid_preview and vessel_scope in {"intracranial", "excluded"} and row["kind"] in {"vessels", "artery", "vein", "sinus"}
                     and not draft and not args.get("highlightLayer")):
                 from .anatomy_intracranial import intracranial_vessels
                 row, display_filter = intracranial_vessels(c, row, excluded=vessel_scope == "excluded", cancelled=request.cancelled.is_set)
@@ -220,18 +284,25 @@ def dispatch(session, operation, args, request, progress):
                 "sourceIdentity": quality["sourceIdentity"],
                 "qa": quality,
                 "surfaceDiagnostics": {"policy": str(geometry.get("policy_version", "legacy")),
-                    "kind": "tumor" if row["kind"] == "tumor" else "vessel" if row["kind"] in {"vessels", "artery", "vein", "sinus"} else "context",
+                    "kind": "tumor" if row["kind"] in {"tumor", "lesion-context"} else "vessel" if row["kind"] in {"vessels", "artery", "vein", "sinus"} else "context",
                     "maxDisplacementMm": float(geometry["max_displacement_mm"]),
                     "restoredComponents": int(geometry.get("restored_components", 0)),
                     "backedOffVertices": int(geometry.get("backed_off_vertices", 0)),
                     "fallbackReason": str(geometry.get("fallback_reason", "")),
+                    "cacheHit": bool(geometry["cache_hit"]),
+                    "preparationMs": float(geometry["preparation_ms"]),
+                    "triangles": int(len(geometry["indices"])),
+                    **({
+                        "maxComponentVolumeChangeFraction": float(geometry["max_component_volume_change_fraction"]),
+                        "volumeRestoredComponents": int(geometry["volume_restored_components"]),
+                    } if "max_component_volume_change_fraction" in geometry else {}),
                     "intersectionCheck": "source-restored" if bool(geometry.get("smoothing_rejected", False)) or str(geometry.get("fallback_reason", "")) else "passed"},
-                "label": row["label"],
+                "label": row["label"] + (" · Source-grid preview" if source_grid_preview else ""),
                 "color": row["color"],
                 "alignmentPreviews": row_previews,
                 "displayFilter": display_filter,
                 **({"labelSet": set_id, "labelValue": row["label_value"]} if shared else {"mask": transfer(mask, "uint8")}),
-                "volumeMm3": source_volume,
+                **({"volumeMm3": source_volume} if source_volume is not None else {}),
             }
             if True:  # Empty geometry is explicit; never rebuild it from a categorical placeholder.
                 transform = np.linalg.inv(displayed) @ source
@@ -278,13 +349,13 @@ def dispatch(session, operation, args, request, progress):
                 sid = tract["source_series"]
                 t = c.document["transforms"].get(sid)
                 if sid == reference["id"]:
+                    c.require_native_geometry(reference)
                     transform = np.linalg.inv(native)
-                elif (
-                    registered
-                    and t
-                    and t["status"] in {"reference", "reviewed", "source-provided"}
-                ):
-                    transform = np.linalg.inv(displayed) @ affine(t["matrix"])
+                elif registered and t:
+                    _, estimated_tract = display_affine(c, c.series(sid), preview=preview_alignment)
+                    transform = np.linalg.inv(displayed) @ c.registration_matrix(sid)
+                    if estimated_tract:
+                        alignment_previews.append(sid)
                 else:
                     continue
                 points = world(transform, c.array(tract["points_ras_mm"])).astype(
@@ -304,7 +375,7 @@ def dispatch(session, operation, args, request, progress):
         if cache["tracts"] is None:
             cache["tracts"] = tracts
         if cache["mri"] is None:
-            cache["mri"] = transfer(c.array(reference["data"]), "float32")
+            cache["mri"] = transfer(c.array(image_data), "float32")
         result = {
             "tractography": cache["tracts"],
             "caseId": c.document["patient_id"],
@@ -316,6 +387,7 @@ def dispatch(session, operation, args, request, progress):
             "compartments": layers,
             "labelSets": list(label_sets.values()),
             "modality": reference["modality"],
+            "displayPreview": None if preview is None else {"factor": 2, "meaning": "reversible source-image display preview; anatomical measurements retain native grids"},
             "unavailableLayers": unavailable,
             "registrationStatus": ("alignment preview" if alignment_previews else "patient frame")
             if registered else "independent source frame",
@@ -398,6 +470,29 @@ def dispatch(session, operation, args, request, progress):
     if operation == "anatomyPlan":
         if key in session.anatomy_drafts:
             raise ValueError("Commit or reject the correction before planning")
+        if args.get("action"):
+            from .anatomy_approaches import dispatch_plan, NativeRouteGeometry
+
+            if args["action"] in {"list", "selectTarget"}:
+                from .anatomy_planning import native_target_options
+                from .surgical_patient import surgical_environment_options
+
+                result = dispatch_plan(c, args, commit=request.begin_commit, check=request.check)
+                target_cache = getattr(session, "anatomy_plan_target_cache", None)
+                if target_cache is None or target_cache[:2] != (c.root, c.identity()):
+                    target_cache = (c.root, c.identity(), native_target_options(c, check=request.check),
+                                    surgical_environment_options(c, check=request.check))
+                    session.anatomy_plan_target_cache = target_cache
+                result["targetOptions"] = target_cache[2]
+                result["rehearsalOptions"] = target_cache[3]
+                return result
+            cache = getattr(session, "anatomy_plan_cache", None)
+            if cache is None or cache.snapshot.snapshot_id != c.identity() or cache.c.root != c.root:
+                cache = NativeRouteGeometry(PatientAnatomySnapshot.capture(c), check=request.check)
+                session.anatomy_plan_cache = cache
+            else:
+                cache.check = request.check
+            return dispatch_plan(c, args, geometry=cache, commit=request.begin_commit)
         from .anatomy_planning import route_clearance
 
         return route_clearance(
@@ -462,6 +557,13 @@ def dispatch(session, operation, args, request, progress):
         session.anatomy_collections[key] = c
         return {"document": c.document, "result": result}
     if operation == "anatomyRegister":
+        if args.get("action") == "ensure" and (
+            c.document.get("preparation_workflow") or c.document.get("migration_source")
+            or c.path("anatomy-preparation.json").is_file()
+        ):
+            # Prepare owns registration and its retry checkpoints. Source viewing
+            # revalidates stored transforms and can open an independent scan.
+            return {"document": c.document, "result": {"changed": False}}
         c = PatientImagingCollection(c.root, c.document)
         previous_view = read_view(c)
         from .anatomy_import import review_registration

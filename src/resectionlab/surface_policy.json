@@ -21,5 +21,14 @@
       "maximumMm": 1.0
     }
   },
-  "maxContextTriangles": 2000000
+  "maxContextTriangles": 2000000,
+  "native": {
+    "version": "native-bounded-display-v3",
+    "maxContextTriangles": 4500000,
+    "contextIterations": 30,
+    "contextPassBand": 0.065,
+    "contextVoxelAltitudes": 0.7,
+    "contextMaximumMm": 1.0,
+    "lesionComponentVolumeTolerance": 0.01
+  }
 }

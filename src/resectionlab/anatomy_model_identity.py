@@ -1,0 +1,43 @@
+"""Preserve model identity across audited non-inference source changes."""
+
+from hashlib import file_digest, sha256
+from pathlib import Path
+
+
+LEGACY_POC_LAUNCHER_SHA = "081620aca0fd0f4fe3b9d9ceda541686743392d454b6beb5134c00e45de83e0a"
+AUDITED_LAUNCHER_SHA = "4570f4cfb54254ab62c0aa105beb100ece36c6df5e7fd4adb864dcb5e7cf230a"
+AUDITED_SUPERVISOR_SHA = "f58360e611eaef4885f45346314aa563c9bff994cfa185888f44b28770b7a405"
+
+
+def _module_sha(name):
+    with Path(__file__).with_name(name).open("rb") as stream:
+        return file_digest(stream, "sha256").hexdigest()
+
+
+def poc_worker_identity(launcher_sha256):
+    if launcher_sha256 == LEGACY_POC_LAUNCHER_SHA:
+        return launcher_sha256
+    supervisor = _module_sha("poc_worker_supervision.py")
+    # The worker, preprocessing and request were unchanged across this pair.
+    # Any later change to either source must use a distinct cache identity.
+    if launcher_sha256 == AUDITED_LAUNCHER_SHA and supervisor == AUDITED_SUPERVISOR_SHA:
+        return LEGACY_POC_LAUNCHER_SHA
+    return sha256((launcher_sha256 + supervisor).encode("ascii")).hexdigest()
+
+
+# The model runtime is identical across this admission-only pair. Crop metadata
+# is backfilled separately, with its own key and without changing inferred arrays.
+LEGACY_ADAPTER_SHA = "580eb66da25c2001c2960bdc1606ed9b2e1fc9a2472eac1112f1c3005f1f1cd8"
+AUDITED_CROP_ADAPTER_SHA = "ea7076f62cf8c47dabb187e628c065c6f009a58a69bcc51721b5eb263c23c032"
+AUDITED_CROP_HELPER_SHA = "2d8cd7f8c64bfafe2822f0eb7cbbd07fede6e1f316bb93ca43dd80f123d55901"
+
+
+def preparation_asset_identities(files):
+    identities = dict(files)
+    if "poc_worker" in files:
+        identities["poc_worker"] = poc_worker_identity(files["poc_worker"])
+    if files.get("adapter") == AUDITED_CROP_ADAPTER_SHA:
+        crop = _module_sha("anatomy_tumor_coverage.py")
+        identities["adapter"] = (LEGACY_ADAPTER_SHA if crop == AUDITED_CROP_HELPER_SHA
+                                 else sha256((AUDITED_CROP_ADAPTER_SHA + crop).encode("ascii")).hexdigest())
+    return identities

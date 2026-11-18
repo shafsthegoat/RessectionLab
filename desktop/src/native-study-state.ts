@@ -1,34 +1,42 @@
 import type {Binding, NativeScanState, NativeViewState, VesselScope} from './native-anatomy-data';
 import type {ViewerWorkspaceSettings} from './viewer/workspaceSettings';
 
-export type AnatomyPresentation = 'segmentation'|'vascular';
+export type AnatomyPresentation = 'scan'|'segmentation'|'vascular';
+/** Only an acquired scalar source can be the initial Scan presentation. */
+export function defaultAnatomyPresentation(modality:string):AnatomyPresentation {
+  return /segmentation only|analytic signal|generated image signal|diagnostic/i.test(modality)?'segmentation':'scan';
+}
 /** Presentation derivatives only; all selected structures and source masks stay intact. */
 export function anatomyPresentation(settings:ViewerWorkspaceSettings,layers:Binding['document']['layers'],mode:AnatomyPresentation,modality:string):ViewerWorkspaceSettings {
-  const vascular=mode==='vascular',ct=/^\s*CT(?:A)?(?:\b|[-_])/i.test(modality);
+  if(mode==='scan'&&defaultAnatomyPresentation(modality)!=='scan')mode='segmentation';
+  const scan=mode==='scan',vascular=mode==='vascular',ct=/^\s*CT(?:A)?(?:\b|[-_])/i.test(modality);
   const layerOpacity={...settings.layerOpacity},layerColor={...settings.layerColor};
   for(const layer of layers){
     if(['vessels','vessel','artery','vein','sinus'].includes(layer.kind)){
-      layerColor[layer.id]='#ad4730';layerOpacity[layer.id]=vascular?1:.42;
-      if(['vein','sinus'].includes(layer.kind)){layerColor[layer.id]='#6188a8';layerOpacity[layer.id]=vascular?.65:.18;}
+      layerColor[layer.id]='#ad4730';layerOpacity[layer.id]=scan?.16:vascular?1:.42;
+      if(['vein','sinus'].includes(layer.kind)){layerColor[layer.id]='#6188a8';layerOpacity[layer.id]=scan?.08:vascular?.65:.18;}
     }else if(layer.kind==='tumor'){
-      layerColor[layer.id]='#65bfd3';layerOpacity[layer.id]=1;
+      layerColor[layer.id]='#65bfd3';layerOpacity[layer.id]=scan?.32:1;
     }else if(['bone','skull'].includes(layer.kind)){
-      layerColor[layer.id]='#ece2ca';layerOpacity[layer.id]=.035;
+      layerColor[layer.id]='#ece2ca';layerOpacity[layer.id]=scan?.015:.035;
     }else if(['brain','tissue','soft_tissue'].includes(layer.kind)){
       const brainRim=!vascular&&layer.kind==='brain';
-      layerColor[layer.id]=brainRim?'#b8a8b6':'#c8d0d5';layerOpacity[layer.id]=brainRim?.12:vascular?.035:.055;
-    }else if(layer.kind==='head-envelope')layerOpacity[layer.id]=.035;
+      layerColor[layer.id]=brainRim?'#b8a8b6':'#c8d0d5';layerOpacity[layer.id]=scan?.012:brainRim?.12:vascular?.035:.055;
+    }else if(layer.kind==='head-envelope')layerOpacity[layer.id]=scan?.008:.035;
+    else if(['brain-region','cerebellar-white-matter','cerebellar-cortex','brainstem'].includes(layer.kind))layerOpacity[layer.id]=scan?.035:vascular?.055:.42;
   }
-  return {...settings,presentation:mode,layout:'3d-focus',sliceOverlay:'contour',sliceFraming:{fit:'anatomy',zoom:1},contextStyle:'shell',smoothSurfaces:true,showPlane:false,
+  return {...settings,presentation:mode,layout:'3d-focus',sliceOverlay:'contour',sliceFraming:{fit:'anatomy',zoom:1},contextStyle:scan?'uniform':'shell',smoothSurfaces:scan?(settings.smoothSurfaces??false):true,showPlane:false,
     skullMode:'transparent',layerColor,layerOpacity,
-    volumeRendering:{enabled:true,preset:'auto',density:ct?(vascular?.14:.075):(vascular?.035:.025),shadows:true},
+    // Explicit presentation action only. Saved contrast, opacity and transfer
+    // choices are otherwise restored verbatim; source signal is never altered.
+    volumeRendering:{enabled:true,preset:'auto',density:scan?(ct?.26:.28):ct?(vascular?.14:.075):(vascular?.035:.025),shadows:true},
     clipping:settings.clipping?{...settings.clipping,enabled:false}:undefined,
     clipBox:settings.clipBox?{...settings.clipBox,enabled:false}:undefined,
     obliqueClip:settings.obliqueClip?{...settings.obliqueClip,enabled:false}:undefined};
 }
 
 export function studyTimepoint(b:Binding):string {
-  return b.document.study_timepoint??b.document.series[0]?.timepoint??'preoperative';
+  return b.document.study_timepoint??b.document.series[0]?.timepoint??'source-session-unknown';
 }
 export function studyLabel(value:string):string {
   return value==='postoperative'?'Post-op':value==='preoperative'?'Pre-op':value==='source-session-unknown'?'Unspecified':value;
@@ -47,7 +55,7 @@ export function sourceEvidenceLabel(source:{modality:string}|undefined,series:Re
 }
 /** Scan contrast/camera stays per scan; selected anatomy belongs to the study. */
 export function nextScanState(current:NativeScanState, saved:NativeScanState):NativeScanState {
-  return {...saved,visible:{...current.visible},settings:{...saved.settings,
+  return {...saved,cursor:current.cursor?[...current.cursor]:saved.cursor?[...saved.cursor]:null,visible:{...current.visible},settings:{...saved.settings,
     presentation:current.settings.presentation,sliceOverlay:current.settings.sliceOverlay,contextStyle:current.settings.contextStyle,
     skullMode:current.settings.skullMode,clipping:current.settings.clipping,clipBox:current.settings.clipBox,obliqueClip:current.settings.obliqueClip,
     layerColor:current.settings.layerColor,layerOpacity:current.settings.layerOpacity}};

@@ -70,13 +70,24 @@ async function startEngine() {
   await fs.mkdir(app.getPath('userData'), { recursive: true });
   await fs.access(config.executable || config.python);
   const createWorker = async ({prefixWorker} = {}) => {
-    let transferRoot=os.tmpdir();
-    if(process.env.RESSECTIONLAB_DATA_ROOT){
-      await new (require('./external-case-catalog.cjs').ExternalCaseCatalog)(process.env.RESSECTIONLAB_DATA_ROOT).load();
-      transferRoot=path.join(process.env.RESSECTIONLAB_DATA_ROOT,'staging','transfers');await fs.mkdir(transferRoot,{recursive:true});
+    const allocateTransferDir=async root=>{
+      const directory=await fs.mkdtemp(path.join(root,'ressectionlab-'));
+      try {await fs.chmod(directory,0o700);return directory;}
+      catch(error) {await fs.rm(directory,{recursive:true,force:true});throw error;}
+    };
+    let transferDir;
+    const external=caseLibrary.current.external;
+    if(external) {
+      try {
+        await external.verifiedRoot();
+        const staging=path.join(external.root,'staging'),transfers=path.join(staging,'transfers');
+        if(await fs.realpath(staging)!==staging)throw new Error('External staging directory is redirected.');
+        try {await fs.mkdir(transfers);} catch(error) {if(error.code!=='EEXIST')throw error;}
+        if(await fs.realpath(transfers)!==transfers)throw new Error('External transfer directory is redirected.');
+        transferDir=await allocateTransferDir(transfers);
+      } catch(error) {log('Using local engine transfers. '+error.message);}
     }
-    const transferDir = await fs.mkdtemp(path.join(transferRoot, 'ressectionlab-'));
-    await fs.chmod(transferDir, 0o700);
+    transferDir??=await allocateTransferDir(os.tmpdir());
     try { return new Sidecar({...config, transferDir, ...(prefixWorker ? {prefixWorker} : {})}); }
     catch (error) { await fs.rm(transferDir, {recursive:true, force:true}); throw error; }
   };
@@ -108,10 +119,15 @@ async function pick(title, extensions) {
 }
 
 function bindOperations() {
-  const openWorkspace = async filename => {
+  const openWorkspace = async selected => {
+    const filename=await fs.realpath(selected);
     if (!await rehearsalUnsaved.allowNavigation()) return null;
-    const native = path.basename(filename)==='patient-anatomy.json'||filename.endsWith('.rsworkspace');
-    const result=await engine.request(native?'anatomyOpen':'loadCase',{path:filename,...(filename.endsWith('.rsworkspace')?{workingRoot:path.join(app.getPath('userData'),'patient-studies')}:{})},300000);
+    const portable=filename.endsWith('.rsworkspace');
+    const native=path.basename(filename)==='patient-anatomy.json'||portable;
+    const readOnlyPackage=caseLibrary.isManagedNativePath(selected)||caseLibrary.isManagedNativePath(filename);
+    const result=await engine.request(native?'anatomyOpen':'loadCase',{path:filename,...(portable?{
+      workingRoot:path.join(app.getPath('userData'),'patient-studies'),...(readOnlyPackage?{readOnlyPackage:true}:{})
+    }:{})},300000);
     currentCasePath=filename;if(result?.caseHash)casePaths.set(result.caseHash,filename);await caseLibrary.remember(filename);return result;
   };
   handle('workspaceInstalled', args=>{args=plainArgs(args,['caseHash','caseId']);currentCaseHash=args.caseHash;currentCaseName=String(args.caseId||'research-case').replace(/[^a-zA-Z0-9._-]/g,'-');rehearsalUnsaved.installed();return true;});
@@ -138,7 +154,11 @@ function bindOperations() {
     if (!await rehearsalUnsaved.allowNavigation()) return null;
     plainArgs(args,['patientId','timepoint']);
     const selected=await dialog.showOpenDialog(window,{title:'Choose an empty patient collection directory',properties:['openDirectory','createDirectory']});
-    if(selected.canceled)return null;const result=await engine.request('anatomyCreate',{...args,path:selected.filePaths[0]});await caseLibrary.remember(path.join(selected.filePaths[0],'patient-anatomy.json'));return result;
+    if(selected.canceled)return null;
+    const result=await engine.request('anatomyCreate',{...args,path:selected.filePaths[0]});
+    currentCasePath=path.join(selected.filePaths[0],'patient-anatomy.json');
+    await caseLibrary.remember(currentCasePath);
+    return result;
   });
   handle('anatomyOpen', async () => {
     const filename = cliValue('--anatomy') || await pick('Open native patient collection', ['json']);
@@ -149,7 +169,7 @@ function bindOperations() {
     anatomyComponents: ['layerId'],
     anatomyGraph: ['layerId','point'],
     anatomyReconstruct: ['seriesId','model','synthsegVersion','brainLayerId'],
-    anatomyPlan: ['start','end','radiusMm'], anatomyRemoval: ['point','radiusMm','reset'],
+    anatomyPlan: ['action','approach','approachId','reviewApproachId','assess','start','end','radiusMm','patchRadiusMm','entryPatch','constraints','targetLayerId','candidateBinding','sensitivityConfig'], anatomyRemoval: ['point','radiusMm','reset'],
     anatomySection: ['seriesId','center','normal','spacingMm','movingId','checkerboard','layers'],
     anatomyView: ['seriesId','layers','original','highlightLayer','highlightComponents','reviewId','previewAlignment','vesselScope'],
     anatomyEdit: ['action','layerId','author','points','radiusMm','threshold','reviewId','componentIds'],
@@ -158,6 +178,61 @@ function bindOperations() {
   };
   for (const [operation, keys] of Object.entries(anatomyKeys))
     handle(operation, args => engine.request(operation, plainArgs(args, ['collectionId','snapshotId',...keys]), operation==='anatomyReconstruct'?1800000:300000));
+  const pendingIntake=new Map();
+  let intakeScope=null;
+  handle('anatomyPickIntake', async args => {
+    const {collectionId,snapshotId,kind}=plainArgs(args,['collectionId','snapshotId','kind']);
+    if(!['nifti','dicom','labels'].includes(kind))throw Error('Choose a supported imaging input');
+    const selected=await dialog.showOpenDialog(window,{
+      title:kind==='dicom'?'Add DICOM folders':kind==='labels'?'Add NIfTI segmentations':'Add NIfTI scans',
+      properties:[kind==='dicom'?'openDirectory':'openFile','multiSelections'],
+      ...(kind==='dicom'?{}:{filters:[{name:'NIfTI',extensions:['nii','gz']}]})
+    });
+    if(selected.canceled)return null;
+    if(selected.filePaths.length>128)throw Error('Choose at most 128 files or folders at a time');
+    const paths=[...new Set(await Promise.all(selected.filePaths.map(filename=>fs.realpath(filename))))];
+    const inspected=await engine.request('anatomyInspectIntake',{collectionId,snapshotId,kind,paths},300000);
+    const scope=JSON.stringify([collectionId,snapshotId]);
+    if(scope!==intakeScope){pendingIntake.clear();intakeScope=scope;}
+    if(inspected.items.length>256||pendingIntake.size+inspected.items.length>512)
+      throw Error('Choose a smaller set of scan series');
+    return {items:inspected.items.map(({path:filename,seriesUid,sourceReceipt,...item})=>{
+      if(!paths.includes(filename)||item.kind!==kind)throw Error('Intake inspection returned unselected imaging');
+      if(item.supported!==false&&(typeof sourceReceipt!=='string'||!/^[a-f0-9]{64}$/.test(sourceReceipt)))
+        throw Error('Intake could not verify the selected imaging source');
+      const existing=[...pendingIntake].find(([,row])=>row.path===filename&&row.kind===kind&&
+        row.seriesUid===seriesUid&&row.sourceReceipt===sourceReceipt);
+      const selectionId=existing?.[0]??randomUUID();
+      pendingIntake.set(selectionId,{path:filename,kind,seriesUid,sourceReceipt,supported:item.supported!==false});
+      return {...item,selectionId};
+    })};
+  });
+  handle('anatomyImportBatch', async args => {
+    const {collectionId,snapshotId,patientId,timepoint,items,confirmedAssociation,sourcePatientId}=plainArgs(args,[
+      'collectionId','snapshotId','patientId','timepoint','items','confirmedAssociation','sourcePatientId',
+    ]);
+    if(confirmedAssociation!==true)throw Error('Confirm the patient and study association');
+    if(intakeScope!==JSON.stringify([collectionId,snapshotId]))throw Error('Choose imaging files for the current study revision');
+    if(!Array.isArray(items)||!items.length||items.length>256)throw Error('Review the selected imaging series');
+    const selections=new Set();
+    const reviewed=items.map(item=>{
+      const {selectionId,kind,...fields}=plainArgs(item,['selectionId','kind','modality','seriesId','sourceInputIndex','roleMap','label']);
+      const selection=pendingIntake.get(selectionId);
+      if(!selection?.supported||kind!==selection.kind||selections.has(selectionId))throw Error('Review each supported file or series once');
+      selections.add(selectionId);
+      const {path:filename,seriesUid,sourceReceipt}=selection;
+      return {...fields,path:filename,kind,seriesUid,sourceReceipt};
+    });
+    const result=await engine.request('anatomyImportBatch',{
+      collectionId,snapshotId,patientId,timepoint,confirmedAssociation,sourcePatientId,items:reviewed,
+    },300000);
+    for(const id of selections)pendingIntake.delete(id);
+    return result;
+  });
+  handle('anatomyPrepare', args=>{
+    args=plainArgs(args,['collectionId','snapshotId','action','planId','retryFailed','tumorIndication','fullHeadConfirmed','includeDuralProxy','requestId']);
+    return engine.request('anatomyPrepare',args,args.action==='run'?3600000:300000);
+  });
   handle('anatomyImport', async args => {
     args=plainArgs(args,['collectionId','snapshotId','kind','modality','timepoint','patientId','seriesId','label','roleMap','sequenceBySeries']);
     const selected=await dialog.showOpenDialog(window,{title:'Import this patient’s imaging',properties:[args.kind==='dicom'?'openDirectory':'openFile']});
@@ -168,6 +243,9 @@ function bindOperations() {
     args=plainArgs(args,['collectionId','snapshotId']);
     const selected=await dialog.showSaveDialog(window,{title:'Save portable patient study',defaultPath:'Patient-study.rsworkspace',filters:[{name:'Patient study',extensions:['rsworkspace']}]});
     if(selected.canceled||!selected.filePath)return null;
+    const directory=await fs.realpath(path.dirname(selected.filePath));
+    if(caseLibrary.isManagedNativePath(selected.filePath)||caseLibrary.isManagedNativePath(path.join(directory,path.basename(selected.filePath))))
+      throw new Error('Choose a save location outside the published native study collection.');
     const result=await engine.request('anatomySavePackage',{...args,path:selected.filePath},300000);
     await caseLibrary.remember(selected.filePath);return result;
   });

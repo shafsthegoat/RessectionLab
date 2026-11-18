@@ -1,4 +1,4 @@
-"""Source-bound functional fields for explicit, uncalibrated research planning.
+"""Source-bound functional fields and replay evidence for research planning.
 
 Attaching this object is distinct from viewing a registered prior. Population
 fields remain population fields, including after engineering alignment checks.
@@ -8,6 +8,7 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 from dataclasses import dataclass, field
+from math import fsum
 from typing import Any
 
 import numpy as np
@@ -188,3 +189,118 @@ def population_prior_sensitivity(case: Any, *, uncertainty: WorldGeneratorConfig
         language_coverage=coverage, affine_ras_mm=affine, source_image_hash=array_digest(case.mri),
         case_anatomy_hash=anatomy_identity(case), uncertainty=uncertainty,
         source_records={name: item.to_manifest() for name, item in selected.items()})
+
+
+CONSEQUENCE_EVIDENCE_SCHEMA = "resectionlab.functional-consequence-evidence.v1"
+_CORE_STRUCTURES = ("motor-cortex", "corticospinal", "language-cortex")
+_OPTIONAL_LANGUAGE_STRUCTURES = ("language", "language-network", "language-tract")
+
+
+def _probe_records(state, probe, result):
+    return [row for row in state["observations"] if row.get("kind") == "mapping"
+            and row.get("probe") == probe and row.get("result") == result]
+
+
+def _native_probe_evidence(engine, baseline):
+    from .surgical_sequence_outcomes import _quantity
+
+    if "observations" not in engine.state or "observations" not in baseline.state:
+        return {"status": "unavailable", "reason": "Native probe observation ledger is unavailable."}
+
+    measurements = {}
+    for probe in ("cortical", "subcortical"):
+        supplied = _probe_records(engine.state, probe, "supplied_evidence")
+        prior = _probe_records(baseline.state, probe, "supplied_evidence")
+        measurements[probe] = {
+            "suppliedEvidenceRecords": _quantity(len(supplied), len(prior), "count"),
+            "unknownRecords": _quantity(len(_probe_records(engine.state, probe, "unknown")),
+                                         len(_probe_records(baseline.state, probe, "unknown")), "count"),
+            "suppliedSiteIds": sorted({site["id"] for row in supplied for site in row["evidence"]}),
+        }
+    return {"status": "native_probe_ledger", "probes": measurements,
+            "scope": "Recorded probe queries and supplied-site matches. Unmatched sites have unknown response."
+                     " Probe type identifies sampling location class only."}
+
+
+def functional_consequence_evidence(engine, baseline, *, direct_dimensions=None,
+                                    all_declared_neural=False) -> dict[str, Any]:
+    """Serialize source annotations and native ledger effects for a checked replay pair."""
+    from .surgical_procedure_policy import PROPERTY, direct_removal_dimensions, procedure_source_memberships
+    from .surgical_sequence_outcomes import _quantity, _unknown
+
+    scene = engine.scene
+    if baseline.scene.identity != scene.identity:
+        raise ValueError("Functional consequence evidence requires one replay source scene")
+    policy = scene.properties.get(PROPERTY)
+    declarations, memberships = {}, {}
+    if policy is None:
+        scene.require_cache_source()
+    else:
+        memberships = procedure_source_memberships(scene)
+        declarations = {name: row for name, row in policy["structures"].items() if row["kind"] == "neural"}
+    supplemental = {} if engine.protection is None else {
+        annotation.structure_id: annotation for annotation in engine.protection.annotations}
+    names = _CORE_STRUCTURES + tuple(name for name in _OPTIONAL_LANGUAGE_STRUCTURES
+                                    if name in declarations or name in supplemental)
+    if all_declared_neural:
+        names += tuple(sorted(declarations.keys() - set(names)))
+    if direct_dimensions is None and any(name in declarations for name in names):
+        direct_dimensions = direct_removal_dimensions(engine, baseline)
+
+    rows = {}
+    for name in names:
+        declaration, annotation = declarations.get(name), supplemental.get(name)
+        source = None if annotation is None else {
+            "kind": "protected_source_annotation", "sourceBinding": annotation.source_binding,
+            "provenance": annotation.provenance, "reviewStatus": annotation.review_status,
+            "membershipCellCount": len(annotation.cells), "coverageStatus": "undeclared"}
+        if declaration is None:
+            reason = "Explicit coverage for this structure is unavailable."
+            rows[name] = {"source": source, "removedMm3": _unknown(reason, "mm3"),
+                          "cutSourceMm3": _unknown(reason, "mm3"),
+                          "recordedContactCellSeconds": _unknown(reason, "cell*s")}
+            continue
+
+        cells = memberships["structure:" + name]
+        source = {
+            "kind": "generated_annotation" if declaration["reviewStatus"] == "generated-engineering" else "source_annotation",
+            "sourceBinding": policy["sourceBinding"], "evidenceSha256": declaration["evidenceSha256"],
+            "provenance": declaration["provenance"], "reviewStatus": declaration["reviewStatus"],
+            "coverageStatus": "declared_intracranial_annotation_domain",
+            "coverageHash": semantic_digest(declaration["coverageCells"]),
+            "membershipCellCount": len(cells),
+            **({"supplementalAnnotation": source} if source is not None and not cells.issuperset(annotation.cells) else {}),
+        }
+        if annotation is not None:
+            cells = cells.union(annotation.cells)
+        contacts = _unknown("Native source-indexed contact ledger is unavailable.", "cell*s")
+        if "contact" in engine.state and "contact" in baseline.state:
+            def contact_total(owner):
+                return fsum(seconds for cell, seconds in owner.state["contact"].items() if int(cell) in cells)
+
+            contacts = _quantity(contact_total(engine), contact_total(baseline), "cell*s", status="modeled_unvalidated")
+            contacts["meaning"] = "Cell-time accumulated in the native source-indexed retained-contact ledger."
+        cuts = _unknown("Native source-indexed cut and transection ledgers are unavailable.", "mm3")
+        if all(field in owner.state for owner in (engine, baseline) for field in ("cutEdges", "transectedEdges")):
+            cuts = {**direct_dimensions["structureCutSourceMm3"][name],
+                    "meaning": "Volume of unique annotated source cells incident to recorded native cut or transection edges."}
+        rows[name] = {"source": source,
+                      "removedMm3": dict(direct_dimensions["structureRemovedMm3"][name]),
+                      "cutSourceMm3": cuts, "recordedContactCellSeconds": contacts}
+
+    unavailable = {
+        "populationPrior": "No population prior encounter ledger is bound to this replay.",
+        "patientTractography": "No patient streamline encounter ledger is bound to this replay.",
+        "intraoperativeMapping": "No verified patient stimulation and task-response evidence is bound to this replay.",
+        "intraoperativeMonitoring": "No verified patient neuromonitoring evidence is bound to this replay.",
+        "observedClinicalOutcome": "No linked clinical functional assessments are bound to this replay.",
+        "fullToolContact": "Contact coverage for all instrument parts and mechanisms is unavailable.",
+    }
+    return {
+        "schema": CONSEQUENCE_EVIDENCE_SCHEMA, "sourceSceneId": scene.identity,
+        "structures": rows,
+        "evidence": {**{name: {"status": "unavailable", "reason": reason} for name, reason in unavailable.items()},
+                     "nativeProbeObservations": _native_probe_evidence(engine, baseline)},
+        "membershipAggregation": "A shared source cell contributes to each structure that contains it.",
+        "clinicalValidation": False,
+    }

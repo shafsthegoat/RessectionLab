@@ -95,3 +95,12 @@
 .sequential-episodes pre{max-width:100%;overflow:auto;white-space:pre-wrap;font-size:10px}
 .sequential-attempts ol{padding-left:18px}.sequential-attempts li{margin-bottom:10px}
 .sequential-attempts [data-request-status=rejected]{color:#f2d5a5}
+.planning-evidence{display:grid;gap:8px;margin-block:12px}
+.planning-evidence :is(h3,h4,p){margin:0}
+.planning-evidence-alternatives{display:grid;gap:7px}
+.planning-evidence-alternatives article,.planning-evidence-decision{display:grid;gap:5px;border:1px solid var(--border,#35505b);border-radius:7px;padding:9px}
+.planning-evidence-alternatives article[data-planning-alternative="harm-aware"]{border-color:#6bb7a7;background:#1b3536}
+.planning-evidence-decision[data-intent="stop_with_residual"]{border-color:#b99858}
+.planning-evidence button{justify-self:start}
+.planning-evidence pre,.approach-access-evidence pre{max-height:240px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;font-size:11px}
+.planning-evidence code{overflow-wrap:anywhere}

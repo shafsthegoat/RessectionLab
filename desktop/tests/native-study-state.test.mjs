@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {nextScanState,scanLabel,studyTimepoint,migrateSkullView,anatomyPresentation,sourceEvidenceLabel} from '../src/native-study-state.ts';
+import {nextScanState,scanLabel,studyTimepoint,migrateSkullView,anatomyPresentation,defaultAnatomyPresentation,sourceEvidenceLabel} from '../src/native-study-state.ts';
 import {checkedViewerSettings} from '../src/workspace-view-settings.ts';
 
 test('structural contrast retains study angiography availability and derived diffusion status',()=>{
@@ -11,7 +11,7 @@ test('structural contrast retains study angiography availability and derived dif
   assert.match(sourceEvidenceLabel(series[0],[series[0]]),/no acquired angiography in this study/);
 });
 
-test('scan switches retain shared anatomy and appearance while restoring scan-specific contrast',()=>{
+test('scan switches retain the physical cursor and anatomy while restoring scan-specific contrast',()=>{
   const current={cursor:[1,2,3],visible:{brain:true,tumor:true,vessels:false},settings:{contrast:2,contextStyle:'shell',sliceFraming:{fit:'anatomy',zoom:2},layerOpacity:{brain:.15},layerColor:{tumor:'#aa00ff'}}};
   const saved={cursor:[4,5,6],visible:{brain:false,tumor:false,vessels:true},settings:{contrast:4,sliceFraming:{fit:'image',zoom:.75},volumeRendering:{preset:'ct-bone'}}};
   const next=nextScanState(current,saved);
@@ -21,7 +21,8 @@ test('scan switches retain shared anatomy and appearance while restoring scan-sp
   assert.equal(next.settings.volumeRendering.preset,'ct-bone');
   assert.equal(next.settings.contextStyle,'shell');
   assert.deepEqual(next.settings.sliceFraming,{fit:'image',zoom:.75});
-  assert.deepEqual(next.cursor,saved.cursor);
+  assert.deepEqual(next.cursor,current.cursor);
+  next.cursor[0]=99;assert.deepEqual(current.cursor,[1,2,3]);assert.deepEqual(saved.cursor,[4,5,6]);
   next.visible.brain=false;
   assert.equal(current.visible.brain,true);
 });
@@ -80,6 +81,33 @@ test('presentation choices preserve source identities, selected anatomy, camera 
   assert.deepEqual({settings,layers},original);
 });
 
+test('Scan explicitly restores acquired signal and restrained overlays without overwriting stored settings',()=>{
+  const layers=[{id:'brain',kind:'brain'},{id:'cerebellum',kind:'cerebellar-cortex'},{id:'brainstem',kind:'brainstem'},{id:'review',kind:'review-region'},{id:'tumor',kind:'tumor'},{id:'bone',kind:'bone'}];
+  const saved={presentation:'segmentation',smoothSurfaces:false,volumeRendering:{enabled:false,density:.025,points:[[0,0,0,0,0],[1,1,1,1,.1]]},layerOpacity:{tumor:1}};
+  const original=structuredClone(saved);
+  for(const modality of ['T1CE','MRI','T2 FLAIR','CTA','CT','3D TOF MRA']){
+    assert.equal(defaultAnatomyPresentation(modality),'scan');
+    const view=anatomyPresentation(saved,layers,'scan',modality);
+    assert.equal(view.presentation,'scan');
+    assert.equal(view.volumeRendering.enabled,true);
+    assert.ok(view.volumeRendering.density>.2);
+    assert.equal(view.volumeRendering.points,undefined);
+    assert.equal(view.contextStyle,'uniform');
+    assert.equal(view.smoothSurfaces,false);
+    assert.ok(view.layerOpacity.cerebellum<.05);
+    assert.ok(view.layerOpacity.brainstem<.05);
+    assert.equal(view.layerOpacity.review,undefined,'Review evidence keeps its authored appearance');
+    assert.ok(view.layerOpacity.tumor>view.layerOpacity.brain);
+    assert.ok(view.layerOpacity.tumor<.5);
+    assert.equal(view.sliceOverlay,'contour');
+  }
+  for(const modality of ['segmentation only','analytic signal','generated image signal','DTI FA diagnostic']){
+    assert.equal(defaultAnatomyPresentation(modality),'segmentation');
+    assert.equal(anatomyPresentation(saved,layers,'scan',modality).presentation,'segmentation');
+  }
+  assert.deepEqual(saved,original);
+});
+
 test('saved context and physical slice framing reopen detached and reject malformed extents',()=>{
   const source={compartments:[],brainMask:null,metadata:{}};
   for(const fit of ['image','anatomy'])for(const zoom of [.5,1,4])for(const contextStyle of ['shell','uniform']){
@@ -92,4 +120,22 @@ test('saved context and physical slice framing reopen detached and reject malfor
   for(const sliceFraming of [null,[],{}, {fit:'brain',zoom:1},{fit:'image',zoom:true},{fit:'image',zoom:.49},{fit:'anatomy',zoom:4.01},{fit:'image',zoom:NaN},{fit:'image',zoom:1,alterSource:true}])
     assert.throws(()=>checkedViewerSettings(source,{sliceFraming}));
   for(const contextStyle of [null,{},[],'unknown'])assert.throws(()=>checkedViewerSettings(source,{contextStyle}));
+});
+
+test('a study without a current cursor initializes from the saved scan without aliasing it',()=>{
+  const saved={cursor:[4,5,6],visible:{},settings:{contrast:3}},current={cursor:null,visible:{},settings:{}};
+  const next=nextScanState(current,saved);assert.deepEqual(next.cursor,saved.cursor);next.cursor[0]=99;assert.deepEqual(saved.cursor,[4,5,6]);
+});
+
+test('body orientation guide saves per scan, accepts old settings and rejects non-boolean flags',()=>{
+  const source={compartments:[],brainMask:null,metadata:{}};
+  assert.equal(checkedViewerSettings(source,{}).showOrientationGuide,undefined);
+  for(const enabled of [true,false]){
+    const saved=checkedViewerSettings(source,JSON.parse(JSON.stringify({showOrientationGuide:enabled})));
+    assert.equal(saved.showOrientationGuide,enabled);
+    const current={cursor:null,visible:{},settings:{showOrientationGuide:!enabled}},scan={cursor:null,visible:{},settings:saved};
+    assert.equal(nextScanState(current,scan).settings.showOrientationGuide,enabled);
+    assert.equal(anatomyPresentation(saved,[],'segmentation','T1').showOrientationGuide,enabled);
+  }
+  for(const value of [null,0,1,'false',[],{}])assert.throws(()=>checkedViewerSettings(source,{showOrientationGuide:value}));
 });

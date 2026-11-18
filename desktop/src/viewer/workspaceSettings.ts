@@ -27,6 +27,7 @@ export function validMicroscopeSettings(value:unknown):value is MicroscopeSettin
 export interface ViewerClipping { axis: 'x'|'y'|'z'; value: number; enabled: boolean; flipped?: boolean }
 /** Display choices only. No setting changes source arrays, masks or registration. */
 export interface ViewerWorkspaceSettings {
+  showOrientationGuide?: boolean;
   smoothSurfaces?: boolean;
   skullMode?: 'exterior'|'transparent'|'cutaway';
   volumeRendering?: import('./volumeTransfer').VolumeRenderingSettings;
@@ -37,7 +38,7 @@ export interface ViewerWorkspaceSettings {
   sliceOverlay?: 'contour'|'fill';
   sliceFraming?: {fit:'image'|'anatomy';zoom:number};
   contextStyle?: 'shell'|'uniform';
-  presentation?: 'segmentation'|'vascular';
+  presentation?: 'scan'|'segmentation'|'vascular';
   layerOpacity?: Record<string, number>;
   layerColor?: Record<string, string>;
   camera?: ViewerCameraState | null;

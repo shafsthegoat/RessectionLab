@@ -259,18 +259,27 @@ def feature_matrix(observed, skills):
 
 
 def run_episode(task, method, tier, *, selector=None, stochastic=False, seed=0,
-        retain_engine=False, gradient_records=False, deadline=None):
+        retain_engine=False, gradient_records=False, deadline=None, initial_prepare_radius=None):
     training_admission(task)
+    initial_prepare = None
+    if initial_prepare_radius is not None:
+        matches = [i for i, skill in enumerate(task.skills)
+                   if skill.kind == 'prepare' and skill.radius == initial_prepare_radius]
+        if len(matches) != 1:
+            raise ValueError('Exactly one declared preparation for the requested initial radius is required')
+        initial_prepare = matches[0]
     reset_started=time.monotonic(); engine=task.initial_engine(); reset_seconds=time.monotonic()-reset_started
     ledger=OnlineLedger(tier,deadline); used=set(); history=[]; attempts=invalid=0; stopped=False
     selections=0; plan=None; search_attempts=[]; gradient=[]; timed_out=False; search_exhausted=False
     try:
-        if method=='search':
+        if method=='search' and initial_prepare is None:
             plan,search_attempts=constrained_skill_search(task,engine,used,ledger)
             search_exhausted=not plan
         for selection in range(task.config.max_skills):
             ledger.check(); selections+=1
-            if method=='greedy': index=greedy_skill(task,engine,used,ledger)
+            if selection == 0 and initial_prepare is not None:
+                index = initial_prepare
+            elif method=='greedy': index=greedy_skill(task,engine,used,ledger)
             elif method=='search':
                 # Lookahead bounds computation, not the physical episode.
                 # Replan over the remaining identical inventory when a checked
@@ -279,11 +288,14 @@ def run_episode(task, method, tier, *, selector=None, stochastic=False, seed=0,
                     plan,extra=constrained_skill_search(task,engine,used,ledger)
                     search_attempts.extend(extra);search_exhausted=not plan
                 index=plan.pop(0) if plan else next(i for i,s in enumerate(task.skills) if s.kind=='stop')
-            elif method=='learned':
+            elif method in ('learned', 'conditional'):
                 mask=_inventory(task,engine,used,ledger)
                 observed=observation(task,engine,attempts=attempts,invalid=invalid,selections=selection)
                 started=time.monotonic()
-                index, record=selector(feature_matrix(observed,task.skills),mask,stochastic)
+                if method == 'conditional':
+                    index, record = selector(observed, task.skills, mask), {}
+                else:
+                    index, record = selector(feature_matrix(observed,task.skills),mask,stochastic)
                 ledger.policy_seconds+=time.monotonic()-started
                 if gradient_records: gradient.append(record)
             else: raise ValueError('Unknown finite skill method')
@@ -316,6 +328,8 @@ def run_episode(task, method, tier, *, selector=None, stochastic=False, seed=0,
         startScope='supplied-post-access-continuation',earlierAccessCosts=None,
         wholeProcedureSuccess=False,finalStateId=engine.state_id,
         snapshot=engine.snapshot(),missingEvidence=outcome['missingEvidence'])
+    if initial_prepare is not None:
+        row['initialPreparationRadiusMm'] = initial_prepare_radius
     if retain_engine: row['_engine']=engine
     if gradient_records: row['_gradient']=gradient
     return row
@@ -361,6 +375,7 @@ def _verify_replay_core(task,row, *, deadline=None,counters):
         if skill['kind']=='stop' and skill['checkedStopAttempted'] and not adapter_stopped:
             counters['adapterStopRequests']+=1
             result=adapter.stop('Finite generated inventory exhausted');adapter_stopped=result[2] or result[3]
+            counters['adapterStopOutcome'] = result[4]['outcome']
     if native.snapshot()!=row['snapshot'] or native.state_id!=adapter.engine.state_id:
         raise ValueError('Final accepted state replay differs')
     stopped=bool(row['skillHistory'] and row['skillHistory'][-1]['kind']=='stop' and row['skillHistory'][-1]['status']=='accepted')
@@ -375,4 +390,5 @@ def _verify_replay_core(task,row, *, deadline=None,counters):
     if evaluate_procedure_sequence(native)!=evaluate_procedure_sequence(adapter.engine):
         raise ValueError('Complete accounting replay differs')
     return dict(verified=True,primitiveActions=compared,
-        wallSeconds=time.monotonic()-started,finalStateId=native.state_id,classification=expected['classification'])
+        wallSeconds=time.monotonic()-started,finalStateId=native.state_id,classification=expected['classification'],
+        adapterTerminationReason=adapter.termination_reason)

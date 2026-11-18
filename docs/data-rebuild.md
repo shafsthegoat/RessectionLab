@@ -1,5 +1,58 @@
 # RessectionLab data collection
 
+## Native study migration
+
+Use the private frozen inventory in the configured `testcases/` collection.
+These commands display dispositions, migrate eligible studies serially, and
+report the resulting counts. The data root must identify the mounted, marked HDD.
+
+```sh
+export RESSECTIONLAB_DATA_ROOT="/Volumes/shafrir/old coding projects/RessectionLabData"
+export RESSECTIONLAB_MODEL_ROOT="$RESSECTIONLAB_DATA_ROOT/cache/models"
+export RESSECTIONLAB_POC_OUTPUT_ROOT="$RESSECTIONLAB_DATA_ROOT/cache/poc-model-results"
+inventory=testcases/adaptive-anatomy-inventory-20261117-v1.json
+destination="$RESSECTIONLAB_DATA_ROOT/prepared/adaptive-anatomy-migration-20261117-v1"
+PYTHONPATH=src .venv/bin/python scripts/migrate_anatomy_library.py "$inventory"
+PYTHONPATH=src .venv/bin/python scripts/migrate_anatomy_library.py "$inventory" --run "$destination"
+PYTHONPATH=src .venv/bin/python scripts/migrate_anatomy_library.py "$inventory" --results "$destination" \
+  --ledger-output testcases/adaptive-anatomy-migration-20261117-v1-results.json
+```
+
+Repeat the run command to resume. Use `--only CASE_KEY` for a representative
+and `--retry-failed` to retry failed stages. Open the resulting
+`patient-anatomy.json` in Cases. Migration writes a private versioned study.
+After a verified SynthStrip MPS allocation failure, the same retry command
+offers one CPU attempt with a ten-minute timeout and an 8 GiB process-memory
+limit. Its checkpoint retains the original GPU failure and records the device.
+Catalog publication requires a separately admitted native release. EDEN
+healthy acquisitions and synthetic target options share one study per person.
+The joined results include every frozen row, its saved outcome, and any stage
+findings. The report links reasons to their exact inventory or receipt entries
+and records both SHA-256 digests. Running, cancelled, and unprocessed rows keep
+the report pending. A complete report can include failures and protected or
+retained studies. `--only` filters the printed counts. The joined export always
+includes the full inventory and can be regenerated from the same frozen inputs.
+When later source review changes an alignment, inspect the affected row's
+`migration.postmigration_review`. It identifies the reviewed working archive,
+the original snapshot it came from, and the checksummed decision. Open the
+linked working archive to see the corrected registration and saved comparison.
+
+For a hand-authored native study, use a plan with schema
+`resectionlab.local-standardization-plan.v2`. Its `cases` contain `id`,
+`patient_id`, `collection`, and a list of `series` with their source paths.
+Optional `layers` declare the source series, label value and its meaning.
+Optional `prepare_options` include `indication`, `full_head_confirmed`,
+and `include_dural_proxy`. Run the plan from the checkout.
+
+```sh
+PYTHONPATH=src .venv/bin/python scripts/standardize_case_library.py testcases/plan.json
+```
+
+Repeat the command to resume. A new plan filename targeting the same collection
+adds scans and preserves the earlier readiness receipt. Version 1 retains its
+explicit simulator-export workflow.
+
+
 The collection supports source inspection and explicitly scoped surgical-research
 controls. Acquired observations, supplied annotations, algorithmic estimates and
 synthetic components remain separate. Synthetic variants add no real people.

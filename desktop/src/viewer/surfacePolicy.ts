@@ -15,6 +15,10 @@ export interface SurfaceDiagnostics {
   fallbackReason?:string;
   intersectionCheck: 'passed' | 'source-restored';
   preparationMs?: number;
+  cacheHit?: boolean;
+  triangles?: number;
+  maxComponentVolumeChangeFraction?: number;
+  volumeRestoredComponents?: number;
 }
 /** Hann-windowed Chebyshev low-pass coefficients, with exact DC preservation.
  * The graph operator is the neighbour mean (spectrum [-1,1]); frequencies near

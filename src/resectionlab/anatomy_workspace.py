@@ -6,6 +6,7 @@ import tempfile
 import numpy as np
 from scipy import ndimage as ndi
 from .patient_anatomy import affine, world
+from .anatomy_planning import is_native_target
 
 
 def checked_view(collection, state):
@@ -18,7 +19,21 @@ def checked_view(collection, state):
     if 'vesselDisplayVersion' in state and (type(state['vesselDisplayVersion']) is not int or state['vesselDisplayVersion'] != 2):
         raise ValueError('Unsupported vessel display version')
     series = {s['id'] for s in collection.document['series']}
-    layers = {s['id'] for s in collection.document['layers']}
+    layers = {s['id'] for s in collection.document['layers']} | {s['id'] for s in collection.document.get('tractography', [])}
+    for key in ('selectedApproachId', 'selectedStructure'):
+        if state.get(key) is not None and (not isinstance(state[key], str) or len(state[key]) > 256):
+            raise ValueError('Invalid selected planning display object')
+    targets = {row['id'] for row in collection.document['layers'] if is_native_target(row)}
+    active_target = state.get('selectedPlanningTargetId')
+    if active_target is not None and (not isinstance(active_target, str) or active_target not in targets):
+        raise ValueError('Invalid selected planning target')
+    selected = state.get('selectedApproachIds', {})
+    # Per-target display preferences can outlive a retired evidence layer.
+    if (not isinstance(selected, dict) or len(selected) > 513 or
+            any(not isinstance(key, str) or len(key) > 256 or
+                (value is not None and (not isinstance(value, str) or len(value) > 256))
+                for key, value in selected.items())):
+        raise ValueError('Invalid saved target approach selections')
     if state.get('seriesId') not in series or not isinstance(state.get('states'), dict) or not set(state['states']) <= series:
         raise ValueError('View references an unknown scan')
     # Bound nesting/size and reject non-finite JSON before admitting display preferences.

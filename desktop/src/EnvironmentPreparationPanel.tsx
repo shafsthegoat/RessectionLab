@@ -1,39 +1,66 @@
 import {useState} from 'react';
-import type {Binding, Layer} from './native-anatomy-data';
+import type {Binding,EnvironmentOptions,EnvironmentRole} from './native-anatomy-data';
+import {rehearsalAvailability} from './NativeStudyEvidence';
+import './native-planning-presentation.css';
 
-const kinds:Record<string,string[]>={brain:['brain'],tumor:['tumor'],bone:['bone','skull'],vessels:['vessel','vessels','artery','vein']};
+const roles:EnvironmentRole[]=['brain','tumor','bone','vessels'];
+const roleNames:Record<EnvironmentRole,string>={brain:'Brain',tumor:'Tumor',bone:'Bone',vessels:'Vessels'};
 export interface EnvironmentPreparation {collectionId:string;snapshotId:string;layers:Record<string,string>;allowUnreviewedRegistration:boolean}
-export function EnvironmentPreparationPanel({binding,busy,onPrepare,onAnatomy}:{binding:Binding;busy:boolean;onPrepare:(options:EnvironmentPreparation)=>Promise<void>;onAnatomy:()=>void}) {
-  const candidates=(role:string)=>binding.document.layers.filter(layer=>kinds[role].includes(layer.kind));
-  const [layers,setLayers]=useState<Record<string,string>>(()=>Object.fromEntries(Object.keys(kinds).map(role=>[role,candidates(role)[0]?.id??''])));
+export function EnvironmentPreparationPanel({binding,options,busy,onPrepare,onAnatomy}:{
+  binding:Binding;options?:EnvironmentOptions;busy:boolean;onPrepare:(options:EnvironmentPreparation)=>Promise<void>;onAnatomy:()=>void;
+}) {
+  const [layers,setLayers]=useState<Record<string,string>>(()=>Object.fromEntries(roles.map(role=>[
+    role,options?.layers.find(layer=>layer.role===role&&layer.status==='ready')?.layerId??'',
+  ])));
   const [allow,setAllow]=useState(false),[preparing,setPreparing]=useState(false),[error,setError]=useState<string|null>(null);
-  const selected=Object.values(layers).filter(Boolean);
-  const needsReview=(series:string)=>{
-    const seen=new Set<string>();
-    let current:string|undefined=series;
-    while(current){
-      if(seen.has(current))return true;
-      seen.add(current);
-      const record:{status:string;parent_series?:string|null}|undefined=binding.document.transforms[current];
-      if(!record||!['reference','reviewed','source-provided'].includes(record.status))return true;
-      current=record.parent_series??undefined;
-    }
-    return false;
-  };
-  const unreviewed=binding.document.layers.filter(layer=>selected.includes(layer.id)&&needsReview(layer.source_series));
-  return <section className="surgical-panel" aria-label="Prepare standard rehearsal environment">
-    <span className="eyebrow">STANDARD RESEARCH ENVIRONMENT</span><h2>Prepare this patient</h2>
-    <p className="surgical-note">RAS+ millimeters · 1 mm simulation grid · V2 mechanics · two instruments. Source scans and segmentations stay unchanged.</p>
-    <p className="surgical-note">Use the supplied anatomy below. Missing structures remain unknown; preparing a case does not infer vessels or establish surgical safety.</p>
-    <fieldset className="surgical-controls" disabled={busy||preparing}>
-      {Object.keys(kinds).map(role=><label key={role}>{role}<select aria-label={`Environment ${role} layer`} value={layers[role]} onChange={e=>setLayers({...layers,[role]:e.target.value})}>
-        <option value="">Unknown / not supplied</option>{candidates(role).map((layer:Layer)=><option key={layer.id} value={layer.id}>{layer.label||layer.id} · {layer.review_status}</option>)}
-      </select></label>)}
-      <p>Reference scan: {binding.document.series.find(s=>s.id===binding.document.reference_series)?.label||binding.document.reference_series}. The displayed CT/MRI choice does not change the preparation grid.</p>
-      {!!unreviewed.length&&<p className="surgical-warning">Estimated alignment needs review for: {unreviewed.map(l=>l.label||l.id).join(', ')}.</p>}
-      <label><input aria-label="Allow estimated alignment for research" type="checkbox" checked={allow} onChange={e=>setAllow(e.target.checked)}/>Use estimated alignment for this research derivative. Review status stays unchanged.</label>
-      <button className="primary-button" disabled={!selected.length||(!allow&&unreviewed.length>0)} onClick={async()=>{setPreparing(true);setError(null);try{await onPrepare({collectionId:binding.collectionId,snapshotId:binding.document.snapshot_id,layers:Object.fromEntries(Object.entries(layers).filter(([,id])=>id)),allowUnreviewedRegistration:allow});}catch(e){setError(e instanceof Error?e.message:String(e));}finally{setPreparing(false);}}}>{preparing?'Preparing environment…':'Prepare standard environment'}</button>
+  const selected=options?.layers.filter(layer=>layers[layer.role]===layer.layerId)??[];
+  const unavailable=options?.layers.filter(layer=>layer.status==='unavailable')??[];
+  const unreviewed=selected.filter(layer=>layer.status==='estimated_alignment');
+  const label=(id:string)=>binding.document.layers.find(layer=>layer.id===id)?.label??id;
+  const canPrepare=!!options&&!options.referenceIssue&&selected.length>0&&
+    selected.every(layer=>layer.status==='ready'||layer.status==='estimated_alignment'&&allow);
+  const missing=roles.filter(role=>!selected.some(layer=>layer.role===role));
+  const alignmentRequired=unreviewed.length>0&&!allow;
+  const readiness=canPrepare?'ready':options&&!options.referenceIssue&&alignmentRequired?'review':'unavailable';
+  const status=canPrepare?'Ready to prepare':!options||options.referenceIssue?'Preparation unavailable':alignmentRequired?'Alignment choice required':'Select source anatomy';
+  return <section className="surgical-panel environment-preparation" aria-label="Prepare standard rehearsal environment" aria-busy={preparing}>
+    <h2>Limited research rehearsal</h2>
+    <div className="environment-preparation-status" data-readiness={readiness} role="status">
+      <strong>{preparing?'Preparing environment…':status}</strong>
+      <p className="surgical-note">{rehearsalAvailability(options)}</p>
+    </div>
+    <fieldset className="surgical-controls environment-preparation-controls" disabled={busy||preparing}>
+      <legend>Source anatomy <span>{roles.length-missing.length} / {roles.length} supplied</span></legend>
+      <div className="environment-layer-list">{roles.map(role=>{
+        const source=selected.find(layer=>layer.role===role);
+        return <label className="environment-layer-row" data-layer-status={source?.status??'unknown'} key={role}>
+          <span className="environment-layer-role">{roleNames[role]}<small>{source?.status==='ready'?'Ready':source?'Estimated':'Unknown'}</small></span>
+          <select aria-label={'Environment '+role+' layer'} value={layers[role]} onChange={e=>setLayers({...layers,[role]:e.target.value})}>
+            <option value="">Unknown / not supplied</option>{options?.layers.filter(layer=>layer.role===role&&layer.status!=='unavailable').map(layer=>
+              <option key={layer.layerId} value={layer.layerId}>{label(layer.layerId)}{layer.status==='estimated_alignment'?' · estimated alignment':''}</option>)}
+          </select>
+        </label>;
+      })}</div>
+      {missing.length>0&&<p className="environment-unassessed">{missing.map(role=>roleNames[role]).join(', ')} · not supplied and unassessed.</p>}
+      {!!unavailable.length&&<details className="environment-excluded"><summary>Excluded layers · {unavailable.length}</summary>{unavailable.map(layer=><p key={layer.layerId}>{label(layer.layerId)} · {layer.reason}</p>)}</details>}
+      {unreviewed.length>0&&<div className="environment-alignment-choice">
+        <p className="surgical-warning">Estimated alignment for {unreviewed.map(layer=>label(layer.layerId)).join(', ')}.</p>
+        <label><input aria-label="Allow estimated alignment for research" type="checkbox" checked={allow} onChange={e=>setAllow(e.target.checked)}/><span>Use estimated alignment for this research derivative.</span></label>
+      </div>}
+      <div className="environment-preparation-actions"><button className="primary-button" disabled={!canPrepare} onClick={async()=>{
+        setPreparing(true);setError(null);
+        try{
+          await onPrepare({collectionId:binding.collectionId,snapshotId:binding.document.snapshot_id,
+            layers:Object.fromEntries(selected.map(layer=>[layer.role,layer.layerId])),allowUnreviewedRegistration:allow});
+        }catch(e){setError(e instanceof Error?e.message:String(e));}
+        finally{setPreparing(false);}
+      }}>{preparing?'Preparing environment…':'Prepare standard environment'}</button>
       <button onClick={onAnatomy}>Review anatomy and alignment</button>
-    </fieldset>{error&&<p role="alert" className="surgical-error">{error}</p>}
+      </div>
+    </fieldset>
+    {error&&<div role="alert" className="surgical-error environment-preparation-error"><strong>Preparation failed</strong><p>{error}</p></div>}
+    <details className="environment-preparation-method"><summary>Preparation checks & limitations</summary>
+      <p className="surgical-note">The derivative uses a 1 mm research grid and V2 mechanics. Unavailable anatomy remains unassessed. Preparation checks occupied labels, source fixity and material overlap.</p>
+    </details>
   </section>;
 }

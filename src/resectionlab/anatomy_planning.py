@@ -1,12 +1,161 @@
-"""Snapshot-to-existing-planner adapter. Context is never a resection target."""
+"""Snapshot-to-existing-planner adapter and native geometric target options."""
 
-from pathlib import Path
 import numpy as np
-from scipy.spatial import cKDTree
 from .core import CaseData, SourceRef, array_digest
-from .critical_evidence import CriticalStructureEvidence, resolve_critical_evidence
+from .critical_evidence import CriticalStructureEvidence
 from .data_policy import ANATOMY_PRETRAINED_POLICY
-from .patient_anatomy import world, affine, digest, file_hash
+from .anatomy_evidence import inference_bounds, is_dural_proxy
+from .patient_anatomy import world, digest, file_hash
+
+
+LESION_CANDIDATE_KINDS = {
+    "tumor", "lesion", "tumor-target", "lesion-target", "synthetic-target",
+    "enhancing-lesion", "nonenhancing-lesion", "nonenhancing-abnormality",
+    "edema", "edema-like-signal",
+}
+
+
+def is_native_target(row):
+    if is_dural_proxy(row):
+        return False
+    return row["role"] == "target" or (
+        row["role"] == "context" and row["kind"] in LESION_CANDIDATE_KINDS
+        and row.get("provenance", {}).get("planning_target_candidate") is not False
+    )
+
+
+def native_target_binding(collection, row):
+    """Bind a selection to evidence content, independently of display edits."""
+    source = collection.series(row["source_series"])
+    reference = collection.series(collection.document["reference_series"])
+    transforms = collection.document["transforms"]
+    chain, sid = {}, source["id"]
+    while sid:
+        if sid in chain or sid not in transforms:
+            raise ValueError("Incomplete target registration chain")
+        transform = transforms[sid]
+        if transform["status"] not in {"reference", "reviewed", "source-provided"}:
+            raise ValueError(f"Registration for {sid} needs review")
+        anchor = collection.series(sid)
+        chain[sid] = {"transform": transform, "sourceSha256": anchor["original"]["sha256"]}
+        sid = transform.get("parent_series")
+    collection.patient_affine(row)
+    bounds = inference_bounds(row)
+    layer = {key: row[key] for key in (
+        "id", "label", "kind", "role", "revision", "review_status", "provenance", "coverage",
+        "affine", "data", "label_value", "probability", "score_meaning", "ontology", "label_ontology",
+    ) if key in row}
+    if bounds is not None:
+        layer["inference_bounds_voxel_inclusive"] = bounds
+    return digest({
+        "patient": collection.document["patient_id"], "layer": layer, "transforms": chain,
+        "source": {key: source[key] for key in ("id", "timepoint", "original", "data", "affine")},
+        "reference": {key: reference[key] for key in ("id", "timepoint", "original", "data", "affine")},
+    })
+
+
+def _inside_fields(points, fields):
+    supported = np.ones(np.asarray(points).shape[:-1], dtype=bool)
+    for inverse, low, high in fields:
+        voxel = world(inverse, points)
+        supported &= np.all((voxel >= np.asarray(low) - .5) & (voxel < np.asarray(high) + .5), axis=-1)
+    return supported
+
+
+def _target_focus(data, label_value, transform, fields, check):
+    """Find a supported labelled voxel centre near the physical label centroid."""
+    def labelled_centers():
+        slab = max(1, 131072 // np.prod(data.shape[1:]))
+        for start in range(0, data.shape[0], slab):
+            check()
+            indices = np.argwhere(data[start:start + slab] == label_value)
+            indices[:, 0] += start
+            if len(indices):
+                yield world(transform, indices)
+
+    total, count, labelled = np.zeros(3), 0, 0
+    for points in labelled_centers():
+        labelled += len(points)
+        points = points[_inside_fields(points, fields)]
+        total += points.sum(axis=0)
+        count += len(points)
+    if not labelled:
+        raise ValueError("Empty target label")
+    if not count:
+        raise ValueError("No labelled voxel centre inside the acquisition, reference and inference fields")
+    centroid = total / count
+    nearest, distance = None, float("inf")
+    for points in labelled_centers():
+        points = points[_inside_fields(points, fields)]
+        if not len(points):
+            continue
+        distances = np.sum((points - centroid) ** 2, axis=1)
+        index = int(distances.argmin())
+        if distances[index] < distance:
+            nearest, distance = points[index], distances[index]
+    return nearest.tolist()
+
+
+def native_target_options(collection, *, layer_id=None, check=lambda: None):
+    """Source-bound target choices independent of display or planner caches."""
+    rows = [row for row in collection.document["layers"] if is_native_target(row)]
+    if not rows:
+        return []
+    prepared_targets = [row["id"] for row in rows if row["role"] == "target"]
+    display = collection.document.get("display", {})
+    hints = display.get("planning_targets", {})
+    reference = collection.series(collection.document["reference_series"])
+
+    def point(value):
+        if isinstance(value, list) and len(value) == 3 and all(
+            type(coordinate) in (int, float) and np.isfinite(coordinate) for coordinate in value
+        ):
+            return value
+        return None
+
+    result = []
+    for row in rows:
+        if layer_id is not None and row["id"] != layer_id:
+            continue
+        check()
+        key = row["id"]
+        provenance = row.get("provenance", {})
+        origin = ("Synthetic target" if row["kind"] == "synthetic-target" or provenance.get("kind") == "simulated" else
+                  "Model estimate" if provenance.get("model") else
+                  "Supplied annotation" if provenance.get("source") else "Anatomy layer")
+        option = {"layerId": key, "label": row["label"], "target": None, "kind": row["kind"],
+                  "origin": origin, "provenance": provenance.get("kind"), "model": provenance.get("model"),
+                  "sourceSeries": row["source_series"], "layerRevision": row.get("revision", 0),
+                  "labelValue": row["label_value"], "reviewStatus": row.get("review_status", "unreviewed"),
+                  "coverageMeaning": row.get("coverage")}
+        hint = hints.get(key) if isinstance(hints, dict) else None
+        hint = hint if isinstance(hint, dict) else display if prepared_targets == [key] else {}
+        try:
+            binding = native_target_binding(collection, row)
+            transform = collection.patient_affine(row)
+            data = collection.array(row["data"])
+            source = collection.series(row["source_series"])
+            fields = [(np.linalg.inv(collection.patient_affine(series)), (0, 0, 0), np.asarray(series["data"]["shape"]) - 1)
+                      for series in (source, reference)]
+            if (bounds := inference_bounds(row)) is not None:
+                fields.append((np.linalg.inv(transform), *bounds))
+            focus = point(hint.get("cursor_ras_mm"))
+            if focus is not None:
+                index = np.floor(world(np.linalg.inv(transform), focus) + .5)
+                if (np.all((index >= 0) & (index < data.shape))
+                        and data[tuple(index.astype(int))] == row["label_value"] and _inside_fields(focus, fields)):
+                    option.update(target=focus, focusMeaning="Prepared point inside the target label")
+            if option["target"] is None:
+                focus = _target_focus(data, row["label_value"], transform, fields, check)
+                option.update(target=focus, focusMeaning="Labelled voxel centre nearest the physical label centroid")
+            entry = point(hint.get("entry_ras_mm"))
+            if entry is not None and np.linalg.norm(np.asarray(entry) - option["target"]) > 1e-6:
+                option["entry"] = entry
+            option["candidateBinding"] = binding
+        except (ValueError, OSError, StopIteration) as error:
+            option["reason"] = str(error) or "Target source series is unavailable"
+        result.append(option)
+    return result
 
 
 def planning_case(snapshot, *, removed=None):
@@ -129,55 +278,29 @@ def planning_case(snapshot, *, removed=None):
 
 
 def route_clearance(snapshot, start, end, radius_mm=1.0):
-    """Conservative voxel-cell capsule query against the canonical critical resolver."""
-    if (
-        not np.isfinite([*start, *end, radius_mm]).all()
-        or np.asarray(start).shape != (3,)
-        or np.asarray(end).shape != (3,)
-        or not 0 < radius_mm <= 50
-    ):
-        raise ValueError(
-            "A finite physical route and positive radius <=50 mm are required"
-        )
-    case = planning_case(snapshot)
-    constraints = resolve_critical_evidence(case)
-    a = case.affine
-    spacing = np.linalg.norm(a[:3, :3], axis=0)
-    length = np.linalg.norm(np.asarray(end) - start)
-    if length > 1000:
-        raise ValueError("Route exceeds bounded patient workspace")
-    count = max(2, int(np.ceil(length / (spacing.min() * 0.25))) + 1)
-    points = np.linspace(start, end, count)
-    step = length / (count - 1)
-    results = {}
-    for name, mask in constraints.masks.items():
-        if mask is None:
-            results[name] = {"available": False}
+    """Native inspection independent of simulator admission, with whole-cell bounds."""
+    from .anatomy_approaches import NativeRouteGeometry, VASCULAR_KINDS
+
+    measured = NativeRouteGeometry(snapshot).measure(start, end, radius_mm)
+    results = {name: {"available": False} for name in ("vessels", "motor", "language")}
+    for item in measured["structures"]:
+        name = "vessels" if item["kind"] in VASCULAR_KINDS else item["kind"]
+        if not item["available"]:
+            results.setdefault(name, {"available": False})
             continue
-        indices = np.argwhere(mask)
-        if not len(indices):
-            results[name] = {"available": False}
-            continue
-        distance = cKDTree(world(a, indices)).query(points)[0]
-        # Circumscribed cell radius plus half sample step; never treats a thin
-        # obstacle as safe merely because a centreline sample missed its cell.
-        cell_radius = 0.5 * sum(np.linalg.norm(a[:3, i]) for i in range(3))
-        clearance = float(distance.min() - radius_mm - cell_radius - step * 0.5)
-        results[name] = {
-            "available": True,
-            "clearance_lower_bound_mm": clearance,
-            "intersects_or_unresolved": clearance <= 0,
-        }
-    voxel = world(np.linalg.inv(a), points)
-    covered = bool(
-        np.all(voxel >= -0.5) and np.all(voxel < np.array(case.mri.shape) - 0.5)
-    )
+        previous = results.get(name, {})
+        bound = item["clearanceLowerBoundMm"]
+        if previous.get("available"):
+            bound = min(bound, previous["clearance_lower_bound_mm"])
+        results[name] = {"available": True, "clearance_lower_bound_mm": bound,
+                         "intersects_or_unresolved": item["intersectsOrUnresolved"] or previous.get("intersects_or_unresolved", False)}
     return {
         "snapshot_id": snapshot.snapshot_id,
-        "planning_hash": case.planning_hash,
+        "planning_hash": digest({"snapshot": snapshot.snapshot_id, "geometry": measured["geometryVersion"]}),
         "constraints": results,
-        "within_source_image": covered,
-        "missing": list(case.unknowns),
+        "within_source_image": measured["coverage"]["withinReferenceEnvelope"],
+        "missing": measured["unknowns"],
+        "measurements": measured,
         "clinical_clearance": False,
         "meaning": "conservative geometric capsule test; unlabelled anatomy remains unknown",
     }

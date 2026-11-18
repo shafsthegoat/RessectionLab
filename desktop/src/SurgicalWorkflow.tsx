@@ -11,6 +11,7 @@ import {preferredWorkflowPlanner,workflowPlannerOptions,workflowReportCurrent} f
 import type {SurgicalWorkflowPlanner,SurgicalWorkflowStage} from './surgical-workflow-data';
 import {StagedStrategiesPanel} from './StagedStrategiesPanel';
 import {stagedStrategyDisplay} from './staged-strategy-data';
+import {PlanningEvidencePanel} from './PlanningEvidencePanel';
 
 const stages:Array<{id:SurgicalWorkflowStage;label:string}>=[{id:'case',label:'Case'},{id:'plan',label:'Plan'},{id:'compare',label:'Compare'},{id:'rehearse',label:'Rehearse/edit'}];
 const labels:Record<SurgicalWorkflowPlanner,string>={cranial:'Opening, preparation, target work and exit',staged:'Bounded staged source sequence · partial anatomy',preparation:'Preparation + complete two-tool sequence',strategy:'Two-tool sequence in existing exposure',approach:'Inactive approach only · no treatment'};
@@ -33,6 +34,7 @@ export function SurgicalWorkflow({c,stage,onStage,pause,cursor,onCursor,artifact
   return <section className="surgical-workflow" aria-label="Case planning workflow" data-workflow-stage={stage} data-workflow-planner={planner??'unavailable'}>
     <nav aria-label="Surgical workflow stages">{stages.map((item,index)=><button key={item.id} aria-label={`${item.label} stage`} aria-current={stage===item.id?'step':undefined} onClick={()=>{pause();onStage(item.id);}}><span>{index+1}</span>{item.label}</button>)}</nav>
     <p className="surgical-note workflow-identity">{qualification?.sourceEvidence.patientId??v.scene.source?.caseId??'Current case'} · branch {r?.branchId} · action {r?.position??0}</p>
+    {(stage==='compare'||stage==='rehearse')&&<PlanningEvidencePanel c={c} pause={pause}/>}
     {(stage==='compare'||stage==='rehearse')&&cranialExplanation&&<p className="surgical-note" aria-label="Canonical cranial decision">{cranialExplanation}</p>}
     <section hidden={stage!=='case'} aria-label="Case anatomy and evidence"><h3>Review this case</h3>
       <p>Inspect source planes and 3D anatomy in the linked views before planning.</p>
@@ -47,7 +49,7 @@ export function SurgicalWorkflow({c,stage,onStage,pause,cursor,onCursor,artifact
       {options.length>1&&<label>Supported task<select aria-label="Supported planning task" disabled={c.pending||!!c.preview} value={planner??''} onChange={event=>{pause();c.clearPreview();setRequested(event.target.value as SurgicalWorkflowPlanner);onStage('plan');}}>{options.map(option=><option key={option} value={option}>{labels[option]}</option>)}</select></label>}
       {planner&&<p className="surgical-note">{labels[planner]}. {planner==='cranial'?'Compare complete native sequences across source-bound opening roots. Missing qualification blocks generation; bone clearance alone never completes the target task.':planner==='approach'?'Checks inactive placement and withdrawal; target removal is outside this task.':planner==='staged'?'Generate from an eligible intact paired source, compare complete recorded outcomes, then open a saved native branch for rehearsal. Playback does not recalculate a plan.':'Generate a bounded comparison, inspect complete costs, then preview and install a checked branch.'}</p>}
       {!!report&&!current&&<p role="status" className="surgical-warning">Saved comparison · historical checkpoint. Anatomy, tools, accepted actions or constraints may have changed. Open its saved checkpoint below or return to Plan and regenerate.</p>}
-      {!planner&&<p role="status">No checked planning task is available at this checkpoint. Inspect source qualification or verify the saved replay. Rehearse/edit retains recorded playback and supported manual actions.</p>}
+      {!planner&&!r?.planningEvidence&&<p role="status">No checked planning task is available at this checkpoint. Inspect source qualification or verify the saved replay. Rehearse/edit retains recorded playback and supported manual actions.</p>}
     </div>
     <SequentialEpisodePanel c={c} artifact={artifact} visible={stage==='compare'||stage==='rehearse'} pause={pause} play={playRecorded} onInspect={()=>onStage('rehearse')} onCursor={onCursor}/>
     {planner==='cranial'&&<CranialStrategiesPanel {...presentation} play={playRecorded}/>}

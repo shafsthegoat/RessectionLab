@@ -235,13 +235,17 @@ test('graphics retry uses the cached recovery extension after the lost context s
   r.retryGraphics();assert.equal(restored,1);assert.equal(lookups,0);assert.equal(ready,0);
   r.renderer={getContext:()=>({isContextLost:()=>false})};r.retryGraphics();assert.equal(ready,1);
 });
-test('source-plane picking follows its axis clip while extra box/oblique clips apply to mesh hits',()=>{
+test('source-plane picking follows visible box, oblique and primary cuts',()=>{
   const r=Object.create(VolumeRenderer.prototype),plane=new THREE.Mesh(),point=new THREE.Vector3(1,1,1);
   plane.material={uniforms:{uWorldToVoxel:{value:new THREE.Matrix4()}}};plane.visible=true;
   Object.assign(r,{panes:{anatomy:{getBoundingClientRect:()=>({left:0,top:0,width:100,height:100})}},camera:{},sourcePlane:plane,anatomy:{visible:false},surfaces:new Map(),surfaceGeometry:new Map(),replayGroup:{children:[]},
     volume:{shape:[2,2,2],mri:new Float32Array(8).fill(1)},clipPlane:null,extraClipPlanes:[new THREE.Plane(new THREE.Vector3(1,0,0),-2)],
     pickRay:{setFromCamera(){},intersectObjects(){return [{object:plane,point}];}}});
-  assert.deepEqual(r.pick(50,50),[1,1,1]);r.clipPlane=new THREE.Plane(new THREE.Vector3(1,0,0),-2);assert.equal(r.pick(50,50),null);
+  assert.equal(r.pick(50,50),null);
+  r.extraClipPlanes[0].constant=0;
+  assert.deepEqual(r.pick(50,50),[1,1,1]);
+  r.clipPlane=new THREE.Plane(new THREE.Vector3(1,0,0),-2);
+  assert.equal(r.pick(50,50),null);
 });
 test('picking skips source-plane pixels discarded by the MRI shader and hidden zero-opacity surfaces',()=>{
   const r=Object.create(VolumeRenderer.prototype),plane=new THREE.Mesh(),source=new THREE.BufferGeometry(),mesh=new THREE.Mesh(source,new THREE.MeshBasicMaterial({opacity:1})),hidden=new THREE.Mesh(source,new THREE.MeshBasicMaterial({opacity:0}));

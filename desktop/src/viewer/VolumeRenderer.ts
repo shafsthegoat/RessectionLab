@@ -19,6 +19,7 @@ import type {IncrementalSurfaceRequest} from './incrementalSurface';
 import {scanFitPoints} from './scanCameraFit';
 import {mprView,sourceSignalBounds} from './mprFraming';
 import {applySourceContextMaterial} from './sourceContextMaterial';
+import {installNativeContextLighting,setNativeContextLighting} from './nativeContextLighting';
 import {displaySurfaceNormals} from './displaySurfaceNormals';
 import {applyVesselDepthMaterial} from './anatomySurfaceMaterial';
 import {microscopeFov} from './microscope';
@@ -53,6 +54,7 @@ import type {
   ViewerInspectionTool,
 } from "./contracts";
 import { InstrumentDisplayState } from "./inspectionTool";
+import {tractColor,tractPreview} from './tractDisplay';
 import type { InspectionToolDisplay, InstrumentCapsuleDisplay } from "./inspectionTool";
 import { checkedPassiveRecordedTools, checkedRecordedEpisodeBounds, recordedToolDisplay } from "./recordedTool";
 import type { RecordedEpisodeBounds, RecordedToolDisplay } from "./recordedTool";
@@ -65,6 +67,7 @@ import { surfaceCameraDistance } from './surfaceCameraFit';
 import { ScanVolumeRenderer } from './ScanVolumeRenderer';
 import type { VolumeRenderingSettings } from './volumeTransfer';
 import { paneViewport } from "./layout";
+import {OrientationGuide} from './orientationGuide';
 import {
   PRIOR_COLORS,
   priorSamplingTolerance,
@@ -82,7 +85,7 @@ import {
   routeAppearance,
 } from "./routeAppearance";
 
-type Panes = { anatomy: HTMLElement } & Record<SlicePlane, HTMLElement>;
+type Panes = { anatomy: HTMLElement; orientationGuide: HTMLElement } & Record<SlicePlane, HTMLElement>;
 type SurfacePair={mesh:THREE.Mesh;source:THREE.BufferGeometry;smooth:THREE.BufferGeometry;smoothingPrepared?:boolean};
 type ModelStage={generation:number;next:ViewerVolume;interaction:SurgicalInteraction|null;
   prepared:Map<string,SurfacePair|null>;jobs:Array<{layer:ViewerVolume['compartments'][number];indices?:Uint32Array;values?:Uint8Array}>;
@@ -90,6 +93,7 @@ type ModelStage={generation:number;next:ViewerVolume;interaction:SurgicalInterac
   waiting?:ViewerVolume['compartments'][number]|'pack';ready?:boolean;changedLayers:number;changedIndices:number;initialMapping:boolean;smoothing:boolean};
 const SLICE_PLANES: SlicePlane[] = ["axial", "coronal", "sagittal"];
 const RETIRED_SURFACE_BUDGET_BYTES=256*1024*1024;
+const CONTEXT_SURFACES = new Set(['brain', 'head-envelope', 'bone', 'skull']);
 
 function matrix(affine: Affine): THREE.Matrix4 {
   return new THREE.Matrix4().set(
@@ -158,6 +162,15 @@ function intensityWindow(values: Float32Array): [number, number] {
 }
 
 /** One GPU context shares the source textures across the 3-D scene and all MPRs. */
+const sourceSignalSamples=new WeakMap<Float32Array,string>();
+/** Bounded fingerprint of immutable source samples; not a replacement for the source SHA. */
+function sourceSignalFingerprint(data:Float32Array):string {
+  const cached=sourceSignalSamples.get(data);if(cached)return cached;
+  const bits=new Uint32Array(data.buffer,data.byteOffset,data.length),count=Math.min(4096,data.length);
+  let hash=2166136261;for(let i=0;i<count;i++){const index=count>1?Math.floor(i*(data.length-1)/(count-1)):0;hash=Math.imul(hash^bits[index],16777619)>>>0;}
+  const value=`sampled-f32:${data.length}:${hash.toString(16).padStart(8,'0')}`;sourceSignalSamples.set(data,value);return value;
+}
+
 export class VolumeRenderer {
   readonly bounds: Bounds3;
   private readonly sliceSupportBounds: Bounds3;
@@ -177,6 +190,7 @@ export class VolumeRenderer {
   private interacting = false;
   private readonly scene = new THREE.Scene();
   private readonly camera = new THREE.PerspectiveCamera(34, 1, 0.1, 5000);
+  private readonly orientationGuide:OrientationGuide;
   private readonly controls: OrbitControls;
   private readonly slices = new Map<
     SlicePlane,
@@ -210,6 +224,8 @@ export class VolumeRenderer {
   private priorTexture: THREE.Data3DTexture;
   private priorCoverageTexture: THREE.Data3DTexture;
   private readonly surfaces = new Map<string, THREE.Mesh>();
+  private readonly tractObjects = new Map<string, THREE.LineSegments<THREE.BufferGeometry,THREE.LineBasicMaterial>>();
+  private selectedStructure:string|null=null;
   private readonly surfaceGeometry = new Map<string, { source: THREE.BufferGeometry; smooth: THREE.BufferGeometry; smoothingPrepared?:boolean }>();
   private surfaceSmoothing = true;
   private scanFramingPoints:Float32Array=new Float32Array();
@@ -260,6 +276,7 @@ export class VolumeRenderer {
   private cameraRestored = false;
   private activePlane: SlicePlane = "axial";
   private routeSignature = "";
+  private selectedRouteIndex=-1;
   private mode: "anatomy" | "instruments" = "anatomy";
   private pendingFit: "anatomy" | "instruments" | null = null;
   private readonly pickRay = new THREE.Raycaster();
@@ -361,6 +378,7 @@ export class VolumeRenderer {
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     this.renderer.toneMappingExposure = .95;
+    this.orientationGuide=new OrientationGuide(panes.orientationGuide);
     const lighting=new RoomEnvironment(),pmrem=new THREE.PMREMGenerator(this.renderer);
     this.environmentTarget=pmrem.fromScene(lighting,.04);
     this.scene.environment=this.environmentTarget.texture;this.scene.environmentIntensity=.45;
@@ -439,8 +457,11 @@ export class VolumeRenderer {
           uOverlay: { value: this.opacity },
           uSliceContours: { value: 0 },
           uLayerOpacities: { value: new Float32Array(MAX_ANATOMY_LAYERS).fill(.66) },
+          uSelectedLayer: {value:-1},
           uClipEnabled: { value: 0 },
           uClipPlane: { value: new THREE.Vector4(0,0,1,0) },
+          uExtraClipCount: {value:0},
+          uExtraClips: {value:Array.from({length:7},()=>new THREE.Vector4())},
           uThreeD: { value: threeD ? 1 : 0 },
           uLayerCount: {value:volume.compartments.length},
           uLayerCodes: {value:packedLabels.codes.map(c=>new THREE.Vector2(...c))},
@@ -454,10 +475,11 @@ export class VolumeRenderer {
             ),
           },
           uRouteCount: { value: 0 },
-          uShaftStart: { value: [new THREE.Vector3(), new THREE.Vector3()] },
-          uShaftEnd: { value: [new THREE.Vector3(), new THREE.Vector3()] },
-          uTipEnd: { value: [new THREE.Vector3(), new THREE.Vector3()] },
-          uRadii: { value: [new THREE.Vector2(), new THREE.Vector2()] },
+          uSelectedRoute: {value:-1},
+          uShaftStart: { value: Array.from({length:3},()=>new THREE.Vector3()) },
+          uShaftEnd: { value: Array.from({length:3},()=>new THREE.Vector3()) },
+          uTipEnd: { value: Array.from({length:3},()=>new THREE.Vector3()) },
+          uRadii: { value: Array.from({length:3},()=>new THREE.Vector2()) },
           uRouteColors: {
             value: Object.values(COMPARISON_COLORS).map((color) =>
               new THREE.Color(color).convertLinearToSRGB(),
@@ -628,12 +650,13 @@ export class VolumeRenderer {
       }
     });
     if(!remaining){this.worker.terminate();this.sourceWorkerActive=false;}
-    for(const tract of volume.tractography??[]){
-      const indices:number[]=[];
-      for(let line=0;line<tract.offsets.length-1;line++)for(let i=tract.offsets[line];i<tract.offsets[line+1]-1;i++)indices.push(i,i+1);
-      const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.BufferAttribute(tract.points,3));geometry.setIndex(indices);
-      const lines=new THREE.LineSegments(geometry,new THREE.LineBasicMaterial({color:'#91cffa',transparent:true,opacity:.45}));placeInSourceFrame(lines,this.affine);this.anatomy.add(lines);
-    }
+    (volume.tractography??[]).forEach((tract,index)=>{
+      const preview=tractPreview(tract,this.affine);
+      const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.BufferAttribute(preview.positions,3));
+      const lines=new THREE.LineSegments(geometry,new THREE.LineBasicMaterial({color:tractColor(index),transparent:true,opacity:.6,depthWrite:false}));
+      lines.name=tract.label;lines.userData.tractId=tract.id;lines.userData.displayPreview={...preview,positions:undefined};
+      this.tractObjects.set(tract.id,lines);this.anatomy.add(lines);
+    });
     this.updateSourcePlane();
     this.fitCamera("anatomy");
     this.requestRender();
@@ -675,7 +698,7 @@ export class VolumeRenderer {
     }
     if(smoothingPrepared)smooth.setAttribute("position", new THREE.BufferAttribute(smoothPositions!, 3));
     const vessel=surfaceKind(layer.kind)==='vessel';
-    const fairNormals=vessel||['brain','bone','skull','head-envelope'].includes(layer.kind??'');
+    const fairNormals=vessel||CONTEXT_SURFACES.has(layer.kind??'');
     if(smoothingPrepared)smooth.setAttribute("normal", new THREE.BufferAttribute(fairNormals&&buffers.indices ? displaySurfaceNormals(smoothNormals!,buffers.indices,this.affine) : smoothNormals!, 3));
     const appearance = layerAppearance(layer.name,layer.color,this.workspaceSettings,layer.kind);
     const mesh = new THREE.Mesh(
@@ -695,7 +718,7 @@ export class VolumeRenderer {
     mesh.castShadow=true;mesh.receiveShadow=true;
     applyOperativeSurface(mesh.material,layer.kind,this.workspaceSettings);
     if(vessel)applyVesselDepthMaterial(mesh.material,this.bounds);
-    applySourceContextMaterial(mesh.material,this.workspaceSettings.contextStyle==='shell'&&['brain','head-envelope','bone','skull'].includes(layer.kind??''));
+    applySourceContextMaterial(mesh.material,this.workspaceSettings.contextStyle==='shell'&&CONTEXT_SURFACES.has(layer.kind??''));
     mesh.visible = this.surfaceVisible(layer.name);
     mesh.userData.compartment = layer.name;
     this.picking?.install(mesh,geometry,eagerPicking);
@@ -703,7 +726,12 @@ export class VolumeRenderer {
   }
   private installSurface(layer:ViewerVolume['compartments'][number],buffers:PreparedSurface|{positions:Float32Array;normals:Float32Array;smoothPositions?:Float32Array;smoothNormals?:Float32Array;indices?:Uint32Array}) {
     const pair=this.makeSurface(layer,buffers);if(!pair)return;
+    if (this.volume.displayIdentity && layer.surface && surfaceKind(layer.kind)==='context') {
+      installNativeContextLighting(pair.mesh.material as THREE.MeshStandardMaterial, this.bounds,
+        this.surfaceSmoothing && this.workspaceSettings.operativeView !== 'surgeon');
+    }
     this.surfaceGeometry.set(layer.name,{source:pair.source,smooth:pair.smooth,smoothingPrepared:pair.smoothingPrepared});this.surfaces.set(layer.name,pair.mesh);this.anatomy.add(pair.mesh);
+    this.applyStructureHighlight();
   }
 
   /** Append only, within an unchanged native source generation. */
@@ -926,7 +954,7 @@ export class VolumeRenderer {
     cameraMode: "anatomy" | "instruments",
   ): void {
     const cursorChanged = cursor.some((value, axis) => value !== this.cursor[axis]);
-    const visibilitySignature = this.volume.compartments.map(layer => visible[layer.name] !== false ? '1' : '0').join('');
+    const visibilitySignature = [...this.volume.compartments.map(layer=>layer.name),...(this.volume.tractography??[]).map(tract=>tract.id)].map(name=>visible[name]!==false?'1':'0').join('');
     const visibilityChanged = visibilitySignature !== this.visibilitySignature;
     if(visibilityChanged&&this.visibilitySignature!=null){this.beginInteraction();this.endInteraction();}
     const nextOpacity = Math.max(0, Math.min(1, opacity));
@@ -948,6 +976,7 @@ export class VolumeRenderer {
         shader.uniforms.uVisibleBits.value = bits;
         this.volume.compartments.forEach((layer,i) => { shader.uniforms.uLayerEnabled.value[i] = visible[layer.name] !== false ? 1 : 0; });
       });
+      this.applyTractAppearance();
     }
     if (cursorChanged) {
       this.cursor = [...cursor];
@@ -979,6 +1008,7 @@ export class VolumeRenderer {
   }
 
   setWorkspaceSettings(settings: ViewerWorkspaceSettings): void {
+    if(this.workspaceSettings?.showOrientationGuide!==settings.showOrientationGuide)this.requestRender(false);
     this.workspaceSettings = settings;
     if(this.surgicalGhost)this.surgicalGhost.visible=!!this.surgicalInteraction&&!this.surgicalInteraction.readOnly&&(settings.operativeView!=='surgeon'||this.surgicalInteraction.mode!=='navigate');
     const surgeon=settings.operativeView==='surgeon'&&settings.microscope;
@@ -1012,7 +1042,7 @@ export class VolumeRenderer {
     // materials. Compare values so cloned or in-place edited settings work too.
     const signature = JSON.stringify([settings.layerOpacity, settings.layerColor,
       settings.clipping, settings.clipBox, settings.obliqueClip,
-      settings.fusion?.opacity, settings.volumeRendering,settings.skullMode,settings.sliceOverlay,settings.contextStyle,settings.operativeView,settings.microscope?.inspectionTransparency,settings.microscope?.inspectionCutaway,settings.microscope?.tissueStyle]);
+      settings.fusion?.opacity, settings.volumeRendering,settings.skullMode,settings.sliceOverlay,settings.contextStyle,settings.presentation,settings.operativeView,settings.microscope?.inspectionTransparency,settings.microscope?.inspectionCutaway,settings.microscope?.tissueStyle]);
     if (signature === this.appearanceSignature) return;
     if(this.appearanceSignature!=null){this.beginInteraction();this.endInteraction();}
     this.appearanceSignature = signature;
@@ -1021,6 +1051,10 @@ export class VolumeRenderer {
     const normal = new THREE.Vector3();
     normal.setComponent({x:0,y:1,z:2}[clipping.axis],clipping.flipped ? -1 : 1);
     this.clipPlane = clipping.enabled ? new THREE.Plane(normal,clipping.flipped ? clipping.value : -clipping.value) : null;
+    // A displayed acquisition at an explicit cut is the front section image.
+    // Its real depth terminates scalar rays, so retained volume behind it
+    // cannot veil the diagnostic texture. Uncut reference planes stay translucent.
+    if(this.sourcePlane)this.sourcePlane.material.depthWrite=clipping.enabled;
     this.extraClipPlanes=[];
     const box=operativeOcclusion?undefined:settings.clipBox;
     if(box?.enabled && [...box.min,...box.max].every(Number.isFinite))for(let i=0;i<3;i++){
@@ -1038,8 +1072,9 @@ export class VolumeRenderer {
         mesh.visible=this.surfaceVisible(layer.name);
         const material=mesh.material as THREE.MeshStandardMaterial;
         material.color.set(appearance.color);material.opacity=appearance.opacity;
+        setNativeContextLighting(material,this.surfaceSmoothing && settings.operativeView !== 'surgeon');
         applyOperativeSurface(material,layer.kind,settings);
-        applySourceContextMaterial(material,settings.contextStyle==='shell'&&['brain','head-envelope','bone','skull'].includes(layer.kind??''));
+        applySourceContextMaterial(material,settings.contextStyle==='shell'&&CONTEXT_SURFACES.has(layer.kind??''));
         const transparent = appearance.opacity < 1;
         if (material.transparent !== transparent) {
           material.transparent = transparent;
@@ -1062,11 +1097,60 @@ export class VolumeRenderer {
       shader.uniforms.uSliceContours.value=settings.sliceOverlay==='contour'?1:0;
       shader.uniforms.uClipEnabled.value=clipping.enabled ? 1 : 0;
       shader.uniforms.uClipPlane.value.set(normal.x,normal.y,normal.z,clipping.flipped ? clipping.value : -clipping.value);
+      if(shader.uniforms.uExtraClipCount){
+        shader.uniforms.uExtraClipCount.value=this.extraClipPlanes.length;
+        this.extraClipPlanes.forEach((plane,i)=>shader.uniforms.uExtraClips.value[i].set(plane.normal.x,plane.normal.y,plane.normal.z,plane.constant));
+      }
       shader.uniforms.uFusionOpacity.value=Number.isFinite(settings.fusion?.opacity) ? Math.max(0,Math.min(1,settings.fusion!.opacity)) : .5;
     });
     this.scanVolume?.configure(settings.volumeRendering, this.volumeModality, this.clipPlane);
     this.scanVolume.labels(this.labelTexture,this.visible,settings,this.extraClipPlanes);
+    this.applyTractAppearance();
+    this.applyStructureHighlight();
     this.requestRender();
+  }
+
+  private applyTractAppearance():void {
+    (this.volume.tractography??[]).forEach((tract,index)=>{
+      const lines=this.tractObjects?.get(tract.id);if(!lines)return;
+      const appearance=layerAppearance(tract.id,tractColor(index),this.workspaceSettings,'tract');
+      lines.visible=this.visible[tract.id]!==false;
+      lines.material.color.set(appearance.color);
+      lines.material.opacity=this.selectedStructure&&this.tractObjects.has(this.selectedStructure)&&this.selectedStructure!==tract.id?appearance.opacity*.35:appearance.opacity;
+      if(this.selectedStructure===tract.id)lines.material.color.lerp(new THREE.Color('#ffffff'),.15);
+      lines.material.clippingPlanes=[...this.extraClipPlanes,...(this.clipPlane?[this.clipPlane]:[])];
+      lines.material.needsUpdate=true;
+      lines.renderOrder=this.selectedStructure===tract.id?3:0;
+    });
+  }
+
+  private applyStructureHighlight():void {
+    this.surfaces.forEach((mesh,name)=>{
+      const material=mesh.material as THREE.MeshStandardMaterial;
+      if(!material.emissive)return;
+      material.emissive.set(name===this.selectedStructure?material.color:0x000000);
+      material.emissiveIntensity=name===this.selectedStructure ? .35 : 0;
+    });
+    const index=this.volume.compartments.findIndex(layer=>layer.name===this.selectedStructure);
+    this.materials().forEach(shader=>{if(shader.uniforms.uSelectedLayer)shader.uniforms.uSelectedLayer.value=index;});
+  }
+
+  setSelectedStructure(name:string|null):void {
+    this.selectedStructure=name;this.applyTractAppearance();this.applyStructureHighlight();this.requestRender();
+  }
+
+  /** Explicit concern focus uses real displayed geometry and returns its RAS centre. */
+  focusStructure(name:string,point?:Point3|null):Point3|null {
+    const local=point?.length===3&&point.every(Number.isFinite);
+    const object=this.surfaces.get(name)??this.tractObjects.get(name);if(!object&&!local)return null;
+    const box=object?physicalBounds(object):new THREE.Box3();if(box.isEmpty()&&!local)return null;
+    const centre=local?new THREE.Vector3(...point):box.getCenter(new THREE.Vector3()),size=box.getSize(new THREE.Vector3());
+    const direction=this.camera.position.clone().sub(this.controls.target).normalize();
+    const aspect=Math.max(.2,this.panes.anatomy.getBoundingClientRect().width/Math.max(1,this.panes.anatomy.getBoundingClientRect().height));
+    const halfFov=Math.min(THREE.MathUtils.degToRad(this.camera.fov)/2,Math.atan(Math.tan(THREE.MathUtils.degToRad(this.camera.fov)/2)*aspect));
+    const distance=local?Math.max(90,28/Math.tan(halfFov)):Math.max(65,Math.max(...size.toArray())*.65/Math.tan(halfFov));
+    this.restoreCamera({position:centre.clone().addScaledVector(direction,distance).toArray() as Point3,target:centre.toArray() as Point3,up:this.camera.up.toArray() as Point3});
+    this.onCameraChange?.(this.getCameraState());return centre.toArray() as Point3;
   }
 
   private updateOperativeLight():void {
@@ -1125,6 +1209,8 @@ export class VolumeRenderer {
     this.surfaces.forEach((mesh, name) => {
       const pair = this.surfaceGeometry.get(name);
       if (pair) mesh.geometry = enabled ? pair.smooth : pair.source;
+      setNativeContextLighting(mesh.material as THREE.MeshStandardMaterial,
+        enabled && this.workspaceSettings?.operativeView !== 'surgeon');
     });
     for (const group of [this.replayGroup, this.pendingReplayGroup])
       group?.children.forEach(mesh => {
@@ -1773,7 +1859,8 @@ export class VolumeRenderer {
   private updateRoutes(routes: ViewerRoute[]): void {
     disposeObject(this.tools);
     this.tools.clear();
-    const shown = routes.slice(0, 2);
+    const shown = routes.slice(0, 3);
+    this.selectedRouteIndex=shown.findIndex(route=>route.scope==='geometric-approach'&&route.selected);
     const capsules: InstrumentCapsuleDisplay[] = [];
     shown.forEach((route, index) => {
       const entry = this.sourceToRas(route.entry_mm),
@@ -1784,6 +1871,8 @@ export class VolumeRenderer {
           .addScaledVector(axis, -route.tool.working_length_mm),
         shaftEnd = tip.clone().addScaledVector(axis, -route.tool.tip_length_mm);
       const { color, slot } = routeAppearance(route, index);
+      const geometric=route.scope==='geometric-approach';
+      const selected=route.selected!==false;
       const addPart = (part: THREE.Object3D) => {
         part.userData.comparisonSlot = slot;
         part.userData.routeId = route.route_id;
@@ -1802,7 +1891,8 @@ export class VolumeRenderer {
             metalness: active ? 0.2 : 0.62,
             roughness: active ? 0.3 : 0.23,
             transparent: true,
-            opacity: active ? 1 : 0.9,
+            opacity: geometric ? (selected ? .22 : .08) : active ? 1 : 0.9,
+            depthWrite: !geometric,
           }),
         );
         mesh.position.copy(a).add(b).multiplyScalar(0.5);
@@ -1812,14 +1902,26 @@ export class VolumeRenderer {
         );
         addPart(mesh);
       };
-      capsule(shaftStart, shaftEnd, route.tool.shaft_radius_mm, false);
-      capsule(shaftEnd, tip, route.tool.tip_radius_mm, true);
+      if(geometric){
+        capsule(entry,tip,route.tool.shaft_radius_mm,false);
+        const axisStart=entry.clone().addScaledVector(axis,-18),axisEnd=tip.clone();
+        const instrument=new THREE.Mesh(new THREE.CylinderGeometry(.32,.32,axisStart.distanceTo(axisEnd),12),new THREE.MeshStandardMaterial({color,roughness:.35,transparent:true,opacity:selected ? .95 : .35}));
+        instrument.position.copy(axisStart).add(axisEnd).multiplyScalar(.5);instrument.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),axis);instrument.userData.geometryRole='virtual-axis';addPart(instrument);
+        for(const [position,role,radius] of [[entry,'entry',1.2],[tip,'target',1.6]] as const){
+          const marker=new THREE.Mesh(new THREE.SphereGeometry(radius,16,12),new THREE.MeshBasicMaterial({color,depthTest:false,transparent:true,opacity:selected?1:.55}));marker.position.copy(position);marker.userData.geometryRole=role;marker.renderOrder=5;addPart(marker);
+        }
+        const ring=new THREE.Mesh(new THREE.RingGeometry(Math.max(.5,route.tool.shaft_radius_mm-.2),route.tool.shaft_radius_mm+.2,48),new THREE.MeshBasicMaterial({color,side:THREE.DoubleSide,transparent:true,opacity:selected ? .95 : .4,depthTest:false}));
+        ring.position.copy(entry);ring.quaternion.setFromUnitVectors(new THREE.Vector3(0,0,1),axis);ring.userData.geometryRole='entry-footprint';ring.renderOrder=4;addPart(ring);
+      }else{
+        capsule(shaftStart, shaftEnd, route.tool.shaft_radius_mm, false);
+        capsule(shaftEnd, tip, route.tool.tip_radius_mm, true);
+      }
       const line = new THREE.Line(
         new THREE.BufferGeometry().setFromPoints([entry, tip]),
         new THREE.LineDashedMaterial({
           color,
           transparent: true,
-          opacity: 0.65,
+          opacity: selected ? .85 : .3,
           dashSize: 2,
           gapSize: 1.4,
           depthTest: false,
@@ -1863,7 +1965,7 @@ export class VolumeRenderer {
         marker.userData.failure = failure.reason;
         addPart(marker);
       }
-      capsules.push({ shaftStart: shaftStart.toArray(), shaftEnd: shaftEnd.toArray(), tip: tip.toArray(),
+      capsules.push({ shaftStart: (geometric?entry:shaftStart).toArray(), shaftEnd: (geometric?tip:shaftEnd).toArray(), tip: tip.toArray(),
         shaftRadius: route.tool.shaft_radius_mm, tipRadius: route.tool.tip_radius_mm, color });
     });
     this.instrumentDisplay.setRoutes(capsules);
@@ -1900,6 +2002,7 @@ export class VolumeRenderer {
       this.recordedTools.visible ? [this.recordedDisplay!] : this.instrumentDisplay.displayed;
     this.materials().forEach((shader) => {
       shader.uniforms.uRouteCount.value = shown.length;
+      if(shader.uniforms.uSelectedRoute)shader.uniforms.uSelectedRoute.value=this.instrumentDisplay.routeVisible?this.selectedRouteIndex:-1;
       shown.forEach((capsule, index) => {
         const set = (name: string, point: readonly number[]) => shader.uniforms[name].value[index].set(point[0], point[1], point[2]);
         set("uShaftStart", capsule.shaftStart);
@@ -2032,8 +2135,7 @@ export class VolumeRenderer {
     ); } finally { displayed.forEach((geometry, mesh) => { mesh.geometry = geometry; }); }
     const planes=[...(this.extraClipPlanes??[]),...(this.clipPlane?[this.clipPlane]:[])];
     const hit=hits.find(item=>{
-      const visiblePlanes=item.object===this.sourcePlane?(this.clipPlane?[this.clipPlane]:[]):planes;
-      if(!visiblePlanes.every(plane=>plane.distanceToPoint(item.point)>=0))return false;
+      if(!planes.every(plane=>plane.distanceToPoint(item.point)>=0))return false;
       if(item.object!==this.sourcePlane)return true;
       // The source-plane shader discards empty/out-of-field pixels. A quad
       // intersection there must allow the next visible anatomy hit through.
@@ -2102,6 +2204,7 @@ export class VolumeRenderer {
     const surgicalAnimationActive=this.advanceSurgicalAnimation(performance.now());
     // Capture before any synchronous telemetry listener can replace the view.
     const publication=this.pendingSurgicalPublication,renderedView=this.surgicalInteraction?.preview??this.surgicalInteraction?.view??null;
+    const displayIdentity=this.volume.displayIdentity,sourceShape=[...this.volume.shape],sourceSignal=sourceSignalFingerprint(this.volume.mri),routeSignature=this.routeSignature,cursor=[...this.cursor],selectedStructure=this.selectedStructure;
     const sourceCaseHash=this.volume.caseHash,surgicalStateId=renderedView?.stateId??null,surgicalFrame=this.surgicalInteraction?.recordedFrame??null;
     this.labelTextureUpdates?.sync(this.renderer,this.labelTexture);
     // Interaction quality changes only offscreen 3D targets. The shared canvas
@@ -2129,6 +2232,7 @@ export class VolumeRenderer {
       return { w: rect.width, h: rect.height };
     };
     const main = viewport(this.panes.anatomy);
+    let orientationGuideVisible=false;
     let surfaceQuality:{adaptive:boolean;width:number;height:number}|null=null;
     if (main) {
       if (this.pendingFit) this.fitCamera(this.pendingFit);
@@ -2137,6 +2241,10 @@ export class VolumeRenderer {
       if (this.replayActive || this.passiveActive||!this.scanVolume.active)
         surfaceQuality=this.surfaceInteraction.render(this.renderer,this.scene,this.camera,main.w,main.h,this.interacting,this.budget.longEdge,()=>{viewport(this.panes.anatomy);});
       else this.scanVolume.render(this.scene,this.camera,main.w,main.h,this.interacting,()=>{viewport(this.panes.anatomy);},this.budget.longEdge);
+      if(this.workspaceSettings.showOrientationGuide!==false){
+        this.orientationGuide.setPosture(renderedView?.positionEffects);
+        orientationGuideVisible=this.orientationGuide.render(this.renderer,this.camera,root,this.paneBounds!.panes.get(this.panes.orientationGuide)!);
+      }
     }
     let sliceDraws=0;
     for (const plane of SLICE_PLANES) {
@@ -2161,13 +2269,14 @@ export class VolumeRenderer {
     this.renderer.setScissorTest(false);
     this.gpuTimer?.end();
     this.lastSubmittedSurgicalView=renderedView;
-    const interactive=this.interacting,cpuMs=performance.now()-frameStarted;
+    const interactive=this.interacting,cpuMs=performance.now()-frameStarted,cameraState=this.getCameraState(),renderedTractIds=this.tractObjects?[...this.tractObjects].filter(([,object])=>object.visible&&(object.geometry.getAttribute('position')?.count??0)>0).map(([id])=>id):[];
     this.canvas.dispatchEvent(new CustomEvent('anatomy-frame',{bubbles:true,detail:{serial,at:frameStarted,cpuMs,cpuMeasurement:'CPU-frame-submission',interactive,volume:this.scanVolume.active,sliceDraws,longEdge:interactive?this.budget.longEdge:1300,
       resources:{...this.renderer.info.memory},drawCalls:this.renderer.info.render.calls,drawStatistics:{...this.renderer.info.render},gpuTimingSupported:this.gpuTimer?.supported??false,
       estimatedAllocation:this.estimateAllocation(),displayWork:{...this.displayWork},workers:{source:this.sourceWorkerActive?1:0,replay:this.replayWorker?1:0,modeled:this.modelWorker?1:0,picking:this.picking?.stats().workerLive??0},surfaceQuality,
       surfaceCache:{budgetBytes:RETIRED_SURFACE_BUDGET_BYTES,retiredBytes:this.retiredSurfaces.reduce((sum,entry)=>sum+entry.bytes,0),retiredEntries:this.retiredSurfaces.length},
       labelUploads:this.labelTextureUpdates?.work??null,
-      sourceCaseHash,surgicalStateId,surgicalFrame,
+      sourceCaseHash,displayIdentity,sourceShape,sourceSignalFingerprint:sourceSignal,cameraState,cursor,selectedStructure,routeSignature,renderedTractIds,surgicalStateId,surgicalFrame,
+      orientationGuide:orientationGuideVisible?this.orientationGuide.snapshot():null,
       recordedFlow:this.surgicalFlowSource?{startSeconds:this.surgicalFlowSource.startSeconds,endSeconds:this.surgicalFlowSource.endSeconds,operations:this.surgicalFlowSource.operations.length,truncated:this.surgicalFlowSource.truncated,
         animated:surgicalAnimationActive,approximation:'Retrospective source-interval overlay; 3x radius display gain',
         glyphInstances:this.surgicalFlow?.children.reduce((sum,object)=>sum+(object instanceof THREE.InstancedMesh&&object.name!=='flow:ledger-droplets'?object.count:0),0)??0,
@@ -2193,7 +2302,7 @@ export class VolumeRenderer {
       const elapsed=performance.now()-frameStarted;
       if(interactive&&(status===gl.ALREADY_SIGNALED||status===gl.CONDITION_SATISFIED))this.budget.sample(elapsed);
       const completed=status===gl.ALREADY_SIGNALED||status===gl.CONDITION_SATISFIED;
-      this.canvas.dispatchEvent(new CustomEvent('anatomy-gpu',{bubbles:true,detail:{serial,sourceCaseHash,surgicalStateId,surgicalFrame,completed,milliseconds:elapsed,completionPollMs:elapsed,measurement:'submission-to-fence-poll-upper-bound'}}));
+      this.canvas.dispatchEvent(new CustomEvent('anatomy-gpu',{bubbles:true,detail:{serial,sourceCaseHash,displayIdentity,sourceSignalFingerprint:sourceSignal,surgicalStateId,surgicalFrame,completed,milliseconds:elapsed,completionPollMs:elapsed,measurement:'submission-to-fence-poll-upper-bound'}}));
       if(this.disposed||this.graphicsLost)return;
       if(completed)this.finishSurgicalFrame(publication,serial);
       else this.failSurgicalFrame(publication,'The GPU did not complete the requested image frame. Reopen the source before continuing.');
@@ -2247,6 +2356,7 @@ export class VolumeRenderer {
     this.mriTexture.dispose();
     this.scanVolume.dispose();
     this.surfaceInteraction.dispose();
+    this.orientationGuide.dispose();
     this.environmentTarget.dispose();
     this.fusionTexture.dispose();
     this.labelTexture.dispose();

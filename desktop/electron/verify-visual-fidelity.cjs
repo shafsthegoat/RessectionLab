@@ -4,11 +4,19 @@
 const {app,dialog}=require('electron');
 const fs=require('node:fs'),os=require('node:os'),path=require('node:path'),crypto=require('node:crypto');
 const {verificationDirectory}=require('./verification-output.cjs');
+const {inputScript}=require('./verify-eden-planning-helpers.cjs');
+const {studyLayerVisibilityScript,studyVisibilityToggleScript,studyLayerSelectionScript}=require('./verify-study-ui-helpers.cjs');
+process.argv.push('--automation-hidden');
+if(process.platform==='darwin')app.setActivationPolicy('accessory');
+const fatalStartup=error=>{console.error(error?.stack||String(error));app.exit(1)};
+dialog.showErrorBox=(title,message)=>fatalStartup(Error(title+': '+message));
+process.on('uncaughtException',fatalStartup);process.on('unhandledRejection',fatalStartup);
+const captureHiddenPage=window=>{if(window.isVisible())throw Error('Verification window became visible');return window.webContents.capturePage(undefined,{stayHidden:true,stayAwake:true})};
 const caseKind=process.env.FIDELITY_CTA?'cta':process.env.FIDELITY_MRA?'mra':'mri';
 const profiles={
-  mri:{source:/T1CE|T1C|T1[-_ ]?POST/i,presentation:'Segmentation',before:'mri',presented:'segmentation',provenance:/no acquired angiography/,ct:false},
-  mra:{source:/MRA|TOF/i,presentation:'Vascular',before:'mra',presented:'mra-vascular',provenance:/MR angiography/,ct:false},
-  cta:{source:/\bCTA\b|CT[-_ ]*ANGIO/i,presentation:'Vascular',before:'cta',presented:'cta-vascular',provenance:/CTA signal \+ sourced structures/,ct:true},
+  mri:{source:/T1CE|T1C|T1[-_ ]?POST/i,presentation:'Structures',before:'mri',presented:'segmentation',provenance:/no acquired angiography/,ct:false},
+  mra:{source:/MRA|TOF/i,presentation:'Vessels',before:'mra',presented:'mra-vascular',provenance:/MR angiography/,ct:false},
+  cta:{source:/\bCTA\b|CT[-_ ]*ANGIO/i,presentation:'Vessels',before:'cta',presented:'cta-vascular',provenance:/CTA signal \+ sourced structures/,ct:true},
 };
 const profile=profiles[caseKind];
 const showcaseOnly=Boolean(process.env.FIDELITY_SHOWCASE_ONLY);
@@ -23,9 +31,11 @@ const index=process.argv.indexOf('--anatomy');
 if(index<0||!process.argv[index+1])throw Error('Pass --anatomy /absolute/patient-anatomy.json');
 const originalSource=path.resolve(process.argv[index+1]),originalDirectory=path.dirname(originalSource);
 const sourceDocument=JSON.parse(fs.readFileSync(originalSource,'utf8'));
+const originalViewFile=path.join(originalDirectory,'workspace-view.json');
+const originalView=fs.existsSync(originalViewFile)?JSON.parse(fs.readFileSync(originalViewFile,'utf8')):null;
 const vesselLabels=sourceDocument.layers.filter(layer=>['vessel','vessels','artery','vein','sinus'].includes(layer.kind)).map(layer=>layer.label);
 if(!vesselLabels.length)throw Error('Verification requires at least one supplied vessel layer');
-const temporary=fs.mkdtempSync(path.join(os.tmpdir(),'rslab-fidelity-study-')),study=path.join(temporary,'study');
+const temporary=fs.mkdtempSync(path.join(output,'study-clone-')),study=path.join(temporary,'study');
 fs.mkdirSync(study);
 for(const member of ['patient-anatomy.json','arrays','originals','meshes','revisions','workspace-view.json']){
   const from=path.join(originalDirectory,member);
@@ -47,7 +57,7 @@ function inventory(){
   }}
   visit('arrays');return Object.fromEntries(files.map(name=>[name,{bytes:fs.statSync(path.join(originalDirectory,name)).size,sha256:digest(path.join(originalDirectory,name))}]));
 }
-const report={startedAt:Date.now(),caseKind,verificationMode:motionOnly?'motion-only':showcaseOnly?'showcase':process.env.FIDELITY_RECHECK?'recheck':'full',originalSource,sourceSeries:sourceDocument.series.map(({id,modality,intensity_units,provenance})=>({id,modality,intensity_units,provenance})),sourceVesselLabels:vesselLabels,disposableStudy:true,errors:[],checks:[],views:[],surface:[],frames:[],gpu:[],refinement:[],motion:[],motionRecordingReceipts:[]};
+const report={startedAt:Date.now(),caseKind,verificationMode:motionOnly?'motion-only':showcaseOnly?'showcase':process.env.FIDELITY_RECHECK?'recheck':'full',originalSource,sourceSeries:sourceDocument.series.map(({id,modality,intensity_units,provenance})=>({id,modality,intensity_units,provenance})),sourceVesselLabels:vesselLabels,disposableStudy:true,windowEverVisible:false,errors:[],checks:[],views:[],surface:[],frames:[],gpu:[],refinement:[],motion:[],motionRecordingReceipts:[]};
 console.log('Hashing original manifest and every source array');const before=inventory();
 fs.writeFileSync(path.join(output,'source-hashes-before.json'),JSON.stringify(before,null,2));
 const pause=ms=>new Promise(resolve=>setTimeout(resolve,ms));
@@ -62,36 +72,53 @@ function memoryReceipt(){
 const cleanup=()=>{fs.rmSync(temporary,{recursive:true,force:true});fs.rmSync(userData,{recursive:true,force:true})};
 app.on('will-quit',cleanup);
 app.on('browser-window-created',(_event,window)=>{
+  window.on('show',()=>{report.windowEverVisible=true;window.hide()});
   window.webContents.on('console-message',(_event,d)=>{if(d.level==='error')report.errors.push(d.message)});
   window.webContents.once('did-finish-load',async()=>{
-    window.webContents.setBackgroundThrottling(false);window.setSize(1440,960);window.show();
+    window.webContents.setBackgroundThrottling(false);window.setSize(1440,960);
     const js=code=>window.webContents.executeJavaScript(code,true);
     const wait=async(expr,seconds=300)=>{for(let i=0;i<seconds*4;i++){if(await js(expr))return;await pause(250)}throw Error('Timed out '+expr)};
-    const click=async(label,selector='button')=>{await js(`(()=>{const b=[...document.querySelectorAll(${JSON.stringify(selector)})].find(b=>b.textContent.trim()===${JSON.stringify(label)});if(!b||b.disabled)throw Error('Missing button '+${JSON.stringify(label)});b.click()})()`);await pause(200)};
-    const select=async(label,value)=>{await js(`(()=>{const s=[...document.querySelectorAll('select')].find(s=>s.getAttribute('aria-label')===${JSON.stringify(label)});if(!s||s.disabled)throw Error('Missing select '+${JSON.stringify(label)});s.value=${JSON.stringify(value)};s.dispatchEvent(new Event('change',{bubbles:true}))})()`);await pause(300)};
+    const click=async(label,selector='button')=>{await js(`(()=>{const b=[...document.querySelectorAll(${JSON.stringify(selector)})].find(b=>b.textContent.trim()===${JSON.stringify(label)}||b.getAttribute('aria-label')===${JSON.stringify(label)});if(!b||b.disabled)throw Error('Missing button '+${JSON.stringify(label)});for(let node=b.parentElement;node;node=node.parentElement)if(node.tagName==='DETAILS')node.open=true;b.scrollIntoView({block:'nearest'});b.click()})()`);await pause(200)};
+    const select=async(label,value)=>{await js(inputScript(label,value));await pause(300)};
     const ready=async()=>{await wait(`!!document.querySelector('.rl-viewer canvas')&&!document.querySelector('.viewer-loading')&&document.querySelector('.rl-viewer').dataset.surfacesPending==='0'&&(document.querySelector('select[aria-label="Source scan"]')?.disabled===false||!!document.querySelector('.unified-correction'))`);await pause(600)};
-    const capture=async name=>{await ready();const filename=path.join(output,name+'.png');fs.writeFileSync(filename,(await window.webContents.capturePage()).toPNG());report.views.push({name,path:filename,at:Date.now()});console.log('Captured '+filename)};
+    const capture=async name=>{await ready();const filename=path.join(output,name+'.png');fs.writeFileSync(filename,(await captureHiddenPage(window)).toPNG());report.views.push({name,path:filename,at:Date.now()});console.log('Captured '+filename)};
     try{
       await js(`window.fidelityEvents={surface:[],frames:[],gpu:[],refinement:[]};for(const [event,key]of [['anatomy-surface','surface'],['anatomy-frame','frames'],['anatomy-gpu','gpu'],['anatomy-refined','refinement']])document.addEventListener(event,e=>window.fidelityEvents[key].push({...e.detail,observedAt:performance.now()}));`);
       await ready();
+      report.startupPresentation=await js(`(()=>{const workspace=document.querySelector('.native-workspace'),view=JSON.parse(workspace.dataset.nativeViewState),source=view.seriesId;return {source,settings:view.states[source].settings,layers:${studyLayerVisibilityScript()},identity:document.querySelector('.rl-viewer').dataset.sourceDisplayIdentity}})()`);
+      const storedStartup=originalView?.snapshotId===sourceDocument.snapshot_id?originalView.states?.[report.startupPresentation.source]?.settings:null;
+      const startupSource=sourceDocument.series.find(scan=>scan.id===report.startupPresentation.source);
+      if(!storedStartup&&!/segmentation only|analytic signal|generated image signal|diagnostic/i.test(startupSource?.modality??'')){
+        if(report.startupPresentation.settings.presentation!=='scan')throw Error('An unsaved acquired source did not open in Scan presentation');
+        report.checks.push({name:'unsaved acquired source opens in Scan presentation',passed:true});
+      }else if(storedStartup){
+        for(const key of ['contrast','volumeRendering'])if(JSON.stringify(report.startupPresentation.settings[key])!==JSON.stringify(storedStartup[key]))throw Error('Startup overwrote saved '+key);
+        report.checks.push({name:'saved scan contrast and volume settings reopen unchanged',passed:true});
+      }
       report.scans=await js(`[...document.querySelector('select[aria-label="Source scan"]').options].map(o=>({value:o.value,label:o.textContent}))`);
       const selectedSource=report.scans.find(s=>profile.source.test(s.label+' '+s.value));if(!selectedSource)throw Error('No requested acquired '+caseKind.toUpperCase()+' source option');
       const declaredSource=sourceDocument.series.find(s=>s.id===selectedSource.value);if(!declaredSource||!profile.source.test(declaredSource.modality))throw Error('Selected source modality does not match requested acquisition');report.selectedSource=declaredSource.id;
       await select('Source scan',selectedSource.value);await ready();await click('Fit 3D');await capture(profile.before+'-before-presentation');
       await click('Layout');await select('Camera preset','left');await js(`document.querySelector('button[aria-label="Close view controls"]').click()`);await capture(profile.before+'-before-left');
-      await click(profile.presentation);await ready();await click('Fit 3D');await capture(profile.presented);
+      const beforeScan=await js(`({source:document.querySelector('select[aria-label="Source scan"]').value,identity:document.querySelector('.rl-viewer').dataset.sourceDisplayIdentity,layers:${studyLayerVisibilityScript()}})`);
+      await click('Scan','.anatomy-presets button');await ready();await capture(profile.before+'-explicit-scan');
+      const afterScan=await js(`(()=>{const workspace=document.querySelector('.native-workspace'),view=JSON.parse(workspace.dataset.nativeViewState);return {source:view.seriesId,identity:document.querySelector('.rl-viewer').dataset.sourceDisplayIdentity,layers:${studyLayerVisibilityScript()},settings:view.states[view.seriesId].settings}})()`);
+      if(afterScan.source!==beforeScan.source||afterScan.identity!==beforeScan.identity||JSON.stringify(afterScan.layers)!==JSON.stringify(beforeScan.layers))throw Error('Scan presentation changed source identity or selected anatomy');
+      if(afterScan.settings.presentation!=='scan'||afterScan.settings.volumeRendering?.enabled!==true)throw Error('Scan action did not restore acquired scalar display');
+      report.checks.push({name:'explicit Scan restores source display while preserving identity and anatomy selection',passed:true,evidence:{before:beforeScan,after:afterScan}});
+      await click(profile.presentation,'.anatomy-presets button');await ready();await click('Fit 3D');await capture(profile.presented);
       await click('Layout');await select('Camera preset','left');await js(`document.querySelector('button[aria-label="Close view controls"]').click()`);await capture(profile.presented+'-left');
       if(process.env.FIDELITY_SUPERIOR){
         await click('Layout');await select('Camera preset','superior');await js(`document.querySelector('button[aria-label="Close view controls"]').click()`);await capture(profile.presented+'-superior');
         window.setSize(1050,720);await pause(700);await capture(caseKind+'-minimum-1050x720');report.minimumWindow={requested:[1050,720],actual:window.getSize(),content:window.getContentSize()};
       }
-      report.initialPresentation=await js(`({source:document.querySelector('select[aria-label="Source scan"]').value,scope:document.querySelector('select[aria-label="Vessel display"]')?.value,framing:{fit:document.querySelector('select[aria-label="Source slice fit"]')?.value,zoom:document.querySelector('button[aria-label="Reset source slice zoom"]')?.textContent},layers:[...document.querySelectorAll('.compact-layer input[type="checkbox"]')].map(c=>({label:c.getAttribute('aria-label'),checked:c.checked})),provenance:document.querySelector('.presentation-source')?.textContent,body:document.body.innerText})`);
+      report.initialPresentation=await js(`({source:document.querySelector('select[aria-label="Source scan"]').value,scope:document.querySelector('select[aria-label="Vessel display"]')?.value,framing:{fit:document.querySelector('select[aria-label="Source slice fit"]')?.value,zoom:document.querySelector('button[aria-label="Reset source slice zoom"]')?.textContent},layers:${studyLayerVisibilityScript()},provenance:document.querySelector('.presentation-source')?.textContent,body:document.body.innerText})`);
       fs.writeFileSync(path.join(output,'initial-presentation.json'),JSON.stringify(report.initialPresentation,null,2));
       report.checks.push({name:'initial '+caseKind.toUpperCase()+' '+profile.presentation.toLowerCase()+' captures',passed:true});
       if(process.env.FIDELITY_MARGIN_CHECK){
         const layer=sourceDocument.layers.find(l=>l.kind==='vessels'&&l.probability);
         if(!layer)throw Error('Margin verification requires retained vascular source scores');
-        await js(`(()=>{const b=[...document.querySelectorAll('.layer-name')].find(b=>b.textContent.trim()===${JSON.stringify(layer.label)});if(!b)throw Error('Missing vessel row');b.click()})()`);await pause(200);
+        await js(studyLayerSelectionScript([layer.label]));await pause(200);
         await click('Edit segmentation');
         await js(`(()=>{const s=[...document.querySelectorAll('summary')].find(s=>s.textContent==='Recover supported vessel margins');if(!s)throw Error('Missing source-score margin controls');s.parentElement.open=true})()`);
         await click('Preview supported margins');await ready();await capture('supported-margin-preview');
@@ -112,8 +139,8 @@ app.on('browser-window-created',(_event,window)=>{
       }
       if(!process.env.FIDELITY_INITIAL_ONLY)await runFullVerification({window,js,wait,click,select,ready,capture,pause,report,output,study});
       Object.assign(report,await js('window.fidelityEvents'));
-      report.memory=app.getAppMetrics();report.memoryReceipt=memoryReceipt();report.passed=report.errors.length===0&&report.checks.every(c=>c.passed);
-    }catch(error){report.passed=false;report.failure=error.stack;console.error(error.stack);fs.writeFileSync(path.join(output,'failure.png'),(await window.webContents.capturePage()).toPNG());}
+      report.memory=app.getAppMetrics();report.memoryReceipt=memoryReceipt();report.passed=!report.windowEverVisible&&report.errors.length===0&&report.checks.every(c=>c.passed);
+    }catch(error){report.passed=false;report.failure=error.stack;console.error(error.stack);fs.writeFileSync(path.join(output,'failure.png'),(await captureHiddenPage(window)).toPNG());}
     console.log('Verifying original manifest and every source array');
     const after=inventory();fs.writeFileSync(path.join(output,'source-hashes-after.json'),JSON.stringify(after,null,2));
     report.sourceArrayCount=Object.keys(before).length-1;report.sourceUnchanged=JSON.stringify(before)===JSON.stringify(after);
@@ -124,14 +151,15 @@ app.on('browser-window-created',(_event,window)=>{
 });
 async function runFullVerification({window,js,wait,click,select,ready,capture,pause,report,output,study}){
   const assert=(condition,message)=>{if(!condition)throw Error(message)};
+  const present=label=>click(label,'.anatomy-presets button');
   const primaryLabels=sourceDocument.layers.filter(layer=>!['brain-region','review-region','head-envelope'].includes(layer.kind)).map(layer=>'Show '+layer.label);
-  const step=async(name,action)=>{if(motionOnly&&!/source scope|orbit motion|cutaway controls|CTA axial showcase/.test(name))return;if(!motionOnly&&showcaseOnly&&!/source scope|presented orbit FPS|orbit motion|cutaway controls|CTA axial showcase|native save/.test(name))return;if(!motionOnly&&process.env.FIDELITY_RECHECK&&!showcaseOnly&&!(captureRecheck?/source scope|presented orbit FPS|orbit motion|cutaway controls|CTA axial showcase|native save/:/presented orbit FPS|native save/).test(name))return;console.log('Checking '+name);try{const evidence=await action();report.checks.push({name,passed:true,evidence})}catch(error){report.checks.push({name,passed:false,error:error.stack});console.error(name+': '+error.message);fs.writeFileSync(path.join(output,'failure-'+name.replace(/[^a-z0-9]+/gi,'-')+'.png'),(await window.webContents.capturePage()).toPNG())}};
-  const state=()=>js(`({source:document.querySelector('select[aria-label="Source scan"]').value,presentation:[...document.querySelectorAll('.anatomy-presets button')].filter(b=>b.getAttribute('aria-pressed')==='true').map(b=>b.textContent),scope:document.querySelector('select[aria-label="Vessel display"]')?.value,framing:{fit:document.querySelector('select[aria-label="Source slice fit"]')?.value,zoom:document.querySelector('button[aria-label="Reset source slice zoom"]')?.textContent},layers:[...document.querySelectorAll('.compact-layer input[type="checkbox"]')].map(c=>({label:c.getAttribute('aria-label'),checked:c.checked})),cursor:document.querySelector('.rl-viewer-statusbar>span')?.textContent,slices:[...document.querySelectorAll('.rl-viewer-slice-image')].map(e=>e.getAttribute('aria-label')),provenance:document.querySelector('.presentation-source')?.textContent,warning:document.querySelector('.alignment-banner')?.textContent??document.body.innerText.split('\\n').filter(s=>/alignment|align|source|estimated/i.test(s)).join(' | ')})`);
+  const step=async(name,action)=>{if(motionOnly&&!/source scope|orbit motion|cutaway controls|CTA axial showcase/.test(name))return;if(!motionOnly&&showcaseOnly&&!/source scope|presented orbit FPS|orbit motion|cutaway controls|CTA axial showcase|native save/.test(name))return;if(!motionOnly&&process.env.FIDELITY_RECHECK&&!showcaseOnly&&!(captureRecheck?/source scope|presented orbit FPS|orbit motion|cutaway controls|CTA axial showcase|native save/:/presented orbit FPS|native save/).test(name))return;console.log('Checking '+name);try{const evidence=await action();report.checks.push({name,passed:true,evidence})}catch(error){report.checks.push({name,passed:false,error:error.stack});console.error(name+': '+error.message);fs.writeFileSync(path.join(output,'failure-'+name.replace(/[^a-z0-9]+/gi,'-')+'.png'),(await captureHiddenPage(window)).toPNG())}};
+  const state=()=>js(`({source:document.querySelector('select[aria-label="Source scan"]').value,presentation:[...document.querySelectorAll('.anatomy-presets button')].filter(b=>b.getAttribute('aria-pressed')==='true').map(b=>b.textContent),scope:document.querySelector('select[aria-label="Vessel display"]')?.value,framing:{fit:document.querySelector('select[aria-label="Source slice fit"]')?.value,zoom:document.querySelector('button[aria-label="Reset source slice zoom"]')?.textContent},layers:${studyLayerVisibilityScript()},cursor:document.querySelector('.rl-viewer-statusbar>span')?.textContent,slices:[...document.querySelectorAll('.rl-viewer-slice-image')].map(e=>e.getAttribute('aria-label')),provenance:document.querySelector('.presentation-source')?.textContent,warning:document.querySelector('.alignment-banner')?.textContent??document.body.innerText.split('\\n').filter(s=>/alignment|align|source|estimated/i.test(s)).join(' | ')})`);
   const close=async()=>{await js(`document.querySelector('button[aria-label="Close view controls"]')?.click()`);await pause(150)};
   const setRange=async(label,value)=>{await js(`(()=>{const e=[...document.querySelectorAll('input')].find(e=>e.getAttribute('aria-label')===${JSON.stringify(label)});if(!e)throw Error('Missing range '+${JSON.stringify(label)});Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set.call(e,${JSON.stringify(String(value))});e.dispatchEvent(new Event('input',{bubbles:true}));e.dispatchEvent(new Event('change',{bubbles:true}))})()`);await pause(200)};
   const center=selector=>js(`(()=>{const e=document.querySelector(${JSON.stringify(selector)});if(!e)throw Error('Missing pane');const r=e.getBoundingClientRect();return {x:Math.round(r.x+r.width*.5),y:Math.round(r.y+r.height*.5),w:r.width,h:r.height}})()`);
   const mouseClick=async point=>{window.webContents.sendInputEvent({type:'mouseDown',x:point.x,y:point.y,button:'left',clickCount:1});await pause(30);window.webContents.sendInputEvent({type:'mouseUp',x:point.x,y:point.y,button:'left',clickCount:1});await pause(350)};
-  const toggle=async(label)=>{await js(`(()=>{const e=[...document.querySelectorAll('input[type="checkbox"]')].find(e=>e.getAttribute('aria-label')===${JSON.stringify(label)});if(!e||e.disabled)throw Error('Missing enabled toggle '+${JSON.stringify(label)});e.click()})()`);await pause(350)};
+  const toggle=async label=>{await js(studyVisibilityToggleScript(label));await pause(350)};
   const saveNative=async()=>{
     const filename=path.join(study,'workspace-view.json'),previous=fs.existsSync(filename)?fs.statSync(filename).mtimeMs:-1;
     await click('Save');
@@ -142,8 +170,8 @@ async function runFullVerification({window,js,wait,click,select,ready,capture,pa
     throw Error('Native Save did not finish writing workspace-view.json');
   };
   const pane='.rl-viewer-anatomy-image';
-  const motionRoot=path.resolve(process.env.FIDELITY_MOTION_OUTPUT||path.join(__dirname,'../../outputs/medivis-fidelity-v2',caseKind));
-  const record=async(kind)=>{const directory=path.join(motionRoot,kind);fs.mkdirSync(directory,{recursive:true});const frames=[];return async()=>{const index=frames.length+1,filename=path.join(directory,String(index).padStart(4,'0')+'.png'),at=performance.now();fs.writeFileSync(filename,(await window.webContents.capturePage()).toPNG());const item={index,at,capturedAt:performance.now(),path:filename,kind,captureMethod:'capturePage'};frames.push(item);report.motion.push(item);return item}};
+  const motionRoot=path.resolve(process.env.FIDELITY_MOTION_OUTPUT||path.join(output,'motion'));
+  const record=async(kind)=>{const directory=path.join(motionRoot,kind);fs.mkdirSync(directory,{recursive:true});const frames=[];return async()=>{const index=frames.length+1,filename=path.join(directory,String(index).padStart(4,'0')+'.png'),at=performance.now();fs.writeFileSync(filename,(await captureHiddenPage(window)).toPNG());const item={index,at,capturedAt:performance.now(),path:filename,kind,captureMethod:'capturePage'};frames.push(item);report.motion.push(item);return item}};
   const orbit=async({recordFrames=false,recordKind='orbit',count=90,button='left',distance=120}={})=>{
     const point=await center(pane),deliveredCapture=recordFrames&&fluidMotion;
     const captureFrame=recordFrames&&!deliveredCapture?await record(recordKind):null;
@@ -198,9 +226,9 @@ async function runFullVerification({window,js,wait,click,select,ready,capture,pa
     return {dragStarted,dragEnded,dragMilliseconds:dragEnded-dragStarted,idleMilliseconds:performance.now()-dragEnded};
   };
   const initial=await state();
-  await step('source scope and provenance',async()=>{assert(initial.scope==='all','Source vessel fragments were silently filtered');assert(initial.provenance?.length>0,'Missing source provenance');assert(primaryLabels.every(label=>initial.layers.find(layer=>layer.label===label)?.checked),'A primary supplied anatomy layer was silently disabled');if(profile.ct){assert(sourceDocument.series.find(s=>s.id===initial.source)?.modality==='CTA','CT vascular evidence lacks a declared acquired CTA');assert(vesselLabels.some(label=>/arterial/i.test(label))&&vesselLabels.some(label=>/venous/i.test(label)),'CTA source labels are not separately represented')} return initial});
-  await step('vascular presentation preserves primary selections',async()=>{await click('Vascular');await ready();await click('Fit 3D');await capture(caseKind+'-vascular-fit');const next=await state();assert(JSON.stringify(next.layers)===JSON.stringify(initial.layers),'Presentation changed selected structures');assert(next.scope==='all','Presentation filtered source fragments');assert(profile.provenance.test(next.provenance),'Modality provenance is misleading');return next});
-  await step('structures and volume remain reversible',async()=>{await click('Structures');await capture('structures-only');assert(await js(`document.querySelector('button[aria-label="Show structures only"]').getAttribute('aria-pressed')==='true'`),'Structures button did not select mesh-only mode');await click('Volume');await capture('volume-and-structures');assert(await js(`document.querySelector('button[aria-label="Show scan volume with structures"]').getAttribute('aria-pressed')==='true'`),'Volume button did not restore scalar rendering');return await state()});
+  await step('source scope and provenance',async()=>{assert(initial.scope==='all','Source vessel fragments were silently filtered');assert(initial.provenance?.length>0,'Missing source provenance');assert(primaryLabels.every(label=>initial.layers.some(layer=>layer.label===label)),'The inventory omitted a primary supplied source label');assert(primaryLabels.every(label=>initial.layers.find(layer=>layer.label===label).checked===report.startupPresentation.layers.find(layer=>layer.label===label)?.checked),'A presentation or scan switch changed the restored source anatomy selection');if(profile.ct){assert(sourceDocument.series.find(s=>s.id===initial.source)?.modality==='CTA','CT vascular evidence lacks a declared acquired CTA');assert(vesselLabels.some(label=>/arterial/i.test(label))&&vesselLabels.some(label=>/venous/i.test(label)),'CTA source labels are not separately represented')} return initial});
+  await step('vascular presentation preserves primary selections',async()=>{await present('Vessels');await ready();await click('Fit 3D');await capture(caseKind+'-vascular-fit');const next=await state();assert(JSON.stringify(next.layers)===JSON.stringify(initial.layers),'Presentation changed selected structures');assert(next.scope==='all','Presentation filtered source fragments');assert(profile.provenance.test(next.provenance),'Modality provenance is misleading');return next});
+  await step('structures and volume remain reversible',async()=>{await click('Show structures only');await capture('structures-only');assert(await js(`document.querySelector('button[aria-label="Show structures only"]').getAttribute('aria-pressed')==='true'`),'Structures button did not select mesh-only mode');await click('Show scan volume with structures');await capture('volume-and-structures');assert(await js(`document.querySelector('button[aria-label="Show scan volume with structures"]').getAttribute('aria-pressed')==='true'`),'Volume button did not restore scalar rendering');return await state()});
   await step('modality-safe preset controls and contour style',async()=>{await click('Appearance');const options=await js(`[...document.querySelector('select[aria-label="Volume rendering preset"]').options].map(o=>({value:o.value,disabled:o.disabled,label:o.textContent}))`);assert(options.filter(o=>o.value.startsWith('ct-')).every(o=>o.disabled===!profile.ct),profile.ct?'CT presets disabled on declared CTA':'CT presets enabled on MRI');if(profile.ct){await select('Volume rendering preset','ct-bone');await close();await capture('cta-bone-context');await click('Appearance');await select('Volume rendering preset','ct-angiography');await close();await capture('cta-angiography-source');await click('Appearance');await select('Volume rendering preset','auto')}const current=await js(`document.querySelector('select[aria-label="Slice annotation style"]').value`);assert(current==='contour','Presentation did not select contours');await select('Slice annotation style','fill');await close();await capture('slice-filled');await click('Appearance');await select('Slice annotation style','contour');await close();await capture('slice-contours');return options});
   await step('uniform and shell context retain source scope and camera',async()=>{
     await click('Fit 3D');const before=await state(),eventStart=await js('window.fidelityEvents.frames.length');
@@ -213,10 +241,10 @@ async function runFullVerification({window,js,wait,click,select,ready,capture,pa
     const evidence=[];
     const cursor=async()=>{const text=(await state()).cursor,match=text.match(/RAS\s+(-?[\d.]+)\s*\/\s*(-?[\d.]+)\s*\/\s*(-?[\d.]+)/);assert(match,'Missing numeric RAS coordinates');return match.slice(1).map(Number)};
     for(const fit of ['image','anatomy']){
-      await select('Source slice fit',fit);
-      await js(`document.querySelector('button[aria-label="Reset source slice zoom"]').click()`);await pause(250);
+      await click('Layout');await select('Source slice fit',fit);
+      await js(`document.querySelector('button[aria-label="Reset source slice zoom"]').click()`);await close();await pause(250);
       for(const zoomed of [false,true]){
-        if(zoomed){await js(`document.querySelector('button[aria-label="Zoom source slices in"]').click()`);await pause(250)}
+        if(zoomed){await click('Layout');await js(`document.querySelector('button[aria-label="Zoom source slices in"]').click()`);await close();await pause(250)}
         const metric=await js(`(()=>{const pane=document.querySelector('.rl-viewer-axial .rl-viewer-slice-image'),r=pane.getBoundingClientRect(),scale=pane.querySelector('.rl-viewer-scale');return {x:Math.round(r.x+r.width*.5),y:Math.round(r.y+r.height*.5),pixelsPerMm:scale.getBoundingClientRect().width/parseFloat(scale.textContent),label:pane.getAttribute('aria-label')}})()`);
         assert(metric.pixelsPerMm>0,'Missing physical source scale');
         await mouseClick(metric);const from=await cursor(),pixels=12;
@@ -232,23 +260,23 @@ async function runFullVerification({window,js,wait,click,select,ready,capture,pa
     return evidence;
   });
   await step('linked slice cursor click',async()=>{const before=await state(),point=await center('.rl-viewer-slice-image');await mouseClick({...point,x:point.x+Math.round(point.w*.12)});await capture('linked-slice-click');const after=await state();assert(after.cursor!==before.cursor,'Linked RAS cursor did not move');assert(after.slices.some((s,i)=>s!==before.slices[i]),'Other linked slice positions did not update');return {before:before.cursor,after:after.cursor,slices:after.slices}});
-  const tumor=initial.layers.find(l=>/tumor/i.test(l.label));
-  if(tumor)await step('tumor toggle and cross-scan shared structures',async()=>{await toggle(tumor.label);await capture('tumor-hidden');let next=await state();assert(next.layers.find(l=>l.label===tumor.label)?.checked===false,'Tumor did not hide');const ct=report.scans.find(s=>/ct-brain/i.test(s.value));if(ct){await select('Source scan',ct.value);await ready();assert((await state()).layers.find(l=>l.label===tumor.label)?.checked===false,'Scan switch restored a hidden tumor');await click('Fit 3D');await capture('ct-shared-structures');await select('Source scan',initial.source);await ready();assert((await state()).layers.find(l=>l.label===tumor.label)?.checked===false,'Return scan restored hidden tumor')}await toggle(tumor.label);await click('Fit 3D');await capture('tumor-restored');return await state()});
-    await step('layer opacity slider',async()=>{const selected=await js(`(()=>{const b=[...document.querySelectorAll('.layer-name')].find(b=>${JSON.stringify(caseKind==='mri'?['brain',...vesselLabels]:vesselLabels)}.includes(b.textContent.trim()));if(!b)throw Error('Missing opacity layer');b.click();return b.textContent.trim()})()`);await pause(200);const label=selected+' opacity',before=await js(`[...document.querySelectorAll('input')].find(e=>e.getAttribute('aria-label')===${JSON.stringify(label)}).value`);await setRange(label,.04);await capture('layer-opacity-low');const low=await js(`[...document.querySelectorAll('input')].find(e=>e.getAttribute('aria-label')===${JSON.stringify(label)}).value`);assert(Math.abs(+low-.04)<.001,'Layer opacity did not update');await setRange(label,+before);await js(`document.querySelector('button[aria-label="Close layer details"]').click()`);return {layer:selected,before,low}});
+  const tumor=initial.layers.find(row=>sourceDocument.layers.some(layer=>layer.id===row.id&&layer.kind==='tumor'));
+  if(tumor)await step('tumor toggle and cross-scan shared structures',async()=>{if(!tumor.checked)await toggle(tumor.label);await toggle(tumor.label);await capture('tumor-hidden');let next=await state();assert(next.layers.find(l=>l.label===tumor.label)?.checked===false,'Tumor did not hide');const ct=report.scans.find(s=>/ct-brain/i.test(s.value));if(ct){await select('Source scan',ct.value);await ready();assert((await state()).layers.find(l=>l.label===tumor.label)?.checked===false,'Scan switch restored a hidden tumor');await click('Fit 3D');await capture('ct-shared-structures');await select('Source scan',initial.source);await ready();assert((await state()).layers.find(l=>l.label===tumor.label)?.checked===false,'Return scan restored hidden tumor')}if(tumor.checked)await toggle(tumor.label);await click('Fit 3D');await capture('tumor-restored');const restored=await state();assert(restored.layers.find(layer=>layer.id===tumor.id)?.checked===tumor.checked,'Source target visibility did not restore its initial selection');return restored});
+    await step('layer opacity slider',async()=>{const selected=await js(studyLayerSelectionScript(caseKind==='mri'?['brain',...vesselLabels]:vesselLabels));await pause(200);const label=selected+' opacity',before=await js(`[...document.querySelectorAll('input')].find(e=>e.getAttribute('aria-label')===${JSON.stringify(label)}).value`);await setRange(label,.04);await capture('layer-opacity-low');const low=await js(`[...document.querySelectorAll('input')].find(e=>e.getAttribute('aria-label')===${JSON.stringify(label)}).value`);assert(Math.abs(+low-.04)<.001,'Layer opacity did not update');await setRange(label,+before);await js(`document.querySelector('button[aria-label="Close layer details"]').click()`);return {layer:selected,before,low}});
   await step('source fragment inspection highlights and locates without accepting a correction',async()=>{
     const before=await state();
-    await js(`(()=>{const b=[...document.querySelectorAll('.layer-name')].find(b=>${JSON.stringify(vesselLabels)}.includes(b.textContent.trim()));if(!b)throw Error('Missing vessel layer');b.click()})()`);await pause(200);
-    await click('Inspect vessel fragments');await ready();await wait(`!!document.querySelector('.component-list input[type="checkbox"]')`,60);await capture('fragment-review-source');
+    await js(studyLayerSelectionScript(vesselLabels));await pause(200);
+    await click('Edit segmentation');await click('Inspect vessel fragments');await ready();await wait(`!!document.querySelector('.component-list input[type="checkbox"]')`,60);await capture('fragment-review-source');
     const selected=await js(`(()=>{const e=document.querySelector('.component-list input[type="checkbox"]');e.click();return e.getAttribute('aria-label')})()`);await ready();
     await js(`document.querySelector('.component-list input[type="checkbox"]').parentElement.querySelector('button').click()`);await pause(300);await capture('fragment-selected-linked');
     const highlighted=await state();assert(highlighted.scope==='all','Fragment inspection restricted source scope');assert(highlighted.cursor!==before.cursor,'Fragment locate did not move linked cursor');
     await toggle(selected);await ready();await js(`document.querySelector('button[aria-label="Close layer details"]').click()`);await capture('fragment-review-restored-source');
     const after=await state();assert(after.scope==='all','Full source was not restored');assert(!await js(`!!document.querySelector('.unified-correction')`),'Fragment inspection unexpectedly entered a correction draft');return {selected,before:before.cursor,located:highlighted.cursor,sourceScope:after.scope,acceptedCorrection:false};
   });
-  await step('presented orbit FPS without capture for intact default presentations',async()=>{
+  await step('presented orbit FPS without capture for current source selections',async()=>{
     const benchmarks=[];
-    for(const presentation of (showcaseOnly||captureRecheck?[profile.presentation]:caseKind==='mri'?['Segmentation','Vascular']:['Vascular'])){
-      await close();await click(presentation);await ready();await click('Fit 3D');await pause(1000);
+    for(const presentation of (showcaseOnly||captureRecheck?[profile.presentation]:caseKind==='mri'?['Scan','Structures','Vessels']:['Scan','Vessels'])){
+      await close();await present(presentation);await ready();await click('Fit 3D');await pause(1000);
       const baseline=await state(),eventStart=await js('window.fidelityEvents.refinement.length');
       assert(baseline.scope==='all','Performance presentation restricted source fragments');
       const timestamps=[];window.webContents.beginFrameSubscription(true,()=>timestamps.push(performance.now()));
@@ -259,7 +287,7 @@ async function runFullVerification({window,js,wait,click,select,ready,capture,pa
       const refinement=await js(`window.fidelityEvents.refinement.slice(${eventStart}).filter(e=>e.completed)`),refinementMs=refinement.map(e=>e.milliseconds).sort((a,b)=>a-b);
       const result={presentation,source:baseline.source,sourceScope:baseline.scope,clipping:'disabled by presentation reset',...drag,deliveredFrames:dragFrames.length,totalSubscriptionFrames:timestamps.length,totalElapsedMs:elapsed,medianFps:intervals.length?1000/intervals[Math.floor(intervals.length*.5)]:null,p95FrameMs:intervals.length?intervals[Math.floor(intervals.length*.95)]:null,captureOverhead:false,cpuEnvironment:'run after desktop/Python suites completed',refinement:{durationField:'milliseconds',completedCount:refinement.length,p50Ms:refinementMs[Math.floor(refinementMs.length*.5)]??null,p95Ms:refinementMs[Math.min(refinementMs.length-1,Math.floor(refinementMs.length*.95))]??null,maxMs:Math.max(0,...refinementMs)}};
       assert(dragFrames.length>1,'No frames were presented during orbit');benchmarks.push(result);
-      await capture('intact-'+presentation.toLowerCase()+'-benchmark');
+      await capture('selected-'+presentation.toLowerCase()+'-benchmark');
     }
     report.performanceBenchmarks=benchmarks;return benchmarks;
   });
@@ -268,7 +296,7 @@ async function runFullVerification({window,js,wait,click,select,ready,capture,pa
 
 
   if(profile.ct)await step('CTA axial showcase retains source artery vein labels',async()=>{
-    await close();await click('Vascular');await ready();await click('Fit 3D');await capture('cta-polished-default');
+    await close();await present('Vessels');await ready();await click('Fit 3D');await capture('cta-polished-default');
     const before=await state();assert(before.scope==='all','CTA showcase restricted source vessel labels');
     await select('Skull view','exterior');await ready();await capture('cta-opaque-high-attenuation-context');
     // The explicit native cutaway control selects +RAS superior removal, keeps

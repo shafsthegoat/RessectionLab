@@ -28,7 +28,10 @@ def test_original_header_bounds_and_native_shape_are_checked_before_pixel_alloca
     source.collection.series('T1')['original'] = source.collection.original(path)
     def forbidden(*a, **k): pytest.fail('Invalid original header reached pixel allocation')
     monkeypatch.setattr(nib.Nifti2Image, 'get_fdata', forbidden)
-    with pytest.raises(ValueError, match=reason): verify(source)
+    with pytest.raises(ValueError, match='Original native geometry differs'):
+        source.export()
+    with pytest.raises(ValueError, match=reason):
+        decode.verify_original_decodes(source.collection, {'sourceLayers': {}}, check=lambda: None)
 
 
 @pytest.fixture(autouse=True)
@@ -150,10 +153,22 @@ def test_coordinated_native_reseal_cannot_substitute_acquired_original(source, m
         data = source.pixels.copy(); data[6, 6, 6] += 1.; image['data'] = c.put_array(data)
     elif change == 'mri-affine':
         matrix = source.affine.copy(); matrix[0, 3] += .25; image['affine'] = matrix.tolist()
+        with pytest.raises(ValueError, match='Original native geometry differs'):
+            source.export()
+        with pytest.raises(ValueError, match='imaging affine differs'):
+            decode.verify_original_decodes(c, {'sourceLayers': {}}, check=lambda: None)
+        return
     elif change == 'mri-spacing': image['grid_spacing_mm'][0] = 1.01
     elif change.startswith('categorical-'):
         if change == 'categorical-affine':
             matrix = source.affine.copy(); matrix[0, 3] += .25; tumor['affine'] = matrix.tolist()
+            with pytest.raises(ValueError, match='Original native geometry differs'):
+                source.export()
+            with pytest.raises(ValueError, match='categorical annotation affine differs'):
+                decode.verify_original_decodes(c, {'sourceLayers': {
+                    'tumor': {'layerId': 'tumor', 'provenance': tumor['provenance']},
+                }}, check=lambda: None)
+            return
         else:
             data = source.labels.copy()
             if change == 'categorical-pixels': data[5, 5, 5] = 0
@@ -234,20 +249,30 @@ def test_paired_nifti_cannot_read_an_unfingerprinted_image_sidecar(source):
 @pytest.mark.parametrize('units,shift,shape_change,passes', [
     ('unknown', 0., False, True), ('unknown', .25, False, False), ('unknown', 0., True, False),
     ('meter', 0., False, False), ('micron', 0., False, False)])
-def test_unknown_annotation_units_inherit_only_exact_verified_parent_grid(source, monkeypatch, units, shift, shape_change, passes):
+def test_unknown_annotation_units_inherit_only_exact_verified_parent_grid(source, units, shift, shape_change, passes):
     data = source.labels[:-1] if shape_change else source.labels
     matrix = source.affine.copy(); matrix[0, 3] += shift
     source.replace_annotation(data, units=units, matrix=matrix)
     row = source.collection.layer('tumor'); row['data'] = source.collection.put_array(data); row['affine'] = matrix.tolist()
-    if passes: assert verify(source)
-    else: old_integrity_accepts_but_decode_refuses(source, monkeypatch, 'units are not bound')
+    if passes:
+        assert verify(source)
+    else:
+        with pytest.raises(ValueError, match='declared millimeter units'):
+            source.export()
+        with pytest.raises(ValueError, match='units are not bound'):
+            decode.verify_original_decodes(source.collection, {'sourceLayers': {
+                'tumor': {'layerId': 'tumor', 'provenance': row['provenance']},
+            }}, check=lambda: None)
 
 
 @pytest.mark.parametrize('units', ['unknown', 'meter', 'micron'])
-def test_native_mm_claim_cannot_override_original_image_units(source, monkeypatch, units):
+def test_native_mm_claim_cannot_override_original_image_units(source, units):
     path = source.nifti(source.root/'wrong-unit-image.nii.gz', source.pixels, units=units)
     source.collection.series('T1')['original'] = source.collection.original(path)
-    old_integrity_accepts_but_decode_refuses(source, monkeypatch, 'imaging units differ')
+    with pytest.raises(ValueError, match='declared millimeter units'):
+        source.export()
+    with pytest.raises(ValueError, match='imaging units differ'):
+        decode.verify_original_decodes(source.collection, {'sourceLayers': {}}, check=lambda: None)
 
 
 def test_model_estimates_are_not_recast_as_observed_categorical_originals(source):

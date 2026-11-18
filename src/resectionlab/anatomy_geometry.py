@@ -3,11 +3,12 @@
 from __future__ import annotations
 import os
 import tempfile
+from time import perf_counter
 import numpy as np
 from scipy import ndimage as ndi
 from skimage.morphology import skeletonize
 from .patient_anatomy import digest, affine, world
-from .surface_fairing import fair_surface, POLICY
+from .surface_fairing import fair_surface, surface_kind, NATIVE_POLICY, POLICY
 
 
 def _save_cache(path, values):
@@ -23,16 +24,17 @@ def _save_cache(path, values):
 
 
 def _poly(values, probability):
-    import vtk
-    from vtk.util.numpy_support import numpy_to_vtk
-    image = vtk.vtkImageData()
+    from vtkmodules.vtkCommonDataModel import vtkImageData
+    from vtkmodules.vtkFiltersCore import vtkFlyingEdges3D, vtkSurfaceNets3D
+    from vtkmodules.util.numpy_support import numpy_to_vtk
+    image = vtkImageData()
     image.SetDimensions(*values.shape)
     image.GetPointData().SetScalars(numpy_to_vtk(np.asarray(values).ravel(order="F"), deep=True))
     if probability:
-        contour = vtk.vtkFlyingEdges3D()
+        contour = vtkFlyingEdges3D()
         contour.SetValue(0, 0.5)
     else:
-        contour = vtk.vtkSurfaceNets3D()
+        contour = vtkSurfaceNets3D()
         contour.SetValue(0, 1)
         contour.SetOutputMeshTypeToQuads()
         contour.SmoothingOff()
@@ -42,7 +44,7 @@ def _poly(values, probability):
 
 
 def _arrays(poly):
-    from vtk.util.numpy_support import vtk_to_numpy
+    from vtkmodules.util.numpy_support import vtk_to_numpy
 
     if not poly.GetNumberOfPoints():
         return np.empty((0, 3), np.float32), np.empty((0, 3), np.uint32)
@@ -75,9 +77,13 @@ def normals(points, faces):
 
 def mesh(collection, row, *, cancelled=lambda: False):
     """Separate source/display mesh; same connectivity, bounded local movement."""
+    started = perf_counter()
+    profile = surface_kind(row["kind"])
+    native = profile != "vessel"
+    version = NATIVE_POLICY["version"] if native else POLICY["version"]
     key = digest(
         {
-            "algorithm": POLICY["version"],
+            "algorithm": version,
             "data": row["data"],
             "probability": row.get("probability"),
             "affine": row["affine"],
@@ -90,19 +96,23 @@ def mesh(collection, row, *, cancelled=lambda: False):
     cache.parent.mkdir(exist_ok=True)
     if cache.exists():
         with np.load(cache, allow_pickle=False) as z:
-            return {k: z[k] for k in z.files}
+            result = {k: z[k] for k in z.files}
+        return {**result, "cache_hit": True, "preparation_ms": (perf_counter()-started)*1000}
     mask = collection.mask(row)
-    where = np.nonzero(mask)
-    if not len(where[0]):
+    bounds = [np.flatnonzero(mask.any(axis=tuple(i for i in range(3) if i != axis))) for axis in range(3)]
+    if not len(bounds[0]):
         return {
             "source": np.empty((0, 3), np.float32),
             "positions": np.empty((0, 3), np.float32),
             "normals": np.empty((0, 3), np.float32),
             "indices": np.empty((0, 3), np.uint32),
             "max_displacement_mm": np.array(0.0),
+            "policy_version": version,
+            "cache_hit": False,
+            "preparation_ms": (perf_counter()-started)*1000,
         }
-    lo = np.maximum(0, np.array([v.min() for v in where]) - 2)
-    hi = np.minimum(mask.shape, np.array([v.max() for v in where]) + 3)
+    lo = np.maximum(0, np.array([axis[0] for axis in bounds]) - 2)
+    hi = np.minimum(mask.shape, np.array([axis[-1] for axis in bounds]) + 3)
     slices = tuple(slice(a, b) for a, b in zip(lo, hi))
     cropped = mask[slices]
     probability = "probability" in row and not row.get("edits")
@@ -131,8 +141,10 @@ def mesh(collection, row, *, cancelled=lambda: False):
     # Quantize in final source coordinates before all geometry safety checks.
     offset = lo - 1
     raw = (raw + offset).astype(np.float32)
-    smoothed, diagnostics = fair_surface(raw, faces, a, row["kind"],
-        mask=np.pad(cropped, 1), mask_origin=offset, cancelled=cancelled)
+    smoothed, diagnostics = fair_surface(
+        raw, faces, a, row["kind"], mask=np.pad(cropped, 1) if profile == "vessel" else None,
+        mask_origin=offset, native=native, cancelled=cancelled,
+    )
     rejected = diagnostics["restoredComponents"] > 0
     result = {
         "source": raw,
@@ -142,17 +154,18 @@ def mesh(collection, row, *, cancelled=lambda: False):
         "smoothing_rejected": np.array(rejected),
         "restored_components": np.array(diagnostics["restoredComponents"]),
         "backed_off_vertices": np.array(diagnostics["backedOffVertices"]),
-        "policy_version": np.array(POLICY["version"]),
+        "policy_version": np.array(version),
         "fallback_reason": np.array(diagnostics.get("fallbackReason", "")),
         "source_degenerate_faces_removed": np.array(degenerate),
-        "max_displacement_mm": np.array(
-            np.linalg.norm((smoothed - raw) @ a[:3, :3].T, axis=1).max(initial=0)
-        ),
+        "max_displacement_mm": np.array(diagnostics["maxDisplacementMm"]),
     }
+    if "maxComponentVolumeChangeFraction" in diagnostics:
+        result["max_component_volume_change_fraction"] = np.array(diagnostics["maxComponentVolumeChangeFraction"])
+        result["volume_restored_components"] = np.array(diagnostics["volumeRestoredComponents"])
     if cancelled():
         raise InterruptedError("Mesh preparation cancelled before cache admission")
     _save_cache(cache, result)
-    return result
+    return {**result, "cache_hit": False, "preparation_ms": (perf_counter()-started)*1000}
 
 
 def vessel_graph(mask, native_affine):

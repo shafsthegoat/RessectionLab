@@ -41,3 +41,27 @@
 .native-workspace.poc-workbench .workspace-heading h2{font-size:20px;letter-spacing:-.3px}
 .native-workspace.poc-workbench .anatomy-panel{padding:16px 16px 10px}
 @media(max-width:1150px){.native-workspace.poc-workbench.anatomy-only{grid-template-columns:54px 244px minmax(0,1fr)}.native-workspace.poc-workbench.anatomy-only.case-panel-collapsed{grid-template-columns:54px 0 minmax(0,1fr)}}
+
+.intake-review{border:1px solid #29404c;border-radius:7px;margin:12px 0;padding:10px;min-width:0}
+.intake-item+.intake-item{border-top:1px solid #29404c;margin-top:10px;padding-top:10px}
+.intake-heading{display:flex;gap:8px;justify-content:space-between;align-items:center}
+.intake-heading strong{overflow-wrap:anywhere}
+.intake-label{display:grid;grid-template-columns:minmax(48px,.5fr) minmax(90px,1fr);align-items:end;gap:6px}
+.intake-label label{margin:2px 0}
+.unified-details .intake-confirm{display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+.intake-confirm input{margin-top:2px;accent-color:#66cbb8}
+.preparation-panel h2{font-size:14px;margin:0 0 10px;color:#deeaef}
+.preparation-stages{list-style:none;margin:6px 0;padding:0}
+.preparation-stages li{padding:8px 0;border-bottom:1px solid #21333d}
+.preparation-stages li>div{display:flex;justify-content:space-between;gap:10px}
+.preparation-stages li span{color:#9fbdba;text-align:right}
+.preparation-stages p{margin:4px 0 0}
+.preparation-progress{display:grid;gap:8px;margin-top:10px}
+.preparation-progress progress{width:100%;accent-color:#66cbb8}
+
+.native-study-readiness{border-top:1px solid #21333d;margin:14px 0;padding:6px 0}
+.native-study-readiness p{color:#99afba;font-size:11px;line-height:1.6;margin:8px 0}
+.native-evidence-detail dl{margin:0}
+.native-evidence-detail dl div{display:grid;grid-template-columns:1fr 1.3fr;gap:8px;padding:6px 0;border-bottom:1px solid #21333d}
+.native-evidence-detail dt{color:#91a4af}
+.native-evidence-detail dd{margin:0;color:#deeaef;overflow-wrap:anywhere}

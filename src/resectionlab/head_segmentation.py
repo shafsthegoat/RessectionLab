@@ -12,15 +12,13 @@ import argparse
 import importlib
 import itertools
 import json
-import os
-import signal
-import subprocess
 import sys
 import time
 import types
 import numpy as np
 from .data_root import atomic_json,sha256_file
 
+MODEL_VERSION='FreeSurfer v8.2.0 / SuperSynth August 2025'
 MODEL_SHA='7f75926757070f53e1e43c4bf31dafe2e599ef56438ce60347f12e9133bffd1d'
 ASSETS={'SuperSynth_August_2025.pth':MODEL_SHA,
  'frugal_models.py':'99267132490967c19a99224f8be724082bea53a94950776ee49530109e179601',
@@ -57,6 +55,8 @@ def _worker(request):
     source=Path(request['source']);out=Path(request['output']);model_root=load_assets(request['model_root'])
     inspect_nifti(source);source_sha=sha256_file(source)
     if source_sha!=request['source_sha256']:raise ValueError('Source changed before inference')
+    if not torch.backends.mps.is_available():
+        raise RuntimeError('The pinned tiled SuperSynth worker requires MPS')
     torch.set_num_threads(2);torch.mps.set_per_process_memory_fraction(.5)
     module=types.ModuleType('SuperSynth');module.__path__=[str(model_root)];sys.modules['SuperSynth']=module
     utils=importlib.import_module('SuperSynth.utils');upstream=importlib.import_module('SuperSynth.frugal_models')
@@ -77,6 +77,8 @@ def _worker(request):
     canonical=nib.as_closest_canonical(nib.Nifti1Image(input.numpy(),affine))
     values=np.asarray(canonical.dataobj,dtype=np.float32).copy();affine=canonical.affine.copy();values/=values.max()
     shape=np.array(values.shape);padded=np.maximum(PARAMETERS['patch'],((shape+15)//16)*16);offset=(padded-shape)//2
+    if int(np.prod(padded)) > 28_000_000:
+        raise MemoryError('Resampled SuperSynth field exceeds the local logit workspace limit')
     roi=tuple(slice(int(a),int(a+b))for a,b in zip(offset,shape))
     field=torch.zeros(tuple(padded),dtype=torch.float16,device='mps');field[roi]=torch.tensor(values,device='mps',dtype=torch.float16)
     del input,values,canonical
@@ -107,44 +109,54 @@ def _worker(request):
         'parameters':PARAMETERS,'clinical_validation':False,'mps_driver_bytes_after_release':torch.mps.driver_allocated_memory()})
 
 
-def segment_head(source,output,model_root,*,timeout=600):
-    """Serialize a resource-bounded worker and retain failed attempts separately."""
-    import psutil
+def segment_head(source, output, model_root, *, timeout=600, cancelled=lambda: False, retry=False):
+    """Serialize the pinned worker. Each retry keeps a separate attempt receipt."""
+    from .anatomy_models import run_bounded
     from .patient_anatomy import reconstruction_lock
-    source=Path(source).resolve();output=Path(output).resolve();model_root=Path(model_root).resolve()
-    identity={'source_sha256':sha256_file(source),'model_sha256':MODEL_SHA,'adapter_sha256':sha256_file(Path(__file__)),
-        'parameters':PARAMETERS}
+
+    source, output, model_root = (Path(item).resolve() for item in (source, output, model_root))
+    identity = {"source_sha256": sha256_file(source), "model_sha256": MODEL_SHA,
+                "adapter_sha256": sha256_file(Path(__file__)), "parameters": PARAMETERS}
     with reconstruction_lock():
-        record_path=output/'inference.json'
-        if record_path.exists():
-            record=json.loads(record_path.read_text())
-            if record.get('status')=='succeeded'and record['identity']==identity:
-                if sha256_file(output/'labels_1mm.nii.gz')!=record['output_sha256']:raise ValueError('Cached head labels changed')
+        if cancelled():
+            raise InterruptedError("Head segmentation cancelled before inference")
+        attempts = [output, *sorted(output.parent.glob(output.name + "-retry-*"))] if retry else [output]
+        for attempt in attempts:
+            receipt = attempt / "inference.json"
+            if not receipt.exists():
+                continue
+            record = json.loads(receipt.read_text())
+            if record.get("status") == "succeeded" and record["identity"] == identity:
+                if sha256_file(attempt / "labels_1mm.nii.gz") != record["output_sha256"]:
+                    raise ValueError("Cached head labels changed")
                 return record
-            raise ValueError('Preserve a prior different/failed inference attempt; use a new output directory')
-        output.mkdir(parents=True,exist_ok=True)
-        request={**identity,'source':str(source),'output':str(output),'model_root':str(model_root)}
-        atomic_json(output/'request.json',request)
-        command=[sys.executable,'-u','-m','resectionlab.head_segmentation','--worker',str(output/'request.json')]
-        started=time.monotonic();peak=0;failure=None
-        with (output/'run.log').open('w')as log:
-            process=subprocess.Popen(command,stdout=log,stderr=subprocess.STDOUT,start_new_session=True,
-                env={**os.environ,'PYTHONPATH':str(Path(__file__).resolve().parents[1]),'OMP_NUM_THREADS':'2','OPENBLAS_NUM_THREADS':'2','PYTORCH_ENABLE_MPS_FALLBACK':'1'})
-            while process.poll()is None:
-                try:
-                    family=psutil.Process(process.pid);rss=sum(p.memory_info().rss for p in [family,*family.children(recursive=True)]);peak=max(peak,rss)
-                except psutil.NoSuchProcess:break
-                if time.monotonic()-started>timeout or rss>6*1024**3 or psutil.virtual_memory().available<1.25*1024**3:
-                    failure='resource_guard';os.killpg(process.pid,signal.SIGTERM);process.wait();break
-                time.sleep(.5)
-            code=process.wait()
-        record={'identity':identity,'source':str(source),'output':str(output),'status':'succeeded'if code==0 and failure is None else 'failed',
-            'exit_code':code,'failure':failure,'seconds':time.monotonic()-started,'peak_sampled_rss_bytes':peak,
-            'created_utc':datetime.now(timezone.utc).isoformat(),'clinical_validation':False}
-        if record['status']=='succeeded':record.update(json.loads((output/'worker.json').read_text()))
-        atomic_json(record_path,record)
-        if record['status']!='succeeded':raise RuntimeError('Head segmentation failed; inspect '+str(output/'run.log'))
+            if not retry:
+                raise ValueError("Prior different or failed inference attempt exists; choose a new output directory")
+        if retry and output.exists():
+            output = output.with_name(output.name + "-retry-" + datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%f"))
+        output.mkdir(parents=True, exist_ok=True)
+        request = {**identity, "source": str(source), "output": str(output), "model_root": str(model_root)}
+        atomic_json(output / "request.json", request)
+        command = [sys.executable, "-u", "-m", "resectionlab.head_segmentation", "--worker", str(output / "request.json")]
+        record = {"identity": identity, "source": str(source), "output": str(output),
+                  "created_utc": datetime.now(timezone.utc).isoformat(), "clinical_validation": False,
+                  "model_version": MODEL_VERSION, "pinned_assets": ASSETS}
+        try:
+            stats = run_bounded(command, output, cancelled=cancelled, timeout=timeout,
+                                memory_bytes=6 * 1024**3, minimum_available_bytes=int(1.25 * 1024**3),
+                                environment_overrides={"PYTHONPATH": str(Path(__file__).resolve().parents[1]),
+                                                       "PYTORCH_ENABLE_MPS_FALLBACK": "1"})
+            record.update(stats)
+            record.update(json.loads((output / "worker.json").read_text()))
+            if cancelled():
+                raise InterruptedError("Head segmentation cancelled before admission")
+        except (OSError, RuntimeError, ValueError, MemoryError) as error:
+            record.update(status="cancelled" if isinstance(error, InterruptedError) else "failed", failure=str(error))
+            atomic_json(output / "inference.json", record)
+            raise
+        atomic_json(output / "inference.json", record)
         return record
+
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser();parser.add_argument('--worker',type=Path,required=True);args=parser.parse_args()

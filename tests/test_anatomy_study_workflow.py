@@ -10,6 +10,26 @@ from resectionlab.anatomy_package import save_package, open_package
 from resectionlab.desktop_bridge import BridgeSession, _Request
 
 
+def test_native_planning_target_uses_label_when_prepared_focus_is_outside(patient, tmp_path):
+    target = patient.layer('tumor')
+    labels = np.zeros(target['data']['shape'], dtype=np.uint8)
+    labels[3, 5, 5] = labels[7, 5, 5] = target['label_value']
+    target['data'] = patient.put_array(labels)
+    transform = patient.patient_affine(target)
+    prepared = world(transform, [5, 5, 5]).tolist()
+    entry = world(transform, [5, 5, 12]).tolist()
+    patient.document['display'] = {'planning_targets': {'tumor': {'cursor_ras_mm': prepared, 'entry_ras_mm': entry}}}
+    patient.save('target picker sources')
+    bridge = BridgeSession(tmp_path / 'target-options-transfer')
+    opened = bridge.execute('anatomyOpen', {'path': str(patient.root / 'patient-anatomy.json')}, _Request('open'), lambda *args: None)
+    plan = bridge.execute('anatomyPlan', {'collectionId': opened['collectionId'], 'snapshotId': patient.identity(), 'action': 'list'}, _Request('plan'), lambda *args: None)
+    option = next(row for row in plan['targetOptions'] if row['layerId'] == 'tumor')
+    assert option['target'] in [world(transform, [3, 5, 5]).tolist(), world(transform, [7, 5, 5]).tolist()]
+    assert option['entry'] == entry
+    assert 'nearest' in option['focusMeaning']
+    assert not (patient.root / 'anatomy-approaches.json').exists()
+
+
 def test_estimated_display_alignment_does_not_authorize_patient_operations(patient, tmp_path):
     c = patient
     c.add_series(tmp_path/'mri.nii.gz', series_id='ct', modality='CT')
@@ -150,7 +170,7 @@ def test_versioned_vessel_scope_roundtrip_preserves_anatomy(patient, scope):
             save_view(patient, {**state, 'vesselDisplayVersion': invalid})
 
 
-@pytest.mark.parametrize('style,mode', [('contour', 'segmentation'), ('fill', 'vascular')])
+@pytest.mark.parametrize('style,mode', [('contour', 'scan'), ('contour', 'segmentation'), ('fill', 'vascular')])
 def test_anatomy_presentation_survives_native_and_portable_reopen(patient, tmp_path, style, mode):
     from resectionlab.anatomy_workspace import save_view, read_view
     before = deepcopy(patient.document)
@@ -158,6 +178,7 @@ def test_anatomy_presentation_survives_native_and_portable_reopen(patient, tmp_p
              'snapshotId': patient.identity(), 'seriesId': 'mri', 'vesselScope': 'all',
              'states': {'mri': {'cursor': [0., 0., 0.], 'visible': {'vessels': True, 'tumor': True},
                                 'settings': {'sliceOverlay': style, 'presentation': mode,
+                                             'showOrientationGuide': mode == 'segmentation',
                                              'contextStyle': 'shell', 'sliceFraming': {'fit': 'anatomy', 'zoom': 1.25},
                                              'volumeRendering': {'preset': 'auto', 'density': .085}}}}}
     save_view(patient, state)
@@ -175,6 +196,11 @@ def test_anatomy_presentation_survives_native_and_portable_reopen(patient, tmp_p
             broken['states']['mri']['settings'][key] = invalid
             with pytest.raises(ValueError, match='Invalid (slice annotation style|anatomy presentation)'):
                 save_view(patient, broken)
+    for invalid in (None, 0, 1, 'false', [], {}):
+        broken = deepcopy(state)
+        broken['states']['mri']['settings']['showOrientationGuide'] = invalid
+        with pytest.raises(ValueError, match='orientation guide'):
+            save_view(patient, broken)
     assert read_view(patient) == state
 
 
@@ -235,3 +261,25 @@ def test_full_source_preserves_continuous_vessel_across_unknown_skull_slice(tmp_
             assert 'Unknown skull coverage' in result['displayFilter']['reason']
     assert c.document == before
     assert Collection(c.root).document == before
+
+
+def test_named_tract_display_and_selected_approach_survive_native_view_roundtrip(patient, tmp_path):
+    import nibabel as nib
+    from resectionlab.anatomy_import import import_anatomy_derivative
+    from resectionlab.anatomy_workspace import save_view, read_view
+    points = world(patient.patient_affine(patient.series('mri')), np.array([[8, 8, 8], [12, 12, 12]]))
+    filename = tmp_path / 'named.trk'
+    nib.streamlines.save(nib.streamlines.Tractogram([points], affine_to_rasmm=np.eye(4)), filename)
+    tract = import_anatomy_derivative(patient, filename, source_series='mri', kind='tractography', label='Supplied CST')
+    patient.save()
+    identity = patient.identity()
+    state = {'schema': 'patient-anatomy-view-v1', 'patientId': patient.document['patient_id'],
+             'snapshotId': identity, 'seriesId': 'mri', 'selectedStructure': tract['id'],
+             'selectedApproachId': 'manual-source-path', 'states': {'mri': {
+                 'cursor': points[0].tolist(), 'visible': {tract['id']: False, 'brain': True},
+                 'settings': {'layerOpacity': {tract['id']: .35}, 'layerColor': {tract['id']: '#65bfd3'}}}}}
+    save_view(patient, state)
+    assert read_view(Collection(patient.root)) == state
+    assert patient.identity() == identity
+    with pytest.raises(ValueError, match='visibility'):
+        save_view(patient, {**state, 'states': {'mri': {**state['states']['mri'], 'visible': {'invented-tract': True}}}})

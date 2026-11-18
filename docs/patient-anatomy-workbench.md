@@ -1,5 +1,178 @@
 # Native patient anatomy workbench
 
+
+## Prepare a patient study
+
+Launch the desktop with `pnpm --dir desktop build` and `pnpm --dir desktop start`.
+In **Cases**, create a patient study or open a native manifest or portable
+`.rsworkspace` file. In **Scans**, add NIfTI files or DICOM folders, attach
+annotations to their source scan, review sequence roles, and confirm patient
+and visit. Untagged images require an explicit local association. Each nonzero
+source label keeps its supplied meaning. Diffusion series and projections are
+retained as source assets. Use separate studies for separate visits.
+
+Choose **Review preparation plan** and **Prepare anatomy**. The plan lists
+eligible models and explains unavailable anatomy. Each completed stage has
+a checkpoint. Cancellation leaves admitted layers available. Retry acts on
+failed or empty stages. Adding scans keeps the reference fixed and marks
+dependent comparisons stale.
+
+Use **Anatomy** to inspect overlays against source slices and correct a layer.
+In **Plan & compare**, explicitly select a nonempty lesion label. The selection
+binds the mask, source and registration chain. Missing vascular and functional
+coverage remains unassessed. Quantitative comparison needs an admissible
+source-to-reference transform. Compatible studies can use the separate research
+environment export under **Rehearse**. MRI skull estimates and the optional
+geometric dural envelope provide display context. Surface smoothing is a
+display setting.
+
+**Save patient study file…** includes native data, preparation checkpoints, view
+settings, the selected target and comparison receipts. For hidden verification
+commands, see the [fresh patient reproduction](fresh-patient-reproduction.md).
+
+### Evidence from the adaptive workflow
+
+The UCSF development study retained its supplied core, edema-like and enhancing
+labels. Selecting the enhancing label produced three geometric comparisons that
+survived a cold reopen. The scanner-acquired meningioma T1 postcontrast study
+reached the same point using an explicitly selected, unreviewed model candidate.
+Both studies lacked a source-supported vascular assessment.
+
+In an independent source-image check on EDEN CTRL_0866, readers could identify
+both lens centers in the T1 and TOF volumes. The archived rigid transform
+placed the two pairs 12.89 mm and 11.49 mm apart. The other three prespecified
+points could not be localized reliably in both scans. Reapplying the archived
+pull transform reproduced 40 sampled registered voxels exactly. The estimate
+failed the workbench's 2 mm landmark criterion. Use the separate corrected
+working revision for this volunteer. It opens the TOF in its own frame, keeps
+the rejected transform in history and withholds quantitative fusion. The local
+testing inventory links the revision, audit and source-plane evidence.
+
+## EDEN source anatomy and saved approaches (2026-11-17)
+
+The normal **Cases → Anatomy → Plan & compare** workflow now opens prepared
+EDEN2020 healthy-volunteer studies. The primary demonstration is
+`EDEN2020:CTRL_1277`; `CTRL_0866` checks portability. Preparation reuses existing
+T1, original TOF (not MIP), FLAIR, SWI, head labels, registration receipts,
+and seven publisher-named tract bundles. The separate synthetic target reuses
+an existing core/rim annotation. Healthy source scans and streamlines remain
+unchanged; no disease displacement, edema or postoperative recovery is inferred.
+
+The paired evaluation uses CTRL_1277, CTRL_0866 and CTRL_0933, with two existing
+target options per study. Variants 01 and 08 have independent target-layer IDs
+and share the healthy acquired anatomy. The [comparison checkpoint](approach-comparison-checkpoint.md)
+links the prepared collection, execution receipts and verification commands.
+
+Private studies live under the configured HDD root at
+`prepared/eden2020-planning-v1/<subject>/patient-anatomy.json`. Local prepared
+library links end in `.anatomy.json`; opaque library IDs resolve their canonical
+manifest without duplicating recent cards. The preparation command is:
+
+```sh
+.venv/bin/python scripts/prepare_eden2020_planning.py --subjects CTRL_1277 CTRL_0866
+```
+
+It verifies the mounted data-root marker, reuses existing conversions, and writes
+source-to-package maps beside each study. Existing completed native studies are
+reused. Inventory, checksums, private review evidence and captures stay under
+ignored `testcases/eden2020-planning-v1`, linked to the HDD. No imaging or weights
+belong in Git. Raw 4D diffusion, gradients and reverse-phase acquisitions remain
+source assets, never flattened structural scans. SWI, SWI magnitude and SWI phase
+are separate import choices; EDEN's processed SWIp does not supply separate
+magnitude/phase or a validated venous segmentation. T1 vein estimates retain their
+T1 provenance and do not become SWI-derived veins.
+
+Use the structure legend to show, isolate, recolor, change opacity or focus a
+named bundle. Source slices share a physical RAS cursor with 3D and retain that cursor when
+switching scans (contrast and camera remain scan-specific); slab-clipped
+fiber previews provide slice context. Reversible scalar previews and complete
+streamline subsets bound display load; measurements use original grids and
+streamline segments. Source-bound imported registrations survive automatic
+opening; **Estimate** is still an explicit replacement operation. Their
+independent anatomical accuracy remains unmeasured.
+
+In **Plan**, choose entry/target at the cursor or edit their coordinates, set a
+corridor radius and declared clearance/length constraints, then create a manual
+path or **Suggest approaches**. Suggestions enumerate a bounded selected entry
+patch, exclude inferior entries and known cerebellar/brainstem conflicts, and
+retain at most three distinct alternatives. Automatic suggestions keep the sampled
+ledger and freeze up to eight finalists for shared sensitivity checks. Supported
+objectives include length, source proximity, target reach and non-target traversal.
+Pareto filtering groups paths with comparable evidence. A detected hard violation
+in a declared scenario vetoes the route. The report explains any shortfall and
+counts nominally eligible paths outside the sensitivity budget.
+
+Each comparison card separates the observed geometric finding (detected
+intersection, no detected intersection in assessed anatomy, or unavailable
+measurement) from evidence completeness and declared constraint failures. Missing
+labels, limited coverage and unmeasured registration remain explicit uncertainties.
+Coverage for a critical source includes the declared clearance margin and any
+scenario boundary padding. Contact is measured using the capsule and that
+scenario's boundary padding.
+
+Inspect nominal, worst assessed, and empirical adverse fifth results where
+perturbed measurements are complete. The default design translates registered
+sources in coherent 1 mm scenarios and pads critical voxel boundaries by 0.5 mm,
+distances near the source grid scale. Every registration root is stressed in
+each signed cardinal direction. Three or more roots use joint translations to
+keep the evaluation budget bounded. Registration distributions, model
+completeness and postoperative outcomes remain unmeasured. [Uncertainty in path planning](https://scholar.harvard.edu/files/sfrisken/files/incorporating_uncertainty_into_path_planning.pdf) · [Registration uncertainty visualization](https://link.springer.com/article/10.1007/s11548-025-03407-z)
+
+**Compare input sets** freezes rich and restricted nominations on the same task
+and sample budget. The restricted arm receives the reference, selected target,
+brain, head surface and listed brainstem/cerebellar estimates. The same richer
+reference evaluator may veto either arm. Every refusal and abstention is retained
+without replacement. Nominations with no hard veto still show incomplete coverage
+when source evidence is missing. Known hard failures and incomplete coverage can
+appear together in the same scenario. Execution authorization remains with the
+procedure engine. Coverage statements apply to the supplied labels, acquisition
+fields and declared missing anatomy. Structures absent from those inputs remain
+unassessed.
+
+A selected approach shows its capsule, entry region and illustrative virtual
+axis. **Along corridor** and **Corridor oblique** reuse the existing camera.
+The entry region is hypothetical, with no measured CT skull opening. Edits
+recompute source-bound comparisons, including edits to the saved entry-patch
+radius. Selecting a path initializes all editor fields from that object; switching
+paths and saving flush valid pending edits. The patch centre and plane stay fixed
+when its entry moves, and disk violations are displayed as constraint failures.
+Selecting a concern highlights and centres that anatomy. Measurements include full capsule field-of-view containment,
+per-label conservative voxel-cell proximity/intersections, supplied streamline
+proximity, target voxel-centre reach and supported brain traversal. These are
+static geometric quantities, not clinical margins, tissue removal, functional
+outcomes or execution permission. Unlabeled anatomy, limited sensitivity and
+unmeasured alignment remain unknown; empty labels stay unassessed. Existing
+physical/simulator refusals are unchanged.
+
+**Save study & comparison** preserves view state, the active target, per-target
+approach selections and exact comparison receipts;
+**Save patient study file…** includes them in the existing portable `.rsworkspace`
+format. Source, assessment-engine or parameter changes mark cached assessments
+stale. Geometry lives in `anatomy-approaches.json`, separately from immutable
+anatomy revisions. The existing `anatomyPlan` operation accepts `list`, `suggest`,
+`compareInputs`, `upsert`, `assess` and `delete`. Its original direct-clearance
+request remains available.
+
+`desktop/electron/verify-eden-planning.cjs` drives the actual React/preload/Python
+workflow with hidden windows. Supply `RESSECTIONLAB_DATA_ROOT`, `EDEN_STUDY` and a
+fresh `EDEN_OUTPUT`; `EDEN_PHASE=reopen` with `EDEN_EXPECTED` pointing to the
+preceding successful report checks exact geometry, measurements, selection,
+camera, layers and source signal in a distinct process. Select changes dispatch
+React-compatible change events. Source verification requires controlled React
+state, the requested source response, matching rendered/GPU-completed identities,
+source-signal fingerprints and visibly different source-pane pixels. A successful
+API call or a changed DOM selector alone cannot establish a modality switch.
+The private `testcases/eden2020-planning-v1/README.md` identifies the verified
+app build, recording, primary case and second-study results. The packaged
+walkthrough exercises library opening, named tract focus, three proposals,
+radius-driven recomputation, saving, cold reopening, concern focus and along-axis
+viewing; the independent source/display and geometry reviews are stored beside it.
+
+Workflow references: [EDEN2020 source](https://zenodo.org/records/3994749),
+[Medivis Studio](https://www.medivis.com/studio), and
+[Brainlab cranial planning](https://www.brainlab.com/surgery-products/overview-neurosurgery-products/cranial-planning/).
+
+
 ## Automatic alignment and skull display (2026-10-15)
 
 Native workspace opening, imports, and scan selection now ensure source-bound

@@ -53,7 +53,7 @@ MAX_PRIOR_PROPOSALS = 16
 MAX_AXIS_INSPECTION_VOXELS = 16_000_000
 MAX_AXIS_INSPECTION_METADATA_BYTES = 256 * 1024
 MAX_AXIS_INSPECTION_RESULT_BYTES = 2 * 1024 * 1024
-OPERATIONS = frozenset({'anatomySavePackage','anatomySaveView','anatomyComponents','anatomyGraph','anatomyCreate','anatomyReconstruct','anatomyPlan','anatomyRemoval','anatomySection','anatomyOpen','anatomyView','anatomyEdit','anatomySample','anatomyRegister','anatomyImport','anatomyExport',"ping", "executeDevelopmentEpisode", "executePersistentPassiveEpisode", "executePublicSurfaceContactEpisode", "publicContactFamilyAvailability", "executePublicContactFamilyEpisode", "inspectDevelopmentEpisodeComparison", "evaluateDevelopmentEpisodeVascular", "loadCase", "importNifti", "importDisplaySeries", "importDiagnosticLayer", "importStructuralEvidence", "importPriorProposals", "saveCase", "generateRoutes", "generateNativeRoutes", "inspectRefinement", "inspectAxisPlanning", "inspectObservedLandmarkUpdate", "cancel", "inspectEvidence", "createSyntheticCase", "nativeTraining", "trainPatient", "listRuns", "replayTraining", "evaluateCandidate", "exportCandidate", "shutdown"})
+OPERATIONS = frozenset({'anatomyInspectIntake','anatomyImportBatch','anatomyPrepare','anatomySavePackage','anatomySaveView','anatomyComponents','anatomyGraph','anatomyCreate','anatomyReconstruct','anatomyPlan','anatomyRemoval','anatomySection','anatomyOpen','anatomyView','anatomyEdit','anatomySample','anatomyRegister','anatomyImport','anatomyExport',"ping", "executeDevelopmentEpisode", "executePersistentPassiveEpisode", "executePublicSurfaceContactEpisode", "publicContactFamilyAvailability", "executePublicContactFamilyEpisode", "inspectDevelopmentEpisodeComparison", "evaluateDevelopmentEpisodeVascular", "loadCase", "importNifti", "importDisplaySeries", "importDiagnosticLayer", "importStructuralEvidence", "importPriorProposals", "saveCase", "generateRoutes", "generateNativeRoutes", "inspectRefinement", "inspectAxisPlanning", "inspectObservedLandmarkUpdate", "cancel", "inspectEvidence", "createSyntheticCase", "nativeTraining", "trainPatient", "listRuns", "replayTraining", "evaluateCandidate", "exportCandidate", "shutdown"})
 from .surgical_bridge import OPERATIONS as SURGICAL_OPERATIONS
 OPERATIONS = OPERATIONS | REHEARSAL_OPERATIONS | SURGICAL_OPERATIONS
 MAX_RUN_JSON_BYTES = 32 * 1024 * 1024
@@ -1866,7 +1866,7 @@ class BridgeRuntime:
             replay_admission = (operation == 'surgicalRehearsal' and args.get('command') in
                                 {'inspect', 'seek', 'seekFrame', 'selectBranch', 'undo', 'redo', 'selectScene'})
             preparation_comparison = operation == 'surgicalRehearsal' and args.get('command') == 'generatePreparations'
-            maximum_timeout = 1800000 if operation == 'anatomyReconstruct' else 3600000 if replay_admission else 600000 if preparation_comparison else 300000
+            maximum_timeout = 1800000 if operation == 'anatomyReconstruct' else 3600000 if replay_admission or operation == "anatomyPrepare" and args.get("action") == "run" else 600000 if preparation_comparison else 300000
             if type(timeout) is not int or not 100 <= timeout <= maximum_timeout:
                 raise BridgeError("INVALID_ARGUMENT", f"timeoutMs must be an integer between 100 and {maximum_timeout}")
             if len(json.dumps(message, allow_nan=False).encode()) > MAX_REQUEST_BYTES:

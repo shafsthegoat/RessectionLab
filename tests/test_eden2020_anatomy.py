@@ -1,12 +1,19 @@
 """Physical placement and categorical-resampling controls for EDEN v2."""
 import importlib.util
+import json
 from pathlib import Path
 import numpy as np
 import nibabel as nib
 import pytest
 
+from resectionlab.imaging import load_nifti_case
+from resectionlab.patient_anatomy import PatientImagingCollection, file_hash
+from resectionlab.workspace_bundle import OriginalFile, save_workspace
+
 spec=importlib.util.spec_from_file_location('eden_anatomy',Path(__file__).resolve().parents[1]/'scripts/build_eden2020_anatomy.py')
 builder=importlib.util.module_from_spec(spec);spec.loader.exec_module(builder)
+planning_spec=importlib.util.spec_from_file_location('eden_planning',Path(__file__).resolve().parents[1]/'scripts/prepare_eden2020_planning.py')
+planning=importlib.util.module_from_spec(planning_spec);planning_spec.loader.exec_module(planning)
 
 
 def test_eight_placement_strata_follow_physical_ras_with_reflected_oblique_grid():
@@ -51,3 +58,123 @@ def test_published_tract_overlay_never_turns_its_background_mri_into_a_tract(tmp
     assert np.array_equal(both,mask) and receipt['foreground_min']==31001
     values[2,2,2]=20000;nib.save(nib.Nifti1Image(values,np.eye(4)),path)
     with pytest.raises(ValueError,match='intensity encoding'):builder.tract_overlay_mask(path,image)
+
+
+def test_native_planning_tract_overlay_crosscheck_uses_physical_coordinates(tmp_path):
+    a=np.array([[0,-2,0,31],[1.5,0,0,-17],[0,0,3,9],[0,0,0,1]],float)
+    voxels=np.array([[3,4,5],[4,4,5],[5,4,5]],np.float32)
+    points=nib.affines.apply_affine(a,voxels).astype(np.float32)
+    values=np.full((12,12,12),100,np.float32);values[tuple(voxels.astype(int).T)]=32001
+    image=nib.Nifti1Image(values,a);image.header.set_xyzt_units('mm')
+    overlay=tmp_path/'bundle_on_3DFLAIR.nii.gz';nib.save(image,overlay)
+    header=nib.streamlines.TrkFile.create_empty_header();header['voxel_to_rasmm']=a;header['dimensions']=[12]*3;header['voxel_sizes']=nib.affines.voxel_sizes(a)
+    tractogram=nib.streamlines.Tractogram([points],affine_to_rasmm=np.eye(4))
+    trk=tmp_path/'bundle_to_3DFLAIR.trk';nib.streamlines.TrkFile(tractogram,header).save(trk)
+    proof=planning.published_tract_alignment(points,trk,overlay,image)
+    assert proof['source_frame_verified'] and proof['points_on_supplied_overlay_fraction']==1
+    assert proof['registration_accuracy_measured'] is False
+    with pytest.raises(ValueError,match='cross-check'):
+        planning.published_tract_alignment(points+[0,0,3],trk,overlay,image)
+    different=nib.Nifti1Image(values,a@np.diag([1,1,2,1]))
+    with pytest.raises(ValueError,match='matching FLAIR grid'):
+        planning.published_tract_alignment(points,trk,overlay,different)
+
+
+def test_native_planning_entry_stays_on_local_superior_outer_envelope():
+    voxels=np.indices((32,32,32));head=np.sum(((voxels-15.5)/13)**2,axis=0)<=1
+    a=np.array([[-1,0,0,40],[0,1,0,-20],[0,0,1,-5],[0,0,0,1]],float)
+    target=nib.affines.apply_affine(a,[13,16,13])
+    entry=planning.superior_entry(head,a,target)
+    assert entry is not None and entry[2]>target[2]+8
+    assert np.linalg.norm(np.asarray(entry)[:2]-target[:2])<=4
+    index=np.rint(nib.affines.apply_affine(np.linalg.inv(a),entry)).astype(int)
+    assert head[tuple(index)] and not head[tuple(index+[0,0,1])]
+    assert planning.superior_entry(np.zeros_like(head),a,target) is None
+
+
+@pytest.fixture
+def prepared_study(tmp_path):
+    subject = "CTRL_0001"
+    patient = f"EDEN2020:{subject}"
+    root = tmp_path / "source"
+    labels = root / planning.SOURCE_COLLECTION / "labels"
+    labels.mkdir(parents=True)
+    packages = root / "cases/synthetic"
+    packages.mkdir(parents=True)
+    source = root / "t1.nii.gz"
+    shape = (24, 24, 24)
+    affine = np.eye(4)
+    image = nib.Nifti1Image(np.arange(np.prod(shape), dtype=np.float32).reshape(shape), affine)
+    image.header.set_xyzt_units("mm")
+    nib.save(image, source)
+    case = load_nifti_case(source, case_id=patient)
+
+    targets = []
+    for variant, center in [(1, [8, 8, 6]), (8, [16, 16, 6])]:
+        case_id = f"EDEN2020-{subject}-SYNTHETIC-{variant:02d}-SEGMENTED-v2"
+        target_source = labels / (case_id + ".nii.gz")
+        values = np.zeros(shape, dtype=np.uint8)
+        x, y, z = center
+        values[x:x+3, y, z] = [1, 2, 3]
+        nib.save(nib.Nifti1Image(values, affine), target_source)
+        package = packages / (case_id + ".ressectionlab")
+        session_hash = save_workspace(
+            case, package, sources=[], imaging=None, episode=None, selection=None, artifacts={},
+            originals=[OriginalFile.from_path(target_source, role="annotation")],
+        )
+        targets.append({"case_id": case_id, "person_id": patient, "role": "DEVELOPMENT", "synthetic": True,
+                        "path": str(package.relative_to(root)), "bytes": package.stat().st_size,
+                        "sha256": file_hash(package), "session_hash": session_hash, "case_hash": case.semantic_hash,
+                        "shape": list(shape), "spacing_mm": [1, 1, 1],
+                        "recipe": {"center_ras_mm": center, "metrics": {"voxel_count": 2}}})
+
+    subject_dir = root / planning.SOURCE_COLLECTION / "subjects" / subject
+    subject_dir.mkdir(parents=True)
+    planning.atomic_json(subject_dir / "complete.json", {"subject": subject, "complete": True, "projects": targets})
+    legacy = root / planning.LEGACY_STUDIES / subject
+    c = PatientImagingCollection.create(legacy, patient)
+    c.add_series(source, series_id="t1", modality="T1")
+    c.add_layer(np.ones(shape, dtype=np.uint8), affine, layer_id="head-surface", source_series="t1",
+                kind="context", role="context", color="#334455")
+    planning.add_synthetic_target(c, root, targets[0], "synthetic-target", "Legacy target")
+    c.document.update(label="Frozen source", preparation={}, display={"cursor_ras_mm": [8, 8, 6]})
+    frozen = c.save("Prepare source study")
+    planning.atomic_json(legacy / "source-map.json", {"snapshot_id": frozen, "tractography": []})
+    c.document["label"] = "User-edited source"
+    c.save("Edit source label")
+    (legacy / "anatomy-approaches.json").write_text("existing personal analysis")
+    return root, subject, legacy, frozen, labels / (targets[1]["case_id"] + ".nii.gz")
+
+
+def test_comparison_study_reuses_frozen_arrays_and_preserves_existing_saved_state(tmp_path, prepared_study):
+    root, subject, legacy, frozen, _ = prepared_study
+    output = tmp_path / "isolated" / subject
+    current_manifest = (legacy / "patient-anatomy.json").read_bytes()
+    receipt = planning.prepare_comparison(root, subject, output)
+    c = PatientImagingCollection(output)
+    assert receipt["reused_native_snapshot"] == frozen
+    assert c.series("t1")["data"] == PatientImagingCollection(legacy).series("t1")["data"]
+    assert c.path(c.series("t1")["data"]["path"]).is_relative_to(output)
+    row_ids = {row["id"] for row in c.document["layers"] if row["role"] == "target"}
+    assert row_ids == {"synthetic-target", "synthetic-target-08"}
+    for layer_id, center in zip(planning.COMPARISON_TARGETS.values(), ([8, 8, 6], [16, 16, 6])):
+        mask = c.mask(c.layer(layer_id))
+        assert np.count_nonzero(mask) == 2
+        assert mask[tuple(center)] and not mask[center[0] + 2, center[1], center[2]]
+        assert c.document["display"]["planning_targets"][layer_id] == {
+            "cursor_ras_mm": center, "entry_ras_mm": [*center[:2], 23.0]}
+    assert (legacy / "patient-anatomy.json").read_bytes() == current_manifest
+    assert (legacy / "anatomy-approaches.json").read_text() == "existing personal analysis"
+    assert not (output / "anatomy-approaches.json").exists()
+    (output / "anatomy-approaches.json").write_text("comparison analysis")
+    assert planning.prepare_comparison(root, subject, output) == receipt
+    assert (output / "anatomy-approaches.json").read_text() == "comparison analysis"
+
+
+def test_comparison_study_rejects_a_changed_source_target_without_publishing(tmp_path, prepared_study):
+    root, subject, _, _, label = prepared_study
+    label.write_bytes(b"changed target label")
+    output = tmp_path / "isolated" / subject
+    with pytest.raises(ValueError, match="archived case"):
+        planning.prepare_comparison(root, subject, output)
+    assert not output.exists()

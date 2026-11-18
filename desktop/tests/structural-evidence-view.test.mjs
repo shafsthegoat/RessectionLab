@@ -281,25 +281,17 @@ test("excessive coordinate precision error cannot appear as a mapped value", () 
   );
 });
 
-test("the unloaded app owns one welcome message without mounting the viewer placeholder beneath it", () => {
+test("the unloaded workspace starts in the library with file and study entry points", () => {
   const previousWindow = globalThis.window;
   globalThis.window = { resectionApi: {} };
   try {
     const html = renderToStaticMarkup(React.createElement(App));
-    assert.equal((html.match(/class="welcome-overlay"/g) ?? []).length, 1);
-    assert.match(html, /From source imaging/);
-    assert.match(html, /Open a case/);
+    assert.match(html, /<main class="library-surface" aria-label="Case library"/);
+    assert.match(html, /Open a saved case/);
+    assert.match(html, /New patient study/);
     assert.match(html, /Local workspace · Open imaging to begin/);
-    assert.doesNotMatch(html, /rl-viewer-empty|Your case, in perspective/);
-    assert.doesNotMatch(html, /workspace-case-id|Current case:/);
-    assert.doesNotMatch(
-      html,
-      /aria-label="Candidate category"|aria-label="Primary route A"|aria-label="Comparison route B"/,
-    );
-    assert.match(
-      html,
-      /<button[^>]*annotation-center-button[^>]*disabled=""[^>]*>[\s\S]*?Center on annotations<\/button>/,
-    );
+    assert.doesNotMatch(html, /id="case-evidence-panel"|class="welcome-overlay"|workspace-case-id|Current case:/);
+    assert.doesNotMatch(html, /aria-label="Candidate category"|aria-label="Primary route A"|aria-label="Comparison route B"/);
   } finally {
     if (previousWindow === undefined) delete globalThis.window;
     else globalThis.window = previousWindow;

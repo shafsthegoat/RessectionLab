@@ -117,7 +117,7 @@ app.on('browser-window-created',(_event,window)=>{
         report.checks.push('Actual healthy task declares unmodeled exposure, baseline T1/MRA and unavailable skull CT');
       }
       if(process.env.DATA_REBUILD_FUSION==='1'){
-        await click('Data');await wait(`!!document.querySelector('[aria-label="Blend registered modality"]')`);
+        await click('Scans');await wait(`!!document.querySelector('[aria-label="Blend registered modality"]')`);
         const options=await js(`[...document.querySelector('[aria-label="Blend registered modality"]').options].filter(o=>o.value).map(o=>({value:o.value,label:o.textContent}))`);
         assert.equal(options.length,1,'Only independently reviewed derived MRA may fuse; original native MRA stays separate');
         await set('Blend registered modality',options[0].value);await ready();
@@ -154,7 +154,7 @@ app.on('browser-window-created',(_event,window)=>{
       }
       report.initialBody=await js('document.body.innerText');
       if(process.env.DATA_REBUILD_STAGES==='1'){
-        await click('Data');await wait(`!!document.querySelector('[aria-label="Inspect scan"]')`);
+        await click('Scans');await wait(`!!document.querySelector('[aria-label="Inspect scan"]')`);
         const stages=await js(`[...document.querySelector('[aria-label="Inspect scan"]').options].filter(o=>/US before|US during|US after/.test(o.textContent)).map(o=>({value:o.value,label:o.textContent}))`);
         assert.equal(stages.length,3,'All observed US operative stages are distinctly named');
         for(let i=0;i<stages.length;i++){

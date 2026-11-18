@@ -188,8 +188,10 @@ def _center(case):
 
 def _viewer_state(case,viewer,cases):
     """Bound display preferences without treating them as image registration."""
-    if not isinstance(viewer,dict) or set(viewer)-{'smoothSurfaces','skullMode','volumeRendering','layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast','clipBox','obliqueClip','sliceOverlay','presentation','sliceFraming','contextStyle','operativeView','microscope','externalCamera'}:
+    if not isinstance(viewer,dict) or set(viewer)-{'showOrientationGuide','smoothSurfaces','skullMode','volumeRendering','layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast','clipBox','obliqueClip','sliceOverlay','presentation','sliceFraming','contextStyle','operativeView','microscope','externalCamera'}:
         raise ValueError('Unknown viewer settings')
+    if 'showOrientationGuide' in viewer and type(viewer['showOrientationGuide']) is not bool:
+        raise ValueError('Invalid body orientation guide flag')
     if 'operativeView' in viewer and viewer['operativeView'] not in ('external','surgeon'):
         raise ValueError('Invalid operative view')
     microscope=viewer.get('microscope')
@@ -221,7 +223,7 @@ def _viewer_state(case,viewer,cases):
             raise ValueError('Invalid slice framing')
     if 'sliceOverlay' in viewer and viewer['sliceOverlay'] not in ('contour','fill'):
         raise ValueError('Invalid slice annotation style')
-    if 'presentation' in viewer and viewer['presentation'] not in ('segmentation','vascular'):
+    if 'presentation' in viewer and viewer['presentation'] not in ('scan','segmentation','vascular'):
         raise ValueError('Invalid anatomy presentation')
     if 'skullMode' in viewer and viewer['skullMode'] not in {'exterior','transparent','cutaway'}:
         raise ValueError('Invalid skull display mode')

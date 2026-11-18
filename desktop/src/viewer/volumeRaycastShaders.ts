@@ -20,6 +20,7 @@ uniform vec2 uRange;
 uniform float uDensity;
 uniform int uSkullMode;
 uniform bool uCt;
+uniform bool uScanPresentation;
 uniform bool uGradientOpacity;
 uniform float uStep;
 uniform bool uLinear;
@@ -125,14 +126,17 @@ void main(){
     surfaceT[j]=d<0.999999?dot(unproject(vec3(vUv*2.0-1.0,d*2.0-1.0))-origin,direction):1e10;
   }
   // Reserve loop slots for split steps and mesh boundaries, including large fields.
-  float stepMm=max(uStep,(exit-entry)/1519.0);
+  float stepMm=max(uStep,(exit-entry)/(uScanPresentation?639.0:1519.0));
   float jitter=fract(52.9829189*fract(dot(gl_FragCoord.xy,vec2(0.06711056,0.00583715)))+uSampleIndex*0.61803398875);
   float t=entry;
   int boundary=0;
   vec4 accumulated=vec4(0.0);
   ivec4 previousLabels=ivec4(0);
   bool previousSelected=false;
-  vec3 light=normalize(vec3(-0.4,-0.5,0.75)-direction*0.7);
+  // Scan inspection uses a broad camera-relative key. Rotating the physical
+  // volume keeps its depth legible without changing its scalar or geometry.
+  vec3 light=uScanPresentation?normalize(mat3(uCameraWorld)*vec3(-0.48,0.62,0.72)):
+    normalize(vec3(-0.4,-0.5,0.75)-direction*0.7);
   for(int i=0;i<1536;i++){
     if(accumulated.a>0.995)break;
     if(boundary<uSurfaceCount && surfaceT[boundary]<=t+0.000001){
@@ -163,7 +167,11 @@ void main(){
     // source context label exists, only its exact packed membership receives
     // skull presentation and its configured color. This includes categorical
     // labels above index 31; it never relies on a 32-bit layer visibility mask.
-    if(uCt){
+    // In Scan, the scalar transfer belongs to the acquired field. A low
+    // opacity on an overlaid skull label must not erase/recolor that CT signal.
+    // Structures/Vessels and an explicitly opaque/cutaway skull retain their
+    // source-membership display behavior.
+    if(uCt && (!uScanPresentation || uSkullMode==1)){
       if(uContextLayerCount>0){
         bool contextMember=false;
         vec4 context=vec4(0.0);
@@ -203,9 +211,20 @@ void main(){
       float alpha=1.0-exp(-tissue.a*dt);
       float lighting=0.8;
       if(length(normal)>0.0001){
+        float gradientConfidence=smoothstep(0.01,0.12,length(normal)/max(uRange.y-uRange.x,0.000001));
         normal=normalize(normal);
         lighting=0.28+0.66*max(dot(normal,light),0.0)+0.15*max(dot(normal,-direction),0.0);
         lighting+=0.12*pow(max(dot(reflect(-light,normal),-direction),0.0),24.0);
+        if(uScanPresentation){
+          // Back-facing internal boundaries still carry acquired contrast;
+          // a restrained fill avoids turning them into black cutout surfaces.
+          lighting=0.20+0.72*max(dot(normal,light),0.0)+0.18*abs(dot(normal,-direction));
+          lighting+=0.08*pow(max(dot(reflect(-light,normal),-direction),0.0),32.0);
+          // Near-uniform signal has no stable surface normal. Do not amplify
+          // tiny acquired fluctuations into fully shaded facets. This changes
+          // radiance only: sampling, transfer extinction and arrays stay exact.
+          lighting=mix(0.62,lighting,gradientConfidence);
+        }
         // A short density probe supplies soft local occlusion in bone creases.
         if(uShadows && alpha>0.0001){
           vec3 ahead=p+mat3(uWorldToVoxel)*light*2.0;
@@ -213,9 +232,11 @@ void main(){
           if(all(greaterThanEqual(ahead,vec3(-.5)))&&all(lessThan(ahead,uShape-.5)))obstruction=texture(uTransfer,vec2(clamp((scalar(ahead)-uRange.x)/(uRange.y-uRange.x),0.0,1.0),0.5)).a;
           float shadow=obstruction*2.0;
           if(!uInteractive)for(int j=1;j<5;j++){
-            vec3 probe=p+mat3(uWorldToVoxel)*light*(2.0+float(j)*3.0);
+            if(uScanPresentation&&j>2)break;
+            float segment=uScanPresentation?5.0:3.0;
+            vec3 probe=p+mat3(uWorldToVoxel)*light*(2.0+float(j)*segment);
             if(all(greaterThanEqual(probe,vec3(0)))&&all(lessThan(probe,uShape)))
-              shadow+=3.0*texture(uTransfer,vec2(clamp((scalar(probe)-uRange.x)/(uRange.y-uRange.x),0.0,1.0),0.5)).a;
+              shadow+=segment*texture(uTransfer,vec2(clamp((scalar(probe)-uRange.x)/(uRange.y-uRange.x),0.0,1.0),0.5)).a;
           }
           lighting*=0.3+0.7*exp(-shadow*uDensity);
         }

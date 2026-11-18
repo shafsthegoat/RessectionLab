@@ -49,40 +49,70 @@ files are hash-checked for deduplication before new imaging is downloaded.
 
 ## Desktop workflow and smoke test
 
-In **Cases → New patient study**, create a pre-op study. **Data** now exposes
-explicit T1, T1CE, T2, FLAIR, CT and angiographic sequence choices for NIfTI and
-DICOM. A DICOM folder with multiple MR series requires UID-keyed typing through
-the backend; the desktop single-series control asks for one series per folder.
-Raw DICOM `MR` is an acquisition family and is refused as a semantic sequence.
+Create a study in **Cases → New patient study**. In **Scans**, choose the available
+NIfTI files or DICOM folders together, review ambiguous sequence assignments, and
+confirm the patient and timepoint. Attach supplied annotations to the scan they
+describe and set the meaning of each nonzero source label. The UCSF example
+uses label 1 for nonenhancing core or necrosis, 2 for edema-like abnormality,
+and 4 for the enhancing lesion.
 
-For a segmentation, list every nonzero numeric label and choose its operative
-role. Missing, duplicate and unsupported mappings are refused. Background 0 is
-preserved. Imported anatomy with unknown or non-mm units cannot silently enter
-the mm simulation grid. **Reconstruct anatomy** includes brain, CT skull,
-sequence-specific glioma, vessel and existing parcellation adapters.
+Use **Review preparation plan → Prepare anatomy**, then **Anatomy** to inspect
+the source slices and estimates. Explicitly select a candidate in **Plan &
+compare**. Geometric comparisons retain source coverage and review status.
+**Save patient study file…** packages the study and comparisons in one
+`.rsworkspace` file. **Rehearse → Prepare standard environment** remains a
+separate capability with its own geometry requirements.
 
-Inspect the linked slices and 3D anatomy, save a portable patient study, then
-choose **Rehearse → Prepare standard environment**. Select existing layers;
-missing structures remain unknown. Estimated alignment requires an explicit
-research opt-in and retains its review status. Save and reopen the prepared
-simulation as a `.ressectionlab` file.
-
-The actual Electron smoke test selects local source files through native-dialog
-stubs; all React controls, preload IPC, Python operations and anatomy are real.
-It creates a study, imports four MRI sequences and source labels, invokes the
-real cached brain adapter, saves/reopens the study, prepares the simulation,
-and saves/reopens it. Use a new output directory on each run:
+Build the desktop once from the repository root. The verifier uses hidden
+Electron windows and supplies local paths to the file dialogs. It exercises
+the renderer, preload, Python engine and actual patient arrays.
 
 ```sh
 pnpm -C desktop build
-FRESH_PATIENT_SOURCE="$PWD/testcases/downloaded-datasets/UCSF-fresh-development-20261026/UCSF-PDGM-0005" \
-FRESH_PATIENT_OUTPUT="$PWD/testcases/outputs/integrated-goal-20261026/electron-new-run" \
-desktop/node_modules/.bin/electron desktop/electron/verify-fresh-patient.cjs
+source_case="$PWD/testcases/downloaded-datasets/UCSF-fresh-development-20261026/UCSF-PDGM-0005"
+evidence="$PWD/testcases/outputs/adaptive-ucsf-0005"
+mkdir -p "$evidence"
+ADAPTIVE_SOURCE="$source_case" ADAPTIVE_OUTPUT="$evidence/create" \
+  desktop/node_modules/.bin/electron desktop/electron/verify-adaptive-patient.cjs
+ADAPTIVE_PHASE=reopen ADAPTIVE_EXPECTED="$evidence/create/report.json" \
+  ADAPTIVE_SOURCE="$source_case" ADAPTIVE_OUTPUT="$evidence/reopen" \
+  desktop/node_modules/.bin/electron desktop/electron/verify-adaptive-patient.cjs
+ADAPTIVE_PHASE=incremental ADAPTIVE_EXPECTED="$evidence/create/report.json" \
+  ADAPTIVE_SOURCE="$source_case" ADAPTIVE_OUTPUT="$evidence/incremental" \
+  desktop/node_modules/.bin/electron desktop/electron/verify-adaptive-patient.cjs
 ```
 
-Use the identical command with source `UCSF-PDGM-0007` and another output
-directory for the second case. Screenshots wait for source loading and surface
-preparation. The report distinguishes UI checks from headless source checks.
+The create phase imports T1 post-contrast and T2 with the supplied annotation.
+The separate reopen process reads the saved file. The incremental phase copies
+the same study into its own evidence directory, adds T1 and FLAIR, and re-adds
+T2 to check deduplication. Use fresh phase directories to preserve prior captures.
+If verification stops after preparation, a new create run with
+`ADAPTIVE_RESUME=/absolute/path/to/the/preceding/report.json` continues through
+the normal **Open** control using a copy of the exact prepared study.
+
+Use the `create` and `reopen` commands with
+`source_case="$PWD/testcases/downloaded-datasets/RessectionLab-Full-Anatomy-Patient/candidate-sub-06"`
+and a separate evidence directory to exercise the acquired meningioma T1
+post-contrast profile. That profile uses the source-session-unknown timepoint
+and explicitly requests the pinned meningioma adapter. Its candidate keeps
+the model's unreviewed status. Set `ADAPTIVE_CANCEL=1` during a create run
+with pending work to exercise cancellation and resume.
+
+## Verify migrated studies
+
+To check a migrated study, build the desktop and set the same guarded
+`RESSECTIONLAB_DATA_ROOT` used for migration. Each invocation opens a private
+copy of the native study in hidden Electron and records source overlays and
+current capabilities. Use a new output name for each run.
+
+```sh
+for case_key in EDEN2020-CTRL_0866 TopCoW-001-CTA; do
+  ADAPTIVE_PHASE=migrated ADAPTIVE_MIGRATED_DATA_ROOT="$RESSECTIONLAB_DATA_ROOT" \
+    ADAPTIVE_SOURCE="$RESSECTIONLAB_DATA_ROOT/prepared/adaptive-anatomy-migration-20261117-v1/$case_key" \
+    ADAPTIVE_OUTPUT="$PWD/testcases/outputs/adaptive-verify-$case_key" \
+    desktop/node_modules/.bin/electron desktop/electron/verify-adaptive-patient.cjs
+done
+```
 
 ## Model weights, runtime and licenses
 

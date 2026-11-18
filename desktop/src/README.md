@@ -5,6 +5,28 @@ retire obsolete code/docs/artifacts, and archive useful history outside the trac
 
 The React shell owns case review, source visibility, route comparison, and local optimization controls. Numerical computation runs in the Python sidecar through the named `window.resectionApi` methods; the renderer never receives an arbitrary file path or executable operation.
 
+## Desktop UI principles
+
+The Medivis reference that shaped this workspace was its desktop planning view. A large reconstruction and three linked slices let the user check the same anatomy in 3D and in the acquired images. Use that workflow as the reference when deciding what deserves screen space.
+
+- **Give each task one home.** Cases, Scans, Anatomy, Plan and Rehearse share one navigation rail. The header identifies the current study and series. Put a new action in the stage where the user needs it. For example, a new approach comparison belongs beside the selected plan. It can use the existing Plan destination.
+- **Give the image the most space.** In Anatomy, keep the large 3D view beside labeled axial, coronal and sagittal slices linked by one physical cursor. Put camera and clipping controls in the viewport toolbar and structure controls in the inspector. Let users collapse the inspector or expand a pane and return to the linked layout.
+- **Put controls beside what they change.** Cases opens to a searchable list with a direct open action and optional row details. Scans uses thumbnails from the selected series. In Anatomy, group related structures and keep visibility, opacity and evidence with the selected layer. A long inventory should scroll within its panel while the study identity and image stay in view.
+- **Reveal detail when it helps a decision.** Show the current selection, the next action and any blocker that affects it. Put provenance records, numerical settings and research diagnostics in a labeled disclosure. For example, a missing input that blocks rehearsal belongs beside the disabled action, with the reason visible even when details are closed.
+- **Use a quiet, consistent visual hierarchy.** Reuse the flat dark surfaces, spacing, typography, dividers and focus styles in the [shared stylesheet](studio.css). Group related controls with alignment and spacing before adding a box. Reserve mint for interaction and selection, and preserve the meanings of anatomy and evidence colors. Use short action labels. Remove decorative gradients, badges, repeated headings and copy that merely restates a control.
+- **Make each state legible and operable.** Distinguish loading, an empty library, no search matches and a failed load. Give the user a relevant next action. Name icon buttons, show keyboard focus, and make selection apparent through text, shape or position as well as color. Use motion sparingly and respect reduced-motion preferences.
+- **Preserve the evidence and the user's place.** Start new acquired MRI and CT studies in Scan with restrained overlays. Identify estimates, generated content and missing coverage where they affect interpretation. A new presentation must respect the source's field of view and physical coordinates. Restore saved views. Temporary inspection modes need a visible way back, as **Exit section** restores the previous clipping settings.
+
+### Reviewing a visible change
+
+1. Name the task that gets easier. For each new always-visible control, explain why the existing toolbar, row or disclosure cannot serve it. Remove any duplicate action or explanation introduced by the change.
+2. Exercise the affected task in the actual Electron app using the hidden verifier. Inspect a normal desktop window and the compact 1050 × 720 layout. Check the affected keyboard path, visible focus, readable labels and reachable controls. For a library or loading change, exercise the relevant empty, busy or failure state too.
+3. Compare before and after at the same window size. For imaging changes, use the same acquired study, series, camera, cursor and visible layers. Inspect settled image pixels in the 3D pane and each linked slice. Exercise the changed control and its return path. Keep local captures under `testcases/` and describe the user-visible difference in review.
+
+See the [desktop workflow](../../docs/desktop-workflow.md#open-and-inspect-a-study) for the user-facing sequence and the [viewer contracts](viewer/README.md) for rendering and coordinate conventions.
+
+## Renderer components
+
 - `App.tsx`: workspace state, operation status, native menu actions, case lifecycle and A/B route choices. A newer case load invalidates older hydration; route results must match the active source fingerprint.
 - `case-data.ts`: validates array encoding, shape, physical affine, source volumes and finite values before exposing typed arrays to the viewer. It converts LPS+ physical coordinates to RAS+ without resampling source voxels.
 - `route-selection.ts`: preserves A/B comparison identity when one slot is empty; compacting visible routes never changes their labels or colors.

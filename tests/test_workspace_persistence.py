@@ -48,6 +48,23 @@ def test_volume_rendering_preferences_roundtrip_without_changing_source(tmp_path
         state['states']['primary']['viewer']={'volumeRendering':invalid}
         with pytest.raises(ValueError,match='volume rendering'):view_state(case,[],state)
 
+@pytest.mark.parametrize('enabled', [True, False, None])
+def test_body_orientation_guide_roundtrip_and_legacy_default(tmp_path, enabled):
+    case=load_nifti_case(image(tmp_path/'source.nii.gz'),case_id='orientation-guide-test')
+    before=case.mri.copy();identity=case.semantic_hash
+    state=view_state(case,[])
+    settings={} if enabled is None else {'showOrientationGuide':enabled}
+    state['states']['primary']['viewer']=settings
+    path=tmp_path/'orientation.ressectionlab'
+    save_workspace(case,path,sources=[],imaging=state,episode=None,selection=None,artifacts={})
+    reopened,_,saved=load_workspace(path)
+    assert saved['imagingState']['states']['primary']['viewer']==settings
+    assert reopened.semantic_hash==identity
+    np.testing.assert_array_equal(reopened.mri,before)
+    for invalid in [None,0,1,'false',[],{}]:
+        state['states']['primary']['viewer']={'showOrientationGuide':invalid}
+        with pytest.raises(ValueError,match='orientation guide'):view_state(case,[],state)
+
 def test_workspace_manifest_hash_overhead_refuses_before_replacing_destination(tmp_path):
     case=load_nifti_case(image(tmp_path/'source.nii.gz'),case_id='manifest-boundary-test')
     state=view_state(case,[]);path=tmp_path/'preserved.ressectionlab'

@@ -31,8 +31,16 @@ def save_package(collection, destination, *, check=lambda: None, progress=lambda
         if not source.is_file() or file_hash(source) != checksum:
             raise ValueError(f'Cannot package changed or missing source: {name}')
         files[name] = checksum
+    from .anatomy_preparation import RECEIPTS, _receipts
+    if collection.path(RECEIPTS).exists():
+        _receipts(collection)
+        files[RECEIPTS] = file_hash(collection.path(RECEIPTS))
     if (collection.root / 'workspace-view.json').exists():
         files['workspace-view.json'] = None
+    if (collection.root / 'anatomy-approaches.json').exists():
+        from .anatomy_approaches import read_approaches
+        read_approaches(collection)
+        files['anatomy-approaches.json'] = file_hash(collection.root / 'anatomy-approaches.json')
     if (collection.root / 'surgical-toolbox.json').exists():
         if (collection.root / 'surgical-toolbox.json').stat().st_size > 32 * 1024**2:
             raise ValueError('Surgical history exceeds archive budget')
@@ -66,6 +74,8 @@ def save_package(collection, destination, *, check=lambda: None, progress=lambda
 
 
 def open_package(filename, working_root, *, check=lambda: None):
+    from .anatomy_approaches import FILENAME as approaches_name, MAX_APPROACH_METADATA_BYTES
+
     filename, working_root = Path(filename), Path(working_root)
     identity = file_hash(filename)
     destination = working_root / identity
@@ -82,8 +92,10 @@ def open_package(filename, working_root, *, check=lambda: None):
             if (len(members) > 10000 or len(names) != len(set(names)) or
                     sum(m.file_size for m in members) > MAX_BYTES or 'patient-anatomy.json' not in names):
                 raise ValueError('Invalid or oversized patient study file')
-            if any(m.file_size > (16 * 1024**2 if m.filename == 'patient-anatomy.json' else 256 * 1024)
-                   for m in members if m.filename in {'patient-anatomy.json', 'workspace-view.json'}):
+            metadata_limits = {'patient-anatomy.json': 16 * 1024**2,
+                               'workspace-view.json': 256 * 1024, 'anatomy-preparation.json': 4 * 1024**2,
+                               approaches_name: MAX_APPROACH_METADATA_BYTES}
+            if any(m.file_size > metadata_limits[m.filename] for m in members if m.filename in metadata_limits):
                 raise ValueError('Oversized patient study metadata')
             for member in members:
                 check()
@@ -98,6 +110,10 @@ def open_package(filename, working_root, *, check=lambda: None):
                         check()
                         out.write(block)
         collection = PatientImagingCollection(temporary)
+        from .anatomy_approaches import read_approaches
+        read_approaches(collection)
+        from .anatomy_preparation import _receipts
+        _receipts(collection)
         for name, checksum in referenced_files(collection.document):
             check()
             if file_hash(collection.path(name)) != checksum:

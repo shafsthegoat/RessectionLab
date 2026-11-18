@@ -16,6 +16,8 @@ import numpy as np
 from scipy import sparse
 from scipy.sparse.linalg import factorized
 
+from . import surgical_mechanical_exposure as mechanical
+
 
 _diagnostics = ContextVar('surgical_deformation_diagnostics', default=None)
 
@@ -244,7 +246,18 @@ def tick(engine, dt):
         forcing += gravity_forces_n(engine, ids)
     if diagnostic is not None:
         diagnostic['forceCapNodeTicks'] += int(np.count_nonzero(np.linalg.norm(forcing, axis=1) > p['maxForceN']))
-    forcing *= np.minimum(1., p['maxForceN'] / np.maximum(np.linalg.norm(forcing, axis=1), 1e-15))[:, None]
+    force_scale = np.minimum(1., p['maxForceN'] / np.maximum(np.linalg.norm(forcing, axis=1), 1e-15))
+    forcing *= force_scale[:, None]
+    track_mechanics = steps and mechanical.enabled(engine)
+    if track_mechanics:
+        labels = engine.scene.labels.ravel()[ids]
+        edge_nodes = np.asarray([(i, j) for i, j, _ in edges], dtype=int).reshape(-1, 2)
+        edge_lengths = np.asarray([length for _, _, length in edges])
+        retractor_cells = sorted({c for key, hold in engine.state['holds'].items()
+                                  if 'target' in hold and engine.state['slots'][key]['instrument'] == 'brain_retractor'
+                                  for c in hold['cells'] if c in index})
+        retractor_nodes = np.asarray([index[cell] for cell in retractor_cells], dtype=int)
+        effective_targets = targets[retractor_nodes] * force_scale[retractor_nodes, None]
     rest = np.column_stack(np.unravel_index(ids, engine.scene.shape)) @ engine.scene.affine[:3, :3].T + engine.scene.affine[:3, 3]
     removed_array = np.fromiter(removed, dtype=np.int64)
     blocking_labels = np.array([label for label, region in engine.by_label.items()
@@ -275,6 +288,11 @@ def tick(engine, dt):
         # Reject the coupled increment as a whole: clamping single nodes would
         # introduce fresh strain discontinuities after the strain projection.
         if collision: u = old
+        if track_mechanics:
+            mechanical.record_lattice_step(engine, labels, edge_nodes, edge_lengths, u, h)
+            if retractor_cells:
+                forces = p['holdStiffnessNPerMm'] * (effective_targets - u[retractor_nodes])
+                mechanical.record_bonded_step(engine, retractor_cells, forces, h)
         if diagnostic is not None:
             diagnostic['collisionRejectedSteps'] += int(collision)
             delta = (u - old).ravel()

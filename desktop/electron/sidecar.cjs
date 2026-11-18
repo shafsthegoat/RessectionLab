@@ -18,7 +18,7 @@ const {surgicalTransportLimitMs}=require('./surgical-timeout.cjs');
 
 const {validateDiagnosticResult,diagnosticRequest}=require('./diagnostic-contract.cjs');
 const MAX_RESPONSE_LINE_BYTES=32*1024*1024;
-const OPERATIONS = new Set(['compareSurgicalAnatomy','prepareSurgicalEnvironment','importSurgicalScene','surgicalRehearsal','createSurgicalFixture','createRehearsal','inspectRehearsal','stepRehearsal','compareRehearsal','anatomySavePackage','anatomySaveView','anatomyComponents','anatomyGraph','anatomyCreate','anatomyReconstruct','anatomyPlan','anatomyRemoval','anatomySection','anatomyOpen','anatomyView','anatomyEdit','anatomySample','anatomyRegister','anatomyImport','anatomyExport','ping', 'publicContactFamilyAvailability', 'executePublicContactFamilyEpisode', 'executePublicSurfaceContactEpisode', 'inspectDevelopmentEpisodeComparison', 'executeDevelopmentEpisode', 'executePersistentPassiveEpisode', 'evaluateDevelopmentEpisodeVascular', 'createSyntheticCase', 'loadCase', 'importNifti', 'importDisplaySeries', 'importDiagnosticLayer', 'importStructuralEvidence', 'saveCase', 'generateRoutes', 'generateNativeRoutes', 'inspectRefinement', 'inspectAxisPlanning', 'inspectObservedLandmarkUpdate', 'cancel', 'inspectEvidence', 'trainPatient', 'nativeTraining', 'listRuns', 'replayTraining', 'exportCandidate', 'shutdown']);
+const OPERATIONS = new Set(['compareSurgicalAnatomy','prepareSurgicalEnvironment','importSurgicalScene','surgicalRehearsal','createSurgicalFixture','createRehearsal','inspectRehearsal','stepRehearsal','compareRehearsal','anatomySavePackage','anatomySaveView','anatomyComponents','anatomyGraph','anatomyCreate','anatomyReconstruct','anatomyPlan','anatomyRemoval','anatomySection','anatomyOpen','anatomyView','anatomyEdit','anatomySample','anatomyRegister','anatomyImport','anatomyInspectIntake','anatomyImportBatch','anatomyPrepare','anatomyExport','ping', 'publicContactFamilyAvailability', 'executePublicContactFamilyEpisode', 'executePublicSurfaceContactEpisode', 'inspectDevelopmentEpisodeComparison', 'executeDevelopmentEpisode', 'executePersistentPassiveEpisode', 'evaluateDevelopmentEpisodeVascular', 'createSyntheticCase', 'loadCase', 'importNifti', 'importDisplaySeries', 'importDiagnosticLayer', 'importStructuralEvidence', 'saveCase', 'generateRoutes', 'generateNativeRoutes', 'inspectRefinement', 'inspectAxisPlanning', 'inspectObservedLandmarkUpdate', 'cancel', 'inspectEvidence', 'trainPatient', 'nativeTraining', 'listRuns', 'replayTraining', 'exportCandidate', 'shutdown']);
 
 class Sidecar extends EventEmitter {
   constructor({ python, cwd, sourcePath, transferDir, executable, runDir, observedSourceRoot, prefixWorker, preparedPrefixCacheDirectory }) {
@@ -91,13 +91,16 @@ class Sidecar extends EventEmitter {
     if (op === 'evaluateDevelopmentEpisodeVascular') {
       try { args=vascularRequest(args); } catch(error) { return Promise.reject(error); }
     }
-    // A renderer-owned surgical request identity lets Cancel target this
-    // exact request, including the interval before its first progress event.
-    // It is transport metadata and never enters the surgical action contract.
+    // Owned identities let the renderer cancel a specific run before its first
+    // event. Transport metadata must not enter the Python operation arguments.
+    const requestPrefix = op === 'surgicalRehearsal' ? 'surgical' :
+      op === 'anatomyPrepare' && args.action === 'run' ? 'prepare' : null;
     let id = randomUUID();
-    if (op === 'surgicalRehearsal' && Object.hasOwn(args, 'requestId')) {
+    if (requestPrefix && Object.hasOwn(args, 'requestId')) {
       const {requestId, ...payload} = args;
-      if (typeof requestId !== 'string' || !/^surgical-[a-f0-9-]{36}$/.test(requestId) || this.pending.has(requestId)) return Promise.reject(new Error('Invalid surgical request identifier'));
+      const valid = typeof requestId === 'string' && requestId.startsWith(requestPrefix + '-') &&
+        /^[a-f0-9-]{36}$/.test(requestId.slice(requestPrefix.length + 1)) && !this.pending.has(requestId);
+      if (!valid) return Promise.reject(new Error('Invalid ' + requestPrefix + ' request identifier'));
       id = requestId; args = payload;
     }
     const message = JSON.stringify({ id, op, args, timeoutMs });

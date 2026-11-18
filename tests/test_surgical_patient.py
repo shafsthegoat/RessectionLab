@@ -4,7 +4,7 @@ import nibabel as nib
 import numpy as np
 import pytest
 from resectionlab.patient_anatomy import PatientImagingCollection
-from resectionlab.surgical_patient import prepare_surgical_patient, ORDER
+from resectionlab.surgical_patient import prepare_surgical_patient, surgical_environment_options, ORDER
 from resectionlab.imaging import load_case
 from resectionlab.surgical_scene import from_case
 
@@ -36,6 +36,9 @@ def fixture(tmp_path, *, status='reviewed'):
 def test_export_preserves_sources_overlaps_coordinates_and_thin_structures(tmp_path):
     c = fixture(tmp_path)
     before = {str(p.relative_to(c.root)): hashlib.sha256(p.read_bytes()).hexdigest() for p in c.root.rglob('*') if p.is_file()}
+    options = surgical_environment_options(c)
+    assert options['referenceIssue'] is None
+    assert {row['layerId']: row['status'] for row in options['layers']} == {key: 'ready' for key in ORDER}
     report = prepare_surgical_patient(c.root, tmp_path / 'output', layer_ids={k: k for k in ORDER})
     case = load_case(report['casePath'])
     assert case.mri.shape == (6, 6, 6)
@@ -63,6 +66,7 @@ def test_export_preserves_sources_overlaps_coordinates_and_thin_structures(tmp_p
 
 def test_unreviewed_transform_opt_in_preserves_status(tmp_path):
     c = fixture(tmp_path, status='unreviewed')
+    assert next(row for row in surgical_environment_options(c)['layers'] if row['layerId'] == 'bone')['status'] == 'estimated_alignment'
     with pytest.raises(ValueError, match='opt-in'):
         prepare_surgical_patient(c.root, tmp_path / 'rejected', layer_ids={k: k for k in ORDER})
     report = prepare_surgical_patient(c.root, tmp_path / 'output', layer_ids={k: k for k in ORDER}, allow_unreviewed_registration=True)
@@ -78,6 +82,7 @@ def test_reject_missing_or_empty_selected_anatomy(tmp_path):
     row = c.layer('vessels')
     row['label_value'] = 2
     c.save()
+    assert next(row for row in surgical_environment_options(c)['layers'] if row['layerId'] == 'vessels')['status'] == 'unavailable'
     with pytest.raises(ValueError, match='no occupied'):
         prepare_surgical_patient(c.root, tmp_path / 'output', layer_ids={k: k for k in ORDER})
 

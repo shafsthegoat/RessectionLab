@@ -1,12 +1,14 @@
 # Current engine and historical Qt dependencies
 
 The active application is Electron/React/TypeScript with a Python numerical
-engine. `requirements-lock.txt` retains 51 exact installed versions for that
-engine plus research, test, and build tools. It does not install Qt or VTK.
-No retained package version was changed.
+engine. `requirements-lock.txt` retains 52 exact installed versions for that
+engine plus research, test, and build tools. It includes VTK 9.7.0 for native
+surface preparation, matching the existing `anatomy` extra and the actual runtime.
+Qt stays optional. No installed package was changed by this correction.
 
 `requirements-legacy-qt-lock.txt` includes the default file and adds only the
-five packages required by the historical interface:
+four Qt packages required by the historical interface; VTK comes from the shared
+engine lock:
 
 | Package | Existing pinned version |
 | --- | --- |
@@ -14,11 +16,12 @@ five packages required by the historical interface:
 | PySide6_Addons | 6.11.2 |
 | PySide6_Essentials | 6.11.2 |
 | shiboken6 | 6.11.2 |
-| vtk | 9.7.1 |
 
-All 56 pins were checked against installed distribution metadata. The current
-`pyproject.toml` already declares Qt/VTK only under the optional `legacy-qt`
-extra and was left unchanged. The installed editable `resectionlab` metadata
+The original lock audit checked the separated pins against distribution metadata.
+Cold native-study packaging subsequently verified the installed VTK runtime as
+9.7.0; the stale optional-only 9.7.1 pin was replaced with that shared pin.
+`pyproject.toml` declares VTK in the `anatomy` extra and Qt in `legacy-qt`
+and was left unchanged. The installed editable `resectionlab` metadata
 predates that source change and still advertises unconditional Qt/VTK
 requirements. It was not regenerated during this audit. A subsequent ordinary
 editable install reads the current project declarations; the README installs
@@ -28,19 +31,21 @@ on these five packages.
 
 ## Import and packaging evidence
 
-Static inspection of Python source, scripts, tests, and packaging entry points
-found direct toolkit imports confined to the historical UI modules,
-`scripts/build_macos.py`, and `packaging/macos_entry.py`. The old
+The historical UI modules, `scripts/build_macos.py`, and `packaging/macos_entry.py`
+use the legacy display toolkits. Native anatomy surface preparation additionally
+uses VTK data/filter bindings through direct `vtkmodules` imports; source runs
+that prepare uncached meshes need VTK even though the Electron interface uses
+Three.js. The old
 `scripts/launch_app.sh` launches that historical application. The reusable
 annotation, refinement, and physical-reslicing helpers under `app/` do not
 require a toolkit; importing `resectionlab.app` itself is lazy.
 
-`scripts/build_electron_sidecar.py` already explicitly excludes PySide6, PyQt6,
-VTK and vtkmodules. Existing packaged-build evidence is described in
-[electron-packaging.md](electron-packaging.md). The currently present frozen
-engine payload was also scanned for toolkit directories/libraries, with no
-matches. Retained historical source files are separate from runtime toolkit
-binaries. No new app build was performed for this lock-file change.
+`scripts/build_electron_sidecar.py` includes the VTK geometry dependency closure
+for cold native-study opening, while excluding PySide6, PyQt6 and the `vtk`
+umbrella import. Packaging evidence and the current runtime scope are described
+in [electron-packaging.md](electron-packaging.md). The earlier lock separation
+was checked against a frozen payload without toolkit binaries; that historical
+scan does not describe the current geometry-enabled bundle.
 
 To test source behavior without modifying the shared environment, fresh Python
 subprocesses loaded a temporary import blocker that makes all five toolkit
