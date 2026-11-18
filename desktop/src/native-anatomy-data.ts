@@ -42,7 +42,7 @@ export type IntakeSelection={
   storage?:'series'|'source-asset';
 };
 export type IntakeItem={selectionId:string;kind:IntakeKind;modality?:string;seriesId?:string;sourceInputIndex?:number;roleMap?:Record<string,string|{kind:string;label:string}>;label?:string};
-export type PreparationStage={id:string;label:string;status:string;reason?:string;seriesId?:string};
+export type PreparationStage={id:string;label:string;status:string;reason?:string;seriesId?:string;retryable?:boolean;device?:string};
 export type PreparationPlan={id:string;stages:PreparationStage[]};
 export type PreparationResponse={document:Document;plan:PreparationPlan;outcomes?:PreparationStage[]};
 export interface NativeAnatomyApi {

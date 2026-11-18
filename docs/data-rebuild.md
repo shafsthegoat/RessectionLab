@@ -21,6 +21,9 @@ PYTHONPATH=src .venv/bin/python scripts/migrate_anatomy_library.py "$inventory" 
 Repeat the run command to resume. Use `--only CASE_KEY` for a representative
 and `--retry-failed` to retry failed stages. Open the resulting
 `patient-anatomy.json` in Cases. Migration writes a private versioned study.
+After a verified SynthStrip MPS allocation failure, the same retry command
+offers one CPU attempt with a ten-minute timeout and an 8 GiB process-memory
+limit. Its checkpoint retains the original GPU failure and records the device.
 Catalog publication requires a separately admitted native release. EDEN
 healthy acquisitions and synthetic target options share one study per person.
 The joined results include every frozen row, its saved outcome, and any stage

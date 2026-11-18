@@ -12,6 +12,7 @@ import time
 from . import anatomy_models
 from .anatomy_alignment import alignment_pairs, ensure_alignment, input_key, matches_alignment_key
 from .patient_anatomy import PatientImagingCollection, digest
+from .anatomy_synthstrip_fallback import CPU_MODEL, CPU_RETRY_STATUS, offer_cpu_retry
 
 RECEIPTS = "anatomy-preparation.json"
 SCHEMA = "native-anatomy-preparation-v1"
@@ -214,7 +215,12 @@ def _jobs(collection, options):
 
 
 def _plan(collection, options, receipts):
-    stages = [_stage(collection, job, receipts) for job in _jobs(collection, options)]
+    stages = []
+    for job in _jobs(collection, options):
+        stage = _stage(collection, job, receipts)
+        stages.append(stage)
+        if fallback := offer_cpu_retry(collection, stage, receipts, _stage):
+            stages.append(fallback)
     by_id = {stage["id"]: stage for stage in stages}
     for stage in stages:
         if stage["status"] not in RUNNABLE_STATUSES:
@@ -244,8 +250,13 @@ def _run_stage(candidate, stage, cancelled, progress):
     if stage["model"] == "rigid-registration":
         ensure_alignment(candidate, series_id=stage["series_id"], cancelled=cancelled, progress=progress)
         return "cached", "Source-bound display alignment prepared", []
-    record = anatomy_models.reconstruct(candidate, stage["series_id"], stage["model"],
-                                        cancelled=cancelled, **stage.get("options", {}))
+    if stage["model"] == CPU_MODEL:
+        from .anatomy_synthstrip_fallback import reconstruct_cpu
+
+        record = reconstruct_cpu(candidate, stage, cancelled=cancelled)
+    else:
+        record = anatomy_models.reconstruct(candidate, stage["series_id"], stage["model"],
+                                            cancelled=cancelled, **stage.get("options", {}))
     before = {row["id"] for row in candidate.document["layers"]}
     result = anatomy_models.import_proposal(candidate, stage["series_id"], record)
     outputs = []
@@ -256,6 +267,8 @@ def _run_stage(candidate, stage, cancelled, progress):
             outputs.append({"id": row["id"], "sha256": row.get("original_data", row["data"])["sha256"]})
             if row["id"] not in before:
                 row["preparation_input"] = stage["inputKey"]
+                if stage["model"] == CPU_MODEL:
+                    row["label"] = "Brain envelope · SynthStrip CPU"
     if not outputs or record.get("foreground_voxels") == 0 or record.get("availability") == "empty_output":
         return "empty_output", "Model returned no labeled anatomy in its output field", outputs
     if len(outputs) == 1 and not candidate.mask(candidate.layer(outputs[0]["id"])).any():
@@ -292,7 +305,10 @@ def prepare_anatomy(collection, *, on_stage=None, cancelled=None, retry_failed=F
             state = stage["status"]
             reason = stage.get("reason") or ""
             published = False
-            if state in RUNNABLE_STATUSES or (retry_failed and state in RETRY_STATUSES):
+            can_run = stage.get("retryable") is not False and (
+                state in RUNNABLE_STATUSES or (retry_failed and state in RETRY_STATUSES | {CPU_RETRY_STATUS})
+            )
+            if can_run:
                 if any(completed.get(dep) not in SATISFIED_STATUSES for dep in stage.get("depends_on", [])):
                     state, reason = "blocked", "A required preparation stage did not produce usable anatomy"
                 else:
@@ -301,6 +317,14 @@ def prepare_anatomy(collection, *, on_stage=None, cancelled=None, retry_failed=F
                     candidate = PatientImagingCollection(collection.root, collection.document)
                     expected = collection.identity()
                     interrupted = None
+                    if stage["model"] == CPU_MODEL:
+                        # An abandoned or interrupted supervisor is also an
+                        # attempt. Persist the one-use budget before launch.
+                        receipts[stage["id"]] = {
+                            "status": "failed", "reason": "The one CPU retry was started",
+                            "inputKey": stage["inputKey"], "outputs": [], "elapsedSeconds": 0,
+                        }
+                        _checkpoint(collection, receipts)
                     try:
                         state, reason, outputs = _run_stage(candidate, stage, cancelled,
                             lambda f, m: progress((index + f) / len(plan["stages"]), m))
@@ -334,6 +358,8 @@ def prepare_anatomy(collection, *, on_stage=None, cancelled=None, retry_failed=F
             completed[stage["id"]] = state
             outcome_status = "complete" if state == "cached" and published else state
             outcome = {"id": stage["id"], "label": stage["label"], "status": outcome_status, "reason": reason}
+            if "device" in stage:
+                outcome["device"] = stage["device"]
             outcomes.append(outcome)
             if on_stage:
                 on_stage(outcome)

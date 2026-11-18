@@ -6,9 +6,9 @@ import type {NativeWorkspace} from './use-native-workspace';
 const stageStatuses:Record<string,string>={
   ready:'Ready',cached:'Reused',available:'Available',missing_input:'Missing input',
   unsupported_input:'Unsupported input',unavailable:'Unavailable',blocked:'Blocked',
-  failed:'Failed',empty_output:'Empty output',interrupted:'Interrupted',complete:'Completed',
+  retry_available:'CPU retry available',failed:'Failed',empty_output:'Empty output',interrupted:'Interrupted',complete:'Completed',
 };
-const retryable=new Set(['failed','empty_output']);
+const retryable=new Set(['failed','empty_output','retry_available']);
 
 export function NativePreparePanel({workspace:w,onReviewAnatomy}:{workspace:NativeWorkspace;onReviewAnatomy:()=>void}){
   const [tumorIndication,setTumorIndication]=useState('');
@@ -27,14 +27,14 @@ export function NativePreparePanel({workspace:w,onReviewAnatomy}:{workspace:Nati
   };
   const planScope=(snapshotId:string)=>JSON.stringify([b.collectionId,snapshotId,options]);
   const plan=report?.scope===planScope(b.document.snapshot_id)?report.plan:null;
-  const interrupted=plan?.stages.some(stage=>stage.status==='interrupted')??false;
+  const interrupted=plan?.stages.some(stage=>stage.status==='interrupted'&&stage.retryable!==false)??false;
   const hasReady=interrupted||(plan?.stages.some(stage=>stage.status==='ready')??false);
   const shownStages=new Map(plan?.stages.map(stage=>[stage.id,stage]));
   if(plan)for(const outcome of report?.outcomes??[]){
     const proposed=shownStages.get(outcome.id);
     shownStages.set(outcome.id,{...proposed,...outcome,reason:outcome.reason||proposed?.reason});
   }
-  const hasFailures=plan?.stages.some(stage=>retryable.has(stage.status))??false;
+  const hasFailures=plan?.stages.some(stage=>stage.retryable!==false&&retryable.has(stage.status))??false;
   function updateOption(update:()=>void){update();setCancelled(false);setError('');}
   function prepare(action:'plan'|'run',retryFailed=false){
     if(action==='run'&&!plan)return;

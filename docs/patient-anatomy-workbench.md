@@ -30,6 +30,24 @@ display setting.
 settings, the selected target and comparison receipts. For hidden verification
 commands, see the [fresh patient reproduction](fresh-patient-reproduction.md).
 
+### Evidence from the adaptive workflow
+
+The UCSF development study retained its supplied core, edema-like and enhancing
+labels. Selecting the enhancing label produced three geometric comparisons that
+survived a cold reopen. The scanner-acquired meningioma T1 postcontrast study
+reached the same point using an explicitly selected, unreviewed model candidate.
+Both studies lacked a source-supported vascular assessment.
+
+In an independent source-image check on EDEN CTRL_0866, readers could identify
+both lens centers in the T1 and TOF volumes. The archived rigid transform
+placed the two pairs 12.89 mm and 11.49 mm apart. The other three prespecified
+points could not be localized reliably in both scans. Reapplying the archived
+pull transform reproduced 40 sampled registered voxels exactly. The estimate
+failed the workbench's 2 mm landmark criterion. Use the separate corrected
+working revision for this volunteer. It opens the TOF in its own frame, keeps
+the rejected transform in history and withholds quantitative fusion. The local
+testing inventory links the revision, audit and source-plane evidence.
+
 ## EDEN source anatomy and saved approaches (2026-11-17)
 
 The normal **Cases → Anatomy → Plan & compare** workflow now opens prepared
