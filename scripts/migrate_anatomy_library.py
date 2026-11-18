@@ -162,12 +162,12 @@ def legacy_member_source(collection, name, checksum):
         return collection.path(name)
     except ValueError:
         original = (collection.root / relative).resolve(strict=True)
-        approved = (LOCAL_OUTPUTS / "downloaded-datasets").resolve()
+        approved = [(LOCAL_OUTPUTS / area).resolve() for area in ("downloaded-datasets", "environments")]
         # Earlier local collections linked exact originals in the configured
         # checkout dataset store. Copy real bytes into the new package and
         # keep ordinary workspace traversal rules intact.
         if (len(relative.parts) != 3 or relative.parts[:2] != ("originals", checksum)
-                or relative.name != original.name or not original.is_relative_to(approved)
+                or relative.name != original.name or not any(original.is_relative_to(root) for root in approved)
                 or not original.is_file() or sha256_file(original) != checksum):
             raise
         return original

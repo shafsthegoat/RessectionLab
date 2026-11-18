@@ -1,4 +1,5 @@
 import hashlib
+import importlib.util
 import json
 from pathlib import Path
 import subprocess
@@ -8,6 +9,35 @@ import pytest
 
 
 SCRIPT = Path(__file__).parents[1] / "scripts" / "migrate_anatomy_library.py"
+
+
+def test_legacy_environment_member_requires_original_name_location_and_bytes(tmp_path, monkeypatch):
+    from resectionlab.patient_anatomy import PatientImagingCollection
+
+    spec = importlib.util.spec_from_file_location("migration_member_test", SCRIPT)
+    runner = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(runner)
+    approved = tmp_path / "testcases"
+    monkeypatch.setattr(runner, "LOCAL_OUTPUTS", approved)
+    original = approved / "environments" / "batch-v1" / "proposal.nii.gz"
+    original.parent.mkdir(parents=True)
+    original.write_bytes(b"frozen proposal")
+    checksum = hashlib.sha256(original.read_bytes()).hexdigest()
+    study = PatientImagingCollection.create(tmp_path / "study", "fixture")
+    name = f"originals/{checksum}/{original.name}"
+    link = study.root / name
+    link.parent.mkdir(parents=True)
+    link.symlink_to(original)
+    assert runner.legacy_member_source(study, name, checksum) == original
+    original.write_bytes(b"changed proposal")
+    with pytest.raises(ValueError):
+        runner.legacy_member_source(study, name, checksum)
+    outside = tmp_path / original.name
+    outside.write_bytes(b"frozen proposal")
+    link.unlink()
+    link.symlink_to(outside)
+    with pytest.raises(ValueError):
+        runner.legacy_member_source(study, name, checksum)
 
 
 def dump(path, document):
