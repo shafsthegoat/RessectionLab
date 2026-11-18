@@ -223,7 +223,7 @@ def _viewer_state(case,viewer,cases):
             raise ValueError('Invalid slice framing')
     if 'sliceOverlay' in viewer and viewer['sliceOverlay'] not in ('contour','fill'):
         raise ValueError('Invalid slice annotation style')
-    if 'presentation' in viewer and viewer['presentation'] not in ('segmentation','vascular'):
+    if 'presentation' in viewer and viewer['presentation'] not in ('scan','segmentation','vascular'):
         raise ValueError('Invalid anatomy presentation')
     if 'skullMode' in viewer and viewer['skullMode'] not in {'exterior','transparent','cutaway'}:
         raise ValueError('Invalid skull display mode')

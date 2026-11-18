@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {nextScanState,scanLabel,studyTimepoint,migrateSkullView,anatomyPresentation,sourceEvidenceLabel} from '../src/native-study-state.ts';
+import {nextScanState,scanLabel,studyTimepoint,migrateSkullView,anatomyPresentation,defaultAnatomyPresentation,sourceEvidenceLabel} from '../src/native-study-state.ts';
 import {checkedViewerSettings} from '../src/workspace-view-settings.ts';
 
 test('structural contrast retains study angiography availability and derived diffusion status',()=>{
@@ -79,6 +79,33 @@ test('presentation choices preserve source identities, selected anatomy, camera 
     assert.deepEqual(JSON.parse(JSON.stringify(next)).presentation,mode);
   }
   assert.deepEqual({settings,layers},original);
+});
+
+test('Scan explicitly restores acquired signal and restrained overlays without overwriting stored settings',()=>{
+  const layers=[{id:'brain',kind:'brain'},{id:'cerebellum',kind:'cerebellar-cortex'},{id:'brainstem',kind:'brainstem'},{id:'review',kind:'review-region'},{id:'tumor',kind:'tumor'},{id:'bone',kind:'bone'}];
+  const saved={presentation:'segmentation',smoothSurfaces:false,volumeRendering:{enabled:false,density:.025,points:[[0,0,0,0,0],[1,1,1,1,.1]]},layerOpacity:{tumor:1}};
+  const original=structuredClone(saved);
+  for(const modality of ['T1CE','MRI','T2 FLAIR','CTA','CT','3D TOF MRA']){
+    assert.equal(defaultAnatomyPresentation(modality),'scan');
+    const view=anatomyPresentation(saved,layers,'scan',modality);
+    assert.equal(view.presentation,'scan');
+    assert.equal(view.volumeRendering.enabled,true);
+    assert.ok(view.volumeRendering.density>.2);
+    assert.equal(view.volumeRendering.points,undefined);
+    assert.equal(view.contextStyle,'uniform');
+    assert.equal(view.smoothSurfaces,false);
+    assert.ok(view.layerOpacity.cerebellum<.05);
+    assert.ok(view.layerOpacity.brainstem<.05);
+    assert.equal(view.layerOpacity.review,undefined,'Review evidence keeps its authored appearance');
+    assert.ok(view.layerOpacity.tumor>view.layerOpacity.brain);
+    assert.ok(view.layerOpacity.tumor<.5);
+    assert.equal(view.sliceOverlay,'contour');
+  }
+  for(const modality of ['segmentation only','analytic signal','generated image signal','DTI FA diagnostic']){
+    assert.equal(defaultAnatomyPresentation(modality),'segmentation');
+    assert.equal(anatomyPresentation(saved,layers,'scan',modality).presentation,'segmentation');
+  }
+  assert.deepEqual(saved,original);
 });
 
 test('saved context and physical slice framing reopen detached and reject malformed extents',()=>{

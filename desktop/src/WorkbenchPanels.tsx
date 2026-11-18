@@ -1,4 +1,6 @@
-import {useState} from 'react';
+import {useDeferredValue,useEffect,useId,useMemo,useRef,useState} from 'react';
+import type {ReactNode} from 'react';
+import {ArrowUpRight,ChevronDown,ChevronLeft,ChevronRight,FolderOpen,Info,Layers3,Search,X} from 'lucide-react';
 import {studyLabel} from './native-study-state';
 import type {CasePayload,ResectionApi,CaseLibraryFolder} from './types';
 import {ImagingWorkspacePanel} from './ImagingWorkspacePanel';
@@ -16,35 +18,102 @@ export function anatomyDescription(record:AnatomyRecord|undefined,fallback:strin
 }
 /** Search only this row's own displayed identity, present anatomy and source report. Catalog
  * receipts contain evidence about other people and must not enter search text. */
-export function filterLibraryCases(cases:LibraryCase[],query:string):LibraryCase[] {
-  const normalize=(value:string)=>value.normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
-  const terms=normalize(query.trim()).split(/\s+/).filter(Boolean);
-  if(!terms.length)return cases;
-  return cases.filter(row=>{const location=row.qualifiedCatalog&&row.sourceLocation?.status==='source-reported-unreviewed'?row.sourceLocation.label:'';
-    const text=normalize([row.title,row.source??'',...(row.anatomy??[]),...(row.capabilities??[]).map(name=>name.replaceAll('_',' ')),location].join(' '));return terms.every(term=>text.includes(term));});
+function normalizeLibraryText(value:string):string {
+  return value.normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
 }
-export function CaseLibraryPanel({cases,onOpen,onBrowse,busy,libraryFolder,onChooseLibrary,libraryError}:{cases:LibraryCase[];onOpen:(id:string)=>void;onBrowse:()=>void;busy:boolean;libraryFolder?:CaseLibraryFolder|null;onChooseLibrary?:()=>void;libraryError?:string|null}) {
+function librarySearchText(row:LibraryCase):string {
+  const location=row.qualifiedCatalog&&row.sourceLocation?.status==='source-reported-unreviewed'?row.sourceLocation.label:'';
+  return normalizeLibraryText([row.title,row.source??'',...(row.anatomy??[]),...(row.capabilities??[]).map(name=>name.replaceAll('_',' ')),location].join(' '));
+}
+export function filterLibraryCases(cases:LibraryCase[],query:string):LibraryCase[] {
+  const terms=normalizeLibraryText(query.trim()).split(/\s+/).filter(Boolean);
+  if(!terms.length)return cases;
+  return cases.filter(row=>{const text=librarySearchText(row);return terms.every(term=>text.includes(term));});
+}
+const libraryPageSize=50;
+type LibraryScope='all'|'recent'|'studies'|'catalog';
+function libraryStudyLabel(row:LibraryCase):string {
+  return row.native?`${studyLabel(row.timepoint??'preoperative')} · ${row.scanCount??0} scans`:row.portable?'Portable patient study':`${(row.bytes/1048576).toFixed(0)} MB`;
+}
+function libraryAnatomyLabel(row:LibraryCase):string {
+  return row.anatomy?.length?row.anatomy.map(name=>name?name[0].toUpperCase()+name.slice(1):'').join(' + '):'Anatomy coverage unknown';
+}
+function libraryGateLabel(row:LibraryCase):string {
+  return row.reviewedExternal?'Engineering review · limited capabilities':row.qualifiedCatalog?'Source checked · anatomy unreviewed':row.native||row.portable?'Saved patient study':'Prepared public case';
+}
+export function CaseLibraryPanel({cases,onOpen,onBrowse,busy,loading=false,libraryFolder,onChooseLibrary,libraryError,newStudyControl}:{cases:LibraryCase[];onOpen:(id:string)=>void;onBrowse:()=>void;busy:boolean;loading?:boolean;libraryFolder?:CaseLibraryFolder|null;onChooseLibrary?:()=>void;libraryError?:string|null;newStudyControl?:ReactNode}) {
   const [query,setQuery]=useState('');
-  const shown=filterLibraryCases(cases,query),hasCatalog=cases.some(row=>row.qualifiedCatalog);
-  return <section className="poc-case-library" aria-label="Saved cases">
-    <span className="eyebrow">CASES ON THIS MAC</span><h2>Find a case</h2>
-    <p className="muted-note">Open a saved study or explore source-checked research cases.</p>
-    <button className="outline-button" onClick={onBrowse} disabled={busy}>Open a saved case…</button>
-    {onChooseLibrary&&<div className="poc-library-folder">
-      <span>Case library folder</span><p>{libraryFolder?.folder??'No library folder selected'}</p>
-      <button className="outline-button" onClick={onChooseLibrary} disabled={busy}>Choose case library…</button>
-      {!libraryFolder?.folder&&<small>Choose the folder containing your source-checked case catalog.</small>}
-    </div>}
-    {(libraryError||libraryFolder?.error)&&<p className="poc-caution" role="alert">{libraryError||libraryFolder?.error}</p>}
-    <label>Search cases<input type="search" aria-label="Search cases by name, source, anatomy or reported site" placeholder="Name, source, anatomy or reported site" value={query} maxLength={100} onChange={event=>setQuery(event.target.value)} style={{width:'100%',marginTop:7}}/></label>
-    <p className="muted-note" role="status">{shown.length} {shown.length===1?'case':'cases'}{query.trim()?` matching “${query.trim()}”`:''}</p>
-    {shown.map(row=><button className="poc-case-card" key={row.id} onClick={()=>onOpen(row.id)} disabled={busy}>
-      <strong>{row.title}</strong><span>{row.recent?'Recently opened':row.qualifiedCatalog?`${row.source} catalog`:'Prepared public case'} · {row.native?`${studyLabel(row.timepoint??'preoperative')} · ${row.scanCount??0} scans`:row.portable?'Portable patient study':`${(row.bytes/1048576).toFixed(0)} MB`}</span>
-      {row.reviewedExternal?<><span>{row.capabilities?.map(name=>name.replaceAll('_',' ')).join(' · ')}</span><span>Engineering review · limited capabilities</span>{row.limitations?.length?<span>{row.limitations[0]}</span>:null}</>:row.qualifiedCatalog&&<><span>{row.anatomy?.length?row.anatomy.map(name=>name[0].toUpperCase()+name.slice(1)).join(' + '):'Anatomy coverage unknown'}</span><span>Source checked · anatomy unreviewed</span></>}
-      {row.qualifiedCatalog&&row.sourceLocation?.status==='source-reported-unreviewed'&&<span className="poc-source-location">Reported site: {row.sourceLocation.label}<small>Dataset / paper report · review pending</small></span>}
-    </button>)}
-    {!shown.length&&<p className="muted-note">{cases.length?'No matching cases. Try a different name, source, anatomy or reported site.':'Open or import imaging to start a case.'}</p>}
-    {hasCatalog&&<p className="muted-note">Catalog entries are existing source cases. Anatomical accuracy and independence across datasets remain unverified.</p>}
+  const [scope,setScope]=useState<LibraryScope>('all');
+  const [page,setPage]=useState(0);
+  const [selectedId,setSelectedId]=useState<string|null>(null);
+  const searchRef=useRef<HTMLInputElement>(null),detailRef=useRef<HTMLElement>(null),detailTriggerRef=useRef<HTMLButtonElement|null>(null),listRef=useRef<HTMLUListElement>(null);
+  const detailId=useId(),resultId=useId(),deferredQuery=useDeferredValue(query);
+  // Index only the allowed row evidence once per listing, then keep rendering bounded.
+  const indexed=useMemo(()=>cases.map(row=>({row,text:librarySearchText(row)})),[cases]);
+  const shown=useMemo(()=>{
+    const terms=normalizeLibraryText(deferredQuery.trim()).split(/\s+/).filter(Boolean);
+    return indexed.filter(({row,text})=>(scope==='all'||scope==='recent'&&row.recent||scope==='studies'&&(row.native||row.portable)||scope==='catalog'&&(row.qualifiedCatalog||row.reviewedExternal))&&terms.every(term=>text.includes(term))).map(({row})=>row);
+  },[indexed,deferredQuery,scope]);
+  const pageCount=Math.max(1,Math.ceil(shown.length/libraryPageSize)),currentPage=Math.min(page,pageCount-1);
+  const visible=shown.slice(currentPage*libraryPageSize,(currentPage+1)*libraryPageSize);
+  const selected=shown.find(row=>row.id===selectedId);
+  const hasCatalog=useMemo(()=>cases.some(row=>row.qualifiedCatalog||row.reviewedExternal),[cases]);
+  const searching=query!==deferredQuery,error=libraryError||libraryFolder?.error;
+  useEffect(()=>{if(selectedId)detailRef.current?.focus();},[selectedId]);
+  const clearFilters=()=>{setQuery('');setScope('all');setPage(0);setSelectedId(null);searchRef.current?.focus();};
+  const closeDetails=()=>{setSelectedId(null);requestAnimationFrame(()=>detailTriggerRef.current?.focus());};
+  const changePage=(next:number)=>{setPage(next);setSelectedId(null);requestAnimationFrame(()=>{listRef.current?.scrollTo({top:0});listRef.current?.querySelector<HTMLButtonElement>('.poc-case-card:not(:disabled),.case-library-detail-toggle')?.focus();});};
+  const folderControl=onChooseLibrary&&<div className="poc-library-folder case-library-location">
+    <FolderOpen size={15} aria-hidden="true"/><div><span>Case library folder</span><p title={libraryFolder?.folder??undefined}>{libraryFolder?.folder??'No library folder selected'}</p>
+    {!libraryFolder?.folder&&<small>Choose the folder containing your source-checked case catalog.</small>}</div>
+    <button className="outline-button" onClick={onChooseLibrary} disabled={busy}>Choose case library…</button>
+  </div>;
+  return <section className="poc-case-library case-library-workspace" aria-label="Saved cases">
+    <header className="case-library-heading">
+      <h1>Case library</h1>
+      <div className="case-library-actions">{!!cases.length&&!error&&folderControl&&<details className="case-library-config" onKeyDown={event=>{if(event.key==='Escape'){event.currentTarget.open=false;event.currentTarget.querySelector('summary')?.focus();}}}><summary><FolderOpen size={14}/><span>Library location</span><ChevronDown size={13}/></summary>{folderControl}</details>}<button className="outline-button" onClick={onBrowse} disabled={busy}><FolderOpen size={15}/><span>Open a saved case…</span></button>{newStudyControl}</div>
+    </header>
+    {(!cases.length||!!error)&&folderControl}
+    {error&&<div className="case-library-error" role="alert"><Info size={17} aria-hidden="true"/><div><strong>Case library needs attention</strong><p>{error}</p><small>Open a saved case directly{onChooseLibrary?' or choose the library folder again':''}.</small></div></div>}
+    <div className="case-library-toolbar">
+      <label className="case-library-search"><Search size={17} aria-hidden="true"/><span className="case-library-sr-only">Search cases</span><input ref={searchRef} type="search" aria-label="Search cases by name, source, anatomy or reported site" aria-describedby={resultId} placeholder="Search name, source, anatomy or reported site" value={query} maxLength={100} onChange={event=>{setQuery(event.target.value);setPage(0);setSelectedId(null);}}/>
+        {!!query&&<button type="button" aria-label="Clear case search" onClick={()=>{setQuery('');setPage(0);setSelectedId(null);searchRef.current?.focus();}}><X size={15}/></button>}</label>
+      <label className="case-library-scope"><span>Show</span><select aria-label="Filter case library" value={scope} onChange={event=>{setScope(event.target.value as LibraryScope);setPage(0);setSelectedId(null);}}><option value="all">All cases</option><option value="recent">Recently opened</option><option value="studies">Patient studies</option><option value="catalog">Research catalog</option></select></label>
+      <p id={resultId} className="case-library-result-count" role="status" aria-live="polite">{loading?'Loading case library…':searching?'Searching…':`${shown.length} ${shown.length===1?'case':'cases'}${query.trim()?` matching “${query.trim()}”`:''}`}</p>
+    </div>
+    <div className={`case-library-content ${selected?'has-preview':''}`}>
+      <div className="case-library-results" aria-busy={loading||searching}>
+        {!!shown.length&&<>
+          <div className="case-library-column-headings" aria-hidden="true"><span>Patient / case</span><span>Source & anatomy</span><span>Evidence status</span><span/></div>
+          <ul ref={listRef} tabIndex={-1} className="case-library-rows" aria-label="Available cases">
+            {visible.map(row=><li className={`case-library-row ${selectedId===row.id?'is-selected':''}`} key={row.id}>
+              <button className="poc-case-card" onClick={()=>onOpen(row.id)} disabled={busy} aria-label={`Open ${row.title}`}>
+                <span className="case-library-identity"><span className="case-library-case-icon" aria-hidden="true">{row.native||row.portable?<FolderOpen size={21}/>:<Layers3 size={21}/>}</span><span><strong title={row.title}>{row.title}</strong><span className="case-library-study">{libraryStudyLabel(row)}{row.recent&&<em>Recently opened</em>}</span></span></span>
+                <span className="case-library-source"><span>{row.source?`${row.source}${row.qualifiedCatalog?' catalog':''}`:row.native||row.portable?'Local patient study':'Prepared public case'}</span>{(row.qualifiedCatalog||row.reviewedExternal)&&<span>{row.anatomy?.length?libraryAnatomyLabel(row):row.reviewedExternal?row.capabilities?.slice(0,2).map(name=>name.replaceAll('_',' ')).join(' · ')||'See case capabilities':libraryAnatomyLabel(row)}</span>}</span>
+                <span className="case-library-evidence"><span className={`case-library-gate ${row.reviewedExternal||row.qualifiedCatalog?'is-research':''}`}>{libraryGateLabel(row)}</span>{row.reviewedExternal&&!!row.limitations?.length&&<span className="case-library-limitation" title={row.limitations[0]}>{row.limitations[0]}</span>}
+                {row.qualifiedCatalog&&row.sourceLocation?.status==='source-reported-unreviewed'&&<span className="poc-source-location">Reported site: {row.sourceLocation.label}<small>Dataset / paper report · review pending</small></span>}</span>
+              </button>
+              <button className="case-library-detail-toggle" aria-label={`Details for ${row.title}`} aria-expanded={selectedId===row.id} aria-controls={selectedId===row.id?detailId:undefined} onClick={event=>{detailTriggerRef.current=event.currentTarget;setSelectedId(selectedId===row.id?null:row.id);}}><Info size={15}/><span>Details</span></button>
+            </li>)}
+          </ul>
+          {pageCount>1&&<nav className="case-library-pagination" aria-label="Case library pages"><span>{currentPage*libraryPageSize+1}–{Math.min((currentPage+1)*libraryPageSize,shown.length)} of {shown.length}</span><div><button aria-label="Previous case page" disabled={currentPage===0} onClick={()=>changePage(currentPage-1)}><ChevronLeft size={15}/></button><span>Page {currentPage+1} of {pageCount}</span><button aria-label="Next case page" disabled={currentPage===pageCount-1} onClick={()=>changePage(currentPage+1)}><ChevronRight size={15}/></button></div></nav>}
+        </>}
+        {!shown.length&&<div className="case-library-empty"><FolderOpen size={28} strokeWidth={1}/><h2>{loading?'Loading case library…':cases.length?'No matching cases':'No cases yet'}</h2><p>{loading?'Reading local cases…':cases.length?'Try a different name, source, anatomy or reported site.':'Open or import imaging to start a case.'}</p>{cases.length>0&&!loading&&<button className="outline-button" onClick={clearFilters}>Clear search and filters</button>}{!cases.length&&!loading&&onChooseLibrary&&!libraryFolder?.folder&&<small>Choose a case library folder to browse a local research catalog.</small>}</div>}
+      </div>
+      {selected&&<aside ref={detailRef} id={detailId} tabIndex={-1} className="case-library-preview" aria-label={`Case details: ${selected.title}`} onKeyDown={event=>{if(event.key==='Escape'){event.preventDefault();closeDetails();}}}>
+        <div className="case-library-preview-heading"><span className="eyebrow">CASE DETAILS</span><button className="icon-button" aria-label="Close case details" onClick={closeDetails}><X size={17}/></button></div>
+        <div className="case-library-preview-symbol"><Layers3 size={37} strokeWidth={1}/><span>Saved case record</span></div>
+        <h2>{selected.title}</h2><p className="case-library-preview-study">{libraryStudyLabel(selected)}</p>
+        <p className="case-library-preview-gate">{libraryGateLabel(selected)}</p>
+        <dl><dt>Source</dt><dd>{selected.source??(selected.native||selected.portable?'Local patient study':'Prepared public case')}</dd>{(selected.qualifiedCatalog||selected.reviewedExternal)&&<><dt>Present anatomy</dt><dd>{libraryAnatomyLabel(selected)}</dd></>}
+        {selected.qualifiedCatalog&&selected.sourceLocation?.status==='source-reported-unreviewed'&&<><dt>Reported site</dt><dd>{selected.sourceLocation.label}<small>Dataset / paper report · review pending</small></dd></>}
+        {!!selected.capabilities?.length&&<><dt>Available capabilities</dt><dd>{selected.capabilities.map(name=>name.replaceAll('_',' ')).join(' · ')}</dd></>}
+        {!!selected.missingAnatomy?.length&&<><dt>Missing anatomy · unassessed</dt><dd>{selected.missingAnatomy.map(name=>name.replaceAll('_',' ')).join(' · ')}</dd></>}</dl>
+        {!!selected.limitations?.length&&<div className="case-library-preview-limits"><h3>Scope & limitations</h3><ul>{selected.limitations.map((limit,index)=><li key={index}>{limit}</li>)}</ul></div>}
+        <button className="outline-button case-library-open" disabled={busy} onClick={()=>onOpen(selected.id)}><span>Open case</span><ArrowUpRight size={16}/></button>
+      </aside>}
+    </div>
+    {hasCatalog&&<p className="case-library-catalog-note">Catalog entries are existing source cases. Anatomical accuracy and independence across datasets remain unverified.</p>}
   </section>;
 }
 export function WorkbenchDataPanel(props:{source:CasePayload;displayed:CasePayload;series:DisplaySeriesView[];selectedId:string|null;busy:boolean;

@@ -44,6 +44,11 @@ test('CT context uniforms retain a hidden source label at index127 and its exact
     const ivory=new THREE.Color('#ece2ca'),color=uniforms.uLayerColor.value[127];
     assert.deepEqual([color.x,color.y,color.z],[ivory.r,ivory.g,ivory.b]);
     assert.equal(color.w,.035);assert.equal(uniforms.uSkullMode.value,2);
+    renderer.labels(texture,{'source-bone':false}, {presentation:'scan',skullMode:'transparent',layerOpacity:{'source-bone':.015}},[]);
+    assert.equal(uniforms.uScanPresentation.value,true,'Scan uses the acquired transfer independently of an overlaid bone opacity');
+    assert.equal(uniforms.uContextLayerCount.value,1,'Source membership remains available when leaving Scan');
+    renderer.labels(texture,{}, {presentation:'scan',operativeView:'surgeon'},[]);
+    assert.equal(uniforms.uScanPresentation.value,false,'Operative scene retains its own source-context policy');
     renderer.setLayers(compartments.slice(0,127),packed.codes);
     renderer.labels(texture,{}, {skullMode:'exterior'},[]);
     assert.equal(uniforms.uContextLayerCount.value,0,'Threshold fallback is available only without a declared context layer');

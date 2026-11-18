@@ -21,7 +21,7 @@ export function checkedViewerSettings(source:CasePayload,input:unknown):ViewerWo
     if(!framing||typeof framing!=='object'||Array.isArray(framing)||Object.keys(framing).some(k=>!['fit','zoom'].includes(k))||!['image','anatomy'].includes(framing.fit)||typeof framing.zoom!=='number'||!Number.isFinite(framing.zoom)||framing.zoom<.5||framing.zoom>4)return fail();
   }
   if(value.sliceOverlay!==undefined&&!['contour','fill'].includes(value.sliceOverlay))return fail();
-  if(value.presentation!==undefined&&!['segmentation','vascular'].includes(value.presentation))return fail();
+  if(value.presentation!==undefined&&!['scan','segmentation','vascular'].includes(value.presentation))return fail();
   if(value.smoothSurfaces!==undefined&&typeof value.smoothSurfaces!=='boolean')return fail();
   if(value.skullMode!==undefined&&!['exterior','transparent','cutaway'].includes(value.skullMode))return fail();
   if(value.volumeRendering!==undefined){

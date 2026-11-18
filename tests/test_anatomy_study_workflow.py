@@ -170,7 +170,7 @@ def test_versioned_vessel_scope_roundtrip_preserves_anatomy(patient, scope):
             save_view(patient, {**state, 'vesselDisplayVersion': invalid})
 
 
-@pytest.mark.parametrize('style,mode', [('contour', 'segmentation'), ('fill', 'vascular')])
+@pytest.mark.parametrize('style,mode', [('contour', 'scan'), ('contour', 'segmentation'), ('fill', 'vascular')])
 def test_anatomy_presentation_survives_native_and_portable_reopen(patient, tmp_path, style, mode):
     from resectionlab.anatomy_workspace import save_view, read_view
     before = deepcopy(patient.document)

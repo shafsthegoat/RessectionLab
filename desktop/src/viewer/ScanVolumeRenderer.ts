@@ -62,7 +62,7 @@ export class ScanVolumeRenderer {
         uDepth:{value:this.sceneTarget.depthTexture},uWorldToVoxel:{value:new THREE.Matrix4().set(...inverse.flat() as Parameters<THREE.Matrix4['set']>)},
         uCameraWorld:{value:new THREE.Matrix4()},uInverseProjection:{value:new THREE.Matrix4()},
         uShape:{value:new THREE.Vector3(...volume.shape)},uRange:{value:new THREE.Vector2()},
-        uSkullMode:{value:0},uCt:{value:false},uGradientOpacity:{value:false},uDensity:{value:.45},uStep:{value:this.spacing*.7},uLinear:{value:linear},
+        uSkullMode:{value:0},uCt:{value:false},uScanPresentation:{value:false},uGradientOpacity:{value:false},uDensity:{value:.45},uStep:{value:this.spacing*.7},uLinear:{value:linear},
         uClipEnabled:{value:false},uClipPlane:{value:new THREE.Vector4()},
         uBackground:{value:this.background},
         uLayerCount:{value:volume.compartments.length},uLayerCodes:{value:(codes??packAnatomyLabels(volume).codes).map(c=>new THREE.Vector2(...c))},uLayerEnabled:{value:new Float32Array(MAX_ANATOMY_LAYERS).fill(1)},
@@ -100,6 +100,7 @@ export class ScanVolumeRenderer {
   }
   labels(texture:THREE.Data3DTexture,visible:Record<string,boolean>,settings:ViewerWorkspaceSettings,planes:THREE.Plane[]){
     this.shellContext=settings.contextStyle==='shell';
+    this.material.uniforms.uScanPresentation.value=settings.presentation==='scan'&&settings.operativeView!=='surgeon';
     this.material.uniforms.uGradientOpacity.value=this.automaticMriTransfer&&this.shellContext;
     const u=this.material.uniforms;u.uLabels.value=texture;u.uSkullMode.value=settings.skullMode==='transparent'?2:settings.skullMode?1:0;let bits=0,all=0,active=0,context=0;
     this.layers.forEach((layer,i)=>{const a=layerAppearance(layer.name,layer.color,settings,layer.kind);
@@ -130,7 +131,11 @@ export class ScanVolumeRenderer {
     interactive: boolean, restoreViewport: ()=>void, longEdge=360) {
     if(!this.enabled){this.renderer.render(scene,camera);return;}
     const pixelRatio=this.renderer.getPixelRatio();
-    const scale=Math.min(pixelRatio,(interactive?longEdge:1300)/Math.max(width,height));
+    // The source texture stays at acquired resolution. Bound a single Scan
+    // draw while transparent MRI traverses the complete field, rather than
+    // oversampling the acquired grid; linked MPR targets remain full size.
+    const scan=this.material.uniforms.uScanPresentation.value===true;
+    const scale=Math.min(pixelRatio,(interactive?longEdge:scan?1024:1300)/Math.max(width,height));
     const w=Math.max(1,Math.round(width*scale)),h=Math.max(1,Math.round(height*scale));
     // Keep the small drag buffers separate so pointer release does not discard
     // the full-quality attachments on every gesture. Sizes/steps are unchanged.
@@ -148,7 +153,7 @@ export class ScanVolumeRenderer {
     camera.updateMatrixWorld();
     uniforms.uCameraWorld.value.copy(camera.matrixWorld);
     uniforms.uInverseProjection.value.copy(camera.projectionMatrixInverse);
-    uniforms.uStep.value=this.spacing*(interactive?3:.6);
+    uniforms.uStep.value=this.spacing*(interactive?3:scan?1:.6);
     uniforms.uInteractive.value=interactive;
     uniforms.uSampleIndex.value=interactive?0:this.samples;
     this.renderer.getClearColor(this.background);

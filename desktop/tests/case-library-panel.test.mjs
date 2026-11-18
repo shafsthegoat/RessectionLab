@@ -10,7 +10,7 @@ import {renderToStaticMarkup} from 'react-dom/server';
 let server,cache,filter,Panel;
 before(async()=>{
   cache=await fs.mkdtemp(path.join(os.tmpdir(),'catalog-panel-'));
-  server=await createServer({root:fileURLToPath(new URL('../',import.meta.url)),cacheDir:cache,logLevel:'error',server:{middlewareMode:true,hmr:false,ws:false},appType:'custom'});
+  server=await createServer({root:fileURLToPath(new URL('../',import.meta.url)),cacheDir:cache,logLevel:'error',optimizeDeps:{noDiscovery:true,include:[]},server:{middlewareMode:true,hmr:false,ws:false},appType:'custom'});
   const module=await server.ssrLoadModule('/src/WorkbenchPanels.tsx');filter=module.filterLibraryCases;Panel=module.CaseLibraryPanel;
 });
 after(async()=>{await server?.close();if(cache)await fs.rm(cache,{recursive:true,force:true});});
@@ -72,4 +72,60 @@ test('selected folder and recoverable catalog errors are visible while case acti
   assert.equal((html.match(/<button[^>]*disabled=""/g)??[]).length,5);
   const available=renderToStaticMarkup(React.createElement(Panel,{cases:[],onOpen(){},onBrowse(){},onChooseLibrary(){},libraryFolder:{folder:'/Moved folder',error:'Choose the library folder again.'},busy:false}));
   assert.match(available,/role="alert"/);assert.doesNotMatch(available,/<button[^>]*disabled=""/);
+});
+test('the full library exposes distinct native open and evidence-detail controls with a semantic case list',()=>{
+  const html=renderToStaticMarkup(React.createElement(Panel,{cases:rows,onOpen(){},onBrowse(){},busy:false,newStudyControl:React.createElement('button',null,'New patient study')}));
+  assert.match(html,/<h1>Case library<\/h1>/);assert.match(html,/New patient study/);
+  assert.match(html,/<ul[^>]*aria-label="Available cases"/);
+  assert.equal((html.match(/class="poc-case-card"/g)??[]).length,rows.length);
+  for(const row of rows){
+    assert(html.includes(`aria-label="Open ${row.title}"`));
+    assert(html.includes(`aria-label="Details for ${row.title}" aria-expanded="false"`));
+  }
+  assert.doesNotMatch(html,/class="case-library-preview"/);
+});
+test('large listings render one bounded page and expose the full count and native pagination controls',()=>{
+  const many=Array.from({length:123},(_,index)=>({...rows[0],id:`opaque-${index}`,title:`Research case ${index+1}`}));
+  const html=renderToStaticMarkup(React.createElement(Panel,{cases:many,onOpen(){},onBrowse(){},busy:false}));
+  assert.equal((html.match(/class="poc-case-card"/g)??[]).length,50);
+  assert.match(html,/123 cases/);assert.match(html,/1–50 of 123/);assert.match(html,/Page 1 of 3/);
+  assert.match(html,/<button aria-label="Previous case page" disabled=""/);
+  assert.match(html,/<button aria-label="Next case page">/);
+  assert.doesNotMatch(html,/Open Research case 51/);
+  assert.equal(filter(many,'Research case 123')[0].id,'opaque-122');
+});
+test('reviewed external rows retain limited engineering status and the stated first limitation',()=>{
+  const reviewed={id:'external',title:'Source case',recent:false,bytes:42,reviewedExternal:true,source:'Research collection',capabilities:['source_native_MRI_inspection','supplied_tumor_annotation_inspection'],limitations:['Source images only; no simulation admission.']};
+  const html=renderToStaticMarkup(React.createElement(Panel,{cases:[reviewed],onOpen(){},onBrowse(){},busy:false}));
+  assert.match(html,/Engineering review · limited capabilities/);
+  assert.match(html,/Source images only; no simulation admission/);
+  assert.match(html,/source native MRI inspection/);
+  assert.deepEqual(filter([reviewed],'MRI inspection').map(row=>row.id),['external']);
+  assert.deepEqual(filter([reviewed],'simulation admission'),[]);
+  assert.doesNotMatch(html,/Source checked · anatomy unreviewed|clinical validation|validated anatomy/);
+});
+test('an explicitly loading library retains immediate file and new-study actions with a loading announcement',()=>{
+  const html=renderToStaticMarkup(React.createElement(Panel,{cases:[],onOpen(){},onBrowse(){},busy:true,loading:true,newStudyControl:React.createElement('button',{disabled:true},'New patient study')}));
+  assert.match(html,/Loading case library/);assert.match(html,/Reading local cases/);
+  assert.match(html,/<button class="outline-button" disabled=""/);assert.match(html,/New patient study/);
+  assert.match(html,/aria-busy="true"/);
+  assert.doesNotMatch(html,/No matching cases/);
+});
+test('disabled navigation never claims a listing operation is running',()=>{
+  for(const cases of [[],rows]){
+    const html=renderToStaticMarkup(React.createElement(Panel,{cases,onOpen(){},onBrowse(){},busy:true}));
+    assert.match(html,/<button class="outline-button" disabled=""/);
+    assert.match(html,/aria-busy="false"/);
+    assert.doesNotMatch(html,/Loading case library|Working…|Reading local cases/);
+    if(!cases.length)assert.match(html,/No cases yet/);
+  }
+});
+test('an existing listing keeps folder configuration in a collapsed disclosure and removes repeated chrome',()=>{
+  const html=renderToStaticMarkup(React.createElement(Panel,{cases:rows,onOpen(){},onBrowse(){},onChooseLibrary(){},libraryFolder:{folder:'/Local studies/Research library'},busy:false}));
+  assert.match(html,/<details class="case-library-config"><summary>/);
+  assert.match(html,/Library location/);assert.match(html,/Choose case library/);
+  assert.doesNotMatch(html,/CASES ON THIS MAC|Local workspace|Saved patient studies and source-checked research cases/);
+  const empty=renderToStaticMarkup(React.createElement(Panel,{cases:[],onOpen(){},onBrowse(){},onChooseLibrary(){},libraryFolder:{folder:null},busy:false}));
+  assert.doesNotMatch(empty,/<details class="case-library-config"/);
+  assert.match(empty,/No library folder selected/);assert.match(empty,/Choose case library/);
 });

@@ -10,6 +10,8 @@ const os=require('node:os');
 const path=require('node:path');
 const {displayIdentity, geometry, inputScript, pixelSummary}=require('./verify-eden-planning-helpers.cjs');
 
+const {studyScanEnabledScript,studyScanSelectionScript}=require('./verify-study-ui-helpers.cjs');
+
 if(process.platform==='darwin')app.setActivationPolicy('accessory');
 process.argv.push('--automation-hidden');
 delete process.env.RESSECTIONLAB_DEV_URL;
@@ -571,7 +573,7 @@ app.on('browser-window-created',(_event, win)=>{
         report.target=provenanceLayer(target);
         report.t1View=await captureSource('01-eden-t1-anatomy','t1');
         await click('Scans');
-        await set('Source scan','tof');
+        await wait(studyScanEnabledScript('tof'),'enabled TOF source row');await js(studyScanSelectionScript('tof'));
         await ready();
         await openDetails('Alignment & registration');
         report.tofView=await captureSource('02-eden-tof-alignment-preview','tof');
@@ -579,7 +581,7 @@ app.on('browser-window-created',(_event, win)=>{
         assert(report.tofView.alignmentPreviews.includes('tof'));
         assert(report.tofView.layers.some(row=>row.id==='tof-vessel-candidates'&&row.volumeMm3>0));
         assert(await js('document.body.innerText.includes("Review landmarks before quantitative planning")'));
-        await set('Source scan','t1');
+        await wait(studyScanEnabledScript('t1'),'enabled T1 source row');await js(studyScanSelectionScript('t1'));
         await ready();
         await click('Plan & compare');
         await until(()=>!!plan('list'),'available EDEN target options');
@@ -680,7 +682,7 @@ app.on('browser-window-created',(_event, win)=>{
         }else{
           fs.mkdirSync(native);
           await click('Cases');
-          await openDetails('New patient study');
+          await click('New patient study');
           await set('New patient ID',patient);
           await set('New study timepoint',study.timepoint);
           nextOpen=[native];

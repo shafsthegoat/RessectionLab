@@ -31,7 +31,10 @@ import {
   ChevronDown,
   ChevronRight,
   CircleDot,
-  Command,
+  Files,
+  FolderPlus,
+  PanelLeftOpen,
+  Orbit,
   Expand,
   FlaskConical,
   Focus,
@@ -573,9 +576,11 @@ export default function App() {
   const [libraryFolder,setLibraryFolder] = useState<CaseLibraryFolder|null>(null);
   const [libraryError,setLibraryError] = useState<string|null>(null);
   const [choosingLibrary,setChoosingLibrary] = useState(false);
+  const [loadingLibrary, setLoadingLibrary] = useState(false);
   useEffect(()=>{
     let live=true;
     if(api)void (async()=>{
+      setLoadingLibrary(true);
       try{
         const rows=await api.listCases?.();
         const info=await api.caseLibraryInfo?.();
@@ -586,6 +591,8 @@ export default function App() {
         }
       }catch(error){
         if(live)setLibraryError(error instanceof Error?error.message:String(error));
+      }finally{
+        if(live)setLoadingLibrary(false);
       }
     })();
     return ()=>{live=false;};
@@ -1185,16 +1192,33 @@ export default function App() {
     setFrozenCusaRunning(false);
     setFrozenCusaPending(false);
   };
-  const load = (kind: "openCase" | "createSyntheticCase") =>
+  const load = (kind: "openCase" | "createSyntheticCase" | "openListedCase", id?: string) =>
     act(async () => {
       if (!api || fileNavigationBlocked) return;
       const generation = ++caseGeneration.current;
+      let source;
+      if (kind === 'openListedCase') {
+        if (!id) return;
+        source = nativeApi?.openListedWorkspace ? await nativeApi.openListedWorkspace(id) : await api.openListedCase?.(id);
+      } else {
+        source = kind === 'openCase' && nativeApi?.openWorkspace ? await nativeApi.openWorkspace() : await api[kind]();
+      }
+      if (!source || !mounted.current || generation !== caseGeneration.current) return;
       imaging.invalidate();
-      const source = kind==="openCase"&&nativeApi?.openWorkspace ? await nativeApi.openWorkspace() : await api[kind]();
-      if (source && mounted.current && generation === caseGeneration.current) {
-        if(isNativeBinding(source)){setPayload(null);setCaseData(null);setEpisodeVisible(false);setCertifiedReplay(null);clearProposal();clearPrior();await native.install(source);await api.workspaceInstalled?.({caseHash:source.collectionId,caseId:source.document.patient_id});setWorkbenchTab('anatomy');api.listCases?.().then(setLibraryCases);return;}
+      if (isNativeBinding(source)) {
+        await native.install(source);
+        setPayload(null);
+        setCaseData(null);
+        setEpisodeVisible(false);
+        setCertifiedReplay(null);
+        clearProposal();
+        clearPrior();
+        await api.workspaceInstalled?.({caseHash: source.collectionId, caseId: source.document.patient_id});
+        setWorkbenchTab('anatomy');
+      } else {
         await installCase(source, api, generation);
       }
+      setCasePanel(true);
     });
   const addData=()=>{
     setCasePanel(true);
@@ -1509,23 +1533,30 @@ export default function App() {
     setRouteB(next[1]?.route_id ?? "");
   }
 
+  const hasStudy = !!(native.binding || caseData);
+  const libraryOpen = workbenchTab === 'cases' || (!hasStudy && (workbenchTab === 'anatomy' || workbenchTab === 'data'));
+  const activeTab = libraryOpen ? 'cases' : workbenchTab;
+  const patientId = native.binding?.document.patient_id ?? caseData?.caseId ?? null;
+  const scanName = native.binding ? scanLabel(native.binding.document.series.find(s => s.id === native.series) ?? {id: '', modality: 'Study'})
+    : displayedSource ? String(displayedSource.metadata.selected_modality ?? 'Source imaging') : '';
+  const inspectorName = {cases: 'Cases', data: 'Scans', anatomy: 'Anatomy', research: native.binding ? 'Planning' : 'Case evidence', rehearsal: 'Rehearsal'}[workbenchTab];
+
   return (
-    <div data-native-series={native.binding?native.series:undefined} data-native-view-state={native.binding?JSON.stringify(native.viewState):undefined} className={`app-shell poc-workbench ${native.binding?"native-workspace":""} ${workbenchTab === "research" && !native.binding ? "research-open" : "anatomy-only"} ${casePanel ? "" : "case-panel-collapsed"}`}>
+    <div data-native-series={native.binding?native.series:undefined} data-native-view-state={native.binding?JSON.stringify(native.viewState):undefined} className={`app-shell poc-workbench ${native.binding?"native-workspace":""} ${libraryOpen?"library-open":""} ${workbenchTab === "research" && !native.binding ? "research-open" : "anatomy-only"} ${casePanel ? "" : "case-panel-collapsed"}`}>
       <header className="app-header">
-        <div className="window-traffic-space" />
         <div className="brand">
           <Logo />
           <span>
             Ressection<span className="brand-light">Lab</span>
           </span>
         </div>
-        <div className="header-divider" />
-        <span className="header-purpose">Studio</span>
-
+        {hasStudy && <div className="workspace-heading">
+          <WorkspaceBreadcrumb caseId={patientId}/>
+          {scanName && <h2>{scanName}</h2>}
+        </div>}
         <div className="header-spacer" />
-        <span className="research-tag">
-          <span className="status-dot" /> Local research
-        </span>
+        {!libraryOpen && !casePanel && <button className="header-button" aria-label="Show case panel" aria-controls="case-evidence-panel" onClick={()=>setCasePanel(true)}><PanelLeftOpen size={16}/> Inspector</button>}
+        {!libraryOpen && <>
         <button
           className="header-button"
           onClick={() => load("openCase")}
@@ -1543,32 +1574,87 @@ export default function App() {
           <ArrowUpFromLine size={15} />
           <span>Add data</span>
         </button>
-        <button
+        </>}
+        {hasStudy && <button
           className="header-button save-button"
           onClick={native.binding?()=>native.save():save}
           disabled={(!payload&&!native.binding) || busy || !!native.draft || engineStopped || readonly}
         >
           <ArrowDownToLine size={15} />
           <span>Save</span>
-        </button>
+        </button>}
       </header>
 
       <nav className="navigation-rail" aria-label="Workspace navigation">
-        {([{id:"cases",label:"Cases",icon:FolderOpen},{id:"data",label:"Data",icon:Scan},{id:"anatomy",label:"Anatomy",icon:Layers3},...(native.binding?[{id:'research' as const,label:'Plan',icon:Target}]:[]),{id:"rehearsal",label:"Rehearse",icon:Target}] as const).map(item=><button key={item.id}
-          className={`rail-button ${workbenchTab===item.id?"selected":""}`} aria-label={item.id==='anatomy'?'3D workspace':item.label}
-          aria-current={workbenchTab===item.id?'page':undefined} title={item.id==='anatomy'?'3D workspace':item.label}
-          onClick={()=>{if(item.id==='rehearsal'){resetDisplayToPrimary();setEpisodeVisible(false);setCertifiedReplay(null);setCameraMode('instruments')}else rehearsal.hide();setWorkbenchTab(item.id);setCasePanel(true)}}><item.icon size={19}/><span>{item.label}</span></button>)}
+        {([
+          {id: 'cases', label: 'Cases', name: 'Cases', icon: Files},
+          {id: 'data', label: 'Scans', name: 'Scans', icon: Scan},
+          {id: 'anatomy', label: 'Anatomy', name: '3D workspace', icon: Layers3},
+          ...(native.binding ? [{id: 'research' as const, label: 'Plan', name: 'Plan & compare', icon: Waypoints}] : []),
+          {id: 'rehearsal', label: 'Rehearse', name: 'Rehearse', icon: Orbit},
+        ] as const).map(item => <button key={item.id}
+          className={`rail-button ${activeTab === item.id ? 'selected' : ''}`}
+          aria-label={item.name} aria-current={activeTab === item.id ? 'page' : undefined}
+          title={item.name} disabled={!hasStudy && (item.id === 'data' || item.id === 'anatomy')}
+          onClick={() => {
+            if (item.id === 'rehearsal') {
+              resetDisplayToPrimary();
+              setEpisodeVisible(false);
+              setCertifiedReplay(null);
+              setCameraMode('instruments');
+            } else rehearsal.hide();
+            setWorkbenchTab(item.id);
+            setCasePanel(true);
+          }}>
+          <item.icon size={21}/><span>{item.label}</span>
+        </button>)}
         <div className="rail-spacer" />
         {!native.binding&&<button className={`rail-button ${workbenchTab==='research'?'selected':''}`} aria-label="Advanced research workflows"
           title="Earlier experimental workflows" onClick={()=>{setWorkbenchTab('research');setCasePanel(true)}}><FlaskConical size={18}/><span>Research</span></button>}
-        <span className="rail-local" title="Processing stays on this Mac"><ShieldCheck size={17}/></span>
+
       </nav>
 
-      <aside className="case-panel" id="case-evidence-panel">
+      {libraryOpen && <main className="library-surface" aria-label="Case library">
+        <CaseLibraryPanel cases={libraryCases} busy={fileNavigationBlocked || choosingLibrary}
+          loading={loadingLibrary || choosingLibrary} onBrowse={() => load('openCase')}
+          libraryFolder={libraryFolder} libraryError={libraryError}
+          onChooseLibrary={api?.chooseCaseLibrary ? () => void chooseCaseLibrary() : undefined}
+          onOpen={id => void load('openListedCase', id)}
+          newStudyControl={<button className="outline-button" disabled={fileNavigationBlocked} onClick={() => setNewStudyOpen(true)}>
+            <FolderPlus size={16}/> New patient study
+          </button>}/>
+      </main>}
+      <Dialog.Root open={newStudyOpen} onOpenChange={setNewStudyOpen}>
+        <Dialog.Portal>
+          <Dialog.Overlay className="dialog-overlay"/>
+          <Dialog.Content className="study-dialog">
+            <div className="study-dialog-heading">
+              <Dialog.Title>New patient study</Dialog.Title>
+              <Dialog.Close className="icon-button" aria-label="Close new study"><X size={17}/></Dialog.Close>
+            </div>
+            <Dialog.Description>Choose a patient ID and timepoint for the scans in this study.</Dialog.Description>
+            <form onSubmit={event => {event.preventDefault(); void act(createStudy);}}>
+              <label>Patient ID<input aria-label="New patient ID" value={newPatient} onChange={e=>setNewPatient(e.target.value)}/></label>
+              <label>Study timepoint<select aria-label="New study timepoint" value={newStudyTimepoint} onChange={e=>setNewStudyTimepoint(e.target.value)}>
+                <option value="preoperative">Pre-op</option><option value="postoperative">Post-op</option>
+                <option value="source-session-unknown">Unspecified timepoint</option>
+              </select></label>
+              {native.message && !native.binding && <p role="status">{native.message}</p>}
+              <div className="study-dialog-actions">
+                <Dialog.Close asChild><button type="button" className="outline-button">Cancel</button></Dialog.Close>
+                <button className="primary-button" disabled={fileNavigationBlocked || !newPatient.trim()}>Create study…</button>
+              </div>
+            </form>
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root>
+      {!libraryOpen && <aside className="case-panel" id="case-evidence-panel" aria-label={inspectorName}>
+        <div className="inspector-title"><h2>{inspectorName}</h2>
+          <button className="icon-button" aria-label="Collapse case panel" onClick={()=>setCasePanel(false)}><PanelLeftClose size={16}/></button>
+        </div>
         {conditionalNotice&&<p className="poc-caution" role="status">{conditionalNotice}</p>}
         {alignmentUncertain&&<p className="poc-caution" role="status">Derived MRA alignment is reviewed for overlays with unresolved quantitative accuracy. Precise navigation and clinical vascular clearance are unsupported; skull CT is unavailable.</p>}
         {workbenchTab==='rehearsal'?<>
-          <div className="panel-heading"><span className="eyebrow">SURGICAL RESEARCH</span><button className="icon-button" aria-label="Collapse case panel" onClick={()=>setCasePanel(false)}><PanelLeftClose size={15}/></button></div>
           {native.binding ? <EnvironmentPreparationPanel key={native.binding.collectionId+"/"+native.binding.document.snapshot_id+"/"+!!native.planning.rehearsalOptions}
             binding={native.binding} options={native.planning.rehearsalOptions} busy={busy} onAnatomy={()=>setWorkbenchTab('data')} onPrepare={async options=>{
             if(!api?.prepareSurgicalEnvironment)throw Error('Restart the app to load environment preparation.');
@@ -1583,30 +1669,12 @@ export default function App() {
 
             </>:<RehearsalPanel controller={rehearsal} unavailableReason={rehearsalUnavailable}/>}
           </>}
-        </>:native.binding&&workbenchTab!=='cases'?<>
-          <div className="panel-heading"><span className="eyebrow">PATIENT WORKSPACE</span><button className="icon-button" aria-label="Collapse case panel" onClick={()=>setCasePanel(false)}><PanelLeftClose size={15}/></button></div>
-          <div className="workspace-tabs"><button className={workbenchTab==='data'?'selected':''} onClick={()=>setWorkbenchTab('data')}>Scans</button><button className={workbenchTab==='anatomy'?'selected':''} onClick={()=>setWorkbenchTab('anatomy')}>Anatomy</button><button className={workbenchTab==='research'?'selected':''} onClick={()=>setWorkbenchTab('research')}>Plan & compare</button></div>
+        </>:native.binding?<>
           {workbenchTab==='research'?<NativeApproachPanel workspace={native}/>:<NativeSidebar workspace={native} tab={workbenchTab==='data'?'data':'anatomy'}
             onOpenAnatomy={()=>setWorkbenchTab('anatomy')} onOpenPlan={()=>setWorkbenchTab('research')} onOpenScans={()=>setWorkbenchTab('data')}/>}
         </>:<>
         {workbenchTab!=="research" && <>
-          <div className="panel-heading"><span className="eyebrow">{workbenchTab==='cases'?'PATIENT LIBRARY':workbenchTab==='data'?'DATA & REGISTRATION':'ANATOMY LAYERS'}</span>
-            <button className="icon-button" aria-label="Collapse case panel" onClick={()=>setCasePanel(false)}><PanelLeftClose size={15}/></button></div>
-          {workbenchTab==='cases' ? <><div className="unified-sidebar">
-            <details className="unified-details" open={newStudyOpen} onToggle={e=>setNewStudyOpen(e.currentTarget.open)}>
-              <summary>New patient study</summary>
-              <label>Patient ID<input aria-label="New patient ID" value={newPatient} onChange={e=>setNewPatient(e.target.value)}/></label>
-              <label>Study timepoint<select aria-label="New study timepoint" value={newStudyTimepoint} onChange={e=>setNewStudyTimepoint(e.target.value)}>
-                <option value="preoperative">Pre-op</option><option value="postoperative">Post-op</option>
-                <option value="source-session-unknown">Unspecified timepoint</option>
-              </select></label>
-              <button disabled={fileNavigationBlocked||!newPatient.trim()} onClick={()=>void act(createStudy)}>Create study…</button>
-              {!native.binding&&native.message&&<p role="status">{native.message}</p>}
-            </details>
-          </div><CaseLibraryPanel cases={libraryCases} busy={fileNavigationBlocked||choosingLibrary} onBrowse={()=>load('openCase')}
-            libraryFolder={libraryFolder} libraryError={libraryError} onChooseLibrary={api?.chooseCaseLibrary?()=>void chooseCaseLibrary():undefined}
-            onOpen={id=>void act(async()=>{if(api?.openListedCase){const next=nativeApi?.openListedWorkspace?await nativeApi.openListedWorkspace(id):await api.openListedCase(id);if(isNativeBinding(next)){setPayload(null);setCaseData(null);await native.install(next);await api.workspaceInstalled?.({caseHash:next.collectionId,caseId:next.document.patient_id});setWorkbenchTab('anatomy')}else if(next){await installCase(next,api)}else return;}})}/></> : <>
-            <div className="workspace-tabs"><button className={workbenchTab==='data'?'selected':''} onClick={()=>setWorkbenchTab('data')}>Scans</button><button className={workbenchTab==='anatomy'?'selected':''} onClick={()=>setWorkbenchTab('anatomy')}>Anatomy</button></div><h1 title={title}>{title}</h1><p className="case-subtitle">{displayedSource ? String(displayedSource.metadata.selected_modality??'Source image') : 'Open a case to begin'}</p>
+            <h1 title={title}>{title}</h1><p className="case-subtitle">{displayedSource ? String(displayedSource.metadata.selected_modality??'Source image') : 'Open a case to begin'}</p>
             {typeof displayedSource?.metadata.observation_role==='string'&&displayedSource.metadata.observation_role.startsWith('baseline_reference')&&<p role="status">Baseline reference acquisition · before synthetic tumor insertion.</p>}
             {workbenchTab==='data' && payload && displayedSource && <WorkbenchDataPanel source={payload} displayed={displayedSource} series={imaging.series} selectedId={imaging.selectedId}
               busy={busy||engineStopped} api={api} onSelect={imaging.select} onImport={request=>void act(()=>imaging.importSeries(request))}
@@ -1628,20 +1696,9 @@ export default function App() {
               <button className="text-button" onClick={()=>setWorkbenchTab('data')}>Source files & registration <ChevronRight size={13}/></button>
               <p className="muted-note poc-research-note">Research estimates. Missing structures are unassessed.</p>
             </>}
-          </>}
         </>}
         {workbenchTab==="research" && <>
 
-        <div className="panel-heading">
-          <span className="eyebrow">CASE & EVIDENCE</span>
-          <button
-            className="icon-button"
-            aria-label="Collapse case panel"
-            onClick={() => setCasePanel(false)}
-          >
-            <PanelLeftClose size={15} />
-          </button>
-        </div>
         <h1>{title}</h1>
         <p className="case-subtitle">
           {displayedSource
@@ -1843,16 +1900,12 @@ export default function App() {
         </div>
         </>}
         </>}
-      </aside>
+      </aside>}
 
-      <main className="anatomy-panel">
-        <div className="workspace-heading">
-          <div>
-            <WorkspaceBreadcrumb caseId={native.binding?.document.patient_id??caseData?.caseId ?? null} />
-            <h2>{workbenchTab==='rehearsal'?'Surgical research rehearsal':native.binding?scanLabel(native.binding.document.series.find(s=>s.id===native.series)??{id:'',modality:'Study'}):workbenchTab==='data'?'Source imaging':'Anatomy workspace'}</h2>
-          </div>
+      <main className="anatomy-panel" hidden={libraryOpen} aria-label="Imaging workspace">
+        {workbenchTab==='research' && <div className="planning-framing">
           <div
-            className={`view-presets ${workbenchTab==='research'?'':'poc-hidden'}`}
+            className="view-presets"
             role="group"
             aria-label="Camera framing"
           >
@@ -1871,7 +1924,7 @@ export default function App() {
               <Expand size={14} /> Fit instruments
             </button>
           </div>
-        </div>
+        </div>}
         {priorView && (
           <div className="prior-view-notice">
             <span className="prior-population-badge">Population prior</span>
@@ -1959,37 +2012,11 @@ export default function App() {
               priorLayer={!native.binding && display.primaryOverlaysPermitted ? priorView : null}
             />
           )}
-          {!caseData && !native.binding && (
-            <div className="welcome-overlay">
-              <div className="welcome-symbol">
-                <Scan size={34} strokeWidth={1} />
-              </div>
-              <span className="eyebrow">RESSECTIONLAB STUDIO</span>
-              <h2>
-                From source imaging
-                <br />
-                to inspectable anatomy.
-              </h2>
-              <p>
-                Explore your imaging in 3D, inspect linked slices, and work with your anatomical layers.
-              </p>
-              <button
-                className="primary-button"
-                disabled={fileNavigationBlocked}
-                onClick={() => load("openCase")}
-              >
-                <FolderOpen size={16} /> Open a case
-              </button>
-              <button className="outline-button" disabled={fileNavigationBlocked} onClick={addData}>New patient study</button>
-              <div className="welcome-workflow" aria-label="Workspace workflow">
-                <span><Scan size={15}/> Source imaging</span>
-                <ChevronRight size={12}/>
-                <span><Layers3 size={15}/> Anatomy</span>
-                <ChevronRight size={12}/>
-                <span><Target size={15}/> Rehearsal</span>
-              </div>
-            </div>
-          )}
+          {!hasStudy && !libraryOpen && <div className="welcome-overlay">
+            <Scan size={28} strokeWidth={1.5}/>
+            <h2>No study open</h2>
+            <button className="outline-button" onClick={()=>setWorkbenchTab('cases')}>Browse cases</button>
+          </div>}
           {native.binding&&!displayedCase&&!native.busy&&<div className="welcome-overlay"><h2>{native.binding.document.series.length?'Scan unavailable':'Add your first scan'}</h2><p>{native.message}</p>{native.binding.document.series.length?<button className="primary-button" onClick={()=>native.run(native.refresh)}>Retry</button>:<button className="primary-button" onClick={addData}>Add scans</button>}</div>}
           {(hydrating||native.busy) && (
             <div className="viewer-loading">
@@ -1998,15 +2025,9 @@ export default function App() {
             </div>
           )}
         </div>
-        <div className="workspace-caption">
-          <span>
-            <span className="mini-crosshair" /> Linked physical coordinates ·
-            RAS+ mm
-          </span>
-          <span>
-            {workbenchTab!=="research" ? "Local imaging · cached anatomy" : cameraMode === "anatomy" ? "Anatomy focus may crop instruments" : "Complete rendered instrument envelopes"}
-          </span>
-        </div>
+        {workbenchTab === 'research' && <div className="workspace-caption">
+          {cameraMode === 'anatomy' ? 'Anatomy focus may crop instruments' : 'Complete rendered instrument envelopes'}
+        </div>}
       </main>
 
       <aside className="planning-panel" data-route-panel tabIndex={-1}>
@@ -2266,11 +2287,11 @@ export default function App() {
             </button>
           </>
         )}
-        <span className="status-frame">
+        <span className="status-frame"><span className="status-local"><ShieldCheck size={13}/> Local research</span>
           {readonly && <strong>READ-ONLY PREVIEW</strong>}
           {displayedCursor
             ? `RAS  ${displayedCursor.map((value) => value.toFixed(1)).join("  /  ")} mm`
-            : "RAS+ · millimeters"}
+            : ""}
         </span>
       </footer>
     </div>

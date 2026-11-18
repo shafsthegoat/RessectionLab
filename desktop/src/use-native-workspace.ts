@@ -1,5 +1,5 @@
 import {useNativeApproaches} from './use-native-approaches';
-import {nextScanState,migrateSkullView,vesselScopeForView,anatomyPresentation} from './native-study-state';
+import {nextScanState,migrateSkullView,vesselScopeForView,anatomyPresentation,defaultAnatomyPresentation} from './native-study-state';
 import type {AnatomyPresentation} from './native-study-state';
 import {drainLayerRequests} from './native-layer-queue';
 import {mergeResidentLayers,prepareNativeLabels} from './native-layer-residency';
@@ -50,7 +50,7 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
   const args=(b=live.current.binding)=>({collectionId:b!.collectionId,snapshotId:b!.document.snapshot_id});
   const initial=(b:Binding,s:string):NativeScanState=>{
     const modality=b.document.series.find(scan=>scan.id===s)?.modality??'MRI';
-    const mode=/\b(CTA|MRA|TOF)\b|angiogra/i.test(modality)?'vascular':'segmentation';
+    const mode=defaultAnatomyPresentation(modality);
     return {cursor:b.document.display?.cursor_ras_mm??null,settings:anatomyPresentation(nativeDefaults(),b.document.layers,mode,modality),visible:Object.fromEntries(b.document.layers.map(l=>[l.id,b.document.display?.initial_layers?b.document.display.initial_layers.includes(l.id):!['brain-region','review-region','head-envelope'].includes(l.kind)]))};
   };
   const state=states[series]??{cursor:null,visible:{},settings:nativeDefaults()};
@@ -119,7 +119,7 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
     // Prefer an acquired angiographic scan for the vascular presentation, and
     // structural MRI for segmentation. Never manufacture a CTA from plain CT.
     const scans=binding.document.series;
-    const candidate=mode==='vascular'
+    const candidate=mode==='scan'?undefined:mode==='vascular'
       ? scans.find(s=>/^(CTA|TOF|MRA)\b|angiogra/i.test(s.modality))
       : scans.find(s=>/T1CE|T1C|T1[-_ ]?POST/i.test(s.modality))??scans.find(s=>/MRI|^T1\b/i.test(s.modality));
     const target=candidate?.id??series,scan=scans.find(s=>s.id===target);

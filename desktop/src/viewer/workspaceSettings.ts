@@ -38,7 +38,7 @@ export interface ViewerWorkspaceSettings {
   sliceOverlay?: 'contour'|'fill';
   sliceFraming?: {fit:'image'|'anatomy';zoom:number};
   contextStyle?: 'shell'|'uniform';
-  presentation?: 'segmentation'|'vascular';
+  presentation?: 'scan'|'segmentation'|'vascular';
   layerOpacity?: Record<string, number>;
   layerColor?: Record<string, string>;
   camera?: ViewerCameraState | null;

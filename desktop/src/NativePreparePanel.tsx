@@ -75,8 +75,8 @@ export function NativePreparePanel({workspace:w,onReviewAnatomy}:{workspace:Nati
       }finally{setRunning(false);}
     },{align:false});
   }
-  return <section className="unified-details preparation-panel" aria-label="Anatomy preparation">
-    <h2>Prepare anatomy</h2>
+  return <details className="unified-details preparation-panel" aria-label="Anatomy preparation" open={running||!!report||!!error||undefined}>
+    <summary><strong>Prepare anatomy</strong><span>Models & supplied labels</span></summary>
     <details>
       <summary>Preparation options</summary>
       <label>Tumor model indication<select aria-label="Tumor model indication" disabled={blocked} value={tumorIndication} onChange={e=>updateOption(()=>setTumorIndication(e.target.value))}>
@@ -107,5 +107,5 @@ export function NativePreparePanel({workspace:w,onReviewAnatomy}:{workspace:Nati
     {hasReady&&<button disabled={blocked} onClick={()=>prepare('run')}>{cancelled||interrupted?'Resume preparation':'Prepare anatomy'}</button>}
     {hasFailures&&<button disabled={blocked} onClick={()=>prepare('run',true)}>Retry failed stages</button>}
     {!!b.document.layers.length&&<button disabled={blocked} onClick={onReviewAnatomy}>Inspect anatomy</button>}
-  </section>;
+  </details>;
 }

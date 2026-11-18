@@ -1,8 +1,10 @@
 import {useState} from 'react';
 import type {Binding,EnvironmentOptions,EnvironmentRole} from './native-anatomy-data';
 import {rehearsalAvailability} from './NativeStudyEvidence';
+import './native-planning-presentation.css';
 
 const roles:EnvironmentRole[]=['brain','tumor','bone','vessels'];
+const roleNames:Record<EnvironmentRole,string>={brain:'Brain',tumor:'Tumor',bone:'Bone',vessels:'Vessels'};
 export interface EnvironmentPreparation {collectionId:string;snapshotId:string;layers:Record<string,string>;allowUnreviewedRegistration:boolean}
 export function EnvironmentPreparationPanel({binding,options,busy,onPrepare,onAnatomy}:{
   binding:Binding;options?:EnvironmentOptions;busy:boolean;onPrepare:(options:EnvironmentPreparation)=>Promise<void>;onAnatomy:()=>void;
@@ -17,21 +19,35 @@ export function EnvironmentPreparationPanel({binding,options,busy,onPrepare,onAn
   const label=(id:string)=>binding.document.layers.find(layer=>layer.id===id)?.label??id;
   const canPrepare=!!options&&!options.referenceIssue&&selected.length>0&&
     selected.every(layer=>layer.status==='ready'||layer.status==='estimated_alignment'&&allow);
-  return <section className="surgical-panel" aria-label="Prepare standard rehearsal environment">
+  const missing=roles.filter(role=>!selected.some(layer=>layer.role===role));
+  const alignmentRequired=unreviewed.length>0&&!allow;
+  const readiness=canPrepare?'ready':options&&!options.referenceIssue&&alignmentRequired?'review':'unavailable';
+  const status=canPrepare?'Ready to prepare':!options||options.referenceIssue?'Preparation unavailable':alignmentRequired?'Alignment choice required':'Select source anatomy';
+  return <section className="surgical-panel environment-preparation" aria-label="Prepare standard rehearsal environment" aria-busy={preparing}>
     <h2>Limited research rehearsal</h2>
-    <p className="surgical-note">{rehearsalAvailability(options)}</p>
-    <p className="surgical-note">The derivative uses a 1 mm research grid and V2 mechanics. Unavailable anatomy remains unassessed. Preparation checks occupied labels, source fixity and material overlap.</p>
-    <fieldset className="surgical-controls" disabled={busy||preparing}>
-      {roles.map(role=><label key={role}>{role}<select aria-label={'Environment '+role+' layer'} value={layers[role]} onChange={e=>setLayers({...layers,[role]:e.target.value})}>
-        <option value="">Unknown / not supplied</option>{options?.layers.filter(layer=>layer.role===role&&layer.status!=='unavailable').map(layer=>
-          <option key={layer.layerId} value={layer.layerId}>{label(layer.layerId)}{layer.status==='estimated_alignment'?' · estimated alignment':''}</option>)}
-      </select></label>)}
-      {!!unavailable.length&&<details><summary>Excluded layers</summary>{unavailable.map(layer=><p key={layer.layerId}>{label(layer.layerId)} · {layer.reason}</p>)}</details>}
-      {unreviewed.length>0&&<>
+    <div className="environment-preparation-status" data-readiness={readiness} role="status">
+      <strong>{preparing?'Preparing environment…':status}</strong>
+      <p className="surgical-note">{rehearsalAvailability(options)}</p>
+    </div>
+    <fieldset className="surgical-controls environment-preparation-controls" disabled={busy||preparing}>
+      <legend>Source anatomy <span>{roles.length-missing.length} / {roles.length} supplied</span></legend>
+      <div className="environment-layer-list">{roles.map(role=>{
+        const source=selected.find(layer=>layer.role===role);
+        return <label className="environment-layer-row" data-layer-status={source?.status??'unknown'} key={role}>
+          <span className="environment-layer-role">{roleNames[role]}<small>{source?.status==='ready'?'Ready':source?'Estimated':'Unknown'}</small></span>
+          <select aria-label={'Environment '+role+' layer'} value={layers[role]} onChange={e=>setLayers({...layers,[role]:e.target.value})}>
+            <option value="">Unknown / not supplied</option>{options?.layers.filter(layer=>layer.role===role&&layer.status!=='unavailable').map(layer=>
+              <option key={layer.layerId} value={layer.layerId}>{label(layer.layerId)}{layer.status==='estimated_alignment'?' · estimated alignment':''}</option>)}
+          </select>
+        </label>;
+      })}</div>
+      {missing.length>0&&<p className="environment-unassessed">{missing.map(role=>roleNames[role]).join(', ')} · not supplied and unassessed.</p>}
+      {!!unavailable.length&&<details className="environment-excluded"><summary>Excluded layers · {unavailable.length}</summary>{unavailable.map(layer=><p key={layer.layerId}>{label(layer.layerId)} · {layer.reason}</p>)}</details>}
+      {unreviewed.length>0&&<div className="environment-alignment-choice">
         <p className="surgical-warning">Estimated alignment for {unreviewed.map(layer=>label(layer.layerId)).join(', ')}.</p>
-        <label><input aria-label="Allow estimated alignment for research" type="checkbox" checked={allow} onChange={e=>setAllow(e.target.checked)}/>Use estimated alignment for this research derivative.</label>
-      </>}
-      <button className="primary-button" disabled={!canPrepare} onClick={async()=>{
+        <label><input aria-label="Allow estimated alignment for research" type="checkbox" checked={allow} onChange={e=>setAllow(e.target.checked)}/><span>Use estimated alignment for this research derivative.</span></label>
+      </div>}
+      <div className="environment-preparation-actions"><button className="primary-button" disabled={!canPrepare} onClick={async()=>{
         setPreparing(true);setError(null);
         try{
           await onPrepare({collectionId:binding.collectionId,snapshotId:binding.document.snapshot_id,
@@ -40,6 +56,11 @@ export function EnvironmentPreparationPanel({binding,options,busy,onPrepare,onAn
         finally{setPreparing(false);}
       }}>{preparing?'Preparing environment…':'Prepare standard environment'}</button>
       <button onClick={onAnatomy}>Review anatomy and alignment</button>
-    </fieldset>{error&&<p role="alert" className="surgical-error">{error}</p>}
+      </div>
+    </fieldset>
+    {error&&<div role="alert" className="surgical-error environment-preparation-error"><strong>Preparation failed</strong><p>{error}</p></div>}
+    <details className="environment-preparation-method"><summary>Preparation checks & limitations</summary>
+      <p className="surgical-note">The derivative uses a 1 mm research grid and V2 mechanics. Unavailable anatomy remains unassessed. Preparation checks occupied labels, source fixity and material overlap.</p>
+    </details>
   </section>;
 }

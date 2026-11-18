@@ -73,6 +73,22 @@ test('opaque anatomy occludes its own rear triangles and transparency restores w
   assert.equal(mesh.material.depthWrite,false);
   assert.deepEqual(r.volume.compartments[0].mask,mask);
 });
+test('an explicit section image writes its physical depth and an uncut reference plane remains translucent',()=>{
+  const {r,uniforms}=renderer();
+  r.sourcePlane={material:new THREE.ShaderMaterial({depthWrite:false})};
+  uniforms.uExtraClipCount={value:0};uniforms.uExtraClips={value:Array.from({length:7},()=>new THREE.Vector4())};
+  const source=r.volume.mri.slice();
+  r.setWorkspaceSettings({showPlane:true,clipping:{axis:'z',value:5,enabled:true},clipBox:{enabled:true,min:[0,0,0],max:[10,20,30]},obliqueClip:{enabled:true,normal:[1,1,0],offset:0}});
+  assert.equal(r.sourcePlane.material.depthWrite,true);
+  assert.equal(uniforms.uExtraClipCount.value,7);
+  assert.ok(uniforms.uExtraClips.value[0].equals(new THREE.Vector4(1,0,0,0)));
+  assert.ok(uniforms.uExtraClips.value[1].equals(new THREE.Vector4(-1,0,0,10)));
+  r.setWorkspaceSettings({showPlane:true,clipping:{axis:'z',value:5,enabled:false}});
+  assert.equal(r.sourcePlane.material.depthWrite,false);
+  assert.equal(uniforms.uExtraClipCount.value,0);
+  assert.deepEqual(r.volume.mri,source);
+  r.sourcePlane.material.dispose();
+});
 test('smoothing toggles cached display geometry; cursor picking always uses the exact source surface',()=>{
   const {r,mesh}=renderer();
   const source=new THREE.BoxGeometry(2,2,2),smooth=new THREE.BoxGeometry(1.8,1.8,1.8);
@@ -133,6 +149,21 @@ test('camera-only settings and cloned toolbar choices do not reapply layer mater
   assert.equal(configured,1);assert.equal(labels,1);assert.equal(rendered,1);assert.equal(mesh.material.clippingPlanes,planes);
   settings.layerOpacity.brain=.8;settings.clipping.value=20;r.setWorkspaceSettings(settings);
   assert.equal(configured,2);assert.equal(mesh.material.opacity,.8);assert.equal(uniforms.uClipPlane.value.w,-20);
+});
+
+test('acquired Scan bounds its settled GPU draw while retaining the source grid and physical opacity step',()=>{
+  const color=new THREE.Color('#000000');
+  const renderer={extensions:{has:()=>true},getPixelRatio:()=>2,getClearColor:out=>out.copy(color),getClearAlpha:()=>1,
+    setClearColor(){},setRenderTarget(){},clear(){},render(){}};
+  const scan=new ScanVolumeRenderer(renderer,source,[0,100]);
+  try{
+    scan.labels(null,{}, {presentation:'scan'},[]);
+    scan.render(new THREE.Scene(),new THREE.PerspectiveCamera(),2000,1000,false,()=>{});
+    assert.equal(scan.volumeTarget.width,1024);assert.equal(scan.volumeTarget.height,512);
+    assert.equal(scan.material.uniforms.uStep.value,1,'Step is one acquired physical spacing, not a changed source grid');
+    assert.equal(scan.texture.image.data,source.mri);
+    assert.deepEqual([scan.texture.image.depth,scan.texture.image.height,scan.texture.image.width],source.shape);
+  }finally{scan.dispose();}
 });
 
 test('slice contour changes reach every image material and preserve source data and 3D appearance',()=>{

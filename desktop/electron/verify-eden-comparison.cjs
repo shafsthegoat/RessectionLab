@@ -194,7 +194,7 @@ app.on('browser-window-created',(_event,win)=>{
       await wait(`[...document.querySelectorAll('.poc-case-card')].some(card=>card.textContent.includes(${JSON.stringify(document.patient_id)})&&!card.disabled)`,'isolated source study in Cases');
       await js(`[...document.querySelectorAll('.poc-case-card')].find(card=>card.textContent.includes(${JSON.stringify(document.patient_id)})).click()`);
       await until(()=>openCount===1,'case selected in library');
-      await wait(`[...document.querySelectorAll('.workspace-tabs button')].some(b=>b.textContent==='Anatomy'&&b.classList.contains('selected'))`,'Anatomy selected');
+      await wait(`[...document.querySelectorAll('.navigation-rail button')].some(b=>b.textContent==='Anatomy'&&b.classList.contains('selected'))`,'Anatomy selected');
       const anatomy=await ready();assert.equal(displayIdentity(anatomy.identity).snapshotId,document.snapshot_id);
       if(!prior)await capture('00-study-anatomy');
       const missing=await js(`(()=>{

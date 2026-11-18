@@ -56,6 +56,8 @@ uniform float uLayerOpacities[128];
 uniform int uSelectedLayer;
 uniform int uClipEnabled;
 uniform vec4 uClipPlane;
+uniform int uExtraClipCount;
+uniform vec4 uExtraClips[7];
 uniform int uThreeD;
 uniform int uVisibleBits;
 uniform vec3 uColors[128];
@@ -140,6 +142,10 @@ bool priorAt(vec3 world,out float result) {
 void main() {
   vec3 world=vWorld;
   if(uThreeD==1 && uClipEnabled==1 && dot(uClipPlane.xyz,world)+uClipPlane.w<0.0) discard;
+  if(uThreeD==1)for(int i=0;i<7;i++){
+    if(i>=uExtraClipCount)break;
+    if(dot(uExtraClips[i].xyz,world)+uExtraClips[i].w<0.0)discard;
+  }
   vec2 point=(vUv-uRect.xy)/uRect.zw;
   if (uThreeD==0) {
     if (any(lessThan(point,vec2(0.0))) || any(greaterThan(point,vec2(1.0)))) {outColor=vec4(0.019,0.031,0.043,1.0);return;}

@@ -5,6 +5,14 @@ retire obsolete code/docs/artifacts, and archive useful history outside the trac
 
 RessectionLab is a local research app. This guide follows the current Electron interface; [project status](../PROJECT_STATUS.md) and the [packaging records](electron-packaging.md) identify which app snapshots have been tested. A modeled geometry check does not establish clinical suitability.
 
+## Open and inspect a study
+
+With no study open, the app shows **Cases**. Search by case, source or anatomy, open a row to load its study, or choose **Details** to inspect its evidence. **New patient study** starts a study with a patient ID and timepoint.
+
+In a native study, **Scans** shows the active acquisition and its source thumbnail. **Anatomy** lists structures by group. Select a row to inspect the layer or change its appearance, and use its eye control to toggle visibility. **Scan** shows the acquired scalar signal with subdued overlays. **Structures** and **Vessels** emphasize the corresponding anatomy. Reopening a saved study restores its recorded view.
+
+Use the right-hand slice controls to move the linked cursor. In the 3D pane, **Clip → Section at cursor** exposes the source image at the chosen plane. **Exit section** restores the prior cut and plane settings. **Plan** and **Rehearse** show the operations and evidence available for the current study.
+
 Historical capture receipts remain available at the links below. Most images
 and recordings now require the [visual evidence archive](visual-evidence-archive-20261116.md),
 which restores their original filenames beside the unchanged receipts.

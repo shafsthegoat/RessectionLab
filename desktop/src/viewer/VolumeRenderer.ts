@@ -460,6 +460,8 @@ export class VolumeRenderer {
           uSelectedLayer: {value:-1},
           uClipEnabled: { value: 0 },
           uClipPlane: { value: new THREE.Vector4(0,0,1,0) },
+          uExtraClipCount: {value:0},
+          uExtraClips: {value:Array.from({length:7},()=>new THREE.Vector4())},
           uThreeD: { value: threeD ? 1 : 0 },
           uLayerCount: {value:volume.compartments.length},
           uLayerCodes: {value:packedLabels.codes.map(c=>new THREE.Vector2(...c))},
@@ -724,7 +726,7 @@ export class VolumeRenderer {
   }
   private installSurface(layer:ViewerVolume['compartments'][number],buffers:PreparedSurface|{positions:Float32Array;normals:Float32Array;smoothPositions?:Float32Array;smoothNormals?:Float32Array;indices?:Uint32Array}) {
     const pair=this.makeSurface(layer,buffers);if(!pair)return;
-    if (this.volume.displayIdentity && layer.surface && CONTEXT_SURFACES.has(layer.kind??'')) {
+    if (this.volume.displayIdentity && layer.surface && surfaceKind(layer.kind)==='context') {
       installNativeContextLighting(pair.mesh.material as THREE.MeshStandardMaterial, this.bounds,
         this.surfaceSmoothing && this.workspaceSettings.operativeView !== 'surgeon');
     }
@@ -1040,7 +1042,7 @@ export class VolumeRenderer {
     // materials. Compare values so cloned or in-place edited settings work too.
     const signature = JSON.stringify([settings.layerOpacity, settings.layerColor,
       settings.clipping, settings.clipBox, settings.obliqueClip,
-      settings.fusion?.opacity, settings.volumeRendering,settings.skullMode,settings.sliceOverlay,settings.contextStyle,settings.operativeView,settings.microscope?.inspectionTransparency,settings.microscope?.inspectionCutaway,settings.microscope?.tissueStyle]);
+      settings.fusion?.opacity, settings.volumeRendering,settings.skullMode,settings.sliceOverlay,settings.contextStyle,settings.presentation,settings.operativeView,settings.microscope?.inspectionTransparency,settings.microscope?.inspectionCutaway,settings.microscope?.tissueStyle]);
     if (signature === this.appearanceSignature) return;
     if(this.appearanceSignature!=null){this.beginInteraction();this.endInteraction();}
     this.appearanceSignature = signature;
@@ -1049,6 +1051,10 @@ export class VolumeRenderer {
     const normal = new THREE.Vector3();
     normal.setComponent({x:0,y:1,z:2}[clipping.axis],clipping.flipped ? -1 : 1);
     this.clipPlane = clipping.enabled ? new THREE.Plane(normal,clipping.flipped ? clipping.value : -clipping.value) : null;
+    // A displayed acquisition at an explicit cut is the front section image.
+    // Its real depth terminates scalar rays, so retained volume behind it
+    // cannot veil the diagnostic texture. Uncut reference planes stay translucent.
+    if(this.sourcePlane)this.sourcePlane.material.depthWrite=clipping.enabled;
     this.extraClipPlanes=[];
     const box=operativeOcclusion?undefined:settings.clipBox;
     if(box?.enabled && [...box.min,...box.max].every(Number.isFinite))for(let i=0;i<3;i++){
@@ -1091,6 +1097,10 @@ export class VolumeRenderer {
       shader.uniforms.uSliceContours.value=settings.sliceOverlay==='contour'?1:0;
       shader.uniforms.uClipEnabled.value=clipping.enabled ? 1 : 0;
       shader.uniforms.uClipPlane.value.set(normal.x,normal.y,normal.z,clipping.flipped ? clipping.value : -clipping.value);
+      if(shader.uniforms.uExtraClipCount){
+        shader.uniforms.uExtraClipCount.value=this.extraClipPlanes.length;
+        this.extraClipPlanes.forEach((plane,i)=>shader.uniforms.uExtraClips.value[i].set(plane.normal.x,plane.normal.y,plane.normal.z,plane.constant));
+      }
       shader.uniforms.uFusionOpacity.value=Number.isFinite(settings.fusion?.opacity) ? Math.max(0,Math.min(1,settings.fusion!.opacity)) : .5;
     });
     this.scanVolume?.configure(settings.volumeRendering, this.volumeModality, this.clipPlane);
@@ -2125,8 +2135,7 @@ export class VolumeRenderer {
     ); } finally { displayed.forEach((geometry, mesh) => { mesh.geometry = geometry; }); }
     const planes=[...(this.extraClipPlanes??[]),...(this.clipPlane?[this.clipPlane]:[])];
     const hit=hits.find(item=>{
-      const visiblePlanes=item.object===this.sourcePlane?(this.clipPlane?[this.clipPlane]:[]):planes;
-      if(!visiblePlanes.every(plane=>plane.distanceToPoint(item.point)>=0))return false;
+      if(!planes.every(plane=>plane.distanceToPoint(item.point)>=0))return false;
       if(item.object!==this.sourcePlane)return true;
       // The source-plane shader discards empty/out-of-field pixels. A quad
       // intersection there must allow the next visible anatomy hit through.
