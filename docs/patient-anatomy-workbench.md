@@ -224,6 +224,35 @@ patch and distinct-entry suggestions, comparison, editing and assessment.
 Its `operativeField` action samples tissue from the saved route and selected
 target at their recorded revision.
 
+
+### Verify a saved operative rehearsal
+
+From the repository root, build the desktop app and run the hidden Electron
+verifier against a writable test copy with a selected, assessed approach.
+The example uses the retained BITE-09 fixture. Each output directory must
+be new. The video option requires `ffmpeg` on PATH.
+
+```sh
+pnpm --dir desktop run build
+output_root="$PWD/testcases/outputs"
+study="$output_root/operative-preview-20261118"
+manifest="$study/MNI-BITE-09-with-SIAM/patient-anatomy.json"
+workspace="$study/MNI-BITE-09-supplied-tumor-SIAM.rsworkspace"
+run=$(mktemp -d "$output_root/rehearsal-check.XXXXXX")
+electron=desktop/node_modules/.bin/electron
+verify=desktop/electron/verify-native-operative-preview.cjs
+"$electron" "$verify" "$manifest" "$run/preview" preview --reuse-selection --source-support --video
+"$electron" "$verify" "$manifest" "$run/reopen" reopen --open-archive "$workspace"
+```
+
+Check `report.json` in both directories for a passing result, the same selected
+route and source snapshot, and an empty renderer error list. The preview also
+checks MRI identity and the filtered skull against the original estimates, and
+records motion in each available chapter. For another prepared study, supply
+its matching manifest and workspace and omit the BITE-specific
+`--source-support` assertions. The optional drive holds the recorded examples
+and fixture restore instructions. [Storage ledger](local-storage-ledger.md)
+
 `desktop/electron/verify-eden-planning.cjs` drives the actual React/preload/Python
 workflow with hidden windows. Supply `RESSECTIONLAB_DATA_ROOT`, `EDEN_STUDY` and a
 fresh `EDEN_OUTPUT`; `EDEN_PHASE=reopen` with `EDEN_EXPECTED` pointing to the

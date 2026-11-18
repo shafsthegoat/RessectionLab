@@ -21,6 +21,10 @@ uses the available modalities and records an outcome for each stage.
 The patient reconstruction combines aligned sources while preserving native
 slices for review. A selected geometric approach can now be replayed from
 bone flap through modeled aspiration wherever corresponding tissue exists.
+The acquired BITE-09 MRI and its supplied tumor mask exercised all four stages
+at 1440 × 900 and 1050 × 720. A fresh app process reopened the saved route.
+The inspection grid used 0.3125 mm spacing. Source MRI resolution still limits
+the anatomy, and two short dural segments show stepping under close zoom.
 See the [scan-to-rehearsal workflow](desktop-workflow.md#from-patient-scans-to-operative-steps).
 Plan & compare binds an explicitly selected lesion to its source and revision.
 Hidden desktop runs exercised supplied UCSF glioma labels and a meningioma
