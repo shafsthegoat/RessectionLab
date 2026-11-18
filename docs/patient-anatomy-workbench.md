@@ -17,18 +17,59 @@ a checkpoint. Cancellation leaves admitted layers available. Retry acts on
 failed or empty stages. Adding scans keeps the reference fixed and marks
 dependent comparisons stale.
 
-Use **Anatomy** to inspect overlays against source slices and correct a layer.
+Use **Anatomy → Structures** to view registered layers together. The source
+selector changes the linked scan for slice review. A layer can extend beyond
+that scan's field of view in 3D. The study-wide intensity backdrop uses the
+brightest separately windowed contribution at each location. Read quantitative
+signal values on the original scan. An unaligned series stays independently
+inspectable until its transform is resolved.
 In **Plan & compare**, explicitly select a nonempty lesion label. The selection
 binds the mask, source and registration chain. Missing vascular and functional
 coverage remains unassessed. Quantitative comparison needs an admissible
-source-to-reference transform. Compatible studies can use the separate research
-environment export under **Rehearse**. MRI skull estimates and the optional
-geometric dural envelope provide display context. Surface smoothing is a
-display setting.
+source-to-reference transform. **Preview operative steps** opens a reversible
+geometric animation for the selected approach. It uses the supported tissue
+on the line from entry to target. **Rehearse → Open instrument environment**
+accesses the separate research mechanics workflow for compatible studies.
+The [desktop walkthrough](desktop-workflow.md#from-patient-scans-to-operative-steps)
+describes stage controls, source evidence and approach selection.
 
 **Save patient study file…** includes native data, preparation checkpoints, view
 settings, the selected target and comparison receipts. For hidden verification
 commands, see the [fresh patient reproduction](fresh-patient-reproduction.md).
+
+### Direct MRI tissue estimates with SIAM v2
+
+On an Apple Silicon host, install the pinned inference environment and the
+SIAM weights explicitly from the project root. An existing original archive
+can be supplied with `--archive /path/to/DS715_NODA.tar.gz`.
+
+```sh
+.venv/bin/python scripts/poc_model_setup.py
+.venv/bin/python scripts/install_siam_v2.py
+```
+
+The installer verifies Romain Valabregue’s 5.31 GB archive and retains the
+1.13 GB fold-1 checkpoint, dataset ontology and nnU-Net plan. The default
+asset directory is `data/models/siam-v2/DS715_NODA`. Set
+`RESECTIONLAB_SIAM_HOME` to an existing installation or
+`RESECTIONLAB_SIAM_PYTHON` to the interpreter of the pinned runtime.
+
+For intact structural MRI, confirm full-head coverage under **Preparation
+options**, review the **SIAM v2** stage for each acquisition and choose
+**Prepare anatomy**. Each source has its own coverage screen and checkpoint.
+A cropped reference can remain open while another acquisition supplies
+cranial tissue estimates. Each positive class appears on its acquisition grid. Classes include dura mater,
+skull, vascular tissue, residual head tissue, CSF and brain tissues. The
+separate geometric dural envelope has its own optional stage and provenance.
+Inspect boundaries against the source slices. The vascular class combines
+vessel types, and the skull label does not measure bone density.
+
+The bounded Metal adapter uses one of the five publisher folds, 128³
+float32 inference tiles, CPU logit accumulation and Gaussian blending. Its estimates are
+unreviewed inspection context. Training used synthetic contrasts derived
+from six anatomical templates. Layer provenance records the source scan,
+model assets, adaptation and exclusion from training and benchmark inputs.
+[Publisher implementation](https://github.com/romainVala/SIAM/tree/52baf64d51275a949d46ee36967b76f8ceaa99d8) · [SIAM v2 weights, CC BY 4.0](https://doi.org/10.5281/zenodo.15780983)
 
 ### Evidence from the adaptive workflow
 

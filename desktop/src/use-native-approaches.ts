@@ -81,7 +81,7 @@ export function useNativeApproaches(binding:Binding|null,api:NativeAnatomyApi|nu
   return {
     approaches,selectedId,select,pending,error,loading:!!binding&&!data&&!error,activeTargetLayerId,targetSelectionIssue:data?.targetSelectionIssue,
     selectedApproachIds:selection?.key===key?selection.byTarget:view?.selectedApproachIds,
-    targetOptions:data?.targetOptions??[],rehearsalOptions:data?.rehearsalOptions,report:data?.proposalReport,inputComparison:data?.inputComparison,
+    targetOptions:data?.targetOptions??[],rehearsalOptions:data?.rehearsalOptions,report:data?.proposalReport,distinctEntryReport:data?.distinctEntryReport,inputComparison:data?.inputComparison,
     consequenceEvidence,request,
     selected:approaches.find(a=>a.id===selectedId)??null,routes:approachRoutes(approaches,selectedId),
   };

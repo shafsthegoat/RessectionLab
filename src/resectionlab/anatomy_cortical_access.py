@@ -2,7 +2,7 @@
 
 import numpy as np
 
-from .anatomy_evidence import inference_bounds
+from .anatomy_evidence import inference_bounds, is_siam_context
 from .geometry import capsule_voxel_indices, point_segment_distances
 from .patient_anatomy import world
 
@@ -22,6 +22,8 @@ _PROTECTED_KINDS = _REFERENCE_PROTECTED_KINDS | {"medulla", "pons", "spinal-cord
 
 def protected_compartment(row, *, reference_inputs_only=False):
     """Retain positive compartment guards for typed layers and legacy EDEN IDs."""
+    if is_siam_context(row):
+        return False
     kinds = _REFERENCE_PROTECTED_KINDS if reference_inputs_only else _PROTECTED_KINDS
     return row["kind"] in kinds or (row["kind"] == "brain-region" and row["id"] in _LEGACY_HEAD)
 

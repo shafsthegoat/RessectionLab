@@ -32,11 +32,24 @@ AUDITED_CROP_ADAPTER_SHA = "ea7076f62cf8c47dabb187e628c065c6f009a58a69bcc51721b5
 AUDITED_CROP_HELPER_SHA = "2d8cd7f8c64bfafe2822f0eb7cbbd07fede6e1f316bb93ca43dd80f123d55901"
 
 
+# The SIAM dispatch and multi-series scheduler leave inference for previously
+# eligible jobs unchanged. Source series, model options and weights are still
+# hashed separately. New SIAM runs retain both their adapter and worker hashes.
+SIAM_DISPATCH_SHA = "6593e2cca605d832298118eeda38a3db89f06e1c7a9bc4218d9f6321a4d0246b"
+MULTISERIES_REGISTRY_SHA = "66756f751cb8f85cc2f61664c971ac28f27349959c3519a66b2009eb8e140d7b"
+PREVIOUS_REGISTRY_SHA = "c3e2d789fbc383e2e41f92ad26cf62a8045283794073ee156a6473b12ae2cbc6"
+
+
 def preparation_asset_identities(files):
     identities = dict(files)
     if "poc_worker" in files:
         identities["poc_worker"] = poc_worker_identity(files["poc_worker"])
-    if files.get("adapter") == AUDITED_CROP_ADAPTER_SHA:
+    if "siam_worker" not in files:
+        if files.get("registry") == MULTISERIES_REGISTRY_SHA:
+            identities["registry"] = PREVIOUS_REGISTRY_SHA
+        if files.get("adapter") == SIAM_DISPATCH_SHA:
+            identities["adapter"] = AUDITED_CROP_ADAPTER_SHA
+    if identities.get("adapter") == AUDITED_CROP_ADAPTER_SHA:
         crop = _module_sha("anatomy_tumor_coverage.py")
         identities["adapter"] = (LEGACY_ADAPTER_SHA if crop == AUDITED_CROP_HELPER_SHA
                                  else sha256((AUDITED_CROP_ADAPTER_SHA + crop).encode("ascii")).hexdigest())

@@ -139,3 +139,15 @@ test('body orientation guide saves per scan, accepts old settings and rejects no
   }
   for(const value of [null,0,1,'false',[],{}])assert.throws(()=>checkedViewerSettings(source,{showOrientationGuide:value}));
 });
+
+test('patient 3D camera and density follow linked slices while unaligned scans keep a separate cursor',()=>{
+  const current={cursor:[32,15,11],visible:{lesion:true,artery:true},settings:{
+    presentation:'segmentation',camera:{position:[0,0,100],target:[4,3,2],up:[0,1,0]},volumeRendering:{density:.12},contrast:1}};
+  const saved={cursor:[1,2,3],visible:{},settings:{contrast:2,volumeRendering:{density:.7}}};
+  const linked=nextScanState(current,saved);
+  assert.deepEqual(linked.cursor,current.cursor);
+  assert.deepEqual(linked.settings.camera,current.settings.camera);
+  assert.deepEqual(linked.settings.volumeRendering,current.settings.volumeRendering);
+  assert.equal(linked.settings.contrast,2);
+  assert.deepEqual(nextScanState(current,saved,false).cursor,saved.cursor);
+});

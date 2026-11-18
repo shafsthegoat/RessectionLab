@@ -2,7 +2,18 @@ import type { Affine, Point3, Shape3 } from "./coordinates";
 
 export interface AlignmentQuality {status:string;warnings:string[];notes?:string[];metrics:Record<string,number|null>;selected?:string}
 export interface VesselDisplayFilter {scope:string;hiddenVoxels?:number;reason?:string;excludedVolumeMm3?:number;excludedFragments?:number;outsideVoxels?:number;boneConflictVoxels?:number;uncertainVoxels?:number}
+export interface PatientContextSource {
+  seriesId:string; modality:string; sourceSha256:string; alignment:string; reason?:string;
+  voxelToPatientRasMm?:Affine; displayWindow?:[number,number];windowUnits?:string;
+}
+export interface PatientContext {
+  sources:PatientContextSource[];
+  field?:{affine:Affine;shape:Shape3;signal:Float32Array;sha256:string};
+}
 export interface ViewerVolume {
+  patientContext?:PatientContext;
+  sourceFrameIssue?:string|null;
+  displayPreview?:{factor:number;meaning:string}|null;
   alignmentQuality?:Record<string,AlignmentQuality>;
   /** Native display identity; includes revision/preview generation, never just object identity. */
   displayIdentity?: string;
@@ -17,13 +28,15 @@ export interface ViewerVolume {
   mri: Float32Array;
   /** Shared categorical volumes in the displayed grid, sampled with nearest cells. */
   labelSets?: Array<{id:string;data:Uint16Array}>;
-  tractography?: Array<{id:string;label:string;points:Float32Array;offsets:Uint32Array}>;
+  tractography?: Array<{id:string;label:string;sourceSeries?:string;alignment?:string;points:Float32Array;offsets:Uint32Array}>;
   compartments: Array<{
     name: string;
     /** Source-facing anatomical name; name remains the stable layer identifier. */
     label?: string;
     kind?: string;
     sourceIdentity?: string;
+    sourceSeries?:string;
+    alignment?:string;
     qa?: AnatomyQuality;
     surfaceDiagnostics?: import('./surfacePolicy').SurfaceDiagnostics;
     mask: Uint8Array;

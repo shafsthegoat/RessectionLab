@@ -13,6 +13,8 @@ uniform sampler2D uTransfer;
 uniform sampler2D uScene;
 uniform sampler2D uDepth;
 uniform mat4 uWorldToVoxel;
+uniform mat4 uLabelWorldToVoxel;
+uniform vec3 uLabelShape;
 uniform mat4 uCameraWorld;
 uniform mat4 uInverseProjection;
 uniform vec3 uShape;
@@ -92,10 +94,12 @@ void main(){
   vec3 direction=normalize(unproject(vec3(vUv*2.0-1.0,1.0))-origin);
   vec3 voxelOrigin=(uWorldToVoxel*vec4(origin,1.0)).xyz;
   vec3 voxelDirection=mat3(uWorldToVoxel)*direction;
+  vec3 labelOrigin=(uLabelWorldToVoxel*vec4(origin,1.0)).xyz;
+  vec3 labelDirection=mat3(uLabelWorldToVoxel)*direction;
   float entry=0.0,exit=1e10;
   for(int axis=0;axis<3;axis++){
     if(abs(voxelDirection[axis])<1e-8){
-      if(voxelOrigin[axis]<-0.5 || voxelOrigin[axis]>uShape[axis]-0.5){outColor=scene;return;}
+      if(voxelOrigin[axis]<-0.5 || voxelOrigin[axis]>uShape[axis]-0.5){exit=-1.0;}
     }else{
       float a=(-0.5-voxelOrigin[axis])/voxelDirection[axis];
       float b=(uShape[axis]-0.5-voxelOrigin[axis])/voxelDirection[axis];
@@ -105,13 +109,13 @@ void main(){
   if(uClipEnabled){
     float d=dot(uClipPlane.xyz,origin)+uClipPlane.w;
     float slope=dot(uClipPlane.xyz,direction);
-    if(abs(slope)<1e-8){if(d<0.0){outColor=scene;return;}}
+    if(abs(slope)<1e-8){if(d<0.0){exit=-1.0;}}
     else if(slope>0.0)entry=max(entry,-d/slope);else exit=min(exit,-d/slope);
   }
   for(int i=0;i<7;i++){
     if(i>=uExtraClipCount)break;
     vec4 clip=uExtraClips[i];float d=dot(clip.xyz,origin)+clip.w;float slope=dot(clip.xyz,direction);
-    if(abs(slope)<1e-8){if(d<0.0){outColor=scene;return;}}
+    if(abs(slope)<1e-8){if(d<0.0){exit=-1.0;}}
     else if(slope>0.0)entry=max(entry,-d/slope);else exit=min(exit,-d/slope);
   }
   float depth=texture(uDepth,vUv).r;
@@ -148,11 +152,17 @@ void main(){
     if(t>=exit)break;
     float dt=min(stepMm,exit-t);
     if(boundary<uSurfaceCount)dt=min(dt,max(0.0,surfaceT[boundary]-t));
-    vec3 p=voxelOrigin+voxelDirection*(t+(0.25+0.5*jitter)*dt);
+    float sampleT=t+(0.25+0.5*jitter)*dt;
+    vec3 p=voxelOrigin+voxelDirection*sampleT;
     float value=scalar(p);
     vec4 tissue=texture(uTransfer,vec2(clamp((value-uRange.x)/(uRange.y-uRange.x),0.0,1.0),0.5));
     ivec4 packed=ivec4(0);
-    if(uActiveLayerCount>0||uContextLayerCount>0)packed=ivec4(round(texture(uLabels,((p+0.5)/uShape).zyx)*255.0));
+    if(uActiveLayerCount>0||uContextLayerCount>0){
+      vec3 labelPoint=labelOrigin+labelDirection*sampleT;
+      vec3 labelUv=(labelPoint+0.5)/uLabelShape;
+      if(all(greaterThanEqual(labelUv,vec3(0.0)))&&all(lessThan(labelUv,vec3(1.0))))
+        packed=ivec4(round(texture(uLabels,labelUv.zyx)*255.0));
+    }
     bool selected=previousSelected;
     if(any(notEqual(packed,previousLabels))){
       selected=false;

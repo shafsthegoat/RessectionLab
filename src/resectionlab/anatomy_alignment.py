@@ -10,7 +10,7 @@ from dataclasses import dataclass
 import numpy as np
 import nibabel as nib
 from scipy import ndimage as ndi
-from .patient_anatomy import affine, world, digest, file_hash, reconstruction_lock
+from .patient_anatomy import affine, world, digest, file_hash, reconstruction_lock, projection_or_localizer
 
 VERSION = 'rigid-quality-v2.4'
 LPS = np.diag([-1., -1., 1., 1.])
@@ -283,7 +283,9 @@ def matches_alignment_key(collection, row, parent, current_key):
 def alignment_pairs(collection):
     """Order CT reconstruction edges after their soft-kernel anchor."""
     reference = collection.series(collection.document['reference_series'])
-    rows = [s for s in collection.document['series'] if s['id'] != reference['id']]
+    if projection_or_localizer(reference):
+        return []
+    rows = [s for s in collection.document['series'] if s['id'] != reference['id'] and not projection_or_localizer(s)]
     cts = [s for s in rows if s['modality'].upper() == 'CT']
     anchor = min(cts, key=lambda s: ('brain' not in (s['id']+' '+s.get('label', '')+' '+s['original'].get('name', '')).lower(), s['id'])) if cts else None
     return [(row, anchor if anchor is not None and row in cts and row is not anchor else reference)

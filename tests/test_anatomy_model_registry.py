@@ -149,6 +149,99 @@ def test_prepared_regions_keep_established_structural_reference(tmp_path, monkey
     assert "brain:additional" not in stages
 
 
+def test_full_head_on_second_sequence_complements_partial_ct(tmp_path, monkeypatch):
+    c = make_study(tmp_path)
+    partial = source(c, tmp_path, "reference", np.ones((12, 12, 12), np.float32))
+    partial["coverage"] = {"status": "limited", "limitations": [{"kind": "privacy-redacted"}]}
+    source(c, tmp_path, "whole", ellipsoid([28, 32, 33]).astype(np.float32), modality="T2", spacing=3)
+    partial_ct = source(c, tmp_path, "ct", np.ones((16, 16, 8), np.float32), modality="CT")
+    partial_ct["intensity_units"] = "HU"
+    monkeypatch.setattr(registry, "model_environment", lambda *args, **kwargs: {})
+    pending = next(j for j in registry.preparation_model_jobs(c) if j["id"] == "mri-head")
+    assert (pending["status"], pending["series_id"]) == ("unprocessed", "whole")
+    jobs = {j["id"]: j for j in registry.preparation_model_jobs(c, full_head_confirmed=True)}
+    assert jobs["mri-head"]["series_id"] == "whole"
+    assert jobs["mri-head"]["depends_on"] == ["brain:whole"]
+    assert jobs["mri-head"]["options"]["include_mri_skull"] is True
+    assert jobs["ct-skull"]["series_id"] == "ct"
+    assert jobs["brain-regions"]["series_id"] == "reference"
+
+
+def test_air_padded_ct_requires_measured_tissue_and_dense_signal(tmp_path, monkeypatch):
+    c = make_study(tmp_path)
+    hu = np.full((24, 24, 24), -1024, np.float32)
+    hu[4:20, 4:20, 4:20] = 40
+    hu[8:16, 8:16, 8:16] = 800
+    source(c, tmp_path, "padded", hu, modality="CT")
+    source(c, tmp_path, "binary", np.where(hu > 500, 800, -1024).astype(np.float32), modality="CT")
+    source(c, tmp_path, "normalized", hu / 2000, modality="CT")
+    monkeypatch.setattr(registry, "model_environment", lambda *args, **kwargs: {})
+    jobs = {j["id"]: j for j in registry.preparation_model_jobs(c)}
+    assert jobs["ct-skull"]["series_id"] == "padded" and jobs["ct-skull"]["status"] == "ready"
+    assert jobs["ct-skull:binary"]["status"] == jobs["ct-skull:normalized"]["status"] == "unsupported_input"
+
+
+def test_distinct_acquisitions_keep_their_layers_and_checkpoint_on_incremental_intake(tmp_path, monkeypatch):
+    from resectionlab import anatomy_preparation as preparation, poc_models
+
+    c = make_study(tmp_path)
+    pixels = np.zeros((12, 12, 12), np.float32)
+    pixels[2:6, 3:7, 4:8] = 500
+    tof = source(c, tmp_path, "tof", pixels, modality="TOF")
+    for kind in ("vessels", "artery", "sinus"):
+        c.add_layer((pixels > 0).astype(np.uint8), tof["affine"], layer_id="supplied-" + kind, kind=kind,
+                    source_series="tof", role="critical", color="#aa5566")
+    c.save()
+    calls = []
+    monkeypatch.setattr(registry, "model_environment", lambda *args, **kwargs: {})
+    monkeypatch.setattr(preparation, "alignment_pairs", lambda _: [])
+
+    def run(image, _case, model, _modality, **kwargs):
+        calls.append((image.name, model))
+        kinds = ["skull", "brain"] if model == "totalsegmentator-skull" else ["vessels"]
+        outputs = []
+        for kind in kinds:
+            path = tmp_path / (kind + ".nii.gz")
+            im = nib.Nifti1Image((pixels > 0).astype(np.uint8), np.eye(4))
+            im.header.set_xyzt_units("mm")
+            nib.save(im, path)
+            outputs.append({"name": kind + "_mask.nii.gz", "path": str(path), "sha256": file_hash(path),
+                            "foreground_voxels": int((pixels > 0).sum())})
+        return {"outputs": outputs}
+
+    monkeypatch.setattr(poc_models, "run", run)
+    result = preparation.prepare_anatomy(c)
+    first = next(s for s in result["plan"]["stages"] if s["id"] == "vascular")
+    assert first["status"] == "cached" and first["seriesId"] == "tof"
+    assert calls == [("tof.nii.gz", "vesselfm-base")]
+
+    cta = source(c, tmp_path, "cta", pixels, modality="CTA")
+    cta["intensity_units"] = "HU"
+    c.add_layer((pixels > 0).astype(np.uint8), cta["affine"], layer_id="supplied-skull", kind="skull",
+                source_series="cta", role="context", color="#999999")
+    source(c, tmp_path, "tof_MIP", pixels, modality="TOF")
+    source(c, tmp_path, "mrv", pixels, modality="MRV")
+    c.save()
+    second = {s["id"]: s for s in preparation.prepare_anatomy(c)["plan"]["stages"]}
+    assert second["vascular"]["status"] == "cached" and second["vascular"]["inputKey"] == first["inputKey"]
+    assert second["vascular:cta"]["status"] == second["ct-skull"]["status"] == "cached"
+    assert second["vascular:tof_MIP"]["status"] == second["venous"]["status"] == "unsupported_input"
+    assert second["sinuses"]["status"] == "available"
+    assert [c.layer(o["id"])["source_series"] for o in second["vascular:cta"]["outputs"]] == ["cta"]
+    assert {c.layer(o["id"])["kind"] for o in second["ct-skull"]["outputs"]} == {"brain", "skull"}
+
+    ct = source(c, tmp_path, "bone", pixels, modality="CT")
+    ct["intensity_units"] = "HU"
+    c.save()
+    final = {s["id"]: s for s in preparation.prepare_anatomy(c)["plan"]["stages"]}
+    assert final["ct-skull"]["seriesId"] == "cta" and final["ct-skull:bone"]["seriesId"] == "bone"
+    assert calls == [("tof.nii.gz", "vesselfm-base"), ("cta.nii.gz", "totalsegmentator-skull"),
+                     ("cta.nii.gz", "vesselfm-base"), ("bone.nii.gz", "totalsegmentator-skull")]
+    with_proxy = preparation.preparation_plan(c, include_dural_proxy=True)
+    proxy = next(s for s in with_proxy["stages"] if s["id"] == "dural-envelope")
+    assert proxy["seriesId"] == "bone" and proxy["depends_on"] == ["ct-skull:bone"]
+
+
 def test_bounded_region_field_contains_complete_estimated_brain(tmp_path):
     c = make_study(tmp_path)
     row = source(c, tmp_path, "mri", np.ones((80, 80, 80), np.float32), spacing=3)

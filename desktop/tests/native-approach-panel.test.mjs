@@ -34,7 +34,7 @@ function harness(renderBody){
 }
 const wholeField={wholeEnvelopeWithinField:true};
 function approach(id,patchRadius=15){return {id,name:`Approach ${id}`,sourceSnapshotId:'revision',parameterHash:`initial-${id}`,assessmentStatus:'current',entry:id==='b'?[9,8,60]:[1,2,50],target:id==='b'?[7,6,20]:[1,2,20],radiusMm:id==='b'?4:2,direction:[0,0,-1],entryPatch:{center:id==='b'?[8,8,60]:[0,2,50],normal:[0,0,-1],radiusMm:patchRadius},constraints:{minClearanceMm:id==='b'?3:0,maxLengthMm:id==='b'?80:150,excludedLayerIds:['tract']},measurements:{lengthMm:30,orientation:{azimuthDeg:0,elevationDeg:-90},status:'incomplete',structures:[{layerId:'tract',label:'Supplied CST',kind:'tractography',available:true,clearanceLowerBoundMm:4,confirmedIntersection:false}],coverage:{withinReferenceEnvelope:true},targets:[{available:true,label:'Target',coveredVoxelCenterVolumeMm3:0,coveredVoxelCenterFraction:0,coverage:wholeField,acquisitionCoverage:wholeField}],normalTraversal:{available:true,conservativeVolumeUpperBoundMm3:120},unknowns:['Registration accuracy unmeasured'],assumptions:['Static straight capsule']}};}
-function fixture(initial=[approach('a',7),approach('b',22)]){
+function fixture(initial=[approach('a',7),approach('b',22)],{patientFrameReady=true,onEditStateChange,setCursor=()=>{}}={}){
   let saved=structuredClone(initial),revision=0,planning,workspace;
   const calls=[],binding={collectionId:'patient',document:{snapshot_id:'revision',display:{entry_ras_mm:[0,0,90],cursor_ras_mm:[0,0,30]},layers:[]},viewState:{selectedApproachId:'a'}};
   const api={async anatomyPlan(args){calls.push(structuredClone(args));if(args.action==='upsert'){
@@ -44,8 +44,8 @@ function fixture(initial=[approach('a',7),approach('b',22)]){
   }return {approaches:structuredClone(saved)};}};
   function open(){return harness(()=>{
     planning=useNativeApproaches(binding,api,true);
-    workspace={planning,binding,busy:false,draft:null,state:{cursor:[4,5,60],visible:{},settings:{}},volume:null,selectedStructure:null,setCursor(){},setSelectedStructure(){},setVisible(){},focusStructure(){},setSettings(){},async save(){calls.push({action:'save',selectedId:planning.selectedId});binding.viewState.selectedApproachId=planning.selectedId;}};
-    return Panel({workspace});
+    workspace={planning,binding,patientFrameReady,busy:false,draft:null,state:{cursor:[4,5,60],visible:{},settings:{}},volume:null,selectedStructure:null,setCursor,setSelectedStructure(){},setVisible(){},focusStructure(){},setSettings(){},async save(){calls.push({action:'save',selectedId:planning.selectedId});binding.viewState.selectedApproachId=planning.selectedId;}};
+    return Panel({workspace,onEditStateChange});
   });}
   return {binding,api,calls,open,get planning(){return planning;},get workspace(){return workspace;},get saved(){return saved;}};
 }
@@ -207,5 +207,37 @@ test('a prepared lesion requires explicit selection and sends its evidence bindi
     assert.equal(selection.candidateBinding,lesion.candidateBinding);
     assert.equal(button(tree,'Suggest approaches').props.disabled,false);
     assert(text(tree).includes('unreviewed'));
+  }finally{h.close();}
+});
+
+test('independent scan cursor stays in its own frame while selecting a saved route',async()=>{
+  const cursorWrites=[];
+  const f=fixture(undefined,{patientFrameReady:false,setCursor:p=>cursorWrites.push(p)}),h=await ready(f);
+  try{
+    const tree=h.render();
+    for(const label of ['Place patch at cursor','Entry at cursor','Target at cursor','Focus selected target']){
+      assert.equal(button(tree,label).props.disabled,true,label);
+    }
+    await [...walk(tree)].find(n=>n.props['data-approach-id']==='b').props.onClick();
+    assert.equal(f.planning.selectedId,'a');
+    h.render();
+    assert.equal(f.planning.selectedId,'b');
+    assert.deepEqual(cursorWrites,[]);
+  }finally{h.close();}
+});
+
+test('discarding an invalid saved-route edit restores the geometry and clears the navigation guard',async()=>{
+  const changes=[];
+  const f=fixture(undefined,{onEditStateChange:flag=>changes.push(flag)}),h=await ready(f);
+  try{
+    const tree=h.render();
+    input(tree,'Entry patch radius').props.onChange({target:{value:'-1'}});
+    assert.equal(changes.at(-1),true);
+    const dirty=h.render();
+    assert.equal(button(dirty,'Reassess').props.disabled,true);
+    button(dirty,'Discard edits').props.onClick();
+    assert.equal(input(h.render(),'Entry patch radius').props.value,7);
+    assert.equal(changes.at(-1),false);
+    assert.equal(f.calls.some(c=>c.action==='upsert'||c.action==='delete'),false);
   }finally{h.close();}
 });

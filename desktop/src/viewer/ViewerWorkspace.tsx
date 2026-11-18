@@ -111,7 +111,9 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   const signalName = props.segmentationOnly ? 'segmentation only' : props.generatedSignal ? "generated image signal" : (props.sourceLabel ?? "MRI");
   const [localSettings,setLocalSettings] = useState<ViewerWorkspaceSettings>({});
   const settings=props.workspaceSettings ?? localSettings;
-  const scanVolume=volumeSettings(settings.volumeRendering,signalName);
+  const fusedContext=!!caseData?.patientContext?.field&&settings.presentation!=='scan';
+  const contextName=fusedContext?'Normalized patient context':signalName;
+  const scanVolume=volumeSettings(settings.volumeRendering,contextName);
   const latestSettings=useRef(settings);latestSettings.current=settings;
   const changeSettings=(next:ViewerWorkspaceSettings)=>{
     latestSettings.current=next;
@@ -193,6 +195,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
         affine,
         inverse: inverseAffine(affine),
         bounds: volumeBounds(geometrySource.shape, affine),
+        patientBounds:geometrySource.patientContext?.field?volumeBounds(geometrySource.patientContext.field.shape,geometrySource.patientContext.field.affine):undefined,
         support: sourceSignalBounds(geometrySource.mri,geometrySource.shape,affine),
       };
     } catch {
@@ -666,13 +669,13 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     );
 
   const refs = { axial, coronal, sagittal };
-  const displayBounds=geometry?.bounds??[[0,0,0],[1,1,1]] as [Point3,Point3];
+  const displayBounds=(fusedContext?geometry?.patientBounds:undefined)??geometry?.bounds??[[0,0,0],[1,1,1]] as [Point3,Point3];
   const clipping=clippingForBounds(settings.clipping,displayBounds);
   const clipAxis={x:0,y:1,z:2}[clipping.axis];
   const modeled = replay && !replayError;
   const passiveMode = passiveReplay && !passiveError;
   const rehearsalMode = rehearsalState && !rehearsalError && !replayError;
-  const volumeDisplayed = scanVolume.enabled && !modeled && !passiveMode && !rehearsalMode;
+  const volumeDisplayed = scanVolume.enabled && !(fusedContext&&settings.volumeRendering?.isolateLabels) && !modeled && !passiveMode && !rehearsalMode;
   const inspected = !diagnosticRequested && !rehearsalRequested && !replay && !passiveRequested && !structuralProposal && !priorLayer &&
     displayedInspection?.caseHash === caseData.caseHash ? displayedInspection : null;
   const clearInspection = () => {
@@ -755,7 +758,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
           </div>
           {controlPanel==='appearance'&&<>
             <label><input type="checkbox" aria-label="Scan volume" checked={scanVolume.enabled} disabled={props.segmentationOnly||props.generatedSignal||Boolean(replay)||passiveRequested||rehearsalRequested} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,enabled:e.target.checked}})}/>Scan volume</label>
-            <label>Preset<select aria-label="Volume rendering preset" value={settings.volumeRendering?.preset??'auto'} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,preset:e.target.value as VolumePreset}})}><option value="auto">Automatic · {signalName}</option><option value="ct-bone" disabled={!isCtModality(signalName)}>CT bone</option><option value="ct-tissue" disabled={!isCtModality(signalName)}>CT tissue</option><option value="ct-angiography" disabled={!isCtModality(signalName)}>CT angiography · contrast scan</option><option value="mri">{/MRA|TOF|angiogra/i.test(signalName)?'Bright-blood MR signal':'MRI tissue'}</option></select></label>
+            <label>Preset<select aria-label="Volume rendering preset" value={settings.volumeRendering?.preset??'auto'} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,preset:e.target.value as VolumePreset}})}><option value="auto">Automatic · {contextName}</option><option value="ct-bone" disabled={!isCtModality(contextName)}>CT bone</option><option value="ct-tissue" disabled={!isCtModality(contextName)}>CT tissue</option><option value="ct-angiography" disabled={!isCtModality(contextName)}>CT angiography · contrast scan</option><option value="mri">{/MRA|TOF|angiogra/i.test(contextName)?'Bright-blood MR signal':fusedContext?'Normalized brightness':'MRI tissue'}</option></select></label>
             <label>Scan density<input aria-label="Scan volume density" type="range" min="0" max="2" step=".01" value={scanVolume.density} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,density:+e.target.value}})}/></label>
             <label><input type="checkbox" aria-label="Smooth 3D surfaces" checked={smoothSurfaces} onChange={e=>setSmoothSurfaces(e.target.checked)}/>Smooth surfaces</label>
             <label><input type="checkbox" aria-label="Body orientation guide" checked={settings.showOrientationGuide!==false} onChange={e=>changeSettings({...settings,showOrientationGuide:e.target.checked})}/>Body orientation guide</label>
@@ -763,7 +766,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
             <label>Slice annotations<select aria-label="Slice annotation style" value={settings.sliceOverlay??'fill'} onChange={e=>changeSettings({...settings,sliceOverlay:e.target.value as 'contour'|'fill'})}><option value="contour">Contours · source detail</option><option value="fill">Filled labels</option></select></label>
             {tractDisplays.length>0&&<label><input type="checkbox" checked={showSliceTracts} onChange={e=>setShowSliceTracts(e.target.checked)}/>Supplied tracts in source slices</label>}
             <label><input type="checkbox" checked={settings.volumeRendering?.shadows!==false} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,shadows:e.target.checked}})}/>Volume shadows</label>
-            <label><input type="checkbox" checked={settings.volumeRendering?.isolateLabels===true} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,isolateLabels:e.target.checked}})}/>Isolate selected tissue</label>
+            <label><input type="checkbox" checked={settings.volumeRendering?.isolateLabels===true} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,isolateLabels:e.target.checked}})}/>{fusedContext?'Show selected structures only':'Isolate selected tissue'}</label>
             {diagnosticLayer&&<label><input type="checkbox" checked={diagnosticVisible} onChange={e=>setDiagnosticVisible(e.target.checked)}/>Diagnostic overlay</label>}
             <details aria-label="Anatomy display quality"><summary>Anatomy quality</summary><p>Source slices and masks remain the basis for review. Anatomical accuracy is unmeasured.</p>{caseData.compartments.map(layer=>{const d=surfaceReports[layer.name]?.diagnostics??layer.surfaceDiagnostics;return <div key={layer.name}><strong>{layer.name}</strong>{layer.qa?.issues.map(issue=><p key={issue}>{issue}</p>)}{d&&<p>{d.fallbackReason?d.fallbackReason:d.restoredComponents?`${d.restoredComponents} components use their original surface after geometry checks.`:'Surface geometry checks passed.'}{d.backedOffVertices?` Smoothing reduced locally at ${d.backedOffVertices.toLocaleString()} vertices.`:''}{d.volumeRestoredComponents?` Lesion volume checks restored ${d.volumeRestoredComponents} source components.`:''}</p>}{surfaceReports[layer.name]?.empty&&<p>Empty segmentation: anatomy is unavailable.</p>}</div>})}</details>
             <TransferEditor value={settings.volumeRendering??{}} onChange={volumeRendering=>changeSettings({...settings,volumeRendering})}/>
@@ -831,7 +834,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
           onDoubleClick={(event) => {
             const point = engine.current?.pick(event.clientX, event.clientY);
             if (point && geometry)
-              onCursorChange(clampCursor(point, geometry.bounds));
+              onCursorChange(fusedContext?point:clampCursor(point, geometry.bounds));
           }}
           aria-label={props.surgicalInteraction?.mode==='draw'?'3-D source anatomy. Drag on anatomy to draw a proposed instrument stroke.':`3-D source anatomy. Drag to ${navigationMode==='pan'?'pan':'rotate'}, scroll to zoom, double-click to set linked cursor.`}
         >

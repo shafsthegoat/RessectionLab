@@ -6,7 +6,7 @@ import json
 import re
 from tempfile import TemporaryDirectory
 import numpy as np
-from .patient_anatomy import affine, world, reconstruction_lock, file_hash, digest, nifti_geometry, nifti_geometry_issue
+from .patient_anatomy import affine, world, reconstruction_lock, file_hash, digest, nifti_geometry, nifti_geometry_issue, projection_or_localizer
 
 
 MRI_SEQUENCES = {
@@ -22,6 +22,10 @@ OPERATIVE_LABELS = {
     "skull": ("skull", "context", "#d8e7f8"),
     "vessels": ("vessels", "critical", "#ef5679"),
     "vessel": ("vessels", "critical", "#ef5679"),
+    "artery": ("artery", "critical", "#e86c62"),
+    "vein": ("vein", "critical", "#678fde"),
+    "sinus": ("sinus", "critical", "#8078ce"),
+    "dura": ("dura", "context", "#eccca7"),
     "context": ("context", "context", "#97bdcf"),
 }
 
@@ -326,6 +330,8 @@ def import_nifti_series(collection, path, *, series_id, modality=None, timepoint
         "sequence_assignment": {"basis": "explicit" if modality is not None else "metadata and name",
                                 "candidates": details["candidates"], "issues": details["issues"]},
     }
+    if projection_or_localizer({"metadata": metadata, "label": Path(path).name}):
+        imaging["projection_or_localizer"] = True
     if retained:
         imaging["companions"] = retained
     acquisition = metadata.get("AcquisitionDateTime")
@@ -358,7 +364,7 @@ def select_intake_reference(collection):
         return document.get("reference_series")
     order = ("T1", "T1CE", "T2", "FLAIR", "CT", "CTA", "TOF", "MRA", "MRV",
              "SWI", "SWI_MAGNITUDE", "SWI_PHASE")
-    candidates = [row for row in document["series"] if row["modality"] in order]
+    candidates = [row for row in document["series"] if row["modality"] in order and not projection_or_localizer(row)]
     if not candidates:
         return document.get("reference_series")
     reference = min(candidates, key=lambda row: (
@@ -446,6 +452,8 @@ def _dicom_sources(directory, selected_series=None):
         header_hints = set().union(*(_sequence_hints(value) for value in descriptions))
         metadata["SequenceRole"] = " ".join(sorted(header_hints & {"MIP", "DWI"}))
         details = _describe_sequence("", metadata, source_family=family.upper())
+        details["projection_or_localizer"] = (projection_or_localizer({"metadata": metadata}) or
+            any(projection_or_localizer({"ImageType": getattr(h, "ImageType", "")}) for h in headers[1:]))
         if not patient or not re.fullmatch(r"[0-9]+(?:\.[0-9]+)*", study):
             details["issues"].append("DICOM patient and StudyInstanceUID are required for study association")
             details["supported"] = False
@@ -540,6 +548,8 @@ def import_dicom(collection, directory, *, modality=None, sequence_by_series=Non
             sequence_assignment={"basis": "explicit" if explicit is not None else "acquisition metadata",
                                  "candidates": details["candidates"], "issues": details["issues"]},
         )
+        if details.get("projection_or_localizer"):
+            metadata["projection_or_localizer"] = True
         if details["storage"] == "source-asset":
             row = dict(id=uid, patient_id=c.document["patient_id"], modality=sequence, timepoint=timepoint,
                        storage="source-asset", original=originals[0], **metadata)

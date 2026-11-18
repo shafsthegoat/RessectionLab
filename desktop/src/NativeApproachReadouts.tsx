@@ -51,10 +51,10 @@ function SourceReadings({readings,labels}:{readings:Record<string,ApproachSource
   </details>;
 }
 
-export function ApproachProposalDetails({report,targetLabel,labels}:{report:ApproachProposalReport;targetLabel?:string;labels:Record<string,string>}){
+export function ApproachProposalDetails({report,targetLabel,labels,title='sampled entries'}:{report:ApproachProposalReport;title?:string;targetLabel?:string;labels:Record<string,string>}){
   const reasons=report.reasons;
   return <details className="approach-proposal-report" data-proposal-status={report.assessmentStatus??'current'}>
-    <summary>{report.accepted} alternatives retained · sampled entries</summary>
+    <summary>{report.accepted} alternatives retained · {title}</summary>
     {report.assessmentStatus==='stale'&&<p role="status">Saved measurements use an earlier source revision or assessment version. Generate alternatives for the current assessment.</p>}
     {report.assessmentStatus==='historical'&&<p role="status">{report.invalidationReason??'The saved corridors have changed since these alternatives were frozen.'}</p>}
     {targetLabel&&<p>Frozen proposal target · {targetLabel}</p>}
@@ -70,6 +70,7 @@ export function ApproachProposalDetails({report,targetLabel,labels}:{report:Appr
         return <li key={candidate.id} data-sampled-disposition={candidate.disposition}>
         <details><summary>{disposition} · {point(candidate.entry)} RAS mm</summary>
           <p>Target (RAS mm) {point(candidate.target)} · capsule radius {candidate.radiusMm} mm</p>
+          {candidate.entrySupport&&<p>Entry label · {candidate.entrySupport.label} · source {candidate.entrySupport.sourceSeries} · voxel {candidate.entrySupport.voxel.join(', ')}{candidate.entrySupport.reviewStatus&&' · '+candidate.entrySupport.reviewStatus}</p>}
           {candidate.pareto===true&&<p>Pareto frontier within its comparable evidence group.</p>}
           {!!candidate.detectedConflictLayerIds?.length&&<p>Detected contact · {candidate.detectedConflictLayerIds.map(id=>labels[id]??id).join(', ')}</p>}
           {candidate.reasons?.map(reason=><p key={reason}>{reason}</p>)}

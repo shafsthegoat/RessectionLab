@@ -310,6 +310,9 @@ def inspect_vessel_geometry(collection, layer_id, point=None):
     row = collection.layer(layer_id)
     if row["kind"] not in {"vessels", "artery", "vein", "sinus"}:
         raise ValueError("Select a vascular layer")
+    from .anatomy_evidence import is_siam_context
+    if is_siam_context(row):
+        raise ValueError("SIAM vascular tissue supplies image context only")
     a = collection.patient_affine(row)
     key = digest(
         {

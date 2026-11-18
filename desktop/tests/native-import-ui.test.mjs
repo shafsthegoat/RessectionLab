@@ -75,6 +75,16 @@ test('study confirmation and resolved source roles are required before import',(
     assert.equal(find(render(state).tree,'button','Import selected data').props.disabled,true);
   }
 });
+test('dura and classified vascular annotations retain separate supplied meanings',async()=>{
+  const kinds=['dura','artery','vein','sinus'];
+  const roles=kinds.map((role,i)=>({value:String(i+1),role}));
+  const {tree,calls}=render({rows:[annotation(roles,'flair')]});
+  const select=find(tree,'select','Segmentation role 1');
+  assert.deepEqual([...walk(select)].filter(n=>n.type==='option'&&kinds.includes(n.props.value)).map(text),
+    ['Dura mater','Artery','Vein','Dural venous sinus']);
+  await find(tree,'button','Import selected data').props.onClick();
+  assert.deepEqual(calls[0].items[0].roleMap,{1:'dura',2:'artery',3:'vein',4:'sinus'});
+});
 test('an active edit or operation disables intake controls',()=>{
   for(const state of [{busy:true},{draft:{layerId:'draft'}},{pending:true}]){
     const {tree}=render({...state,rows:[scan('nifti','T1CE')]});

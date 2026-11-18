@@ -152,18 +152,35 @@ def dispatch(session, operation, args, request, progress):
             raise ValueError("Unknown anatomical layer or tract bundle")
         requested = [name for name in requested if name not in tract_ids]
         native = affine(reference["affine"])
-        t = c.document["transforms"].get(reference["id"])
         preview_alignment = args.get("previewAlignment") is True
         vessel_scope = args.get("vesselScope", "all")
         if vessel_scope not in {"all", "brain", "intracranial", "excluded"}:
             raise ValueError("Unknown vessel display scope")
+        source_frame_issue = None
         try:
             displayed, estimated = display_affine(c, reference, preview=preview_alignment)
             registered = True
-        except ValueError:
+        except ValueError as error:
+            source_frame_issue = str(error)
             displayed, estimated, registered = native, False, False
+        patient_context = None
+        if args.get("patientModel") is True and registered:
+            from .anatomy_display import patient_display_context
+            context_key = (key, c.identity(), preview_alignment)
+            cached = getattr(session, "anatomy_context_cache", None)
+            if cached is None or cached[0] != context_key or (
+                    cached[1].get("signal") and not Path(cached[1]["signal"]["path"]).is_file()):
+                patient_context, signal = patient_display_context(c, preview=preview_alignment, check=request.check)
+                if signal is not None:
+                    patient_context["signal"] = session.transfers.array(signal, "float32")
+                session.anatomy_context_cache = (context_key, patient_context)
+            else:
+                patient_context = cached[1]
         source_displayed = displayed
         alignment_previews = [reference["id"]] if estimated else []
+        if patient_context:
+            alignment_previews.extend(s["seriesId"] for s in patient_context["sources"]
+                                      if s["alignment"] == "estimated" and "displayWindow" in s)
         image_data = reference["data"]
         preview = next((item for item in reference.get("preview_pyramid", [])
                         if item.get("factor") == 2), None)
@@ -178,7 +195,7 @@ def dispatch(session, operation, args, request, progress):
             preview = None
         shape = tuple(image_data["shape"])
         cache_key = (key, c.identity(), reference["id"], image_data["sha256"],
-                     displayed.tobytes(), bool(args.get("original")), preview_alignment, vessel_scope)
+                     displayed.tobytes(), bool(args.get("original")), preview_alignment, vessel_scope, bool(patient_context))
         cacheable = not (session.anatomy_drafts.get(key) or key in session.anatomy_removal
                          or args.get("highlightComponents"))
         cache = getattr(session, "anatomy_view_cache", None)
@@ -208,7 +225,7 @@ def dispatch(session, operation, args, request, progress):
                 row["label_value"] = 1
                 row["edits"] = [{"draft": True}]
                 row["revision"] += 1
-            row_previews = []
+            row_previews = [reference["id"]] if estimated and row["source_series"] == reference["id"] else []
             source_grid_preview = False
             try:
                 if row["source_series"] == reference["id"]:
@@ -229,19 +246,19 @@ def dispatch(session, operation, args, request, progress):
                         alignment_previews.extend(row_previews)
             except ValueError:
                 source_grid_preview = preview_alignment and source_lattice_annotation_preview(c, row, reference)
+                source = source_displayed
                 if not source_grid_preview:
                     unavailable.append(name)
                     continue
-                source = source_displayed
             progress(
                 (i + 0.1) / max(1, len(requested)), f"Preparing native {row['label']}"
             )
             if key in session.anatomy_removal and row["role"] == "target":
-                preview = session.anatomy_removal[key]
+                removal_preview = session.anatomy_removal[key]
                 ref = c.series(c.document["reference_series"])
                 cut = (
                     resample(
-                        preview.astype(np.uint8),
+                        removal_preview.astype(np.uint8),
                         c.patient_affine(ref),
                         tuple(row["data"]["shape"]),
                         source,
@@ -271,7 +288,8 @@ def dispatch(session, operation, args, request, progress):
             geometry = mesh(c, row, cancelled=request.cancelled.is_set)
             request.check()
             shared = row.get("kind") == "brain-region" and not row.get("edits")
-            set_id = row["data"]["sha256"] if shared else None
+            # Identical categorical values may originate on different physical grids.
+            set_id = hashlib.sha256(row["data"]["sha256"].encode() + source.tobytes()).hexdigest() if shared else None
             if shared and set_id not in label_sets:
                 if set_id not in cache["label_sets"]:
                     values = resample(c.array(row["data"]), source, shape, displayed, order=0).astype(np.uint16)
@@ -281,6 +299,9 @@ def dispatch(session, operation, args, request, progress):
             record = {
                 "name": name,
                 "kind": row["kind"],
+                "sourceSeries": row["source_series"],
+                "alignment": ("source-grid preview" if source_grid_preview else "independent" if not registered
+                              else "estimated" if row_previews else c.document["transforms"][row["source_series"]]["status"]),
                 "sourceIdentity": quality["sourceIdentity"],
                 "qa": quality,
                 "surfaceDiagnostics": {"policy": str(geometry.get("policy_version", "legacy")),
@@ -309,6 +330,8 @@ def dispatch(session, operation, args, request, progress):
                 p = world(transform, geometry["positions"]).astype(np.float32)
                 raw = world(transform, geometry["source"]).astype(np.float32)
                 faces = geometry["indices"]
+                if np.linalg.det(transform[:3, :3]) < 0:
+                    faces = faces[:, ::-1]
                 record["surface"] = {"empty": True} if not p.size else {
                     "positions": transfer(p, "float32"),
                     "source": transfer(raw, "float32"),
@@ -341,9 +364,10 @@ def dispatch(session, operation, args, request, progress):
                 transform = np.linalg.inv(displayed) @ source
                 hp = world(transform, hgeo["positions"]).astype(np.float32)
                 hr = world(transform, hgeo["source"]).astype(np.float32)
-                hi = hgeo["indices"]
+                hi = hgeo["indices"] if np.linalg.det(transform[:3, :3]) >= 0 else hgeo["indices"][:, ::-1]
                 layers.append({"name": "__fragment_review", "color": "#ffb454", "mask": transfer(resample(highlight.astype(np.uint8), source, shape, displayed, order=0), "uint8"), "surface": {"positions": transfer(hp,"float32"), "source": transfer(hr,"float32"), "normals": transfer(normals(hp,hi),"float32"), "sourceNormals": transfer(normals(hr,hi),"float32"), "indices": transfer(hi,"uint32")}})
         tracts = []
+        unavailable_tracts = []
         for tract in ([] if cache["tracts"] is not None else c.document.get("tractography", [])):
             try:
                 sid = tract["source_series"]
@@ -353,10 +377,11 @@ def dispatch(session, operation, args, request, progress):
                     transform = np.linalg.inv(native)
                 elif registered and t:
                     _, estimated_tract = display_affine(c, c.series(sid), preview=preview_alignment)
-                    transform = np.linalg.inv(displayed) @ c.registration_matrix(sid)
+                    transform = np.linalg.inv(displayed) @ c.registration_matrix(sid, require_geometry=True)
                     if estimated_tract:
                         alignment_previews.append(sid)
                 else:
+                    unavailable_tracts.append(tract["id"])
                     continue
                 points = world(transform, c.array(tract["points_ras_mm"])).astype(
                     np.float32
@@ -365,19 +390,26 @@ def dispatch(session, operation, args, request, progress):
                     tracts.append(
                         {
                             "id": tract["id"],
-                            "label": tract["label"],
+                            "label": tract["label"], "sourceSeries": sid,
+                            "alignment": ("independent" if not registered else "estimated"
+                                          if (estimated if sid == reference["id"] else estimated_tract)
+                                          else t["status"]),
                             "points": transfer(points, "float32"),
                             "offsets": transfer(c.array(tract["offsets"]), "uint32"),
                         }
                     )
             except ValueError:
-                continue
+                unavailable_tracts.append(tract["id"])
         if cache["tracts"] is None:
             cache["tracts"] = tracts
+            cache["unavailable_tracts"] = unavailable_tracts
+        unavailable.extend(cache["unavailable_tracts"])
+        alignment_previews.extend(t["sourceSeries"] for t in cache["tracts"] if t["alignment"] == "estimated")
         if cache["mri"] is None:
             cache["mri"] = transfer(c.array(image_data), "float32")
         result = {
             "tractography": cache["tracts"],
+            **({"patientContext": patient_context} if patient_context else {}),
             "caseId": c.document["patient_id"],
             "caseHash": "sha256:" + hashlib.sha256((c.identity()+":"+reference["id"]).encode()).hexdigest(),
             "frame": "RAS+",
@@ -389,6 +421,8 @@ def dispatch(session, operation, args, request, progress):
             "modality": reference["modality"],
             "displayPreview": None if preview is None else {"factor": 2, "meaning": "reversible source-image display preview; anatomical measurements retain native grids"},
             "unavailableLayers": unavailable,
+            "sourceFrameIssue": source_frame_issue,
+            "patientFrameReady": registered and not estimated,
             "registrationStatus": ("alignment preview" if alignment_previews else "patient frame")
             if registered else "independent source frame",
             "alignmentPreviews": sorted(set(alignment_previews)),
@@ -470,6 +504,13 @@ def dispatch(session, operation, args, request, progress):
     if operation == "anatomyPlan":
         if key in session.anatomy_drafts:
             raise ValueError("Commit or reject the correction before planning")
+        if args.get("action") == "operativeField":
+            from .anatomy_operative_field import operative_field
+
+            result = operative_field(c, args, check=request.check)
+            result["labels"] = session.transfers.array(result["labels"], "uint8")
+            _retain(session, result)
+            return result
         if args.get("action"):
             from .anatomy_approaches import dispatch_plan, NativeRouteGeometry
 

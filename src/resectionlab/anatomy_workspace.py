@@ -54,8 +54,10 @@ def checked_view(collection, state):
         from types import SimpleNamespace
         from .workspace_bundle import _viewer_state
         source=collection.series(series_id)
-        transform=collection.document['transforms'].get(series_id)
-        a=collection.patient_affine(source) if transform and transform['status'] in {'reference','reviewed','source-provided'} else affine(source['affine'])
+        try:
+            a = collection.patient_affine(source)
+        except ValueError:
+            a = affine(source['affine'])  # Independent review preferences use the original grid.
         proxy=SimpleNamespace(compartments={name:None for name in layers|{'__fragment_review','brain','tumor','vessels','bone','scalp-envelope'}},brain_mask=None,frame='RAS+',affine=a,mri=SimpleNamespace(shape=source['data']['shape']))
         _viewer_state(proxy,view['settings'],{})
     return state

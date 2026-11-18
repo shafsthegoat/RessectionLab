@@ -3,6 +3,11 @@
 VASCULAR_KINDS = {"vessel", "vessels", "artery", "vein", "sinus"}
 
 
+def is_siam_context(layer):
+    """Each SIAM v2 tissue class is admitted for image inspection only."""
+    return layer.get("provenance", {}).get("model") == "siam-v2"
+
+
 def vascular_evidence_supported(collection, layer):
     """Allow source-associated annotations and supported positive model labels."""
     if layer["kind"] not in VASCULAR_KINDS:

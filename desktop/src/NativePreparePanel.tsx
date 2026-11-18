@@ -5,7 +5,7 @@ import type {NativeWorkspace} from './use-native-workspace';
 
 const stageStatuses:Record<string,string>={
   ready:'Ready',cached:'Reused',available:'Available',missing_input:'Missing input',
-  unsupported_input:'Unsupported input',unavailable:'Unavailable',blocked:'Blocked',
+  unsupported_input:'Unsupported input',unavailable:'Unavailable',blocked:'Blocked',unprocessed:'Needs confirmation',
   retry_available:'CPU retry available',failed:'Failed',empty_output:'Empty output',interrupted:'Interrupted',complete:'Completed',
 };
 const retryable=new Set(['failed','empty_output','retry_available']);
@@ -86,7 +86,7 @@ export function NativePreparePanel({workspace:w,onReviewAnatomy}:{workspace:Nati
         <option value="glioma-lgg">Lower-grade glioma · FLAIR</option>
       </select></label>
       <label className="intake-confirm"><input type="checkbox" checked={fullHeadConfirmed} disabled={blocked} onChange={e=>updateOption(()=>setFullHeadConfirmed(e.target.checked))}/>
-        Include estimates from eligible full-head MRI</label>
+        Confirm full-head MRI coverage for head and cranial tissue estimates</label>
       <label className="intake-confirm"><input type="checkbox" checked={includeDuralProxy} disabled={blocked} onChange={e=>updateOption(()=>setIncludeDuralProxy(e.target.checked))}/>
         Include a geometric dural envelope where supported</label>
     </details>

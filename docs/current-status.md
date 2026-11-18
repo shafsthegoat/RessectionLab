@@ -3,7 +3,7 @@
 Repository upkeep follows the [maintenance policy](../CONTRIBUTING.md): keep current-use material,
 retire obsolete code/docs/artifacts, and archive useful history outside the tracked tree.
 
-As of November 17, 2026, the maintained application is Electron/React/TypeScript
+As of November 18, 2026, the maintained application is Electron/React/TypeScript
 with the Python engine and optional compiled C++ backend. This tree combines
 the November 16 structure-aware harm and canonical endpoint work (`b80d2e9e`,
 PR #20), repository cleanup and archive restoration support, and the completed
@@ -16,8 +16,12 @@ Prepared datasets, model assets and detailed receipts remain on Shafrir's
 optional personal HDD and are unavailable to collaborators through a clone.
 The [storage ledger](local-storage-ledger.md) records discovery and access limits.
 
-Native patient studies now accept scans together in Cases. Prepare anatomy
+Native patient studies accept scans together in Cases. Prepare anatomy
 uses the available modalities and records an outcome for each stage.
+The patient reconstruction combines aligned sources while preserving native
+slices for review. A selected geometric approach can now be replayed from
+bone flap through modeled aspiration wherever corresponding tissue exists.
+See the [scan-to-rehearsal workflow](desktop-workflow.md#from-patient-scans-to-operative-steps).
 Plan & compare binds an explicitly selected lesion to its source and revision.
 Hidden desktop runs exercised supplied UCSF glioma labels and a meningioma
 model candidate through geometric comparison, portable save and cold reopen.

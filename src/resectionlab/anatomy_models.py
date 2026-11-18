@@ -126,6 +126,9 @@ def reconstruct(
         raise ValueError("Original source changed before reconstruction")
     if cancelled():
         raise InterruptedError("Reconstruction cancelled before inference")
+    if model == "siam-v2":
+        from . import anatomy_siam
+        return anatomy_siam.reconstruct(c, row, source, confirmed=full_head_confirmed, cancelled=cancelled)
     if model == "supersynth":
         return reconstruct_head(c, row, source, brain_layer_id=brain_layer_id,
                                 confirmed=full_head_confirmed, include_skull=include_mri_skull,
@@ -432,6 +435,9 @@ def import_proposal(c, series_id, record):
         raise ValueError("Model output changed before admission")
     if record["model"] in {"synthseg", "fastsurfer"}:
         return import_parcellation(c, series_id, record)
+    if record["model"] == "siam-v2":
+        from .anatomy_siam import import_tissues
+        return import_tissues(c, series_id, record)
     if record["model"] == "supersynth":
         return import_head(c, series_id, record)
     im = nib.load(record["path"])

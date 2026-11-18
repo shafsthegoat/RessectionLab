@@ -228,6 +228,8 @@ export class VolumeRenderer {
   private selectedStructure:string|null=null;
   private readonly surfaceGeometry = new Map<string, { source: THREE.BufferGeometry; smooth: THREE.BufferGeometry; smoothingPrepared?:boolean }>();
   private surfaceSmoothing = true;
+  private patientBounds?:Bounds3;
+  private patientFramingPoints?:Float32Array;
   private scanFramingPoints:Float32Array=new Float32Array();
   private readonly mriTexture: THREE.Data3DTexture;
   private fusionTexture: THREE.Data3DTexture;
@@ -354,6 +356,11 @@ export class VolumeRenderer {
     ) as Point3;
     this.defaultWindow = intensityWindow(volume.mri);
     this.scanFramingPoints=scanFitPoints(volume,this.defaultWindow);
+    const field=volume.patientContext?.field;
+    if(field){
+      this.patientBounds=volumeBounds(field.shape,field.affine);
+      this.patientFramingPoints=scanFitPoints({mri:field.signal,affine:field.affine,frame:'RAS+',shape:field.shape},[0,1]);
+    }
     this.renderer = new THREE.WebGLRenderer({
       canvas,
       antialias: true,
@@ -717,7 +724,7 @@ export class VolumeRenderer {
     placeInSourceFrame(mesh, this.affine);
     mesh.castShadow=true;mesh.receiveShadow=true;
     applyOperativeSurface(mesh.material,layer.kind,this.workspaceSettings);
-    if(vessel)applyVesselDepthMaterial(mesh.material,this.bounds);
+    if(vessel)applyVesselDepthMaterial(mesh.material,this.patientBounds??this.bounds);
     applySourceContextMaterial(mesh.material,this.workspaceSettings.contextStyle==='shell'&&CONTEXT_SURFACES.has(layer.kind??''));
     mesh.visible = this.surfaceVisible(layer.name);
     mesh.userData.compartment = layer.name;
@@ -727,7 +734,7 @@ export class VolumeRenderer {
   private installSurface(layer:ViewerVolume['compartments'][number],buffers:PreparedSurface|{positions:Float32Array;normals:Float32Array;smoothPositions?:Float32Array;smoothNormals?:Float32Array;indices?:Uint32Array}) {
     const pair=this.makeSurface(layer,buffers);if(!pair)return;
     if (this.volume.displayIdentity && layer.surface && surfaceKind(layer.kind)==='context') {
-      installNativeContextLighting(pair.mesh.material as THREE.MeshStandardMaterial, this.bounds,
+      installNativeContextLighting(pair.mesh.material as THREE.MeshStandardMaterial, this.patientBounds??this.bounds,
         this.surfaceSmoothing && this.workspaceSettings.operativeView !== 'surgeon');
     }
     this.surfaceGeometry.set(layer.name,{source:pair.source,smooth:pair.smooth,smoothingPrepared:pair.smoothingPrepared});this.surfaces.set(layer.name,pair.mesh);this.anatomy.add(pair.mesh);
@@ -1047,7 +1054,7 @@ export class VolumeRenderer {
     if(this.appearanceSignature!=null){this.beginInteraction();this.endInteraction();}
     this.appearanceSignature = signature;
     const operativeOcclusion=settings.operativeView==='surgeon'&&!settings.microscope?.inspectionCutaway;
-    const clipping = clippingForBounds(operativeOcclusion?undefined:settings.clipping,this.bounds);
+    const clipping = clippingForBounds(operativeOcclusion?undefined:settings.clipping,settings.presentation==='scan'?this.bounds:this.patientBounds??this.bounds);
     const normal = new THREE.Vector3();
     normal.setComponent({x:0,y:1,z:2}[clipping.axis],clipping.flipped ? -1 : 1);
     this.clipPlane = clipping.enabled ? new THREE.Plane(normal,clipping.flipped ? clipping.value : -clipping.value) : null;
@@ -1103,7 +1110,7 @@ export class VolumeRenderer {
       }
       shader.uniforms.uFusionOpacity.value=Number.isFinite(settings.fusion?.opacity) ? Math.max(0,Math.min(1,settings.fusion!.opacity)) : .5;
     });
-    this.scanVolume?.configure(settings.volumeRendering, this.volumeModality, this.clipPlane);
+    this.scanVolume?.configure(settings.volumeRendering, this.volumeModality, this.clipPlane,settings.presentation!=='scan');
     this.scanVolume.labels(this.labelTexture,this.visible,settings,this.extraClipPlanes);
     this.applyTractAppearance();
     this.applyStructureHighlight();
@@ -1198,7 +1205,7 @@ export class VolumeRenderer {
 
   setVolumeRendering(settings: VolumeRenderingSettings | undefined, modality: string): void {
     this.volumeModality = modality;
-    this.scanVolume.configure(settings, modality, this.clipPlane);
+    this.scanVolume.configure(settings, modality, this.clipPlane,this.workspaceSettings.presentation!=='scan');
     this.requestRender();
   }
 
@@ -2021,14 +2028,16 @@ export class VolumeRenderer {
       return;
     }
     this.pendingFit = null;
+    const contextBounds=this.workspaceSettings?.presentation==='scan'?this.bounds:this.patientBounds??this.bounds;
     let box = physicalBounds(this.anatomy);
     if (box.isEmpty())
       box = new THREE.Box3(
-        new THREE.Vector3(...this.bounds[0]),
-        new THREE.Vector3(...this.bounds[1]),
+        new THREE.Vector3(...contextBounds[0]),
+        new THREE.Vector3(...contextBounds[1]),
       );
     else box.expandByScalar(12);
-    if(this.scanVolume?.active&&this.scanFramingPoints.length){const support=new THREE.Box3().setFromArray(this.scanFramingPoints);box.union(support.expandByScalar(3));}
+    const framingPoints=this.workspaceSettings?.presentation!=='scan'&&this.patientFramingPoints?this.patientFramingPoints:this.scanFramingPoints;
+    if(this.scanVolume?.active&&framingPoints.length){const support=new THREE.Box3().setFromArray(framingPoints);box.union(support.expandByScalar(3));}
     const visibleTools = this.recordedTools.visible ? this.recordedTools : this.instrumentDisplay.inspected ? this.inspectionTools : this.tools;
     if (mode === "instruments" && this.replayActive && this.replayBounds) {
       const [low, high] = this.replayBounds.boundsRasMm;
@@ -2076,9 +2085,9 @@ export class VolumeRenderer {
     const surfaceDistance=mode==='anatomy' && !this.replayActive && !this.passiveActive
       ? surfaceCameraDistance(this.anatomy,centre,direction,right,up,vertical,aspect) : null;
     if(surfaceDistance!==null)distance=surfaceDistance;
-    if(this.scanVolume?.active&&this.scanFramingPoints.length){
+    if(this.scanVolume?.active&&framingPoints.length){
       let scanDistance=40;const p=new THREE.Vector3();
-      for(let i=0;i<this.scanFramingPoints.length;i+=3){p.fromArray(this.scanFramingPoints,i).sub(centre);const depth=p.dot(direction);scanDistance=Math.max(scanDistance,depth+(Math.abs(p.dot(right))+3)/Math.tan(horizontal/2),depth+(Math.abs(p.dot(up))+3)/Math.tan(vertical/2));}
+      for(let i=0;i<framingPoints.length;i+=3){p.fromArray(framingPoints,i).sub(centre);const depth=p.dot(direction);scanDistance=Math.max(scanDistance,depth+(Math.abs(p.dot(right))+3)/Math.tan(horizontal/2),depth+(Math.abs(p.dot(up))+3)/Math.tan(vertical/2));}
       distance=Math.max(distance,scanDistance*1.08);
     }
     this.camera.position.copy(centre).addScaledVector(direction, distance);
@@ -2163,7 +2172,7 @@ export class VolumeRenderer {
     if(this.pendingReplayGroup)gather(this.pendingReplayGroup);
     for(const entry of this.retiredSurfaces){geometries.add(entry.pair.source);geometries.add(entry.pair.smooth);}
     if(this.modelStage)for(const pair of this.modelStage.prepared.values())if(pair){geometries.add(pair.source);geometries.add(pair.smooth);}
-    const textures=[this.mriTexture,this.labelTexture,this.fusionTexture,this.removedTexture,this.proposalTexture,
+    const textures=[...(this.scanVolume.patientTexture?[this.scanVolume.patientTexture]:[]),this.mriTexture,this.labelTexture,this.fusionTexture,this.removedTexture,this.proposalTexture,
       this.diagnosticStateTexture,this.diagnosticCoverageTexture,this.priorTexture,this.priorCoverageTexture];
     const geometryBytes=geometryBufferBytes(geometries),textureBytes=[...new Set(textures)].reduce((sum,texture)=>{
       const data=texture.image?.data as ArrayBufferView|undefined;return sum+(data?.byteLength??0);

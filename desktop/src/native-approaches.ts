@@ -37,6 +37,7 @@ export interface ApproachScenarioSet {
 
 export interface ApproachProposalCandidate {
   id:string;entry:Point3;target:Point3;radiusMm:number;direction:Point3|null;disposition:string;
+  entrySupport?:{layerId:string;label:string;sourceSeries:string;voxel:Point3;model?:string|null;reviewStatus?:string|null};
   reasons?:string[];objectives?:Record<string,number|null>;pareto?:boolean;detectedConflictLayerIds?:string[];
   sourceReadings?:Record<string,ApproachSourceReading>;
   scenarioGuard?:ApproachScenarioGuard;
@@ -137,7 +138,7 @@ export interface ApproachResponse {
   rehearsalOptions?:EnvironmentOptions;
   snapshotId:string;approaches:NativeApproach[];selectedId?:string|null;targetOptions?:ApproachTargetOption[];
   activeTargetLayerId?:string|null;targetSelectionIssue?:string|null;
-  proposalReport?:ApproachProposalReport|null;inputComparison?:ApproachInputComparisonReport|null;
+  proposalReport?:ApproachProposalReport|null;distinctEntryReport?:ApproachProposalReport|null;inputComparison?:ApproachInputComparisonReport|null;
   consequenceEvidence?:ApproachConsequenceEvidence|null;
 }
 export const approachStatus=(a:NativeApproach)=>a.assessmentStatus!=='current'?a.assessmentStatus:a.measurements?.status??'unassessed';
@@ -171,7 +172,13 @@ export function approachAssessment(a:NativeApproach){
     traversalMm3:m?.normalTraversal?.available&&finite(m.normalTraversal.conservativeVolumeUpperBoundMm3)?m.normalTraversal.conservativeVolumeUpperBoundMm3:null};
 }
 
-export function approachRoutes(approaches:NativeApproach[],selectedId:string|null):ViewerRoute[]{const displayed=approaches.slice(0,3),selected=approaches.find(a=>a.id===selectedId);if(selected&&!displayed.includes(selected))displayed[2]=selected;return displayed.map((a,index)=>({route_id:a.id,comparisonSlot:(['A','B','C'] as const)[index],scope:'geometric-approach',label:a.name,selected:a.id===selectedId,entry_mm:a.entry,target_mm:a.target,
+export function approachRoutes(approaches:NativeApproach[],selectedId:string|null):ViewerRoute[]{
+  const selected=approaches.find(a=>a.id===selectedId);
+  const surfaceEntries=selected?.origin==='native-source-entry-windows';
+  const comparison=selected?approaches.filter(a=>(a.origin==='native-source-entry-windows')===surfaceEntries):approaches;
+  const displayed=comparison.slice(0,3);
+  if(selected&&!displayed.includes(selected))displayed[2]=selected;
+  return displayed.map((a,index)=>({route_id:a.id,comparisonSlot:(['A','B','C'] as const)[index],scope:'geometric-approach',label:a.name,selected:a.id===selectedId,entry_mm:a.entry,target_mm:a.target,
   tool:{working_length_mm:Math.hypot(...a.target.map((v,i)=>v-a.entry[i])),tip_length_mm:0,shaft_radius_mm:a.radiusMm,tip_radius_mm:a.radiusMm},
   window:a.entryPatch?{center_mm:a.entryPatch.center,normal_inward:a.entryPatch.normal,radius_mm:a.entryPatch.radiusMm}:undefined}));}
 
