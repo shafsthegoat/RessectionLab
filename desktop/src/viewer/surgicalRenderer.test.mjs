@@ -494,3 +494,42 @@ test('recorded cranial guides render exact accepted polylines and overlapping so
  assert.equal(r.panes.anatomy.dataset.recordedPolicyHash,'policy');assert.equal(r.panes.anatomy.dataset.recordedSelectedBranch,'branch');assert.equal(r.panes.anatomy.dataset.recordedGeometrySeal,'geometry');assert.deepEqual(input.view,before);
  r.setSurgical(input);assert.equal(r.panes.anatomy.dataset.recordedGeometrySeal,'');assert.equal(r.panes.anatomy.dataset.recordedSelectedBranch,'');
 });
+
+test('accepted engine mapping replaces even unchanged native pairs with one shared display partition; edits, raw toggle and exit retain exact source',async()=>{
+  const {modeledVolume}=await server.ssrLoadModule('/src/modeled-volume.ts');
+  const mock=modelWorkerMock();
+  try{
+    const {r,source}=modeledFixture(),masks=source.compartments.map(l=>l.mask.slice());
+    const regions=source.compartments.map((l,i)=>({name:l.name,id:i+1,material:i?'vessel':'soft_tissue',color:l.color}));
+    const view={stateId:'mapped',scene:{shape:source.shape,affine:source.affine,regions},removed:[],moved:[]};
+    const volume=modeledVolume(source,view),events=[];
+    r.canvas.dispatchEvent=e=>{if(e.type==='anatomy-surface')events.push(e.detail);};
+    r.installSurgicalState(volume,{view});
+    const worker=r.modelWorker;
+    while(worker.queue.length)worker.flush();
+    submitPreparedState(r);
+    assert.equal(r.volume,volume);assert.equal(events.length,2);
+    assert(events.every(e=>e.diagnostics.policy==='engine-shared-implicit-v1'));
+    const requests=worker.messages.filter(m=>!m.task);
+    assert.equal(requests.length,2);
+    assert.deepEqual(requests[0].partition.reference.protectedRegions,[2]);
+    assert.equal(requests[1].partition.key,requests[0].partition.key);
+    assert.equal(requests[1].partition.reference,undefined);
+    const vessel=r.surfaces.get('vessel');
+    const nextView={...view,stateId:'cut',removed:[22]},cut=modeledVolume(source,nextView);
+    r.installSurgicalState(cut,{view:nextView});
+    while(worker.queue.length)worker.flush();
+    submitPreparedState(r);
+    assert.equal(r.surfaces.get('vessel'),vessel);assert.equal(cut.compartments[0].mask[22],0);
+    assert.equal(worker.messages.filter(m=>m.partition?.reference).length,1);
+    const brain=r.surfaceGeometry.get('brain'),labels=r.labelTexture.image.data.slice();
+    r.setSurfaceSmoothing(false);assert.equal(r.surfaces.get('brain').geometry,brain.source);
+    r.setSurfaceSmoothing(true);assert.equal(r.surfaces.get('brain').geometry,brain.smooth);
+    assert.deepEqual(r.labelTexture.image.data,labels);
+    r.installSurgicalState(source,null);
+    while(worker.queue.length)worker.flush();
+    submitPreparedState(r);
+    assert.equal(r.volume,source);assert.deepEqual(r.labelTexture.image.data,packAnatomyLabels(source).data);
+    assert.deepEqual(source.compartments.map(l=>l.mask),masks);
+  }finally{mock.restore();}
+});

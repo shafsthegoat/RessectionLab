@@ -5,7 +5,7 @@ import {surfaceKind} from './viewer/surfacePolicy.ts';
 import {registerModeledAnatomy} from './viewer/modeledAnatomy.ts';
 
 type Layer=ViewerVolume['compartments'][number];
-type Base={owner:Uint16Array;regions:SurgicalRegion[];originals:Array<{layer:Layer|undefined;labels:Uint8Array|Uint16Array|undefined}>;priority:Map<number,number>};
+type Base={surfaceReference:import('./viewer/engineImplicitSurface').EngineSurfaceReference;owner:Uint16Array;regions:SurgicalRegion[];originals:Array<{layer:Layer|undefined;labels:Uint8Array|Uint16Array|undefined}>;priority:Map<number,number>};
 type State={volume:ViewerVolume;overrides:Map<number,number>;differences:number[]};
 type Cache={mappingKey:string;base:Base;current:State;frames:Map<string,State>};
 const caches=new WeakMap<ViewerVolume,Cache>();
@@ -106,7 +106,7 @@ export function referenceModeledVolume(source:ViewerVolume,view:SurgicalView,cap
     const labels=source.labelSets?.find(s=>s.id===layer.labelSet)?.data;
     compartments.push({...layer,labelSet:undefined,labelValue:undefined,mask:labels?Uint8Array.from(labels,n=>Number(n===layer.labelValue)):layer.mask});
   }
-  capture?.({owner:original,regions:structuredClone(regions),originals,priority},differences);
+  capture?.({surfaceReference:{owner:original,protectedRegions:regions.filter(r=>['vessel','membrane'].includes(r.material)).map(r=>r.id)},owner:original,regions:structuredClone(regions),originals,priority},differences);
   return displayVolume(source,compartments,stateKey(view,coupled));
 }
 function overrides(base:Base,view:SurgicalView,coupled:boolean):Map<number,number>{
@@ -159,7 +159,7 @@ export function modeledVolume(source:ViewerVolume,view:SurgicalView):ViewerVolum
     const volume=displayVolume(source,compartments,key);state={volume,overrides:next,differences};cache.current=state;
     measurement={fullBuild:false,sourceCellsScanned:0,copiedMaskBytes,patchedCells:changedCells,baseOwnerBytes:base.owner.byteLength};
   }
-  registerModeledAnatomy(source,state.volume,mappingKey,[...view.removed,...view.moved.flat()]);
+  registerModeledAnatomy(source,state.volume,mappingKey,[...view.removed,...view.moved.flat()],cache.base.surfaceReference);
   cache.frames.set(key,state);if(cache.frames.size>3)cache.frames.delete(cache.frames.keys().next().value!);
   work.set(state.volume,measurement);return state.volume;
 }

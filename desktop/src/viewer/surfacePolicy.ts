@@ -10,6 +10,7 @@ export interface SurfaceDiagnostics {
   policy: string;
   kind: SurfaceKind;
   maxDisplacementMm: number;
+  displacementLimitMm?:number;
   restoredComponents: number;
   backedOffVertices?:number;
   fallbackReason?:string;
