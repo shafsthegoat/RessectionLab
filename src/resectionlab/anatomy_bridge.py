@@ -90,6 +90,8 @@ def dispatch(session, operation, args, request, progress):
         args = {**args, "snapshotId": c.identity()}
     if args.get("snapshotId") != c.identity() or current_id != c.identity():
         raise ValueError("Anatomy changed; reload the patient")
+    if key in session.anatomy_removal and session.anatomy_removal[key][0] != current_id:
+        session.anatomy_removal.pop(key)
     request.check()
     if operation == "anatomyInspectIntake":
         from .anatomy_intake import inspect_intake
@@ -248,7 +250,7 @@ def dispatch(session, operation, args, request, progress):
                 (i + 0.1) / max(1, len(requested)), f"Preparing native {row['label']}"
             )
             if key in session.anatomy_removal and row["role"] == "target":
-                removal_preview = session.anatomy_removal[key]
+                _, removal_preview = session.anatomy_removal[key]
                 ref = c.series(c.document["reference_series"])
                 cut = (
                     resample(
@@ -274,6 +276,19 @@ def dispatch(session, operation, args, request, progress):
             source_support = None
             if not (draft and draft.layer_id == name) and args.get("highlightLayer") != name:
                 row, source_support = supported_tissue_layer(c, row, check=request.check, raw_qc=bool(args.get("original")))
+            bone_review = None
+            if (registered and not row_previews and not source_grid_preview and not draft
+                    and not args.get("original") and not args.get("highlightLayer") and args.get("patientModel")):
+                from .anatomy_adjudication import composite_bone_layer
+
+                row, bone_review = composite_bone_layer(c, row, request.check)
+                if bone_review:
+                    count = bone_review["alternativePositiveVoxels"]
+                    disagreement = bone_review["alternativeOnlyVoxels"]
+                    ids = ", ".join(bone_review["preferredLayerIds"])
+                    quality = {**quality, "issues": [*quality["issues"],
+                               f"CT bone display from {ids} takes precedence at {count} MRI bone cells; "
+                               f"{disagreement} are unlabelled on CT. Raw source QC retains the MRI alternative."]}
             raw_siam = bool(source_support and source_support["status"] == "unfiltered")
             display_filter = None
             # Correction review always shows the complete editable source.
@@ -323,6 +338,7 @@ def dispatch(session, operation, args, request, progress):
                 "alignmentPreviews": row_previews,
                 "displayFilter": display_filter,
                 **({"sourceSupport": source_support} if source_support else {}),
+                **({"boneAdjudication": bone_review} if bone_review else {}),
                 **({"labelSet": set_id, "labelValue": row["label_value"]} if shared else {"mask": transfer(mask, "uint8")}),
                 **({"volumeMm3": source_volume} if source_volume is not None else {}),
             }
@@ -516,10 +532,12 @@ def dispatch(session, operation, args, request, progress):
             from .anatomy_operative_field import operative_field
 
             result = operative_field(c, args, check=request.check)
-            result["labels"] = session.transfers.array(result["labels"], "uint8")
+            result["labels"] = session.transfers.array(result["labels"], result["labels"].dtype.name)
             if "intensity" in result:
                 image = result["intensity"]
                 image["signal"] = session.transfers.array(image["signal"], "uint8")
+                overview = image["overview"]
+                overview["signal"] = session.transfers.array(overview["signal"], "uint8")
             _retain(session, result)
             return result
         if args.get("action"):
@@ -535,6 +553,9 @@ def dispatch(session, operation, args, request, progress):
                     target_cache = (c.root, c.identity(), native_target_options(c, check=request.check),
                                     surgical_environment_options(c, check=request.check))
                     session.anatomy_plan_target_cache = target_cache
+                from .anatomy_adjudication import acquisition_contributions
+                if "acquisitions" not in target_cache[3]:
+                    target_cache[3]["acquisitions"] = acquisition_contributions(c, target_cache[2], target_cache[3])
                 result["targetOptions"] = target_cache[2]
                 result["rehearsalOptions"] = target_cache[3]
                 return result
@@ -563,9 +584,9 @@ def dispatch(session, operation, args, request, progress):
         if args.get("reset"):
             session.anatomy_removal.pop(key, None)
         else:
-            session.anatomy_removal[key] = removal_preview(
+            session.anatomy_removal[key] = (current_id, removal_preview(
                 PatientAnatomySnapshot.capture(c), args["point"], args["radiusMm"]
-            )
+            ))
         return {
             "snapshotId": c.identity(),
             "preview": key in session.anatomy_removal,
@@ -582,6 +603,7 @@ def dispatch(session, operation, args, request, progress):
             spacing_mm=args.get("spacingMm", 0.5),
             moving_id=args.get("movingId"),
             checkerboard=args.get("checkerboard", True),
+            registration_review=bool(args.get("registrationReview")),
             original=bool(args.get("original")),
             check=request.check,
             layers=args.get("layers", []),
@@ -633,7 +655,9 @@ def dispatch(session, operation, args, request, progress):
             )
         else:
             from .anatomy_alignment import ensure_alignment
-            changed = ensure_alignment(c, force=args.get("action") == "estimate", cancelled=request.cancelled.is_set, progress=progress)
+            estimate = args.get("action") == "estimate"
+            changed = ensure_alignment(c, force=estimate, series_id=args.get("seriesId") if estimate else None,
+                                       cancelled=request.cancelled.is_set, progress=progress)
             result = {"changed": changed}
             if not changed:
                 return {"document": c.document, "result": result}

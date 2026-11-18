@@ -16,6 +16,7 @@ def section(
     size=512,
     moving_id=None,
     checkerboard=True,
+    registration_review=False,
     layers=(),
     original=False,
     check=lambda: None,
@@ -48,12 +49,19 @@ def section(
         + (x[..., None] - (size - 1) / 2) * spacing_mm * u
         + (y[..., None] - (size - 1) / 2) * spacing_mm * v
     )
-    try:
-        a = c.patient_affine(row)
-        frame = "patient"
-    except ValueError:
-        a = affine(row["affine"])
-        frame = "independent source"
+    if registration_review:
+        # Both views sample the proposed patient-space plane. Picks are converted
+        # back to their native physical frames before landmark review.
+        placement = c.registration_matrix(series_id, require_geometry=True)
+        a = placement @ affine(row["affine"])
+        frame = "registration preview"
+    else:
+        try:
+            a = c.patient_affine(row)
+            frame = "patient"
+        except ValueError:
+            a = affine(row["affine"])
+            frame = "independent source"
 
     def sample(data, transform, order):
         indices = world(np.linalg.inv(transform), points).reshape(-1, 3).T
@@ -141,6 +149,9 @@ def section(
         "size": size,
         "frame": frame,
         "movingStatus": moving_status,
+        **({"sourceFromSection": np.linalg.inv(placement).tolist(),
+            "voxelFromSection": np.linalg.inv(a).tolist(), "sourceShape": list(row["data"]["shape"])}
+           if registration_review else {}),
         "coverageMeaning": "purple pixels are outside sampled image support",
         "snapshotId": c.identity(),
     }

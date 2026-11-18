@@ -1,12 +1,13 @@
 """Sample native labels in a target-centred RAS frame for visual rehearsal."""
 
 import json
-from itertools import product
 
 import numpy as np
 
+from .anatomy_adjudication import BoneEvidence
+from .anatomy_sampling import sample_layer as _sample
 from .anatomy_approaches import FILENAME, _read_plan
-from .anatomy_evidence import VASCULAR_KINDS, inference_bounds, is_dural_proxy, vascular_evidence_supported
+from .anatomy_evidence import VASCULAR_KINDS, is_dural_proxy, vascular_evidence_supported
 from .anatomy_operative_intensity import operative_intensity
 from .anatomy_planning import native_target_binding
 from .anatomy_siam_display import supported_tissue_layer
@@ -15,6 +16,67 @@ from .patient_anatomy import file_hash, world
 
 
 MATERIAL_BITS = {"bone": 1, "dura": 2, "brain": 4, "tumor": 8, "vessels": 16}
+
+
+# Overlapping display classes preserve native evidence. Only the selected target sets the tumor bit.
+DETAIL_BITS = {"grayMatter": 32, "whiteMatter": 64, "csf": 128, "ventricles": 256,
+               "artery": 512, "vein": 1024, "sinus": 2048,
+               "enhancing": 4096, "nonenhancingCore": 8192, "perilesionalSignal": 16384, "tumorCore": 32768,
+               "wholeAbnormality": 65536}
+
+
+def _detail(row):
+    kind = row["kind"]
+    explicit = {"gray-matter": "grayMatter", "white-matter": "whiteMatter",
+                "cerebellar-cortex": "grayMatter", "cerebellar-white-matter": "whiteMatter",
+                "csf": "csf", "ventricles": "ventricles", "artery": "artery", "vein": "vein", "sinus": "sinus",
+                "enhancing-tumor": "enhancing", "nonenhancing-tumor": "nonenhancingCore",
+                "edema": "perilesionalSignal", "tumor-core": "tumorCore", "tumor-whole": "wholeAbnormality"}
+    if kind in explicit:
+        return explicit[kind]
+    provenance = row.get("provenance", {})
+    ontology = provenance.get("label_ontology", {})
+    if not isinstance(ontology, dict):
+        ontology = {}
+    model = str(provenance.get("model", "")).lower()
+    if model == "siam-v2":
+        return {"GM": "grayMatter", "WM": "whiteMatter"}.get(ontology.get("name"))
+    if model in {"supersynth", "synthseg", "fastsurfer"} and kind == "brain-region":
+        code = ontology.get("value", row.get("original_label_value", row["label_value"]))
+        if code in {2, 7, 41, 46}:
+            return "whiteMatter"
+        if code in {3, 8, 42, 47}:
+            return "grayMatter"
+        if code in {4, 5, 14, 15, 43, 44}:
+            return "ventricles"
+        if code == 24:
+            return "csf"
+    # Retained explicit source mapping in the prepared UCSF mirror studies.
+    if provenance.get("kind") == "observed_source_annotation":
+        if provenance.get("method") == "Pinned source BraTS compartment labels":
+            return {1: "nonenhancingCore", 2: "perilesionalSignal", 4: "enhancing"}.get(provenance.get("annotation_value"))
+        return {(1, "Non-enhancing tumor core / necrosis · source label 1"): "nonenhancingCore",
+                (2, "Peritumoral edema · source label 2"): "perilesionalSignal",
+                (4, "Enhancing tumor · source label 4"): "enhancing"}.get(
+                    (provenance.get("source_label_value"), row["label"]))
+    return None
+
+
+def _inference_spacing(row):
+    provenance = row["provenance"]
+    # The retained SIAM DS715 3d_fullres plans specify a 0.75 mm isotropic network lattice.
+    # Earlier study receipts contain the plans checksum but omit the spacing field.
+    if provenance.get("model") == "siam-v2":
+        from .siam_worker import ASSETS
+        config = provenance.get("configuration", {})
+        if (isinstance(config, dict) and config.get("files", {}).get("plans.json") == ASSETS["plans.json"]
+                and config.get("parameters", {}).get("configuration") == "3d_fullres"):
+            return [.75, .75, .75]
+    pitch = provenance.get("inference_spacing_mm")
+    if (isinstance(pitch, (list, tuple)) and len(pitch) == 3
+            and all(type(value) in (float, int) and np.isfinite(value) and value > 0 for value in pitch)):
+        return list(pitch)
+    return None
 
 
 def _saved_route(collection, args):
@@ -94,16 +156,19 @@ def _field_grid(collection, route):
     }
 
 
-def _material(row, target):
+def _material(row, target, detail):
     kind = row["kind"]
     model = row.get("provenance", {}).get("model")
     if row["id"] == target:
         return "tumor"
-    if kind == "brain":
+    if detail in {"csf", "ventricles"}:
+        return "fluid"
+    if detail in {"enhancing", "nonenhancingCore", "perilesionalSignal", "tumorCore", "wholeAbnormality"}:
+        return "lesionContext"
+    if kind == "brain" or detail in {"grayMatter", "whiteMatter"}:
         return "brain"
     if model == "siam-v2" and kind in {"brain-region", "cerebellar-cortex"}:
-        # Only these SIAM tissue kinds denote parenchyma. CSF and
-        # ventricular CSF share the categorical volume, but stay unlabelled.
+        # Deep nuclei without a specific display class retain their source name.
         return "brain"
     if kind in {"bone", "skull"}:
         return "bone"
@@ -124,81 +189,6 @@ def _evidence(row):
     return {"generated_evidence": "Synthetic engineering label", "supplied_annotation": "Supplied annotation",
             "model_estimate": "Source-derived estimate", "derived_geometry": "Geometric estimate",
             "unclassified_source": "Source-associated label"}[_source_class(row)]
-
-
-def _coordinate(matrix, axis, coords):
-    return (matrix[axis, 0] * coords[0] + matrix[axis, 1] * coords[1]
-            + matrix[axis, 2] * coords[2] + matrix[axis, 3])
-
-
-def _sample_values(data, native, source_affine, source_shape, grid, shape, bounds, slices, check):
-    """Pull a categorical grid once, preserving source-cell and acquisition support."""
-    layer_from_field = np.linalg.solve(native, grid)
-    source_from_layer = np.linalg.solve(source_affine, native)
-    source_from_field = np.linalg.solve(source_affine, grid)
-    low, high = map(np.asarray, bounds)
-    # Omit redundant acquisition tests only when whole label cells are
-    # contained. Cropped or tilted labels can protrude past acquired voxels.
-    corners = world(source_from_layer, list(product(*zip(low - .5, high + .5))))
-    contained = ((np.array_equal(native, source_affine) and np.all(high < source_shape))
-                 or (np.all(corners > -.5) and np.all(corners < source_shape - .5)))
-    axial = None
-    if slices is not None:
-        axial = np.zeros(data.shape[2], dtype=bool)
-        axial[list(slices)] = True
-
-    values = np.zeros(shape, dtype=data.dtype)
-    covered = np.zeros(shape, dtype=bool)
-    y = np.arange(shape[1])[None, :, None]
-    z = np.arange(shape[2])[None, None, :]
-    # Bound intermediate coordinates independently of trajectory and study size.
-    slab_size = max(1, 262144 // (shape[1] * shape[2]))
-    for start in range(0, shape[0], slab_size):
-        check()
-        stop = min(start + slab_size, shape[0])
-        coords = (np.arange(start, stop)[:, None, None], y, z)
-        cells = [np.floor(_coordinate(layer_from_field, axis, coords) + .5).astype(np.int32) for axis in range(3)]
-        valid = np.ones((stop - start, *shape[1:]), dtype=bool)
-        for axis, cell in enumerate(cells):
-            valid &= (cell >= low[axis]) & (cell <= high[axis])
-        if not valid.any():
-            continue
-        if not contained:
-            for axis, size in enumerate(source_shape):
-                point = _coordinate(source_from_field, axis, coords)
-                center = _coordinate(source_from_layer, axis, cells)
-                valid &= (point >= -.5) & (point < size - .5) & (center >= -.5) & (center < size - .5)
-        for axis, cell in enumerate(cells):
-            np.clip(cell, 0, data.shape[axis] - 1, out=cell)
-        if axial is not None:
-            valid &= axial[cells[2]]
-        covered[start:stop] = valid
-        values[start:stop] = data[tuple(cells)]
-    return values, covered
-
-
-def _sample(collection, row, grid, shape, check, cache):
-    source = collection.series(row["source_series"])
-    native = collection.patient_affine(row)
-    source_affine = collection.patient_affine(source)
-    data = collection.array(row["data"])
-    bounds = inference_bounds(row) or ((0, 0, 0), tuple(size - 1 for size in data.shape))
-    slices = row.get("coverage_fields", {}).get("supported_axial_indices")
-    if slices is not None:
-        if (not isinstance(slices, list)
-                or any(type(index) is not int or not 0 <= index < data.shape[2] for index in slices)):
-            raise ValueError("Invalid supported axial slice indices")
-        slices = tuple(slices)
-    source_shape = tuple(source["data"]["shape"])
-    key = (row["data"]["sha256"], native.tobytes(), source_affine.tobytes(), source_shape, bounds, slices)
-    if cache.get("key") != key:
-        # A segmentation can represent many separately attributed tissues in
-        # one categorical array. Keep just the current native grid in memory.
-        cache.clear()
-        values, covered = _sample_values(data, native, source_affine, np.asarray(source_shape),
-                                         grid, shape, bounds, slices, check)
-        cache.update(key=key, values=values, covered=covered)
-    return (cache["values"] == row["label_value"]) & cache["covered"], cache["covered"]
 
 
 def _runs(mask, depths):
@@ -265,15 +255,18 @@ def operative_field(collection, args, *, check=lambda: None):
     route, binding, revision = _saved_route(collection, args)
     target = route["targetLayerId"]
     grid, shape, frame = _field_grid(collection, route)
-    labels = np.zeros(shape, np.uint8)
+    has_whole = any(row["kind"] == "tumor-whole" for row in collection.document["layers"])
+    labels = np.zeros(shape, np.uint32 if has_whole else np.uint16)
     depths = frame["origin"][2] + np.arange(shape[2]) * frame["spacingMm"]
     middle = shape[0] // 2
     layers, excluded = [], []
     direct_dura = np.zeros(shape, bool)
     cache = {}
     source_rows = sorted(collection.document["layers"], key=is_dural_proxy)
-    for row in sorted(source_rows, key=lambda item: (is_dural_proxy(item), item["data"]["sha256"])):
-        role = _material(row, target)
+    bone = BoneEvidence(collection, source_rows, shape)
+    for row in sorted(source_rows, key=lambda item: (is_dural_proxy(item), bone.order(item), item["data"]["sha256"])):
+        detail = _detail(row)
+        role = _material(row, target, detail)
         if not role:
             continue
         identity = {"id": row["id"], "label": row["label"], "role": role}
@@ -308,11 +301,20 @@ def operative_field(collection, args, *, check=lambda: None):
                 # An annotation can be partial within its own acquisition.
                 # Only positive source labels take precedence over proxy cells.
                 direct_dura |= occupied
-        labels[occupied] |= MATERIAL_BITS[role]
+        adjudication = None
+        if role == "bone":
+            occupied, covered, adjudication = bone.apply(row, occupied, covered)
+        if vascular_context:
+            detail = None
+        labels[occupied] |= MATERIAL_BITS.get(role, 0) | DETAIL_BITS.get(detail, 0)
         source = collection.series(row["source_series"])
         evidence = f"{model} vascular estimate, display only" if vascular_context else _evidence(row)
         layers.append({**identity, "kind": row["kind"], "proxy": proxy, "evidence": evidence,
-                       "vascularContextOnly": vascular_context,
+                       "vascularContextOnly": vascular_context, "detail": detail,
+                       "sourceSpacingMm": np.linalg.norm(np.asarray(source["affine"])[:3, :3], axis=0).tolist(),
+                       "labelSpacingMm": np.linalg.norm(np.asarray(row["affine"])[:3, :3], axis=0).tolist(),
+                       "inferenceSpacingMm": _inference_spacing(row),
+                       **({"adjudication": adjudication} if adjudication else {}),
                        "model": row["provenance"].get("model"), "sourceSeries": source["id"],
                        "sourceSha256": source["original"]["sha256"], "dataSha256": row["data"]["sha256"],
                        "sampledDataSha256": display_row["data"]["sha256"], "sourceSupport": support,
@@ -342,7 +344,7 @@ def operative_field(collection, args, *, check=lambda: None):
             or file_hash(collection.root / FILENAME) != revision):
         raise ValueError("The anatomy or saved plan changed while sampling the operative field")
     return {**frame, **({"intensity": intensity} if intensity is not None else {}), "snapshotId": args["snapshotId"], "approachId": route["id"], "parameterHash": route["parameterHash"],
-            "targetLayerId": target, "candidateBinding": binding, "labels": labels, "materialBits": dict(MATERIAL_BITS),
+            "targetLayerId": target, "candidateBinding": binding, "labels": labels, "materialBits": {**MATERIAL_BITS, **DETAIL_BITS},
             "layers": layers, "excluded": excluded, "stations": stations, "stationRuns": runs, "stationIssues": issues,
             "stationLayerIds": station_ids, "stationEvidence": station_evidence,
             "encounters": _encounters(measured), "blockers": measured["constraintFailures"], "unknowns": measured["unknowns"],

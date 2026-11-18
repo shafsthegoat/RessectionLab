@@ -8,7 +8,8 @@ import numpy as np
 import pytest
 
 from resectionlab.anatomy_approaches import dispatch_plan
-from resectionlab.anatomy_operative_field import _field_grid, _sample, _sample_values, operative_field
+from resectionlab.anatomy_sampling import sample_layer as _sample, _sample_values
+from resectionlab.anatomy_operative_field import _field_grid, operative_field
 from resectionlab.anatomy_planning import native_target_binding
 from resectionlab.desktop_bridge import BridgeSession, _Request
 from resectionlab.patient_anatomy import PatientImagingCollection, world
@@ -82,9 +83,13 @@ def test_native_bits_stations_order_and_transfer(study, tmp_path):
         raw = Path(labels["path"]).read_bytes()
         assert labels["path"] in b.anatomy_transfer_paths
         assert hashlib.sha256(raw).hexdigest() == labels["sha256"]
-        assert labels["dtype"] == "uint8" and labels["order"] == "C" and labels["shape"] == field["shape"]
-        bits = np.frombuffer(raw, dtype=np.uint8).reshape(field["shape"])
+        assert labels["dtype"] == "uint16" and labels["order"] == "C" and labels["shape"] == field["shape"]
+        bits = np.frombuffer(raw, dtype="<u2").reshape(field["shape"])
         spacing, origin = field["spacingMm"], np.array(field["origin"])
+        overview = texture["overview"]
+        assert max(overview["shape"]) <= 162
+        assert np.linalg.norm(np.subtract(overview["entryPx"], overview["targetPx"])) * overview["spacingMm"] == pytest.approx(field["entryDepthMm"])
+        assert Path(overview["signal"]["path"]).stat().st_size == np.prod(overview["shape"])
         assert spacing == .3125
         center = np.rint(-origin / spacing).astype(int)
         assert origin + spacing * center == pytest.approx([0, 0, 0])
@@ -101,6 +106,8 @@ def test_native_bits_stations_order_and_transfer(study, tmp_path):
         assert field["stationEvidence"]["dura"] == "source" and field["stationLayerIds"]["dura"] == ["direct"]
         layers = {r["id"]: r for r in field["layers"]}
         assert "other-lesion" not in layers and layers["vein"]["sampledVoxels"] == 0
+        assert layers["artery"]["detail"] == "artery" and (bits & field["materialBits"]["artery"]).any()
+        assert layers["mri-vein"]["detail"] is None
         assert layers["siam-vascular"]["vascularContextOnly"] and layers["siam-vascular"]["sampledVoxels"] > 0
         assert layers["mri-vein"]["vascularContextOnly"] and any("mri-vein" in issue for issue in field["stationIssues"])
         assert layers["dura-slices"]["centerlineRunsMm"][0][1] < 13
@@ -266,7 +273,7 @@ def test_categorical_pull_reuses_shared_values_and_distinguishes_coverage(study,
         calls.append(True)
         return _sample_values(*args)
 
-    monkeypatch.setattr("resectionlab.anatomy_operative_field._sample_values", observed)
+    monkeypatch.setattr("resectionlab.anatomy_sampling._sample_values", observed)
     layer = c.layer("lesion")
     grid = c.patient_affine(layer)
     shape, cache = tuple(layer["data"]["shape"]), {}
@@ -300,18 +307,55 @@ def test_operative_display_support_preserves_raw_layer_identity_and_selected_tar
     source = c.add_series(path, series_id="t1-for-siam", modality="T1")
     c.set_registration(source["id"], np.eye(4), status="reviewed", method="fixture")
     categorical = head.astype(np.uint8)
+    categorical[head & (z == 19)] = 2
+    categorical[head & (z == 18)] = 3
+    categorical[head & (z == 17)] = 4
     categorical[:2, :2, :2] = 1
     row = c.add_layer(categorical, a, layer_id="siam-gray", source_series=source["id"],
                       kind="brain-region", role="context", color="#abcdee",
                       provenance={"model": "siam-v2", "source": source["original"]["sha256"],
                                   "source_array_sha256": source["data"]["sha256"], "label_ontology": {"value": 1}})
+    row["provenance"]["label_ontology"]["name"] = "GM"
+    for code, name, kind in [(2,"WM","brain-region"),(3,"CSF","csf"),(4,"CSFv","ventricles")]:
+        c.document["layers"].append({**row, "id": name, "label_value": code, "kind": kind,
+            "provenance": {**row["provenance"], "label_ontology": {"value": code, "name": name}}})
     c.save()
     dispatch_plan(c, {"action": "assess", "approachId": args["approachId"]})
     field = operative_field(c, {**args, "snapshotId": c.identity()})
     layers = {entry["id"]: entry for entry in field["layers"]}
+    for layer, detail in [("siam-gray","grayMatter"),("WM","whiteMatter"),("CSF","csf"),("CSFv","ventricles")]:
+        assert layers[layer]["detail"] == detail and layers[layer]["sourceSpacingMm"] == [1, 1, 1]
+        assert np.count_nonzero(field["labels"] & field["materialBits"][detail]) == layers[layer]["sampledVoxels"]
     brain, target = layers["siam-gray"], layers["lesion"]
     support = brain["sourceSupport"]
     assert support["rawDataSha256"] == brain["dataSha256"] == row["data"]["sha256"]
     assert support["sampledDataSha256"] == brain["sampledDataSha256"] != brain["dataSha256"]
     assert support["hiddenVoxels"] >= 8
     assert target["sourceSupport"] is None and target["dataSha256"] == target["sampledDataSha256"]
+
+
+def test_nested_lesion_context_keeps_target_separate(study):
+    c, args = study
+    source = c.layer("lesion")
+    data = c.array(source["data"])
+    # Overlap the selected target's label deliberately. The other labels retain
+    # distinct geometry extending outside that target, without extending aspiration.
+    for layer_id, kind, provenance in [
+        ("whole", "tumor-whole", {"model": "monai-brats-0.5.4"}),
+        ("core", "tumor-core", {"model": "monai-brats-0.5.4"}),
+        ("flair-region", "lesion-context", {"kind": "observed_source_annotation",
+          "method": "Pinned source BraTS compartment labels", "annotation_value": 2}),
+    ]:
+        mask = data.copy()
+        mask[:2] = 1
+        c.add_layer(mask, source["affine"], layer_id=layer_id, source_series=source["source_series"],
+                    kind=kind, role="context", color="#aabbcc", provenance=provenance)
+    c.save()
+    dispatch_plan(c, {"action": "assess", "approachId": args["approachId"]})
+    field = operative_field(c, {**args, "snapshotId": c.identity()})
+    bits, labels = field["materialBits"], field["labels"]
+    assert labels.dtype == np.uint32
+    for name in ("wholeAbnormality", "tumorCore", "perilesionalSignal"):
+        assert np.any((labels & bits[name] != 0) & (labels & bits["tumor"] == 0))
+        assert np.all(labels[labels & bits["tumor"] != 0] & bits[name] != 0)
+    assert field["stationLayerIds"]["tumor"] == ["lesion"]

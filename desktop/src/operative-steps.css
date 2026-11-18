@@ -61,3 +61,11 @@
 .operative-options input {accent-color: #8dd9b7;}
 .operative-conflict {color: #f2c89a; font-size: 12px; padding-bottom: 5px; max-height: 4em; overflow: auto;}
 .operative-playback :is(button,input,summary):focus-visible {outline: 2px solid #9fe1c0; outline-offset: 1px;}
+.operative-scale {position:absolute;z-index:1;right:12px;bottom:10px;color:#e0e9e4;border:solid currentColor;border-width:0 1px 2px;text-align:center;font-size:10px;text-shadow:0 1px 3px #000;pointer-events:none;}
+.operative-overview {position:absolute;top:8px;left:10px;margin:0;width:clamp(72px,17%,144px);background:#101514df;border:1px solid #45564e;border-radius:3px;overflow:hidden;pointer-events:none;}
+.operative-overview canvas {display:block;width:100%;max-height:132px;object-fit:contain;}
+.operative-overview figcaption {text-align:center;font-size:10px;color:#c7d3cc;}
+.operative-overview span {position:absolute;color:#e4e9e7;text-shadow:0 1px 3px #000;font-size:9px;}
+.operative-up {top:0;left:50%;}
+.operative-right {top:42%;right:2px;}
+.operative-legend {max-width:calc(100% - 112px);}

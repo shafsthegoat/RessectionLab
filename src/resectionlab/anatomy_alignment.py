@@ -312,7 +312,19 @@ def ensure_alignment(c, *, force=False, cancelled=lambda: False, progress=lambda
         if promoted != reference_id:
             reference = c.series(promoted)
             changed = True
-    pairs = [(row, parent) for row, parent in alignment_pairs(c) if series_id in (None, row['id'])]
+    pairs = alignment_pairs(c)
+    if series_id and not changed:
+        parents = {row['id']: parent['id'] for row, parent in pairs}
+        needed, sid = set(), series_id
+        while sid in parents and sid not in needed:
+            needed.add(sid)
+            sid = parents[sid]
+            try:
+                c.registration_matrix(sid)
+                break
+            except ValueError:
+                pass
+        pairs = [(row, parent) for row, parent in pairs if row['id'] in needed]
     if not pairs:
         return changed
     rows = [row for row, _ in pairs]
@@ -321,8 +333,8 @@ def ensure_alignment(c, *, force=False, cancelled=lambda: False, progress=lambda
         if row['id'] not in grids: grids[row['id']] = load_grid(c, row, cancelled)
         return grids[row['id']]
     supplied = set()
-    if not force:
-        for row in rows:
+    for row in rows:
+        if not force or series_id and row['id'] != series_id:
             existing = c.document['transforms'].get(row['id'], {})
             if existing.get('status') not in {'source-provided', 'reviewed'}:
                 continue
@@ -354,7 +366,8 @@ def ensure_alignment(c, *, force=False, cancelled=lambda: False, progress=lambda
                 continue
             key = input_key(c, row, parent)
             old = c.document['transforms'].get(row['id'])
-            if not force and old and matches_alignment_key(c, row, parent, key):
+            force_edge = force and (series_id is None or row['id'] == series_id)
+            if not force_edge and old and matches_alignment_key(c, row, parent, key):
                 try:
                     c.registration_matrix(row['id']); continue
                 except ValueError:

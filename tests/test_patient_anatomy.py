@@ -138,7 +138,7 @@ def test_registration_not_guessed_from_grid(patient, tmp_path):
             [[0, 0, 0], [1, 0, 0], [2, 0, 0]],
             "r",
         )
-    pts = [[0, 0, 0], [1, 0, 0], [0, 1, 0]]
+    pts = world(np.asarray(c.series(c.document["reference_series"])["affine"]), [[4, 4, 4], [8, 4, 4], [4, 8, 4]]).tolist()
     review_registration(c, "other", pts, pts, "r")
     assert c.patient_affine(c.series("other")).shape == (4, 4)
     with pytest.raises(ValueError, match="different patients"):

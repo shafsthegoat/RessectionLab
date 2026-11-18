@@ -150,6 +150,8 @@ def _describe_sequence(name, metadata, *, source_family=None, shape=None, gradie
         coverage["status"] = "limited"
     elif metadata.get("FullHeadAcquired") is True:
         coverage["full_head_acquired"] = True
+    if metadata.get("WholeBrainAcquired") is True:
+        coverage["whole_brain"] = True
     issues = []
     if "MIP" in all_hints or "DWI" in all_hints or gradients:
         role = "MIP" if "MIP" in all_hints else "DWI"
@@ -709,6 +711,11 @@ def review_registration(
     errors = np.linalg.norm(world(matrix, m) - r, axis=1)
     if errors.max() > 2.0:
         raise ValueError("Landmark residual exceeds 2 mm; improve alignment before accepting review")
+    for sid, points in ((series_id, m), (collection.document["reference_series"], r)):
+        source = collection.series(sid)
+        indices = world(np.linalg.inv(affine(source["affine"])), points)
+        if np.any(indices < 0) or np.any(indices > np.asarray(source["data"]["shape"]) - 1):
+            raise ValueError(f"Landmarks outside acquired source coverage in {sid}")
     collection.set_registration(
         series_id,
         t["matrix"],

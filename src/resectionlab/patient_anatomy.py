@@ -699,10 +699,14 @@ class PatientAnatomySnapshot:
         if np.asarray(point).shape != (3,) or not np.isfinite(point).all():
             raise ValueError("A finite physical point is required")
         from .anatomy_evidence import inference_bounds
+        from .anatomy_adjudication import sampled_bone_evidence, structure_disagreements
         result = {}
         for row in self.collection.document["layers"]:
             try:
-                p = world(np.linalg.inv(self.collection.patient_affine(row)), point)
+                layer_frame = self.collection.patient_affine(row)
+                source = self.collection.series(row["source_series"])
+                source_inverse = np.linalg.inv(self.collection.patient_affine(source))
+                p = world(np.linalg.inv(layer_frame), point)
             except ValueError:
                 result[row["id"]] = {
                     "known": False,
@@ -714,6 +718,10 @@ class PatientAnatomySnapshot:
             coverage = row.get("coverage_fields", {})
             bounds = inference_bounds(row)
             index = np.floor(p + 0.5).astype(int)
+            source_shape = np.asarray(source["data"]["shape"])
+            for physical in (point, world(layer_frame, index)):
+                source_index = world(source_inverse, physical)
+                inside = inside and bool(np.all(source_index >= -.5) and np.all(source_index < source_shape - .5))
             if bounds is not None:
                 inside = inside and bool(np.all(index >= bounds[0]) and np.all(index <= bounds[1]))
             slices = coverage.get("supported_axial_indices")
@@ -752,6 +760,8 @@ class PatientAnatomySnapshot:
         return {
             "snapshot_id": self.snapshot_id,
             "layers": result,
+            "boneAdjudication": sampled_bone_evidence(self.collection, result, point),
+            "structureDisagreements": structure_disagreements(self.collection, result),
             "missing": self.collection.document["missing"],
         }
 
@@ -772,10 +782,13 @@ class PatientAnatomySnapshot:
         self._check()
         from scipy.spatial import cKDTree
 
-        from .anatomy_evidence import is_siam_context
+        from .anatomy_evidence import is_siam_context, vascular_evidence_supported
         row = self.collection.layer(layer_id)
         if is_siam_context(row):
             return {"snapshot_id": self.snapshot_id, "available": False, "reason": "SIAM tissue estimate is context only"}
+        if (not vascular_evidence_supported(self.collection, row)
+                or row.get("provenance", {}).get("evidence_use") == "context_only"):
+            return {"snapshot_id": self.snapshot_id, "available": False, "reason": "Layer supplies inspection context only"}
         state = self.sample(point)["layers"][layer_id]
         if not state["known"]:
             return {

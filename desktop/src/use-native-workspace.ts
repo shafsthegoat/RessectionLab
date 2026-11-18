@@ -144,18 +144,10 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
     scopeRef.current=vesselScopeForView(saved);setVesselScope(scopeRef.current);
     const s=saved?.seriesId??b.document.reference_series??'';setSeries(s);
     const views=saved?.states??{};const v=migrateSkullView(views[s]??initial(b,s),b.document.layers);setStates(s?{...views,[s]:v}:{});
-    if(s)await run(async()=>{
-      let next=b,alignmentError='',retired:RetiredClipping[]|undefined;
-      try{
-        setMessage('Checking study alignment…');
-        const result=await api!.anatomyRegister({...args(b),action:'ensure'});
-        next={...b,document:result.document};setBinding(next);
-        retired=result.retiredClipping;
-      }catch(error){alignmentError=error instanceof Error?error.message:String(error);}
-      await loadView(next,s,retireClipping(retired,s,v),false,{},!!saved&&saved.patientCutaway===undefined);
-      if(alignmentError)setMessage('Source available · Alignment check failed · '+alignmentError);
-      else if(retired?.length)setMessage(retiredClippingMessage);
-    });else setMessage('Add a source scan to begin.');
+    // Recorded episodes and saved approaches belong to this exact source revision.
+    // Registration changes are made through intake, preparation or explicit review.
+    if(s)await run(()=>loadView(b,s,v,false,{},!!saved&&saved.patientCutaway===undefined));
+    else setMessage('Add a source scan to begin.');
   },[api]);
   async function create(patientId:string,timepoint='preoperative'):Promise<Binding|null>{let result:Binding|null=null;await run(async()=>{result=await api!.anatomyCreate({patientId,timepoint})});if(result)await install(result);return result;}
   function clear(){contextCache.current=undefined;sourceImage.current=null;generation.current++;resetLayers();setBinding(null);installVolume(null);setPatientCutaway({});setDraft(null);setReview(null);setEditLayer(null);}
@@ -169,18 +161,7 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
       v={...v,settings:skullDisplay({...anatomyPresentation(v.settings,binding.document.layers,mode,modality),...viewerCutaway(v.settings)})};
     }
     generation.current++;resetLayers();installVolume(null);setSeries(s);setStates(all=>({...all,[s]:v}));setReview(null);setComponents([]);setEditLayer(null);
-    void run(async()=>{
-      let b=binding;
-      let alignmentError='',retired:RetiredClipping[]|undefined;
-      if(s!==b.document.reference_series&&b.document.transforms[s]){
-        setMessage('Checking source alignment…');
-        try{const r=await api!.anatomyRegister({...args(b),seriesId:s,action:'ensure'});b={...b,document:r.document};setBinding(b);retired=r.retiredClipping}
-        catch(e){alignmentError=e instanceof Error?e.message:String(e);}
-      }
-      await loadView(b,s,retireClipping(retired,s,v));
-      if(alignmentError)setMessage('Source available · Alignment check failed · '+alignmentError);
-      else if(retired?.length)setMessage(retiredClippingMessage);
-    });
+    void run(()=>loadView(binding,s,v));
   }
   function present(mode:AnatomyPresentation){
     if(!binding||busy||draft)return;

@@ -22,6 +22,11 @@ export function operativeSignalTexture(signal: Signal) {
   return texture;
 }
 
+export const tissueColors = {
+  grayMatter:'#b78491',whiteMatter:'#ece0c9',csf:'#8bbfdb',ventricles:'#5b92c4',
+  artery:'#cd5954',vein:'#7283ca',sinus:'#5769ad',enhancing:'#ce77a5',nonenhancingCore:'#9571b3',
+  perilesionalSignal:'#cb9e60',tumorCore:'#b289bd',wholeAbnormality:'#a686ad',lesionContext:'#a487ad',
+};
 const tissues = {
   bone: { color: '#e5d8bc', roughness: 0.68, contrast: 0.48, section: 0.2 },
   dura: { color: '#d7b2a0', roughness: 0.46, contrast: 0.64, section: 0.32 },
@@ -37,8 +42,12 @@ export function operativeTissueMaterial(
   restOffset: THREE.Vector3,
   sectionY: THREE.IUniform<number>
 ) {
-  const tissue = tissues[name === 'boneFlap' ? 'bone' : name === 'duraFlap' ? 'dura' : name];
-  const material = new THREE.MeshStandardMaterial({ color: tissue.color, roughness: tissue.roughness });
+  const fluid=name==='csf'||name==='ventricles';
+  const base=name==='boneFlap'?'bone':name==='duraFlap'?'dura':name==='artery'||name==='vein'||name==='sinus'?'vessel':
+    name==='whiteMatter'||name==='grayMatter'||fluid?'brain':name in tissueColors?'tumor':name;
+  const tissue=tissues[base as keyof typeof tissues];
+  const color=name in tissueColors?tissueColors[name as keyof typeof tissueColors]:tissue.color;
+  const material = new THREE.MeshStandardMaterial({ color, roughness: tissue.roughness, transparent:fluid, opacity:fluid ? .42 : 1, depthWrite:!fluid });
   const signal = field.intensity;
   if (!signal || !texture) return material;
 

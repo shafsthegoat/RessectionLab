@@ -1,10 +1,13 @@
 import type { OperativeField, OperativePhase } from '../operative-field';
+import { detailBits } from '../operative-field.ts';
 import { aspirationSeedIndex, eligibleTumor } from './operativeSeed.ts';
 export { hasAspirationSeed } from './operativeSeed.ts';
 import { emptyVoxelBounds, extendVoxelBounds, registerOperativeEdits, markOperativeEdits } from './operativeSurface.ts';
 
 type XYZ = [number, number, number];
-export const layerNames = ['bone','boneFlap','dura','duraFlap','brain','tumor','vessel'] as const;
+export const embeddedLayers = ['brain','tumor','vessel','grayMatter','whiteMatter','csf','ventricles',
+  'artery','vein','sinus','enhancing','nonenhancingCore','perilesionalSignal','tumorCore','wholeAbnormality','lesionContext'] as const;
+export const layerNames = ['bone','boneFlap','dura','duraFlap',...embeddedLayers] as const;
 export type FieldLayer = typeof layerNames[number];
 const TAU = Math.PI * 2;
 export const clamp01 = (n: number) => Math.max(0, Math.min(1, n));
@@ -79,11 +82,19 @@ function aspiration(field: OperativeField, tipRadius: number) {
   return {path, firstHit, seed:center};
 }
 
+/** Rest-coordinate displacement shared by tissue surfaces and the aspirator contact point. */
+export function retractionOffset(x:number,y:number,z:number,opening:number,brainZ:number):XYZ {
+  const distance=((x-opening*.16)/(opening*.62))**2+(y/(opening*.55))**2+((z-brainZ)/(opening*.85))**2;
+  const weight=Math.exp(-distance*1.65);
+  return [opening*.40*weight,0,-opening*.31*weight];
+}
+
 export function buildOperativeModel(field: OperativeField) {
   const {origin, spacingMm:s, stations} = field, [nx,ny,nz] = field.shape;
   const {opening,duralOpening,tipRadius,kerf}=operativeDimensions(field);
-  const layers = Object.fromEntries(layerNames.map(name=>[name,{mask:new Uint8Array(field.voxels.length), bounds:emptyVoxelBounds()}])) as Record<FieldLayer,{mask:Uint8Array;bounds:ReturnType<typeof emptyVoxelBounds>}>;
+  const layers = Object.fromEntries(layerNames.map(name=>[name,{mask:new Uint8Array(['brain','tumor','vessel','bone','dura','boneFlap','duraFlap'].includes(name)?field.voxels.length:0), bounds:emptyVoxelBounds()}])) as Record<FieldLayer,{mask:Uint8Array;bounds:ReturnType<typeof emptyVoxelBounds>}>;
   const source = (name: FieldLayer, i:number, x:number,y:number,z:number) => {
+    if(!layers[name].mask.length)layers[name].mask=new Uint8Array(field.voxels.length);
     layers[name].mask[i]=1; extendVoxelBounds(layers[name].bounds,x,y,z);
   };
   const cutIndices = {bone:[] as number[], dura:[] as number[]};
@@ -123,10 +134,28 @@ export function buildOperativeModel(field: OperativeField) {
         // Keep contact with bone, ambiguous tissue overlaps, and columns
         // without supporting skull. Tool eligibility always uses field.voxels.
         if(outerBone>=0 && z>outerBone+1 && !(bits&(2|4|8))) vesselDisplay.superficialVoxels++;
-        else {source('vessel',i,x,y,z);vesselDisplay.visibleVoxels++;}
+        else {
+          const type=bits&(detailBits.artery|detailBits.vein|detailBits.sinus);
+          source(type===detailBits.artery?'artery':type===detailBits.vein?'vein':type===detailBits.sinus?'sinus':'vessel',i,x,y,z);
+          vesselDisplay.visibleVoxels++;
+        }
       }
       if(eligibleTumor(bits)) source('tumor',i,x,y,z);
-      if((bits&4) && !(bits&(1|2|8|16))) source('brain',i,x,y,z);
+      if(bits&(1|2|8|16))continue;
+      const specific=bits&(detailBits.enhancing|detailBits.nonenhancingCore|detailBits.perilesionalSignal);
+      if(specific || bits&(detailBits.tumorCore|detailBits.wholeAbnormality)){
+        // Nested whole/core labels retain their original bits. Show the most specific
+        // supplied compartment; a conflict between specific classes stays generic.
+        const name=specific===detailBits.enhancing?'enhancing':specific===detailBits.nonenhancingCore?'nonenhancingCore':
+          specific===detailBits.perilesionalSignal?'perilesionalSignal':specific?'lesionContext':
+          bits&detailBits.tumorCore?'tumorCore':'wholeAbnormality';
+        source(name,i,x,y,z);
+      }else if(bits&(detailBits.csf|detailBits.ventricles)){
+        source(bits&detailBits.ventricles?'ventricles':'csf',i,x,y,z);
+      }else if(bits&4){
+        const tissue=bits&(detailBits.grayMatter|detailBits.whiteMatter);
+        source(tissue===detailBits.grayMatter?'grayMatter':tissue===detailBits.whiteMatter?'whiteMatter':'brain',i,x,y,z);
+      }
     }
   }
   const targets=emptyVoxelBounds();

@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import type { OperativeField, OperativePhase } from '../operative-field';
-import { buildOperativeModel, clamp01, layerNames, phaseAmount, smooth, type FieldLayer } from './operativeFieldModel.ts';
+import { buildOperativeModel, clamp01, embeddedLayers, layerNames, retractionOffset, phaseAmount, smooth, type FieldLayer } from './operativeFieldModel.ts';
 import { operativeSurface } from './operativeSurface.ts';
 import { prepareOperativeOpening } from './operativeOpening.ts';
 import { operativeInstruments } from './operativeInstruments.ts';
@@ -73,7 +73,18 @@ function fieldScene(host:HTMLDivElement, field:OperativeField, lost:()=>void) {
   });
   const cache=new Map<FieldLayer,string>();
   let viewSize=field.radiusMm*2.8, aspect=1, frame=0, disposed=false;
-  const draw=()=>{frame=0;if(!disposed) renderer.render(scene,camera);};
+  const scale=host.querySelector<HTMLElement>('.operative-scale');
+  const draw=()=>{
+    frame=0;
+    if(disposed)return;
+    const pxPerMm=host.clientWidth*camera.zoom/(camera.right-camera.left);
+    if(scale&&pxPerMm>0){
+      const mm=[1,2,5,10,20,50,100].filter(mm=>mm*pxPerMm<85).pop()??1;
+      scale.style.width=(mm*pxPerMm)+'px';
+      scale.textContent=mm+' mm';
+    }
+    renderer.render(scene,camera);
+  };
   const queue=()=>{if(!frame && !disposed) frame=requestAnimationFrame(draw);};
   controls.addEventListener('change',queue);
   const updateProjection=()=>{
@@ -133,28 +144,32 @@ function fieldScene(host:HTMLDivElement, field:OperativeField, lost:()=>void) {
   renderer.domElement.addEventListener('webglcontextlost',contextLost);
   renderer.domElement.addEventListener('keydown',onKey);
   const brainZ=field.stations.brain??0, opening=model.opening;
-  const brainOffset=(x:number,y:number,z:number)=>{
-    const distance=((x-opening*.16)/(opening*.62))**2+(y/(opening*.55))**2+((z-brainZ)/(opening*.85))**2;
-    return Math.exp(-distance*1.65);
-  };
   function geometry(name:FieldLayer, state:string, cutaway:boolean) {
     const row=cutaway?model.firstSectionRow:0, key=`${state}/${row}`;
     if(cache.get(name)===key) return;
     const layer=model.layers[name], mesh=meshes[name];
-    const next=operativeSurface(field,layer.mask,layer.bounds,row,name);
+    const surfaceKind=['artery','vein','sinus'].includes(name)?'vessel':name;
+    const next=operativeSurface(field,layer.mask,layer.bounds,row,surfaceKind);
     const position=next.getAttribute('position');
-    if(name==='brain' && position && field.stations.brain!==null) {
+    if(embeddedLayers.some(layer=>layer===name) && position && field.stations.brain!==null) {
       const displaced=new Float32Array(position.count*3);
       for(let i=0;i<position.count;i++){
-        const weight=brainOffset(position.getX(i),position.getY(i),position.getZ(i));
-        displaced[i*3]=opening*.40*weight;displaced[i*3+2]=-opening*.31*weight;
+        displaced.set(retractionOffset(position.getX(i),position.getY(i),position.getZ(i),opening,brainZ),i*3);
       }
       next.morphAttributes.position=[new THREE.BufferAttribute(displaced,3)];next.morphTargetsRelative=true;
     }
     mesh.geometry.dispose();mesh.geometry=next;mesh.updateMorphTargets();cache.set(name,key);
   }
   let previousStep=-1,removedCells=0;
+  let previousCutaway:boolean|undefined;
   function update({phase:next,progress,withRetraction,cutaway}:Props) {
+    if(previousCutaway!==cutaway){
+      // Look down the saved approach at intact and opened layers; orbit remains available.
+      const offset=cutaway?direction:new THREE.Vector3(.06,-.19,1).normalize();
+      camera.position.copy(controls.target).addScaledVector(offset,400);
+      controls.update();
+      previousCutaway=cutaway;
+    }
     sectionY.value=field.origin[1]+((cutaway?model.firstSectionRow:0)-.5)*field.spacingMm;
     followStation(next,progress,withRetraction);
     const amounts={bone:phaseAmount(next,progress,'bone'),dura:phaseAmount(next,progress,'dura')};
@@ -174,22 +189,26 @@ function fieldScene(host:HTMLDivElement, field:OperativeField, lost:()=>void) {
         const bit=kind==='bone'?tool.getObjectByName('instrument:drill-bit'):null;if(bit)bit.rotation.z=fraction*Math.PI*48;
       }
     }
-    geometry('brain','source',cutaway);geometry('vessel','source',cutaway);
+
     const retract=withRetraction&&field.stations.brain!==null?phaseAmount(next,progress,'brain'):0;
-    const held=smooth((retract-.16)/.84), influence=meshes.brain.morphTargetInfluences;
-    if(influence)influence[0]=held;
+    const held=smooth((retract-.16)/.84);
     equipment.blade.visible=withRetraction && field.stations.brain!==null && (next==='brain'||next==='tumor');
     equipment.blade.position.set(opening*(.16+.40*held),0,brainZ+opening*(.55*(1-smooth(retract/.16))-.31*held));
     equipment.blade.rotation.y=.32+.14*held;
     const tumor=phaseAmount(next,progress,'tumor');
     const sweep=clamp01((tumor-.16)/.78), step=Math.round(Math.round(sweep*120)/120*model.stepCount);
     if(step!==previousStep){removedCells=model.applyAspiration(step);previousStep=step;}
-    geometry('tumor',String(step),cutaway);
+    for(const name of embeddedLayers){
+      geometry(name,name==='tumor'?String(step):'source',cutaway);
+      const influence=meshes[name].morphTargetInfluences;
+      if(influence?.length)influence[0]=held;
+    }
     const tip=model.tipAt(step);
     equipment.cusa.visible=next==='tumor' && !!tip;
     if(tip){
       const travel=opening*.8*(1-smooth(tumor/.16))+opening*.32*smooth((tumor-.94)/.06);
-      equipment.cusa.position.set(tip[0],tip[1],tip[2]+travel);equipment.cusa.rotation.set(.055,-.10,0);
+      const [dx,,dz]=retractionOffset(...tip,opening,brainZ);
+      equipment.cusa.position.set(tip[0]+held*dx,tip[1],tip[2]+travel+held*dz);equipment.cusa.rotation.set(.055,-.10,0);
     }
     queue();
     return model.stepCount ? removedCells : null;
@@ -222,6 +241,7 @@ export function OperativeFieldCanvas(props:Props) {
   },[props.field,props.onSuperficialVessels]);
   useEffect(()=>{if(scene.current)setRemoved(scene.current.update(props));},[props.field,props.phase,props.progress,props.withRetraction,props.cutaway]);
   return <div ref={host} className="operative-field-canvas">
+    {!error&&<span className="operative-scale" aria-label="Physical scale"/>}
     {error&&<div role="alert">{error}</div>}
     {!error&&props.phase==='tumor'&&<span className="operative-cavity" data-removed-cells={removed??0}>{removed===null
       ?'No eligible lesion cells at this tip position'

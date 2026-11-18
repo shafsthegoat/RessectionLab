@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import test from 'node:test';
-import {operativeRouteIssue,playableSteps,readOperativeField,timelinePose} from '../src/operative-field.ts';
+import {detailBits,operativeRouteIssue,playableSteps,readOperativeField,timelinePose} from '../src/operative-field.ts';
 
 const route={id:'A',sourceSnapshotId:'patient-A-revision-8',targetLayerId:'lesion',parameterHash:'geometry',assessmentStatus:'current'};
 const voxels=Uint8Array.of(1,2,4,8,16,24,8,31);
@@ -73,4 +73,15 @@ test('operative scan texture verifies its local frame, source identity, coverage
     {sourceVoxelToPatientRasMm:[[0,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]]},{window:[34,4]},{windowUnits:'HU'},{signal:{...descriptor,order:'F'}},{signal:{...descriptor,sha256:'a'.repeat(64)}}]){
     await assert.rejects(()=>readOperativeField({...packet,intensity:{...intensity,...bad}},route,read),/intensity|scan/i);
   }
+});
+
+test('extended source labels survive transfer and require the matching class map',async()=>{
+  const extended=Uint16Array.of(4|32,4|64,128,256,16|512,16|1024,16|2048,8|4096);
+  const raw=new Uint8Array(extended.buffer);
+  const labels={...bytes,dtype:'uint16',byteLength:raw.byteLength,sha256:createHash('sha256').update(raw).digest('hex')};
+  const result={...packet,labels,materialBits:{...packet.materialBits,...detailBits}};
+  const field=await readOperativeField(result,route,async()=>raw);
+  assert.deepEqual(field.voxels,extended);
+  await assert.rejects(()=>readOperativeField({...result,materialBits:{...result.materialBits,artery:1024}},route,async()=>raw),/classes/);
+  await assert.rejects(()=>readOperativeField(result,route,async()=>raw.subarray(1)),/verify/);
 });

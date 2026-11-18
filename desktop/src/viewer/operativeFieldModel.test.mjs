@@ -135,3 +135,16 @@ test('exposed skull display omits only separated superficial vessel labels in su
   const incomplete=buildOperativeModel(f);
   assert.deepEqual(incomplete.vesselDisplay,{sourceVoxels:9,visibleVoxels:9,superficialVoxels:0});
 });
+
+test('source classes and adjacent lesion compartments preserve selected-target membership',()=>{
+  const f=field();
+  f.voxels=new Uint32Array(f.voxels.length);
+  const cells=[['grayMatter',4|32],['whiteMatter',4|64],['csf',4|128],['ventricles',256],
+    ['artery',16|512],['vein',16|1024],['sinus',16|2048],['vessel',16|512|1024],
+    ['perilesionalSignal',4|16384],['tumor',4|8|4096],['nonenhancingCore',8192],['tumorCore',32768|65536],['enhancing',65536|32768|4096],['wholeAbnormality',65536]];
+  cells.forEach(([,bits],i)=>f.voxels[i+500]=bits);
+  const m=buildOperativeModel(f);
+  cells.forEach(([name],i)=>assert.equal(m.layers[name].mask[i+500],1,name));
+  assert.equal(count(m.layers.tumor.mask),1);
+  assert.equal(m.stepCount,0);
+});
