@@ -604,6 +604,10 @@ reader for earlier vectors.
 ### Reproduce this integration
 
 The ignored local results are under `testcases/native-glioma-integration-v1/`.
+The compact `case-comparison.json` indexes the two native cases, the configured
+decisions, and their separate generated mechanism controls. See `final-ucsf`,
+`final-eden` and `final-configured-residual-cold` for hidden desktop captures
+with the exact candidate build.
 Use the prepared study paths from [Launch and reproduce](#launch-and-reproduce)
 or the existing local comparison copies. If the external drive is absent,
 use the local EDEN copy when available and run UCSF and the generated checks
@@ -637,6 +641,13 @@ protocol. The reviewed run independently verified all nine episodes, twelve
 portable branches and seventeen decision prefixes. The nine rows agreed in
 treatment, harm, physical request counts and verified endpoints. The five
 resealed source/coverage/residual/prefix-harm/skill corruptions were refused.
+The reviewed snapshot passed the original 295 focused Python tests and 1,400
+desktop tests. The candidate passed 344 focused Python tests, 1,400 desktop
+tests and the production build. The initial candidate omitted the functional
+serializer change, which caused five exact-snapshot failures. The corrected
+candidate passed those tests. The separate `test_functional_evidence.py` and
+`test_functional_native_bridge.py` probes each reproduced two reviewed failures
+under the same source-exclusion and recorded-experience guards.
 
 Clinician review needs case-specific lesion definitions, access and registration
 review, and evidence appropriate to tract preservation and vascular territory
