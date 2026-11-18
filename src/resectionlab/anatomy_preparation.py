@@ -114,9 +114,14 @@ def _exclusive(collection):
 
 
 def _environment_identity(environment):
-    if isinstance(environment, dict) and "file_paths" in environment:
-        return {key: value for key, value in environment.items() if key != "file_paths"}
-    return environment
+    if not isinstance(environment, dict):
+        return environment
+    configuration = {key: value for key, value in environment.items() if key != "file_paths"}
+    if isinstance(configuration.get("files"), dict):
+        from .anatomy_model_identity import preparation_asset_identities
+
+        configuration["files"] = preparation_asset_identities(configuration["files"])
+    return configuration
 
 
 def _model_input(collection, job):
@@ -154,9 +159,9 @@ def _stage(collection, job, receipts):
                 stage.update(status="cached", reason="Source-bound " + transform["status"] + " alignment")
                 return stage
     else:
+        stage["inputKey"] = _model_input(collection, stage)
         if "environment" in stage:
             stage["environment"] = _environment_identity(environment)
-        stage["inputKey"] = _model_input(collection, stage)
     receipt = receipts.get(stage["id"], {})
     matches = receipt.get("inputKey") == stage["inputKey"]
     if not matches and receipt and stage.get("model") != "rigid-registration":
@@ -192,7 +197,9 @@ def _stage(collection, job, receipts):
 
 def _jobs(collection, options):
     from .anatomy_model_registry import preparation_model_jobs
-    jobs = list(preparation_model_jobs(collection, **options))
+    from .anatomy_tumor_coverage import retained_crop_jobs
+
+    jobs = [*retained_crop_jobs(collection), *preparation_model_jobs(collection, **options)]
     if collection.document.get("reference_series"):
         for row, parent in alignment_pairs(collection):
             jobs.append({"id": "align-" + row["id"], "capability": "registration",
@@ -229,6 +236,11 @@ def preparation_plan(collection, *, indication=None, include_dural_proxy=False, 
 
 
 def _run_stage(candidate, stage, cancelled, progress):
+    if stage["model"] == "restore-tumor-crop-coverage":
+        from .anatomy_tumor_coverage import restore_retained_crop
+
+        output = restore_retained_crop(candidate, stage["options"]["proposal_layer_id"])
+        return "cached", "Recorded the native model crop from retained evidence", [output]
     if stage["model"] == "rigid-registration":
         ensure_alignment(candidate, series_id=stage["series_id"], cancelled=cancelled, progress=progress)
         return "cached", "Source-bound display alignment prepared", []

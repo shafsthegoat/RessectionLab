@@ -77,7 +77,9 @@ def legacy_model_environments(model, environment, layers):
     if files.get("registry") != PORTABLE_REGISTRY_SHA:
         return
     paths = environment["file_paths"]
-    hashes = {**files, "registry": LEGACY_REGISTRY_SHA}
+    from .anatomy_model_identity import preparation_asset_identities
+
+    hashes = preparation_asset_identities({**files, "registry": LEGACY_REGISTRY_SHA})
     configuration = {key: value for key, value in environment.items() if key not in {"files", "file_paths"}}
     yield {**configuration, "files": {paths[role]: checksum for role, checksum in hashes.items()}}
     if model in POC_ADAPTERS:

@@ -20,6 +20,7 @@ import numpy as np
 import psutil
 from .patient_anatomy import reconstruction_lock, digest, file_hash, affine
 from .data_root import atomic_json
+from .anatomy_tumor_coverage import bind_proposal_crop, compatible_proposal, proposal_crop
 from .anatomy_model_registry import (
     ANGIOGRAPHY, POC_ADAPTERS, STRUCTURAL_MRI, TUMOR_ADAPTERS, ct_intensities,
     head_coverage, matching_layer, source_volume, supersynth_home, synthseg_assets,
@@ -450,6 +451,26 @@ def import_proposal(c, series_id, record):
             raise ValueError("Model score must be finite and in [0,1]")
     key = record["model"] + "-" + digest({"series": series_id, "output": record["output_sha256"]})[:12]
     kind = record["kind"]
+    crop = None
+    if kind == "tumor" and record.get("brain_mask"):
+        if probability is None:
+            raise ValueError("Brain-cropped tumor proposals require their retained native model scores")
+        crop = proposal_crop(c, c.series(series_id), record, im.shape, im.affine)
+        box = tuple(slice(lo, hi + 1) for lo, hi in zip(*crop))
+        if np.count_nonzero(values) != np.count_nonzero(values[box]):
+            raise ValueError("Model output is positive outside its recorded native crop")
+        existing = compatible_proposal(c, series_id, record, values, probability, im.affine)
+        if existing is not None:
+            bind_proposal_crop(c, existing, crop)
+            return existing["id"]
+        if any(row["id"] == key for row in c.document["layers"]):
+            # The same binary contour may come from a different score map or
+            # changed model inputs. Keep that alternative as a separate layer.
+            key += "-" + digest({
+                "files": record["files"], "runner": record["runner_sha256"],
+                "runtime": record.get("runtime_source_sha256"), "brain": record["brain_mask"]["selected_mask_sha256"],
+                "scores": record["probability"]["sha256"],
+            })[:12]
     if kind == "brain" and record["model"] == "totalsegmentator-skull":
         key += "-brain"
     if any(r["id"] == key for r in c.document["layers"]):
@@ -481,6 +502,8 @@ def import_proposal(c, series_id, record):
                       kind=kind, role=role, color=color, label=label, probability=probability)
     row.update(_model_layer_fields(c, series_id, im, record),
                availability="available" if available else "empty_output")
+    if crop is not None:
+        bind_proposal_crop(c, row, crop)
     for extra in record.get("extra_outputs", []):
         import_proposal(c, series_id, extra)
     return key
@@ -633,6 +656,7 @@ def reconstruct_tumor(c, row, model, *, cancelled=lambda: False, brain_layer_id=
             "parameters": {"threshold": .5, "foreground_definition": "publisher tumor channel"},
             "path": str(mask_path),
             "output_sha256": file_hash(mask_path),
+            **({"brain_input_label_value": brain_row["label_value"]} if brain is not None else {}),
             "probability": {"path": str(probability), "sha256": file_hash(probability)},
             "foreground_voxels": int((p >= 0.5).sum()),
             "maximum_score": float(p.max()),

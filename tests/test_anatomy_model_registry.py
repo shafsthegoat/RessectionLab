@@ -114,7 +114,11 @@ def test_pinned_head_ontology_keeps_mri_vessels_context_only(tmp_path, monkeypat
     assert len(c.document["layers"]) == 4
 
 
-def test_dural_proxy_stops_at_open_axial_slices(tmp_path):
+def test_dural_proxy_stops_at_open_axial_slices(tmp_path, monkeypatch):
+    from resectionlab import anatomy_dural
+    from resectionlab.patient_anatomy import reconstruction_lock
+
+    monkeypatch.setattr(anatomy_dural, "reconstruction_lock", lambda: reconstruction_lock(tmp_path / "fixture-lock"))
     c = make_study(tmp_path)
     x, y, z = np.ogrid[:32, :32, :24]
     radius = np.sqrt((x - 16) ** 2 + (y - 16) ** 2)
@@ -201,6 +205,7 @@ def test_poc_model_key_survives_model_cache_and_python_location_changes(tmp_path
 
     from resectionlab import anatomy_preparation as preparation, data_root, poc_models
     from resectionlab.anatomy_model_cache import LEGACY_REGISTRY_SHA
+    from resectionlab.anatomy_model_identity import LEGACY_ADAPTER_SHA, LEGACY_POC_LAUNCHER_SHA
 
     repository = tmp_path / "checkout"
     external = tmp_path / "private-drive"
@@ -231,7 +236,7 @@ def test_poc_model_key_survives_model_cache_and_python_location_changes(tmp_path
     job = dict(id="ct-skull", series_id="cta", model=model, status="ready", options={})
     old_environment = {"files": {
         str(old_runtime): file_hash(old_runtime), str(old_weight): file_hash(old_weight),
-        poc_models.__file__: file_hash(poc_models.__file__), anatomy_models.__file__: file_hash(anatomy_models.__file__),
+        poc_models.__file__: LEGACY_POC_LAUNCHER_SHA, anatomy_models.__file__: LEGACY_ADAPTER_SHA,
         registry.__file__: LEGACY_REGISTRY_SHA,
     }}
     old_key = preparation._model_input(c, {**job, "environment": old_environment})
