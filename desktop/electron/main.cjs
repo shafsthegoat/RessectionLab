@@ -52,10 +52,12 @@ if((secondaryDisplayOnly||automationHidden)&&process.platform==='darwin')app.set
 let secondaryDisplayId;
 let secondaryDisplayUnavailable=false;
 const casePaths = new Map();
-const studyReplaySources = new Set();
+const studyReplaySources = new Map();
+const {StudyReplayRecorder}=require('./study-engine-recording.cjs');
+const replayRecorder=new StudyReplayRecorder();
 function rememberReplayMode(result) {
   if(result?.caseHash){
-    if(result.artifacts?.nativeStudyReplay)studyReplaySources.add(result.caseHash);
+    if(result.artifacts?.nativeStudyReplay)studyReplaySources.set(result.caseHash,result.artifacts.nativeStudyReplay);
     else studyReplaySources.delete(result.caseHash);
   }
 }
@@ -182,7 +184,7 @@ function bindOperations() {
     anatomySection: ['seriesId','center','normal','spacingMm','movingId','checkerboard','layers','original','registrationReview'],
     anatomyView: ['seriesId','layers','original','highlightLayer','highlightComponents','reviewId','previewAlignment','vesselScope','patientModel'],
     anatomyEdit: ['action','layerId','author','points','radiusMm','threshold','reviewId','componentIds'],
-    anatomySample: ['point'],
+    anatomySample: ['point','layerId','independentSeries'],
     anatomyRegister: ['action','seriesId','movingPoints','referencePoints','reviewer'],
   };
   for (const [operation, keys] of Object.entries(anatomyKeys))
@@ -336,6 +338,18 @@ function bindOperations() {
     frozenCusaAdmission=null;return true;
   });
   handle('cancelFrozenCusa',()=>{frozenCusaAbort?.abort();return true;});
+  handle('recordEngineMovie', async args=>{
+    args=plainArgs(args,['command','id','caseHash','branchId','stateId','rect']);
+    if(args.command!=='begin') return replayRecorder.command(args,window);
+    if(typeof args.caseHash!=='string' || typeof args.branchId!=='string') throw Error('Choose a recorded branch.');
+    const binding=studyReplaySources.get(args.caseHash);
+    const source=binding ? [binding.patientId,binding.targetLayerId,binding.sourceSnapshotId?.slice(0,10)].filter(Boolean).join(' · ') : null;
+    return replayRecorder.begin({caseHash:args.caseHash,branchId:args.branchId,source,choose:async()=>{
+      const choice=await dialog.showSaveDialog(window,{title:'Export observed engine replay',defaultPath:'engine-replay.mp4',
+        filters:[{name:'MPEG-4 video',extensions:['mp4']}]});
+      return choice.canceled?null:choice.filePath;
+    }});
+  });
   handle('surgicalRehearsal', async args => {
     args=plainArgs(args, ['includeSequenceOutcome','requestId','caseHash','command','expectedStateId','action','mapping','position','frameIndex','cacheOnly','timelineToken','viewFieldTokens','prefixToken','prefixFieldTokens','branchId','source','sceneIndex','acknowledgeResearchUnknowns','opponent','allowModeledBrainCorridor','scenario','maxActions','initialAccessRadiusMm','exploreExteriorFaces','cumulativeReentry','planningHorizon','beamWidth','policyInput','expectedComparisonSeal','constraints','candidateId','expectedPlanSeal','phase','offsetMm','contextVoxelShift']);
     if(studyReplaySources.has(args.caseHash)&&!['inspect','seek','seekFrame'].includes(args.command))throw Error('STUDY_REPLAY_ONLY: use the recorded branch replay controls');
@@ -346,7 +360,7 @@ function bindOperations() {
       if(currentCaseHash!==caseHash)throw Error('Workspace changed while choosing protection');
       args={...args,protectionPath};
     }
-    const result=await engine.request('surgicalRehearsal',args,surgicalTimeoutMs(args.command));rehearsalUnsaved.changed(args,result);return result;
+    const result=await engine.request('surgicalRehearsal',args,surgicalTimeoutMs(args.command));rehearsalUnsaved.changed(args,result);replayRecorder.observe(result);return result;
   });
   for (const op of ['createRehearsal','inspectRehearsal','stepRehearsal','compareRehearsal']) {
     handle(op, async args => {const result=await engine.request(op, plainArgs(args, op === 'stepRehearsal'
@@ -471,7 +485,7 @@ async function createWindow() {
   window.on('close', event=>{
     if(!quitting&&rehearsalUnsaved.dirty){event.preventDefault();void rehearsalUnsaved.allowNavigation().then(allowed=>{if(allowed){rehearsalUnsaved.saved();window?.close();}});}
   });
-  window.on('closed', () => {screen.removeListener('display-removed',guardSecondaryDisplay);screen.removeListener('display-metrics-changed',guardSecondaryDisplay);window = undefined;});
+  window.on('closed', () => {void replayRecorder.clear().catch(error=>log(String(error)));screen.removeListener('display-removed',guardSecondaryDisplay);screen.removeListener('display-metrics-changed',guardSecondaryDisplay);window = undefined;});
   await window.loadURL(allowedUrl);
 }
 

@@ -16,7 +16,7 @@ const runtimeFiles = Object.freeze([
   'prefix-assets.cjs', 'prefix-engine.cjs', 'prefix-pipeline.cjs', 'prefix-resources.cjs',
   'preload.cjs', 'public-contact-authority.cjs', 'public-contact.cjs',
   'rehearsal-unsaved.cjs', 'secondary-display.cjs', 'security.cjs', 'sidecar.cjs',
-  'structural-import.cjs', 'surgical-timeout.cjs', 'workspace-session.cjs',
+  'structural-import.cjs', 'study-engine-recording.cjs', 'surgical-timeout.cjs', 'workspace-session.cjs',
 ]);
 const digest = bytes => createHash('sha256').update(bytes).digest('hex');
 

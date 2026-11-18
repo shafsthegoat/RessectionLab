@@ -85,6 +85,7 @@ contextBridge.exposeInMainWorld('resectionApi', Object.freeze({
   createSurgicalFixture: () => ipcRenderer.invoke('research:createSurgicalFixture'),
   compareSurgicalAnatomy: args => ipcRenderer.invoke('research:compareSurgicalAnatomy', args),
   surgicalRehearsal,
+  recordEngineMovie: args => ipcRenderer.invoke('research:recordEngineMovie',args),
   executeFrozenCusa: args => ipcRenderer.invoke('research:executeFrozenCusa',args),
   finishFrozenCusa: args => ipcRenderer.invoke('research:finishFrozenCusa',args),
   cancelFrozenCusa: () => ipcRenderer.invoke('research:cancelFrozenCusa'),

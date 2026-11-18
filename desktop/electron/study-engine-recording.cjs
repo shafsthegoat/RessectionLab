@@ -1,71 +1,143 @@
 'use strict';
-const fs = require('node:fs');
+const fs = require('node:fs/promises');
 const path = require('node:path');
-const {execFileSync} = require('node:child_process');
-const assert = require('node:assert/strict');
+const {execFile} = require('node:child_process');
+const {promisify} = require('node:util');
+const {randomUUID} = require('node:crypto');
+const run = promisify(execFile);
 
-function subtitleTime(ms) {
-  return new Date(ms).toISOString().slice(11,23).replace('.',',');
+// The last authenticated state at a simultaneous transition owns the following
+// interval. A one-second terminal hold makes the final state visible.
+function movieIntervals(samples) {
+  if (!samples.length) throw Error('No observed engine states to encode.');
+  const origin = samples[0].time, result = [];
+  for (const [index,sample] of samples.entries()) {
+    const milliseconds = Math.round((sample.time-origin)*1000);
+    if (!Number.isSafeInteger(milliseconds) || milliseconds < (result.at(-1)?.milliseconds ?? 0))
+      throw Error('Engine observation times are out of order.');
+    if (milliseconds === result.at(-1)?.milliseconds) result.pop();
+    result.push({index,milliseconds});
+  }
+  return result.map((item,i)=>({...item,duration:(result[i+1]?.milliseconds ?? item.milliseconds+1000)-item.milliseconds}));
 }
 
-// The 25 fps output holds each captured compositor image. Captions identify
-// recorded action boundaries; the encoder never synthesizes intermediate poses.
-function encodeStudyReplay({framesDirectory, filename, report, history}) {
-  const {states,binding}=report;
-  const frames=[], subtitles=[], sampleTimes=new Map();
-  let ms=0;
-  for (const [i,state] of states.entries()) {
-    const action=history[state.position-1];
-    const operation=action?.action.operation;
-    const final=i===states.length-1;
-    const duration=final||!i?4400:operation==='withdraw'||i===2||i===3?1760:640;
-    sampleTimes.set(i,(ms+duration/2)/1000);
-    const title=i? (operation==='apply'&&action.reasonCode==='TISSUE_ASPIRATION_IN_PROGRESS'?
-      'Aspiration in progress · partial action':state.tools[action.action.slot].instrument.toUpperCase()+' · '+operation+' · '+action.status):
-      'Recorded access preparation · opaque microscope view · inspection cutaway off';
-    const {dimensions,originalTarget,withdrawalComplete}=state.ledger;
-    const number=value=>typeof value==='number'?value.toLocaleString('en-US',{maximumFractionDigits:2}):'unknown';
-    const amount=key=>number(dimensions[key].cumulative);
-    const result=final&&withdrawalComplete?'Withdrawal complete. ':'';
-    frames.push("file '"+i+".png'",'duration '+duration/1000);
-    subtitles.push(String(i+1),subtitleTime(ms)+' --> '+subtitleTime(ms+duration-1),
-      binding.patientId+'    |    Engine boundary '+i+' / '+history.length+'    |    '+title,
-      result+'Target removed '+amount('targetRemovedMm3')+' mm³    ·    Non-target removed '+amount('nonTargetRemovedMm3')+
-      ' mm³    ·    Whole target remaining '+number(originalTarget.residualMm3)+' mm³','');
-    ms+=duration;
+async function ffmpeg(args,options={}) {
+  const search = [process.env.PATH,'/opt/homebrew/bin','/usr/local/bin'].filter(Boolean).join(path.delimiter);
+  try { return await run('ffmpeg',args,{...options,env:{...process.env,PATH:search}}); }
+  catch(error) { throw Error(error.code==='ENOENT'?'Install FFmpeg with H.264 and subtitle support to export a replay.':String(error.stderr || error.message).slice(-1800)); }
+}
+
+function subtitleTime(ms) {return new Date(ms).toISOString().slice(11,23).replace('.',',');}
+function caption(value) {return String(value).replace(/[\r\n<>{}\\]/g,' ').slice(0,160);}
+
+async function encodeStudyReplay(directory,samples,source,signal) {
+  const frames=[],titles=[],intervals=movieIntervals(samples);
+  const completions=new Map();
+  for(const s of samples) if(s.frameIndex===s.frameCount-1){
+    const t=Math.round((s.time-samples[0].time)*1000);
+    completions.set(t,'Action '+(s.position+1)+' '+s.operation+' '+s.status);
   }
-  frames.push("file '"+(states.length-1)+".png'");
-  fs.writeFileSync(path.join(framesDirectory,'frames.txt'),frames.join('\n')+'\n');
-  fs.writeFileSync(path.join(framesDirectory,'titles.srt'),subtitles.join('\n'));
-  execFileSync('ffmpeg',['-nostdin','-hide_banner','-loglevel','error','-n','-f','concat','-i','frames.txt',
-    '-vf',"fps=25,pad=iw:ih+100:0:0:color=0x101619,subtitles=titles.srt:force_style='FontName=Arial,FontSize=7,MarginV=5,Outline=0,Shadow=0'",
-    '-t',String(ms/1000),'-c:v','libx264','-crf','16','-preset','fast','-pix_fmt','yuv420p','-movflags','+faststart',filename],{cwd:framesDirectory});
-  const media=JSON.parse(execFileSync('ffprobe',['-v','error','-select_streams','v:0','-show_entries','stream=codec_name,width,height,duration,nb_frames','-of','json',filename]));
-  assert.equal(media.streams[0].codec_name,'h264');
-  assert(Math.abs(Number(media.streams[0].duration)-ms/1000)<.12);
-  // Compare encoded microscope pixels with the compositor at the same boundary.
-  // The central crop excludes text, transport, HUD and source-slice panels.
-  const {x,y,width,height}=report.fieldCrop;
-  const filter='crop='+[width,height,x,y].join(':')+',scale=100:100,format=rgb24';
-  function decode(args) {
-    return execFileSync('ffmpeg',['-nostdin','-v','error',...args,'-vf',filter,'-frames:v','1','-f','rawvideo','pipe:1']);
+  for(const [i,{index,milliseconds,duration}] of intervals.entries()) {
+    const s=samples[index];
+    frames.push("file '"+index+".png'",'option framerate 1000','duration '+duration/1000);
+    const quantity=value=>Number.isFinite(value)?value.toFixed(1):'unknown';
+    titles.push(String(i+1),subtitleTime(milliseconds)+' --> '+subtitleTime(milliseconds+duration),
+      caption(source)+'  |  '+caption(s.branchId)+'  |  '+s.time.toFixed(2)+' simulated s',
+      'Action '+(s.position+1)+'/'+s.steps+'  ·  '+caption(s.operation)+'  ·  '+caption(s.kind.replaceAll('_',' '))+
+        '  ·  '+quantity(s.targetRemoved)+' mm³ target removed  ·  '+quantity(s.nonTargetRemoved)+' mm³ other removed',
+      caption(s.endpoint??completions.get(milliseconds)??' '),'');
   }
-  const fieldEvidence=[];
-  const initial=decode(['-i',path.join(framesDirectory,'0.png')]);
-  for(const index of [0,Math.floor((states.length-1)/2),states.length-1]){
-    const original=decode(['-i',path.join(framesDirectory,index+'.png')]);
-    const encoded=decode(['-ss',String(sampleTimes.get(index)),'-i',filename]);
-    assert.equal(original.length,encoded.length);
-    let error=0,changed=0;
-    for(let k=0;k<encoded.length;k++){
-      error+=Math.abs(original[k]-encoded[k]);
-      if(Math.abs(original[k]-initial[k])>12) changed++;
+  const last=intervals.at(-1);
+  frames.push("file '"+last.index+".png'",'option framerate 1000');
+  await fs.writeFile(path.join(directory,'frames.txt'),frames.join('\n')+'\n');
+  await fs.writeFile(path.join(directory,'titles.srt'),titles.join('\n'));
+  await ffmpeg(['-nostdin','-hide_banner','-loglevel','error','-f','concat','-safe','0','-i','frames.txt',
+    '-vf',"fps=50:round=up,pad=ceil(iw/2)*2:ceil(ih/2)*2+90:0:0:color=0x101619,subtitles=titles.srt:force_style='FontName=Arial,FontSize=9,MarginV=5,Outline=0,Shadow=0'",
+    '-t',String((last.milliseconds+last.duration)/1000),'-c:v','libx264','-pix_fmt','yuv420p','-preset','fast','-crf','16','-movflags','+faststart','movie.mp4'],{cwd:directory,signal});
+  return {captured:samples.length,timedImages:intervals.length,simulatedSeconds:last.milliseconds/1000,terminalHoldSeconds:1};
+}
+
+class StudyReplayRecorder {
+  constructor() {this.session=null;}
+  async begin({choose,caseHash,branchId,source}) {
+    if(this.session) throw Error('A replay export is already active.');
+    await ffmpeg(['-version']);
+    const filename=await choose();
+    if(!filename) return null;
+    if(this.session) throw Error('A replay export is already active.');
+    const session={id:randomUUID(),caseHash,branchId,source,filename,samples:[],abort:new AbortController()};
+    this.session=session;
+    try {session.directory=await fs.mkdtemp(path.join(path.dirname(filename),'.resectionlab-recording-'));}
+    catch(error){this.session=null;throw error;}
+    return session.id;
+  }
+  observe(response) {
+    const s=this.session;
+    if(!s) return;
+    const p=response?.playback,v=response?.view;
+    s.receipt=null;
+    if(response?.caseHash!==s.caseHash || response.branchId!==s.branchId) return;
+    s.source??=v?.scene?.source?.caseId??v?.scene?.sceneId?.slice(0,19)??'Recorded engine episode';
+    if(response.timeline) s.actions=response.timeline;
+    const comparison=response.cranialPlanning;
+    if(comparison?.selectedBranchId===s.branchId) {
+      const selected=comparison.alternatives.find(row=>row.branchId===s.branchId);
+      if(selected) s.endpoint={stateId:selected.finalStateId,reason:selected.stopReason,rootId:selected.rootId};
     }
-    const meanAbsoluteError=error/encoded.length;
-    assert(meanAbsoluteError<6,'Decoded field differs from captured state '+index);
-    fieldEvidence.push({position:index,meanAbsoluteError,changedChannelsFromInitial:changed});
+    s.steps=response.branches?.find(b=>b.id===s.branchId)?.steps??s.steps;
+    if(!p?.readOnly || !v) return;
+    const action=s.actions?.[p.position];
+    if(!action || !s.steps) throw Error('Verified branch action history is unavailable for export.');
+    if((p.frameIndex===0 && v.stateId!==action.stateBefore) ||
+       (p.frameIndex===p.frameCount-1 && v.stateId!==action.stateAfter))
+      throw Error('Observed recording boundary differs from the archived action.');
+    s.receipt={position:p.position,frameIndex:p.frameIndex,frameCount:p.frameCount,time:p.observedTimeSeconds,
+      stateId:v.stateId,branchId:s.branchId,steps:s.steps,kind:p.frames[p.frameIndex].kind,operation:action.action.operation,
+      endpoint:p.frameIndex===p.frameCount-1 && p.position===s.steps-1 && s.endpoint?.stateId===v.stateId?
+        s.endpoint.rootId+' · '+s.endpoint.reason.replaceAll('_',' ').toLowerCase():null,
+      status:action.status,removedCells:v.removed.length,targetRemoved:v.metrics.targetRemovedMm3,
+      nonTargetRemoved:v.metrics.nonTargetRemovedMm3,originalResidual:v.originalTargetResidualMm3??null,
+      contactCells:v.contact.length,tools:Object.fromEntries(Object.entries(v.slots).map(([k,t])=>[k,{
+        instrument:t.instrument,position:t.position,quaternion:t.quaternion,inserted:t.inserted}]))};
   }
-  assert(fieldEvidence[1].changedChannelsFromInitial>20,'Expected visible instrument or tissue change within the operative field');
-  return {...media.streams[0],fieldEvidence};
+  async command(args,win) {
+    const s=this.session;
+    if(!s || args.id!==s.id) throw Error('Replay export session expired.');
+    if(args.command==='cancel') {await this.clear(s);return;}
+    if(s.busy) throw Error('A replay capture is already in progress.');
+    s.busy=true;
+    try {
+      if(args.command==='finish') {
+        const last=s.samples.at(-1);
+        if(!last || last.position!==s.steps-1 || last.frameIndex!==last.frameCount-1)
+          throw Error('Replay export did not reach the verified endpoint.');
+        const media=await encodeStudyReplay(s.directory,s.samples,s.source,s.abort.signal);
+        if(s!==this.session) throw Error('Export cancelled.');
+        await fs.rename(path.join(s.directory,'movie.mp4'),s.filename);
+        await this.clear(s);
+        return media;
+      }
+      const r=s.receipt,last=s.samples.at(-1),first=!last || last.frameIndex===last.frameCount-1;
+      if(args.command!=='capture' || !r || r.stateId!==args.stateId ||
+         r.position!==(last?last.position+Number(first):0) || r.frameIndex!==(first?0:last.frameIndex+1) ||
+         (last && r.time<last.time-1e-9))
+        throw Error('Displayed observation differs from the expected next engine frame.');
+      const rect=args.rect,bounds=win.getContentBounds();
+      if(!rect || !['x','y','width','height'].every(key=>Number.isSafeInteger(rect[key])) ||
+          rect.width<16 || rect.height<16 || rect.x<0 || rect.y<0 || rect.x+rect.width>bounds.width || rect.y+rect.height>bounds.height)
+        throw Error('Keep the operative field visible while exporting.');
+      if(s.rect && Object.keys(rect).some(key=>rect[key]!==s.rect[key])) throw Error('The operative field changed size during export.');
+      s.rect={...rect};
+      const image=await win.webContents.capturePage(rect,{stayHidden:true,stayAwake:true});
+      if(image.isEmpty() || s!==this.session || s.receipt!==r) throw Error('The displayed state changed during capture.');
+      await fs.writeFile(path.join(s.directory,s.samples.length+'.png'),image.resize({width:rect.width,height:rect.height}).toPNG());
+      s.samples.push(r);
+    } finally {s.busy=false;}
+  }
+  async clear(s=this.session) {
+    if(!s || this.session!==s) return;
+    this.session=null;s.abort.abort();
+    if(s.directory) await fs.rm(s.directory,{recursive:true,force:true});
+  }
 }
-module.exports={encodeStudyReplay};
+module.exports={movieIntervals,StudyReplayRecorder};
