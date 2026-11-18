@@ -4,6 +4,7 @@
 // real hidden compositor. --export FILE saves a portable study. Reopen it in a
 // second process with mode reopen and --open-archive FILE.
 // --reuse-selection replays a saved route. --stage-detail captures intermediate poses.
+// --inspect-shortest with --distinct selects the shortest returned window for the saved geometric example.
 // --source-support checks the raw/supported MRI and SIAM receipts on a real tumor fixture.
 // baseline, prepare, stale and no-target exercise simpler study states.
 const {app, dialog, ipcMain} = require('electron');
@@ -60,6 +61,13 @@ ipcMain.handle = (channel, handler) => handle(channel, async (...args) => {
   activeRequests++;
   try {
     const result = await handler(...args);
+    if(channel==='research:prepareSurgicalEnvironment') {
+      report.engineInspection={request:args[1],caseHash:result.caseHash};
+    }
+    if(channel==='research:surgicalRehearsal' && report.engineInspection && result?.view) {
+      report.engineInspection.engine={position:result.position,state:result.view.stateId,
+        admission:result.planningAdmission,metrics:result.view.metrics};
+    }
     if(channel==='research:anatomyView' && process.argv.includes('--source-support')) {
       (report.anatomyViews ??= []).push({series:args[1].seriesId,sourceHash:result.mri.sha256,
         layers:result.compartments.map(l=>({id:l.name,kind:l.kind,volumeMm3:l.volumeMm3,sourceSupport:l.sourceSupport}))});
@@ -73,12 +81,14 @@ ipcMain.handle = (channel, handler) => handle(channel, async (...args) => {
     if(channel === 'research:anatomyPlan') {
       const action = args[1].action;
       (report.plans ??= []).push({action,selectedId:result.selectedId,
-        routes:result.approaches?.map(r=>({id:r.id,origin:r.origin,status:r.assessmentStatus,entry:r.entry,target:r.target,parameterHash:r.parameterHash})),
+        routes:result.approaches?.map(r=>({id:r.id,origin:r.origin,status:r.assessmentStatus,entry:r.entry,target:r.target,parameterHash:r.parameterHash,
+          lengthMm:r.measurements?.lengthMm,coveredTargetMm3:r.measurements?.targets?.find(t=>t.layerId===r.targetLayerId)?.coveredVoxelCenterVolumeMm3,
+          normalTraversalMm3:r.measurements?.normalTraversal?.supportedNonTargetVoxelCenterVolumeMm3})),
         spacingMm:result.spacingMm,shape:result.shape,stations:result.stations,
         intensity:result.intensity && {series:result.intensity.sourceSeries,modality:result.intensity.modality,
           sourceHash:result.intensity.sourceSha256,dataHash:result.intensity.dataSha256,signalHash:result.intensity.signal?.sha256,
           covered:result.intensity.coveredVoxels,window:result.intensity.window,shape:result.intensity.shape},
-        layers:result.layers?.map(l=>({id:l.id,role:l.role,evidence:l.evidence,voxels:l.sampledVoxels,sourceSupport:l.sourceSupport})),
+        layers:result.layers?.map(l=>({id:l.id,role:l.role,detail:l.detail,evidence:l.evidence,voxels:l.sampledVoxels,sourceSupport:l.sourceSupport,sourceSpacingMm:l.sourceSpacingMm,inferenceSpacingMm:l.inferenceSpacingMm})),
         target:result.targetLayerId,approach:result.approachId,excluded:result.excluded,issues:result.stationIssues,
         stationEvidence:result.stationEvidence,stationLayerIds:result.stationLayerIds,
         distinctEntryReport:result.distinctEntryReport?{status:result.distinctEntryReport.status,shortfall:result.distinctEntryReport.shortfall}:undefined});
@@ -318,7 +328,14 @@ app.on('browser-window-created', (_, win) => {
           if(distinct.length) cards=distinct.map(row=>row.id);
         }
         const selected = await js("document.querySelector('.approach-card.selected')?.dataset.approachId");
-        const route = cards.find(id=>id!==selected) ?? cards[0];
+        let route = cards.find(id=>id!==selected) ?? cards[0];
+        if(process.argv.includes('--inspect-shortest')) {
+          assert(process.argv.includes('--distinct'),'Choose separated entry windows for the length comparison');
+          const windows=report.plans.findLast(row=>row.action==='suggestDistinctEntries').routes.filter(row=>cards.includes(row.id));
+          assert(windows.length>1 && windows.every(row=>Number.isFinite(row.lengthMm)));
+          route=windows.sort((a,b)=>a.lengthMm-b.lengthMm || a.id.localeCompare(b.id))[0].id;
+          report.selectionCriterion='Shortest measured path among the distinct windows, for geometric inspection only';
+        }
         await js(`document.querySelector('.approach-card[data-approach-id="${route}"]').click()`);
         await until(`document.querySelector('.approach-card.selected')?.dataset.approachId===${JSON.stringify(route)}`);
         report.selected = route;
@@ -450,6 +467,20 @@ app.on('browser-window-created', (_, win) => {
             readout.stages.push({role,changedPixels:changed,removed});
             prior = frame;
           }
+          if(process.argv.includes('--inspect-access')){
+            const toggle="[...document.querySelectorAll('.operative-options label')].find(l=>l.textContent.trim()==='Inspection cutaway').querySelector('input')";
+            const identity=()=>js("({phase:document.querySelector('.operative-playback').dataset.operativePhase,progress:document.querySelector('.operative-playback').dataset.operativeProgress,removed:document.querySelector('[data-removed-cells]')?.dataset.removedCells})");
+            const before=await identity();
+            assert(await js(`(${toggle}).checked`));
+            await js(`(${toggle}).click()`);
+            const intactView=await captureField('cutaway-off-'+width);
+            assert.equal(await js(`(${toggle}).checked`),false);
+            assert.deepEqual(await identity(),before);
+            assert(await js("!!document.querySelector('.operative-overview canvas')&&document.querySelector('.operative-scale').textContent.includes('mm')"));
+            readout.cutawayOff={...before,changedPixels:delta(prior,intactView),scale:await js("document.querySelector('.operative-scale').textContent")};
+            assert(readout.cutawayOff.changedPixels>30);
+            await js(`(${toggle}).click()`);
+          }
           const timeline = 'input[aria-label="Operative timeline"]';
           await js(inputScript('Operative timeline',0.55));
           await until(`Number(document.querySelector(${JSON.stringify(timeline)}).value)===.55`);
@@ -504,6 +535,20 @@ app.on('browser-window-created', (_, win) => {
         await click('Rehearse');
         await until("!!document.querySelector('.operative-field-canvas canvas')");
         await both('reopened');
+        if(process.argv.includes('--engine-inspection')) {
+          await click('Open instrument environment');
+          await click('Inspect approach in engine');
+          await until("!!document.querySelector('.surgical-panel[data-state-id]')",300000);
+          const check=report.engineInspection;
+          assert.equal(check.request.approach.approachId,report.selected);
+          assert.equal(check.request.approach.snapshotId,document.snapshot_id);
+          assert.equal(check.request.approach.targetLayerId,check.request.layers.tumor);
+          assert.equal(check.engine.position,0);
+          assert.equal(check.engine.metrics.targetRemovedMm3,0);
+          assert.equal(check.engine.metrics.nonTargetRemovedMm3,0);
+          assert.equal(check.engine.admission?.available,false);
+          await both('planned-engine-inspection');
+        }
       }
       if(mode==='stale') {
         const preview = await js(`!!(${button('Preview operative steps')}) && !(${button('Preview operative steps')}).disabled`);
