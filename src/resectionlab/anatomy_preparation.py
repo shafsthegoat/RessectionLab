@@ -271,6 +271,9 @@ def preparation_plan(collection, *, indication=None, include_dural_proxy=False, 
 
 
 def _run_stage(candidate, stage, cancelled, progress):
+    if stage["model"] == "monai-brats-0.5.4":
+        from . import anatomy_brats
+        return anatomy_brats.run(candidate, stage, cancelled)
     if stage["model"] == "restore-tumor-crop-coverage":
         from .anatomy_tumor_coverage import restore_retained_crop
 

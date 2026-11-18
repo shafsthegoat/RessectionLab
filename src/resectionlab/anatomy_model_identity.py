@@ -41,12 +41,18 @@ MULTISERIES_REGISTRY_SHA = "66756f751cb8f85cc2f61664c971ac28f27349959c3519a66b20
 PREVIOUS_REGISTRY_SHA = "c3e2d789fbc383e2e41f92ad26cf62a8045283794073ee156a6473b12ae2cbc6"
 
 
+# Adding the opt-in four-channel stage leaves the existing inference paths unchanged.
+BRATS_REGISTRY_SHA = "228ca8ba264f2824c6f771121961df07cc232b895260a4aafeb1fc8fe7e1322a"
+
+
 def preparation_asset_identities(files):
     identities = dict(files)
+    if "brats_worker" not in files and files.get("registry") == BRATS_REGISTRY_SHA:
+        identities["registry"] = MULTISERIES_REGISTRY_SHA
     if "poc_worker" in files:
         identities["poc_worker"] = poc_worker_identity(files["poc_worker"])
     if "siam_worker" not in files:
-        if files.get("registry") == MULTISERIES_REGISTRY_SHA:
+        if identities.get("registry") == MULTISERIES_REGISTRY_SHA:
             identities["registry"] = PREVIOUS_REGISTRY_SHA
         if files.get("adapter") == SIAM_DISPATCH_SHA:
             identities["adapter"] = AUDITED_CROP_ADAPTER_SHA

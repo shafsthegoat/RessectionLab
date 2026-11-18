@@ -82,6 +82,7 @@ export function NativePreparePanel({workspace:w,onReviewAnatomy}:{workspace:Nati
       <label>Tumor model indication<select aria-label="Tumor model indication" disabled={blocked} value={tumorIndication} onChange={e=>updateOption(()=>setTumorIndication(e.target.value))}>
         <option value="">Use supplied lesion masks</option>
         <option value="meningioma">Meningioma · T1 post-contrast</option>
+        <option value="monai-brats-0.5.4">Glioma compartments · T1 post-contrast, T1, T2 and FLAIR</option>
         <option value="glioma-gbm">Glioblastoma · T1 post-contrast</option>
         <option value="glioma-lgg">Lower-grade glioma · FLAIR</option>
       </select></label>
