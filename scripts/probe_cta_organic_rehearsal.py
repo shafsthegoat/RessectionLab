@@ -14,7 +14,7 @@ from scipy.spatial.transform import Rotation
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / 'src'))
-from build_cta_organic_gliomas import COLLECTION, OBSERVATION, ORDER, UUID, checked_mask
+from build_cta_organic_gliomas import COLLECTION, OBSERVATION, ORDER, SUBJECTS, UUID, checked_mask
 from data_integrated_probe import envelope_admission
 from resectionlab.core import array_digest
 from resectionlab.data_root import atomic_json, checked_root, safe_path, sha256_file
@@ -24,6 +24,8 @@ from resectionlab.surgical_tools import TOOLS
 from resectionlab.workspace_bundle import load_workspace
 
 CASE_ID = 'TopCoW-014-CTA-ORGANIC-03-v1'
+PILOT_CASES = tuple(f'TopCoW-{subject}-CTA-ORGANIC-{variant:02d}-v1'
+                    for subject in SUBJECTS[:3] for variant in range(1, 5))
 OUTPUT = 'qc/cta-organic-rehearsal-preflight-v1'
 DIRECTIONS = 512
 RAY_MM = np.arange(0., 111., .5)
@@ -158,13 +160,15 @@ def screen_direction(case, grid, origin, direction, layers, enclosure, lower_lim
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--root', type=Path)
-    parser.add_argument('--output-name', default=Path(OUTPUT).name, help='A new QC directory name.')
+    parser.add_argument('--case-id', choices=PILOT_CASES, default=CASE_ID)
+    parser.add_argument('--output-name', help='A new QC directory name.')
     args = parser.parse_args()
-    if not args.output_name or args.output_name in {'.', '..'} or Path(args.output_name).name != args.output_name:
+    name = args.output_name or (Path(OUTPUT).name if args.case_id == CASE_ID else args.case_id + '-static-preflight')
+    if name in {'.', '..'} or Path(name).name != name:
         parser.error('Choose one directory name under the external qc root')
     started = time.monotonic()
     root = checked_root(args.root, expected_uuid=UUID)
-    receipt_path = safe_path(root, f'{COLLECTION}/{CASE_ID}/receipt.json')
+    receipt_path = safe_path(root, f'{COLLECTION}/{args.case_id}/receipt.json')
     receipt = json.loads(receipt_path.read_text())
     native_binding = receipt['native_case']
     path = safe_path(root, native_binding['path'])
@@ -173,8 +177,9 @@ def main():
     case, artifacts, workspace = load_workspace(path)
     data = case.metadata['data_case']
     adapter = case.metadata['surgical_adapter']
-    if (case.case_id != CASE_ID or case.frame != 'RAS+' or case.semantic_hash != receipt['case_hash']
-            or data['role'] != 'DEVELOPMENT' or data['family_id'] != 'TopCoW:014'
+    family = f'TopCoW:{args.case_id.split("-")[1]}'
+    if (case.case_id != args.case_id or case.frame != 'RAS+' or case.semantic_hash != receipt['case_hash']
+            or data['role'] != 'DEVELOPMENT' or data['family_id'] != family
             or artifacts or workspace is None or workspace['episode'] is not None
             or set(case.compartments) != {*ORDER, OBSERVATION}
             or 'reviewedTaskDomainV1' in adapter or 'integrated_rehearsal' in case.metadata):
@@ -203,7 +208,7 @@ def main():
     if sha256_file(path) != native_binding['sha256']:
         raise ValueError('Pristine case changed during static screening')
     status = 'static_candidate_pending_fresh_review' if candidates else 'no_static_candidate_in_bounded_screen'
-    report = {'schema': 'resectionlab.cta-organic-stock-static-preflight.v1', 'case_id': CASE_ID, 'status': status,
+    report = {'schema': 'resectionlab.cta-organic-stock-static-preflight.v1', 'case_id': args.case_id, 'status': status,
               'source': native_binding, 'case_hash': case.semantic_hash, 'role': data['role'],
               'source_contour': {'layer': OBSERVATION, 'hash': array_digest(target)},
               'enclosure': enclosure_binding, 'tool_names': ['cranial_drill', 'cusa'],
@@ -213,7 +218,7 @@ def main():
               'ranked_static_candidates': candidates[:6], 'production_actions_executed': 0,
               'instrument_admitted': False, 'case_unchanged': True, 'scope': list(DISCLOSURES),
               'wall_seconds': time.monotonic() - started}
-    destination = safe_path(root, Path(OUTPUT).with_name(args.output_name))
+    destination = safe_path(root, Path(OUTPUT).with_name(name))
     destination.mkdir(exist_ok=False)
     atomic_json(destination / 'receipt.json', report)
     print(json.dumps({key: value for key, value in report.items() if key != 'ranked_static_candidates'}, indent=2))

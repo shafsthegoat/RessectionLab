@@ -11,6 +11,14 @@ manifest checksums and located the separate EDEN v2 collection of 15 baselines
 and 120 variants. See the HDD manifest for imaging and annotation counts,
 the first-party acquisition receipts and the scope of file verification.
 
+The development addition has six newly acquired source families, seven acquired
+CT-family series, one publisher-registered CTA derivative, three native
+showcases on previously acquired TopCoW families, and 12 generated scenarios.
+The checkout lists 21 new development entries in Cases. The three acquisition
+sets retain 354,652,995 bytes of publisher payloads. At the final check the
+scoped source files, studies, scenarios, inference caches, inventory and QA
+used 5.80 GB of allocated HDD file space.
+
 ### Selective CTA intake
 
 ```sh
@@ -48,6 +56,14 @@ export RESSECTIONLAB_POC_OUTPUT_ROOT="$RESSECTIONLAB_DATA_ROOT/cache/poc-model-r
 receipt="$RESSECTIONLAB_POC_OUTPUT_ROOT/anatomy-410401c34a17e131/totalsegmentator-skull/e0bedd63e0d8502d8985/inference.json"
 .venv/bin/python scripts/prepare_tair_cta.py --recover-ct-worker "$receipt" 00273
 ```
+
+A bounded VesselFM run on the 0.75 mm CTA crop returned 21,282 positive
+voxels across 104 components. The largest component held 17.6% of positives,
+and 13.1% intersected the dense skull estimate. Source overlays showed
+predictions in frontal sinus regions. The crop and outputs are retained as a
+diagnostic experiment in `qc/tair-v1-cta-native/00273/vesselfm-crop-v1/`.
+Reproduce its quality check with `.venv/bin/python scripts/prepare_tair_vessels.py`
+under the same model-cache environment. TAIR 00273 carries no new vessel layer.
 
 The [Annotated Head CTA release](https://zenodo.org/records/15697196) supports
 selective ZIP64 extraction. Development subjects 189 and 013 have 276 and 289
@@ -172,16 +188,17 @@ for the combined view. The 006 and 012 proofs are in the same `hidden-app/`
 directory under `cta-native-showcase-006-surfaces-20261118-v1` and
 `cta-native-showcase-012-surfaces-20261118-v1`.
 
-CTA014 organic variant 03 has a fresh, read-only preparation screen in
-`qc/cta-organic-rehearsal-preflight-v1/receipt.json`. The screen rejected all
-3,584 sampled straight stock-tool paths. Fifteen reached the final gate, where
-the proposed drill cut failed to cover the CUSA bone blockers within the
-source-tissue constraints. The scenario remains preview-only. It retains its
-intact state and has no inherited authority from the older CTA014 replay.
+CTA014 organic variants 01 and 03 and CTA012 variant 03 received fresh read-only
+preparation screens. All 10,752 sampled straight stock-tool paths were refused.
+Eighty-seven reached the final gate, where the proposed drill cut failed to
+cover the CUSA bone blockers within the source-tissue constraints. The three
+scenarios remain intact and preview-only. See `qc/cta-organic-rehearsal-preflight-v1/`
+for CTA014 variant 03, and `qc/TopCoW-014-CTA-ORGANIC-01-v1-static-preflight/` and
+`qc/TopCoW-012-CTA-ORGANIC-03-v1-static-preflight/` for the other results.
 
 ```sh
 .venv/bin/python scripts/probe_cta_organic_rehearsal.py --root "$RESSECTIONLAB_DATA_ROOT" \
-  --output-name cta-organic-rehearsal-preflight-reproduction
+  --case-id TopCoW-014-CTA-ORGANIC-03-v1 --output-name cta-organic-rehearsal-preflight-reproduction
 ```
 
 ### Observed surgical change
