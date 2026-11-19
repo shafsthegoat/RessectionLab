@@ -3,6 +3,7 @@
 const {app,ipcMain}=require('electron');
 const {execFile}=require('node:child_process');
 const fs=require('node:fs'),os=require('node:os'),path=require('node:path'),crypto=require('node:crypto'),assert=require('node:assert/strict');
+const {inputScript}=require('./verify-eden-planning-helpers.cjs');
 const main=process.env.SURFACE_VERIFY_MAIN||path.join(__dirname,'main.cjs');
 const output=path.resolve(process.env.SURFACE_VERIFY_OUTPUT);
 fs.mkdirSync(output,{recursive:false});
@@ -133,10 +134,24 @@ app.on('browser-window-created',(_event,window)=>{
     try{
       await js(`window.surfaceVerification={frames:[],gpu:[],surface:[],refinement:[]};for(const [name,key] of [['anatomy-frame','frames'],['anatomy-gpu','gpu'],['anatomy-surface','surface'],['anatomy-refined','refinement']])document.addEventListener(name,e=>{window.surfaceVerification[key].push(e.detail);});`);
       await ready();report.freshProcessToReadyMs=performance.now()-started;
+      if(process.env.SURFACE_VERIFY_NATIVE_PRESENTATION==='1'){
+        await js(`(()=>{const button=[...document.querySelectorAll('.anatomy-presets button')].find(b=>b.textContent.trim()==='Structures');
+          if(!button||button.disabled)throw Error('Native Structures presentation unavailable');
+          button.click();
+        })()`);
+      }
       await click('Show structures only');
       const hasBone=report.requests.some(request=>request.layers?.some(layer=>['skull','bone'].includes(layer.kind)&&layer.points>0));
       const skull=hasBone&&await js(`!!document.querySelector('select[aria-label="Skull view"]')`);
       if(skull){await sidePanel('Display & fragments');await set('[aria-label="Skull view"]','transparent');}
+      if(process.env.SURFACE_VERIFY_NATIVE_PRESENTATION==='1'){
+        const brain=document.layers.find(layer=>layer.kind==='brain');
+        if(brain){
+          await click(brain.label);
+          await js(inputScript(`${brain.label} opacity`,.16));
+          await click('Close layer details');
+        }
+      }
       const pair=async(name,frameView=async()=>{})=>{
         await smooth(false);await frameView();
         const raw=await capture('source-'+name);
@@ -194,6 +209,11 @@ app.on('browser-window-created',(_event,window)=>{
         sameFrame(raw,view,name);
         for(const plane of ['axial','coronal','sagittal'])assert.equal(raw.pixels[plane].sha256,view.pixels[plane].sha256,name+' changed '+plane+' source pixels');
       }
+      if(process.env.SURFACE_VERIFY_NATIVE_PRESENTATION==='1'){
+        assert.notEqual(report.captures['source-oblique'].pixels['anatomy-image'].sha256,
+          report.captures['smooth-oblique'].pixels['anatomy-image'].sha256,
+          'Conditioned contours should change the actual 3D pixels at the same source and camera');
+      }
       if(process.env.SURFACE_VERIFY_EXPECTED){
         const before=JSON.parse(fs.readFileSync(process.env.SURFACE_VERIFY_EXPECTED,'utf8'));
         assert(before.passed&&before.sourceHash===report.sourceHash,'Expected successful baseline with exact same source');
@@ -218,10 +238,11 @@ app.on('browser-window-created',(_event,window)=>{
       clearInterval(memory);sampleMemory();
       Object.assign(report,await js('window.surfaceVerification').catch(()=>({})));
       report.sourceUnchanged=sha(source)===sourceHash;
-      report.passed=report.passed&&report.sourceUnchanged&&!report.windowEverVisible&&!report.errors.length;
+      report.passed=Boolean(report.passed&&report.sourceUnchanged&&!report.windowEverVisible&&!report.errors.length);
       fs.writeFileSync(path.join(output,'report.json'),JSON.stringify(report,null,2));
       console.log(JSON.stringify({passed:report.passed,failure:report.failure,errors:report.errors,orbit:report.orbit}));
-      app.quit();if(!report.passed)process.exitCode=1;
+      if(!report.passed)process.exitCode=1;
+      app.quit();
     }
   });
 });

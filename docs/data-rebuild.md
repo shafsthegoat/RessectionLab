@@ -70,7 +70,8 @@ TopCoW 006, 012 and 014 reuse same-person TopBrain v3 CTA, existing skull and
 brain estimates, and six publisher annotations. Display uses three V1 masks,
 with V2 retained separately. Reuse avoided three vessel model runs and three
 brain/skull reruns. All three supplied arterial layers reach the inferior scan
-boundary, and the 006 brain estimate covers a superior portion only. See
+boundary. The 006 brain estimate spans the head field, with scenario placement
+restricted to the reviewed superior support region. See
 `qc/multimodal-anatomy-20261118-vessel-v1/README.md` for exact grids, label
 semantics, continuity, and source overlays.
 
@@ -103,6 +104,39 @@ See `qc/hidden-app/cta-organic-014-warm-20261118-v2/report.json` and
 `qc/hidden-app/cta-organic-014-cold-20261118-v2/report.json`. The separate
 reviewed CTA014 replay restored a 48-state run with 15.81 mm³ of target effect
 and withdrawal. Its report is `qc/hidden-app/cta-pilot-baseline-20261118-v1/report.json`.
+
+The three **NATIVE-SHOWCASE** entries use the native conditioned surfaces.
+Each shows the matched CTA, broader mineralized skull estimate, brain envelope,
+separate publisher artery and vein/sinus unions, and its existing variant 01
+contour. Fifteen meshes were verified and cached. Conditioning changed 3D
+pixels while preserving all three linked source-slice views in each study.
+The skull and brain remain estimates, with visible stepping where the source
+or estimate is coarse. These studies carry display and inspection scope.
+
+```sh
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python \
+  scripts/build_cta_native_showcases.py --register "$PWD/testcases/cases"
+showcase="$RESSECTIONLAB_DATA_ROOT/prepared/cta-native-showcases-v1/TopCoW-014-CTA-ORGANIC-01-v1-NATIVE-SHOWCASE/patient-anatomy.json"
+SURFACE_VERIFY_NATIVE_PRESENTATION=1 SURFACE_VERIFY_OUTPUT="$RESSECTIONLAB_DATA_ROOT/qc/cta-showcase-reproduction" \
+  desktop/node_modules/.bin/electron desktop/electron/verify-surface-quality.cjs --anatomy "$showcase" --automation-hidden
+```
+
+Open `qc/hidden-app/cta-native-showcase-014-surfaces-20261118-v2/smooth-oblique.png`
+for the combined view. The 006 and 012 proofs are in the same `hidden-app/`
+directory under `cta-native-showcase-006-surfaces-20261118-v1` and
+`cta-native-showcase-012-surfaces-20261118-v1`.
+
+CTA014 organic variant 03 has a fresh, read-only preparation screen in
+`qc/cta-organic-rehearsal-preflight-v1/receipt.json`. The screen rejected all
+3,584 sampled straight stock-tool paths. Fifteen reached the final gate, where
+the proposed drill cut failed to cover the CUSA bone blockers within the
+source-tissue constraints. The scenario remains preview-only. It retains its
+intact state and has no inherited authority from the older CTA014 replay.
+
+```sh
+.venv/bin/python scripts/probe_cta_organic_rehearsal.py --root "$RESSECTIONLAB_DATA_ROOT" \
+  --output-name cta-organic-rehearsal-preflight-reproduction
+```
 
 ### Observed surgical change
 
