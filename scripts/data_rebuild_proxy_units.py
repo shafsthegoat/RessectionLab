@@ -14,6 +14,30 @@ from resectionlab.data_root import atomic_json,checked_root,safe_path,sha256_fil
 from resectionlab.imaging import inspect_nifti
 
 
+def write_nifti1_mm_copy(original, destination):
+    """Write a gzip NIfTI-1 copy with only the spatial-unit header bits changed."""
+    image = nib.load(original)
+    if type(image) is not nib.Nifti1Image or image.header.get_xyzt_units()[0] not in ('unknown', 'mm'):
+        raise ValueError('Expected a single-file gzip NIfTI-1 with compatible spatial units')
+    with gzip.open(original, 'rb') as source, destination.open('wb') as file:
+        with gzip.GzipFile(filename='', fileobj=file, mode='wb', mtime=0) as output:
+            header = bytearray(source.read(352))
+            if len(header) != 352 or header[344:348] != b'n+1\0':
+                raise ValueError('Expected complete single-file NIfTI-1 header')
+            header[123] = (header[123] & ~7) | 2
+            output.write(header)
+            shutil.copyfileobj(source, output, 1024 * 1024)
+    with gzip.open(original, 'rb') as source, gzip.open(destination, 'rb') as result:
+        before, after = source.read(352), result.read(352)
+        if before[:123] != after[:123] or before[124:] != after[124:] or after[123] != ((before[123] & ~7) | 2):
+            raise ValueError('Copy changed more than the spatial-unit bits')
+        while block := source.read(1024 * 1024):
+            if block != result.read(len(block)):
+                raise ValueError('Spatial unit declaration changed the voxel payload')
+        if result.read(1):
+            raise ValueError('Spatial unit declaration extended the voxel payload')
+
+
 def run(root=None):
     root=checked_root(root)
     directory=root/'qc/proxy-unit-repairs';directory.mkdir(exist_ok=True)
@@ -42,15 +66,8 @@ def run(root=None):
         if structural['physical_units']!='mm' or structural['unit_scale_to_mm']!=1.:
             raise ValueError('Source imaging must explicitly establish millimeter coordinates')
         temporary=destination.with_name(destination.name+'.partial')
-        with gzip.open(original,'rb') as source,gzip.open(temporary,'wb') as output:
-            header=bytearray(source.read(352))
-            if len(header)!=352:raise ValueError('Expected complete NIfTI1 header')
-            header[123]=(header[123]&~7)|2
-            output.write(header);shutil.copyfileobj(source,output,1024*1024)
+        write_nifti1_mm_copy(original, temporary)
         temporary.replace(destination)
-        with gzip.open(original,'rb') as source,gzip.open(destination,'rb') as repaired:
-            before=source.read();after=repaired.read()
-        if before[:123]!=after[:123] or before[124:]!=after[124:]:raise ValueError('Header repair changed more than spatial unit bits')
         qc=inspect_nifti(destination)
         if qc['physical_units']!='mm':raise ValueError('Repaired standalone proxy remains spatially ambiguous')
         record={'schema':'ressectionlab-placement-proxy-unit-repair-v1','subject':subject,'person_id':contract['person_id'],

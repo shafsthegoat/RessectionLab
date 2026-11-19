@@ -18,8 +18,9 @@ The checkout lists 22 CTA development entries in the core addition, including
 a publisher-geometry companion for TopCoW 006. The route-conditioned CTA014
 and IXI077 studies each add a pristine case and a separate recording. IXI265
 adds an MRI anatomy study, and RESECT Case3 adds the paired observation study.
-The recordings and companion studies reuse existing people. All 28 additions
-resolve in Cases. Acquired identities are distinct within their source
+The recordings and companion studies reuse existing people. CADS case 465 adds
+one acquired noncontrast head CT study. All 29 additions resolve in Cases.
+Acquired identities are distinct within their source
 namespaces. Cross-publisher subject independence is unverified.
 
 | Retained publisher payload | Bytes |
@@ -28,12 +29,14 @@ namespaces. Cross-publisher subject independence is unverified.
 | CoW geometry and selected TopCoW source and annotation members | 1,652,113 |
 | RESECT Case3 during-resection cavity annotation | 28,518 |
 | RESECT Case3 after-resection cavity and paired landmark files | 46,148 |
-| Total | 356,379,774 |
+| CADS 465 CT, three model-label volumes and publisher metadata | 94,793,190 |
+| Total | 451,172,964 |
 
 The three new CTA source directories, prepared pilot and scenario directories,
 both recorded workspaces and the Case3 stage benchmark occupy 6.48 GB of
-allocated HDD file space. The baseline inventory, model caches and hidden app
-captures are outside that storage count.
+allocated HDD file space. CADS source and preparation add 0.84 GB of allocated
+HDD file space. These figures exclude the baseline inventory, model caches and
+hidden app captures.
 
 ### Selective CTA intake
 
@@ -380,6 +383,49 @@ DATA_REBUILD_CASE="$trial/replay.ressectionlab" \
   DATA_REBUILD_EXPECT_REPLAY_ACTIONS="$(jq -r '.committed_action_count' "$trial/report.json")" \
   desktop/node_modules/.bin/electron desktop/electron/verify-data-rebuild.cjs --automation-hidden
 ```
+
+### Noncontrast head CT and supplied brain tissue estimates
+
+Search **CADS-BRAINCT-465-NATIVE-v1** in Cases. The [pinned BrainCT-1mm release](https://huggingface.co/datasets/huggingface/CADS-dataset/blob/eee3c0a993636264fd04104f7e2a090c507c0c43/0042_new_brainct_1mm/README_0042_new_brainct_1mm.md)
+provides the acquired noncontrast CT and three segmentation parts under CC BY
+4.0. The selection uses the finest in-plane spacing among published 512 × 512
+grids with 180–225 slices at 1 mm. Case 465 is 512 × 512 × 208 at
+0.426 × 0.426 × 1 mm. The pinned publisher spacing index establishes the unit
+for a display copy that changes only the NIfTI spatial-unit bits. The original
+CT and all three labels retain their exact bytes and affine.
+
+The seven displayed layer definitions preserve the publisher's brain, compact
+and spongy head bone, brainstem, gray matter, white matter, CSF and carotid
+memberships. Every label is a model estimate. The source planes show broad
+vault and posterior skull-base coverage. The head-bone union includes neck
+bone and meets the lower scan edge at 8,948 voxels. Brain and bone estimates
+overlap at 51,715 voxels, retained for inspection. Dedicated ventricular
+subdivisions, cerebellar parcellation and detailed intracranial vessels are
+unavailable.
+
+The conditioned head-bone, brain and brainstem surfaces contain 2,132,164,
+664,100 and 43,220 triangles. Desktop conditioning changed the 3D rendering
+and preserved the linked source-slice views. The linked desktop panes use
+the 256 × 256 × 104 preview grid, while the surfaces and saved source use
+the full lattice. The opaque bone surface still shows visible terracing.
+The study has inspection scope.
+
+```sh
+.venv/bin/python scripts/acquire_cads_brainct.py
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python scripts/prepare_cads_brainct.py \
+  --register "$PWD/testcases/cases"
+study="$RESSECTIONLAB_DATA_ROOT/prepared/cads-brainct-1mm-v1/CADS-BRAINCT-465-NATIVE-v1/patient-anatomy.json"
+SURFACE_VERIFY_NATIVE_PRESENTATION=1 \
+  SURFACE_VERIFY_OUTPUT="$RESSECTIONLAB_DATA_ROOT/qc/cads-465-surfaces-reproduction" \
+  desktop/node_modules/.bin/electron desktop/electron/verify-surface-quality.cjs --anatomy "$study" --automation-hidden
+DATA_REBUILD_CASE="$study" DATA_REBUILD_INSPECT_STUDY=1 DATA_REBUILD_NATIVE_VIA_CASES=1 \
+  DATA_REBUILD_OUTPUT="$RESSECTIONLAB_DATA_ROOT/qc/cads-465-cases-reproduction" \
+  desktop/node_modules/.bin/electron desktop/electron/verify-data-rebuild.cjs --automation-hidden
+```
+
+The source receipt and overlay are with the prepared study. The captures and
+desktop reports are in `qc/hidden-app/cads-brainct-465-surfaces-20261118-v1/` and
+`qc/hidden-app/cads-brainct-465-cases-20261118-v1/`.
 
 ### Higher-detail CT and MRI anatomy
 

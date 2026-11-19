@@ -41,6 +41,7 @@ record subsequent downloads, spatial review and case admission separately.
 | ISLES’24 v7, 0146 | Acquired NCCT and CTA, publisher-registered CTA, automated CoW mask | One study with independent acquired grids and separately identified derivative. |
 | TopCoW/TopBrain 006 | Original CTA CoW mask, publisher VTP surface and graph, reused native MRA and its V1 annotation | One companion study on a previously acquired person. |
 | RESECT Case3 | Two observed cavity masks and paired landmark files, reused MRI and staged ultrasound | One paired observational study on a previously acquired person. |
+| CADS BrainCT-1mm, 465 | One acquired noncontrast head CT and three publisher model-label volumes, with source metadata | Separate native inspection study for head-bone and brain tissue coverage. |
 
 ## A. CTA and paired cranial imaging
 

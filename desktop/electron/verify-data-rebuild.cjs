@@ -841,6 +841,22 @@ app.on('browser-window-created',(_event,window)=>{
         unavailableLayers:nativeVolume.unavailableLayers};
     };
     const inspectNativeStudy=async()=>{
+      if(process.env.DATA_REBUILD_NATIVE_VIA_CASES==='1'){
+        const title=nativeStudy.patient_id,search='Search cases by name, source, anatomy or reported site';
+        const listed=(await js('window.resectionApi.listCases()')).filter(row=>row.title===title);
+        assert.equal(listed.length,1);
+        assert(listed[0].native&&!listed[0].reviewedExternal,'Expected a local native development card');
+        await click('Cases');await wait(`!!document.querySelector('[aria-label="${search}"]')`);
+        await js(inputScript(search,title));
+        const label=`Open ${title}`;
+        await wait(`[...document.querySelectorAll('.poc-case-card')].some(e=>e.getAttribute('aria-label')===${JSON.stringify(label)}&&!e.disabled)`);
+        await capture('native-study-cases');
+        const firstRequest=report.requests.length;
+        await click(label);await wait(`!document.querySelector('.case-library-workspace')`);await ready();
+        const opened=report.requests.slice(firstRequest).find(row=>row.operation==='research:openListedWorkspace');
+        assert(opened&&!opened.error,'Expected the actual native Cases open request');
+        report.nativeCases={id:listed[0].id,title,native:true};
+      }
       await click('Scans');
       report.nativeStudy=await nativeScan();
       await capture('native-study-scans');
