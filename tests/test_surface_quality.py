@@ -201,3 +201,54 @@ def test_whole_anatomy_exterior_reduces_staircase_without_relaxing_source_bounds
     assert np.linalg.norm(updated-source, axis=1).max() <= .7
     assert display_surface_kind({'kind':'context', 'provenance':{'model':'siam-v2','label_ontology':{'value':16}}}) == 'outer-head-tissue'
     assert display_surface_kind({'kind':'context','label_value':16}) == 'context'
+
+
+def test_conditioned_skull_surface_keeps_shape_binding_through_portable_reopen(tmp_path):
+    import nibabel as nib
+    from resectionlab.anatomy_geometry import CONDITIONED_SURFACE, mesh
+    from resectionlab.anatomy_package import open_package, save_package
+    from resectionlab.core import array_digest
+    from resectionlab.patient_anatomy import PatientImagingCollection
+
+    values = np.zeros((10, 10, 10), np.uint8)
+    values[2:8, 2:8, 2:8] = 1
+    matrix = np.diag([0.5, 0.5, 1., 1.])
+    image = nib.Nifti1Image(values, matrix)
+    image.header.set_xyzt_units("mm")
+    source = tmp_path / "ct.nii.gz"
+    nib.save(image, source)
+    study = PatientImagingCollection.create(tmp_path / "study", "skull-conditioner")
+    scan = study.add_series(source, series_id="ct", modality="CT")
+    row = study.add_layer(values, matrix, layer_id="skull", source_series="ct",
+                          kind="skull", role="context", color="#dddddd")
+    stock = mesh(study, row)
+    moved = stock["positions"].copy()
+    eligible = stock["source"][:, 2] > 5
+    moved[eligible, 2] += .01
+    row["conditioned_surface"] = {
+        "schema": CONDITIONED_SURFACE, "mask_revision": 0, "label_value": 1,
+        "mask_sha256": row["data"]["sha256"], "source_array_sha256": scan["data"]["sha256"],
+        "source_original_sha256": scan["original"]["sha256"], "affine": scan["affine"],
+        "source_mesh_hash": array_digest(stock["source"]), "indices_hash": array_digest(stock["indices"]),
+        "stock_conditioned_hash": array_digest(stock["positions"]), "protected_native_plane": 5,
+        "positions": study.put_array(moved),
+    }
+    study.save()
+    archive = tmp_path / "portable.rsworkspace"
+    save_package(study, archive)
+    reopened = PatientImagingCollection(open_package(archive, tmp_path / "fresh").parent)
+    layer = reopened.layer("skull")
+    restored = mesh(reopened, layer)
+    assert restored["policy_version"] == CONDITIONED_SURFACE
+    np.testing.assert_array_equal(restored["source"], stock["source"])
+    np.testing.assert_array_equal(restored["indices"], stock["indices"])
+    np.testing.assert_array_equal(restored["positions"], moved)
+    np.testing.assert_array_equal(reopened.mask(layer), values.astype(bool))
+    assert mesh(reopened, {**layer, "revision": 1})["policy_version"] != CONDITIONED_SURFACE
+    invalid = {**layer["conditioned_surface"], "mask_sha256": "a" * 64}
+    with pytest.raises(ValueError, match="bindings differ"):
+        mesh(reopened, {**layer, "conditioned_surface": invalid})
+    moved[~eligible, 2] += .01
+    invalid = {**layer["conditioned_surface"], "positions": reopened.put_array(moved)}
+    with pytest.raises(ValueError, match="source bounds"):
+        mesh(reopened, {**layer, "conditioned_surface": invalid})

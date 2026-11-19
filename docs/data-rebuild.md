@@ -34,7 +34,7 @@ namespaces. Cross-publisher subject independence is unverified.
 
 The three new CTA source directories, prepared pilot and scenario directories,
 both recorded workspaces and the Case3 stage benchmark occupy 6.48 GB of
-allocated HDD file space. CADS source and preparation add 0.84 GB of allocated
+allocated HDD file space. CADS source and preparation add 0.85 GB of allocated
 HDD file space. These figures exclude the baseline inventory, model caches and
 hidden app captures.
 
@@ -406,9 +406,8 @@ unavailable.
 The conditioned head-bone, brain and brainstem surfaces contain 2,132,164,
 664,100 and 43,220 triangles. Desktop conditioning changed the 3D rendering
 and preserved the linked source-slice views. The linked desktop panes use
-the 256 × 256 × 104 preview grid, while the surfaces and saved source use
-the full lattice. The opaque bone surface still shows visible terracing.
-The study has inspection scope.
+the 256 × 256 × 104 preview grid. Surface extraction and the saved acquired
+source use the full lattice. The study has inspection scope.
 
 ```sh
 .venv/bin/python scripts/acquire_cads_brainct.py
@@ -426,6 +425,56 @@ DATA_REBUILD_CASE="$study" DATA_REBUILD_INSPECT_STUDY=1 DATA_REBUILD_NATIVE_VIA_
 The source receipt and overlay are with the prepared study. The captures and
 desktop reports are in `qc/hidden-app/cads-brainct-465-surfaces-20261118-v1/` and
 `qc/hidden-app/cads-brainct-465-cases-20261118-v1/`.
+
+The superior-vault refinement preserves the raw mesh, its triangle indices,
+the CT, and the labels. A physical-coordinate low-pass tapers in from native
+slice index 116 to 136. All 681,110 lower vertices at or below 116 retain
+their stock positions. The geometry audit found zero newly intersecting
+triangle pairs after returning 140 vertices to their stock positions. Maximum
+motion from stock is 0.505 mm. Across the measured superior vault, squared
+normal turn drops 62.9%. The median CT contrast between samples ±0.5 mm from
+matched mesh points changes from 275.02 to 274.91 CT units. Lower skull,
+brain and vessel estimates retain their earlier limitations.
+
+Matched hidden desktop runs compare the same scan, camera, slice pixels,
+source surface and indices. The new vault changes only the conditioned 3D
+render. A portable Save carries the attachment and its source receipt. The
+fresh desktop process restores the same display geometry and 3D capture.
+The numeric report and matched upper-vault crops are in
+`qc/cads465-vault-conditioning-v1/`. The desktop
+reports are in `qc/hidden-app/cads465-conditioned-vault-warm-v2/` and
+`qc/hidden-app/cads465-conditioned-vault-cold-v1/`.
+
+To repeat the refinement, run the probe and stage the selected CADS snapshot
+under `qc/`. For a locally refined study, use the immutable `stock_manifest`
+from its receipt as the staged manifest. The surface verifier compares the
+staged candidate against the stock desktop report.
+
+```sh
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python scripts/probe_cads_vault_conditioning.py \
+  --output-name cads465-vault-reproduction
+trial="$RESSECTIONLAB_DATA_ROOT/qc/cads465-staged-study"
+mkdir "$trial"
+rsync -a --exclude='._*' "$(dirname "$study")/" "$trial/"
+stock_manifest=$(jq -r '(.stock_manifest // .manifest).path' "$(dirname "$study")/receipt.json")
+cp "$RESSECTIONLAB_DATA_ROOT/$stock_manifest" "$trial/patient-anatomy.json"
+.venv/bin/python scripts/install_cads_vault_conditioning.py \
+  --study qc/cads465-staged-study --probe qc/cads465-vault-reproduction/report.json
+stock="$RESSECTIONLAB_DATA_ROOT/qc/hidden-app/cads-brainct-465-surfaces-20261118-v1/report.json"
+warm="$RESSECTIONLAB_DATA_ROOT/qc/cads465-vault-app-reproduction"
+SURFACE_VERIFY_NATIVE_PRESENTATION=1 SURFACE_VERIFY_REFINED_LAYER=head-bone \
+  SURFACE_VERIFY_EXPECTED="$stock" SURFACE_VERIFY_SAVE_REFINED=1 SURFACE_VERIFY_OUTPUT="$warm" \
+  desktop/node_modules/.bin/electron desktop/electron/verify-surface-quality.cjs \
+  --anatomy "$trial/patient-anatomy.json" --automation-hidden
+SURFACE_VERIFY_NATIVE_PRESENTATION=1 SURFACE_VERIFY_REFINED_LAYER=head-bone \
+  SURFACE_VERIFY_EXPECTED="$stock" SURFACE_VERIFY_REFINED_PRIOR="$warm/report.json" \
+  SURFACE_VERIFY_OUTPUT="$RESSECTIONLAB_DATA_ROOT/qc/cads465-vault-cold-reproduction" \
+  desktop/node_modules/.bin/electron desktop/electron/verify-surface-quality.cjs \
+  --anatomy "$warm/conditioned-vault.rsworkspace" --automation-hidden
+```
+
+The live Cases entry uses the refined revision. Its post-install desktop check
+is in `qc/hidden-app/cads465-conditioned-vault-cases-v1/`.
 
 ### Higher-detail CT and MRI anatomy
 

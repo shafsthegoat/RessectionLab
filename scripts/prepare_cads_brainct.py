@@ -82,7 +82,7 @@ def source_inputs(root):
     return paths, images, binding(root, path), index
 
 
-def establish(stage, paths, images, receipt, index):
+def establish(stage, paths, images, acquisition_path, index):
     collection = PatientImagingCollection.create(stage, CASE, timepoint=TIMEPOINT)
     raw = collection.original(paths['ncct'])
     form = {'source_spatial_unit': 'undeclared', 'display_spatial_unit': 'mm',
@@ -122,7 +122,7 @@ def establish(stage, paths, images, receipt, index):
                                       'cursor_ras_mm': nib.affines.apply_affine(scan['affine'], [247, 227, 98]).tolist()}
     collection.document['data_case'] = {'source_family_id': FAMILY, 'role': 'DEVELOPMENT',
                                         'case_type': 'display_companion', 'clinical_validation': False,
-                                        'source_receipt': receipt, 'limits': LIMITS}
+                                        'source_receipt': collection.original(acquisition_path), 'limits': LIMITS}
     collection.document['publisher_metadata'] = {key: collection.original(paths[key])
                                                  for key in ('readme', 'label_map')}
     collection.document['missing'] = LIMITS[1:]
@@ -216,7 +216,7 @@ def build(root):
     final.parent.mkdir(parents=True, exist_ok=True)
     with TemporaryDirectory(prefix='.cads-native-', dir=final.parent) as temporary:
         stage = Path(temporary) / CASE
-        establish(stage, paths, images, acquisition, index)
+        establish(stage, paths, images, checked_file(root, acquisition), index)
         report = report_study(stage, images)
         report.update(schema='cads-brainct-native-v1', case_id=CASE, source_family=FAMILY,
                       acquisition=acquisition, role='DEVELOPMENT')
