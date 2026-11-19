@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import argparse
 from copy import deepcopy
+import errno
 from hashlib import sha256
+import os
 from pathlib import Path
 from shutil import copyfile
 from tempfile import TemporaryDirectory
@@ -221,30 +223,37 @@ def export_variant(showcase, destination, case_id, family, observation, recipe):
     snapshot['display']['cursor_ras_mm'] = recipe['center_ras_mm']
     snapshot['development_scenario'] = {'source_family_id': family, 'source_family_role': 'DEVELOPMENT',
                                         'role': 'DEVELOPMENT', 'simulated_image_signal': False, 'mass_effect': False}
-    case = PatientImagingCollection(showcase.root, snapshot)
-    reference = snapshot['reference_series']
-    target = case.add_layer(observation.astype(np.uint8), case.series(reference)['affine'], layer_id=OBSERVATION,
-                            label=TARGET, source_series=reference, kind='synthetic-target', role='target', color='#f18fbd',
-                            provenance={'kind': 'simulated', 'source_family_id': family, 'generation': SCHEMA,
-                                        'method': 'Approximate simulated partial-volume contour'})
-    target['coverage'] = 'Approximate generated contour on the physical reference grid'
-    case.document['snapshot_id'] = case.identity()
     archive = destination / (case_id + '.rsworkspace')
-    target_path = target['data']['path']
-    try:
+    with TemporaryDirectory(dir=destination, prefix='.native-variant-') as scratch:
+        stage = Path(scratch) / 'stage'
+        stage.mkdir()
+        case = PatientImagingCollection(stage, snapshot)
+        for name, _ in set(referenced_files(snapshot)):
+            source = showcase.path(name)
+            output = case.path(name)
+            output.parent.mkdir(parents=True, exist_ok=True)
+            try:
+                os.link(source, output)
+            except OSError as error:
+                if error.errno not in {errno.EXDEV, errno.ENOTSUP, errno.EOPNOTSUPP, errno.EPERM}:
+                    raise
+                copyfile(source, output)
+        reference = snapshot['reference_series']
+        target = case.add_layer(observation.astype(np.uint8), case.series(reference)['affine'], layer_id=OBSERVATION,
+                                label=TARGET, source_series=reference, kind='synthetic-target', role='target', color='#f18fbd',
+                                provenance={'kind': 'simulated', 'source_family_id': family, 'generation': SCHEMA,
+                                            'method': 'Approximate simulated partial-volume contour'})
+        target['coverage'] = 'Approximate generated contour on the physical reference grid'
+        case.save('Publish the simulated contour and exact source members for portable export')
         save_package(case, archive)
-        with TemporaryDirectory(dir=destination, prefix='.verify-portable-') as scratch:
-            payload = open_package(archive, Path(scratch))
-            recovered = PatientImagingCollection(payload.parent)
-            if (recovered.identity() != case.identity()
-                    or not np.array_equal(recovered.mask(recovered.layer(OBSERVATION)), observation)):
-                raise ValueError('Portable reopen changed the native study or simulated contour')
+        payload = open_package(archive, Path(scratch) / 'verify')
+        recovered = PatientImagingCollection(payload.parent)
+        if (recovered.identity() != case.identity()
+                or not np.array_equal(recovered.mask(recovered.layer(OBSERVATION)), observation)):
+            raise ValueError('Portable reopen changed the native study or simulated contour')
         with ZipFile(archive) as portable:
             if any('research-truth' in name for name in portable.namelist()):
                 raise ValueError('Privileged research truth reached the native app package')
-    finally:
-        if not any(name == target_path for name, _ in referenced_files(showcase.document)):
-            case.path(target_path).unlink(missing_ok=True)
     return archive, case.identity(), target
 
 
