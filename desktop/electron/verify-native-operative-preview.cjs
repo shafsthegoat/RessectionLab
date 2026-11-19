@@ -7,6 +7,10 @@
 // --inspect-shortest with --distinct selects the shortest returned window for the saved geometric example.
 // --material-review with --visual-review --video captures layer isolation and matched final cutaways without encoding a film.
 // --source-support checks the raw/supported MRI and SIAM receipts on a real tumor fixture.
+// --field-review --acceptance-views records section and Follow poses at both desktop sizes.
+// --match-operative-cameras and --match-movie-poses accept prior report and movie-state JSON paths.
+// --geometry-ablations toggles exact cell faces and exterior at fixed camera and timeline.
+// --capture-both-sweeps captures legacy controls then replays the default; --preserve-plan-view verifies the saved start.
 // baseline, prepare, stale and no-target exercise simpler study states.
 const {app, dialog, ipcMain} = require('electron');
 const {execFileSync} = require('node:child_process');
@@ -87,11 +91,11 @@ ipcMain.handle = (channel, handler) => handle(channel, async (...args) => {
         routes:result.approaches?.map(r=>({id:r.id,origin:r.origin,status:r.assessmentStatus,entry:r.entry,target:r.target,parameterHash:r.parameterHash,
           lengthMm:r.measurements?.lengthMm,coveredTargetMm3:r.measurements?.targets?.find(t=>t.layerId===r.targetLayerId)?.coveredVoxelCenterVolumeMm3,
           normalTraversalMm3:r.measurements?.normalTraversal?.supportedNonTargetVoxelCenterVolumeMm3})),
-        spacingMm:result.spacingMm,shape:result.shape,stations:result.stations,fieldLabelSha256:result.labels?.sha256,
+        spacingMm:result.spacingMm,shape:result.shape,origin:result.origin,basisRas:result.basisRas,targetRasMm:result.targetRasMm,entryDepthMm:result.entryDepthMm,parameterHash:result.parameterHash,stations:result.stations,fieldLabelSha256:result.labels?.sha256,
         intensity:result.intensity && {series:result.intensity.sourceSeries,modality:result.intensity.modality,
           sourceHash:result.intensity.sourceSha256,dataHash:result.intensity.dataSha256,signalHash:result.intensity.signal?.sha256,
           covered:result.intensity.coveredVoxels,window:result.intensity.window,shape:result.intensity.shape},
-        layers:result.layers?.map(l=>({id:l.id,role:l.role,detail:l.detail,evidence:l.evidence,model:l.model,vascularContextOnly:l.vascularContextOnly,voxels:l.sampledVoxels,sourceSupport:l.sourceSupport,sourceSpacingMm:l.sourceSpacingMm,inferenceSpacingMm:l.inferenceSpacingMm})),
+        layers:result.layers?.map(l=>({id:l.id,role:l.role,detail:l.detail,evidence:l.evidence,model:l.model,sampledDataSha256:l.sampledDataSha256,coveredVoxels:l.coveredVoxels,vascularContextOnly:l.vascularContextOnly,voxels:l.sampledVoxels,sourceSupport:l.sourceSupport,sourceSpacingMm:l.sourceSpacingMm,inferenceSpacingMm:l.inferenceSpacingMm})),
         target:result.targetLayerId,approach:result.approachId,excluded:result.excluded,issues:result.stationIssues,
         stationEvidence:result.stationEvidence,stationLayerIds:result.stationLayerIds,
         distinctEntryReport:result.distinctEntryReport?{status:result.distinctEntryReport.status,shortfall:result.distinctEntryReport.shortfall}:undefined});
@@ -197,7 +201,7 @@ app.on('browser-window-created', (_, win) => {
     try {
       report.rendererAsset = await js("document.querySelector('script[type=module][src]')?.src.split('/').pop()");
       await until(`document.querySelector('footer')?.textContent.includes('Add a source scan')`);
-      if(mode==='compare-anatomy' || process.argv.includes('--source-support') || process.argv.includes('--visual-review') || process.argv.includes('--expect-presentation')) await js(`document.addEventListener('anatomy-frame',event=>{
+      if(mode==='compare-anatomy' || process.argv.includes('--preserve-plan-view') || process.argv.includes('--source-support') || process.argv.includes('--visual-review') || process.argv.includes('--expect-presentation')) await js(`document.addEventListener('anatomy-frame',event=>{
         const {cameraState,cursor,sourceSignalFingerprint}=event.detail;
         window.operativeVerificationFrame={cameraState,cursor,sourceSignalFingerprint};
       })`);
@@ -241,6 +245,25 @@ app.on('browser-window-created', (_, win) => {
         const prior=JSON.parse(fs.readFileSync(priorPresentation,'utf8'));
         report.restoredPresentation=await presentation();
         assert.deepEqual(report.restoredPresentation,prior.savedPresentation);
+      }
+      if(process.argv.includes('--preserve-plan-view')){
+        assert(archive,'Plan verification requires a portable workspace');
+        const saved=JSON.parse(execFileSync('unzip',['-p',archive,'workspace-view.json'],{encoding:'utf8'}));
+        const savedState=saved.states[saved.seriesId];
+        report.coldPlanPresentation=await presentation();
+        const frame=report.coldPlanPresentation.frame;
+        assert(frame?.cameraState,'Missing reopened anatomical camera');
+        for(const key of ['position','target','up']){
+          assert(frame.cameraState[key].every((x,i)=>Math.abs(x-savedState.settings.camera[key][i])<.001),'Reopened plan camera '+key);
+        }
+        assert.deepEqual(frame.cursor,savedState.cursor);
+        assert.equal(savedState.cranialView,'planning');
+        const view=await js("JSON.parse(document.querySelector('.native-workspace').dataset.nativeViewState)");
+        assert.equal(view.selectedApproachId,saved.selectedApproachId);
+        assert.deepEqual(view.states[view.seriesId].visible,savedState.visible);
+        report.coldPlanPresentation.savedView={series:saved.seriesId,route:saved.selectedApproachId,visible:savedState.visible,
+          cursor:savedState.cursor,camera:savedState.settings.camera,mode:savedState.cranialView};
+
       }
       await click('Anatomy');
       await ready();
@@ -477,10 +500,17 @@ app.on('browser-window-created', (_, win) => {
             assert(report.orbitFrameTimes.length>1);
             await capture('rotated-structures');
           }
-          await click('Layout');
-          await js(`(()=>{const select=document.querySelector('select[aria-label="Camera preset"]');
-            select.value='left';select.dispatchEvent(new Event('change',{bubbles:true}));})()`);
-          await click('Close view controls');
+          if(process.argv.includes('--preserve-plan-view')){
+            report.cranialView=await js(`document.querySelector('[aria-label="Cranial view"]')?.value`);
+            assert.equal(report.cranialView,'planning');
+            report.moviePlanPresentation=await presentation();
+            assert.deepEqual(report.moviePlanPresentation.layers,report.coldPlanPresentation.layers);
+          }else{
+            await click('Layout');
+            await js(`(()=>{const select=document.querySelector('select[aria-label="Camera preset"]');
+              select.value='left';select.dispatchEvent(new Event('change',{bubbles:true}));})()`);
+            await click('Close view controls');
+          }
           await ready();
           await capture('selected-approach-1080p');
           intro=await framePixels(win);
@@ -490,20 +520,45 @@ app.on('browser-window-created', (_, win) => {
           await saveStudy();
           await click('Plan');await ready();
         }
+        if(process.argv.includes('--acceptance-views'))await js('('+require('./verify-operative-camera.cjs').observeField+')()');
         await click('Preview operative steps');
         await previewReady();
         const field = report.plans.findLast(p=>p.action==='operativeField');
         assert.equal(field.approach,report.selected);
         assert.equal(field.target,targetLayer.id);
         if(process.argv.includes('--field-review')){
+          const acceptance=process.argv.includes('--acceptance-views');
+          const bothSweeps=process.argv.includes('--capture-both-sweeps');
+          const sweepValue=()=>js("document.querySelector('.operative-sweep-choice select')?.value??'original spiral (single option)'");
+          const chooseSweep=async value=>{
+            await js(`(()=>{const choice=document.querySelector('.operative-sweep-choice select');
+              choice.value=${JSON.stringify(value)};choice.dispatchEvent(new Event('change',{bubbles:true}))})()`);
+            await until(`document.querySelector('.operative-sweep-choice select').value===${JSON.stringify(value)}`);
+            await previewReady();
+          };
+          report.initialSweep=await sweepValue();
+          if(bothSweeps)assert.equal(report.initialSweep,'overlapping');
+          if((bothSweeps||process.argv.includes('--original-sweep'))&&report.initialSweep==='overlapping')await chooseSweep('spiral');
+          report.comparisonSweep=report.sweep=await sweepValue();
           const reference=flagValue('--match-field-viewports');
           if(reference)assert(reference.startsWith(fixtureRoot));
           const match=reference?JSON.parse(fs.readFileSync(reference)).corridorViews:null;
           report.matchedFieldViewports=reference;
-          report.corridorViews=await verifyOperativeCorridor({win,js,until,capture,match});
+          const cameraReport=flagValue('--match-operative-cameras');
+          if(cameraReport)assert(cameraReport.startsWith(fixtureRoot));
+          const cameras=cameraReport?JSON.parse(fs.readFileSync(cameraReport)).corridorViews:null;
+          const movieReference=flagValue('--match-movie-poses');
+          if(movieReference)assert(movieReference.startsWith(fixtureRoot));
+          const moviePoses=movieReference?JSON.parse(fs.readFileSync(movieReference)):null;
+          report.corridorViews=await verifyOperativeCorridor({win,js,until,capture,match,cameras,moviePoses,acceptance,ablations:process.argv.includes('--geometry-ablations')});
           if(process.argv.includes('--expect-vascular-estimate')){
             assert(field.layers.some(l=>l.role==='vessels'&&l.model&&l.vascularContextOnly&&l.voxels>0));
             assert.equal(report.corridorViews['endpoint-1440'].vesselLegend?.label,'Vascular estimate');
+          }
+          if(bothSweeps){
+            await chooseSweep('overlapping');
+            report.sweep=await sweepValue();
+            report.defaultCorridorViews=await verifyOperativeCorridor({win,js,until,acceptance,expectEntry:true,expectOuterHead:process.argv.includes('--expect-outer-head'),capture:name=>capture('default-'+name)});
           }
           if(process.argv.includes('--review-video')){
             report.recording=await recordOperativePlayback(win,js,output,intro,true);
