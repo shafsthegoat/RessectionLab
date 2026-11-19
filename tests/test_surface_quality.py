@@ -248,6 +248,9 @@ def test_conditioned_skull_surface_keeps_shape_binding_through_portable_reopen(t
     invalid = {**layer["conditioned_surface"], "mask_sha256": "a" * 64}
     with pytest.raises(ValueError, match="bindings differ"):
         mesh(reopened, {**layer, "conditioned_surface": invalid})
+    invalid = {**layer["conditioned_surface"], "protected_crop_margin_cells": 3}
+    with pytest.raises(ValueError, match="source bounds"):
+        mesh(reopened, {**layer, "conditioned_surface": invalid})
     moved[~eligible, 2] += .01
     invalid = {**layer["conditioned_surface"], "positions": reopened.put_array(moved)}
     with pytest.raises(ValueError, match="source bounds"):

@@ -112,7 +112,7 @@ def _display_geometry(collection, row, result, cache_hit, started):
             raise ValueError("Unsupported conditioned display surface")
         if row["revision"] == attachment["mask_revision"]:
             scan = collection.series(row["source_series"])
-            if (row["kind"] not in {"skull", "bone"} or row["role"] != "context"
+            if (row["kind"] not in {"skull", "bone", "brain"} or row["role"] != "context"
                     or row["data"]["sha256"] != attachment["mask_sha256"]
                     or row["label_value"] != attachment["label_value"]
                     or scan["data"]["sha256"] != attachment["source_array_sha256"]
@@ -129,6 +129,10 @@ def _display_geometry(collection, row, result, cache_hit, started):
                 raise ValueError("Invalid conditioned display positions")
             linear = affine(row["affine"])[:3, :3]
             protected = source[:, 2] <= attachment["protected_native_plane"]
+            if "protected_crop_margin_cells" in attachment:
+                margin = attachment["protected_crop_margin_cells"]
+                face_distance = np.minimum(source, np.asarray(row["data"]["shape"]) - 1 - source)
+                protected |= (face_distance <= margin).any(axis=1)
             displacement = np.linalg.norm((points - source) @ linear.T, axis=1)
             if (not protected.any() or not np.array_equal(points[protected], stock[protected])
                     or displacement.max(initial=0.) > CONDITIONED_MAX_SOURCE_MM

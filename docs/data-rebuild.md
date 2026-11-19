@@ -18,8 +18,9 @@ The checkout lists 22 CTA development entries in the core addition, including
 a publisher-geometry companion for TopCoW 006. The route-conditioned CTA014
 and IXI077 studies each add a pristine case and a separate recording. IXI265
 adds an MRI anatomy study, and RESECT Case3 adds the paired observation study.
-The recordings and companion studies reuse existing people. CADS case 465 adds
-one acquired noncontrast head CT study. All 29 additions resolve in Cases.
+CADS case 465 adds one acquired noncontrast head CT study. Two further
+published-geometry companions reuse TopCoW 012 and 014. The recordings and
+companion studies reuse existing people. All 31 additions resolve in Cases.
 Acquired identities are distinct within their source
 namespaces. Cross-publisher subject independence is unverified.
 
@@ -27,16 +28,18 @@ namespaces. Cross-publisher subject independence is unverified.
 | --- | ---: |
 | TAIR, Head CTA and ISLES’24 acquisitions | 354,652,995 |
 | CoW geometry and selected TopCoW source and annotation members | 1,652,113 |
+| CoW geometry and exact original CTA masks for 012 and 014 | 3,689,826 |
 | RESECT Case3 during-resection cavity annotation | 28,518 |
 | RESECT Case3 after-resection cavity and paired landmark files | 46,148 |
 | CADS 465 CT, three model-label volumes and publisher metadata | 94,793,190 |
-| Total | 451,172,964 |
+| Total | 454,862,790 |
 
 The three new CTA source directories, prepared pilot and scenario directories,
 both recorded workspaces and the Case3 stage benchmark occupy 6.48 GB of
-allocated HDD file space. CADS source and preparation add 0.85 GB of allocated
-HDD file space. These figures exclude the baseline inventory, model caches and
-hidden app captures.
+allocated HDD file space. CADS source and preparation add 0.85 GB. The two
+new paired companions and their selective source directory add 1.24 GB.
+These figures exclude the baseline inventory, model caches, hidden desktop
+captures and portable demonstration copies.
 
 ### Selective CTA intake
 
@@ -171,25 +174,38 @@ restricted to the reviewed superior support region. See
 semantics, continuity, and source overlays.
 
 The [published Circle of Willis geometry](https://zenodo.org/records/17358162)
-was qualified separately for CTA006. The 915 graph points use the original CTA
-RAS frame and all 914 edge midpoints overlap the original CoW annotation. The
-surface contains 47,202 vertices and 94,404 triangles. The proof used the
-published VTP files directly in VTK and retained the original mask, license and
-hashes. The selected source material retains 1,652,113 bytes from 1,574,488
-transferred bytes. See `README.md` and `source-receipt.json` under
-`qc/multimodal-anatomy-20261118-cow-vtp-v1/`.
+was qualified for 006, 012 and 014 on their original CTA lattices. Every graph
+point and edge midpoint was supported by its original CoW mask. The original
+publisher meshes, graphs, label files and notices retain their exact bytes.
+The retained 012 and 014 CTAs matched each official archive member's length
+and CRC and were reused. Neither geometry required a frame transform.
 
-Search **PUBLISHED-COW** to open the CTA006 native companion. The
+| TopCoW pilot | Supported graph points | Supported edge midpoints | Mesh vertices | Mesh triangles |
+| --- | ---: | ---: | ---: | ---: |
+| 006 | 915 | 914 | 47,202 | 94,404 |
+| 012 | 814 | 815 | 61,860 | 123,724 |
+| 014 | 773 | 771 | 47,462 | 94,932 |
+
+The 006 proof and source receipt are under
+`qc/multimodal-anatomy-20261118-cow-vtp-v1/`. The 012 and 014 receipts are
+under `sources/topcow-cow-vtp-selective-v1/`. Their acquisition retained
+3,689,826 bytes through 2,874,142 bytes of selective transport. These source
+families retain their frozen TRAIN roles.
+
+Search **PUBLISHED-COW** for the native companions. The
 **Circle of Willis · publisher mesh** layer uses the original triangular
 surface, while the exact original CoW segmentation supplies linked CTA slice
 overlays. The wider TopBrain arterial and venous unions remain separate.
 The same-person TopBrain MRA and its V1 arterial union open on their own source
-grid. The study keeps both VTP originals, publisher metadata and licenses.
+grid. Each study keeps both VTP originals, publisher metadata and licenses.
 The centerline graph and its attributes remain available as source evidence.
 
 ```sh
 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python \
   scripts/build_cta_published_cow_study.py --register "$PWD/testcases/cases"
+.venv/bin/python scripts/acquire_topcow_cta_geometry.py 012 014
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python \
+  scripts/build_cta_published_cow_study.py --subject 012 --subject 014 --register "$PWD/testcases/cases"
 ```
 
 The hidden desktop verified all 47,202 projected publisher vertices, 94,404
@@ -204,6 +220,30 @@ The portable MRA check rendered its 429 × 507 × 139 source grid and
 overlays and restored the original CTA mesh on return. The supplied MRA
 annotation header omits units, so the app offers native-grid preview.
 See `qc/hidden-app/cta006-published-cow-paired-mra-20261118-v1/`.
+
+The 012 and 014 companion packages carry their refined superior skull and
+brain display geometry and the untouched author meshes. Their fresh-process
+checks restore the exact mesh, then switch from the saved CTA to the separate
+acquired MRA and back. Use
+the 006 **NATIVE-SHOWCASE** card for the refined skull and brain and its
+**PUBLISHED-COW** card for the earlier paired vessel study.
+
+```sh
+subject=012
+study="$RESSECTIONLAB_DATA_ROOT/prepared/cta-published-cow-v1/TopCoW-$subject-CTA-MRA-PUBLISHED-COW-v1"
+warm="$RESSECTIONLAB_DATA_ROOT/qc/cta$subject-published-cow-warm-reproduction"
+SURFACE_VERIFY_NATIVE_PRESENTATION=1 SURFACE_VERIFY_DIRECT_SOURCE="$study/transfer-expectation.json" \
+  SURFACE_VERIFY_OUTPUT="$warm" desktop/node_modules/.bin/electron \
+  desktop/electron/verify-surface-quality.cjs --anatomy "$study/patient-anatomy.json" --automation-hidden
+SURFACE_VERIFY_NATIVE_PRESENTATION=1 SURFACE_VERIFY_DIRECT_SOURCE="$study/transfer-expectation.json" \
+  SURFACE_VERIFY_DIRECT_PRIOR="$warm/report.json" SURFACE_VERIFY_DIRECT_MRA_AFTER_REOPEN=1 \
+  SURFACE_VERIFY_OUTPUT="$RESSECTIONLAB_DATA_ROOT/qc/cta$subject-published-cow-cold-reproduction" \
+  desktop/node_modules/.bin/electron desktop/electron/verify-surface-quality.cjs \
+  --anatomy "$warm/publisher-geometry.rsworkspace" --automation-hidden
+```
+
+The retained output directories are `qc/hidden-app/cta<id>-published-cow-warm-v1/`
+and `qc/hidden-app/cta<id>-published-cow-cold-paired-v1/` for 012 and 014.
 
 Build or reopen 12 development scenarios and register them in the checkout's
 Cases library. The EDEN v2 generator provides the lobulated geometry. A
@@ -264,8 +304,8 @@ separate publisher artery and vein/sinus unions, and its existing variant 01
 contour. Fifteen meshes were verified and cached. Conditioning changed 3D
 pixels while preserving all three linked source-slice views in each study.
 The skull and brain remain estimates. The opaque skull views show anterior
-discontinuities and partial skull-base coverage. The conditioned brain envelopes
-show stepping and lack qualified cortical or ventricular boundaries. The
+discontinuities and partial skull-base coverage. The brain envelopes lack
+qualified cortical or ventricular boundaries. The
 arterial unions reach the scan boundary and cover only the supplied branches.
 These studies carry display and inspection scope.
 
@@ -287,6 +327,44 @@ Open `qc/hidden-app/cta-native-showcase-014-surfaces-20261118-v2/smooth-oblique.
 for the combined view. The 006 and 012 proofs are in the same `hidden-app/`
 directory under `cta-native-showcase-006-surfaces-20261118-v1` and
 `cta-native-showcase-012-surfaces-20261118-v1`.
+
+The source-bound refinement adds a physical-coordinate low-pass to the
+superior skull and brain envelopes. Vertices on the protected lower surfaces
+and within two cells of any scan clipping face are fixed at stock positions.
+The unchanged native CTA, masks and raw triangle connectivity stay bound to
+each layer. No new mesh intersections were found. The median CTA contrast
+across matched boundary samples remained within 0.52% of stock.
+
+| TopCoW pilot | Skull normal-turn reduction | Brain normal-turn reduction |
+| --- | ---: | ---: |
+| 006 | 46.3% | 63.1% |
+| 012 | 71.0% | 61.5% |
+| 014 | 40.8% | 48.4% |
+
+The metric is the decrease in mean squared angular variation between adjacent
+faces on the measured superior surface. The evidence and candidate hashes are
+in `qc/cta-showcase-conditioned-surfaces-v1/`. The same directory includes
+the three paired superior skull crops. Matched desktop comparisons
+use the same camera and linked source slices. Only the conditioned display
+positions change. They are in `qc/hidden-app/cta-showcase-<id>-refined-surfaces-v1/`.
+The underlying skull-base crop and brain-envelope uncertainty remain visible.
+The live Cases snapshots, A/B records and cold paired companion checks are
+indexed in `qc/cta-showcase-conditioned-surfaces-v1/cohort-verification.json`.
+
+```sh
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python \
+  scripts/probe_cta_showcase_conditioning.py 006 012 014 --output-name cta-showcase-surface-reproduction
+subject=014
+trial="qc/cta-showcase-surface-reproduction/$subject-staged-study"
+.venv/bin/python scripts/install_cta_showcase_conditioning.py "$subject" \
+  --proofs qc/cta-showcase-surface-reproduction --trial "$trial"
+stock="$RESSECTIONLAB_DATA_ROOT/qc/hidden-app/cta-native-showcase-$subject-surfaces-20261118-v2/report.json"
+SURFACE_VERIFY_NATIVE_PRESENTATION=1 SURFACE_VERIFY_REFINED_LAYER=broader_skull_display,brain \
+  SURFACE_VERIFY_EXPECTED="$stock" \
+  SURFACE_VERIFY_OUTPUT="$RESSECTIONLAB_DATA_ROOT/qc/cta014-refined-surface-reproduction" \
+  desktop/node_modules/.bin/electron desktop/electron/verify-surface-quality.cjs \
+  --anatomy "$RESSECTIONLAB_DATA_ROOT/$trial/patient-anatomy.json" --automation-hidden
+```
 
 CTA014 organic variants 01 and 03 and CTA012 variant 03 received fresh read-only
 preparation screens. All 10,752 sampled straight stock-tool paths were refused.

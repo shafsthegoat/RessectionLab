@@ -19,12 +19,14 @@ const zipMember=(archive,member,maxBuffer=16*1024*1024)=>execFileSync('unzip',['
 const sourceHash=sha(source);
 const directFile=process.env.SURFACE_VERIFY_DIRECT_SOURCE;
 const refinedLayer=process.env.SURFACE_VERIFY_REFINED_LAYER;
+const refinedIds=refinedLayer?.split(',')??[];
 const refinedPriorFile=process.env.SURFACE_VERIFY_REFINED_PRIOR;
 const refinedPrior=refinedPriorFile?JSON.parse(fs.readFileSync(refinedPriorFile,'utf8')):null;
 const direct=directFile?JSON.parse(fs.readFileSync(directFile,'utf8')):null;
 const priorFile=process.env.SURFACE_VERIFY_DIRECT_PRIOR;
 const prior=priorFile?JSON.parse(fs.readFileSync(priorFile,'utf8')):null;
 const pairedMra=process.env.SURFACE_VERIFY_DIRECT_MRA==='1';
+const pairedMraAfterReopen=process.env.SURFACE_VERIFY_DIRECT_MRA_AFTER_REOPEN==='1';
 const directoryOpen=nativeIndex>=0&&path.basename(source)==='patient-anatomy.json';
 const document=directoryOpen?JSON.parse(fs.readFileSync(source,'utf8'))
   :(direct||refinedLayer)&&nativeIndex>=0&&source.endsWith('.rsworkspace')?JSON.parse(zipMember(source,'patient-anatomy.json')):null;
@@ -41,7 +43,7 @@ if(savePath)dialog.showSaveDialog=async(_window,options)=>{
   assert.equal(options.title,'Save portable patient study');
   return {canceled:false,filePath:savePath};
 };
-if(pairedMra)assert(prior&&direct,'Verify paired MRA on the portable archive from a successful warm run');
+if(pairedMra||pairedMraAfterReopen)assert(prior&&direct,'Verify paired MRA on the portable archive from a successful warm run');
 if(prior){
   assert(direct&&prior.passed&&prior.pid!==process.pid&&prior.directSurface?.portable,'Use the successful warm receipt in a distinct Electron process');
   assert.equal(source,fs.realpathSync(prior.directSurface.portable.path));
@@ -308,8 +310,12 @@ app.on('browser-window-created',(_event,window)=>{
       if(refinedPortable){
         await click('Scans');await click('Save patient study file…');
         await wait(async()=>fs.existsSync(refinedPortable)&&await js(`document.body.innerText.includes('Patient study file saved')`),'refined portable study save');
-        const attachment=document.layers.find(row=>row.id===refinedLayer).conditioned_surface;
-        for(const member of [attachment.positions,attachment.proof,document.data_case.source_receipt]){
+        const members=refinedIds.flatMap(id=>{
+          const attachment=document.layers.find(row=>row.id===id).conditioned_surface;
+          return [attachment.positions,attachment.proof];
+        });
+        if(document.data_case.source_receipt)members.push(document.data_case.source_receipt);
+        for(const member of members){
           assert.equal(crypto.createHash('sha256').update(zipMember(refinedPortable,member.path)).digest('hex'),member.sha256);
         }
         report.refinedPortable={path:refinedPortable,sha256:sha(refinedPortable)};
@@ -343,6 +349,7 @@ app.on('browser-window-created',(_event,window)=>{
       await pair('oblique',()=>click('Fit 3D view'));
       if(direct){
         await verifyDirect();
+        if(pairedMraAfterReopen)await verifyPairedMra();
         report.passed=true;
         return;
       }
@@ -397,9 +404,9 @@ app.on('browser-window-created',(_event,window)=>{
       }
       if(process.env.SURFACE_VERIFY_EXPECTED){
         const before=JSON.parse(fs.readFileSync(process.env.SURFACE_VERIFY_EXPECTED,'utf8'));
-        const refined=refinedLayer&&document.layers.find(row=>row.id===refinedLayer)?.conditioned_surface;
+        const refined=refinedIds.map(id=>document.layers.find(row=>row.id===id)?.conditioned_surface);
         if(refinedLayer){
-          assert(refined&&before.passed&&before.sourceHash===refined.stock_manifest_sha256,
+          assert(before.passed&&refined.every(row=>row?.stock_manifest_sha256===before.sourceHash),
             'Expected the checksum-bound original study for this refinement');
           // Both reports must compare the serialized grid record. JSON removes
           // optional undefined fields and preserves signed-zero geometry as 0.
@@ -408,26 +415,29 @@ app.on('browser-window-created',(_event,window)=>{
         for(const [name,view] of Object.entries(report.captures)){
           if(name==='post-orbit-refinement')continue;
           compareSourceFrame(before.captures[name],view,name+' baseline');
-          if(refined)compareSlices(before.captures[name],view,name+' baseline');
+          if(refinedLayer)compareSlices(before.captures[name],view,name+' baseline');
         }
         const identities=log=>log.requests.flatMap(request=>request.layers??[]).map(layer=>[
           layer.name,layer.indicesSha256,layer.sourceMeshSha256,layer.maskSha256,layer.volumeMm3,layer.qa?.componentCount
         ]);
         assert.deepEqual(identities(before),identities(report),'Source masks, topology, geometry or source volume changed');
-        if(refined){
+        if(refinedLayer){
           const layer=(log,name)=>log.requests.flatMap(request=>request.layers??[]).find(row=>row.name===name);
-          const stock=layer(before,refinedLayer),current=layer(report,refinedLayer);
-          assert.equal(current?.surfaceDiagnostics.policy,refined.schema);
-          assert.notEqual(current.displayMeshSha256,stock.displayMeshSha256);
+          const comparisons=refinedIds.map((id,index)=>{
+            const stock=layer(before,id),current=layer(report,id),attachment=refined[index];
+            assert.equal(current?.surfaceDiagnostics.policy,attachment.schema);
+            assert.notEqual(current.displayMeshSha256,stock.displayMeshSha256);
+            return {layer:id,stockManifest:before.sourceHash,stockDisplaySha256:stock.displayMeshSha256,
+              displaySha256:current.displayMeshSha256,probeSha256:attachment.proof.sha256};
+          });
           assert.equal(report.captures['source-skull-anterior'].pixels['anatomy-image'].sha256,
             before.captures['source-skull-anterior'].pixels['anatomy-image'].sha256);
           assert.notEqual(report.captures['smooth-skull-anterior'].pixels['anatomy-image'].sha256,
             before.captures['smooth-skull-anterior'].pixels['anatomy-image'].sha256);
-          report.refinedComparison={layer:refinedLayer,stockManifest:before.sourceHash,
-            stockDisplaySha256:stock.displayMeshSha256,displaySha256:current.displayMeshSha256,
-            probeSha256:refined.proof.sha256};
+          report.refinedComparisons=comparisons;
+          if(comparisons.length===1)report.refinedComparison=comparisons[0];
           if(refinedPrior){
-            assert.deepEqual(report.refinedComparison,refinedPrior.refinedComparison);
+            assert.deepEqual(comparisons,refinedPrior.refinedComparisons??[refinedPrior.refinedComparison]);
             compareSourceFrame(refinedPrior.captures['smooth-skull-anterior'],report.captures['smooth-skull-anterior'],'Cold conditioned vault');
             compareSlices(refinedPrior.captures['smooth-skull-anterior'],report.captures['smooth-skull-anterior'],'Cold conditioned vault');
             assert.equal(report.captures['smooth-skull-anterior'].pixels['anatomy-image'].sha256,

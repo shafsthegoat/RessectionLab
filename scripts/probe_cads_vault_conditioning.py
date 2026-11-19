@@ -60,10 +60,11 @@ def filter_positions(positions, faces):
     return vtk_to_numpy(result.GetPoints().GetData()).astype(np.float64)
 
 
-def cap_candidate(source, baseline, target, linear):
+def cap_candidate(source, baseline, target, linear, weight=None):
     """Taper to exact baseline under the protected skull-base boundary."""
-    t = np.clip((source[:, 2] - LOWER_INDEX) / (UPPER_INDEX - LOWER_INDEX), 0, 1)
-    weight = t * t * (3 - 2 * t)
+    if weight is None:
+        t = np.clip((source[:, 2] - LOWER_INDEX) / (UPPER_INDEX - LOWER_INDEX), 0, 1)
+        weight = t * t * (3 - 2 * t)
     inverse = np.linalg.inv(linear)
     delta = (target - baseline @ linear.T) * weight[:, None]
     delta *= np.minimum(1., (MAX_ADDITIONAL_MM - .0001) /
@@ -77,7 +78,7 @@ def cap_candidate(source, baseline, target, linear):
                            (MAX_FROM_SOURCE_CELLS - .0001) /
                            np.maximum(np.linalg.norm(moved, axis=1), 1.e-20))
     result = np.asarray(source + moved * np.minimum(1., fractions)[:, None], dtype=np.float32)
-    result[t == 0] = baseline[t == 0]
+    result[weight == 0] = baseline[weight == 0]
     return result
 
 
@@ -139,6 +140,64 @@ def contrast_pair(ct, baseline, candidate, faces, vault, linear):
     return [contrast(points) for points in (baseline, candidate)]
 
 
+def assess(old, ct, linear, protected, vault, weight=None):
+    """Measure display-only relocation on fixed, source-bound indices."""
+    raw, baseline, faces = old['source'], old['positions'], old['indices']
+    raw_phys, baseline_phys = raw @ linear.T, baseline @ linear.T
+    target = filter_positions(baseline_phys, faces)
+    candidate = cap_candidate(raw, baseline, target, linear, weight)
+    del target
+    print(f'Prepared {len(faces):,} existing triangles; checking independent geometry limits', flush=True)
+    candidate_phys = candidate @ linear.T
+    rolled_back = remove_bad_faces(baseline_phys, candidate_phys, faces)
+    rolled_back_nodes = np.all(candidate_phys == baseline_phys, axis=1)
+    candidate = (candidate_phys @ np.linalg.inv(linear).T).astype(np.float32)
+    candidate[rolled_back_nodes] = baseline[rolled_back_nodes]
+    candidate_phys = candidate @ linear.T
+    if len(intersection_vertices(baseline_phys, candidate_phys, faces)):
+        raise ValueError('Quantized candidate introduced triangle contacts')
+    origin_change = np.linalg.norm(candidate_phys - raw_phys, axis=1)
+    extra_change = np.linalg.norm(candidate_phys - baseline_phys, axis=1)
+    cell_change = np.linalg.norm(candidate - raw, axis=1)
+    if (origin_change.max() > MAX_FROM_SOURCE_MM or extra_change.max() > MAX_ADDITIONAL_MM
+            or cell_change.max() > MAX_FROM_SOURCE_CELLS
+            or not np.array_equal(candidate[protected], baseline[protected])):
+        raise ValueError('Candidate changed protected anatomy or exceeded its grid-relative displacement bounds')
+
+    edge_count, turn = normal_turn_pair(baseline_phys, candidate_phys, faces, vault)
+    contrast = contrast_pair(ct, baseline, candidate, faces, vault, linear)
+    reduction = float(1 - turn[1]['mean_squared_deg'] / turn[0]['mean_squared_deg'])
+    contrast_ratio = contrast[1][1] / max(contrast[0][1], 1.e-10)
+    passed = reduction >= .15 and contrast_ratio >= .95 and contrast[0][0] == contrast[1][0]
+    report = {'triangles': len(faces),
+              'indices_hash': array_digest(faces), 'source_mesh_hash': array_digest(raw),
+              'stock_conditioned_hash': array_digest(baseline), 'candidate_hash': array_digest(candidate),
+              'protected_vertices_exact': int(np.count_nonzero(protected)),
+              'additional_displacement_mm': float(extra_change.max()),
+              'source_displacement_mm': float(origin_change.max()),
+              'source_displacement_cells': float(cell_change.max()),
+              'vertices_returned_to_baseline': rolled_back, 'new_contacts': 0,
+              'vault_shared_edges': edge_count, 'turn': dict(zip(('stock', 'candidate'), turn)),
+              'mean_squared_turn_reduction': reduction,
+              'ct_contrast_probe': dict(zip(('stock', 'candidate'), [dict(samples=n, median=v) for n, v in contrast])),
+              'contrast_ratio': contrast_ratio, 'passed_numeric_gate': passed,
+              'scope': 'Display surface only. Image values, label memberships and triangle indices are unchanged.'}
+    return report, candidate
+
+
+def retain_result(root, output, report, candidate):
+    with TemporaryDirectory(prefix='.cads-vault-', dir=output.parent) as temporary:
+        stage = Path(temporary) / output.name
+        stage.mkdir()
+        if report['passed_numeric_gate']:
+            positions = stage / 'conditioned-vault.npy'
+            np.save(positions, candidate, allow_pickle=False)
+            report['positions'] = {**binding(root, positions), 'path': str((output / positions.name).relative_to(root))}
+        atomic_json(stage / 'report.json', report)
+        stage.rename(output)
+    return report
+
+
 def probe(root, directory, source_manifest, output):
     collection = PatientImagingCollection(directory, json.loads(checked_file(root, source_manifest).read_text()))
     scan = collection.series(SERIES)
@@ -155,60 +214,13 @@ def probe(root, directory, source_manifest, output):
     if tuple(np.diag(linear)) != (-.42578125, .42578125, 1.) or not np.array_equal(linear, np.diag(np.diag(linear))):
         raise ValueError('The frozen protected levels require the original orthogonal CADS 465 grid')
     old = mesh(collection, layer)
-    raw, baseline, faces = old['source'], old['positions'], old['indices']
-    raw_phys, baseline_phys = raw @ linear.T, baseline @ linear.T
-    target = filter_positions(baseline_phys, faces)
-    candidate = cap_candidate(raw, baseline, target, linear)
-    del target
-    print(f'Prepared {len(faces):,} existing triangles; checking independent geometry limits', flush=True)
-    candidate_phys = candidate @ linear.T
-    rolled_back = remove_bad_faces(baseline_phys, candidate_phys, faces)
-    rolled_back_nodes = np.all(candidate_phys == baseline_phys, axis=1)
-    candidate = (candidate_phys @ np.linalg.inv(linear).T).astype(np.float32)
-    candidate[rolled_back_nodes] = baseline[rolled_back_nodes]
-    candidate_phys = candidate @ linear.T
-    if len(intersection_vertices(baseline_phys, candidate_phys, faces)):
-        raise ValueError('Quantized candidate introduced triangle contacts')
-    origin_change = np.linalg.norm(candidate_phys - raw_phys, axis=1)
-    extra_change = np.linalg.norm(candidate_phys - baseline_phys, axis=1)
-    cell_change = np.linalg.norm(candidate - raw, axis=1)
-    if (origin_change.max() > MAX_FROM_SOURCE_MM or extra_change.max() > MAX_ADDITIONAL_MM
-            or cell_change.max() > MAX_FROM_SOURCE_CELLS
-            or not np.array_equal(candidate[raw[:, 2] <= LOWER_INDEX], baseline[raw[:, 2] <= LOWER_INDEX])):
-        raise ValueError('Candidate changed protected anatomy or exceeded its grid-relative displacement bounds')
-
-    vault = raw[:, 2] >= UPPER_INDEX
-    edge_count, turn = normal_turn_pair(baseline_phys, candidate_phys, faces, vault)
-    contrast = contrast_pair(ct, baseline, candidate, faces, vault, linear)
-    reduction = float(1 - turn[1]['mean_squared_deg'] / turn[0]['mean_squared_deg'])
-    contrast_ratio = contrast[1][1] / max(contrast[0][1], 1.e-10)
-    passed = reduction >= .15 and contrast_ratio >= .95 and contrast[0][0] == contrast[1][0]
-    report = {'schema': OUTPUT, 'source_manifest': source_manifest, 'source_ct': source_ref,
-              'source_ct_array': scan['data'], 'mask': layer['data'], 'snapshot': collection.identity(),
-              'layer': layer['id'], 'affine': matrix.tolist(), 'triangles': len(faces),
-              'indices_hash': array_digest(faces), 'source_mesh_hash': array_digest(raw),
-              'stock_conditioned_hash': array_digest(baseline), 'candidate_hash': array_digest(candidate),
-              'protected_native_plane_inclusive': LOWER_INDEX, 'full_effect_native_plane': UPPER_INDEX,
-              'protected_vertices_exact': int(np.count_nonzero(raw[:, 2] <= LOWER_INDEX)),
-              'additional_displacement_mm': float(extra_change.max()),
-              'source_displacement_mm': float(origin_change.max()),
-              'source_displacement_cells': float(cell_change.max()),
-              'vertices_returned_to_baseline': rolled_back, 'new_contacts': 0,
-              'vault_shared_edges': edge_count, 'turn': dict(zip(('stock', 'candidate'), turn)),
-              'mean_squared_turn_reduction': reduction,
-              'ct_contrast_probe': dict(zip(('stock', 'candidate'), [dict(samples=n, median=v) for n, v in contrast])),
-              'contrast_ratio': contrast_ratio, 'passed_numeric_gate': passed,
-              'scope': 'Display surface only. Image values, label memberships and triangle indices are unchanged.'}
-    with TemporaryDirectory(prefix='.cads-vault-', dir=output.parent) as temporary:
-        stage = Path(temporary) / output.name
-        stage.mkdir()
-        if passed:
-            positions = stage / 'conditioned-vault.npy'
-            np.save(positions, candidate, allow_pickle=False)
-            report['positions'] = {**binding(root, positions), 'path': str((output / positions.name).relative_to(root))}
-        atomic_json(stage / 'report.json', report)
-        stage.rename(output)
-    return report
+    levels = old['source'][:, 2]
+    report, candidate = assess(old, ct, linear, levels <= LOWER_INDEX, levels >= UPPER_INDEX)
+    report.update(schema=OUTPUT, source_manifest=source_manifest, source_ct=source_ref,
+                  source_ct_array=scan['data'], mask=layer['data'], snapshot=collection.identity(),
+                  layer=layer['id'], affine=matrix.tolist(), protected_native_plane_inclusive=LOWER_INDEX,
+                  full_effect_native_plane=UPPER_INDEX)
+    return retain_result(root, output, report, candidate)
 
 
 def main():

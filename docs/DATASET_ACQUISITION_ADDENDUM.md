@@ -39,7 +39,7 @@ record subsequent downloads, spatial review and case admission separately.
 | TAIR v1.0, 00273, 00244 and 00410 | Three acquired CTA series | Three native inspection studies. Pilot brain and skull estimates for 00273. |
 | Head CTA, 013 and 189 | Two acquired DICOM studies and the 013 aneurysm STL | Two native inspection studies. The STL remains withheld from display pending frame qualification. |
 | ISLES’24 v7, 0146 | Acquired NCCT and CTA, publisher-registered CTA, automated CoW mask | One study with independent acquired grids and separately identified derivative. |
-| TopCoW/TopBrain 006 | Original CTA CoW mask, publisher VTP surface and graph, reused native MRA and its V1 annotation | One companion study on a previously acquired person. |
+| TopCoW/TopBrain 006, 012 and 014 | Original CTA CoW masks, publisher VTP surfaces and graphs, reused native MRAs and their V1 annotations | Three companion studies on previously acquired people. The newer ranges recover only the two previously missing geometry selections. |
 | RESECT Case3 | Two observed cavity masks and paired landmark files, reused MRI and staged ultrasound | One paired observational study on a previously acquired person. |
 | CADS BrainCT-1mm, 465 | One acquired noncontrast head CT and three publisher model-label volumes, with source metadata | Separate native inspection study for head-bone and brain tissue coverage. |
 

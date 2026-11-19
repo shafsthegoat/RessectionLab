@@ -18,6 +18,27 @@ from resectionlab.data_root import atomic_json, checked_root, safe_path, sha256_
 from resectionlab.patient_anatomy import PatientImagingCollection, reconstruction_lock
 
 
+def attach_positions(root, collection, row, scan, proof, numeric_path):
+    positions = np.load(checked_file(root, proof['positions']), allow_pickle=False)
+    if array_digest(positions) != proof['candidate_hash']:
+        raise ValueError('Candidate geometry bytes differ')
+    row['conditioned_surface'] = {
+        'schema': CONDITIONED_SURFACE, 'mask_revision': row['revision'],
+        'label_value': row['label_value'], 'mask_sha256': row['data']['sha256'],
+        'source_array_sha256': scan['data']['sha256'], 'source_original_sha256': scan['original']['sha256'],
+        'affine': row['affine'], 'source_mesh_hash': proof['source_mesh_hash'],
+        'indices_hash': proof['indices_hash'], 'stock_conditioned_hash': proof['stock_conditioned_hash'],
+        'stock_manifest_sha256': proof['source_manifest']['sha256'],
+        'protected_native_plane': proof['protected_native_plane_inclusive'],
+        'positions': collection.put_array(positions), 'proof': collection.original(numeric_path),
+    }
+    if 'protected_crop_margin_cells' in proof:
+        row['conditioned_surface']['protected_crop_margin_cells'] = proof['protected_crop_margin_cells']
+    geometry = mesh(collection, row)
+    if array_digest(geometry['positions']) != proof['candidate_hash']:
+        raise ValueError('Native renderer geometry does not use the measured candidate')
+
+
 def install(root, study, numeric_path, desktop_path):
     proof = json.loads(numeric_path.read_text())
     if proof['schema'] != OUTPUT or proof['passed_numeric_gate'] is not True or proof['new_contacts'] != 0:
@@ -57,22 +78,8 @@ def install(root, study, numeric_path, desktop_path):
     if row.get('conditioned_surface') is None:
         if sha256_file(manifest) != stock_sha:
             raise ValueError('Start from the audited stock study snapshot')
-        positions = np.load(checked_file(root, proof['positions']), allow_pickle=False)
-        if array_digest(positions) != proof['candidate_hash']:
-            raise ValueError('Candidate geometry bytes differ')
-        row['conditioned_surface'] = {
-            'schema': CONDITIONED_SURFACE, 'mask_revision': row['revision'],
-            'label_value': row['label_value'], 'mask_sha256': row['data']['sha256'],
-            'source_array_sha256': scan['data']['sha256'], 'source_original_sha256': scan['original']['sha256'],
-            'affine': row['affine'], 'source_mesh_hash': proof['source_mesh_hash'],
-            'indices_hash': proof['indices_hash'], 'stock_conditioned_hash': proof['stock_conditioned_hash'],
-            'stock_manifest_sha256': stock_sha, 'protected_native_plane': LOWER_INDEX,
-            'positions': collection.put_array(positions), 'proof': collection.original(numeric_path),
-        }
+        attach_positions(root, collection, row, scan, proof, numeric_path)
         collection.document['data_case']['source_receipt'] = collection.original(checked_file(root, receipt['acquisition']))
-        geometry = mesh(collection, row)
-        if array_digest(geometry['positions']) != proof['candidate_hash']:
-            raise ValueError('Native renderer geometry does not use the measured candidate')
         if any(sha256_file(collection.path(name)) != sha for name, sha in set(referenced_files(collection.document))):
             raise ValueError('A portable archive member is missing or changed')
         collection.save('Attach source-bound superior vault display positions', expected=proof['snapshot'])
