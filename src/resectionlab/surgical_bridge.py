@@ -13,7 +13,7 @@ from .surgical_scene import from_case, engineering_scene
 from .surgical_engine import SurgicalEngine
 from .surgical_replay_cache import SurgicalReplayCache
 
-OPERATIONS = frozenset({'surgicalRehearsal', 'createSurgicalFixture', 'importSurgicalScene', 'prepareSurgicalEnvironment', 'compareSurgicalAnatomy', 'openBoundSurgicalReplay'})
+OPERATIONS = frozenset({'surgicalRehearsal', 'createSurgicalFixture', 'importSurgicalScene', 'prepareSurgicalEnvironment', 'compareSurgicalAnatomy', 'compareBoundSurgicalReplays', 'openBoundSurgicalReplay'})
 ARTIFACT = 'surgical_toolbox'
 RESULT_BYTES = 32 * 1024**2 - 4096  # Reserve the bounded JSONL envelope.
 _NATIVE_PREVIEW = SurgicalEngine.preview
@@ -199,6 +199,20 @@ def dispatch(session, operation, args, request, progress):
             decisions=args.get('decisions', 1), check=request.check, progress=progress)
         _require_json_budget(result, 2 * 1024 * 1024, 'SURGICAL_RESULT_LIMIT', 'Comparison result exceeds budget')
         return result
+    if operation == 'compareBoundSurgicalReplays':
+        from .desktop_bridge import _path
+        from .surgical_strategy_comparison import compare_recordings
+        _keys(args, {'collectionId', 'snapshotId', 'targetLayerId', 'paths'})
+        collection = getattr(session, 'anatomy_collections', {}).get(args['collectionId'])
+        if collection is None or collection.identity() != args['snapshotId']:
+            raise ValueError('Reopen the current study before comparing recorded procedures')
+        if args['collectionId'] in getattr(session, 'anatomy_drafts', {}):
+            raise ValueError('Finish the anatomy correction before comparing procedures')
+        paths = args['paths']
+        if not isinstance(paths, list) or len(paths) != 2:
+            raise ValueError('Select two recorded procedures')
+        return compare_recordings(collection, args['targetLayerId'], [_path(p, kind='case') for p in paths],
+                                  request, progress)
     if operation == 'openBoundSurgicalReplay':
         _keys(args, {'collectionId', 'snapshotId', 'targetLayerId', 'approachId', 'path'})
         from .desktop_bridge import _path

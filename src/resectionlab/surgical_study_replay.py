@@ -6,6 +6,7 @@ import numpy as np
 from .core import semantic_digest
 from .patient_anatomy import PatientImagingCollection
 from .surgical_engine import SurgicalEngine
+from . import surgical_recording_contract as contract
 from .surgical_environment import SCHEMA, resolve_branch_scene, standardize
 from .surgical_scene import from_case
 from .surgical_task_admission import verify_source
@@ -28,7 +29,7 @@ def study_target(collection, target_id):
     return binding
 
 
-def _recorded_branch(case, record):
+def _recorded_branch(case, record, *, exact_target=None):
     if not isinstance(record, dict) or record.get('environmentSchema') != SCHEMA:
         raise ValueError('Select a saved standard SurgicalEngine environment with recorded actions')
     branch_id = record.get('branchId')
@@ -45,6 +46,10 @@ def _recorded_branch(case, record):
     target_id = adapter.get('sourceLayers', {}).get(targets[0]['name'], {}).get('layerId')
     if 'exactGridReplay' in record:
         target_id = record['exactGridReplay']['targetLayerId']
+    if exact_target is not None:
+        if target_id and target_id != exact_target:
+            raise ValueError('Recorded treatment target differs from the selected native target')
+        target_id = exact_target
     if not target_id:
         raise ValueError('Recorded treatment target lacks a native layer binding')
     if type(record.get('position')) is not int or not 0 <= record['position'] <= len(snapshot['actions']):
@@ -54,7 +59,9 @@ def _recorded_branch(case, record):
 
 def _receipt(case, scene, snapshot, target_id, record):
     from .anatomy_planning import manifest_target_binding
-    if 'exactGridReplay' in record:
+    if record.get('exactGridReplay', {}).get('schema') == contract.SCHEMA:
+        source = contract.identity(case, scene, snapshot, record, record['exactGridReplay'])
+    elif 'exactGridReplay' in record:
         from .surgical_exact_grid_replay import fixed_route_identity
         source = fixed_route_identity(case, scene, snapshot, record['exactGridReplay'])
     else:
@@ -109,7 +116,7 @@ def _verify_resampled_source(collection, case, scene, check):
         raise ValueError('Recorded reference image differs from the open study on the engine grid')
 
 
-def verify_recording(collection, target_id, case, record, *, approach_id=None, check=lambda: None):
+def verify_recording(collection, target_id, case, record, *, approach_id=None, check=lambda: None, on_verified_engine=None):
     check()
     binding = study_target(collection, target_id)
     scene, snapshot, mapped_target = _recorded_branch(case, record)
@@ -117,12 +124,23 @@ def verify_recording(collection, target_id, case, record, *, approach_id=None, c
         raise ValueError('Recorded treatment target differs from the selected native target')
     receipt = _receipt(case, scene, snapshot, target_id, record)
     exact = record.get('exactGridReplay')
-    if exact is not None:
+    reusable = exact is not None and exact.get('schema') == contract.SCHEMA
+    if reusable:
+        contract.verify_source(collection, case, scene, exact, approach_id, check=check)
+    elif exact is not None:
         from .surgical_exact_grid_replay import verify_exact_source
         verify_exact_source(collection, case, scene, exact, approach_id, check=check)
     else:
         _verify_resampled_source(collection, case, scene, check)
-    SurgicalEngine.restore(scene, snapshot, check=check, use_cache=False)
+
+    def compare_boundary(current):
+        if contract.observed_boundary(current) != exact['observations'][len(current.actions)]:
+            raise ValueError('Cold engine pose, metrics, time or removal differs at boundary ' + str(len(current.actions)))
+
+    engine = SurgicalEngine.restore(scene, snapshot, check=check, use_cache=False,
+        on_boundary=compare_boundary if reusable else None)
+    if reusable:
+        contract.verify_history(engine, record, exact)
     native = collection.layer(target_id)
     raw = collection.array(native['data'])
     count = sum(int(np.count_nonzero(raw[:, :, k] == native['label_value'])) for k in range(raw.shape[2]))
@@ -139,4 +157,6 @@ def verify_recording(collection, target_id, case, record, *, approach_id=None, c
     if (current.identity() != collection.identity() or study_target(current, target_id) != binding
             or receipt['targetBinding'] != binding):
         raise ValueError('Native study or target selection changed while checking the episode')
+    if on_verified_engine is not None:
+        on_verified_engine(engine)
     return receipt, sampling

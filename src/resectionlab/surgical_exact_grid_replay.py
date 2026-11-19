@@ -11,10 +11,11 @@ from .anatomy_operative_field import _saved_route
 from .anatomy_planning import manifest_target_binding
 from .patient_anatomy import digest, file_hash
 from .surgical_tools import TOOLS
+from .surgical_recording_contract import bind_recording  # public producer API
 
 
 SCHEMA = 'resectionlab.exact-grid-fixed-cusa-replay.v1'
-# Only this archived producer report has been reviewed for the fixed-route join.
+# Legacy v1 archives use the original report as their evidence. New v2 recordings use the native contract.
 # Its body binds the source case, numerical engine, script, actions and observed endpoint.
 FIXED_CUSA_REPORT_SHA256 = '28da0e97f025b4916f9867c9cbeb9902e424793bdd1cd8160ba11e1aadc543b6'
 
