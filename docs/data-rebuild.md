@@ -14,11 +14,17 @@ the first-party acquisition receipts and the scope of file verification.
 The development addition has six newly acquired source families, seven acquired
 CT-family series, one publisher-registered CTA derivative, three native
 showcases on previously acquired TopCoW families, and 12 generated scenarios.
-The checkout lists 22 new CTA development entries in Cases, including a separate
-publisher-geometry companion for TopCoW 006. The three acquisition
-sets retain 354,652,995 bytes of publisher payloads. At the final check the
-scoped source files, studies, scenarios, inference caches, inventory and QA
-used 5.80 GB of allocated HDD file space before the publisher-geometry companion.
+The checkout lists 22 CTA development entries in the core addition, including
+a publisher-geometry companion for TopCoW 006. The route-conditioned CTA014
+and IXI077 studies each add a pristine case and a separate recording. IXI265
+adds an MRI anatomy study, and RESECT Case3 adds the paired observation study.
+The recordings and companion studies reuse existing people. The three CTA
+acquisition sets retain 354,652,995 bytes of publisher payloads. The Case3
+extension recovered another 46,148 bytes of publisher data. The three new CTA
+source directories, prepared pilot and scenario directories, both recorded
+workspaces and the Case3 stage benchmark occupy 6.48 GB of allocated HDD file
+space. The separate baseline inventory, model caches and hidden app captures
+are outside that storage count.
 
 ### Selective CTA intake
 
@@ -276,6 +282,53 @@ OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python \
 
 See `prepared/cta014-organic-fixed-route-v1/preflight.json` and the source
 shape QA beside the package.
+
+The separate **TopCoW-014-CTA-ORGANIC-FIXED-ROUTE-01-v1-RECORDED** card
+starts from the pristine case and preserves 45 newly checked actions. The
+simulator repeated 24 opening actions and removed 552 estimated skull cells.
+Five kerfs and their returns removed 22 more. Two stock CUSA applies produced
+the first target effect, followed by withdrawal along the same line with no
+additional removal. The recorded totals are 131.52 mm³ of estimated skull,
+47.66 mm³ of non-target brain and 8.02 mm³ of target. The edited target count
+is 35 of 719 visible contour cells. Cold backend reopen restored the exact
+acquired image, source masks, action history and final state.
+
+Scalp and dural exposure remain assumed. The modeled action-boundary drill
+temperature reached 124.25 °C. That is a sampled numerical result. It supplies
+no measured thermal history or clinical clearance. The partial vessel layers
+show zero modeled encounters in this run, with unobserved vessels outside the
+scope of the check. Complete removal remains unqualified.
+
+```sh
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python \
+  scripts/rehearse_cta014_route_conditioned.py --output-name cta014-organic-replay-reproduction
+```
+
+The active replay and guarded action log are in
+`qc/cta014-organic-fixed-route-rehearsal-v1/` on the HDD.
+The second backend run checked all 17 guarded bone blockers and reproduced
+all nine archive members byte for byte after decompression. Its report and
+restore pointer are in `qc/cta014-organic-fixed-route-rehearsal-reproduction-20261118/`.
+The hidden desktop verified completed GPU frames at pristine state, the
+552-cell drilled opening, first target-effect boundary and withdrawal. Play,
+Pause and scrubbing used native replay observations. The selected frame at
+29.8 s within the second 30 s apply shows 7.79 mm³ of target effect. The
+accepted boundary shows 8.02 mm³. All stages preserve the acquired CTA signal.
+The report and five captures are in
+`qc/hidden-app/cta014-organic-conditioned-replay-20261118-v1/`.
+
+```sh
+trial="$RESSECTIONLAB_DATA_ROOT/qc/cta014-organic-fixed-route-rehearsal-v1"
+DATA_REBUILD_CASE="$trial/replay.ressectionlab" \
+  DATA_REBUILD_OUTPUT="$RESSECTIONLAB_DATA_ROOT/qc/cta014-replay-app-reproduction" \
+  DATA_REBUILD_REPLAY_ONLY=1 DATA_REBUILD_REPLAY_ACTION=43 \
+  DATA_REBUILD_REPLAY_OPENING_REPORT="$trial/report.json" \
+  DATA_REBUILD_REPLAY_START_STATE_ID="$(jq -r '.[43].before_state_id' "$trial/actions.json")" \
+  DATA_REBUILD_EXPECT_OPERATING_STATE_ID="$(jq -r '.target_effect_state_id' "$trial/report.json")" \
+  DATA_REBUILD_EXPECT_STATE_ID="$(jq -r '.final_state_id' "$trial/report.json")" \
+  DATA_REBUILD_EXPECT_REPLAY_ACTIONS="$(jq -r '.committed_action_count' "$trial/report.json")" \
+  desktop/node_modules/.bin/electron desktop/electron/verify-data-rebuild.cjs --automation-hidden
+```
 
 ### MRI anatomy and diffusion inspection
 

@@ -23,6 +23,14 @@ const targetLabel=process.env.DATA_REBUILD_CTA_TARGET_LABEL;
 const sourceSha=process.env.DATA_REBUILD_CTA_SOURCE_SHA256;
 const collectionFile=process.env.DATA_REBUILD_CTA_COLLECTION;
 const replayOnly=process.env.DATA_REBUILD_REPLAY_ONLY==='1';
+const replayOpeningFile=process.env.DATA_REBUILD_REPLAY_OPENING_REPORT;
+const replayOpening=replayOpeningFile?JSON.parse(fs.readFileSync(replayOpeningFile,'utf8')):null;
+if(replayOpening){
+  assert(replayOnly&&replayOpening.status==='target_effect_and_withdrawal');
+  assert.equal(replayOpening.replay_sha256,inputSha);
+  assert.equal(replayOpening.historical_prefix_actuated_from_zero,true);
+  assert.equal(replayOpening.opening_verified,true);
+}
 const resectPairFile=process.env.DATA_REBUILD_RESECT_PAIR_REPORT;
 const resectPair=resectPairFile?JSON.parse(fs.readFileSync(resectPairFile,'utf8')):null;
 if(resectPair){
@@ -127,6 +135,8 @@ ipcMain.handle=(name,handler)=>originalHandle(name,async(...args)=>{
       receipt.slots=Object.fromEntries(Object.entries(view.slots).map(([id,{instrument,inserted,position,quaternion}])=>[id,{instrument,inserted,position,quaternion}]));
       receipt.effects={targetMm3:view.metrics.targetRemovedMm3,nonTargetMm3:view.metrics.nonTargetRemovedMm3,
         removedCells:view.removed?.length,elapsedSeconds:view.metrics.elapsedSeconds};
+      if(replayOpening)Object.assign(receipt.effects,{byLabelMm3:view.metrics.removedByLabelMm3,
+        drillMm3:view.metrics.drillRemovedVolumeMm3});
       if(playback){
         const {position,actionIndex,frameIndex,frameCount,frameStateId,observedTimeSeconds,actionElapsedSeconds,actionDurationSeconds,isActionBoundary,readOnly}=playback;
         const frames=playback.frames,start=frames[0].observedTimeSeconds,end=frames[frameCount-1].observedTimeSeconds;
@@ -185,11 +195,15 @@ app.on('browser-window-created',(_event,window)=>{
       const enabledTimeline=`!!document.querySelector('[aria-label="Surgical timeline"]:enabled')`;
       const domState=`document.querySelector('.surgical-panel')?.dataset.stateId`;
       const observation=`document.querySelector('[aria-label="Observed action frames"]')`;
+      const checkSource=(receipt,frame)=>{
+        assert.equal(receipt.caseHash,frame.publication.sourceCaseHash);
+        if(report.replaySource)assert.equal(frame.gpu.sourceSignalFingerprint,report.replaySource.sourceSignal);
+      };
       const boundary=async(id,position,since)=>{
         const frame=await completedFrame(id,since);
         const receipt=report.requests.findLast(row=>row.stateId===id&&row.position===position&&!row.playback&&row.effects);
         assert(receipt,`Missing engine boundary ${position} receipt for ${id}`);
-        assert.equal(receipt.caseHash,frame.publication.sourceCaseHash);
+        checkSource(receipt,frame);
         return {receipt,frame};
       };
       const animateFrame=async({id,frameIndex},since)=>{
@@ -205,10 +219,48 @@ app.on('browser-window-created',(_event,window)=>{
         assert.equal(receipt.slots.right.instrument,'cusa');
         assert.equal(receipt.slots.right.inserted,true);
         const frame=await completedFrame(id,since);
-        assert.equal(receipt.caseHash,frame.publication.sourceCaseHash);
+        checkSource(receipt,frame);
         return {receipt,frame};
       };
       const timestamp=()=>js('performance.now()');
+      let opening;
+      if(replayOpening){
+        const archived=JSON.parse(execFileSync('unzip',['-p',input,'manifest.json'],{encoding:'utf8',maxBuffer:64*1024*1024}));
+        const record=archived.artifacts.surgical_toolbox,history=record.timeline[record.branchId];
+        const openingPos=replayOpening.contract.opening_actions;
+        assert(Number.isSafeInteger(openingPos)&&openingPos>0&&openingPos<action);
+        assert.equal(archived.case_semantic_hash,replayOpening.contract.case_hash);
+        assert.equal(history[0].stateBefore,replayOpening.initial_state_id);
+        assert.equal(history[action].action.operation,'apply');
+        assert.equal(history[total-1].action.operation,'withdraw');
+        assert.equal(history[action].stateBefore,startId);
+        assert.equal(history[action].stateAfter,effectId);
+        assert.equal(history[total-1].stateAfter,finalId);
+        assert.equal(history.length,total);
+        const structural=archived.source_refs.find(ref=>ref.source_id==='structural');
+        assert.equal(structural?.provenance,'observed');
+        assert.match(structural.sha256,/^[a-f0-9]{64}$/);
+        await click('Anatomy');
+        await wait(`document.querySelectorAll('.anatomy-layer-identity').length===${Object.keys(archived.metadata.anatomy_layers).length}`);
+        await gpuSourceReady();
+        const source=await sourceState();
+        assert.equal(source.caseHash,archived.case_semantic_hash);
+        assert.match(source.modality,/CTA/i);
+        assert.match(source.sourceSignal,/^sampled-f32:/);
+        const layers=await js(`[...document.querySelectorAll('.anatomy-layer-identity')].map(e=>({
+          label:e.querySelector('strong').textContent,provenance:e.querySelector('.anatomy-layer-origin').textContent
+        }))`);
+        for(const [id,layer] of Object.entries(archived.metadata.anatomy_layers)){
+          assert(source.visible.includes(id),`Missing active native source layer ${id}`);
+          if(layer.provenance==='simulated')assert.match(layers.find(row=>row.label===layer.label)?.provenance??'',/generated research geometry/i);
+        }
+        assert(layers.some(row=>/skull/i.test(row.label)&&/estimate/i.test(row.provenance)));
+        assert(layers.some(row=>/arterial/i.test(row.label)&&/source-provided annotation/i.test(row.provenance)));
+        assert(layers.some(row=>/venous/i.test(row.label)&&/source-provided annotation/i.test(row.provenance)));
+        report.replaySource={...source,structural,layers};
+        await capture('acquired-cta-source-overlays');
+        opening={position:openingPos,stateId:history[openingPos-1].stateAfter};
+      }
       let since=await timestamp();
       await click('Rehearse');
       await wait(`${enabledTimeline}||${button('Verify replay for planning')}||${button('Verify saved replay')}`);
@@ -219,6 +271,15 @@ app.on('browser-window-created',(_event,window)=>{
       assert.equal(final.receipt.slots.right.instrument,'cusa');
       assert.equal(final.receipt.slots.right.inserted,false);
       assert(final.receipt.effects.targetMm3>0);
+      if(replayOpening){
+        assert.equal(finalId,replayOpening.final_state_id);
+        assert.equal(effectId,replayOpening.target_effect_state_id);
+        assert.equal(final.receipt.effects.targetMm3,replayOpening.final_metrics.targetRemovedMm3);
+        assert.equal(final.receipt.effects.nonTargetMm3,replayOpening.final_metrics.nonTargetRemovedMm3);
+        assert.deepEqual(final.receipt.effects.byLabelMm3,replayOpening.final_metrics.removedByLabelMm3);
+        assert.deepEqual(final.receipt.slots.right.position,replayOpening.final_slots.right.position);
+        assert(Object.values(final.receipt.slots).every(slot=>!slot.inserted));
+      }
       report.recordedReplay={final};
       await capture('withdrawn-endpoint');
 
@@ -229,8 +290,28 @@ app.on('browser-window-created',(_event,window)=>{
       assert.equal(effect.receipt.slots.right.inserted,true);
       assert.equal(effect.receipt.effects.targetMm3,final.receipt.effects.targetMm3);
       assert.equal(effect.receipt.effects.nonTargetMm3,final.receipt.effects.nonTargetMm3);
+      if(replayOpening)assert.deepEqual(effect.receipt.effects.byLabelMm3,final.receipt.effects.byLabelMm3);
       report.recordedReplay.effect=effect;
       await capture('inserted-target-effect');
+
+      if(opening){
+        since=await timestamp();
+        await js(inputScript('Surgical timeline',0));
+        const pristine=await boundary(replayOpening.initial_state_id,0,since);
+        assert.equal(pristine.receipt.effects.removedCells,0);
+        assert.equal(pristine.receipt.effects.targetMm3,0);
+        since=await timestamp();
+        await js(inputScript('Surgical timeline',opening.position));
+        const bone=await boundary(opening.stateId,opening.position,since);
+        const effects=bone.receipt.effects;
+        assert.equal(effects.removedCells,replayOpening.contract.limits.opening_bone_cells);
+        assert.equal(effects.targetMm3,0);
+        assert.deepEqual(Object.keys(effects.byLabelMm3),['estimated_skull']);
+        assert(effects.drillMm3>0&&Math.abs(effects.drillMm3-effects.byLabelMm3.estimated_skull)<1e-7);
+        report.recordedReplay.modeledOpening={before:pristine,after:bone};
+        await capture('modeled-skull-opening');
+        report.checks.push('Hidden GPU rendered the sealed bone-only opening from the intact starting state');
+      }
 
       since=await timestamp();
       await js(inputScript('Surgical timeline',action));
@@ -808,7 +889,7 @@ app.on('browser-window-created',(_event,window)=>{
       report.passed=!report.windowEverVisible;
     };
     try{
-      if(targetId||nativeStudy||resectPair)await js(`(()=>{
+      if(targetId||nativeStudy||resectPair||replayOpening)await js(`(()=>{
         const key=frame=>JSON.stringify([frame.sourceCaseHash,frame.displayIdentity,frame.serial]);
         const probe=window.__dataRebuildCtaFrames={frames:[],completed:new Map(),key};
         document.addEventListener('anatomy-frame',e=>{probe.frames.push(e.detail);if(probe.frames.length>32)probe.completed.delete(key(probe.frames.shift()))});
