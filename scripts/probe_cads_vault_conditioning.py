@@ -140,13 +140,15 @@ def contrast_pair(ct, baseline, candidate, faces, vault, linear):
     return [contrast(points) for points in (baseline, candidate)]
 
 
-def assess(old, ct, linear, protected, vault, weight=None):
+def assess(old, ct, linear, protected, vault, weight=None, position_guard=None):
     """Measure display-only relocation on fixed, source-bound indices."""
     raw, baseline, faces = old['source'], old['positions'], old['indices']
     raw_phys, baseline_phys = raw @ linear.T, baseline @ linear.T
     target = filter_positions(baseline_phys, faces)
     candidate = cap_candidate(raw, baseline, target, linear, weight)
     del target
+    if position_guard is not None:
+        candidate = position_guard(baseline, candidate)
     print(f'Prepared {len(faces):,} existing triangles; checking independent geometry limits', flush=True)
     candidate_phys = candidate @ linear.T
     rolled_back = remove_bad_faces(baseline_phys, candidate_phys, faces)

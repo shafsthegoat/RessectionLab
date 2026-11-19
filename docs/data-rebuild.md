@@ -164,6 +164,120 @@ receipt="$RESSECTIONLAB_DATA_ROOT/cache/poc-model-results/anatomy-d9c4252897c372
 .venv/bin/python scripts/prepare_isles24_cta_pair.py --recover-ct-worker "$receipt"
 ```
 
+### Tumor-bearing studies on the new CTA subjects
+
+ISLES 0146 and TAIR 00273 came from the selective intake above. The showcases
+and scenarios reuse those source people and do not add to the accepted
+research release. This preparation reuses the acquired originals and
+TotalSegmentator brain and skull masks on their existing physical grids.
+Both studies use the retained 3 mm outputs from TotalSegmentator 2.12.0,
+Dataset297 v2.0.0, labels 90 and 91, with the density gate at 250 HU for
+the skull. The original QA receipts record the checkpoint and mask hashes.
+Head CTA 189 lacks retained brain, skull and vessel masks. The 013 aneurysm
+STL remains withheld because of the laterality conflict described above.
+
+**ISLES24-0146-CTA-ANATOMY-v1** uses the acquired NCCT, publisher-registered
+CTA and categorical publisher CoW mask. The rendered 2,848-voxel union
+retains its two components. The acquired CTA remains independently
+selectable. The 2 mm NCCT spacing and the 1,111 skull-mask voxels touching
+the inferior source face limit skull-base reconstruction. The automated
+CoW provides selected arterial context. Distal vessels, veins and independent
+registration landmarks remain unavailable.
+
+**TAIR-00273-CTA-ANATOMY-v1** retains exact every-second-slice samples at
+their original physical coordinates. The reviewed enhancement segment
+follows a visible intracranial tube, with 146 display voxels and 451 voxels
+in the unsampled CTA. Its endpoints depend on the threshold. The layer is
+an intensity-derived, context-only estimate. Vessel identity and the rest
+of the vascular tree remain unresolved. The earlier failed VesselFM output
+remains outside the study.
+
+Original masks and mesh triangle indices are preserved. The ISLES skull
+and brain already have protected vertices beyond the 0.9 mm limit for
+further custom surface attachment. TAIR's first additional skull fit
+reduced normal-turn variation by 65.1%, while the 95th-percentile
+categorical-boundary residual rose from 0.413 to 0.500. A bounded fit with
+the categorical guard brought that residual to 0.397 and preserved 99.94%
+of matched CT contrast, with an 11.2% roughness reduction below the preset
+15% gate. The showcases retain the existing source-bound display surfaces.
+Compared with raw categorical positions, these skull surfaces reduce mean
+squared normal turn in the measured upper vault by 63.2% on ISLES and
+86.5% on TAIR. Their maximum displacements are 0.999 and 0.420 mm.
+Cortical detail, skull-base detail and functional anatomy remain unqualified.
+
+```sh
+export RESSECTIONLAB_DATA_ROOT="/absolute/path/on/mounted/RessectionLabData"
+export PYTHONPATH=src OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1
+.venv/bin/python scripts/prepare_tair00273_showcase.py --register "$PWD/testcases/cases"
+.venv/bin/python scripts/build_new_cta_gliomas.py --host isles --register "$PWD/testcases/cases"
+.venv/bin/python scripts/build_new_cta_gliomas.py --host tair --register "$PWD/testcases/cases"
+```
+
+To reproduce the numeric display trials, run
+`scripts/probe_new_cta_surface_conditioning.py --case <case> --output-name <fresh-name>`
+with the same Python environment. The case selectors are `isles0146-skull`,
+`isles0146-brain` and `tair00273-skull`. Add `--guard-categorical` for the
+second TAIR trial.
+
+Each portable scenario keeps the source scan arrays, baseline layers and
+one approximate simulated contour. Exact core, rim and edema truth are
+separate NIfTIs. The recipes record physical placement, deterministic seed,
+disjoint membership, distances to known exclusions and independent shape
+measurements. Only the 46-person UCSF TRAIN summary informs calibration.
+The sites span both left and right, anterior and posterior, and higher and
+middle-height tissue in the estimated brain envelope. Low-attenuation and
+bright-CTA exclusions proxy some unsupported tissue. CSF borders and distal
+vessel clearance remain unverified. The cases retain the acquired image
+intensities and omit mass effect.
+The earlier TopCoW centers were at 0.667–0.810 of the retained brain height.
+The new centers span 0.425–0.765. Two from each host lie below 0.60. Heights
+use the full retained brain estimate for each source person.
+
+| Site and EDEN profile | ISLES core + rim (mL) | TAIR core + rim (mL) |
+| --- | ---: | ---: |
+| Left anterior, circumscribed | 11.01 | 9.33 |
+| Right posterior, lobulated | 19.98 | 19.68 |
+| Right anterior, broad edema | 26.25 | 24.45 |
+| Left posterior, EDEN v2 | 25.65 | 26.87 |
+
+Median core-and-rim volumes are 22.81 mL on ISLES and 22.06 mL on TAIR,
+compared with 8.31 mL in the earlier TopCoW cohort and 28.27 mL in UCSF TRAIN.
+Medians including edema are 49.39 and 52.46 mL, compared with 17.69 and
+96.76 mL respectively. All eight core-and-rim masks are single connected
+components. Dice between the approximate contours and exact core plus rim
+ranges from 0.965 to 0.980. The two `collection.json` files bind images,
+masks, standalone native packages and distribution comparisons.
+
+The hidden desktop opened all eight scenario cards through Cases and verified
+the actual scalar and contour transfers. ISLES variant 02 switched to the
+independent acquired CTA and restored the registered CTA and selected contour.
+TAIR variant 03 and ISLES variant 02 both restored their saved source signal,
+contour, cursor and selection in fresh processes. For ISLES use
+`qc/hidden-app/isles0146-cta-gliomas-{warm-v1,cold-v4}/`. For TAIR use
+`qc/hidden-app/tair00273-cta-gliomas-{warm-v1,cold-v1}/`.
+The independent verification in `qc/new-cta-showcases-independent-verification-v1.json`
+binds those runs to the original scan hashes, exact label grids and cohort receipts.
+
+Matched anterior and oblique desktop pairs are in
+`qc/hidden-app/{isles0146,tair00273}-native-surface-pair-v1/`. Each `source-*`
+and `smooth-*` pair uses an identical camera, native input and three linked
+slice crops. The 3D images change between raw categorical positions and the
+retained conditioned surfaces.
+
+For the standard rehearsal check on ISLES variant 02, a temporary copy maps
+the exact simulated contour to the standard environment's tumor field. The
+contour bytes and simulated provenance are preserved. The production engine
+reopens an intact scene with 19,036 mm³ of sampled target. Planning refuses
+with `PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING`. The full-case check
+also requires supplied brainstem and critical-structure coverage. The scene
+stays at zero actions. The result is `qc/isles0146-cta-guarded-refusal-v1.json`.
+The desktop's unmodified setup independently refuses the same guarded
+planning command and preserves its zero-action state.
+
+```sh
+.venv/bin/python scripts/build_new_cta_gliomas.py --guarded-rehearsal
+```
+
 ### Published masks and acquired-host scenarios
 
 TopCoW 006, 012 and 014 reuse same-person TopBrain v3 CTA, existing skull and

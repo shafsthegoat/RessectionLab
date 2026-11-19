@@ -17,7 +17,24 @@ const input=fs.realpathSync(process.env.DATA_REBUILD_CASE),output=path.resolve(p
 for(const file of [input,output])assert(file.startsWith(root+path.sep),'Keep case and evidence on the configured external root');
 assert(!fs.existsSync(output),'Preserve prior evidence; use a fresh output directory');fs.mkdirSync(output,{recursive:true});
 const digest=file=>crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
-const inputSha=digest(input),saved=path.join(output,'saved.ressectionlab');
+const nativeGliomaFile=process.env.DATA_REBUILD_NATIVE_GLIOMA_REPORT;
+const nativeGliomaPriorFile=process.env.DATA_REBUILD_NATIVE_GLIOMA_PRIOR;
+const nativeGliomaCases=nativeGliomaFile?JSON.parse(fs.readFileSync(nativeGliomaFile,'utf8')):null;
+const nativeGliomaPrior=nativeGliomaPriorFile?JSON.parse(fs.readFileSync(nativeGliomaPriorFile,'utf8')):null;
+const scoredGliomaId=process.env.DATA_REBUILD_NATIVE_GLIOMA_CASE_ID??nativeGliomaPrior?.nativeGliomas?.scoredCaseId??nativeGliomaCases?.cases?.[0]?.case_id;
+const inputSha=digest(input),saved=path.join(output,nativeGliomaCases?'saved.rsworkspace':'saved.ressectionlab');
+if(nativeGliomaCases){
+  assert.equal(nativeGliomaCases.schema,'ressectionlab-new-cta-gliomas-v1');
+  assert(Array.isArray(nativeGliomaCases.cases));
+  assert(nativeGliomaCases.cases.some(row=>row.case_id===scoredGliomaId),'Select a scored case from the collection receipt');
+}
+if(nativeGliomaPrior){
+  assert(nativeGliomaCases&&nativeGliomaPrior.passed&&nativeGliomaPrior.pid!==process.pid);
+  assert.equal(nativeGliomaPrior.nativeGliomas.scoredCaseId,scoredGliomaId);
+  assert.equal(nativeGliomaPrior.nativeGliomas.collectionSha256,digest(nativeGliomaFile));
+  assert.equal(input,fs.realpathSync(nativeGliomaPrior.saved));
+  assert.equal(inputSha,nativeGliomaPrior.savedSha256);
+}
 const targetId=process.env.DATA_REBUILD_CTA_TARGET_ID;
 const targetLabel=process.env.DATA_REBUILD_CTA_TARGET_LABEL;
 const sourceSha=process.env.DATA_REBUILD_CTA_SOURCE_SHA256;
@@ -74,10 +91,12 @@ app.setPath('userData',profile);report.runtimeProfile=profile;
 const sidecarModule=require('./sidecar.cjs'),OriginalSidecar=sidecarModule.Sidecar;
 const sidecars=new Set();
 let ctaCohortLoadPath;
+let nativeGliomaOpenPath;
 sidecarModule.Sidecar=class extends OriginalSidecar {
   constructor(options){super(options);sidecars.add(this);}
   request(operation,args,...rest){
     if(ctaCohort&&operation==='loadCase')ctaCohortLoadPath=fs.realpathSync(args.path);
+    if(nativeGliomaCases&&operation==='anatomyOpen')nativeGliomaOpenPath=fs.realpathSync(args.path);
     return super.request(operation,args,...rest);
   }
 };
@@ -108,6 +127,8 @@ const ctaCohortAssets=new Map();
 let resectPayload;
 const resectAssets=new Map();
 let nativeVolume;
+let nativeGliomaBinding;
+const nativeGliomaAssets=new Map(),nativeGliomaTransfers=new Map();
 const ixiT1Layers=new Map();
 function inspectSourceAsset(asset,kind,bytes){
   assert.equal(bytes.byteLength,asset.byteLength);
@@ -158,6 +179,22 @@ ipcMain.handle=(name,handler)=>originalHandle(name,async(...args)=>{
       if(transfer)transfer.receipt=inspectSourceAsset(transfer.asset,transfer.kind,result);
     }
     if(nativeStudy&&name==='research:anatomyView'&&result)nativeVolume=result;
+    if(nativeGliomaCases&&result){
+      if(['research:startupWorkspace','research:openListedWorkspace'].includes(name)){
+        assert.equal(result.document?.schema,'patient-anatomy-v1');
+        nativeGliomaBinding=result;
+      }
+      if(name==='research:anatomyView'){
+        nativeVolume=result;
+        nativeGliomaAssets.set(result.mri.assetId,{asset:result.mri,kind:'image'});
+        const mask=result.compartments.find(layer=>layer.name==='synthetic_target_observation')?.mask;
+        if(mask)nativeGliomaAssets.set(mask.assetId,{asset:mask,kind:'mask'});
+      }
+      if(name==='research:readAsset'){
+        const transfer=nativeGliomaAssets.get(args[1]);
+        if(transfer)nativeGliomaTransfers.set(transfer.asset.sha256,inspectSourceAsset(transfer.asset,transfer.kind,result));
+      }
+    }
     if(ixiStudy&&name==='research:anatomyView'&&args[1]?.seriesId==='t1'){
       for(const layer of result.compartments)ixiT1Layers.set(layer.name,layer);
     }
@@ -824,20 +861,20 @@ app.on('browser-window-created',(_event,window)=>{
       report.ctaPreview={...initial,...selected};
       report.checks.push('Cases opens the exact CTA package, distinguishes observed and generated provenance, and the selected contour changes linked slice pixels');
     };
-    const nativeScan=async expectedId=>{
+    const nativeScan=async(expectedId,study=nativeStudy)=>{
       await gpuSourceReady();
       const selected=await js(`(()=>{
         const shell=document.querySelector('.native-workspace'),viewer=document.querySelector('.rl-viewer');
         return {series:shell?.dataset.nativeSeries,display:JSON.parse(viewer.dataset.sourceDisplayIdentity),
           panes:document.querySelectorAll('.rl-viewer-slice-image').length};
       })()`);
-      const series=nativeStudy.series.find(row=>row.id===selected.series);
+      const series=study.series.find(row=>row.id===selected.series);
       assert(series&&nativeVolume,'The app must load a declared display series');
       if(expectedId)assert.equal(series.id,expectedId);
       assert.equal(selected.panes,3);
       assert.equal(selected.display[1],series.id);
       assert.equal(selected.display[2],nativeVolume.mri.sha256);
-      assert.equal(selected.display[3],nativeStudy.snapshot_id);
+      assert.equal(selected.display[3],study.snapshot_id);
       const rendered=await sourceState();
       assert.deepEqual(rendered.sourceShape,nativeVolume.shape);
       assert(rendered.sourceSignal);
@@ -847,7 +884,7 @@ app.on('browser-window-created',(_event,window)=>{
         sourceMeshSha256:layer.surface?.source?.sha256,displayMeshSha256:layer.surface?.positions?.sha256,
         diagnostics:layer.surfaceDiagnostics,
       }));
-      return {patientId:nativeStudy.patient_id,snapshotId:nativeStudy.snapshot_id,id:series.id,
+      return {patientId:study.patient_id,snapshotId:study.snapshot_id,id:series.id,
         modality:series.modality,displayNativeGrid:series.data.shape,publisherSource:series.publisher_source??null,
         gridSampling:series.display_sampling_ijk??null,rendered,surfaces,affine:nativeVolume.affine,
         originalSha256:series.original.sha256,sourceArraySha256:selected.display[2],registrationStatus:nativeVolume.registrationStatus,
@@ -1063,8 +1100,209 @@ app.on('browser-window-created',(_event,window)=>{
       assert.equal(window.isVisible(),false);
       report.passed=!report.windowEverVisible;
     };
+    const inspectNativeGliomas=async()=>{
+      const collection=fs.realpathSync(nativeGliomaFile);
+      assert(collection.startsWith(root+path.sep));
+      const search='Search cases by name, source, anatomy or reported site';
+      const targetId='synthetic_target_observation';
+      const cohort=nativeGliomaCases.cases;
+      for(const key of ['case_id','snapshot_id'])assert.equal(new Set(cohort.map(row=>row[key])).size,cohort.length);
+      const listed=nativeGliomaPrior?[]:await js('window.resectionApi.listCases()');
+      const rows=nativeGliomaPrior?cohort.filter(row=>row.case_id===scoredGliomaId):cohort;
+      report.nativeGliomas={collection,collectionSha256:digest(collection),scoredCaseId:scoredGliomaId,cases:[]};
+      const readScan=async(id,document)=>{
+        const scan=await nativeScan(id,document),series=document.series.find(row=>row.id===id);
+        const transfer=nativeGliomaTransfers.get(scan.sourceArraySha256);
+        assert.equal(transfer?.sourceSignal,scan.rendered.sourceSignal,'The completed GPU frame must match the transferred source');
+        assert.equal(path.basename(series.data.path).split('-')[0],transfer.sha256,'Transferred source bytes must match the sealed array');
+        assert.deepEqual(scan.rendered.sourceShape,series.data.shape);
+        assert(scan.affine.every((row,i)=>row.every((value,j)=>Math.abs(value-series.affine[i][j])<=1e-6)));
+        return scan;
+      };
+      const selectScan=async(id,document)=>{
+        await click('Scans');
+        await wait(studyScanEnabledScript(id));
+        await js(studyScanSelectionScript(id));
+        await wait(`document.querySelector('.native-workspace')?.dataset.nativeSeries===${JSON.stringify(id)}`);
+        await ready();
+        return readScan(id,document);
+      };
+      const verifyTarget=(scan,target,expected)=>{
+        const surface=scan.surfaces.find(layer=>layer.id===target.id);
+        const transfer=nativeGliomaTransfers.get(surface?.maskSha256);
+        assert(['tumor','synthetic-target'].includes(surface?.kind));
+        assert(surface.diagnostics?.triangles>0,'The target must supply a nonempty mesh');
+        assert(scan.rendered.visible.includes(target.id),'Synthetic contour must be visible in the rendered view');
+        assert.equal(transfer?.sha256,path.basename(target.data.path).split('-')[0]);
+        assert.equal(transfer.positiveVoxels,expected.positive_voxels);
+        assert(surface.volumeMm3>0);
+        const {diagnostics:{cacheHit,preparationMs,...geometry},...layer}=surface;
+        return {...layer,geometry,positiveVoxels:transfer.positiveVoxels,npySha256:target.data.sha256};
+      };
+      const selectTarget=async(target,document,frameName)=>{
+        await click('Anatomy');
+        if(!nativeGliomaPrior){
+          await click('Show structures only');
+          await set('Skull view','transparent');
+          const brain=document.layers.find(layer=>layer.kind==='brain');
+          await js(studyLayerSelectionScript([brain.label]));
+          await set(`${brain.label} opacity`,.16);
+        }
+        assert.equal(await js(studyLayerSelectionScript([target.label])),target.label);
+        const since=await js('performance.now()');
+        await click(`Focus ${target.label}`);
+        await wait(`(()=>{const probe=window.__dataRebuildCtaFrames,viewer=document.querySelector('.rl-viewer');
+          return viewer?.dataset.selectedStructure===${JSON.stringify(target.id)}&&probe.frames.some(f=>f.at>=${since}
+            &&f.selectedStructure===${JSON.stringify(target.id)}&&f.sourceCaseHash===viewer.dataset.sourceCaseHash
+            &&f.displayIdentity===viewer.dataset.sourceDisplayIdentity&&probe.completed.has(probe.key(f)));})()`);
+        const evidence=await js(`document.querySelector('.layer-inspector')?.textContent`);
+        assert(evidence?.includes(target.label));
+        await capture(frameName);
+        return evidence;
+      };
+      const verifyGuardedRefusal=async target=>{
+        await click('Rehearse');
+        const prepare='Prepare standard environment';
+        const enabled=label=>`[...document.querySelectorAll('button')].some(b=>b.textContent.trim()===${JSON.stringify(label)}&&!b.disabled)`;
+        await wait(enabled(prepare));
+        await set('Environment tumor layer',targetId);
+        await click(prepare);
+        // Preparing the standard environment mounts its own saved zero-action
+        // scene. Let its automatic inspection finish before issuing a second request.
+        await wait(`!!document.querySelector('.surgical-panel[data-state-id] [aria-label="Planning source admission"]')`);
+        await ready();
+        await wait(`!document.body.innerText.includes('Verifying saved source-bound rehearsal')
+          &&!document.querySelector('.surgical-panel[aria-busy="true"]')`);
+        const prepared=report.requests.findLast(row=>row.operation==='research:prepareSurgicalEnvironment');
+        assert(prepared?.caseHash&&!prepared.error);
+        const summary=`r=>({position:r.position,stateId:r.view.stateId,actions:r.timeline.length,
+          history:r.view.history.length,removedCells:r.view.removed.length,targetRemovedMm3:r.view.metrics.targetRemovedMm3,
+          targets:r.view.scene.regions.filter(row=>row.target).map(row=>row.name),
+          planningAdmission:r.planningAdmission,fullCaseReadiness:r.fullCaseReadiness})`;
+        const call=(args,read)=>js(`window.resectionApi.surgicalRehearsal(${JSON.stringify({caseHash:prepared.caseHash,...args})})
+          .then(r=>({value:(${read})(r)})).catch(error=>({error:String(error)}))`);
+        const inspect=async()=>{
+          let result;
+          for(let attempt=0;attempt<3;attempt++){
+            result=await call({command:'inspect',includeSequenceOutcome:false},summary);
+            if(!result.error?.includes('Operation cancelled'))break;
+            await delay(600);
+          }
+          assert(!result.error,result.error);
+          return result.value;
+        };
+        const before=await inspect();
+        assert.equal(before.position,0);assert.equal(before.actions,0);assert.equal(before.history,0);
+        assert.equal(before.removedCells,0);assert.equal(before.targetRemovedMm3,0);
+        // The standard setup exports tumor layers. A native synthetic-target
+        // still binds the visible contour here, but requires explicit mapping.
+        assert.deepEqual(before.targets,target.kind==='tumor'?['tumor']:[]);
+        assert.equal(before.planningAdmission.available,false);
+        assert(before.fullCaseReadiness.blockers.some(row=>['missing-protection','missing-critical-annotations'].includes(row.code)));
+        const code='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING';
+        assert(before.planningAdmission.blockers.some(row=>row.code===code));
+        const {error:refusal}=await call({command:'generateApproaches',expectedStateId:before.stateId,
+          acknowledgeResearchUnknowns:true},'()=>null');
+        assert(refusal?.includes(code),'The guarded planning request must explicitly refuse the acquired source');
+        const after=await inspect();
+        assert.deepEqual(after,before);
+        await capture('native-glioma-rehearsal-refusal');
+        return {caseHash:prepared.caseHash,sourceTargetKind:target.kind,command:'generateApproaches',code,refusal,before,after};
+      };
+      for(const row of rows){
+        const canonical=fs.realpathSync(path.resolve(root,row.native_case.path));
+        assert(canonical.startsWith(root+path.sep));
+        assert.equal(path.basename(canonical),row.case_id+'.rsworkspace');
+        let catalogId;
+        if(!nativeGliomaPrior){
+          const matches=listed.filter(entry=>entry.title===path.basename(canonical)&&entry.portable&&!entry.reviewedExternal);
+          assert.equal(matches.length,1,`Expected one local portable Cases card for ${row.case_id}`);
+          catalogId=matches[0].id;
+          await click('Cases');await wait(`!!document.querySelector('[aria-label="${search}"]')`);
+          await js(inputScript(search,row.case_id));
+          const label='Open '+matches[0].title;
+          await wait(`[...document.querySelectorAll('.poc-case-card')].some(b=>b.getAttribute('aria-label')===${JSON.stringify(label)}&&!b.disabled)`);
+          if(row.case_id===scoredGliomaId)fs.writeFileSync(path.join(output,'native-glioma-cases.png'),(await screenshot()).toPNG());
+          const firstRequest=report.requests.length;
+          await click(label);await wait(`!document.querySelector('.case-library-workspace')`);await ready();
+          const opened=report.requests.slice(firstRequest).find(request=>request.operation==='research:openListedWorkspace');
+          assert(opened&&!opened.error);
+          assert.equal(nativeGliomaOpenPath,canonical);
+        }else assert.equal(nativeGliomaOpenPath,input);
+        const document=nativeGliomaBinding.document,scored=row.case_id===scoredGliomaId;
+        assert.equal(document.snapshot_id,row.snapshot_id);
+        const paired=document.series.some(series=>series.id==='cta-ncct-space');
+        const displayId=paired?'cta-ncct-space':document.reference_series;
+        assert.equal(document.reference_series,paired?'ncct':'tair-cta-display');
+        assert.equal(row.target.layer_id,targetId);
+        const targets=document.layers.filter(layer=>layer.role==='target');
+        assert.equal(targets.length,1);
+        const [target]=targets;
+        assert.equal(target.id,targetId);assert.equal(target.label,row.target.label);
+        assert.match(JSON.stringify(target.provenance),/synthetic|simulat|generat/i);
+        assert.equal(target.label_value,1);assert.equal(target.data.dtype,'uint8');
+        assert.equal(target.data.sha256,row.target.array_sha256);
+        const sourceSeries=document.series.find(series=>series.id===displayId);
+        assert.equal(sourceSeries.modality,'CTA');
+        if(paired)assert.equal(sourceSeries.origin,'publisher_registered_acquired_derivative');
+        const cta=nativeGliomaPrior?await readScan(displayId,document):await selectScan(displayId,document);
+        assert.equal(cta.registrationStatus,'patient frame');
+        for(const kind of ['brain','skull',paired?'artery':'vessels']){
+          assert(cta.surfaces.some(layer=>layer.kind===kind&&layer.diagnostics?.triangles>0));
+        }
+        const renderedTarget=verifyTarget(cta,target,row.target);
+        const item={caseId:row.case_id,personId:row.person_id,catalogId,archiveSha256:row.native_case.sha256,cta,target:renderedTarget};
+        report.nativeGliomas.cases.push(item);
+        if(nativeGliomaPrior){
+          const expected=nativeGliomaPrior.nativeGliomas.cases.find(entry=>entry.caseId===row.case_id);
+          assert.equal(cta.sourceArraySha256,expected.cta.sourceArraySha256);
+          assert.equal(cta.originalSha256,expected.cta.originalSha256);
+          assert.equal(cta.rendered.sourceSignal,expected.cta.rendered.sourceSignal);
+          assert.deepEqual(renderedTarget,expected.target);
+          assert.deepEqual(nativeGliomaBinding.viewState,nativeGliomaPrior.nativeGliomas.savedViewState);
+          assert.deepEqual(cta.rendered.cursor,nativeGliomaBinding.viewState.states[cta.id].cursor);
+          assert.equal(nativeGliomaBinding.viewState.selectedStructure,targetId);
+          item.coldReopened=true;
+        }
+        item.targetEvidence=await selectTarget(target,document,`${row.case_id}-selected-target`);
+        if(scored&&!nativeGliomaPrior&&paired){
+          const native=await selectScan('native-cta',document);
+          assert.equal(native.registrationStatus,'independent source frame');
+          assert.equal(document.series.find(series=>series.id===native.id).origin,'acquired_source');
+          assert.notEqual(native.originalSha256,cta.originalSha256);
+          assert.notEqual(native.sourceArraySha256,cta.sourceArraySha256);
+          assert(!native.surfaces.some(layer=>layer.id===targetId||layer.kind==='artery'));
+          await capture('native-glioma-independent-cta');
+          item.independentCta=native;
+          const restored=await selectScan(cta.id,document);
+          assert.equal(restored.sourceArraySha256,cta.sourceArraySha256);
+          assert.equal(restored.rendered.sourceSignal,cta.rendered.sourceSignal);
+          assert.equal(verifyTarget(restored,target,row.target).maskSha256,renderedTarget.maskSha256);
+          item.restoredCta=restored;
+          await selectTarget(target,document,'native-glioma-restored-target');
+        }
+        if(scored&&!nativeGliomaPrior){
+          await click('Scans');await click('Save patient study file…');
+          await wait(`document.body.innerText.includes('Patient study file saved')`);
+          assert(fs.existsSync(saved));
+          report.saved=saved;report.savedSha256=digest(saved);
+          report.nativeGliomas.savedViewState=JSON.parse(execFileSync('unzip',['-p',saved,'workspace-view.json'],{encoding:'utf8'}));
+        }
+        if(scored&&process.env.DATA_REBUILD_NATIVE_GLIOMA_REHEARSE==='1')item.guardedRefusal=await verifyGuardedRefusal(target);
+        assert.equal(digest(canonical),row.native_case.sha256,`${row.case_id} source package changed`);
+      }
+      assert.equal(digest(input),inputSha);
+      assert.equal(window.isVisible(),false);
+      assert(!report.requests.some(row=>row.command==='step'),'The verification must leave every procedure unacted');
+      if(nativeGliomaPrior)report.checks.push('A fresh Electron process restored the exact portable study snapshot, CTA display, selected contour and persisted view');
+      else report.checks.push('Actual Cases cards open distinct portable studies with checksum-bound source and visible generated target geometry',
+        'The desktop saved the scored study and selected view to a new portable archive');
+      if(report.nativeGliomas.cases.some(item=>item.independentCta))report.checks.push('Original acquired CTA opens independently and switching back restores the exact registered CTA and generated contour');
+      if(process.env.DATA_REBUILD_NATIVE_GLIOMA_REHEARSE==='1')report.checks.push('The guarded production planning request refused acquired anatomy and preserved the zero-action scene');
+      report.passed=!report.windowEverVisible;
+    };
     try{
-      if(targetId||nativeStudy||resectPair||replayOpening||ctaCohort)await js(`(()=>{
+      if(targetId||nativeStudy||resectPair||replayOpening||ctaCohort||nativeGliomaCases)await js(`(()=>{
         const key=frame=>JSON.stringify([frame.sourceCaseHash,frame.displayIdentity,frame.serial]);
         const probe=window.__dataRebuildCtaFrames={frames:[],completed:new Map(),key};
         document.addEventListener('anatomy-frame',e=>{probe.frames.push(e.detail);if(probe.frames.length>32)probe.completed.delete(key(probe.frames.shift()))});
@@ -1083,6 +1321,7 @@ app.on('browser-window-created',(_event,window)=>{
         report.checks.push('Malformed native fixture visibly rejected without fallback source anatomy');report.passed=true;return;
       }
       const started=performance.now();await ready();report.coldReadyMs=performance.now()-started;
+      if(nativeGliomaCases){await inspectNativeGliomas();return;}
       if(islesPair){await inspectIslesPair();return;}
       if(ixiStudy){await inspectIxiStudy();return;}
       if(nativeStudy){await inspectNativeStudy();return;}
