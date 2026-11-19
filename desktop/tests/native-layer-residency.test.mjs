@@ -20,6 +20,23 @@ test('hydration reuses admitted image and shared label grid without asset reads'
   assert.equal(hydrated.mri,base.mri);assert.equal(hydrated.labelSets[0],base.labelSets[0]);
 });
 
+test('cortex from a different scan reuses its verified samples with the new physical transform',async()=>{
+  const base=source(),mr=new Float32Array(12).fill(55);
+  const mrFrame=affine.map(row=>[...row]);mrFrame[0][3]=17;
+  const signal={sha256:'mr',shape:[3,2,2],dtype:'float32',byteLength:mr.byteLength};
+  const payload={...base,mri:{sha256:'ct'},labelSets:[{id:'regions',data:{}}],
+    appearanceSources:[{seriesId:'mr',modality:'T1',sourceSha256:'original',affine:mrFrame,signal}],
+    compartments:['left','right','index-only'].map(name=>({name,sourceSeries:'mr',displayKind:'gray-matter',
+      alignment:name==='index-only'?'source-grid preview':'reviewed',labelSet:'regions',labelValue:1,color:'#aaa'}))};
+  const api={readAsset(){throw Error('Validated resident samples should not need another transfer')}};
+  const loaded=await hydrateAnatomy(payload,api,base.mri,base,undefined,new Map([['mr',mr]]));
+  const [left,right,indexOnly]=loaded.compartments;
+  assert.equal(left.appearanceSource,right.appearanceSource);
+  assert.equal(left.appearanceSource.data,mr);
+  assert.deepEqual(left.appearanceSource.affine,mrFrame);
+  assert.deepEqual(left.appearanceSource.shape,[3,2,2]);
+  assert.equal(indexOnly.appearanceSource,undefined);
+});
 test('explicit empty surfaces hydrate without inventing triangles or transferring zero-length assets',async()=>{
   const base=source(),mask=new Uint8Array(8),descriptor={byteLength:8,byteOrder:'little',order:'C',assetId:'mask'};
   const payload={...base,mri:{},labelSets:[],compartments:[{name:'empty',kind:'tumor',mask:descriptor,surface:{empty:true},color:'#ff00ff'}]};

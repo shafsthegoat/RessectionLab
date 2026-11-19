@@ -1,3 +1,4 @@
+import {NativeCranialView} from './NativeCranialView';
 import {useEffect,useState} from 'react';
 import {ArrowDownToLine,Focus,Plus,Sparkles} from 'lucide-react';
 import type {NativeWorkspace} from './use-native-workspace';
@@ -95,6 +96,7 @@ export function NativeApproachPanel({workspace:w,onPreview,onEditStateChange}:{w
       ?{action:'list',targetLayerId:option.layerId}
       :{action:'selectTarget',targetLayerId:option?.layerId??null,candidateBinding:option?.candidateBinding??null});
     if(!result)return;
+    if((w.state.cranialView||w.canRestoreCranialView)&&option?.layerId!==p.activeTargetLayerId)w.composeCranialView('custom');
     const preferred=p.selectedApproachIds?.[option?.layerId??''];
     const route=preferred===null?undefined:result.approaches.find(a=>a.id===preferred)??result.approaches.find(a=>a.targetLayerId===option?.layerId);
     if(w.patientFrameReady)w.setCursor(route?.target??option?.target??initialTarget);
@@ -106,6 +108,14 @@ export function NativeApproachPanel({workspace:w,onPreview,onEditStateChange}:{w
     b.document.layers.some(row=>row.id===m.normalTraversal.layerId&&row.source_series===b.document.reference_series);
   const focus=(id:string,point?:unknown)=>{w.setVisible({...w.state.visible,[id]:true});w.focusStructure(id,w.patientFrameReady&&Array.isArray(point)&&point.length===3?point as Point3:undefined)};
   const targetOption=p.targetOptions.find(option=>option.layerId===targetLayerId);
+  function showPlanningTarget(){
+    if(!w.patientFrameReady)return;
+    if(targetOption?.target){
+      if(w.state.visible[targetOption.layerId]===false)w.setVisible({...w.state.visible,[targetOption.layerId]:true});
+      w.setSelectedStructure(targetOption.layerId);
+    }
+    w.setCursor(target);
+  }
   const targetLabel=(id?:string|null)=>p.targetOptions.find(option=>option.layerId===id)?.label??id??undefined;
   const layerLabels=Object.fromEntries([...b.document.layers.map(row=>[row.id,row.label]),...(m?.structures??[]).map(row=>[row.layerId,row.label])]);
   return <div className="native-approaches unified-sidebar" data-approach-pending={p.pending} data-approach-dirty={dirty}>
@@ -116,6 +126,7 @@ export function NativeApproachPanel({workspace:w,onPreview,onEditStateChange}:{w
         <p>{rehearsalAvailability(p.rehearsalOptions)}</p>
       </>}
     </div>
+    <NativeCranialView workspace={w}/>
     {p.targetOptions.length>0&&<label className="approach-target-picker">Planning target<select aria-label="Planning target" value={p.targetSelectionIssue?'':p.activeTargetLayerId??''} disabled={blocked||(dirty&&!valid)} onChange={event=>void selectTarget(p.targetOptions.find(option=>option.layerId===event.target.value))}>
       <option value="">Choose a lesion candidate</option>{p.targetOptions.map(option=><option key={option.layerId} value={option.layerId} disabled={option.target===null}>{option.label}{option.origin?` · ${option.origin}`:''}{option.target===null?' · unavailable':''}</option>)}</select></label>}
     {p.targetSelectionIssue&&<p className="approach-error" role="status">{p.targetSelectionIssue}</p>}
@@ -127,7 +138,7 @@ export function NativeApproachPanel({workspace:w,onPreview,onEditStateChange}:{w
     {p.targetOptions.some(option=>!option.target)&&<details><summary>Unavailable target candidates</summary>
       {p.targetOptions.filter(option=>!option.target).map(option=><p key={option.layerId}>{option.label} · {option.reason??'Source geometry unavailable'}</p>)}
     </details>}
-    <section className="approach-editor"><fieldset disabled={blocked||!canPlan}><div className="approach-section-heading"><h2>{selected?'Edit selected approach':'Set the entry patch'}</h2>{selected&&<button aria-label="Focus selected target" disabled={!w.patientFrameReady} onClick={()=>w.setCursor(target)}><Focus size={13}/></button>}</div>
+    <section className="approach-editor"><fieldset disabled={blocked||!canPlan}><div className="approach-section-heading"><h2>{selected?'Edit selected approach':'Set the entry patch'}</h2>{(selected||defaultTarget)&&<button aria-label="Focus selected target" title={targetOption?.target?'Show the target layer and center the linked slices at the planned endpoint':'Center the linked slices at the planned endpoint'} disabled={!w.patientFrameReady} onClick={showPlanningTarget}><Focus size={13}/> Show target</button>}</div>
       <label className="approach-radius">Corridor radius <output>{mm(radius)} mm</output><input aria-label="Corridor radius" type="range" min=".5" max={Math.max(12,radius)} step=".5" disabled={blocked} value={radius} onChange={e=>edit({radius:+e.target.value})}/></label>
       <label>Entry patch radius · mm<input aria-label="Entry patch radius" type="number" min="0" max="40" value={patchRadius} onChange={e=>edit({patchRadius:+e.target.value})}/></label>
       <p className="approach-caption">Patch centre (RAS mm) {ras(fields.patchCenter??entry)}</p>

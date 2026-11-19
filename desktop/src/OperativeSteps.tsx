@@ -1,11 +1,19 @@
 import {useEffect,useRef,useState} from 'react';
 import {ChevronLeft,ChevronRight,Pause,Play,RotateCcw} from 'lucide-react';
 import type {NativeAnatomyApi} from './native-anatomy-data';
+import type {ViewerVolume} from './viewer/contracts';
 import type {NativeApproach} from './native-approaches';
 import type {ResectionApi} from './types';
 import {operativeSteps,playableSteps,readOperativeField,timelinePose} from './operative-field';
-import type {OperativeField,OperativePhase} from './operative-field';
+import type {Detail,OperativeField,OperativeIntensity,OperativePhase} from './operative-field';
 import {OperativeFieldCanvas} from './viewer/OperativeFieldCanvas';
+import {entryApproachEnd} from './viewer/operativeCameraPath';
+import {operativeSectionVisible,type OperativeViewChoice} from './viewer/operativeSectionContext';
+import {missingOperativeSkull,loadOperativeSkull} from './viewer/operativeResidentContext';
+import {fieldTargetOnOverview} from './viewer/operativeFieldSlice';
+import type {AspirationPattern} from './viewer/operativeAspiration';
+import type {OperativeModel} from './viewer/operativeFieldModel';
+import {tissueColors,unclassifiedVesselAppearance} from './viewer/operativeFieldAppearance';
 import './operative-steps.css';
 
 const descriptions:Record<OperativePhase,string>={
@@ -15,10 +23,49 @@ const descriptions:Record<OperativePhase,string>={
   brain:'Displace the labeled brain and hold the corridor open',
   tumor:'Advance the ultrasonic aspirator and inspect the modeled cavity',
 };
-const legend={bone:'Skull',dura:'Dura',brain:'Brain',tumor:'Lesion',vessels:'Vessels'};
+const detailLabels:Record<Detail,string>={grayMatter:'Gray matter',whiteMatter:'White matter',csf:'CSF',ventricles:'Ventricular CSF',
+  artery:'Artery',vein:'Vein',sinus:'Sinus',enhancing:'Enhancing compartment',nonenhancingCore:'Non-enhancing core',
+  perilesionalSignal:'Perilesional signal',tumorCore:'Tumor core',wholeAbnormality:'Whole abnormality'};
+const pitch=(value:number[])=>value.map(n=>Number(n.toFixed(2))).join(' × ')+' mm';
 
-export function OperativeSteps({api,collectionId,route}:{
-  api:NativeAnatomyApi&ResectionApi;collectionId:string;route:NativeApproach;
+function SourceOverviewInset({field,image,phase}:{field:OperativeField;image:OperativeIntensity;phase:OperativePhase}){
+  const ref=useRef<HTMLCanvasElement>(null),view=image.overview;
+  useEffect(()=>{
+    if(!view||!ref.current)return;
+    const ctx=ref.current.getContext('2d');
+    if(!ctx)return;
+    const [height,width]=view.shape,pixels=ctx.createImageData(width,height),target=fieldTargetOnOverview(field,view);
+    for(let i=0;i<view.voxels.length;i++){
+      const value=view.voxels[i];
+      const x=i%width,y=Math.floor(i/width);
+      const edge=target[i]&&(x===0||y===0||x===width-1||y===height-1||!target[i-1]||!target[i+1]||!target[i-width]||!target[i+width]);
+      pixels.data.set(edge?[101,191,211,255]:[value,value,value,255],4*i);
+    }
+    ctx.putImageData(pixels,0,0);
+    ctx.strokeStyle='#92e6c2';ctx.lineWidth=1.4;ctx.beginPath();
+    ctx.moveTo(...view.entryPx);ctx.lineTo(...view.targetPx);ctx.stroke();
+    for(const [point,color] of [[view.entryPx,'#92e6c2'],[view.targetPx,'#65bfd3']] as const){
+      ctx.fillStyle=color;ctx.beginPath();ctx.arc(...point,2.2,0,Math.PI*2);ctx.fill();
+    }
+  },[field,view]);
+  if(!view)return null;
+  const orientation=(axis:number[])=>{
+    const i=axis.map(Math.abs).indexOf(Math.max(...axis.map(Math.abs)));
+    return axis[i]>=0?['R','A','S'][i]:['L','P','I'][i];
+  };
+  const z=phase==='overview'?null:field.stations[phase],t=(z??0)/field.entryDepthMm;
+  const station=view.targetPx.map((v,i)=>v+t*(view.entryPx[i]-v));
+  return <figure className="operative-overview" title={image.sourceSeries+' · full source plane through entry and target'}>
+    <div className="operative-overview-plane"><canvas ref={ref} width={view.shape[1]} height={view.shape[0]} aria-label="Source scan with the saved route and original local target outline"/>
+    {z!==null&&<svg viewBox={`0 0 ${view.shape[1]} ${view.shape[0]}`} aria-label={phase+' station on saved route'}><circle cx={station[0]} cy={station[1]} r="3.5"/></svg>}</div>
+    <span className="operative-up">{orientation(view.upRas)}</span><span className="operative-right">{orientation(view.rightRas)}</span>
+    <figcaption>{image.modality} · route plane<br/>Cyan · local target{z!==null?' · ring · step':''}</figcaption>
+  </figure>;
+}
+const legend={bone:'Skull',dura:'Dura',brain:'Brain',tumor:'Selected target',vessels:'Vessels'};
+
+export function OperativeSteps({api,collectionId,route,linkedOverview=false,sourceVolume=null,visibleLayers}:{
+  api:NativeAnatomyApi&ResectionApi;collectionId:string;route:NativeApproach;linkedOverview?:boolean;visibleLayers?:Readonly<Record<string,boolean>>;sourceVolume?:ViewerVolume|null;
 }){
   const [field,setField]=useState<OperativeField|null>(null);
   const [error,setError]=useState(''),[attempt,setAttempt]=useState(0);
@@ -34,23 +81,45 @@ export function OperativeSteps({api,collectionId,route}:{
     })().catch(e=>{if(live)setError(e instanceof Error?e.message:String(e))});
     return ()=>{live=false};
   },[api,collectionId,route.sourceSnapshotId,route.id,route.parameterHash,route.targetLayerId,attempt]);
-  if(!field)return <div className="operative-placeholder" role={error?'alert':'status'}>
-    <strong>{error?'Operative field unavailable':'Preparing the operative field…'}</strong>
+  const [localContext,setLocalContext]=useState<{field:OperativeField;base:ViewerVolume;volume:ViewerVolume;issue?:string}|null>(null);
+  const missing=field&&missingOperativeSkull(sourceVolume,field,collectionId);
+  useEffect(()=>{
+    if(!field||!sourceVolume||!missing)return;
+    const controller=new AbortController();
+    loadOperativeSkull(api,sourceVolume,missing,controller.signal).then(volume=>{
+      if(!controller.signal.aborted)setLocalContext({field,base:sourceVolume,volume});
+    }).catch(cause=>{
+      if(!controller.signal.aborted)setLocalContext({field,base:sourceVolume,volume:sourceVolume,issue:cause instanceof Error?cause.message:String(cause)});
+    });
+    return ()=>controller.abort();
+  },[api,field,sourceVolume,missing]);
+  const resolved=localContext?.base===sourceVolume&&localContext?.field===field?localContext:null;
+  if(!field||(missing&&!resolved))return <div className="operative-placeholder" role={error?'alert':'status'}>
+    <strong>{error?'Operative field unavailable':missing?'Preparing the registered exterior…':'Preparing the operative field…'}</strong>
     <p>{error||'Sampling the selected approach in aligned patient anatomy.'}</p>
     {error&&<button onClick={()=>setAttempt(n=>n+1)}>Retry preview</button>}
   </div>;
-  return <OperativePlayback field={field}/>;
+  return <OperativePlayback field={field} visibleLayers={visibleLayers} sourceVolume={resolved?.volume??sourceVolume} contextIssue={resolved?.issue} collectionId={collectionId} linkedOverview={linkedOverview}/>;
 }
 
-function OperativePlayback({field}:{field:OperativeField}){
-  const [retract,setRetract]=useState(true),[cutaway,setCutaway]=useState(true);
+function OperativePlayback({field,sourceVolume,contextIssue,visibleLayers,collectionId,linkedOverview}:{field:OperativeField;visibleLayers?:Readonly<Record<string,boolean>>;contextIssue?:string;sourceVolume:ViewerVolume|null;collectionId:string;linkedOverview:boolean}){
+  const [retract,setRetract]=useState(true),[choice,setChoice]=useState<OperativeViewChoice>('follow'),[raw,setRaw]=useState(false);
+  const [sweepPattern,setSweepPattern]=useState<AspirationPattern>('overlapping');
   const [value,setValue]=useState(0),[playing,setPlaying]=useState(false);
-  const [superficialVessels,setSuperficialVessels]=useState(0);
+  const [contextLayers,setContextLayers]=useState<string[]>([]),[fitExterior,setFitExterior]=useState(false);
+  const [vesselDisplay,setVesselDisplay]=useState<OperativeModel['vesselDisplay']|null>(null);
+  const superficialVessels=vesselDisplay?.superficialVoxels??0;
+  const vascularStyle=unclassifiedVesselAppearance(field.layers,vesselDisplay?.conflictingVoxels??0);
   const clock=useRef(0),steps=playableSteps(field,retract),end=steps.length;
   const pose=timelinePose(steps,value);
+  const locatingEntry=(fitExterior||choice!=='section')&&contextLayers.length>0&&(pose.phase==='overview'||(pose.phase===steps[0]?.id&&pose.progress<entryApproachEnd));
+  const stageDescription=locatingEntry?'Locate the planned entry on the intact surface':descriptions[pose.phase];
+  const cutaway=!fitExterior&&operativeSectionVisible(field,pose.phase,choice);
   const proxies=field.layers.filter(l=>l.role==='dura'&&l.sampledVoxels>0);
-  const duralProxy=proxies.length>0&&proxies.every(l=>l.proxy);
+  const duraLabel=proxies.length&&proxies.every(l=>l.proxy)?'Dural proxy':
+    proxies.length&&proxies.every(l=>l.model&&l.evidence==='Source-derived estimate')?'Dural estimate':'Dura';
   const tissues=(Object.keys(legend) as Array<keyof typeof legend>).filter(role=>field.layers.some(l=>l.role===role&&l.sampledVoxels>0));
+  const details=Array.from(new Set(field.layers.filter(l=>l.detail&&l.sampledVoxels>0&&l.role!=='tumor').map(l=>l.detail!)));
   const contacts=field.encounters.filter(s=>s.status==='contact');
   function seek(next:number){
     setPlaying(false);
@@ -80,27 +149,42 @@ function OperativePlayback({field}:{field:OperativeField}){
       ?available.filter(step=>step.id==='bone'||step.id==='dura').length:0;
     setPlaying(false);clock.current=nextValue;setValue(nextValue);setRetract(next);
   }
-  return <section className="operative-playback" aria-label="Operative steps" data-operative-phase={pose.phase} data-operative-progress={pose.progress.toFixed(3)}>
-    <div className="operative-topline"><div><strong>Operative field</strong><small>{field.spacingMm.toFixed(2)} mm display grid · Geometric rehearsal</small></div>
+  const routePlane=field.intensity?.overview&&<SourceOverviewInset field={field} image={field.intensity} phase={pose.phase}/>;
+  return <section className="operative-playback" aria-label="Operative steps" data-operative-phase={pose.phase} data-operative-progress={pose.progress.toFixed(3)} data-field-view={cutaway?'section':'exterior'}>
+    <div className="operative-topline"><div><strong>Operative field</strong><small>{field.spacingMm.toFixed(2)} mm display grid · Geometric preview · {cutaway?'Corridor section':contextLayers.length?'Exterior':'Sampled local exterior'}</small></div>
+        {contextLayers.length>0&&<button className="operative-frame-choice" aria-pressed={fitExterior} onClick={()=>setFitExterior(value=>!value)}>{fitExterior?'Follow operative step':'Fit source anatomy'}</button>}
       <details className="operative-sources"><summary>Field evidence</summary><div>
-        {field.intensity&&<p><b>Surface contrast</b><br/>{field.intensity.modality} · {field.intensity.sourceSeries} · acquired scan intensities</p>}
+        {field.intensity&&<p><b>Surface contrast</b><br/>{field.intensity.modality} · {field.intensity.sourceSeries} · acquired scan intensities. Inspection cutaway shows the surrounding scan at its source display brightness when registered context is available.</p>}
+        {contextIssue&&<p>Surrounding skull unavailable · {contextIssue}</p>}
+        {contextLayers.length>0&&<p><b>Surrounding anatomy</b><br/>{contextLayers.join(', ')} · registered surface outside the sampled opening</p>}
         {superficialVessels>0&&<p><b>Exposed skull</b><br/>{superficialVessels.toLocaleString()} superficial vessel samples are hidden with the overlying tissue. Anatomy shows the source estimates.</p>}
-        <h3>Layers in this field</h3>
-        {field.layers.map(layer=><p key={layer.id}><b>{layer.label}</b><br/>{layer.sourceSeries} · {layer.evidence}{layer.reviewStatus?' · '+layer.reviewStatus.replaceAll('_',' '):''}{layer.sampledVoxels===0?' · No labeled cells in this field':''}</p>)}
+        {proxies.length>0&&<p><b>{duraLabel}</b><br/>The reflected flap follows the sampled dural sheet. Field voxel faces shows the full sampled label thickness.</p>}
+        {steps.some(step=>step.id==='tumor')&&<label className="operative-sweep-choice">Geometric aspiration sweep
+          <select value={sweepPattern} onChange={e=>{setPlaying(false);setSweepPattern(e.target.value as AspirationPattern);}}>
+            <option value="overlapping">Overlapping passes</option><option value="spiral">Original spiral</option>
+          </select></label>}
+        <p><b>Selected target</b><br/>{field.layers.find(l=>l.id===field.targetLayerId)?.label}</p><h3>Layers in this field</h3>
+        {field.layers.map(layer=><p key={layer.id}><b>{layer.label}</b><br/>{layer.sourceSeries} · {layer.evidence}{layer.reviewStatus?' · '+layer.reviewStatus.replaceAll('_',' '):''}{layer.sourceSpacingMm&&<><br/>Scan {pitch(layer.sourceSpacingMm)} · label {pitch(layer.labelSpacingMm??layer.sourceSpacingMm)}</>}
+          {Array.isArray(layer.inferenceSpacingMm)&&<> · inference {pitch(layer.inferenceSpacingMm)}</>}
+          {layer.adjudication&&<><br/>CT preferred within coverage · {layer.adjudication.disagreementVoxels.toLocaleString()} differing display cells</>}
+          {layer.coverageMeaning&&<><br/>{layer.coverageMeaning.replaceAll('_',' ')}</>}{layer.coveredVoxels!==undefined&&<> · {Math.round(100*layer.coveredVoxels/field.voxels.length)}% of field covered</>}{layer.sampledVoxels===0?' · No labeled cells in this field':''}</p>)}
         {field.excluded.length>0&&<><h3>Excluded layers</h3>{field.excluded.map(l=><p key={l.id}>{l.label} · {l.reason}</p>)}</>}
         {[...new Set([...field.blockers,...field.stationIssues,...field.unknowns])].map(reason=><p key={reason}>{reason}</p>)}
       </div></details>
     </div>
-    <div className="operative-image"><OperativeFieldCanvas field={field} phase={pose.phase} progress={pose.progress} withRetraction={retract} cutaway={cutaway} onSuperficialVessels={setSuperficialVessels}/>
-      <div className="operative-legend" aria-label="Visible tissues">{tissues.map(role=><span key={role} data-tissue={role}>{role==='dura'&&duralProxy?'Dural proxy':legend[role]}</span>)}
+    <div className="operative-image"><OperativeFieldCanvas visibleLayers={visibleLayers} sweepPattern={sweepPattern} sourceVolume={sourceVolume} collectionId={collectionId} field={field} phase={pose.phase} progress={pose.progress} withRetraction={retract} cutaway={cutaway} raw={raw} fitExterior={fitExterior} depthFraming={choice==='follow'} onContext={setContextLayers} onVesselDisplay={setVesselDisplay}/>
+      {!linkedOverview&&routePlane}
+      <div className="operative-legend" aria-label="Visible tissues">{tissues.filter(role=>role!=='vessels'||vesselDisplay?.unclassifiedVoxels).map(role=><span key={role} data-tissue={role} style={role==='vessels'?{'--tissue':vascularStyle.color} as React.CSSProperties:undefined}>{role==='dura'?duraLabel:role==='vessels'?vascularStyle.label:legend[role]}</span>)}
+        {details.map(key=><span key={key} style={{'--tissue':tissueColors[key]} as React.CSSProperties}>{detailLabels[key]}</span>)}
         {!tissues.includes('vessels')&&<small>Vessels unmapped here</small>}
       </div>
     </div>
+    {linkedOverview&&routePlane}
     <div className="operative-transport">
       {(contacts.length>0||field.blockers.length>0)&&<div className="operative-conflict">{contacts.length?'Intersection with '+contacts.map(c=>c.label).join(', '):field.blockers[0]}</div>}
-      <div className="operative-stage-title"><strong>{descriptions[pose.phase]}</strong><span>{pose.phase==='overview'?'Start':Math.round(pose.progress*100)+'%'}</span></div>
+      <div className="operative-stage-title"><strong>{stageDescription}</strong><span>{pose.phase==='overview'?'Start':Math.round(pose.progress*100)+'% of step'}</span></div>
       <div className="operative-scrub"><button aria-label={playing?'Pause steps':'Play steps'} disabled={!end} onClick={togglePlay}>{playing?<Pause size={16}/>:<Play size={16}/>}</button>
-        <input aria-label="Operative timeline" aria-valuetext={descriptions[pose.phase]+' · '+Math.round(pose.progress*100)+'%'} type="range" min={0} max={end||1} step={.01} value={value} disabled={!end} onChange={e=>seek(+e.target.value)}/>
+        <input aria-label="Operative timeline" aria-valuetext={stageDescription+' · '+Math.round(pose.progress*100)+'% of step'} type="range" min={0} max={end||1} step={.01} value={value} disabled={!end} onChange={e=>seek(+e.target.value)}/>
         <button aria-label="Previous step" disabled={value<=0} onClick={()=>seek(Math.max(0,Math.ceil(value)-1))}><ChevronLeft size={16}/></button>
         <button aria-label="Next step" disabled={value>=end} onClick={()=>seek(Math.floor(value)+1)}><ChevronRight size={16}/></button>
         <button aria-label="Reset operative steps" disabled={!value&&!playing} onClick={()=>seek(0)}><RotateCcw size={15}/></button>
@@ -114,7 +198,10 @@ function OperativePlayback({field}:{field:OperativeField}){
           onClick={()=>seek(index+1)}>{step.label}{detail&&<small>{detail}</small>}</button>;
       })}</div>
       <div className="operative-options">
-        <label><input type="checkbox" checked={cutaway} onChange={e=>setCutaway(e.target.checked)}/>Inspection cutaway</label>
+        <label>Field view <select aria-label="Operative field view" value={choice} onChange={e=>{
+          setChoice(e.target.value as OperativeViewChoice);setFitExterior(false);
+        }}><option value="follow">Follow operative depth</option><option value="exterior">Exterior</option><option value="section">Inspection cutaway</option></select></label>
+        <label title="Exact faces of cells on the sampled local display grid at this geometric step"><input type="checkbox" checked={raw} onChange={e=>setRaw(e.target.checked)}/>Field voxel faces</label>
         <label><input type="checkbox" checked={retract&&field.stations.brain!==null} disabled={field.stations.brain===null} onChange={toggleRetractor}/>Include retraction</label>
       </div>
     </div>

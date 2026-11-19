@@ -62,7 +62,7 @@ test('pending cancellation, running pause, stopped reason and actual readiness r
 });
 test('one outcome readout distinguishes unknown from measured zero and follows preview anatomy',()=>{
   const c=controller();let tree=Outcome({c});assert.equal(text(find(tree,'strong','0.00')),'0.00');let fluid=nodes(tree).find(n=>n.props['data-surgical-metric']==='fluidPresentMm3');assert.equal(text(fluid),'Unknown');
-  c.preview={...c.view,stateId:'preview',metrics:{...c.view.metrics,targetRemovedMm3:1.5,fluidPresentMm3:0}};tree=Outcome({c});assert(text(tree).includes('Preview modeled outcome'));assert.equal(text(nodes(tree).find(n=>n.props['data-surgical-metric']==='targetRemovedMm3')),'1.50');assert.equal(text(nodes(tree).find(n=>n.props['data-surgical-metric']==='fluidPresentMm3')),'0.00');assert.equal(c.view.metrics.targetRemovedMm3,0);
+  c.preview={...c.view,stateId:'preview',originalTargetResidualMm3:11.5,metrics:{...c.view.metrics,targetRemovedMm3:1.5,fluidPresentMm3:0}};tree=Outcome({c});assert(text(tree).includes('Preview modeled outcome'));assert.equal(text(nodes(tree).find(n=>n.props['data-surgical-metric']==='targetRemovedMm3')),'1.50');assert.equal(text(nodes(tree).find(n=>n.props['data-surgical-metric']==='fluidPresentMm3')),'0.00');assert.equal(c.view.metrics.targetRemovedMm3,0);
 });
 test('native bone opening summary uses aperture and withdrawal flags independently of bone count',()=>{
   const c=controller();
@@ -117,7 +117,7 @@ test('inspection notice reflects active optical state and remains outside settin
 test('entire rendered toolbox has one workflow and authoritative displayed-state measurements',()=>{
   const c=controller();
   const html=()=>renderToStaticMarkup(React.createElement(Panel,{c,available:true,onFixture(){}}));
-  const check=(markup,target,fluid)=>{
+  const check=(markup,target,fluid,originalResidual='Unknown')=>{
     for(const [pattern,label] of [
       [/aria-label="Instrument action"/g,'manual action'],
       [/aria-label="Instrument interaction"/g,'pose controls'],
@@ -129,20 +129,20 @@ test('entire rendered toolbox has one workflow and authoritative displayed-state
       [/>Apply<\/button>/g,'apply'],
       [/>Preview<\/button>/g,'preview'],
     ])assert.equal([...markup.matchAll(pattern)].length,1,label);
-    for(const [key,value] of [['targetRemovedMm3',target],['nonTargetRemovedMm3','0.00'],['fluidPresentMm3',fluid],['contactCellSeconds','Unknown']]){
+    for(const [key,value] of [['targetRemovedMm3',target],['originalTargetResidualMm3',originalResidual],['nonTargetRemovedMm3','0.00'],['fluidPresentMm3',fluid],['contactCellSeconds','Unknown']]){
       const readings=[...markup.matchAll(new RegExp(`data-surgical-metric="${key}"[^>]*>([^<]*)<`,'g'))].map(m=>m[1]);
       assert.deepEqual(readings,[value],key);
     }
-    assert.equal([...markup.matchAll(/Target removed · mm³/g)].length,1);
+    assert.equal([...markup.matchAll(/Owned target removed · mm³/g)].length,1);
     assert.equal([...markup.matchAll(/Other removed · mm³/g)].length,1);
     assert(!markup.includes('NaN'));
   };
   check(html(),'0.00','Unknown');
-  c.preview={...c.view,stateId:'preview',metrics:{...c.view.metrics,targetRemovedMm3:1.5,fluidPresentMm3:0}};
-  const preview=html();check(preview,'1.50','0.00');assert.match(preview,/Preview · uncommitted/);assert.match(preview,/Preview modeled outcome/);
+  c.preview={...c.view,stateId:'preview',originalTargetResidualMm3:11.5,metrics:{...c.view.metrics,targetRemovedMm3:1.5,fluidPresentMm3:0}};
+  const preview=html();check(preview,'1.50','0.00','11.50');assert.match(preview,/Preview · uncommitted/);assert.match(preview,/Preview modeled outcome/);
   assert(!preview.includes('Target remaining: 10.00'),'no contradictory accepted-state remainder');
   c.preview={...c.preview,metrics:{nonTargetRemovedMm3:0}};
-  check(html(),'Unknown','Unknown');
+  check(html(),'Unknown','Unknown','11.50');
   assert.equal(c.view.metrics.targetRemovedMm3,0);assert.deepEqual(c.calls,[]);
 });
 

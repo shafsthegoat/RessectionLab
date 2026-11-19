@@ -9,7 +9,7 @@ instructions or an explicitly agreed transfer for collaborator workflows.
 - RessectionLab root: `/Volumes/shafrir/old coding projects/RessectionLabData`
 - Volume UUID: `9CC3623C-E38B-3EEE-B6BB-B9A06C193700`
 
-Last location check: **November 18, 2026**. The drive may be disconnected.
+Last location check: **November 19, 2026**. The drive may be disconnected.
 Verify the real mount and `.ressectionlab-data-root.json` before writing; never
 create a substitute mount directory. Ignored `testcases/` links may be dangling
 while it is absent. Ordinary development must not require this private drive;
@@ -42,13 +42,70 @@ establish scientific readiness or a completed build; consult each run's receipts
 | Case library | `cases/real/`, `cases/synthetic/`, `cases/controls/`: native projects; use their manifests for roles and supported capabilities. |
 | Model assets | `cache/models/`: `synthstrip-v1/`, `poc-vesselfm-base/`, `poc-totalsegmentator/`, `supersynth-source/`; availability, terms and installation state are in local receipts. |
 | Historical archives | `archive/closed-evidence/`: October 19 rehearsal tar, generated-control tar, October 20 rehearsal, desktop visual evidence and profiler-baseline archives. [Exact newer archive identities/restoration](../manifests/historical-archives-20261116.json). |
-| Archived desktop builds | `archive/desktop-builds-20261117/`: older macOS app bundles, packaging inputs and staging directories. `README.md` provides restore commands beside the per-archive checksums. |
+| Retired tracked research artifacts | `archive/closed-evidence/tracked-research-artifacts-20261119-v1/` contains 3,645 files from historical research runs, reviews and source snapshots. [Restore the original paths](#restore-retired-tracked-research-artifacts). |
+| Archived desktop builds | `archive/desktop-builds-20261117/`: older macOS app bundles, packaging inputs and staging directories. `README.md` provides restore commands beside the per-archive checksums, including the November 17 orientation-guide app formerly in `desktop/release/RessectionLab-darwin-arm64`. |
 | Archived sidecar and test runs | `archive/closed-evidence/local-build-and-test-archives-20261117/`: prior orientation-guide sidecar and 16 older vascular test runs. `README.md` links the verified archives and the existing evidence archives used to retire the local restore-test copies. |
 | November 18 operative rehearsal examples | Open `archive/closed-evidence/operative-rehearsal-20261118/README.md` for the BITE-09, UCSF-0005, EDEN CTRL_1277 and synthetic workspaces, recordings and comparison images. Its `SHA256SUMS` covers the archived media, earlier diagnostic captures and test logs. The guide lists the working-study restore paths and identifies the five fixtures kept locally for verification. |
+| November 18 scan-to-engine demonstration | `qc/scan-to-engine-20261118/README.md` links the UCSF-0004 portable geometric study, 53-action engine recording, cold saves, BITE-09 preview, paired CT registration refusal and generated controls. The ignored local `testcases/outputs/scan-to-engine-20261118` link resolves here. |
+| Continuous operative rehearsal | `qc/continuous-rehearsal-20261118/README.md` indexes two observed engine films, the BITE-09 geometric walkthrough, matched raw/conditioned fields, the UCSF intact decision, source review, canonical generated success and the repeated frozen-policy comparison. The local ignored link is `testcases/outputs/continuous-rehearsal-20261118`. Use the root checksums and sample-restore receipt before copying. |
+| Four-channel glioma preparation | `cache/models/poc-monai-brats-0.5.4/` contains the pinned 18,840,620-byte weight and release configuration. `qc/brats-native-0004-20261118/` holds the portable UCSF-0004 multimodal estimate, source/model identities and verification receipt. The application requires the matching local MPS runtime. |
 | Integrated research | `integrated-v1/`: cases, anatomy hosts, replay experiments, QC, reports and reproduction records; start at its `START-HERE.md`. |
 | Catalog and review | `catalog/START-HERE.md`, `catalog/releases/`, `catalog/inventory/`, `catalog/work-ledger.json`; `qc/`, `quarantine/`, `staging/` hold review/recovery/work areas. Catalog releases and ledgers have their own dates and scope. |
+| Multimodal library baseline | `catalog/inventory/multimodal-anatomy-baseline-20261118-v1/README.md` indexes the pre-acquisition files, receipts, role restrictions and source families. |
+| New CTA source studies | `sources/tair-v1-cta-selective/` and `sources/head-cta-15697196/selective/` hold original scans, checksums and the publisher STL. `prepared/tair-v1-cta-native/` and `prepared/head-cta-15697196-native/` hold the development studies. Matching `qc/` directories contain source and display checks. |
+| Head CTA 013 aneurysm frame review | `qc/head-cta-15697196-native/013/stl-frame-v1/` keeps the diagnostic overlay and measured axis hypotheses. The only contrast-supported placement conflicts with publisher laterality, so the original STL remains outside the native study layers. |
+| ISLES'24 v7 acute CT pair | `sources/isles24-v7/acute-pair-selective/sub-stroke0146/` holds acquired NCCT and CTA, the publisher-registered CTA and automated CoW mask. `prepared/isles24-v7-native/sub-stroke0146/` holds the study. `qc/isles24-v7-native/sub-stroke0146/` links source and paired-display evidence. |
+| New CTA showcases and gliomas | `prepared/isles0146-cta-gliomas-v1/` and `prepared/tair00273-cta-gliomas-v1/` index the source grids, contours, separate truths and overlays. `prepared/tair00273-cta-showcase-v1/` contains the restricted enhancement segment and exact wider-grid evidence. Under `qc/hidden-app/`, the `*-native-surface-pair-v1/` and `*-cta-gliomas-*/` directories contain the matched views and portable desktop checks. `qc/isles0146-cta-guarded-refusal-v1.json` binds the attempted rehearsal to the sealed contour. Numeric trials are under `qc/isles0146-{brain,skull}-conditioning-v1/` and `qc/tair00273-skull-{conditioning,categorical-guard}-v1/`. |
+| CTA anatomy and glioma scenarios | `prepared/cta-organic-gliomas-v1/collection.json` indexes 12 development projects, overlays, the contact sheet and separate truth labels. The 46-person TRAIN summary is in `prepared/cta-organic-glioma-guidance-v1/`. The shape audit and Cases preview evidence are in `qc/cta-organic-cohort-shape-audit-v1/` and `qc/hidden-app/cta-organic-cohort-20261118-v1/`. TopBrain reuse and CoW geometry frame checks are in `qc/multimodal-anatomy-20261118-vessel-v1/` and `qc/multimodal-anatomy-20261118-cow-vtp-v1/`. |
+| Native CTA showcases | `prepared/cta-native-showcases-v1/` contains the three locally registered studies and their verified mesh caches. Hidden source/conditioned captures are in `qc/hidden-app/cta-native-showcase-*-surfaces-20261118-v*/`. The CTA014 organic route screen is in `qc/cta-organic-rehearsal-preflight-v1/receipt.json`. |
+| CTA014 route-conditioned organic case | `prepared/cta014-organic-fixed-route-v1/` holds the pristine workspace, separate truth labels and static screen. `qc/cta014-organic-fixed-route-rehearsal-v1/` holds the fresh opening, first target effect and withdrawal. `qc/hidden-app/cta014-organic-conditioned-replay-20261118-v1/` holds opened-source, drilled opening, aspiration, and withdrawal captures. |
+| Publisher CoW CTA/MRA companions | `prepared/cta-published-cow-v1/` contains the 006, 012 and 014 direct publisher CTA meshes, original labels and graphs, paired independent MRAs and verified superior skull and brain display geometry. The selective 012/014 receipts and exact publisher assets are in `sources/topcow-cow-vtp-selective-v1/`. Hidden verification directories start with `qc/hidden-app/cta<id>-published-cow-`. The 006 `refined-warm-v1` and `refined-cold-v1` checks bind the conditioned surfaces and native MRA to the portable study. The CTA014 multi-lane screen is in `qc/cta014-organic-01-multilane-v1/receipt.json`. |
+| IXI265 structural MRI and diffusion | `prepared/adaptive-anatomy-migration-20261117-v1/IXI265-multimodal/` retains the T1, MRA, diffusion b0, diagnostic FA and cached T1 tissue estimates. The checkout Cases alias points to this existing study. Hidden app verification and two captures are in `qc/hidden-app/ixi265-multimodal-20261118-v3/`. |
+| Meningioma sub-06 CT and MRI | `prepared/adaptive-anatomy-migration-20261117-v1/Meningioma-sub-06/` retains the two CT kernels, T1CE and cached tissue estimates. `qc/meningioma-sub06-skull-brain-conflict-v1.json` localizes dense CT signal against the MRI-derived masks and leaves the existing transform review status unchanged. |
+| CADS BrainCT-1mm case 465 | `sources/cads-brainct-1mm/465/` retains the pinned CT and three model-label originals, publisher index, label map and acquisition receipt. `prepared/cads-brainct-1mm-v1/CADS-BRAINCT-465-NATIVE-v1/` contains the native study, stock revision pointer and source-plane review. `qc/cads465-vault-conditioning-v1/` holds the numeric evidence. The portable study, paired captures and restore reports are in `qc/hidden-app/cads465-conditioned-vault-{warm-v2,cold-v1}/`. |
+| Source-supported anatomical detail | `prepared/{topcow014-publisher-branches,cads465-skull-base-detail}-v1/` holds the native companions and exact source receipts. Matched captures and hidden-app reports use the same directory names under `qc/hidden-app/`. `qc/cads465-skull-base-edge-v1/` holds the rejected numeric probe, its archived script and checksums. `qc/anatomical-fidelity-cta-cohort-integrity-v1.json` verifies the 20 earlier CTA package hashes. |
+| Meningioma sub-13 and five-layer CTA inspection | `prepared/meningioma-sub13-anatomical-review-v2/` holds the independent CT and T1 views, directional landmarks and matched image pairs. `prepared/five-layer-cta-inspection-v1/collection.json` indexes the portable workspaces and their exact parent scenarios. The TopCoW 014 desktop receipt and images are in `qc/hidden-app/five-layer-cta-topcow014-v1/`. |
+| Unattended native anatomy preparation | `prepared/anatomy-preparation-unattended-v1/` holds the ten prepared study copies and their source bindings. `qc/anatomy-preparation-unattended-v1/` holds the frozen plan, interruption and repeat-run evidence, logs, and per-case results. Worker receipts and logs remain in `cache/poc-model-results/`. |
+| Annotated CTA vessel reconstruction | `prepared/annotated-cta-vascular-comparison-v1/` holds the portable 014 and 018 comparisons with the exact right M2 annotations. `qc/annotated-cta-vascular-benchmark-v1/` holds source coverage, frozen settings, measurements, and matched desktop views. [Reproduce the comparison](data-rebuild.md#annotated-cta-vessel-comparison). |
+| IXI077 organic route-conditioned scenario | `prepared/ixi077-organic-rehearsal-v1/IXI-077-T1-MRA-ORGANIC-ROUTE-01-v1/` holds the pristine study, separate exact labels and static screen. `qc/ixi077-organic-conditional-replay-v1/` holds first contour effect and withdrawal with cold backend verification. `qc/hidden-app/ixi077-organic-replay-20261118-v2/` holds the desktop playback proof and captures. |
+| November 19 visual reconstruction and rehearsal | `qc/medivis-visual-fidelity-20261119-v1/README.md` links the BITE-09 cortex/annotated tumor workspace and geometric film, TopCoW-014 arterial classes and independent MRA, CADS-465 direct CT skull, IXI265 internals, and the matched UCSF procedures. The index includes source identities, cross-patient fitting results, hidden desktop comparisons, performance and cold reopens. |
+| BITE-09 reviewed operative demonstration | `qc/bite09-operative-fidelity-20261119-v1/README.md` indexes the two reviewed planning and inspection workspaces, continuous BITE-09 film, matched 9/14/18-second controls, source-plane correction decisions, measured cavity contacts, and the independent TopCoW-014 CTA cutaway. |
+| Fixed-target strategies and patient reconstruction comparison | `qc/patient-strategy-comparison-20261119/README.md` indexes the two UCSF-PDGM-0004 recordings, joined study and result-inspection film, standardized anatomy captures, saved sub-06 CT/MRI study and RESECT Case3 model/annotation comparison. The directory includes source-bound contract checks and a sample restore. |
+| IXI077 integrated engine replay | `qc/engine-operative-integration-20261118/README.md` indexes the source-bound T1/MRA plan, procedural saves, observed films, independent state checks and matched BITE-09 and meningioma rendering comparisons. Use the checksums and endpoint sample-restore receipt to verify a copy. |
+| Local rehearsal output cleanup | `catalog/rehearsal-local-dedup-20261119.json` maps retired local copies to checksum-verified IXI077, matched-strategy and cranial review files. The ignored portable workspaces and movie paths link to the HDD. The two unpacked strategy studies can be copied from `qc/patient-strategy-comparison-20261119/`. |
+| Cranial rendering and operative rehearsal | `qc/cranial-reconstruction-20261118/` contains the MNI BITE-09 saved MRI reconstruction, matched planning and operative captures, and the full geometric rehearsal. It also retains separate CTA006 publisher-mesh and independent MRA checks. |
+| Observed surgical change | `sources/RESECT-SEG/v1-20240215/Case3/` retains the publisher cavity annotation and rights notice. `qc/surgical-change/RESECT-Case3-benchmark-verified-20261118/README.md` links the portable workspace, overlay and landmark results. |
+| RESECT Case3 observed stage pair | `sources/RESECT-SEG/v1-20240215/Case3/` now includes during and after cavity labels. The paired landmarks are in `sources/RESECT/v1/Case3/Landmarks/`. `qc/surgical-change/RESECT-Case3-observed-stages-20261118-v1/` contains the workspace, cavity overlay, held-out predictions and report. See `qc/hidden-app/resect-case3-native-stage-pair-20261118-v1/` for separate source and display proof. |
+| RESECT Case3 observed tumor and cavity | `qc/surgical-change/RESECT-Case3-observed-target-cavity-20261119-v1/` binds the two acquired tumor annotations, after-US cavity, source landmarks, two native workspaces, overlay figure and held-out comparisons. `historical-localization/` retains the exact earlier FLAIR model output and its preoperative score. Hidden display evidence is in `qc/hidden-app/resect-case3-target-cavity-native-20261119-v1/` and `qc/hidden-app/resect-case3-flair-target-native-20261119-v1/`. |
 
 When adding, moving, archiving or retiring relevant HDD assets, update this ledger
 and the affected local catalog pointers. Keep detailed file inventories, hashes
 and run logs on the HDD; retain only concise discovery metadata here. Check
 existing collections before downloading again. See [repository upkeep](../CONTRIBUTING.md).
+
+## Restore retired tracked research artifacts
+
+The November 19 cleanup archived 229 historical groups. Runtime and test
+fixtures, experiment inputs, and evidence referenced by maintained guides
+remain in the checkout. The archive preserves each original `artifacts/`
+path and was fully restored and checked before removal.
+
+From the repository root, restore to a fresh directory under the ignored
+`testcases/` tree:
+
+```sh
+archive_dir='/Volumes/shafrir/old coding projects/RessectionLabData/archive/closed-evidence/tracked-research-artifacts-20261119-v1'
+python3 scripts/archive_historical_evidence.py restore \
+  --archive "$archive_dir/archive.tar.gz" \
+  --manifest "$archive_dir/manifest.json" \
+  --destination testcases/restored-tracked-research-artifacts-20261119
+```
+
+The archive SHA-256 is
+`62e1ca29db915433d093c6d215ebb3ce2e223a0b20460777277d1a25dd2ee3e7`.
+The manifest SHA-256 is
+`21078732a4f0354a9aa5c74ca5e26253e27186cd16a7ed921b851db19653a704`.
+With the HDD disconnected, retrieve a tracked file from the commit immediately
+before the cleanup with
+`git show '9b766cce5316b1da407e29c138f3819f465d837d:artifacts/<original-path>'`,
+or browse the [pre-cleanup artifact tree](https://github.com/shafsthegoat/RessectionLab/tree/9b766cce5316b1da407e29c138f3819f465d837d/artifacts).

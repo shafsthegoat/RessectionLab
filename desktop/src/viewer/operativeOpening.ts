@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 import type { OperativeModel } from './operativeFieldModel.ts';
+import { operativeVoxelSurface } from './operativeVoxelSurface.ts';
 import { operativeSurface } from './operativeSurface.ts';
+import { estimatedDuralFlap, updateDuralFold } from './operativeDuralFlap.ts';
 
 type Opening = 'bone' | 'dura';
 type TissueMesh = THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
@@ -41,6 +43,7 @@ type Surfaces = {
   cut: THREE.BufferGeometry;
   detached: THREE.BufferGeometry;
   flap: THREE.BufferGeometry | null;
+  membrane?: boolean;
 };
 
 export function prepareOperativeOpening(
@@ -60,6 +63,7 @@ export function prepareOperativeOpening(
   intact.parent?.add(cut);
   const limit = { value: -1 };
   for (const mesh of [intact, cut]) {
+    mesh.userData.sourceLayer={role:kind,openingLimit:limit,kerf:mesh===cut};
     mesh.customDepthMaterial = new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking });
     angularClip(mesh.material, limit, mesh === cut);
     angularClip(mesh.customDepthMaterial, limit, mesh === cut);
@@ -68,8 +72,14 @@ export function prepareOperativeOpening(
   const stationary = model.layers[kind];
   const movingKind = kind === 'bone' ? 'boneFlap' : 'duraFlap';
   const moving = model.layers[movingKind];
-  function prepare(row: number): Surfaces {
-    const extract = () => operativeSurface(model.field, stationary.mask, stationary.bounds, row, kind);
+  const duraSources=model.field.layers?.filter(layer=>layer.role==='dura'&&layer.sampledVoxels>0);
+  const estimated=kind==='dura'&&duraSources?.length&&duraSources.every(layer=>layer.model||layer.proxy);
+  const initialSide=flap.material.side;
+  function prepare(row: number, raw: boolean): Surfaces {
+    const surface = (layer:typeof stationary, name:string) => raw
+      ? operativeVoxelSurface(model.field, layer.mask, layer.bounds, row)
+      : operativeSurface(model.field, layer.mask, layer.bounds, row, name);
+    const extract = () => surface(stationary, kind);
     const original = extract();
     if (model.field.stations[kind] === null)
       return { intact: original, cut: original, detached: original, flap: null };
@@ -78,19 +88,26 @@ export function prepareOperativeOpening(
       const kerfed = extract();
       model.applyOpening(kind, 128, true);
       const detached = extract();
-      const patch = operativeSurface(model.field, moving.mask, moving.bounds, row, movingKind);
-      patch.translate(-flapOrigin.x, -flapOrigin.y, -flapOrigin.z);
-      return { intact: original, cut: kerfed, detached, flap: patch };
+      const membrane=Boolean(estimated&&!raw);
+      const patch = membrane
+        ? estimatedDuralFlap(model.field,moving.mask,moving.bounds,row,flapOrigin,model.duralOpening)
+        : surface(moving, movingKind).translate(-flapOrigin.x, -flapOrigin.y, -flapOrigin.z);
+      return { intact: original, cut: kerfed, detached, flap: patch, membrane };
     } finally {
       model.applyOpening(kind, 0, false);
     }
   }
-  function update(row: number, amount: number) {
-    let surfaces = sections.get(row);
+  function warm(row:number,raw=false) {
+    const key = raw ? -1-row : row;
+    let surfaces = sections.get(key);
     if (!surfaces) {
-      surfaces = prepare(row);
-      sections.set(row, surfaces);
+      surfaces = prepare(row,raw);
+      sections.set(key, surfaces);
     }
+    return surfaces;
+  }
+  function update(row: number, amount: number, raw = false) {
+    const surfaces=warm(row,raw);
     if (model.field.stations[kind] === null) amount = 0;
     const sweep = model.openingState(kind, amount);
     const { lift } = sweep;
@@ -101,7 +118,14 @@ export function prepareOperativeOpening(
     intact.visible = sweep.fraction < 1 || lift > 0;
     cut.visible = sweep.fraction > 0 && lift === 0;
     flap.visible = lift > 0 && surfaces.flap !== null;
-    if (surfaces.flap) flap.geometry = surfaces.flap;
+    if (surfaces.flap && flap.geometry!==surfaces.flap) {
+      flap.geometry = surfaces.flap;
+      flap.morphTargetInfluences=undefined;
+      flap.updateMorphTargets();
+      const side=surfaces.membrane?THREE.DoubleSide:initialSide;
+      if(flap.material.side!==side){flap.material.side=side;flap.material.needsUpdate=true;}
+    }
+    if(surfaces.membrane)updateDuralFold(flap,lift);
     return sweep;
   }
   function dispose() {
@@ -120,5 +144,5 @@ export function prepareOperativeOpening(
     for (const geometry of resources) geometry.dispose();
     sections.clear();
   }
-  return { update, dispose };
+  return { update, warm, dispose, kerf:cut };
 }

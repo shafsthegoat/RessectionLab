@@ -1,5 +1,7 @@
 """Acquired grayscale for route-local display, sampled independently of labels."""
 
+from itertools import product
+
 import numpy as np
 from scipy import ndimage as ndi
 
@@ -37,6 +39,36 @@ def _texture_grid(grid, frame, native):
         counts = intervals_at(upper)
     scale = intervals / counts
     return counts + 1, scale * frame["spacingMm"], grid @ np.diag([*scale, 1.])
+
+
+def _source_overview(data, native, frame, low, high):
+    """Show the full acquired cross-section containing both saved route endpoints."""
+    ray = np.asarray(frame["basisRas"][2])
+    target = np.asarray(frame["targetRasMm"])
+    axis = np.eye(3)[np.argmin(np.abs(ray))]
+    normal = axis - ray * (axis @ ray)
+    normal /= np.linalg.norm(normal)
+    up = np.array([0., 0., 1.]) if abs(normal[2]) < .9 else np.array([0., 1., 0.])
+    right = np.cross(up, normal)
+    right /= np.linalg.norm(right)
+    down = np.cross(right, normal)
+    axes = np.stack([right, down])
+    corners = np.array(list(product(*[(0, n - 1) for n in data.shape])))
+    xy = (corners @ native[:3, :3].T + native[:3, 3] - target) @ axes.T
+    lo, hi = xy.min(axis=0), xy.max(axis=0)
+    pitch = max(float((hi - lo).max()) / 159, 0.25)
+    width, height = np.maximum(2, 1 + np.ceil((hi - lo) / pitch).astype(int))
+    y, x = np.indices((height, width))
+    ras = target[:, None, None] + right[:, None, None] * (lo[0] + x*pitch) + down[:, None, None] * (lo[1] + y*pitch)
+    vox = np.linalg.solve(native[:3, :3], (ras - native[:3, 3, None, None]).reshape(3, -1))
+    signal = ndi.map_coordinates(data, vox.reshape(3, height, width), order=1, prefilter=False,
+                                 mode="constant", cval=np.nan, output=np.float32)
+    grey = np.zeros((height, width), dtype=np.uint8)
+    covered = np.isfinite(signal)
+    grey[covered] = 1 + np.rint(254 * np.clip((signal[covered] - low) / (high - low), 0, 1)).astype(np.uint8)
+    return {"signal": grey, "shape": [int(height), int(width)], "spacingMm": pitch,
+            "rightRas": right.tolist(), "upRas": (-down).tolist(),
+            "targetPx": (-lo / pitch).tolist(), "entryPx": ((axes @ ray * frame["entryDepthMm"] - lo) / pitch).tolist()}
 
 
 def operative_intensity(collection, target_source, grid, frame, *, check):
@@ -81,7 +113,9 @@ def operative_intensity(collection, target_source, grid, frame, *, check):
         scaled = np.clip((values[covered].astype(np.float64) - low) / (high - low), 0, 1)
         signal[covered] = 1 + np.rint(254 * scaled).astype(np.uint8)
         return {"shape": shape.tolist(), "origin": frame["origin"], "spacingMm": spacing.tolist(),
-                "signal": signal, "unknownValue": 0, "sourceSeries": source["id"], "modality": modality,
+                "signal": signal, **({"overview": _source_overview(data, native, frame, low, high)}
+                                   if "entryDepthMm" in frame else {}),
+                "unknownValue": 0, "sourceSeries": source["id"], "modality": modality,
                 "sourceSha256": source["original"]["sha256"], "dataSha256": source["data"]["sha256"],
                 "window": [float(low), float(high)], "windowUnits": "HU" if ct else "source intensity",
                 "windowMethod": "Local 1st–99th percentiles excluding CT air or MRI zero background",

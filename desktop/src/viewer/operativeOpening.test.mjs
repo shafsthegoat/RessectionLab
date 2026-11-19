@@ -67,6 +67,8 @@ for(const kind of ['bone','dura'])test(kind+' reuses opening surfaces across scr
   assert.ok(intact.visible&&!cut.visible&&flap.visible);
   const detached=intact.geometry,patch=flap.geometry;
   assert.notEqual(detached,initial);
+  opening.warm(model.firstSectionRow);
+  assert.equal(intact.geometry,detached);assert.equal(flap.geometry,patch);assert.equal(angle.value,-1);
   // Terminal rendering uses the same masks and extractor as exact voxel edits.
   for(const [step,lifted,display] of [[0,false,initial],[128,false,kerfed],[128,true,detached]]){
     model.applyOpening(kind,step,lifted);
@@ -85,4 +87,44 @@ for(const kind of ['bone','dura'])test(kind+' reuses opening surfaces across scr
   assert.deepEqual(model.layers[kind].mask,before);
   opening.dispose();texture.dispose();
   assert.equal(scene.children.length,0);
+});
+
+test('reflected estimate uses a two-sided source-supported midsurface and raw mode restores occupied cells',()=>{
+  const shape=[31,31,12],voxels=new Uint8Array(31*31*12);
+  for(let x=0;x<31;x++)for(let y=0;y<31;y++){
+    if(x===13&&y===15)continue;
+    for(const z of [4,5,8])voxels[(x*31+y)*12+z]=2;
+  }
+  const field={shape,voxels,origin:[-15,-15,0],spacingMm:1,radiusMm:15,routeRadiusMm:2,entryDepthMm:9,
+    stations:{bone:null,dura:8,brain:null,tumor:null},layers:[{role:'dura',model:'siam-v2',proxy:false,sampledVoxels:100}]};
+  const model=buildOperativeModel(field),hinge=new THREE.Vector3(model.duralOpening*.74,0,8);
+  const material=()=>new THREE.MeshStandardMaterial(),scene=new THREE.Scene();
+  const stationary=new THREE.Mesh(new THREE.BufferGeometry(),material()),flap=stationary.clone();
+  flap.material=material();scene.add(stationary,flap);
+  const opening=prepareOperativeOpening('dura',model,stationary,flap,material(),hinge);
+  const original=Array.from(model.layers.dura.mask),moving=Array.from(model.layers.duraFlap.mask);
+  opening.update(0,1);
+  const smooth=flap.geometry,faces=smooth.index,rest=smooth.getAttribute('position');
+  assert.equal(flap.material.side,THREE.DoubleSide);
+  assert.ok(flap.morphTargetInfluences?.length);
+  // Positive-area triangle interiors stay in an occupied column run, including
+  // beside the missing column and across the air gap between the two bands.
+  for(let i=0;i<faces.count;i+=3){
+    for(const weights of [[.33,.33,.34],[.92,.04,.04],[.04,.92,.04],[.04,.04,.92]]){
+      const p=new THREE.Vector3().copy(hinge);
+      for(let j=0;j<3;j++)p.addScaledVector(new THREE.Vector3().fromBufferAttribute(rest,faces.getX(i+j)),weights[j]);
+      const x=Math.round(p.x+15),y=Math.round(p.y+15),z=Math.round(p.z);
+      assert.equal(moving[(x*31+y)*12+z],1);
+    }
+  }
+  const getPose=()=>Array.from({length:rest.count},(_,i)=>flap.getVertexPosition(i,new THREE.Vector3()).toArray());
+  const lifted=getPose();
+  opening.update(0,.8);assert.notDeepEqual(getPose(),lifted);
+  opening.update(0,1);assert.deepEqual(getPose(),lifted);
+  opening.update(0,1,true);
+  assert.equal(flap.material.side,THREE.FrontSide);assert.notEqual(flap.geometry,smooth);
+  assert(!flap.morphTargetInfluences?.length);
+  opening.update(0,1);assert.equal(flap.geometry,smooth);
+  assert.deepEqual(original,Array.from(model.layers.dura.mask));assert.deepEqual(moving,Array.from(model.layers.duraFlap.mask));
+  opening.dispose();
 });

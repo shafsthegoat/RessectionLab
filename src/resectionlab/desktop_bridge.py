@@ -1133,6 +1133,8 @@ class BridgeSession:
         if operation in {'generateRoutes','generateNativeRoutes','inspectRefinement','inspectAxisPlanning',
                          'trainPatient','nativeTraining','evaluateCandidate','replayTraining','exportCandidate'}:
             entry = self.cases.get(args.get('caseHash'))
+            if entry is not None and 'nativeStudyReplay' in entry.artifacts:
+                raise BridgeError('STUDY_REPLAY_ONLY', 'Use the recorded branch for this study. New planning requires a qualified source.')
             if entry is not None and entry.case.metadata.get('anatomy_workbench_only'):
                 raise BridgeError('ANATOMY_ONLY_CASE', 'This case is an anatomical inspection workspace. Its layers are not surgical targets or validated simulation anatomy.')
         if operation in LEGACY_OPERATION_EXCLUSIONS:
@@ -1477,6 +1479,9 @@ class BridgeSession:
             from .workspace_bundle import load_workspace
             case,artifacts,saved=load_workspace(path,cancelled=request.cancelled.is_set)
             request.check()
+            if 'nativeStudyReplay' in artifacts:
+                from .surgical_study_replay import validate_saved_binding
+                validate_saved_binding(case, artifacts)
             if saved is None:
                 saved={'sources':[],'imagingState':None,'episode':None,'selection':None,'sessionHash':None}
             return self._install_case(case, artifacts, request,workspace=saved)
@@ -1656,8 +1661,11 @@ class BridgeSession:
         if operation == "inspectAxisPlanning":
             return self._inspect_axis_planning(args, request, progress)
         if operation == "saveCase":
-            _keys(args, {"caseHash", "path", "workspace", "overwrite"})
+            _keys(args, {"caseHash", "path", "workspace", "overwrite", "forFrozenExecution"})
             entry = self._get_case(args.get("caseHash"))
+            if args.get("forFrozenExecution") and ('nativeStudyReplay' in entry.artifacts or
+                    'cranialPlanningCandidateV1' in entry.case.metadata.get('surgical_properties', {})):
+                raise BridgeError('STUDY_REPLAY_ONLY', 'A recording or inspection workspace cannot start a frozen policy.')
             if entry.public_surface_contact_active:
                 raise BridgeError("CONTACT_EPISODE_TRANSIENT",
                                   "The current public contact episode cannot yet be saved as a workspace")

@@ -328,7 +328,7 @@ def test_consequence_evidence_distinct_streamlines_partial_fields_and_reviewed_l
     nib.save(image, path)
     native.add_series(path, series_id="flair", modality="FLAIR")
     native.set_registration("flair", np.eye(4), status="unreviewed", method="Fixture transform")
-    moving = np.array([[1., 1., 1.], [2., 1., 1.], [1., 2., 1.]])
+    moving = world(affine, [[4, 4, 4], [8, 4, 4], [4, 8, 4]])
     review_registration(native, "flair", moving, moving + [.25, 0., 0.], "Fixture reviewer")
     points = world(affine, [[10, 17, 14], [10, 17, 15], [10, 17, 16],
                             [9, 18, 15], [11, 18, 15], [2, 19, 15], [3, 19, 15]])

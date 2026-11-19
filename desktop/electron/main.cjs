@@ -52,6 +52,15 @@ if((secondaryDisplayOnly||automationHidden)&&process.platform==='darwin')app.set
 let secondaryDisplayId;
 let secondaryDisplayUnavailable=false;
 const casePaths = new Map();
+const studyReplaySources = new Map();
+const {StudyReplayRecorder}=require('./study-engine-recording.cjs');
+const replayRecorder=new StudyReplayRecorder();
+function rememberReplayMode(result) {
+  if(result?.caseHash){
+    if(result.artifacts?.nativeStudyReplay)studyReplaySources.set(result.caseHash,result.artifacts.nativeStudyReplay);
+    else studyReplaySources.delete(result.caseHash);
+  }
+}
 const cliValue = name => { const index = process.argv.indexOf(name); return index >= 0 ? process.argv[index + 1] : undefined; };
 
 async function startEngine() {
@@ -128,6 +137,7 @@ function bindOperations() {
     const result=await engine.request(native?'anatomyOpen':'loadCase',{path:filename,...(portable?{
       workingRoot:path.join(app.getPath('userData'),'patient-studies'),...(readOnlyPackage?{readOnlyPackage:true}:{})
     }:{})},300000);
+    rememberReplayMode(result);
     currentCasePath=filename;if(result?.caseHash)casePaths.set(result.caseHash,filename);await caseLibrary.remember(filename);return result;
   };
   handle('workspaceInstalled', args=>{args=plainArgs(args,['caseHash','caseId']);currentCaseHash=args.caseHash;currentCaseName=String(args.caseId||'research-case').replace(/[^a-zA-Z0-9._-]/g,'-');rehearsalUnsaved.installed();return true;});
@@ -145,6 +155,7 @@ function bindOperations() {
   const openSaved = async filename => {
     if (!await rehearsalUnsaved.allowNavigation()) return null;
     const result = await engine.request('loadCase', {path: filename});
+    rememberReplayMode(result);
     currentCasePath = filename;
     casePaths.set(result.caseHash,filename);
     await caseLibrary.remember(filename);
@@ -170,10 +181,10 @@ function bindOperations() {
     anatomyGraph: ['layerId','point'],
     anatomyReconstruct: ['seriesId','model','synthsegVersion','brainLayerId'],
     anatomyPlan: ['action','approach','approachId','parameterHash','reviewApproachId','assess','start','end','radiusMm','patchRadiusMm','entryPatch','constraints','targetLayerId','candidateBinding','sensitivityConfig'], anatomyRemoval: ['point','radiusMm','reset'],
-    anatomySection: ['seriesId','center','normal','spacingMm','movingId','checkerboard','layers','original'],
+    anatomySection: ['seriesId','center','normal','spacingMm','movingId','checkerboard','layers','original','registrationReview'],
     anatomyView: ['seriesId','layers','original','highlightLayer','highlightComponents','reviewId','previewAlignment','vesselScope','patientModel'],
     anatomyEdit: ['action','layerId','author','points','radiusMm','threshold','reviewId','componentIds'],
-    anatomySample: ['point'],
+    anatomySample: ['point','layerId','independentSeries'],
     anatomyRegister: ['action','seriesId','movingPoints','referencePoints','reviewer'],
   };
   for (const [operation, keys] of Object.entries(anatomyKeys))
@@ -259,10 +270,29 @@ function bindOperations() {
     if (!await rehearsalUnsaved.allowNavigation()) return null;
     const result=await engine.request('createSurgicalFixture', {}); currentCasePath=null; return result;
   });
+  handle('compareBoundSurgicalReplays', async args=>{
+    args=plainArgs(args,['collectionId','snapshotId','targetLayerId']);
+    const selected=await dialog.showOpenDialog(window,{title:'Compare two recorded procedures',
+      properties:['openFile','multiSelections'],filters:[{name:'Recorded engine procedures',extensions:['ressectionlab','rslab']}]});
+    if(selected.canceled)return null;
+    if(selected.filePaths.length!==2)throw Error('Select two recorded procedures in the file chooser.');
+    return engine.request('compareBoundSurgicalReplays',{...args,paths:selected.filePaths},300000);
+  });
+  handle('openBoundSurgicalReplay', async args=>{
+    args=plainArgs(args,['collectionId','snapshotId','targetLayerId','approachId']);
+    if(!await rehearsalUnsaved.allowNavigation())return null;
+    const filename=await pick('Open recorded engine episode for this study',['ressectionlab','rslab']);
+    if(!filename)return null;
+    const result=await engine.request('openBoundSurgicalReplay',{...args,path:filename},300000);
+    rememberReplayMode(result);casePaths.delete(result.caseHash);
+    // Save a new replay workspace, preserving the selected archive.
+    currentCasePath=null;
+    return result;
+  });
   handle('prepareSurgicalEnvironment', async args=>{
     if(!await rehearsalUnsaved.allowNavigation())return null;
-    args=plainArgs(args,['collectionId','snapshotId','layers','allowUnreviewedRegistration']);
-    const result=await engine.request('prepareSurgicalEnvironment',args,300000);currentCasePath=null;return result;
+    args=plainArgs(args,['collectionId','snapshotId','layers','allowUnreviewedRegistration','approach']);
+    const result=await engine.request('prepareSurgicalEnvironment',args,300000);rememberReplayMode(result);currentCasePath=null;return result;
   });
   handle('importSurgicalScene', async args => {
     if (!await rehearsalUnsaved.allowNavigation()) return null;
@@ -274,6 +304,7 @@ function bindOperations() {
   handle('compareSurgicalAnatomy', args => engine.request('compareSurgicalAnatomy', plainArgs(args,['beforeCaseHash','afterCaseHash','changedLayers','prefix','decisions']),300000));
   handle('executeFrozenCusa', async args => {
     args=plainArgs(args,['caseHash','branchId','kind']);
+    if(studyReplaySources.has(args.caseHash))throw Error('STUDY_REPLAY_ONLY: open a writable research environment before running a policy');
     const kind=args.kind??'cusa';
     if(!['cusa','sector'].includes(kind))throw Error('Unknown frozen policy kind');
     if(app.isPackaged)throw Error('Frozen CUSA execution requires the local research checkout and matching Python runtime');
@@ -289,7 +320,7 @@ function bindOperations() {
       const source=path.join(folder,'input.ressectionlab');
       // Snapshot the current cached workspace, including unsaved approaches.
       // The original file and its navigation/save state remain untouched.
-      await engine.request('saveCase',{caseHash:args.caseHash,path:source,overwrite:false},300000);
+      await engine.request('saveCase',{caseHash:args.caseHash,path:source,overwrite:false,forFrozenExecution:true},300000);
       const result=await runFrozenCusa({repo,source,branchId:args.branchId,checkpoint,kind,
         output:path.join(folder,'execution'),signal:frozenCusaAbort.signal});
       frozenCusaAbort.signal.throwIfAborted();
@@ -315,8 +346,21 @@ function bindOperations() {
     frozenCusaAdmission=null;return true;
   });
   handle('cancelFrozenCusa',()=>{frozenCusaAbort?.abort();return true;});
+  handle('recordEngineMovie', async args=>{
+    args=plainArgs(args,['command','id','caseHash','branchId','stateId','rect']);
+    if(args.command!=='begin') return replayRecorder.command(args,window);
+    if(typeof args.caseHash!=='string' || typeof args.branchId!=='string') throw Error('Choose a recorded branch.');
+    const binding=studyReplaySources.get(args.caseHash);
+    const source=binding ? [binding.patientId,binding.targetLayerId,binding.sourceSnapshotId?.slice(0,10)].filter(Boolean).join(' · ') : null;
+    return replayRecorder.begin({caseHash:args.caseHash,branchId:args.branchId,source,choose:async()=>{
+      const choice=await dialog.showSaveDialog(window,{title:'Export observed engine replay',defaultPath:'engine-replay.mp4',
+        filters:[{name:'MPEG-4 video',extensions:['mp4']}]});
+      return choice.canceled?null:choice.filePath;
+    }});
+  });
   handle('surgicalRehearsal', async args => {
     args=plainArgs(args, ['includeSequenceOutcome','requestId','caseHash','command','expectedStateId','action','mapping','position','frameIndex','cacheOnly','timelineToken','viewFieldTokens','prefixToken','prefixFieldTokens','branchId','source','sceneIndex','acknowledgeResearchUnknowns','opponent','allowModeledBrainCorridor','scenario','maxActions','initialAccessRadiusMm','exploreExteriorFaces','cumulativeReentry','planningHorizon','beamWidth','policyInput','expectedComparisonSeal','constraints','candidateId','expectedPlanSeal','phase','offsetMm','contextVoxelShift']);
+    if(studyReplaySources.has(args.caseHash)&&!['inspect','seek','seekFrame'].includes(args.command))throw Error('STUDY_REPLAY_ONLY: use the recorded branch replay controls');
     if(args.command==='attachProtection'){
       if(!currentCaseHash||args.caseHash!==currentCaseHash||typeof args.expectedStateId!=='string'||!args.expectedStateId||args.source)throw Error('Choose the accepted state in the current workspace before attaching protection');
       const caseHash=currentCaseHash,protectionPath=await pick('Choose surgical-rl-protection-v1 JSON',['json']);
@@ -324,7 +368,7 @@ function bindOperations() {
       if(currentCaseHash!==caseHash)throw Error('Workspace changed while choosing protection');
       args={...args,protectionPath};
     }
-    const result=await engine.request('surgicalRehearsal',args,surgicalTimeoutMs(args.command));rehearsalUnsaved.changed(args,result);return result;
+    const result=await engine.request('surgicalRehearsal',args,surgicalTimeoutMs(args.command));rehearsalUnsaved.changed(args,result);replayRecorder.observe(result);return result;
   });
   for (const op of ['createRehearsal','inspectRehearsal','stepRehearsal','compareRehearsal']) {
     handle(op, async args => {const result=await engine.request(op, plainArgs(args, op === 'stepRehearsal'
@@ -449,7 +493,7 @@ async function createWindow() {
   window.on('close', event=>{
     if(!quitting&&rehearsalUnsaved.dirty){event.preventDefault();void rehearsalUnsaved.allowNavigation().then(allowed=>{if(allowed){rehearsalUnsaved.saved();window?.close();}});}
   });
-  window.on('closed', () => {screen.removeListener('display-removed',guardSecondaryDisplay);screen.removeListener('display-metrics-changed',guardSecondaryDisplay);window = undefined;});
+  window.on('closed', () => {void replayRecorder.clear().catch(error=>log(String(error)));screen.removeListener('display-removed',guardSecondaryDisplay);screen.removeListener('display-metrics-changed',guardSecondaryDisplay);window = undefined;});
   await window.loadURL(allowedUrl);
 }
 

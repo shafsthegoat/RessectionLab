@@ -148,6 +148,9 @@ def test_unified_patient_context_and_surfaces_survive_linked_scan_switch(tmp_pat
     assert mr["registrationStatus"] == ct["registrationStatus"] == "alignment preview"
     assert [s["alignment"] for s in context["sources"]] == ["reference", "estimated", "unavailable"]
     assert context["sources"][1]["displayWindow"] == [0., 1000.]
+    # Only the source-admitted MRI brain can supply a wider operative surface.
+    assert [s["seriesId"] for s in mr["appearanceSources"]] == ["mr"]
+    assert all(s["seriesId"] != "ct" for s in ct.get("appearanceSources", []))
     signal = as_array(context["signal"])
     assert signal[5, 5, 5] == pytest.approx(1.)
     assert signal[40, 5, 5] == pytest.approx(.8)
@@ -178,6 +181,45 @@ def test_unified_patient_context_and_surfaces_survive_linked_scan_switch(tmp_pat
     assert independent["registrationStatus"] == "independent source frame"
     assert "patientContext" not in independent
     assert independent["unavailableLayers"] == ["mr-structure", "ct-structure"]
+
+
+def test_cortical_texture_uses_acquisition_lattice_across_registered_and_independent_views(tmp_path):
+    study = PatientImagingCollection.create(tmp_path / "study", "contrasts")
+    mr_frame = np.array([[0., -1.5, 0., 15.], [1.25, 0., 0., -4.], [0., 0., 1., 3.], [0., 0., 0., 1.]])
+    mr_shape = (12, 14, 16)
+    for sid, modality, shape, frame in (("mr", "T1", mr_shape, mr_frame),
+            ("ct", "CT", (20, 15, 17), np.eye(4)), ("isolated", "CT", (9, 9, 9), np.eye(4))):
+        image = nib.Nifti1Image(np.arange(np.prod(shape), dtype=np.float32).reshape(shape), frame)
+        image.header.set_xyzt_units("mm")
+        path = tmp_path / (sid + ".nii")
+        nib.save(image, path)
+        study.add_series(path, series_id=sid, modality=modality)
+    # A coarser annotation grid must never become the texture lattice.
+    label_grid = mr_frame @ np.diag([2., 2., 2., 1.])
+    mask = np.zeros((6, 7, 8), np.uint8)
+    mask[1:-1, 1:-1, 1:-1] = 3
+    study.add_layer(mask, label_grid, layer_id="cortex", source_series="mr", kind="brain-region",
+                    role="context", color="#aa8899", label_value=3, provenance={"model": "synthseg"})
+    transform = np.eye(4)
+    transform[0, 3] = 2.
+    study.set_registration("ct", transform, status="unreviewed", method="fixture")
+    study.save()
+    client = BridgeSession(tmp_path / "transfers")
+    def call(op, args):
+        return client.execute(op, args, _Request("appearance"), lambda *_: None)
+    opened = call("anatomyOpen", {"path": str(study.root / "patient-anatomy.json")})
+    args = {"collectionId": opened["collectionId"], "snapshotId": study.identity(), "previewAlignment": True, "layers": ["cortex"]}
+    mr, ct, isolated = [call("anatomyView", {**args, "seriesId": sid}) for sid in ("mr", "ct", "isolated")]
+    assert mr["appearanceSources"] == ct["appearanceSources"]
+    source, = mr["appearanceSources"]
+    assert source["signal"] == mr["mri"] and source["signal"]["sha256"] != ct["mri"]["sha256"]
+    assert source["seriesId"] == "mr" and source["sourceSha256"] == study.series("mr")["original"]["sha256"]
+    assert source["affine"] == mr_frame.tolist() and tuple(source["signal"]["shape"]) == mr_shape
+    assert source["nativeAffine"] == mr_frame.tolist() and tuple(source["nativeShape"]) == mr_shape
+    assert mr["compartments"][0]["displayKind"] == ct["compartments"][0]["displayKind"] == "gray-matter"
+    assert ct["registrationStatus"] == "alignment preview"
+    assert isolated["registrationStatus"] == "independent source frame"
+    assert isolated["unavailableLayers"] == ["cortex"] and "appearanceSources" not in isolated
 
 
 @pytest.mark.parametrize(("filename", "metadata"), [

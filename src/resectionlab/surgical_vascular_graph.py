@@ -359,6 +359,19 @@ def consume_field_interval(engine, dt):
     return True
 
 
+DEFICIT_METRICS = ('supplyDeficitSeconds', 'drainageDeficitSeconds')
+
+
+def maximum_interface_deficits(regions):
+    """Cumulative modeled seconds at the worst declared interface for each mechanism.
+
+    Territories can overlap. Neither duration predicts infarction or disability.
+    Undeclared interfaces have no observed value.
+    """
+    return {name: max((row[name] for row in regions.values()), default=None)
+            for name in DEFICIT_METRICS}
+
+
 def metrics(engine):
     s = initialize(engine); p = engine.scene.properties[PROPERTY]
     sources = [r for r in engine.state['sources'] if r.get('modelVersion') == MODEL_VERSION]

@@ -4,8 +4,63 @@ This is the implemented research contract, not a completed clinical objective.
 The [November 13 engineering closeout](../artifacts/decision-system-closeout-20261113.json)
 records the current source/build checks; historical milestones and remaining
 patient dependencies are in [the progress record](decision-system-progress.md).
-Zero completed patient tumor tasks and all anatomical, physiological and RL
-qualification holds remain.
+Zero acquired cases have completed the qualified supratentorial tumor task.
+
+Validate four properties separately. **Visual quality** is measured at fixed
+source, camera, state and hardware, including the time to settle after a change.
+**Anatomical fidelity** uses source voxels, original sampling, annotations,
+review status, thin-structure continuity and uncertainty. **Physical validity**
+requires agreement between the accepted actions, intermediate observations,
+contacts, tissue and field ledgers, STOP and exit. **Outcome validity** requires
+independent evidence for each claimed patient effect. A successful generated
+episode tests the declared engineering endpoint.
+
+The linked imaging and corridor examples in Medivis informed the decision to
+keep original slices beside an opaque operative field. Slicer's separate
+labelmap and surface representations informed source-exact picking and the raw
+edge comparison. VTK's shared material interfaces informed the bounded display
+reconstruction. The curved control measures interface separation and membrane
+thickness independently of image appearance. Rhoton is an orientation reference
+for cranial relationships. Source scans supply the visible patient anatomy.
+[Medivis Studio](https://www.medivis.com/studio) · [Cranial navigation](https://www.medivis.com/navigation/cranial) · [3D Slicer segmentations](https://slicer.readthedocs.io/en/latest/user_guide/modules/segmentations.html) · [Segment Editor](https://slicer.readthedocs.io/en/latest/user_guide/modules/segmenteditor.html) · [VTK Surface Nets](https://vtk.org/doc/nightly/html/classvtkSurfaceNets3D.html) · [Rhoton Collection](https://www.aans.org/education-publications/references/the-rhoton-collection/).
+
+## Scan-to-procedure acceptance
+
+Begin with the available scans of one person at a declared timepoint. Retain
+the original geometry and annotated compartments, inspect corrections on the
+original slices and account for each added acquisition. Keep acquired signal,
+supplied labels, model estimates and synthetic additions identifiable through
+save and reopen. Separate missing coverage, unlabelled tissue and assessed
+negative evidence in each structure's contribution.
+
+An acquired-case demonstration requires all of the following in the desktop.
+
+1. Add same-patient imaging and show what changed. Withhold a failed
+   registration or an out-of-coverage result. Record the source and target revision.
+2. Compare at least two entry strategies against the same target, evidence and
+   constraints. Keep residual enhancing target, surrounding FLAIR abnormality
+   and necrotic core distinguishable where the annotation supports them.
+3. Execute an admitted episode with complete instrument and swept-path checks.
+   Record a rejected action, its reason and the unchanged physical state.
+4. Play the accepted actions in 3D with a cutaway-off view of exposure. Show
+   the tools, tissue changes, cavity, whole-target residual and consequences
+   at their recorded states. Pause, step, scrub, save and cold reopen. Match
+   tool, state and cumulative-ledger identities at selected positions.
+5. Compare search and an eligible policy from the same state with matched
+   observations and explicit compute budgets. Include STOP and checked exit.
+   Report direct neural injury, mechanical exposure, arterial supply or venous
+   drainage effects, and motor plus a case-supported second functional domain.
+   Unmeasured outcomes stay unknown. An advantage requires a measured result.
+
+The geometric preview and its removal animation remain available on cases
+with insufficient engine evidence. Generated controls test implementation.
+The acquired completion count uses the full sequence above. Outcome claims
+require their own clinical validation. Anatomical teaching references inform
+orientation, paired intraoperative landmarks support registration evaluation,
+and tumor compartment selection depends on indication and imaging.
+[Rhoton Collection](https://www.aans.org/education-publications/references/the-rhoton-collection/) ·
+[RESECT acquisition and landmarks](https://pubmed.ncbi.nlm.nih.gov/28391601/) ·
+[EANS–EANO glioma resection guidelines](https://doi.org/10.1093/neuonc/noaf217).
 
 For the opt-in November 16 supratentorial task, the
 [versioned procedure policy](supratentorial-procedure-policy.md) now supersedes
@@ -36,7 +91,7 @@ Four separate concepts currently run:
 |Feasibility|`SurgicalEngine`, `surgical_rl_protection`, `surgical_task_domain`, checked staged skills|Hard native constraints plus declared tissue/action/computation limits. Missing anatomy remains unknown.|
 |Planning preference|`surgical_staged_planning`, `surgical_sequence_search`, `surgical_two_tool`, `surgical_preparation_planning`|Staged baseline maximizes immediate target mm³. New lookahead retains target/non-target/time Pareto outcomes and recommends lexicographically: more target, less non-target, less modeled time. Two-tool comparison minimizes seconds after its progress gate; preparation comparison charges the whole prefix and suffix.|
 |Episode reward|`surgical_rl_rewards.RewardTracker/compute_reward`|Illustrative engineering return, separate from treatment outcome and feasibility. No training occurs in this milestone.|
-|Policy training loss|Existing policy-specific BC/PPO fitting code|An optimization objective over observations/returns; no anatomical or outcome certificate. Existing physiological, continuum, heat and vascular RL holds remain.|
+|Policy training loss|Existing policy-specific BC/PPO fitting code|An optimization objective over observations/returns; no anatomical or outcome certificate. Acquired vascular, continuum and heat modes remain gated. Declared generated graphs support separate supply and drainage costs.|
 
 Default reward weights are target +1, healthy removal −2, bone −0.05,
 deformation −1, bleeding −1 and protected damage −5 per 1,000 mm³ of their

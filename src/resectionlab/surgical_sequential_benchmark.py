@@ -7,6 +7,7 @@ import time
 from types import SimpleNamespace
 import numpy as np
 
+from .core import array_digest
 from .surgical_sequential_task import (COMMON_CONFIG, execute_skill, endpoint_assessment,
     observation, available_mask, training_admission, SequentialPrimitiveAdapter, SkillExecutionInterrupted)
 from .surgical_procedure_policy import evaluate_procedure_sequence
@@ -240,10 +241,13 @@ def feature_matrix(observed, skills):
     stats=[route_stats(s) for s in skills]
     workstats=[r for s,r in zip(skills,stats) if s.kind=='work']
     limits=observed['declared_limits']; remaining=observed['remaining']
+    # The trained 3-mm isotropic task has 27 mm³ cells. Transferred native
+    # observations may have another affine, while harm limits remain in mm³.
+    voxel_mm3 = abs(float(np.linalg.det(affine[:3, :3])))
     global_values=[len(targets-removed)/16.,len(motor-removed)/8.,len(cst-removed)/8.,
-        (limits['maximumNeuralRemovalMm3']-len(neural & removed)*27.)/108.,
-        (limits['maximumStructureRemovalMm3']['motor-cortex']-len(motor & removed)*27.)/108.,
-        (limits['maximumStructureRemovalMm3']['corticospinal']-len(cst & removed)*27.)/108.,
+        (limits['maximumNeuralRemovalMm3']-len(neural & removed)*voxel_mm3)/108.,
+        (limits['maximumStructureRemovalMm3']['motor-cortex']-len(motor & removed)*voxel_mm3)/108.,
+        (limits['maximumStructureRemovalMm3']['corticospinal']-len(cst & removed)*voxel_mm3)/108.,
         remaining['attempts']/512.,remaining['seconds']/240.,remaining['skills']/8.,
         max(r[4] for r in workstats),min(r[5] for r in workstats),float(np.mean([r[5] for r in workstats])),
         float(state['slots']['right']['inserted']),float(state['slots']['right']['active']),
@@ -258,8 +262,28 @@ def feature_matrix(observed, skills):
     return result
 
 
+def observed_greedy_search(features, mask):
+    """Enumerate available working routes. Rank observed target minus annotated encounters.
+
+    Counts use the same corridor neighborhood as the frozen actor's input.
+    Radius preparation has no observed immediate treatment. STOP wins ties at zero.
+    """
+    def counts(name, scale):
+        return features[:, FEATURE_NAMES.index(name)] * scale
+    predicted_gain = (counts('route_remaining_target_cells', 8) - counts('route_motor_cells', 4)
+                      - counts('route_cst_cells', 4) - counts('route_critical_cells', 4))
+    stop, = np.flatnonzero(mask & features[:, FEATURE_NAMES.index('kind_stop')].astype(bool))
+    work = np.flatnonzero(mask & features[:, FEATURE_NAMES.index('kind_work')].astype(bool))
+    if len(work):
+        best = work[np.argmax(predicted_gain[work])]
+        if predicted_gain[best] > 0:
+            return int(best)
+    return int(stop)
+
+
 def run_episode(task, method, tier, *, selector=None, stochastic=False, seed=0,
-        retain_engine=False, gradient_records=False, deadline=None, initial_prepare_radius=None):
+        retain_engine=False, gradient_records=False, deadline=None, initial_prepare_radius=None,
+        record_decision_inputs=False):
     training_admission(task)
     initial_prepare = None
     if initial_prepare_radius is not None:
@@ -270,6 +294,7 @@ def run_episode(task, method, tier, *, selector=None, stochastic=False, seed=0,
         initial_prepare = matches[0]
     reset_started=time.monotonic(); engine=task.initial_engine(); reset_seconds=time.monotonic()-reset_started
     ledger=OnlineLedger(tier,deadline); used=set(); history=[]; attempts=invalid=0; stopped=False
+    decision_inputs = []
     selections=0; plan=None; search_attempts=[]; gradient=[]; timed_out=False; search_exhausted=False
     try:
         if method=='search' and initial_prepare is None:
@@ -288,14 +313,20 @@ def run_episode(task, method, tier, *, selector=None, stochastic=False, seed=0,
                     plan,extra=constrained_skill_search(task,engine,used,ledger)
                     search_attempts.extend(extra);search_exhausted=not plan
                 index=plan.pop(0) if plan else next(i for i,s in enumerate(task.skills) if s.kind=='stop')
-            elif method in ('learned', 'conditional'):
+            elif method in ('learned', 'conditional', 'observed_greedy_search'):
                 mask=_inventory(task,engine,used,ledger)
                 observed=observation(task,engine,attempts=attempts,invalid=invalid,selections=selection)
                 started=time.monotonic()
                 if method == 'conditional':
                     index, record = selector(observed, task.skills, mask), {}
                 else:
-                    index, record = selector(feature_matrix(observed,task.skills),mask,stochastic)
+                    features = feature_matrix(observed, task.skills)
+                    if record_decision_inputs:
+                        decision_inputs.append(dict(features=array_digest(features), mask=array_digest(mask)))
+                    if method == 'observed_greedy_search':
+                        index, record = observed_greedy_search(features, mask), {}
+                    else:
+                        index, record = selector(features, mask, stochastic)
                 ledger.policy_seconds+=time.monotonic()-started
                 if gradient_records: gradient.append(record)
             else: raise ValueError('Unknown finite skill method')
@@ -330,6 +361,7 @@ def run_episode(task, method, tier, *, selector=None, stochastic=False, seed=0,
         snapshot=engine.snapshot(),missingEvidence=outcome['missingEvidence'])
     if initial_prepare is not None:
         row['initialPreparationRadiusMm'] = initial_prepare_radius
+    if record_decision_inputs: row['decisionInputs'] = decision_inputs
     if retain_engine: row['_engine']=engine
     if gradient_records: row['_gradient']=gradient
     return row

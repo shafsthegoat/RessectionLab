@@ -506,3 +506,17 @@
 .operative-readout{position:absolute;left:14px;bottom:34px;z-index:4;display:grid;gap:3px;padding:9px 12px;background:rgba(12,17,17,.82);border:1px solid rgba(225,214,190,.25);border-radius:6px;color:#e8e2d3;font-size:10px;line-height:1.4;pointer-events:none;font-variant-numeric:tabular-nums}
 .operative-readout strong{font-size:11px;color:#f1e1be}
 .rl-viewer-anatomy-image:has(.rl-body-guide:not([hidden])) .operative-readout{left:calc(clamp(104px,20%,144px) + 24px);right:14px;max-width:430px;box-sizing:border-box}
+.operative-source-locator { position:absolute; top:12px; right:12px; z-index:3; width:clamp(88px,16%,140px); margin:0; padding:4px; border:1px solid #58655c; border-radius:5px; background:#101715ed; color:#dee6dc; font:10px/1.25 system-ui; text-align:center; pointer-events:none; }
+.operative-source-locator div { position:relative; }
+.operative-source-locator canvas { display:block; width:100%; height:auto; }
+.operative-source-locator svg { position:absolute; inset:0; width:100%; height:100%; fill:none; stroke:#8effc6; stroke-width:1.3; filter:drop-shadow(0 0 1px black); }
+
+.engine-anatomy-key {position:absolute; z-index:4; left:12px; top:32px; max-width:min(78%,420px); font-size:11px; color:#e1e9e8; pointer-events:none}
+.engine-anatomy-key-keys,.operative-contour-controls {display:flex; flex-wrap:wrap; gap:3px; margin-bottom:3px}
+.engine-anatomy-key button {pointer-events:auto; background:rgba(14,21,22,.92); border:1px solid #405051; border-radius:4px; padding:3px 7px; color:inherit; font:inherit; cursor:pointer}
+.engine-anatomy-key button[aria-pressed=true] {border-color:#85b8a9; color:#d9f4ea}
+.engine-anatomy-key i {display:inline-block; width:.72em; height:.72em; border-radius:50%; margin-right:5px; border:1px solid #ffffff44}
+.operative-contour-controls {font-size:10px; color:#c2d3ce}
+.operative-layer-inspection {width:fit-content; max-width:100%; display:grid; gap:2px; padding:7px; border-radius:4px; background:rgba(14,21,22,.94); overflow-wrap:anywhere}
+
+.engine-source-swatch {display:inline-flex; align-items:center; margin-left:5px; padding-left:5px; border-left:1px solid #627572; font-size:9px; color:#afc1bb}

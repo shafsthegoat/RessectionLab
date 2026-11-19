@@ -4,7 +4,22 @@ from scipy import ndimage as ndi
 from .patient_anatomy import digest
 
 
-def mask_quality(mask, source_identity, *, probability=None, review_status='unreviewed', alignment_status=None):
+def empty_tumor_reason(record, modality):
+    """Explain a thresholded model result only when its recorded scores support it."""
+    if record.get("availability") != "empty_output":
+        return None
+    peak = record.get("maximum_score")
+    parameters = record.get("parameters")
+    cutoff = parameters.get("threshold") if isinstance(parameters, dict) else None
+    if not all(type(value) in (int, float) for value in (peak, cutoff)) or not 0 <= peak < cutoff <= 1:
+        return None
+    display_peak = f"{peak:.4g}" if float(f"{peak:.4g}") < cutoff else str(peak)
+    return (f"No tumor voxels reached the model threshold of {cutoff:g} on {modality}. "
+            f"The highest score was {display_peak}. Review the source scan or import a supplied tumor label for this scan.")
+
+
+def mask_quality(mask, source_identity, *, probability=None, review_status='unreviewed', alignment_status=None,
+                 empty_reason=None):
     mask = np.asarray(mask, bool)
     labels, count = ndi.label(mask, np.ones((3, 3, 3)))
     sizes = np.bincount(labels.ravel())
@@ -12,7 +27,7 @@ def mask_quality(mask, source_identity, *, probability=None, review_status='unre
     boundary = mask.copy()
     boundary[1:-1, 1:-1, 1:-1] = False
     issues = []
-    if not voxels: issues.append('Empty segmentation: anatomy is missing or localization failed.')
+    if not voxels: issues.append(empty_reason or 'The segmentation contains no labeled voxels. The anatomy remains unassessed.')
     if count > 1: issues.append(f'{count:,} disconnected source components; inspect before correcting.')
     touching = int(boundary.sum())
     if touching: issues.append(f'{touching:,} foreground cells touch the acquisition boundary; coverage may be truncated.')
@@ -39,8 +54,15 @@ def layer_quality(collection, row):
     if identity not in cache:
         probability = collection.array(row['probability']) if row.get('probability') and not row.get('edits') else None
         transform = collection.document['transforms'].get(row['source_series'], {})
+        reason = None
+        if probability is not None and row["kind"] == "tumor":
+            provenance = row.get("provenance", {})
+            record = provenance.get("native_rerun", provenance)
+            if record.get("availability") == "empty_output" and record.get("maximum_score") == float(probability.max()):
+                reason = empty_tumor_reason(record, collection.series(row["source_series"])["modality"])
         cache[identity] = mask_quality(collection.mask(row), identity, probability=probability,
-            review_status=row.get('review_status', 'unreviewed'), alignment_status=transform.get('status', 'unknown'))
+            review_status=row.get('review_status', 'unreviewed'), alignment_status=transform.get('status', 'unknown'),
+            empty_reason=reason)
         # Keep only the latest few generations of findings in this process.
         if len(cache) > 512: cache.pop(next(iter(cache)))
         collection._quality_cache = cache

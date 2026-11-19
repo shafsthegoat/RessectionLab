@@ -17,10 +17,10 @@ test('runtime staging retains exact dependency closure and all repository develo
     }
     const staged = path.join(base, 'runtime');
     const receipt = await stageElectronRuntime(source, staged, hashes);
-    assert.equal(receipt.fileCount, 34);
+    assert.equal(receipt.fileCount, 35);
     assert.deepEqual((await fs.readdir(staged)).sort(), [...runtimeFiles].sort());
     for (const name of runtimeFiles) assert.equal(sha(await fs.readFile(path.join(staged, name))), hashes['electron/' + name]);
-    for (const name of ['main.cjs', 'preload.cjs', 'sidecar.cjs', 'prefix-engine.cjs', 'frozen-cusa.cjs']) assert(receipt.files[name]);
+    for (const name of ['main.cjs', 'preload.cjs', 'sidecar.cjs', 'prefix-engine.cjs', 'frozen-cusa.cjs', 'study-engine-recording.cjs']) assert(receipt.files[name]);
     for (const name of ['package-macos.cjs', 'runtime-files.test.cjs', 'benchmark-surgical-playback.cjs', 'vascular_playback_monitor.py']) {
       assert(receipt.excludedSourcePaths.includes('electron/' + name));
       assert((await fs.stat(path.join(source, name))).isFile());

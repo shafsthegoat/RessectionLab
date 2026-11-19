@@ -10,6 +10,7 @@ import hashlib
 import itertools
 import json
 from pathlib import Path
+from urllib.parse import quote
 import numpy as np
 from scipy.ndimage import affine_transform
 from .core import CaseData, SourceRef, array_digest
@@ -148,7 +149,8 @@ def _research_grid(collection, reference, resolution_mm):
 
 def surgical_environment_options(collection, *, check=lambda: None):
     """Source and role preflight for the separate limited rehearsal derivative."""
-    result = {'referenceIssue': None, 'layers': []}
+    from .surgical_selected_decision import selected_route_forecast
+    result = {'referenceIssue': None, 'layers': [], 'selectedRouteForecast': selected_route_forecast()}
     try:
         reference = collection.series(collection.document['reference_series'])
         _source_registration(collection, reference)
@@ -188,7 +190,7 @@ def surgical_environment_options(collection, *, check=lambda: None):
 
 def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
                              resolution_mm=1., allow_unreviewed_registration=False,
-                             tissue_physics=None, require_complete=True):
+                             tissue_physics=None, require_complete=True, approach=None):
     """Save patient.ressectionlab and report.json; return the auditable report.
 
     layer_ids maps exactly brain/tumor/bone/vessels to existing collection IDs.
@@ -210,6 +212,27 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
     if root.is_file(): root = root.parent
     collection = PatientImagingCollection(root)
     manifest_path = root / 'patient-anatomy.json'
+    def selected_approach():
+        from .anatomy_operative_field import _saved_route
+        required = {'approachId', 'parameterHash', 'targetLayerId', 'snapshotId'}
+        if type(approach) is not dict or not required <= set(approach) <= required | {'measurementHash'}:
+            raise ValueError('Select a current saved approach and target')
+        if layer_ids.get('tumor') != approach['targetLayerId']:
+            raise ValueError('Environment tumor differs from the selected approach target')
+        route, binding, revision = _saved_route(collection, approach)
+        if 'measurementHash' in approach and approach['measurementHash'] != route['measurementHash']:
+            raise ValueError('The selected route measurements changed; review the forecast again')
+        from .surgical_selected_decision import selected_route_forecast
+        measured = route['measurements']
+        geometry = {'lengthMm': measured['lengthMm'],
+                    'traversedNonTargetMm3': measured['normalTraversal'].get('supportedNonTargetVoxelCenterVolumeMm3'),
+                    'unknowns': list(measured['unknowns'])}
+        return {'schema': 'resectionlab.native-environment-approach.v1', 'planRevision': revision,
+            'geometry': geometry, 'forecast': selected_route_forecast(),
+            'targetBinding': binding, **{key: copy.deepcopy(route[key]) for key in
+                ('id', 'name', 'sourceSnapshotId', 'targetLayerId', 'parameterHash', 'measurementHash',
+                 'entry', 'target', 'radiusMm', 'direction')}}
+    planned = selected_approach() if approach is not None else None
     manifest_hash = _sha(manifest_path)
     manifest = copy.deepcopy(collection.document)
     reference = collection.series(manifest['reference_series'])
@@ -238,8 +261,12 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
         original_path = collection.path(original['path'])
         if _sha(original_path) != original['sha256']:
             raise ValueError('Source original checksum differs')
-        source_refs.append(SourceRef(sid, original_path.as_uri(), original['sha256'], native_frame='RAS+'))
-    source_refs.append(SourceRef('source-manifest', manifest_path.resolve().as_uri(), manifest_hash, native_frame='RAS+'))
+        # The native package may be extracted under a new directory on each open.
+        # Relative references resolve within the hash-bound source manifest.
+        uri = quote(original['path']) if planned else original_path.as_uri()
+        source_refs.append(SourceRef(sid, uri, original['sha256'], native_frame='RAS+'))
+    manifest_uri = 'patient-anatomy.json' if planned else manifest_path.resolve().as_uri()
+    source_refs.append(SourceRef('source-manifest', manifest_uri, manifest_hash, native_frame='RAS+'))
     mri = _resample(collection.array(reference['data']), reference_affine, target_affine, shape)
     masks, layer_report = {}, {}
     for name in selected_order:
@@ -278,15 +305,30 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
         'sourceLayers': layer_report, 'overlapCells': overlaps, 'ownershipPrecedence': list(selected_order),
         'ownershipCells': ownership_counts, 'allowUnreviewedRegistration': bool(allow_unreviewed_registration)}
     physics_key = 'tissuePhysicsV2' if physics.get('schema') == 'resectionlab.tissue-physics.v2' else 'tissuePhysics'
+    properties = {physics_key: physics}
+    if planned:
+        from .surgical_source_inspection import PROPERTY
+        adapter['selectedApproach'] = planned
+        # The native guard uses presence of PROPERTY for every inspection variant.
+        # This derivative has sampled materials, unlike the exact-grid annotation export.
+        properties[PROPERTY] = {'schema': 'resectionlab.planned-derivative-inspection.v1',
+            'status': 'inspection-only', 'patientTaskAdmission': False,
+            'sourceSnapshotId': planned['sourceSnapshotId'], 'targetBinding': planned['targetBinding'],
+            'approachId': planned['id'], 'planRevision': planned['planRevision'], 'blockers': [
+            {'code': 'PROCEDURE_ACQUIRED_SOURCE_QUALIFICATION_UNAVAILABLE',
+             'message': 'The saved approach supplies proposed geometry. Executing it requires qualified source coverage, entry, compartments, operative stages and swept instrument workspace.'}]}
     case = CaseData(case_id=manifest['patient_id'] + '-surgical-research', mri=mri,
         compartments=masks, affine=target_affine, frame='RAS+', source_refs=tuple(source_refs),
-        metadata={'surgical_adapter': adapter, 'surgical_properties': {physics_key: physics},
+        metadata={'surgical_adapter': adapter, 'surgical_properties': properties,
+            **({'anatomy_workbench_only': True} if planned else {}),
             'anatomy_layers': {name: _anatomy_metadata(name, rows[name]) for name in selected_order},
             'missing_anatomy': [name for name in ORDER if name not in rows],
             'description': 'Acquired reference image with explicitly selected source annotations and research estimates; missing anatomy remains unknown.'})
     output = Path(output_dir)
     output.mkdir(parents=True, exist_ok=True)
     path = save_case(case, output / 'patient.ressectionlab')
+    if planned is not None and selected_approach() != planned:
+        raise ValueError('Selected approach changed during environment export')
     if _sha(manifest_path) != manifest_hash:
         raise ValueError('Source manifest changed during export')
     report = {'schema': 'resectionlab.surgical-patient-export.v1', 'casePath': str(path.resolve()),
@@ -298,7 +340,7 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
 
 
 def prepare_surgical_environment(collection_path, output_dir, *, layer_ids,
-                                 resolution_mm=1., allow_unreviewed_registration=False):
+                                 resolution_mm=1., allow_unreviewed_registration=False, approach=None):
     """One interoperable export path for desktop preparation, CLI, and RL.
 
     Missing roles are explicit. Source manifests are never rewritten. The saved
@@ -311,11 +353,12 @@ def prepare_surgical_environment(collection_path, output_dir, *, layer_ids,
     from .surgical_physics_v2 import default_profile
     report = prepare_surgical_patient(collection_path, output_dir, layer_ids=layer_ids,
         resolution_mm=resolution_mm, allow_unreviewed_registration=allow_unreviewed_registration,
-        tissue_physics=default_profile(), require_complete=False)
+        tissue_physics=default_profile(), require_complete=False, approach=approach)
     case = load_case(report['casePath'])
     scene = standardize(from_case(case))
     from .surgical_rl_protection import GuardConfig
-    engine = SurgicalEngine(scene, guard_config=GuardConfig(require_critical_coverage=False))
+    engine = (SurgicalEngine(scene) if approach is not None else
+              SurgicalEngine(scene, guard_config=GuardConfig(require_critical_coverage=False)))
     record = {'environmentSchema': SCHEMA, 'physicsProfile': copy.deepcopy(scene.properties['tissuePhysicsV2']),
               'mapping': scene.regions, 'branches': {'main': engine.snapshot()}, 'branchId': 'main',
               'position': 0, 'parents': {'main': None}, 'timeline': {'main': []}}

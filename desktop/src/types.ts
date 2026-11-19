@@ -117,7 +117,15 @@ export interface PriorLayerView {
   proposal: PriorProposal;
 }
 
+export interface VerifiedStudyReplay {
+  caseHash:string;patientId:string;sourceSnapshotId:string;targetLayerId:string;branchId:string;actions:number;
+  recordedApproach?:{id:string;name:string;entry:Vec3;target:Vec3;radiusMm:number;parameterHash:string;measurementHash:string};
+  actionGenerator?:{kind:string;name:string};
+  actionsHash:string;sceneId:string;endpointStateId:string;instrumentCatalogHash:string;
+}
 export interface CasePayload {
+  verifiedStudyReplay?:VerifiedStudyReplay;
+  verifiedTargetSampling?:{nativeAnnotationMm3:number;nativeGridSpacingMm:number[];engineAnnotationMm3:number;engineGridSpacingMm:number[]};
   workspaceSession?: import("./workspace-session-types").WorkspaceSessionPayload;
   caseId: string;
   caseHash: string;
@@ -464,11 +472,14 @@ export type CaseLibraryFolder = {folder:string|null;error?:string};
 export interface ResectionApi extends TrainingApi {
   importSurgicalScene?(args:{frame:string;units:string;material:string;resolution:number;topology:string;thicknessMm?:number}):Promise<CasePayload|null>;
   compareSurgicalAnatomy?(args:{beforeCaseHash:string;afterCaseHash:string;changedLayers?:string[];prefix?:Record<string,unknown>[];decisions?:number}):Promise<import('./surgical-types').AnatomyComparisonResult>;
+  recordEngineMovie?(args:{command:'begin';caseHash:string;branchId:string}|{command:'cancel'|'finish';id:string}|{command:'capture';id:string;stateId:string;rect:{x:number;y:number;width:number;height:number}}):Promise<string|{captured:number;simulatedSeconds:number}|null|void>;
   surgicalRehearsal?: import("./surgical-types").SurgicalApi["surgicalRehearsal"];
   executeFrozenCusa?(args:{caseHash:string;branchId:string;kind?:'cusa'|'sector'}):Promise<{case:CasePayload;workspacePath:string;receiptPath:string;admissionId:string;status:string;taskGateMet:boolean;cleanupComplete:boolean;deltaTargetMm3:number;deltaNonTargetMm3:number}|null>;
   finishFrozenCusa?(args:{admissionId:string;accepted:boolean}):Promise<boolean>;
   cancelFrozenCusa?():Promise<boolean>;
   workspaceInstalled?(args:{caseHash:string;caseId:string}):Promise<boolean>;
+  compareBoundSurgicalReplays?(args:{collectionId:string;snapshotId:string;targetLayerId:string}):Promise<import("./RecordedStrategyComparison").RecordingComparison|null>;
+  openBoundSurgicalReplay?(args:{collectionId:string;snapshotId:string;targetLayerId:string;approachId?:string}):Promise<CasePayload|null>;
   prepareSurgicalEnvironment?(args:import('./EnvironmentPreparationPanel').EnvironmentPreparation):Promise<CasePayload|null>;
   createSurgicalFixture?: import("./surgical-types").SurgicalApi["createSurgicalFixture"];
   createRehearsal?: import("./rehearsal-types").RehearsalApi["createRehearsal"];

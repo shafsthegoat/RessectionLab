@@ -106,7 +106,7 @@ def _terminate_group(process):
         os.killpg(process.pid, signal.SIGKILL)
     except ProcessLookupError:
         pass
-    process.wait()
+    process.wait(timeout=5)
 
 
 def _drain(selector, attempt_log, timeout):
@@ -116,6 +116,12 @@ def _drain(selector, attempt_log, timeout):
             attempt_log.append(data)
         else:
             selector.unregister(event.fd)
+
+
+def _drain_for(selector, attempt_log, seconds):
+    deadline = time.monotonic() + seconds
+    while selector.get_map() and (remaining := deadline - time.monotonic()) > 0:
+        _drain(selector, attempt_log, remaining)
 
 
 def supervise_worker(command, environment, log_path, *, timeout, cancelled, measure_footprint=False):
@@ -156,16 +162,17 @@ def supervise_worker(command, environment, log_path, *, timeout, cancelled, meas
                         failure = "time_budget_exceeded"
                         break
                     _drain(log_ready, attempt_log, max(0, min(remaining, next_sample - time.monotonic())))
-                if failure:
-                    _terminate_group(process)
-                # Collect the last diagnostics without waiting forever on an
-                # inherited pipe that a stray descendant has kept open.
-                drain_until = time.monotonic() + 1
-                while log_ready.get_map() and (remaining := drain_until - time.monotonic()) > 0:
-                    _drain(log_ready, attempt_log, remaining)
-                if log_ready.get_map() and not failure:
-                    _terminate_group(process)
-                    failure = "worker_output_not_closed"
+                if not failure:
+                    _drain_for(log_ready, attempt_log, 1)
+                inherited_pipe = not failure and bool(log_ready.get_map())
+                # The worker owns a session. Clean up even if helpers closed
+                # stdout already, and drain any bytes buffered before exit.
+                _terminate_group(process)
+                _drain_for(log_ready, attempt_log, 1)
+                if inherited_pipe:
+                    attempt_log.append(b"\n[Worker exited with an inherited log pipe; cleaned up its process group.]\n")
+                if log_ready.get_map():
+                    attempt_log.append(b"[Log pipe still open after process-group cleanup; stopped draining.]\n")
         except BaseException as error:
             _terminate_group(process)
             if isinstance(error, subprocess.SubprocessError):

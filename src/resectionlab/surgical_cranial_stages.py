@@ -265,6 +265,11 @@ def prepare_transition(engine):
     """
     contract=getattr(engine,'_cranial_stages',None)
     if contract is None:return
+    if engine.__dict__.get('_resident') is not None:
+        # This reference entry point must validate the same private witness
+        # that the resident owner derived before membrane work.
+        from .surgical_native_engine import detach
+        detach(engine)
     validate_stage_contract(engine,contract);_history_current(engine)
     if getattr(engine,'_cranial_stage_bone_prefix',None) is not None:
         verified_bone_prefix(engine,contract);_prepare_permission(engine,contract);return
@@ -286,7 +291,11 @@ def prepare_transition(engine):
 
 
 def verified_bone_prefix(engine,contract=None,*,full=True):
-    contract=contract or getattr(engine,'_cranial_stages',None);proof=getattr(engine,'_cranial_stage_bone_prefix',None)
+    contract=contract or getattr(engine,'_cranial_stages',None)
+    if engine.__dict__.get('_resident') is not None:
+        from .surgical_native_engine import detach
+        detach(engine)
+    proof=getattr(engine,'_cranial_stage_bone_prefix',None)
     if proof is not None and _prefixes.get(id(proof)) is proof:
         if any((getattr(proof,k) is not v if isinstance(v,tuple) else getattr(proof,k)!=v) for k,v in _prefix_facts[id(proof)]):_fail('DERIVED_BONE_PREFIX_CHANGED')
     if (contract is None or proof is None or _prefixes.get(id(proof)) is not proof or proof.stage_hash!=contract.content_hash or

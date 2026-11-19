@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import type { OperativeField } from '../operative-field';
+import type { OperativeField,FieldLayer as SourceLayer } from '../operative-field';
 import type { FieldLayer } from './operativeFieldModel';
 
 type Signal = NonNullable<OperativeField['intensity']>;
@@ -22,23 +22,43 @@ export function operativeSignalTexture(signal: Signal) {
   return texture;
 }
 
+export const tissueColors = {
+  grayMatter:'#b38b8b',whiteMatter:'#e2d7c3',csf:'#8bbfdb',ventricles:'#5b92c4',
+  artery:'#cd5954',vein:'#7283ca',sinus:'#5769ad',enhancing:'#ce77a5',nonenhancingCore:'#9571b3',
+  perilesionalSignal:'#cb9e60',tumorCore:'#b289bd',wholeAbnormality:'#a686ad',lesionContext:'#a487ad',
+};
 const tissues = {
-  bone: { color: '#e5d8bc', roughness: 0.68, contrast: 0.48, section: 0.2 },
-  dura: { color: '#d7b2a0', roughness: 0.46, contrast: 0.64, section: 0.32 },
+  bone: { color: '#e5d8bc', roughness: 0.76, contrast: 0.68, section: 0.2 },
+  dura: { color: '#d7b2a0', roughness: 0.38, contrast: 0.48, section: 0.32 },
   brain: { color: '#c68788', roughness: 0.6, contrast: 1.4, section: 0.83 },
-  tumor: { color: '#b67cae', roughness: 0.55, contrast: 1.02, section: 0.64 },
+  tumor: { color: '#65bfd3', roughness: 0.55, contrast: 1.02, section: 0.64 },
   vessel: { color: '#be4349', roughness: 0.38, contrast: 0.4, section: 0.16 },
 };
+
+/** Combined typed bits render in the generic mesh. Include their provenance
+ * whenever a retained cell has two overlapping vessel classes. */
+export function unclassifiedVesselAppearance(layers:SourceLayer[],conflictingVoxels:number){
+  const candidates=layers.filter(l=>l.role==='vessels'&&l.sampledVoxels>0&&(!l.detail||conflictingVoxels>0));
+  const estimated=candidates.length>0&&candidates.every(l=>!!l.model&&(l.vascularContextOnly===true||l.evidence==='Source-derived estimate'));
+  return estimated?{label:'Vascular estimate',color:'#947486',roughness:.79}:
+    {label:'Unclassified vessel label',color:'#ad7783',roughness:.67};
+}
 
 export function operativeTissueMaterial(
   name: FieldLayer,
   field: OperativeField,
   texture: THREE.Data3DTexture | null,
   restOffset: THREE.Vector3,
-  sectionY: THREE.IUniform<number>
+  sectionY: THREE.IUniform<number>,
+  conflictingVoxels=0
 ) {
-  const tissue = tissues[name === 'boneFlap' ? 'bone' : name === 'duraFlap' ? 'dura' : name];
-  const material = new THREE.MeshStandardMaterial({ color: tissue.color, roughness: tissue.roughness });
+  const fluid=name==='csf'||name==='ventricles';
+  const base=name==='boneFlap'?'bone':name==='duraFlap'?'dura':name==='artery'||name==='vein'||name==='sinus'?'vessel':
+    name==='whiteMatter'||name==='grayMatter'||fluid?'brain':name in tissueColors?'tumor':name;
+  const tissue=tissues[base as keyof typeof tissues];
+  const generic=name==='vessel'?unclassifiedVesselAppearance(field.layers,conflictingVoxels):null;
+  const color=generic?.color??(name in tissueColors?tissueColors[name as keyof typeof tissueColors]:tissue.color);
+  const material = new THREE.MeshStandardMaterial({ color, roughness:generic?.roughness??tissue.roughness, transparent:fluid, opacity:fluid ? .42 : 1, depthWrite:!fluid });
   const signal = field.intensity;
   if (!signal || !texture) return material;
 
@@ -60,7 +80,7 @@ export function operativeTissueMaterial(
       uCropMax: { value: max },
       uSectionY: sectionY,
       uBoundaryWidth: { value: half },
-      uSectionMix: { value: tissue.section },
+      uSectionContrast: { value: tissue.section },
     });
     shader.vertexShader =
       `uniform vec3 uFieldMin, uFieldSize, uRestOffset;
@@ -76,30 +96,44 @@ export function operativeTissueMaterial(
     // brain carry their original scan contrast as the geometry moves.
     shader.fragmentShader =
       `uniform highp sampler3D uFieldSignal;
-      uniform float uFieldContrast, uSectionY, uBoundaryWidth, uSectionMix;
+      uniform float uFieldContrast, uSectionY, uBoundaryWidth, uSectionContrast;
       uniform vec3 uCropMin, uCropMax;
       varying vec3 vFieldUVW, vRestPosition;
     ` +
       shader.fragmentShader.replace(
         '#include <color_fragment>',
         `#include <color_fragment>
+      // The closed mesh has flat caps exactly on the cut/crop planes. Use
+      // geometric rest-space normals, since fitted vertex normals are smoothed
+      // across their rims and moving flaps carry their own acquisition.
+      vec3 faceCross=cross(dFdx(vRestPosition),dFdy(vRestPosition));
+      vec3 faceAlignment=abs(faceCross)/max(length(faceCross),1e-12);
+      vec3 edge=min(abs(vRestPosition-uCropMin),abs(vRestPosition-uCropMax));
+      edge.y=min(edge.y,abs(vRestPosition.y-uSectionY));
+      vec3 onPlane=(1.-smoothstep(vec3(.005),vec3(.1),edge/uBoundaryWidth))
+        *smoothstep(vec3(.97),vec3(.999),faceAlignment);
+      float section=step(uCropMin.y,uSectionY)*max(onPlane.x,max(onPlane.y,onPlane.z));
       if (all(greaterThanEqual(vFieldUVW,vec3(0.))) && all(lessThanEqual(vFieldUVW,vec3(1.)))) {
         vec2 signal=texture(uFieldSignal,vFieldUVW).rg;
         if(signal.g>.999){
           float brightness=clamp((255.*signal.r-1.)/254.,0.,1.);
-          diffuseColor.rgb *= exp2((brightness-.5)*uFieldContrast*1.85);
-          // Use measured grayscale on the cut faces, with enough of the
-          // layer color to identify the tissue across the cut.
-          vec3 edge=min(abs(vRestPosition-uCropMin),abs(vRestPosition-uCropMax));
-          float distanceToFace=min(min(edge.x,edge.y),min(edge.z,abs(vRestPosition.y-uSectionY)));
-          float section=1.-smoothstep(.02*uBoundaryWidth,uBoundaryWidth,distanceToFace);
-          vec3 tint=mix(vec3(1.),diffuse,0.42);
-          vec3 scanColor=(.014+.68*pow(brightness,2.2))*tint;
-          diffuseColor.rgb=mix(diffuseColor.rgb,scanColor,uSectionMix*section);
+          // Scan variation belongs in albedo. Keeping lighting downstream
+          // preserves self-shadow and the color of residual target at the lip.
+          float exteriorContrast=1.85*uFieldContrast;
+          diffuseColor.rgb*=exp2((brightness-.5)*exteriorContrast);
+          // A section through a label is an acquired gray-value slice with
+          // tissue tint. Use the scan's grayscale range on the cut face while
+          // retaining standard illumination, roughness and instrument shadows.
+          vec3 tint=diffuse/max(max(max(diffuse.r,diffuse.g),diffuse.b),.001);
+          vec3 sampledAlbedo=pow(vec3(brightness),vec3(2.2))*mix(vec3(1.),tint,.48);
+          diffuseColor.rgb=mix(diffuseColor.rgb,sampledAlbedo,section*mix(.72,.90,uSectionContrast));
         }
       }`
-      );
+      ).replace('#include <roughnessmap_fragment>',`#include <roughnessmap_fragment>
+        // The diagnostic section is a sampled plane. Give it a broad matte
+        // response distinct from the lit exterior and the reflected membrane.
+        roughnessFactor=mix(roughnessFactor,0.94,section);`);
   };
-  material.customProgramCacheKey = () => 'operative-acquired-section-v2';
+  material.customProgramCacheKey = () => 'operative-acquired-albedo-v6';
   return material;
 }

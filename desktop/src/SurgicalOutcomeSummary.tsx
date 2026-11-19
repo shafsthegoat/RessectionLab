@@ -16,12 +16,12 @@ export function SurgicalOutcomeSummary({c}:{c:SurgicalController}) {
   return <section className="surgical-outcome" aria-label="Modeled outcome summary">
     <h3>{c.preview?'Preview modeled outcome':'Modeled outcome'}</h3>
     <div className="surgical-metrics">
-      <div><small>Target removed · mm³</small><strong data-surgical-metric="targetRemovedMm3">{metricAmount(summary.targetRemovedMm3)}</strong></div>
-      <div><small>Target remaining · mm³</small><strong>{amount(summary.targetRemainingMm3)}</strong></div>
+      <div><small>Owned target removed · mm³</small><strong data-surgical-metric="targetRemovedMm3">{metricAmount(summary.targetRemovedMm3)}</strong></div>
+      <div><small>Whole target remaining · mm³</small><strong data-surgical-metric="originalTargetResidualMm3">{metricAmount(v.originalTargetResidualMm3)}</strong></div>
       <div><small>Other removed · mm³</small><strong data-surgical-metric="nonTargetRemovedMm3">{metricAmount(v.metrics.nonTargetRemovedMm3)}</strong></div>
       <div><small>Modeled field fluid · mm³</small><strong data-surgical-metric="fluidPresentMm3">{metricAmount(v.metrics.fluidPresentMm3)}</strong></div>
     </div>
-    <p className="surgical-note">{summary.targetRemovedPercent===null?'Unknown fraction':amount(summary.targetRemovedPercent)+'%'} of {amount(summary.initialTargetMm3)} mm³ modeled target. Functional injury remains Unknown.</p>
+    <p className="surgical-note">{summary.targetRemovedPercent===null?'Unknown fraction':amount(summary.targetRemovedPercent)+'%'} of {amount(summary.initialTargetMm3)} mm³ owned target removed. Owned target remaining {amount(summary.targetRemainingMm3)} mm³. Functional injury remains Unknown.</p>
     {opening&&<div aria-label="Native bone opening">
       <div className="surgical-metrics">
         {opening.method==='milling'?<>
@@ -50,7 +50,7 @@ export function SurgicalOutcomeSummary({c}:{c:SurgicalController}) {
       <p className="surgical-note">Unknowns: {stage.sourceUnknowns?.join('; ')||'Source coverage and clinical consequences remain unassessed'}.</p>
     </div>}
     <details><summary>Source target, material and fluid accounting</summary>
-    {record?.fullAnnotationTargetMm3!==undefined&&<p className="surgical-note">Full source annotation: {amount(record.fullAnnotationTargetMm3)} mm³. Displayed percentages use the modeled source grid target.</p>}
+    {record?.fullAnnotationTargetMm3!==undefined&&<p className="surgical-note">Full source annotation: {amount(record.fullAnnotationTargetMm3)} mm³. Displayed percentages use the owned target on the simulation grid.</p>}
     <div className="surgical-metrics" aria-label="Recorded normal and unknown material accounting">
       <div><small>Non-target normal material removed · mm³</small><strong>{amount(summary.normalRemovedMm3)}</strong></div>
       <div><small>Mapped unknown material removed · mm³</small><strong>{amount(summary.unknownRemovedMm3)}</strong></div>

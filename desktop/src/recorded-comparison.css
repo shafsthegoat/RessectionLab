@@ -1,0 +1,31 @@
+.study-dialog.recorded-comparison {width:min(740px,92vw);max-height:91vh;overflow:auto;}
+.recorded-comparison table {width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums;}
+.recorded-comparison th,.recorded-comparison td {text-align:right;padding:5px 3px;border-bottom:1px solid var(--line,#343d38);overflow-wrap:anywhere;}
+.recorded-comparison th:first-child {text-align:left;width:40%;}
+.recorded-comparison thead th {vertical-align:bottom;}
+.recorded-comparison details p {overflow-wrap:anywhere;}
+
+.endpoint-sections {margin:0 0 16px;}
+.section-toolbar,.endpoint-legend {display:flex;align-items:center;flex-wrap:wrap;gap:8px;}
+.section-toolbar {justify-content:space-between;margin-bottom:8px;}
+.section-toolbar h3 {margin:0;font-size:14px;font-weight:600;}
+.section-toolbar [role=group] {display:flex;gap:2px;padding:2px;background:#101412;border:1px solid #38453f;border-radius:5px;}
+.section-toolbar button {padding:4px 9px;background:transparent;border:0;border-radius:3px;color:#bdc5c0;font-size:12px;}
+.section-toolbar button[aria-pressed=true] {background:#315449;color:#dcf8eb;}
+.endpoint-pair {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
+.endpoint-pair figure {min-width:0;margin:0;overflow:hidden;border:1px solid #404841;border-radius:5px;background:#0d100e;}
+.endpoint-pair figcaption {display:flex;align-items:center;gap:8px;min-height:32px;padding:4px 8px;background:#222825;font-size:12px;}
+.endpoint-letter {display:grid;place-items:center;flex:none;width:21px;height:21px;border:1px solid #627d70;border-radius:3px;color:#cef4df;font-size:12px;}
+.endpoint-image {position:relative;width:min(100%,33vh);margin:auto;}
+.endpoint-image img {display:block;width:100%;height:auto;}
+.endpoint-image span {position:absolute;color:white;font-size:10px;line-height:1.3;font-weight:600;text-shadow:0 0 2px #000,0 0 5px #000;}
+.section-up {top:3px;left:50%;transform:translateX(-50%);}
+.section-right {right:4px;top:50%;transform:translateY(-50%);}
+.section-scale {left:6%;bottom:5%;border-bottom:2px solid white;white-space:nowrap;text-align:center;}
+.endpoint-fraction {padding:5px 8px;border-top:1px solid #343d38;font-size:11px;color:#c4cec8;text-align:center;}
+.endpoint-legend {gap:6px 15px;margin-top:9px;}
+.endpoint-legend span {display:inline-flex;align-items:center;gap:6px;font-size:12px;}
+.endpoint-legend i {display:inline-block;width:12px;height:5px;}
+.endpoint-target {border-top:2px solid #5accd3;}
+.endpoint-removal {background:#f9ad50;}
+.recorded-comparison .endpoint-explanation {margin:3px 0 0;}

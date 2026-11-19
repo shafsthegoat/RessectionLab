@@ -186,7 +186,7 @@ def forest_priority(candidates, *, procedure):
 
 
 def search_opening_forest(roots, *, budget, horizon=5, beam_width=3,
-                          max_expansions=24, progress=lambda *args: None):
+                          max_expansions=24, progress=lambda *args: None, compare_initial_stop=False):
     """Search qualified caller-owned roots; return only exactly replayed plans.
 
     A root supplies its unacted native engine, explicit limits, source-only
@@ -244,6 +244,7 @@ def search_opening_forest(roots, *, budget, horizon=5, beam_width=3,
         result = checked_joint_sequence_search(source, root.get('route'), propose=root['propose'],
             limits=limits, goal=goal, meter=meter, outside_poses=root.get('outside_poses'),
             horizon=horizon, beam_width=beam_width, max_expansions=max_expansions,
+            compare_initial_stop=compare_initial_stop,
             check=budget.check, phase='cranial.desktop.' + root_id)
         searches.append({'rootId': root_id, 'evidence': result.evidence,
                          'attempts': result.attempts})

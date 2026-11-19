@@ -458,7 +458,7 @@ def _proposal(value, state_id):
         raise ValueError('Joint proposal requires id, sourceStateId and kind')
     p = copy.deepcopy(value)
     if (type(p['id']) is not str or not p['id'] or p['sourceStateId'] != state_id or
-            p['kind'] not in ('opening', 'milling_opening', 'preparation', 'configuration', 'work', 'cusa')):
+            p['kind'] not in ('opening', 'milling_opening', 'preparation', 'configuration', 'work', 'cusa', 'cleanup')):
         raise ValueError('Joint proposal must name a supported kind and the current native source state')
     if p['kind'] == 'milling_opening':
         required = {'approach', 'drill_seconds', 'suction_seconds', 'staging_seconds',
@@ -486,7 +486,7 @@ def _proposal(value, state_id):
 def checked_joint_sequence_search(engine, route=None, *, propose, limits, goal,
         meter=None, hand='left', outside_poses=None, horizon=3, beam_width=3,
         max_expansions=24, max_exit_candidates=6, check=lambda: None,
-        phase='cranial.joint.search'):
+        phase='cranial.joint.search', compare_initial_stop=False):
     """Search up to five skills, retaining zero-target preparation continuations.
 
     ``propose(current_native_state)`` returns a finite list of source-bound
@@ -494,13 +494,14 @@ def checked_joint_sequence_search(engine, route=None, *, propose, limits, goal,
     generation is the caller's responsibility and confers no executable proof.
     Horizon one is an immediate-target ablation using the same inventory and
     joint limits, not a strongest-controller patient benchmark. Exit probes
-    branch from work; they are not inserted between
-    consecutive skills in the selected program.
+    branch from work; they are not inserted between consecutive skills in the
+    selected program. Interactive comparisons also check the unacted source as
+    a STOP candidate, charging any required exit through the original meter.
     """
     from .surgical_planning_admission import require_planning_admission
     require_planning_admission(engine)
     from .surgical_joint_cranial_exit import find_checked_joint_exit
-    if (not callable(propose) or not callable(check) or
+    if (not callable(propose) or not callable(check) or type(compare_initial_stop) is not bool or
             type(horizon) is not int or not 1 <= horizon <= 5 or
             type(beam_width) is not int or not 2 <= beam_width <= 4 or
             type(max_expansions) is not int or not 1 <= max_expansions <= 24 or
@@ -518,15 +519,18 @@ def checked_joint_sequence_search(engine, route=None, *, propose, limits, goal,
     expansions, deepest, exhausted, interrupted = 0, 0, False, False
     stop_reason = None
     initial_stop = None
-    if supported_procedure:
+    if supported_procedure or compare_initial_stop:
         exited, receipt = find_checked_joint_exit(engine, route, limits=limits,
             meter=meter, hand=hand, outside_poses=outside_poses, check=check,
             max_candidates=max_exit_candidates, phase=phase+'.initial-stop')
-        if receipt['status'] != 'accepted':
+        if receipt['status'] == 'accepted':
+            initial_stop = JointSequenceNode(engine, exited, (), joint_cranial_ledger(exited, limits),
+                joint_goal_assessment(exited, goal=goal, limits=limits, exit_receipt=receipt),
+                receipt['sequenceOutcome'])
+        elif supported_procedure:
             raise ValueError('PROCEDURE_EXECUTABLE_INITIAL_STOP_REQUIRED: ' + str(receipt.get('reason')))
-        initial_stop = JointSequenceNode(engine, exited, (), joint_cranial_ledger(exited, limits),
-            joint_goal_assessment(exited, goal=goal, limits=limits, exit_receipt=receipt),
-            receipt['sequenceOutcome'])
+        elif receipt['status'] == 'interrupted' and _global_stop(receipt.get('reason')):
+            raise InterruptedError('INITIAL_STOP_INTERRUPTED: ' + str(receipt.get('reason')))
 
     def guard():
         check()
@@ -623,7 +627,7 @@ def checked_joint_sequence_search(engine, route=None, *, propose, limits, goal,
                     assessment = joint_goal_assessment(exited, goal=goal, limits=limits,
                         exit_receipt=exit_receipt)
                     ledger = joint_cranial_ledger(exited, limits)
-                    row.update(status='work_and_exit_checked', preparationOnly=target_delta <= 0,
+                    row.update(status='work_and_exit_checked', preparationOnly=target_delta <= 0 and p['kind'] != 'cleanup',
                         workStateId=work.state_id, checkedExitStateId=exited.state_id,
                         frozenTaskCheckedAtNode=assessment['completedFrozenTask'])
                     node = JointSequenceNode(work, exited, (*path, row), ledger, assessment,

@@ -193,6 +193,32 @@ export function displayBrainMask(payload:CasePayload):boolean {
   return !!payload.brainMask && !!anatomy?.brain && !payload.compartments.some(layer=>layer.name==='brain');
 }
 
+const objectRecord = (value: unknown): value is Record<string, unknown> =>
+  !!value && typeof value === "object" && !Array.isArray(value);
+
+function validatePlannedDerivative(payload: CasePayload, marker: Record<string, unknown>) {
+  const adapter = payload.metadata.surgical_adapter;
+  const route = objectRecord(adapter) && adapter.selectedApproach;
+  const layers = objectRecord(adapter) && adapter.sourceLayers;
+  const digest = (value: unknown) => typeof value === "string" && /^[0-9a-f]{64}$/.test(value);
+  if (payload.metadata.anatomy_workbench_only !== true || marker.status !== "inspection-only" ||
+      marker.patientTaskAdmission !== false || !objectRecord(adapter) || adapter.type !== "native-patient-research-derivative" ||
+      !objectRecord(route) || route.schema !== "resectionlab.native-environment-approach.v1" ||
+      !digest(marker.sourceSnapshotId) || marker.sourceSnapshotId !== adapter.sourceCollectionHash ||
+      marker.sourceSnapshotId !== route.sourceSnapshotId || !digest(marker.targetBinding) ||
+      marker.targetBinding !== route.targetBinding || !digest(marker.planRevision) || marker.planRevision !== route.planRevision ||
+      typeof route.id !== "string" || !route.id || marker.approachId !== route.id ||
+      !digest(route.parameterHash) || !digest(route.measurementHash) ||
+      JSON.stringify(adapter.targetAffine) !== JSON.stringify(payload.affine) || !objectRecord(layers) ||
+      !objectRecord(layers.tumor) || typeof route.targetLayerId !== "string" || route.targetLayerId !== layers.tumor.layerId ||
+      !payload.compartments.some(layer => layer.name === "tumor") ||
+      Object.keys(layers).length !== payload.compartments.length ||
+      payload.compartments.some(layer => {
+        const row = layers[layer.name];
+        return !objectRecord(row) || typeof row.sampledMaskHash !== "string" || !/^sha256:[0-9a-f]{64}$/.test(row.sampledMaskHash);
+      })) throw Error("Invalid planned derivative inspection binding");
+}
+
 export async function hydrateCase(
   payload: CasePayload,
   api: ResectionApi,
@@ -256,8 +282,19 @@ export async function hydrateCase(
     }),
   };
   const properties=payload.metadata.surgical_properties;
-  if(properties&&typeof properties==='object'&&!Array.isArray(properties)&&Object.prototype.hasOwnProperty.call(properties,'cranialPlanningCandidateV1'))
-    registerSourceInspection(result,(properties as Record<string,unknown>).cranialPlanningCandidateV1,payload.metadata.source_inspection_annotations);
+  const adapter = payload.metadata.surgical_adapter;
+  if (objectRecord(adapter) && adapter.type === 'native-patient-research-derivative' && 'selectedApproach' in adapter &&
+      (!objectRecord(properties) || !('cranialPlanningCandidateV1' in properties))) {
+    throw Error('Missing planned derivative inspection binding');
+  }
+  if (objectRecord(properties) && Object.prototype.hasOwnProperty.call(properties, 'cranialPlanningCandidateV1')) {
+    const marker = properties.cranialPlanningCandidateV1;
+    if (objectRecord(marker) && marker.schema === 'resectionlab.planned-derivative-inspection.v1') {
+      validatePlannedDerivative(payload, marker);
+    } else {
+      registerSourceInspection(result, marker, payload.metadata.source_inspection_annotations);
+    }
+  }
   return result;
 }
 

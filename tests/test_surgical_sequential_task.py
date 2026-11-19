@@ -158,3 +158,17 @@ def test_withdrawal_stop_recovers_refused_move_prefix_with_real_cost_and_adapter
     adapter.stop('Recovery after refused work')
     assert adapter.engine.state_id==engine.state_id and adapter.completion_assessment==stopped['endpoint']
     assert stopped['endpoint']['progress']['originalTargetTreatmentMm3']==target
+
+
+def test_feature_only_route_search_respects_masks_and_deliberate_residual():
+    from resectionlab.surgical_sequential_benchmark import FEATURE_NAMES, observed_greedy_search
+    features = np.zeros((3, len(FEATURE_NAMES)), np.float32)
+    features[:2, FEATURE_NAMES.index('kind_work')] = 1
+    features[2, FEATURE_NAMES.index('kind_stop')] = 1
+    features[:2, FEATURE_NAMES.index('route_remaining_target_cells')] = [.25, .125]
+    mask = np.ones(3, bool)
+    assert observed_greedy_search(features, mask) == 0
+    features[0, FEATURE_NAMES.index('route_motor_cells')] = .5
+    assert observed_greedy_search(features, mask) == 1
+    mask[1] = False
+    assert observed_greedy_search(features, mask) == 2

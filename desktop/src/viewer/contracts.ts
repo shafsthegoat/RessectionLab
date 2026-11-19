@@ -15,6 +15,11 @@ export interface PatientContext {
   sources:PatientContextSource[];
   field?:{affine:Affine;shape:Shape3;signal:Float32Array;sha256:string};
 }
+/** Immutable scalar samples and physical display frame of a surface's own acquisition. */
+export interface SurfaceAppearanceSource {
+  seriesId:string; modality:string; sourceSha256:string; signalSha256:string;
+  affine:Affine; shape:Shape3; data:Float32Array; nativeAffine?:Affine; nativeShape?:Shape3;
+}
 export interface ViewerVolume {
   patientContext?:PatientContext;
   headSupport?:{data:Uint8Array;sha256:string};
@@ -41,6 +46,7 @@ export interface ViewerVolume {
     label?: string;
     kind?: string;
     sourceIdentity?: string;
+    appearanceSource?:SurfaceAppearanceSource;
     displayKind?: string;
     sourceSeries?:string;
     alignment?:string;
@@ -86,6 +92,9 @@ export interface ViewerRoute {
 }
 
 export interface ViewerWorkspaceProps {
+  approachOverview?:boolean;
+  /** Inspect the modeled grid committed with the displayed instrument state. */
+  engineInspection?:boolean;
   readCamera?: import('react').Ref<()=>import('./workspaceSettings').ViewerCameraState|null>;
   surgicalInteraction?: import("../surgical-types").SurgicalInteraction;
   onSliceStroke?: (point: Point3 | null, phase: 'start' | 'move' | 'end') => void;
@@ -113,6 +122,8 @@ export interface ViewerWorkspaceProps {
   cameraFitRequest?:number;
   /** A compartment name or supplied tract id. Display selection never changes assessment. */
   selectedStructure?: string | null;
+  /** A double-click on a registered native label selects its source evidence. */
+  onPickStructure?: (name: string) => void;
   /** Explicit focus command; selecting a row alone does not move a restored camera. */
   structureFocusRequest?: number;
   /** An assessed source-RAS concern location, when focusing a local intersection. */

@@ -19,7 +19,7 @@ const layers=[{id:'tumor',label:'Supplied lesion',kind:'tumor',color:'#ffffff'},
 function render(extra={}){
   const visibility=[],selection=[];
   const internals=React.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE,previous=internals.H;
-  internals.H={useState:initial=>[initial,()=>{}],useRef:initial=>({current:initial})};
+  internals.H={useState:initial=>[initial,()=>{}],useRef:initial=>({current:initial}),useEffect:effect=>effect()};
   try{
     const tree=NativeStructureControls({volume:{compartments:[]},layers,visibleLayers:{tumor:false,vessel:true,region:false,__fragment_review:true},onVisibilityChange:value=>visibility.push(value),settings:{},onSettingsChange:()=>{},selectedStructure:null,onSelectStructure:value=>selection.push(value),onFocusStructure:()=>{},showSelectionControls:false,...extra});
     return {tree,visibility,selection,button:label=>[...walk(tree)].find(node=>node.type==='button'&&(node.props['aria-label']===label||text(node)===label))};

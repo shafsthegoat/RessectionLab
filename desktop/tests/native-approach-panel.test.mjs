@@ -258,6 +258,13 @@ test('a saved zero-alternative comparison restores its task and can be saved aga
     assert.deepEqual(point(tree,'Target').props.value,[5,8,10]);
     assert.equal(button(tree,'Save study & comparison').props.disabled,false);
     assert.equal(f.planning.selectedId,null);
+    const changes=[];
+    f.workspace.state.visible={'target-2':false,cortex:true,skull:false};
+    f.workspace.setVisible=visible=>changes.push(visible);
+    f.workspace.setSelectedStructure=layerId=>changes.push(layerId);
+    f.workspace.setCursor=endpoint=>changes.push(endpoint);
+    button(tree,'Focus selected target').props.onClick();
+    assert.deepEqual(changes,[{'target-2':true,cortex:true,skull:false},'target-2',[5,8,10]]);
   }finally{h.close();}
 });
 
@@ -275,9 +282,13 @@ test('a prepared lesion requires explicit selection and sends its evidence bindi
     assert.equal(button(tree,'Suggest approaches').props.disabled,true);
     const picker=[...walk(tree)].find(node=>node.type==='select'&&node.props['aria-label']==='Planning target');
     assert.equal(picker.props.value,'');
+    const composition=[];
+    f.workspace.state.cranialView='inspection';
+    f.workspace.composeCranialView=mode=>composition.push(mode);
     picker.props.onChange({target:{value:'lesion'}});await flush();tree=h.render();
     const selection=f.calls.at(-1);
     assert.equal(selection.action,'selectTarget');
+    assert.deepEqual(composition,['custom']);
     assert.equal(selection.targetLayerId,lesion.layerId);
     assert.equal(selection.candidateBinding,lesion.candidateBinding);
     assert.equal(button(tree,'Suggest approaches').props.disabled,false);

@@ -4,6 +4,8 @@ import numpy as np
 from scipy import ndimage as ndi
 from .patient_anatomy import affine, world
 from .anatomy_siam_display import supported_tissue_layer
+from .anatomy_sampling import sample_layer
+from .anatomy_display import source_lattice_annotation_preview
 
 
 def section(
@@ -16,6 +18,7 @@ def section(
     size=512,
     moving_id=None,
     checkerboard=True,
+    registration_review=False,
     layers=(),
     original=False,
     check=lambda: None,
@@ -48,12 +51,19 @@ def section(
         + (x[..., None] - (size - 1) / 2) * spacing_mm * u
         + (y[..., None] - (size - 1) / 2) * spacing_mm * v
     )
-    try:
-        a = c.patient_affine(row)
-        frame = "patient"
-    except ValueError:
-        a = affine(row["affine"])
-        frame = "independent source"
+    if registration_review:
+        # Both views sample the proposed patient-space plane. Picks are converted
+        # back to their native physical frames before landmark review.
+        placement = c.registration_matrix(series_id, require_geometry=True)
+        a = placement @ affine(row["affine"])
+        frame = "registration preview"
+    else:
+        try:
+            a = c.patient_affine(row)
+            frame = "patient"
+        except ValueError:
+            a = affine(row["affine"])
+            frame = "independent source"
 
     def sample(data, transform, order):
         indices = world(np.linalg.inv(transform), points).reshape(-1, 3).T
@@ -95,21 +105,33 @@ def section(
         else:
             rgb = 0.5 * (rgb + second)
             coverage &= covered
+    # Section rows follow v and columns follow u. Use the same coverage-limited
+    # categorical sampling as the operative field and the original-label cursor.
+    section_grid = np.eye(4)
+    section_grid[:3, :3] = np.column_stack((spacing_mm * v, spacing_mm * u, n))
+    section_grid[:3, 3] = points[0, 0]
+    sample_cache = {}
     for name in layers[:8]:
         layer = c.layer(name)
         try:
             if frame == "patient":
                 transform = c.patient_affine(layer)
+                source_transform = c.patient_affine(c.series(layer["source_series"]))
             else:
                 if layer["source_series"] != series_id:
                     continue
                 c.require_native_geometry(row)
                 c.require_native_geometry(layer)
-                transform = affine(layer["affine"])
+                transform = placement @ affine(layer["affine"]) if registration_review else affine(layer["affine"])
+                source_transform = a
         except ValueError:
-            continue
+            if layer["source_series"] != series_id or not source_lattice_annotation_preview(c, layer, row):
+                continue
+            transform = source_transform = a
         layer, _support = supported_tissue_layer(c, layer, raw_qc=original, check=check)
-        values, covered = sample(c.array(layer["data"]), transform, 0)
+        inside, covered = sample_layer(c, layer, section_grid, (size, size, 1), check, sample_cache,
+                                       frames=(transform, source_transform))
+        inside, covered = inside[:, :, 0], covered[:, :, 0]
         if layer.get("score"):
             scores = c.array(layer["score"])
             score, score_covered = sample(scores, transform, 1)
@@ -121,9 +143,8 @@ def section(
                     np.array([1.0, 0.35, 0.05]),
                     np.array([0.05, 0.4, 1.0]),
                 )
-                alpha *= score_covered[..., None]
+                alpha *= (score_covered & covered)[..., None]
                 rgb = rgb * (1 - alpha) + tint * alpha
-        inside = (values == layer["label_value"]) & covered
         contour = inside & ~ndi.binary_erosion(inside)
         color = layer["color"].lstrip("#")
         rgb[contour] = [int(color[i : i + 2], 16) / 255 for i in (0, 2, 4)]
@@ -141,6 +162,9 @@ def section(
         "size": size,
         "frame": frame,
         "movingStatus": moving_status,
+        **({"sourceFromSection": np.linalg.inv(placement).tolist(),
+            "voxelFromSection": np.linalg.inv(a).tolist(), "sourceShape": list(row["data"]["shape"])}
+           if registration_review else {}),
         "coverageMeaning": "purple pixels are outside sampled image support",
         "snapshotId": c.identity(),
     }

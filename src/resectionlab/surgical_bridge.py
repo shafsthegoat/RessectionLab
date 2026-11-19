@@ -13,7 +13,7 @@ from .surgical_scene import from_case, engineering_scene
 from .surgical_engine import SurgicalEngine
 from .surgical_replay_cache import SurgicalReplayCache
 
-OPERATIONS = frozenset({'surgicalRehearsal', 'createSurgicalFixture', 'importSurgicalScene', 'prepareSurgicalEnvironment', 'compareSurgicalAnatomy'})
+OPERATIONS = frozenset({'surgicalRehearsal', 'createSurgicalFixture', 'importSurgicalScene', 'prepareSurgicalEnvironment', 'compareSurgicalAnatomy', 'compareBoundSurgicalReplays', 'openBoundSurgicalReplay'})
 ARTIFACT = 'surgical_toolbox'
 RESULT_BYTES = 32 * 1024**2 - 4096  # Reserve the bounded JSONL envelope.
 _NATIVE_PREVIEW = SurgicalEngine.preview
@@ -191,13 +191,53 @@ def dispatch(session, operation, args, request, progress):
         _keys(args, {'beforeCaseHash', 'afterCaseHash', 'changedLayers', 'prefix', 'decisions'})
         _require_json_budget(args, 256 * 1024, 'SURGICAL_REQUEST_LIMIT', 'Comparison request exceeds budget')
         from .surgical_anatomy_comparison import compare_anatomy
-        result = compare_anatomy(session._get_case(args['beforeCaseHash']), session._get_case(args['afterCaseHash']),
+        before, after = (session._get_case(args[key]) for key in ('beforeCaseHash', 'afterCaseHash'))
+        if any('nativeStudyReplay' in entry.artifacts for entry in (before, after)):
+            raise ValueError('STUDY_REPLAY_ONLY: a recording cannot start a new branch comparison')
+        result = compare_anatomy(before, after,
             changed_layers=args.get('changedLayers', ['vessels']), prefix=args.get('prefix', []),
             decisions=args.get('decisions', 1), check=request.check, progress=progress)
         _require_json_budget(result, 2 * 1024 * 1024, 'SURGICAL_RESULT_LIMIT', 'Comparison result exceeds budget')
         return result
+    if operation == 'compareBoundSurgicalReplays':
+        from .desktop_bridge import _path
+        from .surgical_strategy_comparison import compare_recordings
+        _keys(args, {'collectionId', 'snapshotId', 'targetLayerId', 'paths'})
+        collection = getattr(session, 'anatomy_collections', {}).get(args['collectionId'])
+        if collection is None or collection.identity() != args['snapshotId']:
+            raise ValueError('Reopen the current study before comparing recorded procedures')
+        if args['collectionId'] in getattr(session, 'anatomy_drafts', {}):
+            raise ValueError('Finish the anatomy correction before comparing procedures')
+        paths = args['paths']
+        if not isinstance(paths, list) or len(paths) != 2:
+            raise ValueError('Select two recorded procedures')
+        return compare_recordings(collection, args['targetLayerId'], [_path(p, kind='case') for p in paths],
+                                  request, progress)
+    if operation == 'openBoundSurgicalReplay':
+        _keys(args, {'collectionId', 'snapshotId', 'targetLayerId', 'approachId', 'path'})
+        from .desktop_bridge import _path
+        from .workspace_bundle import load_workspace
+        from .surgical_study_replay import validate_saved_binding, verify_recording
+        collection = getattr(session, 'anatomy_collections', {}).get(args['collectionId'])
+        if collection is None or collection.identity() != args['snapshotId']:
+            raise ValueError('Native anatomy changed; reopen the study before checking a recording')
+        if args['collectionId'] in getattr(session, 'anatomy_drafts', {}):
+            raise ValueError('Finish the anatomy correction before checking a recorded episode')
+        progress(.1, 'Checking recorded study, target and source images')
+        case, artifacts, workspace = load_workspace(_path(args.get('path'), kind='case'),
+            cancelled=request.cancelled.is_set)
+        if 'nativeStudyReplay' in artifacts:
+            validate_saved_binding(case, artifacts)
+        receipt, sampling = verify_recording(collection, args['targetLayerId'], case, artifacts.get(ARTIFACT),
+            approach_id=args.get('approachId'), check=request.check)
+        # Opening via the native study creates a replay-only workspace. The
+        # marker restricts operations even after save/reopen; it grants no trust.
+        artifacts['nativeStudyReplay'] = receipt
+        installed = session._install_case(case, artifacts, request, workspace=workspace or
+            {'sources': [], 'imagingState': None, 'episode': None, 'selection': None, 'sessionHash': None})
+        return {**installed, 'verifiedStudyReplay': receipt, 'verifiedTargetSampling': sampling}
     if operation == 'prepareSurgicalEnvironment':
-        _keys(args, {'collectionId', 'snapshotId', 'layers', 'allowUnreviewedRegistration'})
+        _keys(args, {'collectionId', 'snapshotId', 'layers', 'allowUnreviewedRegistration', 'approach'})
         from .surgical_patient import prepare_surgical_environment
         from .imaging import load_case, read_case_artifacts
         collection = getattr(session, 'anatomy_collections', {}).get(args['collectionId'])
@@ -210,7 +250,8 @@ def dispatch(session, operation, args, request, progress):
         progress(0.1, 'Preparing standard 1 mm research environment from selected source masks')
         with tempfile.TemporaryDirectory(prefix='surgical-environment-') as directory:
             report = prepare_surgical_environment(collection.root, directory, layer_ids=args['layers'],
-                resolution_mm=1., allow_unreviewed_registration=args.get('allowUnreviewedRegistration', False))
+                resolution_mm=1., allow_unreviewed_registration=args.get('allowUnreviewedRegistration', False),
+                approach=args.get('approach'))
             if report['sourceCollectionHash'] != args['snapshotId']:
                 raise ValueError('Source collection changed during environment preparation')
             request.check()
@@ -351,6 +392,15 @@ def dispatch(session, operation, args, request, progress):
     if command not in {'create', 'inspect', 'inspectArchive', 'preview', 'step', 'recoverExit', 'undo', 'redo', 'seek', 'branch', 'selectBranch', 'reset', 'selectScene', 'plan', 'fullCase', 'attachProtection', 'reevaluateConsequences', 'generateApproaches', 'previewApproach', 'applyApproach', 'generateStrategies', 'previewStrategy', 'applyStrategy', 'analyzeStrategySensitivity',
                        'suggestPreparation','generatePreparations','previewPreparation','applyPreparation','seekFrame', *PREFIX_COMMANDS}:
         raise ValueError('Unsupported surgical command')
+    study_replay = artifacts.get('nativeStudyReplay')
+    if 'nativeStudyReplay' in artifacts:
+        # Archived receipts are restrictions only. Every displayed frame still
+        # comes from native reconstruction. Other branches need their own join.
+        if (not isinstance(study_replay, (dict, MappingProxyType)) or command not in
+                {'inspect', 'seek', 'seekFrame'}
+                or args.get('branchId', study_replay['branchId']) != study_replay['branchId']
+                or artifacts.get(ARTIFACT, {}).get('branchId') != study_replay['branchId']):
+            raise ValueError('STUDY_REPLAY_ONLY: the source-bound recording permits replay of its recorded branch only')
     raw = artifacts.get(ARTIFACT)
     from .surgical_environment import (
         standardize, default_target_names, resolve_branch_scene, SCHEMA as ENVIRONMENT_SCHEMA)
@@ -560,10 +610,10 @@ def dispatch(session, operation, args, request, progress):
             'generateStrategies','previewStrategy','applyStrategy','analyzeStrategySensitivity',
             'suggestPreparation','generatePreparations','previewPreparation','applyPreparation'}:
         require_planning_admission(engine)
-    if planning_admission(engine.scene, engine.protection)['available'] and (record.get('preparationComparisons') or record.get('preparationApplications')):
+    if not study_replay and planning_admission(engine.scene, engine.protection)['available'] and (record.get('preparationComparisons') or record.get('preparationApplications')):
         from .surgical_preparation_workspace import bind_for_branch
         bind_for_branch(engine,record,identity,check=request.check)
-    elif record.get('taskAdmission') is not None:
+    elif not study_replay and record.get('taskAdmission') is not None:
         from .surgical_task_admission import bind_admission
         bind_admission(engine, record['taskAdmission'])
     request.check()
@@ -657,6 +707,9 @@ def dispatch(session, operation, args, request, progress):
             'playback': playback, 'branchId': branch_id, 'position': record['position'],
             **({} if compact else {'fullCase': copy.deepcopy(record.get('fullCase', {}).get(branch_id))}),
             'branches': [{'id': k, 'steps': len(v['actions']), 'parent': record.get('parents', {}).get(k)} for k,v in record['branches'].items()]}
+        if study_replay:
+            result['branches'] = [row for row in result['branches'] if row['id'] == branch_id]
+            result['readOnly'] = True
         _require_json_budget(result, RESULT_BYTES, 'SURGICAL_RESULT_LIMIT', 'Playback frame exceeds the display budget')
         return result
     if command in ('suggestPreparation','generatePreparations'):
@@ -1127,9 +1180,31 @@ def dispatch(session, operation, args, request, progress):
               'branchId': record['branchId'], 'position': record['position'],
               'fullCase': copy.deepcopy(record.get('fullCase', {}).get(record['branchId'])),
               'branches': [{'id': k, 'steps': len(v['actions']), 'parent': record.get('parents', {}).get(k)} for k, v in record['branches'].items()]}
+    if (engine.scene.source.get('adapter') or {}).get('selectedApproach'):
+        from .surgical_selected_decision import selected_plan_decision
+        decision = selected_plan_decision(engine, result['planningAdmission'], branch_id=record['branchId'])
+        if decision is not None:
+            result['selectedPlanDecision'] = decision
+            result['readOnly'] = True
+    if study_replay:
+        result['readOnly'] = True
+        result['branches'] = [b for b in result['branches'] if b['id'] == study_replay['branchId']]
     if args.get('includeSequenceOutcome') is True:
         from .surgical_sequence_outcomes import sequence_outcome
         result['sequenceOutcome'] = sequence_outcome(engine)
+    if study_replay:
+        # This workspace only observes an already reconstructed action history.
+        # Planner proposals/admissions are unrelated to a recorded cursor. Keep
+        # saved evidence verbatim; only persist its selected inspection position.
+        _require_json_budget(result, RESULT_BYTES, 'SURGICAL_RESULT_LIMIT', 'Recorded state exceeds the display budget')
+        request.begin_commit()
+        original = entry.artifacts[ARTIFACT]
+        if original['position'] != record['position']:
+            entry.artifacts = MappingProxyType({**entry.artifacts,
+                ARTIFACT: MappingProxyType({**original, 'position': record['position']})})
+        cache[identity] = (None, engine, record, entry.artifacts, base_scene)
+        session.surgical_sessions = dict(list(cache.items())[-4:])
+        return result
     from .full_case_readiness import full_case_readiness
     result['fullCaseReadiness'] = {**full_case_readiness(engine), 'caseHash': identity}
     from .surgical_planning import availability

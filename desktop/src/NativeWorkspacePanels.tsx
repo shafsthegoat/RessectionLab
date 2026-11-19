@@ -1,3 +1,4 @@
+import {NativeCranialView} from './NativeCranialView';
 import {NativeStructureControls} from './NativeStructureControls';
 import {layerAppearance} from './viewer/workspaceSettings';
 import {useEffect,useRef,useState} from 'react';
@@ -10,7 +11,8 @@ import type {NativeWorkspace} from './use-native-workspace';
 import {AnatomyInspection} from './AnatomyInspection';
 import {NativeImportPanel} from './NativeImportPanel';
 import {NativePreparePanel} from './NativePreparePanel';
-import {NativeLayerEvidence,rehearsalAvailability} from './NativeStudyEvidence';
+import {NativeRegistrationReview} from './NativeRegistrationReview';
+import {AcquisitionContributions,NativeLayerEvidence,rehearsalAvailability} from './NativeStudyEvidence';
 import './unified-anatomy.css';
 
 /** A display-only, physical sagittal section sampled from the current source.
@@ -45,7 +47,6 @@ export function NativeSidebar({workspace:w,tab,onOpenAnatomy,onOpenPlan,onOpenSc
   workspace:NativeWorkspace;tab:'data'|'anatomy';onOpenAnatomy:()=>void;onOpenPlan:()=>void;onOpenScans:()=>void;
 }){
   const [selected,setSelected]=useState<string|null>(w.draft?w.editLayer:w.selectedStructure),[editing,setEditing]=useState(!!w.draft),[size,setSize]=useState(0);
-  const [landmarks,setLandmarks]=useState('');
   const [componentPage,setComponentPage]=useState(0),[componentOrder,setComponentOrder]=useState('smallest');
   const [marginScore,setMarginScore]=useState(.35),[marginRadius,setMarginRadius]=useState(.8);
   useEffect(()=>setComponentPage(0),[w.review?.reviewId,componentOrder]);
@@ -66,7 +67,7 @@ export function NativeSidebar({workspace:w,tab,onOpenAnatomy,onOpenPlan,onOpenSc
   const layerInspector=layer&&<section className="layer-inspector"><div className="inspector-heading"><strong>{layer.label}</strong><button aria-label="Close layer details" disabled={!!w.draft} onClick={()=>choose(null)}>×</button></div>
         <div className="tool-row"><input type="color" aria-label={`${layer.label} color`} value={w.state.settings.layerColor?.[layer.id]??layer.color} onChange={e=>w.setSettings({...w.state.settings,layerColor:{...w.state.settings.layerColor,[layer.id]:e.target.value}})}/><label>Opacity<input aria-label={`${layer.label} opacity`} type="range" min="0" max="1" step=".01" value={layerAppearance(layer.id,layer.color,w.state.settings,studyLayerDisplayKind(layer)).opacity} onChange={e=>w.setSettings({...w.state.settings,layerOpacity:{...w.state.settings.layerOpacity,[layer.id]:+e.target.value}})}/></label><button disabled={w.busy} onClick={()=>w.setVisible(Object.fromEntries(b.document.layers.map(l=>[l.id,l.id===layer.id])))}>Isolate</button></div>
         <p className="subtle layer-review-status">{layer.review_status.replaceAll('_',' ')}{w.volume?.compartments.find(l=>l.name===layer.id)?.volumeMm3!=null&&<> · source {(w.volume.compartments.find(l=>l.name===layer.id)!.volumeMm3!/1000).toFixed(2)} mL</>}</p>
-        {w.volume?.compartments.find(l=>l.name===layer.id)?.qa&&(()=>{const q=w.volume!.compartments.find(l=>l.name===layer.id)!.qa!;return <details className="unified-details" open={q.voxelCount===0}><summary>Anatomy quality · {q.voxelCount===0?'missing anatomy':q.issues.length?'review findings':'source checks complete'}</summary><p>{q.componentCount.toLocaleString()} source components · anatomical accuracy unmeasured</p>{q.issues.map(issue=><p key={issue}>{issue}</p>)}<p>Findings do not change the source. Inspect linked slices before accepting corrections.</p></details>})()}
+        {w.volume?.compartments.find(l=>l.name===layer.id)?.qa&&(()=>{const q=w.volume!.compartments.find(l=>l.name===layer.id)!.qa!;return <details className="unified-details" open={q.voxelCount===0}><summary>Anatomy quality · {q.voxelCount===0?'empty segmentation':q.issues.length?'review findings':'source checks complete'}</summary><p>{q.componentCount.toLocaleString()} source components · anatomical accuracy unmeasured</p>{q.issues.map(issue=><p key={issue}>{issue}</p>)}<p>Findings do not change the source. Inspect linked slices before accepting corrections.</p></details>})()}
         <button className="edit-segmentation" disabled={w.busy||!w.canEditLayer(layer.id)} onClick={()=>{setEditing(!editing);w.setTool('navigate');w.setEditLayer(layer.id)}}>{editing?'Close tools':'Edit segmentation'}</button>
         {editing&&['vessels','artery','vein','sinus'].includes(layer.kind)&&<div className="vessel-review-note"><p>Disconnected pieces are model estimates. Inspect them on the source slices before keeping or removing them.</p><button disabled={w.busy||!!w.draft||!w.canEditLayer(layer.id)} onClick={()=>{setEditing(true);w.setEditLayer(layer.id);void w.reviewFragments(layer.id)}}>Inspect vessel fragments</button></div>}
         {editing&&<div className="correction-tools"><label>Tool<select aria-label="Correction tool" value={w.tool} onChange={e=>w.setTool(e.target.value)}><option value="navigate">Navigate</option><option value="paint">Paint</option><option value="erase">Erase</option></select></label><label>Brush radius · mm<input type="number" min=".25" max="50" step=".25" value={w.radius} onChange={e=>w.setRadius(+e.target.value)}/></label>
@@ -78,7 +79,7 @@ export function NativeSidebar({workspace:w,tab,onOpenAnatomy,onOpenPlan,onOpenSc
         </div>}
         {selectedDisplay?.alignment&&<p className="subtle">Model placement · {selectedDisplay.alignment}</p>}
         {layer.source_series!==w.series&&<button disabled={blocked} onClick={()=>w.selectScan(layer.source_series)}>Review {scanLabel(b.document.series.find(s=>s.id===layer.source_series)!)} slices</button>}
-        <NativeLayerEvidence layer={layer} document={b.document}/>
+        <NativeLayerEvidence layer={layer} document={b.document} workspace={w}/>
       </section>;
   return <div className={`unified-sidebar study-inspector study-inspector-${tab}`}>
     <div className="study-badge">{studyLabel(timepoint)} study <span>{b.document.series.length} {b.document.series.length===1?'scan':'scans'}</span></div>
@@ -102,12 +103,19 @@ export function NativeSidebar({workspace:w,tab,onOpenAnatomy,onOpenPlan,onOpenSc
         {source.coverage?.status&&<div><dt>Recorded coverage</dt><dd>{source.coverage.status.replaceAll('_',' ')}</dd></div>}
         {!!b.document.source_assets?.length&&<div><dt>Archived source files</dt><dd>{b.document.source_assets.length}</dd></div>}
       </dl>{source.coverage?.limitations?.map((item,index)=><p key={index}>{item.kind.replaceAll('_',' ')}{item.basis?' · '+item.basis:''}</p>)}</details>}
+      <AcquisitionContributions workspace={w} onInspect={layer=>{
+        choose(layer.id);
+        if(layer.source_series!==w.series)w.selectScan(layer.source_series,undefined,layer.id);
+        else if(!w.state.visible[layer.id])w.setVisible({...w.state.visible,[layer.id]:true});
+        onOpenAnatomy();
+      }}/>
       <NativeImportPanel workspace={w} timepoint={timepoint}/>
       <NativePreparePanel workspace={w} onReviewAnatomy={onOpenAnatomy}/>
       <button className="wide-button" disabled={blocked} onClick={w.savePackage}>Save patient study file…</button>
-      {!!source&&<details className="unified-details"><summary>Alignment & registration</summary><p>{w.registration==='patient frame'?'Source or reviewed alignment.':w.registration==='alignment preview'?'An estimated transform is being used for display. Review landmarks before quantitative planning.':'Align this scan to show shared structures.'}</p>{Object.entries(w.volume?.alignmentQuality??{}).map(([sid,q])=><div key={sid} className="alignment-notice"><strong>{sid} · {q.status}</strong>{[...q.warnings,...(q.notes??[])].map((warning,i)=><span key={i}>{warning}</span>)}<details><summary>Measurements</summary><pre>{JSON.stringify(q.metrics,null,2)}</pre></details></div>)}<button disabled={blocked||w.series===b.document.reference_series} onClick={()=>w.change(()=>api.anatomyRegister({...w.args(),seriesId:w.series,action:'estimate'}))}>Recalculate alignment</button><label>Reviewer<input value={w.author} onChange={e=>w.setAuthor(e.target.value)}/></label><label>Landmarks · RAS mm<textarea value={landmarks} onChange={e=>setLandmarks(e.target.value)} placeholder={'{"moving":[[0,0,0]],"reference":[[0,0,0]]}'}/></label><button disabled={blocked||!landmarks||!w.author.trim()} onClick={()=>w.change(async()=>{const p=JSON.parse(landmarks);return api.anatomyRegister({...w.args(),seriesId:w.series,action:'review',movingPoints:p.moving,referencePoints:p.reference,reviewer:w.author})})}>Accept landmark review</button></details>}
+      {!!source&&<details className="unified-details"><summary>Alignment & registration</summary><p>{w.registration==='patient frame'?'Source or reviewed alignment.':w.registration==='alignment preview'?'An estimated transform is being used for display. Review landmarks before quantitative planning.':'Align this scan to show shared structures.'}</p>{Object.entries(w.volume?.alignmentQuality??{}).map(([sid,q])=><div key={sid} className="alignment-notice"><strong>{sid} · {q.status}</strong>{[...q.warnings,...(q.notes??[])].map((warning,i)=><span key={i}>{warning}</span>)}<details><summary>Measurements</summary><pre>{JSON.stringify(q.metrics,null,2)}</pre></details></div>)}<button disabled={blocked||w.series===b.document.reference_series} onClick={()=>w.change(()=>api.anatomyRegister({...w.args(),seriesId:w.series,action:'estimate'}))}>Recalculate alignment</button><NativeRegistrationReview key={JSON.stringify([b.collectionId,b.document.snapshot_id,w.series])} workspace={w} blocked={blocked}/></details>}
     </>:<>
       <div className="anatomy-presets" role="group" aria-label="Anatomy presentation"><button aria-pressed={w.state.settings.presentation==='scan'} disabled={blocked||!source||defaultAnatomyPresentation(source.modality)!=='scan'} onClick={()=>w.present('scan')}><ScanLine size={13}/>Scan</button><button aria-pressed={w.state.settings.presentation==='segmentation'} disabled={blocked} onClick={()=>w.present('segmentation')}>Structures</button><button aria-pressed={w.state.settings.presentation==='vascular'} disabled={blocked} onClick={()=>w.present('vascular')}>Vessels</button></div>
+    <NativeCranialView workspace={w}/>
       {model&&<details className="unified-details patient-model-summary" data-frame="patient">
         <summary>Patient reconstruction · {model.sources.filter(s=>s.displayWindow).length} contributing scans</summary>
         <p>{w.state.settings.presentation==='scan'?'3D signal and linked slices show the selected scan.':'3D context shows the brightest windowed signal across aligned scans. Linked slices retain the selected scan’s intensity.'} Surfaces retain their source extent.</p>
@@ -115,14 +123,25 @@ export function NativeSidebar({workspace:w,tab,onOpenAnatomy,onOpenPlan,onOpenSc
         {model.sources.map(s=><p key={s.seriesId}><strong>{scanLabel(b.document.series.find(scan=>scan.id===s.seriesId)!)}</strong> · {s.modality} · {s.alignment}{s.reason?' · '+s.reason:''}{s.displayWindow?' · display window '+s.displayWindow.map(n=>Number(n.toFixed(2))).join(' to ')+' '+(s.windowUnits??''):''}</p>)}
       </details>}
       {independent&&<div className="patient-model-summary" data-frame="independent"><p>Independent source coordinates. {w.volume?.sourceFrameIssue??'Study alignment is unavailable for this scan.'}</p>{w.series!==b.document.reference_series&&<button disabled={blocked} onClick={()=>w.selectScan(b.document.reference_series,'segmentation')}>Return to patient reconstruction</button>}</div>}
+      {planning.selected&&!w.patientFrameReady&&!w.busy&&source&&source.id!==b.document.reference_series&&
+        <div className="alignment-notice" aria-label="Plan on reference scan">
+          <strong>Approach retained on {scanLabel(b.document.series.find(s=>s.id===b.document.reference_series)!)}</strong>
+          <p>{scanLabel(source)} needs reviewed alignment before it can show the planned route.</p>
+          <button disabled={blocked} onClick={()=>w.selectScan(b.document.reference_series)}>View plan on reference scan</button>
+        </div>}
       <p className="presentation-source">{model&&w.state.settings.presentation!=='scan'?'Linked slices · ':''}{sourceEvidenceLabel(source,b.document.series)}</p>
       <NativeStructureControls volume={w.volume} layers={b.document.layers} tracts={b.document.tractography} visibleLayers={w.state.visible} onVisibilityChange={w.setVisible} settings={w.state.settings} onSettingsChange={w.setSettings} selectedStructure={w.selectedStructure} onSelectStructure={choose} onFocusStructure={w.focusStructure} unavailable={unavailable} pendingLayers={w.pendingLayers} layerErrors={w.layerErrors} onRetryLayer={w.retryLayer} selectionInspector={layerInspector} disabled={w.busy||!!w.draft} showSelectionControls={!!w.selectedStructure&&!layer}/>
       <details className="anatomy-display-tools"><summary>Display & fragments</summary>
         {b.document.layers.some(l=>(l.provenance as {model?:string}|null)?.model==='siam-v2')&&<>
           <label><input type="checkbox" aria-label="Unfiltered SIAM estimates (QC)" checked={w.original} disabled={blocked} onChange={w.compare}/>Unfiltered SIAM estimates (QC)</label>
-          <span>{w.original?'Showing raw SIAM predictions, including estimates in background air.':'SIAM display uses MRI head support where available.'}</span>
+          <span>{w.original?'Showing raw SIAM predictions, including estimates in background air.':'SIAM display uses MRI head support where available. Raw QC restores MRI bone alternatives in CT overlap.'}</span>
           {w.volume?.compartments.filter(l=>l.sourceSupport&&l.name===w.selectedStructure).map(l=><span key={l.name}>{l.sourceSupport?.status==='unavailable'?`${l.sourceSupport.reason}. Showing the unfiltered estimate.`:`${l.sourceSupport?.retainedVoxels?.toLocaleString()} of ${l.sourceSupport?.sourceVoxels?.toLocaleString()} source voxels in this SIAM view`}</span>)}
-        </>}<label>Skull view<select aria-label="Skull view" disabled={blocked} value={w.state.settings.skullMode??'exterior'} onChange={e=>w.changeSkullMode(e.target.value as 'exterior'|'transparent'|'cutaway')}><option value="exterior">Opaque exterior</option><option value="transparent">Transparent</option><option value="cutaway">Cutaway</option></select></label><label>Vessel display<select aria-label="Vessel display" disabled={blocked} value={w.vesselScope} onChange={e=>w.changeVesselScope(e.target.value as VesselScope)}><option value="intracranial">Skull-supported only</option><option value="excluded">Excluded fragments (highlighted)</option><option value="brain">Within brain only</option><option value="all">Full source estimate</option></select></label><span>{w.vesselScope==='all'?'Vessel estimates are unreviewed. Completeness is unmeasured.':w.volume?.compartments.find(l=>l.displayFilter?.reason)?.displayFilter?.reason??'Preparing filtered vessel display…'}</span>{w.vesselScope!=='all'&&<><span>Filters hide source estimates and can introduce gaps. Source anatomy is preserved.</span><button disabled={blocked} onClick={()=>w.changeVesselScope('all')}>Show full source</button></>}</details>
+        </>}
+        {!b.document.layers.some(l=>(l.provenance as {model?:string}|null)?.model==='siam-v2')&&
+          b.document.layers.some(l=>(l.provenance as {model?:string}|null)?.model==='supersynth')&&
+          b.document.series.some(s=>['CT','CTA'].includes(s.modality))&&
+          <label><input type="checkbox" checked={w.original} disabled={blocked} onChange={w.compare}/>Raw source layers (QC)</label>}
+        <label>Skull view<select aria-label="Skull view" disabled={blocked} value={w.state.settings.skullMode??'exterior'} onChange={e=>w.changeSkullMode(e.target.value as 'exterior'|'transparent'|'cutaway')}><option value="exterior">Opaque exterior</option><option value="transparent">Transparent</option><option value="cutaway">Cutaway</option></select></label><label>Vessel display<select aria-label="Vessel display" disabled={blocked} value={w.vesselScope} onChange={e=>w.changeVesselScope(e.target.value as VesselScope)}><option value="intracranial">Skull-supported only</option><option value="excluded">Excluded fragments (highlighted)</option><option value="brain">Within brain only</option><option value="all">Full source estimate</option></select></label><span>{w.vesselScope==='all'?'Vessel estimates are unreviewed. Completeness is unmeasured.':w.volume?.compartments.find(l=>l.displayFilter?.reason)?.displayFilter?.reason??'Preparing filtered vessel display…'}</span>{w.vesselScope!=='all'&&<><span>Filters hide source estimates and can introduce gaps. Source anatomy is preserved.</span><button disabled={blocked} onClick={()=>w.changeVesselScope('all')}>Show full source</button></>}</details>
       {b.document.series.length>0&&<details className="unified-details native-study-readiness"><summary>Planning & rehearsal availability</summary>
         {planning.loading?<p>Checking planning and rehearsal evidence…</p>:<>
           <p>{activeTarget?'The selected target supports geometric comparison.':usableTargets.length?

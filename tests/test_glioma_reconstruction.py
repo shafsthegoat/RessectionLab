@@ -184,3 +184,38 @@ def test_warm_preparation_backfills_crop_without_running_inference(tmp_path, mon
     row = reopened.layer(key)
     assert row["data"] == original_mask and row["probability"] == retained_score
     assert inference_bounds(row) == ((2, 2, 2), (5, 5, 5))
+
+
+def test_empty_tumor_scores_explain_preparation_and_retained_anatomy(tmp_path, monkeypatch):
+    from resectionlab import anatomy_preparation as preparation
+    from resectionlab.anatomy_qa import layer_quality
+
+    study, _ = fixture(tmp_path, monkeypatch)
+    study.save()
+    stage = dict(id="tumor", capability="tumor", model="glioma-gbm", series_id="T1CE", status="ready",
+                 options={"brain_layer_id": "brain-t1ce"}, reason="", depends_on=[])
+    monkeypatch.setattr(preparation, "_jobs", lambda *_: [stage])
+
+    def bounded(_command, directory, **_kwargs):
+        image(directory / "output/pred_Tumor.nii.gz", np.full((8, 8, 8), .213, np.float32))
+        return {"elapsed_seconds": .1, "peak_sampled_rss_bytes": 1000}
+
+    monkeypatch.setattr(anatomy_models, "run_bounded", bounded)
+    result = preparation.prepare_anatomy(study)
+    outcome, = result["outcomes"]
+    assert outcome["status"] == "empty_output"
+    assert "threshold of 0.5 on T1CE" in outcome["reason"] and "highest score was 0.213" in outcome["reason"]
+    study = PatientImagingCollection(study.root)
+    tumor, = [row for row in study.document["layers"] if row["kind"] == "tumor"]
+    qa = layer_quality(study, tumor)
+    assert qa["voxelCount"] == 0 and outcome["reason"] in qa["issues"]
+
+    # Historic checkpoints can report the measurements without rerunning the
+    # model. A mismatched output reference cannot supply another run's scores.
+    prior = preparation._receipts(study)
+    prior["tumor"]["reason"] = "Model returned no labeled anatomy in its output field"
+    preparation._checkpoint(study, prior)
+    assert preparation.preparation_plan(study)["stages"][0]["reason"] == outcome["reason"]
+    prior["tumor"]["outputs"][0]["sha256"] = "f" * 64
+    preparation._checkpoint(study, prior)
+    assert preparation.preparation_plan(study)["stages"][0]["reason"] == prior["tumor"]["reason"]

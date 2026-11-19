@@ -2,6 +2,7 @@
 const assert = require('node:assert/strict');
 const {spawn} = require('node:child_process');
 const {once} = require('node:events');
+const {nativeImage} = require('electron');
 const path = require('node:path');
 const fs = require('node:fs');
 const {inputScript} = require('./verify-eden-planning-helpers.cjs');
@@ -65,7 +66,7 @@ async function framePixels(win) {
   assert.equal(bytes.length,width*height*4);
   return bytes;
 }
-async function recordOperativePlayback(win,js,output,intro) {
+async function recordOperativePlayback(win,js,output,intro,inspectEndpoint=false) {
   const originalSize=win.getContentSize();
   await recordingSize(win,js);
   const chapters=await js("Array.from(document.querySelectorAll('.operative-chapters button:not(:disabled)'),b=>b.getAttribute('aria-label'))");
@@ -83,6 +84,8 @@ async function recordOperativePlayback(win,js,output,intro) {
     const start = index === 0 ? introFrames : introFrames + stepsPerChapter * index + 1;
     movieChapters.push({title,start,end:introFrames + stepsPerChapter * (index + 1) + 1});
   });
+  const inspectionFrames=inspectEndpoint?fps*3:0;
+  if(inspectionFrames)movieChapters.push({title:'Inspect modeled cavity',start:introFrames+motionFrames,end:introFrames+motionFrames+inspectionFrames});
   const metadata = [';FFMETADATA1', ...movieChapters.flatMap(({title,start,end}) => [
     '[CHAPTER]', 'TIMEBASE=1/'+fps, 'START='+start, 'END='+end, 'title='+title,
   ])].join('\n')+'\n';
@@ -114,6 +117,15 @@ async function recordOperativePlayback(win,js,output,intro) {
     }
   }
   let prior=null,still=0,lastChapter=-1;
+  const sampledStates=[];
+  const collectStates=await js('!!window.__operativeQA');
+  const gateSeconds=[9,14,18];
+  const storeGate=(bytes,frame)=>{
+    if(collectStates&&gateSeconds.includes(frame/fps)){
+      const filename=path.join(output,'movie-'+(frame/fps)+'s.png');
+      fs.writeFileSync(filename,nativeImage.createFromBitmap(bytes,{width,height}).toPNG());
+    }
+  };
   const perChapter=Object.fromEntries(chapters.map(name=>[name,{frames:0,changedFrames:0,framesWithVisibleMotion:0,longestStillFrames:0}]));
   const started=performance.now();
   try {
@@ -126,7 +138,9 @@ async function recordOperativePlayback(win,js,output,intro) {
         const panel=document.querySelector('.operative-playback');
         resolve({phase:panel.dataset.operativePhase,progress:Number(panel.dataset.operativeProgress),
           position:Number(panel.querySelector('input[type=range]').value),
-          renderingError:panel.querySelector('.operative-field-canvas [role=alert]')?.textContent});
+          renderingError:panel.querySelector('.operative-field-canvas [role=alert]')?.textContent,
+          removed:Number(panel.querySelector('[data-removed-cells]')?.dataset.removedCells??0),
+          submitted:window.__operativeQA?.lastDraw});
       })))`);
       assert(!state.renderingError, state.renderingError);
       assert(Math.abs(state.position-position)<.0001,'Unexpected timeline value at frame '+i);
@@ -149,7 +163,34 @@ async function recordOperativePlayback(win,js,output,intro) {
         }
       }
       prior=sample;
+      const frame=introFrames+i;
+      if(collectStates)sampledStates.push({frame,...state});
+      storeGate(bytes,frame);
       await write(bytes);
+    }
+    let endpointInspection=null;
+    if(inspectEndpoint){
+      const state=()=>js(`(()=>{const canvas=document.querySelector('.operative-field-canvas canvas');
+        return {removed:Number(document.querySelector('[data-removed-cells]').dataset.removedCells),camera:JSON.parse(canvas.dataset.camera),
+          position:Number(document.querySelector('[aria-label="Operative timeline"]').value),submitted:window.__operativeQA?.lastDraw};})()`);
+      const start=await state(),x=Math.round(rect.x+rect.width*.5),y=Math.round(rect.y+rect.height*.5);
+      assert(start.removed>0&&start.position===max);
+      win.webContents.sendInputEvent({type:'mouseDown',x,y,button:'left',clickCount:1});
+      for(let i=1;i<=fps*2;i++){
+        const t=i/(fps*2),ease=t*t*(3-2*t);
+        win.webContents.sendInputEvent({type:'mouseMove',x:x+Math.round(47*ease),y:y+Math.round(19*ease),modifiers:['leftButtonDown']});
+        await js('new Promise(done=>requestAnimationFrame(()=>requestAnimationFrame(done)))');
+        await write(await framePixels(win));
+      }
+      win.webContents.sendInputEvent({type:'mouseUp',x:x+47,y:y+19,button:'left',clickCount:1});
+      const end=await state();assert.equal(end.removed,start.removed);assert.equal(end.position,start.position);assert.notDeepEqual(end.camera,start.camera);
+      endpointInspection={start,end,orbitFrames:fps*2,holdFrames:fps};
+      const held=await framePixels(win);
+      for(let i=0;i<fps;i++){
+        const frame=introFrames+motionFrames+fps*2+i;
+        if(collectStates&&gateSeconds.includes(frame/fps))sampledStates.push({frame,...end});
+        storeGate(held,frame);await write(held);
+      }
     }
     encoder.stdin.end();
     const status=await closed;
@@ -157,7 +198,8 @@ async function recordOperativePlayback(win,js,output,intro) {
     for(const [stage,stats] of Object.entries(perChapter))
       assert(stats.framesWithVisibleMotion>stepsPerChapter/3,'Too few visible operative canvas changes in '+stage);
     fs.renameSync(partial,filename);
-    return {filename,width,height,fps,introFrames,motionFrames,movieChapters,sampledRect:rect,perChapter,secondsToRecord:(performance.now()-started)/1000};
+    if(collectStates)fs.writeFileSync(path.join(output,'movie-states.json'),JSON.stringify(sampledStates)+'\n');
+    return {filename,width,height,fps,introFrames,motionFrames,inspectionFrames,endpointInspection,movieChapters,sampledRect:rect,perChapter,secondsToRecord:(performance.now()-started)/1000};
   } finally {
     if(encoder.exitCode===null && encoder.signalCode===null) encoder.kill();
     await closed;

@@ -98,7 +98,10 @@ def model_environment(model, *, include_paths=False, **options):
 
     assets = {}
     configuration = {}
-    if model in POC_ADAPTERS:
+    if model == "monai-brats-0.5.4":
+        from . import anatomy_brats
+        assets, configuration["model_release"] = anatomy_brats.assets()
+    elif model in POC_ADAPTERS:
         config = poc_models.MODEL_CONFIG[POC_ADAPTERS[model]]
         home = os.environ.get("RESSECTIONLAB_MODEL_ROOT")
         model_root = Path(home).resolve() if home else ROOT / "data/models"
@@ -453,7 +456,20 @@ def preparation_model_jobs(c, *, indication=None, full_head_confirmed=False, inc
     tumor_kinds = {"tumor", "enhancing-tumor", "nonenhancing-tumor", "lesion", "tumor-core", "tumor-whole"}
     supplied = next((layer for row in series
                      if (layer := matching_layer(c, row, tumor_kinds, supplied_only=True))), None)
-    if supplied:
+    if indication == "monai-brats-0.5.4":
+        from . import anatomy_brats
+        if supplied:
+            job("supplied-tumor", "supplied_tumor", c.series(supplied["source_series"]), existing=supplied)
+        try:
+            if not reference:
+                raise ValueError("A patient reference series is required")
+            evidence = anatomy_brats.inputs(c)
+        except (ValueError, OSError) as error:
+            job("tumor", "four_channel_tumor_compartments", status="unsupported_input", reason=str(error))
+        else:
+            job("tumor", "four_channel_tumor_compartments", c.series(evidence["channels"][0]["series_id"]),
+                indication, options={"brats_inputs": evidence}, reason="Unreviewed estimates on the common preprocessed grid")
+    elif supplied:
         job("tumor", "tumor", c.series(supplied["source_series"]), existing=supplied)
     elif indication in TUMOR_ADAPTERS and indication != "glioma":
         _, modality = TUMOR_ADAPTERS[indication]
@@ -491,8 +507,16 @@ def preparation_model_jobs(c, *, indication=None, full_head_confirmed=False, inc
             job("dural-envelope", "dural_envelope", status="missing_input",
                 reason="No source-supported cranial envelope available for a geometric proxy")
     tracts = bool(c.document.get("tractography")) or any(row["kind"] in {"tract", "tractography"} for row in c.document["layers"])
-    job("tractography", "tractography", status="available" if tracts else "missing_input",
-        reason="Supplied tracts retained with their limitations" if tracts else "No supplied patient-specific tractography")
+    raw_dwi = any(row.get("storage") == "source-asset" and row.get("modality") == "DWI"
+                  and (not reference or row.get("timepoint") == reference["timepoint"])
+                  for row in c.document.get("source_assets", []))
+    if tracts:
+        job("tractography", "tractography", status="available", reason="Supplied tracts retained with their limitations")
+    elif raw_dwi:
+        job("tractography", "tractography", status="unsupported_input",
+            reason="Raw diffusion retained. Named tracts require reviewed preprocessing, gradient orientation and bundle evidence.")
+    else:
+        job("tractography", "tractography", status="missing_input", reason="No supplied patient-specific tractography")
     functional = any(row["kind"] in {"motor", "language", "functional"} for row in c.document["layers"])
     job("functional", "functional", status="available" if functional else "missing_input",
         reason="Supplied functional maps retained with their limitations" if functional else "No supplied patient-specific functional evidence")

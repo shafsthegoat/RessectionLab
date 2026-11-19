@@ -50,6 +50,57 @@ def test_packaged_policy_copy_matches_canonical_resource():
     assert json.loads(desktop.read_text()) == POLICY
 
 
+def test_publisher_surface_retains_geometry_after_portable_reopen(tmp_path):
+    import nibabel as nib
+    from resectionlab.anatomy_geometry import mesh
+    from resectionlab.anatomy_package import open_package, save_package
+    from resectionlab.anatomy_publisher_surface import POLICY, publisher_surface
+    from resectionlab.patient_anatomy import PatientImagingCollection, world
+
+    matrix = np.diag([-0.5, 1.25, 2., 1.])
+    matrix[:3, 3] = [100., -40., 20.]
+    values = np.zeros((6, 6, 6), np.uint8)
+    values[1:4, 1:4, 1:4] = 1
+    source = tmp_path / 'source.nii.gz'
+    image = nib.Nifti1Image(values, matrix)
+    image.header.set_xyzt_units('mm')
+    nib.save(image, source)
+    raw_asset = tmp_path / 'mesh.vtp'
+    raw_asset.write_bytes(b'synthetic publisher asset test')
+    c = PatientImagingCollection.create(tmp_path / 'study', 'publisher-pilot')
+    scan = c.add_series(source, series_id='cta', modality='CTA')
+    row = c.add_layer(values, matrix, layer_id='arterial', source_series='cta', kind='artery',
+                      role='context', color='#aabbcc')
+    vertices = world(matrix, [[1., 1., 1.], [3., 1., 1.], [1., 3., 2.]]).astype(np.float32)
+    triangles = np.array([[0, 1, 2]], dtype=np.uint32)
+    row['publisher_surface'] = {
+        'schema': POLICY, 'original': c.original(raw_asset),
+        'vertices_ras_mm': c.put_array(vertices), 'triangles': c.put_array(triangles),
+        'source_series': 'cta', 'source_sha256': scan['original']['sha256'], 'source_affine': scan['affine'],
+        'mask_sha256': row['data']['sha256'], 'mask_label_value': 1, 'mask_revision': 0,
+    }
+    c.save()
+    archive = tmp_path / 'roundtrip.rsworkspace'
+    save_package(c, archive)
+    restored = PatientImagingCollection(open_package(archive, tmp_path / 'reopen').parent)
+    layer = restored.layer(row['id'])
+    actual = mesh(restored, layer)
+    np.testing.assert_array_equal(world(matrix, actual['positions']), vertices)
+    np.testing.assert_array_equal(actual['source'], actual['positions'])
+    np.testing.assert_array_equal(actual['indices'], triangles[:, ::-1])
+    np.testing.assert_array_equal(restored.mask(layer), values.astype(bool))
+    assert actual['policy_version'] == POLICY and actual['max_displacement_mm'] == 0.
+
+    assert publisher_surface(restored, {**layer, 'revision': 1}, cancelled=lambda: False) is None
+    assert publisher_surface(restored, {**layer, 'edits': [{'draft': True}]}, cancelled=lambda: False) is None
+    changed = {**layer, 'publisher_surface': {**layer['publisher_surface'], 'source_sha256': 'a' * 64}}
+    with pytest.raises(ValueError, match='binding differ'):
+        mesh(restored, changed)
+    restored.path(restored.series('cta')['original']['path']).write_bytes(b'changed acquired source')
+    with pytest.raises(ValueError, match='acquired source checksum differs'):
+        mesh(restored, layer)
+
+
 def test_empty_native_mesh_has_explicit_descriptor_without_zero_length_transfer(tmp_path):
     import nibabel as nib
     from resectionlab.patient_anatomy import PatientImagingCollection
@@ -150,3 +201,57 @@ def test_whole_anatomy_exterior_reduces_staircase_without_relaxing_source_bounds
     assert np.linalg.norm(updated-source, axis=1).max() <= .7
     assert display_surface_kind({'kind':'context', 'provenance':{'model':'siam-v2','label_ontology':{'value':16}}}) == 'outer-head-tissue'
     assert display_surface_kind({'kind':'context','label_value':16}) == 'context'
+
+
+def test_conditioned_skull_surface_keeps_shape_binding_through_portable_reopen(tmp_path):
+    import nibabel as nib
+    from resectionlab.anatomy_geometry import CONDITIONED_SURFACE, mesh
+    from resectionlab.anatomy_package import open_package, save_package
+    from resectionlab.core import array_digest
+    from resectionlab.patient_anatomy import PatientImagingCollection
+
+    values = np.zeros((10, 10, 10), np.uint8)
+    values[2:8, 2:8, 2:8] = 1
+    matrix = np.diag([0.5, 0.5, 1., 1.])
+    image = nib.Nifti1Image(values, matrix)
+    image.header.set_xyzt_units("mm")
+    source = tmp_path / "ct.nii.gz"
+    nib.save(image, source)
+    study = PatientImagingCollection.create(tmp_path / "study", "skull-conditioner")
+    scan = study.add_series(source, series_id="ct", modality="CT")
+    row = study.add_layer(values, matrix, layer_id="skull", source_series="ct",
+                          kind="skull", role="context", color="#dddddd")
+    stock = mesh(study, row)
+    moved = stock["positions"].copy()
+    eligible = stock["source"][:, 2] > 5
+    moved[eligible, 2] += .01
+    row["conditioned_surface"] = {
+        "schema": CONDITIONED_SURFACE, "mask_revision": 0, "label_value": 1,
+        "mask_sha256": row["data"]["sha256"], "source_array_sha256": scan["data"]["sha256"],
+        "source_original_sha256": scan["original"]["sha256"], "affine": scan["affine"],
+        "source_mesh_hash": array_digest(stock["source"]), "indices_hash": array_digest(stock["indices"]),
+        "stock_conditioned_hash": array_digest(stock["positions"]), "protected_native_plane": 5,
+        "positions": study.put_array(moved),
+    }
+    study.save()
+    archive = tmp_path / "portable.rsworkspace"
+    save_package(study, archive)
+    reopened = PatientImagingCollection(open_package(archive, tmp_path / "fresh").parent)
+    layer = reopened.layer("skull")
+    restored = mesh(reopened, layer)
+    assert restored["policy_version"] == CONDITIONED_SURFACE
+    np.testing.assert_array_equal(restored["source"], stock["source"])
+    np.testing.assert_array_equal(restored["indices"], stock["indices"])
+    np.testing.assert_array_equal(restored["positions"], moved)
+    np.testing.assert_array_equal(reopened.mask(layer), values.astype(bool))
+    assert mesh(reopened, {**layer, "revision": 1})["policy_version"] != CONDITIONED_SURFACE
+    invalid = {**layer["conditioned_surface"], "mask_sha256": "a" * 64}
+    with pytest.raises(ValueError, match="bindings differ"):
+        mesh(reopened, {**layer, "conditioned_surface": invalid})
+    invalid = {**layer["conditioned_surface"], "protected_crop_margin_cells": 3}
+    with pytest.raises(ValueError, match="source bounds"):
+        mesh(reopened, {**layer, "conditioned_surface": invalid})
+    moved[~eligible, 2] += .01
+    invalid = {**layer["conditioned_surface"], "positions": reopened.put_array(moved)}
+    with pytest.raises(ValueError, match="source bounds"):
+        mesh(reopened, {**layer, "conditioned_surface": invalid})

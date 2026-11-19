@@ -256,7 +256,19 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
     fullCaseReadiness:view?boundFullCaseReadiness(result,source?.caseHash):null,canStartFullCase,
     canCancelComputation:requestPending&&!!activeRequest.current?.cancel,cancelling,cancelComputation,
     playbackVersion,startPlayback,runPlayback,stopPlayback,showFlowTransfers,setShowFlowTransfers,setPlaybackDisplay,
-    pausePlayback:()=>{stopPlayback();setPlaybackVersion(n=>n+1);},
+    pausePlayback:()=>{
+      const active=replayLane.current!.active;
+      stopPlayback();
+      // A decoded observation may already be waiting on asynchronous surface
+      // preparation. Cancel this display ticket along with the pending fetch.
+      const shown=current.current.result;
+      if(active && shown && !desired.current.preview) {
+        desired.current.result=shown;
+        displayAdmission.current.expect(shown.caseHash,generation.current,shown.view);
+        pendingPoseView.current=null;setDesiredResult(shown);
+      }
+      setPlaybackVersion(n=>n+1);
+    },
     computingFullCase:fullCaseComputation.current.scenario,pauseFullCase,
     startFullCase:(scenario:'primary'|'vascular')=>{if(!canStartFullCase(scenario))return false;fullCaseComputation.current.start(scenario);setFullCaseVersion(n=>n+1);return true;},
     setParameters:(p:Record<string,number>)=>{setParameters(p);clearPreview();},

@@ -1,8 +1,7 @@
 """Source-qualified complete cranial sequences for the desktop comparison.
 
-This adapter proposes only source-owned programs. Native search and literal
-export replay decide executable progress; no report or qualification seal grants
-patient treatment permission.
+Source programs and measured generated kerf debris guide proposals. Native search
+and literal export replay determine executable progress.
 """
 from __future__ import annotations
 
@@ -208,7 +207,7 @@ def cranial_planning_availability(base_scene, record):
     return result
 
 
-def _proposer(planning):
+def _proposer(planning, *, check=lambda: None):
     inventory = copy.deepcopy(planning)
     def propose(engine):
         from .surgical_joint_cranial_skills import _readiness
@@ -225,18 +224,31 @@ def _proposer(planning):
         if not membership:
             return []
         owned = {r['id'] for r in engine.scene.regions if r.get('target')}
-        remaining = sorted({int(c) for cells in membership.values() for c in cells}
-            - set(engine.state['removed']))
-        remaining = [c for c in remaining if int(engine.scene.labels.flat[c]) in owned]
-        if not remaining:
-            return []
+        target = {int(c) for cells in membership.values() for c in cells
+                  if int(engine.scene.labels.flat[c]) in owned}
+        removed = set(engine.state['removed'])
+        remaining = sorted(target - removed)
+        # Cleanup can be terminal with a real residual. Only the hand actually
+        # carrying a CUSA can propose another CUSA stroke from this boundary.
+        routes = [r for r in inventory['workRoutes']
+                  if engine.state['slots'][r['motion']['slot']]['instrument'] == 'cusa']
+        cleanup = []
+        if engine.state.get('debris') and not target.isdisjoint(removed):
+            from .surgical_cranial_cleanup import kerf_cleanup_actions
+            for hand in sorted({r['motion']['slot'] for r in routes}):
+                actions = kerf_cleanup_actions(engine, hand, check=check)
+                if actions:
+                    cleanup.append({'id': 'collect-kerf-debris-' + hand, 'sourceStateId': engine.state_id,
+                        'kind': 'cleanup', 'actions': actions})
+        if not remaining or not routes:
+            return cleanup
         points = engine.scene.points(remaining)
         def rank(route):
             point = np.asarray(route['motion']['pose']['position'], float)
             return float(np.min(np.sum((points-point)**2, axis=1))), route['id']
-        return [{'id': 'source-work-' + row['id'], 'sourceStateId': engine.state_id,
+        return cleanup + [{'id': 'source-work-' + row['id'], 'sourceStateId': engine.state_id,
             'kind': 'cusa', 'motion': copy.deepcopy(row['motion'])}
-            for row in sorted(inventory['workRoutes'], key=rank)[:6]]
+            for row in sorted(routes, key=rank)[:6 - len(cleanup)]]
     return propose
 
 
@@ -270,9 +282,9 @@ def compare_cranial_strategies(base_scene, record, *, check=lambda: None,
         roots.append({'id': row['id'], 'label': row['label'],
             'engine': SurgicalEngine.restore(scenes[row['id']], thaw_json(row['sourceSnapshot']), use_cache=False, check=budget.check),
             'limits': {k: v for k, v in common.items() if k != 'export_replay_reserve_calls'},
-            'propose': _proposer(row['planning']), 'outside_poses': copy.deepcopy(row['planning']['outsidePoses'])})
+            'propose': _proposer(row['planning'], check=budget.check), 'outside_poses': copy.deepcopy(row['planning']['outsidePoses'])})
     result = search_opening_forest(roots, budget=budget, horizon=planning_horizon,
-        beam_width=beam_width, progress=progress)
+        beam_width=beam_width, progress=progress, compare_initial_stop=True)
     from .surgical_procedure_policy import PROPERTY as PROCEDURE_PROPERTY, procedure_admission
     procedure = procedure_admission(base_scene) if PROCEDURE_PROPERTY in base_scene.properties else None
     branches, alternatives = [], []
@@ -297,6 +309,10 @@ def compare_cranial_strategies(base_scene, record, *, check=lambda: None,
             'stopReason': _sequence_stop_reason(goal,procedure),
             'snapshotHash': semantic_digest(engine.snapshot()), 'nativeHistory': copy.deepcopy(engine.history),
             'admittedPatientTask': False}
+        if row['validStop'] and row['nativeActions'] == 0:
+            row['label'] = 'Stop before opening · ' + row['label']
+            if not procedure:
+                row['stopReason'] = 'CHECKED_STOP_BEFORE_OPENING_WITH_ORIGINAL_TARGET_REMAINING'
         if procedure:
             from .surgical_cranial_geometry import recorded_cranial_geometry
             root = next(r for r in rows if r['id'] == item['rootId'])

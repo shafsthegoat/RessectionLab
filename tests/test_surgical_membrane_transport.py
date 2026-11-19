@@ -292,3 +292,37 @@ def test_native_milling_membrane_descriptor_retains_verified_bone_prefix():
     assert final_frame.snapshot()==saved and final_frame.observe()['cranialStages']['wholeExitComplete']
     reference=timeline[-1];actual=pending.step(saved['actions'][-1])
     assert actual['status']==reference['status'] and pending.snapshot()==saved
+
+
+def test_desktop_forward_seek_after_membrane_cut_preserves_earlier_bone_witness():
+    from resectionlab.desktop_bridge import _Request
+    from resectionlab.surgical_replay_cache import SurgicalReplayCache
+    engine, contract, contour, *_ = joint_source()
+    opening = bone_actions(contour)
+    actions = opening + membrane_cut_actions(engine, contract)[:10]
+    check = _Request('generated-stage-seek').check
+    for action in actions:
+        assert engine.step(action, check=check)['status'] == 'accepted'
+    saved = engine.snapshot()
+    from resectionlab.surgical_cranial_stages import verified_bone_prefix
+    from resectionlab.surgical_native_engine import detach
+
+    def witness(boundary):
+        detached = boundary.clone()
+        detach(detached)
+        proof = verified_bone_prefix(detached)
+        return proof.position, proof.state_id
+
+    bone_witness = witness(engine)
+    cache = SurgicalReplayCache()
+    # The first scissor cut follows exchange + placement. Continuing a seek
+    # from that checkpoint needs the earlier bone witness even for withdrawal.
+    cut = len(opening) + 3
+    cursor = cache.seek(engine, saved, 0, check=check)
+    for position in (cut, cut + 3, cut, cut + 3, len(actions)):
+        cursor = cache.seek(cursor, saved, position, check=check)
+        assert cursor.state_id == engine.history[position - 1]['stateAfter']
+        assert cursor.history == engine.history[:position]
+        assert cursor.state['cutEdges'] and stage_readiness(cursor)['bonePrefixVerified']
+        assert witness(cursor) == bone_witness
+    assert cursor.snapshot() == saved

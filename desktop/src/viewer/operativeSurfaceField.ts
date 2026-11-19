@@ -1,3 +1,4 @@
+import { conditionCavityField } from './operativeCavityField.ts';
 import type { OperativeField } from '../operative-field';
 import type { VoxelBounds } from './operativeSurface';
 
@@ -153,7 +154,7 @@ export function operativeSurfaceField(grid: Grid, source: Uint8Array, bounds: Vo
     if (inside && value < 128) smooth[i] = thin ? 176 : 144;
     if (!inside && value >= 128) smooth[i] = thin ? 79 : 111;
   }
-  return {
+  const field = {
     mask,
     smooth,
     unresolved: buffer,
@@ -163,6 +164,8 @@ export function operativeSurfaceField(grid: Grid, source: Uint8Array, bounds: Vo
     origin,
     base: -origin[0] * yz - origin[1] * sz - origin[2],
   };
+  conditionCavityField(source, field);
+  return field;
 }
 
 export type ConditionedField = ReturnType<typeof operativeSurfaceField>;

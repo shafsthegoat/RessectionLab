@@ -501,3 +501,8 @@
     gap: 5px;
   }
 }
+
+.environment-route-decision {margin-block: .6rem; padding: .65rem .8rem; border-inline-start: 3px solid #dfb773; background: #1c2228; overflow-wrap: anywhere;}
+.environment-route-decision h3 {margin: 0 0 .4rem; font-size: 1rem;}
+.environment-route-decision p {margin: .4rem 0;}
+.environment-route-decision details {margin-top: .55rem;}

@@ -25,6 +25,11 @@ def referenced_files(value):
 
 def save_package(collection, destination, *, check=lambda: None, progress=lambda *x: None, commit=lambda: None):
     destination = Path(destination)
+    # Verification of a source-adapted engine scene includes the manifest bytes.
+    # Keep the published representation while packaging the same loaded snapshot.
+    manifest = collection.path('patient-anatomy.json').read_bytes()
+    if json.loads(manifest) != collection.document:
+        raise ValueError('Patient manifest changed; reload before saving the study')
     files = {'patient-anatomy.json': None}
     for name, checksum in referenced_files(collection.document):
         source = collection.path(name)
@@ -55,7 +60,7 @@ def save_package(collection, destination, *, check=lambda: None, progress=lambda
                 check()
                 progress(index / len(files), f"Saving patient study · file {index + 1} of {len(files)}")
                 if name == 'patient-anatomy.json':
-                    archive.writestr(name, json.dumps(collection.document, allow_nan=False))
+                    archive.writestr(name, manifest)
                     continue
                 checksum = hashlib.sha256()
                 with collection.path(name).open('rb') as source, archive.open(name, 'w', force_zip64=True) as target:

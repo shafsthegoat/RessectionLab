@@ -9,7 +9,9 @@ export function checkedViewerSettings(source:CasePayload,input:unknown):ViewerWo
   if(!input || typeof input!=='object' || Array.isArray(input))return fail();
   const value=input as ViewerWorkspaceSettings;
   const labels=[...source.compartments.map(layer=>layer.name),...(displayBrainMask(source)?['brain']:[])];
-  if(Object.keys(value).some(key=>!['showOrientationGuide','smoothSurfaces','skullMode','volumeRendering','layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast','clipBox','obliqueClip','sliceOverlay','presentation','sliceFraming','contextStyle','operativeView','microscope','externalCamera'].includes(key)))return fail();
+  if(Object.keys(value).some(key=>!['showOrientationGuide','smoothSurfaces','skullMode','volumeRendering','layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast','clipBox','obliqueClip','sliceOverlay','presentation','sliceFraming','contextStyle','operativeView','microscope','externalCamera','resultInspection','resultCamera'].includes(key)))return fail();
+  if(value.resultInspection!==undefined&&!['both','cavity','residual'].includes(value.resultInspection))return fail();
+  if(value.resultCamera!=null&&!validCameraState(value.resultCamera))return fail();
   if(value.showOrientationGuide!==undefined&&typeof value.showOrientationGuide!=='boolean')return fail();
   if(value.operativeView!==undefined&&!['external','surgeon'].includes(value.operativeView))return fail();
   if(value.microscope!==undefined&&!validMicroscopeSettings(value.microscope))return fail();

@@ -171,7 +171,7 @@ def cleanup_program():
 
 
 def build_generated_cranial_case(neural_limit=0., *, cerebellar_shortcut=False,
-        include_cleanup=True, endpoint_fluid_source=False):
+        include_cleanup=True, endpoint_fluid_source=False, target_source_cells=None):
     """Prospective anatomy/route inventory; no expected outcome enters search."""
     from resectionlab.surgical_engine import SurgicalEngine
     from resectionlab.surgical_craniotomy import binding, contract_hash
@@ -180,6 +180,18 @@ def build_generated_cranial_case(neural_limit=0., *, cerebellar_shortcut=False,
     from resectionlab.surgical_procedure_policy import PROPERTY, make_procedure_policy
     template, stage, contour, _, _ = joint_source()
     labels = template.scene.labels.copy()
+    if target_source_cells is not None:
+        cells = np.asarray(target_source_cells)
+        if (cells.ndim != 1 or not len(cells) or cells.dtype.kind not in 'iu' or
+                np.any(cells < 0) or np.any(cells >= labels.size) or len(np.unique(cells)) != len(cells)):
+            raise ValueError('Distinct in-grid generated target cells required')
+        x, y, z = np.unravel_index(cells, labels.shape)
+        if not np.all((x >= 25) & (x < 40) & (y >= 25) & (y < 40) & (z >= 67) & (z < 75)):
+            raise ValueError('Generated target must be inside the declared work compartment')
+        if cerebellar_shortcut and np.any((x == 34) & (y == 32) & (z == 67)):
+            raise ValueError('Target collides with the generated categorical neural owner')
+        labels[labels == 2] = 0
+        labels.flat[cells] = 2
     labels[33, 32, 66] = labels[22, 22, 70] = labels[23, 22, 70] = 4
     neural_position=(34,32,67) if cerebellar_shortcut else (33,32,66)
     if cerebellar_shortcut:
@@ -251,7 +263,7 @@ def build_generated_cranial_case(neural_limit=0., *, cerebellar_shortcut=False,
     native = SurgicalEngine(scene)
     contract = freeze_cranial_stage_contract(native, membrane_cells=stage.membrane_cells,
         retained_membrane_cells=stage.retained_membrane_cells, membrane_anchor_cells=stage.membrane_anchor_cells,
-        work_cells=sorted([*stage.work_cells,flat(neural_position)]), evidence=stage.as_dict()['evidence'])
+        work_cells=sorted([*map(int, np.flatnonzero(labels == 2)),flat(neural_position)]), evidence=stage.as_dict()['evidence'])
     native = SurgicalEngine(scene, protection=native.protection, guard_config=native.guard_config, cranial_stages=contract)
     opening_actions = bone_actions(contour)
     prep = preparation_program(native,contract,contour)[len(opening_actions):]

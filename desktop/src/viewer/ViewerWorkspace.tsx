@@ -1,3 +1,7 @@
+import {resultMembership} from './resultInspectionData';
+import {EngineOperatedSection} from './EngineOperatedSection';
+import {OperativeSourceLocator} from './OperativeSourceLocator';
+import {OperativeLegend} from './OperativeLegend';
 import {planningSliceSegments,planningSphereSliceRadius,planningSliceMemberships} from '../interactive-planning-data';
 import {surgicalEffectMarkers,clipSurgicalMarkersToSlab,surgicalMarkerRadiusPx} from './surgicalGeometry';
 import {modeledSourceIdentity,modeledAnatomy} from './modeledAnatomy';
@@ -139,7 +143,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     [ready, setReady] = useState(false);
   const [fusionError,setFusionError]=useState<string|null>(null);
   const [graphicsLost,setGraphicsLost]=useState(false),[graphicsGeneration,setGraphicsGeneration]=useState(0);
-  const [committedSurgical,setCommittedSurgical]=useState<{identity:typeof rendererIdentity;interaction:SurgicalInteraction|null}|null>(null);
+  const [committedSurgical,setCommittedSurgical]=useState<{identity:typeof rendererIdentity;volume:NonNullable<typeof caseData>;interaction:SurgicalInteraction|null}|null>(null);
   const [modelDisplayPending,setModelDisplayPending]=useState(false);
   const [modelDisplayError,setModelDisplayError]=useState<string|null>(null);
   const lastCameraFitRequest=useRef(props.cameraFitRequest??0);
@@ -151,6 +155,20 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   const activePlane=settings.activePlane??'axial',contrast=settings.contrast??1,showPlane=settings.showPlane??false;
   const displayedSurgical=committedSurgical?.identity===rendererIdentity?committedSurgical.interaction:null;
   const surgicalView=displayedSurgical?.preview??displayedSurgical?.view;
+  const showEngineSection=!!(props.engineInspection&&surgicalView&&!displayedSurgical?.preview&&committedSurgical);
+  const resultOrbit=useRef<HTMLDivElement>(null);
+  const inspectable=showEngineSection&&committedSurgical&&!!modeledAnatomy(committedSurgical.volume)?.surfaceReference;
+  const resultParts=inspectable?settings.resultInspection:undefined;
+  useEffect(()=>{
+    const renderer=engine.current;if(!renderer||!ready)return;
+    renderer.setResultInspection(resultParts?resultOrbit.current:null,resultParts,settings.resultCamera,
+      pose=>changeSettings({...latestSettings.current,resultCamera:pose}));
+  },[ready,graphicsGeneration,resultParts,settings.resultCamera,rendererIdentity]);
+  const resultCells=resultParts&&committedSurgical&&surgicalView?resultMembership(committedSurgical.volume,surgicalView):null;
+  const inspectResult=(mode:ViewerWorkspaceSettings['resultInspection'])=>changeSettings({...latestSettings.current,resultInspection:mode,
+    ...(resultParts&&mode&&resultParts!==mode?{resultCamera:undefined}:{})});
+  const [pickedLayer,setPickedLayer]=useState<{sceneId:string;name:string}|null>(null);
+  const inspectRegion=(name:string|null)=>setPickedLayer(name&&surgicalView?{sceneId:surgicalView.scene.sceneId,name}:null);
   const surgicalMarkers=useMemo(()=>surgicalView?surgicalEffectMarkers(surgicalView,displayedSurgical?.outcome):[],[surgicalView,displayedSurgical?.outcome]);
   const setActivePlane=(activePlane:SlicePlane)=>changeSettings({...latestSettings.current,activePlane});
   const setContrast=(contrast:number)=>changeSettings({...latestSettings.current,contrast});
@@ -342,13 +360,13 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   },[ready,graphicsGeneration,caseData,props.selectedStructure,props.structureFocusRequest,props.structureFocusPoint]);
   useEffect(()=>{
     const renderer=engine.current,requested=props.surgicalInteraction??null;if(!renderer||!caseData)return;
-    if(!requested?.view){setCommittedSurgical({identity:rendererIdentity,interaction:null});setModelDisplayPending(false);setModelDisplayError(null);}
+    if(!requested?.view){setCommittedSurgical({identity:rendererIdentity,volume:caseData,interaction:null});setModelDisplayPending(false);setModelDisplayError(null);}
     else setModelDisplayPending(true);
-    const admitted=renderer.installSurgicalState(caseData,requested?{...requested,onDisplayReady:view=>{
-      if(engine.current!==renderer)return;setCommittedSurgical({identity:rendererIdentity,interaction:requested});setModelDisplayPending(false);setModelDisplayError(null);requested.onDisplayReady?.(view);
+    const admitted=renderer.installSurgicalState(caseData,requested?{...requested,insertedInstrumentsOnly:!!props.engineInspection&&settings.operativeView==='surgeon'&&!requested.preview,onDisplayReady:view=>{
+      if(engine.current!==renderer)return;setCommittedSurgical({identity:rendererIdentity,volume:caseData,interaction:requested});setModelDisplayPending(false);setModelDisplayError(null);requested.onDisplayReady?.(view);
     },onDisplayError:(view,message)=>{if(engine.current!==renderer)return;setModelDisplayPending(false);setModelDisplayError(message);requested.onDisplayError?.(view,message);}}:null);
     if(!admitted)setModelDisplayPending(false);
-  },[ready,graphicsGeneration,caseData,props.surgicalInteraction]);
+  },[ready,graphicsGeneration,caseData,props.surgicalInteraction,props.engineInspection,settings.operativeView]);
   useEffect(()=>{engine.current?.setNavigationMode(navigationMode);},[ready,graphicsGeneration,caseData,navigationMode]);
   useEffect(()=>{engine.current?.setSurfaceSmoothing(smoothSurfaces);},[ready,graphicsGeneration,caseData,smoothSurfaces]);
   useEffect(()=>{engine.current?.setVolumeRendering(settings.volumeRendering,signalName);},[ready,graphicsGeneration,caseData,settings.volumeRendering,signalName]);
@@ -681,6 +699,11 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   const volumeDisplayed = scanVolume.enabled && !(fusedContext&&settings.volumeRendering?.isolateLabels) && !modeled && !passiveMode && !rehearsalMode;
   const inspected = !diagnosticRequested && !rehearsalRequested && !replay && !passiveRequested && !structuralProposal && !priorLayer &&
     displayedInspection?.caseHash === caseData.caseHash ? displayedInspection : null;
+  const operativeMeasurements=surgicalView&&<>
+            <span>Owned target removed {Number(surgicalView.metrics.targetRemovedMm3).toFixed(1)} mm³ · Whole target remaining {surgicalView.originalTargetResidualMm3==null?'unknown':`${surgicalView.originalTargetResidualMm3.toFixed(1)} mm³`}</span>
+            <span>CUSA pending work {Number(surgicalView.metrics.cusaPendingCapacityMm3??0).toFixed(2)} mm³ · suction {Number(surgicalView.metrics.fluidRemovedMm3??0).toFixed(2)} mm³</span>
+            <span>Field fluid {Number(surgicalView.metrics.fluidPresentMm3??0).toFixed(2)} mm³ · source grid {surgicalView.scene.resolutionMm.map(n=>n.toFixed(1)).join(' × ')} mm</span>
+  </>;
   const clearInspection = () => {
     inspectionSelection.current.clear(inspectionTool ?? null);
     engine.current?.setInspectionTool(null);
@@ -690,13 +713,15 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   };
   return (
     <div
-      className={`rl-viewer rl-layout-${layout}${expanded ? " has-expanded" : ""}`}
+      className={`rl-viewer rl-layout-${layout}${props.engineInspection?' engine-operated-view':''}${expanded ? " has-expanded" : ""}`}
       ref={container}
       onKeyDownCapture={event=>{if(event.key==='Escape'&&controlPanel){event.preventDefault();closeControls();}}}
       onPointerDownCapture={event=>{if((event.target as HTMLInputElement).type==='range')engine.current?.beginInteraction();if(controlPanel&&!(event.target as HTMLElement).closest('.rl-control-popover,.rl-primary-tools,.rl-viewer-details'))setControlPanel(null)}}
       onPointerUpCapture={event=>{if((event.target as HTMLInputElement).type==='range')engine.current?.endInteraction();}}
       onPointerCancelCapture={()=>engine.current?.endInteraction()}
       data-layout={layout}
+      data-engine-section-layout={showEngineSection||undefined}
+      data-result-inspection={resultParts}
       data-source-case-hash={caseData?.caseHash}
       data-source-display-identity={caseData?.displayIdentity}
       data-source-modality={props.sourceLabel}
@@ -707,14 +732,17 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
       data-renderer-ready={ready&&!error&&!modelDisplayPending&&remaining===0?'true':'false'}
       data-surfaces-pending={remaining}
       data-expanded={expanded ?? undefined}
-      aria-label="Linked patient imaging workspace"
+      aria-label={props.approachOverview?"Selected approach on intact anatomy":"Linked patient imaging workspace"}
     >
+      {props.approachOverview&&<div className="operative-reference-heading">Selected approach · intact anatomy</div>}
       <canvas ref={canvas} className="rl-viewer-canvas" aria-hidden="true" />
       <div
         className="rl-viewer-layoutbar"
         role="toolbar"
         aria-label="Imaging layout and 3D controls"
       >
+        {resultParts&&<div className="result-heading"><strong>3D result</strong>
+          <button onClick={()=>inspectResult(undefined)}>Return to operative field</button></div>}
         <div className="rl-primary-tools">
           <div className="rl-viewer-title">
             <strong>3D View</strong>
@@ -741,10 +769,10 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
         <div ref={controlPanelElement} id={controlsId} className="rl-control-popover" role="region" aria-label={`${controlPanel??'view'} controls`} hidden={!controlPanel}>
           <div className="popover-heading"><strong>{controlPanel==='info'?'View information':controlPanel?controlPanel[0].toUpperCase()+controlPanel.slice(1):'View controls'}</strong><button aria-label="Close view controls" onClick={closeControls}>×</button></div>
           <div hidden={controlPanel!=='layout'}>
-            <div className="viewer-field-row"><button aria-pressed={layout==='3d-focus'} onClick={()=>{setLayout('3d-focus');setExpanded(null);closeControls()}}>3D + slices</button><button aria-pressed={layout==='mri-review'} onClick={()=>{setLayout('mri-review');setExpanded(null);closeControls()}}>Four views</button></div>
+            <div className="viewer-field-row" hidden={showEngineSection}><button aria-pressed={layout==='3d-focus'} onClick={()=>{setLayout('3d-focus');setExpanded(null);closeControls()}}>3D + slices</button><button aria-pressed={layout==='mri-review'} onClick={()=>{setLayout('mri-review');setExpanded(null);closeControls()}}>Four views</button></div>
             <label>Camera<select aria-label="Camera preset" defaultValue="oblique" onChange={e=>engine.current?.cameraPreset(e.target.value as 'oblique'|'anterior'|'left'|'superior')}><option value="oblique">Oblique</option><option value="anterior">Anterior</option><option value="left">Left</option><option value="superior">Superior</option></select></label>
             <label>Left drag<select aria-label="3D drag mode" value={navigationMode} onChange={e=>setNavigationMode(e.target.value as 'orbit'|'pan')}><option value="orbit">Rotate</option><option value="pan">Pan</option></select></label>
-            <div className="rl-slice-framing" role="group" aria-label="Source slice framing">
+            <div className="rl-slice-framing" role="group" aria-label="Source slice framing" hidden={showEngineSection}>
               <label>Slice fit<select aria-label="Source slice fit" title="Display framing only. Full image restores the complete source image." value={framing.fit} onChange={event=>setFraming(event.target.value as 'image'|'anatomy')}>
                 <option value="anatomy">Fit scan content</option><option value="image">Fit full image</option>
               </select></label>
@@ -771,7 +799,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
             <label><input type="checkbox" checked={settings.volumeRendering?.shadows!==false} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,shadows:e.target.checked}})}/>Volume shadows</label>
             <label><input type="checkbox" checked={settings.volumeRendering?.isolateLabels===true} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,isolateLabels:e.target.checked}})}/>{fusedContext?'Show selected structures only':'Isolate selected tissue'}</label>
             {diagnosticLayer&&<label><input type="checkbox" checked={diagnosticVisible} onChange={e=>setDiagnosticVisible(e.target.checked)}/>Diagnostic overlay</label>}
-            <details aria-label="Anatomy display quality"><summary>Anatomy quality</summary><p>Source slices and masks remain the basis for review. Anatomical accuracy is unmeasured.</p>{caseData.compartments.map(layer=>{const d=surfaceReports[layer.name]?.diagnostics??layer.surfaceDiagnostics;return <div key={layer.name}><strong>{layer.name}</strong>{layer.qa?.issues.map(issue=><p key={issue}>{issue}</p>)}{d&&<p>{d.fallbackReason?d.fallbackReason:d.restoredComponents?`${d.restoredComponents} components use their original surface after geometry checks.`:'Surface geometry checks passed.'}{d.backedOffVertices?` Smoothing reduced locally at ${d.backedOffVertices.toLocaleString()} vertices.`:''}{d.volumeRestoredComponents?` Lesion volume checks restored ${d.volumeRestoredComponents} source components.`:''}</p>}{surfaceReports[layer.name]?.empty&&<p>Empty segmentation: anatomy is unavailable.</p>}</div>})}</details>
+            <details aria-label="Anatomy display quality"><summary>Anatomy quality</summary><p>Source slices and masks remain the basis for review. Anatomical accuracy is unmeasured.</p>{caseData.compartments.map(layer=>{const d=surfaceReports[layer.name]?.diagnostics??layer.surfaceDiagnostics;return <div key={layer.name}><strong>{layer.name}</strong>{layer.qa?.issues.map(issue=><p key={issue}>{issue}</p>)}{d?.policy==='engine-shared-implicit-v1'&&<p>Shared material interfaces · maximum display displacement {d.maxDisplacementMm.toFixed(3)} mm{d.displacementLimitMm!=null&&<> of {d.displacementLimitMm.toFixed(3)} mm allowed</>}.</p>}{d&&<p>{d.fallbackReason?d.fallbackReason:d.restoredComponents?`${d.restoredComponents} components use their original surface after geometry checks.`:'Surface geometry checks passed.'}{d.backedOffVertices?` Smoothing reduced locally at ${d.backedOffVertices.toLocaleString()} vertices.`:''}{d.volumeRestoredComponents?` Lesion volume checks restored ${d.volumeRestoredComponents} source components.`:''}</p>}{surfaceReports[layer.name]?.empty&&<p>Empty segmentation: anatomy is unavailable.</p>}</div>})}</details>
             <TransferEditor value={settings.volumeRendering??{}} onChange={volumeRendering=>changeSettings({...settings,volumeRendering})}/>
           </>}
           {controlPanel==='clip'&&<>
@@ -839,18 +867,31 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
           onPointerMove={event=>{if(event.buttons===1&&props.surgicalInteraction?.mode==='draw'){const p=engine.current?.pick(event.clientX,event.clientY);if(p)props.surgicalInteraction.onStroke(p,'move');}}}
           onPointerUp={event=>{if(props.surgicalInteraction?.mode==='draw'){const p=engine.current?.pick(event.clientX,event.clientY);if(p)props.surgicalInteraction.onStroke(p,'end');}}}
           onDoubleClick={(event) => {
-            const point = engine.current?.pick(event.clientX, event.clientY);
+            const point = engine.current?.pick(event.clientX, event.clientY, name=>{
+              if (surgicalView) inspectRegion(name);
+              else if (name) props.onPickStructure?.(name);
+            });
             if (point && geometry)
               onCursorChange(fusedContext?point:clampCursor(point, geometry.bounds));
           }}
           aria-label={props.surgicalInteraction?.mode==='draw'?'3-D source anatomy. Drag on anatomy to draw a proposed instrument stroke.':`3-D source anatomy. Drag to ${navigationMode==='pan'?'pan':'rotate'}, scroll to zoom, double-click to set linked cursor.`}
         >
-          {settings.operativeView==='surgeon'&&surgicalView&&<div className="operative-readout" data-operative-readout-state={surgicalView.stateId}>
-            <strong>Native operative state · {Number(surgicalView.metrics.elapsedSeconds).toFixed(1)} s</strong>
-            <span>Target removed {Number(surgicalView.metrics.targetRemovedMm3).toFixed(1)} mm³ · remaining {surgicalView.scene.environment?.target.initialVolumeMm3===undefined?'unknown':`${Math.max(0,surgicalView.scene.environment.target.initialVolumeMm3-Number(surgicalView.metrics.targetRemovedMm3)).toFixed(1)} mm³`}</span>
-            <span>CUSA pending work {Number(surgicalView.metrics.cusaPendingCapacityMm3??0).toFixed(2)} mm³ · suction {Number(surgicalView.metrics.fluidRemovedMm3??0).toFixed(2)} mm³</span>
-            <span>Field fluid {Number(surgicalView.metrics.fluidPresentMm3??0).toFixed(2)} mm³ · source grid {surgicalView.scene.resolutionMm.map(n=>n.toFixed(1)).join(' × ')} mm</span>
-          </div>}
+          {surgicalView&&<OperativeLegend scene={surgicalView.scene} settings={settings} cursor={currentCursor}
+            visible={visibleLayers} picked={pickedLayer?.sceneId===surgicalView.scene.sceneId?pickedLayer.name:null}
+            onPick={inspectRegion} onSmooth={setSmoothSurfaces}/>}
+          {settings.operativeView==='surgeon'&&settings.microscope&&geometrySource&&geometry&&surgicalView&&
+            (!displayedSurgical?.preview||displayedSurgical.recordedFrame)&&
+            <OperativeSourceLocator source={geometrySource} bounds={geometry.bounds} inverse={geometry.inverse}
+              microscope={settings.microscope} labelsOnly={!!props.segmentationOnly} stateId={surgicalView.stateId}/>}
+          {settings.operativeView==='surgeon'&&surgicalView&&(showEngineSection?
+            <details className="engine-frame-metrics" data-operative-readout-state={surgicalView.stateId}>
+              <summary>Engine · {Number(surgicalView.metrics.elapsedSeconds).toFixed(1)} s</summary>
+              {operativeMeasurements}
+            </details>:
+            <div className="operative-readout" data-operative-readout-state={surgicalView.stateId}>
+              <strong>Native operative state · {Number(surgicalView.metrics.elapsedSeconds).toFixed(1)} s</strong>
+              {operativeMeasurements}
+            </div>)}
           <div className="rl-viewer-annotations">
             {settings.operativeView==='surgeon'&&<span>{settings.microscope?.tissueStyle==='labels'?'Operative field · source labels':'Operative field · illustrative material'}</span>}
             {(rehearsalMode||passiveMode||modeled)&&<span className="rl-viewer-dot" />}
@@ -949,7 +990,26 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
             <small data-guide-caption>Anatomical reference</small>
           </div>
         </div>
+        {resultParts&&<>
+          <div className="engine-result-orbit" ref={resultOrbit} aria-label="Rotatable three-dimensional cavity and residual target"
+            onDoubleClick={()=>engine.current?.fitResultInspection()}>
+            <span className="result-empty">No cells in the selected result at this state.</span>
+          </div>
+          <div className="result-controls" role="group" aria-label="Result surfaces">
+            {(['both','cavity','residual'] as const).map(mode=><button key={mode} aria-pressed={resultParts===mode}
+              aria-label={mode==='both'?'Show cavity and residual':`Show ${mode} only`} onClick={()=>inspectResult(mode)}>
+              {mode==='both'?'Both':mode==='cavity'?'Cavity':'Residual'}</button>)}
+            <button aria-label="Fit result" onClick={()=>{changeSettings({...latestSettings.current,resultCamera:undefined});engine.current?.fitResultInspection();}}>Fit</button>
+          </div>
+          {resultCells&&<div className="result-key">
+            <span>Removed space · cavity cast{resultParts==='both'&&resultCells.cavity.length>0&&resultCells.residual.length>0?' · muted where behind target':''}</span><span>Owned residual target · {(resultCells.residual.length*resultCells.cellMm3).toFixed(1)} mm³</span>
+            {resultCells.overlapOriginal>0&&<small>{resultCells.overlapRemaining.toLocaleString()} of {resultCells.overlapOriginal.toLocaleString()} overlapping target cells remain assigned to other tissues.</small>}
+          </div>}
+        </>}
       </div>
+      {showEngineSection&&committedSurgical&&surgicalView&&<EngineOperatedSection key={surgicalView.scene.sceneId}
+        onInspect={inspectable&&!resultParts?()=>inspectResult('both'):undefined}
+        volume={committedSurgical.volume} view={surgicalView} labelsOnly={!!props.segmentationOnly} sourceLabel={signalName}/>}
       {PLANES.map((plane) => {
         const [left, right, top, bottom] = PLANE_LABELS[plane],
           axis = PLANE_AXES[plane][2];

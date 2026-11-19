@@ -216,10 +216,12 @@ def _viewer_cutaway(viewer, *, corners, frame_name):
 
 def _viewer_state(case,viewer,cases):
     """Bound display preferences without treating them as image registration."""
-    if not isinstance(viewer,dict) or set(viewer)-{'showOrientationGuide','smoothSurfaces','skullMode','volumeRendering','layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast','clipBox','obliqueClip','sliceOverlay','presentation','sliceFraming','contextStyle','operativeView','microscope','externalCamera'}:
+    if not isinstance(viewer,dict) or set(viewer)-{'showOrientationGuide','smoothSurfaces','skullMode','volumeRendering','layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast','clipBox','obliqueClip','sliceOverlay','presentation','sliceFraming','contextStyle','operativeView','microscope','externalCamera','resultInspection','resultCamera'}:
         raise ValueError('Unknown viewer settings')
     if 'showOrientationGuide' in viewer and type(viewer['showOrientationGuide']) is not bool:
         raise ValueError('Invalid body orientation guide flag')
+    if 'resultInspection' in viewer and viewer['resultInspection'] not in ('both','cavity','residual'):
+        raise ValueError('Invalid result inspection mode')
     if 'operativeView' in viewer and viewer['operativeView'] not in ('external','surgeon'):
         raise ValueError('Invalid operative view')
     microscope=viewer.get('microscope')
@@ -288,7 +290,7 @@ def _viewer_state(case,viewer,cases):
                     raise ValueError('Layer opacity must be between zero and one')
             elif not isinstance(value,str) or not re.fullmatch('#[a-fA-F0-9]{6}',value):
                 raise ValueError('Layer color must be a six-digit hex color')
-    for camera_name in ('camera','externalCamera'):
+    for camera_name in ('camera','externalCamera','resultCamera'):
         camera=viewer.get(camera_name)
         if camera is not None:
             if not isinstance(camera,dict) or set(camera)!={'position','target','up'}:

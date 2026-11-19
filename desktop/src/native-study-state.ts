@@ -1,4 +1,4 @@
-import type {Binding, NativeScanState, NativeViewState, VesselScope} from './native-anatomy-data';
+import type {Binding, CranialView, Layer, NativeScanState, NativeViewState, VesselScope} from './native-anatomy-data';
 import type {ViewerWorkspaceSettings} from './viewer/workspaceSettings';
 
 export type AnatomyPresentation = 'scan'|'segmentation'|'vascular';
@@ -6,27 +6,91 @@ export type AnatomyPresentation = 'scan'|'segmentation'|'vascular';
 export function defaultAnatomyPresentation(modality:string):AnatomyPresentation {
   return /segmentation only|analytic signal|generated image signal|diagnostic/i.test(modality)?'segmentation':'scan';
 }
-export function studyLayerDisplayKind(layer:Binding['document']['layers'][number]):string {
+export function studyLayerDisplayKind(layer:Layer):string {
   const provenance=layer.provenance as {model?:string;label_ontology?:{value?:number}}|null;
-  const ontology=layer.label_ontology as {value?:number}|undefined;
-  return layer.kind==='context'&&provenance?.model==='siam-v2'&&(ontology??provenance.label_ontology)?.value===16?'outer-head-tissue':layer.kind;
+  const ontology=(layer.label_ontology??provenance?.label_ontology) as {value?:number}|undefined;
+  const model=typeof provenance?.model==='string'?provenance.model.toLowerCase():undefined;
+  if(model==='siam-v2'&&layer.kind==='context'&&ontology?.value===16)return 'outer-head-tissue';
+  if(layer.kind==='brain-region'){
+    if(model==='siam-v2'&&ontology?.value===1)return 'gray-matter';
+    if(['supersynth','synthseg','fastsurfer'].includes(model??'')&&[3,42].includes(ontology?.value??layer.label_value??-1))return 'gray-matter';
+  }
+  return layer.kind;
 }
+
+export function corticalLayers(layers:Layer[]):Layer[] {
+  return layers.filter(layer=>['gray-matter','cerebral-cortex'].includes(studyLayerDisplayKind(layer)));
+}
+
+/** Decide which anatomy can drive the automatic appearance of this scan. */
+export function presentationLayers(study:Binding['document'],seriesId:string,displaySources?:ReadonlyArray<{seriesId:string;alignment:string}>):Layer[] {
+  if(displaySources){
+    // A source-bound estimate may already be visible in the shared scene.
+    // Style its surfaces with the rest of the patient, including an imported CT skull.
+    const admitted=new Set(displaySources.filter(s=>s.alignment!=='unavailable').map(s=>s.seriesId));
+    if(admitted.has(seriesId))return study.layers.filter(layer=>admitted.has(layer.source_series));
+  }
+  const shared=(id:string)=>id===study.reference_series||['reference','reviewed','source-provided'].includes(study.transforms?.[id]?.status);
+  return study.layers.filter(layer=>layer.source_series===seriesId||(shared(seriesId)&&shared(layer.source_series)));
+}
+
+export function hasAngiographicArteries(layers:Layer[],modality:string,seriesId?:string):boolean {
+  return !!seriesId&&/\b(?:CTA|MRA|TOF)\b|\b(?:CT|MR|MRI)[- _]+angiogra/i.test(modality)&&
+    layers.some(layer=>layer.kind==='artery'&&layer.source_series===seriesId);
+}
+
+export function initialNativeLayers(study:Binding['document'],seriesId:string,independent:boolean){
+  const owned=study.layers.filter(layer=>layer.source_series===seriesId);
+  const declared=study.display?.initial_layers;
+  // The reference frame's list can omit every native layer of a separately acquired scan.
+  const initial=independent&&declared?.length&&!owned.some(layer=>declared.includes(layer.id))?undefined:declared;
+  const available=(independent?owned:presentationLayers(study,seriesId)).filter(layer=>!initial||initial.includes(layer.id));
+  const cortex=corticalLayers(available);
+  const visible=Object.fromEntries(study.layers.map(layer=>{
+    const selected=initial?initial.includes(layer.id):cortex.includes(layer)||!['brain-region','review-region','head-envelope'].includes(layer.kind);
+    return [layer.id,selected&&(!independent||layer.source_series===seriesId)];
+  }));
+  return {available,cortex,visible};
+}
+
 /** Presentation derivatives only; all selected structures and source masks stay intact. */
-export function anatomyPresentation(settings:ViewerWorkspaceSettings,layers:Binding['document']['layers'],mode:AnatomyPresentation,modality:string):ViewerWorkspaceSettings {
+export function anatomyPresentation(settings:ViewerWorkspaceSettings,layers:Binding['document']['layers'],mode:AnatomyPresentation,modality:string,seriesId?:string):ViewerWorkspaceSettings {
   if(mode==='scan'&&defaultAnatomyPresentation(modality)!=='scan')mode='segmentation';
   const scan=mode==='scan',vascular=mode==='vascular',ct=/^\s*CT(?:A)?(?:\b|[-_])/i.test(modality);
+  const cranial=mode==='segmentation'&&corticalLayers(layers).length>0;
+  const arteries=mode==='segmentation'&&hasAngiographicArteries(layers,modality,seriesId);
   const layerOpacity={...settings.layerOpacity},layerColor={...settings.layerColor};
   for(const layer of layers){
-    if(['vessels','vessel','artery','vein','sinus'].includes(layer.kind)){
-      layerColor[layer.id]='#ad4730';layerOpacity[layer.id]=scan?.16:vascular?1:.28;
-      if(['vein','sinus'].includes(layer.kind)){layerColor[layer.id]='#6188a8';layerOpacity[layer.id]=scan?.08:vascular?.65:.18;}
+    const displayKind=studyLayerDisplayKind(layer);
+    if(cranial&&['gray-matter','cerebral-cortex','cerebellar-cortex'].includes(displayKind)){
+      layerColor[layer.id]='#c69891';layerOpacity[layer.id]=arteries?.18:.66;
+    }else if(cranial&&['head-envelope','outer-head-tissue'].includes(displayKind)){
+      layerColor[layer.id]='#d3dce5';layerOpacity[layer.id]=.78;
+    }else if(cranial&&['bone','skull','brain','dura','csf'].includes(displayKind)){
+      layerOpacity[layer.id]=displayKind==='csf'?.012:.018;
+    }else if(arteries&&['bone','skull','brain'].includes(displayKind)){
+      layerColor[layer.id]=displayKind==='brain'?'#b8a8b6':'#ece2ca';
+      layerOpacity[layer.id]=displayKind==='brain'?.16:.08;
+    }else if(['vessels','vessel','artery','vein','sinus'].includes(layer.kind)){
+      const source=layer.provenance as {kind?:string;publisher_class_id?:number}|null;
+      const namedArtery=layer.kind==='artery'&&source?.kind==='supplied_annotation'&&
+        Number.isInteger(layer.label_value)&&(layer.label_value??0)>0&&source.publisher_class_id===layer.label_value;
+      layerColor[layer.id]=namedArtery&&/^#[0-9a-f]{6}$/i.test(layer.color)?layer.color:'#b75848';
+      layerOpacity[layer.id]=scan?.16:cranial&&layer.kind==='vessels'?.09:1;
+      if(['vein','sinus'].includes(layer.kind)){layerColor[layer.id]='#7187bf';layerOpacity[layer.id]=scan?.08:1;}
     }else if(layer.kind==='tumor'){
       layerColor[layer.id]='#65bfd3';layerOpacity[layer.id]=scan?.32:1;
+    }else if(['enhancing-tumor','tumor-core','tumor-whole','edema','nonenhancing-tumor','lesion-context'].includes(layer.kind)){
+      const annotation=layer.provenance as {kind?:string;method?:string;annotation_value?:number}|null;
+      const value=annotation?.kind==='observed_source_annotation'&&annotation.method==='Pinned source BraTS compartment labels'?annotation.annotation_value:null;
+      const signal=layer.kind==='edema'||value===2,core=layer.kind==='nonenhancing-tumor'||value===1||layer.kind==='tumor-core';
+      layerColor[layer.id]=signal?'#cb9e60':core?'#9571b3':layer.kind==='enhancing-tumor'?'#ce77a5':'#a686ad';
+      layerOpacity[layer.id]=scan?.06:vascular?.035:.13;
     }else if(['bone','skull'].includes(layer.kind)){
-      layerColor[layer.id]='#ece2ca';layerOpacity[layer.id]=scan?.015:vascular?.06:.52;
+      layerColor[layer.id]='#ece2ca';layerOpacity[layer.id]=scan?.015:vascular?.06:1;
     }else if(['brain','tissue','soft_tissue'].includes(layer.kind)){
       const brainRim=!vascular&&layer.kind==='brain';
-      layerColor[layer.id]=brainRim?'#b8a8b6':'#c8d0d5';layerOpacity[layer.id]=scan?.012:brainRim?.12:vascular?.035:.055;
+      layerColor[layer.id]=brainRim?'#b8a8b6':'#c8d0d5';layerOpacity[layer.id]=scan?.012:brainRim?1:vascular?.035:.055;
     }else if(layer.kind==='head-envelope')layerOpacity[layer.id]=scan?.008:.035;
     else if(studyLayerDisplayKind(layer)==='outer-head-tissue')layerOpacity[layer.id]=scan?.035:vascular?.065:.14;
     else if(layer.kind==='dura')layerOpacity[layer.id]=scan?.04:vascular?.06:.16;
@@ -35,13 +99,39 @@ export function anatomyPresentation(settings:ViewerWorkspaceSettings,layers:Bind
     else if(['brain-region','cerebellar-white-matter','cerebellar-cortex','brainstem'].includes(layer.kind))layerOpacity[layer.id]=scan?.035:vascular?.055:.42;
   }
   return {...settings,presentation:mode,layout:'3d-focus',sliceOverlay:'contour',sliceFraming:{fit:'anatomy',zoom:1},contextStyle:scan?'uniform':'shell',smoothSurfaces:scan?(settings.smoothSurfaces??true):true,showPlane:false,
-    skullMode:'transparent',layerColor,layerOpacity,
+    skullMode:mode==='segmentation'&&!cranial&&!arteries?'exterior':'transparent',layerColor,layerOpacity,
     // Explicit presentation action only. Saved contrast, opacity and transfer
     // choices are otherwise restored verbatim; source signal is never altered.
     volumeRendering:{enabled:true,preset:'auto',density:scan?(ct?.26:.28):ct?(vascular?.14:.075):(vascular?.035:.025),shadows:true},
     clipping:settings.clipping?{...settings.clipping,enabled:false}:undefined,
     clipBox:settings.clipBox?{...settings.clipBox,enabled:false}:undefined,
     obliqueClip:settings.obliqueClip?{...settings.obliqueClip,enabled:false}:undefined};
+}
+
+/** A sparse set of source-owned layers. Only the rendered composition changes. */
+export function cranialComposition(view:NativeScanState,layers:Layer[],allIds:string[],mode:CranialView,
+  targetId:string|null|undefined,selectedId:string|null):NativeScanState {
+  const inspection=mode==='inspection';
+  const head=layers.find(layer=>studyLayerDisplayKind(layer)==='outer-head-tissue')??layers.find(layer=>layer.kind==='head-envelope');
+  const isCortex=(layer:Layer)=>['gray-matter','cerebral-cortex','cerebellar-cortex'].includes(studyLayerDisplayKind(layer));
+  const internal=inspection?layers.find(layer=>layer.id===selectedId&&layer!==head&&layer.id!==targetId&&!isCortex(layer))
+    ??layers.find(layer=>layer.kind==='ventricles'):undefined;
+  const visible:Record<string,boolean>=Object.fromEntries(allIds.map(id=>[id,false]));
+  const layerOpacity={...view.settings.layerOpacity},layerColor={...view.settings.layerColor};
+  for(const layer of layers){
+    if(layer.id===targetId){
+      layerOpacity[layer.id]=1;layerColor[layer.id]='#65bfd3';
+    }else if(layer===head){
+      layerOpacity[layer.id]=inspection?.65:.23;layerColor[layer.id]='#d3dce5';
+    }else if(layer===internal){
+      layerOpacity[layer.id]=.88;layerColor[layer.id]=layer.color;
+    }else if(isCortex(layer)){
+      layerOpacity[layer.id]=inspection?.19:.71;layerColor[layer.id]='#c69891';
+    }else continue;
+    visible[layer.id]=true;
+  }
+  return {...view,cranialView:mode,visible,settings:{...view.settings,presentation:'segmentation',contextStyle:'shell',
+    sliceOverlay:'contour',layerOpacity,layerColor,volumeRendering:{...view.settings.volumeRendering,enabled:false}}};
 }
 
 export function studyTimepoint(b:Binding):string {
@@ -64,7 +154,7 @@ export function sourceEvidenceLabel(source:{modality:string}|undefined,series:Re
 }
 /** Scan contrast/camera stays per scan; selected anatomy belongs to the study. */
 export function nextScanState(current:NativeScanState, saved:NativeScanState,linked=true):NativeScanState {
-  return {...saved,cursor:linked&&current.cursor?[...current.cursor]:saved.cursor?[...saved.cursor]:null,visible:{...current.visible},settings:{...saved.settings,
+  return {...saved,...(linked?{cranialView:current.cranialView}:{}),cursor:linked&&current.cursor?[...current.cursor]:saved.cursor?[...saved.cursor]:null,visible:{...current.visible},settings:{...saved.settings,
     ...(linked?{presentation:current.settings.presentation}:{}),
     ...(linked&&current.settings.presentation&&current.settings.presentation!=='scan'?{camera:current.settings.camera,volumeRendering:current.settings.volumeRendering}:{}),
     sliceOverlay:current.settings.sliceOverlay,contextStyle:current.settings.contextStyle,

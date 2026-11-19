@@ -11,13 +11,35 @@ export function operativeInstruments(tipRadius:number, opening:number, fieldDept
   function axial(group:THREE.Group, points:number[][], material:THREE.Material) {
     const profile=points.map(([r,z])=>new THREE.Vector2(r,z));
     const mesh=new THREE.Mesh(new THREE.LatheGeometry(profile,28),material);
-    mesh.rotation.x=Math.PI/2; group.add(mesh);
+    mesh.rotation.x=Math.PI/2;
+    group.add(mesh);
+    return mesh;
   }
   const cusa=new THREE.Group(), r=tipRadius;
   cusa.name='hollow-aspirator';
-  // The annular cross section includes the inner lumen wall and bevel.
-  axial(cusa,[[r*.63,r*3],[r*.63,r*.14],[r*.7,0],[r*.91,0],[r,r*.15],[r,r*3],[r*.63,r*3]],metal);
-  axial(cusa,[[r,r*2.9],[r*1.13,r*4],[r*1.13,shaftLength],[r,shaftLength]],metal);
+  // The oblique mouth exposes the existing lumen in a lateral field view.
+  // Its distal edge still touches local Z=0, inside the modeled tip radius.
+  const tipMetal=metal.clone();tipMetal.vertexColors=true;
+  const tip=axial(cusa,[[r*.62,r*3],[r*.62,r*.15],[r*.70,0],[r,0],[r,r*.15],[r,r*3]],tipMetal);
+  const geometry=tip.geometry,position=geometry.getAttribute('position');
+  // Lathe axis is Y before the mesh is rotated into the route's +Z frame.
+  const colors=new Float32Array(position.count*3);
+  for(let i=0;i<position.count;i++){
+    const height=position.getY(i);
+    if(height<r)position.setY(i,height+1.18*(r+position.getZ(i)));
+    // The two inner profile points are the recessed lumen wall. Keep its shaded
+    // transition to the polished rim in this mesh's single draw call.
+    const radial=Math.hypot(position.getX(i),position.getZ(i));
+    colors.fill(radial<r*.65?.20:1,i*3,i*3+3);
+  }
+  geometry.setAttribute('color',new THREE.BufferAttribute(colors,3));
+  geometry.computeVertexNormals();
+  tip.name='aspirator-beveled-mouth';
+  axial(cusa,[[r,r*3],[r*1.16,r*3.45],[r*1.16,shaftLength],[r,shaftLength]],metal);
+  if(shaftLength*.69>r*4.15){
+    const sheath=new THREE.MeshStandardMaterial({color:'#6c8c94',metalness:.08,roughness:.56});
+    axial(cusa,[[r*1.15,r*3.7],[r*1.3,r*4.15],[r*1.3,shaftLength*.69],[r*1.45,shaftLength*.71]],sheath);
+  }
   axial(cusa,[[r*1.12,shaftLength*.68],[r*1.53,shaftLength*.7],[r*1.53,shaftLength*.85],[r*1.12,shaftLength*.88]],grip);
   axial(cusa,[[r*1.12,shaftLength*.91],[r*2.1,shaftLength],[r*2.7,shaftLength+r*2],[r*2.7,shaftLength+r*6],[0,shaftLength+r*6]],grip);
   axial(cusa,[[r*2.55,shaftLength+r*1.8],[r*2.76,shaftLength+r*2],[r*2.76,shaftLength+r*2.45],[r*2.65,shaftLength+r*2.6]],accent);

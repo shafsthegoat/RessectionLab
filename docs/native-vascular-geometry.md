@@ -107,6 +107,28 @@ vascular coverage remain open. The [RC model](vascular-graph.md) is a separate
 declared numerical mechanism; these thousands of adjacency nodes are not silently
 converted into its lumped segments or blood-flow parameters.
 
+### Same-source class review in the newer TopBrain release
+
+A separate review of the TopCoW-001 CTA development migration used the
+August 17, 2026 TopBrain v3 release. Both supplied label versions used the
+same native image lattice, 0.508 × 0.508 × 0.625 mm. The reference hashes,
+native overlays and per-class measurements are in the private HDD review
+under `qc/continuous-rehearsal-20261118/source-review/`. The acquisition is
+privacy-redacted. The two releases share subject and annotation lineage.
+[Publisher dataset](https://zenodo.org/records/21972006)
+
+| Structure | Source result |
+|---|---|
+| Basilar artery | The 2,975 positive voxels match across versions. The v1 label is one face-connected component. Median twice-centerline-to-background distance is 3.71 mm. |
+| Right posterior communicating artery | Both versions label the same 218 voxels. The v1 label is one face-connected component. The median width proxy is 1.25 mm, close to two source slices. |
+| Superior sagittal sinus | The v1 label has one 26-neighbor component and ten face-connected components. Twenty-seven skeleton edges lack a local face-connected path. |
+| Vein of Galen | The v1 label has 524 positive voxels and one face-connected component. One diagonal skeleton edge lacks a local face-connected path. |
+| Anterior communicating artery | Both supplied masks are empty. Presence and caliber remain unknown. |
+
+The two venous structures have no matching v2 class in this comparison. The width proxy
+measures the sampled label. Lumen diameter and patency would require independent
+source review. Vascular evidence belongs to this CTA patient.
+
 ## Reproduce
 
 The final [protocol](../manifests/experiments/native-vascular-graph-v4.json) binds

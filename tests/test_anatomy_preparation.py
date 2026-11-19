@@ -99,6 +99,29 @@ def test_interrupted_stage_remains_resumable_without_admitting_partial_layer(tmp
     assert [s["status"] for s in resumed["plan"]["stages"]] == ["cached", "cached"]
 
 
+def test_default_preparation_retries_only_historical_ct_pipe_failure(tmp_path, monkeypatch):
+    study = _study(tmp_path)
+    jobs = [{**_job("pipe"), "model": "totalsegmentator-skull"},
+            {**_job("timeout"), "model": "totalsegmentator-skull"}]
+    monkeypatch.setattr(preparation, "_jobs", lambda *_: jobs)
+    calls = []
+
+    def run(candidate, stage, _cancelled, _progress):
+        calls.append(stage["id"])
+        if calls == ["pipe"]:
+            raise RuntimeError("worker_output_not_closed; inspect prior log")
+        if stage["id"] == "timeout":
+            raise RuntimeError("time_budget_exceeded; inspect prior log")
+        return _output(_layer(candidate, "brain"))
+
+    monkeypatch.setattr(preparation, "_run_stage", run)
+    first = preparation.prepare_anatomy(study)
+    assert [row["status"] for row in first["outcomes"]] == ["failed", "failed"]
+    resumed = preparation.prepare_anatomy(PatientImagingCollection(study.root))
+    assert [row["status"] for row in resumed["outcomes"]] == ["complete", "failed"]
+    assert calls == ["pipe", "timeout", "pipe"]
+
+
 def test_optional_adapter_failure_preserves_independent_stages_and_blocks_dependents(tmp_path, monkeypatch):
     study = _study(tmp_path)
     monkeypatch.setattr(preparation, "_jobs", lambda *_: [

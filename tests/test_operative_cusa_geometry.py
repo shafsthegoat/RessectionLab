@@ -221,6 +221,7 @@ CATALOGUE_MECHANISMS = [
     ('micro_scissors', 'vessel'), ('tumor_forceps', 'tumor'),
     ('irrigation', 'soft_tissue'), ('cortical_probe', 'soft_tissue'),
     ('subcortical_probe', 'soft_tissue'),
+    ('bone_flap_holder', 'bone'), ('membrane_forceps', 'membrane'),
 ]
 
 
@@ -310,6 +311,14 @@ def test_revision2_public_catalogue_mechanisms_retain_their_effect_contract(tool
         accepted(engine, 'apply', pose=pose((8., 8., 9.8)), parameters={'power': 1.})
         assert sum(engine.state['thermal'].values()) > 0.
         assert not engine.state['removed']
+    elif tool in ('bone_flap_holder', 'membrane_forceps'):
+        # The isolated coupon has no reviewed opening or movable patch.
+        before = engine.snapshot()
+        result = engine.step(action('grasp', pose=pose((8., 8., 9.8))))
+        reason = {'bone_flap_holder': 'BONE_FLAP_CONTRACT_REQUIRED',
+                  'membrane_forceps': 'MEMBRANE_PATCH_STAGE_CONTRACT_REQUIRED'}[tool]
+        assert (result['status'], result['reasonCode']) == ('rejected', reason)
+        assert engine.snapshot() == before
     elif tool == 'tumor_forceps':
         accepted(engine, 'grasp', pose=pose((8., 8., 9.8)))
         assert engine.state['holds']['left']['cells'] == [identifier]

@@ -15,7 +15,7 @@ from .patient_anatomy import (
 )
 from .anatomy_editor import AnatomyDraft
 from .anatomy_workspace import read_view, save_view, component_review
-from .anatomy_geometry import mesh, normals, display_surface_kind
+from .anatomy_geometry import mesh, normals, appearance_kind
 from .anatomy_qa import layer_quality
 from .anatomy_display import display_affine, brain_vessel_display, source_display_grid, source_lattice_annotation_preview
 
@@ -32,9 +32,8 @@ def _retain(session, result):
 
 
 def dispatch(session, operation, args, request, progress):
-    # Only one immutable displayed source is cached. Any operation outside a
-    # view conservatively invalidates descriptors (including edits/registration).
-    if operation != "anatomyView":
+    # A source read does not change the cached view or its transfer descriptors.
+    if operation not in {"anatomyView", "anatomySample"}:
         session.anatomy_view_cache = None
     if not hasattr(session, "anatomy_collections"):
         session.anatomy_packages = {}
@@ -90,6 +89,8 @@ def dispatch(session, operation, args, request, progress):
         args = {**args, "snapshotId": c.identity()}
     if args.get("snapshotId") != c.identity() or current_id != c.identity():
         raise ValueError("Anatomy changed; reload the patient")
+    if key in session.anatomy_removal and session.anatomy_removal[key][0] != current_id:
+        session.anatomy_removal.pop(key)
     request.check()
     if operation == "anatomyInspectIntake":
         from .anatomy_intake import inspect_intake
@@ -248,7 +249,7 @@ def dispatch(session, operation, args, request, progress):
                 (i + 0.1) / max(1, len(requested)), f"Preparing native {row['label']}"
             )
             if key in session.anatomy_removal and row["role"] == "target":
-                removal_preview = session.anatomy_removal[key]
+                _, removal_preview = session.anatomy_removal[key]
                 ref = c.series(c.document["reference_series"])
                 cut = (
                     resample(
@@ -274,6 +275,19 @@ def dispatch(session, operation, args, request, progress):
             source_support = None
             if not (draft and draft.layer_id == name) and args.get("highlightLayer") != name:
                 row, source_support = supported_tissue_layer(c, row, check=request.check, raw_qc=bool(args.get("original")))
+            bone_review = None
+            if (registered and not row_previews and not source_grid_preview and not draft
+                    and not args.get("original") and not args.get("highlightLayer") and args.get("patientModel")):
+                from .anatomy_adjudication import composite_bone_layer
+
+                row, bone_review = composite_bone_layer(c, row, request.check)
+                if bone_review:
+                    count = bone_review["alternativePositiveVoxels"]
+                    disagreement = bone_review["alternativeOnlyVoxels"]
+                    ids = ", ".join(bone_review["preferredLayerIds"])
+                    quality = {**quality, "issues": [*quality["issues"],
+                               f"CT bone display from {ids} takes precedence at {count} MRI bone cells; "
+                               f"{disagreement} are unlabelled on CT. Raw source QC retains the MRI alternative."]}
             raw_siam = bool(source_support and source_support["status"] == "unfiltered")
             display_filter = None
             # Correction review always shows the complete editable source.
@@ -298,7 +312,7 @@ def dispatch(session, operation, args, request, progress):
             record = {
                 "name": name,
                 "kind": row["kind"],
-                "displayKind": display_surface_kind(row),
+                "displayKind": appearance_kind(row),
                 "sourceSeries": row["source_series"],
                 "alignment": ("source-grid preview" if source_grid_preview else "independent" if not registered
                               else "estimated" if row_previews else c.document["transforms"][row["source_series"]]["status"]),
@@ -313,6 +327,8 @@ def dispatch(session, operation, args, request, progress):
                     "cacheHit": bool(geometry["cache_hit"]),
                     "preparationMs": float(geometry["preparation_ms"]),
                     "triangles": int(len(geometry["indices"])),
+                    **({"publisherSourceSha256": geometry["publisher_source_sha256"]}
+                       if "publisher_source_sha256" in geometry else {}),
                     **({
                         "maxComponentVolumeChangeFraction": float(geometry["max_component_volume_change_fraction"]),
                         "volumeRestoredComponents": int(geometry["volume_restored_components"]),
@@ -323,6 +339,7 @@ def dispatch(session, operation, args, request, progress):
                 "alignmentPreviews": row_previews,
                 "displayFilter": display_filter,
                 **({"sourceSupport": source_support} if source_support else {}),
+                **({"boneAdjudication": bone_review} if bone_review else {}),
                 **({"labelSet": set_id, "labelValue": row["label_value"]} if shared else {"mask": transfer(mask, "uint8")}),
                 **({"volumeMm3": source_volume} if source_volume is not None else {}),
             }
@@ -414,8 +431,31 @@ def dispatch(session, operation, args, request, progress):
                 if preview:
                     support = resample(support, affine(reference["affine"]), shape, native, order=0)
                 cache["headSupport"] = transfer(support, "uint8")
+        # Resolve source-textured cortical and operative surroundings. Mesh
+        # vertices are in the selected display lattice, while these affines map
+        # the acquisition's actual display samples into the same physical frame.
+        appearance_sources = []
+        source_ids = dict.fromkeys(layer["sourceSeries"] for layer in layers
+                if (layer.get("displayKind") in {"gray-matter", "cerebral-cortex", "cerebellar-cortex"}
+                    and layer["alignment"] != "source-grid preview")
+                or (layer.get("displayKind") in {"bone", "skull", "brain"}
+                    and layer["alignment"] in {"reference", "reviewed", "source-provided"}))
+        for sid in source_ids:
+            scan = c.series(sid)
+            if sid == reference["id"]:
+                scalar, texture_frame, frame = cache["mri"], displayed, source_displayed
+            else:
+                # The layer admission above already requires its frame and this
+                # timepoint. Acquire the scalar's own lattice, not the label's.
+                frame, _ = display_affine(c, scan, preview=preview_alignment)
+                data, _, texture_frame, _ = source_display_grid(scan, frame)
+                scalar = transfer(c.array(data), "float32")
+            appearance_sources.append({"seriesId": sid, "modality": scan["modality"],
+                    "sourceSha256": scan["original"]["sha256"], "affine": texture_frame.tolist(),
+                    "signal": scalar, "nativeShape": scan["data"]["shape"], "nativeAffine": frame.tolist()})
         result = {
             "tractography": cache["tracts"],
+            **({"appearanceSources": appearance_sources} if appearance_sources else {}),
             **({"patientContext": patient_context} if patient_context else {}),
             "caseId": c.document["patient_id"],
             "caseHash": "sha256:" + hashlib.sha256((c.identity()+":"+reference["id"]).encode()).hexdigest(),
@@ -516,10 +556,12 @@ def dispatch(session, operation, args, request, progress):
             from .anatomy_operative_field import operative_field
 
             result = operative_field(c, args, check=request.check)
-            result["labels"] = session.transfers.array(result["labels"], "uint8")
+            result["labels"] = session.transfers.array(result["labels"], result["labels"].dtype.name)
             if "intensity" in result:
                 image = result["intensity"]
                 image["signal"] = session.transfers.array(image["signal"], "uint8")
+                overview = image["overview"]
+                overview["signal"] = session.transfers.array(overview["signal"], "uint8")
             _retain(session, result)
             return result
         if args.get("action"):
@@ -535,6 +577,9 @@ def dispatch(session, operation, args, request, progress):
                     target_cache = (c.root, c.identity(), native_target_options(c, check=request.check),
                                     surgical_environment_options(c, check=request.check))
                     session.anatomy_plan_target_cache = target_cache
+                from .anatomy_adjudication import acquisition_contributions
+                if "acquisitions" not in target_cache[3]:
+                    target_cache[3]["acquisitions"] = acquisition_contributions(c, target_cache[2], target_cache[3])
                 result["targetOptions"] = target_cache[2]
                 result["rehearsalOptions"] = target_cache[3]
                 return result
@@ -563,9 +608,9 @@ def dispatch(session, operation, args, request, progress):
         if args.get("reset"):
             session.anatomy_removal.pop(key, None)
         else:
-            session.anatomy_removal[key] = removal_preview(
+            session.anatomy_removal[key] = (current_id, removal_preview(
                 PatientAnatomySnapshot.capture(c), args["point"], args["radiusMm"]
-            )
+            ))
         return {
             "snapshotId": c.identity(),
             "preview": key in session.anatomy_removal,
@@ -582,6 +627,7 @@ def dispatch(session, operation, args, request, progress):
             spacing_mm=args.get("spacingMm", 0.5),
             moving_id=args.get("movingId"),
             checkerboard=args.get("checkerboard", True),
+            registration_review=bool(args.get("registrationReview")),
             original=bool(args.get("original")),
             check=request.check,
             layers=args.get("layers", []),
@@ -590,7 +636,11 @@ def dispatch(session, operation, args, request, progress):
         _retain(session, result)
         return result
     if operation == "anatomySample":
-        return PatientAnatomySnapshot.capture(c).sample(args["point"])
+        cached = getattr(session, "anatomy_sample_snapshot", None)
+        if cached is None or cached.collection.root != c.root or cached.snapshot_id != current_id:
+            cached = session.anatomy_sample_snapshot = PatientAnatomySnapshot.capture(c)
+        return cached.sample(args["point"], layer_id=args.get("layerId"), independent_series=args.get("independentSeries"),
+                             inspect_sources=True)
     if operation == "anatomyReconstruct":
         if key in session.anatomy_drafts:
             raise ValueError("Commit or reject the correction before reconstruction")
@@ -633,7 +683,9 @@ def dispatch(session, operation, args, request, progress):
             )
         else:
             from .anatomy_alignment import ensure_alignment
-            changed = ensure_alignment(c, force=args.get("action") == "estimate", cancelled=request.cancelled.is_set, progress=progress)
+            estimate = args.get("action") == "estimate"
+            changed = ensure_alignment(c, force=estimate, series_id=args.get("seriesId") if estimate else None,
+                                       cancelled=request.cancelled.is_set, progress=progress)
             result = {"changed": changed}
             if not changed:
                 return {"document": c.document, "result": result}

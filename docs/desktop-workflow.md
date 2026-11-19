@@ -15,12 +15,82 @@ Use the right-hand slice controls to move the linked cursor. In the 3D pane, **C
 
 ### From patient scans to operative steps
 
+Use **Cases → Scans → Anatomy → Plan → Rehearse** to carry the same patient
+study through the workflow. Keep the source slices visible while inspecting
+the reconstruction and the approach. From **Rehearse**, save the recording
+at the state you want to revisit, and save the native study to retain the
+selected approach.
+
 1. In **Cases**, choose **New patient study**. In **Scans**, add the patient's DICOM folders or NIfTI volumes together. Attach any label maps to their acquisition and assign the meaning of each label. Confirm the study association.
 2. Open **Prepare anatomy**. Confirm intact full-head MRI coverage where applicable and choose a tumor indication if you want a lesion estimate. Review the proposed stages, then run preparation. Calibrated CT supports skull estimates. Volumetric CTA, TOF and MRA support vascular candidates. Eligible structural MRI can contribute dural, skull, vascular and other tissue estimates through the installed SIAM adapter. Review each stage's outcome. [Setup, coverage and models](patient-anatomy-workbench.md#direct-mri-tissue-estimates-with-siam-v2) · [SIAM study](https://arxiv.org/abs/2605.02737) · [vesselFM study](https://openaccess.thecvf.com/content/CVPR2025/html/Wittmann_vesselFM_A_Foundation_Model_for_Universal_3D_Blood_Vessel_Segmentation_CVPR_2025_paper.html)
 3. In **Anatomy**, use **Structures** to inspect the combined patient reconstruction. Change the source scan to check a contour against its original slices. Inspect a layer's source and coverage, including where an acquisition ends. An estimated alignment is labeled in the viewer. Resolve a questionable registration under **Scans → Alignment & registration** before using it in a quantitative comparison. Published cranial planning cases used different acquisitions for different structures and frequently required manual segmentation. [107-case imaging study](https://pmc.ncbi.nlm.nih.gov/articles/PMC11008664/)
 4. In **Plan**, select the lesion. Use **Suggest distinct entries** to compare paths from separate skull or brain surface points in the supported ipsilateral supratentorial search. To explore variations within one entry patch, set the patch and choose **Suggest approaches**. Compare measured length, labeled target reach, estimated brain traversal, intersections and missing coverage. Select a path and choose **Preview operative steps**. **Rehearse** also opens the current assessed path. A study with no supported lesion can still be inspected in Anatomy.
 5. Press **Play steps** or scrub the **Operative timeline**. The field shows the bone flap lifting, the dural flap opening, optional brain retraction and a modeled ultrasonic aspirator advancing into the labeled lesion. Stages need corresponding tissue on the path. A dural envelope proxy is identified at the opening step. Toggle **Include retraction** to explore the same path without a held blade. **Inspection cutaway** exposes the instrument and cavity. The tissue motion and cavity are illustrative geometry. Patient-specific forces, bleeding, functional outcomes and surgical feasibility remain unassessed. [Operative simulation study](https://link.springer.com/article/10.1007/s00701-020-04359-w) · [Retraction in selected deep lesions](https://pmc.ncbi.nlm.nih.gov/articles/PMC6529054/)
 6. Use **Return to plan** to select and preview another path. **Save study & comparison** retains the selected approach with its source study. The choice is yours. The metrics describe geometric tradeoffs within the available evidence.
+
+In **Anatomy** or **Plan**, choose **Cranial view → Cortex and target · planning** to see the selected tumor and approach against the cortex and head outline. **Internal boundaries · inspection** brings a selected internal structure and the head silhouette forward. The visible structures also have contours on the native slices. The controls for individual layers remain available. The source details distinguish supplied annotations from model estimates.
+
+**Follow operative depth** starts at the saved entry on the registered exterior, holds the opening in view, then turns toward the longitudinal section as the deeper tissue comes into view. The right pane keeps the intact head and source MRI visible. **Inspection cutaway** allows a separate fixed-angle comparison at the same timeline position. Cyan identifies residual target. **Field voxel faces** exposes the exact local display-grid cells used by the geometric demonstration.
+
+To try the geometric workflow on one study, use the reviewed **BITE-09**
+planning workspace. Inspect the supplied tumor on its source MRI in
+**Anatomy**, then use **Show target** in **Plan** to center the slices at the
+planned endpoint. In **Rehearse**, pause at the dural opening or aspiration
+and switch between **Follow operative depth** and **Inspection cutaway**
+to inspect that moment. The reviewed workspace and walkthrough are indexed
+in the [local storage ledger](local-storage-ledger.md).
+
+Under **Field evidence**, choose **Overlapping passes** to follow successive passes through the local target, or **Original spiral** to reproduce the earlier geometric endpoint. The two paths contact different cells. On the indexed BITE-09 route, the default path removes 4,741 local target cells (144.68 mm³) and the original removes 3,224 (98.39 mm³). Both use a 0.84 mm modeled tip radius and preserve the source mask. These quantities describe the geometric preview. The SurgicalEngine records its own instrument contacts and outcome measures.
+
+In **Scans → Acquisition contributions**, inspect the acquisition role, registration
+and processing outcomes. Compare a moving scan with its reference in
+**Alignment & registration**. Pick corresponding anatomical points on both
+source views and inspect their residuals near the route. Opening a study
+or selecting another acquisition preserves its source revision.
+
+For a preprocessed glioma study with aligned T1CE, T1, T2 and FLAIR, choose
+the four-channel MONAI option under **Prepare anatomy**. It retains enhancing,
+core and whole abnormality as nested unreviewed estimates alongside supplied
+labels. Incomplete inputs keep the compatible single-sequence options.
+The four inputs must be distinct brain-extracted, spatially qualified images
+on the supported common grid. An arbitrary set of four uploads can fail
+that check. Inspect the reason for each withheld stage in the study.
+The BraTS bundle requires four channels. Methods evaluated on missing-modality
+subsets require a separate verified implementation. Supplied tract bundles
+can be inspected. Raw DWI, MRV and SWI alone do not produce named tracts,
+veins or sinuses in this build. [MONAI bundle](https://huggingface.co/MONAI/brats_mri_segmentation/blob/main/docs/README.md)
+· [mmFormer subset evaluation](https://arxiv.org/abs/2206.02425).
+
+### Watch a recorded engine procedure
+
+In **Plan**, select the target and approach. In **Rehearse**, choose **Open recorded engine episode** and select the saved environment. The app checks the patient, study revision, target, source masks, reference pixels, instruments and recorded branch. When the recording identifies a native approach, its entry, target, radius and measurement identity must match the selected plan. An older recording can establish the patient and target without establishing an approach match.
+
+The intact reference shows the patient and the approach carried by the recording. The operative viewer shows the engine's tool poses and tissue state. **Operated anatomy** sections the working grid through the effect. Residual target, removed space and mapped protected structures have separate colors. Use the grid and slice controls to inspect a specific location, or **Follow effect** to follow the removal. The section marks the recorded tool tip when it intersects the plane. Volume readouts cover the whole modeled target.
+
+Play, pause, step or seek to an observation. The 3D field, section and quantities follow that observation on the same branch. In the procedure, **Save** writes the engine environment and playback position. In the native study, **Save** retains the plan and source view. Returning to Plan restores the native study. Opening a saved procedure on its own uses its embedded source grid for the intact reference.
+
+For an acquired imaging example with instrument motion and measured tissue
+changes, start with [IXI077](#replay-the-ixi077-t1-and-mra-case). Its recorded
+episode starts after exposure and uses a synthetic target. For two recorded
+approaches to the same supplied tumor, use the [UCSF fixed-target comparison](#compare-two-recorded-procedures-on-one-target).
+
+**Export observed replay** saves a captioned MP4. It waits for the tool and surface state and the corresponding operated section, then captures the joined view. The recording uses engine observation times and holds the endpoint for one second. Export restores the prior cursor. FFmpeg with H.264 and subtitle support is required.
+
+Choose **Source edges** or **Conditioned edges** in the operative legend to
+compare display surfaces at the same camera and engine state. Inspect a legend
+entry or double-click a surface for its layer and linked source coordinates.
+On the historical UCSF preparation the violet source label is supplied contrast
+enhancement. Magenta on the MRI slices identifies the experimental vesselFM
+estimate. The microscope shows that estimate in muted rose with a separate
+slice swatch. Its positive signal does not measure vascular clearance.
+[VesselFM's published scope](https://github.com/bwittmann/vesselFM).
+
+To inspect the current proposal in the engine, choose **Open instrument
+environment** from the preview and **Inspect approach in engine**. The derivative
+records the approach, target, source revision and physical geometry. A full
+procedure requires reviewed entry, operative compartment, brainstem, cerebellum,
+coverage and swept instrument workspace evidence. A selected path by itself
+authorizes zero actions. [Acquired case and measured results](current-status.md#acquired-scan-to-procedure-demonstration).
 
 The operative field reports its display spacing above the 3D view. On the
 MNI BITE 09 study the field uses a 0.3125 mm grid. The renderer smooths the
@@ -31,6 +101,214 @@ supported outer bone surface are hidden with the scalp. **Field evidence**
 reports that count and identifies the scan supplying the tissue contrast.
 The full vascular estimates are available in **Anatomy**. Original scan
 spacing and supplied contours are available in **Scans**.
+
+Use **Show target** in Plan to reveal the selected annotation and center the
+linked slices at the editable endpoint. In a deep geometric rehearsal,
+**Follow operative depth** opens a longitudinal section through the working
+field. Its surrounding grayscale plane comes from the matching acquisition.
+**Exterior** returns to the surface view. The BITE-09 example uses the supplied
+tumor contour and MRI-derived tissue estimates.
+
+### Compare two recorded procedures on one target
+
+Open the native study and select its target in **Plan**. In **Rehearse**,
+choose **Compare two recordings** and select both procedural files in the
+same file chooser. The app independently checks each saved route, replays
+both action histories, and compares endpoints on the same patient revision,
+engine scene, initial state, physics and instrument catalog. When a bound
+reference scan is available, **Along A** and **Along B** change the plane in
+both endpoint images together. Cyan traces the original target. Amber marks
+removed source cells intersected by that plane. The table
+reports the whole original annotation remaining, tissue assigned to the
+target and removed, other mapped tissue removal, elapsed time and
+withdrawal. An unavailable material appears as **Unmeasured**. Close the
+table and select **Review comparison** to inspect it again.
+
+To watch one arm, select its own approach in **Plan**, then choose **Open
+recorded engine episode** in **Rehearse**. Choose **Inspect result in 3D**
+from the operated section to rotate the amber cast of the empty cavity
+and the cyan surface of the remaining owned tumor. Choose **Cavity** or
+**Residual** to isolate and fit that surface. **Both** shows their relative
+positions. The residual is opaque, and the portion of the cast behind it
+appears in muted amber. Mesh conditioning affects the display. The cell
+ledger supplies the measurements. **Return to operative field** restores
+the microscope. In a bound recording, **Inspect recorded corridor** sections
+the working field along the recorded approach. **View down approach** returns
+to an exterior view. **Save**
+retains the current frame, result mode and orbit. The adjacent full-target
+readout includes original annotation cells assigned to overlapping labels.
+
+On UCSF-PDGM-0004, the study's supplied enhancing contour was frozen
+before searching for approaches. To reproduce both arms, run the following
+from the checkout with the local fixtures listed in the storage ledger.
+The first command creates a new directory and writes the protocol.
+
+```sh
+output=testcases/outputs/ucsf-fixed-target-repeat
+.venv/bin/python scripts/compare_patient_cusa_routes.py plan "$output"
+.venv/bin/python scripts/compare_patient_cusa_routes.py execute "$output"
+.venv/bin/python scripts/compare_patient_cusa_routes.py bind "$output"
+```
+
+For a different study, `scripts/bind_native_engine_recording.py --help`
+lists the inputs to bind a recorded environment to a measured native
+approach. The application supports exact source grids and its verified
+resampled research derivative. The binder checks physical results through
+cold replay, including effective tool radius and direction, initial state,
+time, tissue membership and residual. Generator attribution comes from
+the producer and includes a source digest and, for RL, a checkpoint digest.
+The current route contract covers straight treatment strokes and preceding
+opening actions. [Procedure results](current-status.md#fixed-target-procedure-comparison).
+
+### Replay the IXI077 T1 and MRA case
+
+Open `selected-approach.rsworkspace` for the intact study. Its Plan view
+identifies the simulated target and the recorded 30 mm post-exposure
+approach. In Rehearse open `recorded-engine.ressectionlab` to see the
+intact patient alongside the working field. For an immediate inspection of
+the final cavity, open the procedure file directly and step back to see
+earlier observations. The local testing guide indexes the saved files,
+walkthrough and matched captures. [Research data locations](local-storage-ledger.md).
+
+To reproduce from the verified original IXI077 archives on the optional
+research drive, build the desktop app and choose a fresh output directory.
+The preparation checks the input files, saved execution report and engine
+endpoint. The following commands run the application in hidden windows.
+
+```sh
+pnpm --dir desktop build
+run=$(mktemp -d "$PWD/testcases/outputs/ixi077-replay-XXXXXX")
+.venv/bin/python scripts/prepare_ixi077_study_replay.py \
+  --data-root "/Volumes/shafrir/old coding projects/RessectionLabData" --output "$run/source"
+verify="$PWD/desktop/electron/verify-integrated-engine-replay.cjs"
+native="$run/source/native/patient-anatomy.json"
+episode="$run/source/replay.ressectionlab"
+for phase in warm --cold-plan --cold-midpoint --cold --full-movie; do
+  if [ "$phase" = warm ]; then
+    desktop/node_modules/.bin/electron "$verify" "$native" "$episode" "$run/result" synthetic_target_observation
+  else
+    desktop/node_modules/.bin/electron "$verify" "$native" "$episode" "$run/result" synthetic_target_observation "$phase"
+  fi
+done
+```
+
+The full movie pass reopens the portable plan, attaches the recording,
+captures the observations through **Export observed replay** and checks the
+restored endpoint. `observed-engine-replay.mp4` follows simulation time.
+`patient-engine-continuous.mp4` adds the planning views, accelerates
+playback fourfold and holds the final inspection. The shorter sampled
+verification movie identifies its individual observations.
+
+In studies with a cortical mesh and matching source map, switching the
+slice panel to an aligned CT keeps the MRI-derived cortex registered to the
+patient and textured by its own MRI. The scan label identifies the active
+slices. A transform accepted only for overlay inspection retains that
+qualification in the anatomy view and in planning. Unknown vascular
+clearance remains visible on the IXI077 route.
+
+### Reproduce the acquired replay and generated comparison
+
+Run from the repository root on the configured Mac with the Python environment,
+desktop dependencies and FFmpeg installed. The local test guide locates the
+UCSF source and original episode. The output link below resolves to the verified
+personal HDD. The commands create a new run and a disposable APFS clone of the
+source. Both Electron entry points use hidden windows.
+
+```sh
+set -e
+pnpm --dir desktop build
+evidence="$PWD/testcases/outputs/scan-to-engine-20261118"
+test -f "$evidence/README.md"
+run=$(mktemp -d "$evidence/reproduce-XXXXXX")
+scratch=$(mktemp -d "$PWD/testcases/outputs/scan-to-engine-input-XXXXXX")
+cp -cR testcases/environments/native/UCSF-PDGM-0004 "$scratch/native"
+native="$scratch/native/patient-anatomy.json"
+episode="$PWD/testcases/matched-exposure-v1/desktop-reopen-01/strategies-saved.ressectionlab"
+electron="$PWD/desktop/node_modules/.bin/electron"
+plan=desktop/electron/verify-native-operative-preview.cjs
+replay=desktop/electron/verify-study-engine-replay.cjs
+"$electron" "$plan" "$native" "$run/plan" preview --distinct --inspect-shortest --export "$run/selected.rsworkspace"
+"$electron" "$plan" "$native" "$run/inspect" reopen --open-archive "$run/selected.rsworkspace" --engine-inspection
+"$electron" "$replay" "$native" "$episode" "$run/recording" enhancing_target
+"$electron" "$replay" "$native" "$episode" "$run/recording" enhancing_target --cold
+"$electron" "$replay" "$native" "$episode" "$run/recording" enhancing_target --cold-midpoint
+.venv/bin/python scripts/demonstrate_approach_procedure.py --output "$scratch/generated-approaches"
+cp -R "$scratch/generated-approaches" "$run/generated-approaches"
+.venv/bin/python scripts/compare_observed_skill_policies.py "$run/generated-search-and-rl"
+```
+
+To repeat the comparison on the four-channel revision saved after inference,
+open its portable source in the same harness. The manifest supplies the
+expected revision for the verifier. The app opens the full archive through
+its normal study chooser.
+
+```sh
+bundle="$scratch/brats.rsworkspace"
+qc="/Volumes/shafrir/old coding projects/RessectionLabData/qc"
+ln -s "$qc/brats-native-0004-20261118/UCSF-PDGM-0004-BraTS-compartments.rsworkspace" "$bundle"
+unzip -p "$bundle" patient-anatomy.json > "$scratch/brats-manifest.json"
+"$electron" "$plan" "$scratch/brats-manifest.json" "$run/four-channel" preview --open-archive "$bundle" --distinct --inspect-shortest --export "$run/four-channel.rsworkspace"
+"$electron" "$plan" "$scratch/brats-manifest.json" "$run/four-channel-inspection" reopen --open-archive "$run/four-channel.rsworkspace" --engine-inspection
+```
+
+The plan check saves the shortest of three measured windows. The recording
+check opens the historical preparation through **Rehearse**, captures every
+accepted boundary, verifies the visible tools and cumulative ledger, and writes
+`engine-preparation.mp4`. The two fresh processes restore the endpoint and the
+midpoint. The generated comparison reads the frozen seed-17 checkpoint under
+`testcases/overnight-sequential-v1/benchmark-task-v2`. After checking the
+outputs, discard the disposable input clone. The saved study contains the scan
+arrays and planning selections. [Case results and qualification](current-status.md#acquired-scan-to-procedure-demonstration) · [Private asset locations](local-storage-ledger.md).
+
+### Reproduce continuous rehearsal
+
+Open the generated `generated-cleanup/final/complete.ressectionlab` from
+**Cases → Open** and choose **Rehearse → Surgeon / Microscope**. Leave the
+inspection cutaway off. Play from boundary zero, pause during action 108
+to inspect the first measured target removal, and scrub between boundaries
+119 and 200 to see 236 mm³ of debris cleared. The endpoint records both tools
+outside. Export from the same view with **Export observed replay**. For the
+acquired decision, open `selected-decision/UCSF-0004-intact-stop.ressectionlab`.
+The four-channel source study is the earlier
+`UCSF-0004-four-channel-selected-window.rsworkspace`. The older acquired MP4
+uses a separately bound trajectory. The [storage ledger](local-storage-ledger.md)
+locates these private assets and the reproduction guides for comparing them.
+
+From the project root, choose a new, empty ignored output directory. When
+using the personal HDD, create it below the verified archive link. The generated
+case can be recreated from source. Hidden desktop runs use the installed
+Electron binary and the same controls as the application.
+
+```sh
+run=testcases/outputs/continuous-rehearsal-rerun
+mkdir "$run"
+pnpm --dir desktop build
+.venv/bin/python scripts/demonstrate_generated_kerf_cleanup.py --output "$run/cleanup"
+.venv/bin/python scripts/generate_curved_render_case.py "$run/curved"
+.venv/bin/python scripts/verify_curved_render_geometry.py "$run/geometry.json"
+electron=desktop/node_modules/.bin/electron
+"$electron" desktop/electron/verify-engine-contours.cjs "$run/curved/curved-field.ressectionlab" "$run/contours" 2 1,2
+replay=desktop/electron/verify-study-engine-replay.cjs
+casefile="$run/cleanup/complete.ressectionlab"
+"$electron" "$replay" --workspace "$casefile" "$run/movie" generated-target
+"$electron" "$replay" --workspace "$casefile" "$run/movie" generated-target --cold
+"$electron" "$replay" --workspace "$casefile" "$run/movie" generated-target --cold-midpoint
+```
+
+For the frozen comparison, the previous run's `freeze.json` and
+`checkpoints/17/selected.pt` must be present under
+`testcases/overnight-sequential-v1/benchmark-task-v2/`. The HDD review
+copy under `evaluation/reproduction-inputs/` includes checksums. The evaluation
+checks the protocol and weights on entry. Each selector receives the same 28
+features and legal skill mask. Each post-access arm has up to eight selections,
+56 physical calls and 25 online seconds. Each closed-shell arm has one route
+selection, 600 public calls, 300 accepted actions and 180 online seconds.
+The original engine independently replays each recorded sequence.
+
+```sh
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 PYTHONPATH=src \
+  .venv/bin/python scripts/compare_complete_generated_plans.py "$run/matched"
+```
 
 Historical capture receipts remain available at the links below. Most images
 and recordings now require the [visual evidence archive](visual-evidence-archive-20261116.md),

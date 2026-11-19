@@ -83,9 +83,77 @@ def display_surface_kind(row):
     return row["kind"]
 
 
+def appearance_kind(row):
+    """Cortical display classification does not alter the cached mesh policy."""
+    kind = display_surface_kind(row)
+    if kind == "brain-region":
+        provenance = row.get("provenance") or {}
+        model = str(provenance.get("model", "")).lower()
+        ontology = row.get("label_ontology") or provenance.get("label_ontology") or {}
+        value = ontology.get("value", row.get("label_value")) if isinstance(ontology, dict) else None
+        if (model == "siam-v2" and value == 1
+                or model in {"supersynth", "synthseg", "fastsurfer"} and value in {3, 42}):
+            return "gray-matter"
+    return kind
+
+
+CONDITIONED_SURFACE = "source-bound-conditioned-surface-v1"
+CONDITIONED_MAX_ADDITIONAL_MM = .55
+CONDITIONED_MAX_SOURCE_MM = .9
+CONDITIONED_MAX_SOURCE_CELLS = 1.18
+
+
+def _display_geometry(collection, row, result, cache_hit, started):
+    attachment = row.get("conditioned_surface")
+    if attachment is not None and not row.get("edits"):
+        from .core import array_digest
+
+        if not isinstance(attachment, dict) or attachment.get("schema") != CONDITIONED_SURFACE:
+            raise ValueError("Unsupported conditioned display surface")
+        if row["revision"] == attachment["mask_revision"]:
+            scan = collection.series(row["source_series"])
+            if (row["kind"] not in {"skull", "bone", "brain"} or row["role"] != "context"
+                    or row["data"]["sha256"] != attachment["mask_sha256"]
+                    or row["label_value"] != attachment["label_value"]
+                    or scan["data"]["sha256"] != attachment["source_array_sha256"]
+                    or scan["original"]["sha256"] != attachment["source_original_sha256"]
+                    or row["affine"] != attachment["affine"] or scan["affine"] != row["affine"]
+                    or array_digest(result["source"]) != attachment["source_mesh_hash"]
+                    or array_digest(result["indices"]) != attachment["indices_hash"]
+                    or array_digest(result["positions"]) != attachment["stock_conditioned_hash"]):
+                raise ValueError("Conditioned surface and native anatomy bindings differ")
+            points = collection.array(attachment["positions"])
+            stock = result["positions"]
+            source = result["source"]
+            if points.dtype != np.float32 or points.shape != source.shape or not np.isfinite(points).all():
+                raise ValueError("Invalid conditioned display positions")
+            linear = affine(row["affine"])[:3, :3]
+            protected = source[:, 2] <= attachment["protected_native_plane"]
+            if "protected_crop_margin_cells" in attachment:
+                margin = attachment["protected_crop_margin_cells"]
+                face_distance = np.minimum(source, np.asarray(row["data"]["shape"]) - 1 - source)
+                protected |= (face_distance <= margin).any(axis=1)
+            displacement = np.linalg.norm((points - source) @ linear.T, axis=1)
+            if (not protected.any() or not np.array_equal(points[protected], stock[protected])
+                    or displacement.max(initial=0.) > CONDITIONED_MAX_SOURCE_MM
+                    or np.linalg.norm(points - source, axis=1).max(initial=0.) > CONDITIONED_MAX_SOURCE_CELLS
+                    or np.linalg.norm((points - stock) @ linear.T, axis=1).max(initial=0.) > CONDITIONED_MAX_ADDITIONAL_MM):
+                raise ValueError("Conditioned display positions exceed the source bounds")
+            result = {**result, "positions": points, "normals": normals(points, result["indices"]),
+                      "policy_version": CONDITIONED_SURFACE, "max_displacement_mm": displacement.max()}
+    return {**result, "cache_hit": cache_hit, "preparation_ms": (perf_counter() - started) * 1000}
+
+
 def mesh(collection, row, *, cancelled=lambda: False):
     """Separate source/display mesh; same connectivity, bounded local movement."""
     started = perf_counter()
+    if row.get("publisher_surface") is not None:
+        from .anatomy_publisher_surface import publisher_surface
+
+        supplied = publisher_surface(collection, row, cancelled=cancelled)
+        if supplied is not None:
+            return {**supplied, "normals": normals(supplied["positions"], supplied["indices"]),
+                    "preparation_ms": (perf_counter() - started) * 1000}
     display_kind = display_surface_kind(row)
     profile = surface_kind(display_kind)
     native = profile != "vessel"
@@ -108,7 +176,7 @@ def mesh(collection, row, *, cancelled=lambda: False):
     if cache.exists():
         with np.load(cache, allow_pickle=False) as z:
             result = {k: z[k] for k in z.files}
-        return {**result, "cache_hit": True, "preparation_ms": (perf_counter()-started)*1000}
+        return _display_geometry(collection, row, result, True, started)
     mask = collection.mask(row)
     bounds = [np.flatnonzero(mask.any(axis=tuple(i for i in range(3) if i != axis))) for axis in range(3)]
     if not len(bounds[0]):
@@ -176,7 +244,7 @@ def mesh(collection, row, *, cancelled=lambda: False):
     if cancelled():
         raise InterruptedError("Mesh preparation cancelled before cache admission")
     _save_cache(cache, result)
-    return {**result, "cache_hit": False, "preparation_ms": (perf_counter()-started)*1000}
+    return _display_geometry(collection, row, result, False, started)
 
 
 def vessel_graph(mask, native_affine):

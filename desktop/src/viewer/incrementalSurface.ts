@@ -1,3 +1,5 @@
+import {WorkerSurfacePartition} from './engineImplicitSurface.ts';
+import type {EnginePartitionRequest} from './engineImplicitSurface';
 import {ChunkedMaskSurface} from './chunkedSurface.ts';
 import {prepareSurfaceSoup,prepareIndexedSurface} from './prepareSurface.ts';
 import {SurfaceIndexBudgetExceeded} from './sourceVertexIndex.ts';
@@ -5,7 +7,7 @@ import {maskSurface} from './surface.ts';
 import {IncrementalSurfaceIntersectionAudit} from './surfaceSafety.ts';
 import {IncrementalSurfaceFilter} from './incrementalSurfaceFilter.ts';
 import type {Affine,Shape3} from './coordinates';
-export interface IncrementalSurfaceRequest {jobId:number;layerId:string;previousIdentity:string;identity:string;shape:Shape3;affine:Affine;kind?:string;mask?:Uint8Array;indices?:Uint32Array;values?:Uint8Array;retainChunks?:boolean;smooth?:boolean}
+export interface IncrementalSurfaceRequest {jobId:number;layerId:string;previousIdentity:string;identity:string;shape:Shape3;affine:Affine;kind?:string;mask?:Uint8Array;indices?:Uint32Array;values?:Uint8Array;retainChunks?:boolean;smooth?:boolean;partition?:EnginePartitionRequest}
 // Small lesions remesh most of their source chunks on each cut. The measured
 // certificate overhead exceeded any savings there; retain the full audit.
 const MIN_CERTIFICATE_FACES=100000;
@@ -15,8 +17,22 @@ const MIN_CERTIFICATE_FACES=100000;
 export class IncrementalSurfaceEngine {
   private readonly cache=new Map<string,{identity:string;signature:string;surface:ChunkedMaskSurface;audit?:IncrementalSurfaceIntersectionAudit;filter?:IncrementalSurfaceFilter}>();
   private readonly maxBytes:number;
+  private readonly partition=new WorkerSurfacePartition();
   constructor(maxBytes=128*1024*1024){this.maxBytes=maxBytes;}
+  private trimCache(){
+    let retainedBytes=this.partition.retainedBytes;
+    for(const entry of this.cache.values())
+      retainedBytes+=entry.surface.retainedBytes+(entry.audit?.retainedBytes??0)+(entry.filter?.retainedBytes??0);
+    for(const [key,entry] of this.cache){
+      if(retainedBytes<=this.maxBytes)break;
+      retainedBytes-=entry.surface.retainedBytes+(entry.audit?.retainedBytes??0)+(entry.filter?.retainedBytes??0);
+      this.cache.delete(key);
+    }
+    return retainedBytes;
+  }
   prepare(request:IncrementalSurfaceRequest){
+    const reference=request.smooth===false?undefined:this.partition.resolve(request.partition,this.maxBytes);
+    const referenceBytes=this.partition.retainedBytes,maxCacheBytes=Math.max(0,this.maxBytes-referenceBytes);
     const started=performance.now(),signature=JSON.stringify([request.shape,request.affine,request.kind]),old=this.cache.get(request.layerId);
     // Initial mapping without tissue effects needs a display, not a hot edit
     // cache. Use the exact full extractor and release its cloned mask/soup
@@ -24,12 +40,13 @@ export class IncrementalSurfaceEngine {
     if(request.retainChunks===false){
       if(!request.mask||request.mask.some(n=>n>1))throw Error('Missing immutable source-mask admission for surface preparation');
       const soup=maskSurface(request.mask,request.shape),extractionMs=performance.now()-started,fairStarted=performance.now();
-      const result=prepareSurfaceSoup(soup,request.mask,request.shape,request.affine,request.kind,request.smooth!==false);
+      const result=prepareSurfaceSoup(soup,request.mask,request.shape,request.affine,request.kind,request.smooth!==false,reference);
       this.cache.delete(request.layerId);
+      const retainedBytes=this.trimCache();
       return {...result,jobId:request.jobId,layerId:request.layerId,identity:request.identity,
         resident:[...this.cache].map(([layerId,state])=>({layerId,identity:state.identity})),
         work:{incremental:false,fullReference:true,remeshedChunks:0,totalChunks:request.shape.reduce((n,s)=>n*Math.ceil((s+1)/32),1),
-          retainedBytes:[...this.cache.values()].reduce((sum,c)=>sum+c.surface.retainedBytes+(c.audit?.retainedBytes??0)+(c.filter?.retainedBytes??0),0),extractionMs,
+          retainedBytes,extractionMs,
           smoothingPrepared:result.smoothingPrepared!==false,globalFairingMs:performance.now()-fairStarted,preparationMs:performance.now()-started}};
     }
     const incremental=!!old&&old.identity===request.previousIdentity&&old.signature===signature&&!request.mask;
@@ -43,14 +60,14 @@ export class IncrementalSurfaceEngine {
       }
     }else {
       if(!request.mask||request.mask.some(n=>n>1))throw Error('Missing immutable source-mask admission for surface preparation');
-      try{surface=new ChunkedMaskSurface(request.mask,request.shape,32,this.maxBytes,request.kind==='bone');}catch(error){
+      try{surface=new ChunkedMaskSurface(request.mask,request.shape,32,maxCacheBytes,request.kind==='bone');}catch(error){
         if(!(error instanceof SurfaceIndexBudgetExceeded))throw error;
         surface=new ChunkedMaskSurface(request.mask,request.shape);
       }
     }
     const extractionMs=performance.now()-started,assemblyStarted=performance.now();
     const stable=incremental&&request.smooth===false&&request.kind==='bone'?surface.stableIndexed(request.affine):undefined;
-    const indexed=stable??(surface.indexedChunks?surface.indexed(request.smooth===false&&request.kind==='bone'?request.affine:undefined,request.smooth!==false):undefined),soup=indexed?undefined:surface.positions(),assemblyMs=performance.now()-assemblyStarted,fairStarted=performance.now();
+    const indexed=stable??(surface.indexedChunks?surface.indexed(request.smooth===false&&request.kind==='bone'?request.affine:undefined,request.smooth!==false&&reference===undefined):undefined),soup=indexed?undefined:surface.positions(),assemblyMs=performance.now()-assemblyStarted,fairStarted=performance.now();
     const layout=indexed&&indexed.indices.length/3>=MIN_CERTIFICATE_FACES&&'auditLayout'in indexed?indexed.auditLayout:undefined;
     const audit=layout?(incremental?old?.audit:undefined)??new IncrementalSurfaceIntersectionAudit():undefined;
     const filter=layout?(incremental?old?.filter:undefined)??new IncrementalSurfaceFilter():undefined;
@@ -59,16 +76,15 @@ export class IncrementalSurfaceEngine {
     // yield their residency before the current frame allocates that staging.
     if(filter&&layout)for(const key of this.cache.keys()){
       const needed=surface.retainedBytes+(audit?.retainedBytes??0)+filter.retainedBytes+49*layout.vertexCapacity+otherBytes();
-      if(needed<=this.maxBytes)break;if(key!==request.layerId)this.cache.delete(key);
+      if(needed<=maxCacheBytes)break;if(key!==request.layerId)this.cache.delete(key);
     }
-    const available=Math.max(0,this.maxBytes-surface.retainedBytes-otherBytes());
+    const available=Math.max(0,maxCacheBytes-surface.retainedBytes-otherBytes());
     const polynomial=filter&&layout?filter.begin(layout,Math.max(0,available-(audit?.retainedBytes??0))):undefined;
     const observer=audit&&layout?audit.begin(layout,indexed!.indices,Math.max(0,available-(polynomial?.reservedBytes??0))):undefined;
-    const result=stable?{...stable,smoothingPrepared:false}:indexed?prepareIndexedSurface(indexed.positions,indexed.indices,surface.mask,request.shape,request.affine,request.kind,request.smooth!==false,indexed.normals,observer,polynomial?.filter):prepareSurfaceSoup(soup!,surface.mask,request.shape,request.affine,request.kind,request.smooth!==false);
+    const result=stable?{...stable,smoothingPrepared:false}:indexed?prepareIndexedSurface(indexed.positions,indexed.indices,surface.mask,request.shape,request.affine,request.kind,request.smooth!==false,indexed.normals,observer,polynomial?.filter,reference):prepareSurfaceSoup(soup!,surface.mask,request.shape,request.affine,request.kind,request.smooth!==false,reference);
     this.cache.delete(request.layerId);
-    if(surface.retainedBytes+(audit?.retainedBytes??0)+(filter?.retainedBytes??0)<=this.maxBytes)this.cache.set(request.layerId,{identity:request.identity,signature,surface,audit,filter});
-    let retainedBytes=[...this.cache.values()].reduce((sum,c)=>sum+c.surface.retainedBytes+(c.audit?.retainedBytes??0)+(c.filter?.retainedBytes??0),0);
-    while(retainedBytes>this.maxBytes&&this.cache.size){const key=this.cache.keys().next().value!,entry=this.cache.get(key)!;retainedBytes-=entry.surface.retainedBytes+(entry.audit?.retainedBytes??0)+(entry.filter?.retainedBytes??0);this.cache.delete(key);}
+    if(surface.retainedBytes+(audit?.retainedBytes??0)+(filter?.retainedBytes??0)<=maxCacheBytes)this.cache.set(request.layerId,{identity:request.identity,signature,surface,audit,filter});
+    const retainedBytes=this.trimCache();
     return {...result,jobId:request.jobId,layerId:request.layerId,identity:request.identity,
       resident:[...this.cache].map(([layerId,state])=>({layerId,identity:state.identity})),
       work:{incremental,stableSourceIds:!!stable,...surface.normalWork,indexedChunks:surface.indexedChunks,indexedCorners:surface.lastIndexedCorners,remeshedChunks:surface.lastRemeshedChunks,totalChunks:surface.totalChunks,retainedBytes,extractionMs,assemblyMs,

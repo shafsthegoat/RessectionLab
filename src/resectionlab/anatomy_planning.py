@@ -26,9 +26,16 @@ def is_native_target(row):
 
 def native_target_binding(collection, row):
     """Bind a selection to evidence content, independently of display edits."""
-    source = collection.series(row["source_series"])
-    reference = collection.series(collection.document["reference_series"])
-    transforms = collection.document["transforms"]
+    collection.patient_affine(row)
+    return manifest_target_binding(collection.document, row)
+
+
+def manifest_target_binding(document, row):
+    """Content identity only. A live native collection checks registered geometry separately."""
+    series = {item['id']: item for item in document['series']}
+    source = series[row['source_series']]
+    reference = series[document['reference_series']]
+    transforms = document['transforms']
     chain, sid = {}, source["id"]
     while sid:
         if sid in chain or sid not in transforms:
@@ -36,10 +43,8 @@ def native_target_binding(collection, row):
         transform = transforms[sid]
         if transform["status"] not in {"reference", "reviewed", "source-provided"}:
             raise ValueError(f"Registration for {sid} needs review")
-        anchor = collection.series(sid)
-        chain[sid] = {"transform": transform, "sourceSha256": anchor["original"]["sha256"]}
+        chain[sid] = {"transform": transform, "sourceSha256": series[sid]["original"]["sha256"]}
         sid = transform.get("parent_series")
-    collection.patient_affine(row)
     bounds = inference_bounds(row)
     layer = {key: row[key] for key in (
         "id", "label", "kind", "role", "revision", "review_status", "provenance", "coverage",
@@ -48,7 +53,7 @@ def native_target_binding(collection, row):
     if bounds is not None:
         layer["inference_bounds_voxel_inclusive"] = bounds
     return digest({
-        "patient": collection.document["patient_id"], "layer": layer, "transforms": chain,
+        "patient": document["patient_id"], "layer": layer, "transforms": chain,
         "source": {key: source[key] for key in ("id", "timepoint", "original", "data", "affine")},
         "reference": {key: reference[key] for key in ("id", "timepoint", "original", "data", "affine")},
     })

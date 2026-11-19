@@ -66,6 +66,8 @@ def checked_view(collection, state, *, retired_clipping=None):
     for series_id, view in state['states'].items():
         if not isinstance(view, dict):
             raise ValueError('Invalid scan view')
+        if 'cranialView' in view and view['cranialView'] not in ('planning', 'inspection'):
+            raise ValueError('Invalid cranial view')
         cursor = view.get('cursor')
         if cursor is not None and (np.asarray(cursor).shape != (3,) or not np.isfinite(cursor).all()):
             raise ValueError('Invalid physical cursor')

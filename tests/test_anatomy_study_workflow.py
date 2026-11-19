@@ -106,6 +106,7 @@ def test_portable_study_roundtrip_preserves_sources_and_reopens_edits(patient, t
     result = save_package(patient, dest)
     assert result['files'] >= 5
     manifest = open_package(dest, tmp_path/'working')
+    assert manifest.read_bytes() == (patient.root/'patient-anatomy.json').read_bytes()
     restored = Collection(manifest.parent)
     assert restored.document == patient.document
     for row in restored.document['series'] + restored.document['layers']:

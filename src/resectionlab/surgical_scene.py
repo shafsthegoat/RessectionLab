@@ -190,6 +190,8 @@ def from_case(case, mapping=None):
     properties = thaw_json(case.metadata).get('surgical_properties', {})
     from .surgical_source_inspection import PROPERTY as INSPECTION_PROPERTY
     inspection = INSPECTION_PROPERTY in properties
+    if adapter.get('type') == 'native-patient-research-derivative' and 'selectedApproach' in adapter and not inspection:
+        raise ValueError('Missing planned derivative inspection binding')
     protected = []
     inspection_declarations = []
     for r in regions:

@@ -286,8 +286,9 @@ Workflow references: [EDEN2020 source](https://zenodo.org/records/3994749),
 
 ## Automatic alignment and skull display (2026-10-15)
 
-Native workspace opening, imports, and scan selection now ensure source-bound
-automatic rigid alignment. CT soft/brain reconstruction anchors to MRI; other CT
+Opening a saved workspace and switching scans preserve its exact revision.
+Intake, preparation and explicit registration commands can estimate source-bound
+rigid alignment. The CT soft/brain reconstruction anchors to MRI. Other CT
 reconstructions connect by measured CT-to-CT registration and compose into the
 same RAS-mm frame. Identity, head-centre, and historical candidates are compared
 against independent samples, anatomical conflicts, reverse registration, and
@@ -485,7 +486,15 @@ Local reconstruction controls use:
 * `.tools/raidionics-packages` (RaidionicsSeg 1.5.2 / ONNX Runtime 1.31.0) and
   `data/models/raidionics/MRI_Meningioma`. Meningioma model SHA-256:
   `b74764e90722b1071dab8b085be0d916f8f318d5bed987470fe15198febb81c8`.
-  Glioma assets are not installed; its gated adapter has not been qualified.
+  The single-sequence Raidionics glioma models remain unavailable on this machine.
+* For **Prepare anatomy → Preparation options → Glioma compartments**, the
+  separate MONAI BraTS 0.5.4 adapter uses aligned, brain-extracted T1CE, T1, T2
+  and FLAIR. Its pinned weight SHA-256 is
+  `860ccb3f1c21c99d0410ad8a1ac4ef6b8fab60cec0a503b0ba42675741a750ae`.
+  The configured MPS runtime uses 128³ tiles. UCSF-PDGM-0004 required 18
+  tiles. Review the three nested estimates alongside the supplied labels.
+  [Model settings and source identity](poc-brats-model-manifest.json) ·
+  [Private model cache and case](local-storage-ledger.md).
 * FastSurfer supports configured `RESECTIONLAB_FASTSURFER_HOME` and
   `RESECTIONLAB_FASTSURFER_PYTHON`. Its runtime is not installed and this patient
   has no supplied noncontrast T1. No FastSurfer output is claimed.
@@ -535,7 +544,7 @@ Outstanding acceptance is explicit:
 * CT registration requires landmark review. Cortical/deep-region proposals,
   skull extent, false-positive/missing vessels and tumor-distorted anatomy need
   review. The MRI head envelope is only a coarse anatomical proposal.
-* FastSurfer, SynthSeg v2 QC and the glioma adapter require appropriate inputs,
+* FastSurfer, SynthSeg v2 QC and the single-sequence Raidionics glioma adapter require appropriate inputs,
   assets and qualification. DICOM/tract/functional imports have software tests;
   they have not been validated on a broad clinical cohort here.
 * The local implementation caps each array at 512 MiB, 64 series and 512 layer

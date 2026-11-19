@@ -188,7 +188,7 @@ test('reference presentation depends on material, preserves camera and never cha
  const rows=[{id:1,name:'unusual tissue',material:'soft_tissue',color:'#aaaaaa',target:false},{id:2,name:'network',material:'vessel',color:'#bbbbbb',target:false}];
  const before=JSON.stringify(rows),camera={position:[1,2,3],target:[0,0,0],up:[0,1,0]};
  const settings=rehearsalPresentation(rows,{camera});
- assert.equal(settings.layerColor.network,'#e54491');assert.equal(settings.layerOpacity['unusual tissue'],.12);
+ assert.equal(settings.layerColor.network,'#b65f78');assert.equal(settings.layerOpacity['unusual tissue'],.12);
  assert.equal(settings.volumeRendering.enabled,false);assert.equal(settings.camera,camera);
  assert.equal(JSON.stringify(rows),before);
 });

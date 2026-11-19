@@ -2,6 +2,70 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {studyLayerDisplayKind,nextScanState,scanLabel,studyTimepoint,migrateSkullView,anatomyPresentation,defaultAnatomyPresentation,sourceEvidenceLabel} from '../src/native-study-state.ts';
 import {checkedViewerSettings} from '../src/workspace-view-settings.ts';
+import {cranialComposition,initialNativeLayers,presentationLayers} from '../src/native-study-state.ts';
+
+test('an independent or estimated scan cannot drive the reference scan presentation',()=>{
+  const layers=['ct','registered','estimated','independent'].map(source_series=>({source_series}));
+  const doc={reference_series:'ct',transforms:{registered:{status:'source-provided'},estimated:{status:'estimated'}},layers};
+  assert.deepEqual(presentationLayers(doc,'ct'),layers.slice(0,2));
+  assert.deepEqual(presentationLayers(doc,'independent'),[layers[3]]);
+  const displayed=['reference','source-provided','estimated','unavailable'].map((alignment,i)=>({alignment,seriesId:layers[i].source_series}));
+  assert.deepEqual(presentationLayers(doc,'ct',displayed),layers.slice(0,3));
+  assert.deepEqual(presentationLayers(doc,'estimated',displayed),layers.slice(0,3));
+  assert.deepEqual(presentationLayers(doc,'independent',displayed),[layers[3]]);
+});
+
+test('an acquired angiogram reveals its own artery inside the skull and brain context',()=>{
+  const layers=[{id:'cow',kind:'artery',source_series:'cta'},{id:'skull',kind:'skull'},{id:'brain',kind:'brain'}];
+  const render=(modality,source)=>anatomyPresentation({},layers,'segmentation',modality,source);
+  const view=render('CTA','cta');
+  assert.equal(view.skullMode,'transparent');
+  assert.equal(view.layerOpacity.cow,1);
+  assert.ok(view.layerOpacity.skull<.1&&view.layerOpacity.brain<.2);
+  assert.equal(render('CT','cta').skullMode,'exterior');
+  assert.equal(render('MRA','other-scan').skullMode,'exterior');
+});
+
+test('a separate angiogram opens its own layers when initial layers describe the reference scan',()=>{
+  const study={reference_series:'ct',transforms:{ct:{status:'reference'}},display:{initial_layers:['skull']},
+    layers:[{id:'skull',source_series:'ct',kind:'skull'},{id:'artery',source_series:'mra',kind:'artery'},
+      {id:'vein',source_series:'mra',kind:'vein'}]};
+  assert.deepEqual(initialNativeLayers(study,'mra',true).visible,{skull:false,artery:true,vein:true});
+  assert.deepEqual(initialNativeLayers(study,'ct',false).visible,{skull:true,artery:false,vein:false});
+  study.display.initial_layers.push('artery');
+  assert.deepEqual(initialNativeLayers(study,'mra',true).visible,{skull:false,artery:true,vein:false});
+  study.display.initial_layers=[];
+  assert.deepEqual(initialNativeLayers(study,'mra',true).visible,{skull:false,artery:false,vein:false});
+});
+
+test('scan and anatomy presets preserve the study colors of supplied arterial classes',()=>{
+  const branch={id:'left-ica',kind:'artery',source_series:'ct',color:'#278c69',label_value:6,
+    provenance:{kind:'supplied_annotation',publisher_class_id:6}};
+  const layers=[branch,{...branch,id:'union',provenance:{kind:'supplied_annotation'}},
+    {...branch,id:'mismatched',label_value:7},{...branch,id:'estimate',provenance:{kind:'model',publisher_class_id:6}}];
+  for(const mode of ['scan','segmentation','vascular']){
+    const result=anatomyPresentation({},layers,mode,'CTA','ct');
+    assert.deepEqual(result.layerColor,{'left-ica':'#278c69',union:'#b75848',mismatched:'#b75848',estimate:'#b75848'});
+  }
+});
+
+test('cortical presentation requires an identified cortical label and preserves target and source data',()=>{
+  const siam=value=>({kind:'brain-region',label_ontology:{value},provenance:{model:'siam-v2'}});
+  const cortex={id:'cortex',...siam(1)},deep={id:'deep',...siam(6)};
+  const skull={id:'skull',kind:'skull'},tumor={id:'target',kind:'tumor'};
+  assert.equal(studyLayerDisplayKind(deep),'brain-region');
+  assert.equal(studyLayerDisplayKind({...cortex,provenance:{model:'other'}}),'brain-region');
+  for(const value of [3,42])assert.equal(studyLayerDisplayKind({...cortex,provenance:{model:'fastsurfer'},label_ontology:{value}}),'gray-matter');
+  const settings={layerOpacity:{skull:1},camera:{position:[-50,20,0]}};
+  const before=structuredClone(settings);
+  const anatomy=anatomyPresentation(settings,[cortex,deep,skull,tumor],'segmentation','T1CE');
+  assert.equal(anatomy.skullMode,'transparent');
+  assert.ok(anatomy.layerOpacity.cortex>anatomy.layerOpacity.skull);
+  assert.equal(anatomy.layerColor.target,'#65bfd3');
+  assert.deepEqual(anatomy.camera,settings.camera);
+  assert.deepEqual(settings,before);
+  assert.equal(anatomyPresentation(settings,[deep,skull,tumor],'segmentation','CT').skullMode,'exterior');
+});
 
 test('structural contrast retains study angiography availability and derived diffusion status',()=>{
   const series=[{modality:'T1'},{modality:'MRA'},{modality:'DTI FA diagnostic'}];
@@ -161,4 +225,30 @@ test('patient 3D camera and density follow linked slices while unaligned scans k
   assert.deepEqual(linked.settings.volumeRendering,current.settings.volumeRendering);
   assert.equal(linked.settings.contrast,2);
   assert.deepEqual(nextScanState(current,saved,false).cursor,saved.cursor);
+});
+
+
+test('cranial views share the source camera and contours and restrict layers to admitted evidence',()=>{
+  const layers=[['gray','cerebral-cortex'],['cerebellum','cerebellar-cortex'],['head','head-envelope'],
+    ['target','tumor'],['other-target','tumor'],['csf','ventricles'],['veins','vein'],['region','brain-region']].map(
+    ([id,kind])=>({id,kind,color:'#6283ac'}));
+  const ids=[...layers.map(layer=>layer.id),'tract','independent'];
+  const camera={position:[-400,0,0],target:[0,0,0],up:[0,0,1]};
+  const initial={cursor:[9,3,4],visible:{tract:true},settings:{camera,sliceOverlay:'fill',sliceFraming:{fit:'image',zoom:1.5},clipping:{enabled:false}}};
+  const visible=view=>Object.keys(view.visible).filter(id=>view.visible[id]);
+  const plan=cranialComposition(initial,layers,ids,'planning','target','veins');
+  assert.deepEqual(visible(plan),['gray','cerebellum','head','target']);
+  const inspect=cranialComposition(plan,layers,ids,'inspection','target','region');
+  assert.deepEqual(visible(inspect),['gray','cerebellum','head','target','region']);
+  assert.ok(inspect.settings.layerOpacity.gray<plan.settings.layerOpacity.gray);
+  assert.ok(inspect.settings.layerOpacity.head>plan.settings.layerOpacity.head);
+  assert.ok(inspect.settings.layerOpacity.region>inspect.settings.layerOpacity.gray);
+  const fallback=cranialComposition(plan,layers,ids,'inspection','target','gray');
+  assert.equal(fallback.visible.csf,true);
+  for(const view of [plan,inspect]){
+    assert.equal(view.settings.camera,camera);assert.equal(view.settings.sliceOverlay,'contour');
+    assert.equal(view.settings.sliceFraming,initial.settings.sliceFraming);assert.equal(view.settings.clipping,initial.settings.clipping);
+    assert.equal(view.visible.independent,false);
+  }
+  assert.deepEqual(initial.visible,{tract:true});
 });

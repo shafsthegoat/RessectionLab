@@ -128,7 +128,8 @@ def test_source_owned_proposer_changes_stage_and_ranks_only_existing_routes(monk
     monkeypatch.setattr(surgical_scene, 'original_target_memberships', lambda _: {'original': np.array([1, 3])})
     scene = SimpleNamespace(regions=[{'id': 2, 'target': True}], labels=np.array([0, 2, 0, 2]),
         points=lambda ids: np.array([[float(i), 0., 0.] for i in ids]))
-    current = SimpleNamespace(scene=scene, state_id='actual-prefix', state={'removed': []})
+    current = SimpleNamespace(scene=scene, state_id='actual-prefix', state={'removed': [], 'debris': {},
+        'slots': {'left': {'instrument': 'cusa'}}})
     p = declaration()
     for i in range(8):
         route = copy.deepcopy(p['workRoutes'][0]);route['id'] = 'declared-' + str(i)
@@ -143,6 +144,9 @@ def test_source_owned_proposer_changes_stage_and_ranks_only_existing_routes(monk
     work = propose(current)
     assert len(work) == 6 and all(x['kind'] == 'cusa' for x in work)
     assert all(x['motion'] in [r['motion'] for r in p['workRoutes']] for x in work)
+    current.state['removed'] = [1]
+    current.state['slots']['left']['instrument'] = 'frazier_suction'
+    assert propose(current) == []  # Remaining target after a terminal cleanup and exit.
     current.state['removed'] = [1, 3]
     assert propose(current) == [] and p == before
 

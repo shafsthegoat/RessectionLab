@@ -11,7 +11,7 @@ import nibabel as nib
 import numpy as np
 import pytest
 
-from resectionlab import anatomy_model_identity, anatomy_preparation, poc_models, poc_worker_supervision
+from resectionlab import anatomy_model_identity, anatomy_preparation, poc_ct_recovery, poc_models, poc_worker_supervision
 
 
 @pytest.fixture
@@ -23,6 +23,9 @@ def fake_runtime(tmp_path, monkeypatch):
     weights = repository / "data/models/synthstrip-v1/synthstrip.1.pt"
     weights.parent.mkdir(parents=True)
     weights.write_bytes(b"fixture; no model execution")
+    ct_weights = repository / "data/models/poc-totalsegmentator/weights/fixture/checkpoint_final.pth"
+    ct_weights.parent.mkdir(parents=True)
+    ct_weights.write_bytes(b"fixture CT weights")
     runtime = tmp_path / "fake-runtime"
     runtime.write_text(f"#!{sys.executable}\n" + r'''
 import json
@@ -32,6 +35,12 @@ import sys
 from pathlib import Path
 
 request = json.loads(Path(sys.argv[-1]).read_text())
+if request["model_id"] == "totalsegmentator-skull":
+    output = Path(request["output"])
+    for name in ("brain_mask.nii.gz", "skull_mask.nii.gz"):
+        shutil.copyfile(request["image"], output / name)
+    (output / "worker.json").write_text(json.dumps({"compute_seconds": 0.001, "runtime_versions": {}}))
+    raise SystemExit(0)
 os.write(1, b"first worker diagnostic\n")
 for _ in range(144):
     os.write(1, b"x" * (64 * 1024))
@@ -48,6 +57,126 @@ shutil.copyfile(request["image"], Path(request["output"]) / "brain_mask.nii.gz")
     for key in ("RESSECTIONLAB_MODEL_ROOT", "RESSECTIONLAB_DATA_ROOT", "RESSECTIONLAB_POC_OUTPUT_ROOT"):
         monkeypatch.delenv(key, raising=False)
     return image, output
+
+
+def _alive(pid):
+    result = subprocess.run(["ps", "-p", str(pid), "-o", "stat="], text=True, capture_output=True)
+    state = result.stdout.strip()
+    return bool(state) and not state.startswith("Z")
+
+
+@pytest.mark.parametrize("exit_code,inherit_pipe", [(0, True), (19, True), (0, False)])
+def test_exited_worker_reaps_helpers_without_reclassifying_exit(tmp_path, exit_code, inherit_pipe):
+    child_pid = tmp_path / "child.pid"
+    child = '''
+import os, signal, sys, time
+from pathlib import Path
+signal.signal(signal.SIGTERM, signal.SIG_IGN)
+Path(sys.argv[1]).write_text(str(os.getpid()))
+time.sleep(60)
+'''
+    parent = '''
+import subprocess, sys, time
+from pathlib import Path
+path, code, status, inherit = sys.argv[1:]
+redirect = None if inherit == "True" else subprocess.DEVNULL
+subprocess.Popen([sys.executable, "-c", code, path], stdout=redirect, stderr=redirect)
+while not Path(path).exists():
+    time.sleep(.01)
+print("leader-completed", flush=True)
+raise SystemExit(int(status))
+'''
+    log = tmp_path / "worker.log"
+    result = poc_worker_supervision.supervise_worker(
+        [sys.executable, "-c", parent, str(child_pid), child, str(exit_code), str(inherit_pipe)],
+        os.environ, log, timeout=5, cancelled=lambda: False)
+    assert result.exit_code == exit_code and result.failure is None
+    assert "leader-completed" in log.read_text()
+    assert ("inherited log pipe" in log.read_text()) is inherit_pipe
+    pid = int(child_pid.read_text())
+    deadline = time.monotonic() + 2
+    while time.monotonic() < deadline and _alive(pid):
+        time.sleep(.02)
+    assert not _alive(pid)
+
+
+def _run_ct(image, output):
+    return poc_models._run(image, "ct-case", "totalsegmentator-skull", "CT", device="cpu",
+                           timeout=10, output_root=output)
+
+
+def test_historical_ct_pipe_failure_recovers_exact_source_copy(fake_runtime, monkeypatch):
+    image, output = fake_runtime
+    original = _run_ct(image, output)
+    receipt = next(output.rglob("inference.json"))
+    original.update(status="failed", failure="worker_output_not_closed", outputs=[],
+                    launcher_sha256=anatomy_model_identity.PRE_RECOVERY_LAUNCHER_SHA)
+    receipt.write_text(json.dumps(original))
+    previous = receipt.read_bytes()
+    copied = image.with_name("relocated-exact-source.nii.gz")
+    copied.write_bytes(image.read_bytes())
+    monkeypatch.setattr(poc_worker_supervision.subprocess, "Popen",
+                        lambda *a, **k: pytest.fail("Historical zero-exit attempt should be reused"))
+    observed = _run_ct(copied, output)
+    assert observed["status"] == "succeeded" and observed["failure"] is None
+    assert observed["recovery"]["status"] == "validated_after_log_pipe_cleanup_failure"
+    assert observed["recovery"]["original_receipt_sha256"] == poc_models.sha256(receipt)
+    assert [row["foreground_voxels"] for row in observed["outputs"]] == [64, 64]
+    assert receipt.read_bytes() == previous
+
+
+@pytest.mark.parametrize("empty", (False, True))
+def test_completed_ct_checkpoint_survives_interrupted_validation(fake_runtime, monkeypatch, empty):
+    image, output = fake_runtime
+    if empty:
+        nib.save(nib.Nifti1Image(np.zeros((4, 4, 4), np.uint8), np.eye(4)), image)
+
+    def interrupt(*args, **kwargs):
+        raise KeyboardInterrupt
+
+    with monkeypatch.context() as scoped:
+        scoped.setattr(poc_ct_recovery, "ct_masks", interrupt)
+        with pytest.raises(KeyboardInterrupt):
+            _run_ct(image, output)
+    receipt = next(output.rglob("inference.json"))
+    assert json.loads(receipt.read_text())["status"] == "pending_validation"
+    monkeypatch.setattr(poc_worker_supervision.subprocess, "Popen",
+                        lambda *a, **k: pytest.fail("Completed attempt must not launch twice"))
+    recovered = _run_ct(image, output)
+    assert recovered["recovery"]["status"] == "validated_from_completed_worker_checkpoint"
+    assert [row["foreground_voxels"] for row in recovered["outputs"]] == ([0, 0] if empty else [64, 64])
+
+
+@pytest.mark.parametrize("problem", ("empty", "different-grid", "units", "missing", "exit", "unknown-launcher"))
+def test_historical_ct_recovery_refuses_incomplete_or_unbound_results(fake_runtime, problem):
+    image, output = fake_runtime
+    record = _run_ct(image, output)
+    receipt = next(output.rglob("inference.json"))
+    record.update(status="failed", failure="worker_output_not_closed", outputs=[],
+                  launcher_sha256=anatomy_model_identity.PRE_RECOVERY_LAUNCHER_SHA)
+    mask = receipt.with_name("brain_mask.nii.gz")
+    if problem == "empty":
+        nib.save(nib.Nifti1Image(np.zeros((4, 4, 4), np.uint8), np.eye(4)), mask)
+    elif problem == "different-grid":
+        affine = np.eye(4)
+        affine[0, 3] = 1
+        nib.save(nib.Nifti1Image(np.ones((4, 4, 4), np.uint8), affine), mask)
+    elif problem == "units":
+        different = nib.Nifti1Image(np.ones((4, 4, 4), np.uint8), np.eye(4))
+        different.header.set_xyzt_units("meter")
+        nib.save(different, mask)
+    elif problem == "missing":
+        mask.unlink()
+    elif problem == "exit":
+        record["exit_code"] = 1
+    else:
+        record["launcher_sha256"] = "0" * 64
+    receipt.write_text(json.dumps(record))
+    with pytest.raises(ValueError):
+        poc_ct_recovery.recover_ct_worker(
+            receipt, cache_root=output, image=image, source_hash=poc_models.sha256(image),
+            modality="CT", model=poc_models.MODEL_CONFIG["totalsegmentator-skull"],
+            expected_identity=record["identity"], expected_weights=record["weights"])
 
 
 @pytest.mark.parametrize("case", ["finished", "failed"])
@@ -108,11 +237,6 @@ time.sleep(60)
             raise subprocess.CalledProcessError(1, "ps")
         return 0, None
 
-    def alive(pid):
-        result = subprocess.run(["ps", "-p", str(pid), "-o", "stat="], text=True, capture_output=True)
-        state = result.stdout.strip()
-        return bool(state) and not state.startswith("Z")
-
     monkeypatch.setattr(poc_worker_supervision, "_family_memory", memory)
     log = tmp_path / "worker.log"
 
@@ -129,9 +253,9 @@ time.sleep(60)
     assert log.read_text() == "starting child\n"
     pids = [int(path.read_text()) for path in (leader_pid, child_pid)]
     deadline = time.monotonic() + 2
-    while time.monotonic() < deadline and any(alive(pid) for pid in pids):
+    while time.monotonic() < deadline and any(_alive(pid) for pid in pids):
         time.sleep(0.02)
-    assert not any(alive(pid) for pid in pids)
+    assert not any(_alive(pid) for pid in pids)
 
 
 def test_supervision_only_compatibility_is_bound_to_exact_audited_sources(monkeypatch):

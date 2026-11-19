@@ -3,6 +3,9 @@
 All entries below are development evidence. No final held-out patient benchmark
 has been run. The patient remains the independent unit for population claims.
 
+Historical artifact paths in this log can be recovered through the
+[restore guide](docs/local-storage-ledger.md#restore-retired-tracked-research-artifacts).
+
 ## October 4, 2026 — local runtime probe
 
 `scripts/benchmark_runtime.py` ran on the Apple M5 with two PyTorch intra-op

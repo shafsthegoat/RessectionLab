@@ -119,7 +119,7 @@ def test_review_rejects_large_residual_and_preserves_automatic_provenance(patien
     c = patient; c.add_series(tmp_path/'mri.nii.gz', series_id='ct', modality='CT')
     c.set_registration('ct', np.eye(4), status='unreviewed', method='test')
     c.document['transforms']['ct']['quality'] = {'status': 'warning', 'warnings': ['test']}
-    pts = [[0, 0, 0], [1, 0, 0], [0, 1, 0]]
+    pts = world(np.asarray(c.series(c.document["reference_series"])["affine"]), [[4, 4, 4], [8, 4, 4], [4, 8, 4]]).tolist()
     with pytest.raises(ValueError, match='exceeds 2 mm'):
         review_registration(c, 'ct', pts, (np.array(pts)+10).tolist(), 'test')
     assert c.document['transforms']['ct']['status'] == 'unreviewed'

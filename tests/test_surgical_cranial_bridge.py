@@ -114,7 +114,13 @@ def test_existing_plan_command_uses_real_adapter_and_preserves_source_on_stop(ro
             acknowledgeResearchUnknowns=True, planningHorizon=1, beamWidth=3)
         assert result['branchId'] == 'main' and result['position'] == 0
         assert result['cranialPlanning']['decision'] == 'STOP'
-        assert result['cranialPlanning']['alternatives'] == []
+        alternatives = result['cranialPlanning']['alternatives']
+        assert {row['rootId'] for row in alternatives} == {r['id'] for r in rows}
+        assert result['cranialPlanning']['selectedBranchId'] in {row['branchId'] for row in alternatives}
+        for row in alternatives:
+            assert row['nativeActions'] == 0 and row['wholeExitComplete']
+            assert row['endpointAssessment']['classification'] == 'valid-stop-with-residual'
+            assert row['ledger']['wholeNonTargetRemovedMm3'] == row['ledger']['modeledElapsedSeconds'] == 0
         assert result['cranialPlanning']['admittedPatientTask'] is False
         assert result['cranialPlanning']['cost']['physicalCalls'] > 0
         saved = thaw_json(owner.cases[case.semantic_hash].artifacts)['surgical_toolbox']

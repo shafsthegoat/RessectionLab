@@ -172,7 +172,8 @@ def worker(request: dict) -> None:
         raise ValueError("MRI inputs must be finite and nonempty")
     tensor = NormalizeIntensity(nonzero=True, channel_wise=True)(values)[None]
     del values
-    config = json.loads((MODEL_DIR / "configs/inference.json").read_text())["network_def"]
+    bundle = Path(request["weights"]["path"]).parent.parent
+    config = json.loads((bundle / "configs/inference.json").read_text())["network_def"]
     if config.pop("_target_") != "SegResNet":
         raise ValueError("Unexpected network architecture")
     model = SegResNet(**config)

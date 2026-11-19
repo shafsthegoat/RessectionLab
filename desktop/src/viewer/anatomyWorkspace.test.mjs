@@ -148,6 +148,9 @@ test('volume framebuffer restores viewport/clear state, bounds workload and reta
   assert.equal(resized,0,'quality changes must reuse the GPU attachments');
   r.configure({enabled:false},'CT',null);const before=renders.length;
   r.render(scene,camera,2000,1000,false,()=>restored++);assert.equal(renders.length,before+1);assert.equal(renders.at(-1).scene,scene);
+  r.render(scene,camera,2000,1000,false,()=>restored++,360,true);
+  assert.equal(r.material.uniforms.uDrawScalar.value,false);
+  assert.equal(renders.at(-1).scene,r.blitScene);
   let disposed=0;r.sceneTarget.addEventListener('dispose',()=>disposed++);r.volumeTarget.addEventListener('dispose',()=>disposed++);
   r.texture.addEventListener('dispose',()=>disposed++);r.transfer.addEventListener('dispose',()=>disposed++);r.dispose();assert.equal(disposed,4);
   assert.equal(resized,4,'both quality levels release their attachments');

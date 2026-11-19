@@ -10,6 +10,7 @@ import copy
 import math
 import numpy as np
 
+from .surgical_vascular_graph import maximum_interface_deficits
 from .core import array_digest, semantic_digest
 from .surgical_modeled_outcomes import summarize_engine_outcomes
 
@@ -174,11 +175,7 @@ def _values(engine):
     if 'vascularGraphV1' in engine.state:
         vascular = metrics['vesselPhysicsV2']
         result['bloodGeneratedMm3'] = vascular['generatedMm3']
-        regions = vascular['regions']
-        if regions:
-            # Maximum declared interface deficit, not a sum of unknown/overlapping territories.
-            result['supplyDeficitSeconds'] = max(r['supplyDeficitSeconds'] for r in regions.values())
-            result['drainageDeficitSeconds'] = max(r['drainageDeficitSeconds'] for r in regions.values())
+        result.update(maximum_interface_deficits(vascular['regions']))
     elif any(r['material'] == 'vessel' and np.any(engine.scene.labels == r['id']) for r in engine.scene.regions):
         if 'vesselsV2' in engine.state:
             result['bloodGeneratedMm3'] = metrics['vesselPhysicsV2']['generatedMm3']

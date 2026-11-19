@@ -164,6 +164,11 @@ def worker(request):
 def _run(image: Path, case: str, model_id: str, modality: str, device: str="mps", timeout: int=1800,
         *, experimental_t1ce=False, blend="constant", threshold=.5, cancelled=lambda: False,
         output_root: Path | None = None):
+    from .data_root import atomic_json
+    from .poc_ct_recovery import PIPE_FAILURE, PENDING_VALIDATION, ct_masks, ct_worker_completion, recover_ct_worker
+
+    if cancelled():
+        raise InterruptedError("Inference cancelled before launch")
     image = image.resolve()
     model = copy.deepcopy(MODEL_CONFIG[model_id])
     if model_id == "vesselfm-base":
@@ -212,18 +217,33 @@ def _run(image: Path, case: str, model_id: str, modality: str, device: str="mps"
     output = cache_root / case / model_id / key
     # Cancelled/failed stages are retained. Resume starts a fresh attempt and
     # searches successful attempts first; it never overwrites historical logs.
+    recoverable = []
     for attempt in [output,*sorted(output.parent.glob(key+"-retry-*"))]:
         cached=attempt/"inference.json"
         if not cached.exists():
             continue
         record=json.loads(cached.read_text())
         if record.get("status") != "succeeded":
+            if model_id == "totalsegmentator-skull" and record.get("failure") in {PIPE_FAILURE, PENDING_VALIDATION}:
+                recoverable.append(cached)
             continue
         members=[*record["outputs"],*([record["probability"]] if record.get("probability") else [])]
         if not all(Path(x["path"]).exists() and sha256(Path(x["path"]))==x["sha256"] for x in members):
             raise ValueError(f"Successful inference cache changed: {attempt}")
         print(json.dumps({"cache_hit":True,"record":str(cached)}))
         return record
+    for cached in reversed(recoverable):
+        try:
+            record = recover_ct_worker(cached, cache_root=cache_root, image=image, source_hash=source_hash,
+                                       modality=modality, model=model, expected_identity=identity,
+                                       expected_weights=weights)
+        except ValueError as error:
+            print(json.dumps({"recovery_rejected": str(cached), "reason": str(error)}), flush=True)
+        else:
+            print(json.dumps({"cache_hit": True, "recovered": True, "record": str(cached)}), flush=True)
+            return record
+    if cancelled():
+        raise InterruptedError("Inference cancelled before launch")
     if output.exists():
         output=output.with_name(key+"-retry-"+datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%f"))
     record_path = output / "inference.json"
@@ -251,8 +271,30 @@ def _run(image: Path, case: str, model_id: str, modality: str, device: str="mps"
                                measure_footprint=measure_footprint)
     failure = process.failure
     reference = nib.load(image)
+    worker_path = output / "worker.json"
+    record = {"schema": "resectionlab-poc-inference-v1", "exit_code": process.exit_code,
+              "created_at": datetime.now(timezone.utc).isoformat(), "case": case, "model_id": model_id,
+              "model": model, "weights": weights,
+              "input": {"path": str(image), "sha256": source_hash, "modality": modality,
+                        "shape": list(reference.shape), "affine_ras_mm": reference.affine.tolist()},
+              "cache_key": key, "identity": identity, "launcher_sha256": launcher_hash, "device": device,
+              "elapsed_seconds": time.monotonic()-start,
+              "peak_process_family_rss_bytes_sampled": process.peak_rss, "log_truncated": process.log_truncated,
+              "memory_caveat": "RSS sampled every 0.5 s; MPS allocated memory separately sampled where available; neither is exact peak",
+              "host": platform.platform(), "probability": None, "clinical_validation": "none", "command": command}
     outputs = []
-    if process.exit_code == 0 and not failure:
+    if model_id == "totalsegmentator-skull" and process.exit_code == 0 and not failure:
+        try:
+            record["worker"] = ct_worker_completion(output, record["elapsed_seconds"])
+            # Preserve the observed zero exit before the potentially slow
+            # native mask reads. Resuming still validates every artifact.
+            atomic_json(record_path, {**record, "status": "pending_validation",
+                                      "failure": PENDING_VALIDATION, "outputs": []})
+            outputs = ct_masks(output, reference, require_nonempty=False)
+        except (OSError, ValueError, nib.filebasedimages.ImageFileError) as error:
+            failure = "invalid_ct_worker_artifacts"
+            record["validation_error"] = str(error)
+    elif process.exit_code == 0 and not failure:
         # ExFAT stores Finder extended attributes in AppleDouble sidecars.
         # They share the NIfTI suffix but are not image observations.
         for mask_path in sorted(p for p in output.glob("*_mask.nii.gz") if not p.name.startswith("._")):
@@ -268,27 +310,19 @@ def _run(image: Path, case: str, model_id: str, modality: str, device: str="mps"
     if not outputs:
         failure = failure or (f"worker_exit_{process.exit_code}" if process.exit_code else "no_saved_masks")
     probability = output / 'vessels_probability.nii.gz'
-    probability_record = None if not probability.exists() else {"path": str(probability), "sha256": sha256(probability), "meaning": "uncalibrated_model_score"}
-    record = {"schema": "resectionlab-poc-inference-v1", "status": "failed" if failure else "succeeded",
-              "failure": failure, "exit_code": process.exit_code, "created_at": datetime.now(timezone.utc).isoformat(),
-              "case": case, "model_id": model_id, "model": model, "weights": weights,
-              "input": {"path": str(image), "sha256": source_hash, "modality": modality,
-                        "shape": list(reference.shape), "affine_ras_mm": reference.affine.tolist()},
-              "cache_key": key, "identity": identity, "launcher_sha256": launcher_hash, "device": device, "elapsed_seconds": time.monotonic()-start,
-              "peak_process_family_rss_bytes_sampled": process.peak_rss, "log_truncated": process.log_truncated,
-              "memory_caveat": "RSS sampled every 0.5 s; MPS allocated memory separately sampled where available; neither is exact peak",
-              "host": platform.platform(), "outputs": outputs, "probability": probability_record, "clinical_validation": "none", "command": command}
+    if probability.exists():
+        record["probability"] = {"path": str(probability), "sha256": sha256(probability), "meaning": "uncalibrated_model_score"}
+    record.update(status="failed" if failure else "succeeded", failure=failure, outputs=outputs,
+                  elapsed_seconds=time.monotonic()-start)
     if measure_footprint:
         record["memory_guard"] = {"metric": identity["memory_guard"], "limit_bytes": MEMORY_LIMIT_BYTES,
                                   "peak_family_phys_footprint_bytes_sampled": process.peak_footprint,
                                   "peak_family_rss_bytes_sampled": process.peak_rss}
-    worker_path = output / "worker.json"
-    if worker_path.exists():
+    if model_id != "totalsegmentator-skull" and worker_path.exists():
         record["worker"] = json.loads(worker_path.read_text())
     samples = mps_samples(log_path)
     if samples is not None:
         record["synthstrip_mps_allocator_samples"] = samples
-    from .data_root import atomic_json
     atomic_json(record_path, record)
     print(json.dumps({"status": record["status"], "record": str(record_path), "elapsed_seconds": record["elapsed_seconds"]}))
     if failure == "cancelled":

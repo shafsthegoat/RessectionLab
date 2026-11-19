@@ -45,8 +45,27 @@ def call(session, operation, args):
     return session.execute(operation, args, _Request(operation), lambda *_: None)
 
 
-def test_comparison_uses_observation_only_policy_and_shared_geometry(tmp_path, monkeypatch):
-    collection, before, after = make_pair(tmp_path)
+def generated_arm(with_vessel_edit, prefix, check=lambda: None):
+    from resectionlab.surgical_anatomy_comparison import _evaluate_arm
+    from resectionlab.surgical_rl_env import RLConfig
+    from resectionlab.surgical_rl_rewards import RewardConfig
+    from resectionlab.surgical_scene import SurgicalScene
+    from resectionlab.surgical_environment import standardize
+    labels = np.zeros((24, 24, 24), np.uint16)
+    labels[6:18, 6:18, 5:18] = 1
+    labels[10:14, 10:14, 10:14] = 2
+    labels[10, 8, 2:14] = 3
+    if with_vessel_edit:
+        labels[10, 9, 2:14] = 3
+    regions = [{'id': i, 'name': name, 'material': material, 'target': name == 'target'}
+               for i, name, material in [(1, 'context', 'soft_tissue'), (2, 'target', 'tumor'), (3, 'vessel', 'vessel')]]
+    scene = standardize(SurgicalScene(labels, np.eye(4), regions, {'kind': 'generated-control'}, {}))
+    config = RLConfig(max_steps=80, max_seconds=120., max_healthy_removed_mm3=100.,
+                      require_critical_coverage=False, local_spacing_mm=1.)
+    return _evaluate_arm(scene, prefix, 1, config, RewardConfig(), check)
+
+
+def test_generated_comparison_uses_observation_only_policy_and_shared_geometry(monkeypatch):
     import resectionlab.surgical_anatomy_comparison as module
     original = module.candidates
     seen = []
@@ -61,24 +80,17 @@ def test_comparison_uses_observation_only_policy_and_shared_geometry(tmp_path, m
     prefix = [{'slot': 'left', 'operation': 'exchange', 'instrument': 'cusa', 'duration': .1},
               {'slot': 'left', 'operation': 'place', 'duration': .1, 'parameters': {'radiusMm': .6},
                'pose': {'position': [10., 10., -2.], 'quaternion': [0., 0., 0., 1.]}}]
-    report = compare_anatomy(before, after, prefix=prefix)
-    assert len(seen) == 2
-    assert report['controls']['training'] is False
-    assert report['maskChanges']['vessels']['addedCells'] == 12
-    assert report['maskChanges']['brain']['changedCells'] == 0
-    assert report['delta']['matchedPrefixLocalChannels']['material'] > 0
-    assert report['before']['targetVolumeMm3'] == report['after']['targetVolumeMm3']
-    assert report['after']['sourceLayers']['vessels']['reviewStatus'] != 'reviewed'
-    assert len(report['before']['policy'][0]['candidateOutcomes']) == 9
-    assert report['controls']['prefix'] == prefix
-    json.dumps(report, allow_nan=False)
+    baseline, before = generated_arm(False, prefix)
+    revised, after = generated_arm(True, prefix)
+    assert len(seen) == 2 and not np.array_equal(baseline['local'], revised['local'])
+    assert len(before['policy'][0]['candidateOutcomes']) == len(after['policy'][0]['candidateOutcomes']) == 9
+    assert all(row['status'] == 'accepted' for row in after['prefixOutcomes'])
+    json.dumps(after, allow_nan=False)
 
 
-def test_anatomy_comparison_forwards_cancellation_inside_prefix_action(tmp_path, monkeypatch):
+def test_generated_comparison_forwards_cancellation_inside_prefix_action(monkeypatch):
     from resectionlab.desktop_bridge import BridgeError
     from resectionlab.surgical_engine import SurgicalEngine
-    _, before, after = make_pair(tmp_path)
-    originals = [thaw_json(entry.artifacts) for entry in (before, after)]
     request = _Request('cancel-anatomy-prefix'); calls = 0; original = SurgicalEngine._substep
     def substep(self, *args):
         nonlocal calls
@@ -87,9 +99,8 @@ def test_anatomy_comparison_forwards_cancellation_inside_prefix_action(tmp_path,
         return result
     monkeypatch.setattr(SurgicalEngine, '_substep', substep)
     with pytest.raises(BridgeError) as exc:
-        compare_anatomy(before, after, prefix=[dict(slot='left', operation='inspect', duration=.6)], check=request.check)
+        generated_arm(False, [dict(slot='left', operation='inspect', duration=.6)], check=request.check)
     assert exc.value.code == 'CANCELLED' and calls == 2
-    assert [thaw_json(entry.artifacts) for entry in (before, after)] == originals
 
 
 def test_ipc_comparison_does_not_mutate_saved_desktop_timeline(tmp_path):
@@ -98,9 +109,11 @@ def test_ipc_comparison_does_not_mutate_saved_desktop_timeline(tmp_path):
     try:
         hashes = [session._install_case(entry.case, entry.artifacts, _Request('loadCase'))['caseHash'] for entry in (before, after)]
         original = [thaw_json(session._get_case(key).artifacts) for key in hashes]
-        report = call(session, 'compareSurgicalAnatomy', {'beforeCaseHash': hashes[0], 'afterCaseHash': hashes[1]})
-        assert report['before']['caseHash'] == hashes[0]
-        assert report['after']['caseHash'] == hashes[1]
+        with pytest.raises(ValueError, match='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'):
+            call(session, 'compareSurgicalAnatomy', {'beforeCaseHash': hashes[0], 'afterCaseHash': hashes[1]})
+        from resectionlab.surgical_anatomy_comparison import _bound_inputs
+        _, _, changes, _ = _bound_inputs(before, after, ['vessels'])
+        assert changes['vessels']['addedCells'] == 12 and changes['brain']['changedCells'] == 0
         assert [thaw_json(session._get_case(key).artifacts) for key in hashes] == original
     finally:
         session.close()

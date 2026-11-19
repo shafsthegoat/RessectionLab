@@ -1382,7 +1382,9 @@ class SurgicalEngine:
         if 'deformation' in self.state:
             from .surgical_physics_v2 import raster
             moved.extend(raster(self))
+        from .surgical_sequence_outcomes import original_target_residual_mm3
         return {**self.observe(_state_id=identity), 'scene': self.scene.descriptor(), 'catalog': catalog(),
+                'originalTargetResidualMm3': original_target_residual_mm3(self),
                 'geometryRevision': identity, 'removed': self.state['removed'][:], 'moved': moved, 'cuts': copy.deepcopy(self.state['cuts']),
                 'holds': copy.deepcopy(self.state['holds']),
                 'contact': list(map(int, self.state['contact'])), 'thermal': copy.deepcopy(self.state['thermal']),
@@ -1417,7 +1419,7 @@ class SurgicalEngine:
                 'checkpoint': {'position': len(self.actions), 'stateId': self.state_id, 'state': copy.deepcopy(self.state)}}
 
     @classmethod
-    def restore(cls, scene, record, *, check=None, use_cache=False, force_verify=False, verified_cache=None):
+    def restore(cls, scene, record, *, check=None, use_cache=False, force_verify=False, verified_cache=None, on_boundary=None):
         if check is not None: check()
         if record['schema'] != SCHEMA or record['sceneId'] != scene.identity: raise ValueError('Saved scene or engine version differs')
         from .surgical_procedure_policy import PROPERTY as PROCEDURE_PROPERTY, procedure_admission
@@ -1434,8 +1436,9 @@ class SurgicalEngine:
         if inspection_only(scene) and (record.get('actions') != []
                 or 'protectionContract' in record or 'cranialStagesContract' in record):
             raise ValueError('SOURCE_INSPECTION_ONLY: only unacted inspection snapshots can be restored')
+        # Boundary observers need the intact state and every causal step, even when a verified endpoint is cached.
         cache = None
-        if use_cache and 'cranialStagesContract' not in record:
+        if use_cache and on_boundary is None and 'cranialStagesContract' not in record:
             from .surgical_verified_cache import VerifiedSurgicalCache
             scene.require_cache_source()
             cache = verified_cache if verified_cache is not None else VerifiedSurgicalCache()
@@ -1451,6 +1454,8 @@ class SurgicalEngine:
         if 'cranialStagesContract' in record:
             options['cranial_stages'] = record['cranialStagesContract']
         result = cls(scene, **options)
+        if on_boundary is not None:
+            on_boundary(result)
         legacy = record.get('legacyGuardPartialActions', [])
         if (type(legacy) is not list or any(type(i) is not int or not 0 <= i < len(record['actions']) for i in legacy)
                 or record.get('hardConstraintPolicy') not in (None, 'atomic-protection-v1')):
@@ -1472,6 +1477,8 @@ class SurgicalEngine:
                 if outcome['status'] == 'partial' and outcome.get('reasonCode') == 'PROTECTED_STRUCTURE':
                     result._legacy_guard_partial_actions = result._legacy_guard_partial_actions | {index}
                 if check is not None: check()
+                if on_boundary is not None:
+                    on_boundary(result)
                 if writer is not None:
                     writer.capture(result, check)
             if result.state_id != record['stateId']: raise ValueError('Replay state identity differs')

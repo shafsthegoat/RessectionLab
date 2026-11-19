@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { operativeSectionContour, carrySectionContour } from './operativeSectionContour.ts';
 import { fitOperativeSheet } from './operativeSheetFit.ts';
 import type { OperativeField } from '../operative-field';
 import {
@@ -126,6 +127,7 @@ function extract(
   const field = conditioned ?? operativeSurfaceField(grid, mask, b, thin),
     yz = field.yz,
     sz = field.sz;
+  const section = firstY > 0 ? operativeSectionContour(grid, mask, firstY) : undefined;
   const corners = [0, yz, sz, yz + sz, 1, yz + 1, sz + 1, yz + sz + 1];
   const shift = new Float64Array(12);
   const [x0, y0, z0] = b.low,
@@ -141,7 +143,9 @@ function extract(
   const stride = [slab, width, 1];
   const value = (x: number, y: number, z: number) =>
     x >= 0 && x < nx && y >= firstY && y < ny && z >= 0 && z < nz
-      ? field.mask[field.base + x * yz + y * sz + z]
+      ? section && y === firstY
+        ? mask[(x * ny + y) * nz + z]
+        : field.mask[field.base + x * yz + y * sz + z]
       : 0;
   for (let x = x0; x <= x1; x++) {
     const plane = ((x - x0) % 2) * slab;
@@ -192,11 +196,12 @@ function extract(
           const off = config.offsets[k],
             n = config.counts[k];
           keys.push(key + k);
-          flags.push(pinned | (config.offsets.length > 1 ? 8 : 0));
+          const cut = y === firstY - 1 ? section : undefined;
+          flags.push((cut ? 7 : pinned) | (config.offsets.length > 1 ? 8 : 0));
           coords.push(
-            x + (pinned & 1 ? 0.5 : off[0] + shift[k * 3] / n),
+            cut ? x + 0.5 : x + (pinned & 1 ? 0.5 : off[0] + shift[k * 3] / n),
             y + (pinned & 2 ? 0.5 : off[1] + shift[k * 3 + 1] / n),
-            z + (pinned & 4 ? 0.5 : off[2] + shift[k * 3 + 2] / n)
+            cut ? z + 0.5 : z + (pinned & 4 ? 0.5 : off[2] + shift[k * 3 + 2] / n)
           );
         }
         for (let axis = 0; axis < 3; axis++) {
@@ -289,6 +294,7 @@ function extract(
     [pos, scratch] = [scratch, pos];
   }
   if (sheet) fitOperativeSheet(grid, field, b, pos);
+  if (section) carrySectionContour(section, firstY, grid.spacingMm, pos, source, sheet);
   let normals = new Float32Array(pos.length);
   for (let i = 0; i < indices.length; i += 3) {
     const a = indices[i] * 3,
@@ -342,6 +348,11 @@ function extract(
     [normals, scratch] = [scratch, normals];
   }
   for (let i = 0; i < pos.length; i += 3) {
+    if (firstY > 0 && pos[i + 1] === firstY - 0.5) {
+      normals[i] = 0;
+      normals[i + 1] = -1;
+      normals[i + 2] = 0;
+    }
     pos[i] = grid.origin[0] + pos[i] * grid.spacingMm;
     pos[i + 1] = grid.origin[1] + pos[i + 1] * grid.spacingMm;
     pos[i + 2] = grid.origin[2] + pos[i + 2] * grid.spacingMm;

@@ -1,3 +1,4 @@
+import { ResultInspectionScene } from './ResultInspectionScene';
 import {interactivePlanningGroup} from './interactivePlanningGeometry';
 import {TransformControls} from "three/addons/controls/TransformControls.js";
 import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
@@ -12,6 +13,8 @@ import {GpuFrameTimer} from './gpuFrameTimer';
 import {geometryBufferBytes,renderTargetBytes} from './renderResourceEstimate';
 import {SurfaceInteractionRenderer} from './surfaceInteractionRenderer';
 import {LabelTextureUpdates} from './labelTextureUpdates';
+import {MAX_ENGINE_REFERENCE_BYTES} from './engineImplicitSurface';
+import type {EnginePartitionRequest,EngineSurfaceReference} from './engineImplicitSurface';
 import {modeledAnatomy} from './modeledAnatomy';
 import {SourcePickingBvh} from './sourcePickingBvh';
 import type {PreparedSurface} from './prepareSurface';
@@ -64,6 +67,7 @@ import { validateDiagnosticLayer } from "./diagnosticLayer";
 import type { CheckedDiagnosticLayer, LoadedDiagnosticLayer } from "./diagnosticLayer";
 import { physicalBounds, placeInSourceFrame } from "./sceneGeometry";
 import { surfaceCameraDistance } from './surfaceCameraFit';
+import {installCorticalSignal,type CorticalSignal} from './cranialDepth';
 import { ScanVolumeRenderer } from './ScanVolumeRenderer';
 import type { VolumeRenderingSettings } from './volumeTransfer';
 import { paneViewport } from "./layout";
@@ -91,6 +95,7 @@ type ModelStage={generation:number;next:ViewerVolume;interaction:SurgicalInterac
   prepared:Map<string,SurfacePair|null>;jobs:Array<{layer:ViewerVolume['compartments'][number];indices?:Uint32Array;values?:Uint8Array}>;
   pack:boolean;packed?:{data:Uint8Array;codes:Array<[number,number]>};patch?:{indices:Uint32Array;values:Uint8Array};
   waiting?:ViewerVolume['compartments'][number]|'pack';ready?:boolean;changedLayers:number;changedIndices:number;initialMapping:boolean;smoothing:boolean};
+const workerPartitions=new WeakMap<Worker,EngineSurfaceReference>();
 const SLICE_PLANES: SlicePlane[] = ["axial", "coronal", "sagittal"];
 const RETIRED_SURFACE_BUDGET_BYTES=256*1024*1024;
 const CONTEXT_SURFACES = new Set(['brain', 'head-envelope', 'outer-head-tissue', 'bone', 'skull']);
@@ -233,6 +238,7 @@ export class VolumeRenderer {
   private patientBounds?:Bounds3;
   private patientFramingPoints?:Float32Array;
   private scanFramingPoints:Float32Array=new Float32Array();
+  private readonly corticalSignals=new Map<string,CorticalSignal>();
   private readonly mriTexture: THREE.Data3DTexture;
   private fusionTexture: THREE.Data3DTexture;
   private labelTexture: THREE.Data3DTexture;
@@ -263,7 +269,7 @@ export class VolumeRenderer {
   private pendingSurgicalPublication:SurgicalInteraction|null=null;
   private lastSubmittedSurgicalView:SurgicalInteraction['view']|null=null;
   private initialSurgicalInteraction:SurgicalInteraction|null=null;
-  private readonly retiredSurfaces:Array<{layer:Pick<ViewerVolume['compartments'][number],'name'|'kind'|'mask'>;pair:SurfacePair;bytes:number}>=[];
+  private readonly retiredSurfaces:Array<{layer:Pick<ViewerVolume['compartments'][number],'name'|'kind'|'mask'>;pair:SurfacePair;bytes:number;partitionId?:string}>=[];
   private disposed = false;
   private frame = 0;
   private width = 0;
@@ -272,6 +278,7 @@ export class VolumeRenderer {
   private visible: Record<string, boolean> = {};
   private opacity = 0.4;
   private workspaceSettings: ViewerWorkspaceSettings = {};
+  private resultInspection:ResultInspectionScene|null=null;
   private operativeLight: THREE.DirectionalLight | null = null;
   private appearanceSignature: string | null = null;
   private visibilitySignature: string | null = null;
@@ -578,6 +585,7 @@ export class VolumeRenderer {
     this.worker = new Worker(new URL("./surface.worker.ts", import.meta.url), {
       type: "module",
     });
+    const reference=modeledAnatomy(volume)?.surfaceReference;
     const sourceRequests=new Map<string,number>();
     this.displayWork.sourceWorkerBuilds++;
     const sourceGeneration=this.sourceSurfaceGeneration;
@@ -627,7 +635,7 @@ export class VolumeRenderer {
         return;
       }
 
-      if(event.data.indices)retainSurface(layer.mask,this.affine,layer.kind,{...event.data,positions,normals:normals!,indices:event.data.indices},this.volume.shape);
+      if(event.data.indices)retainSurface(layer.mask,this.affine,layer.kind,{...event.data,positions,normals:normals!,indices:event.data.indices},this.volume.shape,reference);
       this.canvas.dispatchEvent(new CustomEvent('anatomy-surface',{bubbles:true,detail:{name:layer.name,diagnostics:event.data.diagnostics??layer.surfaceDiagnostics,qa:layer.qa,empty:!positions.length}}));
       if(remaining===0){this.worker.terminate();this.sourceWorkerActive=false;}
       if(!positions.length){
@@ -647,9 +655,9 @@ export class VolumeRenderer {
       );
     };
     volume.compartments.forEach((layer) => {
-      const cached=!layer.labelSet?cachedSurface(layer.mask,this.affine,layer.kind,this.volume.shape):undefined;
+      const cached=!layer.labelSet?cachedSurface(layer.mask,this.affine,layer.kind,this.volume.shape,true,reference):undefined;
       if(cached){this.worker.onmessage?.(new MessageEvent('message',{data:{name:layer.name,...cached}}));}
-      else if (layer.surface) {
+      else if (layer.surface&&!reference) {
         const s = layer.surface;
         this.worker.onmessage?.(new MessageEvent('message', {data: {name: layer.name,
           positions: s.source, normals: s.sourceNormals, smoothPositions: s.positions,
@@ -657,7 +665,7 @@ export class VolumeRenderer {
       } else {
         const mask=materializeLayerMask(this.volume,layer);sourceRequests.set(layer.name,performance.now());
         this.displayWork.sourceRemeshedLayers++;this.displayWork.workerInputCloneBytes+=mask.byteLength;
-        this.worker.postMessage({name:layer.name,kind:layer.kind,mask,shape:volume.shape,affine:this.affine,displaySmoothing:true});
+        this.worker.postMessage({name:layer.name,kind:layer.kind,mask,shape:volume.shape,affine:this.affine,displaySmoothing:true,partition:this.partitionRequest(this.worker,reference,true)});
       }
     });
     if(!remaining){this.worker.terminate();this.sourceWorkerActive=false;}
@@ -734,9 +742,33 @@ export class VolumeRenderer {
       this.workspaceSettings.presentation==='segmentation'&&['bone','skull'].includes(layer.kind??''));
     mesh.visible = this.surfaceVisible(layer.name);
     mesh.userData.compartment = layer.name;
+    mesh.userData.corticalContact = ['csf','ventricles','dura','skull','bone'].includes(displayKind);
+    mesh.userData.cranialBoundary=this.cranialBoundary(displayKind,this.workspaceSettings);
+    const source=layer.appearanceSource;
+    if(source&&['gray-matter','cerebral-cortex','cerebellar-cortex'].includes(displayKind)){
+      let signal=this.corticalSignals.get(source.seriesId);
+      if(!signal){
+        const active=source.data===this.volume.mri&&source.shape.every((n,i)=>n===this.volume.shape[i]);
+        signal={texture:active?this.mriTexture:dataTexture(source.data,source.shape),
+          window:active?this.defaultWindow:intensityWindow(source.data),
+          worldToVoxel:matrix(inverseAffine(source.affine))};
+        this.corticalSignals.set(source.seriesId,signal);
+      }
+      mesh.userData.corticalSignalEnabled=installCorticalSignal(mesh.material,signal,
+        this.workspaceSettings.presentation==='segmentation'&&this.workspaceSettings.operativeView!=='surgeon');
+    }
     this.picking?.install(mesh,geometry,eagerPicking);
     return {mesh,source:geometry,smooth,smoothingPrepared};
   }
+  private cranialBoundary(kind:string|undefined,settings:ViewerWorkspaceSettings) {
+    if(!this.volume.displayIdentity||settings.presentation!=='segmentation'||settings.contextStyle!=='shell'||
+       settings.operativeView==='surgeon')return undefined;
+    if(['gray-matter','cerebral-cortex','cerebellar-cortex'].includes(kind??''))return 'cortex';
+    if((kind==='outer-head-tissue'||kind==='head-envelope')&&this.volume.compartments.some(layer=>
+      ['gray-matter','cerebral-cortex','cerebellar-cortex'].includes(layer.displayKind??layer.kind??'')))return 'head';
+    return undefined;
+  }
+
   private installSurface(layer:ViewerVolume['compartments'][number],buffers:PreparedSurface|{positions:Float32Array;normals:Float32Array;smoothPositions?:Float32Array;smoothNormals?:Float32Array;indices?:Uint32Array}) {
     const pair=this.makeSurface(layer,buffers);if(!pair)return;
     if (this.volume.displayIdentity && layer.surface && surfaceKind(layer.kind)==='context') {
@@ -803,6 +835,15 @@ export class VolumeRenderer {
     if(interaction.onDisplayError)interaction.onDisplayError(interaction.preview??interaction.view,message);
     else this.onError?.(message);
   }
+  private partitionRequest(worker:Worker,reference:EngineSurfaceReference|undefined,smooth:boolean):EnginePartitionRequest|undefined {
+    if(!reference)return undefined;
+    const key=this.modelIdentity(reference);
+    if(!smooth||workerPartitions.get(worker)===reference)return {key};
+    workerPartitions.set(worker,reference);
+    const value=reference.owner.byteLength<=MAX_ENGINE_REFERENCE_BYTES?reference:null;
+    this.displayWork.workerInputCloneBytes+=value?.owner.byteLength??0;
+    return {key,reference:value};
+  }
   private modelIdentity(value:object){let key=this.modelIdentities.get(value);if(!key){key=`tissue-${++this.modelIdentityCounter}`;this.modelIdentities.set(value,key);}return key;}
   private disposeSurfacePair(pair:SurfacePair){
     disposeObject(pair.mesh);if(pair.source!==pair.mesh.geometry)pair.source.dispose();if(pair.smooth!==pair.mesh.geometry&&pair.smooth!==pair.source)pair.smooth.dispose();
@@ -812,7 +853,8 @@ export class VolumeRenderer {
     this.surfaces.delete(layer.name);this.surfaceGeometry.delete(layer.name);if(!mesh||!geometry)return;
     this.anatomy.remove(mesh);const pair={mesh,...geometry},bytes=geometryBufferBytes([geometry.source,geometry.smooth])+layer.mask.byteLength;
     if(!retain){this.disposeSurfacePair(pair);return;}
-    this.retiredSurfaces.push({layer:{name:layer.name,kind:layer.kind,mask:layer.mask},pair,bytes});let total=this.retiredSurfaces.reduce((sum,e)=>sum+e.bytes,0);
+    const reference=modeledAnatomy(this.volume)?.surfaceReference;
+    this.retiredSurfaces.push({layer:{name:layer.name,kind:layer.kind,mask:layer.mask},pair,bytes,partitionId:reference?this.modelIdentity(reference):undefined});let total=this.retiredSurfaces.reduce((sum,e)=>sum+e.bytes,0);
     while(total>RETIRED_SURFACE_BUDGET_BYTES||this.retiredSurfaces.length>16){const old=this.retiredSurfaces.shift()!;total-=old.bytes;this.disposeSurfacePair(old.pair);}
   }
   private clearModelStage(){
@@ -853,18 +895,19 @@ export class VolumeRenderer {
       const stage:ModelStage={generation:++this.modelGeneration,next,interaction,prepared:new Map(),jobs:[],pack:!sameLayout,changedLayers:0,changedIndices:0,
         initialMapping:!a&&!!b&&!b.modifiedIndices.length,smoothing};
       this.modelStage=stage;
+      const partitionId=b?.surfaceReference?this.modelIdentity(b.surfaceReference):undefined;
       for(const layer of next.compartments){
         const old=this.volume.compartments.find(l=>l.name===layer.name);
         const needsSmoothing=smoothing&&this.surfaceGeometry.get(layer.name)?.smoothingPrepared===false;
         let indices:Uint32Array|undefined,values:Uint8Array|undefined;
-        if(old&&old.kind===layer.kind&&this.preparedSourceLayers.has(layer.name)){
+        if(a?.surfaceReference===b?.surfaceReference&&old&&old.kind===layer.kind&&this.preparedSourceLayers.has(layer.name)){
           if(old.mask===layer.mask&&!old.labelSet&&!layer.labelSet&&!needsSmoothing)continue;
           if(candidates){const changed=candidates.filter(i=>old.mask[i]!==layer.mask[i]);if(!changed.length&&!needsSmoothing)continue;indices=Uint32Array.from(changed);values=Uint8Array.from(changed,i=>layer.mask[i]);stage.changedIndices+=changed.length;}
         }
         stage.changedLayers++;
-        const retired=this.retiredSurfaces.findIndex(e=>e.layer.name===layer.name&&e.layer.kind===layer.kind&&e.layer.mask===layer.mask&&(!smoothing||e.pair.smoothingPrepared!==false));
+        const retired=this.retiredSurfaces.findIndex(e=>e.partitionId===partitionId&&e.layer.name===layer.name&&e.layer.kind===layer.kind&&e.layer.mask===layer.mask&&(!smoothing||e.pair.smoothingPrepared!==false));
         if(retired>=0){stage.prepared.set(layer.name,this.retiredSurfaces.splice(retired,1)[0].pair);continue;}
-        const cached=!layer.labelSet?cachedSurface(layer.mask,this.affine,layer.kind,next.shape,smoothing):undefined,s=layer.surface;
+        const cached=!layer.labelSet?cachedSurface(layer.mask,this.affine,layer.kind,next.shape,smoothing,b?.surfaceReference):undefined,s=b?.surfaceReference?undefined:layer.surface;
         const buffers=cached??(s?{positions:s.source,normals:s.sourceNormals,smoothPositions:s.positions,smoothNormals:s.normals,indices:s.indices}:undefined);
         if(buffers){const pair=buffers.positions.length?this.makeSurface(layer,buffers,!interaction?.readOnly):null;if(buffers.positions.length&&!pair)throw Error('Invalid prepared modeled surface');stage.prepared.set(layer.name,pair);}
         else stage.jobs.push({layer,indices,values});
@@ -914,9 +957,10 @@ export class VolumeRenderer {
         const buffers=event.data;if(!buffers.positions||!buffers.normals||buffers.positions.length!==buffers.normals.length||
           (buffers.smoothingPrepared!==false)!==stage.smoothing||
           (stage.smoothing&&(!buffers.smoothPositions||!buffers.smoothNormals||buffers.smoothPositions.length!==buffers.positions.length||buffers.smoothNormals.length!==buffers.positions.length))){this.failModelStage('inconsistent modeled surface buffers');return;}
-        retainSurface(layer.mask,this.affine,layer.kind,buffers,stage.next.shape);
+        retainSurface(layer.mask,this.affine,layer.kind,buffers,stage.next.shape,modeledAnatomy(stage.next)?.surfaceReference);
         const pair=buffers.positions.length?this.makeSurface(layer,buffers,!stage.interaction?.readOnly):null;if(buffers.positions.length&&!pair){this.failModelStage('invalid modeled surface');return;}
         stage.prepared.set(layer.name,pair);this.modelWorkerStates=new Map((event.data.resident??[]).map(e=>[e.layerId,e.identity]));
+        this.canvas.dispatchEvent(new CustomEvent('anatomy-surface',{bubbles:true,detail:{name:layer.name,diagnostics:buffers.diagnostics,qa:layer.qa,empty:!buffers.positions.length}}));
         const work=event.data.work;this.displayWork.modelRemeshedLayers++;this.displayWork.modelRemeshedChunks+=Number(work?.remeshedChunks??0);
         this.canvas.dispatchEvent(new CustomEvent('anatomy-work',{bubbles:true,detail:{kind:'modeled-surface-preparation',name:layer.name,...work}}));
       }
@@ -924,7 +968,7 @@ export class VolumeRenderer {
     };
     if(job){
       stage.waiting=job.layer;const oldLayer=this.volume.compartments.find(l=>l.name===job.layer.name),previousIdentity=oldLayer?this.modelIdentity(oldLayer.mask):'',identity=this.modelIdentity(job.layer.mask),incremental=job.indices&&this.modelWorkerStates.get(job.layer.name)===previousIdentity;
-      const request:IncrementalSurfaceRequest={jobId:stage.generation,layerId:job.layer.name,previousIdentity,identity,shape:stage.next.shape,affine:this.affine,kind:job.layer.kind,retainChunks:!stage.initialMapping,smooth:stage.smoothing};
+      const request:IncrementalSurfaceRequest={jobId:stage.generation,layerId:job.layer.name,previousIdentity,identity,shape:stage.next.shape,affine:this.affine,kind:job.layer.kind,retainChunks:!stage.initialMapping,smooth:stage.smoothing,partition:this.partitionRequest(worker,modeledAnatomy(stage.next)?.surfaceReference,stage.smoothing)};
       if(incremental){request.indices=job.indices;request.values=job.values;this.displayWork.workerInputTransferBytes+=job.indices!.byteLength+job.values!.byteLength;worker.postMessage(request,[job.indices!.buffer,job.values!.buffer]);}
       else {request.mask=materializeLayerMask(stage.next,job.layer);this.displayWork.workerInputCloneBytes+=request.mask.byteLength;worker.postMessage(request);}
     }else{
@@ -1020,6 +1064,16 @@ export class VolumeRenderer {
     this.requestRender();
   }
 
+  setResultInspection(element:HTMLElement|null,parts:ViewerWorkspaceSettings['resultInspection'],camera:ViewerCameraState|null|undefined,save:(pose:ViewerCameraState)=>void) {
+    if(this.resultInspection&&this.resultInspection.element!==element){this.resultInspection.dispose();this.resultInspection=null;}
+    if(element&&parts){
+      this.resultInspection??=new ResultInspectionScene(element,()=>this.requestRender(false),save);
+      this.resultInspection.configure(parts,camera);
+    }
+    this.requestRender(false);
+  }
+  fitResultInspection(){this.resultInspection?.requestFit();this.requestRender(false);}
+
   setWorkspaceSettings(settings: ViewerWorkspaceSettings): void {
     if(this.workspaceSettings?.showOrientationGuide!==settings.showOrientationGuide)this.requestRender(false);
     this.workspaceSettings = settings;
@@ -1083,6 +1137,8 @@ export class VolumeRenderer {
       const appearance=layerAppearance(layer.name,layer.color,settings,layer.displayKind??layer.kind);
       const mesh=this.surfaces.get(layer.name);
       if(mesh){
+        mesh.userData.cranialBoundary=this.cranialBoundary(layer.displayKind??layer.kind,settings);
+        if(mesh.userData.corticalSignalEnabled)mesh.userData.corticalSignalEnabled.value=settings.presentation==='segmentation'&&settings.operativeView!=='surgeon';
         mesh.visible=this.surfaceVisible(layer.name);
         const material=mesh.material as THREE.MeshStandardMaterial;
         material.color.set(appearance.color);material.opacity=appearance.opacity;
@@ -1335,6 +1391,10 @@ export class VolumeRenderer {
     // geometry resident while the ghost and recorded tools move by transforms.
     if(!interaction?.view){
       disposeObject(this.surgicalGroup);this.surgicalGroup.clear();this.surgicalSlots?.clear();
+      if(this.panes?.anatomy){
+        const data=this.panes.anatomy.dataset;
+        for(const key of ['renderedToolSlots','surgicalStateId','removedCells','positionEffects','maxShiftMm','acceptedTools'])delete data[key];
+      }
       this.surgicalEffects=null;this.surgicalEffectsView=null;this.surgicalEffectsOutcome=undefined;
       this.surgicalFlow=null;this.surgicalFlowSource=undefined;
       this.surgicalAnimation=null;this.surgicalAnimationKey=null;
@@ -1383,7 +1443,7 @@ export class VolumeRenderer {
     for(const [name,recordedSlot] of Object.entries(view.slots)){
       // Planning guides remain visible through the existing exposure; canonical
       // withdrawn poses still belong to acceptedTools and collision state.
-      if(interaction.planningOverlay&&!recordedSlot.inserted)continue;
+      if((interaction.planningOverlay||interaction.insertedInstrumentsOnly)&&!recordedSlot.inserted)continue;
       // The explicitly parked second hand stays outside this one-tool field.
       // Its canonical pose is retained for collision/admission and replay.
       if(view.planarBladeManeuver&&name!=='left'&&!recordedSlot.inserted)continue;
@@ -1403,6 +1463,7 @@ export class VolumeRenderer {
     for(const [name,old] of this.surgicalSlots)if(!retained.has(name)){
       disposeObject(old.group);this.surgicalGroup.remove(old.group);this.surgicalSlots.delete(name);
     }
+    if(this.panes?.anatomy)this.panes.anatomy.dataset.renderedToolSlots=JSON.stringify([...this.surgicalSlots.keys()]);
     if(!this.surgicalGhost){
       this.surgicalGhost=new THREE.Group();this.scene.add(this.surgicalGhost);
       this.surgicalGizmo=new TransformControls(this.camera,this.panes.anatomy);
@@ -2116,7 +2177,7 @@ export class VolumeRenderer {
   }
 
   /** A click on displayed source MRI/surfaces updates the same RAS cursor. */
-  pick(clientX: number, clientY: number): Point3 | null {
+  pick(clientX: number, clientY: number, onLayer?: (name: string | null) => void): Point3 | null {
     const started=performance.now();
     const rect = this.panes.anatomy.getBoundingClientRect();
     const ndc = new THREE.Vector2(
@@ -2164,6 +2225,10 @@ export class VolumeRenderer {
     });
     this.canvas?.dispatchEvent(new CustomEvent('anatomy-pick',{bubbles:true,detail:{milliseconds:performance.now()-started,
       measurement:'CPU-source-surface-raycast-and-clip',intersections:hits.length,selected:!!hit}}));
+    if (onLayer) {
+      const name = hit?.object?.userData?.compartment;
+      onLayer(typeof name === 'string' ? name : null);
+    }
     return hit
       ? [hit.point.x, hit.point.y, hit.point.z]
       : null;
@@ -2180,7 +2245,8 @@ export class VolumeRenderer {
     if(this.pendingReplayGroup)gather(this.pendingReplayGroup);
     for(const entry of this.retiredSurfaces){geometries.add(entry.pair.source);geometries.add(entry.pair.smooth);}
     if(this.modelStage)for(const pair of this.modelStage.prepared.values())if(pair){geometries.add(pair.source);geometries.add(pair.smooth);}
-    const textures=[...(this.scanVolume.supportTexture?[this.scanVolume.supportTexture]:[]),...(this.scanVolume.patientTexture?[this.scanVolume.patientTexture]:[]),this.mriTexture,this.labelTexture,this.fusionTexture,this.removedTexture,this.proposalTexture,
+    const corticalTextures=Array.from(this.corticalSignals.values(),signal=>signal.texture);
+    const textures=[...corticalTextures,...(this.scanVolume.supportTexture?[this.scanVolume.supportTexture]:[]),...(this.scanVolume.patientTexture?[this.scanVolume.patientTexture]:[]),this.mriTexture,this.labelTexture,this.fusionTexture,this.removedTexture,this.proposalTexture,
       this.diagnosticStateTexture,this.diagnosticCoverageTexture,this.priorTexture,this.priorCoverageTexture];
     const geometryBytes=geometryBufferBytes(geometries),textureBytes=[...new Set(textures)].reduce((sum,texture)=>{
       const data=texture.image?.data as ArrayBufferView|undefined;return sum+(data?.byteLength??0);
@@ -2251,13 +2317,17 @@ export class VolumeRenderer {
     const main = viewport(this.panes.anatomy);
     let orientationGuideVisible=false;
     let surfaceQuality:{adaptive:boolean;width:number;height:number}|null=null;
-    if (main) {
+    if(main&&this.resultInspection&&renderedView&&!this.surgicalInteraction?.preview&&modeledAnatomy(this.volume)?.surfaceReference){
+      this.resultInspection.render(this.renderer,this.volume,renderedView,this.surfaces,main.w,main.h);
+    } else if (main) {
       if (this.pendingFit) this.fitCamera(this.pendingFit);
       this.camera.aspect = main.w / main.h;
       this.camera.updateProjectionMatrix();
-      if (this.replayActive || this.passiveActive||!this.scanVolume.active)
+      const cranialSurfaces=!this.scanVolume.active&&Array.from(this.surfaces.values()).some(mesh=>
+        mesh.visible&&mesh.userData.cranialBoundary&&!Array.isArray(mesh.material)&&mesh.material.opacity>0&&mesh.material.opacity<1);
+      if (this.replayActive || this.passiveActive||(!this.scanVolume.active&&!cranialSurfaces))
         surfaceQuality=this.surfaceInteraction.render(this.renderer,this.scene,this.camera,main.w,main.h,this.interacting,this.budget.longEdge,()=>{viewport(this.panes.anatomy);});
-      else this.scanVolume.render(this.scene,this.camera,main.w,main.h,this.interacting,()=>{viewport(this.panes.anatomy);},this.budget.longEdge);
+      else this.scanVolume.render(this.scene,this.camera,main.w,main.h,this.interacting,()=>{viewport(this.panes.anatomy);},this.budget.longEdge,cranialSurfaces);
       if(this.workspaceSettings.showOrientationGuide!==false){
         this.orientationGuide.setPosture(renderedView?.positionEffects);
         orientationGuideVisible=this.orientationGuide.render(this.renderer,this.camera,root,this.paneBounds!.panes.get(this.panes.orientationGuide)!);
@@ -2335,6 +2405,7 @@ export class VolumeRenderer {
   }
 
   dispose(): void {
+    this.resultInspection?.dispose();
     this.picking?.dispose();
     if (this.disposed) return;
     this.disposed = true;
@@ -2370,6 +2441,9 @@ export class VolumeRenderer {
     this.surfaceGeometry.clear();
     disposeObject(this.scene);
     this.slices.forEach((slice) => disposeObject(slice.scene));
+    for(const texture of new Set([...this.corticalSignals.values()].map(signal=>signal.texture)))
+      if(texture!==this.mriTexture)texture.dispose();
+    this.corticalSignals.clear();
     this.mriTexture.dispose();
     this.scanVolume.dispose();
     this.surfaceInteraction.dispose();

@@ -7,7 +7,9 @@ const surfaceUniforms=new WeakMap<THREE.MeshStandardMaterial,{value:boolean}>();
 export function operativeSurfaceStyle(kind:string|undefined,settings:ViewerWorkspaceSettings){
   if(settings.operativeView!=='surgeon'||settings.microscope?.tissueStyle==='labels')return null;
   if(['brain','soft_tissue','tissue','head-envelope'].includes(kind??''))return {color:'#b77b79',roughness:.6};
-  if(kind==='tumor')return {color:'#cfad75',roughness:.78};
+  // The caller has already applied the label color used in the linked slices.
+  if(kind==='tumor')return {color:null,roughness:.78};
+  if(kind==='vessel'||kind==='vessels')return {color:'#ac6579',roughness:.67};
   if(['bone','skull'].includes(kind??''))return {color:'#ded0b1',roughness:.8};
   if(['membrane','dura'].includes(kind??''))return {color:'#c8aaa0',roughness:.57};
   return null;
@@ -32,6 +34,6 @@ export function applyOperativeSurface(material:THREE.MeshStandardMaterial,kind:s
     };
     material.customProgramCacheKey=()=>`operative-optics-v1-${key}`;material.needsUpdate=true;
   }
-  if(style){material.color.set(style.color);material.roughness=style.roughness;material.metalness=0;}
+  if(style){if(style.color)material.color.set(style.color);material.roughness=style.roughness;material.metalness=0;}
   else material.roughness=kind==='tumor'?.48:['vessel','vessels','artery','vein','sinus'].includes(kind??'')?.32:.52;
 }
