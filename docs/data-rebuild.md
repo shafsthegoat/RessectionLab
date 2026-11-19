@@ -694,13 +694,75 @@ bone/cochlea and gray matter estimate against the same CT. All 20 earlier CTA
 scenario packages match their original cohort sizes and SHA-256 digests in
 `qc/anatomical-fidelity-cta-cohort-integrity-v1.json`.
 
-For cortical fidelity, the next retained source is Bethesda Meningioma
-sub-13 in `prepared/adaptive-anatomy-migration-20261117-v1/`. It has a
-publisher 0.5 mm CT grid with sharp and soft reconstructions, 3D contrast T1,
-and cached tissue labels for inspection. Inspect the modalities independently
-pending a landmark-validated registration. Dedicated same-person angiography is
-still needed for distal arterial and venous branches in an aligned study.
-See the [A Paired Head CT-MRI Dataset release](https://zenodo.org/records/17486320).
+### Meningioma sub-13 native CT and T1 review
+
+Open **Meningioma-sub-13-CT-T1-EVIDENCE-v2** in Cases. The [paired release](https://zenodo.org/records/17486320)
+provides sharp and soft CT reconstructions and contrast T1 on a shared
+414 × 414 × 302 publisher grid at 0.5 mm. The grid spacing describes sampling.
+The source does not establish the effective acquisition resolution.
+
+Fourteen anatomical transects evaluated the frozen registration candidates.
+The signed edge profiles report the displacement along each transect. They
+cover five vault landmarks, three ventricular landmarks and six skull-base
+landmarks. The soft CT identity map has median absolute errors of 0.49 mm
+at the vault, 0.79 mm at ventricular boundaries and 2.34 mm at the skull base.
+The retained sharp CT map has 2.31 mm median skull-base error and 4.07 mm
+maximum measured discrepancy. The receipts flag search-window boundary
+peaks and retain the source-specific profiles. Differences in CT and T1
+tissue contrast also affect these edges. The measurements do not establish
+3D landmark error or qualify a shared frame.
+
+The companion opens the modalities independently. T1 shows the supplied image
+beside the cached 1 mm SynthSeg cortical labels. Sharp CT shows gross
+mineralized skull-base anatomy and the retained density-derived bone layer.
+The bone layer exactly matches the sharp CT threshold at 300 HU. The largest
+26-connected component contains 98.0% of its 2,731,406 voxels. The remaining
+components include disconnected structures and density fragments. Over 99.5%
+of the cortical label voxels sample within the separate brain estimate.
+These checks support inspection of the cortical pattern and visible bone.
+Thin foraminal margins, tissue thickness, and precise skull–brain contact
+remain unverified. Both retained tumor outputs are empty. The experimental
+T1 vascular map has no independent angiographic annotation or completeness
+evidence. The subject has no measured dural label.
+
+The numeric report and annotated image pairs are in
+`prepared/meningioma-sub13-anatomical-review-v2/`. Hidden desktop receipts
+are in `qc/hidden-app/meningioma-sub13-independent-{t1-cortex,ct-skull-base}-v1/`.
+The paired views hold the camera, cursor and source signal fixed within each
+modality and show only layers from the active scan.
+
+### Five-layer CTA inspection cases
+
+Search **FIVE-LAYER** in Cases for 18 portable studies from six acquired
+subjects. All five anatomy groups are enabled when each case opens. Each
+combines an acquired CTA or CT reference, retained brain and skull estimates, source-linked
+vascular annotations, a CT-derived inner-cranial dural proxy, and a retained
+simulated tumor contour. The measured dural anatomy and patient tumor
+status remain unknown. The proxies use the existing 1.5 mm enclosed-ring
+algorithm and preserve open and acquisition-limited regions as unknown.
+The case receipts report the fraction of tumor voxels at supported proxy
+slice levels. This measures axial overlap, with no inference about local
+dural thickness, contact, vessel absence, or surgical access.
+
+The stronger TopCoW set includes supplied arteries and veins or sinuses.
+ISLES 0146 has a restricted publisher-provided automated CoW estimate. The
+TopCoW 004 companion retains the local skull estimate. TopCoW 018 uses its
+previously qualified wider density estimate. The TAIR 00273 enhancement component is too restricted for the five-layer
+collection. The EDEN MRI-based cranial estimates and registered angiographic
+surfaces require separate evidence review before comparable admission.
+
+```sh
+.venv/bin/python scripts/review_meningioma_sub13_alignment.py \
+  --root "$RESSECTIONLAB_DATA_ROOT" --register "$PWD/testcases/cases"
+.venv/bin/python scripts/prepare_five_layer_cta_cases.py \
+  --root "$RESSECTIONLAB_DATA_ROOT" --scratch "$PWD/testcases/outputs" --register "$PWD/testcases/cases"
+```
+
+The collection index is `prepared/five-layer-cta-inspection-v1/collection.json`.
+Each archive was opened into a fresh native-study directory and verified
+against its original tumor contour. The TopCoW 014 representative also has
+matched hidden desktop captures in `qc/hidden-app/five-layer-cta-topcow014-v1/`.
+These studies carry inspection permissions.
 
 ### CADS superior-vault surface verification
 

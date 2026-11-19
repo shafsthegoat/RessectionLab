@@ -21,6 +21,9 @@ const directFile=process.env.SURFACE_VERIFY_DIRECT_SOURCE;
 const refinedLayer=process.env.SURFACE_VERIFY_REFINED_LAYER;
 const refinedIds=refinedLayer?.split(',')??[];
 const detailIds=process.env.SURFACE_VERIFY_DETAIL_FOCUS?.split(',')??[];
+const selectedSeries=process.env.SURFACE_VERIFY_SERIES;
+const detailCursor=process.env.SURFACE_VERIFY_DETAIL_CURSOR?.split(',').map(Number);
+if(detailCursor)assert(detailIds.length===1&&detailCursor.length===3&&detailCursor.every(Number.isFinite),'Choose one detail layer and a numeric RAS cursor');
 const branchFile=process.env.SURFACE_VERIFY_BRANCH_RECEIPT;
 const branches=branchFile?JSON.parse(fs.readFileSync(branchFile,'utf8')):null;
 const refinedPriorFile=process.env.SURFACE_VERIFY_REFINED_PRIOR;
@@ -35,7 +38,8 @@ const pairedMra=process.env.SURFACE_VERIFY_DIRECT_MRA==='1';
 const pairedMraAfterReopen=process.env.SURFACE_VERIFY_DIRECT_MRA_AFTER_REOPEN==='1';
 const directoryOpen=nativeIndex>=0&&path.basename(source)==='patient-anatomy.json';
 const document=directoryOpen?JSON.parse(fs.readFileSync(source,'utf8'))
-  :(direct||refinedLayer)&&nativeIndex>=0&&source.endsWith('.rsworkspace')?JSON.parse(zipMember(source,'patient-anatomy.json')):null;
+  :(direct||refinedLayer||detailIds.length||selectedSeries)&&nativeIndex>=0&&source.endsWith('.rsworkspace')?JSON.parse(zipMember(source,'patient-anatomy.json')):null;
+if(selectedSeries)assert(document?.series.some(row=>row.id===selectedSeries),'Unknown verification series '+selectedSeries);
 if(branches)assert.equal(branches.manifest.sha256,sourceHash,'Branch receipt must bind this exact study');
 for(const id of detailIds)assert(document?.layers.some(row=>row.id===id),'Unknown detail layer '+id);
 const portable=direct&&!prior?path.join(output,'publisher-geometry.rsworkspace'):null;
@@ -341,6 +345,15 @@ app.on('browser-window-created',(_event,window)=>{
       await js(`window.surfaceVerification={frames:[],gpu:[],surface:[],refinement:[]};for(const [name,key] of [['anatomy-frame','frames'],['anatomy-gpu','gpu'],['anatomy-surface','surface'],['anatomy-refined','refinement']])document.addEventListener(name,e=>{window.surfaceVerification[key].push(e.detail);});`);
       await ready();report.freshProcessToReadyMs=performance.now()-started;
       if(pairedMra){await verifyPairedMra();report.passed=true;return;}
+      if(selectedSeries){
+        await click('Scans');
+        await wait(()=>js(studyScanEnabledScript(selectedSeries)),selectedSeries+' source control');
+        await js(studyScanSelectionScript(selectedSeries));
+        await wait(()=>js(`document.querySelector('.native-workspace')?.dataset.nativeSeries===${JSON.stringify(selectedSeries)}`),selectedSeries+' active source');
+        await ready();
+        report.selectedSeries=selectedSeries;
+        await click('Anatomy');
+      }
       if(refinedPortable){
         await click('Scans');await click('Save patient study file…');
         await wait(async()=>fs.existsSync(refinedPortable)&&await js(`document.body.innerText.includes('Patient study file saved')`),'refined portable study save');
@@ -366,7 +379,9 @@ app.on('browser-window-created',(_event,window)=>{
       const skull=hasBone&&await js(`!!document.querySelector('select[aria-label="Skull view"]')`);
       if(skull){await sidePanel('Display & fragments');await set('[aria-label="Skull view"]','transparent');}
       if(process.env.SURFACE_VERIFY_NATIVE_PRESENTATION==='1'){
-        const brain=document.layers.find(layer=>layer.kind==='brain');
+        const brain=document.layers.find(layer=>layer.kind==='brain'&&
+          (!selectedSeries||layer.source_series===selectedSeries||['reference','reviewed','source-provided'].includes(document.transforms[layer.source_series]?.status)&&
+            ['reference','reviewed','source-provided'].includes(document.transforms[selectedSeries]?.status)));
         if(brain){
           await click(brain.label);
           await js(inputScript(`${brain.label} opacity`,.16));
@@ -405,6 +420,16 @@ app.on('browser-window-created',(_event,window)=>{
         assert.notEqual(a.pixels['anatomy-image'].sha256,b.pixels['anatomy-image'].sha256,after+' did not change the 3D pixels');
       };
       await pair('oblique',()=>click('Fit 3D view'));
+      if(document?.five_layer_inspection){
+        const groups=document.five_layer_inspection.anatomy_layers;
+        const visible=JSON.parse(report.captures['smooth-oblique'].layers);
+        const surfaces=report.requests.flatMap(request=>request.layers??[]);
+        for(const [group,ids] of Object.entries(groups)){
+          assert(ids.some(id=>visible.includes(id)&&surfaces.some(row=>row.name===id&&row.triangles>0)),
+            group+' must be visible and have native geometry at startup');
+        }
+        report.fiveLayerInspection={groups,visible};
+      }
       if(direct){
         await verifyDirect();
         if(pairedMraAfterReopen)await verifyPairedMra();
@@ -464,6 +489,13 @@ app.on('browser-window-created',(_event,window)=>{
         const wasVisible=(await visibility()).find(row=>row.id===id)?.checked;
         await showLayer(id,true);
         await focusLayer(layer.label);
+        if(detailCursor){
+          for(const [axis,plane] of ['Sagittal','Coronal','Axial'].entries()){
+            await js(inputScript(plane+' slice position',detailCursor[axis]));
+          }
+          const positioned=await ready();
+          assert(positioned.frame.cursor.every((v,i)=>Math.abs(v-detailCursor[i])<=.51),'Could not match the requested source location');
+        }
         const opacity=await inputValue(layer.label+' opacity');
         if(opacity!=='1')await js(inputScript(layer.label+' opacity',1));
         const shown=await capture('with-'+id);
