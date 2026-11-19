@@ -23,6 +23,14 @@ const targetLabel=process.env.DATA_REBUILD_CTA_TARGET_LABEL;
 const sourceSha=process.env.DATA_REBUILD_CTA_SOURCE_SHA256;
 const collectionFile=process.env.DATA_REBUILD_CTA_COLLECTION;
 const replayOnly=process.env.DATA_REBUILD_REPLAY_ONLY==='1';
+const resectPairFile=process.env.DATA_REBUILD_RESECT_PAIR_REPORT;
+const resectPair=resectPairFile?JSON.parse(fs.readFileSync(resectPairFile,'utf8')):null;
+if(resectPair){
+  assert.equal(resectPair.schema,'resectionlab-case3-observed-stage-benchmark-v1');
+  assert.equal(resectPair.patient,'RESECT:Case3');
+  assert.equal(resectPair.members[path.basename(input)],inputSha);
+  assert.equal(resectPair.postoperative_observation_excluded_from_preoperative_case,true);
+}
 const islesPair=process.env.DATA_REBUILD_INSPECT_ISLES_CTA==='1';
 const ixiStudy=process.env.DATA_REBUILD_INSPECT_IXI==='1';
 const nativeStudy=islesPair||ixiStudy||process.env.DATA_REBUILD_INSPECT_STUDY==='1'?JSON.parse(fs.readFileSync(input,'utf8')):null;
@@ -71,12 +79,42 @@ dialog.showSaveDialog=async()=>({canceled:false,filePath:saved});dialog.showMess
 let selection=saved;dialog.showOpenDialog=async()=>({canceled:false,filePaths:[selection]});
 const originalHandle=ipcMain.handle.bind(ipcMain);
 let ctaPayload;
+let resectPayload;
+const resectAssets=new Map();
 let nativeVolume;
 const ixiT1Layers=new Map();
+function inspectResectAsset(asset,kind,bytes){
+  assert.equal(bytes.byteLength,asset.byteLength);
+  const sha256=crypto.createHash('sha256').update(bytes).digest('hex');
+  assert.equal(sha256,String(asset.sha256).replace(/^sha256:/,''));
+  if(kind==='mask'){
+    let positiveVoxels=0;
+    for(let i=0;i<bytes.length;i++)positiveVoxels+=bytes[i];
+    return {sha256,positiveVoxels};
+  }
+  const bits=Buffer.from(bytes.buffer,bytes.byteOffset,bytes.byteLength),length=bits.length/4,count=Math.min(4096,length);
+  let hash=2166136261;
+  for(let i=0;i<count;i++){
+    const index=count>1?Math.floor(i*(length-1)/(count-1)):0;
+    hash=Math.imul(hash^bits.readUInt32LE(index*4),16777619)>>>0;
+  }
+  return {sha256,sourceSignal:`sampled-f32:${length}:${hash.toString(16).padStart(8,'0')}`};
+}
 ipcMain.handle=(name,handler)=>originalHandle(name,async(...args)=>{
   const started=performance.now();
   try{const result=await handler(...args);
     if(targetId&&['research:startupWorkspace','research:openListedWorkspace','research:openWorkspace'].includes(name)&&result)ctaPayload=result;
+    if(resectPair&&name==='research:startupWorkspace'&&result){
+      resectPayload=result;
+      for(const volume of [result,...result.workspaceSession.displaySeries.map(stage=>stage.volume)]){
+        resectAssets.set(volume.mri.assetId,{asset:volume.mri,kind:'image'});
+        for(const layer of volume.compartments)resectAssets.set(layer.array.assetId,{asset:layer.array,kind:'mask'});
+      }
+    }
+    if(resectPair&&name==='research:readAsset'){
+      const transfer=resectAssets.get(args[1]);
+      if(transfer)transfer.receipt=inspectResectAsset(transfer.asset,transfer.kind,result);
+    }
     if(nativeStudy&&name==='research:anatomyView'&&result)nativeVolume=result;
     if(ixiStudy&&name==='research:anatomyView'&&args[1]?.seriesId==='t1'){
       for(const layer of result.compartments)ixiT1Layers.set(layer.name,layer);
@@ -288,6 +326,130 @@ app.on('browser-window-created',(_event,window)=>{
       return probe.frames.some(f=>probe.completed.has(probe.key(f))&&f.sourceCaseHash===viewer?.dataset.sourceCaseHash
         &&(f.displayIdentity??'')===(viewer?.dataset.sourceDisplayIdentity??''));
     })()`);
+    const inspectResectPair=async()=>{
+      const readMember=(archive,member)=>JSON.parse(execFileSync('unzip',['-p',archive,member],{encoding:'utf8'}));
+      const baseline=fs.realpathSync(path.join(root,resectPair.source_workspace.path));
+      assert(baseline.startsWith(root+path.sep));
+      assert.equal(digest(baseline),resectPair.source_workspace.sha256);
+      const original=readMember(baseline,'manifest.json'),archive=readMember(input,'manifest.json'),workspace=readMember(input,'workspace.json');
+      const {workspaceSession:session}=resectPayload;
+      const {displaySeries}=session;
+      assert.equal(resectPayload.caseId,'RESECT-Case3');
+      assert.equal(resectPayload.caseHash,original.case_semantic_hash);
+      assert.equal(archive.case_semantic_hash,original.case_semantic_hash);
+      assert.equal(archive.array_sha256,original.array_sha256);
+      assert.deepEqual(resectPayload.sourceRefs,original.source_refs);
+      assert.deepEqual(resectPayload.compartments,[]);
+      assert.deepEqual(archive.artifacts,{});
+      assert.equal(session.episodeReplay,null);
+      assert.equal(displaySeries.length,2);
+      assert.equal(workspace.images.length,2);
+      const captureGrid=async(volume,since=0)=>{
+        const source=JSON.stringify(volume.caseHash);
+        await wait(`(()=>{
+          const p=window.__dataRebuildCtaFrames,hash=${source};
+          return document.querySelector('.rl-viewer')?.dataset.sourceCaseHash===hash&&
+            p.frames.some(f=>f.sourceCaseHash===hash&&f.at>=${since}&&p.completed.has(p.key(f)));
+        })()`);
+        await ready();
+        const observed=await js(`(()=>{
+          const p=window.__dataRebuildCtaFrames,f=p.frames.findLast(f=>f.sourceCaseHash===${source}&&f.at>=${since}&&p.completed.has(p.key(f)));
+          const g=p.completed.get(p.key(f)),viewer=document.querySelector('.rl-viewer');
+          return {serial:f.serial,completed:g.completed,caseHash:f.sourceCaseHash,sourceShape:f.sourceShape,sourceSignal:f.sourceSignalFingerprint,
+            gpuSignal:g.sourceSignalFingerprint,cursor:f.cursor,visible:JSON.parse(viewer.dataset.visibleLayerIds),
+            panes:viewer.querySelectorAll('.rl-viewer-slice-image').length};
+        })()`);
+        const transfer=resectAssets.get(volume.mri.assetId)?.receipt;
+        assert(transfer,'Read and checksum the source bytes actually sent to the renderer');
+        assert.deepEqual(observed.sourceShape,volume.shape);
+        assert.equal(observed.sourceSignal,transfer.sourceSignal);
+        assert.equal(observed.gpuSignal,transfer.sourceSignal);
+        assert.equal(observed.panes,3);
+        return {...observed,imageArraySha256:transfer.sha256,affine:volume.affine};
+      };
+      const scan='Inspect scan';
+      const timestamp=()=>js('performance.now()');
+      const visible=()=>js(`JSON.parse(document.querySelector('.rl-viewer').dataset.visibleLayerIds)`);
+      const sliceCrops=()=>js(`[...document.querySelectorAll('.rl-viewer-slice-image')].map(e=>{
+        const r=e.getBoundingClientRect();return{x:Math.ceil(r.x),y:Math.ceil(r.y),width:Math.floor(r.width)-2,height:Math.floor(r.height)-2};
+      })`);
+      const pixelHashes=(image,crops)=>crops.map(rect=>crypto.createHash('sha256').update(image.crop(rect).toBitmap()).digest('hex'));
+      await click('Scans');
+      const primary=await captureGrid(resectPayload);
+      assert.deepEqual(primary.visible,[]);
+      const primarySlices=await sliceCrops(),primaryPixels=pixelHashes(await screenshot(),primarySlices);
+      report.resectPair={primary:{...primary,sourceSha256:original.source_refs[0].sha256,
+        modality:original.metadata.selected_modality,caseRole:original.metadata.data_case.role}};
+      for(const stage of ['during','after']){
+        const sourceSha=resectPair.sources[stage].sha256,expected=resectPair.stage_visibility[stage];
+        const series=displaySeries.find(s=>s.volume.sourceRefs.some(ref=>ref.source_id==='structural'&&ref.sha256===sourceSha));
+        assert(series,`Missing transfer bound to the verified ${stage} image`);
+        const volume=series.volume;
+        const sealed=workspace.images.find(row=>row.source.seriesId===series.seriesId)?.source;
+        assert.equal(sealed?.sourceCaseHash,volume.caseHash);
+        assert.equal(sealed.sourceFrameHash,series.sourceFrameHash);
+        assert.equal(series.referenceCaseHash,primary.caseHash);
+        assert.equal(series.annotationKind,'source-provided');
+        assert.equal(series.scope,'display-only-native-grid');
+        assert.equal(series.planningEligible,false);
+        assert.equal(series.evaluationEligible,false);
+        assert.equal(series.registration.overlayPermitted,false);
+        assert.equal(series.registration.sourceToReferenceRasMm,null);
+        assert.equal(volume.metadata.acquisition_stage,`intraoperative-${stage}`);
+        assert.equal(volume.metadata.annotationTimeRole,'intraoperative_observed_evaluator_only');
+        assert.equal(volume.sourceRefs.find(ref=>ref.source_id==='supplied_target_annotation')?.sha256,expected.annotation_sha256);
+        assert.deepEqual(volume.shape,expected.shape);
+        assert.equal(volume.compartments.length,1);
+        const layer=volume.compartments[0],label=`Observed visible cavity · ${stage} resection`;
+        assert.equal(layer.name,label);
+        const mask=resectAssets.get(layer.array.assetId)?.receipt;
+        assert.equal(mask?.positiveVoxels,expected.positive_voxels);
+        assert(Math.abs(layer.volumeMm3-expected.native_volume_mm3)<1e-4*expected.native_volume_mm3);
+
+        let since=await timestamp();
+        await js(inputScript(scan,series.seriesId));
+        const selected=await captureGrid(volume,since);
+        assert.deepEqual(selected.visible,[label]);
+        const selectedLabel=await js(`document.querySelector('[aria-label="Inspect scan"]').selectedOptions[0].textContent`);
+        assert.match(selectedLabel,/supplied visible cavity · source labels · separate frame$/);
+        await click('Anatomy');
+        const control=`document.querySelector(${JSON.stringify(`[aria-label="Show ${label}"]`)})`;
+        await wait(`${control}?.checked===true`);
+        const provenance=await js(`${control}.closest('.anatomy-layer').querySelector('.anatomy-layer-origin').textContent`);
+        assert.match(provenance,/supplied annotation|source-provided annotation/i);
+        const image=await capture(`resect-case3-${stage}-native-cavity`),crops=await sliceCrops();
+        since=await timestamp();
+        await js(`${control}.click()`);
+        await wait(`${control}.checked===false`);
+        const hidden=await captureGrid(volume,since);
+        assert.deepEqual(hidden.visible,[]);
+        assert.deepEqual(hidden.cursor,selected.cursor);
+        const onPixels=pixelHashes(image,crops),offPixels=pixelHashes(await screenshot(),crops);
+        const changedMprPanes=onPixels.filter((sha,i)=>sha!==offPixels[i]).length;
+        assert(changedMprPanes>0,'The actual source-slice pixels should change when the supplied mask is hidden');
+        await js(`${control}.click()`);
+        await wait(`${control}.checked===true`);
+        assert.deepEqual(await visible(),[label]);
+        await click('Scans');
+        report.resectPair[stage]={...selected,sourceSha256:sourceSha,sourceFrameHash:series.sourceFrameHash,seriesId:series.seriesId,
+          selectedLabel,annotation:{label,provenance,publisherSha256:expected.annotation_sha256,mask,volumeMm3:layer.volumeMm3,changedMprPanes},
+          registration:series.registration,annotationTimeRole:volume.metadata.annotationTimeRole};
+      }
+      const {during,after}=report.resectPair;
+      for(const key of ['caseHash','sourceFrameHash','sourceShape','sourceSignal','affine'])assert.notDeepEqual(during[key],after[key]);
+      const since=await timestamp();
+      await js(inputScript(scan,''));
+      const restored=await captureGrid(resectPayload,since);
+      assert.deepEqual({...restored,serial:primary.serial},primary);
+      assert.deepEqual(pixelHashes(await screenshot(),primarySlices),primaryPixels);
+      report.resectPair.restoredPrimary={...restored,identicalMprPanes:primaryPixels.length};
+      assert.equal(digest(input),inputSha);
+      assert.equal(window.isVisible(),false);
+      report.checks.push('Actual During and After controls render independent source grids and distinct checksum-bound ultrasound bytes',
+        'Both evaluator-only supplied cavity masks change native source-slice pixels and stay outside the MRI reference',
+        'Returning to the original MRI restores its source, cursor and three identical source-slice crops');
+      report.passed=!report.windowEverVisible;
+    };
     const ctaReadout=async()=>{
       await click('Scans');
       await wait(`!!document.querySelector('.poc-source-facts')`);
@@ -646,11 +808,11 @@ app.on('browser-window-created',(_event,window)=>{
       report.passed=!report.windowEverVisible;
     };
     try{
-      if(targetId||nativeStudy)await js(`(()=>{
+      if(targetId||nativeStudy||resectPair)await js(`(()=>{
         const key=frame=>JSON.stringify([frame.sourceCaseHash,frame.displayIdentity,frame.serial]);
-        const probe=window.__dataRebuildCtaFrames={frames:[],completed:new Set(),key};
+        const probe=window.__dataRebuildCtaFrames={frames:[],completed:new Map(),key};
         document.addEventListener('anatomy-frame',e=>{probe.frames.push(e.detail);if(probe.frames.length>32)probe.completed.delete(key(probe.frames.shift()))});
-        document.addEventListener('anatomy-gpu',e=>{if(e.detail.completed)probe.completed.add(key(e.detail))});
+        document.addEventListener('anatomy-gpu',e=>{if(e.detail.completed)probe.completed.set(key(e.detail),e.detail)});
       })()`);
       if(replayOnly||process.env.DATA_REBUILD_REQUIRE_GPU_STATE==='1')await js(`(()=>{
         const p=window.__dataRebuildFrames={gpu:[],publications:[]};
@@ -669,6 +831,7 @@ app.on('browser-window-created',(_event,window)=>{
       if(ixiStudy){await inspectIxiStudy();return;}
       if(nativeStudy){await inspectNativeStudy();return;}
       if(replayOnly){await inspectRecordedReplay();return;}
+      if(resectPair){await inspectResectPair();return;}
       if(process.env.DATA_REBUILD_STRUCTURES==='1'){
         await click('Show structures only');await ready();
         report.checks.push('Explicit structures-only 3D display with unchanged full native source slices');

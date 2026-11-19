@@ -254,6 +254,29 @@ return. The source case and initial simulated state remained intact.
   --output-name cta014-organic-01-multilane-reproduction
 ```
 
+**TopCoW-014-CTA-ORGANIC-FIXED-ROUTE-01-v1** is a separate development
+case on the same acquired CTA and unchanged tissue masks. Its 0.21 mL
+generated target is conditioned on a point 5 mm upstream of a previously
+traced endpoint. The 0.8 mm contour blur retains a proxy-to-truth Dice of
+0.886 for this small target. The 1.3 mm blur used by the larger cohort gave
+0.694 on the same target, below the source contour quality gate. The exact
+core, rim and edema stay outside the app package.
+
+Using the historical geometry only, 950 opening and 782 kerf sweeps miss the
+719-cell contour. The stock CUSA working envelope along the historically
+attained part of the line intersects 375 contour cells. The fresh study
+contains no actions or opening. These results qualify a candidate for an
+independently checked rehearsal from the starting state. They leave scalp,
+dural, and unmapped anatomy assumptions explicit.
+
+```sh
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python \
+  scripts/probe_cta014_route_conditioned.py --register "$PWD/testcases/cases"
+```
+
+See `prepared/cta014-organic-fixed-route-v1/preflight.json` and the source
+shape QA beside the package.
+
 ### MRI anatomy and diffusion inspection
 
 Search **IXI265-Guys-0845** in the checkout's Cases library or open
@@ -350,6 +373,46 @@ ultrasound landmark RMS of 4.045 mm unchanged, 1.020 mm after rigid correction,
 and 1.104 mm with inverse-distance weighting. Case3 image-only registration
 increased landmark error from 2.029 to 2.087 mm RMS. No frame-qualified predicted
 cavity was available for a simulated-versus-observed removal comparison.
+
+The Case3 two-stage extension recovers 46,148 bytes of checksum-pinned
+publisher data, comprising the after-resection cavity mask and two short
+landmark files. It reuses the acquired US scans. The original T1 remains the
+primary reference in **RESECT-Case3-observed-cavity-stages-v1**. The two
+ultrasound annotations open on their separate native grids as display-only
+observations. Both masks restore exactly. FLAIR and before-resection US remain
+available in the original source-stage workspace.
+
+The visible cavity measured 160.04 mm³ during resection and 2,044.01 mm³
+afterward. The labels represent the cavity visible at each ultrasound
+acquisition. Among the two files' 11 before-US landmarks, ten match exactly.
+The remaining coordinates differ by 0.408 mm and their destinations were
+excluded from fitting and scoring. Across the five matched points withheld
+from the fit, RMS error was 3.050 mm for the unchanged before positions,
+1.905 mm for the during positions carried forward, and 1.391 mm with a rigid
+update conditioned on the other five correspondences. The two cross-stage
+cavity overlap scores use separate acquired-signal supports and describe
+visible anatomy under each alignment hypothesis. No causal removal or dense
+tissue deformation is inferred.
+
+```sh
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python \
+  scripts/benchmark_resect_case3_stages.py --output-name RESECT-Case3-observed-stages-reproduction
+```
+
+The workspace, source overlay, frozen held-out predictions and report are in
+`qc/surgical-change/RESECT-Case3-observed-stages-20261118-v1/`.
+The hidden desktop checks in `qc/hidden-app/resect-case3-native-stage-pair-20261118-v1/`
+bind each selected ultrasound to its native source and cavity checksum. Showing
+each mask changes all three linked ultrasound panes. Returning to the original
+MRI restores its exact scalar identity, cursor and slice pixels.
+
+```sh
+stages="$RESSECTIONLAB_DATA_ROOT/qc/surgical-change/RESECT-Case3-observed-stages-20261118-v1"
+DATA_REBUILD_CASE="$stages/RESECT-Case3-observed-cavity-stages-v1.ressectionlab" \
+  DATA_REBUILD_RESECT_PAIR_REPORT="$stages/report.json" \
+  DATA_REBUILD_OUTPUT="$RESSECTIONLAB_DATA_ROOT/qc/resect-case3-app-reproduction" \
+  desktop/node_modules/.bin/electron desktop/electron/verify-data-rebuild.cjs --automation-hidden
+```
 
 ## Native study migration
 

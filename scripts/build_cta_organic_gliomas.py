@@ -178,10 +178,10 @@ def generate(domain, affine, distance, midline, family, variant, previous, targe
     raise ValueError(f'No valid organic target survived 24 draws for {family} variant {variant}')
 
 
-def observed_contour(target, support, spacing):
+def observed_contour(target, support, spacing, *, sigma_mm=1.3):
     # Filter the target envelope, keeping distinct generator compartments out
     # of the planning workspace. The acquired CTA intensities remain exact.
-    contour = (gaussian_filter(target.astype(np.float32), 1.3 / np.asarray(spacing)) >= .54) & support
+    contour = (gaussian_filter(target.astype(np.float32), sigma_mm / np.asarray(spacing)) >= .54) & support
     dice = 2 * np.count_nonzero(contour & target) / (np.count_nonzero(contour) + np.count_nonzero(target))
     if not .75 <= dice < .995:
         raise ValueError('Approximate observation is too degraded or effectively exact')
@@ -291,7 +291,7 @@ def load_existing(root, directory, case_id, evidence, target_ml):
     return receipt
 
 
-def save_variant(root, final, case_id, host, originals, evidence, geometry, domain, z_start):
+def save_variant(root, final, case_id, host, originals, evidence, geometry, domain, z_start, *, observation_sigma_mm=1.3):
     masks, recipe, local_region = geometry
     region = (*local_region[:2], slice(local_region[2].start + z_start, local_region[2].stop + z_start))
     support = domain[local_region]
@@ -301,7 +301,7 @@ def save_variant(root, final, case_id, host, originals, evidence, geometry, doma
                    or any(np.any(mask & host.compartments[key][region]) for key in ORDER[1:])
                    for mask in masks.values())):
         raise ValueError('Generated compartments fail the exclusive source-tissue gate')
-    contour, dice = observed_contour(target, support, host.spacing_mm)
+    contour, dice = observed_contour(target, support, host.spacing_mm, sigma_mm=observation_sigma_mm)
     observation = np.zeros(host.mri.shape, bool)
     observation[region] = contour
     case = scenario_case(host, case_id, observation, evidence)
@@ -358,7 +358,7 @@ def save_variant(root, final, case_id, host, originals, evidence, geometry, doma
                                                         for name, mask in masks.items()}},
                    'observation': {'name': OBSERVATION, 'volume_mm3': float(observation.sum() * host.voxel_volume_mm3),
                                    'array_hash': array_digest(observation), 'truth_overlap_dice': dice,
-                                   'generated_image_signal': False, 'filter_sigma_mm': 1.3, 'threshold': .54},
+                                   'generated_image_signal': False, 'filter_sigma_mm': observation_sigma_mm, 'threshold': .54},
                    'production_workspace_reopen': True, 'limitations': list(LIMITS)}
         atomic_json(staging / 'receipt.json', receipt)
         staging.rename(final)
