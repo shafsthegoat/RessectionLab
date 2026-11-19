@@ -30,7 +30,7 @@ def accepted(engine, operation, **kwargs):
     return result
 
 
-def shell(*, proof_status='reviewed', obstacle=None, source_gap=False, protected=False, attachments=()):
+def shell(*, proof_status='reviewed', unknown_attachments=False, obstacle=None, source_gap=False, protected=False, attachments=()):
     """Freeze the source-cell contour before executing any native command."""
     labels = np.zeros((64, 64, 96), np.uint16)
     labels[20:45, 20:45, 60] = 1
@@ -73,6 +73,8 @@ def shell(*, proof_status='reviewed', obstacle=None, source_gap=False, protected
                  'maximumVoxelBoundary': [63.5, 63.5, 95.5]},
         'evidence': {'scope': 'idealized-engineering', **{name: copy.deepcopy(proof)
                       for name in ('window', 'support', 'attachments', 'exit')}}}
+    if unknown_attachments:
+        contract['evidence']['attachments'].update(status='unknown', evidenceSha256=None)
     contract['contentHash'] = contract_hash(contract)
     properties[PROPERTY] = contract
     scene = SurgicalScene(labels, np.eye(4), regions, source, properties)
@@ -266,12 +268,13 @@ def test_full_tumor_entry_cannot_use_cropped_or_existing_void_before_flap_evacua
 
 
 def test_unknown_attachment_review_stays_inspectable_and_blocks_bone_work():
-    engine, contour, _, _ = shell(proof_status='unknown')
+    engine, _, _, _ = shell(unknown_attachments=True)
     accepted(engine, 'configure', mechanicsRevision=2)
-    accepted(engine, 'place', pose=pose(26, 26, 55))
+    assert not engine.observe()['craniotomy']['openingComplete']
     before = engine.snapshot()
-    result = engine.step(request('apply', pose=contour[0]))
-    assert result['status'] == 'rejected' and 'EVIDENCE_REQUIRED' in result['reason']
+    placement = request('place', pose=pose(26, 26, 55))
+    for result in (engine.preview(placement, include_view=False), engine.step(placement)):
+        assert (result['status'], result['reasonCode']) == ('rejected', 'CRANIOTOMY_ATTACHMENTS_EVIDENCE_REQUIRED')
     assert engine.snapshot() == before
 
 
