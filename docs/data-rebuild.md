@@ -1,5 +1,125 @@
 # RessectionLab data collection
 
+## Multimodal anatomy pilots
+
+The [source catalog](DATASET_ACQUISITION_ADDENDUM.md) lists rights, access,
+annotations and known overlaps. On the marked HDD, start with
+`catalog/inventory/multimodal-anatomy-baseline-20261118-v1/README.md`. The
+baseline checked paths and sizes for 368 accepted packages across 130 source
+families, including 208 synthetic cases. It verified 175 private migration
+manifest checksums and located the separate EDEN v2 collection of 15 baselines
+and 120 variants. See the HDD manifest for imaging and annotation counts,
+the first-party acquisition receipts and the scope of file verification.
+
+### Selective CTA intake
+
+```sh
+export RESSECTIONLAB_DATA_ROOT="/absolute/path/on/mounted/RessectionLabData"
+.venv/bin/python scripts/acquire_tair_cta.py 00273 00244 00410
+.venv/bin/python scripts/prepare_tair_cta.py 00273 00244 00410
+```
+
+The three TAIR scans occupy 183,437,613 source bytes. The downloader reuses
+complete objects, resumes partial transfers and verifies the publisher's
+full-object CRC64NVME and object length before writing a local SHA256 receipt.
+Open `prepared/tair-v1-cta-native/<id>/patient-anatomy.json` through Cases.
+The publisher originals retain their full grids. The display uses every second
+slice at its original physical location, giving 0.6 mm through-plane sampling
+and 0.44–0.50 mm native in-plane spacing. Review the calvarium, brain, skull
+base and enhanced structures at `qc/tair-v1-cta-native/<id>/source-planes.png`.
+The release is defaced and supplies no segmentation objects for these scans.
+
+TAIR 00273 also has source-bound brain and dense skull estimates. The existing
+TotalSegmentator CT adapter ran on the display grid with 3 mm inference. The
+worker exited zero, retained both masks and wrote its completion record. Its
+inherited logging pipe triggered the supervisor failure. Intake independently
+verified the retained binary masks, exact grid, source and pinned model. The
+failed attempt receipt remains in the model cache. Its masks were reused without
+repeating inference. The skull and brain surfaces have about 2.07 million and
+719,000 triangles respectively. Their conditioned display vertices move by at
+most 0.42 mm. Anatomy coverage and vascular segmentation remain unqualified.
+
+```sh
+export RESSECTIONLAB_MODEL_ROOT="$RESSECTIONLAB_DATA_ROOT/cache/models"
+export RESSECTIONLAB_POC_OUTPUT_ROOT="$RESSECTIONLAB_DATA_ROOT/cache/poc-model-results"
+# For a fresh CTA study with available model assets.
+.venv/bin/python scripts/prepare_tair_cta.py --estimate-skull-brain 00273
+# Recover only the retained outputs of the specific zero-exit, log-pipe case.
+receipt="$RESSECTIONLAB_POC_OUTPUT_ROOT/anatomy-410401c34a17e131/totalsegmentator-skull/e0bedd63e0d8502d8985/inference.json"
+.venv/bin/python scripts/prepare_tair_cta.py --recover-ct-worker "$receipt" 00273
+```
+
+The [Annotated Head CTA release](https://zenodo.org/records/15697196) supports
+selective ZIP64 extraction. Development subjects 189 and 013 have 276 and 289
+DICOM instances. Subject 013 includes one supplied aneurysm STL. Member CRC and
+local SHA256 checks cover the selected originals. The reported whole-archive
+MD5 identifies the publisher release. Both native study affines passed an
+independent check against DICOM orientation and slice positions. The STL stays
+with the originals pending a verified spatial basis.
+
+```sh
+.venv/bin/python scripts/acquire_head_cta.py --prepare 189 013
+```
+
+Open `prepared/head-cta-15697196-native/<id>/patient-anatomy.json`. The source
+and reconstruction checks are under `qc/head-cta-15697196-native/<id>/`.
+
+### Published masks and acquired-host scenarios
+
+TopCoW 006, 012 and 014 reuse same-person TopBrain v3 CTA, existing skull and
+brain estimates, and six publisher annotations. Display uses three V1 masks,
+with V2 retained separately. Reuse avoided three vessel model runs and three
+brain/skull reruns. All three supplied arterial layers reach the inferior scan
+boundary, and the 006 brain estimate covers a superior portion only. See
+`qc/multimodal-anatomy-20261118-vessel-v1/README.md` for exact grids, label
+semantics, continuity, and source overlays.
+
+The [published Circle of Willis geometry](https://zenodo.org/records/17358162)
+was qualified separately for CTA006. The 915 graph points use the original CTA
+RAS frame and all 914 edge midpoints overlap the original CoW annotation. The
+surface contains 47,202 vertices and 94,404 triangles. The proof used the
+published VTP files directly in VTK and retained the original mask, license and
+hashes. See `qc/multimodal-anatomy-20261118-cow-vtp-v1/README.md`. The desktop
+pilots continue to use their native voxel annotation layers.
+
+Build or reopen 12 development scenarios and register them in the checkout's
+Cases library. The EDEN v2 generator provides the lobulated geometry. A
+checksummed 46-person UCSF TRAIN summary guides sizing and excludes four people
+listed in BraTS validation. The scenarios span 3.90–12.87 mL across four recipes
+per host. Each preserves acquired CTA and source anatomy and exposes an
+approximate simulated contour. Exact core, rim, and edema labels stay in
+separate research files. The cases omit mass effect and synthetic CTA signal.
+
+```sh
+.venv/bin/python scripts/build_cta_organic_gliomas.py --register "$PWD/testcases/cases"
+```
+
+Search **CTA-ORGANIC** in Cases. Package checksums, seeds and a contact sheet are
+under `prepared/cta-organic-gliomas-v1/`. The global accepted release is unchanged.
+The hidden desktop verified all 12 Cases entries and checked CTA014 variant 01
+against its original CTA identity. Its scan and generated contour restored in a
+fresh process, and rehearsal inspect preview left the modeled state intact.
+See `qc/hidden-app/cta-organic-014-warm-20261118-v2/report.json` and
+`qc/hidden-app/cta-organic-014-cold-20261118-v2/report.json`. The separate
+reviewed CTA014 replay restored a 48-state run with 15.81 mm³ of target effect
+and withdrawal. Its report is `qc/hidden-app/cta-pilot-baseline-20261118-v1/report.json`.
+
+### Observed surgical change
+
+```sh
+.venv/bin/python scripts/benchmark_resect_surgical_change.py \
+  --output-name RESECT-Case3-benchmark-reproduction
+```
+
+`qc/surgical-change/RESECT-Case3-benchmark-verified-20261118/README.md` indexes
+the checksum-bound evidence. The same-patient intraoperative cavity is an
+observed display layer. Its 20,005 voxels and 160.04 mm³ survived workspace
+save and cold reopen at Dice 1.000. Case4's frozen update reproduced held-out
+ultrasound landmark RMS of 4.045 mm unchanged, 1.020 mm after rigid correction,
+and 1.104 mm with inverse-distance weighting. Case3 image-only registration
+increased landmark error from 2.029 to 2.087 mm RMS. No frame-qualified predicted
+cavity was available for a simulated-versus-observed removal comparison.
+
 ## Native study migration
 
 Use the private frozen inventory in the configured `testcases/` collection.
@@ -62,14 +182,13 @@ publication belongs to this cycle.
 
 ## Open accepted cases
 
-The latest integration release is `2026-10-31-integrated-rehearsal-v1`: 362
-native packages, 130 source person families and 207 synthetic variants. Its seven
-additions reuse existing people: five CTA cases support bounded conditional
-negative instrument workflows, and two healthy cases support reviewed approximate
-MRI/MRA overlay inspection. No acquired-case target reach or full rehearsal is
-claimed. See [integrated-suite instructions](data-integrated-rehearsal.md) and
-`integrated-v1/START-HERE.md` on the data drive for the capability table, exact
-reproduction commands, independent decisions and actual app captures.
+The latest frozen compatibility release is `2026-11-05-integrated-rehearsal-v2`,
+with 368 packages from 130 source-person families, including 208 synthetic
+variants. Its CTA cases have bounded conditional instrument workflows and the
+healthy MRI/MRA cases have reviewed approximate overlay inspection. See the
+[integrated-suite instructions](data-integrated-rehearsal.md) and the HDD
+`integrated-v1/START-HERE.md` for capabilities, reproduction commands,
+independent decisions and app captures.
 
 The original frozen `2026-10-31-data-foundation-v1` release remains unchanged:
 355 native packages, 130 source person families and 200 synthetic variants.

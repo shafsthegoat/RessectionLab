@@ -50,6 +50,10 @@ establish scientific readiness or a completed build; consult each run's receipts
 | Four-channel glioma preparation | `cache/models/poc-monai-brats-0.5.4/` contains the pinned 18,840,620-byte weight and release configuration. `qc/brats-native-0004-20261118/` holds the portable UCSF-0004 multimodal estimate, source/model identities and verification receipt. The application requires the matching local MPS runtime. |
 | Integrated research | `integrated-v1/`: cases, anatomy hosts, replay experiments, QC, reports and reproduction records; start at its `START-HERE.md`. |
 | Catalog and review | `catalog/START-HERE.md`, `catalog/releases/`, `catalog/inventory/`, `catalog/work-ledger.json`; `qc/`, `quarantine/`, `staging/` hold review/recovery/work areas. Catalog releases and ledgers have their own dates and scope. |
+| Multimodal library baseline | `catalog/inventory/multimodal-anatomy-baseline-20261118-v1/README.md` indexes the pre-acquisition files, receipts, role restrictions and source families. |
+| New CTA source studies | `sources/tair-v1-cta-selective/` and `sources/head-cta-15697196/selective/` hold original scans, checksums and the publisher STL. `prepared/tair-v1-cta-native/` and `prepared/head-cta-15697196-native/` hold the development studies. Matching `qc/` directories contain source and display checks. |
+| CTA anatomy and glioma scenarios | `prepared/cta-organic-gliomas-v1/collection.json` indexes 12 development projects, overlays, the contact sheet and separate truth labels. The 46-person TRAIN summary is in `prepared/cta-organic-glioma-guidance-v1/`. TopBrain reuse and CoW geometry frame checks are in `qc/multimodal-anatomy-20261118-vessel-v1/` and `qc/multimodal-anatomy-20261118-cow-vtp-v1/`. |
+| Observed surgical change | `sources/RESECT-SEG/v1-20240215/Case3/` retains the publisher cavity annotation and rights notice. `qc/surgical-change/RESECT-Case3-benchmark-verified-20261118/README.md` links the portable workspace, overlay and landmark results. |
 
 When adding, moving, archiving or retiring relevant HDD assets, update this ledger
 and the affected local catalog pointers. Keep detailed file inventories, hashes

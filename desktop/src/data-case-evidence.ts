@@ -23,6 +23,7 @@ export function conditionalRehearsalNotice(metadata:Record<string,unknown>|undef
 export function caseLayerEvidence(metadata:Record<string,unknown>|undefined,name:string){
   const layers=metadata?.anatomy_layers as Record<string,Record<string,unknown>>|undefined;
   const record=layers?.[name];
+  if(record?.provenance==='supplied_annotation')return {...record,provenance:'source-provided'};
   if(record?.provenance)return record;
   const key=({supplied_arterial_annotation_union:'arteries',supplied_venous_sinus_annotation_union:'veins_sinuses'} as Record<string,string>)[name];
   const data=metadata?.data_case as Record<string,unknown>|undefined;

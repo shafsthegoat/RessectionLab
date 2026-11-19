@@ -10,6 +10,15 @@ from scipy.ndimage import distance_transform_edt, label, gaussian_filter
 from scipy.spatial import ConvexHull
 
 
+# amplitude range, radial core threshold, radial edema threshold
+PROFILES = {
+    'eden-v2': ((.25, .65), .57, 1.35),
+    'circumscribed': ((.17, .40), .42, 1.25),
+    'lobulated': ((.36, .72), .51, 1.48),
+    'broad-edema': ((.22, .56), .64, 1.63),
+}
+
+
 def signed_domain(mask, affine):
     mask=np.asarray(mask,bool);a=np.asarray(affine,float)
     spacing=np.linalg.norm(a[:3,:3],axis=0)
@@ -38,22 +47,26 @@ def shape_metrics(mask, affine):
         'is_cuboid':bool(mask.sum()==np.prod(high-low)),'bounds_native_exclusive':[low.tolist(),high.tolist()]}
 
 
-def organic_geometry(domain, affine, *, center_voxel, seed, radii_mm=(9.,12.,13.), signed=None):
+def organic_geometry(domain, affine, *, center_voxel, seed, radii_mm=(9.,12.,13.), signed=None,
+                     profile='eden-v2'):
     domain=np.asarray(domain,bool);a=np.asarray(affine,float);spacing=np.linalg.norm(a[:3,:3],axis=0)
     center=np.asarray(center_voxel,int);radii=np.asarray(radii_mm,float)
     if center.shape!=(3,) or np.any(center<0) or np.any(center>=domain.shape) or not domain[tuple(center)]:
         raise ValueError('Center must lie inside the declared tissue domain')
     if radii.shape!=(3,) or not np.isfinite(radii).all() or np.any(radii<3) or np.any(radii>30):raise ValueError('Radii must be finite physical sizes in [3,30] mm')
+    if profile not in PROFILES:
+        raise ValueError('Unknown organic tumor profile')
+    amplitude_range, core_level, edema_level = PROFILES[profile]
     distance=signed_domain(domain,a)if signed is None else np.asarray(signed)
     if distance.shape!=domain.shape or not np.isfinite(distance).all():raise ValueError('Invalid signed tissue domain')
     rng=np.random.default_rng(seed);rotation,_=np.linalg.qr(rng.normal(size=(3,3)))
     if np.linalg.det(rotation)<0:rotation[:,0]*=-1
     count=int(rng.integers(3,7));directions=rng.normal(size=(count,3));directions/=np.linalg.norm(directions,axis=1)[:,None]
-    amplitudes=rng.uniform(.25,.65,count);sharpness=rng.uniform(6.,13.,count);phase=rng.uniform(-np.pi,np.pi,3)
+    amplitudes=rng.uniform(*amplitude_range,count);sharpness=rng.uniform(6.,13.,count);phase=rng.uniform(-np.pi,np.pi,3)
     # An analytic bound covers even several lobes pointing in one direction.
     # The allocation crop must never become a flat face of the generated shape.
     maximum_radius=1.+float(amplitudes.sum())+.13
-    half=np.ceil((radii.max()*1.35*maximum_radius+2.)/spacing).astype(int)
+    half=np.ceil((radii.max()*edema_level*maximum_radius+2.)/spacing).astype(int)
     low=np.maximum(0,center-half);high=np.minimum(domain.shape,center+half+1)
     roi=tuple(slice(int(x),int(y))for x,y in zip(low,high))
     grid=np.stack(np.meshgrid(*(np.arange(x,y,dtype=np.float32)-c for x,y,c in zip(low,high,center)),indexing='ij'),-1)
@@ -71,7 +84,7 @@ def organic_geometry(domain, affine, *, center_voxel, seed, radii_mm=(9.,12.,13.
         # Smooth minimum preserves both inequalities, hence containment.
         field=-.7*np.logaddexp(-raw/.7,-allowed/.7)
         return field>=0
-    whole=level(1.);core=level(.57);outer=level(1.35)
+    whole=level(1.);core=level(core_level);outer=level(edema_level)
     local_center=tuple(center-low)
     def seed_component(mask):
         numbered,_=label(mask);component=numbered[local_center]
@@ -88,9 +101,12 @@ def organic_geometry(domain, affine, *, center_voxel, seed, radii_mm=(9.,12.,13.
     target=masks['synthetic_core']|masks['synthetic_rim'];metrics=shape_metrics(target,a)
     if metrics['is_cuboid'] or metrics['bounding_box_fill']>.75 or metrics['surface_solidity']>.98 or metrics['components']!=1:
         raise ValueError('Organic shape gate refused an overly solid, regular or disconnected target')
-    return masks,{'recipe':'lobulated-smooth-tissue-domain-v1','seed':int(seed),'center_voxel':center.tolist(),
+    recipe={'recipe':'lobulated-smooth-tissue-domain-v1','seed':int(seed),'center_voxel':center.tolist(),
         'center_ras_mm':(a[:3,:3]@center+a[:3,3]).tolist(),'radii_mm':radii.tolist(),'rotation_ras':rotation.tolist(),
         'lobe_directions_local':directions.tolist(),'lobe_amplitudes':amplitudes.tolist(),'lobe_sharpness':sharpness.tolist(),
         'number_of_shape_lobes':count,'phase':phase.tolist(),'domain_surface_definition':'smooth minimum of lobulated radial field and estimated tissue signed distance minus0.35mm',
         'removed_non_seed_component_voxels':before-int(whole.sum()),'metrics':metrics,'clinical_validation':False,
         'axis_aligned_box_used_as_shape':False,'outside_tissue_voxels':0}
+    if profile != 'eden-v2':
+        recipe.update(profile=profile, core_radial_threshold=core_level, edema_radial_threshold=edema_level)
+    return masks, recipe

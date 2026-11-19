@@ -30,6 +30,9 @@ test('supplied vascular unions retain component evidence inside synthetic cases 
  assert.equal(caseLayerEvidence({is_synthetic:true},'supplied_arterial_annotation_union'),undefined);
  assert.equal(caseLayerEvidence(metadata,'brain').provenance,'estimated');
  assert.equal(caseLayerEvidence({...metadata,anatomy_layers:{supplied_arterial_annotation_union:{provenance:'estimated'}}},'supplied_arterial_annotation_union').provenance,'estimated');
+ const supplied={provenance:'supplied_annotation',coverage:'Partial annotation on the native CTA grid.'};
+ assert.deepEqual(caseLayerEvidence({anatomy_layers:{arteries:supplied}},'arteries'),{...supplied,provenance:'source-provided'});
+ assert.equal(supplied.provenance,'supplied_annotation');
 });
 test('generated image variants and analytic fixtures remain visibly generated',()=>{
  assert.equal(caseImageEvidence({is_synthetic:true,data_case:{classification:'synthetic_scenario_on_acquired_host',observations:{primary_image:'synthetic_appearance'}}}).generatedImage,true);
