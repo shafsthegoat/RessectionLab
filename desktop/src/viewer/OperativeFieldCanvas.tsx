@@ -3,19 +3,20 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import type { OperativeField, OperativePhase } from '../operative-field';
-import { buildOperativeModel, clamp01, embeddedLayers, layerNames, retractionOffset, phaseAmount, smooth, type FieldLayer } from './operativeFieldModel.ts';
+import { buildOperativeModel, clamp01, embeddedLayers, layerNames, retractionOffset, phaseAmount, smooth, type FieldLayer, type OperativeModel } from './operativeFieldModel.ts';
 import { operativeVoxelSurface } from './operativeVoxelSurface.ts';
 import { operativeSurface } from './operativeSurface.ts';
 import { prepareOperativeOpening } from './operativeOpening.ts';
 import { operativeInstruments } from './operativeInstruments.ts';
 import { operativeSignalTexture,operativeTissueMaterial } from './operativeFieldAppearance.ts';
 
+import {operativeSectionContext} from './operativeSectionContext.ts';
 import type {ViewerVolume} from './contracts';
 import {pickOperativeStructure,type OperativePick} from './operativeFieldPick.ts';
 import {operativeFieldContext,limitToOperativePatch} from './operativeFieldContext.ts';
 
-type Props = {sourceVolume:ViewerVolume|null;collectionId:string;field:OperativeField; phase:OperativePhase; progress:number; withRetraction:boolean; cutaway:boolean; raw:boolean; fitExterior:boolean; onContext:(layers:string[])=>void;
-  onSuperficialVessels:(count:number)=>void};
+type Props = {sourceVolume:ViewerVolume|null;collectionId:string;field:OperativeField; phase:OperativePhase; progress:number; withRetraction:boolean; cutaway:boolean; raw:boolean; fitExterior:boolean; depthFraming:boolean; onContext:(layers:string[])=>void;
+  onVesselDisplay:(display:OperativeModel['vesselDisplay'])=>void};
 
 function fieldScene(host:HTMLDivElement, field:OperativeField, sourceVolume:ViewerVolume|null,collectionId:string,pick:(value:OperativePick|null)=>void,lost:()=>void) {
   const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,powerPreference:'high-performance'});
@@ -61,11 +62,14 @@ function fieldScene(host:HTMLDivElement, field:OperativeField, sourceVolume:View
   const hingeZ=model.surfaceHeight('dura',hingeX,0)??field.stations.dura??0;
   const texture=field.intensity?operativeSignalTexture(field.intensity):null;
   const sectionY={value:field.origin[1]-field.spacingMm*.5};
+  const sectionPlaneY=field.origin[1]+(model.firstSectionRow-.5)*field.spacingMm;
+  let sectionContext:ReturnType<typeof operativeSectionContext>|undefined;
+  const sectionCamera=new THREE.Vector3(.16,-1,.52).normalize();
   const meshes=Object.fromEntries(layerNames.map(name=>{
     const offset=new THREE.Vector3();
     if(name==='duraFlap')offset.set(hingeX,0,hingeZ);
     if(name==='boneFlap')offset.z=boneZ;
-    const material=operativeTissueMaterial(name,field,texture,offset,sectionY);
+    const material=operativeTissueMaterial(name,field,texture,offset,sectionY,model.vesselDisplay.conflictingVoxels);
     const mesh=new THREE.Mesh(new THREE.BufferGeometry(),material);
     const role=name==='boneFlap'?'bone':name==='duraFlap'?'dura':name==='vessel'?'vessels':name;
     mesh.userData.sourceLayer={role,offset,detail:['brain','bone','dura','tumor','vessels','lesionContext'].includes(role)?null:name};
@@ -131,9 +135,12 @@ function fieldScene(host:HTMLDivElement, field:OperativeField, sourceVolume:View
   const sourceCenter=sourceBox?.getCenter(new THREE.Vector3());
   const sourceRadius=sourceBox?.getBoundingSphere(new THREE.Sphere()).radius??0;
   const closeSize=Math.max(model.opening*4,field.radiusMm*1.82);
+  const entryZ=field.stations.bone??field.stations.dura??field.stations.brain??fieldTop;
+  const sectionFocus=(z:number)=>z+.3*Math.max(0,entryZ-z);
+  const sectionSize=(z:number)=>Math.max(model.opening*3.4,(entryZ-z)*1.35+model.opening*1.65);
   function focus(z:number,size:number,reset=false,x=0,y=0) {
     if(!reset && x===controls.target.x && y===controls.target.y && z===controls.target.z && size===viewSize)return;
-    const offset=reset?(previousCutaway===false?exteriorDirection:direction).clone().multiplyScalar(400):camera.position.clone().sub(controls.target);
+    const offset=reset?(previousCutaway===false?exteriorDirection:previousDepthFraming?sectionCamera:direction).clone().multiplyScalar(400):camera.position.clone().sub(controls.target);
     controls.target.set(x,y,z);camera.position.copy(controls.target).add(offset);
     viewSize=size;
     keyLight.target.position.set(0,0,z);
@@ -142,7 +149,7 @@ function fieldScene(host:HTMLDivElement, field:OperativeField, sourceVolume:View
     controls.update();updateProjection();queue();
   }
   const stageOrder=['bone','dura','brain','tumor'] as const;
-  function followStation(phase:OperativePhase,progress:number,retraction:boolean,cutaway:boolean,fitExterior:boolean){
+  function followStation(phase:OperativePhase,progress:number,retraction:boolean,cutaway:boolean,fitExterior:boolean,depthFraming:boolean){
     if(!cutaway && fitExterior && sourceCenter && sourceRadius>0){
       focus(sourceCenter.z,sourceRadius*2.12,false,sourceCenter.x,sourceCenter.y);
       return;
@@ -165,12 +172,13 @@ function fieldScene(host:HTMLDivElement, field:OperativeField, sourceVolume:View
       if(z===null || (id==='brain'&&!retraction))continue;
       if(id===phase){
         const entering=first&&fromPatient;
+        const activeZ=cutaway&&depthFraming?sectionFocus(z):z,activeSize=cutaway&&depthFraming?sectionSize(z):closeSize;
         const t=smooth(progress/(entering?.42:.24));
-        const size=entering?Math.exp(THREE.MathUtils.lerp(Math.log(previousSize),Math.log(closeSize),t)):THREE.MathUtils.lerp(previousSize,closeSize,t);
-        focus(THREE.MathUtils.lerp(previousZ,z,t),size,false,entering?sourceCenter.x*(1-t):0,entering?sourceCenter.y*(1-t):0);
+        const size=entering?Math.exp(THREE.MathUtils.lerp(Math.log(previousSize),Math.log(activeSize),t)):THREE.MathUtils.lerp(previousSize,activeSize,t);
+        focus(THREE.MathUtils.lerp(previousZ,activeZ,t),size,false,entering?sourceCenter.x*(1-t):0,entering?sourceCenter.y*(1-t):0);
         return;
       }
-      previousZ=z;previousSize=closeSize;first=false;
+      previousZ=cutaway&&depthFraming?sectionFocus(z):z;previousSize=cutaway&&depthFraming?sectionSize(z):closeSize;first=false;
     }
   }
   const exteriorDirection=new THREE.Vector3(.06,-.19,1).normalize();
@@ -219,18 +227,25 @@ function fieldScene(host:HTMLDivElement, field:OperativeField, sourceVolume:View
     mesh.geometry.dispose();mesh.geometry=next;mesh.updateMorphTargets();cache.set(name,key);
   }
   let previousStep=-1,removedCells=0;
-  let previousCutaway:boolean|undefined;
-  function update({phase:next,progress,withRetraction,cutaway,raw,fitExterior}:Props) {
-    if(previousCutaway!==cutaway){
+  let previousCutaway:boolean|undefined,previousDepthFraming:boolean|undefined;
+  function update({phase:next,progress,withRetraction,cutaway,raw,fitExterior,depthFraming}:Props) {
+    if(previousCutaway!==cutaway||(cutaway&&previousDepthFraming!==depthFraming)){
       // Look down the saved approach at intact and opened layers; orbit remains available.
-      const offset=cutaway?direction:exteriorDirection;
+      if(cutaway&&sectionContext===undefined){
+        sectionContext=operativeSectionContext(sourceVolume,collectionId,field,sectionPlaneY);
+        if(sectionContext)scene.add(sectionContext);
+      }
+      if(sectionContext)sectionContext.visible=cutaway;
+      host.dataset.sectionSource=cutaway&&sectionContext?JSON.stringify(sectionContext.userData.sectionSource):'';
+      host.dataset.sectionCaption=cutaway&&sectionContext?sectionContext.name:'';
+      const offset=cutaway?(depthFraming?sectionCamera:direction):exteriorDirection;
       camera.position.copy(controls.target).addScaledVector(offset,400);
       controls.update();
       exterior.value=!cutaway;context.visible=!cutaway;
-      previousCutaway=cutaway;
+      previousCutaway=cutaway;previousDepthFraming=depthFraming;
     }
     sectionY.value=field.origin[1]+(cutaway?model.firstSectionRow-.5:-2)*field.spacingMm;
-    followStation(next,progress,withRetraction,cutaway,fitExterior);
+    followStation(next,progress,withRetraction,cutaway,fitExterior,depthFraming);
     const amounts={bone:phaseAmount(next,progress,'bone'),dura:phaseAmount(next,progress,'dura')};
     for(const kind of ['bone','dura'] as const){
       const {angle,fraction,lift,cutting}=openings[kind].update(cutaway?model.firstSectionRow:0,amounts[kind],raw);
@@ -279,7 +294,7 @@ function fieldScene(host:HTMLDivElement, field:OperativeField, sourceVolume:View
     const materials=new Set<THREE.Material>();
     openings.bone.dispose();openings.dura.dispose();
     scene.traverse(object=>{if(object instanceof THREE.Mesh){object.geometry.dispose();for(const m of Array.isArray(object.material)?object.material:[object.material]) materials.add(m);}});
-    materials.forEach(m=>m.dispose());texture?.dispose();environment.dispose();keyLight.shadow.dispose();
+    materials.forEach(m=>m.dispose());sectionContext?.material.map?.dispose();texture?.dispose();environment.dispose();keyLight.shadow.dispose();
     scene.clear();renderer.dispose();renderer.forceContextLoss();renderer.domElement.remove();
   }
   return {update,dispose,vesselDisplay:model.vesselDisplay,contextLabels:context.children.map(mesh=>[mesh.name,mesh.userData.sourceLayer.appearance?.modality].filter(Boolean).join(' · '))};
@@ -295,12 +310,12 @@ export function OperativeFieldCanvas(props:Props) {
     setError('');setPicked(null);
     try{
       scene.current=fieldScene(host.current,props.field,props.sourceVolume,props.collectionId,setPicked,()=>setError('The 3D graphics context was interrupted. Reopen the operative field to restore it.'));
-      props.onSuperficialVessels(scene.current.vesselDisplay.superficialVoxels);props.onContext(scene.current.contextLabels);
+      props.onVesselDisplay(scene.current.vesselDisplay);props.onContext(scene.current.contextLabels);
     }
     catch(cause){setError(cause instanceof Error?cause.message:'3D graphics could not be initialized.');}
     return ()=>{scene.current?.dispose();scene.current=null;};
-  },[props.field,props.sourceVolume,props.collectionId,props.onSuperficialVessels,props.onContext]);
-  useEffect(()=>{if(scene.current)setRemoved(scene.current.update(props));},[props.field,props.sourceVolume,props.collectionId,props.phase,props.progress,props.withRetraction,props.cutaway,props.raw,props.fitExterior]);
+  },[props.field,props.sourceVolume,props.collectionId,props.onVesselDisplay,props.onContext]);
+  useEffect(()=>{if(scene.current)setRemoved(scene.current.update(props));},[props.field,props.sourceVolume,props.collectionId,props.phase,props.progress,props.withRetraction,props.cutaway,props.raw,props.fitExterior,props.depthFraming]);
   return <div ref={host} className="operative-field-canvas">
     {picked&&!error&&<aside className="operative-picked" aria-label="Picked tissue provenance">
       <button aria-label="Close picked tissue" onClick={()=>setPicked(null)}>×</button>

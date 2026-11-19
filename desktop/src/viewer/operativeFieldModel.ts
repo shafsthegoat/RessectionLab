@@ -102,7 +102,7 @@ export function buildOperativeModel(field: OperativeField) {
   const flapIndices = {bone:[] as number[], dura:[] as number[]};
   const swept = aspiration(field, tipRadius), affected=Array.from(swept.firstHit);
   const maxOffset = Math.max(8,opening*.9,4*s);
-  const vesselDisplay = {sourceVoxels:0, visibleVoxels:0, superficialVoxels:0};
+  const vesselDisplay = {sourceVoxels:0, visibleVoxels:0, superficialVoxels:0, unclassifiedVoxels:0, conflictingVoxels:0};
   const targetSlice=Math.max(0,Math.round(-origin[2]/s));
   for(let x=0,i=0;x<nx;x++) for(let y=0;y<ny;y++) {
     const px=origin[0]+x*s, py=origin[1]+y*s, r=Math.hypot(px,py);
@@ -136,7 +136,12 @@ export function buildOperativeModel(field: OperativeField) {
         if(outerBone>=0 && z>outerBone+1 && !(bits&(2|4|8))) vesselDisplay.superficialVoxels++;
         else {
           const type=bits&(detailBits.artery|detailBits.vein|detailBits.sinus);
-          source(type===detailBits.artery?'artery':type===detailBits.vein?'vein':type===detailBits.sinus?'sinus':'vessel',i,x,y,z);
+          const layer=type===detailBits.artery?'artery':type===detailBits.vein?'vein':type===detailBits.sinus?'sinus':'vessel';
+          if(layer==='vessel'){
+            vesselDisplay.unclassifiedVoxels++;
+            if(type)vesselDisplay.conflictingVoxels++;
+          }
+          source(layer,i,x,y,z);
           vesselDisplay.visibleVoxels++;
         }
       }

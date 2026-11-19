@@ -1,3 +1,4 @@
+import {Vector3} from 'three';
 import type {NativeApproach} from './native-approaches';
 import type {VerifiedStudyReplay} from './types';
 import type {ViewerRoute} from './viewer/contracts';
@@ -34,14 +35,33 @@ export function recordedOverviewRoute(recorded:NonNullable<VerifiedStudyReplay['
       tip_length_mm:0,shaft_radius_mm:recorded.radiusMm,tip_radius_mm:recorded.radiusMm}};
 }
 
-export function recordedMicroscope(recorded:NonNullable<VerifiedStudyReplay['recordedApproach']>,settings:ViewerWorkspaceSettings):ViewerWorkspaceSettings{
-  if(settings.operativeView)return settings;
-  const outward=recorded.entry.map((v,i)=>v-recorded.target[i]) as MicroscopeSettings['outward'];
-  const length=Math.hypot(...outward);
+/** Fixed optical presets from the physically bound route. The longitudinal
+ * inspection plane passes through both endpoints and keeps the far side. */
+export function recordedCorridorView(recorded:NonNullable<VerifiedStudyReplay['recordedApproach']>,settings:ViewerWorkspaceSettings,section:boolean):ViewerWorkspaceSettings {
+  const entry=new Vector3(...recorded.entry),target=new Vector3(...recorded.target);
+  const outward=entry.clone().sub(target),length=outward.length();
   if(!(length>0))return settings;
-  const microscope:MicroscopeSettings={target:recorded.target,outward,fieldMm:Math.max(18,Math.min(42,length*1.3)),
-    angleDeg:7,azimuthDeg:0,workingDistanceMm:160,focusOffsetMm:0,light:2.5};
-  return {...settings,operativeView:'surgeon',microscope,camera:microscopeCamera(microscope),externalCamera:settings.camera,
-    layout:'3d-focus',contextStyle:'uniform',showPlane:false,clipping:undefined,clipBox:undefined,obliqueClip:undefined,
+  outward.normalize();
+  // The exterior opening is toward the entry. Allow room for the projected
+  // entry-to-target separation when the user tilts the microscope.
+  const field=section?length*1.15+recorded.radiusMm*4:Math.max(18,recorded.radiusMm*13,length*.28+recorded.radiusMm*7);
+  const center=target.clone().lerp(entry,section?.44:.65);
+  const microscope:MicroscopeSettings={...settings.microscope,target:center.toArray(),outward:outward.toArray(),
+    fieldMm:Math.max(12,Math.min(120,field)),angleDeg:section?62:7,azimuthDeg:0,workingDistanceMm:160,
+    focusOffsetMm:0,light:settings.microscope?.light??2.5,inspectionCutaway:section,inspectionTransparency:false};
+  const camera=microscopeCamera(microscope);
+  let obliqueClip:ViewerWorkspaceSettings['obliqueClip'];
+  if(section){
+    const eye=new Vector3(...camera.position).sub(center);
+    const normal=eye.addScaledVector(outward,-eye.dot(outward)).normalize().negate();
+    obliqueClip={enabled:true,normal:normal.toArray(),offset:-normal.dot(target)};
+  }
+  return {...settings,operativeView:'surgeon',microscope,camera,
+    externalCamera:settings.operativeView==='surgeon'?settings.externalCamera:settings.camera,
+    layout:'3d-focus',contextStyle:'uniform',showPlane:false,clipping:undefined,clipBox:undefined,obliqueClip,
     volumeRendering:{...settings.volumeRendering,enabled:false}};
+}
+
+export function recordedMicroscope(recorded:NonNullable<VerifiedStudyReplay['recordedApproach']>,settings:ViewerWorkspaceSettings):ViewerWorkspaceSettings{
+  return settings.operativeView?settings:recordedCorridorView(recorded,settings,false);
 }

@@ -4,17 +4,30 @@ import type {SurgicalView} from '../surgical-types';
 import type {ViewerVolume} from './contracts';
 import type {ViewerCameraState,ViewerWorkspaceSettings} from './workspaceSettings';
 import {resultMaskCrop,resultMaskHash,resultMembership} from './resultInspectionData.ts';
-import {prepareSurface} from './prepareSurface.ts';
+import {prepareSurfaceSoup} from './prepareSurface.ts';
+import type {PreparedSurface} from './prepareSurface.ts';
+import {maskSurface} from './surface.ts';
+import {SURFACE_POLICY} from './surfacePolicy.ts';
 import {placeInSourceFrame} from './sceneGeometry.ts';
 
 type Parts=NonNullable<ViewerWorkspaceSettings['resultInspection']>;
+// Keep the topology audit for larger cuts off the orbit and replay thread.
+const INLINE_CAVITY_TRIANGLES=4096;
 export class ResultInspectionScene {
   private scene=new THREE.Scene();
   private camera=new THREE.PerspectiveCamera(34,1,.05,2500);
   private controls:OrbitControls;
   private residual=new THREE.Group();
   private cavity=new THREE.Mesh(new THREE.BufferGeometry(),new THREE.MeshStandardMaterial({color:0xe5a456,roughness:.54,side:THREE.DoubleSide}));
-  private tissue=new THREE.MeshStandardMaterial({color:0x53c6d1,roughness:.58,side:THREE.DoubleSide});
+  // Only the cavity silhouette behind retained tissue gets a muted ink. Draw this
+  // depth-tested pass before the normally lit cast so exposed surfaces stay solid.
+  private buriedCast=new THREE.Mesh(this.cavity.geometry,new THREE.MeshBasicMaterial({
+    color:0xa58158,depthFunc:THREE.GreaterDepth,depthWrite:false,
+  }));
+  private tissue=new THREE.MeshStandardMaterial({color:0x499ca6,roughness:.78,side:THREE.DoubleSide});
+  private lastCavity?:{sceneId:string;indices:Uint32Array};
+  private conditioning?:Worker;
+  private settling?:ReturnType<typeof setTimeout>;
   private volume:ViewerVolume|null=null;
   private parts:Parts='both';
   private followFit=true;
@@ -26,10 +39,16 @@ export class ResultInspectionScene {
   private residualBounds=new THREE.Box3();
   private consumedPose:ViewerCameraState|null|undefined;
   readonly element:HTMLElement;
-  constructor(element:HTMLElement,render:()=>void,private saveCamera:(camera:ViewerCameraState)=>void){
+  private renderAgain:()=>void;
+  private saveCamera:(camera:ViewerCameraState)=>void;
+  constructor(element:HTMLElement,renderAgain:()=>void,saveCamera:(camera:ViewerCameraState)=>void){
     this.element=element;
+    this.renderAgain=renderAgain;
+    this.saveCamera=saveCamera;
     this.scene.background=new THREE.Color(0x10191c);
-    this.scene.add(this.cavity,this.residual,new THREE.HemisphereLight(0xfff7e8,0x7090a0,1.5));
+    this.buriedCast.renderOrder=1;
+    this.cavity.renderOrder=2;
+    this.scene.add(this.buriedCast,this.cavity,this.residual,new THREE.HemisphereLight(0xfff7e8,0x7090a0,1.5));
     const key=new THREE.DirectionalLight(0xfff0db,2.35);key.position.set(-.4,-.65,1);this.scene.add(key);
     const rim=new THREE.DirectionalLight(0xc9efff,1.1);rim.position.set(.7,1,.2);this.scene.add(rim);
     this.camera.up.set(0,0,1);
@@ -37,7 +56,7 @@ export class ResultInspectionScene {
     this.controls.minDistance=.4;this.controls.maxDistance=1600;
     // Keep every interactive orbit inside the persisted camera's non-polar range.
     this.controls.minPolarAngle=.017;this.controls.maxPolarAngle=Math.PI-.017;
-    this.controls.addEventListener('change',render);
+    this.controls.addEventListener('change',this.renderAgain);
     this.controls.addEventListener('end',()=>{this.followFit=false;this.saveCamera(this.pose());});
   }
   private pose():ViewerCameraState {
@@ -54,11 +73,7 @@ export class ResultInspectionScene {
       }
     }
     this.consumedPose=pose;
-    // The cavity can be entirely enclosed within a larger residual target.
-    // Keep it visible through the retained target shell in the combined view.
-    this.tissue.transparent=parts==='both'&&this.cavityCount>0;
-    this.tissue.opacity=this.tissue.transparent?.48:1;
-    this.tissue.depthWrite=!this.tissue.transparent;
+    this.buriedCast.visible=parts==='both'&&this.cavityCount>0&&this.residualCount>0;
     this.cavity.visible=parts!=='residual'&&this.cavityCount>0;
     this.residual.visible=parts!=='cavity';
   }
@@ -79,9 +94,19 @@ export class ResultInspectionScene {
         direction.crossVectors(axis,up).addScaledVector(up,.42).addScaledVector(axis,.15);
       }
     }
-    const fov=Math.atan(Math.tan(THREE.MathUtils.degToRad(this.camera.fov/2))*Math.min(1,this.camera.aspect));
-    const distance=Math.max(2,bounds.getSize(new THREE.Vector3()).length()*.56/Math.sin(fov));
-    this.controls.target.copy(center);this.camera.position.copy(center).addScaledVector(direction.normalize(),distance);
+    direction.normalize();
+    const right=new THREE.Vector3().crossVectors(this.camera.up,direction).normalize();
+    const up=new THREE.Vector3().crossVectors(direction,right);
+    const tanY=Math.tan(THREE.MathUtils.degToRad(this.camera.fov/2)),tanX=tanY*this.camera.aspect;
+    // Fit the projected corners. A diagonal bounding sphere wastes most of the
+    // vertical field for an elongated cast, particularly in the narrow layout.
+    let distance=2;
+    for(const x of [bounds.min.x,bounds.max.x])for(const y of [bounds.min.y,bounds.max.y])for(const z of [bounds.min.z,bounds.max.z]){
+      const offset=new THREE.Vector3(x,y,z).sub(center);
+      const extent=Math.max(Math.abs(offset.dot(right))/tanX,Math.abs(offset.dot(up))/tanY);
+      distance=Math.max(distance,offset.dot(direction)+1.18*extent);
+    }
+    this.controls.target.copy(center);this.camera.position.copy(center).addScaledVector(direction,distance);
     this.controls.update();this.fitNeeded=false;
   }
 
@@ -97,14 +122,13 @@ export class ResultInspectionScene {
         const mesh=new THREE.Mesh(source.geometry,this.tissue);placeInSourceFrame(mesh,view.scene.affine);
         this.residual.add(mesh);
       }
-      const crop=resultMaskCrop(cells.cavity,view);
-      this.cavity.geometry.dispose();this.cavity.geometry=new THREE.BufferGeometry();
-      if(crop){
-        const surface=prepareSurface(crop.mask,crop.size,crop.affine,'cavity',false);
-        this.cavity.geometry.setAttribute('position',new THREE.BufferAttribute(surface.positions,3));
-        this.cavity.geometry.setAttribute('normal',new THREE.BufferAttribute(surface.normals,3));
-        this.cavity.geometry.setIndex(new THREE.BufferAttribute(surface.indices,1));
-        placeInSourceFrame(this.cavity,crop.affine);
+      // Many observed samples move the tool without editing a single cell.
+      // Retain just the most recent cast and check exact membership before extraction.
+      const previous=this.lastCavity;
+      if(previous?.sceneId!==view.scene.sceneId||previous.indices.length!==cells.cavity.length||
+          !cells.cavity.every((value,index)=>previous.indices[index]===value)){
+        this.installCavity(resultMaskCrop(cells.cavity,view));
+        this.lastCavity={sceneId:view.scene.sceneId,indices:cells.cavity};
       }
       data.resultCavityCells=String(this.cavityCount=cells.cavity.length);
       data.resultResidualCells=String(this.residualCount=cells.residual.length);
@@ -113,9 +137,7 @@ export class ResultInspectionScene {
       data.resultCavityTriangles=String((this.cavity.geometry.index?.count??0)/3);
       // Stable geometry can retain unused historical vertices. Fit only the
       // triangle-indexed vertices actually submitted for this result.
-      this.cavityBounds=drawnBounds(this.cavity);
       this.residualBounds=drawnBounds(this.residual);
-      const rasBounds=(b:THREE.Box3)=>JSON.stringify(b.isEmpty()?null:[b.min.toArray(),b.max.toArray()]);
       data.resultCavityBounds=rasBounds(this.cavityBounds);data.resultResidualBounds=rasBounds(this.residualBounds);
       this.volume=volume;this.configure(this.parts,this.consumedPose);
       if(this.followFit)this.fitNeeded=true;
@@ -129,7 +151,65 @@ export class ResultInspectionScene {
     data.resultState=view.stateId;
     data.resultEmpty=String(!(this.cavity.visible&&this.cavityCount||this.residual.visible&&this.residualCount));
   }
-  dispose(){this.controls.dispose();this.residual.clear();this.cavity.geometry.dispose();this.cavity.material.dispose();this.tissue.dispose();}
+  private installCavity(crop:ReturnType<typeof resultMaskCrop>){
+    const data=this.element.dataset;
+    this.cancelConditioning();
+    this.cavity.geometry.dispose();
+    const geometry=new THREE.BufferGeometry();
+    this.cavity.geometry=this.buriedCast.geometry=geometry;
+    this.cavityBounds.makeEmpty();
+    data.resultCavitySourceBounds='null';
+    data.resultCavityDisplacementMm='0';
+    if(!crop)return;
+    const soup=maskSurface(crop.mask,crop.size);
+    const triangles=soup.length/9;
+    const inline=triangles<=INLINE_CAVITY_TRIANGLES;
+    const surface=prepareSurfaceSoup(soup,crop.mask,crop.size,crop.affine,'cavity',inline);
+    geometry.setIndex(new THREE.BufferAttribute(surface.indices,1));
+    geometry.setAttribute('position',new THREE.BufferAttribute(surface.positions,3));
+    placeInSourceFrame(this.cavity,crop.affine);
+    placeInSourceFrame(this.buriedCast,crop.affine);
+    data.resultCavitySourceBounds=rasBounds(drawnBounds(this.cavity));
+    const useSurface=(prepared:PreparedSurface)=>{
+      geometry.setAttribute('position',new THREE.BufferAttribute(prepared.smoothPositions??prepared.positions,3));
+      geometry.setAttribute('normal',new THREE.BufferAttribute(prepared.smoothNormals??prepared.normals,3));
+      geometry.computeBoundingSphere();
+      this.cavityBounds=drawnBounds(this.cavity);
+      data.resultCavityBounds=rasBounds(this.cavityBounds);
+      data.resultCavityDisplacementMm=String(prepared.diagnostics?.maxDisplacementMm??0);
+    };
+    useSurface(surface);
+    if(inline||triangles>SURFACE_POLICY.maxContextTriangles)return;
+    // Show current raw geometry throughout a seek. Condition the latest
+    // settled edit and retire the worker if that membership changes.
+    this.settling=setTimeout(()=>{
+      const worker=new Worker(new URL('./surface.worker.ts',import.meta.url),{type:'module'});
+      this.conditioning=worker;
+      worker.onmessage=(event:MessageEvent<PreparedSurface&{error?:string}>)=>{
+        if(this.conditioning!==worker)return;
+        if(!event.data.error){
+          // Dispose the uploaded attributes before replacing their buffers.
+          geometry.dispose();
+          useSurface(event.data);
+          if(this.followFit)this.fitNeeded=true;
+          this.renderAgain();
+        }
+        this.cancelConditioning();
+      };
+      worker.onerror=()=>{if(this.conditioning===worker)this.cancelConditioning();};
+      worker.postMessage({name:'result-cavity',kind:'cavity',mask:crop.mask,shape:crop.size,
+        affine:crop.affine,displaySmoothing:true},[crop.mask.buffer]);
+    },140);
+  }
+  private cancelConditioning(){
+    clearTimeout(this.settling);
+    this.conditioning?.terminate();this.conditioning=undefined;
+  }
+  dispose(){
+    this.cancelConditioning();
+    this.controls.dispose();this.residual.clear();this.cavity.geometry.dispose();
+    this.cavity.material.dispose();this.buriedCast.material.dispose();this.tissue.dispose();
+  }
 }
 
 function drawnBounds(root:THREE.Object3D):THREE.Box3 {
@@ -145,4 +225,8 @@ function drawnBounds(root:THREE.Object3D):THREE.Box3 {
     }
   });
   return bounds;
+}
+
+function rasBounds(bounds:THREE.Box3){
+  return JSON.stringify(bounds.isEmpty()?null:[bounds.min.toArray(),bounds.max.toArray()]);
 }

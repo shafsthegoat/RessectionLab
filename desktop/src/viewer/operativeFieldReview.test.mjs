@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import * as THREE from 'three';
 import {operativeVoxelSurface} from './operativeVoxelSurface.ts';
 import {operativeFieldContext} from './operativeFieldContext.ts';
+import {operativeSectionVisible,operativeSectionContext} from './operativeSectionContext.ts';
 import {fieldTargetOnOverview} from './operativeFieldSlice.ts';
 
 const field={shape:[2,2,2],origin:[0,0,0],spacingMm:2,voxels:Uint8Array.of(8,0,0,0,8,0,0,0),
@@ -53,4 +54,33 @@ test('surrounding source geometry maps the patient target to the local origin an
   assert.equal(operativeFieldContext(volume,scanField,'collection').children[0].geometry.hasAttribute('scanSignal'),false);
   volume.compartments[0].sourceSupport.sampledDataSha256='raw';
   assert.equal(operativeFieldContext(volume,field,'collection').children.length,0);
+});
+
+test('depth following retains the exterior for shallow work and respects explicit view choices',()=>{
+  const route={stations:{bone:28,dura:22,brain:16,tumor:12},spacingMm:.5,routeRadiusMm:3};
+  assert(!operativeSectionVisible(route,'dura','follow'));
+  assert(operativeSectionVisible(route,'brain','follow'));
+  assert(operativeSectionVisible(route,'tumor','follow'));
+  assert(!operativeSectionVisible({...route,stations:{bone:null,dura:null,brain:14,tumor:12}},'tumor','follow'));
+  assert(!operativeSectionVisible(route,'tumor','exterior'));
+  assert(operativeSectionVisible(route,'overview','section'));
+});
+
+test('intact MRI continuation samples the matching source outside the operated footprint only',()=>{
+  const affine=[[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]];
+  const source={seriesId:'mri',sourceSha256:'original',affine,shape:[8,8,8],data:new Float32Array(512).fill(20)};
+  const volume={displayIdentity:JSON.stringify(['study','mri','signal','rev',false,1]),compartments:[{appearanceSource:source,alignment:'reference'}]};
+  const local={...field,origin:[0,0,0],targetRasMm:[2,2,2],basisRas:[[1,0,0],[0,1,0],[0,0,1]],spacingMm:1,
+    intensity:{sourceSeries:'mri',sourceSha256:'original',window:[0,40]}};
+  const plane=operativeSectionContext(volume,'study',local,0);
+  assert(plane);
+  const {data,width}=plane.material.map.image;
+  // Native source extends from RAS 0 to 7, sampled every 0.5 mm.
+  assert.deepEqual([...data.slice(0,4)],[128,128,128,255]);
+  assert.equal(data[(4*width+4)*4+3],0);
+  assert.equal(operativeSectionContext(volume,'other',local,0),null);
+  assert.equal(operativeSectionContext(volume,'study',{...local,snapshotId:'old'},0),null);
+  source.sourceSha256='another-acquisition';
+  assert.equal(operativeSectionContext(volume,'study',local,0),null);
+  plane.geometry.dispose();plane.material.map.dispose();plane.material.dispose();
 });

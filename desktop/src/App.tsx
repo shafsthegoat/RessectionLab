@@ -2125,6 +2125,7 @@ export default function App() {
             />
           )}
           {showEngineRecording&&replayReceipt&&caseData&&<EngineStudyReference receipt={replayReceipt} engineScene={surgical.view?.scene}
+            operativeSettings={viewerSettings} onOperativeSettings={setViewerSettings}
             nativeSource={!!nativeReference} targetLabel={nativeReference?study.binding?.document.layers.find(l=>l.id===replayReceipt.targetLayerId)?.label??replayReceipt.targetLayerId:replayReceipt.targetLayerId.replaceAll('_',' ')}
             reference={nativeReference?{caseData:nativeReference,visibleLayers:study.state.visible,workspaceSettings:study.state.settings,
               cursor:study.state.cursor,overlayOpacity}:{caseData,visibleLayers,workspaceSettings:recordingReferenceSettings,cursor:null,overlayOpacity}}/>}

@@ -11,6 +11,8 @@ export function pickOperativeStructure(scene:THREE.Scene,camera:THREE.Camera,ndc
     const mesh=hit.object;
     if(!(mesh instanceof THREE.Mesh))continue;
     const identity=mesh.userData.sourceLayer;
+    const section=mesh.userData.acquiredSection;
+    if(section&&hit.point.x>=section.minX&&hit.point.x<=section.maxX&&hit.point.z>=section.minZ&&hit.point.z<=section.maxZ)continue;
     if(!identity)return null; // A visible instrument occludes the source surface.
     const {directId,role,detail,offset,openingLimit,kerf,patchRadius,exterior}=identity;
     const point=hit.point.clone();

@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import type { OperativeField } from '../operative-field';
+import type { OperativeField,FieldLayer as SourceLayer } from '../operative-field';
 import type { FieldLayer } from './operativeFieldModel';
 
 type Signal = NonNullable<OperativeField['intensity']>;
@@ -35,19 +35,30 @@ const tissues = {
   vessel: { color: '#be4349', roughness: 0.38, contrast: 0.4, section: 0.16 },
 };
 
+/** Combined typed bits render in the generic mesh. Include their provenance
+ * whenever a retained cell has two overlapping vessel classes. */
+export function unclassifiedVesselAppearance(layers:SourceLayer[],conflictingVoxels:number){
+  const candidates=layers.filter(l=>l.role==='vessels'&&l.sampledVoxels>0&&(!l.detail||conflictingVoxels>0));
+  const estimated=candidates.length>0&&candidates.every(l=>!!l.model&&(l.vascularContextOnly===true||l.evidence==='Source-derived estimate'));
+  return estimated?{label:'Vascular estimate',color:'#947486',roughness:.79}:
+    {label:'Unclassified vessel label',color:'#ad7783',roughness:.67};
+}
+
 export function operativeTissueMaterial(
   name: FieldLayer,
   field: OperativeField,
   texture: THREE.Data3DTexture | null,
   restOffset: THREE.Vector3,
-  sectionY: THREE.IUniform<number>
+  sectionY: THREE.IUniform<number>,
+  conflictingVoxels=0
 ) {
   const fluid=name==='csf'||name==='ventricles';
   const base=name==='boneFlap'?'bone':name==='duraFlap'?'dura':name==='artery'||name==='vein'||name==='sinus'?'vessel':
     name==='whiteMatter'||name==='grayMatter'||fluid?'brain':name in tissueColors?'tumor':name;
   const tissue=tissues[base as keyof typeof tissues];
-  const color=name in tissueColors?tissueColors[name as keyof typeof tissueColors]:tissue.color;
-  const material = new THREE.MeshStandardMaterial({ color, roughness: tissue.roughness, transparent:fluid, opacity:fluid ? .42 : 1, depthWrite:!fluid });
+  const generic=name==='vessel'?unclassifiedVesselAppearance(field.layers,conflictingVoxels):null;
+  const color=generic?.color??(name in tissueColors?tissueColors[name as keyof typeof tissueColors]:tissue.color);
+  const material = new THREE.MeshStandardMaterial({ color, roughness:generic?.roughness??tissue.roughness, transparent:fluid, opacity:fluid ? .42 : 1, depthWrite:!fluid });
   const signal = field.intensity;
   if (!signal || !texture) return material;
 
@@ -109,12 +120,17 @@ export function operativeTissueMaterial(
           // Scan variation belongs in albedo. Keeping lighting downstream
           // preserves self-shadow and the color of residual target at the lip.
           float exteriorContrast=1.85*uFieldContrast;
-          float sectionContrast=1.+1.8*uSectionContrast;
-          diffuseColor.rgb*=exp2((brightness-.5)*mix(exteriorContrast,sectionContrast,section));
+          diffuseColor.rgb*=exp2((brightness-.5)*exteriorContrast);
+          // A section through a label is an acquired gray-value slice with
+          // tissue tint. Use the scan's grayscale range on the cut face while
+          // retaining standard illumination, roughness and instrument shadows.
+          vec3 tint=diffuse/max(max(max(diffuse.r,diffuse.g),diffuse.b),.001);
+          vec3 sampledAlbedo=pow(vec3(brightness),vec3(2.2))*mix(vec3(1.),tint,.48);
+          diffuseColor.rgb=mix(diffuseColor.rgb,sampledAlbedo,section*mix(.72,.90,uSectionContrast));
         }
       }`
       );
   };
-  material.customProgramCacheKey = () => 'operative-acquired-albedo-v4';
+  material.customProgramCacheKey = () => 'operative-acquired-albedo-v5';
   return material;
 }

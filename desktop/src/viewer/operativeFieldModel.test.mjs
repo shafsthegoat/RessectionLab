@@ -126,14 +126,14 @@ test('exposed skull display omits only separated superficial vessel labels in su
   for(const [x,y,z,bits] of examples) f.voxels[index(x,y,z)]=bits;
   f.voxels[index(14,12,8)]=1;
   const raw=f.voxels.slice(),m=buildOperativeModel(f);
-  assert.deepEqual(m.vesselDisplay,{sourceVoxels:9,visibleVoxels:8,superficialVoxels:1});
+  assert.deepEqual(m.vesselDisplay,{sourceVoxels:9,visibleVoxels:8,superficialVoxels:1,unclassifiedVoxels:8,conflictingVoxels:0});
   examples.forEach(([x,y,z],n)=>assert.equal(m.layers.vessel.mask[index(x,y,z)],n===0?0:1));
   m.applyOpening('bone',128,true); m.applyAspiration(m.stepCount);
   assert.deepEqual(f.voxels,raw);
   assert.equal(m.layers.tumor.mask[index(12,12,19)],0);
   f.stations.bone=null;
   const incomplete=buildOperativeModel(f);
-  assert.deepEqual(incomplete.vesselDisplay,{sourceVoxels:9,visibleVoxels:9,superficialVoxels:0});
+  assert.deepEqual(incomplete.vesselDisplay,{sourceVoxels:9,visibleVoxels:9,superficialVoxels:0,unclassifiedVoxels:9,conflictingVoxels:0});
 });
 
 test('source classes and adjacent lesion compartments preserve selected-target membership',()=>{

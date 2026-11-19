@@ -7,8 +7,10 @@ import type {ResectionApi} from './types';
 import {operativeSteps,playableSteps,readOperativeField,timelinePose} from './operative-field';
 import type {Detail,OperativeField,OperativeIntensity,OperativePhase} from './operative-field';
 import {OperativeFieldCanvas} from './viewer/OperativeFieldCanvas';
+import {operativeSectionVisible,type OperativeViewChoice} from './viewer/operativeSectionContext';
 import {fieldTargetOnOverview} from './viewer/operativeFieldSlice';
-import {tissueColors} from './viewer/operativeFieldAppearance';
+import type {OperativeModel} from './viewer/operativeFieldModel';
+import {tissueColors,unclassifiedVesselAppearance} from './viewer/operativeFieldAppearance';
 import './operative-steps.css';
 
 const descriptions:Record<OperativePhase,string>={
@@ -85,12 +87,15 @@ export function OperativeSteps({api,collectionId,route,linkedOverview=false,sour
 }
 
 function OperativePlayback({field,sourceVolume,collectionId,linkedOverview}:{field:OperativeField;sourceVolume:ViewerVolume|null;collectionId:string;linkedOverview:boolean}){
-  const [retract,setRetract]=useState(true),[cutaway,setCutaway]=useState(false),[raw,setRaw]=useState(false);
+  const [retract,setRetract]=useState(true),[choice,setChoice]=useState<OperativeViewChoice>('follow'),[raw,setRaw]=useState(false);
   const [value,setValue]=useState(0),[playing,setPlaying]=useState(false);
   const [contextLayers,setContextLayers]=useState<string[]>([]),[fitExterior,setFitExterior]=useState(false);
-  const [superficialVessels,setSuperficialVessels]=useState(0);
+  const [vesselDisplay,setVesselDisplay]=useState<OperativeModel['vesselDisplay']|null>(null);
+  const superficialVessels=vesselDisplay?.superficialVoxels??0;
+  const vascularStyle=unclassifiedVesselAppearance(field.layers,vesselDisplay?.conflictingVoxels??0);
   const clock=useRef(0),steps=playableSteps(field,retract),end=steps.length;
   const pose=timelinePose(steps,value);
+  const cutaway=!fitExterior&&operativeSectionVisible(field,pose.phase,choice);
   const proxies=field.layers.filter(l=>l.role==='dura'&&l.sampledVoxels>0);
   const duralProxy=proxies.length>0&&proxies.every(l=>l.proxy);
   const tissues=(Object.keys(legend) as Array<keyof typeof legend>).filter(role=>field.layers.some(l=>l.role===role&&l.sampledVoxels>0));
@@ -125,9 +130,9 @@ function OperativePlayback({field,sourceVolume,collectionId,linkedOverview}:{fie
     setPlaying(false);clock.current=nextValue;setValue(nextValue);setRetract(next);
   }
   const routePlane=field.intensity?.overview&&<SourceOverviewInset field={field} image={field.intensity} phase={pose.phase}/>;
-  return <section className="operative-playback" aria-label="Operative steps" data-operative-phase={pose.phase} data-operative-progress={pose.progress.toFixed(3)}>
-    <div className="operative-topline"><div><strong>Operative field</strong><small>{field.spacingMm.toFixed(2)} mm display grid · Geometric preview · {cutaway?'Teaching section':'Exterior'}</small></div>
-        {!cutaway&&contextLayers.length>0&&<button className="operative-frame-choice" aria-pressed={fitExterior} onClick={()=>setFitExterior(value=>!value)}>{fitExterior?'Follow operative step':'Fit source anatomy'}</button>}
+  return <section className="operative-playback" aria-label="Operative steps" data-operative-phase={pose.phase} data-operative-progress={pose.progress.toFixed(3)} data-field-view={cutaway?'section':'exterior'}>
+    <div className="operative-topline"><div><strong>Operative field</strong><small>{field.spacingMm.toFixed(2)} mm display grid · Geometric preview · {cutaway?'Corridor section':'Exterior'}</small></div>
+        {contextLayers.length>0&&<button className="operative-frame-choice" aria-pressed={fitExterior} onClick={()=>setFitExterior(value=>!value)}>{fitExterior?'Follow operative step':'Fit source anatomy'}</button>}
       <details className="operative-sources"><summary>Field evidence</summary><div>
         {field.intensity&&<p><b>Surface contrast</b><br/>{field.intensity.modality} · {field.intensity.sourceSeries} · acquired scan intensities</p>}
         {contextLayers.length>0&&<p><b>Surrounding anatomy</b><br/>{contextLayers.join(', ')} · registered surface outside the sampled opening</p>}
@@ -141,9 +146,9 @@ function OperativePlayback({field,sourceVolume,collectionId,linkedOverview}:{fie
         {[...new Set([...field.blockers,...field.stationIssues,...field.unknowns])].map(reason=><p key={reason}>{reason}</p>)}
       </div></details>
     </div>
-    <div className="operative-image"><OperativeFieldCanvas sourceVolume={sourceVolume} collectionId={collectionId} field={field} phase={pose.phase} progress={pose.progress} withRetraction={retract} cutaway={cutaway} raw={raw} fitExterior={fitExterior} onContext={setContextLayers} onSuperficialVessels={setSuperficialVessels}/>
+    <div className="operative-image"><OperativeFieldCanvas sourceVolume={sourceVolume} collectionId={collectionId} field={field} phase={pose.phase} progress={pose.progress} withRetraction={retract} cutaway={cutaway} raw={raw} fitExterior={fitExterior} depthFraming={choice==='follow'} onContext={setContextLayers} onVesselDisplay={setVesselDisplay}/>
       {!linkedOverview&&routePlane}
-      <div className="operative-legend" aria-label="Visible tissues">{tissues.map(role=><span key={role} data-tissue={role}>{role==='dura'&&duralProxy?'Dural proxy':legend[role]}</span>)}
+      <div className="operative-legend" aria-label="Visible tissues">{tissues.filter(role=>role!=='vessels'||vesselDisplay?.unclassifiedVoxels).map(role=><span key={role} data-tissue={role} style={role==='vessels'?{'--tissue':vascularStyle.color} as React.CSSProperties:undefined}>{role==='dura'&&duralProxy?'Dural proxy':role==='vessels'?vascularStyle.label:legend[role]}</span>)}
         {details.map(key=><span key={key} style={{'--tissue':tissueColors[key]} as React.CSSProperties}>{detailLabels[key]}</span>)}
         {!tissues.includes('vessels')&&<small>Vessels unmapped here</small>}
       </div>
@@ -167,7 +172,9 @@ function OperativePlayback({field,sourceVolume,collectionId,linkedOverview}:{fie
           onClick={()=>seek(index+1)}>{step.label}{detail&&<small>{detail}</small>}</button>;
       })}</div>
       <div className="operative-options">
-        <label><input type="checkbox" checked={cutaway} onChange={e=>setCutaway(e.target.checked)}/>Inspection cutaway</label>
+        <label>Field view <select aria-label="Operative field view" value={choice} onChange={e=>{
+          setChoice(e.target.value as OperativeViewChoice);setFitExterior(false);
+        }}><option value="follow">Follow operative depth</option><option value="exterior">Exterior</option><option value="section">Inspection cutaway</option></select></label>
         <label title="Exact faces of cells on the sampled local display grid at this geometric step"><input type="checkbox" checked={raw} onChange={e=>setRaw(e.target.checked)}/>Field voxel faces</label>
         <label><input type="checkbox" checked={retract&&field.stations.brain!==null} disabled={field.stations.brain===null} onChange={toggleRetractor}/>Include retraction</label>
       </div>

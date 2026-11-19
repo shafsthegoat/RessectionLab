@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import * as THREE from 'three';
-import {operativeSignalTexture,operativeTissueMaterial} from './operativeFieldAppearance.ts';
+import {operativeSignalTexture,operativeTissueMaterial,tissueColors,unclassifiedVesselAppearance} from './operativeFieldAppearance.ts';
 
 test('C-order scan texture preserves acquired black, missing samples and flap coordinates',()=>{
   const signal={shape:[2,1,3],origin:[-1,2,7],spacingMm:[.5,1,2],
@@ -35,6 +35,24 @@ test('source contrast on the section cap preserves tissue color and physical lig
   assert.match(shader.fragmentShader,/diffuseColor\.rgb\*=exp2/);
   assert.equal(shader.fragmentShader.slice(shader.fragmentShader.indexOf('#include <alphamap_fragment>')),
     THREE.ShaderLib.standard.fragmentShader.slice(THREE.ShaderLib.standard.fragmentShader.indexOf('#include <alphamap_fragment>')));
+  assert.match(shader.fragmentShader,/mix\(diffuseColor.rgb,sampledAlbedo,section/);
   assert(material.color.b>material.color.r);
   material.dispose();texture.dispose();
+});
+
+test('the generic vascular mesh and legend share corroborated estimate provenance and material',()=>{
+  const generic={role:'vessels',sampledVoxels:7,model:'siam-v2',vascularContextOnly:true};
+  const artery={role:'vessels',sampledVoxels:4,detail:'artery',evidence:'Supplied annotation'};
+  const layers=[generic,artery];
+  const appearance=unclassifiedVesselAppearance(layers,0);
+  const genericMesh=operativeTissueMaterial('vessel',{layers},null,new THREE.Vector3(),{value:0});
+  assert.equal(appearance.label,'Vascular estimate');
+  assert.equal('#'+genericMesh.color.getHexString(),appearance.color);
+  assert.equal(genericMesh.roughness,appearance.roughness);
+  const arteryMesh=operativeTissueMaterial('artery',{layers},null,new THREE.Vector3(),{value:0});
+  assert.equal('#'+arteryMesh.color.getHexString(),tissueColors.artery);
+  assert(arteryMesh.roughness<genericMesh.roughness);
+  assert.equal(unclassifiedVesselAppearance(layers,1).label,'Unclassified vessel label');
+  assert.equal(unclassifiedVesselAppearance([{...generic,model:null}],0).label,'Unclassified vessel label');
+  genericMesh.dispose();arteryMesh.dispose();
 });

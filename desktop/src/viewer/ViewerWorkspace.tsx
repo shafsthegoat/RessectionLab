@@ -1002,7 +1002,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
             <button aria-label="Fit result" onClick={()=>{changeSettings({...latestSettings.current,resultCamera:undefined});engine.current?.fitResultInspection();}}>Fit</button>
           </div>
           {resultCells&&<div className="result-key">
-            <span>Removed space · volume cast</span><span>Owned residual target · {(resultCells.residual.length*resultCells.cellMm3).toFixed(1)} mm³</span>
+            <span>Removed space · cavity cast{resultParts==='both'&&resultCells.cavity.length>0&&resultCells.residual.length>0?' · muted where behind target':''}</span><span>Owned residual target · {(resultCells.residual.length*resultCells.cellMm3).toFixed(1)} mm³</span>
             {resultCells.overlapOriginal>0&&<small>{resultCells.overlapRemaining.toLocaleString()} of {resultCells.overlapOriginal.toLocaleString()} overlapping target cells remain assigned to other tissues.</small>}
           </div>}
         </>}

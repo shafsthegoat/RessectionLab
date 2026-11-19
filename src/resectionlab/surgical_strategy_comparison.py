@@ -3,9 +3,13 @@ from __future__ import annotations
 
 import math
 
+import numpy as np
+
 from .patient_anatomy import PatientImagingCollection
+from .surgical_comparison_sections import comparison_sections
 from .surgical_exact_grid_replay import verify_selected_route
 from .surgical_modeled_outcomes import summarize_engine_outcomes
+from .surgical_scene import original_target_memberships
 from .surgical_study_replay import validate_saved_binding, verify_recording
 from .workspace_bundle import load_workspace
 
@@ -40,10 +44,16 @@ def _read_arm(collection, target_id, path, request):
     approach = record.get('exactGridReplay', {}).get('recordedApproach') or {}
     if not approach.get('id'):
         raise ValueError('Select a recording that identifies a saved approach on this study')
-    endpoint = {}
+    endpoint, grid = {}, {}
+
+    def read_endpoint(engine):
+        endpoint.update(_endpoint(engine))
+        original, = original_target_memberships(engine.scene).values()
+        grid.update(shape=engine.scene.shape, affine=engine.scene.affine, original=original,
+                    removed=np.asarray(engine.state['removed'], dtype=np.int64))
+
     receipt, _ = verify_recording(collection, target_id, case, record, approach_id=approach['id'],
-                                  check=request.check,
-                                  on_verified_engine=lambda engine: endpoint.update(_endpoint(engine)))
+                                  check=request.check, on_verified_engine=read_endpoint)
     route = receipt['recordedApproach']
     return {
         'name': route['name'], 'routeId': route['id'], 'radiusMm': route['radiusMm'],
@@ -52,19 +62,20 @@ def _read_arm(collection, target_id, path, request):
         'branchId': receipt['branchId'], 'endpointStateId': receipt['endpointStateId'],
         'actions': receipt['actions'], 'actionsHash': receipt['actionsHash'],
         **endpoint,
-    }, receipt
+    }, receipt, grid
 
 
 def compare_recordings(collection, target_id, paths, request, progress):
     if len(paths) != 2 or paths[0] == paths[1]:
         raise ValueError('Select two distinct saved engine recordings')
-    arms, receipts = [], []
+    arms, receipts, grids = [], [], []
     for index, path in enumerate(paths):
         request.check()
         progress(.1 + .45 * index, f'Verifying source images, route and actions for recording {index + 1}')
-        arm, receipt = _read_arm(collection, target_id, path, request)
+        arm, receipt, grid = _read_arm(collection, target_id, path, request)
         arms.append(arm)
         receipts.append(receipt)
+        grids.append(grid)
     first, second = receipts
     common = ('patientId', 'sourceSnapshotId', 'targetLayerId', 'targetBinding', 'caseHash',
               'sceneId', 'instrumentCatalogHash', 'physicsHash')
@@ -72,6 +83,7 @@ def compare_recordings(collection, target_id, paths, request, progress):
         raise ValueError('The recordings must share the same study, target, engine scene, initial state and instruments')
     if first['actionsHash'] == second['actionsHash']:
         raise ValueError('The selected files contain the same recorded action sequence')
+    sections = comparison_sections(collection, arms, grids, request.check)
     # Route edits need not change the acquisition revision while a long replay runs.
     current = PatientImagingCollection(collection.root)
     if current.identity() != first['sourceSnapshotId']:
@@ -79,4 +91,4 @@ def compare_recordings(collection, target_id, paths, request, progress):
     for receipt in receipts:
         verify_selected_route(current, receipt, receipt['recordedApproach']['id'])
     return {'patientId': first['patientId'], 'sourceSnapshotId': first['sourceSnapshotId'],
-            'targetLayerId': target_id, 'arms': arms}
+            'targetLayerId': target_id, 'arms': arms, 'sections': sections}

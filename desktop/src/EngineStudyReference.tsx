@@ -1,12 +1,13 @@
 import {useLayoutEffect,useMemo,useRef} from 'react';
 import {Vector3} from 'three';
 import {cIndex,inverseAffine,rasAffine,sampleTrilinear,transformPoint} from './viewer/coordinates';
+import type {ViewerWorkspaceSettings} from './viewer/workspaceSettings';
 import type {Point3} from './viewer/coordinates';
 import type {VerifiedStudyReplay} from './types';
 import type {SurgicalView} from './surgical-types';
 import type {ViewerVolume,ViewerWorkspaceProps} from './viewer/contracts';
 import {ViewerWorkspace} from './viewer/ViewerWorkspace';
-import {recordedOverviewRoute} from './study-engine-presentation';
+import {recordedCorridorView,recordedOverviewRoute} from './study-engine-presentation';
 
 type ReferenceProps=Pick<ViewerWorkspaceProps,'caseData'|'visibleLayers'|'workspaceSettings'|'cursor'|'overlayOpacity'>;
 const noCursorChange=()=>{};
@@ -63,12 +64,13 @@ function RecordedRoutePlane({source,route,targetId}:{source:ViewerVolume;targetI
         <circle cx={b} cy={h} r="3" fill="#62bfd4" stroke="#15251d"/>
         <text x={a} y={h-8}>Entry</text><text x={b} y={h-8}>Target</text>
       </svg>
-    </div><figcaption>Source plane through approach</figcaption>
+    </div><figcaption>Intact source · recorded route</figcaption>
   </figure>;
 }
 
-export function EngineStudyReference({receipt,nativeSource,reference,targetLabel,engineScene}:{
+export function EngineStudyReference({receipt,nativeSource,reference,targetLabel,engineScene,operativeSettings,onOperativeSettings}:{
   receipt:VerifiedStudyReplay;nativeSource:boolean;reference:ReferenceProps;targetLabel:string;engineScene?:SurgicalView['scene'];
+  operativeSettings:ViewerWorkspaceSettings;onOperativeSettings:(settings:ViewerWorkspaceSettings)=>void;
 }){
   const route=receipt.recordedApproach;
   const engineTargets=engineScene?.sceneId===receipt.sceneId?engineScene.regions.filter(r=>r.target):[];
@@ -84,7 +86,12 @@ export function EngineStudyReference({receipt,nativeSource,reference,targetLabel
         onCursorChange={noCursorChange} cameraMode="anatomy"/>
     </div>
     {route&&reference.caseData&&<RecordedRoutePlane source={reference.caseData} route={route} targetId={referenceTarget}/>}
-    <footer>{route&&<><strong>Recorded approach</strong><span>{route.name}</span></>}
+    <footer>{route&&<><strong>Recorded approach</strong><span>{route.name}</span>
+      <div className="engine-approach-views" role="group" aria-label="Operative camera">
+        <button onClick={()=>onOperativeSettings(recordedCorridorView(route,operativeSettings,false))}>View down approach</button>
+        <button onClick={()=>onOperativeSettings(recordedCorridorView(route,operativeSettings,true))}>Inspect recorded corridor</button>
+      </div>{operativeSettings.operativeView==='surgeon'&&operativeSettings.microscope?.inspectionCutaway&&
+        <span role="status">Display cutaway through the operated field</span>}</>}
       <strong>Target</strong><span>{targetLabel}</span>
       {receipt.actionGenerator&&<><strong>Action generator</strong><span>{receipt.actionGenerator.kind} · {receipt.actionGenerator.name}</span></>}
     </footer>

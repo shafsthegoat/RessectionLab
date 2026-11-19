@@ -29,6 +29,7 @@
 }
 .operative-image {position: relative; flex: 1; min-height: 0; overflow: hidden;}
 .operative-field-canvas {position: absolute; inset: 0; background: #090c10;}
+.operative-field-canvas[data-section-source]:not([data-section-source=""])::after {content:attr(data-section-caption);position:absolute;left:10px;top:8px;color:#e3e8e6;background:#101514df;border-radius:4px;padding:4px 8px;font-size:11px;pointer-events:none;}
 .operative-cavity {
   position: absolute; z-index: 1; right: 12px; top: 8px; padding: 4px 8px; border-radius: 4px;
   color: #e0e9e4; background: #101514df; font-size: 11px; pointer-events: none; font-variant-numeric: tabular-nums;
@@ -58,6 +59,7 @@
 .operative-chapters button:disabled {opacity: .62;}
 .operative-options {margin-top: 8px; flex-wrap: wrap; color: #b9c6be; font-size: 12px;}
 .operative-options label {display: flex; align-items: center; gap: 5px;}
+.operative-options select {color:#dce8e1;background:#1c2621;border:1px solid #405048;border-radius:4px;font:inherit;padding:2px 4px;}
 .operative-options input {accent-color: #8dd9b7;}
 .operative-conflict {color: #f2c89a; font-size: 12px; padding-bottom: 5px; max-height: 4em; overflow: auto;}
 .operative-playback :is(button,input,summary):focus-visible {outline: 2px solid #9fe1c0; outline-offset: 1px;}
@@ -131,6 +133,8 @@
 .engine-intact-reference footer {border-top:1px solid #353c38;}
 .engine-intact-reference footer strong {font-size:10px;color:#9bad9f;}
 .engine-intact-reference footer span+strong {margin-top:4px;}
+.engine-approach-views {display:flex;flex-wrap:wrap;gap:4px;margin:3px 0;}
+.engine-approach-views button {flex:1 1 auto;padding:4px 6px;color:#d8e9e1;border:1px solid #42554b;border-radius:4px;background:#202c26;font:11px/1.3 system-ui;cursor:pointer;}
 .engine-reference-image {position:relative;min-height:0;overflow:hidden;}
 .engine-intact-reference .rl-viewer {position:absolute;inset:0;display:block;min-height:0;min-width:0;}
 .engine-intact-reference .rl-viewer .rl-viewer-anatomy {position:absolute;inset:0;border:0;}
@@ -148,10 +152,3 @@
 .engine-route-plane svg {position:absolute;inset:0;display:block;width:100%;height:100%;}
 .engine-route-plane text {text-anchor:middle;fill:#ecfff5;font:11px system-ui;paint-order:stroke;stroke:#101814;stroke-width:2.5px;}
 .engine-route-plane figcaption {color:#bfcbc3;text-align:center;font-size:10px;margin-top:3px;}
-
-.study-dialog.recorded-comparison {width:min(640px,90vw);max-height:85vh;overflow:auto;}
-.recorded-comparison table {width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums;}
-.recorded-comparison th,.recorded-comparison td {text-align:right;padding:5px 3px;border-bottom:1px solid var(--line,#343d38);overflow-wrap:anywhere;}
-.recorded-comparison th:first-child {text-align:left;width:40%;}
-.recorded-comparison thead th {vertical-align:bottom;}
-.recorded-comparison details p {overflow-wrap:anywhere;}

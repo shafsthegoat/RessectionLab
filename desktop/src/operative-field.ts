@@ -11,7 +11,7 @@ export interface FieldLayer {
   id:string; label:string; role:Tissue|'vessels'|'fluid'|'lesionContext'; detail?:Detail|null;
   sourceSpacingMm?:Point3; labelSpacingMm?:Point3; inferenceSpacingMm?:Point3;
   adjudication?:{disagreementVoxels:number; preferredLayerIds:string[]}; evidence:string; sourceSeries:string;
-  reviewStatus:string; sampledVoxels:number; proxy:boolean; sampledDataSha256?:string; coverageMeaning?:string; coveredVoxels?:number;
+  model?:string|null; vascularContextOnly?:boolean; reviewStatus:string; sampledVoxels:number; proxy:boolean; sampledDataSha256?:string; coverageMeaning?:string; coveredVoxels?:number;
 }
 export const detailBits={grayMatter:32,whiteMatter:64,csf:128,ventricles:256,artery:512,vein:1024,sinus:2048,
   enhancing:4096,nonenhancingCore:8192,perilesionalSignal:16384,tumorCore:32768,wholeAbnormality:65536} as const;
