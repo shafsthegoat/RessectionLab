@@ -173,3 +173,139 @@ test('thin-sheet fitting translates paired interfaces by at most 0.62 physical m
   original.dispose();
   fitted.dispose();
 });
+
+test('adjacent teaching-section labels share cap edges and retain an unlabeled gap after edits', async () => {
+  const { registerOperativeSection } = await import('./operativeSectionContour.ts');
+  const shape = [33, 13, 27],
+    spacing = 0.3125,
+    row = 5;
+  const regions = (x, z) => (z === 13 ? 0 : x < 9 + Math.floor(z / 3) ? 1 : z < 19 ? 2 : 3);
+  const layers = [1, 2, 3].map((label) => sample(shape, spacing, (x, _y, z) => regions(x, z) === label));
+  const { grid, bounds } = layers[0],
+    masks = layers.map((layer) => layer.mask);
+  registerOperativeSection(grid, masks, row, [masks[1]]);
+  function sectionEdges(mask) {
+    const mesh = operativeSurface(grid, mask, bounds, row),
+      p = mesh.attributes.position,
+      n = mesh.attributes.normal;
+    const uses = new Map(),
+      ix = mesh.index.array,
+      plane = (row - 0.5) * spacing;
+    const key = (i) => [p.getX(i), p.getZ(i)].join(',');
+    for (let i = 0; i < ix.length; i += 3) {
+      const tri = [ix[i], ix[i + 1], ix[i + 2]];
+      if (tri.some((id) => p.getY(id) !== plane)) continue;
+      const signed =
+        (p.getX(tri[1]) - p.getX(tri[0])) * (p.getZ(tri[2]) - p.getZ(tri[0])) -
+        (p.getX(tri[2]) - p.getX(tri[0])) * (p.getZ(tri[1]) - p.getZ(tri[0]));
+      assert.ok(signed > 0, 'the section cap has positive area and consistent direction');
+      for (let j = 0; j < 3; j++) {
+        const a = tri[j],
+          b = tri[(j + 1) % 3],
+          keyPair = [key(a), key(b)].sort().join('|');
+        assert.equal(n.getY(a), -1);
+        uses.set(keyPair, (uses.get(keyPair) ?? 0) + 1);
+      }
+    }
+    const ray = new THREE.Raycaster(
+      new THREE.Vector3(7 * spacing, -1, 13 * spacing),
+      new THREE.Vector3(0, 1, 0),
+    );
+    assert.equal(ray.intersectObject(new THREE.Mesh(mesh)).length, 0, 'a thin empty source row stays open');
+    mesh.dispose();
+    return new Set([...uses].filter(([, count]) => count === 1).map(([edge]) => edge));
+  }
+  const contacts = (a, b) => [...a].filter((edge) => b.has(edge)).length;
+  const first = sectionEdges(masks[0]),
+    target = sectionEdges(masks[1]),
+    third = sectionEdges(masks[2]);
+  const expected = [0, 0, 0, 0];
+  for (let x = 0; x < shape[0]; x++)
+    for (let z = 0; z < shape[2]; z++) {
+      if (regions(x, z) !== 1) continue;
+      for (const [xx, zz] of [
+        [x - 1, z],
+        [x + 1, z],
+        [x, z - 1],
+        [x, z + 1],
+      ])
+        if (xx >= 0 && zz >= 0 && xx < shape[0] && zz < shape[2]) expected[regions(xx, zz)]++;
+    }
+  assert.equal(contacts(first, target), expected[2]);
+  assert.equal(contacts(first, third), expected[3]);
+  for (let x = 21; x < 26; x++) for (let z = 3; z < 9; z++) masks[1][(x * shape[1] + row) * shape[2] + z] = 0;
+  assert.equal(contacts(first, sectionEdges(masks[1])), expected[2]);
+});
+
+test('a registered submillimetre cavity follows the accepted tip radius and restores on backward scrub', async () => {
+  const { registerCavityField, setCavityStep } = await import('./operativeCavityField.ts');
+  const { grid, mask, bounds } = sample([25, 25, 25], 0.3125, () => true),
+    s = grid.spacingMm,
+    r = 0.84;
+  const center = 12,
+    id = (x, y, z) => (x * 25 + y) * 25 + z;
+  grid.origin = [-center * s, -center * s, -center * s];
+  const pristine = mask.slice(),
+    box = { low: [8, 8, 8], high: [16, 16, 16] };
+  registerCavityField(grid, mask, box, [id(center, center, center)], r);
+  for (let x = 8; x <= 16; x++)
+    for (let y = 8; y <= 16; y++)
+      for (let z = 8; z <= 16; z++)
+        if (s * Math.hypot(x - center, y - center, z - center) <= r) mask[id(x, y, z)] = 0;
+  const accepted = mask.slice();
+  setCavityStep(mask, 1);
+  const geometry = operativeSurface(grid, mask, bounds, 0, 'tumor');
+  const material = new THREE.MeshBasicMaterial({ side: THREE.DoubleSide }),
+    mesh = new THREE.Mesh(geometry, material);
+  const ray = new THREE.Raycaster();
+  let total = 0;
+  for (let i = 0; i < 64; i++) {
+    const nz = 1 - (2 * (i + 0.5)) / 64,
+      a = 2.39996323 * i;
+    ray.set(
+      new THREE.Vector3(),
+      new THREE.Vector3(Math.sqrt(1 - nz * nz) * Math.cos(a), Math.sqrt(1 - nz * nz) * Math.sin(a), nz),
+    );
+    total += Math.abs(ray.intersectObject(mesh)[0].distance - r);
+  }
+  assert.ok(total / 64 < 0.16, 'mean brush-radius error remains below half one display cell plus rounding');
+  assert.deepEqual(mask, accepted);
+  setCavityStep(mask, 0);
+  mask.set(pristine);
+  const restored = operativeSurface(grid, mask, bounds, 0, 'tumor'),
+    fresh = operativeSurface(grid, pristine, bounds, 0, 'tumor');
+  assert.deepEqual(restored.attributes.position.array, fresh.attributes.position.array);
+  restored.dispose();
+  fresh.dispose();
+  geometry.dispose();
+  material.dispose();
+});
+
+test('a protected source sample keeps clearance from the fitted target contour', async () => {
+  const { registerOperativeSection, operativeSectionContour } = await import('./operativeSectionContour.ts');
+  const { grid, mask } = sample([31, 7, 31], 0.3125, (x, _y, z) => x < 14 + Math.floor(z / 5));
+  const [nx, ny, nz] = grid.shape,
+    row = 3;
+  grid.voxels = new Uint16Array(mask.length);
+  const protectedCells = [
+    [15, 5],
+    [17, 15],
+    [18, 20],
+  ];
+  for (const [x, z] of protectedCells) {
+    const i = (x * ny + row) * nz + z;
+    mask[i] = 0;
+    grid.voxels[i] = 16;
+  }
+  registerOperativeSection(grid, [mask], row, [mask], undefined, mask);
+  const fit = operativeSectionContour(grid, mask, row);
+  for (const [x, z] of protectedCells)
+    for (const dx of [0, 1])
+      for (const dz of [0, 1]) {
+        const k = (x + dx) * (nz + 1) + z + dz;
+        assert.ok(
+          Math.hypot(fit.x[k] - (x + dx - 0.5), fit.z[k] - (z + dz - 0.5)) <= 0.421,
+          'protected center stays inside its source cell',
+        );
+      }
+});

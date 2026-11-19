@@ -71,6 +71,16 @@ test('aspirator annulus has an open lumen and a separate long shaft',()=>{
   m.cusa.updateMatrixWorld(true);assert.equal(ray.intersectObject(tip).length,0);
   ray.ray.origin.x=1.25;assert.ok(ray.intersectObject(tip).length>0);
   assert.ok(new THREE.Box3().setFromObject(shaft).getSize(new THREE.Vector3()).z>40);
+  const bounds=new THREE.Box3().setFromObject(tip);
+  assert.ok(Math.abs(bounds.min.z)<1e-6,'preserve the distal contact plane');
+  assert.ok(Math.max(bounds.max.x,bounds.max.y)<=1.6+1e-6,'the mouth fits the modeled radius');
+  // An oblique section camera can see into the lumen along a ray crossing
+  // the near lip. The baseline flat rim occluded this direction.
+  const lateral=new THREE.Raycaster(new THREE.Vector3(0,-4,3.28).multiplyScalar(1.6),
+    new THREE.Vector3(0,1,-.52).normalize());
+  const [inside]=lateral.intersectObject(tip);
+  assert.ok(inside&&Math.abs(inside.point.y-1.6*.62)<1e-5,'the far inner wall is in view');
+  assert(tip.geometry.getAttribute('color').getX(0)<.3,'the deeper bore is distinguished from its rim');
   for(const tool of Object.values(m))tool.traverse(obj=>{if(obj instanceof THREE.Mesh){obj.geometry.dispose();obj.material.dispose();}});
 });
 
@@ -147,4 +157,27 @@ test('source classes and adjacent lesion compartments preserve selected-target m
   cells.forEach(([name],i)=>assert.equal(m.layers[name].mask[i+500],1,name));
   assert.equal(count(m.layers.tumor.mask),1);
   assert.equal(m.stepCount,0);
+});
+
+test('the illustrated bone flap keeps a contiguous inner lamina ending on source dura',()=>{
+  const shape=[25,25,45],voxels=new Uint8Array(25*25*45),at=(x,y,z)=>(x*25+y)*45+z;
+  for(let x=0;x<25;x++)for(let y=0;y<25;y++){
+    voxels[at(x,y,12)]=1;
+    for(let z=20;z<=31;z++)voxels[at(x,y,z)]=1;
+    voxels[at(x,y,19)]=2;
+  }
+  const f={shape,voxels,origin:[-12,-12,-5],spacingMm:1,radiusMm:12,routeRadiusMm:2,entryDepthMm:26,
+    stations:{bone:26,dura:14,brain:null,tumor:null},stationEvidence:{dura:'source'},
+    layers:[{role:'dura',sampledVoxels:625,proxy:false}]};
+  // A neighbouring column has an actual separation between skull and dura.
+  voxels[at(13,12,19)]=0;voxels[at(13,12,18)]=2;
+  const original=voxels.slice(),m=buildOperativeModel(f);m.applyOpening('bone',128,true);
+  assert.equal(m.layers.boneFlap.mask[at(12,12,20)],1);
+  assert.equal(m.layers.bone.mask[at(12,12,20)],0);
+  assert.equal(m.layers.bone.mask[at(12,12,12)],1);
+  assert.equal(m.layers.bone.mask[at(13,12,20)],1,'retain uncorroborated deeper skull');
+  assert.equal(m.layers.bone.mask[at(0,0,20)],1,'preserve tissue outside the opening');
+  assert.deepEqual(f.voxels,original);
+  f.layers[0].proxy=true;
+  assert.equal(buildOperativeModel(f).layers.boneFlap.mask[at(12,12,20)],0);
 });

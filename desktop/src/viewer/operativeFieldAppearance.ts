@@ -23,13 +23,13 @@ export function operativeSignalTexture(signal: Signal) {
 }
 
 export const tissueColors = {
-  grayMatter:'#b78491',whiteMatter:'#ece0c9',csf:'#8bbfdb',ventricles:'#5b92c4',
+  grayMatter:'#b38b8b',whiteMatter:'#e2d7c3',csf:'#8bbfdb',ventricles:'#5b92c4',
   artery:'#cd5954',vein:'#7283ca',sinus:'#5769ad',enhancing:'#ce77a5',nonenhancingCore:'#9571b3',
   perilesionalSignal:'#cb9e60',tumorCore:'#b289bd',wholeAbnormality:'#a686ad',lesionContext:'#a487ad',
 };
 const tissues = {
   bone: { color: '#e5d8bc', roughness: 0.76, contrast: 0.68, section: 0.2 },
-  dura: { color: '#d7b2a0', roughness: 0.46, contrast: 0.64, section: 0.32 },
+  dura: { color: '#d7b2a0', roughness: 0.38, contrast: 0.48, section: 0.32 },
   brain: { color: '#c68788', roughness: 0.6, contrast: 1.4, section: 0.83 },
   tumor: { color: '#65bfd3', roughness: 0.55, contrast: 1.02, section: 0.64 },
   vessel: { color: '#be4349', roughness: 0.38, contrast: 0.4, section: 0.16 },
@@ -129,8 +129,11 @@ export function operativeTissueMaterial(
           diffuseColor.rgb=mix(diffuseColor.rgb,sampledAlbedo,section*mix(.72,.90,uSectionContrast));
         }
       }`
-      );
+      ).replace('#include <roughnessmap_fragment>',`#include <roughnessmap_fragment>
+        // The diagnostic section is a sampled plane. Give it a broad matte
+        // response distinct from the lit exterior and the reflected membrane.
+        roughnessFactor=mix(roughnessFactor,0.94,section);`);
   };
-  material.customProgramCacheKey = () => 'operative-acquired-albedo-v5';
+  material.customProgramCacheKey = () => 'operative-acquired-albedo-v6';
   return material;
 }
