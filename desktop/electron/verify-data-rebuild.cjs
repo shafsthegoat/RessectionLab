@@ -22,6 +22,8 @@ const targetId=process.env.DATA_REBUILD_CTA_TARGET_ID;
 const targetLabel=process.env.DATA_REBUILD_CTA_TARGET_LABEL;
 const sourceSha=process.env.DATA_REBUILD_CTA_SOURCE_SHA256;
 const collectionFile=process.env.DATA_REBUILD_CTA_COLLECTION;
+const ctaCohort=process.env.DATA_REBUILD_CTA_COHORT==='1';
+if(ctaCohort)assert(collectionFile,'A sealed source collection is required');
 const replayOnly=process.env.DATA_REBUILD_REPLAY_ONLY==='1';
 const replayOpeningFile=process.env.DATA_REBUILD_REPLAY_OPENING_REPORT;
 const replayOpening=replayOpeningFile?JSON.parse(fs.readFileSync(replayOpeningFile,'utf8')):null;
@@ -61,8 +63,13 @@ const profile=fs.mkdtempSync(path.join(require('node:os').tmpdir(),'rslab-data-p
 app.setPath('userData',profile);report.runtimeProfile=profile;
 const sidecarModule=require('./sidecar.cjs'),OriginalSidecar=sidecarModule.Sidecar;
 const sidecars=new Set();
+let ctaCohortLoadPath;
 sidecarModule.Sidecar=class extends OriginalSidecar {
   constructor(options){super(options);sidecars.add(this);}
+  request(operation,args,...rest){
+    if(ctaCohort&&operation==='loadCase')ctaCohortLoadPath=fs.realpathSync(args.path);
+    return super.request(operation,args,...rest);
+  }
 };
 let exiting=false;
 async function finish(){
@@ -87,11 +94,12 @@ dialog.showSaveDialog=async()=>({canceled:false,filePath:saved});dialog.showMess
 let selection=saved;dialog.showOpenDialog=async()=>({canceled:false,filePaths:[selection]});
 const originalHandle=ipcMain.handle.bind(ipcMain);
 let ctaPayload;
+const ctaCohortAssets=new Map();
 let resectPayload;
 const resectAssets=new Map();
 let nativeVolume;
 const ixiT1Layers=new Map();
-function inspectResectAsset(asset,kind,bytes){
+function inspectSourceAsset(asset,kind,bytes){
   assert.equal(bytes.byteLength,asset.byteLength);
   const sha256=crypto.createHash('sha256').update(bytes).digest('hex');
   assert.equal(sha256,String(asset.sha256).replace(/^sha256:/,''));
@@ -112,6 +120,22 @@ ipcMain.handle=(name,handler)=>originalHandle(name,async(...args)=>{
   const started=performance.now();
   try{const result=await handler(...args);
     if(targetId&&['research:startupWorkspace','research:openListedWorkspace','research:openWorkspace'].includes(name)&&result)ctaPayload=result;
+    if(ctaCohort&&name==='research:openListedWorkspace'&&result){
+      ctaPayload=result;
+      ctaCohortAssets.clear();
+      ctaCohortAssets.set(result.mri.assetId,{asset:result.mri,kind:'image'});
+      for(const layer of result.compartments)ctaCohortAssets.set(layer.array.assetId,{asset:layer.array,kind:'mask'});
+    }
+    if(ctaCohort&&name==='research:readAsset'){
+      const transfer=ctaCohortAssets.get(args[1]);
+      if(transfer){
+        transfer.receipt=inspectSourceAsset(transfer.asset,transfer.kind,result);
+        // Match the production Python native-array digest, including shape and dtype.
+        const dtype=transfer.kind==='image'?'<f4':'|b1';
+        const header=`{"dtype": "${dtype}", "shape": [${transfer.asset.shape.join(', ')}]}`;
+        transfer.receipt.arrayHash='sha256:'+crypto.createHash('sha256').update(header).update(result).digest('hex');
+      }
+    }
     if(resectPair&&name==='research:startupWorkspace'&&result){
       resectPayload=result;
       for(const volume of [result,...result.workspaceSession.displaySeries.map(stage=>stage.volume)]){
@@ -121,7 +145,7 @@ ipcMain.handle=(name,handler)=>originalHandle(name,async(...args)=>{
     }
     if(resectPair&&name==='research:readAsset'){
       const transfer=resectAssets.get(args[1]);
-      if(transfer)transfer.receipt=inspectResectAsset(transfer.asset,transfer.kind,result);
+      if(transfer)transfer.receipt=inspectSourceAsset(transfer.asset,transfer.kind,result);
     }
     if(nativeStudy&&name==='research:anatomyView'&&result)nativeVolume=result;
     if(ixiStudy&&name==='research:anatomyView'&&args[1]?.seriesId==='t1'){
@@ -562,35 +586,157 @@ app.on('browser-window-created',(_event,window)=>{
       await gpuSourceReady();
       return {source,layers,...await sourceState()};
     };
-    const inspectCtaRehearsal=async()=>{
+    const inspectCtaRehearsal=async({expectedCase=report.ctaPreview.caseHash,expectedTarget=targetId,captureName='cta-rehearsal-inspect'}={})=>{
       await click('Rehearse');
       const prepare=`[...document.querySelectorAll('button')].some(b=>b.textContent.trim()==='Prepare instrument scene'&&!b.disabled)`;
       const action=`!!document.querySelector('[aria-label="Instrument action"]')`;
       await wait(`${action}||${prepare}`);
       if(await js(prepare))await click('Prepare instrument scene');
       await wait(action);
-      const caseHash=JSON.stringify(report.ctaPreview.caseHash);
+      if(ctaCohort){
+        await click('Rehearse/edit stage');
+        await wait(`document.querySelector('[aria-label="Instrument action"]')?.checkVisibility()`);
+      }
+      const caseHash=JSON.stringify(expectedCase);
       const inspect=()=>js(`(async()=>{
         const result=await window.resectionApi.surgicalRehearsal({caseHash:${caseHash},command:'inspect'});
         return {caseHash:result.caseHash,stateId:result.view.stateId,position:result.position,
           targets:result.view.scene.regions.filter(row=>row.target).map(row=>row.name),
-          targetRemovedMm3:result.view.metrics.targetRemovedMm3,planningAvailable:result.planningAdmission?.available};
+          targetRemovedMm3:result.view.metrics.targetRemovedMm3,nonTargetRemovedMm3:result.view.metrics.nonTargetRemovedMm3,
+          removedCells:result.view.removed.length,actions:result.timeline.length,
+          planningAvailable:result.planningAdmission?.available};
       })()`);
       const before=await inspect();
-      assert.equal(before.caseHash,report.ctaPreview.caseHash);
-      assert.deepEqual(before.targets,[targetId]);
+      assert.equal(before.caseHash,expectedCase);
+      assert.deepEqual(before.targets,[expectedTarget]);
       assert.equal(before.position,0);
+      assert.equal(before.actions,0);
       assert.equal(before.targetRemovedMm3,0);
+      assert.equal(before.nonTargetRemovedMm3,0);
+      assert.equal(before.removedCells,0);
       assert.equal(before.planningAvailable,false);
+      const preparedGpu=ctaCohort?await completedFrame(before.stateId):null;
+      const firstPreviewRequest=report.requests.length;
       await set('Instrument action','inspect');
       await click('Preview');
       await wait(`document.querySelector('.surgical-panel')?.textContent.includes('Preview · uncommitted')`);
-      await capture('cta-rehearsal-inspect');
+      const preview=report.requests.slice(firstPreviewRequest).find(row=>row.operation==='research:surgicalRehearsal'&&row.command==='preview');
+      assert.equal(preview?.caseHash,expectedCase);
+      assert(!preview.error);
+      if(captureName)await capture(captureName);
       await click('Cancel preview');
+      await wait(`!document.querySelector('.surgical-panel')?.textContent.includes('Preview · uncommitted')`);
       const after=await inspect();
       assert.deepEqual(after,before);
+      if(ctaCohort)return {before,uncommittedPreview:preview,after,preparedGpu};
       report.ctaRehearsal=after;
       report.checks.push('The exact contour initializes a manual rehearsal, keeps procedure planning unavailable and cancels an inspection preview without changing state');
+    };
+    const inspectCtaCohort=async()=>{
+      const collectionPath=fs.realpathSync(collectionFile);
+      assert(collectionPath.startsWith(root+path.sep));
+      const collection=JSON.parse(fs.readFileSync(collectionPath,'utf8'));
+      assert.equal(collection.schema,'cta-organic-gliomas-v1');
+      assert.equal(collection.generated_scenarios,12);
+      assert.equal(collection.cases.length,12);
+      assert.equal(collection.new_real_patient_count,0);
+      const listed=await js('window.resectionApi.listCases()');
+      const cases=collection.cases.map(entry=>{
+        const rows=listed.filter(row=>row.title===entry.case_id);
+        assert.equal(rows.length,1,`Expected one actual Cases entry for ${entry.case_id}`);
+        assert(!rows[0].reviewedExternal);
+        return {...entry,catalogId:rows[0].id};
+      });
+      assert.equal(new Set(cases.map(row=>row.catalogId)).size,12);
+      assert.equal(new Set(cases.map(row=>row.person_id)).size,3);
+      report.cohort={collection:collectionPath,collectionSha256:digest(collectionPath),cases:[],packageVerification:[]};
+      const verifyArchive=async file=>{
+        const hasher=crypto.createHash('sha256');
+        for await(const bytes of fs.createReadStream(file))hasher.update(bytes);
+        return hasher.digest('hex');
+      };
+      const search='Search cases by name, source, anatomy or reported site';
+      const targetName='synthetic_target_observation',targetTitle='Simulated Tumor Contour';
+      for(const [index,entry] of cases.entries()){
+        report.cohort.inProgress=entry.case_id;
+        const started=performance.now(),canonical=fs.realpathSync(path.join(root,entry.native_case.path));
+        assert(canonical.startsWith(root+path.sep));
+        assert.equal(fs.statSync(canonical).size,entry.native_case.bytes);
+        assert.equal(await verifyArchive(canonical),entry.native_case.sha256);
+        const sealed=JSON.parse(fs.readFileSync(path.join(path.dirname(canonical),'receipt.json'),'utf8'));
+        assert.equal(sealed.case_id,entry.case_id);
+        assert.equal(sealed.person_id,entry.person_id);
+        assert.deepEqual(sealed.native_case,entry.native_case);
+        assert.equal(sealed.production_workspace_reopen,true);
+        assert.equal(sealed.role,'DEVELOPMENT');
+        assert.equal(sealed.observation.name,targetName);
+        assert.equal(sealed.observation.generated_image_signal,false);
+
+        await click('Cases');
+        await wait(`!!document.querySelector('[aria-label="${search}"]')`);
+        await js(inputScript(search,entry.case_id));
+        const label=`Open ${entry.case_id}`;
+        await wait(`[...document.querySelectorAll('.poc-case-card')].some(e=>e.getAttribute('aria-label')===${JSON.stringify(label)}&&!e.disabled)`);
+        ctaPayload=null;
+        ctaCohortLoadPath=null;
+        await click(label);
+        await wait(`!document.querySelector('.case-library-workspace')&&document.querySelector('.rl-viewer')?.dataset.sourceCaseHash===${JSON.stringify(sealed.case_hash)}`);
+        await ready();await gpuSourceReady();
+        assert.equal(ctaCohortLoadPath,canonical);
+        assert.equal(ctaPayload.caseId,entry.case_id);
+        assert.equal(ctaPayload.caseHash,sealed.case_hash);
+        assert.equal(ctaPayload.workspaceSession.sessionHash,sealed.session_hash);
+        assert(!ctaPayload.artifacts?.surgical_toolbox);
+        const observed=ctaPayload.sourceRefs.find(ref=>ref.source_id==='structural');
+        assert.equal(observed?.provenance,'observed');
+        assert.equal(observed.sha256,sealed.source.source_CTA_and_v1_labels[0].sha256);
+        assert.deepEqual(ctaPayload.shape,sealed.native_grid_shape);
+        assert.deepEqual(ctaPayload.affine,sealed.source_affine_ras_mm);
+        assert.deepEqual(ctaPayload.spacingMm,sealed.native_grid_spacing_mm);
+        const image=ctaCohortAssets.get(ctaPayload.mri.assetId)?.receipt;
+        assert.equal(image?.arrayHash,sealed.source_volume_hash);
+        const nativeLayers={...sealed.source_membership_hashes,[targetName]:sealed.observation.array_hash};
+        assert.deepEqual(ctaPayload.compartments.map(row=>row.name).sort(),Object.keys(nativeLayers).sort());
+        for(const layer of ctaPayload.compartments){
+          assert.equal(ctaCohortAssets.get(layer.array.assetId)?.receipt?.arrayHash,nativeLayers[layer.name]);
+        }
+        const recordedTarget=ctaPayload.metadata.anatomy_layers[targetName];
+        assert.equal(recordedTarget.kind,'tumor');
+        assert.equal(recordedTarget.provenance,'simulated');
+        assert.equal(ctaPayload.compartments.find(row=>row.name===targetName).volumeMm3,sealed.observation.volume_mm3);
+        await click('Anatomy');
+        const rendered=await sourceState();
+        assert.equal(rendered.caseHash,sealed.case_hash);
+        assert.match(rendered.modality,/CTA/i);
+        assert.deepEqual(rendered.sourceShape,sealed.native_grid_shape);
+        assert.equal(rendered.sourceSignal,image.sourceSignal);
+        assert(rendered.visible.includes(targetName));
+        const sourceBadge=await js(`[...document.querySelectorAll('.anatomy-layer-identity')]
+          .find(e=>e.querySelector('strong').textContent.toLowerCase()===${JSON.stringify(targetTitle.toLowerCase())})?.querySelector('.anatomy-layer-origin').textContent`);
+        assert.match(sourceBadge,/^Generated research geometry\b/);
+        if(index===0)await capture('cohort-acquired-cta');
+        const rehearsal=await inspectCtaRehearsal({expectedCase:sealed.case_hash,expectedTarget:targetName,
+          captureName:index===cases.length-1?'cohort-uncommitted-preview':null});
+        assert.equal(rehearsal.preparedGpu.gpu.sourceSignalFingerprint,image.sourceSignal);
+        report.cohort.cases.push({caseId:entry.case_id,personId:entry.person_id,caseHash:sealed.case_hash,catalogId:entry.catalogId,
+          archiveSha256:entry.native_case.sha256,sourceSha256:observed.sha256,sourceShape:rendered.sourceShape,
+          affine:sealed.source_affine_ras_mm,sourceArrayHash:image.arrayHash,sourceSignal:rendered.sourceSignal,
+          targetId:targetName,targetArrayHash:sealed.observation.array_hash,targetVolumeMm3:sealed.observation.volume_mm3,
+          sourceBadge,rehearsal,wallMs:performance.now()-started});
+        console.log(`Cohort ${index+1}/${cases.length} ${entry.case_id} passed`);
+      }
+      for(const entry of cases){
+        const unchanged=await verifyArchive(path.join(root,entry.native_case.path))===entry.native_case.sha256;
+        assert(unchanged,`Case package changed for ${entry.case_id}`);
+        report.cohort.packageVerification.push({caseId:entry.case_id,unchanged});
+      }
+      delete report.cohort.inProgress;
+      assert(!report.requests.some(row=>row.command==='step'||row.operation==='research:saveWorkspace'));
+      report.checks.push('All 12 distinct local Cases entries open the exact sealed CTA, native source-grid overlays and simulated contour bytes',
+        'Each case prepares zero accepted actions, inspects through an uncommitted preview and cancels without changing the accepted state',
+        'All source case packages remain byte-identical and clinical planning admission remains unavailable');
+      assert.equal(window.isVisible(),false);
+      report.passed=!report.windowEverVisible;
     };
     const inspectCtaPreview=async()=>{
       if(prior){
@@ -889,13 +1035,13 @@ app.on('browser-window-created',(_event,window)=>{
       report.passed=!report.windowEverVisible;
     };
     try{
-      if(targetId||nativeStudy||resectPair||replayOpening)await js(`(()=>{
+      if(targetId||nativeStudy||resectPair||replayOpening||ctaCohort)await js(`(()=>{
         const key=frame=>JSON.stringify([frame.sourceCaseHash,frame.displayIdentity,frame.serial]);
         const probe=window.__dataRebuildCtaFrames={frames:[],completed:new Map(),key};
         document.addEventListener('anatomy-frame',e=>{probe.frames.push(e.detail);if(probe.frames.length>32)probe.completed.delete(key(probe.frames.shift()))});
         document.addEventListener('anatomy-gpu',e=>{if(e.detail.completed)probe.completed.set(key(e.detail),e.detail)});
       })()`);
-      if(replayOnly||process.env.DATA_REBUILD_REQUIRE_GPU_STATE==='1')await js(`(()=>{
+      if(replayOnly||ctaCohort||process.env.DATA_REBUILD_REQUIRE_GPU_STATE==='1')await js(`(()=>{
         const p=window.__dataRebuildFrames={gpu:[],publications:[]};
         document.addEventListener('anatomy-gpu',e=>{p.gpu.push({...e.detail,at:performance.now()});if(p.gpu.length>64)p.gpu.shift()});
         document.addEventListener('anatomy-surgical-display',e=>{p.publications.push({...e.detail,at:performance.now()});if(p.publications.length>32)p.publications.shift()});
@@ -913,6 +1059,7 @@ app.on('browser-window-created',(_event,window)=>{
       if(nativeStudy){await inspectNativeStudy();return;}
       if(replayOnly){await inspectRecordedReplay();return;}
       if(resectPair){await inspectResectPair();return;}
+      if(ctaCohort){await inspectCtaCohort();return;}
       if(process.env.DATA_REBUILD_STRUCTURES==='1'){
         await click('Show structures only');await ready();
         report.checks.push('Explicit structures-only 3D display with unchanged full native source slices');

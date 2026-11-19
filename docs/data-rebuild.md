@@ -18,13 +18,22 @@ The checkout lists 22 CTA development entries in the core addition, including
 a publisher-geometry companion for TopCoW 006. The route-conditioned CTA014
 and IXI077 studies each add a pristine case and a separate recording. IXI265
 adds an MRI anatomy study, and RESECT Case3 adds the paired observation study.
-The recordings and companion studies reuse existing people. The three CTA
-acquisition sets retain 354,652,995 bytes of publisher payloads. The Case3
-extension recovered another 46,148 bytes of publisher data. The three new CTA
-source directories, prepared pilot and scenario directories, both recorded
-workspaces and the Case3 stage benchmark occupy 6.48 GB of allocated HDD file
-space. The separate baseline inventory, model caches and hidden app captures
-are outside that storage count.
+The recordings and companion studies reuse existing people. All 28 additions
+resolve in Cases. Acquired identities are distinct within their source
+namespaces. Cross-publisher subject independence is unverified.
+
+| Retained publisher payload | Bytes |
+| --- | ---: |
+| TAIR, Head CTA and ISLES’24 acquisitions | 354,652,995 |
+| CoW geometry and selected TopCoW source and annotation members | 1,652,113 |
+| RESECT Case3 during-resection cavity annotation | 28,518 |
+| RESECT Case3 after-resection cavity and paired landmark files | 46,148 |
+| Total | 356,379,774 |
+
+The three new CTA source directories, prepared pilot and scenario directories,
+both recorded workspaces and the Case3 stage benchmark occupy 6.48 GB of
+allocated HDD file space. The baseline inventory, model caches and hidden app
+captures are outside that storage count.
 
 ### Selective CTA intake
 
@@ -163,7 +172,9 @@ was qualified separately for CTA006. The 915 graph points use the original CTA
 RAS frame and all 914 edge midpoints overlap the original CoW annotation. The
 surface contains 47,202 vertices and 94,404 triangles. The proof used the
 published VTP files directly in VTK and retained the original mask, license and
-hashes. See `qc/multimodal-anatomy-20261118-cow-vtp-v1/README.md`.
+hashes. The selected source material retains 1,652,113 bytes from 1,574,488
+transferred bytes. See `README.md` and `source-receipt.json` under
+`qc/multimodal-anatomy-20261118-cow-vtp-v1/`.
 
 Search **PUBLISHED-COW** to open the CTA006 native companion. The
 **Circle of Willis · publisher mesh** layer uses the original triangular
@@ -205,11 +216,42 @@ separate research files. The cases omit mass effect and synthetic CTA signal.
 
 Search **CTA-ORGANIC** in Cases. Package checksums, seeds and a contact sheet are
 under `prepared/cta-organic-gliomas-v1/`. The global accepted release is unchanged.
-The hidden desktop verified all 12 Cases entries and checked CTA014 variant 01
-against its original CTA identity. Its scan and generated contour restored in a
-fresh process, and rehearsal inspect preview left the modeled state intact.
-See `qc/hidden-app/cta-organic-014-warm-20261118-v2/report.json` and
-`qc/hidden-app/cta-organic-014-cold-20261118-v2/report.json`. The separate
+The cohort shape audit compared the 12 private masks with the existing
+46-person UCSF TRAIN summary using the same physical volume, surface,
+and covariance measurements. All 12 core-and-rim masks are single connected
+components, with sphericity 0.632–0.828 and axis ratios 0.367–0.720. Their
+median volume is 8.31 mL versus 28.27 mL in the reference. Including edema,
+five scenarios fall below the smallest reference volume and two exceed the
+reference sphericity range. The engineering cohort emphasizes small targets
+and compact edema. All regions stayed within the modeled brain and excluded
+the retained bone and vessel memberships. Dice between each approximate
+contour and private core-and-rim mask was 0.942–0.971. The app packages
+preserve the original host attachments, with exact tumor truth stored separately.
+The report and plot are in `qc/cta-organic-cohort-shape-audit-v1/`.
+
+```sh
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python \
+  scripts/audit_cta_organic_cohort.py --output-name cta-organic-shape-audit-reproduction
+```
+
+The hidden desktop opened all 12 actual Cases entries, verified the native CTA
+and five layer transfers against the sealed receipts, and prepared a GPU frame
+on the correct source grid for each. Every case entered and canceled an
+inspection preview at zero accepted actions. All project hashes and simulation
+states were unchanged. Clinical planning remained unavailable. The report and
+two captures are in `qc/hidden-app/cta-organic-cohort-20261118-v1/`.
+
+```sh
+cohort="$RESSECTIONLAB_DATA_ROOT/prepared/cta-organic-gliomas-v1"
+DATA_REBUILD_CASE="$cohort/TopCoW-006-CTA-ORGANIC-01-v1/TopCoW-006-CTA-ORGANIC-01-v1.ressectionlab" \
+  DATA_REBUILD_CTA_COLLECTION="$cohort/collection.json" DATA_REBUILD_CTA_COHORT=1 \
+  DATA_REBUILD_OUTPUT="$RESSECTIONLAB_DATA_ROOT/qc/cta-organic-cohort-app-reproduction" \
+  desktop/node_modules/.bin/electron desktop/electron/verify-data-rebuild.cjs --automation-hidden
+```
+
+The separate CTA014 variant 01 save restored the same CTA and contour in a
+fresh process. See `qc/hidden-app/cta-organic-014-warm-20261118-v2/report.json`
+and `qc/hidden-app/cta-organic-014-cold-20261118-v2/report.json`. The earlier
 reviewed CTA014 replay restored a 48-state run with 15.81 mm³ of target effect
 and withdrawal. Its report is `qc/hidden-app/cta-pilot-baseline-20261118-v1/report.json`.
 
@@ -218,8 +260,17 @@ Each shows the matched CTA, broader mineralized skull estimate, brain envelope,
 separate publisher artery and vein/sinus unions, and its existing variant 01
 contour. Fifteen meshes were verified and cached. Conditioning changed 3D
 pixels while preserving all three linked source-slice views in each study.
-The skull and brain remain estimates, with visible stepping where the source
-or estimate is coarse. These studies carry display and inspection scope.
+The skull and brain remain estimates. The opaque skull views show anterior
+discontinuities and partial skull-base coverage. The conditioned brain envelopes
+show stepping and lack qualified cortical or ventricular boundaries. The
+arterial unions reach the scan boundary and cover only the supplied branches.
+These studies carry display and inspection scope.
+
+| TopCoW pilot | Brain triangles | Skull triangles | Artery / vein connected components | Skull voxels touching image boundary |
+| --- | ---: | ---: | ---: | ---: |
+| 006 | 730,496 | 1,923,752 | 9 / 7 | 37,183 |
+| 012 | 927,588 | 2,087,724 | 5 / 2 | 23,913 |
+| 014 | 590,488 | 1,543,300 | 8 / 3 | 23,968 |
 
 ```sh
 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python \
@@ -421,7 +472,9 @@ DATA_REBUILD_CASE="$trial/replay.ressectionlab" \
 `qc/surgical-change/RESECT-Case3-benchmark-verified-20261118/README.md` indexes
 the checksum-bound evidence. The same-patient intraoperative cavity is an
 observed display layer. Its 20,005 voxels and 160.04 mm³ survived workspace
-save and cold reopen at Dice 1.000. Case4's frozen update reproduced held-out
+save and cold reopen at Dice 1.000. The verified 28,518-byte during mask is
+recorded in `qc/surgical-change/RESECT-Case3-benchmark-20261118/cavity-source-mirror-attempt.json`.
+Case4's frozen update reproduced held-out
 ultrasound landmark RMS of 4.045 mm unchanged, 1.020 mm after rigid correction,
 and 1.104 mm with inverse-distance weighting. Case3 image-only registration
 increased landmark error from 2.029 to 2.087 mm RMS. No frame-qualified predicted
