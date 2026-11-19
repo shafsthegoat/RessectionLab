@@ -1,3 +1,4 @@
+import {studyLayerDisplayKind} from './native-study-state.ts';
 import type {ViewerVolume,VesselDisplayFilter,PatientContext} from './viewer/contracts';
 import type {Point3} from './viewer/coordinates';
 import type {ViewerWorkspaceSettings} from './viewer/workspaceSettings';
@@ -85,7 +86,7 @@ export interface NativeAnatomyApi {
 }
 export type Surface=NonNullable<ViewerVolume['compartments'][number]['surface']>;
 export type ViewPayload=Omit<ViewerVolume,'mri'|'compartments'|'tractography'|'labelSets'|'patientContext'|'headSupport'>&{headSupport?:ArrayDescriptor;patientContext?:{sources:PatientContext['sources'];affine?:ViewerVolume['affine'];shape?:ViewerVolume['shape'];signal?:ArrayDescriptor};labelSets?:Array<{id:string;data:ArrayDescriptor}>;tractography?:Array<{id:string;label:string;points:ArrayDescriptor;offsets:ArrayDescriptor}>;mri:ArrayDescriptor;modality:string;registrationStatus:string;patientFrameReady?:boolean;alignmentPreviews?:string[];unavailableLayers:string[];compartments:Array<{kind?:string;displayKind?:string;sourceIdentity?:string;qa?:import('./viewer/contracts').AnatomyQuality;surfaceDiagnostics?:import('./viewer/surfacePolicy').SurfaceDiagnostics;name:string;color:string;volumeMm3?:number;displayFilter?:VesselDisplayFilter;sourceSupport?:import('./viewer/contracts').TissueDisplaySupport;mask?:ArrayDescriptor;labelSet?:string;labelValue?:number;surface?:{empty:true}|Record<keyof Surface,ArrayDescriptor>}>};
-export async function hydrateAnatomy(payload:ViewPayload,api:ResectionApi,cachedImage?:Float32Array,cached?:Pick<ViewerVolume,'labelSets'|'tractography'|'patientContext'|'headSupport'>):Promise<ViewerVolume>{
+export async function hydrateAnatomy(payload:ViewPayload,api:ResectionApi,cachedImage?:Float32Array,cached?:Pick<ViewerVolume,'labelSets'|'tractography'|'patientContext'|'headSupport'>,studyLayers?:Layer[]):Promise<ViewerVolume>{
   async function bytes(d:ArrayDescriptor){
     if(!d || d.byteLength>512*1024**2 || d.byteOrder!=='little' || d.order!=='C')throw Error('Unsupported anatomy transfer');
     const b=await api.readAsset(d.assetId);if(b.byteLength!==d.byteLength)throw Error('Incomplete anatomy transfer');
@@ -105,7 +106,10 @@ export async function hydrateAnatomy(payload:ViewPayload,api:ResectionApi,cached
         normals:new Float32Array(await bytes(s.normals)),sourceNormals:new Float32Array(await bytes(s.sourceNormals)),indices:new Uint32Array(await bytes(s.indices))};
       if(surface.positions.length%3 || surface.indices.length%3 || surface.source.length!==surface.positions.length || surface.normals.length!==surface.positions.length || surface.sourceNormals.length!==surface.positions.length || surface.indices.some(i=>i>=surface!.positions.length/3))throw Error('Invalid indexed anatomy mesh');
     }
-    compartments.push({...layer,mask,surface});
+    const declaration=studyLayers?.find(row=>row.id===layer.name);
+    const declaredKind=declaration&&studyLayerDisplayKind(declaration);
+    const displayKind=declaredKind!==declaration?.kind?declaredKind:layer.displayKind??declaredKind;
+    compartments.push({...layer,displayKind,mask,surface});
   }
   const tractography=[];for(const t of payload.tractography??[]){const resident=cached?.tractography?.find(r=>r.id===t.id);if(resident){tractography.push(resident);continue;}tractography.push({...t,points:new Float32Array(await bytes(t.points)),offsets:new Uint32Array(await bytes(t.offsets))});}
   const labelSets=[];for(const set of payload.labelSets??[]){const resident=cached?.labelSets?.find(r=>r.id===set.id);if(resident){labelSets.push(resident);continue;}const data=new Uint16Array(await bytes(set.data));if(data.length!==mri.length)throw Error("Categorical grid mismatch");labelSets.push({id:set.id,data});}

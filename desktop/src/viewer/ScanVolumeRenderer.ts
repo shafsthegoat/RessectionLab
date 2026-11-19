@@ -78,7 +78,7 @@ export class ScanVolumeRenderer {
     this.material=new THREE.ShaderMaterial({glslVersion:THREE.GLSL3,vertexShader:volumeVertexShader,
       fragmentShader:volumeFragmentShader,depthTest:false,depthWrite:false,toneMapped:false,uniforms:{
         uHeadSupport:{value:this.supportTexture??null},uUseHeadSupport:{value:!!this.supportTexture},
-        uVolume:{value:this.texture},uTransfer:{value:null},uScene:{value:this.sceneTarget.texture},
+        uVolume:{value:this.texture},uTransfer:{value:null},uScene:{value:this.sceneTarget.texture},uDrawScalar:{value:true},
         uLabelWorldToVoxel:{value:this.sourceGrid.inverse},uLabelShape:{value:this.sourceGrid.shape},
         uDepth:{value:this.sceneTarget.depthTexture},uWorldToVoxel:{value:new THREE.Matrix4().set(...inverse.flat() as Parameters<THREE.Matrix4['set']>)},
         uCameraWorld:{value:new THREE.Matrix4()},uInverseProjection:{value:new THREE.Matrix4()},
@@ -152,13 +152,14 @@ export class ScanVolumeRenderer {
   }
   get active(){return this.enabled;}
   get estimatedTargetBytes(){
-    const targets=[this.sceneTarget,this.volumeTarget,...this.accumulation,...this.surfacePass.targets,this.surfacePass.tail];
+    const targets=[this.sceneTarget,this.volumeTarget,...this.accumulation,...this.surfacePass.targets,...this.surfacePass.cranial.targets.values(),this.surfacePass.tail];
     if(this.interactionTargets)targets.push(this.interactionTargets.scene,this.interactionTargets.volume);
     return targets.reduce((sum,target)=>sum+renderTargetBytes(target),0)+(this.transfer?.image.data?.byteLength??0);
   }
   render(scene: THREE.Scene, camera: THREE.PerspectiveCamera, width: number, height: number,
-    interactive: boolean, restoreViewport: ()=>void, longEdge=360) {
-    if(!this.enabled){this.renderer.render(scene,camera);return;}
+    interactive: boolean, restoreViewport: ()=>void, longEdge=360, cranialSurfaces=false) {
+    if(!this.enabled&&!cranialSurfaces){this.renderer.render(scene,camera);return;}
+    this.material.uniforms.uDrawScalar.value=this.enabled;
     const pixelRatio=this.renderer.getPixelRatio();
     // The source texture stays at acquired resolution. Bound a single Scan
     // draw while transparent MRI traverses the complete field, rather than

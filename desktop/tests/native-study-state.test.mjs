@@ -2,6 +2,43 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {studyLayerDisplayKind,nextScanState,scanLabel,studyTimepoint,migrateSkullView,anatomyPresentation,defaultAnatomyPresentation,sourceEvidenceLabel} from '../src/native-study-state.ts';
 import {checkedViewerSettings} from '../src/workspace-view-settings.ts';
+import {presentationLayers} from '../src/native-study-state.ts';
+
+test('an independent or estimated scan cannot drive the reference scan presentation',()=>{
+  const layers=['ct','registered','estimated','independent'].map(source_series=>({source_series}));
+  const doc={reference_series:'ct',transforms:{registered:{status:'source-provided'},estimated:{status:'estimated'}},layers};
+  assert.deepEqual(presentationLayers(doc,'ct'),layers.slice(0,2));
+  assert.deepEqual(presentationLayers(doc,'independent'),[layers[3]]);
+});
+
+test('an acquired angiogram reveals its own artery inside the skull and brain context',()=>{
+  const layers=[{id:'cow',kind:'artery',source_series:'cta'},{id:'skull',kind:'skull'},{id:'brain',kind:'brain'}];
+  const render=(modality,source)=>anatomyPresentation({},layers,'segmentation',modality,source);
+  const view=render('CTA','cta');
+  assert.equal(view.skullMode,'transparent');
+  assert.equal(view.layerOpacity.cow,1);
+  assert.ok(view.layerOpacity.skull<.1&&view.layerOpacity.brain<.2);
+  assert.equal(render('CT','cta').skullMode,'exterior');
+  assert.equal(render('MRA','other-scan').skullMode,'exterior');
+});
+
+test('cortical presentation requires an identified cortical label and preserves target and source data',()=>{
+  const siam=value=>({kind:'brain-region',label_ontology:{value},provenance:{model:'siam-v2'}});
+  const cortex={id:'cortex',...siam(1)},deep={id:'deep',...siam(6)};
+  const skull={id:'skull',kind:'skull'},tumor={id:'target',kind:'tumor'};
+  assert.equal(studyLayerDisplayKind(deep),'brain-region');
+  assert.equal(studyLayerDisplayKind({...cortex,provenance:{model:'other'}}),'brain-region');
+  for(const value of [3,42])assert.equal(studyLayerDisplayKind({...cortex,provenance:{model:'fastsurfer'},label_ontology:{value}}),'gray-matter');
+  const settings={layerOpacity:{skull:1},camera:{position:[-50,20,0]}};
+  const before=structuredClone(settings);
+  const anatomy=anatomyPresentation(settings,[cortex,deep,skull,tumor],'segmentation','T1CE');
+  assert.equal(anatomy.skullMode,'transparent');
+  assert.ok(anatomy.layerOpacity.cortex>anatomy.layerOpacity.skull);
+  assert.equal(anatomy.layerColor.target,'#65bfd3');
+  assert.deepEqual(anatomy.camera,settings.camera);
+  assert.deepEqual(settings,before);
+  assert.equal(anatomyPresentation(settings,[deep,skull,tumor],'segmentation','CT').skullMode,'exterior');
+});
 
 test('structural contrast retains study angiography availability and derived diffusion status',()=>{
   const series=[{modality:'T1'},{modality:'MRA'},{modality:'DTI FA diagnostic'}];

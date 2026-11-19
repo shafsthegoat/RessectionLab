@@ -59,8 +59,8 @@ function SourceOverviewInset({field,image,phase}:{field:OperativeField;image:Ope
 }
 const legend={bone:'Skull',dura:'Dura',brain:'Brain',tumor:'Selected target',vessels:'Vessels'};
 
-export function OperativeSteps({api,collectionId,route,sourceVolume=null}:{
-  api:NativeAnatomyApi&ResectionApi;collectionId:string;route:NativeApproach;sourceVolume?:ViewerVolume|null;
+export function OperativeSteps({api,collectionId,route,linkedOverview=false,sourceVolume=null}:{
+  api:NativeAnatomyApi&ResectionApi;collectionId:string;route:NativeApproach;linkedOverview?:boolean;sourceVolume?:ViewerVolume|null;
 }){
   const [field,setField]=useState<OperativeField|null>(null);
   const [error,setError]=useState(''),[attempt,setAttempt]=useState(0);
@@ -81,10 +81,10 @@ export function OperativeSteps({api,collectionId,route,sourceVolume=null}:{
     <p>{error||'Sampling the selected approach in aligned patient anatomy.'}</p>
     {error&&<button onClick={()=>setAttempt(n=>n+1)}>Retry preview</button>}
   </div>;
-  return <OperativePlayback field={field} sourceVolume={sourceVolume} collectionId={collectionId}/>;
+  return <OperativePlayback field={field} sourceVolume={sourceVolume} collectionId={collectionId} linkedOverview={linkedOverview}/>;
 }
 
-function OperativePlayback({field,sourceVolume,collectionId}:{field:OperativeField;sourceVolume:ViewerVolume|null;collectionId:string}){
+function OperativePlayback({field,sourceVolume,collectionId,linkedOverview}:{field:OperativeField;sourceVolume:ViewerVolume|null;collectionId:string;linkedOverview:boolean}){
   const [retract,setRetract]=useState(true),[cutaway,setCutaway]=useState(false),[raw,setRaw]=useState(false);
   const [value,setValue]=useState(0),[playing,setPlaying]=useState(false);
   const [contextLayers,setContextLayers]=useState<string[]>([]),[fitExterior,setFitExterior]=useState(false);
@@ -124,6 +124,7 @@ function OperativePlayback({field,sourceVolume,collectionId}:{field:OperativeFie
       ?available.filter(step=>step.id==='bone'||step.id==='dura').length:0;
     setPlaying(false);clock.current=nextValue;setValue(nextValue);setRetract(next);
   }
+  const routePlane=field.intensity?.overview&&<SourceOverviewInset field={field} image={field.intensity} phase={pose.phase}/>;
   return <section className="operative-playback" aria-label="Operative steps" data-operative-phase={pose.phase} data-operative-progress={pose.progress.toFixed(3)}>
     <div className="operative-topline"><div><strong>Operative field</strong><small>{field.spacingMm.toFixed(2)} mm display grid · Geometric preview · {cutaway?'Teaching section':'Exterior'}</small></div>
         {!cutaway&&contextLayers.length>0&&<button className="operative-frame-choice" aria-pressed={fitExterior} onClick={()=>setFitExterior(value=>!value)}>{fitExterior?'Follow operative step':'Fit source anatomy'}</button>}
@@ -141,12 +142,13 @@ function OperativePlayback({field,sourceVolume,collectionId}:{field:OperativeFie
       </div></details>
     </div>
     <div className="operative-image"><OperativeFieldCanvas sourceVolume={sourceVolume} collectionId={collectionId} field={field} phase={pose.phase} progress={pose.progress} withRetraction={retract} cutaway={cutaway} raw={raw} fitExterior={fitExterior} onContext={setContextLayers} onSuperficialVessels={setSuperficialVessels}/>
-      {field.intensity?.overview&&<SourceOverviewInset field={field} image={field.intensity} phase={pose.phase}/>}
+      {!linkedOverview&&routePlane}
       <div className="operative-legend" aria-label="Visible tissues">{tissues.map(role=><span key={role} data-tissue={role}>{role==='dura'&&duralProxy?'Dural proxy':legend[role]}</span>)}
         {details.map(key=><span key={key} style={{'--tissue':tissueColors[key]} as React.CSSProperties}>{detailLabels[key]}</span>)}
         {!tissues.includes('vessels')&&<small>Vessels unmapped here</small>}
       </div>
     </div>
+    {linkedOverview&&routePlane}
     <div className="operative-transport">
       {(contacts.length>0||field.blockers.length>0)&&<div className="operative-conflict">{contacts.length?'Intersection with '+contacts.map(c=>c.label).join(', '):field.blockers[0]}</div>}
       <div className="operative-stage-title"><strong>{descriptions[pose.phase]}</strong><span>{pose.phase==='overview'?'Start':Math.round(pose.progress*100)+'% of step'}</span></div>

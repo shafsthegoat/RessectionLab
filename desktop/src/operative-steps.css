@@ -80,3 +80,37 @@
 .operative-picked small,.operative-picked strong{display:block}
 .operative-picked button{float:right;margin-left:6px;cursor:pointer}
 .operative-topline .operative-frame-choice {margin-left:auto;min-height:24px;padding:2px 7px;color:#c2d8cc;font-size:11px;}
+
+/* Keep the planning renderer and its patient camera alive beside the changing
+   local field. Both reference panes follow the selected study and approach. */
+.viewer-shell.has-operative-reference {
+  display:grid;grid-template-columns:minmax(0,1fr) clamp(152px,24%,300px);
+  grid-template-rows:auto minmax(0,1.16fr) minmax(0,1fr) auto;
+}
+.has-operative-reference > .operative-playback {display:contents;}
+.has-operative-reference .operative-topline {grid-area:1 / 1 / 2 / 3;}
+.has-operative-reference .operative-image {grid-area:2 / 1 / 4 / 2;}
+.has-operative-reference .operative-transport {grid-area:4 / 1 / 5 / 3;}
+.viewer-shell.has-operative-reference > .rl-viewer {
+  grid-area:2 / 2 / 4 / 3;display:block;min-height:0;min-width:0;box-sizing:border-box;
+  border:1px solid #343936;background:#080909;
+}
+.has-operative-reference:has(.operative-playback > .operative-overview) > .rl-viewer {grid-row-end:3;}
+.has-operative-reference:has(.operative-placeholder) > .rl-viewer {visibility:hidden;}
+.has-operative-reference .operative-reference-heading {
+  position:absolute;inset:0 0 auto;height:24px;padding:4px 8px;background:#151a18;
+  color:#cbd6cf;font-size:11px;line-height:16px;z-index:1;box-sizing:border-box;
+}
+.has-operative-reference .rl-viewer .rl-viewer-anatomy {position:absolute;inset:24px 0 0;border:0;}
+.has-operative-reference .rl-viewer .rl-viewer-anatomy-image {
+  inset:50% 0 auto;width:100%;height:auto;aspect-ratio:1.08;max-height:100%;transform:translateY(-50%);
+}
+.has-operative-reference .rl-viewer :is(.rl-viewer-slice,.rl-viewer-layoutbar,.rl-viewer-annotations,.rl-body-guide) {display:none;}
+.has-operative-reference .operative-playback > .operative-overview {
+  grid-area:3 / 2 / 4 / 3;position:relative;inset:auto;width:auto;min-height:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  margin:0;border-radius:0;background:#080909;
+}
+.has-operative-reference .operative-overview-plane {min-height:0;width:100%;flex:1;}
+.has-operative-reference .operative-overview-plane canvas {width:100%;height:100%;object-fit:contain;}
+.has-operative-reference .operative-overview figcaption {width:100%;flex:none;}

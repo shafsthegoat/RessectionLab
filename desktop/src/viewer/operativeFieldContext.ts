@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import type {ViewerVolume} from './contracts';
 import type {OperativeField} from '../operative-field';
-import {rasAffine} from './coordinates.ts';
+import {rasAffine,sampleTrilinear} from './coordinates.ts';
 import {placeInSourceFrame} from './sceneGeometry.ts';
 
 export function operativeFieldContext(volume:ViewerVolume|null,field:OperativeField,collectionId:string,patchRadius=field.radiusMm){
@@ -28,13 +28,34 @@ export function operativeFieldContext(volume:ViewerVolume|null,field:OperativeFi
     geometry.setAttribute('normal',new THREE.BufferAttribute(normals,3));
     geometry.setIndex(new THREE.BufferAttribute(indices,1));
     const material=new THREE.MeshStandardMaterial({color:role==='bone'?'#e5d8bc':'#c68788',roughness:role==='bone'?.76:.6,side:THREE.DoubleSide});
+    // The mesh is expressed in the displayed scan's voxel frame. Carry the
+    // same acquired contrast across the seam into the wider stationary skull.
+    const signal=field.intensity;
+    if(signal&&signal.sourceSeries===identity[1]&&volume.mri){
+      const [low,high]=signal.window;
+      const values=new Uint8Array(positions.length/3);
+      for(let i=0;i<values.length;i++){
+        const x=positions[3*i],y=positions[3*i+1],z=positions[3*i+2];
+        const covered=x>=0&&y>=0&&z>=0&&x<=volume.shape[0]-1&&y<=volume.shape[1]-1&&z<=volume.shape[2]-1;
+        const normalized=covered?(sampleTrilinear(volume.mri,volume.shape,[x,y,z])-low)/(high-low):.5;
+        values[i]=Math.round(255*THREE.MathUtils.clamp(normalized,0,1));
+      }
+      geometry.setAttribute('scanSignal',new THREE.BufferAttribute(values,1,true));
+    }
     material.onBeforeCompile=shader=>{
+      if(geometry.hasAttribute('scanSignal')){
+        shader.vertexShader='attribute float scanSignal; varying float vScanSignal;\n'+shader.vertexShader.replace('#include <begin_vertex>',
+          '#include <begin_vertex>\nvScanSignal=scanSignal;');
+        shader.fragmentShader='varying float vScanSignal;\n'+shader.fragmentShader.replace('#include <color_fragment>',
+          `#include <color_fragment>\ndiffuseColor.rgb*=exp2((vScanSignal-.5)*${role==='bone'?'1.26':'2.59'});`);
+      }
       Object.assign(shader.uniforms,{uLocalLow:{value:low},uLocalHigh:{value:high},uPatchRadius:{value:patchRadius}});
       shader.vertexShader='varying vec3 vOperativeLocal;\n'+shader.vertexShader.replace('#include <begin_vertex>',
         '#include <begin_vertex>\nvOperativeLocal=(modelMatrix*vec4(position,1.0)).xyz;');
       shader.fragmentShader='uniform vec3 uLocalLow,uLocalHigh; uniform float uPatchRadius; varying vec3 vOperativeLocal;\n'+shader.fragmentShader.replace('#include <clipping_planes_fragment>',
         '#include <clipping_planes_fragment>\nif(length(vOperativeLocal.xy)<=uPatchRadius && vOperativeLocal.z>=uLocalLow.z && vOperativeLocal.z<=uLocalHigh.z)discard;');
     };
+    material.customProgramCacheKey=()=>`operative-context-${role}-${geometry.hasAttribute('scanSignal')}`;
     const mesh=new THREE.Mesh(geometry,material);
     placeInSourceFrame(mesh,rasAffine(volume.affine,volume.frame));
     mesh.name=item.label;mesh.userData.sourceLayer={directId:item.id,role,patchRadius};

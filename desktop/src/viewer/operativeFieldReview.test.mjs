@@ -39,6 +39,12 @@ test('surrounding source geometry maps the patient target to the local origin an
   assert.deepEqual(new THREE.Vector3(0,1,0).applyMatrix4(group.children[0].matrixWorld).toArray(),[1,0,0]);
   assert.equal(operativeFieldContext(volume,{...field,snapshotId:'other'},'collection').children.length,0);
   assert.equal(operativeFieldContext(volume,field,'other').children.length,0);
+  volume.shape=[2,2,2];
+  volume.mri=Float32Array.of(40,0,0,0,0,0,0,0);
+  const scanField={...field,intensity:{sourceSeries:'series',window:[20,60]}};
+  assert.equal(operativeFieldContext(volume,scanField,'collection').children[0].geometry.getAttribute('scanSignal').array[0],128);
+  scanField.intensity.sourceSeries='other-scan';
+  assert.equal(operativeFieldContext(volume,scanField,'collection').children[0].geometry.hasAttribute('scanSignal'),false);
   volume.compartments[0].sourceSupport.sampledDataSha256='raw';
   assert.equal(operativeFieldContext(volume,field,'collection').children.length,0);
 });

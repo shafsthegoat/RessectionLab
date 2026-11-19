@@ -3,6 +3,42 @@ import assert from 'node:assert/strict';
 import * as THREE from 'three';
 import {applySourceContextMaterial,sourceContextOpacity} from './sourceContextMaterial.ts';
 import {SurfaceVolumePass} from './SurfaceVolumePass.ts';
+
+test('head and cortex capture separate nearest depths with patient clipping during orbit and at rest',()=>{
+  const pass=new SurfaceVolumePass(),scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera();
+  const geometry=new THREE.PlaneGeometry(),opaque=new THREE.Texture();
+  const clip=[new THREE.Plane(new THREE.Vector3(1,0,0),2)];
+  const groups=['head','cortex','cortex',undefined];
+  const meshes=groups.map((boundary,i)=>{
+    const material=new THREE.MeshStandardMaterial({transparent:true,opacity:.5,clippingPlanes:clip});
+    const mesh=new THREE.Mesh(geometry,material);
+    mesh.userData={compartment:'layer'+i,cranialBoundary:boundary};
+    scene.add(mesh);
+    return mesh;
+  });
+  const source=meshes.map(m=>m.material),capture=[];
+  const renderer={setRenderTarget(){},clear(){},render(){
+    if(scene.overrideMaterial){
+      assert.equal(scene.overrideMaterial.clippingPlanes,clip);
+      capture.push(meshes.map(m=>m.visible));
+    }else{
+      for(const [i,mesh] of meshes.entries()){
+        const shader={uniforms:{},fragmentShader:THREE.ShaderLib.standard.fragmentShader};
+        mesh.material.onBeforeCompile(shader,renderer);
+        assert.equal(shader.uniforms.uBoundaryDepth?.value,pass.cranial.targets.get(groups[i])?.depthTexture);
+      }
+    }
+  }};
+  try{
+    for(const interactive of [true,false]){
+      pass.render(renderer,scene,camera,opaque,32,24,interactive);
+      assert.deepEqual(capture.splice(0),[[true,false,false,false],[false,true,true,false]]);
+      assert.deepEqual(meshes.map(m=>m.material),source);
+      assert(meshes.every(m=>m.visible));
+    }
+    assert.notEqual(pass.cranial.targets.get('head'),pass.cranial.targets.get('cortex'));
+  }finally{pass.dispose();source.forEach(m=>m.dispose());geometry.dispose();opaque.dispose();}
+});
 import {installNativeContextLighting,setNativeContextLighting} from './nativeContextLighting.ts';
 
 test('shell context retains the source silhouette and configured opacity without filling the interior',()=>{

@@ -42,9 +42,9 @@ function fieldScene(host:HTMLDivElement, field:OperativeField, sourceVolume:View
   const environment=pmrem.fromScene(room,.06);
   room.dispose();pmrem.dispose();
   scene.environment=environment.texture;
-  scene.environmentIntensity=.40;
-  scene.add(new THREE.HemisphereLight('#fff7ed','#87747b',.64));
-  const keyLight=new THREE.DirectionalLight('#fff2e4',2.45);
+  scene.environmentIntensity=.25;
+  scene.add(new THREE.HemisphereLight('#fff7ed','#665b65',.42));
+  const keyLight=new THREE.DirectionalLight('#fff2e4',1.82);
   const range=field.radiusMm*1.8;
   keyLight.castShadow=true;
   keyLight.shadow.mapSize.set(1024,1024);
@@ -54,7 +54,7 @@ function fieldScene(host:HTMLDivElement, field:OperativeField, sourceVolume:View
   keyLight.shadow.normalBias=.09;
   keyLight.shadow.bias=-.00022;
   scene.add(keyLight,keyLight.target);
-  const rim=new THREE.DirectionalLight('#d6e8ef',1.05);
+  const rim=new THREE.DirectionalLight('#d6e8ef',.72);
   rim.position.set(.78,1,1.15);scene.add(rim);
   const hingeX=model.duralOpening*.74, boneZ=field.stations.bone??0;
   const hingeZ=model.surfaceHeight('dura',hingeX,0)??field.stations.dura??0;
@@ -148,17 +148,28 @@ function fieldScene(host:HTMLDivElement, field:OperativeField, sourceVolume:View
     }
     const startZ=cutaway?overviewZ:(field.stations.bone??field.stations.dura??field.stations.brain??field.stations.tumor??fieldTop);
     const startSize=cutaway?overviewSize:field.radiusMm*(context.children.length?6.5:2);
-    if(phase==='overview'){focus(startZ,startSize);return;}
-    let previousZ=startZ,previousSize=startSize;
+    // Enter from the full registered surface, following the first available
+    // station. Interpolate magnification logarithmically so it also scrubs back.
+    const fromPatient=!cutaway&&sourceCenter&&sourceRadius>0;
+    const initialSize=fromPatient?sourceRadius*2.06:startSize;
+    if(phase==='overview'){
+      if(fromPatient)focus(sourceCenter.z,initialSize,false,sourceCenter.x,sourceCenter.y);
+      else focus(startZ,startSize);
+      return;
+    }
+    let previousZ=fromPatient?sourceCenter.z:startZ,previousSize=initialSize;
+    let first=true;
     for(const id of stageOrder){
       const z=field.stations[id];
       if(z===null || (id==='brain'&&!retraction))continue;
       if(id===phase){
-        const t=smooth(progress/.24);
-        focus(THREE.MathUtils.lerp(previousZ,z,t),THREE.MathUtils.lerp(previousSize,closeSize,t));
+        const entering=first&&fromPatient;
+        const t=smooth(progress/(entering?.42:.24));
+        const size=entering?Math.exp(THREE.MathUtils.lerp(Math.log(previousSize),Math.log(closeSize),t)):THREE.MathUtils.lerp(previousSize,closeSize,t);
+        focus(THREE.MathUtils.lerp(previousZ,z,t),size,false,entering?sourceCenter.x*(1-t):0,entering?sourceCenter.y*(1-t):0);
         return;
       }
-      previousZ=z;previousSize=closeSize;
+      previousZ=z;previousSize=closeSize;first=false;
     }
   }
   const exteriorDirection=new THREE.Vector3(.06,-.19,1).normalize();

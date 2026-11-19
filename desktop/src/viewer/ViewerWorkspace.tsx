@@ -711,8 +711,9 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
       data-renderer-ready={ready&&!error&&!modelDisplayPending&&remaining===0?'true':'false'}
       data-surfaces-pending={remaining}
       data-expanded={expanded ?? undefined}
-      aria-label="Linked patient imaging workspace"
+      aria-label={props.approachOverview?"Selected approach on intact anatomy":"Linked patient imaging workspace"}
     >
+      {props.approachOverview&&<div className="operative-reference-heading">Selected approach · intact anatomy</div>}
       <canvas ref={canvas} className="rl-viewer-canvas" aria-hidden="true" />
       <div
         className="rl-viewer-layoutbar"

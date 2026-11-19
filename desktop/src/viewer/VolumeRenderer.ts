@@ -738,9 +738,23 @@ export class VolumeRenderer {
       this.workspaceSettings.presentation==='segmentation'&&['bone','skull'].includes(layer.kind??''));
     mesh.visible = this.surfaceVisible(layer.name);
     mesh.userData.compartment = layer.name;
+    mesh.userData.cranialBoundary=this.cranialBoundary(displayKind,this.workspaceSettings);
+    if(layer.sourceSeries&&['gray-matter','cerebral-cortex','cerebellar-cortex'].includes(displayKind)&&this.volume.displayIdentity&&
+        layer.sourceSeries===JSON.parse(this.volume.displayIdentity)[1]){
+      mesh.userData.corticalSignal={texture:this.mriTexture,window:this.defaultWindow};
+    }
     this.picking?.install(mesh,geometry,eagerPicking);
     return {mesh,source:geometry,smooth,smoothingPrepared};
   }
+  private cranialBoundary(kind:string|undefined,settings:ViewerWorkspaceSettings) {
+    if(!this.volume.displayIdentity||settings.presentation!=='segmentation'||settings.contextStyle!=='shell'||
+       settings.operativeView==='surgeon')return undefined;
+    if(['gray-matter','cerebral-cortex','cerebellar-cortex'].includes(kind??''))return 'cortex';
+    if((kind==='outer-head-tissue'||kind==='head-envelope')&&this.volume.compartments.some(layer=>
+      ['gray-matter','cerebral-cortex','cerebellar-cortex'].includes(layer.displayKind??layer.kind??'')))return 'head';
+    return undefined;
+  }
+
   private installSurface(layer:ViewerVolume['compartments'][number],buffers:PreparedSurface|{positions:Float32Array;normals:Float32Array;smoothPositions?:Float32Array;smoothNormals?:Float32Array;indices?:Uint32Array}) {
     const pair=this.makeSurface(layer,buffers);if(!pair)return;
     if (this.volume.displayIdentity && layer.surface && surfaceKind(layer.kind)==='context') {
@@ -1099,6 +1113,7 @@ export class VolumeRenderer {
       const appearance=layerAppearance(layer.name,layer.color,settings,layer.displayKind??layer.kind);
       const mesh=this.surfaces.get(layer.name);
       if(mesh){
+        mesh.userData.cranialBoundary=this.cranialBoundary(layer.displayKind??layer.kind,settings);
         mesh.visible=this.surfaceVisible(layer.name);
         const material=mesh.material as THREE.MeshStandardMaterial;
         material.color.set(appearance.color);material.opacity=appearance.opacity;
@@ -2275,9 +2290,11 @@ export class VolumeRenderer {
       if (this.pendingFit) this.fitCamera(this.pendingFit);
       this.camera.aspect = main.w / main.h;
       this.camera.updateProjectionMatrix();
-      if (this.replayActive || this.passiveActive||!this.scanVolume.active)
+      const cranialSurfaces=!this.scanVolume.active&&Array.from(this.surfaces.values()).some(mesh=>
+        mesh.visible&&mesh.userData.cranialBoundary&&!Array.isArray(mesh.material)&&mesh.material.opacity>0&&mesh.material.opacity<1);
+      if (this.replayActive || this.passiveActive||(!this.scanVolume.active&&!cranialSurfaces))
         surfaceQuality=this.surfaceInteraction.render(this.renderer,this.scene,this.camera,main.w,main.h,this.interacting,this.budget.longEdge,()=>{viewport(this.panes.anatomy);});
-      else this.scanVolume.render(this.scene,this.camera,main.w,main.h,this.interacting,()=>{viewport(this.panes.anatomy);},this.budget.longEdge);
+      else this.scanVolume.render(this.scene,this.camera,main.w,main.h,this.interacting,()=>{viewport(this.panes.anatomy);},this.budget.longEdge,cranialSurfaces);
       if(this.workspaceSettings.showOrientationGuide!==false){
         this.orientationGuide.setPosture(renderedView?.positionEffects);
         orientationGuideVisible=this.orientationGuide.render(this.renderer,this.camera,root,this.paneBounds!.panes.get(this.panes.orientationGuide)!);

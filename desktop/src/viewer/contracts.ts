@@ -86,6 +86,7 @@ export interface ViewerRoute {
 }
 
 export interface ViewerWorkspaceProps {
+  approachOverview?:boolean;
   readCamera?: import('react').Ref<()=>import('./workspaceSettings').ViewerCameraState|null>;
   surgicalInteraction?: import("../surgical-types").SurgicalInteraction;
   onSliceStroke?: (point: Point3 | null, phase: 'start' | 'move' | 'end') => void;

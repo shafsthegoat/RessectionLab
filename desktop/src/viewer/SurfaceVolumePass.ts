@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import {CranialDepth} from './cranialDepth.ts';
 
 export const SURFACE_PEELS=4;
 /** Front-to-back mesh boundary layers for the scan ray marcher. This uses the
@@ -8,12 +9,13 @@ export const SURFACE_PEELS=4;
  * depth ordering is approximate; the foreground peels/opaque depth are exact.
  */
 export class SurfaceVolumePass {
+  readonly cranial=new CranialDepth();
   readonly targets=Array.from({length:SURFACE_PEELS+1},()=>{
     const t=new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,depthBuffer:true});
     t.depthTexture=new THREE.DepthTexture(1,1,THREE.UnsignedIntType);return t;
   });
   readonly tail=new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,depthBuffer:false});
-  private readonly materials=new Map<THREE.Material,{peel:THREE.Material;tail:THREE.Material;sourceProgramKey:string}>();
+  private readonly materials=new Map<THREE.Material,{peel:THREE.Material;tail:THREE.Material;sourceProgramKey:string;boundary?:'head'|'cortex'}>();
   private readonly uniforms={uPreviousSurface:{value:null as THREE.Texture|null},uOpaqueSurface:{value:null as THREE.Texture|null},uSurfaceSize:{value:new THREE.Vector2()},uFirstSurface:{value:true}};
   private make(original:THREE.Material,tail:boolean){
     const material=original.clone();material.transparent=tail;material.depthWrite=!tail;
@@ -34,7 +36,7 @@ export class SurfaceVolumePass {
     material.customProgramCacheKey=()=>`physical-surface-peeling-v2-${tail}-${original.customProgramCacheKey()}`;
     return material;
   }
-  render(renderer:THREE.WebGLRenderer,scene:THREE.Scene,camera:THREE.Camera,opaque:THREE.Texture,w:number,h:number,interactive:boolean){
+  render(renderer:THREE.WebGLRenderer,scene:THREE.Scene,camera:THREE.PerspectiveCamera,opaque:THREE.Texture,w:number,h:number,interactive:boolean){
     const selected:Array<{mesh:THREE.Mesh;material:THREE.Material}>=[],hidden:THREE.Object3D[]=[];
     scene.traverseVisible(o=>{
       if(o instanceof THREE.Mesh&&!Array.isArray(o.material)&&o.userData.compartment&&o.material.opacity>0&&o.material.opacity<1)selected.push({mesh:o,material:o.material});
@@ -45,11 +47,16 @@ export class SurfaceVolumePass {
     this.uniforms.uSurfaceSize.value.set(w,h);this.uniforms.uOpaqueSurface.value=opaque;
     const target=(t:THREE.WebGLRenderTarget)=>{if(t.width!==w||t.height!==h)t.setSize(w,h);renderer.setRenderTarget(t);renderer.clear();};
     try{
+      const hasBoundary=selected.some(s=>s.mesh.userData.cranialBoundary);
+      if(hasBoundary)this.cranial.capture(renderer,scene,camera,selected,w,h);
       for(const s of selected){
+        const boundary=s.mesh.userData.cranialBoundary;
         const sourceProgramKey=s.material.customProgramCacheKey();
         let pair=this.materials.get(s.material);
-        if(!pair){
-          pair={peel:this.make(s.material,false),tail:this.make(s.material,true),sourceProgramKey};
+        if(!pair||pair.boundary!==boundary){
+          pair?.peel.dispose();pair?.tail.dispose();
+          pair={peel:this.make(s.material,false),tail:this.make(s.material,true),sourceProgramKey,boundary};
+          if(boundary){this.cranial.install(pair.peel,boundary,s.mesh.userData.corticalSignal);this.cranial.install(pair.tail,boundary,s.mesh.userData.corticalSignal);}
           this.materials.set(s.material,pair);
         }else if(pair.sourceProgramKey!==sourceProgramKey){
           // The existing clones compile the currently selected source variant.
@@ -74,5 +81,5 @@ export class SurfaceVolumePass {
     }finally{for(const s of selected)s.mesh.material=s.material;for(const o of hidden)o.visible=true;}
     return {count:selected.length?count+1:0,tailIndex:count};
   }
-  dispose(){this.targets.forEach(t=>t.dispose());this.tail.dispose();for(const p of this.materials.values()){p.peel.dispose();p.tail.dispose();}this.materials.clear();}
+  dispose(){this.cranial.dispose();this.targets.forEach(t=>t.dispose());this.tail.dispose();for(const p of this.materials.values()){p.peel.dispose();p.tail.dispose();}this.materials.clear();}
 }

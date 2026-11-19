@@ -1,5 +1,5 @@
 import {useNativeApproaches} from './use-native-approaches';
-import {nextScanState,migrateSkullView,vesselScopeForView,anatomyPresentation,defaultAnatomyPresentation} from './native-study-state';
+import {nextScanState,migrateSkullView,vesselScopeForView,corticalLayers,hasAngiographicArteries,presentationLayers,anatomyPresentation,defaultAnatomyPresentation} from './native-study-state';
 import type {AnatomyPresentation} from './native-study-state';
 import {drainLayerRequests} from './native-layer-queue';
 import {mergeResidentLayers,prepareNativeLabels} from './native-layer-residency';
@@ -69,8 +69,13 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
   const args=(b=live.current.binding)=>({collectionId:b!.collectionId,snapshotId:b!.document.snapshot_id});
   const initial=(b:Binding,s:string):NativeScanState=>{
     const modality=b.document.series.find(scan=>scan.id===s)?.modality??'MRI';
-    const mode=b.document.series.length>1?'segmentation':defaultAnatomyPresentation(modality);
-    return {cursor:s===b.document.reference_series?b.document.display?.cursor_ras_mm??null:null,settings:anatomyPresentation(nativeDefaults(),b.document.layers,mode,modality),visible:Object.fromEntries(b.document.layers.map(l=>[l.id,b.document.display?.initial_layers?b.document.display.initial_layers.includes(l.id):!['brain-region','review-region','head-envelope'].includes(l.kind)]))};
+    const initialLayers=b.document.display?.initial_layers;
+    const available=presentationLayers(b.document,s).filter(layer=>!initialLayers||initialLayers.includes(layer.id));
+    const cortex=corticalLayers(available);
+    const structures=b.document.series.length>1||cortex.length>0||hasAngiographicArteries(available,modality,s);
+    const mode=structures?'segmentation':defaultAnatomyPresentation(modality);
+    const visible=Object.fromEntries(b.document.layers.map(l=>[l.id,initialLayers?initialLayers.includes(l.id):cortex.includes(l)||!['brain-region','review-region','head-envelope'].includes(l.kind)]));
+    return {cursor:s===b.document.reference_series?b.document.display?.cursor_ras_mm??null:null,settings:anatomyPresentation(nativeDefaults(),available,mode,modality,s),visible};
   };
   const scanState=states[series]??{cursor:null,visible:{},settings:nativeDefaults()};
   const patientField=volume?.patientContext?.field;
@@ -122,7 +127,7 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
       const result=await api.anatomyView({...args(b),seriesId:s,layers:ids,original:raw,patientModel:b.document.series.length>1,previewAlignment:true,vesselScope:scopeRef.current,...extra});
       if(seq!==generation.current)return;
       const imageKey=b.collectionId+"/"+s+"/"+result.mri.sha256;
-      let hydrated=await hydrateAnatomy(result,api,sourceImage.current?.key===imageKey?sourceImage.current.data:undefined,{patientContext:contextCache.current});if(seq!==generation.current)return;
+      let hydrated=await hydrateAnatomy(result,api,sourceImage.current?.key===imageKey?sourceImage.current.data:undefined,{patientContext:contextCache.current},b.document.layers);if(seq!==generation.current)return;
       contextCache.current=hydrated.patientContext;
       hydrated.displayIdentity=JSON.stringify([b.collectionId,s,result.mri.sha256,b.document.snapshot_id,raw,seq]);
       hydrated=await prepared(hydrated);if(seq!==generation.current)return;
@@ -158,7 +163,7 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
     if(patientCutawayActive&&alignment!=='unavailable')v={...v,settings:{...v.settings,presentation:scanState.settings.presentation}};
     if(mode){
       const modality=binding.document.series.find(scan=>scan.id===s)?.modality??'MRI';
-      v={...v,settings:skullDisplay({...anatomyPresentation(v.settings,binding.document.layers,mode,modality),...viewerCutaway(v.settings)})};
+      v={...v,settings:skullDisplay({...anatomyPresentation(v.settings,presentationLayers(binding.document,s),mode,modality,s),...viewerCutaway(v.settings)})};
     }
     if(inspectLayer)v={...v,visible:{...v.visible,[inspectLayer]:true}};
     generation.current++;resetLayers();installVolume(null);setSeries(s);setStates(all=>({...all,[s]:v}));setReview(null);setComponents([]);setEditLayer(null);
@@ -167,9 +172,14 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
   function present(mode:AnatomyPresentation){
     if(!binding||busy||draft)return;
     const scan=binding.document.series.find(s=>s.id===series);
-    const settings=anatomyPresentation(state.settings,binding.document.layers,mode,scan?.modality??'MRI');
+    const available=presentationLayers(binding.document,series);
+    const settings=anatomyPresentation(state.settings,available,mode,scan?.modality??'MRI',series);
     if(usesPatientContext(settings,!!patientField)===patientCutawayActive)updateSettings(settings);
     else updateState({settings:skullDisplay({...settings,...viewerCutaway(scanState.settings)})});
+    if(mode==='segmentation'){
+      const missing=corticalLayers(available).filter(layer=>!state.visible[layer.id]);
+      if(missing.length)setVisible({...state.visible,...Object.fromEntries(missing.map(layer=>[layer.id,true]))});
+    }
   }
   function queueLayers(){
     if(layerTask.current||active.current||!api)return;
@@ -184,7 +194,7 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
         if(seq!==generation.current)throw new DOMException('Cancelled','AbortError');
         const imageKey=b.collectionId+"/"+s+"/"+result.mri.sha256;
         if(sourceImage.current?.key!==imageKey)throw Error('Source image changed; reopen this scan');
-        const incoming=await hydrateAnatomy(result,api,base.mri,base);
+        const incoming=await hydrateAnatomy(result,api,base.mri,base,b.document.layers);
         if(seq!==generation.current)throw new DOMException('Cancelled','AbortError');
         incoming.displayIdentity=base.displayIdentity;
         if(result.alignmentPreviews?.length)setRegistration('alignment preview');
@@ -268,11 +278,13 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
       setSeries(source);
       if(!source)return;
       const previousLayers=new Set(binding.document.layers.map(layer=>layer.id));
-      const added=Object.fromEntries(next.document.layers.filter(layer=>!previousLayers.has(layer.id)).map(layer=>[layer.id,!['brain-region','review-region','head-envelope'].includes(layer.kind)]));
+      const available=presentationLayers(next.document,source);
+      const cortex=corticalLayers(available);
+      const added=Object.fromEntries(next.document.layers.filter(layer=>!previousLayers.has(layer.id)).map(layer=>[layer.id,cortex.includes(layer)||!['brain-region','review-region','head-envelope'].includes(layer.kind)]));
       let current=states[source]??initial(next,source);
       if((binding.document.series.length<2&&next.document.series.length>1)||(!binding.document.layers.length&&next.document.layers.length)){
         const modality=next.document.series.find(scan=>scan.id===source)!.modality;
-        current={...current,settings:anatomyPresentation(current.settings,next.document.layers,'segmentation',modality)};
+        current={...current,settings:anatomyPresentation(current.settings,available,'segmentation',modality,source)};
       }
       current=retireClipping(retired,source,current);
       await loadView(next,source,migrateSkullView({...current,visible:{...current.visible,...added}},next.document.layers));

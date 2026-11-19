@@ -22,6 +22,7 @@ uniform mat4 uInverseProjection;
 uniform vec3 uShape;
 uniform vec2 uRange;
 uniform float uDensity;
+uniform bool uDrawScalar;
 uniform int uSkullMode;
 uniform bool uCt;
 uniform bool uScanPresentation;
@@ -92,6 +93,15 @@ vec3 unproject(vec3 ndc){
 void main(){
   vec4 scene=texture(uScene,vUv);
   scene.rgb+=(1.0-scene.a)*uBackground;
+  if(!uDrawScalar){
+    vec4 layers=vec4(0.);
+    for(int i=0;i<5;i++){
+      if(i>=uSurfaceCount)break;
+      layers+=(1.-layers.a)*boundaryColor(i);
+    }
+    outColor=vec4(layers.rgb+(1.-layers.a)*scene.rgb,1.);
+    return;
+  }
   vec3 origin=uCameraWorld[3].xyz;
   vec3 direction=normalize(unproject(vec3(vUv*2.0-1.0,1.0))-origin);
   vec3 voxelOrigin=(uWorldToVoxel*vec4(origin,1.0)).xyz;

@@ -181,10 +181,21 @@ app.on('browser-window-created', (_, win) => {
       }
       win.setContentSize(1440,900);
     };
+    const saveStudy = async () => {
+      await click('Scans');
+      await click('Save patient study file…');
+      await until("document.querySelector('footer')?.textContent.includes('Patient study file saved')",600000);
+      report.archive={name:saveTo,bytes:fs.statSync(saveTo).size};
+      assert(report.archive.bytes>0);
+    };
+    const presentation = () => js(`(()=>{
+      const v=document.querySelector('.rl-viewer');
+      return {frame:window.operativeVerificationFrame,layers:JSON.parse(v.dataset.visibleLayerIds).sort()};
+    })()`);
     try {
       report.rendererAsset = await js("document.querySelector('script[type=module][src]')?.src.split('/').pop()");
       await until(`document.querySelector('footer')?.textContent.includes('Add a source scan')`);
-      if(process.argv.includes('--source-support') || process.argv.includes('--visual-review')) await js(`document.addEventListener('anatomy-frame',event=>{
+      if(process.argv.includes('--source-support') || process.argv.includes('--visual-review') || process.argv.includes('--expect-presentation')) await js(`document.addEventListener('anatomy-frame',event=>{
         const {cameraState,cursor,sourceSignalFingerprint}=event.detail;
         window.operativeVerificationFrame={cameraState,cursor,sourceSignalFingerprint};
       })`);
@@ -221,6 +232,13 @@ app.on('browser-window-created', (_, win) => {
       }
       await until(`JSON.parse(document.querySelector('.rl-viewer')?.dataset.sourceDisplayIdentity || '[]')[3]===${JSON.stringify(document.snapshot_id)}`);
       await ready();
+      const priorPresentation=flagValue('--expect-presentation');
+      if(priorPresentation){
+        assert(archive && priorPresentation.startsWith(fixtureRoot));
+        const prior=JSON.parse(fs.readFileSync(priorPresentation,'utf8'));
+        report.restoredPresentation=await presentation();
+        assert.deepEqual(report.restoredPresentation,prior.savedPresentation);
+      }
       await click('Anatomy');
       await ready();
       await both('anatomy');
@@ -229,6 +247,11 @@ app.on('browser-window-created', (_, win) => {
         await ready();
         await capture('structures');
         report.nativeFrame=await js("window.operativeVerificationFrame");
+        await click('Show structures only');
+        await ready();await capture('surfaces-only');
+        const surfaceFrame=await js('window.operativeVerificationFrame');
+        assert.deepEqual(surfaceFrame,report.nativeFrame);
+        await click('Show scan volume with structures');await ready();
         const geometry=`document.querySelector('select[aria-label="Native surface representation"]')`;
         if(await js(`!!(${geometry})`)){
           await js(`(${geometry}).value='source';(${geometry}).dispatchEvent(new Event('change',{bubbles:true}));`);
@@ -418,6 +441,28 @@ app.on('browser-window-created', (_, win) => {
         if(process.argv.includes('--video')) {
           await recordingSize(win,js);
           await ready();
+          if(process.argv.includes('--visual-review')){
+            const start=await presentation();
+            const center=await js(`(()=>{const r=document.querySelector('.rl-viewer-anatomy-image').getBoundingClientRect();
+              return {x:Math.round(r.x+r.width/2),y:Math.round(r.y+r.height/2)};})()`);
+            await js(`window.operativeOrbitFrames=[];document.addEventListener('anatomy-frame',e=>{
+              if(e.detail.interactive)window.operativeOrbitFrames.push(performance.now());
+            });`);
+            win.webContents.sendInputEvent({type:'mouseDown',...center,button:'left',clickCount:1});
+            for(let i=1;i<=60;i++){
+              win.webContents.sendInputEvent({type:'mouseMove',x:center.x+i*2,y:center.y,modifiers:['leftButtonDown']});
+              await pause(16);
+            }
+            win.webContents.sendInputEvent({type:'mouseUp',x:center.x+120,y:center.y,button:'left',clickCount:1});
+            await ready();
+            const end=await presentation();
+            assert.notDeepEqual(end.frame.cameraState.position,start.frame.cameraState.position);
+            assert.deepEqual(end.layers,start.layers);
+            assert.equal(end.frame.sourceSignalFingerprint,start.frame.sourceSignalFingerprint);
+            report.orbitFrameTimes=await js('window.operativeOrbitFrames');
+            assert(report.orbitFrameTimes.length>1);
+            await capture('rotated-structures');
+          }
           await click('Layout');
           await js(`(()=>{const select=document.querySelector('select[aria-label="Camera preset"]');
             select.value='left';select.dispatchEvent(new Event('change',{bubbles:true}));})()`);
@@ -425,6 +470,11 @@ app.on('browser-window-created', (_, win) => {
           await ready();
           await capture('selected-approach-1080p');
           intro=await framePixels(win);
+        }
+        if(saveTo&&process.argv.includes('--visual-review')){
+          report.savedPresentation=await presentation();
+          await saveStudy();
+          await click('Plan');await ready();
         }
         await click('Preview operative steps');
         await previewReady();
@@ -491,7 +541,36 @@ app.on('browser-window-created', (_, win) => {
             requestAnimationFrame(tick);
           })`);
           if(process.argv.includes('--review-video')){
-            report.recording=await recordOperativePlayback(win,js,output,null);
+            const readReference=()=>js(`(()=>{
+              const v=document.querySelector('[aria-label="Selected approach on intact anatomy"]');
+              return v&&{identity:v.dataset.sourceDisplayIdentity,caseHash:v.dataset.sourceCaseHash,
+                selected:JSON.parse(v.dataset.approachRoutes).find(r=>r.selected)?.route_id,
+                viewport:v.querySelector('.rl-viewer-anatomy-image').getBoundingClientRect().toJSON()};
+            })()`);
+            report.reference=await readReference();
+            if(report.reference){
+              assert.equal(report.reference.selected,report.selected);
+              assert.equal(JSON.parse(report.reference.identity)[3],document.snapshot_id);
+            }
+            const chapters=await js("Array.from(document.querySelectorAll('.operative-chapters button:not(:disabled)'),b=>b.getAttribute('aria-label'))");
+            const seek=async(position)=>{await js(inputScript('Operative timeline',position));await pause(300);};
+            report.stageViews={};
+            for(const [name,position] of [['exposed',chapters.indexOf('Dural opening')+1],['instrument',chapters.indexOf('Tumor aspiration')+.15],['mid-resection',chapters.indexOf('Tumor aspiration')+.55],['final-cavity',chapters.length]]){
+              if(position<=0)continue;
+              await seek(position);await capture(name);report.stageViews[name]=await fieldState();
+            }
+            if(chapters.includes('Tumor aspiration')){
+              await seek(chapters.indexOf('Tumor aspiration')+.55);
+              assert.deepEqual(await fieldState(),report.stageViews['mid-resection']);
+            }
+            await seek(0);
+            assert.equal((await fieldState()).removed,0);
+            const size=win.getContentSize();
+            win.setContentSize(1050,720);await until('innerWidth===1050&&innerHeight===720');
+            await capture('operative-compact');
+            report.compactReference=await readReference();
+            win.setContentSize(...size);
+            report.recording=await recordOperativePlayback(win,js,output,intro);
             report.video=report.recording.filename;
           }
           finish();return;
@@ -630,11 +709,7 @@ app.on('browser-window-created', (_, win) => {
         await ready();
         await capture('restored-anatomy');
         if(saveTo) {
-          await click('Scans');
-          await click('Save patient study file…');
-          await until("document.querySelector('footer')?.textContent.includes('Patient study file saved')",600000);
-          assert(fs.statSync(saveTo).size>0);
-          report.archive={name:saveTo,bytes:fs.statSync(saveTo).size};
+          await saveStudy();
         } else if(process.argv.includes('--save-view')) {
           await click('Save');
           await until("document.querySelector('footer')?.textContent.includes('Workspace saved')");

@@ -92,6 +92,8 @@ export function operativeTissueMaterial(
       shader.fragmentShader.replace(
         '#include <color_fragment>',
         `#include <color_fragment>
+      vec3 sectionSignal=vec3(0.);
+      float sectionWeight=0.;
       if (all(greaterThanEqual(vFieldUVW,vec3(0.))) && all(lessThanEqual(vFieldUVW,vec3(1.)))) {
         vec2 signal=texture(uFieldSignal,vFieldUVW).rg;
         if(signal.g>.999){
@@ -102,13 +104,15 @@ export function operativeTissueMaterial(
           vec3 edge=min(abs(vRestPosition-uCropMin),abs(vRestPosition-uCropMax));
           float distanceToFace=min(min(edge.x,edge.y),min(edge.z,abs(vRestPosition.y-uSectionY)));
           float section=step(uCropMin.y-.1*uBoundaryWidth,uSectionY)*(1.-smoothstep(.02*uBoundaryWidth,uBoundaryWidth,distanceToFace));
-          vec3 tint=mix(vec3(1.),diffuse,0.42);
-          vec3 scanColor=(.014+.68*pow(brightness,2.2))*tint;
-          diffuseColor.rgb=mix(diffuseColor.rgb,scanColor,uSectionMix*section);
+          vec3 tint=mix(vec3(1.),diffuse,0.24);
+          sectionSignal=pow(vec3(brightness),vec3(2.2))*tint;
+          sectionWeight=section*mix(.76,.96,uSectionMix);
         }
       }`
-      );
+      ).replace('#include <opaque_fragment>',`
+      outgoingLight=mix(outgoingLight,sectionSignal,sectionWeight);
+      #include <opaque_fragment>`);
   };
-  material.customProgramCacheKey = () => 'operative-acquired-section-v2';
+  material.customProgramCacheKey = () => 'operative-acquired-section-v3';
   return material;
 }

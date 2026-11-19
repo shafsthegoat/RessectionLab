@@ -581,6 +581,7 @@ export default function App() {
   const operativeIssue=native.binding && (native.planning.targetSelectionIssue ||
     operativeRouteIssue(nativeRoute,native.planning.activeTargetLayerId,native.binding.document.snapshot_id));
   const showOperative=workbenchTab==='rehearsal' && !!routeKey && operativeKey===routeKey && !operativeIssue && !native.draft;
+  const linkedOperative=showOperative&&native.registration==='patient frame'&&!!native.volume&&!native.original;
   function openOperative(){
     if(!routeKey||operativeIssue||native.draft||planningEditsPending)return;
     setOperativeKey(routeKey);setWorkbenchTab('rehearsal');setCasePanel(true);
@@ -2040,12 +2041,13 @@ export default function App() {
             <button className="text-button" onClick={restoreSourceView}>Source view <X size={12}/></button></div>}
         {native.binding&&!showOperative&&native.registration==='alignment preview'&&<div className="workspace-alignment-banner" role="status">Estimated scan alignment <span>{Object.values(native.volume?.alignmentQuality??{}).flatMap(q=>q.warnings)[0]??'Shared structures · verify in Scans before planning'}</span></div>}
         <NativeCorrectionBar workspace={native}/>
-        <div className="viewer-shell">
-          {showOperative && native.binding && nativeApi && nativeRoute && <OperativeSteps key={routeKey} api={nativeApi} collectionId={native.binding.collectionId} route={nativeRoute} sourceVolume={native.registration==='patient frame'?native.volume:null}/>}
-          {!showOperative && displayedCase && (
+        <div className={linkedOperative?"viewer-shell has-operative-reference":"viewer-shell"}>
+          {showOperative && native.binding && nativeApi && nativeRoute && <OperativeSteps key={routeKey} api={nativeApi} collectionId={native.binding.collectionId} route={nativeRoute} linkedOverview={linkedOperative} sourceVolume={native.registration==='patient frame'?native.volume:null}/>}
+          {(!showOperative||linkedOperative) && displayedCase && (
             <ViewerWorkspace
-              surgicalInteraction={workbenchTab==="rehearsal"?surgical.interaction:undefined}
-              rehearsalState={surgical.interaction.view?null:rehearsal.viewerState}
+              approachOverview={linkedOperative}
+              surgicalInteraction={!showOperative&&workbenchTab==="rehearsal"?surgical.interaction:undefined}
+              rehearsalState={showOperative||surgical.interaction.view?null:rehearsal.viewerState}
               workspaceSettings={viewerSettings}
               readCamera={native.binding?native.readCamera:undefined}
               onWorkspaceSettingsChange={setViewerSettings}
@@ -2057,7 +2059,7 @@ export default function App() {
               generatedSignal={display.primaryOverlaysPermitted && generatedPrimaryImage}
               segmentationOnly={!native.binding && displayedSource?.metadata.generated_signal===true}
               publicGoal={!native.binding && display.primaryOverlaysPermitted ? publicGoalMarker : null}
-              caseData={surgical.previewVolume??surgical.volume??displayedCase}
+              caseData={linkedOperative?native.volume:surgical.previewVolume??surgical.volume??displayedCase}
               visibleLayers={displayedLayers}
               overlayOpacity={overlayOpacity}
               cursor={displayedCursor}
