@@ -47,10 +47,12 @@ US_HASH = {
 RIGHTS = 'CC-BY-NC-SA-4.0'
 
 
-def recover_sources(root):
+def recover_sources(root, entries=SOURCE, publisher_urls=None):
     """Fetch just the absent exact releases, preserving valid local bytes."""
     records = {}
-    for name, (size, digest, url) in SOURCE.items():
+    publisher_urls = publisher_urls or {
+        str(AFTER_MASK): 'https://osf.io/download/64cd21fcc7ab292b21d4e00a/?revision=2'}
+    for name, (size, digest, url) in entries.items():
         path = safe_path(root, name)
         from_existing = path.is_file()
         if not from_existing:
@@ -66,11 +68,12 @@ def recover_sources(root):
                 staged.write_bytes(data)
                 if not path.exists():
                     staged.rename(path)
-        checked_file(root, {'path': name, 'sha256': digest, 'bytes': size})
+        checked_file(root, {'path': name, 'sha256': digest})
+        if path.stat().st_size != size:
+            raise ValueError(f'Unexpected retained release byte count: {path.name}')
         records[name] = {'bytes': size, 'sha256': digest, 'reused_local_bytes': from_existing,
                          'retrieval_url': url,
-                         'publisher_url': 'https://osf.io/download/64cd21fcc7ab292b21d4e00a/?revision=2'
-                         if path == root / AFTER_MASK else url}
+                         'publisher_url': publisher_urls.get(name, url)}
     return records
 
 

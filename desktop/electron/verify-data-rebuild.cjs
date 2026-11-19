@@ -35,8 +35,18 @@ if(replayOpening){
 }
 const resectPairFile=process.env.DATA_REBUILD_RESECT_PAIR_REPORT;
 const resectPair=resectPairFile?JSON.parse(fs.readFileSync(resectPairFile,'utf8')):null;
+let resectStages=['during','after'];
 if(resectPair){
-  assert.equal(resectPair.schema,'resectionlab-case3-observed-stage-benchmark-v1');
+  if(resectPair.schema==='resectionlab-case3-observed-target-cavity-v1'){
+    assert.deepEqual(resectPair.preview_studies,{
+      'RESECT-Case3-observed-target-cavity-v1.ressectionlab':['before','after'],
+      'RESECT-Case3-observed-flair-target-v1.ressectionlab':['flair'],
+    });
+    resectStages=resectPair.preview_studies[path.basename(input)];
+    assert(resectStages,'Expected one of the sealed observed-target workspace members');
+  }else{
+    assert.equal(resectPair.schema,'resectionlab-case3-observed-stage-benchmark-v1');
+  }
   assert.equal(resectPair.patient,'RESECT:Case3');
   assert.equal(resectPair.members[path.basename(input)],inputSha);
   assert.equal(resectPair.postoperative_observation_excluded_from_preoperative_case,true);
@@ -447,8 +457,8 @@ app.on('browser-window-created',(_event,window)=>{
       assert.deepEqual(resectPayload.compartments,[]);
       assert.deepEqual(archive.artifacts,{});
       assert.equal(session.episodeReplay,null);
-      assert.equal(displaySeries.length,2);
-      assert.equal(workspace.images.length,2);
+      assert.equal(displaySeries.length,resectStages.length);
+      assert.equal(workspace.images.length,resectStages.length);
       const captureGrid=async(volume,since=0)=>{
         const source=JSON.stringify(volume.caseHash);
         await wait(`(()=>{
@@ -485,7 +495,7 @@ app.on('browser-window-created',(_event,window)=>{
       const primarySlices=await sliceCrops(),primaryPixels=pixelHashes(await screenshot(),primarySlices);
       report.resectPair={primary:{...primary,sourceSha256:original.source_refs[0].sha256,
         modality:original.metadata.selected_modality,caseRole:original.metadata.data_case.role}};
-      for(const stage of ['during','after']){
+      for(const stage of resectStages){
         const sourceSha=resectPair.sources[stage].sha256,expected=resectPair.stage_visibility[stage];
         const series=displaySeries.find(s=>s.volume.sourceRefs.some(ref=>ref.source_id==='structural'&&ref.sha256===sourceSha));
         assert(series,`Missing transfer bound to the verified ${stage} image`);
@@ -500,12 +510,12 @@ app.on('browser-window-created',(_event,window)=>{
         assert.equal(series.evaluationEligible,false);
         assert.equal(series.registration.overlayPermitted,false);
         assert.equal(series.registration.sourceToReferenceRasMm,null);
-        assert.equal(volume.metadata.acquisition_stage,`intraoperative-${stage}`);
-        assert.equal(volume.metadata.annotationTimeRole,'intraoperative_observed_evaluator_only');
+        assert.equal(volume.metadata.acquisition_stage,expected.acquisition_stage??`intraoperative-${stage}`);
+        assert.equal(volume.metadata.annotationTimeRole,expected.annotation_time_role??'intraoperative_observed_evaluator_only');
         assert.equal(volume.sourceRefs.find(ref=>ref.source_id==='supplied_target_annotation')?.sha256,expected.annotation_sha256);
         assert.deepEqual(volume.shape,expected.shape);
         assert.equal(volume.compartments.length,1);
-        const layer=volume.compartments[0],label=`Observed visible cavity · ${stage} resection`;
+        const layer=volume.compartments[0],label=expected.layer_label??`Observed visible cavity · ${stage} resection`;
         assert.equal(layer.name,label);
         const mask=resectAssets.get(layer.array.assetId)?.receipt;
         assert.equal(mask?.positiveVoxels,expected.positive_voxels);
@@ -516,13 +526,15 @@ app.on('browser-window-created',(_event,window)=>{
         const selected=await captureGrid(volume,since);
         assert.deepEqual(selected.visible,[label]);
         const selectedLabel=await js(`document.querySelector('[aria-label="Inspect scan"]').selectedOptions[0].textContent`);
-        assert.match(selectedLabel,/supplied visible cavity · source labels · separate frame$/);
+        if(expected.display_label)assert.equal(selectedLabel,`${expected.display_label} · source labels · separate frame`);
+        else assert.match(selectedLabel,/supplied visible cavity · source labels · separate frame$/);
         await click('Anatomy');
         const control=`document.querySelector(${JSON.stringify(`[aria-label="Show ${label}"]`)})`;
         await wait(`${control}?.checked===true`);
         const provenance=await js(`${control}.closest('.anatomy-layer').querySelector('.anatomy-layer-origin').textContent`);
         assert.match(provenance,/supplied annotation|source-provided annotation/i);
-        const image=await capture(`resect-case3-${stage}-native-cavity`),crops=await sliceCrops();
+        const image=await capture(`resect-case3-${stage}-native-${expected.layer_label&&stage!=='after'?'tumor':'cavity'}`);
+        const crops=await sliceCrops();
         since=await timestamp();
         await js(`${control}.click()`);
         await wait(`${control}.checked===false`);
@@ -540,8 +552,9 @@ app.on('browser-window-created',(_event,window)=>{
           selectedLabel,annotation:{label,provenance,publisherSha256:expected.annotation_sha256,mask,volumeMm3:layer.volumeMm3,changedMprPanes},
           registration:series.registration,annotationTimeRole:volume.metadata.annotationTimeRole};
       }
-      const {during,after}=report.resectPair;
-      for(const key of ['caseHash','sourceFrameHash','sourceShape','sourceSignal','affine'])assert.notDeepEqual(during[key],after[key]);
+      for(const key of ['caseHash','sourceFrameHash','sourceShape','sourceSignal','affine']){
+        assert.equal(new Set(resectStages.map(stage=>JSON.stringify(report.resectPair[stage][key]))).size,resectStages.length);
+      }
       const since=await timestamp();
       await js(inputScript(scan,''));
       const restored=await captureGrid(resectPayload,since);
@@ -550,8 +563,8 @@ app.on('browser-window-created',(_event,window)=>{
       report.resectPair.restoredPrimary={...restored,identicalMprPanes:primaryPixels.length};
       assert.equal(digest(input),inputSha);
       assert.equal(window.isVisible(),false);
-      report.checks.push('Actual During and After controls render independent source grids and distinct checksum-bound ultrasound bytes',
-        'Both evaluator-only supplied cavity masks change native source-slice pixels and stay outside the MRI reference',
+      report.checks.push('The scan selector renders each independent native grid with distinct checksum-bound source bytes',
+        'The supplied tumor or cavity overlays change native source-slice pixels and stay outside the MRI reference',
         'Returning to the original MRI restores its source, cursor and three identical source-slice crops');
       report.passed=!report.windowEverVisible;
     };

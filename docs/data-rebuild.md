@@ -17,10 +17,10 @@ showcases on previously acquired TopCoW families, and 12 generated scenarios.
 The checkout lists 22 CTA development entries in the core addition, including
 a publisher-geometry companion for TopCoW 006. The route-conditioned CTA014
 and IXI077 studies each add a pristine case and a separate recording. IXI265
-adds an MRI anatomy study, and RESECT Case3 adds the paired observation study.
+adds an MRI anatomy study, and RESECT Case3 adds three observation studies.
 CADS case 465 adds one acquired noncontrast head CT study. Two further
 published-geometry companions reuse TopCoW 012 and 014. The recordings and
-companion studies reuse existing people. All 31 additions resolve in Cases.
+companion studies reuse existing people. All 33 additions resolve in Cases.
 Acquired identities are distinct within their source
 namespaces. Cross-publisher subject independence is unverified.
 
@@ -31,13 +31,15 @@ namespaces. Cross-publisher subject independence is unverified.
 | CoW geometry and exact original CTA masks for 012 and 014 | 3,689,826 |
 | RESECT Case3 during-resection cavity annotation | 28,518 |
 | RESECT Case3 after-resection cavity and paired landmark files | 46,148 |
+| RESECT Case3 two tumor annotations and two MRI–ultrasound landmark files | 145,205 |
 | CADS 465 CT, three model-label volumes and publisher metadata | 94,793,190 |
-| Total | 454,862,790 |
+| Total | 455,007,995 |
 
 The three new CTA source directories, prepared pilot and scenario directories,
 both recorded workspaces and the Case3 stage benchmark occupy 6.48 GB of
 allocated HDD file space. CADS source and preparation add 0.85 GB. The two
 new paired companions and their selective source directory add 1.24 GB.
+The Case3 target-to-cavity workspaces, report and overlays use 187 MiB.
 These figures exclude the baseline inventory, model caches, hidden desktop
 captures and portable demonstration copies.
 
@@ -719,6 +721,74 @@ stages="$RESSECTIONLAB_DATA_ROOT/qc/surgical-change/RESECT-Case3-observed-stages
 DATA_REBUILD_CASE="$stages/RESECT-Case3-observed-cavity-stages-v1.ressectionlab" \
   DATA_REBUILD_RESECT_PAIR_REPORT="$stages/report.json" \
   DATA_REBUILD_OUTPUT="$RESSECTIONLAB_DATA_ROOT/qc/resect-case3-app-reproduction" \
+  desktop/node_modules/.bin/electron desktop/electron/verify-data-rebuild.cjs --automation-hidden
+```
+
+### Case3 target and after-resection cavity
+
+The [RESECT image and landmark release](https://doi.org/10.11582/2017.00004)
+and [RESECT-SEG annotations](https://doi.org/10.17605/OSF.IO/JV8BK) supply
+same-person preoperative FLAIR, before-resection ultrasound and after-resection
+ultrasound observations. This comparison recovered the FLAIR and before-US
+tumor masks and two MRI–US landmark files. It reused the three images, the
+before–after landmark file and the after-US cavity mask. The source report
+records the exact member versions and checksums. The MRI points use the FLAIR
+world frame described in the [source methods](https://doi.org/10.1002/mp.12268).
+Case3 retains its TRAIN role.
+
+The script fits each proper rigid transform on odd landmark ranks in
+lexicographic source RAS order and scores only even ranks. It writes the
+transforms and held predictions before opening the label volumes. The overlap
+scores use the same support for both hypotheses, with positive ultrasound
+signal as a visibility proxy. A separate sparse pullback reproduces the rigid
+intersection counts.
+
+| Transport and observed label | Held landmarks | Landmark RMS, identity → rigid | Dice on fixed support, identity → rigid |
+| --- | ---: | ---: | ---: |
+| FLAIR tumor → before-US tumor | 7 | 9.620 → 0.991 mm | 0.00013 → 0.557 |
+| FLAIR tumor → after-US visible cavity | 7 | 7.410 → 2.146 mm | 0.053 → 0.363 |
+| Before-US tumor → after-US visible cavity | 5 | 3.012 → 0.843 mm | 0.312 → 0.288 |
+
+The native annotation volumes are 1,322 mm³ for FLAIR tumor, 614 mm³ for
+before-US tumor and 2,044 mm³ for the observed cavity. The nearest withheld
+point to each source tumor centroid is 9.5–12.0 mm away. The opposite movement
+of landmark error and Dice in the ultrasound pair leaves local cavity
+agreement uncertain. These comparisons quantify image registration and visible
+label overlap. Residual tumor, extent of resection, and dense tissue motion
+remain unmeasured. No saved simulator output for this patient has an admitted
+frame and matching cavity observation.
+
+An independent preoperative diagnostic scores the saved Raidionics LGG
+localization against the exact acquired FLAIR label. Its native output had zero
+foreground voxels and zero Dice. All 1,322 supplied target voxels were within
+the run’s brain mask. Patch-level inference coverage remains unaudited. The
+saved run is retained for reproducibility without commissioning new inference.
+
+```sh
+PYTHONPATH=src OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python \
+  scripts/benchmark_resect_case3_target_cavity.py --output-name RESECT-Case3-target-cavity-reproduction
+study="$RESSECTIONLAB_DATA_ROOT/qc/surgical-change/RESECT-Case3-observed-target-cavity-20261119-v1"
+PYTHONPATH=src .venv/bin/python scripts/benchmark_resect_case3_target_cavity.py \
+  --output-name RESECT-Case3-target-cavity-reproduction \
+  --saved-localization-run "$study/historical-localization"
+```
+
+The current study directory contains both Cases workspaces, the source-linked
+report and the overlay figure. The unchanged T1 reference opens with the
+annotated before/after ultrasound pair or with the annotated FLAIR. Splitting
+the previews keeps the complete native grids within the desktop display budget.
+All three masks are supplied inspection layers in independent frames. Both
+hidden desktop proofs recorded pixel changes in all three slice panes for each
+mask and exact primary T1 pixel restoration.
+
+```sh
+DATA_REBUILD_RESECT_PAIR_REPORT="$study/report.json" \
+  DATA_REBUILD_CASE="$study/RESECT-Case3-observed-target-cavity-v1.ressectionlab" \
+  DATA_REBUILD_OUTPUT="$RESSECTIONLAB_DATA_ROOT/qc/resect-case3-us-target-cavity-app-reproduction" \
+  desktop/node_modules/.bin/electron desktop/electron/verify-data-rebuild.cjs --automation-hidden
+DATA_REBUILD_RESECT_PAIR_REPORT="$study/report.json" \
+  DATA_REBUILD_CASE="$study/RESECT-Case3-observed-flair-target-v1.ressectionlab" \
+  DATA_REBUILD_OUTPUT="$RESSECTIONLAB_DATA_ROOT/qc/resect-case3-flair-target-app-reproduction" \
   desktop/node_modules/.bin/electron desktop/electron/verify-data-rebuild.cjs --automation-hidden
 ```
 
