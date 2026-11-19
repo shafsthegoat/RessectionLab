@@ -44,7 +44,7 @@ const width = 1440, height = 900;
 const started=performance.now();
 const assets=path.join(__dirname,'../dist/assets'),rendererAssets=Object.fromEntries(fs.readdirSync(assets).filter(n=>n.startsWith('index-')&&/\.(js|css)$/.test(n)).map(n=>[n,sha256File(path.join(assets,n))]));
 const movie=path.join(output,'observed-engine-replay.mp4');
-const report = {rendererAssets,hardware:{cpu:os.cpus()[0].model,memoryGiB:os.totalmem()/2**30,os:os.release(),arch:os.arch()},observations:[],sourceHash,branch:artifact.branchId,target,windowEverVisible:false,states:[]};
+const report = {pid:process.pid,rendererAssets,hardware:{cpu:os.cpus()[0].model,memoryGiB:os.totalmem()/2**30,os:os.release(),arch:os.arch()},observations:[],sourceHash,studyHash,branch:artifact.branchId,target,windowEverVisible:false,states:[]};
 const engineStates = new Map();
 let lastObservation=null;
 const handle = ipcMain.handle.bind(ipcMain);
@@ -181,7 +181,9 @@ app.on('browser-window-created',(_,win)=>{
       assert.equal(drawn.cavityCells,removed.size);assert.equal(drawn.cavityHash,maskHash([...removed]));
       assert.equal(drawn.residualCells,ownedRemaining.length);assert.equal(drawn.residualHash,maskHash(ownedRemaining));
       const bounds=await js(`(()=>{const d=(${query}).dataset;return d.resultCavityBounds?{cavity:JSON.parse(d.resultCavityBounds),residual:JSON.parse(d.resultResidualBounds)}:null;})()`);
-      if(bounds)(report.meshBounds??={})[id]=verifyResultBounds(source,[...removed],ownedRemaining,bounds);
+      assert(bounds,'Missing submitted mesh bounds');
+      const conditioning=await js(`(()=>{const d=(${query}).dataset;return d.resultCavitySourceBounds?{sourceBounds:JSON.parse(d.resultCavitySourceBounds),displacementMm:Number(d.resultCavityDisplacementMm)}:null;})()`);
+      (report.meshBounds??={})[id]=verifyResultBounds(source,[...removed],ownedRemaining,bounds,conditioning);
       const overlap=[...source.source].filter(i=>!source.owned.has(i));
       const keyText=await js("document.querySelector('.result-key')?.textContent");
       assert(keyText?.includes('Owned residual target · '+(ownedRemaining.length*source.voxelMm3).toFixed(1)+' mm³'));
@@ -321,7 +323,9 @@ app.on('browser-window-created',(_,win)=>{
         }
         const end=report.states.at(-1);assert(end.inspection.cavityOnSlice.cells&&end.inspection.targetOnSlice.cells);
         await capture('operative-endpoint');
-        await click('Inspect result in 3D');const fitted=await resultView(endpoint);
+        win.setContentSize(1050,720);await until('innerWidth===1050&&innerHeight===720');await referenceReady();await capture('operative-endpoint-1050');
+        win.setContentSize(width,height);await until(`innerWidth===${width}&&innerHeight===${height}`);await referenceReady();
+        await click('Inspect result in 3D');const fitted=await resultView(endpoint);report.combinedFit=fitted;
         await capture('result-combined','[data-engine-replay-layout]');
         inspectionFrames.push({image:'result-combined.png',seconds:1.6,title:'Final result inspection',note:'Removed space and remaining owned target in patient coordinates'});
         await click('Show cavity only');report.cavityOnly=await resultView(endpoint,'cavity');await capture('cavity-only','[data-engine-replay-layout]');
@@ -376,6 +380,24 @@ app.on('browser-window-created',(_,win)=>{
           acquisitions:[...new Set(nativeStudy.series.map(s=>s.modality))].join(' / '),
           target:((targetInfo.label??target)+' · '+(targetInfo.provenance?.kind??targetInfo.kind)).replaceAll('_',' '),
           generator:exact.actionGenerator.kind+' · '+exact.actionGenerator.name},end.ledger,inspectionFrames);
+        if(await js("!!document.querySelector('.engine-approach-views')")){
+          await seek(work);
+          report.corridorViews=[];
+          for(const [name,button,clipped] of [['corridor','Inspect recorded corridor',true],['approach','View down approach',false]]){
+            await click(button);
+            await until(`[...document.querySelectorAll('.surgeon-view input[type=checkbox]')].some(e=>/cutaway/i.test(e.parentElement.textContent)&&e.checked===${clipped})`);
+            for(const [w,h] of [[1440,900],[1050,720]]){
+              win.setContentSize(w,h);await until('innerWidth==='+w+'&&innerHeight==='+h);
+              await ready(work);await capture('working-'+name+'-'+w);
+              const frame=await js(`(()=>{const d=document.querySelector('[data-accepted-tools]').dataset;
+                return {state:d.surgicalStateId,view:d.operativeView,optics:JSON.parse(d.opticalCamera),tools:JSON.parse(d.acceptedTools)};})()`);
+              assert.equal(frame.state,report.states[work].id);
+              assert.deepEqual(frame.tools,report.states[work].tools);
+              report.corridorViews.push({name,width:w,height:h,clipped,...frame});
+            }
+          }
+          win.setContentSize(width,height);await until('innerWidth==='+width+'&&innerHeight==='+height);
+        }
         await click('Plan');assert.deepEqual(await selected(),report.planned);
         const another=await js(`[...document.querySelectorAll('.approach-card')].find(b=>b.dataset.approachId!==${JSON.stringify(report.planned.id)})?.dataset.approachId`);
         if(another)await js(`[...document.querySelectorAll('.approach-card')].find(b=>b.dataset.approachId===${JSON.stringify(another)}).click()`);

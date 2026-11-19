@@ -40,7 +40,7 @@ function tissueState(source,view) {
 }
 
 // Compare the submitted mesh extents with RAS coordinates from the source grid.
-function verifyResultBounds(source,removed,remaining,drawn) {
+function verifyResultBounds(source,removed,remaining,drawn,conditioning) {
   const [,ny,nz]=source.shape;
   const voxel=i=>[Math.floor(i/(ny*nz)),Math.floor(i/nz)%ny,i%nz];
   const present=new Set(removed);
@@ -61,11 +61,26 @@ function verifyResultBounds(source,removed,remaining,drawn) {
     }
   }
   const result={actual:drawn};
+  let cavityLimit=0;
+  if(conditioning) {
+    const cols=[0,1,2].map(k=>source.affine.slice(0,3).map(row=>row[k]));
+    const cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+    const areas=cols.map((a,i)=>Math.hypot(...cross(a,cols[(i+1)%3])));
+    const halfMinimumSpacing=source.voxelMm3/Math.max(...areas)/2;
+    cavityLimit=conditioning.displacementMm;
+    assert(Number.isFinite(cavityLimit)&&cavityLimit>=0&&cavityLimit<=halfMinimumSpacing+1e-5,
+      'Cavity smoothing exceeds half of the smallest source cell altitude');
+    result.conditioning={...conditioning,halfMinimumSpacingMm:halfMinimumSpacing};
+  }
   for(const [name,points] of [['cavity',boundary],['residual',remaining.map(voxel)]]){
     if(!points.length){assert.equal(drawn[name],null);continue;}
     const expected=bounds(points);
     const error=expected.flatMap((row,i)=>row.map((n,k)=>Math.abs(n-drawn[name][i][k])));
-    const limit=name==='cavity'?[0,0,0]:source.affine.slice(0,3).map(row=>row.slice(0,3).reduce((s,n)=>s+Math.abs(n),0));
+    if(name==='cavity'&&conditioning) {
+      assert(expected.every((row,i)=>row.every((value,k)=>Math.abs(value-conditioning.sourceBounds[i][k])<1e-5)),
+        'Raw cavity bounds differ from the source grid boundary');
+    }
+    const limit=name==='cavity'?[cavityLimit,cavityLimit,cavityLimit]:source.affine.slice(0,3).map(row=>row.slice(0,3).reduce((s,n)=>s+Math.abs(n),0));
     assert(error.every((n,k)=>n<=limit[k%3]+1e-5),name+' mesh lies outside its source-frame envelope');
     result[name]={expected,maximumErrorMm:Math.max(...error)};
   }

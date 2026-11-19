@@ -293,10 +293,10 @@ app.on('browser-window-created', (_, win) => {
         "Number(document.querySelector('[data-removed-cells]').dataset.removedCells)",
       );
       if (prior) assert.equal(report.previewRemovedCells, prior.previewRemovedCells);
+      const {setFieldView}=require('./verify-operative-corridor.cjs');
+      await setFieldView(js,'exterior');
       await capture('geometric-endpoint');
-      await js(
-        "[...document.querySelectorAll('.operative-options label')].find(l=>l.innerText.trim()==='Inspection cutaway').querySelector('input').click()",
-      );
+      await setFieldView(js,'section');
       await capture('geometric-endpoint-cutaway');
       finish();
     } catch (e) {

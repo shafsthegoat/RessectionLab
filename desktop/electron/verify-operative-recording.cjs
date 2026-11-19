@@ -65,7 +65,7 @@ async function framePixels(win) {
   assert.equal(bytes.length,width*height*4);
   return bytes;
 }
-async function recordOperativePlayback(win,js,output,intro) {
+async function recordOperativePlayback(win,js,output,intro,inspectEndpoint=false) {
   const originalSize=win.getContentSize();
   await recordingSize(win,js);
   const chapters=await js("Array.from(document.querySelectorAll('.operative-chapters button:not(:disabled)'),b=>b.getAttribute('aria-label'))");
@@ -83,6 +83,8 @@ async function recordOperativePlayback(win,js,output,intro) {
     const start = index === 0 ? introFrames : introFrames + stepsPerChapter * index + 1;
     movieChapters.push({title,start,end:introFrames + stepsPerChapter * (index + 1) + 1});
   });
+  const inspectionFrames=inspectEndpoint?fps*3:0;
+  if(inspectionFrames)movieChapters.push({title:'Inspect modeled cavity',start:introFrames+motionFrames,end:introFrames+motionFrames+inspectionFrames});
   const metadata = [';FFMETADATA1', ...movieChapters.flatMap(({title,start,end}) => [
     '[CHAPTER]', 'TIMEBASE=1/'+fps, 'START='+start, 'END='+end, 'title='+title,
   ])].join('\n')+'\n';
@@ -151,13 +153,33 @@ async function recordOperativePlayback(win,js,output,intro) {
       prior=sample;
       await write(bytes);
     }
+    let endpointInspection=null;
+    if(inspectEndpoint){
+      const state=()=>js(`(()=>{const canvas=document.querySelector('.operative-field-canvas canvas');
+        return {removed:Number(document.querySelector('[data-removed-cells]').dataset.removedCells),camera:JSON.parse(canvas.dataset.camera),
+          position:Number(document.querySelector('[aria-label="Operative timeline"]').value)};})()`);
+      const start=await state(),x=Math.round(rect.x+rect.width*.5),y=Math.round(rect.y+rect.height*.5);
+      assert(start.removed>0&&start.position===max);
+      win.webContents.sendInputEvent({type:'mouseDown',x,y,button:'left',clickCount:1});
+      for(let i=1;i<=fps*2;i++){
+        const t=i/(fps*2),ease=t*t*(3-2*t);
+        win.webContents.sendInputEvent({type:'mouseMove',x:x+Math.round(47*ease),y:y+Math.round(19*ease),modifiers:['leftButtonDown']});
+        await js('new Promise(done=>requestAnimationFrame(()=>requestAnimationFrame(done)))');
+        await write(await framePixels(win));
+      }
+      win.webContents.sendInputEvent({type:'mouseUp',x:x+47,y:y+19,button:'left',clickCount:1});
+      const end=await state();assert.equal(end.removed,start.removed);assert.equal(end.position,start.position);assert.notDeepEqual(end.camera,start.camera);
+      endpointInspection={start,end,orbitFrames:fps*2,holdFrames:fps};
+      const held=await framePixels(win);
+      for(let i=0;i<fps;i++)await write(held);
+    }
     encoder.stdin.end();
     const status=await closed;
     assert.equal(status,0,'Movie encoder failed');
     for(const [stage,stats] of Object.entries(perChapter))
       assert(stats.framesWithVisibleMotion>stepsPerChapter/3,'Too few visible operative canvas changes in '+stage);
     fs.renameSync(partial,filename);
-    return {filename,width,height,fps,introFrames,motionFrames,movieChapters,sampledRect:rect,perChapter,secondsToRecord:(performance.now()-started)/1000};
+    return {filename,width,height,fps,introFrames,motionFrames,inspectionFrames,endpointInspection,movieChapters,sampledRect:rect,perChapter,secondsToRecord:(performance.now()-started)/1000};
   } finally {
     if(encoder.exitCode===null && encoder.signalCode===null) encoder.kill();
     await closed;

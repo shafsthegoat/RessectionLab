@@ -17,6 +17,7 @@ const os = require('node:os');
 const path = require('node:path');
 const {createHash} = require('node:crypto');
 const {studyScanSelectionScript} = require('./verify-study-ui-helpers.cjs');
+const {setFieldView,verifyOperativeCorridor}=require('./verify-operative-corridor.cjs');
 const {inputScript} = require('./verify-eden-planning-helpers.cjs');
 const root = path.resolve(__dirname, '../..');
 const [, , manifestArg, outputArg, mode = 'preview'] = process.argv;
@@ -90,7 +91,7 @@ ipcMain.handle = (channel, handler) => handle(channel, async (...args) => {
         intensity:result.intensity && {series:result.intensity.sourceSeries,modality:result.intensity.modality,
           sourceHash:result.intensity.sourceSha256,dataHash:result.intensity.dataSha256,signalHash:result.intensity.signal?.sha256,
           covered:result.intensity.coveredVoxels,window:result.intensity.window,shape:result.intensity.shape},
-        layers:result.layers?.map(l=>({id:l.id,role:l.role,detail:l.detail,evidence:l.evidence,voxels:l.sampledVoxels,sourceSupport:l.sourceSupport,sourceSpacingMm:l.sourceSpacingMm,inferenceSpacingMm:l.inferenceSpacingMm})),
+        layers:result.layers?.map(l=>({id:l.id,role:l.role,detail:l.detail,evidence:l.evidence,model:l.model,vascularContextOnly:l.vascularContextOnly,voxels:l.sampledVoxels,sourceSupport:l.sourceSupport,sourceSpacingMm:l.sourceSpacingMm,inferenceSpacingMm:l.inferenceSpacingMm})),
         target:result.targetLayerId,approach:result.approachId,excluded:result.excluded,issues:result.stationIssues,
         stationEvidence:result.stationEvidence,stationLayerIds:result.stationLayerIds,
         distinctEntryReport:result.distinctEntryReport?{status:result.distinctEntryReport.status,shortfall:result.distinctEntryReport.shortfall}:undefined});
@@ -494,6 +495,22 @@ app.on('browser-window-created', (_, win) => {
         const field = report.plans.findLast(p=>p.action==='operativeField');
         assert.equal(field.approach,report.selected);
         assert.equal(field.target,targetLayer.id);
+        if(process.argv.includes('--field-review')){
+          const reference=flagValue('--match-field-viewports');
+          if(reference)assert(reference.startsWith(fixtureRoot));
+          const match=reference?JSON.parse(fs.readFileSync(reference)).corridorViews:null;
+          report.matchedFieldViewports=reference;
+          report.corridorViews=await verifyOperativeCorridor({win,js,until,capture,match});
+          if(process.argv.includes('--expect-vascular-estimate')){
+            assert(field.layers.some(l=>l.role==='vessels'&&l.model&&l.vascularContextOnly&&l.voxels>0));
+            assert.equal(report.corridorViews['endpoint-1440'].vesselLegend?.label,'Vascular estimate');
+          }
+          if(process.argv.includes('--review-video')){
+            report.recording=await recordOperativePlayback(win,js,output,intro,true);
+            report.video=report.recording.filename;
+          }
+          finish();return;
+        }
         if(process.argv.includes('--visual-review')){
           const setting=label=>`[...document.querySelectorAll('.operative-options label')].find(l=>l.textContent.trim()===${JSON.stringify(label)})?.querySelector('input')`;
           const toggle=async(label,checked)=>{
@@ -522,7 +539,7 @@ app.on('browser-window-created', (_, win) => {
             await click('Fit source anatomy');await capture('whole-source');
             await click('Follow operative step');
           }
-          await toggle('Inspection cutaway',true);
+          await setFieldView(js,'section');
           await click('Tumor aspiration');
           await capture('teaching-end');
           report.teachingState=await fieldState();
@@ -537,7 +554,7 @@ app.on('browser-window-created', (_, win) => {
             await until(`innerWidth===${size[0]}&&innerHeight===${size[1]}`);
           }
 
-          await toggle('Inspection cutaway',false);
+          await setFieldView(js,'exterior');
           await capture('exterior-end');
           report.exteriorState=await fieldState();
           if(await toggle('Field voxel faces',true)){
@@ -594,6 +611,7 @@ app.on('browser-window-created', (_, win) => {
             await capture('operative-compact');
             report.compactReference=await readReference();
             win.setContentSize(...size);
+            await setFieldView(js,'follow');
             report.recording=await recordOperativePlayback(win,js,output,intro);
             report.video=report.recording.filename;
           }
@@ -682,18 +700,17 @@ app.on('browser-window-created', (_, win) => {
             prior = frame;
           }
           if(process.argv.includes('--inspect-access')){
-            const toggle="[...document.querySelectorAll('.operative-options label')].find(l=>l.textContent.trim()==='Inspection cutaway').querySelector('input')";
+            await setFieldView(js,'exterior');
+            const exterior=await captureField('exterior-access-'+width);
             const identity=()=>js("({phase:document.querySelector('.operative-playback').dataset.operativePhase,progress:document.querySelector('.operative-playback').dataset.operativeProgress,removed:document.querySelector('[data-removed-cells]')?.dataset.removedCells})");
             const before=await identity();
-            assert.equal(await js(`(${toggle}).checked`),false,'Exterior exposure is the initial view');
-            await js(`(${toggle}).click()`);
+            await setFieldView(js,'section');
             const teaching=await captureField('teaching-cutaway-'+width);
-            assert.equal(await js(`(${toggle}).checked`),true);
             assert.deepEqual(await identity(),before);
             assert(await js("!!document.querySelector('.operative-overview canvas')&&document.querySelector('.operative-scale').textContent.includes('mm')"));
-            readout.teachingCutaway={...before,changedPixels:delta(prior,teaching),scale:await js("document.querySelector('.operative-scale').textContent")};
+            readout.teachingCutaway={...before,changedPixels:delta(exterior,teaching),scale:await js("document.querySelector('.operative-scale').textContent")};
             assert(readout.teachingCutaway.changedPixels>30);
-            await js(`(${toggle}).click()`);
+            await setFieldView(js,'follow');
           }
           const timeline = 'input[aria-label="Operative timeline"]';
           await js(inputScript('Operative timeline',0.55));

@@ -2,6 +2,7 @@
 // Electron SCRIPT disposable-native-manifest arm-A.ressectionlab arm-B.ressectionlab output
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
+const {createHash}=require('node:crypto');
 const os = require('node:os');
 const path = require('node:path');
 const {app, dialog, ipcMain} = require('electron');
@@ -18,6 +19,7 @@ if (process.platform === 'darwin') app.setActivationPolicy('accessory');
 process.argv.push('--automation-hidden', '--anatomy', native);
 delete process.env.RESSECTIONLAB_DEV_URL;
 let compared;
+const rendererErrors=[];
 const handle = ipcMain.handle.bind(ipcMain);
 ipcMain.handle = (channel, handler) => handle(channel, async (...args) => {
   const result = await handler(...args);
@@ -32,6 +34,9 @@ const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 app.on('browser-window-created', (_, win) => {
   let shown = false;
+  win.webContents.on('console-message',(_,message)=>{if(message.level==='error')rendererErrors.push(message.message);});
+  win.webContents.on('did-fail-load',(_,code,description)=>rendererErrors.push(code+' '+description));
+  win.webContents.on('render-process-gone',(_,details)=>rendererErrors.push(details.reason));
   win.on('show', () => { shown = true; });
   win.webContents.once('did-finish-load', async () => {
     const js = code => win.webContents.executeJavaScript(code);
@@ -66,16 +71,44 @@ app.on('browser-window-created', (_, win) => {
           assert.equal(Number(cell.replaceAll(',','').split(' ')[0]), Number(amount.toFixed(2)));
         }
       }
+      const sections=compared.sections.planes, captures=[];
+      assert.equal(sections.length,2);
+      assert.notEqual(compared.arms[0].endpointStateId,compared.arms[1].endpointStateId);
+      assert.equal(compared.arms[0].baselineStateId,compared.arms[1].baselineStateId);
+      const section=`document.querySelector('[aria-label="Matched endpoint sections"]')`;
       for(const [width,height] of [[1440,900],[1050,720]]) {
         win.setContentSize(width,height);
-        await wait(()=>js('innerWidth==='+width),'window size');
+        await wait(()=>js('innerWidth==='+width+'&&innerHeight==='+height),'window size');
+        const capture=async name=>{
+          await delay(250);
+          const image=await win.webContents.capturePage(undefined,{stayHidden:true,stayAwake:true});
+          fs.writeFileSync(path.join(output,name+'.png'),image.resize({width,height}).toPNG());
+        };
+        for(const [index,plane] of sections.entries()){
+          await wait(()=>click(index?'Along B':'Along A'),'shared section plane');
+          await js("document.querySelector('.recorded-comparison').scrollTop=0");
+          await wait(()=>js(`[...(${section}).querySelectorAll('img')].every(img=>img.complete&&img.naturalWidth===${plane.size})`),'decoded endpoint images');
+          const panels=await js(`[...(${section}).querySelectorAll('figure')].map(fig=>{const img=fig.querySelector('img'),r=img.getBoundingClientRect();return {state:fig.dataset.endpointState,src:img.src,rect:[r.x,r.y,r.width,r.height],fraction:fig.querySelector('.endpoint-fraction')?.textContent};})`);
+          assert.equal(panels.length,2);
+          for(const [j,panel] of panels.entries()){
+            assert.equal(panel.state,compared.arms[j].endpointStateId);
+            assert.equal(panel.src,'data:image/png;base64,'+plane.arms[j].png);
+            const [x,y,w,h]=panel.rect;
+            assert(x>=0&&y>=0&&x+w<=width+1&&y+h<=height+1&&w>=160&&Math.abs(w-h)<1,'Endpoint panel clipped');
+            delete panel.src;
+          }
+          const name='comparison-'+width+'-along-'+(index?'b':'a');
+          await capture(name);captures.push({image:name+'.png',width,height,index,panels});
+        }
         await js("document.querySelector('.recorded-comparison table').scrollIntoView({block:'center'})");
-        await delay(300);
-        const capture=await win.webContents.capturePage(undefined,{stayHidden:true,stayAwake:true});
-        fs.writeFileSync(path.join(output,'comparison-'+width+'.png'),capture.toPNG());
+        await capture('comparison-'+width);
       }
-      assert(!shown && !win.isVisible());
-      fs.writeFileSync(path.join(output,'comparison.json'), JSON.stringify({compared,rows,passed:true},null,2)+'\n');
+      assert(!shown&&!win.isVisible());assert.deepEqual(rendererErrors,[]);
+      const sha256=f=>createHash('sha256').update(fs.readFileSync(f)).digest('hex');
+      const assets=path.resolve(__dirname,'../dist/assets');
+      const rendererAssets=Object.fromEntries(fs.readdirSync(assets).filter(name=>/^index-.*\.(js|css)$/.test(name)).map(name=>[name,sha256(path.join(assets,name))]));
+      fs.writeFileSync(path.join(output,'comparison.json'),JSON.stringify({compared,rows,captures,rendererErrors,rendererAssets,pid:process.pid,studySha256:sha256(native),
+        recordings:files.map(f=>({name:path.basename(f),sha256:sha256(f)})),passed:true},null,2)+'\n');
       app.exit(0);
     } catch(error) {
       console.error(error);

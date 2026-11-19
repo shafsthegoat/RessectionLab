@@ -81,13 +81,23 @@ reports that count and identifies the scan supplying the tissue contrast.
 The full vascular estimates are available in **Anatomy**. Original scan
 spacing and supplied contours are available in **Scans**.
 
+Use **Show target** in Plan to reveal the selected annotation and center the
+linked slices at the editable endpoint. In a deep geometric rehearsal,
+**Follow operative depth** opens a longitudinal section through the working
+field. Its surrounding grayscale plane comes from the matching acquisition.
+**Exterior** returns to the surface view. The BITE-09 example uses the supplied
+tumor contour and MRI-derived tissue estimates.
+
 ### Compare two recorded procedures on one target
 
 Open the native study and select its target in **Plan**. In **Rehearse**,
 choose **Compare two recordings** and select both procedural files in the
 same file chooser. The app independently checks each saved route, replays
 both action histories, and compares endpoints on the same patient revision,
-engine scene, initial state, physics and instrument catalog. The table
+engine scene, initial state, physics and instrument catalog. When a bound
+reference scan is available, **Along A** and **Along B** change the plane in
+both endpoint images together. Cyan traces the original target. Amber marks
+removed source cells intersected by that plane. The table
 reports the whole original annotation remaining, tissue assigned to the
 target and removed, other mapped tissue removal, elapsed time and
 withdrawal. An unavailable material appears as **Unmeasured**. Close the
@@ -98,7 +108,12 @@ recorded engine episode** in **Rehearse**. Choose **Inspect result in 3D**
 from the operated section to rotate the amber cast of the empty cavity
 and the cyan surface of the remaining owned tumor. Choose **Cavity** or
 **Residual** to isolate and fit that surface. **Both** shows their relative
-positions. **Return to operative field** restores the microscope. **Save**
+positions. The residual is opaque, and the portion of the cast behind it
+appears in muted amber. Mesh conditioning affects the display. The cell
+ledger supplies the measurements. **Return to operative field** restores
+the microscope. In a bound recording, **Inspect recorded corridor** sections
+the working field along the recorded approach. **View down approach** returns
+to an exterior view. **Save**
 retains the current frame, result mode and orbit. The adjacent full-target
 readout includes original annotation cells assigned to overlapping labels.
 
