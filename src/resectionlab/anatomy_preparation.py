@@ -176,6 +176,13 @@ def _stage(collection, job, receipts):
         matches = any(receipt["inputKey"] == _model_input(collection, {**stage, "environment": legacy})
                       for legacy in legacy_model_environments(stage.get("model"), environment, lineage))
     if matches:
+        if (stage.get("model") == "totalsegmentator-skull" and receipt["status"] == "failed"
+                and receipt["reason"].startswith(("RuntimeError: worker_output_not_closed;",
+                                                  "worker_output_not_closed;"))
+                and stage["status"] in {"ready", "available"}):
+            if stage["status"] == "ready":
+                stage["reason"] = "Validate any retained zero-exit CT worker outputs before starting a new attempt"
+            return stage
         if receipt["status"] in RETRY_STATUSES and stage["status"] in {"ready", "available"}:
             stage.update(status=receipt["status"], reason=receipt["reason"])
             if receipt["status"] == "empty_output" and stage.get("capability") == "tumor":

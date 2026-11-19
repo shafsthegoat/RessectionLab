@@ -5,8 +5,11 @@ from pathlib import Path
 
 
 LEGACY_POC_LAUNCHER_SHA = "081620aca0fd0f4fe3b9d9ceda541686743392d454b6beb5134c00e45de83e0a"
-AUDITED_LAUNCHER_SHA = "065caba2b0e2073b660f346913cd1bb073f9a5c00e0e439b92f1a9418156a756"
-AUDITED_SUPERVISOR_SHA = "b671b9ae08a1ee1f29051a2f60fa4ae69684b7d68ea3551393b4d3d220eb2003"
+PRE_RECOVERY_LAUNCHER_SHA = "065caba2b0e2073b660f346913cd1bb073f9a5c00e0e439b92f1a9418156a756"
+PRE_RECOVERY_SUPERVISOR_SHA = "b671b9ae08a1ee1f29051a2f60fa4ae69684b7d68ea3551393b4d3d220eb2003"
+AUDITED_LAUNCHER_SHA = "37daaec45a62bc64ee64a5a0b89620a85883f5dede9e06d6640b68d067a124dc"
+AUDITED_SUPERVISOR_SHA = "f4f43e1962894a14737298993e6ea01ca630dd45fb807237063f40f391fb5a0a"
+AUDITED_CT_RECOVERY_SHA = "4a52194e8c722b8aa8660897da0406512f23dc10b9069100716b50b28113a2da"
 
 
 def _module_sha(name):
@@ -18,12 +21,21 @@ def poc_worker_identity(launcher_sha256):
     if launcher_sha256 == LEGACY_POC_LAUNCHER_SHA:
         return launcher_sha256
     supervisor = _module_sha("poc_worker_supervision.py")
-    # Worker and preprocessing are unchanged. The Darwin CPU SynthStrip
-    # guard adds its own cache identity field; other executions retain theirs.
-    # Any later change to either source must use a distinct cache identity.
-    if launcher_sha256 == AUDITED_LAUNCHER_SHA and supervisor == AUDITED_SUPERVISOR_SHA:
+    if (launcher_sha256, supervisor) == (PRE_RECOVERY_LAUNCHER_SHA, PRE_RECOVERY_SUPERVISOR_SHA):
         return LEGACY_POC_LAUNCHER_SHA
-    return sha256((launcher_sha256 + supervisor).encode("ascii")).hexdigest()
+    recovery = _module_sha("poc_ct_recovery.py")
+    # Only supervision and recovery changed. The actual model workers and
+    # preprocessing are byte-identical. Unknown changes get fresh keys.
+    if ((launcher_sha256, supervisor, recovery)
+            == (AUDITED_LAUNCHER_SHA, AUDITED_SUPERVISOR_SHA, AUDITED_CT_RECOVERY_SHA)):
+        return LEGACY_POC_LAUNCHER_SHA
+    return sha256((launcher_sha256 + supervisor + recovery).encode("ascii")).hexdigest()
+
+
+def retained_ct_runner(launcher_sha256, runner_sha256):
+    """Accept the audited failed attempt and the current completion checkpoint."""
+    return (runner_sha256 == LEGACY_POC_LAUNCHER_SHA
+            and launcher_sha256 in {PRE_RECOVERY_LAUNCHER_SHA, AUDITED_LAUNCHER_SHA})
 
 
 # The model runtime is identical across this admission-only pair. Crop metadata

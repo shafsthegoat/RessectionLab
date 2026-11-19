@@ -389,7 +389,7 @@ def main():
         def checkpoint():
             atomic_json(result_path, results)
 
-        previous = signal.signal(signal.SIGINT, cancel) if native else None
+        previous = ({sig: signal.signal(sig, cancel) for sig in (signal.SIGINT, signal.SIGTERM)} if native else {})
         try:
             for spec in plan['cases']:
                 if args.only and spec['id'] != args.only:
@@ -418,8 +418,8 @@ def main():
                     print(f"{spec['id']}: {error}" if native else traceback.format_exc(),
                           file=sys.stderr if native else sys.stdout, flush=True)
         finally:
-            if native:
-                signal.signal(signal.SIGINT, previous)
+            for sig, handler in previous.items():
+                signal.signal(sig, handler)
     print(str(result_path.resolve()), flush=True)
     if stop:
         return 130

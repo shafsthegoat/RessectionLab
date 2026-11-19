@@ -76,10 +76,12 @@ export RESSECTIONLAB_MODEL_ROOT="$RESSECTIONLAB_DATA_ROOT/cache/models"
 export RESSECTIONLAB_POC_OUTPUT_ROOT="$RESSECTIONLAB_DATA_ROOT/cache/poc-model-results"
 # For a fresh CTA study with available model assets.
 .venv/bin/python scripts/prepare_tair_cta.py --estimate-skull-brain 00273
-# Recover only the retained outputs of the specific zero-exit, log-pipe case.
-receipt="$RESSECTIONLAB_POC_OUTPUT_ROOT/anatomy-410401c34a17e131/totalsegmentator-skull/e0bedd63e0d8502d8985/inference.json"
-.venv/bin/python scripts/prepare_tair_cta.py --recover-ct-worker "$receipt" 00273
 ```
+
+Ordinary CT preparation checks the existing zero-exit attempt before running
+a model. It validates the completion evidence, input and checkpoint hashes,
+and both native masks. The original failed attempt stays in the cache. The
+explicit `--recover-ct-worker` option can still select a particular receipt.
 
 A bounded VesselFM run on the 0.75 mm CTA crop returned 21,282 positive
 voxels across 104 components. The largest component held 17.6% of positives,
@@ -1110,6 +1112,32 @@ PYTHONPATH=src .venv/bin/python scripts/standardize_case_library.py testcases/pl
 Repeat the command to resume. A new plan filename targeting the same collection
 adds scans and preserves the earlier readiness receipt. Version 1 retains its
 explicit simulator-export workflow.
+
+### Resume a native preparation batch
+
+Run the same native plan again after SIGINT or SIGTERM. Both signals ask
+the script to checkpoint and stop with exit status 130. Each completed stage
+is committed independently. A completed CT attempt writes its zero-exit
+checkpoint before the native masks are read, so an interruption at that point
+can resume at validation. Later runs verify cached artifacts and report
+missing inputs, empty outputs, and model failures per study. Use
+`--retry-failed` when you intend to repeat failed model stages.
+
+The worker supervisor cleans up its process group after exit and drains the
+remaining log for a bounded time. A descendant retaining stdout is recorded
+in the log. CT worker completion and native mask checks determine whether
+that finished attempt can be admitted.
+
+The ten-study local batch uses the frozen
+`qc/anatomy-preparation-unattended-v1/batch.json` with copies under
+`prepared/anatomy-preparation-unattended-v1/`. All ten studies finished with
+documented limits. Eight gained 24 available layers beyond the originals.
+ISLES 0146 and TAIR 00273 recovered both historical CT masks without a new
+worker for either source. Eight fresh workers finished despite an inherited
+log pipe. The recorded SIGTERM preserved the first completed CT stage, and
+both repeat passes published identical study snapshots without launching new
+workers. The per-case `results.json` details the available layers, missing
+inputs, empty outputs and registration status.
 
 
 The collection supports source inspection and explicitly scoped surgical-research
