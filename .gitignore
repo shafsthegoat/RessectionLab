@@ -11,10 +11,20 @@ __pycache__/
 *.py[cod]
 .pytest_cache/
 *.egg-info/
+.env
+.env.*
+!.env.example
 src/resectionlab/_geometry_cpp*.so
 src/resectionlab/_geometry_cpp*.pyd
 src/resectionlab/_geometry_cpp.build.json
 .DS_Store
+._*
+*.swp
+*.swo
+*~
+*.tmp
+*.log
+*.ips
 build/
 dist/
 data/
@@ -31,18 +41,21 @@ outputs/
 *.npz
 *.npy
 *.ressectionlab
+*.rsworkspace
 *.rslcase
+*.mp4
+*.webm
+*.mov
 *.app/
 *.dmg
 *.zip
+*.tar.zst
 # Historical visual collections are archived. New captures stay local; promote
 # selected proof deliberately with git add -f and its source-bound receipt.
 /artifacts/desktop-renderer/**/*.png
 /artifacts/desktop-renderer/**/*.jpg
-/artifacts/desktop-renderer/**/*.mp4
 /artifacts/electron-*/**/*.png
 /artifacts/electron-*/**/*.jpg
-/artifacts/electron-*/**/*.mp4
 # Local validation archives retain exact bytes; compact receipts are versioned.
 /artifacts/validation/procedural-transfer-*/baseline.tar
 /artifacts/validation/procedural-transfer-*/frozen-source/
@@ -92,6 +105,3 @@ outputs/
 # Public acquisition summaries retain payload hashes and original receipt hashes.
 /artifacts/febio-runtime-build-v1/acquire-01/acquisition.json
 /artifacts/febio-runtime-build-v1/acquire-01/worker-progress.json
-
-# Full OS crash report stays local; version the task-specific trace summary.
-/artifacts/poc-ixi265-atropos-positive-domain-run-v2/native-crash.ips
