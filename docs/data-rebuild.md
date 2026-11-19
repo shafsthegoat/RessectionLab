@@ -381,6 +381,35 @@ DATA_REBUILD_CASE="$trial/replay.ressectionlab" \
   desktop/node_modules/.bin/electron desktop/electron/verify-data-rebuild.cjs --automation-hidden
 ```
 
+### Higher-detail CT and MRI anatomy
+
+The retained Meningioma sub-06 study preserves sharp-kernel CT, soft-kernel CT
+and contrast-enhanced T1 MRI on the same publisher-supplied 439 × 439 × 361
+grid at 0.5 mm. Scanner resolution remains unspecified. The existing CT
+density surface shows a more continuous mineralized vault than the CTA pilot
+estimates. The MRI separately supplies cortical, cerebellar, brainstem and
+ventricular estimates. Existing desktop source-switch captures and their
+source identities are in `qc/engine-operative-integration-20261118/multimodal/`.
+
+A checksum-bound audit sampled both CT images against retained MRI masks at
+1 mm. On soft-kernel CT, 8.72% of the sampled brain-envelope locations reached
+300 CT units. The retained sharp-kernel alignment gave 7.42%. In both, more
+than 96% of those dense-signal samples lie within 4 mm of the extraction
+boundary. The selected SynthSeg tissue regions show 2.83% and 1.82%,
+respectively. The masks describe different tissue supports. These results
+localize the conflict and leave its registration and segmentation causes
+unresolved. The combined frame remains unreviewed, with operative use of the
+CT-derived bone withheld. Reuse follows the retained private DEVELOPMENT
+scope and frozen CC BY-NC 4.0 receipt.
+
+```sh
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python \
+  scripts/audit_meningioma_skull_brain.py --output-name meningioma-sub06-conflict-reproduction.json
+```
+
+The measured source, transform and mask bindings are in
+`qc/meningioma-sub06-skull-brain-conflict-v1.json` on the HDD.
+
 ### MRI anatomy and diffusion inspection
 
 Search **IXI265-Guys-0845** in the checkout's Cases library or open
