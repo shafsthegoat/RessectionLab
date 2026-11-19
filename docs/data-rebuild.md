@@ -64,6 +64,52 @@ with the originals pending a verified spatial basis.
 Open `prepared/head-cta-15697196-native/<id>/patient-anatomy.json`. The source
 and reconstruction checks are under `qc/head-cta-15697196-native/<id>/`.
 
+### Same-patient NCCT and CTA
+
+The [ISLES'24 v7 release](https://zenodo.org/records/17652035) supplies an acute
+admission pair and an automated Circle of Willis annotation for `sub-stroke0146`.
+Selective solid-stream extraction used 654,353,001 bytes of reserved transfer
+budget, with 71,915,829 bytes of source files retained. The acquisition checks
+the exact publisher archive index, member CRCs and local hashes. The optional
+original CTA uses a verified LZMA2 reset and has a separate receipt bound to the
+unchanged records for the other three members. CC BY-NC-SA 4.0 applies.
+
+```sh
+.venv/bin/python scripts/acquire_isles24_cta_pair.py
+.venv/bin/python scripts/acquire_isles24_cta_pair.py --native-cta
+.venv/bin/python scripts/prepare_isles24_cta_pair.py
+```
+
+Open `prepared/isles24-v7-native/sub-stroke0146/patient-anatomy.json`. Acquired
+NCCT, publisher-registered CTA and the supplied automated mask share an exact
+512 × 512 × 87 grid at 0.451 × 0.451 × 2.0 mm. The acquired CTA has its own
+512 × 512 × 207 grid at 0.470 × 0.470 × 0.75 mm and opens independently.
+The visually inspected montage and verification receipt are in
+`qc/isles24-v7-native/sub-stroke0146/`. The mask contains 2,848 positive voxels
+across nine arterial classes and two components. Exact categorical data remain
+in the publisher original. The app shows the union as an automated estimate.
+The exploratory CTA-minus-NCCT subtraction left substantial dense residuals
+and remains a diagnostic image. Independent registration error and downstream
+vessel or surgical authority remain unqualified.
+
+The hidden desktop test selected all three scans. NCCT and registered CTA
+showed distinct signals on the same physical grid with the same rendered
+publisher CoW mask. Switching back restored the exact NCCT signal. The acquired
+CTA opened on its independent grid with no transferred layers. See
+`qc/hidden-app/isles24-v7-0146-paired-cta-20261118-v1/report.json` and its
+three app captures. The six new source-study cards are indexed locally in Cases.
+
+The acquired NCCT also supports a 3 mm model estimate of the brain envelope
+and a dense-signal-gated skull estimate. The independently verified retained
+worker outputs were used after the same inherited-log condition observed in
+TAIR. Their surfaces contain 487,124 and 1,085,448 triangles. Conditioned
+displacement stayed below 1 mm on the anisotropic NCCT grid.
+
+```sh
+receipt="$RESSECTIONLAB_DATA_ROOT/cache/poc-model-results/anatomy-d9c4252897c3723a/totalsegmentator-skull/356208c07c8b9d6e6e9d/inference.json"
+.venv/bin/python scripts/prepare_isles24_cta_pair.py --recover-ct-worker "$receipt"
+```
+
 ### Published masks and acquired-host scenarios
 
 TopCoW 006, 012 and 014 reuse same-person TopBrain v3 CTA, existing skull and

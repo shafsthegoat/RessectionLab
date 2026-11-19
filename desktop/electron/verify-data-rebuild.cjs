@@ -8,6 +8,7 @@ dialog.showErrorBox=(_title,message)=>{console.error(message);app.exit(1);};
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),crypto=require('node:crypto');
 const {execFileSync}=require('node:child_process');
 const {inputScript}=require('./verify-eden-planning-helpers.cjs');
+const {studyLayerSelectionScript,studyScanEnabledScript,studyScanSelectionScript}=require('./verify-study-ui-helpers.cjs');
 const repo=path.resolve(__dirname,'../..'),root=process.env.RESSECTIONLAB_DATA_ROOT;
 if(!root)throw Error('Set RESSECTIONLAB_DATA_ROOT');
 try{execFileSync(path.join(repo,'.venv/bin/python'),['-c','from resectionlab.data_root import checked_root; checked_root(required_bytes=1024**3)'],{cwd:repo,env:process.env});}
@@ -21,7 +22,8 @@ const targetId=process.env.DATA_REBUILD_CTA_TARGET_ID;
 const targetLabel=process.env.DATA_REBUILD_CTA_TARGET_LABEL;
 const sourceSha=process.env.DATA_REBUILD_CTA_SOURCE_SHA256;
 const collectionFile=process.env.DATA_REBUILD_CTA_COLLECTION;
-const nativeStudy=process.env.DATA_REBUILD_INSPECT_STUDY==='1'?JSON.parse(fs.readFileSync(input,'utf8')):null;
+const islesPair=process.env.DATA_REBUILD_INSPECT_ISLES_CTA==='1';
+const nativeStudy=islesPair||process.env.DATA_REBUILD_INSPECT_STUDY==='1'?JSON.parse(fs.readFileSync(input,'utf8')):null;
 const priorFile=process.env.DATA_REBUILD_CTA_PRIOR;
 const prior=priorFile?JSON.parse(fs.readFileSync(priorFile,'utf8')):null;
 if(targetId)assert(targetLabel&&/^[a-f0-9]{64}$/.test(sourceSha),'Provide the exact target label and baseline source digest');
@@ -132,7 +134,8 @@ app.on('browser-window-created',(_event,window)=>{
     const set=async(label,value)=>{await js(`(()=>{const el=document.querySelector('[aria-label='+${JSON.stringify(JSON.stringify(label))}+']');if(!el)throw Error('Missing '+${JSON.stringify(label)});for(let p=el.parentElement;p;p=p.parentElement)if(p.tagName==='DETAILS')p.open=true;Object.getOwnPropertyDescriptor(el.tagName==='SELECT'?HTMLSelectElement.prototype:HTMLInputElement.prototype,'value').set.call(el,${JSON.stringify(value)});el.dispatchEvent(new Event(el.tagName==='SELECT'?'change':'input',{bubbles:true}))})()`);await delay(100);};
     const sourceState=()=>js(`(()=>{
       const viewer=document.querySelector('.rl-viewer'),probe=window.__dataRebuildCtaFrames;
-      const frame=probe.frames.findLast(f=>f.sourceCaseHash===viewer.dataset.sourceCaseHash&&probe.completed.has(f.serial));
+      const frame=probe.frames.findLast(f=>f.sourceCaseHash===viewer.dataset.sourceCaseHash
+        &&(f.displayIdentity??'')===(viewer.dataset.sourceDisplayIdentity??'')&&probe.completed.has(probe.key(f)));
       return {caseHash:viewer.dataset.sourceCaseHash,modality:viewer.dataset.sourceModality,
         visible:JSON.parse(viewer.dataset.visibleLayerIds),sourceShape:frame?.sourceShape,
         sourceSignal:frame?.sourceSignalFingerprint,cursor:frame?.cursor,
@@ -148,8 +151,11 @@ app.on('browser-window-created',(_event,window)=>{
       const layers=JSON.parse(document.querySelector('.rl-viewer')?.dataset.visibleLayerIds??'[]');
       return control?.checked===${visible}&&layers.includes(${JSON.stringify(targetId)})===${visible};
     })()`);
-    const gpuSourceReady=()=>wait(`window.__dataRebuildCtaFrames.frames.some(f=>window.__dataRebuildCtaFrames.completed.has(f.serial)
-      &&f.sourceCaseHash===document.querySelector('.rl-viewer')?.dataset.sourceCaseHash)`);
+    const gpuSourceReady=()=>wait(`(()=>{
+      const probe=window.__dataRebuildCtaFrames,viewer=document.querySelector('.rl-viewer');
+      return probe.frames.some(f=>probe.completed.has(probe.key(f))&&f.sourceCaseHash===viewer?.dataset.sourceCaseHash
+        &&(f.displayIdentity??'')===(viewer?.dataset.sourceDisplayIdentity??''));
+    })()`);
     const ctaReadout=async()=>{
       await click('Scans');
       await wait(`!!document.querySelector('.poc-source-facts')`);
@@ -284,8 +290,8 @@ app.on('browser-window-created',(_event,window)=>{
       report.ctaPreview={...initial,...selected};
       report.checks.push('Cases opens the exact CTA package, distinguishes observed and generated provenance, and the selected contour changes linked slice pixels');
     };
-    const inspectNativeStudy=async()=>{
-      await click('Scans');await gpuSourceReady();
+    const nativeScan=async expectedId=>{
+      await gpuSourceReady();
       const selected=await js(`(()=>{
         const shell=document.querySelector('.native-workspace'),viewer=document.querySelector('.rl-viewer');
         return {series:shell?.dataset.nativeSeries,display:JSON.parse(viewer.dataset.sourceDisplayIdentity),
@@ -293,6 +299,7 @@ app.on('browser-window-created',(_event,window)=>{
       })()`);
       const series=nativeStudy.series.find(row=>row.id===selected.series);
       assert(series&&nativeVolume,'The app must load a declared display series');
+      if(expectedId)assert.equal(series.id,expectedId);
       assert.equal(selected.panes,3);
       assert.equal(selected.display[1],series.id);
       assert.equal(selected.display[2],nativeVolume.mri.sha256);
@@ -301,13 +308,20 @@ app.on('browser-window-created',(_event,window)=>{
       assert.deepEqual(rendered.sourceShape,nativeVolume.shape);
       assert(rendered.sourceSignal);
       const surfaces=nativeVolume.compartments.map(layer=>({
-        id:layer.name,kind:layer.kind,volumeMm3:layer.volumeMm3,maskSha256:layer.mask?.sha256,
+        id:layer.name,kind:layer.kind,sourceSeries:layer.sourceSeries,alignment:layer.alignment,
+        volumeMm3:layer.volumeMm3,maskSha256:layer.mask?.sha256,
         sourceMeshSha256:layer.surface?.source?.sha256,displayMeshSha256:layer.surface?.positions?.sha256,
         diagnostics:layer.surfaceDiagnostics,
       }));
-      report.nativeStudy={patientId:nativeStudy.patient_id,snapshotId:nativeStudy.snapshot_id,id:series.id,
+      return {patientId:nativeStudy.patient_id,snapshotId:nativeStudy.snapshot_id,id:series.id,
         modality:series.modality,displayNativeGrid:series.data.shape,publisherSource:series.publisher_source??null,
-        gridSampling:series.display_sampling_ijk??null,rendered,surfaces};
+        gridSampling:series.display_sampling_ijk??null,rendered,surfaces,affine:nativeVolume.affine,
+        originalSha256:series.original.sha256,sourceArraySha256:selected.display[2],registrationStatus:nativeVolume.registrationStatus,
+        unavailableLayers:nativeVolume.unavailableLayers};
+    };
+    const inspectNativeStudy=async()=>{
+      await click('Scans');
+      report.nativeStudy=await nativeScan();
       await capture('native-study-scans');
       await click('Anatomy');
       const anatomy=await js(`[...document.querySelectorAll('.native-structure-row')].map(row=>({
@@ -324,11 +338,87 @@ app.on('browser-window-created',(_event,window)=>{
       report.checks.push('The actual native viewer renders the manifest-bound scan and all three source panes');
       report.passed=!report.windowEverVisible;
     };
+    const inspectIslesPair=async()=>{
+      await click('Scans');
+      const select=async id=>{
+        await wait(studyScanEnabledScript(id));
+        await js(studyScanSelectionScript(id));
+        await wait(`document.querySelector('.native-workspace')?.dataset.nativeSeries===${JSON.stringify(id)}`);
+        await ready();
+        return nativeScan(id);
+      };
+      const structures=async()=>{
+        await click('Anatomy');
+        await js(`[...document.querySelectorAll('.anatomy-presets button')].find(b=>b.textContent.trim()==='Structures').click()`);
+        await click('Show structures only');
+        const context=nativeStudy.layers.filter(layer=>nativeVolume.compartments.some(displayed=>displayed.name===layer.id));
+        if(context.some(layer=>layer.kind==='skull'))await set('Skull view','transparent');
+        const brain=context.find(layer=>layer.kind==='brain');
+        if(brain){
+          await js(studyLayerSelectionScript([brain.label]));
+          await js(inputScript(`${brain.label} opacity`,.16));
+          await click('Close layer details');
+        }
+      };
+      const cowId='publisher-estimated-cow';
+      const cow=nativeStudy.layers.find(layer=>layer.id===cowId);
+      assert(cow&&cow.source_series==='cta-ncct-space'&&cow.role==='context');
+      assert.equal(cow.provenance.kind,'image_derived_estimate');
+      assert.equal(cow.provenance.evidence_use,'context_only');
+      assert.match(cow.label,/publisher automated/i);
+      const ncct=await select('ncct');
+      await structures();
+      await capture('isles-ncct');
+      const cta=await select('cta-ncct-space');
+      assert.equal(ncct.modality,'CT');assert.equal(cta.modality,'CTA');
+      assert.equal(ncct.registrationStatus,'patient frame');
+      assert.equal(cta.registrationStatus,'patient frame');
+      assert.notEqual(ncct.originalSha256,cta.originalSha256);
+      assert.notEqual(ncct.sourceArraySha256,cta.sourceArraySha256);
+      assert.notEqual(ncct.rendered.sourceSignal,cta.rendered.sourceSignal);
+      assert.deepEqual(ncct.rendered.sourceShape,cta.rendered.sourceShape);
+      assert(cta.affine.every((row,i)=>row.every((value,j)=>Math.abs(value-ncct.affine[i][j])<=1e-5)));
+      const ncctCow=ncct.surfaces.find(layer=>layer.id===cowId);
+      const ctaCow=cta.surfaces.find(layer=>layer.id===cowId);
+      assert(ncctCow?.maskSha256&&ctaCow?.maskSha256,'Both linked scans must show the publisher CoW');
+      assert.equal(ctaCow.maskSha256,ncctCow.maskSha256);
+      assert.equal(ctaCow.sourceSeries,'cta-ncct-space');
+      assert.equal(ctaCow.alignment,'source-provided');
+      await structures();
+      assert.equal(await js(studyLayerSelectionScript([cow.label])),cow.label);
+      await click(`Focus ${cow.label}`);
+      await wait(`document.querySelector('.rl-viewer')?.dataset.selectedStructure===${JSON.stringify(cowId)}`);
+      const attribution=await js(`document.querySelector('.layer-inspector')?.textContent`);
+      assert.match(attribution,/publisher automated/i);
+      assert.match(attribution,/image derived estimate/i);
+      await capture('isles-registered-cta-cow');
+      report.islesPair={ncct,cta,cow:{...ctaCow,label:cow.label,publisherMaskSha256:cow.provenance.source.sha256}};
+      const backToNcct=await select('ncct');
+      assert.equal(backToNcct.sourceArraySha256,ncct.sourceArraySha256);
+      assert.equal(backToNcct.rendered.sourceSignal,ncct.rendered.sourceSignal);
+      report.checks.push('Actual scan selection renders distinct NCCT and registered CTA in the same frame with the same publisher-automated CoW mask');
+      if(nativeStudy.series.some(series=>series.id==='native-cta')){
+        const native=await select('native-cta');
+        assert.equal(native.modality,'CTA');
+        assert.equal(native.registrationStatus,'independent source frame');
+        assert.notEqual(native.originalSha256,cta.originalSha256);
+        assert.notEqual(native.sourceArraySha256,cta.sourceArraySha256);
+        assert(!native.surfaces.some(layer=>layer.id===cowId));
+        await wait(`!!document.querySelector('.patient-model-summary[data-frame="independent"]')`);
+        await capture('isles-native-cta-independent');
+        report.islesPair.native=native;
+        report.checks.push('The optional original native CTA opens independently and carries no transferred CoW overlay');
+      }
+      assert.equal(digest(input),inputSha);
+      assert.equal(window.isVisible(),false);
+      report.passed=!report.windowEverVisible;
+    };
     try{
       if(targetId||nativeStudy)await js(`(()=>{
-        const probe=window.__dataRebuildCtaFrames={frames:[],completed:new Set()};
-        document.addEventListener('anatomy-frame',e=>{probe.frames.push(e.detail);if(probe.frames.length>32)probe.completed.delete(probe.frames.shift().serial)});
-        document.addEventListener('anatomy-gpu',e=>{if(e.detail.completed)probe.completed.add(e.detail.serial)});
+        const key=frame=>JSON.stringify([frame.sourceCaseHash,frame.displayIdentity,frame.serial]);
+        const probe=window.__dataRebuildCtaFrames={frames:[],completed:new Set(),key};
+        document.addEventListener('anatomy-frame',e=>{probe.frames.push(e.detail);if(probe.frames.length>32)probe.completed.delete(key(probe.frames.shift()))});
+        document.addEventListener('anatomy-gpu',e=>{if(e.detail.completed)probe.completed.add(key(e.detail))});
       })()`);
       if(process.env.DATA_REBUILD_REQUIRE_GPU_STATE==='1')await js(`(()=>{
         const p=window.__dataRebuildFrames={gpu:[],publications:[]};
@@ -343,6 +433,7 @@ app.on('browser-window-created',(_event,window)=>{
         report.checks.push('Malformed native fixture visibly rejected without fallback source anatomy');report.passed=true;return;
       }
       const started=performance.now();await ready();report.coldReadyMs=performance.now()-started;
+      if(islesPair){await inspectIslesPair();return;}
       if(nativeStudy){await inspectNativeStudy();return;}
       if(process.env.DATA_REBUILD_STRUCTURES==='1'){
         await click('Show structures only');await ready();
