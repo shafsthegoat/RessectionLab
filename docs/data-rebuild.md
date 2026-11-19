@@ -696,6 +696,58 @@ bone/cochlea and gray matter estimate against the same CT. All 20 earlier CTA
 scenario packages match their original cohort sizes and SHA-256 digests in
 `qc/anatomical-fidelity-cta-cohort-integrity-v1.json`.
 
+### Annotated CTA vessel comparison
+
+Search **VESSEL-COMPARISON** in Cases for TopCoW 014 and 018. Each portable
+study opens the acquired CTA at full native resolution with the supplied
+TopBrain arterial and venous landmarks. The vascular layer list also includes
+the baseline and diagnostic comparison within the publisher's Circle of Willis
+box, the reference labels in that box, and a separate right M2 layer. Right M2
+keeps every voxel of publisher class 17. The baseline missed 2,100 of 3,540
+of these labelled voxels on 014 and 2,488 of 4,635 on 018. The original
+annotations are included in the archives. Their headers omit spatial units,
+so the viewer uses the exact acquired CTA lattice for inspection.
+[TopBrain release](https://zenodo.org/records/21972006) ·
+[TopCoW release and ROI definitions](https://zenodo.org/records/15692630).
+
+TopCoW 006 and 012 selected settings. TopCoW 014 and 018 verified the frozen
+comparison. The five alternatives used lower or higher thresholds, constant
+patch blending, connected low-score growth from higher-score seeds, and
+high-attenuation exclusion. All failed the selection criteria. Constant
+blending ranked highest as a diagnostic alternative and failed verification.
+The existing Gaussian blending and 0.50 threshold remain the default.
+
+| Verification subject | Centerline F1 | Recall for estimated diameter under 2 mm | Complete branch segments | Boundary HD95 |
+| --- | ---: | ---: | ---: | ---: |
+| 014 | 0.747 → 0.712 | 50.2% → 45.6% | 39.1% → 39.1% | 3.61 → 4.69 mm |
+| 018 | 0.770 → 0.775 | 57.5% → 55.2% | 59.1% → 63.6% | 4.91 → 4.52 mm |
+
+Arrows compare Gaussian with constant blending at the same threshold. The
+central metrics use 1 mm centerline tolerance and the union of the two
+publisher masks inside the TopCoW box. Beyond that box, only agreement with
+positive TopBrain landmarks is scored. The four scans are publisher training
+subjects and pretrained exposure is unknown. These results quantify agreement
+with the supplied annotations within their coverage.
+
+The private `qc/annotated-cta-vascular-benchmark-v1/` directory contains the
+frozen protocol, source receipts, cached-inference bindings, measurements and
+paired hidden desktop captures. The studies and cold-reopen receipts live in
+`prepared/annotated-cta-vascular-comparison-v1/`.
+
+```sh
+export PYTHONPATH=src:scripts OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1
+.venv/bin/python scripts/benchmark_annotated_cta_vessels.py --root "$RESSECTIONLAB_DATA_ROOT" verification
+.venv/bin/python scripts/prepare_annotated_cta_vessel_comparison.py \
+  --root "$RESSECTIONLAB_DATA_ROOT" --subject 014 --subject 018 --register "$PWD/testcases/cases"
+subject=014
+case_id="TopCoW-$subject-CTA-VESSEL-COMPARISON-v1"
+archive="$RESSECTIONLAB_DATA_ROOT/prepared/annotated-cta-vascular-comparison-v1/$case_id/$case_id.rsworkspace"
+SURFACE_VERIFY_VASCULAR_COMPARISON=1 \
+  SURFACE_VERIFY_OUTPUT="$RESSECTIONLAB_DATA_ROOT/qc/annotated-cta-vessels-$subject-reproduction" \
+  desktop/node_modules/.bin/electron desktop/electron/verify-surface-quality.cjs \
+  --anatomy "$archive" --automation-hidden
+```
+
 ### Meningioma sub-13 native CT and T1 review
 
 Open **Meningioma-sub-13-CT-T1-EVIDENCE-v2** in Cases. The [paired release](https://zenodo.org/records/17486320)

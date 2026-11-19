@@ -22,6 +22,7 @@ const refinedLayer=process.env.SURFACE_VERIFY_REFINED_LAYER;
 const refinedIds=refinedLayer?.split(',')??[];
 const detailIds=process.env.SURFACE_VERIFY_DETAIL_FOCUS?.split(',')??[];
 const selectedSeries=process.env.SURFACE_VERIFY_SERIES;
+const vascularComparison=process.env.SURFACE_VERIFY_VASCULAR_COMPARISON==='1';
 const detailCursor=process.env.SURFACE_VERIFY_DETAIL_CURSOR?.split(',').map(Number);
 if(detailCursor)assert(detailIds.length===1&&detailCursor.length===3&&detailCursor.every(Number.isFinite),'Choose one detail layer and a numeric RAS cursor');
 const branchFile=process.env.SURFACE_VERIFY_BRANCH_RECEIPT;
@@ -38,7 +39,8 @@ const pairedMra=process.env.SURFACE_VERIFY_DIRECT_MRA==='1';
 const pairedMraAfterReopen=process.env.SURFACE_VERIFY_DIRECT_MRA_AFTER_REOPEN==='1';
 const directoryOpen=nativeIndex>=0&&path.basename(source)==='patient-anatomy.json';
 const document=directoryOpen?JSON.parse(fs.readFileSync(source,'utf8'))
-  :(direct||refinedLayer||detailIds.length||selectedSeries)&&nativeIndex>=0&&source.endsWith('.rsworkspace')?JSON.parse(zipMember(source,'patient-anatomy.json')):null;
+  :(direct||refinedLayer||detailIds.length||selectedSeries||vascularComparison)&&nativeIndex>=0&&source.endsWith('.rsworkspace')?JSON.parse(zipMember(source,'patient-anatomy.json')):null;
+if(vascularComparison)assert(document?.vascular_comparison?.views.length,'Study must declare vascular comparison views');
 if(selectedSeries)assert(document?.series.some(row=>row.id===selectedSeries),'Unknown verification series '+selectedSeries);
 if(branches)assert.equal(branches.manifest.sha256,sourceHash,'Branch receipt must bind this exact study');
 for(const id of detailIds)assert(document?.layers.some(row=>row.id===id),'Unknown detail layer '+id);
@@ -419,6 +421,38 @@ app.on('browser-window-created',(_event,window)=>{
         compareSourceFrame(a,b,after);
         assert.notEqual(a.pixels['anatomy-image'].sha256,b.pixels['anatomy-image'].sha256,after+' did not change the 3D pixels');
       };
+      if(vascularComparison){
+        await smooth(false);
+        for(const view of document.vascular_comparison.views){
+          await showLayer(view.focus,true);
+          for(const row of await visibility())if(row.checked&&row.id!==view.focus)await showLayer(row.id,false);
+          const focus=document.layers.find(row=>row.id===view.focus);
+          await focusLayer(focus.label);
+          const colorLabel=focus.label+' color';
+          if(await inputValue(colorLabel)!==focus.color)await js(inputScript(colorLabel,focus.color));
+          for(const [axis,plane] of ['Sagittal','Coronal','Axial'].entries()){
+            await js(inputScript(plane+' slice position',view.cursor_ras_mm[axis]));
+          }
+          let previous;
+          for(const state of view.states){
+            for(const id of state.layers)await showLayer(id,true);
+            for(const row of await visibility())if(row.checked&&!state.layers.includes(row.id))await showLayer(row.id,false);
+            const frame=await capture(state.name,previous?.serial);
+            assert(frame.cursor.every((value,axis)=>Math.abs(value-view.cursor_ras_mm[axis])<=.51),state.name+' cursor differs');
+            assert.deepEqual(JSON.parse(report.captures[state.name].layers).sort(),[...state.layers].sort());
+            if(previous)verifyOverlay(previous.name,state.name);
+            previous={name:state.name,serial:frame.serial};
+          }
+        }
+        assert(!report.windowEverVisible,'Verification window appeared');
+        const rendered=report.requests.flatMap(request=>request.layers??[]);
+        for(const view of document.vascular_comparison.views)for(const {name,layers} of view.states){
+          assert(report.captures[name].frame.drawStatistics.triangles>0,name+' rendered no triangles');
+          for(const id of layers)assert(rendered.some(layer=>layer.name===id&&layer.triangles>0),id+' has no native geometry');
+        }
+        report.passed=true;
+        return;
+      }
       await pair('oblique',()=>click('Fit 3D view'));
       if(document?.five_layer_inspection){
         const groups=document.five_layer_inspection.anatomy_layers;
