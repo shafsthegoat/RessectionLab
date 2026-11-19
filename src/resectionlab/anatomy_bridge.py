@@ -327,6 +327,8 @@ def dispatch(session, operation, args, request, progress):
                     "cacheHit": bool(geometry["cache_hit"]),
                     "preparationMs": float(geometry["preparation_ms"]),
                     "triangles": int(len(geometry["indices"])),
+                    **({"publisherSourceSha256": geometry["publisher_source_sha256"]}
+                       if "publisher_source_sha256" in geometry else {}),
                     **({
                         "maxComponentVolumeChangeFraction": float(geometry["max_component_volume_change_fraction"]),
                         "volumeRestoredComponents": int(geometry["volume_restored_components"]),

@@ -50,6 +50,57 @@ def test_packaged_policy_copy_matches_canonical_resource():
     assert json.loads(desktop.read_text()) == POLICY
 
 
+def test_publisher_surface_retains_geometry_after_portable_reopen(tmp_path):
+    import nibabel as nib
+    from resectionlab.anatomy_geometry import mesh
+    from resectionlab.anatomy_package import open_package, save_package
+    from resectionlab.anatomy_publisher_surface import POLICY, publisher_surface
+    from resectionlab.patient_anatomy import PatientImagingCollection, world
+
+    matrix = np.diag([-0.5, 1.25, 2., 1.])
+    matrix[:3, 3] = [100., -40., 20.]
+    values = np.zeros((6, 6, 6), np.uint8)
+    values[1:4, 1:4, 1:4] = 1
+    source = tmp_path / 'source.nii.gz'
+    image = nib.Nifti1Image(values, matrix)
+    image.header.set_xyzt_units('mm')
+    nib.save(image, source)
+    raw_asset = tmp_path / 'mesh.vtp'
+    raw_asset.write_bytes(b'synthetic publisher asset test')
+    c = PatientImagingCollection.create(tmp_path / 'study', 'publisher-pilot')
+    scan = c.add_series(source, series_id='cta', modality='CTA')
+    row = c.add_layer(values, matrix, layer_id='arterial', source_series='cta', kind='artery',
+                      role='context', color='#aabbcc')
+    vertices = world(matrix, [[1., 1., 1.], [3., 1., 1.], [1., 3., 2.]]).astype(np.float32)
+    triangles = np.array([[0, 1, 2]], dtype=np.uint32)
+    row['publisher_surface'] = {
+        'schema': POLICY, 'original': c.original(raw_asset),
+        'vertices_ras_mm': c.put_array(vertices), 'triangles': c.put_array(triangles),
+        'source_series': 'cta', 'source_sha256': scan['original']['sha256'], 'source_affine': scan['affine'],
+        'mask_sha256': row['data']['sha256'], 'mask_label_value': 1, 'mask_revision': 0,
+    }
+    c.save()
+    archive = tmp_path / 'roundtrip.rsworkspace'
+    save_package(c, archive)
+    restored = PatientImagingCollection(open_package(archive, tmp_path / 'reopen').parent)
+    layer = restored.layer(row['id'])
+    actual = mesh(restored, layer)
+    np.testing.assert_array_equal(world(matrix, actual['positions']), vertices)
+    np.testing.assert_array_equal(actual['source'], actual['positions'])
+    np.testing.assert_array_equal(actual['indices'], triangles[:, ::-1])
+    np.testing.assert_array_equal(restored.mask(layer), values.astype(bool))
+    assert actual['policy_version'] == POLICY and actual['max_displacement_mm'] == 0.
+
+    assert publisher_surface(restored, {**layer, 'revision': 1}, cancelled=lambda: False) is None
+    assert publisher_surface(restored, {**layer, 'edits': [{'draft': True}]}, cancelled=lambda: False) is None
+    changed = {**layer, 'publisher_surface': {**layer['publisher_surface'], 'source_sha256': 'a' * 64}}
+    with pytest.raises(ValueError, match='binding differ'):
+        mesh(restored, changed)
+    restored.path(restored.series('cta')['original']['path']).write_bytes(b'changed acquired source')
+    with pytest.raises(ValueError, match='acquired source checksum differs'):
+        mesh(restored, layer)
+
+
 def test_empty_native_mesh_has_explicit_descriptor_without_zero_length_transfer(tmp_path):
     import nibabel as nib
     from resectionlab.patient_anatomy import PatientImagingCollection

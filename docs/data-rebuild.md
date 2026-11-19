@@ -14,10 +14,11 @@ the first-party acquisition receipts and the scope of file verification.
 The development addition has six newly acquired source families, seven acquired
 CT-family series, one publisher-registered CTA derivative, three native
 showcases on previously acquired TopCoW families, and 12 generated scenarios.
-The checkout lists 21 new development entries in Cases. The three acquisition
+The checkout lists 22 new development entries in Cases, including a separate
+publisher-geometry companion for TopCoW 006. The three acquisition
 sets retain 354,652,995 bytes of publisher payloads. At the final check the
 scoped source files, studies, scenarios, inference caches, inventory and QA
-used 5.80 GB of allocated HDD file space.
+used 5.80 GB of allocated HDD file space before the publisher-geometry companion.
 
 ### Selective CTA intake
 
@@ -142,8 +143,33 @@ was qualified separately for CTA006. The 915 graph points use the original CTA
 RAS frame and all 914 edge midpoints overlap the original CoW annotation. The
 surface contains 47,202 vertices and 94,404 triangles. The proof used the
 published VTP files directly in VTK and retained the original mask, license and
-hashes. See `qc/multimodal-anatomy-20261118-cow-vtp-v1/README.md`. The desktop
-pilots continue to use their native voxel annotation layers.
+hashes. See `qc/multimodal-anatomy-20261118-cow-vtp-v1/README.md`.
+
+Search **PUBLISHED-COW** to open the CTA006 native companion. The
+**Circle of Willis · publisher mesh** layer uses the original triangular
+surface, while the exact original CoW segmentation supplies linked CTA slice
+overlays. The wider TopBrain arterial and venous unions remain separate.
+The same-person TopBrain MRA and its V1 arterial union open on their own source
+grid. The study keeps both VTP originals, publisher metadata and licenses.
+The centerline graph and its attributes remain available as source evidence.
+
+```sh
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python \
+  scripts/build_cta_published_cow_study.py --register "$PWD/testcases/cases"
+```
+
+The hidden desktop verified all 47,202 projected publisher vertices, 94,404
+triangles and the native CoW mask byte for byte. Hiding the publisher layer
+changed the 3D image. Source and conditioned modes preserved the same mesh
+and three linked slice crops. The app's portable Save retained the exact VTP,
+and a fresh process reopened it with identical transfers. See
+`qc/hidden-app/cta006-published-cow-warm-20261118-v1/` and
+`qc/hidden-app/cta006-published-cow-cold-20261118-v1/` on the HDD.
+The portable MRA check rendered its 429 × 507 × 139 source grid and
+122,060 supplied arterial voxels. It verified independence from the CTA
+overlays and restored the original CTA mesh on return. The supplied MRA
+annotation header omits units, so the app offers native-grid preview.
+See `qc/hidden-app/cta006-published-cow-paired-mra-20261118-v1/`.
 
 Build or reopen 12 development scenarios and register them in the checkout's
 Cases library. The EDEN v2 generator provides the lobulated geometry. A
@@ -199,6 +225,19 @@ for CTA014 variant 03, and `qc/TopCoW-014-CTA-ORGANIC-01-v1-static-preflight/` a
 ```sh
 .venv/bin/python scripts/probe_cta_organic_rehearsal.py --root "$RESSECTIONLAB_DATA_ROOT" \
   --case-id TopCoW-014-CTA-ORGANIC-03-v1 --output-name cta-organic-rehearsal-preflight-reproduction
+```
+
+The next bounded screen on CTA014 variant 01 evaluated 60 stock craniotome
+lanes across three of the straight screen's final-gate routes. Fifty-six
+lanes predicted new retained-anatomy contact on return and four crossed the
+native field boundary. Each route retained all of its bone blockers. A single
+unobstructed CUSA sweep on those paths would contact at most 87 of 15,270
+visible contour cells. This evaluates fixed-attitude lanes with passive
+return. The source case and initial simulated state remained intact.
+
+```sh
+.venv/bin/python scripts/probe_cta_organic_multilane.py \
+  --output-name cta014-organic-01-multilane-reproduction
 ```
 
 ### Observed surgical change

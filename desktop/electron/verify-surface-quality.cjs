@@ -1,9 +1,10 @@
 'use strict';
 // Hidden Electron capture of the live viewer. Native studies are tested on disposable copies.
-const {app,ipcMain}=require('electron');
-const {execFile}=require('node:child_process');
+const {app,dialog,ipcMain}=require('electron');
+const {execFile,execFileSync}=require('node:child_process');
 const fs=require('node:fs'),os=require('node:os'),path=require('node:path'),crypto=require('node:crypto'),assert=require('node:assert/strict');
 const {inputScript}=require('./verify-eden-planning-helpers.cjs');
+const {studyScanEnabledScript,studyScanSelectionScript,studyVisibilityToggleScript}=require('./verify-study-ui-helpers.cjs');
 const main=process.env.SURFACE_VERIFY_MAIN||path.join(__dirname,'main.cjs');
 const output=path.resolve(process.env.SURFACE_VERIFY_OUTPUT);
 fs.mkdirSync(output,{recursive:false});
@@ -14,8 +15,41 @@ const nativeIndex=process.argv.indexOf('--anatomy'),caseIndex=process.argv.index
 assert((nativeIndex>=0)!==(caseIndex>=0),'Choose --anatomy or --case');
 const inputIndex=(nativeIndex>=0?nativeIndex:caseIndex)+1,source=fs.realpathSync(process.argv[inputIndex]);
 const sha=file=>crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+const zipMember=(archive,member,maxBuffer=16*1024*1024)=>execFileSync('unzip',['-p',archive,member],{maxBuffer});
 const sourceHash=sha(source);
-const document=nativeIndex>=0&&path.basename(source)==='patient-anatomy.json' ? JSON.parse(fs.readFileSync(source,'utf8')) : null;
+const directFile=process.env.SURFACE_VERIFY_DIRECT_SOURCE;
+const direct=directFile?JSON.parse(fs.readFileSync(directFile,'utf8')):null;
+const priorFile=process.env.SURFACE_VERIFY_DIRECT_PRIOR;
+const prior=priorFile?JSON.parse(fs.readFileSync(priorFile,'utf8')):null;
+const pairedMra=process.env.SURFACE_VERIFY_DIRECT_MRA==='1';
+const directoryOpen=nativeIndex>=0&&path.basename(source)==='patient-anatomy.json';
+const document=directoryOpen?JSON.parse(fs.readFileSync(source,'utf8'))
+  :direct&&nativeIndex>=0&&source.endsWith('.rsworkspace')?JSON.parse(zipMember(source,'patient-anatomy.json')):null;
+const portable=direct&&!prior?path.join(output,'publisher-geometry.rsworkspace'):null;
+if(pairedMra)assert(prior&&direct,'Verify paired MRA on the portable archive from a successful warm run');
+if(prior){
+  assert(direct&&prior.passed&&prior.pid!==process.pid&&prior.directSurface?.portable,'Use the successful warm receipt in a distinct Electron process');
+  assert.equal(source,fs.realpathSync(prior.directSurface.portable.path));
+  assert.equal(sourceHash,prior.directSurface.portable.sha256);
+  assert.equal(sha(directFile),prior.directSurface.expectationSha256);
+}
+if(direct){
+  assert(document?.schema==='patient-anatomy-v1'&&directoryOpen===!prior,'Warm input is a native manifest and cold input is the saved study archive');
+  assert(direct.layerId&&direct.policy&&direct.transfer&&direct.points>0&&direct.triangles>0);
+  const vtp=direct.sourceVtp;
+  assert(/^[a-zA-Z0-9_./-]+\.vtp$/.test(vtp.path)&&!path.isAbsolute(vtp.path)&&!vtp.path.split('/').includes('..'));
+  assert(/^[a-f0-9]{64}$/.test(vtp.sha256));
+  const referenced=value=>value&&typeof value==='object'&&(
+    value.path===vtp.path&&value.sha256===vtp.sha256||Object.values(value).some(referenced)
+  );
+  const layer=document.layers.find(row=>row.id===direct.layerId);
+  assert(layer&&referenced(layer),'The surface layer must bind the published VTP member');
+  if(directoryOpen)assert.equal(sha(path.join(path.dirname(source),vtp.path)),vtp.sha256);
+  if(portable)dialog.showSaveDialog=async(_window,options)=>{
+    assert.equal(options.title,'Save portable patient study');
+    return {canceled:false,filePath:portable};
+  };
+}
 const cacheSource=process.env.SURFACE_VERIFY_CACHE_FROM;
 const retention=process.env.SURFACE_VERIFY_RETAIN_CACHE==='1';
 let studyDirectory;
@@ -30,7 +64,7 @@ function clone(from,to){
     fs.mkdirSync(to); for(const name of fs.readdirSync(target))clone(path.join(target,name),path.join(to,name));
   }else fs.copyFileSync(target,to,fs.constants.COPYFILE_FICLONE);
 }
-if(document){
+if(directoryOpen){
   studyDirectory=path.join(profile,'study');fs.mkdirSync(studyDirectory);
   for(const member of ['patient-anatomy.json','arrays','originals','revisions']){
     const from=path.join(path.dirname(source),member),destination=path.join(studyDirectory,member);
@@ -40,7 +74,7 @@ if(document){
   if(availableCache&&fs.existsSync(availableCache))clone(availableCache,path.join(studyDirectory,'meshes'));
   process.argv[inputIndex]=path.join(studyDirectory,'patient-anatomy.json');
 }
-const report={source,sourceHash,windowEverVisible:false,captures:{},requests:[],errors:[],memory:{peakElectronKiB:0,peakSidecarKiB:0,peakCombinedKiB:0},startedAt:new Date().toISOString()};
+const report={source,sourceHash,pid:process.pid,windowEverVisible:false,captures:{},requests:[],errors:[],memory:{peakElectronKiB:0,peakSidecarKiB:0,peakCombinedKiB:0},startedAt:new Date().toISOString()};
 if(document){
   report.snapshotId=document.snapshot_id;
   report.grids=[...document.series,...document.layers].map(x=>({id:x.id,shape:x.data.shape,
@@ -49,6 +83,7 @@ if(document){
 }
 const dist=path.resolve(path.dirname(main),'../dist');
 report.build=Object.fromEntries(fs.readdirSync(path.join(dist,'assets')).filter(n=>!n.endsWith('.map')).map(n=>[n,sha(path.join(dist,'assets',n))]));
+if(prior)assert.deepEqual(report.build,prior.build,'Use the same renderer build for portable cold reopen');
 const delay=ms=>new Promise(resolve=>setTimeout(resolve,ms)),started=performance.now();
 let active=0;
 const handle=ipcMain.handle.bind(ipcMain);
@@ -57,8 +92,9 @@ ipcMain.handle=(name,handler)=>handle(name,async(event,args)=>{
   try{
     const result=await handler(event,args);
     if(['research:startupWorkspace','research:anatomyView','research:anatomyRegister'].includes(name)){
-      const layers=result?.compartments?.map(({name,kind,qa,surfaceDiagnostics,volumeMm3,mask,surface})=>({name,kind,qa,surfaceDiagnostics,volumeMm3,maskSha256:mask?.sha256,triangles:surface?.indices?.shape?.reduce((a,b)=>a*b,1)/3,points:surface?.positions?.shape?.reduce((a,b)=>a*b,1)/3,indicesSha256:surface?.indices?.sha256,sourceMeshSha256:surface?.source?.sha256,displayMeshSha256:surface?.positions?.sha256}));
-      report.requests.push({name,action:args?.action,at,ms:performance.now()-started-at,sourceSignalSha256:result?.mri?.sha256,layers});
+      const layers=result?.compartments?.map(({name,kind,sourceSeries,qa,surfaceDiagnostics,volumeMm3,mask,surface})=>({name,kind,sourceSeries,qa,surfaceDiagnostics,volumeMm3,maskSha256:mask?.sha256,triangles:surface?.indices?.shape?.reduce((a,b)=>a*b,1)/3,points:surface?.positions?.shape?.reduce((a,b)=>a*b,1)/3,indicesSha256:surface?.indices?.sha256,sourceMeshSha256:surface?.source?.sha256,displayMeshSha256:surface?.positions?.sha256}));
+      report.requests.push({name,action:args?.action,seriesId:args?.seriesId,at,ms:performance.now()-started-at,
+        sourceSignalSha256:result?.mri?.sha256,registrationStatus:result?.registrationStatus,layers});
     }
     return result;
   }catch(error){report.requests.push({name,error:String(error),at});throw error;}
@@ -96,7 +132,12 @@ app.on('browser-window-created',(_event,window)=>{
       return wait(async()=>{
         if(report.requests.some(r=>r.error&&r.name.startsWith('research:anatomy')))throw Error(report.requests.find(r=>r.error).error);
         if(active)return null;
-        const state=await js(`(()=>{const v=document.querySelector('.rl-viewer'),p=window.surfaceVerification,f=p.frames.at(-1);return {frame:f,gpu:f&&p.gpu.findLast(g=>g.serial===f.serial&&g.completed),visible:v?.dataset.rendererReady==='true',pending:!!document.querySelector('.viewer-loading,[data-layer-pending=true]'),layers:v?.dataset.visibleLayerIds,modality:v?.dataset.sourceModality}})()`);
+        const state=await js(`(()=>{const v=document.querySelector('.rl-viewer'),p=window.surfaceVerification;
+          const f=p.frames.findLast(frame=>frame.sourceCaseHash===v?.dataset.sourceCaseHash
+            &&(frame.displayIdentity??'')===(v?.dataset.sourceDisplayIdentity??''));
+          const gpu=f&&p.gpu.findLast(g=>g.serial===f.serial&&g.completed&&g.sourceCaseHash===f.sourceCaseHash&&g.displayIdentity===f.displayIdentity);
+          return {frame:f,gpu,visible:v?.dataset.rendererReady==='true',pending:!!document.querySelector('.viewer-loading,[data-layer-pending=true]'),layers:v?.dataset.visibleLayerIds,modality:v?.dataset.sourceModality};
+        })()`);
         return state.gpu&&state.visible&&!state.pending&&state.frame.serial>minimum&&!state.frame.interactive?state:null;
       },'GPU-confirmed resting anatomy');
     };
@@ -131,9 +172,128 @@ app.on('browser-window-created',(_event,window)=>{
       await click('Layout');await set('[aria-label="Camera preset"]',preset);await click('Close view controls');
     };
     const sidePanel=async label=>{await js(`(()=>{const x=[...document.querySelectorAll('summary')].find(e=>e.textContent.includes(${JSON.stringify(label)}));if(x)x.parentElement.open=true;})()`);};
+    const compareSourceFrame=(before,after,label)=>{
+      for(const point of ['target','position','up'])assert(before.frame.cameraState[point].every((value,i)=>Math.abs(value-after.frame.cameraState[point][i])<1e-5),label+' camera differs');
+      assert.equal(before.frame.sourceSignalFingerprint,after.frame.sourceSignalFingerprint,label+' source signal differs');
+      assert.deepEqual(before.frame.cursor,after.frame.cursor,label+' slice cursor differs');
+    };
+    const compareSlices=(before,after,label)=>{
+      for(const plane of ['axial','coronal','sagittal'])assert.equal(before.pixels[plane].sha256,after.pixels[plane].sha256,label+' changed '+plane+' source pixels');
+    };
+    const verifyPairedMra=async()=>{
+      const mra=document.series.find(series=>series.id==='mra');
+      const artery=document.layers.find(layer=>layer.id==='mra-publisher-artery');
+      assert(mra?.modality==='MRA'&&artery?.source_series===mra.id&&artery.data.dtype==='uint8');
+      assert.deepEqual(artery.data.shape,mra.data.shape);
+      const packed=zipMember(source,artery.data.path,64*1024*1024);
+      const hash=bytes=>crypto.createHash('sha256').update(bytes).digest('hex');
+      assert.equal(hash(packed),artery.data.sha256);
+      assert.equal(packed.subarray(0,6).toString('hex'),'934e554d5059');
+      const version=packed[6];
+      assert([1,2,3].includes(version),'Unsupported NumPy archive layout');
+      const headerStart=version===1?10:12;
+      const start=headerStart+(version===1?packed.readUInt16LE(8):packed.readUInt32LE(8));
+      const header=packed.toString('utf8',headerStart,start);
+      assert(header.includes("'descr': '|u1'")&&header.includes("'fortran_order': False"));
+      assert.equal(packed.length-start,artery.data.shape.reduce((a,b)=>a*b,1));
+      const maskSha256=hash(packed.subarray(start));
+      const select=async id=>{
+        await wait(()=>js(studyScanEnabledScript(id)),id+' source control');
+        await js(studyScanSelectionScript(id));
+        await wait(()=>js(`document.querySelector('.native-workspace')?.dataset.nativeSeries===${JSON.stringify(id)}`),id+' active source');
+        return ready();
+      };
+      const initial=await ready();
+      const cta=document.reference_series;
+      await select(mra.id);
+      await click('Show structures only');
+      const shown=await js(`document.querySelector(${JSON.stringify('[data-structure-id="'+artery.id+'"] .native-structure-visibility')})?.getAttribute('aria-pressed')==='true'`);
+      if(!shown)await js(studyVisibilityToggleScript('Show '+artery.label));
+      const displayed=await capture('paired-mra-independent');
+      const mraRequests=report.requests.filter(request=>request.seriesId===mra.id&&request.layers);
+      const own=mraRequests.flatMap(request=>request.layers).find(layer=>layer.name===artery.id);
+      assert(own?.triangles>0&&own.sourceSeries===mra.id);
+      assert.equal(own.maskSha256,maskSha256);
+      assert(mraRequests.every(request=>request.registrationStatus==='independent source frame'
+        &&request.layers.every(layer=>layer.sourceSeries===mra.id)),'MRA must not borrow CTA anatomy');
+      assert.deepEqual(displayed.sourceShape,mra.data.shape);
+      assert.notEqual(displayed.sourceSignalFingerprint,initial.frame.sourceSignalFingerprint);
+      assert(await js(`!!document.querySelector('.patient-model-summary[data-frame="independent"]')`));
+      const mraView=report.captures['paired-mra-independent'];
+      assert(JSON.parse(mraView.layers).includes(artery.id));
+      const restored=await select(cta);
+      const ctaView=await capture('paired-cta-restored');
+      assert.equal(ctaView.sourceSignalFingerprint,initial.frame.sourceSignalFingerprint);
+      assert.deepEqual(ctaView.sourceShape,initial.frame.sourceShape);
+      assert(JSON.parse(restored.layers).includes(direct.layerId));
+      const publisher=report.requests.findLast(request=>request.seriesId===cta&&request.layers?.some(layer=>layer.name===direct.layerId))
+        ?.layers.find(layer=>layer.name===direct.layerId);
+      assert.equal(publisher?.sourceMeshSha256,direct.transfer.sourceMeshSha256);
+      assert.equal(publisher?.indicesSha256,direct.transfer.indicesSha256);
+      assert.equal(publisher?.surfaceDiagnostics?.publisherSourceSha256,direct.sourceVtp.sha256);
+      report.pairedMra={id:mra.id,shape:mra.data.shape,originalSha256:mra.original.sha256,
+        sourceSignal:displayed.sourceSignalFingerprint,arterialLayer:own,independent:true,ctaRestored:true};
+    };
+    const verifyDirect=async()=>{
+      const layer=document.layers.find(row=>row.id===direct.layerId);
+      const evidence=report.requests.flatMap(request=>request.layers??[]).find(row=>row.name===layer.id);
+      assert(evidence,'Actual anatomy response omitted the direct surface');
+      const transfer=Object.fromEntries(Object.keys(direct.transfer).map(key=>[key,evidence[key]]));
+      for(const key of ['sourceMeshSha256','displayMeshSha256','indicesSha256','maskSha256']){
+        assert(/^[a-f0-9]{64}$/.test(direct.transfer[key]),'Invalid expected transport hash for '+key);
+      }
+      assert.deepEqual(transfer,direct.transfer);
+      assert.equal(evidence.sourceMeshSha256,evidence.displayMeshSha256);
+      assert.equal(evidence.points,direct.points);
+      assert.equal(evidence.triangles,direct.triangles);
+      assert.equal(evidence.surfaceDiagnostics?.policy,direct.policy);
+      assert.equal(evidence.surfaceDiagnostics?.publisherSourceSha256,direct.sourceVtp.sha256);
+      assert.equal(evidence.surfaceDiagnostics?.maxDisplacementMm,0);
+      const installed=await js(`window.surfaceVerification.surface.find(layer=>layer.name===${JSON.stringify(layer.id)}&&!layer.empty)`);
+      assert.equal(installed?.diagnostics?.policy,direct.policy,'Renderer must install the publisher mesh');
+      assert.equal(installed.diagnostics.publisherSourceSha256,direct.sourceVtp.sha256);
+      const raw=report.captures['source-oblique'],smooth=report.captures['smooth-oblique'];
+      assert([raw,smooth].every(view=>view.gpu.completed&&JSON.parse(view.layers).includes(layer.id)
+        &&view.frame.drawStatistics.triangles>=direct.triangles),'Publisher layer must contribute to the completed GPU view');
+      compareSourceFrame(raw,smooth,'Publisher selector');
+      compareSlices(raw,smooth,'Publisher selector');
+      await js(studyVisibilityToggleScript('Hide '+layer.label));
+      await capture('publisher-mesh-hidden',smooth.frame.serial);
+      const hidden=report.captures['publisher-mesh-hidden'];
+      assert(!JSON.parse(hidden.layers).includes(layer.id));
+      compareSourceFrame(smooth,hidden,'Hidden publisher layer');
+      assert.notEqual(smooth.pixels['anatomy-image'].sha256,hidden.pixels['anatomy-image'].sha256,
+        'Hiding the publisher layer must change the real 3D pixels');
+      assert(smooth.frame.drawStatistics.triangles-hidden.frame.drawStatistics.triangles>=direct.triangles,
+        'Hiding the publisher layer must remove its triangles from GPU draw statistics');
+      await js(studyVisibilityToggleScript('Show '+layer.label));
+      await capture('publisher-mesh-restored',hidden.frame.serial);
+      const restored=report.captures['publisher-mesh-restored'];
+      assert(JSON.parse(restored.layers).includes(layer.id));
+      compareSourceFrame(smooth,restored,'Restored publisher layer');
+      compareSlices(smooth,restored,'Restored publisher layer');
+      report.directSurface={expectationSha256:sha(directFile),layerId:layer.id,
+        sourceVtp:direct.sourceVtp,policy:direct.policy,points:evidence.points,triangles:evidence.triangles,transfer};
+      if(portable){
+        await click('Scans');
+        await click('Save patient study file…');
+        await wait(async()=>fs.existsSync(portable)&&await js(`document.body.innerText.includes('Patient study file saved')`),'portable study save');
+        report.directSurface.portable={path:portable,sha256:sha(portable)};
+      }else{
+        assert.equal(report.snapshotId,prior.snapshotId);
+        assert.deepEqual(transfer,prior.directSurface.transfer);
+        compareSourceFrame(prior.captures['smooth-oblique'],smooth,'Cold publisher layer');
+        compareSlices(prior.captures['smooth-oblique'],smooth,'Cold publisher layer');
+        report.directSurface.coldReopened=true;
+      }
+      const member=zipMember(portable??source,direct.sourceVtp.path);
+      assert.equal(crypto.createHash('sha256').update(member).digest('hex'),direct.sourceVtp.sha256,
+        'Portable study changed the publisher VTP bytes');
+    };
     try{
       await js(`window.surfaceVerification={frames:[],gpu:[],surface:[],refinement:[]};for(const [name,key] of [['anatomy-frame','frames'],['anatomy-gpu','gpu'],['anatomy-surface','surface'],['anatomy-refined','refinement']])document.addEventListener(name,e=>{window.surfaceVerification[key].push(e.detail);});`);
       await ready();report.freshProcessToReadyMs=performance.now()-started;
+      if(pairedMra){await verifyPairedMra();report.passed=true;return;}
       if(process.env.SURFACE_VERIFY_NATIVE_PRESENTATION==='1'){
         await js(`(()=>{const button=[...document.querySelectorAll('.anatomy-presets button')].find(b=>b.textContent.trim()==='Structures');
           if(!button||button.disabled)throw Error('Native Structures presentation unavailable');
@@ -160,6 +320,11 @@ app.on('browser-window-created',(_event,window)=>{
         report.captures['smooth-'+name].toggleToCaptureMs=performance.now()-warmStarted;
       };
       await pair('oblique',()=>click('Fit 3D view'));
+      if(direct){
+        await verifyDirect();
+        report.passed=true;
+        return;
+      }
       await pair('anterior',()=>camera('anterior'));
       if(skull){
         await set('[aria-label="Skull view"]','exterior');
@@ -199,15 +364,10 @@ app.on('browser-window-created',(_event,window)=>{
       report.resting=metrics(data.frames.filter(f=>!f.interactive));report.orbit=metrics(data.frames.filter(f=>f.interactive));
       assert(report.orbit.frames>0,'No actual interactive frame submitted');
       assert(!report.windowEverVisible,'Verification window appeared');
-      function sameFrame(before,after,label){
-        for(const point of ['target','position','up'])assert(before.frame.cameraState[point].every((value,i)=>Math.abs(value-after.frame.cameraState[point][i])<1e-5),label+' camera differs');
-        assert.equal(before.frame.sourceSignalFingerprint,after.frame.sourceSignalFingerprint,label+' source signal differs');
-        assert.deepEqual(before.frame.cursor,after.frame.cursor,label+' slice cursor differs');
-      }
       for(const [name,view] of Object.entries(report.captures)){
         const raw=report.captures[name.replace(/^smooth-/,'source-')];if(!name.startsWith('smooth-')||!raw)continue;
-        sameFrame(raw,view,name);
-        for(const plane of ['axial','coronal','sagittal'])assert.equal(raw.pixels[plane].sha256,view.pixels[plane].sha256,name+' changed '+plane+' source pixels');
+        compareSourceFrame(raw,view,name);
+        compareSlices(raw,view,name);
       }
       if(process.env.SURFACE_VERIFY_NATIVE_PRESENTATION==='1'){
         assert.notEqual(report.captures['source-oblique'].pixels['anatomy-image'].sha256,
@@ -219,7 +379,7 @@ app.on('browser-window-created',(_event,window)=>{
         assert(before.passed&&before.sourceHash===report.sourceHash,'Expected successful baseline with exact same source');
         for(const [name,view] of Object.entries(report.captures)){
           if(name==='post-orbit-refinement')continue;
-          sameFrame(before.captures[name],view,name+' baseline');
+          compareSourceFrame(before.captures[name],view,name+' baseline');
         }
         const identities=log=>log.requests.flatMap(request=>request.layers??[]).map(layer=>[
           layer.name,layer.indicesSha256,layer.sourceMeshSha256,layer.maskSha256,layer.volumeMm3,layer.qa?.componentCount

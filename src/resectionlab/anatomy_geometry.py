@@ -86,6 +86,13 @@ def display_surface_kind(row):
 def mesh(collection, row, *, cancelled=lambda: False):
     """Separate source/display mesh; same connectivity, bounded local movement."""
     started = perf_counter()
+    if row.get("publisher_surface") is not None:
+        from .anatomy_publisher_surface import publisher_surface
+
+        supplied = publisher_surface(collection, row, cancelled=cancelled)
+        if supplied is not None:
+            return {**supplied, "normals": normals(supplied["positions"], supplied["indices"]),
+                    "preparation_ms": (perf_counter() - started) * 1000}
     display_kind = display_surface_kind(row)
     profile = surface_kind(display_kind)
     native = profile != "vessel"
