@@ -92,6 +92,28 @@ frame-time tails remain open.
 
 ## Acquired scan-to-procedure demonstration
 
+IXI077 joins acquired T1 MRI and a partial-coverage MRA to a recorded
+post-exposure ultrasonic aspirator (CUSA) rehearsal. The native plan and
+the recording identify the same 30 mm approach and synthetic target. A
+fixed script configured and placed the instrument, applied aspiration, then
+withdrew it. The 10 actions span 211.1 simulated seconds. The engine
+removed 27 of 282 target cells (28.48 mm³) and 314 other tissue cells
+(331.17 mm³), leaving 255 target cells (268.94 mm³). This episode is a
+baseline for testing whether a different action sequence can reduce the
+cost to surrounding tissue.
+
+The desktop export captured 1,075 engine observations. An independent
+check compared the painted source cells and instrument poses at all 11
+boundaries and 42 intermediate observations with the recorded actions.
+Separate fresh processes reopened the selected plan, the mid-procedure save
+at 42 removed cells and the endpoint at 341 removed cells.
+
+The scalp, bone and dural opening are assumed. The MRA registration
+supports visual inspection. Its uncertainty and the partial slab leave
+vascular clearance unknown. The evaluated frozen policy has a generated
+case contract. The IXI077 episode uses the recorded script.
+[Watch or reproduce the episode](desktop-workflow.md#replay-the-ixi077-t1-and-mra-case).
+
 The earlier demonstration at `b05a5534` used preoperative **UCSF-PDGM-0004**, revision
 `557b567cecdc3b109cd86873cc74c30c957b35876532a63f882eb8cca62c5844`.
 Four preprocessed structural MRI volumes and supplied tumor labels are available.

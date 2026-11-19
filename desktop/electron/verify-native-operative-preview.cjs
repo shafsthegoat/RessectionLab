@@ -5,6 +5,7 @@
 // second process with mode reopen and --open-archive FILE.
 // --reuse-selection replays a saved route. --stage-detail captures intermediate poses.
 // --inspect-shortest with --distinct selects the shortest returned window for the saved geometric example.
+// --material-review with --visual-review --video captures layer isolation and matched final cutaways without encoding a film.
 // --source-support checks the raw/supported MRI and SIAM receipts on a real tumor fixture.
 // baseline, prepare, stale and no-target exercise simpler study states.
 const {app, dialog, ipcMain} = require('electron');
@@ -19,7 +20,7 @@ const {studyScanSelectionScript} = require('./verify-study-ui-helpers.cjs');
 const {inputScript} = require('./verify-eden-planning-helpers.cjs');
 const root = path.resolve(__dirname, '../..');
 const [, , manifestArg, outputArg, mode = 'preview'] = process.argv;
-assert(['preview','baseline','prepare','no-target','stale','reopen','reopen-decision'].includes(mode),'Unknown verification mode');
+assert(['preview','baseline','prepare','no-target','stale','reopen','reopen-decision','source-switch'].includes(mode),'Unknown verification mode');
 assert(manifestArg && outputArg, 'Pass a disposable native manifest, new evidence directory, and baseline or preview');
 const manifest = fs.realpathSync(manifestArg);
 const fixtureRoot = fs.realpathSync(path.join(root, 'testcases/outputs')) + path.sep;
@@ -213,6 +214,7 @@ app.on('browser-window-created', (_, win) => {
           return upload.call(this,location,...rest);
         };
       })()`);
+      if(mode==='source-switch'||process.argv.includes('--cortical-switch'))await js('('+require('./verify-cortical-switch.cjs').observeCorticalDraws+')()');
       await click('Open');
       if(mode==='reopen-decision') {
         const prior=flagValue('--decision-report');
@@ -241,6 +243,10 @@ app.on('browser-window-created', (_, win) => {
       }
       await click('Anatomy');
       await ready();
+      if(mode==='source-switch'||process.argv.includes('--cortical-switch')){
+        await require('./verify-cortical-switch.cjs').verifyCorticalSwitch({js,until,click,ready,capture,report,document});
+        if(mode==='source-switch'){finish();return;}
+      }
       await both('anatomy');
       if(process.argv.includes('--visual-review')){
         await js("document.querySelector('.anatomy-presets button:nth-child(2)').click()");
@@ -251,6 +257,9 @@ app.on('browser-window-created', (_, win) => {
         await ready();await capture('surfaces-only');
         const surfaceFrame=await js('window.operativeVerificationFrame');
         assert.deepEqual(surfaceFrame,report.nativeFrame);
+        if(process.argv.includes('--material-review')){
+          await require('./verify-operative-materials.cjs').verifyOperativeMaterials({js,ready,presentation,capture,report,surfaceFrame});
+        }
         await click('Show scan volume with structures');await ready();
         const geometry=`document.querySelector('select[aria-label="Native surface representation"]')`;
         if(await js(`!!(${geometry})`)){
@@ -308,7 +317,7 @@ app.on('browser-window-created', (_, win) => {
         assert.equal((await read()).checked,false);
       }
 
-      if(mode==='preview' && document.series.length>1) {
+      if(mode==='preview' && document.series.length>1 && !process.argv.includes('--cortical-switch')) {
         const reference = document.reference_series;
         await js(studyScanSelectionScript(reference));
         await ready();
@@ -513,6 +522,17 @@ app.on('browser-window-created', (_, win) => {
           await click('Tumor aspiration');
           await capture('teaching-end');
           report.teachingState=await fieldState();
+          if(process.argv.includes('--material-review')){
+            const size=win.getContentSize();
+            win.setContentSize(1050,720);
+            await until('innerWidth===1050&&innerHeight===720');
+            await capture('cutaway-compact');
+            report.compactCutaway=await fieldState();
+            assert.equal(report.compactCutaway.removed,report.teachingState.removed);
+            win.setContentSize(...size);
+            await until(`innerWidth===${size[0]}&&innerHeight===${size[1]}`);
+          }
+
           await toggle('Inspection cutaway',false);
           await capture('exterior-end');
           report.exteriorState=await fieldState();

@@ -24,7 +24,7 @@ Use the right-hand slice controls to move the linked cursor. In the 3D pane, **C
 
 For a cranial study with a cortical gray-matter label, **Structures** shows the folds inside the outline of the head. The selected tumor keeps its cyan planning color. **Layout → Camera preset → Left** shows the lateral profile. Use the linked slices to check an inset, fold or lesion against the scan. The layer details identify the model or supplied annotation. The scan's field of view determines where the head ends. On angiography with an arterial label from that acquisition, the brain and skull recede so you can trace the supplied vessels.
 
-During a geometric preview with anatomy in the patient frame, the intact head and selected route remain beside the local operative field. The adjacent source slice shows the route plane. With a matching surrounding surface, playback starts at the patient extent and approaches the operative site. The exterior and **Inspection cutaway** share the same timeline. The cutaway shows acquired intensity on its section faces wherever the source covers them. The cavity and remaining local target follow the modeled removal history when playing or scrubbing.
+During a geometric preview with anatomy in the patient frame, the intact head and selected route remain beside the local operative field. The adjacent source slice shows the route plane. With a matching surrounding surface, playback starts at the patient extent and approaches the operative site. The exterior and **Inspection cutaway** share the same timeline. The cutaway uses the source MRI to modulate the cut faces before lighting. Cyan identifies the remaining local target and the indentation at the aspirator shows the modeled cavity. Select the grayscale source slice to inspect the underlying signal. In BITE-09, isolated inferior and superficial colored islands also occur in the source segmentation estimates. The original study has no angiogram to adjudicate those islands.
 
 In **Scans → Acquisition contributions**, inspect the acquisition role, registration
 and processing outcomes. Compare a moving scan with its reference in
@@ -47,22 +47,13 @@ veins or sinuses in this build. [MONAI bundle](https://huggingface.co/MONAI/brat
 
 ### Watch a recorded engine procedure
 
-Select the study's target in **Plan**. In **Rehearse**, choose **Open recorded
-engine episode** and pick the matching recorded environment. The app checks
-the native patient, revision, target, source masks, registered reference image,
-instrument configuration and branch replay. The selected geometric route stays
-in the native study. The episode uses its recorded path. **Surgeon / Microscope**
-shows the operative field. Leave **Inspection-only cutaway** and **Inspection-only
-transparency** off to see the actual modeled exposure. Play, pause, step or
-scrub to a recorded state. Use **Save** to persist the episode and view, and
-**Open** to restore them. Each frame carries its cumulative effects.
+In **Plan**, select the target and approach. In **Rehearse**, choose **Open recorded engine episode** and select the saved environment. The app checks the patient, study revision, target, source masks, reference pixels, instruments and recorded branch. When the recording identifies a native approach, its entry, target, radius and measurement identity must match the selected plan. An older recording can establish the patient and target without establishing an approach match.
 
-Use **Export observed replay** to save a captioned MP4. Select a destination
-with space for temporary compositor images. The exporter seeks the engine's
-recorded observations, waits for the matching tool and surface state, then
-encodes their simulated times. A one-second hold shows the endpoint. The
-operation restores the prior timeline cursor. The installed FFmpeg must
-support H.264 and subtitles.
+The intact reference shows the patient and the approach carried by the recording. The operative viewer shows the engine's tool poses and tissue state. **Operated anatomy** sections the working grid through the effect. Residual target, removed space and mapped protected structures have separate colors. Use the grid and slice controls to inspect a specific location, or **Follow effect** to follow the removal. The section marks the recorded tool tip when it intersects the plane. Volume readouts cover the whole modeled target.
+
+Play, pause, step or seek to an observation. The 3D field, section and quantities follow that observation on the same branch. In the procedure, **Save** writes the engine environment and playback position. In the native study, **Save** retains the plan and source view. Returning to Plan restores the native study. Opening a saved procedure on its own uses its embedded source grid for the intact reference.
+
+**Export observed replay** saves a captioned MP4. It waits for the tool and surface state and the corresponding operated section, then captures the joined view. The recording uses engine observation times and holds the endpoint for one second. Export restores the prior cursor. FFmpeg with H.264 and subtitle support is required.
 
 Choose **Source edges** or **Conditioned edges** in the operative legend to
 compare display surfaces at the same camera and engine state. Inspect a legend
@@ -89,6 +80,52 @@ supported outer bone surface are hidden with the scalp. **Field evidence**
 reports that count and identifies the scan supplying the tissue contrast.
 The full vascular estimates are available in **Anatomy**. Original scan
 spacing and supplied contours are available in **Scans**.
+
+### Replay the IXI077 T1 and MRA case
+
+Open `selected-approach.rsworkspace` for the intact study. Its Plan view
+identifies the simulated target and the recorded 30 mm post-exposure
+approach. In Rehearse open `recorded-engine.ressectionlab` to see the
+intact patient alongside the working field. For an immediate inspection of
+the final cavity, open the procedure file directly and step back to see
+earlier observations. The local testing guide indexes the saved files,
+walkthrough and matched captures. [Research data locations](local-storage-ledger.md).
+
+To reproduce from the verified original IXI077 archives on the optional
+research drive, build the desktop app and choose a fresh output directory.
+The preparation checks the input files, saved execution report and engine
+endpoint. The following commands run the application in hidden windows.
+
+```sh
+pnpm --dir desktop build
+run=$(mktemp -d "$PWD/testcases/outputs/ixi077-replay-XXXXXX")
+.venv/bin/python scripts/prepare_ixi077_study_replay.py \
+  --data-root "/Volumes/shafrir/old coding projects/RessectionLabData" --output "$run/source"
+verify="$PWD/desktop/electron/verify-integrated-engine-replay.cjs"
+native="$run/source/native/patient-anatomy.json"
+episode="$run/source/replay.ressectionlab"
+for phase in warm --cold-plan --cold-midpoint --cold --full-movie; do
+  if [ "$phase" = warm ]; then
+    desktop/node_modules/.bin/electron "$verify" "$native" "$episode" "$run/result" synthetic_target_observation
+  else
+    desktop/node_modules/.bin/electron "$verify" "$native" "$episode" "$run/result" synthetic_target_observation "$phase"
+  fi
+done
+```
+
+The full movie pass reopens the portable plan, attaches the recording,
+captures the observations through **Export observed replay** and checks the
+restored endpoint. `observed-engine-replay.mp4` follows simulation time.
+`patient-engine-continuous.mp4` adds the planning views, accelerates
+playback fourfold and holds the final inspection. The shorter sampled
+verification movie identifies its individual observations.
+
+In studies with a cortical mesh and matching source map, switching the
+slice panel to an aligned CT keeps the MRI-derived cortex registered to the
+patient and textured by its own MRI. The scan label identifies the active
+slices. A transform accepted only for overlay inspection retains that
+qualification in the anatomy view and in planning. Unknown vascular
+clearance remains visible on the IXI077 route.
 
 ### Reproduce the acquired replay and generated comparison
 
