@@ -69,7 +69,7 @@ export function operativeTissueMaterial(
       uCropMax: { value: max },
       uSectionY: sectionY,
       uBoundaryWidth: { value: half },
-      uSectionMix: { value: tissue.section },
+      uSectionContrast: { value: tissue.section },
     });
     shader.vertexShader =
       `uniform vec3 uFieldMin, uFieldSize, uRestOffset;
@@ -85,34 +85,36 @@ export function operativeTissueMaterial(
     // brain carry their original scan contrast as the geometry moves.
     shader.fragmentShader =
       `uniform highp sampler3D uFieldSignal;
-      uniform float uFieldContrast, uSectionY, uBoundaryWidth, uSectionMix;
+      uniform float uFieldContrast, uSectionY, uBoundaryWidth, uSectionContrast;
       uniform vec3 uCropMin, uCropMax;
       varying vec3 vFieldUVW, vRestPosition;
     ` +
       shader.fragmentShader.replace(
         '#include <color_fragment>',
         `#include <color_fragment>
-      vec3 sectionSignal=vec3(0.);
-      float sectionWeight=0.;
+      // The closed mesh has flat caps exactly on the cut/crop planes. Use
+      // geometric rest-space normals, since fitted vertex normals are smoothed
+      // across their rims and moving flaps carry their own acquisition.
+      vec3 faceCross=cross(dFdx(vRestPosition),dFdy(vRestPosition));
+      vec3 faceAlignment=abs(faceCross)/max(length(faceCross),1e-12);
+      vec3 edge=min(abs(vRestPosition-uCropMin),abs(vRestPosition-uCropMax));
+      edge.y=min(edge.y,abs(vRestPosition.y-uSectionY));
+      vec3 onPlane=(1.-smoothstep(vec3(.005),vec3(.1),edge/uBoundaryWidth))
+        *smoothstep(vec3(.97),vec3(.999),faceAlignment);
+      float section=step(uCropMin.y,uSectionY)*max(onPlane.x,max(onPlane.y,onPlane.z));
       if (all(greaterThanEqual(vFieldUVW,vec3(0.))) && all(lessThanEqual(vFieldUVW,vec3(1.)))) {
         vec2 signal=texture(uFieldSignal,vFieldUVW).rg;
         if(signal.g>.999){
           float brightness=clamp((255.*signal.r-1.)/254.,0.,1.);
-          diffuseColor.rgb *= exp2((brightness-.5)*uFieldContrast*1.85);
-          // Use measured grayscale on the cut faces, with enough of the
-          // layer color to identify the tissue across the cut.
-          vec3 edge=min(abs(vRestPosition-uCropMin),abs(vRestPosition-uCropMax));
-          float distanceToFace=min(min(edge.x,edge.y),min(edge.z,abs(vRestPosition.y-uSectionY)));
-          float section=step(uCropMin.y-.1*uBoundaryWidth,uSectionY)*(1.-smoothstep(.02*uBoundaryWidth,uBoundaryWidth,distanceToFace));
-          vec3 tint=mix(vec3(1.),diffuse,0.24);
-          sectionSignal=pow(vec3(brightness),vec3(2.2))*tint;
-          sectionWeight=section*mix(.76,.96,uSectionMix);
+          // Scan variation belongs in albedo. Keeping lighting downstream
+          // preserves self-shadow and the color of residual target at the lip.
+          float exteriorContrast=1.85*uFieldContrast;
+          float sectionContrast=1.+1.8*uSectionContrast;
+          diffuseColor.rgb*=exp2((brightness-.5)*mix(exteriorContrast,sectionContrast,section));
         }
       }`
-      ).replace('#include <opaque_fragment>',`
-      outgoingLight=mix(outgoingLight,sectionSignal,sectionWeight);
-      #include <opaque_fragment>`);
+      );
   };
-  material.customProgramCacheKey = () => 'operative-acquired-section-v3';
+  material.customProgramCacheKey = () => 'operative-acquired-albedo-v4';
   return material;
 }

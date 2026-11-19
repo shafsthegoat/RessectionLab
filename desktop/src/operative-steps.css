@@ -114,3 +114,38 @@
 .has-operative-reference .operative-overview-plane {min-height:0;width:100%;flex:1;}
 .has-operative-reference .operative-overview-plane canvas {width:100%;height:100%;object-fit:contain;}
 .has-operative-reference .operative-overview figcaption {width:100%;flex:none;}
+
+.viewer-shell.has-engine-reference {
+  display:grid;grid-template-columns:minmax(0,1fr) clamp(156px,21%,270px);
+  grid-template-rows:minmax(0,1fr);gap:4px;background:#242c28;
+}
+.has-engine-reference > .rl-viewer {min-width:0;min-height:0;}
+.engine-intact-reference {
+  min-width:0;min-height:0;display:grid;grid-template-rows:auto minmax(0,1fr) auto;
+  border-left:1px solid #353c38;background:#101513;color:#ced8d2;
+}
+.engine-intact-reference header,.engine-intact-reference footer {display:grid;gap:3px;padding:10px 12px;line-height:1.4;}
+.engine-intact-reference header {border-bottom:1px solid #353c38;}
+.engine-intact-reference header strong {font-size:13px;}
+.engine-intact-reference header span,.engine-intact-reference footer span {font-size:11px;overflow-wrap:anywhere;}
+.engine-intact-reference footer {border-top:1px solid #353c38;}
+.engine-intact-reference footer strong {font-size:10px;color:#9bad9f;}
+.engine-intact-reference footer span+strong {margin-top:4px;}
+.engine-reference-image {position:relative;min-height:0;overflow:hidden;}
+.engine-intact-reference .rl-viewer {position:absolute;inset:0;display:block;min-height:0;min-width:0;}
+.engine-intact-reference .rl-viewer .rl-viewer-anatomy {position:absolute;inset:0;border:0;}
+.engine-intact-reference .rl-viewer .rl-viewer-anatomy-image {
+  inset:50% 0 auto;transform:translateY(-50%);width:100%;height:auto;aspect-ratio:1;max-height:100%;
+}
+.engine-intact-reference .rl-viewer :is(.rl-viewer-slice,.rl-viewer-layoutbar,.rl-viewer-annotations,.rl-body-guide) {display:none;}
+.engine-recording-info details {font-size:11px;overflow-wrap:anywhere;}
+.engine-recording-info summary {cursor:pointer;color:#b9c9c0;}
+
+.engine-intact-reference:has(.engine-route-plane) {grid-template-rows:auto minmax(0,1fr) auto auto;}
+.engine-intact-reference .engine-reference-image > .rl-viewer {left:-30%;right:auto;width:160%;}
+.engine-route-plane {margin:0;padding:5px 8px 6px;background:#0b100e;border-top:1px solid #353c38;}
+.engine-route-plane > div {position:relative;max-width:100%;width:min(100%,30vh);margin:auto;}
+.engine-route-plane canvas {display:block;width:100%;height:auto;}
+.engine-route-plane svg {position:absolute;inset:0;display:block;width:100%;height:100%;}
+.engine-route-plane text {text-anchor:middle;fill:#ecfff5;font:11px system-ui;paint-order:stroke;stroke:#101814;stroke-width:2.5px;}
+.engine-route-plane figcaption {color:#bfcbc3;text-align:center;font-size:10px;margin-top:3px;}

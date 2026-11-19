@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 
 type Boundary = 'cortex' | 'head';
+export type CorticalSignal = {texture:THREE.Data3DTexture;window:[number,number];worldToVoxel:THREE.Matrix4};
 type Surface = {mesh:THREE.Mesh;material:THREE.Material};
 
 /** The outer intersection of a folded tissue remains a translucent surface.
@@ -41,7 +42,7 @@ export class CranialDepth {
     }
   }
 
-  install(material:THREE.Material,group:Boundary,signal?:{texture:THREE.Data3DTexture;window:[number,number]}):void {
+  install(material:THREE.Material,group:Boundary,signal?:CorticalSignal):void {
     const previous=material.onBeforeCompile;
     const key=material.customProgramCacheKey;
     material.onBeforeCompile=(shader,renderer)=>{
@@ -52,11 +53,12 @@ export class CranialDepth {
       if(signal&&group==='cortex'){
         shader.uniforms.uCorticalScan={value:signal.texture};
         shader.uniforms.uCorticalWindow={value:new THREE.Vector2(...signal.window)};
-        shader.vertexShader='varying vec3 vDisplayVoxel;\n'+shader.vertexShader.replace('#include <begin_vertex>',
-          '#include <begin_vertex>\nvDisplayVoxel=position;');
-        shader.fragmentShader='uniform highp sampler3D uCorticalScan; uniform vec2 uCorticalWindow; varying vec3 vDisplayVoxel;\n'+
+        shader.uniforms.uCorticalWorldToVoxel={value:signal.worldToVoxel};
+        shader.vertexShader='uniform mat4 uCorticalWorldToVoxel; varying vec3 vCorticalVoxel;\n'+shader.vertexShader.replace('#include <begin_vertex>',
+          '#include <begin_vertex>\nvCorticalVoxel=(uCorticalWorldToVoxel*modelMatrix*vec4(position,1.)).xyz;');
+        shader.fragmentShader='uniform highp sampler3D uCorticalScan; uniform vec2 uCorticalWindow; varying vec3 vCorticalVoxel;\n'+
           shader.fragmentShader.replace('#include <color_fragment>',`#include <color_fragment>
-          vec3 uvw=(vDisplayVoxel.zyx+0.5)/vec3(textureSize(uCorticalScan,0));
+          vec3 uvw=(vCorticalVoxel.zyx+0.5)/vec3(textureSize(uCorticalScan,0));
           if(all(greaterThanEqual(uvw,vec3(0.)))&&all(lessThanEqual(uvw,vec3(1.)))){
             float signalValue=texture(uCorticalScan,uvw).r;
             float brightness=clamp((signalValue-uCorticalWindow.x)/(uCorticalWindow.y-uCorticalWindow.x),0.,1.);
@@ -97,7 +99,7 @@ export class CranialDepth {
                        max(texture2D(uBoundaryDepth,boundaryUv+vec2(0.,px.y)).r,texture2D(uBoundaryDepth,boundaryUv-vec2(0.,px.y)).r));
         float rim=max(step(.9999999,edge),pow(1.-abs(dot(normal,normalize(vViewPosition))),3.));
         diffuseColor.a=opacity*(.009+.91*rim);
-        outgoingLight=diffuseColor.rgb*(.18+1.12*rim);
+        outgoingLight=diffuseColor.rgb*(.18+1.12*rim)+totalEmissiveRadiance;
         #include <opaque_fragment>`);
     };
     material.customProgramCacheKey=()=>key.call(material)+'/front-'+group+(signal?'/scan':'');

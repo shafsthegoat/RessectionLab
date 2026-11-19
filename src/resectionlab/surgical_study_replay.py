@@ -43,6 +43,8 @@ def _recorded_branch(case, record):
     if len(targets) != 1 or targets[0]['material'] != 'tumor':
         raise ValueError('The recording requires one mapped tumor treatment target')
     target_id = adapter.get('sourceLayers', {}).get(targets[0]['name'], {}).get('layerId')
+    if 'exactGridReplay' in record:
+        target_id = record['exactGridReplay']['targetLayerId']
     if not target_id:
         raise ValueError('Recorded treatment target lacks a native layer binding')
     if type(record.get('position')) is not int or not 0 <= record['position'] <= len(snapshot['actions']):
@@ -50,16 +52,20 @@ def _recorded_branch(case, record):
     return scene, snapshot, target_id
 
 
-def _receipt(case, scene, snapshot, target_id, branch_id):
+def _receipt(case, scene, snapshot, target_id, record):
     from .anatomy_planning import manifest_target_binding
-    adapter = scene.source['adapter']
-    manifest = adapter['sourceManifest']
-    layer = next(row for row in manifest['layers'] if row['id'] == target_id)
+    if 'exactGridReplay' in record:
+        from .surgical_exact_grid_replay import fixed_route_identity
+        source = fixed_route_identity(case, scene, snapshot, record['exactGridReplay'])
+    else:
+        adapter = scene.source['adapter']
+        manifest = adapter['sourceManifest']
+        layer = next(row for row in manifest['layers'] if row['id'] == target_id)
+        source = dict(patientId=adapter['sourcePatient'], sourceSnapshotId=adapter['sourceCollectionHash'],
+                      targetBinding=manifest_target_binding(manifest, layer))
     state = snapshot['checkpoint']['state']
-    return {'schema': 'resectionlab.native-study-engine-replay.v1',
-        'patientId': adapter['sourcePatient'], 'sourceSnapshotId': adapter['sourceCollectionHash'],
-        'targetLayerId': target_id, 'targetBinding': manifest_target_binding(manifest, layer),
-        'caseHash': case.semantic_hash, 'sceneId': scene.identity, 'branchId': branch_id,
+    return {'schema': 'resectionlab.native-study-engine-replay.v1', **source, 'targetLayerId': target_id,
+        'caseHash': case.semantic_hash, 'sceneId': scene.identity, 'branchId': record['branchId'],
         'actions': len(snapshot['actions']), 'actionsHash': semantic_digest(snapshot['actions']),
         'endpointStateId': snapshot['stateId'], 'snapshotHash': semantic_digest(snapshot),
         'physicsHash': semantic_digest(scene.properties), 'instrumentCatalogHash': semantic_digest(catalog()),
@@ -71,7 +77,7 @@ def validate_saved_binding(case, artifacts):
     record = artifacts.get('surgical_toolbox')
     try:
         scene, snapshot, target_id = _recorded_branch(case, record)
-        expected = _receipt(case, scene, snapshot, target_id, record['branchId'])
+        expected = _receipt(case, scene, snapshot, target_id, record)
         matches = (snapshot['sceneId'] == scene.identity and snapshot['checkpoint']['stateId'] == snapshot['stateId']
                    and artifacts['nativeStudyReplay'] == expected)
     except (KeyError, TypeError, StopIteration, ValueError) as error:
@@ -80,17 +86,12 @@ def validate_saved_binding(case, artifacts):
         raise ValueError('STUDY_REPLAY_BINDING_CHANGED: saved study, target, tools or recorded branch differs')
 
 
-def verify_recording(collection, target_id, case, record, *, check=lambda: None):
+def _verify_resampled_source(collection, case, scene, check):
     from .surgical_patient import _research_grid, _resample
-    check()
-    binding = study_target(collection, target_id)
-    scene, snapshot, mapped_target = _recorded_branch(case, record)
     adapter = scene.source['adapter']
     if (adapter.get('sourcePatient') != collection.document['patient_id']
             or adapter.get('sourceCollectionHash') != collection.identity()):
         raise ValueError('Recorded patient or native study revision differs from the open study')
-    if mapped_target != target_id:
-        raise ValueError('Recorded treatment target differs from the selected native target')
     verify_source(scene, native_collection=collection.root, check=check)
     # The source verifier rebuilds the material field. Also reproduce the MRI
     # overlay so the viewer cannot display substituted pixels around those tools.
@@ -106,6 +107,21 @@ def verify_recording(collection, target_id, case, record, *, check=lambda: None)
     reference_pixels = _resample(source_image, affine, scene.affine, scene.shape)
     if not np.array_equal(reference_pixels, case.mri):
         raise ValueError('Recorded reference image differs from the open study on the engine grid')
+
+
+def verify_recording(collection, target_id, case, record, *, approach_id=None, check=lambda: None):
+    check()
+    binding = study_target(collection, target_id)
+    scene, snapshot, mapped_target = _recorded_branch(case, record)
+    if mapped_target != target_id:
+        raise ValueError('Recorded treatment target differs from the selected native target')
+    receipt = _receipt(case, scene, snapshot, target_id, record)
+    exact = record.get('exactGridReplay')
+    if exact is not None:
+        from .surgical_exact_grid_replay import verify_exact_source
+        verify_exact_source(collection, case, scene, exact, approach_id, check=check)
+    else:
+        _verify_resampled_source(collection, case, scene, check)
     SurgicalEngine.restore(scene, snapshot, check=check, use_cache=False)
     native = collection.layer(target_id)
     raw = collection.array(native['data'])
@@ -117,7 +133,9 @@ def verify_recording(collection, target_id, case, record, *, check=lambda: None)
         'nativeGridSpacingMm': np.linalg.norm(basis, axis=0).tolist(),
         'engineAnnotationMm3': len(cells) * scene.voxel_mm3, 'engineGridSpacingMm': scene.spacing.tolist()}
     current = PatientImagingCollection(collection.root)
-    receipt = _receipt(case, scene, snapshot, target_id, record['branchId'])
+    if exact is not None:
+        from .surgical_exact_grid_replay import verify_selected_route
+        verify_selected_route(current, exact, approach_id)
     if (current.identity() != collection.identity() or study_target(current, target_id) != binding
             or receipt['targetBinding'] != binding):
         raise ValueError('Native study or target selection changed while checking the episode')

@@ -66,6 +66,7 @@ import { validateDiagnosticLayer } from "./diagnosticLayer";
 import type { CheckedDiagnosticLayer, LoadedDiagnosticLayer } from "./diagnosticLayer";
 import { physicalBounds, placeInSourceFrame } from "./sceneGeometry";
 import { surfaceCameraDistance } from './surfaceCameraFit';
+import type {CorticalSignal} from './cranialDepth';
 import { ScanVolumeRenderer } from './ScanVolumeRenderer';
 import type { VolumeRenderingSettings } from './volumeTransfer';
 import { paneViewport } from "./layout";
@@ -236,6 +237,7 @@ export class VolumeRenderer {
   private patientBounds?:Bounds3;
   private patientFramingPoints?:Float32Array;
   private scanFramingPoints:Float32Array=new Float32Array();
+  private readonly corticalSignals=new Map<string,CorticalSignal>();
   private readonly mriTexture: THREE.Data3DTexture;
   private fusionTexture: THREE.Data3DTexture;
   private labelTexture: THREE.Data3DTexture;
@@ -738,10 +740,19 @@ export class VolumeRenderer {
       this.workspaceSettings.presentation==='segmentation'&&['bone','skull'].includes(layer.kind??''));
     mesh.visible = this.surfaceVisible(layer.name);
     mesh.userData.compartment = layer.name;
+    mesh.userData.corticalContact = ['csf','ventricles','dura','skull','bone'].includes(displayKind);
     mesh.userData.cranialBoundary=this.cranialBoundary(displayKind,this.workspaceSettings);
-    if(layer.sourceSeries&&['gray-matter','cerebral-cortex','cerebellar-cortex'].includes(displayKind)&&this.volume.displayIdentity&&
-        layer.sourceSeries===JSON.parse(this.volume.displayIdentity)[1]){
-      mesh.userData.corticalSignal={texture:this.mriTexture,window:this.defaultWindow};
+    const source=layer.appearanceSource;
+    if(source){
+      let signal=this.corticalSignals.get(source.seriesId);
+      if(!signal){
+        const active=source.data===this.volume.mri&&source.shape.every((n,i)=>n===this.volume.shape[i]);
+        signal={texture:active?this.mriTexture:dataTexture(source.data,source.shape),
+          window:active?this.defaultWindow:intensityWindow(source.data),
+          worldToVoxel:matrix(inverseAffine(source.affine))};
+        this.corticalSignals.set(source.seriesId,signal);
+      }
+      mesh.userData.corticalSignal=signal;
     }
     this.picking?.install(mesh,geometry,eagerPicking);
     return {mesh,source:geometry,smooth,smoothingPrepared};
@@ -1366,6 +1377,7 @@ export class VolumeRenderer {
     // geometry resident while the ghost and recorded tools move by transforms.
     if(!interaction?.view){
       disposeObject(this.surgicalGroup);this.surgicalGroup.clear();this.surgicalSlots?.clear();
+      if(this.panes?.anatomy)delete this.panes.anatomy.dataset.renderedToolSlots;
       this.surgicalEffects=null;this.surgicalEffectsView=null;this.surgicalEffectsOutcome=undefined;
       this.surgicalFlow=null;this.surgicalFlowSource=undefined;
       this.surgicalAnimation=null;this.surgicalAnimationKey=null;
@@ -1414,7 +1426,7 @@ export class VolumeRenderer {
     for(const [name,recordedSlot] of Object.entries(view.slots)){
       // Planning guides remain visible through the existing exposure; canonical
       // withdrawn poses still belong to acceptedTools and collision state.
-      if(interaction.planningOverlay&&!recordedSlot.inserted)continue;
+      if((interaction.planningOverlay||interaction.insertedInstrumentsOnly)&&!recordedSlot.inserted)continue;
       // The explicitly parked second hand stays outside this one-tool field.
       // Its canonical pose is retained for collision/admission and replay.
       if(view.planarBladeManeuver&&name!=='left'&&!recordedSlot.inserted)continue;
@@ -1434,6 +1446,7 @@ export class VolumeRenderer {
     for(const [name,old] of this.surgicalSlots)if(!retained.has(name)){
       disposeObject(old.group);this.surgicalGroup.remove(old.group);this.surgicalSlots.delete(name);
     }
+    if(this.panes?.anatomy)this.panes.anatomy.dataset.renderedToolSlots=JSON.stringify([...this.surgicalSlots.keys()]);
     if(!this.surgicalGhost){
       this.surgicalGhost=new THREE.Group();this.scene.add(this.surgicalGhost);
       this.surgicalGizmo=new TransformControls(this.camera,this.panes.anatomy);
@@ -2215,7 +2228,8 @@ export class VolumeRenderer {
     if(this.pendingReplayGroup)gather(this.pendingReplayGroup);
     for(const entry of this.retiredSurfaces){geometries.add(entry.pair.source);geometries.add(entry.pair.smooth);}
     if(this.modelStage)for(const pair of this.modelStage.prepared.values())if(pair){geometries.add(pair.source);geometries.add(pair.smooth);}
-    const textures=[...(this.scanVolume.supportTexture?[this.scanVolume.supportTexture]:[]),...(this.scanVolume.patientTexture?[this.scanVolume.patientTexture]:[]),this.mriTexture,this.labelTexture,this.fusionTexture,this.removedTexture,this.proposalTexture,
+    const corticalTextures=Array.from(this.corticalSignals.values(),signal=>signal.texture);
+    const textures=[...corticalTextures,...(this.scanVolume.supportTexture?[this.scanVolume.supportTexture]:[]),...(this.scanVolume.patientTexture?[this.scanVolume.patientTexture]:[]),this.mriTexture,this.labelTexture,this.fusionTexture,this.removedTexture,this.proposalTexture,
       this.diagnosticStateTexture,this.diagnosticCoverageTexture,this.priorTexture,this.priorCoverageTexture];
     const geometryBytes=geometryBufferBytes(geometries),textureBytes=[...new Set(textures)].reduce((sum,texture)=>{
       const data=texture.image?.data as ArrayBufferView|undefined;return sum+(data?.byteLength??0);
@@ -2407,6 +2421,9 @@ export class VolumeRenderer {
     this.surfaceGeometry.clear();
     disposeObject(this.scene);
     this.slices.forEach((slice) => disposeObject(slice.scene));
+    for(const texture of new Set([...this.corticalSignals.values()].map(signal=>signal.texture)))
+      if(texture!==this.mriTexture)texture.dispose();
+    this.corticalSignals.clear();
     this.mriTexture.dispose();
     this.scanVolume.dispose();
     this.surfaceInteraction.dispose();

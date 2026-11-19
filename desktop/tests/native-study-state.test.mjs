@@ -9,6 +9,10 @@ test('an independent or estimated scan cannot drive the reference scan presentat
   const doc={reference_series:'ct',transforms:{registered:{status:'source-provided'},estimated:{status:'estimated'}},layers};
   assert.deepEqual(presentationLayers(doc,'ct'),layers.slice(0,2));
   assert.deepEqual(presentationLayers(doc,'independent'),[layers[3]]);
+  const displayed=['reference','source-provided','estimated','unavailable'].map((alignment,i)=>({alignment,seriesId:layers[i].source_series}));
+  assert.deepEqual(presentationLayers(doc,'ct',displayed),layers.slice(0,3));
+  assert.deepEqual(presentationLayers(doc,'estimated',displayed),layers.slice(0,3));
+  assert.deepEqual(presentationLayers(doc,'independent',displayed),[layers[3]]);
 });
 
 test('an acquired angiogram reveals its own artery inside the skull and brain context',()=>{

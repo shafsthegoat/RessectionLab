@@ -26,6 +26,7 @@ test('head and cortex capture separate nearest depths with patient clipping duri
         const shader={uniforms:{},fragmentShader:THREE.ShaderLib.standard.fragmentShader};
         mesh.material.onBeforeCompile(shader,renderer);
         assert.equal(shader.uniforms.uBoundaryDepth?.value,pass.cranial.targets.get(groups[i])?.depthTexture);
+        if(groups[i]==='head')assert.match(shader.fragmentShader,/outgoingLight=diffuseColor\.rgb\*\([^;]+\)\+totalEmissiveRadiance;/);
       }
     }
   }};
@@ -99,7 +100,7 @@ test('native context lighting uses physical view depth and restores the original
   assert.equal(direct.uniforms.uNativeContextRadius.value,30);
   assert.match(direct.fragmentShader,/dot\(normal, normalize\(vec3\(-0\.46, 0\.55, 0\.70\)\)\)/);
   assert.match(direct.fragmentShader,/vViewPosition\.z - centerDepth/);
-  assert.match(direct.fragmentShader,/outgoingLight = diffuseColor\.rgb/);
+  assert.match(direct.fragmentShader,/outgoingLight = diffuseColor\.rgb \* diffuseLighting \+ totalEmissiveRadiance;/);
   assert.match(direct.fragmentShader,/uSourceContextShell/);
   const scene=new THREE.Scene(), geometry=new THREE.PlaneGeometry(), mesh=new THREE.Mesh(geometry,material);
   mesh.userData.compartment='brain';scene.add(mesh);
@@ -126,4 +127,39 @@ test('native context lighting uses physical view depth and restores the original
       opacity:material.opacity, transparent:material.transparent, depthWrite:material.depthWrite, clippingPlanes:material.clippingPlanes,
     });
   }finally{geometry.dispose();opaque.dispose();volume.dispose();material.dispose();}
+});
+
+test('cached transparent peels and sorting tail follow the current selection through A, B and clear',()=>{
+  const pass=new SurfaceVolumePass(),scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera();
+  const geometry=new THREE.PlaneGeometry(),opaque=new THREE.Texture();
+  const meshes=['#cc6677','#77aadd'].map((color,index)=>{
+    const mesh=new THREE.Mesh(geometry,new THREE.MeshStandardMaterial({color,transparent:true,opacity:.5}));
+    mesh.userData.compartment=String(index);scene.add(mesh);
+    return mesh;
+  });
+  const sources=meshes.map(mesh=>mesh.material),pairs=meshes.map(()=>new Map());
+  const renderer={setRenderTarget(){},clear(){},render(){
+    meshes.forEach(({material},i)=>{
+      const source=sources[i];
+      assert.notEqual(material,source);
+      assert.ok(material.emissive.equals(source.emissive),'emissive color must follow the current source');
+      assert.equal(material.emissiveIntensity,source.emissiveIntensity);
+      const first=pairs[i].get(material.transparent);
+      if(first){
+        assert.equal(material,first.material,'reuse the cached material');
+        assert.equal(material.version,first.version,'selection changes uniforms only');
+      }else pairs[i].set(material.transparent,{material,version:material.version});
+    });
+  }};
+  try{
+    for(const selected of [null,0,1,null]){
+      sources.forEach((material,i)=>{
+        material.emissive.set(i===selected?material.color:0);
+        material.emissiveIntensity=i===selected?.35:0;
+      });
+      for(const interactive of [false,true])pass.render(renderer,scene,camera,opaque,8,8,interactive);
+      assert.deepEqual(meshes.map(mesh=>mesh.material),sources);
+    }
+    for(const pair of pairs)assert.deepEqual([...pair.keys()],[false,true]);
+  }finally{sources.forEach(m=>m.dispose());geometry.dispose();opaque.dispose();pass.dispose();}
 });

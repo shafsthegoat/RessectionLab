@@ -15,7 +15,7 @@ from .patient_anatomy import (
 )
 from .anatomy_editor import AnatomyDraft
 from .anatomy_workspace import read_view, save_view, component_review
-from .anatomy_geometry import mesh, normals, display_surface_kind
+from .anatomy_geometry import mesh, normals, appearance_kind
 from .anatomy_qa import layer_quality
 from .anatomy_display import display_affine, brain_vessel_display, source_display_grid, source_lattice_annotation_preview
 
@@ -312,7 +312,7 @@ def dispatch(session, operation, args, request, progress):
             record = {
                 "name": name,
                 "kind": row["kind"],
-                "displayKind": display_surface_kind(row),
+                "displayKind": appearance_kind(row),
                 "sourceSeries": row["source_series"],
                 "alignment": ("source-grid preview" if source_grid_preview else "independent" if not registered
                               else "estimated" if row_previews else c.document["transforms"][row["source_series"]]["status"]),
@@ -431,8 +431,29 @@ def dispatch(session, operation, args, request, progress):
                 if preview:
                     support = resample(support, affine(reference["affine"]), shape, native, order=0)
                 cache["headSupport"] = transfer(support, "uint8")
+        # Resolve each visible cortical surface against its own acquisition. Mesh
+        # vertices are in the selected display lattice, while these affines map
+        # the acquisition's actual display samples into the same physical frame.
+        appearance_sources = []
+        cortex_sources = dict.fromkeys(layer["sourceSeries"] for layer in layers
+                if layer.get("displayKind") in {"gray-matter", "cerebral-cortex", "cerebellar-cortex"}
+                and layer["alignment"] != "source-grid preview")
+        for sid in cortex_sources:
+            scan = c.series(sid)
+            if sid == reference["id"]:
+                scalar, texture_frame = cache["mri"], displayed
+            else:
+                # The layer admission above already requires its frame and this
+                # timepoint. Acquire the scalar's own lattice, not the label's.
+                frame, _ = display_affine(c, scan, preview=preview_alignment)
+                data, _, texture_frame, _ = source_display_grid(scan, frame)
+                scalar = transfer(c.array(data), "float32")
+            appearance_sources.append({"seriesId": sid, "modality": scan["modality"],
+                    "sourceSha256": scan["original"]["sha256"], "affine": texture_frame.tolist(),
+                    "signal": scalar})
         result = {
             "tractography": cache["tracts"],
+            **({"appearanceSources": appearance_sources} if appearance_sources else {}),
             **({"patientContext": patient_context} if patient_context else {}),
             "caseId": c.document["patient_id"],
             "caseHash": "sha256:" + hashlib.sha256((c.identity()+":"+reference["id"]).encode()).hexdigest(),

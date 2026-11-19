@@ -83,6 +83,20 @@ def display_surface_kind(row):
     return row["kind"]
 
 
+def appearance_kind(row):
+    """Cortical display classification does not alter the cached mesh policy."""
+    kind = display_surface_kind(row)
+    if kind == "brain-region":
+        provenance = row.get("provenance") or {}
+        model = str(provenance.get("model", "")).lower()
+        ontology = row.get("label_ontology") or provenance.get("label_ontology") or {}
+        value = ontology.get("value", row.get("label_value")) if isinstance(ontology, dict) else None
+        if (model == "siam-v2" and value == 1
+                or model in {"supersynth", "synthseg", "fastsurfer"} and value in {3, 42}):
+            return "gray-matter"
+    return kind
+
+
 def mesh(collection, row, *, cancelled=lambda: False):
     """Separate source/display mesh; same connectivity, bounded local movement."""
     started = perf_counter()

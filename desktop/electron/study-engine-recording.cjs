@@ -40,12 +40,13 @@ async function encodeStudyReplay(directory,samples,source,signal) {
   for(const [i,{index,milliseconds,duration}] of intervals.entries()) {
     const s=samples[index];
     frames.push("file '"+index+".png'",'option framerate 1000','duration '+duration/1000);
-    const quantity=value=>Number.isFinite(value)?value.toFixed(1):'unknown';
+    const quantity=value=>Number.isFinite(value)?value.toFixed(1)+' mm³':'unavailable';
+    const boundary=s.endpoint??completions.get(milliseconds);
     titles.push(String(i+1),subtitleTime(milliseconds)+' --> '+subtitleTime(milliseconds+duration),
       caption(source)+'  |  '+caption(s.branchId)+'  |  '+s.time.toFixed(2)+' simulated s',
       'Action '+(s.position+1)+'/'+s.steps+'  ·  '+caption(s.operation)+'  ·  '+caption(s.kind.replaceAll('_',' '))+
-        '  ·  '+quantity(s.targetRemoved)+' mm³ target removed  ·  '+quantity(s.nonTargetRemoved)+' mm³ other removed',
-      caption(s.endpoint??completions.get(milliseconds)??' '),'');
+        (boundary?'  ·  '+caption(boundary):''),
+      'Target removed '+quantity(s.targetRemoved)+'  ·  Residual '+quantity(s.originalResidual)+'  ·  Other tissue removed '+quantity(s.nonTargetRemoved),'');
   }
   const last=intervals.at(-1);
   frames.push("file '"+last.index+".png'",'option framerate 1000');

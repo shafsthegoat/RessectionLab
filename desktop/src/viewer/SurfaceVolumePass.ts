@@ -17,7 +17,11 @@ export class SurfaceVolumePass {
   readonly tail=new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,depthBuffer:false});
   private readonly materials=new Map<THREE.Material,{peel:THREE.Material;tail:THREE.Material;sourceProgramKey:string;boundary?:'head'|'cortex'}>();
   private readonly uniforms={uPreviousSurface:{value:null as THREE.Texture|null},uOpaqueSurface:{value:null as THREE.Texture|null},uSurfaceSize:{value:new THREE.Vector2()},uFirstSurface:{value:true}};
-  private make(original:THREE.Material,tail:boolean){
+  private readonly corticalContact={
+    uHasCorticalBoundary:{value:false},
+    uCorticalBoundaryDepth:{value:null as THREE.Texture|null},
+  };
+  private make(original:THREE.Material,tail:boolean,corticalContact=false){
     const material=original.clone();material.transparent=tail;material.depthWrite=!tail;
     material.depthTest=!tail;material.blending=tail?THREE.NormalBlending:THREE.NoBlending;
     material.premultipliedAlpha=true;material.toneMapped=false;
@@ -28,12 +32,28 @@ export class SurfaceVolumePass {
       original.onBeforeCompile.call(material,shader,renderer);
       Object.assign(shader.uniforms,this.uniforms);
       shader.fragmentShader='uniform sampler2D uPreviousSurface;\nuniform sampler2D uOpaqueSurface;\nuniform vec2 uSurfaceSize;\nuniform bool uFirstSurface;\n'+shader.fragmentShader;
+      if(corticalContact){
+        Object.assign(shader.uniforms,this.corticalContact);
+        shader.fragmentShader='uniform sampler2D uCorticalBoundaryDepth; uniform bool uHasCorticalBoundary;\n'+shader.fragmentShader;
+      }
       shader.fragmentShader=shader.fragmentShader.replace('#include <clipping_planes_fragment>',`#include <clipping_planes_fragment>
         vec2 surfaceUv=gl_FragCoord.xy/uSurfaceSize;
         if(gl_FragCoord.z>=texture2D(uOpaqueSurface,surfaceUv).r-0.0000001)discard;
-        if(!uFirstSurface&&gl_FragCoord.z<=texture2D(uPreviousSurface,surfaceUv).r+0.0000001)discard;`);
+        float fragmentDepth=gl_FragCoord.z;
+        ${corticalContact ? `
+        // An adjacent context label can describe the same surface as cortex.
+        // Preserve both colors. Reserve a separate peel for the superficial layer
+        // only when the depth attachment cannot reliably split the surfaces.
+        if(uHasCorticalBoundary){
+          float cortex=texelFetch(uCorticalBoundaryDepth,ivec2(gl_FragCoord.xy),0).r;
+          const float depthUnit=1./16777215.;
+          if(cortex<1. && abs(fragmentDepth-cortex)<=4.*depthUnit)
+            fragmentDepth=max(0.,cortex-6.*depthUnit);
+        }
+        gl_FragDepth=fragmentDepth;` : ''}
+        if(!uFirstSurface&&fragmentDepth<=texture2D(uPreviousSurface,surfaceUv).r+0.0000001)discard;`);
     };
-    material.customProgramCacheKey=()=>`physical-surface-peeling-v2-${tail}-${original.customProgramCacheKey()}`;
+    material.customProgramCacheKey=()=>`physical-surface-peeling-v3-${tail}-${corticalContact}-${original.customProgramCacheKey()}`;
     return material;
   }
   render(renderer:THREE.WebGLRenderer,scene:THREE.Scene,camera:THREE.PerspectiveCamera,opaque:THREE.Texture,w:number,h:number,interactive:boolean){
@@ -49,13 +69,16 @@ export class SurfaceVolumePass {
     try{
       const hasBoundary=selected.some(s=>s.mesh.userData.cranialBoundary);
       if(hasBoundary)this.cranial.capture(renderer,scene,camera,selected,w,h);
+      this.corticalContact.uHasCorticalBoundary.value=selected.some(s=>s.mesh.userData.cranialBoundary==='cortex');
+      this.corticalContact.uCorticalBoundaryDepth.value=this.cranial.targets.get('cortex')?.depthTexture??null;
       for(const s of selected){
         const boundary=s.mesh.userData.cranialBoundary;
         const sourceProgramKey=s.material.customProgramCacheKey();
         let pair=this.materials.get(s.material);
         if(!pair||pair.boundary!==boundary){
           pair?.peel.dispose();pair?.tail.dispose();
-          pair={peel:this.make(s.material,false),tail:this.make(s.material,true),sourceProgramKey,boundary};
+          const contact=s.mesh.userData.corticalContact===true;
+          pair={peel:this.make(s.material,false,contact),tail:this.make(s.material,true,contact),sourceProgramKey,boundary};
           if(boundary){this.cranial.install(pair.peel,boundary,s.mesh.userData.corticalSignal);this.cranial.install(pair.tail,boundary,s.mesh.userData.corticalSignal);}
           this.materials.set(s.material,pair);
         }else if(pair.sourceProgramKey!==sourceProgramKey){
@@ -64,9 +87,19 @@ export class SurfaceVolumePass {
           pair.peel.needsUpdate=true;
           pair.tail.needsUpdate=true;
         }
-        // Opacity/color/clip changes update values without rebuilding programs.
-        for(const m of [pair.peel,pair.tail]){const p=m as THREE.MeshStandardMaterial,o=s.material as THREE.MeshStandardMaterial;
-          p.color.copy(o.color);p.opacity=o.opacity;p.clippingPlanes=o.clippingPlanes;p.roughness=o.roughness;p.metalness=o.metalness;}
+        const source=s.material as THREE.MeshStandardMaterial;
+        for(const m of [pair.peel,pair.tail]){
+          const material=m as THREE.MeshStandardMaterial;
+          material.color.copy(source.color);
+          if(material.emissive){
+            material.emissive.copy(source.emissive);
+            material.emissiveIntensity=source.emissiveIntensity;
+          }
+          material.opacity=source.opacity;
+          material.clippingPlanes=source.clippingPlanes;
+          material.roughness=source.roughness;
+          material.metalness=source.metalness;
+        }
         s.mesh.material=pair.peel;
       }
       for(let i=0;i<=count;i++){

@@ -23,3 +23,18 @@ test('C-order scan texture preserves acquired black, missing samples and flap co
   assert.deepEqual(shader.uniforms.uCropMax.value.toArray(),[.25,2.25,11.25]);
   texture.dispose();material.dispose();
 });
+
+test('source contrast on the section cap preserves tissue color and physical lighting',()=>{
+  const signal={shape:[1,1,1],origin:[0,0,0],spacingMm:[1,1,1],unknownValue:0,voxels:Uint8Array.of(128)};
+  const field={intensity:signal,origin:[0,0,0],shape:[1,1,1],spacingMm:1};
+  const texture=operativeSignalTexture(signal);
+  const material=operativeTissueMaterial('tumor',field,texture,new THREE.Vector3(),{value:0});
+  const shader={...THREE.ShaderLib.standard,uniforms:{}};
+  material.onBeforeCompile(shader,{});
+  assert.match(shader.fragmentShader,/dFdx\(vRestPosition\)/);
+  assert.match(shader.fragmentShader,/diffuseColor\.rgb\*=exp2/);
+  assert.equal(shader.fragmentShader.slice(shader.fragmentShader.indexOf('#include <alphamap_fragment>')),
+    THREE.ShaderLib.standard.fragmentShader.slice(THREE.ShaderLib.standard.fragmentShader.indexOf('#include <alphamap_fragment>')));
+  assert(material.color.b>material.color.r);
+  material.dispose();texture.dispose();
+});

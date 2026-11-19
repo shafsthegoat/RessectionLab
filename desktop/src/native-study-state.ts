@@ -23,7 +23,13 @@ export function corticalLayers(layers:Layer[]):Layer[] {
 }
 
 /** Decide which anatomy can drive the automatic appearance of this scan. */
-export function presentationLayers(study:Binding['document'],seriesId:string):Layer[] {
+export function presentationLayers(study:Binding['document'],seriesId:string,displaySources?:ReadonlyArray<{seriesId:string;alignment:string}>):Layer[] {
+  if(displaySources){
+    // A source-bound estimate may already be visible in the shared scene.
+    // Style its surfaces with the rest of the patient, including an imported CT skull.
+    const admitted=new Set(displaySources.filter(s=>s.alignment!=='unavailable').map(s=>s.seriesId));
+    if(admitted.has(seriesId))return study.layers.filter(layer=>admitted.has(layer.source_series));
+  }
   const shared=(id:string)=>id===study.reference_series||['reference','reviewed','source-provided'].includes(study.transforms[id]?.status);
   return study.layers.filter(layer=>layer.source_series===seriesId||(shared(seriesId)&&shared(layer.source_series)));
 }

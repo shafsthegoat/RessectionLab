@@ -271,7 +271,7 @@ function bindOperations() {
     const result=await engine.request('createSurgicalFixture', {}); currentCasePath=null; return result;
   });
   handle('openBoundSurgicalReplay', async args=>{
-    args=plainArgs(args,['collectionId','snapshotId','targetLayerId']);
+    args=plainArgs(args,['collectionId','snapshotId','targetLayerId','approachId']);
     if(!await rehearsalUnsaved.allowNavigation())return null;
     const filename=await pick('Open recorded engine episode for this study',['ressectionlab','rslab']);
     if(!filename)return null;

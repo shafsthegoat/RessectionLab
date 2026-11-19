@@ -476,6 +476,11 @@ test('planning display hides only withdrawn tools while retaining canonical pose
   const r=renderer(),input=interaction();input.view.metrics={};input.view.slots.left.inserted=false;input.view.slots.right.inserted=false;
   r.panes={anatomy:{dataset:{}}};r.setSurgical(input);assert.equal(r.surgicalSlots.size,2);
   const before=structuredClone(input.view),planningOverlay={binding:'source-state',constraints:{target:{centerMm:[7,8,9],radiusMm:2},entry:{centerMm:[1,2,3],radiusMm:4},tool:{instrument:'cusa',radiusMm:1.5},requiredEvidence:[],candidateCount:3,nonTargetClearanceMm:0},routes:[],selectedId:null,limitingStructures:[]};
+  r.setSurgical({...input,insertedInstrumentsOnly:true});assert.equal(r.surgicalSlots.size,0);
+  assert.deepEqual(JSON.parse(r.panes.anatomy.dataset.renderedToolSlots),[]);
+  const entering={...input.view,slots:{...input.view.slots,right:{...input.view.slots.right,inserted:true}}};
+  r.setSurgical({...input,view:entering,insertedInstrumentsOnly:true});
+  assert.deepEqual(JSON.parse(r.panes.anatomy.dataset.renderedToolSlots),['right']);
   r.setSurgical({...input,planningOverlay});assert.equal(r.surgicalSlots.size,0);
   const canonical=JSON.parse(r.panes.anatomy.dataset.acceptedTools);assert.deepEqual(canonical.left.position,input.view.slots.left.position);assert.equal(canonical.left.inserted,false);assert.equal(Object.keys(canonical).length,2);
   const preview={...input.view,stateId:'preview',slots:{...input.view.slots,left:{...input.view.slots.left,inserted:true}}};

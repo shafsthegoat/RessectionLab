@@ -4,6 +4,9 @@ import {caseImageEvidence,caseLayerEvidence,conditionalRehearsalNotice} from './
 import {SurgicalPanel} from "./SurgicalPanel";
 import {EnvironmentPreparationPanel} from './EnvironmentPreparationPanel';
 import {OperativeSteps} from './OperativeSteps';
+import {EngineStudyReference} from './EngineStudyReference';
+import {recordedMicroscope,recordingMatchesStudy,recordingSelectionKey} from './study-engine-presentation';
+import type {VerifiedStudyReplay} from './types';
 import {operativeRouteIssue} from './operative-field';
 import {rehearsalPresentation,initialRehearsalPresentation} from './rehearsal-presentation';
 import {operativeFieldFrame} from './full-case-presentation';
@@ -559,7 +562,7 @@ export default function App() {
   const [api, setApi] = useState<ResectionApi | null>(
     window.resectionApi ?? null,
   );
-  const native = useNativeWorkspace(api);
+  const study = useNativeWorkspace(api);
   const nativeApi = api as (ResectionApi&NativeAnatomyApi)|null;
   const [newStudyOpen,setNewStudyOpen]=useState(false);
   const [newPatient,setNewPatient]=useState('');
@@ -574,9 +577,28 @@ export default function App() {
   const [workbenchTab,setWorkbenchTab] = useState<"cases"|"data"|"anatomy"|"rehearsal"|"research">("anatomy");
   const [operativeKey,setOperativeKey]=useState<string|null>(null);
   const [planningEditsPending,setPlanningEditsPending]=useState(false);
+  const [recordingSelection,setRecordingSelection]=useState<string|null>(null);
+  const currentSelection=study.binding&&study.planning.activeTargetLayerId?{
+    collectionId:study.binding.collectionId,patientId:study.binding.document.patient_id,
+    snapshotId:study.binding.document.snapshot_id,targetLayerId:study.planning.activeTargetLayerId,
+    route:study.planning.selected??null,
+  }:null;
+  const selectionKey=recordingSelectionKey(currentSelection);
+  const latestSelectionKey=useRef(selectionKey);
+  latestSelectionKey.current=selectionKey;
+  const boundRecording=!!recordingSelection&&recordingSelection===selectionKey&&!!currentSelection&&!!payload&&
+    !study.draft&&!planningEditsPending&&recordingMatchesStudy(payload.verifiedStudyReplay,payload.caseHash,currentSelection);
+  const viewingStudyRecording=boundRecording&&workbenchTab==='rehearsal';
+  // The native study stays resident while its separate, source-bound engine case owns the playback controls.
+  const native=viewingStudyRecording?{...study,binding:null}:study;
+  const replayReceipt=payload?.verifiedStudyReplay??payload?.artifacts?.nativeStudyReplay as VerifiedStudyReplay|undefined;
+  const showEngineRecording=workbenchTab==='rehearsal'&&!native.binding&&!!replayReceipt&&replayReceipt.caseHash===payload?.caseHash;
+  useEffect(()=>{
+    if(recordingSelection&&recordingSelection!==selectionKey)setRecordingSelection(null);
+  },[recordingSelection,selectionKey]);
   const nativeRoute=native.planning.selected;
   const routeKey=native.binding && nativeRoute
-    ? JSON.stringify([native.binding.collectionId,native.binding.document.snapshot_id,nativeRoute.id,nativeRoute.parameterHash,nativeRoute.targetLayerId])
+    ? JSON.stringify([native.binding.collectionId,native.binding.document.snapshot_id,nativeRoute.id,nativeRoute.parameterHash,nativeRoute.measurementHash,nativeRoute.targetLayerId])
     : null;
   const operativeIssue=native.binding && (native.planning.targetSelectionIssue ||
     operativeRouteIssue(nativeRoute,native.planning.activeTargetLayerId,native.binding.document.snapshot_id));
@@ -584,7 +606,7 @@ export default function App() {
   const linkedOperative=showOperative&&native.registration==='patient frame'&&!!native.volume&&!native.original;
   function openOperative(){
     if(!routeKey||operativeIssue||native.draft||planningEditsPending)return;
-    setOperativeKey(routeKey);setWorkbenchTab('rehearsal');setCasePanel(true);
+    setRecordingSelection(null);setOperativeKey(routeKey);setWorkbenchTab('rehearsal');setCasePanel(true);
   }
   const [rehearsalModel,setRehearsalModel]=useState<'standard'|'legacy'>('standard');
   const [libraryCases,setLibraryCases] = useState<LibraryCase[]>([]);
@@ -741,6 +763,8 @@ export default function App() {
   }:null,[api,native.binding?.collectionId,native.binding?.document.snapshot_id,native.series]);
   const surgical = useSurgical(displayedCase, surgicalApi, workbenchTab === "rehearsal" && rehearsalModel==='standard' && !native.binding && (!payload?.artifacts?.nativeStudyReplay||!imaging.selected),
     !payload?.artifacts?.nativeStudyReplay && !!(payload?.artifacts?.surgical_toolbox as {archivePreviewAvailable?:boolean}|undefined)?.archivePreviewAvailable);
+  const nativeReference=viewingStudyRecording&&study.patientFrameReady&&!study.original?study.volume:null;
+  const recordingReferenceSettings=useMemo(()=>rehearsalPresentation(surgical.view?.scene.regions??[]),[surgical.view?.scene.sceneId]);
   const presentedScene=useRef<string|null>(null);
   useEffect(()=>{
     if(surgical.view&&presentedScene.current!==surgical.view.scene.sceneId){
@@ -818,7 +842,7 @@ export default function App() {
   }, []);
 
   const installCase = useCallback(
-    async (sourceInput: CasePayload, runtime: ResectionApi, requestedGeneration?: number) => {
+    async (sourceInput: CasePayload, runtime: ResectionApi, requestedGeneration?: number, keepStudySelection?:string) => {
       const generation = requestedGeneration ?? ++caseGeneration.current;
       if (generation !== caseGeneration.current) return false;
       setHydrating(true);
@@ -827,10 +851,11 @@ export default function App() {
         const reopened = await hydrateWorkspace(sourceInput, runtime,
           () => mounted.current && generation === caseGeneration.current);
         const { source, volume: loaded } = reopened;
-        if (!mounted.current || generation !== caseGeneration.current)
+        if (!mounted.current || generation !== caseGeneration.current || (keepStudySelection && latestSelectionKey.current!==keepStudySelection))
           return false;
         // Commit only after the complete replacement has hydrated successfully.
-        native.clear();
+        if(!keepStudySelection)native.clear();
+        setRecordingSelection(keepStudySelection??null);
         imaging.invalidate();
         diagnostic.clear();
         setEpisodeVisible(false);
@@ -931,7 +956,10 @@ export default function App() {
         const images=reopened.imagingState;
         imaging.restore(source.caseHash, reopened.series,
           images&&source.artifacts?.nativeStudyReplay?{...images,selectedSeriesId:null}:images);
-        setPrimaryViewer(reopened.imagingState?.states.primary.viewer ?? {});
+        const restoredViewer=reopened.imagingState?.states.primary.viewer??{};
+        const recording=source.verifiedStudyReplay??source.artifacts?.nativeStudyReplay as VerifiedStudyReplay|undefined;
+        setPrimaryViewer(recording?.caseHash===source.caseHash&&recording.recordedApproach
+          ?recordedMicroscope(recording.recordedApproach,restoredViewer):restoredViewer);
         if (reopened.imagingState) {
           setCursor(reopened.imagingState.states.primary.cursor);
           setVisibleLayers(reopened.imagingState.states.primary.visibleLayers);
@@ -1554,8 +1582,8 @@ export default function App() {
   const hasStudy = !!(native.binding || caseData);
   const libraryOpen = workbenchTab === 'cases' || (!hasStudy && (workbenchTab === 'anatomy' || workbenchTab === 'data'));
   const activeTab = libraryOpen ? 'cases' : workbenchTab;
-  const patientId = native.binding?.document.patient_id ?? caseData?.caseId ?? null;
-  const scanName = native.binding ? scanLabel(native.binding.document.series.find(s => s.id === native.series) ?? {id: '', modality: 'Study'})
+  const patientId = native.binding?.document.patient_id ?? replayReceipt?.patientId ?? caseData?.caseId ?? null;
+  const scanName = showEngineRecording?'Engine playback':native.binding ? scanLabel(native.binding.document.series.find(s => s.id === native.series) ?? {id: '', modality: 'Study'})
     : displayedSource ? String(displayedSource.metadata.selected_modality ?? 'Source imaging') : '';
   const inspectorName = {cases: 'Cases', data: 'Scans', anatomy: 'Anatomy', research: native.binding ? 'Planning' : 'Case evidence', rehearsal: 'Rehearsal'}[workbenchTab];
 
@@ -1596,6 +1624,7 @@ export default function App() {
         {hasStudy && <button
           className="header-button save-button"
           onClick={native.binding?()=>native.save():save}
+          title={showEngineRecording?'Save recorded procedure and playback position':native.binding?'Save native study and plan':undefined}
           disabled={(!payload&&!native.binding) || busy || !!native.draft || engineStopped || readonly}
         >
           <ArrowDownToLine size={15} />
@@ -1608,7 +1637,7 @@ export default function App() {
           {id: 'cases', label: 'Cases', name: 'Cases', icon: Files},
           {id: 'data', label: 'Scans', name: 'Scans', icon: Scan},
           {id: 'anatomy', label: 'Anatomy', name: '3D workspace', icon: Layers3},
-          ...(native.binding ? [{id: 'research' as const, label: 'Plan', name: 'Plan & compare', icon: Waypoints}] : []),
+          ...(study.binding ? [{id: 'research' as const, label: 'Plan', name: 'Plan & compare', icon: Waypoints}] : []),
           {id: 'rehearsal', label: 'Rehearse', name: 'Rehearse', icon: Orbit},
         ] as const).map(item => <button key={item.id}
           className={`rail-button ${activeTab === item.id ? 'selected' : ''}`}
@@ -1690,12 +1719,15 @@ export default function App() {
               {api?.openBoundSurgicalReplay&&<div>
                 <button disabled={busy||!!native.draft||planningEditsPending||!native.planning.activeTargetLayerId}
                   onClick={()=>void act(async()=>{
-                    const binding=native.binding,target=native.planning.activeTargetLayerId;
-                    if(!binding||!target)return;
+                    if(!currentSelection||!selectionKey)return;
+                    const {collectionId,snapshotId,targetLayerId,route}=currentSelection;
                     const generation=++caseGeneration.current;
-                    const replay=await api.openBoundSurgicalReplay!({collectionId:binding.collectionId,
-                      snapshotId:binding.document.snapshot_id,targetLayerId:target});
-                    if(replay&&await installCase(replay,api,generation))setWorkbenchTab('rehearsal');
+                    const replay=await api.openBoundSurgicalReplay!({collectionId,snapshotId,targetLayerId,
+                      ...(route?{approachId:route.id}:{})});
+                    if(!replay||latestSelectionKey.current!==selectionKey||generation!==caseGeneration.current)return;
+                    if(!recordingMatchesStudy(replay.verifiedStudyReplay,replay.caseHash,currentSelection))
+                      throw Error('The recorded patient, target or approach differs from the current plan.');
+                    await installCase(replay,api,generation,selectionKey);
                   })}>Open recorded engine episode</button>
                 <p className="surgical-note">{native.planning.activeTargetLayerId?
                   'Checks the recorded instruments and actions against this study revision and target. A new procedure requires reviewed brainstem, cerebellum, entry, compartment and instrument-workspace evidence.':
@@ -1711,17 +1743,24 @@ export default function App() {
             const prepared=await api.prepareSurgicalEnvironment(options);
             if(prepared&&await installCase(prepared,api))setWorkbenchTab('rehearsal');
           }}/>}</> : <>
-            {payload?.verifiedStudyReplay&&<div className="surgical-note" role="status" aria-label="Source-verified recorded episode">
-              <strong>Recorded engine episode · read only</strong>
-              <p>{payload.verifiedStudyReplay.patientId} · {payload.verifiedStudyReplay.targetLayerId} · {payload.verifiedStudyReplay.actions} recorded actions</p>
-              <details><summary>Verified recording identities</summary><p>Study {payload.verifiedStudyReplay.sourceSnapshotId}</p>
-              <p>Branch {payload.verifiedStudyReplay.branchId} · endpoint {payload.verifiedStudyReplay.endpointStateId}</p>
-              <p>Instrument catalog {payload.verifiedStudyReplay.instrumentCatalogHash}</p>
-              {payload.verifiedTargetSampling&&<p>Native annotation {Number(payload.verifiedTargetSampling.nativeAnnotationMm3.toFixed(2))} mm³
-                {' · '}{payload.verifiedTargetSampling.nativeGridSpacingMm.map(n=>+n.toFixed(3)).join(' × ')} mm.
-                Engine mask {Number(payload.verifiedTargetSampling.engineAnnotationMm3.toFixed(2))} mm³
-                {' · '}{payload.verifiedTargetSampling.engineGridSpacingMm.map(n=>+n.toFixed(3)).join(' × ')} mm.</p>}</details>
-            </div>}
+            {showEngineRecording&&replayReceipt&&<section className="operative-inspector engine-recording-info" aria-label="Source-verified recorded episode">
+              <h2>{viewingStudyRecording?'Study-linked recording':'Saved procedural recording'}</h2>
+              <strong>{replayReceipt.recordedApproach?.name??'Recorded engine episode'}</strong>
+              <p>{replayReceipt.actions} recorded actions · read only</p>
+              {!replayReceipt.recordedApproach&&<p>This archive records its own tool path. Its geometry has no saved link to a selected planning approach.</p>}
+              {!replayReceipt.actionGenerator&&<p>The archive does not identify its action generator.</p>}
+              {viewingStudyRecording&&<button onClick={()=>setWorkbenchTab('research')}>Return to plan</button>}
+              <details><summary>Recording and save details</summary>
+                <p>Save stores the engine episode and timeline position. Save the native study from Plan to retain the editable approaches.</p>
+                <p>Study {replayReceipt.sourceSnapshotId}</p><p>Target {replayReceipt.targetLayerId}</p>
+                <p>Branch {replayReceipt.branchId} · endpoint {replayReceipt.endpointStateId}</p>
+                <p>Instrument catalog {replayReceipt.instrumentCatalogHash}</p>
+                {payload?.verifiedTargetSampling&&<p>Native annotation {Number(payload.verifiedTargetSampling.nativeAnnotationMm3.toFixed(2))} mm³
+                  {' · '}{payload.verifiedTargetSampling.nativeGridSpacingMm.map(n=>+n.toFixed(3)).join(' × ')} mm.
+                  Engine mask {Number(payload.verifiedTargetSampling.engineAnnotationMm3.toFixed(2))} mm³
+                  {' · '}{payload.verifiedTargetSampling.engineGridSpacingMm.map(n=>+n.toFixed(3)).join(' × ')} mm.</p>}
+              </details>
+            </section>}
             {!payload?.artifacts?.nativeStudyReplay&&<details className="rehearsal-environment"><summary>Environment · {rehearsalModel==='standard'?'standard':'legacy'}</summary><label className="rehearsal-model">Rehearsal model<select aria-label="Rehearsal model" value={rehearsalModel} onChange={e=>{rehearsal.pause();surgical.cancel();setRehearsalModel(e.target.value as typeof rehearsalModel)}}><option value="standard">Standard instrument environment</option><option value="legacy">Legacy bounded episode</option></select></label></details>}
             {rehearsalModel==='standard'?<>
               {frozenCusaRunning&&<button onClick={()=>void api?.cancelFrozenCusa?.()}>Cancel frozen policy execution</button>}<fieldset disabled={frozenCusaPending} style={{border:0,padding:0,margin:0,minWidth:0}}><SurgicalPanel c={surgical} studyRecording={!!payload?.artifacts?.nativeStudyReplay} planningCursor={displayedCursor} onPlanningCursor={point=>{if(imaging.selected)imaging.setCursor(point);else setCursor(point);}} inspectionNotice={inspectionNotice(viewerSettings)} onRunFrozenCusa={api?.executeFrozenCusa?executeFrozenCusa:undefined} onRunFrozenSector={api?.executeFrozenCusa?(method=>executeFrozenCusa(method,'sector')):undefined} frozenCusaPending={frozenCusaPending} learningReport={payload?.artifacts?.patient_rescue_learning} executionReport={payload?.artifacts?.patient_rescue_ppo_bc??payload?.artifacts?.patient_rescue_bc} cusaLearning={payload?.artifacts?.surgical_toolbox} microscopeControls={<><SurgeonViewControls c={surgical} settings={viewerSettings} onSettings={setViewerSettings}/>{viewerSettings.operativeView!=='surgeon'&&<SurgicalCloseViewControls c={surgical} source={displayedCase} settings={viewerSettings} cursor={displayedCursor} onSettings={setViewerSettings} onCursor={point=>{if(imaging.selected&&point)imaging.setCursor(point);else setCursor(point);}} onFitAnatomy={()=>{setCameraMode('anatomy');setCameraFitRequest(request=>request+1);}}/>}</>} fieldDisplayControls={<label><input type="checkbox" checked={viewerSettings.smoothSurfaces!==false} onChange={e=>setViewerSettings({...viewerSettings,smoothSurfaces:e.target.checked})}/>Smooth 3D surfaces</label>} onFrameField={()=>{if(surgical.view){const field=operativeFieldFrame(surgical.view,imaging.selected?null:annotationCenterMm,viewerSettings,displayedCase);if(field){if(imaging.selected)imaging.setCursor(field.center);else setCursor(field.center);setViewerSettings(field.settings);setMessage(field.anchor==='target'?'Framed supplied annotation.':'Framed accepted instrument in source scan.');}else setMessage('No accepted instrument or supplied annotation lies within this source scan.');}}} anatomyControls={!!surgical.view&&<details className="rehearsal-anatomy"><summary>Anatomy visibility and appearance</summary><button onClick={()=>setViewerSettings(rehearsalPresentation(surgical.view!.scene.regions,viewerSettings))}>Reference appearance</button>
@@ -2041,10 +2080,12 @@ export default function App() {
             <button className="text-button" onClick={restoreSourceView}>Source view <X size={12}/></button></div>}
         {native.binding&&!showOperative&&native.registration==='alignment preview'&&<div className="workspace-alignment-banner" role="status">Estimated scan alignment <span>{Object.values(native.volume?.alignmentQuality??{}).flatMap(q=>q.warnings)[0]??'Shared structures · verify in Scans before planning'}</span></div>}
         <NativeCorrectionBar workspace={native}/>
-        <div className={linkedOperative?"viewer-shell has-operative-reference":"viewer-shell"}>
+        <div className={linkedOperative?"viewer-shell has-operative-reference":showEngineRecording?"viewer-shell has-engine-reference":"viewer-shell"}
+          data-engine-replay-layout={showEngineRecording?'source-bound':undefined}>
           {showOperative && native.binding && nativeApi && nativeRoute && <OperativeSteps key={routeKey} api={nativeApi} collectionId={native.binding.collectionId} route={nativeRoute} linkedOverview={linkedOperative} sourceVolume={native.registration==='patient frame'?native.volume:null}/>}
           {(!showOperative||linkedOperative) && displayedCase && (
             <ViewerWorkspace
+              engineInspection={showEngineRecording}
               approachOverview={linkedOperative}
               surgicalInteraction={!showOperative&&workbenchTab==="rehearsal"?surgical.interaction:undefined}
               rehearsalState={showOperative||surgical.interaction.view?null:rehearsal.viewerState}
@@ -2077,6 +2118,10 @@ export default function App() {
               priorLayer={!native.binding && display.primaryOverlaysPermitted ? priorView : null}
             />
           )}
+          {showEngineRecording&&replayReceipt&&caseData&&<EngineStudyReference receipt={replayReceipt}
+            nativeSource={!!nativeReference} targetLabel={nativeReference?study.binding?.document.layers.find(l=>l.id===replayReceipt.targetLayerId)?.label??replayReceipt.targetLayerId:replayReceipt.targetLayerId.replaceAll('_',' ')}
+            reference={nativeReference?{caseData:nativeReference,visibleLayers:study.state.visible,workspaceSettings:study.state.settings,
+              cursor:study.state.cursor,overlayOpacity}:{caseData,visibleLayers,workspaceSettings:recordingReferenceSettings,cursor:null,overlayOpacity}}/>}
           {!hasStudy && !libraryOpen && <div className="welcome-overlay">
             <Scan size={28} strokeWidth={1.5}/>
             <h2>No study open</h2>

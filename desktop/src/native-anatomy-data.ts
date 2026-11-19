@@ -1,5 +1,6 @@
 import {studyLayerDisplayKind} from './native-study-state.ts';
-import type {ViewerVolume,VesselDisplayFilter,PatientContext} from './viewer/contracts';
+import type {ViewerVolume,VesselDisplayFilter,PatientContext,SurfaceAppearanceSource} from './viewer/contracts';
+import {inverseAffine,rasAffine} from './viewer/coordinates.ts';
 import type {Point3} from './viewer/coordinates';
 import type {ViewerWorkspaceSettings} from './viewer/workspaceSettings';
 import type {ArrayDescriptor,ResectionApi,CasePayload} from './types';
@@ -85,15 +86,26 @@ export interface NativeAnatomyApi {
   anatomySample(args:Args):Promise<unknown>;
 }
 export type Surface=NonNullable<ViewerVolume['compartments'][number]['surface']>;
-export type ViewPayload=Omit<ViewerVolume,'mri'|'compartments'|'tractography'|'labelSets'|'patientContext'|'headSupport'>&{headSupport?:ArrayDescriptor;patientContext?:{sources:PatientContext['sources'];affine?:ViewerVolume['affine'];shape?:ViewerVolume['shape'];signal?:ArrayDescriptor};labelSets?:Array<{id:string;data:ArrayDescriptor}>;tractography?:Array<{id:string;label:string;points:ArrayDescriptor;offsets:ArrayDescriptor}>;mri:ArrayDescriptor;modality:string;registrationStatus:string;patientFrameReady?:boolean;alignmentPreviews?:string[];unavailableLayers:string[];compartments:Array<{kind?:string;displayKind?:string;sourceIdentity?:string;qa?:import('./viewer/contracts').AnatomyQuality;surfaceDiagnostics?:import('./viewer/surfacePolicy').SurfaceDiagnostics;name:string;color:string;volumeMm3?:number;displayFilter?:VesselDisplayFilter;sourceSupport?:import('./viewer/contracts').TissueDisplaySupport;mask?:ArrayDescriptor;labelSet?:string;labelValue?:number;surface?:{empty:true}|Record<keyof Surface,ArrayDescriptor>}>};
-export async function hydrateAnatomy(payload:ViewPayload,api:ResectionApi,cachedImage?:Float32Array,cached?:Pick<ViewerVolume,'labelSets'|'tractography'|'patientContext'|'headSupport'>,studyLayers?:Layer[]):Promise<ViewerVolume>{
+export type ViewPayload=Omit<ViewerVolume,'mri'|'compartments'|'tractography'|'labelSets'|'patientContext'|'headSupport'>&{appearanceSources?:Array<Pick<SurfaceAppearanceSource,'seriesId'|'modality'|'sourceSha256'|'affine'>&{signal:ArrayDescriptor}>;headSupport?:ArrayDescriptor;patientContext?:{sources:PatientContext['sources'];affine?:ViewerVolume['affine'];shape?:ViewerVolume['shape'];signal?:ArrayDescriptor};labelSets?:Array<{id:string;data:ArrayDescriptor}>;tractography?:Array<{id:string;label:string;points:ArrayDescriptor;offsets:ArrayDescriptor}>;mri:ArrayDescriptor;modality:string;registrationStatus:string;patientFrameReady?:boolean;alignmentPreviews?:string[];unavailableLayers:string[];compartments:Array<{sourceSeries?:string;alignment?:string;kind?:string;displayKind?:string;sourceIdentity?:string;qa?:import('./viewer/contracts').AnatomyQuality;surfaceDiagnostics?:import('./viewer/surfacePolicy').SurfaceDiagnostics;name:string;color:string;volumeMm3?:number;displayFilter?:VesselDisplayFilter;sourceSupport?:import('./viewer/contracts').TissueDisplaySupport;mask?:ArrayDescriptor;labelSet?:string;labelValue?:number;surface?:{empty:true}|Record<keyof Surface,ArrayDescriptor>}>};
+export async function hydrateAnatomy(payload:ViewPayload,api:ResectionApi,cachedImage?:Float32Array,cached?:Pick<ViewerVolume,'labelSets'|'tractography'|'patientContext'|'headSupport'>,studyLayers?:Layer[],appearanceCache?:Map<string,Float32Array>):Promise<ViewerVolume>{
   async function bytes(d:ArrayDescriptor){
     if(!d || d.byteLength>512*1024**2 || d.byteOrder!=='little' || d.order!=='C')throw Error('Unsupported anatomy transfer');
     const b=await api.readAsset(d.assetId);if(b.byteLength!==d.byteLength)throw Error('Incomplete anatomy transfer');
     return (b.byteOffset===0&&b.byteLength===b.buffer.byteLength?b.buffer:b.buffer.slice(b.byteOffset,b.byteOffset+b.byteLength)) as ArrayBuffer;
   }
-  const mri=cachedImage??new Float32Array(await bytes(payload.mri));
+  const mri=cachedImage??appearanceCache?.get(payload.mri.sha256)??new Float32Array(await bytes(payload.mri));
   if(mri.length!==payload.shape.reduce((a,b)=>a*b,1))throw Error('Native image grid mismatch');
+  const appearanceSources=new Map<string,SurfaceAppearanceSource>();
+  for(const {signal,...source} of payload.appearanceSources??[]){
+    const shape=signal.shape;
+    if(signal.dtype!=='float32'||shape.length!==3||shape.some(n=>!Number.isInteger(n)||n<2)||
+       shape.reduce((a,b)=>a*b,1)*4!==signal.byteLength)throw Error('Invalid surface appearance grid');
+    const affine=rasAffine(source.affine,'RAS+');
+    inverseAffine(affine);
+    const data=signal.sha256===payload.mri.sha256?mri:appearanceCache?.get(signal.sha256)??new Float32Array(await bytes(signal));
+    if(data.length*4!==signal.byteLength)throw Error('Incomplete surface appearance grid');
+    appearanceSources.set(source.seriesId,{...source,affine,signalSha256:signal.sha256,shape:shape as Point3,data});
+  }
   const compartments:ViewerVolume['compartments']=[];
   for(const layer of payload.compartments){
     const mask=layer.mask?new Uint8Array(await bytes(layer.mask)):new Uint8Array(0);if(!layer.labelSet&&mask.length!==mri.length)throw Error('Overlay grid mismatch');
@@ -109,7 +121,9 @@ export async function hydrateAnatomy(payload:ViewPayload,api:ResectionApi,cached
     const declaration=studyLayers?.find(row=>row.id===layer.name);
     const declaredKind=declaration&&studyLayerDisplayKind(declaration);
     const displayKind=declaredKind!==declaration?.kind?declaredKind:layer.displayKind??declaredKind;
-    compartments.push({...layer,displayKind,mask,surface});
+    const appearanceSource=layer.alignment!=='source-grid preview'&&layer.sourceSeries&&['gray-matter','cerebral-cortex','cerebellar-cortex'].includes(displayKind??layer.kind??'')
+      ?appearanceSources.get(layer.sourceSeries):undefined;
+    compartments.push({...layer,displayKind,mask,surface,appearanceSource});
   }
   const tractography=[];for(const t of payload.tractography??[]){const resident=cached?.tractography?.find(r=>r.id===t.id);if(resident){tractography.push(resident);continue;}tractography.push({...t,points:new Float32Array(await bytes(t.points)),offsets:new Uint32Array(await bytes(t.offsets))});}
   const labelSets=[];for(const set of payload.labelSets??[]){const resident=cached?.labelSets?.find(r=>r.id===set.id);if(resident){labelSets.push(resident);continue;}const data=new Uint16Array(await bytes(set.data));if(data.length!==mri.length)throw Error("Categorical grid mismatch");labelSets.push({id:set.id,data});}

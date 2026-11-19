@@ -31,7 +31,7 @@ export function installNativeContextLighting(material: MeshStandardMaterial, bou
         float depth = (vViewPosition.z - centerDepth) / uNativeContextRadius;
         float attenuation = mix(1.0, 0.70, smoothstep(-0.55, 0.60, depth));
         float diffuseLighting = (0.15 + 0.70 * key + 0.14 * fill) * attenuation;
-        outgoingLight = diffuseColor.rgb * diffuseLighting + 0.16 * totalEmissiveRadiance;
+        outgoingLight = diffuseColor.rgb * diffuseLighting + totalEmissiveRadiance;
       #include <opaque_fragment>`);
   };
   const update = (active: boolean) => {

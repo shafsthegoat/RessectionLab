@@ -200,7 +200,7 @@ def dispatch(session, operation, args, request, progress):
         _require_json_budget(result, 2 * 1024 * 1024, 'SURGICAL_RESULT_LIMIT', 'Comparison result exceeds budget')
         return result
     if operation == 'openBoundSurgicalReplay':
-        _keys(args, {'collectionId', 'snapshotId', 'targetLayerId', 'path'})
+        _keys(args, {'collectionId', 'snapshotId', 'targetLayerId', 'approachId', 'path'})
         from .desktop_bridge import _path
         from .workspace_bundle import load_workspace
         from .surgical_study_replay import validate_saved_binding, verify_recording
@@ -215,7 +215,7 @@ def dispatch(session, operation, args, request, progress):
         if 'nativeStudyReplay' in artifacts:
             validate_saved_binding(case, artifacts)
         receipt, sampling = verify_recording(collection, args['targetLayerId'], case, artifacts.get(ARTIFACT),
-            check=request.check)
+            approach_id=args.get('approachId'), check=request.check)
         # Opening via the native study creates a replay-only workspace. The
         # marker restricts operations even after save/reopen; it grants no trust.
         artifacts['nativeStudyReplay'] = receipt

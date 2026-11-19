@@ -118,7 +118,9 @@ export interface PriorLayerView {
 }
 
 export interface VerifiedStudyReplay {
-  patientId:string;sourceSnapshotId:string;targetLayerId:string;branchId:string;actions:number;
+  caseHash:string;patientId:string;sourceSnapshotId:string;targetLayerId:string;branchId:string;actions:number;
+  recordedApproach?:{id:string;name:string;entry:Vec3;target:Vec3;radiusMm:number;parameterHash:string;measurementHash:string};
+  actionGenerator?:{kind:string;name:string};
   actionsHash:string;sceneId:string;endpointStateId:string;instrumentCatalogHash:string;
 }
 export interface CasePayload {
@@ -476,7 +478,7 @@ export interface ResectionApi extends TrainingApi {
   finishFrozenCusa?(args:{admissionId:string;accepted:boolean}):Promise<boolean>;
   cancelFrozenCusa?():Promise<boolean>;
   workspaceInstalled?(args:{caseHash:string;caseId:string}):Promise<boolean>;
-  openBoundSurgicalReplay?(args:{collectionId:string;snapshotId:string;targetLayerId:string}):Promise<CasePayload|null>;
+  openBoundSurgicalReplay?(args:{collectionId:string;snapshotId:string;targetLayerId:string;approachId?:string}):Promise<CasePayload|null>;
   prepareSurgicalEnvironment?(args:import('./EnvironmentPreparationPanel').EnvironmentPreparation):Promise<CasePayload|null>;
   createSurgicalFixture?: import("./surgical-types").SurgicalApi["createSurgicalFixture"];
   createRehearsal?: import("./rehearsal-types").RehearsalApi["createRehearsal"];

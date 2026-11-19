@@ -172,3 +172,48 @@ def test_selected_plan_export_preserves_target_and_current_revision_without_acti
                     'command': 'inspect'})['selectedPlanDecision'] == decision
     finally:
         session.close()
+
+
+def test_exact_grid_fixed_recording_rejects_substitution_and_preserves_registration_scope():
+    """Optional real-data regression on the reproducible, ignored paired study."""
+    from pathlib import Path
+    from resectionlab.patient_anatomy import PatientImagingCollection
+    from resectionlab.anatomy_approaches import read_approaches
+    from resectionlab.anatomy_display import display_affine
+    from resectionlab.surgical_exact_grid_replay import fixed_route_identity, verify_selected_route
+    from resectionlab.surgical_study_replay import _recorded_branch
+    from resectionlab.workspace_bundle import load_workspace
+
+    root = Path(__file__).resolve().parents[1]/'testcases/outputs/engine-operative-integration/episode'
+    if not (root/'replay.ressectionlab').is_file():
+        pytest.skip('Build the paired IXI077 companion using scripts/prepare_ixi077_study_replay.py')
+    study = PatientImagingCollection(root/'native')
+    case, artifacts, _ = load_workspace(root/'replay.ressectionlab')
+    record = artifacts['surgical_toolbox']
+    exact = record['exactGridReplay']
+    scene, snapshot, target = _recorded_branch(case, record)
+    route = exact['recordedApproach']
+    assert fixed_route_identity(case, scene, snapshot, exact)['recordedApproach'] == route
+    verify_selected_route(study, exact, route['id'])
+    for key in ('scriptSha256', 'executionReportSha256'):
+        changed = {**exact, 'actionGenerator': {**exact['actionGenerator'], key: 'a'*64}}
+        with pytest.raises(ValueError, match='generator differs'):
+            fixed_route_identity(case, scene, snapshot, changed)
+    with pytest.raises(ValueError, match='Unknown fixed CUSA execution report'):
+        fixed_route_identity(case, scene, snapshot, {**exact, 'executionReport': exact['executionReport']+' '})
+    with pytest.raises(ValueError, match='Recorded engine branch differs'):
+        fixed_route_identity(case, scene, {**snapshot, 'actions': snapshot['actions'][1:]}, exact)
+    with pytest.raises(ValueError, match='Select the recorded approach'):
+        verify_selected_route(study, exact, 'different-approach')
+    with pytest.raises(ValueError, match='route differs'):
+        verify_selected_route(study, {**exact, 'recordedApproach': {**route, 'measurementHash': 'a'*64}}, route['id'])
+    for sid in (exact['movingSeriesId'], exact['registeredSeriesId']):
+        assert display_affine(study, study.series(sid), preview=True)[1]
+        with pytest.raises(ValueError, match='needs review'):
+            study.registration_matrix(sid, require_review=True)
+    assessed = next(item for item in read_approaches(study) if item['id'] == route['id'])
+    vessel = next(item for item in assessed['measurements']['structures'] if item['kind'] == 'vessels')
+    assert not vessel['available'] and 'clearanceMm' not in vessel
+    receipt, sampling = verify_recording(study, target, case, record, approach_id=route['id'])
+    assert receipt['endpointStateId'] == snapshot['stateId'] and receipt['actions'] == 10
+    assert sampling['nativeAnnotationMm3'] == sampling['engineAnnotationMm3']

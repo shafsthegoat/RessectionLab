@@ -3,6 +3,19 @@ import type {SurgicalController} from './use-surgical';
 
 const paint=()=>new Promise<void>(resolve=>requestAnimationFrame(()=>resolve()));
 
+function presentedCaptureArea(stateId:string) {
+  const pane=Array.from(document.querySelectorAll<HTMLElement>('[data-accepted-tools]'))
+    .find(element=>element.dataset.surgicalStateId===stateId&&element.closest<HTMLElement>('.rl-viewer')?.dataset.surfacesPending==='0');
+  if(!pane)return null;
+  const layout=pane.closest<HTMLElement>('[data-engine-replay-layout]');
+  if(!layout)return pane;
+  const inspection=layout.querySelector<HTMLElement>('canvas[data-engine-inspection-state]');
+  if(inspection?.dataset.engineInspectionState!==stateId)return null;
+  const preparing=Array.from(layout.querySelectorAll<HTMLElement>('.rl-viewer'))
+    .some(view=>view.clientWidth>0&&view.dataset.rendererReady!=='true');
+  return preparing?null:layout;
+}
+
 /** Walk the manual seekFrame path. Canvas and controller must both acknowledge
  * the exact observation before the compositor image can enter the movie. */
 export function SurgicalMovieExport({controller,disabled}:{controller:SurgicalController;disabled:boolean}) {
@@ -46,18 +59,17 @@ export function SurgicalMovieExport({controller,disabled}:{controller:SurgicalCo
           for(;;) {
             await paint();check();
             const c=latest.current,r=c.result,p=r?.playback;
-            const pane=document.querySelector<HTMLElement>('[data-accepted-tools]');
-            if(!c.pending && r && p?.position===position && p.frameIndex===frameIndex &&
-               pane?.dataset.surgicalStateId===r.view.stateId &&
-               document.querySelector<HTMLElement>('.rl-viewer')?.dataset.surfacesPending==='0') {
+            const area=r&&presentedCaptureArea(r.view.stateId);
+            if(performance.now()>deadline) throw Error(c.error??'Timed out waiting for the displayed operative field.');
+            if(!c.pending && r && p?.position===position && p.frameIndex===frameIndex && area) {
               frameCount=p.frameCount;
-              const bounds=pane.getBoundingClientRect(),x=Math.ceil(bounds.left),y=Math.ceil(bounds.top);
-              const rect={x,y,width:Math.floor(bounds.right)-x,height:Math.floor(bounds.bottom)-y};
               await paint();check();
+              if(presentedCaptureArea(r.view.stateId)!==area)continue;
+              const bounds=area.getBoundingClientRect(),x=Math.ceil(bounds.left),y=Math.ceil(bounds.top);
+              const rect={x,y,width:Math.floor(bounds.right)-x,height:Math.floor(bounds.bottom)-y};
               await record({command:'capture',id,stateId:r.view.stateId,rect});
               break;
             }
-            if(performance.now()>deadline) throw Error(c.error??'Timed out waiting for the displayed operative field.');
           }
         }
         setMessage('Captured action '+(position+1)+' of '+steps+'.');
