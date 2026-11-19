@@ -22,6 +22,7 @@ const targetId=process.env.DATA_REBUILD_CTA_TARGET_ID;
 const targetLabel=process.env.DATA_REBUILD_CTA_TARGET_LABEL;
 const sourceSha=process.env.DATA_REBUILD_CTA_SOURCE_SHA256;
 const collectionFile=process.env.DATA_REBUILD_CTA_COLLECTION;
+const replayOnly=process.env.DATA_REBUILD_REPLAY_ONLY==='1';
 const islesPair=process.env.DATA_REBUILD_INSPECT_ISLES_CTA==='1';
 const ixiStudy=process.env.DATA_REBUILD_INSPECT_IXI==='1';
 const nativeStudy=islesPair||ixiStudy||process.env.DATA_REBUILD_INSPECT_STUDY==='1'?JSON.parse(fs.readFileSync(input,'utf8')):null;
@@ -80,8 +81,24 @@ ipcMain.handle=(name,handler)=>originalHandle(name,async(...args)=>{
     if(ixiStudy&&name==='research:anatomyView'&&args[1]?.seriesId==='t1'){
       for(const layer of result.compartments)ixiT1Layers.set(layer.name,layer);
     }
-    report.requests.push({operation:name,command:args[1]?.command,ms:performance.now()-started,
-    stateId:result?.view?.stateId,caseHash:result?.caseHash,reason:result?.reason,status:result?.status});return result;}
+    const receipt={operation:name,command:args[1]?.command,ms:performance.now()-started,
+      stateId:result?.view?.stateId,caseHash:result?.caseHash,reason:result?.reason,status:result?.status};
+    if(replayOnly&&name==='research:surgicalRehearsal'&&result?.view){
+      const {view,playback}=result;
+      receipt.position=result.position;
+      receipt.slots=Object.fromEntries(Object.entries(view.slots).map(([id,{instrument,inserted,position,quaternion}])=>[id,{instrument,inserted,position,quaternion}]));
+      receipt.effects={targetMm3:view.metrics.targetRemovedMm3,nonTargetMm3:view.metrics.nonTargetRemovedMm3,
+        removedCells:view.removed?.length,elapsedSeconds:view.metrics.elapsedSeconds};
+      if(playback){
+        const {position,actionIndex,frameIndex,frameCount,frameStateId,observedTimeSeconds,actionElapsedSeconds,actionDurationSeconds,isActionBoundary,readOnly}=playback;
+        const frames=playback.frames,start=frames[0].observedTimeSeconds,end=frames[frameCount-1].observedTimeSeconds;
+        const timedInterior=frame=>frame.observedTimeSeconds>start&&frame.observedTimeSeconds<end;
+        receipt.playback={position,actionIndex,frameIndex,frameCount,frameStateId,observedTimeSeconds,actionElapsedSeconds,actionDurationSeconds,
+          isActionBoundary,readOnly,kind:frames[frameIndex].kind,
+          firstTimedInteriorIndex:frames.findIndex(timedInterior),lastTimedInteriorIndex:frames.findLastIndex(timedInterior)};
+      }
+    }
+    report.requests.push(receipt);return result;}
   catch(error){report.requests.push({operation:name,command:args[1]?.command,ms:performance.now()-started,error:String(error)});throw error;}
 });
 const delay=ms=>new Promise(resolve=>setTimeout(resolve,ms));
@@ -113,10 +130,120 @@ app.on('browser-window-created',(_event,window)=>{
       fs.writeFileSync(path.join(output,name+'.png'),image.toPNG());
       return image;
     };
-    const completedFrame=async stateId=>{
+    const completedFrame=async (stateId,since=0)=>{
       const state=JSON.stringify(stateId);
-      await wait(`(()=>{const p=window.__dataRebuildFrames,s=${state},v=p?.publications.findLast(v=>v.surgicalStateId===s);return document.querySelector('.surgical-panel')?.dataset.stateId===s&&!!v&&p.gpu.some(g=>g.serial===v.frameSerial&&g.surgicalStateId===s&&g.sourceCaseHash===v.sourceCaseHash&&g.completed&&g.at<=v.at)})()`);
+      await wait(`(()=>{const p=window.__dataRebuildFrames,s=${state},v=p?.publications.findLast(v=>v.surgicalStateId===s&&v.at>=${since});return document.querySelector('.surgical-panel')?.dataset.stateId===s&&!!v&&p.gpu.some(g=>g.serial===v.frameSerial&&g.surgicalStateId===s&&g.sourceCaseHash===v.sourceCaseHash&&g.completed&&g.at<=v.at)})()`);
       return js(`(()=>{const p=window.__dataRebuildFrames,v=p.publications.findLast(v=>v.surgicalStateId===${state});return{publication:v,gpu:p.gpu.findLast(g=>g.serial===v.frameSerial&&g.surgicalStateId===v.surgicalStateId&&g.completed)}})()`);
+    };
+    const inspectRecordedReplay=async()=>{
+      const finalId=process.env.DATA_REBUILD_EXPECT_STATE_ID;
+      const effectId=process.env.DATA_REBUILD_EXPECT_OPERATING_STATE_ID;
+      const startId=process.env.DATA_REBUILD_REPLAY_START_STATE_ID;
+      const total=Number(process.env.DATA_REBUILD_EXPECT_REPLAY_ACTIONS);
+      const action=Number(process.env.DATA_REBUILD_REPLAY_ACTION);
+      for(const id of [finalId,effectId,startId])assert.match(id??'',/^sha256:[a-f0-9]{64}$/);
+      assert(Number.isSafeInteger(total)&&Number.isSafeInteger(action)&&action>=0&&action<total-1);
+      const button=label=>`[...document.querySelectorAll('.surgical-panel button')].some(b=>b.textContent.trim()===${JSON.stringify(label)}&&!b.disabled)`;
+      const enabledTimeline=`!!document.querySelector('[aria-label="Surgical timeline"]:enabled')`;
+      const domState=`document.querySelector('.surgical-panel')?.dataset.stateId`;
+      const observation=`document.querySelector('[aria-label="Observed action frames"]')`;
+      const boundary=async(id,position,since)=>{
+        const frame=await completedFrame(id,since);
+        const receipt=report.requests.findLast(row=>row.stateId===id&&row.position===position&&!row.playback&&row.effects);
+        assert(receipt,`Missing engine boundary ${position} receipt for ${id}`);
+        assert.equal(receipt.caseHash,frame.publication.sourceCaseHash);
+        return {receipt,frame};
+      };
+      const animateFrame=async({id,frameIndex},since)=>{
+        const receipt=report.requests.findLast(row=>row.stateId===id&&row.playback?.frameIndex===frameIndex&&row.playback.actionIndex===action);
+        assert(receipt&&['seekFrame','seekPrefixFrame'].includes(receipt.command));
+        const p=receipt.playback;
+        assert.equal(p.frameStateId,id);
+        assert.equal(p.position,action);
+        assert.equal(p.readOnly,true);
+        assert.equal(p.isActionBoundary,false);
+        assert(p.frameIndex>0&&p.frameIndex<p.frameCount-1);
+        assert(p.actionElapsedSeconds>0&&p.actionElapsedSeconds<p.actionDurationSeconds);
+        assert.equal(receipt.slots.right.instrument,'cusa');
+        assert.equal(receipt.slots.right.inserted,true);
+        const frame=await completedFrame(id,since);
+        assert.equal(receipt.caseHash,frame.publication.sourceCaseHash);
+        return {receipt,frame};
+      };
+      const timestamp=()=>js('performance.now()');
+      let since=await timestamp();
+      await click('Rehearse');
+      await wait(`${enabledTimeline}||${button('Verify replay for planning')}||${button('Verify saved replay')}`);
+      if(await js(button('Verify replay for planning')))await click('Verify replay for planning');
+      else if(await js(button('Verify saved replay')))await click('Verify saved replay');
+      await wait(enabledTimeline);
+      const final=await boundary(finalId,total,since);
+      assert.equal(final.receipt.slots.right.instrument,'cusa');
+      assert.equal(final.receipt.slots.right.inserted,false);
+      assert(final.receipt.effects.targetMm3>0);
+      report.recordedReplay={final};
+      await capture('withdrawn-endpoint');
+
+      since=await timestamp();
+      await click('Previous recorded state');
+      const effect=await boundary(effectId,total-1,since);
+      assert.equal(effect.receipt.slots.right.instrument,'cusa');
+      assert.equal(effect.receipt.slots.right.inserted,true);
+      assert.equal(effect.receipt.effects.targetMm3,final.receipt.effects.targetMm3);
+      assert.equal(effect.receipt.effects.nonTargetMm3,final.receipt.effects.nonTargetMm3);
+      report.recordedReplay.effect=effect;
+      await capture('inserted-target-effect');
+
+      since=await timestamp();
+      await js(inputScript('Surgical timeline',action));
+      const start=await boundary(startId,action,since);
+      report.recordedReplay.actionStart=start;
+      assert(effect.receipt.effects.targetMm3>start.receipt.effects.targetMm3);
+      await js(inputScript('Replay speed',.25));
+      since=await timestamp();
+      await click('Play replay');
+      await wait(`(()=>{
+        const el=${observation},id=${domState},i=Number(el?.value);
+        const detail=el?.closest('[aria-label="Observed microstep replay"]')?.textContent;
+        if(!i||i>=Number(el.max)||!detail?.includes('Action '+(${action}+1)+' · frame '+i+' /'))return false;
+        const p=window.__dataRebuildFrames,v=p.publications.findLast(v=>v.surgicalStateId===id&&v.at>=${since});
+        if(!v||!p.gpu.some(g=>g.serial===v.frameSerial&&g.surgicalStateId===id&&g.completed&&g.at<=v.at))return false;
+        const pause=[...document.querySelectorAll('.surgical-panel button')].find(b=>b.textContent.trim()==='Pause replay'&&!b.disabled);
+        if(!pause)return false;
+        pause.click();window.__dataRebuildPausedPlayback={id,frameIndex:i};return true;
+      })()`);
+      const played=await animateFrame(await js('window.__dataRebuildPausedPlayback'),since);
+      report.recordedReplay.played=played;
+      await wait(`(${button('Play replay')})&&!!${observation}`);
+
+      const {frameIndex,firstTimedInteriorIndex,lastTimedInteriorIndex}=played.receipt.playback;
+      assert(firstTimedInteriorIndex>0&&lastTimedInteriorIndex>firstTimedInteriorIndex,'Need two distinct timed interiors to verify scrubbing');
+      // A final microstep can share the exact time and state of the boundary.
+      const scrubIndex=frameIndex===lastTimedInteriorIndex?firstTimedInteriorIndex:lastTimedInteriorIndex;
+      since=await timestamp();
+      await js(inputScript('Observed action frames',scrubIndex));
+      await wait(`Number(${observation}?.value)===${scrubIndex}&&${domState}!==${JSON.stringify(played.receipt.stateId)}`);
+      const scrubbed=await animateFrame({id:await js(domState),frameIndex:scrubIndex},since);
+      report.recordedReplay.scrubbed=scrubbed;
+      for(const sample of [played,scrubbed])assert(![startId,effectId,finalId].includes(sample.receipt.stateId));
+      assert.notEqual(scrubbed.receipt.playback.observedTimeSeconds,played.receipt.playback.observedTimeSeconds);
+      const interiors=[played,scrubbed].sort((a,b)=>a.receipt.playback.frameIndex-b.receipt.playback.frameIndex);
+      assert(interiors[0].receipt.effects.targetMm3>=start.receipt.effects.targetMm3);
+      assert(interiors[1].receipt.effects.targetMm3>=interiors[0].receipt.effects.targetMm3);
+      assert(effect.receipt.effects.targetMm3>=interiors[1].receipt.effects.targetMm3);
+      report.recordedReplay.interiorTargetIncreaseMm3=interiors[1].receipt.effects.targetMm3-start.receipt.effects.targetMm3;
+      await capture('observed-intra-action');
+
+      since=await timestamp();
+      await js(inputScript('Surgical timeline',total));
+      report.recordedReplay.restored=await boundary(finalId,total,since);
+      assert.equal(digest(input),inputSha);
+      assert.equal(window.isVisible(),false);
+      report.checks.push('Hidden desktop rendered the sealed target-effect and withdrawn action boundaries with actual GPU completion',
+        'Play, Pause and manual scrubbing displayed distinct, admitted read-only interiors of a recorded CUSA apply',
+        'Returned to the sealed withdrawn endpoint without changing the input package');
+      assert.equal(report.windowEverVisible,false);
+      report.passed=true;
     };
     const inspectHostLayers=async()=>{
       await click('Anatomy');
@@ -525,7 +652,7 @@ app.on('browser-window-created',(_event,window)=>{
         document.addEventListener('anatomy-frame',e=>{probe.frames.push(e.detail);if(probe.frames.length>32)probe.completed.delete(key(probe.frames.shift()))});
         document.addEventListener('anatomy-gpu',e=>{if(e.detail.completed)probe.completed.add(key(e.detail))});
       })()`);
-      if(process.env.DATA_REBUILD_REQUIRE_GPU_STATE==='1')await js(`(()=>{
+      if(replayOnly||process.env.DATA_REBUILD_REQUIRE_GPU_STATE==='1')await js(`(()=>{
         const p=window.__dataRebuildFrames={gpu:[],publications:[]};
         document.addEventListener('anatomy-gpu',e=>{p.gpu.push({...e.detail,at:performance.now()});if(p.gpu.length>64)p.gpu.shift()});
         document.addEventListener('anatomy-surgical-display',e=>{p.publications.push({...e.detail,at:performance.now()});if(p.publications.length>32)p.publications.shift()});
@@ -541,6 +668,7 @@ app.on('browser-window-created',(_event,window)=>{
       if(islesPair){await inspectIslesPair();return;}
       if(ixiStudy){await inspectIxiStudy();return;}
       if(nativeStudy){await inspectNativeStudy();return;}
+      if(replayOnly){await inspectRecordedReplay();return;}
       if(process.env.DATA_REBUILD_STRUCTURES==='1'){
         await click('Show structures only');await ready();
         report.checks.push('Explicit structures-only 3D display with unchanged full native source slices');

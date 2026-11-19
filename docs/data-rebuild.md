@@ -293,13 +293,47 @@ OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python \
   scripts/build_ixi077_organic_rehearsal.py --register "$PWD/testcases/cases"
 ```
 
-See `prepared/ixi077-organic-rehearsal-v1/` for the native package and receipt.
-The new case passed eight necessary static checks along the fixed line. The
-stock working envelope intersects 96 of 282 contour cells and no mapped vessel
-cells. The screen assumes prior scalp, local skull and dural exposure. The
-remaining contour, unknown vascular coverage, modeled target effect and reverse
-withdrawal require separate evidence. The case has no instrument admission or
-committed actions.
+See `prepared/ixi077-organic-rehearsal-v1/` for the pristine package and static
+receipt. The stock working envelope intersects 96 of 282 contour cells and no
+mapped vessel cells. The geometry assumes prior scalp, local skull and dural
+exposure. Unmapped vasculature and unknown tissue remain outside the evidence.
+
+Search **IXI-077-T1-MRA-ORGANIC-ROUTE-01-v1-RECORDED** for the separate saved
+simulation. Stock CUSA reached 87.7% of the fixed line. At the first accepted
+apply boundary with a contour effect, the modeled removal totaled 27 of 282
+visible contour cells (28.48 mm³) and 314 non-target brain cells (331.17 mm³).
+The next action withdrew on the same line with no additional removal. The
+source remained unchanged, and all ten actions, effects and final tool states
+matched after cold backend reopen. The result covers conditional partial
+rehearsal. Complete treatment, intact-head access, automatic planning,
+vascular clearance beyond the partial overlay and clinical validity remain
+unqualified.
+
+```sh
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python \
+  scripts/rehearse_ixi077_organic.py --output-name ixi077-organic-replay-reproduction
+```
+
+The committed actions and preserved workspace are in
+`qc/ixi077-organic-conditional-replay-v1/` on the HDD.
+The hidden desktop verified the withdrawn and inserted target-effect boundaries
+with completed GPU frames. Play and Pause displayed a recorded frame at 0.2 s.
+Scrubbing to a distinct recorded frame at 29.8 s of the seventh 30 s apply
+showed the 28.48 mm³ target effect before the action boundary. The reader
+then returned to the exact withdrawn state. The report and three captures are
+in `qc/hidden-app/ixi077-organic-replay-20261118-v2/`.
+
+```sh
+trial="$RESSECTIONLAB_DATA_ROOT/qc/ixi077-organic-conditional-replay-v1"
+DATA_REBUILD_CASE="$trial/replay.ressectionlab" \
+  DATA_REBUILD_OUTPUT="$RESSECTIONLAB_DATA_ROOT/qc/ixi077-app-reproduction" \
+  DATA_REBUILD_REPLAY_ONLY=1 DATA_REBUILD_REPLAY_ACTION=8 \
+  DATA_REBUILD_REPLAY_START_STATE_ID="$(jq -r '.[8].before_state_id' "$trial/actions.json")" \
+  DATA_REBUILD_EXPECT_OPERATING_STATE_ID="$(jq -r '.target_effect_state_id' "$trial/report.json")" \
+  DATA_REBUILD_EXPECT_STATE_ID="$(jq -r '.final_state_id' "$trial/report.json")" \
+  DATA_REBUILD_EXPECT_REPLAY_ACTIONS="$(jq -r '.committed_action_count' "$trial/report.json")" \
+  desktop/node_modules/.bin/electron desktop/electron/verify-data-rebuild.cjs --automation-hidden
+```
 
 ### Observed surgical change
 
