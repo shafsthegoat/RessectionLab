@@ -10,6 +10,7 @@ import tempfile
 import time
 
 from . import anatomy_models
+from .anatomy_qa import empty_tumor_reason
 from .anatomy_alignment import alignment_pairs, ensure_alignment, input_key, matches_alignment_key
 from .patient_anatomy import PatientImagingCollection, digest
 from .anatomy_synthstrip_fallback import CPU_MODEL, CPU_RETRY_STATUS, offer_cpu_retry
@@ -177,6 +178,20 @@ def _stage(collection, job, receipts):
     if matches:
         if receipt["status"] in RETRY_STATUSES and stage["status"] in {"ready", "available"}:
             stage.update(status=receipt["status"], reason=receipt["reason"])
+            if receipt["status"] == "empty_output" and stage.get("capability") == "tumor":
+                # Older checkpoints saved only a generic message. Recover the
+                # measurements from the original output bound to this attempt.
+                outputs = {item["id"]: item["sha256"] for item in receipt["outputs"]}
+                for layer in collection.document["layers"]:
+                    if (layer["kind"] == "tumor" and layer["source_series"] == stage["seriesId"]
+                            and layer.get("preparation_input") == receipt["inputKey"]
+                            and outputs.get(layer["id"]) == layer.get("original_data", layer["data"])["sha256"]):
+                        provenance = layer.get("provenance", {})
+                        reason = empty_tumor_reason(provenance.get("native_rerun", provenance),
+                                                    collection.series(stage["seriesId"])["modality"])
+                        if reason:
+                            stage["reason"] = reason
+                            break
         elif receipt["status"] == "interrupted" and stage["status"] == "ready":
             stage.update(status="interrupted", reason=receipt["reason"])
         elif receipt["status"] == "cached" and receipt["outputs"]:
@@ -308,7 +323,8 @@ def _run_stage(candidate, stage, cancelled, progress):
                 if stage["model"] == CPU_MODEL:
                     row["label"] = "Brain envelope · SynthStrip CPU"
     if not outputs or record.get("foreground_voxels") == 0 or record.get("availability") == "empty_output":
-        return "empty_output", "Model returned no labeled anatomy in its output field", outputs
+        reason = empty_tumor_reason(record, candidate.series(stage["series_id"])["modality"]) if record.get("kind") == "tumor" else None
+        return "empty_output", reason or "Model returned no labeled anatomy in its output field", outputs
     if len(outputs) == 1 and not candidate.mask(candidate.layer(outputs[0]["id"])).any():
         return "empty_output", "Layer is empty; anatomy remains unassessed", outputs
     return "cached", "Prepared " + str(len(outputs)) + " layer(s) for review", outputs

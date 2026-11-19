@@ -33,6 +33,7 @@ function fieldScene(host:HTMLDivElement, field:OperativeField, sourceVolume:View
   const exterior={value:false};
   const context=operativeFieldContext(sourceVolume,field,collectionId,patchRadius);scene.add(context);
   host.dataset.surroundingLayers=JSON.stringify(context.children.map(mesh=>mesh.name));
+  host.dataset.surroundingSources=JSON.stringify(context.children.map(mesh=>mesh.userData.sourceLayer));
   camera.up.set(0,0,1); const direction=new THREE.Vector3(.36,-.91,.90).normalize();
   camera.position.copy(direction).multiplyScalar(400);
   const controls=new OrbitControls(camera,renderer.domElement);
@@ -78,10 +79,10 @@ function fieldScene(host:HTMLDivElement, field:OperativeField, sourceVolume:View
       operativeTissueMaterial('dura',field,texture,new THREE.Vector3(),sectionY),new THREE.Vector3(hingeX,0,hingeZ)),
   };
   for(const source of context.children){
-    const role=source.userData.sourceLayer.role;
-    for(const name of [role,role+'Kerf']){
-      const display=scene.getObjectByName(name);
-      if(!(display instanceof THREE.Mesh))continue;
+    const role=source.userData.sourceLayer.role as 'brain'|'bone';
+    // Source labels are user data and can be named "brain" or "bone" too.
+    const local=role==='bone'?[meshes.bone,openings.bone.kerf]:[meshes.brain];
+    for(const display of local){
       limitToOperativePatch(display.material,patchRadius,exterior);
       if(display.customDepthMaterial)limitToOperativePatch(display.customDepthMaterial,patchRadius,exterior);
       display.userData.sourceLayer.patchRadius=patchRadius;
@@ -281,7 +282,7 @@ function fieldScene(host:HTMLDivElement, field:OperativeField, sourceVolume:View
     materials.forEach(m=>m.dispose());texture?.dispose();environment.dispose();keyLight.shadow.dispose();
     scene.clear();renderer.dispose();renderer.forceContextLoss();renderer.domElement.remove();
   }
-  return {update,dispose,vesselDisplay:model.vesselDisplay,contextLabels:context.children.map(mesh=>mesh.name)};
+  return {update,dispose,vesselDisplay:model.vesselDisplay,contextLabels:context.children.map(mesh=>[mesh.name,mesh.userData.sourceLayer.appearance?.modality].filter(Boolean).join(' · '))};
 }
 
 export function OperativeFieldCanvas(props:Props) {

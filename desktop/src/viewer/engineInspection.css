@@ -51,3 +51,27 @@
 .engine-frame-metrics summary {cursor:pointer;color:#e3ceb0;font-weight:600}
 .engine-frame-metrics span {display:block;margin-top:3px}
 .engine-operated-view .engine-anatomy-key {max-width:calc(100% - clamp(88px,16%,140px) - 38px)}
+.inspect-3d-result,.result-heading button,.result-controls button {
+  color:#dcece9;border:1px solid #435b58;background:#1c312f;border-radius:4px;
+  font:500 12px/1.4 system-ui;cursor:pointer;padding:5px 9px;
+}
+.engine-section .inspect-3d-result {align-self:flex-start;margin-top:5px}
+.rl-viewer[data-result-inspection] .rl-primary-tools,
+.rl-viewer[data-result-inspection] .rl-control-popover {display:none}
+.rl-viewer[data-result-inspection] .rl-viewer-anatomy-image > * {visibility:hidden}
+.result-heading {height:100%;display:flex;align-items:center;justify-content:space-between;padding:0 10px}
+.result-heading strong {font-size:13px;font-weight:600;color:#e0e9e5}
+.result-heading button {font-size:11px;background:#172320}
+.engine-result-orbit {position:absolute;inset:38px 0 0;z-index:2;touch-action:none;cursor:grab}
+.engine-result-orbit:active {cursor:grabbing}
+.result-controls,.result-key {position:absolute;z-index:3;display:flex;flex-wrap:wrap;gap:4px;left:10px;right:10px}
+.result-controls {top:48px}
+.result-controls button {font-size:11px;background:#172321}
+.result-controls button[aria-pressed=true] {background:#37564e;border-color:#82afa1}
+.result-key {bottom:12px;gap:6px 14px;color:#d6dfdf;font:11px/1.5 system-ui;pointer-events:none}
+.result-key span::before {content:'';display:inline-block;width:8px;height:8px;margin-right:5px;border-radius:2px;background:#e5a456}
+.result-key span+span::before {background:#53c6d1}
+.result-empty {display:none;position:absolute;top:48%;left:10%;right:10%;text-align:center;color:#a2b7b8;font-size:12px}
+.engine-result-orbit[data-result-empty=true] .result-empty {display:block}
+
+.result-key small {flex-basis:100%;font:inherit;color:#b2c1c2}

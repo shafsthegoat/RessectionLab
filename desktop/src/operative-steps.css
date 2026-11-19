@@ -142,10 +142,16 @@
 .engine-recording-info summary {cursor:pointer;color:#b9c9c0;}
 
 .engine-intact-reference:has(.engine-route-plane) {grid-template-rows:auto minmax(0,1fr) auto auto;}
-.engine-intact-reference .engine-reference-image > .rl-viewer {left:-30%;right:auto;width:160%;}
 .engine-route-plane {margin:0;padding:5px 8px 6px;background:#0b100e;border-top:1px solid #353c38;}
 .engine-route-plane > div {position:relative;max-width:100%;width:min(100%,30vh);margin:auto;}
 .engine-route-plane canvas {display:block;width:100%;height:auto;}
 .engine-route-plane svg {position:absolute;inset:0;display:block;width:100%;height:100%;}
 .engine-route-plane text {text-anchor:middle;fill:#ecfff5;font:11px system-ui;paint-order:stroke;stroke:#101814;stroke-width:2.5px;}
 .engine-route-plane figcaption {color:#bfcbc3;text-align:center;font-size:10px;margin-top:3px;}
+
+.study-dialog.recorded-comparison {width:min(640px,90vw);max-height:85vh;overflow:auto;}
+.recorded-comparison table {width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums;}
+.recorded-comparison th,.recorded-comparison td {text-align:right;padding:5px 3px;border-bottom:1px solid var(--line,#343d38);overflow-wrap:anywhere;}
+.recorded-comparison th:first-child {text-align:left;width:40%;}
+.recorded-comparison thead th {vertical-align:bottom;}
+.recorded-comparison details p {overflow-wrap:anywhere;}

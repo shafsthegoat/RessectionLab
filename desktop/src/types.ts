@@ -478,6 +478,7 @@ export interface ResectionApi extends TrainingApi {
   finishFrozenCusa?(args:{admissionId:string;accepted:boolean}):Promise<boolean>;
   cancelFrozenCusa?():Promise<boolean>;
   workspaceInstalled?(args:{caseHash:string;caseId:string}):Promise<boolean>;
+  compareBoundSurgicalReplays?(args:{collectionId:string;snapshotId:string;targetLayerId:string}):Promise<import("./RecordedStrategyComparison").RecordingComparison|null>;
   openBoundSurgicalReplay?(args:{collectionId:string;snapshotId:string;targetLayerId:string;approachId?:string}):Promise<CasePayload|null>;
   prepareSurgicalEnvironment?(args:import('./EnvironmentPreparationPanel').EnvironmentPreparation):Promise<CasePayload|null>;
   createSurgicalFixture?: import("./surgical-types").SurgicalApi["createSurgicalFixture"];

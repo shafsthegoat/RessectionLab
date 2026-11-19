@@ -270,6 +270,14 @@ function bindOperations() {
     if (!await rehearsalUnsaved.allowNavigation()) return null;
     const result=await engine.request('createSurgicalFixture', {}); currentCasePath=null; return result;
   });
+  handle('compareBoundSurgicalReplays', async args=>{
+    args=plainArgs(args,['collectionId','snapshotId','targetLayerId']);
+    const selected=await dialog.showOpenDialog(window,{title:'Compare two recorded procedures',
+      properties:['openFile','multiSelections'],filters:[{name:'Recorded engine procedures',extensions:['ressectionlab','rslab']}]});
+    if(selected.canceled)return null;
+    if(selected.filePaths.length!==2)throw Error('Select two recorded procedures in the file chooser.');
+    return engine.request('compareBoundSurgicalReplays',{...args,paths:selected.filePaths},300000);
+  });
   handle('openBoundSurgicalReplay', async args=>{
     args=plainArgs(args,['collectionId','snapshotId','targetLayerId','approachId']);
     if(!await rehearsalUnsaved.allowNavigation())return null;

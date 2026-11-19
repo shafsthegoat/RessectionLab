@@ -126,5 +126,5 @@ export function prepareOperativeOpening(
     for (const geometry of resources) geometry.dispose();
     sections.clear();
   }
-  return { update, dispose };
+  return { update, dispose, kerf:cut };
 }

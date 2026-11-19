@@ -2,6 +2,8 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import {modeledVolume} from '../modeled-volume.ts';
 import {inspectionSection,inspectionSource,sectionClasses} from './engineInspection.ts';
+import {resultMembership,resultMaskCrop,resultMaskHash} from './resultInspectionData.ts';
+import {transformPoint} from './coordinates.ts';
 import {modeledAnatomy} from './modeledAnatomy.ts';
 
 const shape=[7,8,9],affine=[[0,-1,0,12],[2,0,0,-8],[0,0,1,4],[0,0,0,1]];
@@ -48,4 +50,24 @@ test('moved tissue that occupies an excavated cell is retained in the current cu
   assert.equal(at(section,3,4),sectionClasses.target);
   assert.equal(at(section,4,4),sectionClasses.tissue);
   assert.equal(section.cavityPixels,0);
+});
+
+test('3D cavity cast, displaced residual ownership and cropped affine follow forward and backward seeks',()=>{
+  const inspect=view=>resultMembership(modeledVolume(source,view),view);
+  const before=inspect(original);
+  assert.equal(before.cellMm3,2);assert.equal(before.overlapOriginal,1);assert.equal(before.overlapRemaining,1);
+  const overlappingRemoval=inspect({...original,removed:[vessel]});
+  assert.equal(overlappingRemoval.overlapRemaining,0);
+  assert.deepEqual([...overlappingRemoval.residual],cells.slice(0,2));
+  assert.deepEqual([...before.residual],cells.slice(0,2));assert.equal(before.cavity.length,0);
+  const destination=index(1,3,7);
+  const state={...original,removed:[cells[0],index(2,1,1)],moved:[[cells[1],destination]]};
+  const next=inspect(state);assert.deepEqual([...next.residual],[destination]);
+  assert.deepEqual([...next.cavity],state.removed.toSorted((a,b)=>a-b));
+  assert.deepEqual(inspect(original),before);assert.deepEqual(inspect(state),next);
+  assert.notEqual(resultMaskHash(before.residual),resultMaskHash(next.residual));
+  const cropped=resultMaskCrop(next.cavity,state);assert.equal(cropped.mask.reduce((a,b)=>a+b,0),2);
+  assert.deepEqual(transformPoint(cropped.affine,[1,3,4]),transformPoint(affine,[3,4,5]));
+  const filled=inspect({...original,removed:[cells[0]],moved:[[cells[1],cells[0]]]});
+  assert.equal(filled.cavity.length,0);assert.deepEqual([...filled.residual],[cells[0]]);
 });

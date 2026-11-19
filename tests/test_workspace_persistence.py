@@ -241,7 +241,8 @@ def test_microscope_settings_roundtrip_and_invalid_optics_do_not_modify_source(t
             'workingDistanceMm':160.,'fieldMm':42.,'focusOffsetMm':0.,'light':2.5,
             'inspectionTransparency':False,'inspectionCutaway':False}
     camera={'position':[102.,6.,172.],'target':[102.,6.,12.],'up':[0.,1.,0.]}
-    settings={'operativeView':'surgeon','microscope':optics,'camera':camera,'externalCamera':camera}
+    settings={'operativeView':'surgeon','microscope':optics,'camera':camera,'externalCamera':camera,
+              'resultInspection':'cavity','resultCamera':dict(camera, position=[122.,8.,60.])}
     state=view_state(case,[]);state['states']['primary']['viewer']=settings
     destination=tmp_path/'microscope.ressectionlab'
     save_workspace(case,destination,sources=[],imaging=state,episode=None,selection=None,artifacts={})

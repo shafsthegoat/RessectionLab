@@ -431,17 +431,19 @@ def dispatch(session, operation, args, request, progress):
                 if preview:
                     support = resample(support, affine(reference["affine"]), shape, native, order=0)
                 cache["headSupport"] = transfer(support, "uint8")
-        # Resolve each visible cortical surface against its own acquisition. Mesh
+        # Resolve source-textured cortical and operative surroundings. Mesh
         # vertices are in the selected display lattice, while these affines map
         # the acquisition's actual display samples into the same physical frame.
         appearance_sources = []
-        cortex_sources = dict.fromkeys(layer["sourceSeries"] for layer in layers
-                if layer.get("displayKind") in {"gray-matter", "cerebral-cortex", "cerebellar-cortex"}
-                and layer["alignment"] != "source-grid preview")
-        for sid in cortex_sources:
+        source_ids = dict.fromkeys(layer["sourceSeries"] for layer in layers
+                if (layer.get("displayKind") in {"gray-matter", "cerebral-cortex", "cerebellar-cortex"}
+                    and layer["alignment"] != "source-grid preview")
+                or (layer.get("displayKind") in {"bone", "skull", "brain"}
+                    and layer["alignment"] in {"reference", "reviewed", "source-provided"}))
+        for sid in source_ids:
             scan = c.series(sid)
             if sid == reference["id"]:
-                scalar, texture_frame = cache["mri"], displayed
+                scalar, texture_frame, frame = cache["mri"], displayed, source_displayed
             else:
                 # The layer admission above already requires its frame and this
                 # timepoint. Acquire the scalar's own lattice, not the label's.
@@ -450,7 +452,7 @@ def dispatch(session, operation, args, request, progress):
                 scalar = transfer(c.array(data), "float32")
             appearance_sources.append({"seriesId": sid, "modality": scan["modality"],
                     "sourceSha256": scan["original"]["sha256"], "affine": texture_frame.tolist(),
-                    "signal": scalar})
+                    "signal": scalar, "nativeShape": scan["data"]["shape"], "nativeAffine": frame.tolist()})
         result = {
             "tractography": cache["tracts"],
             **({"appearanceSources": appearance_sources} if appearance_sources else {}),

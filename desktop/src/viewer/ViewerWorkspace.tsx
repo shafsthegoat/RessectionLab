@@ -1,3 +1,4 @@
+import {resultMembership} from './resultInspectionData';
 import {EngineOperatedSection} from './EngineOperatedSection';
 import {OperativeSourceLocator} from './OperativeSourceLocator';
 import {OperativeLegend} from './OperativeLegend';
@@ -155,6 +156,17 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   const displayedSurgical=committedSurgical?.identity===rendererIdentity?committedSurgical.interaction:null;
   const surgicalView=displayedSurgical?.preview??displayedSurgical?.view;
   const showEngineSection=!!(props.engineInspection&&surgicalView&&!displayedSurgical?.preview&&committedSurgical);
+  const resultOrbit=useRef<HTMLDivElement>(null);
+  const inspectable=showEngineSection&&committedSurgical&&!!modeledAnatomy(committedSurgical.volume)?.surfaceReference;
+  const resultParts=inspectable?settings.resultInspection:undefined;
+  useEffect(()=>{
+    const renderer=engine.current;if(!renderer||!ready)return;
+    renderer.setResultInspection(resultParts?resultOrbit.current:null,resultParts,settings.resultCamera,
+      pose=>changeSettings({...latestSettings.current,resultCamera:pose}));
+  },[ready,graphicsGeneration,resultParts,settings.resultCamera,rendererIdentity]);
+  const resultCells=resultParts&&committedSurgical&&surgicalView?resultMembership(committedSurgical.volume,surgicalView):null;
+  const inspectResult=(mode:ViewerWorkspaceSettings['resultInspection'])=>changeSettings({...latestSettings.current,resultInspection:mode,
+    ...(resultParts&&mode&&resultParts!==mode?{resultCamera:undefined}:{})});
   const [pickedLayer,setPickedLayer]=useState<{sceneId:string;name:string}|null>(null);
   const inspectRegion=(name:string|null)=>setPickedLayer(name&&surgicalView?{sceneId:surgicalView.scene.sceneId,name}:null);
   const surgicalMarkers=useMemo(()=>surgicalView?surgicalEffectMarkers(surgicalView,displayedSurgical?.outcome):[],[surgicalView,displayedSurgical?.outcome]);
@@ -709,6 +721,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
       onPointerCancelCapture={()=>engine.current?.endInteraction()}
       data-layout={layout}
       data-engine-section-layout={showEngineSection||undefined}
+      data-result-inspection={resultParts}
       data-source-case-hash={caseData?.caseHash}
       data-source-display-identity={caseData?.displayIdentity}
       data-source-modality={props.sourceLabel}
@@ -728,6 +741,8 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
         role="toolbar"
         aria-label="Imaging layout and 3D controls"
       >
+        {resultParts&&<div className="result-heading"><strong>3D result</strong>
+          <button onClick={()=>inspectResult(undefined)}>Return to operative field</button></div>}
         <div className="rl-primary-tools">
           <div className="rl-viewer-title">
             <strong>3D View</strong>
@@ -975,8 +990,25 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
             <small data-guide-caption>Anatomical reference</small>
           </div>
         </div>
+        {resultParts&&<>
+          <div className="engine-result-orbit" ref={resultOrbit} aria-label="Rotatable three-dimensional cavity and residual target"
+            onDoubleClick={()=>engine.current?.fitResultInspection()}>
+            <span className="result-empty">No cells in the selected result at this state.</span>
+          </div>
+          <div className="result-controls" role="group" aria-label="Result surfaces">
+            {(['both','cavity','residual'] as const).map(mode=><button key={mode} aria-pressed={resultParts===mode}
+              aria-label={mode==='both'?'Show cavity and residual':`Show ${mode} only`} onClick={()=>inspectResult(mode)}>
+              {mode==='both'?'Both':mode==='cavity'?'Cavity':'Residual'}</button>)}
+            <button aria-label="Fit result" onClick={()=>{changeSettings({...latestSettings.current,resultCamera:undefined});engine.current?.fitResultInspection();}}>Fit</button>
+          </div>
+          {resultCells&&<div className="result-key">
+            <span>Removed space · volume cast</span><span>Owned residual target · {(resultCells.residual.length*resultCells.cellMm3).toFixed(1)} mm³</span>
+            {resultCells.overlapOriginal>0&&<small>{resultCells.overlapRemaining.toLocaleString()} of {resultCells.overlapOriginal.toLocaleString()} overlapping target cells remain assigned to other tissues.</small>}
+          </div>}
+        </>}
       </div>
       {showEngineSection&&committedSurgical&&surgicalView&&<EngineOperatedSection key={surgicalView.scene.sceneId}
+        onInspect={inspectable&&!resultParts?()=>inspectResult('both'):undefined}
         volume={committedSurgical.volume} view={surgicalView} labelsOnly={!!props.segmentationOnly} sourceLabel={signalName}/>}
       {PLANES.map((plane) => {
         const [left, right, top, bottom] = PLANE_LABELS[plane],

@@ -37,7 +37,10 @@ export function pickOperativeStructure(scene:THREE.Scene,camera:THREE.Camera,ndc
     });
     if(!layers.length)return null;
     const local=point.toArray(),ras=field.targetRasMm.map((v,i)=>v+field.basisRas.reduce((sum,axis,j)=>sum+axis[i]*local[j],0)) as Point3;
-    const signal=field.intensity;
+    const owned=identity.appearance;
+    const signal=directId?(owned?.sourceVoxelToPatientRasMm&&owned?.sourceShape
+      ?{sourceSeries:owned.seriesId,sourceShape:owned.sourceShape,sourceVoxelToPatientRasMm:owned.sourceVoxelToPatientRasMm}
+      :undefined):field.intensity;
     const grid=signal?transformPoint(inverseAffine(signal.sourceVoxelToPatientRasMm),ras):null;
     const voxel=grid?.map(Math.round) as Point3|undefined;
     return {layers,ras,voxel:voxel&&voxel.every((v,i)=>v>=0&&v<signal!.sourceShape[i])?voxel:null,series:signal?.sourceSeries??null};

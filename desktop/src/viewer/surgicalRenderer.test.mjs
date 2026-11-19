@@ -486,6 +486,8 @@ test('planning display hides only withdrawn tools while retaining canonical pose
   const preview={...input.view,stateId:'preview',slots:{...input.view.slots,left:{...input.view.slots.left,inserted:true}}};
   r.setSurgical({...input,planningOverlay,preview});assert.equal(r.surgicalSlots.size,1);assert(r.surgicalSlots.has('left'));assert.deepEqual(input.view,before);
   r.setSurgical(input);assert.equal(r.surgicalSlots.size,2);assert.deepEqual(input.view,before);
+  r.setSurgical(null);
+  for(const key of ['surgicalStateId','acceptedTools','removedCells','renderedToolSlots'])assert.equal(r.panes.anatomy.dataset[key],undefined);
 });
 
 test('recorded cranial guides render exact accepted polylines and overlapping source memberships without draft region spheres',()=>{

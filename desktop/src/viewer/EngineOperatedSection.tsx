@@ -46,8 +46,8 @@ function paintSection(canvas:HTMLCanvasElement,section:InspectionSection,labelsO
   return true;
 }
 
-export function EngineOperatedSection({volume,view,labelsOnly,sourceLabel}:{
-  volume:ViewerVolume;view:SurgicalView;labelsOnly:boolean;sourceLabel:string;
+export function EngineOperatedSection({volume,view,labelsOnly,sourceLabel,onInspect}:{
+  volume:ViewerVolume;view:SurgicalView;labelsOnly:boolean;sourceLabel:string;onInspect?:()=>void;
 }) {
   const canvas=useRef<HTMLCanvasElement>(null);
   const owner=modeledAnatomy(volume)?.surfaceReference?.owner;
@@ -64,7 +64,7 @@ export function EngineOperatedSection({volume,view,labelsOnly,sourceLabel}:{
   const visibleTips=section.tips.filter(p=>p.inPlane&&p.x>=0&&p.y>=0&&p.x<=section.width&&p.y<=section.height);
   const outside=section.tips.length-visibleTips.length;
   return <section className="engine-section" aria-label="Operated anatomy section">
-    <header><h3>Operated anatomy</h3><span>{labelsOnly?'Engine labels':sourceLabel} · {section.widthMm.toFixed(0)} mm field</span></header>
+    <header><h3>Operated anatomy</h3><span>{labelsOnly?'Engine labels':sourceLabel} · {section.widthMm.toFixed(0)} mm field</span>{onInspect&&<button className="inspect-3d-result" onClick={onInspect}>Inspect result in 3D</button>}</header>
     <div className="engine-section-image">
       <div className="engine-section-frame" style={{aspectRatio:`${section.widthMm} / ${section.heightMm}`}}>
         <canvas ref={canvas} aria-label="Source section with residual tissue and modeled cavity"
@@ -79,7 +79,7 @@ export function EngineOperatedSection({volume,view,labelsOnly,sourceLabel}:{
         {section.labels.map((label,i)=><b key={i} className={`edge edge-${i}`}>{label}</b>)}
       </div>
     </div>
-    <div className="engine-section-key"><span className="residual">Residual target</span><span className="cavity">Removed space</span>
+    <div className="engine-section-key"><span className="residual">Owned residual target</span><span className="cavity">Removed space</span>
       {section.hasVessels&&<span className="vessels">Mapped vessels</span>}{section.hasProtected&&<span className="protected">Protected label</span>}
       {!!visibleTips.length&&<span className="tool">Tool tip</span>}</div>
     <div className="engine-section-metrics">

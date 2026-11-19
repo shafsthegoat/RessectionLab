@@ -1,3 +1,4 @@
+import { ResultInspectionScene } from './ResultInspectionScene';
 import {interactivePlanningGroup} from './interactivePlanningGeometry';
 import {TransformControls} from "three/addons/controls/TransformControls.js";
 import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
@@ -277,6 +278,7 @@ export class VolumeRenderer {
   private visible: Record<string, boolean> = {};
   private opacity = 0.4;
   private workspaceSettings: ViewerWorkspaceSettings = {};
+  private resultInspection:ResultInspectionScene|null=null;
   private operativeLight: THREE.DirectionalLight | null = null;
   private appearanceSignature: string | null = null;
   private visibilitySignature: string | null = null;
@@ -743,7 +745,7 @@ export class VolumeRenderer {
     mesh.userData.corticalContact = ['csf','ventricles','dura','skull','bone'].includes(displayKind);
     mesh.userData.cranialBoundary=this.cranialBoundary(displayKind,this.workspaceSettings);
     const source=layer.appearanceSource;
-    if(source){
+    if(source&&['gray-matter','cerebral-cortex','cerebellar-cortex'].includes(displayKind)){
       let signal=this.corticalSignals.get(source.seriesId);
       if(!signal){
         const active=source.data===this.volume.mri&&source.shape.every((n,i)=>n===this.volume.shape[i]);
@@ -1061,6 +1063,16 @@ export class VolumeRenderer {
     this.requestRender();
   }
 
+  setResultInspection(element:HTMLElement|null,parts:ViewerWorkspaceSettings['resultInspection'],camera:ViewerCameraState|null|undefined,save:(pose:ViewerCameraState)=>void) {
+    if(this.resultInspection&&this.resultInspection.element!==element){this.resultInspection.dispose();this.resultInspection=null;}
+    if(element&&parts){
+      this.resultInspection??=new ResultInspectionScene(element,()=>this.requestRender(false),save);
+      this.resultInspection.configure(parts,camera);
+    }
+    this.requestRender(false);
+  }
+  fitResultInspection(){this.resultInspection?.requestFit();this.requestRender(false);}
+
   setWorkspaceSettings(settings: ViewerWorkspaceSettings): void {
     if(this.workspaceSettings?.showOrientationGuide!==settings.showOrientationGuide)this.requestRender(false);
     this.workspaceSettings = settings;
@@ -1377,7 +1389,10 @@ export class VolumeRenderer {
     // geometry resident while the ghost and recorded tools move by transforms.
     if(!interaction?.view){
       disposeObject(this.surgicalGroup);this.surgicalGroup.clear();this.surgicalSlots?.clear();
-      if(this.panes?.anatomy)delete this.panes.anatomy.dataset.renderedToolSlots;
+      if(this.panes?.anatomy){
+        const data=this.panes.anatomy.dataset;
+        for(const key of ['renderedToolSlots','surgicalStateId','removedCells','positionEffects','maxShiftMm','acceptedTools'])delete data[key];
+      }
       this.surgicalEffects=null;this.surgicalEffectsView=null;this.surgicalEffectsOutcome=undefined;
       this.surgicalFlow=null;this.surgicalFlowSource=undefined;
       this.surgicalAnimation=null;this.surgicalAnimationKey=null;
@@ -2300,7 +2315,9 @@ export class VolumeRenderer {
     const main = viewport(this.panes.anatomy);
     let orientationGuideVisible=false;
     let surfaceQuality:{adaptive:boolean;width:number;height:number}|null=null;
-    if (main) {
+    if(main&&this.resultInspection&&renderedView&&!this.surgicalInteraction?.preview&&modeledAnatomy(this.volume)?.surfaceReference){
+      this.resultInspection.render(this.renderer,this.volume,renderedView,this.surfaces,main.w,main.h);
+    } else if (main) {
       if (this.pendingFit) this.fitCamera(this.pendingFit);
       this.camera.aspect = main.w / main.h;
       this.camera.updateProjectionMatrix();
@@ -2386,6 +2403,7 @@ export class VolumeRenderer {
   }
 
   dispose(): void {
+    this.resultInspection?.dispose();
     this.picking?.dispose();
     if (this.disposed) return;
     this.disposed = true;

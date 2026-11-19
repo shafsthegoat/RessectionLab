@@ -3,6 +3,7 @@ import {Vector3} from 'three';
 import {cIndex,inverseAffine,rasAffine,sampleTrilinear,transformPoint} from './viewer/coordinates';
 import type {Point3} from './viewer/coordinates';
 import type {VerifiedStudyReplay} from './types';
+import type {SurgicalView} from './surgical-types';
 import type {ViewerVolume,ViewerWorkspaceProps} from './viewer/contracts';
 import {ViewerWorkspace} from './viewer/ViewerWorkspace';
 import {recordedOverviewRoute} from './study-engine-presentation';
@@ -10,7 +11,7 @@ import {recordedOverviewRoute} from './study-engine-presentation';
 type ReferenceProps=Pick<ViewerWorkspaceProps,'caseData'|'visibleLayers'|'workspaceSettings'|'cursor'|'overlayOpacity'>;
 const noCursorChange=()=>{};
 
-function RecordedRoutePlane({source,route,targetId}:{source:ViewerVolume;targetId:string;route:NonNullable<VerifiedStudyReplay['recordedApproach']>}){
+function RecordedRoutePlane({source,route,targetId}:{source:ViewerVolume;targetId?:string;route:NonNullable<VerifiedStudyReplay['recordedApproach']>}){
   const canvas=useRef<HTMLCanvasElement>(null);
   const width=198,height=134;
   const frame=useMemo(()=>{
@@ -66,13 +67,15 @@ function RecordedRoutePlane({source,route,targetId}:{source:ViewerVolume;targetI
   </figure>;
 }
 
-export function EngineStudyReference({receipt,nativeSource,reference,targetLabel}:{
-  receipt:VerifiedStudyReplay;nativeSource:boolean;reference:ReferenceProps;targetLabel:string;
+export function EngineStudyReference({receipt,nativeSource,reference,targetLabel,engineScene}:{
+  receipt:VerifiedStudyReplay;nativeSource:boolean;reference:ReferenceProps;targetLabel:string;engineScene?:SurgicalView['scene'];
 }){
   const route=receipt.recordedApproach;
+  const engineTargets=engineScene?.sceneId===receipt.sceneId?engineScene.regions.filter(r=>r.target):[];
+  const referenceTarget=nativeSource?receipt.targetLayerId:engineTargets.length===1?engineTargets[0].name:undefined;
   const routes=useMemo(()=>route?[recordedOverviewRoute(route)]:[],[route]);
   const settings=useMemo(()=>({...reference.workspaceSettings,operativeView:'external' as const,
-    layout:'3d-focus' as const,showPlane:false}),[reference.workspaceSettings]);
+    layout:'3d-focus' as const,camera:null,externalCamera:null,showPlane:false}),[reference.workspaceSettings]);
   return <aside className="engine-intact-reference" aria-label="Intact patient and recorded approach"
     data-study-snapshot={receipt.sourceSnapshotId} data-recorded-approach={route?.id} data-target-layer={receipt.targetLayerId}>
     <header><strong>Intact anatomy</strong><span>{receipt.patientId} · {nativeSource?'Native study':'Recorded source grid'}</span></header>
@@ -80,7 +83,7 @@ export function EngineStudyReference({receipt,nativeSource,reference,targetLabel
       <ViewerWorkspace {...reference} workspaceSettings={settings} routes={routes}
         onCursorChange={noCursorChange} cameraMode="anatomy"/>
     </div>
-    {route&&reference.caseData&&<RecordedRoutePlane source={reference.caseData} route={route} targetId={receipt.targetLayerId}/>}
+    {route&&reference.caseData&&<RecordedRoutePlane source={reference.caseData} route={route} targetId={referenceTarget}/>}
     <footer>{route&&<><strong>Recorded approach</strong><span>{route.name}</span></>}
       <strong>Target</strong><span>{targetLabel}</span>
       {receipt.actionGenerator&&<><strong>Action generator</strong><span>{receipt.actionGenerator.kind} · {receipt.actionGenerator.name}</span></>}

@@ -11,6 +11,8 @@ function presentedCaptureArea(stateId:string) {
   if(!layout)return pane;
   const inspection=layout.querySelector<HTMLElement>('canvas[data-engine-inspection-state]');
   if(inspection?.dataset.engineInspectionState!==stateId)return null;
+  const result=pane.closest<HTMLElement>('.rl-viewer[data-result-inspection]');
+  if(result&&result.querySelector<HTMLElement>('.engine-result-orbit')?.dataset.resultState!==stateId)return null;
   const preparing=Array.from(layout.querySelectorAll<HTMLElement>('.rl-viewer'))
     .some(view=>view.clientWidth>0&&view.dataset.rendererReady!=='true');
   return preparing?null:layout;

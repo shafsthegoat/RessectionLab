@@ -148,6 +148,9 @@ def test_unified_patient_context_and_surfaces_survive_linked_scan_switch(tmp_pat
     assert mr["registrationStatus"] == ct["registrationStatus"] == "alignment preview"
     assert [s["alignment"] for s in context["sources"]] == ["reference", "estimated", "unavailable"]
     assert context["sources"][1]["displayWindow"] == [0., 1000.]
+    # Only the source-admitted MRI brain can supply a wider operative surface.
+    assert [s["seriesId"] for s in mr["appearanceSources"]] == ["mr"]
+    assert all(s["seriesId"] != "ct" for s in ct.get("appearanceSources", []))
     signal = as_array(context["signal"])
     assert signal[5, 5, 5] == pytest.approx(1.)
     assert signal[40, 5, 5] == pytest.approx(.8)
@@ -212,6 +215,7 @@ def test_cortical_texture_uses_acquisition_lattice_across_registered_and_indepen
     assert source["signal"] == mr["mri"] and source["signal"]["sha256"] != ct["mri"]["sha256"]
     assert source["seriesId"] == "mr" and source["sourceSha256"] == study.series("mr")["original"]["sha256"]
     assert source["affine"] == mr_frame.tolist() and tuple(source["signal"]["shape"]) == mr_shape
+    assert source["nativeAffine"] == mr_frame.tolist() and tuple(source["nativeShape"]) == mr_shape
     assert mr["compartments"][0]["displayKind"] == ct["compartments"][0]["displayKind"] == "gray-matter"
     assert ct["registrationStatus"] == "alignment preview"
     assert isolated["registrationStatus"] == "independent source frame"

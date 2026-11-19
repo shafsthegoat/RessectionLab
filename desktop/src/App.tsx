@@ -1,3 +1,4 @@
+import {RecordedStrategyComparison} from './RecordedStrategyComparison';
 import {NativeApproachPanel} from './NativeApproachPanel';
 import {useSurgical} from "./use-surgical";
 import {caseImageEvidence,caseLayerEvidence,conditionalRehearsalNotice} from './data-case-evidence';
@@ -603,7 +604,7 @@ export default function App() {
   const operativeIssue=native.binding && (native.planning.targetSelectionIssue ||
     operativeRouteIssue(nativeRoute,native.planning.activeTargetLayerId,native.binding.document.snapshot_id));
   const showOperative=workbenchTab==='rehearsal' && !!routeKey && operativeKey===routeKey && !operativeIssue && !native.draft;
-  const linkedOperative=showOperative&&native.registration==='patient frame'&&!!native.volume&&!native.original;
+  const linkedOperative=showOperative&&native.patientFrameReady&&!!native.volume&&!native.original;
   function openOperative(){
     if(!routeKey||operativeIssue||native.draft||planningEditsPending)return;
     setRecordingSelection(null);setOperativeKey(routeKey);setWorkbenchTab('rehearsal');setCasePanel(true);
@@ -1734,6 +1735,11 @@ export default function App() {
                   'Select a treatment target in Plan to check an engine recording.'}</p>
               </div>}
             </section>
+            {api?.compareBoundSurgicalReplays&&currentSelection&&<RecordedStrategyComparison
+              key={JSON.stringify([currentSelection.collectionId,currentSelection.snapshotId,currentSelection.targetLayerId,
+                native.planning.approaches.map(route=>[route.id,route.measurementHash,route.assessmentStatus])])}
+              compare={api.compareBoundSurgicalReplays} disabled={busy||!!native.draft||planningEditsPending||native.planning.pending}
+              request={{collectionId:currentSelection.collectionId,snapshotId:currentSelection.snapshotId,targetLayerId:currentSelection.targetLayerId}}/>}
             {!showOperative&&<EnvironmentPreparationPanel key={native.binding.collectionId+"/"+native.binding.document.snapshot_id+"/"+!!native.planning.rehearsalOptions+"/"+routeKey}
             approach={!operativeIssue&&nativeRoute?.targetLayerId?{approachId:nativeRoute.id,parameterHash:nativeRoute.parameterHash,measurementHash:nativeRoute.measurementHash,
               targetLayerId:nativeRoute.targetLayerId,snapshotId:nativeRoute.sourceSnapshotId}:undefined}
@@ -2082,7 +2088,7 @@ export default function App() {
         <NativeCorrectionBar workspace={native}/>
         <div className={linkedOperative?"viewer-shell has-operative-reference":showEngineRecording?"viewer-shell has-engine-reference":"viewer-shell"}
           data-engine-replay-layout={showEngineRecording?'source-bound':undefined}>
-          {showOperative && native.binding && nativeApi && nativeRoute && <OperativeSteps key={routeKey} api={nativeApi} collectionId={native.binding.collectionId} route={nativeRoute} linkedOverview={linkedOperative} sourceVolume={native.registration==='patient frame'?native.volume:null}/>}
+          {showOperative && native.binding && nativeApi && nativeRoute && <OperativeSteps key={routeKey} api={nativeApi} collectionId={native.binding.collectionId} route={nativeRoute} linkedOverview={linkedOperative} sourceVolume={linkedOperative?native.volume:null}/>}
           {(!showOperative||linkedOperative) && displayedCase && (
             <ViewerWorkspace
               engineInspection={showEngineRecording}
@@ -2118,7 +2124,7 @@ export default function App() {
               priorLayer={!native.binding && display.primaryOverlaysPermitted ? priorView : null}
             />
           )}
-          {showEngineRecording&&replayReceipt&&caseData&&<EngineStudyReference receipt={replayReceipt}
+          {showEngineRecording&&replayReceipt&&caseData&&<EngineStudyReference receipt={replayReceipt} engineScene={surgical.view?.scene}
             nativeSource={!!nativeReference} targetLabel={nativeReference?study.binding?.document.layers.find(l=>l.id===replayReceipt.targetLayerId)?.label??replayReceipt.targetLayerId:replayReceipt.targetLayerId.replaceAll('_',' ')}
             reference={nativeReference?{caseData:nativeReference,visibleLayers:study.state.visible,workspaceSettings:study.state.settings,
               cursor:study.state.cursor,overlayOpacity}:{caseData,visibleLayers,workspaceSettings:recordingReferenceSettings,cursor:null,overlayOpacity}}/>}

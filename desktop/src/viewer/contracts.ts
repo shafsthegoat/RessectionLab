@@ -18,7 +18,7 @@ export interface PatientContext {
 /** Immutable scalar samples and physical display frame of a surface's own acquisition. */
 export interface SurfaceAppearanceSource {
   seriesId:string; modality:string; sourceSha256:string; signalSha256:string;
-  affine:Affine; shape:Shape3; data:Float32Array;
+  affine:Affine; shape:Shape3; data:Float32Array; nativeAffine?:Affine; nativeShape?:Shape3;
 }
 export interface ViewerVolume {
   patientContext?:PatientContext;

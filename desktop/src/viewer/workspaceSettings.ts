@@ -43,6 +43,8 @@ export interface ViewerWorkspaceSettings {
   layerColor?: Record<string, string>;
   camera?: ViewerCameraState | null;
   operativeView?: 'external'|'surgeon';
+  resultInspection?: 'both'|'cavity'|'residual';
+  resultCamera?: ViewerCameraState|null;
   microscope?: MicroscopeSettings;
   externalCamera?: ViewerCameraState | null;
   clipping?: ViewerClipping;

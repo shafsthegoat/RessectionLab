@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import type {ViewerVolume} from './contracts';
 import type {OperativeField} from '../operative-field';
-import {rasAffine,sampleTrilinear} from './coordinates.ts';
+import {rasAffine,sampleTrilinear,type Point3} from './coordinates.ts';
 import {placeInSourceFrame} from './sceneGeometry.ts';
 
 export function operativeFieldContext(volume:ViewerVolume|null,field:OperativeField,collectionId:string,patchRadius=field.radiusMm){
@@ -21,6 +21,7 @@ export function operativeFieldContext(volume:ViewerVolume|null,field:OperativeFi
     if(layers.length!==1||layers[0].adjudication)continue;
     const item=layers[0],resident=volume.compartments.find(l=>l.name===item.id);
     if(!resident?.surface?.indices.length||resident.displayFilter||
+      ['estimated','independent','source-grid preview'].includes(resident.alignment??'')||
       (resident.sourceSupport&&resident.sourceSupport.sampledDataSha256!==item.sampledDataSha256))continue;
     const {positions,normals,indices}=resident.surface;
     const geometry=new THREE.BufferGeometry();
@@ -28,16 +29,27 @@ export function operativeFieldContext(volume:ViewerVolume|null,field:OperativeFi
     geometry.setAttribute('normal',new THREE.BufferAttribute(normals,3));
     geometry.setIndex(new THREE.BufferAttribute(indices,1));
     const material=new THREE.MeshStandardMaterial({color:role==='bone'?'#e5d8bc':'#c68788',roughness:role==='bone'?.76:.6,side:THREE.DoubleSide});
-    // The mesh is expressed in the displayed scan's voxel frame. Carry the
-    // same acquired contrast across the seam into the wider stationary skull.
-    const signal=field.intensity;
-    if(signal&&signal.sourceSeries===identity[1]&&volume.mri){
-      const [low,high]=signal.window;
+    // Geometry uses the inspected scan's lattice. Intensities belong to
+    // this tissue's acquisition, which can have a different grid and pose.
+    const source=resident.appearanceSource;
+    const shared=volume.patientContext?.sources.find(s=>s.seriesId===item.sourceSeries&&s.sourceSha256===source?.sourceSha256);
+    const local=field.intensity;
+    const window=local&&local.sourceSeries===item.sourceSeries&&local.sourceSha256===source?.sourceSha256
+      ?local.window:shared?.displayWindow;
+    const appearance=source&&source.seriesId===item.sourceSeries&&window?{
+      seriesId:source.seriesId,modality:source.modality,sourceSha256:source.sourceSha256,signalSha256:source.signalSha256,
+      sourceShape:source.nativeShape,sourceVoxelToPatientRasMm:source.nativeAffine,window
+    }:undefined;
+    if(source&&appearance){
+      const toSource=new THREE.Matrix4().fromArray(source.affine.flat()).transpose().invert()
+        .multiply(new THREE.Matrix4().fromArray(rasAffine(volume.affine,volume.frame).flat()).transpose());
+      const [lo,hi]=appearance.window;
       const values=new Uint8Array(positions.length/3);
+      const p=new THREE.Vector3();
       for(let i=0;i<values.length;i++){
-        const x=positions[3*i],y=positions[3*i+1],z=positions[3*i+2];
-        const covered=x>=0&&y>=0&&z>=0&&x<=volume.shape[0]-1&&y<=volume.shape[1]-1&&z<=volume.shape[2]-1;
-        const normalized=covered?(sampleTrilinear(volume.mri,volume.shape,[x,y,z])-low)/(high-low):.5;
+        const voxel=p.fromArray(positions,3*i).applyMatrix4(toSource).toArray() as Point3;
+        const covered=voxel.every((n,axis)=>n>=0&&n<=source.shape[axis]-1);
+        const normalized=covered?(sampleTrilinear(source.data,source.shape,voxel)-lo)/(hi-lo):.5;
         values[i]=Math.round(255*THREE.MathUtils.clamp(normalized,0,1));
       }
       geometry.setAttribute('scanSignal',new THREE.BufferAttribute(values,1,true));
@@ -58,7 +70,7 @@ export function operativeFieldContext(volume:ViewerVolume|null,field:OperativeFi
     material.customProgramCacheKey=()=>`operative-context-${role}-${geometry.hasAttribute('scanSignal')}`;
     const mesh=new THREE.Mesh(geometry,material);
     placeInSourceFrame(mesh,rasAffine(volume.affine,volume.frame));
-    mesh.name=item.label;mesh.userData.sourceLayer={directId:item.id,role,patchRadius};
+    mesh.name=item.label;mesh.userData.sourceLayer={directId:item.id,role,patchRadius,sourceSeries:item.sourceSeries,appearance};
     group.add(mesh);
   }
   return group;
