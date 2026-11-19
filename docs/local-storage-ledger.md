@@ -42,6 +42,7 @@ establish scientific readiness or a completed build; consult each run's receipts
 | Case library | `cases/real/`, `cases/synthetic/`, `cases/controls/`: native projects; use their manifests for roles and supported capabilities. |
 | Model assets | `cache/models/`: `synthstrip-v1/`, `poc-vesselfm-base/`, `poc-totalsegmentator/`, `supersynth-source/`; availability, terms and installation state are in local receipts. |
 | Historical archives | `archive/closed-evidence/`: October 19 rehearsal tar, generated-control tar, October 20 rehearsal, desktop visual evidence and profiler-baseline archives. [Exact newer archive identities/restoration](../manifests/historical-archives-20261116.json). |
+| Retired tracked research artifacts | `archive/closed-evidence/tracked-research-artifacts-20261119-v1/` contains 3,645 files from historical research runs, reviews and source snapshots. [Restore the original paths](#restore-retired-tracked-research-artifacts). |
 | Archived desktop builds | `archive/desktop-builds-20261117/`: older macOS app bundles, packaging inputs and staging directories. `README.md` provides restore commands beside the per-archive checksums, including the November 17 orientation-guide app formerly in `desktop/release/RessectionLab-darwin-arm64`. |
 | Archived sidecar and test runs | `archive/closed-evidence/local-build-and-test-archives-20261117/`: prior orientation-guide sidecar and 16 older vascular test runs. `README.md` links the verified archives and the existing evidence archives used to retire the local restore-test copies. |
 | November 18 operative rehearsal examples | Open `archive/closed-evidence/operative-rehearsal-20261118/README.md` for the BITE-09, UCSF-0005, EDEN CTRL_1277 and synthetic workspaces, recordings and comparison images. Its `SHA256SUMS` covers the archived media, earlier diagnostic captures and test logs. The guide lists the working-study restore paths and identifies the five fixtures kept locally for verification. |
@@ -77,3 +78,30 @@ When adding, moving, archiving or retiring relevant HDD assets, update this ledg
 and the affected local catalog pointers. Keep detailed file inventories, hashes
 and run logs on the HDD; retain only concise discovery metadata here. Check
 existing collections before downloading again. See [repository upkeep](../CONTRIBUTING.md).
+
+## Restore retired tracked research artifacts
+
+The November 19 cleanup archived 229 historical groups. Runtime and test
+fixtures, experiment inputs, and evidence referenced by maintained guides
+remain in the checkout. The archive preserves each original `artifacts/`
+path and was fully restored and checked before removal.
+
+From the repository root, restore to a fresh directory under the ignored
+`testcases/` tree:
+
+```sh
+archive_dir='/Volumes/shafrir/old coding projects/RessectionLabData/archive/closed-evidence/tracked-research-artifacts-20261119-v1'
+python3 scripts/archive_historical_evidence.py restore \
+  --archive "$archive_dir/archive.tar.gz" \
+  --manifest "$archive_dir/manifest.json" \
+  --destination testcases/restored-tracked-research-artifacts-20261119
+```
+
+The archive SHA-256 is
+`62e1ca29db915433d093c6d215ebb3ce2e223a0b20460777277d1a25dd2ee3e7`.
+The manifest SHA-256 is
+`21078732a4f0354a9aa5c74ca5e26253e27186cd16a7ed921b851db19653a704`.
+With the HDD disconnected, retrieve a tracked file from
+`preservation/cleanup-execution-20261116` with
+`git show '6547ad746787283f9f9159ddf3235d0820c9c382:artifacts/<original-path>'`,
+or browse the [preserved artifact tree](https://github.com/shafsthegoat/RessectionLab/tree/6547ad746787283f9f9159ddf3235d0820c9c382/artifacts).
