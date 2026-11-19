@@ -1,4 +1,4 @@
-import type {Binding, Layer, NativeScanState, NativeViewState, VesselScope} from './native-anatomy-data';
+import type {Binding, CranialView, Layer, NativeScanState, NativeViewState, VesselScope} from './native-anatomy-data';
 import type {ViewerWorkspaceSettings} from './viewer/workspaceSettings';
 
 export type AnatomyPresentation = 'scan'|'segmentation'|'vascular';
@@ -108,6 +108,32 @@ export function anatomyPresentation(settings:ViewerWorkspaceSettings,layers:Bind
     obliqueClip:settings.obliqueClip?{...settings.obliqueClip,enabled:false}:undefined};
 }
 
+/** A sparse set of source-owned layers. Only the rendered composition changes. */
+export function cranialComposition(view:NativeScanState,layers:Layer[],allIds:string[],mode:CranialView,
+  targetId:string|null|undefined,selectedId:string|null):NativeScanState {
+  const inspection=mode==='inspection';
+  const head=layers.find(layer=>studyLayerDisplayKind(layer)==='outer-head-tissue')??layers.find(layer=>layer.kind==='head-envelope');
+  const isCortex=(layer:Layer)=>['gray-matter','cerebral-cortex','cerebellar-cortex'].includes(studyLayerDisplayKind(layer));
+  const internal=inspection?layers.find(layer=>layer.id===selectedId&&layer!==head&&layer.id!==targetId&&!isCortex(layer))
+    ??layers.find(layer=>layer.kind==='ventricles'):undefined;
+  const visible:Record<string,boolean>=Object.fromEntries(allIds.map(id=>[id,false]));
+  const layerOpacity={...view.settings.layerOpacity},layerColor={...view.settings.layerColor};
+  for(const layer of layers){
+    if(layer.id===targetId){
+      layerOpacity[layer.id]=1;layerColor[layer.id]='#65bfd3';
+    }else if(layer===head){
+      layerOpacity[layer.id]=inspection?.65:.23;layerColor[layer.id]='#d3dce5';
+    }else if(layer===internal){
+      layerOpacity[layer.id]=.88;layerColor[layer.id]=layer.color;
+    }else if(isCortex(layer)){
+      layerOpacity[layer.id]=inspection?.19:.71;layerColor[layer.id]='#c69891';
+    }else continue;
+    visible[layer.id]=true;
+  }
+  return {...view,cranialView:mode,visible,settings:{...view.settings,presentation:'segmentation',contextStyle:'shell',
+    sliceOverlay:'contour',layerOpacity,layerColor,volumeRendering:{...view.settings.volumeRendering,enabled:false}}};
+}
+
 export function studyTimepoint(b:Binding):string {
   return b.document.study_timepoint??b.document.series[0]?.timepoint??'source-session-unknown';
 }
@@ -128,7 +154,7 @@ export function sourceEvidenceLabel(source:{modality:string}|undefined,series:Re
 }
 /** Scan contrast/camera stays per scan; selected anatomy belongs to the study. */
 export function nextScanState(current:NativeScanState, saved:NativeScanState,linked=true):NativeScanState {
-  return {...saved,cursor:linked&&current.cursor?[...current.cursor]:saved.cursor?[...saved.cursor]:null,visible:{...current.visible},settings:{...saved.settings,
+  return {...saved,...(linked?{cranialView:current.cranialView}:{}),cursor:linked&&current.cursor?[...current.cursor]:saved.cursor?[...saved.cursor]:null,visible:{...current.visible},settings:{...saved.settings,
     ...(linked?{presentation:current.settings.presentation}:{}),
     ...(linked&&current.settings.presentation&&current.settings.presentation!=='scan'?{camera:current.settings.camera,volumeRendering:current.settings.volumeRendering}:{}),
     sliceOverlay:current.settings.sliceOverlay,contextStyle:current.settings.contextStyle,

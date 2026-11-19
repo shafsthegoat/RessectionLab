@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {studyLayerDisplayKind,nextScanState,scanLabel,studyTimepoint,migrateSkullView,anatomyPresentation,defaultAnatomyPresentation,sourceEvidenceLabel} from '../src/native-study-state.ts';
 import {checkedViewerSettings} from '../src/workspace-view-settings.ts';
-import {initialNativeLayers,presentationLayers} from '../src/native-study-state.ts';
+import {cranialComposition,initialNativeLayers,presentationLayers} from '../src/native-study-state.ts';
 
 test('an independent or estimated scan cannot drive the reference scan presentation',()=>{
   const layers=['ct','registered','estimated','independent'].map(source_series=>({source_series}));
@@ -225,4 +225,30 @@ test('patient 3D camera and density follow linked slices while unaligned scans k
   assert.deepEqual(linked.settings.volumeRendering,current.settings.volumeRendering);
   assert.equal(linked.settings.contrast,2);
   assert.deepEqual(nextScanState(current,saved,false).cursor,saved.cursor);
+});
+
+
+test('cranial views share the source camera and contours and restrict layers to admitted evidence',()=>{
+  const layers=[['gray','cerebral-cortex'],['cerebellum','cerebellar-cortex'],['head','head-envelope'],
+    ['target','tumor'],['other-target','tumor'],['csf','ventricles'],['veins','vein'],['region','brain-region']].map(
+    ([id,kind])=>({id,kind,color:'#6283ac'}));
+  const ids=[...layers.map(layer=>layer.id),'tract','independent'];
+  const camera={position:[-400,0,0],target:[0,0,0],up:[0,0,1]};
+  const initial={cursor:[9,3,4],visible:{tract:true},settings:{camera,sliceOverlay:'fill',sliceFraming:{fit:'image',zoom:1.5},clipping:{enabled:false}}};
+  const visible=view=>Object.keys(view.visible).filter(id=>view.visible[id]);
+  const plan=cranialComposition(initial,layers,ids,'planning','target','veins');
+  assert.deepEqual(visible(plan),['gray','cerebellum','head','target']);
+  const inspect=cranialComposition(plan,layers,ids,'inspection','target','region');
+  assert.deepEqual(visible(inspect),['gray','cerebellum','head','target','region']);
+  assert.ok(inspect.settings.layerOpacity.gray<plan.settings.layerOpacity.gray);
+  assert.ok(inspect.settings.layerOpacity.head>plan.settings.layerOpacity.head);
+  assert.ok(inspect.settings.layerOpacity.region>inspect.settings.layerOpacity.gray);
+  const fallback=cranialComposition(plan,layers,ids,'inspection','target','gray');
+  assert.equal(fallback.visible.csf,true);
+  for(const view of [plan,inspect]){
+    assert.equal(view.settings.camera,camera);assert.equal(view.settings.sliceOverlay,'contour');
+    assert.equal(view.settings.sliceFraming,initial.settings.sliceFraming);assert.equal(view.settings.clipping,initial.settings.clipping);
+    assert.equal(view.visible.independent,false);
+  }
+  assert.deepEqual(initial.visible,{tract:true});
 });

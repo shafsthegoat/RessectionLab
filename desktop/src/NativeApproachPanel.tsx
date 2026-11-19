@@ -1,3 +1,4 @@
+import {NativeCranialView} from './NativeCranialView';
 import {useEffect,useState} from 'react';
 import {ArrowDownToLine,Focus,Plus,Sparkles} from 'lucide-react';
 import type {NativeWorkspace} from './use-native-workspace';
@@ -95,6 +96,7 @@ export function NativeApproachPanel({workspace:w,onPreview,onEditStateChange}:{w
       ?{action:'list',targetLayerId:option.layerId}
       :{action:'selectTarget',targetLayerId:option?.layerId??null,candidateBinding:option?.candidateBinding??null});
     if(!result)return;
+    if((w.state.cranialView||w.canRestoreCranialView)&&option?.layerId!==p.activeTargetLayerId)w.composeCranialView('custom');
     const preferred=p.selectedApproachIds?.[option?.layerId??''];
     const route=preferred===null?undefined:result.approaches.find(a=>a.id===preferred)??result.approaches.find(a=>a.targetLayerId===option?.layerId);
     if(w.patientFrameReady)w.setCursor(route?.target??option?.target??initialTarget);
@@ -124,6 +126,7 @@ export function NativeApproachPanel({workspace:w,onPreview,onEditStateChange}:{w
         <p>{rehearsalAvailability(p.rehearsalOptions)}</p>
       </>}
     </div>
+    <NativeCranialView workspace={w}/>
     {p.targetOptions.length>0&&<label className="approach-target-picker">Planning target<select aria-label="Planning target" value={p.targetSelectionIssue?'':p.activeTargetLayerId??''} disabled={blocked||(dirty&&!valid)} onChange={event=>void selectTarget(p.targetOptions.find(option=>option.layerId===event.target.value))}>
       <option value="">Choose a lesion candidate</option>{p.targetOptions.map(option=><option key={option.layerId} value={option.layerId} disabled={option.target===null}>{option.label}{option.origin?` · ${option.origin}`:''}{option.target===null?' · unavailable':''}</option>)}</select></label>}
     {p.targetSelectionIssue&&<p className="approach-error" role="status">{p.targetSelectionIssue}</p>}

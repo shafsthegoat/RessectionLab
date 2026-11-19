@@ -282,9 +282,13 @@ test('a prepared lesion requires explicit selection and sends its evidence bindi
     assert.equal(button(tree,'Suggest approaches').props.disabled,true);
     const picker=[...walk(tree)].find(node=>node.type==='select'&&node.props['aria-label']==='Planning target');
     assert.equal(picker.props.value,'');
+    const composition=[];
+    f.workspace.state.cranialView='inspection';
+    f.workspace.composeCranialView=mode=>composition.push(mode);
     picker.props.onChange({target:{value:'lesion'}});await flush();tree=h.render();
     const selection=f.calls.at(-1);
     assert.equal(selection.action,'selectTarget');
+    assert.deepEqual(composition,['custom']);
     assert.equal(selection.targetLayerId,lesion.layerId);
     assert.equal(selection.candidateBinding,lesion.candidateBinding);
     assert.equal(button(tree,'Suggest approaches').props.disabled,false);

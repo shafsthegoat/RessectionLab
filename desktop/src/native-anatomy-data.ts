@@ -148,7 +148,8 @@ export async function hydrateAnatomy(payload:ViewPayload,api:ResectionApi,cached
   return {...payload,mri,compartments,tractography,labelSets,patientContext,headSupport};
 }
 
-export interface NativeScanState {cursor:Point3|null;visible:Record<string,boolean>;settings:ViewerWorkspaceSettings}
+export type CranialView = 'planning'|'inspection';
+export interface NativeScanState {cranialView?:CranialView;cursor:Point3|null;visible:Record<string,boolean>;settings:ViewerWorkspaceSettings}
 export interface RetiredClipping {seriesId:string|null;cutaway:import('./viewer/workspaceSettings').ViewerCutaway}
 export interface NativeViewState {schema:'patient-anatomy-view-v1';patientId:string;snapshotId:string;seriesId:string;states:Record<string,NativeScanState>;patientCutaway?:import('./viewer/workspaceSettings').ViewerCutaway;vesselScope?:VesselScope;vesselDisplayVersion?:2;selectedApproachId?:string|null;selectedPlanningTargetId?:string|null;selectedApproachIds?:Record<string,string|null>;selectedStructure?:string|null}
 export interface ComponentReview {reviewId:string;layerId:string;components:Array<{id:number;voxels:number;volumeMm3:number;center:Point3}>}

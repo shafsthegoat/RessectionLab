@@ -135,6 +135,34 @@ def test_insufficient_source_support_retains_raw_and_explains_unavailability(stu
     assert display.source_head_support(c, s) is None
 
 
+def test_reviewed_component_removal_keeps_source_support_after_reopen(study, tmp_path):
+    c = study
+    row = c.layer("siam-15")
+    original = c.mask(row)
+    corrected = original.copy()
+    corrected[32, 31, 37] = False
+    operations = [{"operation": "remove-components", "componentIds": [2]}, {"operation": "undo"}, {"operation": "redo"}]
+    c.commit_edit(row["id"], corrected, author="fixture", expected=c.identity(), operations=operations)
+    package = tmp_path / "reviewed.rsworkspace"
+    save_package(c, package)
+    reopened = PatientImagingCollection(open_package(package, tmp_path / "copies").parent)
+    row = reopened.layer("siam-15")
+    layer, report = display.supported_tissue_layer(reopened, row)
+    assert (report["sourceVoxels"], report["retainedVoxels"], report["hiddenVoxels"]) == (1, 0, 1)
+    assert np.array_equal(reopened.mask(row), corrected) and not reopened.mask(layer).any()
+    raw, _ = display.supported_tissue_layer(reopened, row, raw_qc=True)
+    assert np.array_equal(reopened.mask(raw), original)
+    # Reject an inconsistent remove-only history without discarding the extra voxel.
+    added = corrected.copy()
+    added[4, 4, 20] = True
+    malformed = {**row, "data": reopened.put_array(added.astype(np.uint8))}
+    assert display.supported_tissue_layer(reopened, malformed) == (malformed, None)
+    reopened.commit_edit(row["id"], added, author="fixture", expected=reopened.identity(),
+                         operations=[{"operation": "add"}])
+    mixed = reopened.layer("siam-15")
+    assert display.supported_tissue_layer(reopened, mixed) == (mixed, None)
+
+
 def test_outer_margin_excludes_air_chip_preserving_dark_surface_and_bright_island(tmp_path):
     c = PatientImagingCollection.create(tmp_path / "native", "margin-test")
     mri = np.zeros((72, 72, 72), np.float32)

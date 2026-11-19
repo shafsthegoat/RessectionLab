@@ -161,9 +161,44 @@ def _cached_support(c, row, series, identity, check):
     return entry
 
 
+def _component_removal_history(row):
+    edits = row.get("edits")
+    if not isinstance(edits, list) or not edits or row.get("provenance", {}).get("model") != "siam-v2":
+        return False
+    for edit in edits:
+        history = edit.get("operations") if isinstance(edit, dict) else None
+        if not isinstance(history, list):
+            return False
+        operations = [item.get("operation") if isinstance(item, dict) else None for item in history]
+        if "remove-components" not in operations or any(op not in ("remove-components", "undo", "redo") for op in operations):
+            return False
+    return True
+
+
+def _supported_correction(c, row, base, entry, check):
+    # An accepted component deletion should only subtract from the former display.
+    # Mixed edit histories can contain deliberate additions outside the MRI envelope.
+    corrected = c.array(row["data"])
+    check()
+    key = ("component-removal", row["data"]["sha256"], row["label_value"],
+           base["data"]["sha256"], base["label_value"], entry["data"]["sha256"])
+    cache = c._siam_display_cache
+    if key not in cache:
+        mask = corrected == row["label_value"]
+        # Even a malformed imported history must not hide manually introduced voxels.
+        if np.any(mask & (c.array(base["data"]) != base["label_value"])):
+            return None
+        total = int(np.count_nonzero(mask))
+        mask &= c.array(entry["data"]) == base["label_value"]
+        cache[key] = (c.put_array(mask.astype(np.uint8)), total, int(np.count_nonzero(mask)))
+    data, total, retained = cache[key]
+    return {**row, "data": data, "label_value": 1}, total, retained
+
+
 def supported_tissue_layer(collection, row, *, check=lambda: None, raw_qc=False):
     """Get a display-only row and receipt. Preserve supplied labels and corrections."""
-    base = _native_prediction(row, original=raw_qc)
+    removal = not raw_qc and _component_removal_history(row)
+    base = _native_prediction(row, original=raw_qc or removal)
     if base is None:
         return row, None
     c = collection
@@ -176,6 +211,17 @@ def supported_tissue_layer(collection, row, *, check=lambda: None, raw_qc=False)
                       "sourceVoxels": count, "retainedVoxels": count, "hiddenVoxels": 0}
     entry = _cached_support(c, base, series, identity, check)
     report.update({k: v for k, v in entry.items() if k not in {"data", "mask", "before", "after"}})
+    if removal:
+        if entry["status"] != "supported":
+            return row, None
+        result = _supported_correction(c, row, base, entry, check)
+        if result is None:
+            return row, None
+        display, total, retained = result
+        report.update(maskSha256=entry["mask"]["sha256"], sampledDataSha256=display["data"]["sha256"],
+                      correctedDataSha256=row["data"]["sha256"], sourceVoxels=total,
+                      retainedVoxels=retained, hiddenVoxels=total - retained)
+        return display, report
     report["sampledDataSha256"] = entry["data"]["sha256"]
     if entry["status"] == "supported":
         report["maskSha256"] = entry["mask"]["sha256"]

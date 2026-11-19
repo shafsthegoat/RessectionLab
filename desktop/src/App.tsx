@@ -605,6 +605,8 @@ export default function App() {
     operativeRouteIssue(nativeRoute,native.planning.activeTargetLayerId,native.binding.document.snapshot_id));
   const showOperative=workbenchTab==='rehearsal' && !!routeKey && operativeKey===routeKey && !operativeIssue && !native.draft;
   const linkedOperative=showOperative&&native.patientFrameReady&&!!native.volume&&!native.original;
+  const nativeRoutes=linkedOperative&&native.state.cranialView==='inspection'
+    ?native.planning.routes.filter(route=>route.selected):native.displayRoutes;
   function openOperative(){
     if(!routeKey||operativeIssue||native.draft||planningEditsPending)return;
     setRecordingSelection(null);setOperativeKey(routeKey);setWorkbenchTab('rehearsal');setCasePanel(true);
@@ -2111,7 +2113,7 @@ export default function App() {
               overlayOpacity={overlayOpacity}
               cursor={displayedCursor}
               onCursorChange={native.binding ? native.setCursor : imaging.selected ? imaging.setCursor : setCursor}
-              routes={native.binding?(native.patientFrameReady?native.planning.routes:[]):display.primaryOverlaysPermitted?viewerRoutes:[]}
+              routes={native.binding?(native.patientFrameReady?nativeRoutes:[]):display.primaryOverlaysPermitted?viewerRoutes:[]}
               selectedStructure={native.binding?native.selectedStructure:null}
               onPickStructure={native.binding?native.setSelectedStructure:undefined}
               structureFocusRequest={native.structureFocusRequest}

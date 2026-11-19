@@ -1,3 +1,4 @@
+import {NativeCranialView} from './NativeCranialView';
 import {NativeStructureControls} from './NativeStructureControls';
 import {layerAppearance} from './viewer/workspaceSettings';
 import {useEffect,useRef,useState} from 'react';
@@ -114,6 +115,7 @@ export function NativeSidebar({workspace:w,tab,onOpenAnatomy,onOpenPlan,onOpenSc
       {!!source&&<details className="unified-details"><summary>Alignment & registration</summary><p>{w.registration==='patient frame'?'Source or reviewed alignment.':w.registration==='alignment preview'?'An estimated transform is being used for display. Review landmarks before quantitative planning.':'Align this scan to show shared structures.'}</p>{Object.entries(w.volume?.alignmentQuality??{}).map(([sid,q])=><div key={sid} className="alignment-notice"><strong>{sid} · {q.status}</strong>{[...q.warnings,...(q.notes??[])].map((warning,i)=><span key={i}>{warning}</span>)}<details><summary>Measurements</summary><pre>{JSON.stringify(q.metrics,null,2)}</pre></details></div>)}<button disabled={blocked||w.series===b.document.reference_series} onClick={()=>w.change(()=>api.anatomyRegister({...w.args(),seriesId:w.series,action:'estimate'}))}>Recalculate alignment</button><NativeRegistrationReview key={JSON.stringify([b.collectionId,b.document.snapshot_id,w.series])} workspace={w} blocked={blocked}/></details>}
     </>:<>
       <div className="anatomy-presets" role="group" aria-label="Anatomy presentation"><button aria-pressed={w.state.settings.presentation==='scan'} disabled={blocked||!source||defaultAnatomyPresentation(source.modality)!=='scan'} onClick={()=>w.present('scan')}><ScanLine size={13}/>Scan</button><button aria-pressed={w.state.settings.presentation==='segmentation'} disabled={blocked} onClick={()=>w.present('segmentation')}>Structures</button><button aria-pressed={w.state.settings.presentation==='vascular'} disabled={blocked} onClick={()=>w.present('vascular')}>Vessels</button></div>
+    <NativeCranialView workspace={w}/>
       {model&&<details className="unified-details patient-model-summary" data-frame="patient">
         <summary>Patient reconstruction · {model.sources.filter(s=>s.displayWindow).length} contributing scans</summary>
         <p>{w.state.settings.presentation==='scan'?'3D signal and linked slices show the selected scan.':'3D context shows the brightest windowed signal across aligned scans. Linked slices retain the selected scan’s intensity.'} Surfaces retain their source extent.</p>
