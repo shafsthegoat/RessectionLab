@@ -15,6 +15,12 @@ Use the right-hand slice controls to move the linked cursor. In the 3D pane, **C
 
 ### From patient scans to operative steps
 
+Use **Cases → Scans → Anatomy → Plan → Rehearse** to carry the same patient
+study through the workflow. Keep the source slices visible while inspecting
+the reconstruction and the approach. From **Rehearse**, save the recording
+at the state you want to revisit, and save the native study to retain the
+selected approach.
+
 1. In **Cases**, choose **New patient study**. In **Scans**, add the patient's DICOM folders or NIfTI volumes together. Attach any label maps to their acquisition and assign the meaning of each label. Confirm the study association.
 2. Open **Prepare anatomy**. Confirm intact full-head MRI coverage where applicable and choose a tumor indication if you want a lesion estimate. Review the proposed stages, then run preparation. Calibrated CT supports skull estimates. Volumetric CTA, TOF and MRA support vascular candidates. Eligible structural MRI can contribute dural, skull, vascular and other tissue estimates through the installed SIAM adapter. Review each stage's outcome. [Setup, coverage and models](patient-anatomy-workbench.md#direct-mri-tissue-estimates-with-siam-v2) · [SIAM study](https://arxiv.org/abs/2605.02737) · [vesselFM study](https://openaccess.thecvf.com/content/CVPR2025/html/Wittmann_vesselFM_A_Foundation_Model_for_Universal_3D_Blood_Vessel_Segmentation_CVPR_2025_paper.html)
 3. In **Anatomy**, use **Structures** to inspect the combined patient reconstruction. Change the source scan to check a contour against its original slices. Inspect a layer's source and coverage, including where an acquisition ends. An estimated alignment is labeled in the viewer. Resolve a questionable registration under **Scans → Alignment & registration** before using it in a quantitative comparison. Published cranial planning cases used different acquisitions for different structures and frequently required manual segmentation. [107-case imaging study](https://pmc.ncbi.nlm.nih.gov/articles/PMC11008664/)
@@ -25,6 +31,14 @@ Use the right-hand slice controls to move the linked cursor. In the 3D pane, **C
 In **Anatomy** or **Plan**, choose **Cranial view → Cortex and target · planning** to see the selected tumor and approach against the cortex and head outline. **Internal boundaries · inspection** brings a selected internal structure and the head silhouette forward. The visible structures also have contours on the native slices. The controls for individual layers remain available. The source details distinguish supplied annotations from model estimates.
 
 **Follow operative depth** starts at the saved entry on the registered exterior, holds the opening in view, then turns toward the longitudinal section as the deeper tissue comes into view. The right pane keeps the intact head and source MRI visible. **Inspection cutaway** allows a separate fixed-angle comparison at the same timeline position. Cyan identifies residual target. **Field voxel faces** exposes the exact local display-grid cells used by the geometric demonstration.
+
+To try the geometric workflow on one study, use the reviewed **BITE-09**
+planning workspace. Inspect the supplied tumor on its source MRI in
+**Anatomy**, then use **Show target** in **Plan** to center the slices at the
+planned endpoint. In **Rehearse**, pause at the dural opening or aspiration
+and switch between **Follow operative depth** and **Inspection cutaway**
+to inspect that moment. The reviewed workspace and walkthrough are indexed
+in the [local storage ledger](local-storage-ledger.md).
 
 Under **Field evidence**, choose **Overlapping passes** to follow successive passes through the local target, or **Original spiral** to reproduce the earlier geometric endpoint. The two paths contact different cells. On the indexed BITE-09 route, the default path removes 4,741 local target cells (144.68 mm³) and the original removes 3,224 (98.39 mm³). Both use a 0.84 mm modeled tip radius and preserve the source mask. These quantities describe the geometric preview. The SurgicalEngine records its own instrument contacts and outcome measures.
 
@@ -54,6 +68,11 @@ In **Plan**, select the target and approach. In **Rehearse**, choose **Open reco
 The intact reference shows the patient and the approach carried by the recording. The operative viewer shows the engine's tool poses and tissue state. **Operated anatomy** sections the working grid through the effect. Residual target, removed space and mapped protected structures have separate colors. Use the grid and slice controls to inspect a specific location, or **Follow effect** to follow the removal. The section marks the recorded tool tip when it intersects the plane. Volume readouts cover the whole modeled target.
 
 Play, pause, step or seek to an observation. The 3D field, section and quantities follow that observation on the same branch. In the procedure, **Save** writes the engine environment and playback position. In the native study, **Save** retains the plan and source view. Returning to Plan restores the native study. Opening a saved procedure on its own uses its embedded source grid for the intact reference.
+
+For an acquired imaging example with instrument motion and measured tissue
+changes, start with [IXI077](#replay-the-ixi077-t1-and-mra-case). Its recorded
+episode starts after exposure and uses a synthetic target. For two recorded
+approaches to the same supplied tumor, use the [UCSF fixed-target comparison](#compare-two-recorded-procedures-on-one-target).
 
 **Export observed replay** saves a captioned MP4. It waits for the tool and surface state and the corresponding operated section, then captures the joined view. The recording uses engine observation times and holds the endpoint for one second. Export restores the prior cursor. FFmpeg with H.264 and subtitle support is required.
 

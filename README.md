@@ -7,10 +7,11 @@ Start with the [current status and working entry points](docs/current-status.md)
 for architecture, workflow, verification, experimental features and dated history.
 The workbench follows one patient from acquired scans and supplied annotations
 through reconstruction, source-slice inspection, approach comparison and 3D
-rehearsal. Every input needs an anatomical contribution or an exclusion reason.
-Watching the operation, pausing, scrubbing and reopening the recorded procedure
-are permanent product requirements. The geometric preview illustrates a selected
-route. Executed replay shows the actions and tissue changes recorded by
+rehearsal in **Cases → Scans → Anatomy → Plan → Rehearse**. Every input needs an
+anatomical contribution or an exclusion reason. Watching the operation, pausing,
+scrubbing and reopening the recorded procedure are permanent product
+requirements. The geometric preview illustrates a selected route. Executed
+replay shows the instrument actions and tissue changes recorded by
 `SurgicalEngine`. [Use the scan-to-rehearsal workflow](docs/desktop-workflow.md#from-patient-scans-to-operative-steps).
 
 In **Rehearse**, play the recorded instrument motion and tissue changes together

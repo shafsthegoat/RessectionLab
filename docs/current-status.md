@@ -87,6 +87,12 @@ an overall advantage. Vascular and observed functional outcomes were unavailable
 A stable-source repetition reproduced all 12 trajectories, including refusals and
 endpoints. Neither method was tested on a patient.
 
+The annotated CTA comparison preserves the supplied right M2 branches as
+separately inspectable layers. All five vessel inference alternatives failed
+selection, and the highest-ranked diagnostic alternative failed verification.
+The default remains Gaussian patch blending at a 0.50 threshold.
+[Measurements and native viewing instructions](data-rebuild.md#annotated-cta-vessel-comparison).
+
 Next work requires independently reviewed acquired operative compartments,
 positive and negative coverage, task permissions and swept access and exit
 evidence with corresponding admission and refusal controls. Independent geometry

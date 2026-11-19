@@ -105,7 +105,7 @@ The archive SHA-256 is
 `62e1ca29db915433d093c6d215ebb3ce2e223a0b20460777277d1a25dd2ee3e7`.
 The manifest SHA-256 is
 `21078732a4f0354a9aa5c74ca5e26253e27186cd16a7ed921b851db19653a704`.
-With the HDD disconnected, retrieve a tracked file from
-`preservation/cleanup-execution-20261116` with
-`git show '6547ad746787283f9f9159ddf3235d0820c9c382:artifacts/<original-path>'`,
-or browse the [preserved artifact tree](https://github.com/shafsthegoat/RessectionLab/tree/6547ad746787283f9f9159ddf3235d0820c9c382/artifacts).
+With the HDD disconnected, retrieve a tracked file from the commit immediately
+before the cleanup with
+`git show '9b766cce5316b1da407e29c138f3819f465d837d:artifacts/<original-path>'`,
+or browse the [pre-cleanup artifact tree](https://github.com/shafsthegoat/RessectionLab/tree/9b766cce5316b1da407e29c138f3819f465d837d/artifacts).
