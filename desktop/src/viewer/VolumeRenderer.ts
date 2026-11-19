@@ -67,7 +67,7 @@ import { validateDiagnosticLayer } from "./diagnosticLayer";
 import type { CheckedDiagnosticLayer, LoadedDiagnosticLayer } from "./diagnosticLayer";
 import { physicalBounds, placeInSourceFrame } from "./sceneGeometry";
 import { surfaceCameraDistance } from './surfaceCameraFit';
-import type {CorticalSignal} from './cranialDepth';
+import {installCorticalSignal,type CorticalSignal} from './cranialDepth';
 import { ScanVolumeRenderer } from './ScanVolumeRenderer';
 import type { VolumeRenderingSettings } from './volumeTransfer';
 import { paneViewport } from "./layout";
@@ -754,7 +754,8 @@ export class VolumeRenderer {
           worldToVoxel:matrix(inverseAffine(source.affine))};
         this.corticalSignals.set(source.seriesId,signal);
       }
-      mesh.userData.corticalSignal=signal;
+      mesh.userData.corticalSignalEnabled=installCorticalSignal(mesh.material,signal,
+        this.workspaceSettings.presentation==='segmentation'&&this.workspaceSettings.operativeView!=='surgeon');
     }
     this.picking?.install(mesh,geometry,eagerPicking);
     return {mesh,source:geometry,smooth,smoothingPrepared};
@@ -1137,6 +1138,7 @@ export class VolumeRenderer {
       const mesh=this.surfaces.get(layer.name);
       if(mesh){
         mesh.userData.cranialBoundary=this.cranialBoundary(layer.displayKind??layer.kind,settings);
+        if(mesh.userData.corticalSignalEnabled)mesh.userData.corticalSignalEnabled.value=settings.presentation==='segmentation'&&settings.operativeView!=='surgeon';
         mesh.visible=this.surfaceVisible(layer.name);
         const material=mesh.material as THREE.MeshStandardMaterial;
         material.color.set(appearance.color);material.opacity=appearance.opacity;

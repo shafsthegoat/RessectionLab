@@ -48,7 +48,7 @@ function visibleCortexPixels(image){
   const data=image.toBitmap(); // Electron stores BGRA bytes.
   let pixels=0;
   for(let i=0;i<data.length;i+=4)
-    if(data[i+2]>60&&data[i+2]>data[i+1]+22&&data[i]>data[i+1]+4)pixels++;
+    if(data[i+2]>60&&data[i+2]>data[i+1]+22&&data[i+2]>data[i]+15&&Math.abs(data[i+1]-data[i])<30)pixels++;
   return pixels;
 }
 

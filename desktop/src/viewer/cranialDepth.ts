@@ -4,6 +4,32 @@ type Boundary = 'cortex' | 'head';
 export type CorticalSignal = {texture:THREE.Data3DTexture;window:[number,number];worldToVoxel:THREE.Matrix4};
 type Surface = {mesh:THREE.Mesh;material:THREE.Material};
 
+/** Sample the originating acquisition on both solid and translucent cortical
+ * surfaces. The volume peels reuse this same material hook. */
+export function installCorticalSignal(material:THREE.MeshStandardMaterial,signal:CorticalSignal,enabled:boolean) {
+  const active={value:enabled};
+  const previous=material.onBeforeCompile,key=material.customProgramCacheKey();
+  material.onBeforeCompile=(shader,renderer)=>{
+    previous.call(material,shader,renderer);
+    shader.uniforms.uCorticalSignalEnabled=active;
+    shader.uniforms.uCorticalScan={value:signal.texture};
+    shader.uniforms.uCorticalWindow={value:new THREE.Vector2(...signal.window)};
+    shader.uniforms.uCorticalWorldToVoxel={value:signal.worldToVoxel};
+    shader.vertexShader='uniform mat4 uCorticalWorldToVoxel; varying vec3 vCorticalVoxel;\n'+shader.vertexShader.replace('#include <begin_vertex>',
+      '#include <begin_vertex>\nvCorticalVoxel=(uCorticalWorldToVoxel*modelMatrix*vec4(position,1.)).xyz;');
+    shader.fragmentShader='uniform bool uCorticalSignalEnabled; uniform highp sampler3D uCorticalScan; uniform vec2 uCorticalWindow; varying vec3 vCorticalVoxel;\n'+
+      shader.fragmentShader.replace('#include <color_fragment>',`#include <color_fragment>
+        vec3 uvw=(vCorticalVoxel.zyx+0.5)/vec3(textureSize(uCorticalScan,0));
+        if(uCorticalSignalEnabled&&all(greaterThanEqual(uvw,vec3(0.)))&&all(lessThanEqual(uvw,vec3(1.)))){
+          float signalValue=texture(uCorticalScan,uvw).r;
+          float brightness=clamp((signalValue-uCorticalWindow.x)/(uCorticalWindow.y-uCorticalWindow.x),0.,1.);
+          diffuseColor.rgb*=exp2((brightness-.45)*1.15);
+        }`);
+  };
+  material.customProgramCacheKey=()=>key+'/source-cortical-signal';
+  return active;
+}
+
 /** The outer intersection of a folded tissue remains a translucent surface.
  * Interior walls of that same tissue would otherwise accumulate until opaque.
  * Each group gets its own depth so the scalp cannot erase the cortex. */
@@ -42,7 +68,7 @@ export class CranialDepth {
     }
   }
 
-  install(material:THREE.Material,group:Boundary,signal?:CorticalSignal):void {
+  install(material:THREE.Material,group:Boundary):void {
     const previous=material.onBeforeCompile;
     const key=material.customProgramCacheKey;
     material.onBeforeCompile=(shader,renderer)=>{
@@ -50,21 +76,6 @@ export class CranialDepth {
       shader.uniforms.uBoundaryDepth={value:this.targets.get(group)!.depthTexture};
       shader.uniforms.uCameraRange=this.cameraRange;
       shader.uniforms.uProjectionScale=this.projectionScale;
-      if(signal&&group==='cortex'){
-        shader.uniforms.uCorticalScan={value:signal.texture};
-        shader.uniforms.uCorticalWindow={value:new THREE.Vector2(...signal.window)};
-        shader.uniforms.uCorticalWorldToVoxel={value:signal.worldToVoxel};
-        shader.vertexShader='uniform mat4 uCorticalWorldToVoxel; varying vec3 vCorticalVoxel;\n'+shader.vertexShader.replace('#include <begin_vertex>',
-          '#include <begin_vertex>\nvCorticalVoxel=(uCorticalWorldToVoxel*modelMatrix*vec4(position,1.)).xyz;');
-        shader.fragmentShader='uniform highp sampler3D uCorticalScan; uniform vec2 uCorticalWindow; varying vec3 vCorticalVoxel;\n'+
-          shader.fragmentShader.replace('#include <color_fragment>',`#include <color_fragment>
-          vec3 uvw=(vCorticalVoxel.zyx+0.5)/vec3(textureSize(uCorticalScan,0));
-          if(all(greaterThanEqual(uvw,vec3(0.)))&&all(lessThanEqual(uvw,vec3(1.)))){
-            float signalValue=texture(uCorticalScan,uvw).r;
-            float brightness=clamp((signalValue-uCorticalWindow.x)/(uCorticalWindow.y-uCorticalWindow.x),0.,1.);
-            diffuseColor.rgb*=exp2((brightness-.45)*1.15);
-          }`);
-      }
       shader.fragmentShader=`
         uniform sampler2D uBoundaryDepth;
         uniform vec2 uCameraRange;
@@ -90,9 +101,9 @@ export class CranialDepth {
         float nearby=.25*(neighborDepth(boundaryUv-dx,center)+neighborDepth(boundaryUv+dx,center)
                         +neighborDepth(boundaryUv-dy,center)+neighborDepth(boundaryUv+dy,center));
         float recess=smoothstep(.15,2.4,center-nearby);
-        float lip=smoothstep(.35,2.8,nearby-center);
-        float rim=pow(1.-abs(dot(normal,normalize(vViewPosition))),2.5);
-        outgoingLight=outgoingLight*(1.-.58*recess)+diffuseColor.rgb*(.42*rim+.40*lip);
+        // The physical lights already brighten the crowns. Add contact shade
+        // only where the surface recedes behind its local neighborhood.
+        outgoingLight=mix(outgoingLight,totalEmissiveRadiance,.40*recess);
         #include <opaque_fragment>`:`
         vec2 px=1./uSurfaceSize;
         float edge=max(max(texture2D(uBoundaryDepth,boundaryUv+vec2(px.x,0.)).r,texture2D(uBoundaryDepth,boundaryUv-vec2(px.x,0.)).r),
@@ -102,7 +113,7 @@ export class CranialDepth {
         outgoingLight=diffuseColor.rgb*(.18+1.12*rim)+totalEmissiveRadiance;
         #include <opaque_fragment>`);
     };
-    material.customProgramCacheKey=()=>key.call(material)+'/front-'+group+(signal?'/scan':'');
+    material.customProgramCacheKey=()=>key.call(material)+'/front-v2-'+group;
   }
 
   dispose():void{

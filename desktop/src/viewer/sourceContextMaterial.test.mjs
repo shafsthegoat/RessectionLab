@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import * as THREE from 'three';
 import {applySourceContextMaterial,sourceContextOpacity} from './sourceContextMaterial.ts';
 import {SurfaceVolumePass} from './SurfaceVolumePass.ts';
+import {installCorticalSignal} from './cranialDepth.ts';
 
 test('head and cortex capture separate nearest depths with patient clipping during orbit and at rest',()=>{
   const pass=new SurfaceVolumePass(),scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera();
@@ -98,9 +99,9 @@ test('native context lighting uses physical view depth and restores the original
   const direct=compile(material);
   assert.deepEqual(direct.uniforms.uNativeContextCenter.value.toArray(),[50,-40,-2]);
   assert.equal(direct.uniforms.uNativeContextRadius.value,30);
-  assert.match(direct.fragmentShader,/dot\(normal, normalize\(vec3\(-0\.46, 0\.55, 0\.70\)\)\)/);
   assert.match(direct.fragmentShader,/vViewPosition\.z - centerDepth/);
-  assert.match(direct.fragmentShader,/outgoingLight = diffuseColor\.rgb \* diffuseLighting \+ totalEmissiveRadiance;/);
+  assert.match(direct.fragmentShader,/mix\(inspectionLight, sceneLight, 0\.32\)/);
+  assert.match(direct.fragmentShader,/\* attenuation\s*\+ totalEmissiveRadiance/);
   assert.match(direct.fragmentShader,/uSourceContextShell/);
   const scene=new THREE.Scene(), geometry=new THREE.PlaneGeometry(), mesh=new THREE.Mesh(geometry,material);
   mesh.userData.compartment='brain';scene.add(mesh);
@@ -127,6 +128,25 @@ test('native context lighting uses physical view depth and restores the original
       opacity:material.opacity, transparent:material.transparent, depthWrite:material.depthWrite, clippingPlanes:material.clippingPlanes,
     });
   }finally{geometry.dispose();opaque.dispose();volume.dispose();material.dispose();}
+});
+
+test('solid cortex and transparent peels sample the same originating MRI in physical space',()=>{
+  const material=new THREE.MeshStandardMaterial(),pass=new SurfaceVolumePass();
+  const texture=new THREE.Data3DTexture(),worldToVoxel=new THREE.Matrix4().makeScale(.5,1,2);
+  const enabled=installCorticalSignal(material,{texture,window:[10,120],worldToVoxel},true);
+  const peel=pass.make(material,false),tail=pass.make(material,true);
+  try{
+    for(const variant of [material,peel,tail]){
+      const shader={uniforms:{},vertexShader:THREE.ShaderLib.standard.vertexShader,fragmentShader:THREE.ShaderLib.standard.fragmentShader};
+      variant.onBeforeCompile(shader,{});
+      assert.equal(shader.uniforms.uCorticalSignalEnabled,enabled);
+      assert.equal(shader.uniforms.uCorticalScan.value,texture);
+      assert.equal(shader.uniforms.uCorticalWorldToVoxel.value,worldToVoxel);
+      assert.deepEqual(shader.uniforms.uCorticalWindow.value.toArray(),[10,120]);
+      assert.match(shader.fragmentShader,/diffuseColor.rgb\*=exp2/);
+      assert.match(shader.vertexShader,/uCorticalWorldToVoxel\*modelMatrix\*vec4\(position/);
+    }
+  }finally{material.dispose();peel.dispose();tail.dispose();texture.dispose();pass.dispose();}
 });
 
 test('cached transparent peels and sorting tail follow the current selection through A, B and clear',()=>{

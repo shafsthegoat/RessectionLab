@@ -79,7 +79,7 @@ export class SurfaceVolumePass {
           pair?.peel.dispose();pair?.tail.dispose();
           const contact=s.mesh.userData.corticalContact===true;
           pair={peel:this.make(s.material,false,contact),tail:this.make(s.material,true,contact),sourceProgramKey,boundary};
-          if(boundary){this.cranial.install(pair.peel,boundary,s.mesh.userData.corticalSignal);this.cranial.install(pair.tail,boundary,s.mesh.userData.corticalSignal);}
+          if(boundary){this.cranial.install(pair.peel,boundary);this.cranial.install(pair.tail,boundary);}
           this.materials.set(s.material,pair);
         }else if(pair.sourceProgramKey!==sourceProgramKey){
           // The existing clones compile the currently selected source variant.

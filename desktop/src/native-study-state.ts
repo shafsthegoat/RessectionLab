@@ -30,13 +30,27 @@ export function presentationLayers(study:Binding['document'],seriesId:string,dis
     const admitted=new Set(displaySources.filter(s=>s.alignment!=='unavailable').map(s=>s.seriesId));
     if(admitted.has(seriesId))return study.layers.filter(layer=>admitted.has(layer.source_series));
   }
-  const shared=(id:string)=>id===study.reference_series||['reference','reviewed','source-provided'].includes(study.transforms[id]?.status);
+  const shared=(id:string)=>id===study.reference_series||['reference','reviewed','source-provided'].includes(study.transforms?.[id]?.status);
   return study.layers.filter(layer=>layer.source_series===seriesId||(shared(seriesId)&&shared(layer.source_series)));
 }
 
 export function hasAngiographicArteries(layers:Layer[],modality:string,seriesId?:string):boolean {
   return !!seriesId&&/\b(?:CTA|MRA|TOF)\b|\b(?:CT|MR|MRI)[- _]+angiogra/i.test(modality)&&
     layers.some(layer=>layer.kind==='artery'&&layer.source_series===seriesId);
+}
+
+export function initialNativeLayers(study:Binding['document'],seriesId:string,independent:boolean){
+  const owned=study.layers.filter(layer=>layer.source_series===seriesId);
+  const declared=study.display?.initial_layers;
+  // The reference frame's list can omit every native layer of a separately acquired scan.
+  const initial=independent&&declared?.length&&!owned.some(layer=>declared.includes(layer.id))?undefined:declared;
+  const available=(independent?owned:presentationLayers(study,seriesId)).filter(layer=>!initial||initial.includes(layer.id));
+  const cortex=corticalLayers(available);
+  const visible=Object.fromEntries(study.layers.map(layer=>{
+    const selected=initial?initial.includes(layer.id):cortex.includes(layer)||!['brain-region','review-region','head-envelope'].includes(layer.kind);
+    return [layer.id,selected&&(!independent||layer.source_series===seriesId)];
+  }));
+  return {available,cortex,visible};
 }
 
 /** Presentation derivatives only; all selected structures and source masks stay intact. */
@@ -49,7 +63,7 @@ export function anatomyPresentation(settings:ViewerWorkspaceSettings,layers:Bind
   for(const layer of layers){
     const displayKind=studyLayerDisplayKind(layer);
     if(cranial&&['gray-matter','cerebral-cortex','cerebellar-cortex'].includes(displayKind)){
-      layerColor[layer.id]='#dd88a4';layerOpacity[layer.id]=arteries?.18:.56;
+      layerColor[layer.id]='#c69891';layerOpacity[layer.id]=arteries?.18:.66;
     }else if(cranial&&['head-envelope','outer-head-tissue'].includes(displayKind)){
       layerColor[layer.id]='#d3dce5';layerOpacity[layer.id]=.78;
     }else if(cranial&&['bone','skull','brain','dura','csf'].includes(displayKind)){
@@ -58,7 +72,11 @@ export function anatomyPresentation(settings:ViewerWorkspaceSettings,layers:Bind
       layerColor[layer.id]=displayKind==='brain'?'#b8a8b6':'#ece2ca';
       layerOpacity[layer.id]=displayKind==='brain'?.16:.08;
     }else if(['vessels','vessel','artery','vein','sinus'].includes(layer.kind)){
-      layerColor[layer.id]='#b75848';layerOpacity[layer.id]=scan?.16:cranial&&layer.kind==='vessels'?.09:1;
+      const source=layer.provenance as {kind?:string;publisher_class_id?:number}|null;
+      const namedArtery=layer.kind==='artery'&&source?.kind==='supplied_annotation'&&
+        Number.isInteger(layer.label_value)&&(layer.label_value??0)>0&&source.publisher_class_id===layer.label_value;
+      layerColor[layer.id]=namedArtery&&/^#[0-9a-f]{6}$/i.test(layer.color)?layer.color:'#b75848';
+      layerOpacity[layer.id]=scan?.16:cranial&&layer.kind==='vessels'?.09:1;
       if(['vein','sinus'].includes(layer.kind)){layerColor[layer.id]='#7187bf';layerOpacity[layer.id]=scan?.08:1;}
     }else if(layer.kind==='tumor'){
       layerColor[layer.id]='#65bfd3';layerOpacity[layer.id]=scan?.32:1;

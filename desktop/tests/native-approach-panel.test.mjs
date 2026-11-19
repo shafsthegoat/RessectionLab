@@ -258,6 +258,13 @@ test('a saved zero-alternative comparison restores its task and can be saved aga
     assert.deepEqual(point(tree,'Target').props.value,[5,8,10]);
     assert.equal(button(tree,'Save study & comparison').props.disabled,false);
     assert.equal(f.planning.selectedId,null);
+    const changes=[];
+    f.workspace.state.visible={'target-2':false,cortex:true,skull:false};
+    f.workspace.setVisible=visible=>changes.push(visible);
+    f.workspace.setSelectedStructure=layerId=>changes.push(layerId);
+    f.workspace.setCursor=endpoint=>changes.push(endpoint);
+    button(tree,'Focus selected target').props.onClick();
+    assert.deepEqual(changes,[{'target-2':true,cortex:true,skull:false},'target-2',[5,8,10]]);
   }finally{h.close();}
 });
 

@@ -1,5 +1,5 @@
 import {useNativeApproaches} from './use-native-approaches';
-import {nextScanState,migrateSkullView,vesselScopeForView,corticalLayers,hasAngiographicArteries,presentationLayers,anatomyPresentation,defaultAnatomyPresentation} from './native-study-state';
+import {nextScanState,migrateSkullView,vesselScopeForView,corticalLayers,hasAngiographicArteries,initialNativeLayers,presentationLayers,anatomyPresentation,defaultAnatomyPresentation} from './native-study-state';
 import type {AnatomyPresentation} from './native-study-state';
 import {drainLayerRequests} from './native-layer-queue';
 import {mergeResidentLayers,prepareNativeLabels} from './native-layer-residency';
@@ -68,14 +68,11 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
     if(['result','error','cancelled'].includes(e.event))requestId.current=null;
   }),[api]);
   const args=(b=live.current.binding)=>({collectionId:b!.collectionId,snapshotId:b!.document.snapshot_id});
-  const initial=(b:Binding,s:string):NativeScanState=>{
+  const initial=(b:Binding,s:string,independent:boolean=!!s&&s!==b.document.reference_series&&!b.document.transforms?.[s]):NativeScanState=>{
     const modality=b.document.series.find(scan=>scan.id===s)?.modality??'MRI';
-    const initialLayers=b.document.display?.initial_layers;
-    const available=presentationLayers(b.document,s).filter(layer=>!initialLayers||initialLayers.includes(layer.id));
-    const cortex=corticalLayers(available);
-    const structures=b.document.series.length>1||cortex.length>0||hasAngiographicArteries(available,modality,s);
+    const {available,cortex,visible}=initialNativeLayers(b.document,s,independent);
+    const structures=(!independent&&b.document.series.length>1)||cortex.length>0||hasAngiographicArteries(available,modality,s);
     const mode=structures?'segmentation':defaultAnatomyPresentation(modality);
-    const visible=Object.fromEntries(b.document.layers.map(l=>[l.id,initialLayers?initialLayers.includes(l.id):cortex.includes(l)||!['brain-region','review-region','head-envelope'].includes(l.kind)]));
     return {cursor:s===b.document.reference_series?b.document.display?.cursor_ras_mm??null:null,settings:anatomyPresentation(nativeDefaults(),available,mode,modality,s),visible};
   };
   const scanState=states[series]??{cursor:null,visible:{},settings:nativeDefaults()};
@@ -135,8 +132,7 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
       hydrated.displayIdentity=JSON.stringify([b.collectionId,s,result.mri.sha256,b.document.snapshot_id,raw,seq]);
       hydrated=await prepared(hydrated);if(seq!==generation.current)return;
       sourceImage.current={key:imageKey,data:hydrated.mri};
-      const independent=result.registrationStatus==='independent source frame';
-      const next={...view,settings:independent?{...view.settings,presentation:defaultAnatomyPresentation(result.modality)}:view.settings,cursor:view.cursor??transformPoint(hydrated.affine,hydrated.shape.map(n=>(n-1)/2) as Point3)};
+      const next={...view,cursor:view.cursor??transformPoint(hydrated.affine,hydrated.shape.map(n=>(n-1)/2) as Point3)};
       if(legacyCutaway&&usesPatientContext(next.settings,!!hydrated.patientContext?.field)){
         setPatientCutaway(viewerCutaway(next.settings));
         next.settings={...next.settings,...viewerCutaway({})};
@@ -160,9 +156,14 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
   async function create(patientId:string,timepoint='preoperative'):Promise<Binding|null>{let result:Binding|null=null;await run(async()=>{result=await api!.anatomyCreate({patientId,timepoint})});if(result)await install(result);return result;}
   function clear(){appearanceCache.current.clear();contextCache.current=undefined;sourceImage.current=null;generation.current++;resetLayers();setBinding(null);installVolume(null);setPatientCutaway({});setDraft(null);setReview(null);setEditLayer(null);}
   function selectScan(s:string,mode?:AnatomyPresentation,inspectLayer?:string){if(!binding||busy||draft||s===series)return;
-    const alignment=volume?.patientContext?.sources.find(source=>source.seriesId===s)?.alignment??'unavailable';
+    const targetSource=volume?.patientContext?.sources.find(source=>source.seriesId===s);
+    const alignment=targetSource?.alignment??'unavailable';
     const linked=patientFrameReady&&['reference','reviewed','source-provided'].includes(alignment);
-    let v=migrateSkullView(nextScanState(scanState,states[s]??initial(binding,s),linked),binding.document.layers);
+    const independentTarget=s!==binding.document.reference_series&&
+      (targetSource?alignment==='unavailable':!binding.document.transforms?.[s]);
+    const destination=states[s]??initial(binding,s,independentTarget);
+    const separate=independentTarget||registration==='independent source frame';
+    let v=migrateSkullView(separate?destination:nextScanState(scanState,destination,linked),binding.document.layers);
     if(patientCutawayActive&&alignment!=='unavailable')v={...v,settings:{...v.settings,
       presentation:scanState.settings.presentation,camera:readCamera.current?.()??scanState.settings.camera,volumeRendering:scanState.settings.volumeRendering}};
     if(mode){

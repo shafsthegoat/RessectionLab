@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {studyLayerDisplayKind,nextScanState,scanLabel,studyTimepoint,migrateSkullView,anatomyPresentation,defaultAnatomyPresentation,sourceEvidenceLabel} from '../src/native-study-state.ts';
 import {checkedViewerSettings} from '../src/workspace-view-settings.ts';
-import {presentationLayers} from '../src/native-study-state.ts';
+import {initialNativeLayers,presentationLayers} from '../src/native-study-state.ts';
 
 test('an independent or estimated scan cannot drive the reference scan presentation',()=>{
   const layers=['ct','registered','estimated','independent'].map(source_series=>({source_series}));
@@ -24,6 +24,29 @@ test('an acquired angiogram reveals its own artery inside the skull and brain co
   assert.ok(view.layerOpacity.skull<.1&&view.layerOpacity.brain<.2);
   assert.equal(render('CT','cta').skullMode,'exterior');
   assert.equal(render('MRA','other-scan').skullMode,'exterior');
+});
+
+test('a separate angiogram opens its own layers when initial layers describe the reference scan',()=>{
+  const study={reference_series:'ct',transforms:{ct:{status:'reference'}},display:{initial_layers:['skull']},
+    layers:[{id:'skull',source_series:'ct',kind:'skull'},{id:'artery',source_series:'mra',kind:'artery'},
+      {id:'vein',source_series:'mra',kind:'vein'}]};
+  assert.deepEqual(initialNativeLayers(study,'mra',true).visible,{skull:false,artery:true,vein:true});
+  assert.deepEqual(initialNativeLayers(study,'ct',false).visible,{skull:true,artery:false,vein:false});
+  study.display.initial_layers.push('artery');
+  assert.deepEqual(initialNativeLayers(study,'mra',true).visible,{skull:false,artery:true,vein:false});
+  study.display.initial_layers=[];
+  assert.deepEqual(initialNativeLayers(study,'mra',true).visible,{skull:false,artery:false,vein:false});
+});
+
+test('scan and anatomy presets preserve the study colors of supplied arterial classes',()=>{
+  const branch={id:'left-ica',kind:'artery',source_series:'ct',color:'#278c69',label_value:6,
+    provenance:{kind:'supplied_annotation',publisher_class_id:6}};
+  const layers=[branch,{...branch,id:'union',provenance:{kind:'supplied_annotation'}},
+    {...branch,id:'mismatched',label_value:7},{...branch,id:'estimate',provenance:{kind:'model',publisher_class_id:6}}];
+  for(const mode of ['scan','segmentation','vascular']){
+    const result=anatomyPresentation({},layers,mode,'CTA','ct');
+    assert.deepEqual(result.layerColor,{'left-ica':'#278c69',union:'#b75848',mismatched:'#b75848',estimate:'#b75848'});
+  }
 });
 
 test('cortical presentation requires an identified cortical label and preserves target and source data',()=>{
