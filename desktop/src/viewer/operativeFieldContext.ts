@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import {matchingOperativeSource,operativeSourceIdentity} from './operativeSourceIdentity.ts';
 import type {ViewerVolume} from './contracts';
 import type {OperativeField} from '../operative-field';
 import {rasAffine,sampleTrilinear,type Point3} from './coordinates.ts';
@@ -6,9 +7,8 @@ import {placeInSourceFrame} from './sceneGeometry.ts';
 
 export function operativeFieldContext(volume:ViewerVolume|null,field:OperativeField,collectionId:string,patchRadius=field.radiusMm){
   const group=new THREE.Group();
-  if(!volume?.displayIdentity||volume.sourceFrameIssue)return group;
-  const identity=JSON.parse(volume.displayIdentity);
-  if(identity[0]!==collectionId||identity[3]!==field.snapshotId||identity[4]!==false)return group;
+  const identity=operativeSourceIdentity(volume);
+  if(!volume||!identity||identity.collectionId!==collectionId||identity.snapshotId!==field.snapshotId)return group;
   const half=field.spacingMm*.5;
   const low=new THREE.Vector3(...field.origin).addScalar(-half);
   const high=low.clone().addScaledVector(new THREE.Vector3(...field.shape),field.spacingMm);
@@ -20,9 +20,7 @@ export function operativeFieldContext(volume:ViewerVolume|null,field:OperativeFi
     const layers=field.layers.filter(l=>l.role===role&&l.sampledVoxels>0&&!l.detail);
     if(layers.length!==1||layers[0].adjudication)continue;
     const item=layers[0],resident=volume.compartments.find(l=>l.name===item.id);
-    if(!resident?.surface?.indices.length||resident.displayFilter||
-      ['estimated','independent','source-grid preview'].includes(resident.alignment??'')||
-      (resident.sourceSupport&&resident.sourceSupport.sampledDataSha256!==item.sampledDataSha256))continue;
+    if(!resident?.surface?.indices.length||!matchingOperativeSource(item,resident))continue;
     const {positions,normals,indices}=resident.surface;
     const geometry=new THREE.BufferGeometry();
     geometry.setAttribute('position',new THREE.BufferAttribute(positions,3));
@@ -89,4 +87,30 @@ export function limitToOperativePatch(material:THREE.Material,radius:number,exte
       '#include <clipping_planes_fragment>\nif(uExteriorPatch && length(vPatchXY)>uPatchRadius)discard;');
   };
   material.customProgramCacheKey=()=>key+'/local-patch';
+}
+
+/** An already visible source-supported external tissue class can establish the
+ * planned entry before the registered skull is exposed. */
+export function operativeEntryCover(volume:ViewerVolume|null,field:OperativeField,collectionId:string,visible:Readonly<Record<string,boolean>>|undefined){
+  const identity=operativeSourceIdentity(volume),signal=field.intensity;
+  if(!identity||!volume||!signal||identity.collectionId!==collectionId||identity.snapshotId!==field.snapshotId)return null;
+  const candidates=volume.compartments.filter(layer=>layer.displayKind==='outer-head-tissue'&&visible?.[layer.name]===true&&
+    layer.sourceSeries===signal.sourceSeries&&layer.sourceSupport?.status==='supported'&&
+    layer.sourceSupport.sourceSha256===signal.sourceSha256&&!layer.displayFilter&&
+    ['reference','source-provided','reviewed'].includes(layer.alignment??'')&&layer.surface?.indices.length);
+  if(candidates.length!==1)return null;
+  const layer=candidates[0],surface=layer.surface!;
+  const geometry=new THREE.BufferGeometry();
+  geometry.setAttribute('position',new THREE.BufferAttribute(surface.positions,3));
+  geometry.setAttribute('normal',new THREE.BufferAttribute(surface.normals,3));
+  geometry.setIndex(new THREE.BufferAttribute(surface.indices,1));
+  const material=new THREE.MeshStandardMaterial({color:'#b9ada4',roughness:.85,side:THREE.DoubleSide,transparent:true});
+  const mesh=new THREE.Mesh(geometry,material);
+  placeInSourceFrame(mesh,rasAffine(volume.affine,volume.frame));
+  mesh.name=layer.label??'Outer head tissue';
+  mesh.userData.sourceLayer={directId:layer.name,role:'outer-head-tissue',sourceSeries:layer.sourceSeries,
+    contextLayer:{id:layer.name,label:mesh.name,sourceSeries:layer.sourceSeries,evidence:'Source-derived estimate',reviewStatus:layer.qa?.reviewStatus},
+    appearance:{seriesId:signal.sourceSeries,modality:signal.modality,sourceSha256:signal.sourceSha256,
+      sourceVoxelToPatientRasMm:signal.sourceVoxelToPatientRasMm,sourceShape:signal.sourceShape}};
+  return mesh;
 }

@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
 import {operativeVoxelSurface} from './operativeVoxelSurface.ts';
-import {operativeFieldContext} from './operativeFieldContext.ts';
+import {operativeEntryCover,operativeFieldContext} from './operativeFieldContext.ts';
 import {operativeSectionVisible,operativeSectionContext} from './operativeSectionContext.ts';
 import {fieldTargetOnOverview} from './operativeFieldSlice.ts';
 
@@ -30,9 +30,10 @@ test('source outline is sampled in patient orientation around the target pixel',
 
 test('surrounding source geometry maps the patient target to the local origin and checks identity and support',()=>{
   const volume={displayIdentity:JSON.stringify(['collection','series','image','rev',false,2]),frame:'RAS+',
-    affine:[[1,0,0,12],[0,1,0,20],[0,0,1,30],[0,0,0,1]],compartments:[{name:'skull',
+    affine:[[1,0,0,12],[0,1,0,20],[0,0,1,30],[0,0,0,1]],compartments:[{name:'skull',sourceSeries:'bone-ct',alignment:'reference',
       sourceSupport:{sampledDataSha256:'supported'},
       surface:{indices:Uint32Array.of(0,1,2),positions:new Float32Array(9),normals:new Float32Array(9)}}]};
+  assert.equal(operativeFieldContext({...volume,displayIdentity:'surgical:case'},field,'collection').children.length,0);
   const group=operativeFieldContext(volume,field,'collection');
   assert.equal(group.children.length,1);
   group.updateWorldMatrix(false,true);
@@ -83,4 +84,24 @@ test('intact MRI continuation samples the matching source outside the operated f
   source.sourceSha256='another-acquisition';
   assert.equal(operativeSectionContext(volume,'study',local,0),null);
   plane.geometry.dispose();plane.material.map.dispose();plane.material.dispose();
+});
+
+test('entry cover uses only a visible supported exterior on the same acquired scan',()=>{
+  const layer={name:'head',displayKind:'outer-head-tissue',sourceSeries:'mri',alignment:'reference',
+    sourceSupport:{status:'supported',sourceSha256:'signal'},
+    surface:{indices:Uint32Array.of(0,1,2),positions:new Float32Array(9),normals:new Float32Array(9)}};
+  const volume={displayIdentity:JSON.stringify(['study','mri','display','rev',false]),compartments:[layer],frame:'RAS+',
+    affine:[[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]]};
+  const entry={...field,intensity:{sourceSeries:'mri',sourceSha256:'signal',modality:'T1CE'}};
+  const actual=operativeEntryCover(volume,entry,'study',{head:true});
+  assert.equal(actual.geometry.attributes.position.array,layer.surface.positions);
+  assert.equal(actual.userData.sourceLayer.directId,'head');
+  assert.equal(operativeEntryCover(volume,entry,'study',{head:false}),null);
+  assert.equal(operativeEntryCover(volume,entry,'other',{head:true}),null);
+  assert.equal(operativeEntryCover({...volume,displayIdentity:'surgical:study'},entry,'study',{head:true}),null);
+  for(const override of [{alignment:'estimated'},{sourceSupport:{status:'supported',sourceSha256:'different'}},
+    {sourceSeries:'other'},{displayFilter:{}}]){
+    assert.equal(operativeEntryCover({...volume,compartments:[{...layer,...override}]},entry,'study',{head:true}),null);
+  }
+  actual.geometry.dispose();actual.material.dispose();
 });

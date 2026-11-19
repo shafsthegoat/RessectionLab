@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import {operativeSourceIdentity} from './operativeSourceIdentity.ts';
 import type {OperativeField,OperativePhase} from '../operative-field';
 import type {ViewerVolume} from './contracts';
 import {sampleTrilinear,type Point3} from './coordinates.ts';
@@ -19,9 +20,8 @@ export function operativeSectionVisible(field:OperativeField,phase:OperativePhas
  * No original scan pixels are drawn through the operated field. */
 export function operativeSectionContext(volume:ViewerVolume|null,collectionId:string,field:OperativeField,sectionY:number){
   const signal=field.intensity;
-  if(!signal||!volume?.displayIdentity||volume.sourceFrameIssue)return null;
-  const [collection,,,revision,raw]=JSON.parse(volume.displayIdentity);
-  if(collection!==collectionId||revision!==field.snapshotId||raw!==false)return null;
+  const identity=operativeSourceIdentity(volume);
+  if(!signal||!volume||!identity||identity.collectionId!==collectionId||identity.snapshotId!==field.snapshotId)return null;
   const source=volume.compartments.find(layer=>
     layer.appearanceSource?.sourceSha256===signal.sourceSha256&&layer.appearanceSource.seriesId===signal.sourceSeries
     &&['reference','reviewed','source-provided'].includes(layer.alignment??''))?.appearanceSource;

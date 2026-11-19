@@ -1,3 +1,4 @@
+import type {TissueDisplaySupport} from './viewer/contracts';
 import type {ArrayDescriptor} from './types';
 import type {Point3} from './viewer/coordinates';
 import {inverseAffine,rasAffine} from './viewer/coordinates.ts';
@@ -8,7 +9,7 @@ import {hasAspirationSeed} from './viewer/operativeSeed.ts';
 export type OperativePhase = 'overview' | 'bone' | 'dura' | 'brain' | 'tumor';
 type Tissue = Exclude<OperativePhase,'overview'>;
 export interface FieldLayer {
-  id:string; label:string; role:Tissue|'vessels'|'fluid'|'lesionContext'; detail?:Detail|null;
+  id:string; label:string; role:Tissue|'vessels'|'fluid'|'lesionContext'; sourceSupport?:TissueDisplaySupport; detail?:Detail|null;
   sourceSpacingMm?:Point3; labelSpacingMm?:Point3; inferenceSpacingMm?:Point3;
   adjudication?:{disagreementVoxels:number; preferredLayerIds:string[]}; evidence:string; sourceSeries:string;
   model?:string|null; vascularContextOnly?:boolean; reviewStatus:string; sampledVoxels:number; proxy:boolean; sampledDataSha256?:string; coverageMeaning?:string; coveredVoxels?:number;

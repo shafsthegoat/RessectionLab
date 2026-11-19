@@ -2,7 +2,8 @@ import * as THREE from 'three';
 import type {FieldLayer,OperativeField} from '../operative-field';
 import {inverseAffine,transformPoint,type Point3} from './coordinates.ts';
 
-export type OperativePick={layers:FieldLayer[];ras:Point3;voxel:Point3|null;series:string|null};
+type PickedSource=Pick<FieldLayer,'id'|'label'|'evidence'|'sourceSeries'|'coverageMeaning'|'reviewStatus'>;
+export type OperativePick={layers:PickedSource[];ras:Point3;voxel:Point3|null;series:string|null};
 export function pickOperativeStructure(scene:THREE.Scene,camera:THREE.Camera,ndc:THREE.Vector2,field:OperativeField):OperativePick|null{
   const ray=new THREE.Raycaster(),visible:THREE.Mesh[]=[];
   ray.setFromCamera(ndc,camera);
@@ -30,7 +31,7 @@ export function pickOperativeStructure(scene:THREE.Scene,camera:THREE.Camera,ndc
       }
       if(offset)point.add(offset); // Rest-space fragment before raising or reflecting a flap.
     }
-    const layers=field.layers.filter(layer=>{
+    const layers:PickedSource[]=identity.contextLayer?[identity.contextLayer]:field.layers.filter(layer=>{
       if(!layer.sampledVoxels)return false;
       if(directId)return layer.id===directId;
       if(role==='tumor')return layer.id===field.targetLayerId;

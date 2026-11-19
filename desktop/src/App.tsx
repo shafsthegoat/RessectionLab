@@ -2090,7 +2090,7 @@ export default function App() {
         <NativeCorrectionBar workspace={native}/>
         <div className={linkedOperative?"viewer-shell has-operative-reference":showEngineRecording?"viewer-shell has-engine-reference":"viewer-shell"}
           data-engine-replay-layout={showEngineRecording?'source-bound':undefined}>
-          {showOperative && native.binding && nativeApi && nativeRoute && <OperativeSteps key={routeKey} api={nativeApi} collectionId={native.binding.collectionId} route={nativeRoute} linkedOverview={linkedOperative} sourceVolume={linkedOperative?native.volume:null}/>}
+          {showOperative && native.binding && nativeApi && nativeRoute && <OperativeSteps key={routeKey} api={nativeApi} collectionId={native.binding.collectionId} route={nativeRoute} visibleLayers={native.state.visible} linkedOverview={linkedOperative} sourceVolume={linkedOperative?native.volume:null}/>}
           {(!showOperative||linkedOperative) && displayedCase && (
             <ViewerWorkspace
               engineInspection={showEngineRecording}
