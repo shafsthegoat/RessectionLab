@@ -23,6 +23,9 @@ const refinedIds=refinedLayer?.split(',')??[];
 const refinedPriorFile=process.env.SURFACE_VERIFY_REFINED_PRIOR;
 const refinedPrior=refinedPriorFile?JSON.parse(fs.readFileSync(refinedPriorFile,'utf8')):null;
 const direct=directFile?JSON.parse(fs.readFileSync(directFile,'utf8')):null;
+const directConditionedFile=process.env.SURFACE_VERIFY_DIRECT_CONDITIONED;
+const directConditioned=directConditionedFile?JSON.parse(fs.readFileSync(directConditionedFile,'utf8')):null;
+if(directConditioned)assert(direct&&directConditioned.passed&&directConditioned.baselineMatched&&!directConditioned.windowEverVisible);
 const priorFile=process.env.SURFACE_VERIFY_DIRECT_PRIOR;
 const prior=priorFile?JSON.parse(fs.readFileSync(priorFile,'utf8')):null;
 const pairedMra=process.env.SURFACE_VERIFY_DIRECT_MRA==='1';
@@ -287,6 +290,22 @@ app.on('browser-window-created',(_event,window)=>{
       compareSlices(smooth,restored,'Restored publisher layer');
       report.directSurface={expectationSha256:sha(directFile),layerId:layer.id,
         sourceVtp:direct.sourceVtp,policy:direct.policy,points:evidence.points,triangles:evidence.triangles,transfer};
+      if(directConditioned){
+        const rows=directConditioned.refinedComparisons;
+        assert.equal(rows.length,2);
+        assert.deepEqual(rows.map(row=>row.layer).sort(),['brain','broader_skull_display']);
+        report.directSurface.conditioned=rows.map(expected=>{
+          const row=document.layers.find(layer=>layer.id===expected.layer);
+          const attachment=row.conditioned_surface;
+          assert.equal(attachment.proof.sha256,expected.probeSha256);
+          assert.equal(attachment.stock_manifest_sha256,expected.stockManifest);
+          const response=report.requests.flatMap(request=>request.layers??[]).find(layer=>layer.name===row.id);
+          assert.equal(response?.displayMeshSha256,expected.displaySha256);
+          assert.equal(response.surfaceDiagnostics?.policy,attachment.schema);
+          assert(JSON.parse(smooth.layers).includes(row.id));
+          return {layer:row.id,displaySha256:response.displayMeshSha256,probeSha256:attachment.proof.sha256};
+        });
+      }
       if(portable){
         await click('Scans');
         await click('Save patient study file…');
@@ -295,6 +314,7 @@ app.on('browser-window-created',(_event,window)=>{
       }else{
         assert.equal(report.snapshotId,prior.snapshotId);
         assert.deepEqual(transfer,prior.directSurface.transfer);
+        assert.deepEqual(report.directSurface.conditioned,prior.directSurface.conditioned);
         compareSourceFrame(prior.captures['smooth-oblique'],smooth,'Cold publisher layer');
         compareSlices(prior.captures['smooth-oblique'],smooth,'Cold publisher layer');
         report.directSurface.coldReopened=true;
@@ -302,6 +322,15 @@ app.on('browser-window-created',(_event,window)=>{
       const member=zipMember(portable??source,direct.sourceVtp.path);
       assert.equal(crypto.createHash('sha256').update(member).digest('hex'),direct.sourceVtp.sha256,
         'Portable study changed the publisher VTP bytes');
+      if(directConditioned){
+        for(const {layer} of report.directSurface.conditioned){
+          const {positions,proof}=document.layers.find(row=>row.id===layer).conditioned_surface;
+          for(const item of [positions,proof]){
+            const digest=crypto.createHash('sha256').update(zipMember(portable??source,item.path)).digest('hex');
+            assert.equal(digest,item.sha256,'Portable study changed a verified conditioned surface member');
+          }
+        }
+      }
     };
     try{
       await js(`window.surfaceVerification={frames:[],gpu:[],surface:[],refinement:[]};for(const [name,key] of [['anatomy-frame','frames'],['anatomy-gpu','gpu'],['anatomy-surface','surface'],['anatomy-refined','refinement']])document.addEventListener(name,e=>{window.surfaceVerification[key].push(e.detail);});`);

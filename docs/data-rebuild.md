@@ -223,12 +223,14 @@ overlays and restored the original CTA mesh on return. The supplied MRA
 annotation header omits units, so the app offers native-grid preview.
 See `qc/hidden-app/cta006-published-cow-paired-mra-20261118-v1/`.
 
-The 012 and 014 companion packages carry their refined superior skull and
-brain display geometry and the untouched author meshes. Their fresh-process
-checks restore the exact mesh, then switch from the saved CTA to the separate
-acquired MRA and back. Use
-the 006 **NATIVE-SHOWCASE** card for the refined skull and brain and its
-**PUBLISHED-COW** card for the earlier paired vessel study.
+All three companion packages carry the refined superior skull and brain
+surfaces alongside the untouched author vessels. Each fresh-process check
+restores the publisher surface, switches to the separate acquired MRA and
+returns to the CTA. The 006 update copies only the two previously verified
+display attachments. It preserves the preceding native revision, original
+CTA and MRA, acquired-grid labels and VTP geometry without rerunning inference
+or mesh reconstruction. The hidden save and cold reopen verify the exact
+brain and skull positions in the same study as the original publisher mesh.
 
 ```sh
 subject=012
@@ -246,6 +248,18 @@ SURFACE_VERIFY_NATIVE_PRESENTATION=1 SURFACE_VERIFY_DIRECT_SOURCE="$study/transf
 
 The retained output directories are `qc/hidden-app/cta<id>-published-cow-warm-v1/`
 and `qc/hidden-app/cta<id>-published-cow-cold-paired-v1/` for 012 and 014.
+For 006, use `qc/hidden-app/cta006-published-cow-refined-warm-v1/` and
+`qc/hidden-app/cta006-published-cow-refined-cold-v1/`. The refresh command
+reuses the existing verified attachments and is safe to repeat.
+
+```sh
+PYTHONPATH=src OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python \
+  scripts/build_cta_published_cow_study.py --subject 006 --refresh-reviewed-surfaces
+```
+
+To repeat the paired desktop checks for 006, set `subject=006` in the previous
+commands and export `SURFACE_VERIFY_DIRECT_CONDITIONED` with the path to
+`qc/hidden-app/cta-showcase-006-refined-surfaces-v1/report.json` on the HDD.
 
 Build or reopen 12 development scenarios and register them in the checkout's
 Cases library. The EDEN v2 generator provides the lobulated geometry. A

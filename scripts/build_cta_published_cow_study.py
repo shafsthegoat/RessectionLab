@@ -13,7 +13,7 @@ from tempfile import TemporaryDirectory
 import nibabel as nib
 import numpy as np
 
-from build_cta_native_showcases import ARTERIES, OUTPUT as SHOWCASES, SERIES, TIMEPOINT, register
+from build_cta_native_showcases import ARTERIES, BRAIN, OUTPUT as SHOWCASES, SERIES, SKULL, TIMEPOINT, register
 from data_integrated_hosts import UUID, binding, checked_file
 from resectionlab.anatomy_package import referenced_files
 from resectionlab.anatomy_publisher_surface import POLICY, publisher_surface
@@ -22,6 +22,7 @@ from resectionlab.patient_anatomy import PatientImagingCollection, nifti_geometr
 
 FIRST_REVIEW = 'qc/multimodal-anatomy-20261118-cow-vtp-v1'
 LAYER = 'publisher_cow_arterial_mesh'
+SURFACE_REFRESH = 'Reuse verified CTA skull and brain display positions beside the exact publisher mesh'
 QUALIFICATIONS = {
     '006': '0af09afa1649c578b46cb787d548711bef09236e2ba9022bc9d8fe3783c1acee',
     '012': '6d87a8a0ce6a1a0e02605dd56d8422c24798cd4783e11164fd9d36ee03348ccc',
@@ -202,7 +203,90 @@ def transfer_expectation(c, vertices, triangles):
                 'indicesSha256': sha(triangles), 'maskSha256': sha(mask)}}
 
 
-def build(root, subject='006'):
+def refresh_surfaces(root, base, base_info, base_receipt, collection, report):
+    reviewed = base_info['conditioned_surfaces']
+    evidence = json.loads(checked_file(root, reviewed['desktop']).read_text())
+    comparisons = {row['layer']: row for row in evidence['refinedComparisons']}
+    if (not evidence['passed'] or evidence['windowEverVisible'] or not evidence['baselineMatched']
+            or set(comparisons) != {SKULL, BRAIN}):
+        raise ValueError('The showcase does not have matched hidden verification for both surfaces')
+    scan = collection.series(SERIES)
+    original = base.series(SERIES)
+    if any(scan[key] != original[key] for key in ('data', 'affine', 'native_geometry')) or (
+            scan['original']['sha256'] != original['original']['sha256']):
+        raise ValueError('The publisher companion uses different native CTA evidence')
+    snapshot = report['snapshot_id']
+    current = collection.identity()
+    receipt_path = collection.root / 'receipt.json'
+    preserved = collection.path(f'revisions/{snapshot}-publisher-receipt.json')
+    stock = collection.path(f'revisions/{snapshot}.json')
+    if sha256_file(stock) != report['manifest']['sha256']:
+        raise ValueError('Expected the immutable previous companion revision')
+    live_manifest = collection.root / 'patient-anatomy.json'
+    if current == snapshot and sha256_file(live_manifest) != report['manifest']['sha256']:
+        raise ValueError('Expected the exact live companion manifest')
+    edits = {}
+    for key in (SKULL, BRAIN):
+        old, new = collection.layer(key), base.layer(key)
+        attachment = deepcopy(new['conditioned_surface'])
+        if (any(old[field] != new[field] for field in ('data', 'affine', 'label_value', 'revision', 'source_series'))
+                or attachment['proof']['sha256'] != comparisons[key]['probeSha256']
+                or attachment['proof']['sha256'] != reviewed['numeric'][key]['sha256']
+                or attachment['stock_manifest_sha256'] != comparisons[key]['stockManifest']):
+            raise ValueError(f'The reviewed positions do not belong to the companion {key} layer')
+        if old.get('conditioned_surface') == attachment:
+            continue
+        if 'conditioned_surface' in old:
+            raise ValueError(f'The companion already uses different conditioning for {key}')
+        edits[key] = attachment
+    if not edits and snapshot == current:
+        return report
+    if current != snapshot:
+        # Resume if publishing the manifest succeeded but writing its receipt was interrupted.
+        before = json.loads(stock.read_text())
+        recovered = deepcopy(collection.document)
+        event = recovered['history'].pop()
+        recovered['revision'] -= 1
+        recovered['snapshot_id'] = snapshot
+        old_layers = {row['id']: row for row in before['layers']}
+        for row in recovered['layers']:
+            if row['id'] in comparisons:
+                row.pop('conditioned_surface')
+                if existing := old_layers[row['id']].get('conditioned_surface'):
+                    row['conditioned_surface'] = existing
+        if (edits or event['event'] != SURFACE_REFRESH or recovered != before
+                or json.loads(preserved.read_text()) != report):
+            raise ValueError('The current companion is not the interrupted surface update')
+    else:
+        for key, attachment in edits.items():
+            for name, checksum in referenced_files(attachment):
+                source = base.path(name)
+                if sha256_file(source) != checksum:
+                    raise ValueError(f'Conditioning member changed: {name}')
+                target = collection.path(name)
+                if not target.exists():
+                    target.parent.mkdir(exist_ok=True)
+                    with TemporaryDirectory(dir=target.parent, prefix='.companion-surface-') as scratch:
+                        staged = Path(scratch) / target.name
+                        copyfile(source, staged)
+                        staged.rename(target)
+                if sha256_file(target) != checksum:
+                    raise ValueError(f'Companion already has different conditioning bytes: {name}')
+            collection.layer(key)['conditioned_surface'] = attachment
+        if not preserved.exists():
+            atomic_json(preserved, report)
+        elif json.loads(preserved.read_text()) != report:
+            raise ValueError('Conflicting historical companion receipt')
+        checked_root(root, expected_uuid=UUID)
+        collection.save(SURFACE_REFRESH, expected=snapshot)
+    report.update(stock_manifest=binding(root, stock), stock_receipt=binding(root, preserved),
+                  base_receipt=binding(root, base_receipt), snapshot_id=collection.identity(),
+                  manifest=binding(root, live_manifest), conditioned_surfaces=reviewed)
+    atomic_json(receipt_path, report)
+    return report
+
+
+def build(root, subject='006', *, refresh=False):
     case_id = f'TopCoW-{subject}-CTA-MRA-PUBLISHED-COW-v1'
     family = f'TopCoW:{subject}'
     output = f'prepared/cta-published-cow-v1/{case_id}'
@@ -219,7 +303,8 @@ def build(root, subject='006'):
         parent_hashes = {sha256_file(base_receipt)}
         if original_parent := base_info.get('stock_receipt'):
             parent_hashes.add(sha256_file(checked_file(root, original_parent)))
-        if (checked_file(root, report['manifest']) != manifest
+        if (report['manifest']['path'] != str(manifest.relative_to(root))
+                or (not refresh and checked_file(root, report['manifest']) != manifest)
                 or report['base_receipt']['path'] != str(base_receipt.relative_to(root))
                 or report['base_receipt']['sha256'] not in parent_hashes
                 or checked_file(root, report['transfer_expectation']).parent != destination):
@@ -228,7 +313,7 @@ def build(root, subject='006'):
         for member, checksum in set(referenced_files(c.document)):
             if sha256_file(c.path(member)) != checksum:
                 raise ValueError(f'Existing portable source member changed: {member}')
-        return report
+        return refresh_surfaces(root, base, base_info, base_receipt, c, report) if refresh else report
     destination.parent.mkdir(parents=True, exist_ok=True)
     with TemporaryDirectory(prefix='.cow-build-', dir=destination.parent) as temp:
         stage = Path(temp) / case_id
@@ -256,10 +341,13 @@ def main():
     parser.add_argument('--root', type=Path)
     parser.add_argument('--register', type=Path)
     parser.add_argument('--subject', choices=tuple(QUALIFICATIONS), action='append')
+    parser.add_argument('--refresh-reviewed-surfaces', action='store_true',
+                        help='Reuse checksum-bound skull and brain display positions in an existing companion')
     args = parser.parse_args()
     root = checked_root(args.root, required_bytes=2 * 1024**3, expected_uuid=UUID)
     with reconstruction_lock():
-        reports = [build(root, subject) for subject in dict.fromkeys(args.subject or ['006'])]
+        reports = [build(root, subject, refresh=args.refresh_reviewed_surfaces)
+                   for subject in dict.fromkeys(args.subject or ['006'])]
         if args.register:
             for report in reports:
                 register(root, args.register, report)
