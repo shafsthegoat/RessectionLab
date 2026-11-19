@@ -14,7 +14,7 @@ the first-party acquisition receipts and the scope of file verification.
 The development addition has six newly acquired source families, seven acquired
 CT-family series, one publisher-registered CTA derivative, three native
 showcases on previously acquired TopCoW families, and 12 generated scenarios.
-The checkout lists 22 new development entries in Cases, including a separate
+The checkout lists 22 new CTA development entries in Cases, including a separate
 publisher-geometry companion for TopCoW 006. The three acquisition
 sets retain 354,652,995 bytes of publisher payloads. At the final check the
 scoped source files, studies, scenarios, inference caches, inventory and QA
@@ -71,8 +71,7 @@ selective ZIP64 extraction. Development subjects 189 and 013 have 276 and 289
 DICOM instances. Subject 013 includes one supplied aneurysm STL. Member CRC and
 local SHA256 checks cover the selected originals. The reported whole-archive
 MD5 identifies the publisher release. Both native study affines passed an
-independent check against DICOM orientation and slice positions. The STL stays
-with the originals pending a verified spatial basis.
+independent check against DICOM orientation and slice positions.
 
 ```sh
 .venv/bin/python scripts/acquire_head_cta.py --prepare 189 013
@@ -80,6 +79,21 @@ with the originals pending a verified spatial basis.
 
 Open `prepared/head-cta-15697196-native/<id>/patient-anatomy.json`. The source
 and reconstruction checks are under `qc/head-cta-15697196-native/<id>/`.
+
+The subject 013 diagnostic at `qc/head-cta-15697196-native/013/stl-frame-v1/`
+compares the original STL against the native CTA under eight axis sign
+conventions. The closed 992-triangle mesh measures 109.11 mm³. Four conventions
+are in bounds. Only the LPS hypothesis overlaps enhanced tissue, with a median
+of 214 HU inside the voxelized surface and 71 HU in its two-voxel shell. The
+other three in-bounds placements have interior medians of 36–38 HU. The LPS
+candidate lies on the right of the approximate native axial skull midline,
+while the publisher metadata specifies left MCA. The original STL and report
+remain available for review. The study has no admitted aneurysm layer.
+
+```sh
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python \
+  scripts/audit_head_cta_aneurysm.py --output-name stl-frame-reproduction
+```
 
 ### Same-patient NCCT and CTA
 
@@ -239,6 +253,53 @@ return. The source case and initial simulated state remained intact.
 .venv/bin/python scripts/probe_cta_organic_multilane.py \
   --output-name cta014-organic-01-multilane-reproduction
 ```
+
+### MRI anatomy and diffusion inspection
+
+Search **IXI265-Guys-0845** in the checkout's Cases library or open
+`prepared/adaptive-anatomy-migration-20261117-v1/IXI265-multimodal/patient-anatomy.json`
+directly. The local entry reuses the checksum-bound migration study and cached
+1 mm T1-derived SynthSeg labels. The acquired T1 has a 256 × 256 × 150 grid at
+0.938 × 0.938 × 1.20 mm. The study also retains the acquired MRA and diffusion
+b0 reference, a partial MRA vessel annotation, and an explicitly derived FA
+map. The MRA and diffusion-to-T1 transforms are unreviewed. The diffusion
+gradient frame remains unresolved, and diffusion is limited to inspection.
+The retained view opens on FA. Select **T1** under Scans to inspect the
+estimated cerebral cortex, white matter, ventricles, brainstem and cerebellum.
+The hidden desktop proof in `qc/hidden-app/ixi265-multimodal-20261118-v3/`
+records conditioned surfaces for 11 selected T1 anatomy labels and changes
+in all three linked source panes. It also compares the acquired MRA and b0
+and the derived FA against exact separate-grid readouts. The captures can
+show the viewer's estimated alignment preview. The report records that mode
+separately from the independent source checks.
+
+```sh
+study="$RESSECTIONLAB_DATA_ROOT/prepared/adaptive-anatomy-migration-20261117-v1/IXI265-multimodal/patient-anatomy.json"
+DATA_REBUILD_INSPECT_IXI=1 DATA_REBUILD_CASE="$study" \
+  DATA_REBUILD_OUTPUT="$RESSECTIONLAB_DATA_ROOT/qc/ixi265-app-reproduction" \
+  desktop/node_modules/.bin/electron desktop/electron/verify-data-rebuild.cjs --automation-hidden
+```
+
+The **IXI-077-T1-MRA-ORGANIC-ROUTE-01-v1** card is a separate DEVELOPMENT
+scenario on existing acquired T1 and MRA. It preserves the source brain estimate
+and the reviewed partial vascular overlay. The EDEN geometry is conditioned
+on the endpoint of a previously traced stock-tool line. The new simulated
+contour contains 282 cells (297.42 mm³) and differs from the old spherical
+fixture by 103 cells. The exact core, rim and edema labels are kept outside
+the app case.
+
+```sh
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python \
+  scripts/build_ixi077_organic_rehearsal.py --register "$PWD/testcases/cases"
+```
+
+See `prepared/ixi077-organic-rehearsal-v1/` for the native package and receipt.
+The new case passed eight necessary static checks along the fixed line. The
+stock working envelope intersects 96 of 282 contour cells and no mapped vessel
+cells. The screen assumes prior scalp, local skull and dural exposure. The
+remaining contour, unknown vascular coverage, modeled target effect and reverse
+withdrawal require separate evidence. The case has no instrument admission or
+committed actions.
 
 ### Observed surgical change
 

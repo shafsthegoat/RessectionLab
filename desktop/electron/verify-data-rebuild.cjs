@@ -8,7 +8,7 @@ dialog.showErrorBox=(_title,message)=>{console.error(message);app.exit(1);};
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),crypto=require('node:crypto');
 const {execFileSync}=require('node:child_process');
 const {inputScript}=require('./verify-eden-planning-helpers.cjs');
-const {studyLayerSelectionScript,studyScanEnabledScript,studyScanSelectionScript}=require('./verify-study-ui-helpers.cjs');
+const {studyLayerSelectionScript,studyScanEnabledScript,studyScanSelectionScript,studyVisibilityToggleScript}=require('./verify-study-ui-helpers.cjs');
 const repo=path.resolve(__dirname,'../..'),root=process.env.RESSECTIONLAB_DATA_ROOT;
 if(!root)throw Error('Set RESSECTIONLAB_DATA_ROOT');
 try{execFileSync(path.join(repo,'.venv/bin/python'),['-c','from resectionlab.data_root import checked_root; checked_root(required_bytes=1024**3)'],{cwd:repo,env:process.env});}
@@ -23,7 +23,8 @@ const targetLabel=process.env.DATA_REBUILD_CTA_TARGET_LABEL;
 const sourceSha=process.env.DATA_REBUILD_CTA_SOURCE_SHA256;
 const collectionFile=process.env.DATA_REBUILD_CTA_COLLECTION;
 const islesPair=process.env.DATA_REBUILD_INSPECT_ISLES_CTA==='1';
-const nativeStudy=islesPair||process.env.DATA_REBUILD_INSPECT_STUDY==='1'?JSON.parse(fs.readFileSync(input,'utf8')):null;
+const ixiStudy=process.env.DATA_REBUILD_INSPECT_IXI==='1';
+const nativeStudy=islesPair||ixiStudy||process.env.DATA_REBUILD_INSPECT_STUDY==='1'?JSON.parse(fs.readFileSync(input,'utf8')):null;
 const priorFile=process.env.DATA_REBUILD_CTA_PRIOR;
 const prior=priorFile?JSON.parse(fs.readFileSync(priorFile,'utf8')):null;
 if(targetId)assert(targetLabel&&/^[a-f0-9]{64}$/.test(sourceSha),'Provide the exact target label and baseline source digest');
@@ -70,11 +71,15 @@ let selection=saved;dialog.showOpenDialog=async()=>({canceled:false,filePaths:[s
 const originalHandle=ipcMain.handle.bind(ipcMain);
 let ctaPayload;
 let nativeVolume;
+const ixiT1Layers=new Map();
 ipcMain.handle=(name,handler)=>originalHandle(name,async(...args)=>{
   const started=performance.now();
   try{const result=await handler(...args);
     if(targetId&&['research:startupWorkspace','research:openListedWorkspace','research:openWorkspace'].includes(name)&&result)ctaPayload=result;
     if(nativeStudy&&name==='research:anatomyView'&&result)nativeVolume=result;
+    if(ixiStudy&&name==='research:anatomyView'&&args[1]?.seriesId==='t1'){
+      for(const layer of result.compartments)ixiT1Layers.set(layer.name,layer);
+    }
     report.requests.push({operation:name,command:args[1]?.command,ms:performance.now()-started,
     stateId:result?.view?.stateId,caseHash:result?.caseHash,reason:result?.reason,status:result?.status});return result;}
   catch(error){report.requests.push({operation:name,command:args[1]?.command,ms:performance.now()-started,error:String(error)});throw error;}
@@ -338,6 +343,106 @@ app.on('browser-window-created',(_event,window)=>{
       report.checks.push('The actual native viewer renders the manifest-bound scan and all three source panes');
       report.passed=!report.windowEverVisible;
     };
+    const inspectIxiStudy=async()=>{
+      assert.equal(nativeStudy.reference_series,'t1');
+      assert.equal(nativeStudy.tractography?.length??0,0);
+      const select=async id=>{
+        await wait(studyScanEnabledScript(id));
+        await js(studyScanSelectionScript(id));
+        await wait(`document.querySelector('.native-workspace')?.dataset.nativeSeries===${JSON.stringify(id)}`);
+        await ready();
+      };
+      const expectedLabels=['brain-stem','left cerebellum cortex','right cerebellum cortex',
+        'left lateral ventricle','right lateral ventricle','3rd ventricle','4th ventricle',
+        'left thalamus','right thalamus','left cerebral cortex','right cerebral cortex'];
+      const regions=expectedLabels.map(label=>{
+        const layer=nativeStudy.layers.find(row=>row.label===label&&row.source_series==='t1');
+        assert(layer,`Missing T1-derived layer ${label}`);
+        return layer;
+      });
+      await click('Anatomy');
+      await select('t1');
+      await js(`[...document.querySelectorAll('.anatomy-presets button')].find(b=>b.textContent.trim()==='Structures').click()`);
+      await click('Show structures only');
+      const opacity=async(label,value)=>{
+        await js(studyLayerSelectionScript([label]));
+        await js(inputScript(`${label} opacity`,value));
+        await click('Close layer details');
+      };
+      await opacity(nativeStudy.layers.find(layer=>layer.id==='brain').label,.13);
+      await ready();await gpuSourceReady();
+      const before=await sourceState(),unmarked=await screenshot();
+      for(const layer of regions){
+        const selected=`JSON.parse(document.querySelector('.rl-viewer')?.dataset.visibleLayerIds??'[]').includes(${JSON.stringify(layer.id)})`;
+        if(!await js(selected)){
+          const button=`document.querySelector(${JSON.stringify('[data-structure-id="'+layer.id+'"] .native-structure-visibility')})`;
+          if(await js(`${button}?.getAttribute('aria-pressed')==='true'`)){
+            await js(studyVisibilityToggleScript('Hide '+layer.label));
+            await wait(`${button}?.getAttribute('aria-pressed')==='false'`);
+          }
+          await js(studyVisibilityToggleScript('Show '+layer.label));
+          await wait(selected);
+        }
+      }
+      await wait(`!document.querySelector('[data-layer-pending="true"]')`);
+      await ready();
+      for(const region of regions.filter(layer=>layer.label.includes('cerebral cortex'))){
+        await opacity(region.label,.22);
+      }
+      const marked=await capture('ixi-t1-structures');
+      const t1=await nativeScan('t1');
+      assert.equal(t1.rendered.sourceSignal,before.sourceSignal);
+      assert.deepEqual(t1.rendered.cursor,before.cursor);
+      const crops=await js(`[...document.querySelectorAll('.rl-viewer-slice-image,.rl-viewer-anatomy-image')].map(e=>{
+        const r=e.getBoundingClientRect();return {x:Math.ceil(r.x),y:Math.ceil(r.y),
+          width:Math.floor(r.width)-2,height:Math.floor(r.height)-2,anatomy:e.classList.contains('rl-viewer-anatomy-image')};
+      })`);
+      const pixels=(image,rect)=>crypto.createHash('sha256').update(image.crop(rect).toBitmap()).digest('hex');
+      const changed=crops.map(({anatomy,...rect})=>({anatomy,changed:pixels(unmarked,rect)!==pixels(marked,rect)}));
+      assert.equal(changed.length,4);
+      assert(changed.some(row=>row.anatomy&&row.changed)&&changed.some(row=>!row.anatomy&&row.changed));
+      report.ixi={t1,changed,regions:regions.map(layer=>{
+        const observed=ixiT1Layers.get(layer.id);
+        assert(t1.rendered.visible.includes(layer.id)&&observed?.sourceSeries==='t1');
+        assert(observed.surfaceDiagnostics?.triangles>0&&observed.qa?.voxelCount>0);
+        return {id:layer.id,label:layer.label,sourceSeries:observed.sourceSeries,
+          voxels:observed.qa.voxelCount,surface:observed.surfaceDiagnostics};
+      }),sources:[]};
+      const sourceDisplay=JSON.parse(await js(`document.querySelector('.rl-viewer').dataset.sourceDisplayIdentity`));
+      for(const id of ['mra','dwi-b0','dwi-fa']){
+        const series=nativeStudy.series.find(row=>row.id===id);
+        assert(series&&nativeStudy.transforms[id].status==='unreviewed');
+        await select(id);
+        const rendered=await nativeScan(id);
+        assert.deepEqual(rendered.rendered.sourceShape,series.data.shape);
+        assert(['independent source frame','alignment preview'].includes(rendered.registrationStatus));
+        if(id==='mra')await capture('ixi-mra-source');
+        if(id==='dwi-fa'){
+          assert.equal(series.provenance.not_acquired_contrast,true);
+          assert.match(series.label,/uncorrected tensor diagnostic/i);
+          assert(await js(`document.body.innerText.includes('FA · uncorrected tensor diagnostic')`));
+        }
+        const raw=await js(`(async()=>{
+          const v=await window.resectionApi.anatomyView(${JSON.stringify({
+            collectionId:sourceDisplay[0],snapshotId:nativeStudy.snapshot_id,seriesId:id,layers:id==='mra'?['brain','vessels']:['brain'],
+            original:true,patientModel:false,previewAlignment:false,vesselScope:'all'
+          })});
+          return {registration:v.registrationStatus,shape:v.shape,affine:v.affine,sha256:v.mri.sha256,
+            layers:v.compartments.map(layer=>({id:layer.name,source:layer.sourceSeries}))};
+        })()`);
+        assert.equal(raw.registration,'independent source frame');
+        assert.deepEqual(raw.shape,series.data.shape);
+        assert(raw.affine.every((row,i)=>row.every((value,j)=>Math.abs(value-series.affine[i][j])<=1e-5)));
+        assert.equal(raw.sha256,rendered.sourceArraySha256);
+        assert(raw.layers.every(layer=>layer.source===id));
+        report.ixi.sources.push({id,label:series.label??series.modality,rendered,raw});
+      }
+      assert.equal(digest(input),inputSha);
+      assert.equal(window.isVisible(),false);
+      report.checks.push('Actual T1 source panes and 3D view show positive model-derived regional anatomy');
+      report.checks.push('Acquired MRA and diffusion b0 and the derived FA diagnostic retain exact independent source arrays; no reviewed registration or tractography is present');
+      report.passed=!report.windowEverVisible;
+    };
     const inspectIslesPair=async()=>{
       await click('Scans');
       const select=async id=>{
@@ -434,6 +539,7 @@ app.on('browser-window-created',(_event,window)=>{
       }
       const started=performance.now();await ready();report.coldReadyMs=performance.now()-started;
       if(islesPair){await inspectIslesPair();return;}
+      if(ixiStudy){await inspectIxiStudy();return;}
       if(nativeStudy){await inspectNativeStudy();return;}
       if(process.env.DATA_REBUILD_STRUCTURES==='1'){
         await click('Show structures only');await ready();
