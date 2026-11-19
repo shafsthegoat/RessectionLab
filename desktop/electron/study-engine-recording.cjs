@@ -30,32 +30,61 @@ async function ffmpeg(args,options={}) {
 function subtitleTime(ms) {return new Date(ms).toISOString().slice(11,23).replace('.',',');}
 function caption(value) {return String(value).replace(/[\r\n<>{}\\]/g,' ').slice(0,160);}
 
-async function encodeStudyReplay(directory,samples,source,signal) {
-  const frames=[],titles=[],intervals=movieIntervals(samples);
+// Subtitle rendering has its own image strip, so wrapped text cannot cover
+// source pixels. Reserve space for the longest authenticated cue in the movie.
+function captionLayout(width,rows) {
+  const outputWidth=Math.max(320,Math.ceil(width/2)*2);
+  const pixels=outputWidth>=900?17:15;
+  const columns=Math.max(8,Math.floor((outputWidth-36)/(pixels*.68)));
+  const cues=rows.map(lines=>lines.flatMap(line=>{
+    const wrapped=[];let row='',used=0;
+    const units=char=>char.codePointAt(0)>=0x2e80?2:1;
+    const flush=()=>{if(row)wrapped.push(row);row='';used=0;};
+    for(const word of line.trim().split(/\s+/u)){
+      const length=Array.from(word).reduce((n,char)=>n+units(char),0);
+      if(row&&used+1+length>columns)flush();
+      if(row){row+=' ';used++;}
+      for(const char of word){
+        if(used+units(char)>columns)flush();
+        row+=char;used+=units(char);
+      }
+    }
+    flush();
+    return wrapped;
+  }));
+  const lines=cues.reduce((longest,cue)=>Math.max(longest,cue.length),0);
+  const height=Math.ceil((lines*pixels*1.45+20)/2)*2;
+  return {width:outputWidth,height,fontSize:pixels*288/height,cues};
+}
+
+async function encodeStudyReplay(directory,samples,source,rect,signal) {
+  const frames=[],rows=[],intervals=movieIntervals(samples);
   const completions=new Map();
   for(const s of samples) if(s.frameIndex===s.frameCount-1){
     const t=Math.round((s.time-samples[0].time)*1000);
     completions.set(t,'Action '+(s.position+1)+' '+s.operation+' '+s.status);
   }
-  for(const [i,{index,milliseconds,duration}] of intervals.entries()) {
+  for(const {index,milliseconds,duration} of intervals) {
     const s=samples[index];
     frames.push("file '"+index+".png'",'option framerate 1000','duration '+duration/1000);
     const quantity=value=>Number.isFinite(value)?value.toFixed(1)+' mm³':'unavailable';
     const boundary=s.endpoint??completions.get(milliseconds);
-    titles.push(String(i+1),subtitleTime(milliseconds)+' --> '+subtitleTime(milliseconds+duration),
+    rows.push([
       caption(source)+'  |  '+caption(s.branchId)+'  |  '+s.time.toFixed(2)+' simulated s',
       'Action '+(s.position+1)+'/'+s.steps+'  ·  '+caption(s.operation)+'  ·  '+caption(s.kind.replaceAll('_',' '))+
         (boundary?'  ·  '+caption(boundary):''),
-      'Target removed '+quantity(s.targetRemoved)+'  ·  Residual '+quantity(s.originalResidual)+'  ·  Other tissue removed '+quantity(s.nonTargetRemoved),'');
+      'Target removed '+quantity(s.targetRemoved)+'  ·  Residual '+quantity(s.originalResidual)+'  ·  Other tissue removed '+quantity(s.nonTargetRemoved)]);
   }
+  const layout=captionLayout(rect.width,rows);
+  const titles=intervals.flatMap(({milliseconds,duration},i)=>[String(i+1),subtitleTime(milliseconds)+' --> '+subtitleTime(milliseconds+duration),...layout.cues[i],'']);
   const last=intervals.at(-1);
   frames.push("file '"+last.index+".png'",'option framerate 1000');
   await fs.writeFile(path.join(directory,'frames.txt'),frames.join('\n')+'\n');
   await fs.writeFile(path.join(directory,'titles.srt'),titles.join('\n'));
   await ffmpeg(['-nostdin','-hide_banner','-loglevel','error','-f','concat','-safe','0','-i','frames.txt',
-    '-vf',"fps=50:round=up,pad=ceil(iw/2)*2:ceil(ih/2)*2+90:0:0:color=0x101619,subtitles=titles.srt:force_style='FontName=Arial,FontSize=9,MarginV=5,Outline=0,Shadow=0'",
+    '-filter_complex',`[0:v]fps=50:round=up,pad=${layout.width}:ceil(ih/2)*2:0:0:color=0x101619[field];color=c=0x101619:s=${layout.width}x${layout.height}:r=50,subtitles=titles.srt:force_style='FontName=Menlo,FontSize=${layout.fontSize},MarginL=2,MarginR=2,MarginV=10,Outline=0,Shadow=0'[caption];[field][caption]vstack=inputs=2:shortest=1[output]`,'-map','[output]',
     '-t',String((last.milliseconds+last.duration)/1000),'-c:v','libx264','-pix_fmt','yuv420p','-preset','fast','-crf','16','-movflags','+faststart','movie.mp4'],{cwd:directory,signal});
-  return {captured:samples.length,timedImages:intervals.length,simulatedSeconds:last.milliseconds/1000,terminalHoldSeconds:1};
+  return {captured:samples.length,timedImages:intervals.length,simulatedSeconds:last.milliseconds/1000,terminalHoldSeconds:1,captionBandPixels:layout.height};
 }
 
 class StudyReplayRecorder {
@@ -103,6 +132,7 @@ class StudyReplayRecorder {
   }
   async command(args,win) {
     const s=this.session;
+    if(!s&&args.command==='cancel')return; // Abort and normal cleanup can both release the same export.
     if(!s || args.id!==s.id) throw Error('Replay export session expired.');
     if(args.command==='cancel') {await this.clear(s);return;}
     if(s.busy) throw Error('A replay capture is already in progress.');
@@ -112,7 +142,7 @@ class StudyReplayRecorder {
         const last=s.samples.at(-1);
         if(!last || last.position!==s.steps-1 || last.frameIndex!==last.frameCount-1)
           throw Error('Replay export did not reach the verified endpoint.');
-        const media=await encodeStudyReplay(s.directory,s.samples,s.source,s.abort.signal);
+        const media=await encodeStudyReplay(s.directory,s.samples,s.source,s.rect,s.abort.signal);
         if(s!==this.session) throw Error('Export cancelled.');
         await fs.rename(path.join(s.directory,'movie.mp4'),s.filename);
         await this.clear(s);
@@ -141,4 +171,4 @@ class StudyReplayRecorder {
     if(s.directory) await fs.rm(s.directory,{recursive:true,force:true});
   }
 }
-module.exports={movieIntervals,StudyReplayRecorder};
+module.exports={captionLayout,movieIntervals,StudyReplayRecorder};

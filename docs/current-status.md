@@ -90,6 +90,41 @@ evidence with corresponding admission and refusal controls. Independent geometry
 and functional references, source-resolution fold recovery and interactive
 frame-time tails remain open.
 
+## Fixed-target procedure comparison
+
+UCSF-PDGM-0004 supports a post-exposure, source-bound comparison on a
+supplied enhancing tumor. The prospective objective was 100 mm³ of owned
+target removal followed by withdrawal, with the same 160 mm³ non-target
+cap and 150 s aspiration budget per arm. A deterministic geometric search
+selected two corridors with entries 31.8 mm apart. Each started from the
+same zero-action state and used five 15 s scripted CUSA applications.
+Neither trajectory advanced to the end of its requested path.
+
+| Engine measure | Short access | Alternate entry |
+| --- | ---: | ---: |
+| Requested length / recorded tip advance, mm | 15.5 / 10.20 | 24.0 / 10.63 |
+| Owned target removed, mm³ | 103 | 116 |
+| Whole original annotation remaining, mm³ | 15,569 | 15,556 |
+| Non-target brain removed, mm³ | 46 | 33 |
+| Elapsed simulated time, s | 77.1 | 77.1 |
+| Goal reached and withdrawn | Yes | Yes |
+
+Both arms assumed scalp, skull and dural exposure. Zero removed cells in
+mapped vessels and named exclusions describes the available masks. Dedicated
+angiography, skull-opening cost and patient-specific functional outcomes
+remain unknown. Less than 1% of the original 15,672 mm³ annotation was
+removed on either route. The frozen patient CUSA policy requires a different
+prepared starting state, action space and budget.
+
+The standardized native viewer comparison favors BITE-09 for cortical folds
+with a supplied tumor, TopCoW-014 for arteries and major venous channels,
+CADS-465 for CT skull, and IXI265 for deep MRI structures. Meningioma
+sub-06 retains a conflict at the MRI envelope and CT skull boundary.
+Among reviewed holdings, no accepted glioma case combines tumor MRI, skull
+CT and dedicated angiography in a compatible operative state.
+[Viewing and comparison](desktop-workflow.md#compare-two-recorded-procedures-on-one-target) ·
+[Studies and recordings](local-storage-ledger.md).
+
 ## Acquired scan-to-procedure demonstration
 
 IXI077 joins acquired T1 MRI and a partial-coverage MRA to a recorded

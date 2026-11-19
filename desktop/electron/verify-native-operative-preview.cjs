@@ -20,7 +20,7 @@ const {studyScanSelectionScript} = require('./verify-study-ui-helpers.cjs');
 const {inputScript} = require('./verify-eden-planning-helpers.cjs');
 const root = path.resolve(__dirname, '../..');
 const [, , manifestArg, outputArg, mode = 'preview'] = process.argv;
-assert(['preview','baseline','prepare','no-target','stale','reopen','reopen-decision','source-switch'].includes(mode),'Unknown verification mode');
+assert(['preview','baseline','prepare','no-target','stale','reopen','reopen-decision','source-switch','compare-anatomy'].includes(mode),'Unknown verification mode');
 assert(manifestArg && outputArg, 'Pass a disposable native manifest, new evidence directory, and baseline or preview');
 const manifest = fs.realpathSync(manifestArg);
 const fixtureRoot = fs.realpathSync(path.join(root, 'testcases/outputs')) + path.sep;
@@ -196,7 +196,7 @@ app.on('browser-window-created', (_, win) => {
     try {
       report.rendererAsset = await js("document.querySelector('script[type=module][src]')?.src.split('/').pop()");
       await until(`document.querySelector('footer')?.textContent.includes('Add a source scan')`);
-      if(process.argv.includes('--source-support') || process.argv.includes('--visual-review') || process.argv.includes('--expect-presentation')) await js(`document.addEventListener('anatomy-frame',event=>{
+      if(mode==='compare-anatomy' || process.argv.includes('--source-support') || process.argv.includes('--visual-review') || process.argv.includes('--expect-presentation')) await js(`document.addEventListener('anatomy-frame',event=>{
         const {cameraState,cursor,sourceSignalFingerprint}=event.detail;
         window.operativeVerificationFrame={cameraState,cursor,sourceSignalFingerprint};
       })`);
@@ -243,6 +243,10 @@ app.on('browser-window-created', (_, win) => {
       }
       await click('Anatomy');
       await ready();
+      if(mode==='compare-anatomy'){
+        await require('./verify-anatomy-comparison.cjs').compareAnatomy({win,js,until,ready,click,capture,report,document});
+        finish();return;
+      }
       if(mode==='source-switch'||process.argv.includes('--cortical-switch')){
         await require('./verify-cortical-switch.cjs').verifyCorticalSwitch({js,until,click,ready,capture,report,document});
         if(mode==='source-switch'){finish();return;}

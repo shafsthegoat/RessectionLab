@@ -772,11 +772,18 @@ label overlap. Residual tumor, extent of resection, and dense tissue motion
 remain unmeasured. No saved simulator output for this patient has an admitted
 frame and matching cavity observation.
 
-An independent preoperative diagnostic scores the saved Raidionics LGG
-localization against the exact acquired FLAIR label. Its native output had zero
-foreground voxels and zero Dice. All 1,322 supplied target voxels were within
-the run’s brain mask. Patch-level inference coverage remains unaudited. The
-saved run is retained for reproducibility without commissioning new inference.
+A CPU replay of the publisher-configured Raidionics LGG model reproduced the
+saved FLAIR score volume byte for byte. All 1,322 publisher tumor voxel centers
+lay inside the brain mask, retained nonzero signal after 0.75 mm RAS resampling
+and reached all eight inference patches. The highest score inside the tumor was
+0.161. The whole-volume peak of 0.213 lay 18.0 mm from the nearest annotated
+voxel center. At the published 0.5 cutoff the output remained empty (Dice 0).
+The preparation result and layer inspector report the cutoff and highest score.
+Importing the publisher label on its own FLAIR restored the 1.32 mL annotation
+as a separate layer. T1-frame planning still requires review of FLAIR alignment.
+The ultrasound cavity and surgical-change comparisons remain separate observations.
+The personal HDD review guide at `qc/patient-strategy-comparison-20261119/resect/README.md`
+links the recovered study, patch-level receipt, score overlays and desktop captures.
 
 ```sh
 PYTHONPATH=src OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python \

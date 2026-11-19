@@ -23,7 +23,7 @@ with zipfile.ZipFile(sys.argv[1]) as z:
         mask=a[layers[r['name']]].astype(bool)
         if r['target']: source |= mask
         owner[mask]=r['target']
-    print(json.dumps(dict(shape=shape,source=np.flatnonzero(source).tolist(),owned=np.flatnonzero(owner).tolist(),voxelMm3=float(abs(np.linalg.det(a['affine'][:3,:3]))))))`;
+    print(json.dumps(dict(shape=shape,affine=a['affine'].tolist(),source=np.flatnonzero(source).tolist(),owned=np.flatnonzero(owner).tolist(),voxelMm3=float(abs(np.linalg.det(a['affine'][:3,:3]))))))`;
   const info = JSON.parse(execFileSync(python,['-c',script,episode],{maxBuffer:32*1024*1024}));
   return {...info,source:new Set(info.source),owned:new Set(info.owned)};
 }
@@ -39,20 +39,55 @@ function tissueState(source,view) {
   return {removed:[...removed].sort((a,b)=>a-b),residual,ownedRemoved:ownedRemoved.length};
 }
 
+// Compare the submitted mesh extents with RAS coordinates from the source grid.
+function verifyResultBounds(source,removed,remaining,drawn) {
+  const [,ny,nz]=source.shape;
+  const voxel=i=>[Math.floor(i/(ny*nz)),Math.floor(i/nz)%ny,i%nz];
+  const present=new Set(removed);
+  const ras=p=>source.affine.slice(0,3).map(row=>row[3]+row[0]*p[0]+row[1]*p[1]+row[2]*p[2]);
+  const bounds=positions=>{
+    const low=[Infinity,Infinity,Infinity],high=[-Infinity,-Infinity,-Infinity];
+    for(const p of positions)ras(p).forEach((n,k)=>{low[k]=Math.min(low[k],n);high[k]=Math.max(high[k],n);});
+    return [low,high];
+  };
+  const boundary=[];
+  // Binary marching tetrahedra cross the midpoint of each incident edge.
+  for(const i of removed){
+    const p=voxel(i);
+    for(let mask=1;mask<8;mask++)for(const sign of [-1,1]){
+      const step=[0,1,2].map(k=>sign*((mask>>k)&1)),q=p.map((v,k)=>v+step[k]);
+      if(q.every((v,k)=>v>=0&&v<source.shape[k])&&present.has((q[0]*ny+q[1])*nz+q[2]))continue;
+      boundary.push(p.map((v,k)=>v+step[k]/2));
+    }
+  }
+  const result={actual:drawn};
+  for(const [name,points] of [['cavity',boundary],['residual',remaining.map(voxel)]]){
+    if(!points.length){assert.equal(drawn[name],null);continue;}
+    const expected=bounds(points);
+    const error=expected.flatMap((row,i)=>row.map((n,k)=>Math.abs(n-drawn[name][i][k])));
+    const limit=name==='cavity'?[0,0,0]:source.affine.slice(0,3).map(row=>row.slice(0,3).reduce((s,n)=>s+Math.abs(n),0));
+    assert(error.every((n,k)=>n<=limit[k%3]+1e-5),name+' mesh lies outside its source-frame envelope');
+    result[name]={expected,maximumErrorMm:Math.max(...error)};
+  }
+  return result;
+}
+
 function digestCells(cells) {
   const bytes=Buffer.alloc(cells.length*4);
   cells.forEach((cell,i)=>bytes.writeUInt32LE(cell,4*i));
   return {cells:cells.length,sha256:hash(bytes)};
 }
 
-function encodeWalkthrough(output,samples,patient,route,ledger) {
+function encodeWalkthrough(output,samples,inputs,ledger,inspectionFrames) {
+  const {patient,route,acquisitions,target,generator}=inputs;
   const endpoint=ledger.dimensions.targetRemovedMm3.cumulative.toFixed(1)+' mm³ target removed, '+ledger.originalTarget.residualMm3.toFixed(1)+' mm³ remaining';
   const sections=[
-    {image:'patient-overview.png',seconds:3.6,title:'Patient reconstruction',note:patient+'  |  Acquired MRI and angiography, with a simulated target'},
+    {image:'patient-overview.png',seconds:3.6,title:'Patient reconstruction',note:patient+'  |  '+acquisitions+'  |  '+target},
     {image:'selected-recorded-approach.png',seconds:3.6,title:'Selected approach',note:route+'  |  Planning geometry in patient space'},
     ...samples.sort((a,b)=>a.position-b.position).map(s=>({...s,seconds:0.8,title:'Recorded engine actions',
-      note:s.time.toFixed(2)+' simulated seconds   |   '+s.operation+'   |   Selected observations of scripted post-exposure CUSA'})),
-    {image:'procedure-final.png',seconds:5.2,title:'Final state inspection',note:endpoint+'  |  CUSA withdrawn to recorded entry'},
+      note:s.time.toFixed(2)+' simulated seconds   |   '+s.operation+'   |   '+generator})),
+    ...inspectionFrames,
+    {image:'procedure-final.png',seconds:5.2,title:'Final state inspection',note:endpoint+'  |  '+(ledger.withdrawalComplete?'Withdrawal complete':'Instrument remains in the field')},
   ];
   const temp=fs.mkdtempSync(path.join(output,'.walkthrough-'));
   const file=path.join(output,'patient-engine-walkthrough.mp4');
@@ -85,7 +120,7 @@ function encodeWalkthrough(output,samples,patient,route,ledger) {
   }
   return {file:path.basename(file),...encoded,checks,sha256:hash(fs.readFileSync(file)),chapters:sections.map(({title,startSeconds,seconds})=>({title,startSeconds,seconds}))};
 }
-module.exports={digestCells,sourceTarget,tissueState,encodeWalkthrough};
+module.exports={verifyResultBounds,digestCells,sourceTarget,tissueState,encodeWalkthrough};
 
 // Read each painted cell at its center. Outlines and projected instrument
 // glyphs are separate from the label painted at the source-grid coordinate.
@@ -119,29 +154,32 @@ async function verifySection(contents,id,state,source) {
 module.exports.verifySection=verifySection;
 
 // The application supplies the complete 1× replay. This edit keeps its
-// authenticated time and outcome captions visible at 4× viewing speed.
+// authenticated time and outcome captions visible at the declared viewing speed.
 function continuousWalkthrough(output,full,short) {
   const source=path.join(output,'observed-engine-replay.mp4');
   const file=path.join(output,'patient-engine-continuous.mp4');
   const chapters=short.walkthrough.chapters,opening=chapters[2].startSeconds;
-  const ending=chapters.at(-1),engineSeconds=Number(full.movie.duration)/4;
+  const ending=chapters.find(c=>c.title==='Final result inspection')??chapters.at(-1),recordedSeconds=Number(full.movie.duration);
+  const inspectionSeconds=Number(short.walkthrough.duration)-ending.startSeconds;
+  const speed=recordedSeconds>90?4:recordedSeconds>45?2:1;
+  const engineSeconds=recordedSeconds/speed;
   const imageMovie=path.join(output,short.walkthrough.file);
   const filter=[
     `[0:v]trim=end=${opening},setpts=PTS-STARTPTS,fps=50[a]`,
-    "[1:v]setpts=(PTS-STARTPTS)/4,fps=50,scale=1600:900:force_original_aspect_ratio=decrease,pad=1600:1000:(ow-iw)/2:(900-ih)/2:color=0x10191e,setsar=1,"+
-      "drawtext=fontfile='/System/Library/Fonts/Supplemental/Arial.ttf':text='Recorded CUSA sequence':fontsize=32:fontcolor=white:x=40:y=919,"+
-      "drawtext=fontfile='/System/Library/Fonts/Supplemental/Arial.ttf':text='Scripted post-exposure execution   |   4× simulated time   |   Target and cavity from the observed engine state':fontsize=21:fontcolor=0x9bd5ce:x=40:y=963[b]",
+    `[1:v]setpts=(PTS-STARTPTS)/${speed},fps=50,scale=1600:900:force_original_aspect_ratio=decrease,pad=1600:1000:(ow-iw)/2:(900-ih)/2:color=0x10191e,setsar=1,`+
+      "drawtext=fontfile='/System/Library/Fonts/Supplemental/Arial.ttf':text='Recorded engine procedure':fontsize=32:fontcolor=white:x=40:y=919,"+
+      "drawtext=fontfile='/System/Library/Fonts/Supplemental/Arial.ttf':text='" + speed + "× simulated time   |   Target and cavity from the observed engine state':fontsize=21:fontcolor=0x9bd5ce:x=40:y=963[b]",
     `[0:v]trim=start=${ending.startSeconds},setpts=PTS-STARTPTS,fps=50[c]`,
     '[a][b][c]concat=n=3:v=1:a=0,format=yuv420p[v]'
   ].join(';');
   execFileSync('ffmpeg',['-nostdin','-v','error','-y','-i',imageMovie,'-i',source,'-filter_complex_threads','2','-filter_complex',filter,'-map','[v]','-c:v','libx264','-threads','4','-crf','17','-preset','fast','-movflags','+faststart',file]);
   const meta=JSON.parse(execFileSync('ffprobe',['-v','error','-select_streams','v:0','-show_entries','stream=width,height,duration,codec_name','-of','json',file])).streams[0];
-  assert(Math.abs(Number(meta.duration)-(opening+engineSeconds+ending.seconds))<.09);
+  assert(Math.abs(Number(meta.duration)-(opening+engineSeconds+inspectionSeconds))<.09);
   const evidence=[];
   const witnessDir=path.join(output,'.movie-checks');
   const frames=full.exportFrames;
   for(const filename of fs.readdirSync(witnessDir)){
-    const i=Number(path.basename(filename,'.png')),f=frames[i],next=frames[i+1];if(!next||next.time-f.time<.14)continue;
+    const i=Number(path.basename(filename,'.png')),f=frames[i],next=frames[i+1];if(!next||next.time-f.time<.04)continue;
     const time=(f.time+next.time)/2;
     const rgb=(args,filter)=>execFileSync('ffmpeg',['-nostdin','-v','error',...args,'-vf',filter,'-frames:v','1','-f','rawvideo','pipe:1']);
     const ref=rgb(['-i',path.join(witnessDir,filename)],'scale=128:72,format=rgb24');
@@ -150,10 +188,10 @@ function continuousWalkthrough(output,full,short) {
     const mae=ref.reduce((sum,n,k)=>sum+Math.abs(n-decoded[k]),0)/ref.length;
     assert(mae<8);evidence.push({index:i,time,state:f.id,decodedMae:mae});
   }
-  assert(evidence.length>=3&&evidence.some(e=>e.time>170),'Check early, intermediate and late decoded engine frames');
+  assert(evidence.length>=3&&evidence.some(e=>e.time>frames.at(-1).time*.8),'Check early, intermediate and late decoded engine frames');
   fs.rmSync(witnessDir,{recursive:true,force:true});
   return {file:path.basename(file),...meta,sha256:hash(fs.readFileSync(file)),encodedSource:hash(fs.readFileSync(source)),evidence,
     chapters:[{title:'Patient reconstruction',at:0},{title:'Selected approach',at:chapters[1].startSeconds},
-      {title:'Recorded actions at 4×',at:opening},{title:'Final inspection',at:opening+engineSeconds}]};
+      {title:'Recorded actions at '+speed+'×',at:opening},{title:'Final inspection',at:opening+engineSeconds}]};
 }
 module.exports.continuousWalkthrough=continuousWalkthrough;

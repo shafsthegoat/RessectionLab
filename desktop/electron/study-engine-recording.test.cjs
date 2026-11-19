@@ -15,7 +15,9 @@ test('movie uses observed durations, simultaneous boundary updates and a termina
 test('export refuses a substituted boundary, a skipped observation and a premature finish',async()=>{
   const {StudyReplayRecorder}=require('./study-engine-recording.cjs');
   const recorder=new StudyReplayRecorder();
+  await recorder.command({id:'expired',command:'cancel'},null);
   recorder.session={id:'capture',caseHash:'case',branchId:'branch',samples:[]};
+  await assert.rejects(recorder.command({id:'expired',command:'cancel'},null),/expired/);
   const response={caseHash:'case',branchId:'branch',timeline:[{action:{operation:'apply'},status:'partial',stateBefore:'start',stateAfter:'end'}],
     branches:[{id:'branch',steps:1}],playback:{readOnly:true,position:0,frameIndex:0,frameCount:3,
       observedTimeSeconds:0,frames:[{kind:'action_start'},{kind:'microstep'},{kind:'action_boundary'}]},
@@ -25,4 +27,18 @@ test('export refuses a substituted boundary, a skipped observation and a prematu
   response.view.stateId='interior';response.playback.frameIndex=1;recorder.observe(response);
   await assert.rejects(recorder.command({id:'capture',command:'capture',stateId:'interior'},null),/expected next engine frame/);
   await assert.rejects(recorder.command({id:'capture',command:'finish'},null),/did not reach/);
+});
+
+test('long source, branch and outcome captions receive a separate strip large enough for every cue',()=>{
+  const {captionLayout}=require('./study-engine-recording.cjs');
+  const long='UCSF-PDGM-0004 · enhancing_target · 557b567cec | alternate-entry-patient-specific-recording | 77.10 simulated s';
+  const rows=[[long,'Action 8/8 · withdraw · action boundary','Target removed 116.0 mm³ · Residual 15556.0 mm³ · Other tissue removed 33.0 mm³']];
+  for(const width of [320,1071]){
+    const layout=captionLayout(width,rows);
+    assert.equal(layout.width%2,0);
+    assert.equal(layout.height%2,0);
+    assert(layout.cues[0].length>3);
+    assert.equal(layout.cues[0].join('').replaceAll(' ',''),rows[0].join('').replaceAll(' ',''));
+    assert(layout.height>=layout.cues[0].length*(width>=900?17:15));
+  }
 });

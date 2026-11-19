@@ -81,6 +81,49 @@ reports that count and identifies the scan supplying the tissue contrast.
 The full vascular estimates are available in **Anatomy**. Original scan
 spacing and supplied contours are available in **Scans**.
 
+### Compare two recorded procedures on one target
+
+Open the native study and select its target in **Plan**. In **Rehearse**,
+choose **Compare two recordings** and select both procedural files in the
+same file chooser. The app independently checks each saved route, replays
+both action histories, and compares endpoints on the same patient revision,
+engine scene, initial state, physics and instrument catalog. The table
+reports the whole original annotation remaining, tissue assigned to the
+target and removed, other mapped tissue removal, elapsed time and
+withdrawal. An unavailable material appears as **Unmeasured**. Close the
+table and select **Review comparison** to inspect it again.
+
+To watch one arm, select its own approach in **Plan**, then choose **Open
+recorded engine episode** in **Rehearse**. Choose **Inspect result in 3D**
+from the operated section to rotate the amber cast of the empty cavity
+and the cyan surface of the remaining owned tumor. Choose **Cavity** or
+**Residual** to isolate and fit that surface. **Both** shows their relative
+positions. **Return to operative field** restores the microscope. **Save**
+retains the current frame, result mode and orbit. The adjacent full-target
+readout includes original annotation cells assigned to overlapping labels.
+
+On UCSF-PDGM-0004, the study's supplied enhancing contour was frozen
+before searching for approaches. To reproduce both arms, run the following
+from the checkout with the local fixtures listed in the storage ledger.
+The first command creates a new directory and writes the protocol.
+
+```sh
+output=testcases/outputs/ucsf-fixed-target-repeat
+.venv/bin/python scripts/compare_patient_cusa_routes.py plan "$output"
+.venv/bin/python scripts/compare_patient_cusa_routes.py execute "$output"
+.venv/bin/python scripts/compare_patient_cusa_routes.py bind "$output"
+```
+
+For a different study, `scripts/bind_native_engine_recording.py --help`
+lists the inputs to bind a recorded environment to a measured native
+approach. The application supports exact source grids and its verified
+resampled research derivative. The binder checks physical results through
+cold replay, including effective tool radius and direction, initial state,
+time, tissue membership and residual. Generator attribution comes from
+the producer and includes a source digest and, for RL, a checkpoint digest.
+The current route contract covers straight treatment strokes and preceding
+opening actions. [Procedure results](current-status.md#fixed-target-procedure-comparison).
+
 ### Replay the IXI077 T1 and MRA case
 
 Open `selected-approach.rsworkspace` for the intact study. Its Plan view
