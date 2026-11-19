@@ -4,7 +4,7 @@ const {app,dialog,ipcMain}=require('electron');
 const {execFile,execFileSync}=require('node:child_process');
 const fs=require('node:fs'),os=require('node:os'),path=require('node:path'),crypto=require('node:crypto'),assert=require('node:assert/strict');
 const {inputScript}=require('./verify-eden-planning-helpers.cjs');
-const {studyScanEnabledScript,studyScanSelectionScript,studyVisibilityToggleScript}=require('./verify-study-ui-helpers.cjs');
+const {studyLayerSelectionScript,studyLayerVisibilityScript,studyScanEnabledScript,studyScanSelectionScript,studyVisibilityToggleScript}=require('./verify-study-ui-helpers.cjs');
 const main=process.env.SURFACE_VERIFY_MAIN||path.join(__dirname,'main.cjs');
 const output=path.resolve(process.env.SURFACE_VERIFY_OUTPUT);
 fs.mkdirSync(output,{recursive:false});
@@ -20,6 +20,9 @@ const sourceHash=sha(source);
 const directFile=process.env.SURFACE_VERIFY_DIRECT_SOURCE;
 const refinedLayer=process.env.SURFACE_VERIFY_REFINED_LAYER;
 const refinedIds=refinedLayer?.split(',')??[];
+const detailIds=process.env.SURFACE_VERIFY_DETAIL_FOCUS?.split(',')??[];
+const branchFile=process.env.SURFACE_VERIFY_BRANCH_RECEIPT;
+const branches=branchFile?JSON.parse(fs.readFileSync(branchFile,'utf8')):null;
 const refinedPriorFile=process.env.SURFACE_VERIFY_REFINED_PRIOR;
 const refinedPrior=refinedPriorFile?JSON.parse(fs.readFileSync(refinedPriorFile,'utf8')):null;
 const direct=directFile?JSON.parse(fs.readFileSync(directFile,'utf8')):null;
@@ -33,6 +36,8 @@ const pairedMraAfterReopen=process.env.SURFACE_VERIFY_DIRECT_MRA_AFTER_REOPEN===
 const directoryOpen=nativeIndex>=0&&path.basename(source)==='patient-anatomy.json';
 const document=directoryOpen?JSON.parse(fs.readFileSync(source,'utf8'))
   :(direct||refinedLayer)&&nativeIndex>=0&&source.endsWith('.rsworkspace')?JSON.parse(zipMember(source,'patient-anatomy.json')):null;
+if(branches)assert.equal(branches.manifest.sha256,sourceHash,'Branch receipt must bind this exact study');
+for(const id of detailIds)assert(document?.layers.some(row=>row.id===id),'Unknown detail layer '+id);
 const portable=direct&&!prior?path.join(output,'publisher-geometry.rsworkspace'):null;
 const refinedPortable=refinedLayer&&directoryOpen&&process.env.SURFACE_VERIFY_SAVE_REFINED==='1'
   ?path.join(output,'conditioned-vault.rsworkspace'):null;
@@ -375,6 +380,30 @@ app.on('browser-window-created',(_event,window)=>{
         await smooth(true);await capture('smooth-'+name,raw.serial);
         report.captures['smooth-'+name].toggleToCaptureMs=performance.now()-warmStarted;
       };
+      const visibility=()=>js(studyLayerVisibilityScript());
+      const enabledControl=(className,label)=>js(`[...document.getElementsByClassName(${JSON.stringify(className)})].some(e=>e.getAttribute('aria-label')===${JSON.stringify(label)}&&!e.disabled)`);
+      const inputValue=label=>js(`[...document.querySelectorAll('input')].find(e=>e.getAttribute('aria-label')===${JSON.stringify(label)}).value`);
+      const showLayer=async(id,show)=>{
+        const control=(await visibility()).find(row=>row.id===id);
+        assert(control,'Missing layer '+id);
+        if(control.checked!==show){
+          const label=show?control.label:control.label.replace(/^Show /,'Hide ');
+          await wait(()=>enabledControl('native-structure-visibility',label),label);
+          await js(studyVisibilityToggleScript(label));
+          await wait(async()=>(await visibility()).find(row=>row.id===id)?.checked===show,label+' state');
+        }
+      };
+      const focusLayer=async label=>{
+        await js(studyLayerSelectionScript([label]));
+        await wait(()=>enabledControl('native-structure-focus','Focus '+label),'focus '+label);
+        await click('Focus '+label);
+        await ready();
+      };
+      const verifyOverlay=(before,after)=>{
+        const a=report.captures[before],b=report.captures[after];
+        compareSourceFrame(a,b,after);
+        assert.notEqual(a.pixels['anatomy-image'].sha256,b.pixels['anatomy-image'].sha256,after+' did not change the 3D pixels');
+      };
       await pair('oblique',()=>click('Fit 3D view'));
       if(direct){
         await verifyDirect();
@@ -387,6 +416,62 @@ app.on('browser-window-created',(_event,window)=>{
         await set('[aria-label="Skull view"]','exterior');
         await pair('skull-anterior');
         await set('[aria-label="Skull view"]','transparent');
+      }
+      if(branches){
+        const whole=document.layers.find(row=>row.id==='publisher_cow_arterial_mesh');
+        const initial=await visibility();
+        for(const {id,checked} of initial)if(checked)await showLayer(id,false);
+        await showLayer(whole.id,true);
+        await focusLayer(whole.label);
+        const raw=await capture('whole-publisher-vessels');
+        await showLayer(whole.id,false);
+        const manualColors=[];
+        for(const branch of branches.branches){
+          const layer=document.layers.find(row=>row.id===branch.layer);
+          await showLayer(layer.id,true);
+          await wait(()=>js(`[...document.getElementsByClassName('native-structure-name')].some(e=>e.title===${JSON.stringify(layer.label)}&&!e.disabled)`),layer.label+' controls');
+          await js(studyLayerSelectionScript([layer.label]));
+          const label=layer.label+' color';
+          if(await inputValue(label)!==layer.color){
+            await js(inputScript(label,layer.color));
+            assert.equal(await inputValue(label),layer.color);
+            manualColors.push(layer.id);
+          }
+        }
+        await capture('named-publisher-branches',raw.serial);
+        verifyOverlay('whole-publisher-vessels','named-publisher-branches');
+        const wholeView=report.captures['whole-publisher-vessels'];
+        const branchView=report.captures['named-publisher-branches'];
+        assert.deepEqual(JSON.parse(wholeView.layers),[whole.id]);
+        assert.deepEqual(JSON.parse(branchView.layers).sort(),branches.branches.map(row=>row.layer).sort());
+        assert.equal(branchView.frame.drawStatistics.triangles,wholeView.frame.drawStatistics.triangles);
+        const rendered=Object.fromEntries(report.requests.flatMap(request=>request.layers??[])
+          .filter(row=>row.triangles>0).map(row=>[row.name,row]));
+        for(const branch of branches.branches){
+          const surface=rendered[branch.layer];
+          assert.equal(surface?.triangles,branch.triangles,branch.layer+' rendered triangle count');
+          assert.equal(surface.points,branch.points,branch.layer+' rendered vertex count');
+          assert.equal(surface.sourceMeshSha256,surface.displayMeshSha256);
+          assert.equal(surface.surfaceDiagnostics?.policy,'publisher-vtp-ras-mm-v1');
+          assert.equal(surface.surfaceDiagnostics?.maxDisplacementMm,0);
+        }
+        assert.equal(rendered[whole.id]?.triangles,branches.branches.reduce((total,row)=>total+row.triangles,0));
+        report.publisherBranches={receiptSha256:sha(branchFile),manualColors,triangles:rendered[whole.id].triangles};
+        for(const {id,checked} of initial)await showLayer(id,checked);
+      }
+      for(const id of detailIds){
+        const layer=document.layers.find(row=>row.id===id);
+        const wasVisible=(await visibility()).find(row=>row.id===id)?.checked;
+        await showLayer(id,true);
+        await focusLayer(layer.label);
+        const opacity=await inputValue(layer.label+' opacity');
+        if(opacity!=='1')await js(inputScript(layer.label+' opacity',1));
+        const shown=await capture('with-'+id);
+        await showLayer(id,false);
+        await capture('without-'+id,shown.serial);
+        verifyOverlay('without-'+id,'with-'+id);
+        if(wasVisible)await showLayer(id,true);
+        await js(inputScript(layer.label+' opacity',opacity));
       }
       if(process.env.SURFACE_VERIFY_FOCUS==='1'){
         const labels=await js(`[...document.querySelectorAll('.native-structure-name')].map(e=>e.textContent.trim())`);

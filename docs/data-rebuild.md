@@ -290,15 +290,16 @@ restricted to the reviewed superior support region. See
 semantics, continuity, and source overlays.
 
 The [published Circle of Willis geometry](https://zenodo.org/records/17358162)
-was qualified for 006, 012 and 014 on their original CTA lattices. Every graph
-point and edge midpoint was supported by its original CoW mask. The original
+was qualified for 006, 012 and 014 on their original CTA lattices. Every edge
+midpoint and all but one graph point were supported by their original CoW
+masks. The unsupported point was inside the 006 acquisition. The original
 publisher meshes, graphs, label files and notices retain their exact bytes.
 The retained 012 and 014 CTAs matched each official archive member's length
 and CRC and were reused. Neither geometry required a frame transform.
 
 | TopCoW pilot | Supported graph points | Supported edge midpoints | Mesh vertices | Mesh triangles |
 | --- | ---: | ---: | ---: | ---: |
-| 006 | 915 | 914 | 47,202 | 94,404 |
+| 006 | 914 of 915 | 914 | 47,202 | 94,404 |
 | 012 | 814 | 815 | 61,860 | 123,724 |
 | 014 | 773 | 771 | 47,462 | 94,932 |
 
@@ -633,6 +634,75 @@ DATA_REBUILD_CASE="$study" DATA_REBUILD_INSPECT_STUDY=1 DATA_REBUILD_NATIVE_VIA_
 The source receipt and overlay are with the prepared study. The captures and
 desktop reports are in `qc/hidden-app/cads-brainct-465-surfaces-20261118-v1/` and
 `qc/hidden-app/cads-brainct-465-cases-20261118-v1/`.
+
+### Source-supported anatomical detail
+
+The field dimensions below are voxel counts multiplied by acquired spacing.
+The CTA registered to ISLES NCCT and the displayed TAIR slice selection are
+listed separately from the acquired grids.
+
+| Candidate | Spacing in mm | Sampled field in mm | Retained anatomical evidence |
+| --- | --- | --- | --- |
+| ISLES 0146 | CTA native 0.470 × 0.470 × 0.750. Registered pair 0.451 × 0.451 × 2.000 | CTA native 240.8 × 240.8 × 155.2. Registered pair 230.7 × 230.7 × 174.0 | Acquired CTA cuts through the upper vault. The registered skull mask reaches the lower boundary. The automated CoW mask has nine classes and 2,848 voxels across two components. No reviewed cortical labels or qualified transfer of the registered contours to native CTA. |
+| TAIR 00273 | 0.496 × 0.496 × 0.300 native. 0.600 through plane in the exact display selection | 254.0 × 254.0 × 226.2 | Finest grid. Defaced anterior field and 3 mm brain and skull model lattice. Native unclassified enhancement occupies 451 voxels and provides limited vascular evidence. No independent tissue or arterial annotation. |
+| Head CTA 189 | 0.478 × 0.478 × 0.800 | 244.7 × 244.7 × 220.8 | Defaced head and upper neck control with wider vault and posterior base coverage. The retained source has no admitted cortical, bone or vascular masks. The DICOM nominal slice thickness is 1.0 mm. |
+| TopCoW 014 | CTA 0.553 × 0.553 × 0.750. TOF MRA 0.297 × 0.297 × 0.600 | CTA 136.5 × 181.3 × 158.2. TOF MRA 144.0 × 188.9 × 104.4 | Publisher CoW categorical mask, mesh and centerline graph. Same-person TopBrain CTA artery and vein/sinus masks, plus separate native TOF annotation. The CTA skull estimate touches all faces. No reviewed cortical labels or qualified CTA-to-TOF registration. |
+| CADS 465 | 0.426 × 0.426 × 1.000 | 218.0 × 218.0 × 208.0 | Native noncontrast CT and exact publisher brain, tissue and skull-base model categories. The posterior base is visible. The bone union reaches the inferior face at 8,948 voxels, and the brain and bone estimates overlap at 51,715 voxels. Tissue and carotid estimates lack independent annotation. |
+
+Open **TopCoW-014-CTA-PUBLISHER-BRANCHES-v1** for the 11 named partitions of
+the publisher CoW mesh. Each class has an independently selectable 3D surface
+and a native categorical slice overlay. Reassembling the partitions recovers
+all 94,932 triangles and 47,462 vertex positions exactly. The original
+surface has two components, zero open or nonmanifold edges and a 0.569 mm p95
+distance from mesh vertices to the nearest original mask boundary voxel
+center. The original mask has 6,115 voxels. All 773 centerline points and 771
+edge midpoints land in the mask, with the exact class present at 768
+midpoints. The two graph components and six junctions are preserved. The
+broader artery, vein/sinus and simulated target remain available for context.
+
+Open **CADS-BRAINCT-465-SKULL-BASE-DETAIL-v1** for the full 512 × 512 × 208 linked
+CT grid and eight named classes from the retained categorical files. Compact
+and spongy head bone have 1,884,026 and 393,037 voxels. The left and right
+cochlea estimates have 837 and 1,298 voxels, with median source values of
+918 and 990.5 CT units. The optic nerves, chiasm and pituitary are available
+as additional model overlays. The source array and affine are identical to
+the retained acquisition. The source CT shows fine bone detail, and cortical
+folds, small soft-tissue boundaries and ventricular subtypes remain uncertain.
+
+A single posterior skull-base edge-fit trial was rejected. Across 486 held-out
+CT edges in 17 spatial blocks, equal-block error increased from 0.446 to
+0.448 mm. Four blocks improved, and p90 error increased from 0.727 to
+0.747 mm. The trial preserved 1,021,772 protected vertices and introduced
+zero new triangle contacts. The report is in
+`qc/cads465-skull-base-edge-v1/report.json`. The same directory holds the
+archived probe script and its checksum. To reproduce the trial, check
+`SHA256SUMS` and run the script with `PYTHONPATH="$PWD/src:$PWD/scripts"`,
+`--root`, and a fresh `--output-name`.
+
+```sh
+.venv/bin/python scripts/prepare_topcow014_publisher_branches.py --register "$PWD/testcases/cases"
+.venv/bin/python scripts/prepare_cads465_skull_base_detail.py --register "$PWD/testcases/cases"
+```
+
+Matched hidden desktop views are in
+`qc/hidden-app/topcow014-publisher-branches-v1/` and
+`qc/hidden-app/cads465-skull-base-detail-v1/`. Each overlay pair records the same
+camera, slice cursor, and source signal. The vessel pair swaps the complete
+publisher mesh and the 11 rendered classes, using the companion's colors
+through the layer controls where needed. The CADS pairs show the temporal
+bone/cochlea and gray matter estimate against the same CT. All 20 earlier CTA
+scenario packages match their original cohort sizes and SHA-256 digests in
+`qc/anatomical-fidelity-cta-cohort-integrity-v1.json`.
+
+For cortical fidelity, the next retained source is Bethesda Meningioma
+sub-13 in `prepared/adaptive-anatomy-migration-20261117-v1/`. It has a
+publisher 0.5 mm CT grid with sharp and soft reconstructions, 3D contrast T1,
+and cached tissue labels for inspection. Inspect the modalities independently
+pending a landmark-validated registration. Dedicated same-person angiography is
+still needed for distal arterial and venous branches in an aligned study.
+See the [A Paired Head CT-MRI Dataset release](https://zenodo.org/records/17486320).
+
+### CADS superior-vault surface verification
 
 The superior-vault refinement preserves the raw mesh, its triangle indices,
 the CT, and the labels. A physical-coordinate low-pass tapers in from native
