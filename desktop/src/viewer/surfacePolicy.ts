@@ -13,6 +13,8 @@ export interface SurfaceDiagnostics {
   displacementLimitMm?:number;
   restoredComponents: number;
   backedOffVertices?:number;
+  cavityJunctionTriangles?:number;
+  cavityCurvedEdges?:number;
   fallbackReason?:string;
   intersectionCheck: 'passed' | 'source-restored';
   preparationMs?: number;

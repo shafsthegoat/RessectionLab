@@ -130,3 +130,17 @@ test('real generated standard-physics BridgeSession create DTO satisfies the pri
   assert.equal(actual.view.physics.profile.schema,'resectionlab.tissue-physics.v2');assert.equal(modeledVolume(loaded,actual.view),loaded);assert.equal(modeledVolumeWork(loaded).baseOwnerBytes,0);assert.equal(actual.view.history.length,0);
   const bad=structuredClone(actual.view);bad.drillingV2.inputEnergyJ=1;assert.throws(()=>modeledVolume(loaded,bad),/unacted source/);
 });
+
+test('cavity display support follows accepted removals and locally yields to moved source or destination cells',()=>{
+  const s=source(600);s.compartments[0].mask.fill(1);
+  const removed=[34,35,36,434,435,436];
+  const original=modeledVolume(s,view(s,{removed}));
+  assert.deepEqual(Array.from(original.compartments[0].cavity.cells),removed);
+  const moved=modeledVolume(s,view(s,{removed,moved:[[33,32]]}));
+  assert.deepEqual(Array.from(moved.compartments[0].cavity.cells),[434,435,436]);
+  assert.equal(modeledVolume(s,view(s,{removed})),original);
+  assert.deepEqual(Array.from(original.compartments[0].cavity.cells),removed);
+  const small=modeledVolume(s,view(s,{removed:[34]}));
+  assert.equal(small.compartments[0].cavity,undefined);
+  assert.equal(small.compartments[0].mask[34],0);
+});

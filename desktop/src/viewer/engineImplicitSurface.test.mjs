@@ -109,3 +109,49 @@ test('one source partition spans workers, source chunks, cavity cuts and undo wi
   assert.deepEqual(limited.smoothPositions,limited.positions);assert.deepEqual(limited.smoothNormals,limited.normals);
   assert.match(limited.diagnostics.fallbackReason,/budget/);
 });
+
+test('a cut spanning source material boundaries keeps raw contact geometry, closes wedge faces and leaves distant and protected surfaces unchanged',()=>{
+  const shape=[26,21,19],owner=grid(shape,(x,y,z)=>x===18&&y===10&&z>4&&z<13?3:x<5||x>20?0:y<10?1:2,Uint16Array);
+  const removed=[];
+  for(let x=4;x<15;x++)for(let y=0;y<21;y++)for(let z=0;z<19;z++){
+    const i=(x*21+y)*19+z;
+    if(owner[i]&&(y-9.7)**2+(z-8.6)**2<6.6)removed.push(i);
+  }
+  const occupied=owner.slice();for(const i of removed)occupied[i]=0;
+  const before=hash(owner);
+  for(const region of [1,2,3]){
+    const mask=Uint8Array.from(occupied,v=>v===region),cells=Uint32Array.from(removed.filter(i=>owner[i]===region));
+    const reference={owner,protectedRegions:[3]},cavity=cells.length?{region,cells}:undefined;
+    const previous=prepareSurface(mask,shape,identity,'soft_tissue',true,reference);
+    const next=prepareSurface(mask,shape,identity,'soft_tissue',true,{...reference,cavity});
+    for(const k of ['positions','normals','indices'])assert.deepEqual(next[k],previous[k]);
+    if(region===3){
+      assert.deepEqual(next.smoothPositions,previous.smoothPositions);
+      assert.equal(next.smoothIndices,undefined);
+      continue;
+    }
+    assert(next.smoothIndices.length>previous.indices.length);
+    assert(next.smoothPositions.length>previous.positions.length);
+    assert(next.diagnostics.maxDisplacementMm<=.5);
+    const counts=new Map();
+    for(let i=0;i<next.smoothIndices.length;i+=3){
+      const face=Array.from(next.smoothIndices.slice(i,i+3));assert.equal(new Set(face).size,3);
+      for(let a=0;a<3;a++){
+        const u=face[a],v=face[(a+1)%3],key=u<v?u+','+v:v+','+u;
+        counts.set(key,(counts.get(key)??0)+1);
+      }
+    }
+    assert([...counts.values()].every(n=>n===2),'every display edge must have two incident triangles');
+    let moved=0;
+    for(let i=0;i<previous.positions.length;i+=3){
+      const difference=[0,1,2].some(k=>previous.smoothPositions[i+k]!==next.smoothPositions[i+k]);
+      if(difference){moved++;assert(previous.positions[i]<17&&previous.positions[i]>3);}
+    }
+    assert(moved>15);
+    const engine=new IncrementalSurfaceEngine(),base={layerId:'tissue',shape,affine:identity,kind:'soft_tissue'};
+    engine.prepare({...base,jobId:1,identity:'original',previousIdentity:'',mask:Uint8Array.from(owner,n=>n===region),partition:{key:'owner',reference}});
+    const edited=engine.prepare({...base,jobId:2,identity:'cut',previousIdentity:'original',indices:cells,values:new Uint8Array(cells.length),partition:{key:'owner',cavity}});
+    for(const k of ['smoothPositions','smoothNormals','smoothIndices'])assert.deepEqual(edited[k],next[k]);
+  }
+  assert.equal(hash(owner),before);
+});

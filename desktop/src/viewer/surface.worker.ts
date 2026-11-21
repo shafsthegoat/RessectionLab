@@ -12,6 +12,7 @@ self.onmessage = (
     if(!affine)throw Error('Surface preparation requires the source affine.');
     const result=prepareSurface(mask,shape,affine,kind,displaySmoothing,partition.resolve(event.data.partition));
     const transfer=[result.positions.buffer,result.indices.buffer,result.normals.buffer];
+    if('smoothIndices' in result&&result.smoothIndices)transfer.push(result.smoothIndices.buffer);
     if(result.smoothPositions)transfer.push(result.smoothPositions.buffer,result.smoothNormals!.buffer);
     self.postMessage({name,requestGeneration,...result},{transfer});
   } catch (error) {

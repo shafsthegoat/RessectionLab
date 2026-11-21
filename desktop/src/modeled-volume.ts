@@ -121,6 +121,39 @@ function overrides(base:Base,view:SurgicalView,coupled:boolean):Map<number,numbe
   for(const [i,value]of values)if(value===base.owner[i])values.delete(i);
   return values;
 }
+/** Accept only vacant cells from the removal ledger. Displaced tissue keeps
+ * its ordinary surface wherever a moved source or destination enters the
+ * filter footprint. Sparse supports never allocate another full patient grid. */
+function attachCavitySupport(state:State,base:Base,view:SurgicalView){
+  const [nx,ny,nz]=state.volume.shape,yz=ny*nz,blocked=new Set<number>();
+  // Above this budget the source-faithful shared implicit surface remains
+  // available. No voxel or accepted effect is omitted from that surface.
+  const byRegion=new Map<number,number[]>();
+  if(view.removed.length<=4096&&view.moved.length<=4096&&view.removed.length){
+    const moved=new Set(view.moved.flat());
+    for(const index of view.removed){
+      const id=base.owner[index];
+      if(!id||state.overrides.get(index)!==0||base.surfaceReference.protectedRegions.includes(id))continue;
+      if(moved.size){
+        const x=Math.floor(index/yz),y=Math.floor(index/nz)%ny,z=index%nz;
+        scan:for(let a=Math.max(0,x-3);a<=Math.min(nx-1,x+3);a++)
+          for(let b=Math.max(0,y-3);b<=Math.min(ny-1,y+3);b++)
+            for(let c=Math.max(0,z-3);c<=Math.min(nz-1,z+3);c++)
+              if(moved.has(a*yz+b*nz+c)){blocked.add(index);break scan;}
+      }
+      if(!blocked.has(index)){
+        const group=byRegion.get(id)??[];group.push(index);byRegion.set(id,group);
+      }
+    }
+  }
+  state.volume.compartments=state.volume.compartments.map((layer,r)=>{
+    const region=base.regions[r]?.id,indices=byRegion.get(region);
+    if(!indices||indices.length<3)return layer.cavity?{...layer,cavity:undefined}:layer;
+    const cells=Uint32Array.from(new Set(indices)).sort(),old=layer.cavity;
+    if(old?.region===region&&old.cells.length===cells.length&&cells.every((value,i)=>value===old.cells[i]))return layer;
+    return {...layer,cavity:{region,cells}};
+  });
+}
 /** Source ownership is built once per mapping. Follow-up states inspect only
  * the sparse old/new effect union; only changed layer masks receive a private
  * full-length copy. No writable mask or override map is shared across frames.
@@ -162,6 +195,7 @@ export function modeledVolume(source:ViewerVolume,view:SurgicalView):ViewerVolum
     const volume=displayVolume(source,compartments,key);state={volume,overrides:next,differences};cache.current=state;
     measurement={fullBuild:false,sourceCellsScanned:0,copiedMaskBytes,patchedCells:changedCells,baseOwnerBytes:base.owner.byteLength};
   }
+  attachCavitySupport(state,cache.base,view);
   registerModeledAnatomy(source,state.volume,mappingKey,[...view.removed,...view.moved.flat()],cache.base.surfaceReference);
   cache.frames.set(key,state);if(cache.frames.size>3)cache.frames.delete(cache.frames.keys().next().value!);
   work.set(state.volume,measurement);return state.volume;

@@ -8,7 +8,7 @@ import type {Affine,Bounds3,Shape3} from './coordinates';
 import type {SurfaceDiagnostics} from './surfacePolicy';
 import type {SurfaceIntersectionAudit} from './surfaceSafety';
 import type {SurfacePolynomialFilter} from './incrementalSurfaceFilter';
-export interface PreparedSurface {positions:Float32Array;normals:Float32Array;smoothPositions?:Float32Array;smoothNormals?:Float32Array;indices:Uint32Array;diagnostics?:SurfaceDiagnostics;smoothingPrepared?:boolean;representation?:'stable-source-ids';activeBounds?:Bounds3}
+export interface PreparedSurface {positions:Float32Array;normals:Float32Array;smoothPositions?:Float32Array;smoothNormals?:Float32Array;smoothIndices?:Uint32Array;indices:Uint32Array;diagnostics?:SurfaceDiagnostics;smoothingPrepared?:boolean;representation?:'stable-source-ids';activeBounds?:Bounds3}
 export function prepareSurface(mask:Uint8Array,shape:Shape3,affine:Affine,kind?:string,smooth=true,reference?:EngineSurfaceReference|null):PreparedSurface {
   const started=performance.now(),result=prepareSurfaceSoup(maskSurface(mask,shape),mask,shape,affine,kind,smooth,reference);
   if(result.diagnostics)result.diagnostics.preparationMs=performance.now()-started;return result;
@@ -26,7 +26,7 @@ export function prepareIndexedSurface(positions:Float32Array,indices:Uint32Array
   if(!smooth)return {positions,indices,normals,smoothingPrepared:false};
   if(reference!==undefined){
     const display=engineImplicitSurface(positions,indices,normals,mask,shape,affine,kind,reference);
-    return {positions,indices,normals,smoothPositions:display.positions,smoothNormals:display.smoothNormals,diagnostics:display.diagnostics,smoothingPrepared:true};
+    return {positions,indices,normals,smoothPositions:display.positions,smoothNormals:display.smoothNormals,smoothIndices:display.smoothIndices,diagnostics:display.diagnostics,smoothingPrepared:true};
   }
   const limits=surfaceKind(kind)==='vessel'?vesselLimits(positions,affine,mask,shape):undefined;
   const display=fairIndexedSurface(positions,indices,affine,kind,limits,audit,filter);

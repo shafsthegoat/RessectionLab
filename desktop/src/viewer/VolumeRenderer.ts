@@ -603,6 +603,7 @@ export class VolumeRenderer {
         normals?: Float32Array;
         smoothPositions?: Float32Array;
         smoothNormals?: Float32Array;
+        smoothIndices?: Uint32Array;
         indices?: Uint32Array;
         diagnostics?: SurfaceDiagnostics;
         error?: string;
@@ -612,7 +613,7 @@ export class VolumeRenderer {
       const requestStarted=sourceRequests.get(event.data.name);
       if(requestStarted!==undefined){
         sourceRequests.delete(event.data.name);
-        const buffers=[event.data.positions,event.data.normals,event.data.smoothPositions,event.data.smoothNormals,event.data.indices];
+        const buffers=[event.data.positions,event.data.normals,event.data.smoothPositions,event.data.smoothNormals,event.data.indices,event.data.smoothIndices];
         const bytes=buffers.reduce((sum,array)=>sum+(array?.byteLength??0),0);
         this.displayWork.workerResultTransferBytes+=bytes;
         this.canvas.dispatchEvent(new CustomEvent('anatomy-work',{bubbles:true,detail:{kind:'surface-preparation',scope:'source',name:event.data.name,
@@ -639,14 +640,14 @@ export class VolumeRenderer {
         return;
       }
 
-      if(event.data.indices)retainSurface(layer.mask,this.affine,layer.kind,{...event.data,positions,normals:normals!,indices:event.data.indices},this.volume.shape,reference);
+      if(event.data.indices)retainSurface(layer.mask,this.affine,layer.kind,{...event.data,positions,normals:normals!,indices:event.data.indices},this.volume.shape,layer.cavity??reference);
       this.canvas.dispatchEvent(new CustomEvent('anatomy-surface',{bubbles:true,detail:{name:layer.name,diagnostics:event.data.diagnostics??layer.surfaceDiagnostics,qa:layer.qa,empty:!positions.length}}));
       if(remaining===0){this.worker.terminate();this.sourceWorkerActive=false;}
       if(!positions.length){
         if(remaining===0&&this.mode==='anatomy'&&!this.cameraRestored)this.fitCamera('anatomy');
         this.finishInitialSurgical();this.requestRender();return;
       }
-      this.installSurface(layer,{positions,normals,smoothPositions:event.data.smoothPositions,smoothNormals:event.data.smoothNormals,indices:event.data.indices});
+      this.installSurface(layer,{positions,normals,smoothPositions:event.data.smoothPositions,smoothNormals:event.data.smoothNormals,smoothIndices:event.data.smoothIndices,indices:event.data.indices});
       this.finishInitialSurgical();
       if (remaining === 0 && this.mode === "anatomy" && !this.cameraRestored) this.fitCamera("anatomy");
       this.requestRender();
@@ -659,7 +660,7 @@ export class VolumeRenderer {
       );
     };
     volume.compartments.forEach((layer) => {
-      const cached=!layer.labelSet?cachedSurface(layer.mask,this.affine,layer.kind,this.volume.shape,true,reference):undefined;
+      const cached=!layer.labelSet?cachedSurface(layer.mask,this.affine,layer.kind,this.volume.shape,true,layer.cavity??reference):undefined;
       if(cached){this.worker.onmessage?.(new MessageEvent('message',{data:{name:layer.name,...cached}}));}
       else if (layer.surface&&!reference) {
         const s = layer.surface;
@@ -669,7 +670,7 @@ export class VolumeRenderer {
       } else {
         const mask=materializeLayerMask(this.volume,layer);sourceRequests.set(layer.name,performance.now());
         this.displayWork.sourceRemeshedLayers++;this.displayWork.workerInputCloneBytes+=mask.byteLength;
-        this.worker.postMessage({name:layer.name,kind:layer.kind,mask,shape:volume.shape,affine:this.affine,displaySmoothing:true,partition:this.partitionRequest(this.worker,reference,true)});
+        this.worker.postMessage({name:layer.name,kind:layer.kind,mask,shape:volume.shape,affine:this.affine,displaySmoothing:true,partition:this.partitionRequest(this.worker,reference,true,layer.cavity)});
       }
     });
     if(!remaining){this.worker.terminate();this.sourceWorkerActive=false;}
@@ -685,7 +686,7 @@ export class VolumeRenderer {
     this.requestRender();
   }
 
-  private makeSurface(layer:ViewerVolume['compartments'][number],buffers:{positions:Float32Array;normals:Float32Array;smoothPositions?:Float32Array;smoothNormals?:Float32Array;indices?:Uint32Array;smoothingPrepared?:boolean;representation?:PreparedSurface['representation'];activeBounds?:Bounds3},eagerPicking=true):SurfacePair|null {
+  private makeSurface(layer:ViewerVolume['compartments'][number],buffers:{positions:Float32Array;normals:Float32Array;smoothPositions?:Float32Array;smoothNormals?:Float32Array;smoothIndices?:Uint32Array;indices?:Uint32Array;smoothingPrepared?:boolean;representation?:PreparedSurface['representation'];activeBounds?:Bounds3},eagerPicking=true):SurfacePair|null {
     const {positions,normals}=buffers;
     const onError=this.onError;
     const geometry = new THREE.BufferGeometry();
@@ -696,7 +697,7 @@ export class VolumeRenderer {
     geometry.setAttribute("normal", new THREE.BufferAttribute(normals, 3));
     const { smoothPositions, smoothNormals } = buffers;
     const smoothingPrepared=buffers.smoothingPrepared!==false;
-    if (smoothingPrepared&&(!smoothPositions || !smoothNormals || smoothPositions.length !== positions.length || smoothNormals.length !== positions.length)) {
+    if (smoothingPrepared&&(!smoothPositions || !smoothNormals || (!buffers.smoothIndices && smoothPositions.length !== positions.length) || smoothNormals.length !== smoothPositions.length)) {
       geometry.dispose();
       onError("Display surface buffers do not match the source triangles.");
       return null;
@@ -706,7 +707,7 @@ export class VolumeRenderer {
     const smooth = smoothingPrepared?new THREE.BufferGeometry():geometry;
     if (buffers.indices) {
       geometry.setIndex(new THREE.BufferAttribute(buffers.indices, 1));
-      smooth.setIndex(new THREE.BufferAttribute(buffers.indices, 1));
+      smooth.setIndex(new THREE.BufferAttribute(buffers.smoothIndices??buffers.indices, 1));
     }
     if(buffers.representation==='stable-source-ids'){
       const bounds=buffers.activeBounds;
@@ -723,7 +724,7 @@ export class VolumeRenderer {
     const vessel=surfaceKind(layer.kind)==='vessel';
     const displayKind=layer.displayKind??layer.kind??'';
     const fairNormals=vessel||CONTEXT_SURFACES.has(displayKind)||Boolean(layer.surface&&['brain-region','gray-matter','white-matter','cerebellar-cortex','dura','csf','ventricles'].includes(displayKind));
-    if(smoothingPrepared)smooth.setAttribute("normal", new THREE.BufferAttribute(fairNormals&&buffers.indices ? displaySurfaceNormals(smoothNormals!,buffers.indices,this.affine) : smoothNormals!, 3));
+    if(smoothingPrepared)smooth.setAttribute("normal", new THREE.BufferAttribute(fairNormals&&buffers.indices ? displaySurfaceNormals(smoothNormals!,buffers.smoothIndices??buffers.indices,this.affine) : smoothNormals!, 3));
     const appearance = layerAppearance(layer.name,layer.color,this.workspaceSettings,layer.displayKind??layer.kind);
     const mesh = new THREE.Mesh(
       this.surfaceSmoothing ? smooth : geometry,
@@ -775,7 +776,7 @@ export class VolumeRenderer {
     return undefined;
   }
 
-  private installSurface(layer:ViewerVolume['compartments'][number],buffers:PreparedSurface|{positions:Float32Array;normals:Float32Array;smoothPositions?:Float32Array;smoothNormals?:Float32Array;indices?:Uint32Array}) {
+  private installSurface(layer:ViewerVolume['compartments'][number],buffers:PreparedSurface|{positions:Float32Array;normals:Float32Array;smoothPositions?:Float32Array;smoothNormals?:Float32Array;smoothIndices?:Uint32Array;indices?:Uint32Array}) {
     const pair=this.makeSurface(layer,buffers);if(!pair)return;
     if (this.volume.displayIdentity && layer.surface && surfaceKind(layer.kind)==='context') {
       installNativeContextLighting(pair.mesh.material as THREE.MeshStandardMaterial, this.patientBounds??this.bounds,
@@ -841,14 +842,14 @@ export class VolumeRenderer {
     if(interaction.onDisplayError)interaction.onDisplayError(interaction.preview??interaction.view,message);
     else this.onError?.(message);
   }
-  private partitionRequest(worker:Worker,reference:EngineSurfaceReference|undefined,smooth:boolean):EnginePartitionRequest|undefined {
+  private partitionRequest(worker:Worker,reference:EngineSurfaceReference|undefined,smooth:boolean,cavity?:EnginePartitionRequest['cavity']):EnginePartitionRequest|undefined {
     if(!reference)return undefined;
     const key=this.modelIdentity(reference);
-    if(!smooth||workerPartitions.get(worker)===reference)return {key};
+    if(!smooth||workerPartitions.get(worker)===reference)return {key,cavity};
     workerPartitions.set(worker,reference);
     const value=reference.owner.byteLength<=MAX_ENGINE_REFERENCE_BYTES?reference:null;
     this.displayWork.workerInputCloneBytes+=value?.owner.byteLength??0;
-    return {key,reference:value};
+    return {key,reference:value,cavity};
   }
   private modelIdentity(value:object){let key=this.modelIdentities.get(value);if(!key){key=`tissue-${++this.modelIdentityCounter}`;this.modelIdentities.set(value,key);}return key;}
   private disposeSurfacePair(pair:SurfacePair){
@@ -860,7 +861,7 @@ export class VolumeRenderer {
     this.anatomy.remove(mesh);const pair={mesh,...geometry},bytes=geometryBufferBytes([geometry.source,geometry.smooth])+layer.mask.byteLength;
     if(!retain){this.disposeSurfacePair(pair);return;}
     const reference=modeledAnatomy(this.volume)?.surfaceReference;
-    this.retiredSurfaces.push({layer:{name:layer.name,kind:layer.kind,mask:layer.mask},pair,bytes,partitionId:reference?this.modelIdentity(reference):undefined});let total=this.retiredSurfaces.reduce((sum,e)=>sum+e.bytes,0);
+    this.retiredSurfaces.push({layer:{name:layer.name,kind:layer.kind,mask:layer.mask},pair,bytes,partitionId:layer.cavity?this.modelIdentity(layer.cavity):reference?this.modelIdentity(reference):undefined});let total=this.retiredSurfaces.reduce((sum,e)=>sum+e.bytes,0);
     while(total>RETIRED_SURFACE_BUDGET_BYTES||this.retiredSurfaces.length>16){const old=this.retiredSurfaces.shift()!;total-=old.bytes;this.disposeSurfacePair(old.pair);}
   }
   private clearModelStage(){
@@ -907,13 +908,13 @@ export class VolumeRenderer {
         const needsSmoothing=smoothing&&this.surfaceGeometry.get(layer.name)?.smoothingPrepared===false;
         let indices:Uint32Array|undefined,values:Uint8Array|undefined;
         if(a?.surfaceReference===b?.surfaceReference&&old&&old.kind===layer.kind&&this.preparedSourceLayers.has(layer.name)){
-          if(old.mask===layer.mask&&!old.labelSet&&!layer.labelSet&&!needsSmoothing)continue;
-          if(candidates){const changed=candidates.filter(i=>old.mask[i]!==layer.mask[i]);if(!changed.length&&!needsSmoothing)continue;indices=Uint32Array.from(changed);values=Uint8Array.from(changed,i=>layer.mask[i]);stage.changedIndices+=changed.length;}
+          if(old.cavity===layer.cavity&&old.mask===layer.mask&&!old.labelSet&&!layer.labelSet&&!needsSmoothing)continue;
+          if(candidates){const changed=candidates.filter(i=>old.mask[i]!==layer.mask[i]);if(!changed.length&&!needsSmoothing&&old.cavity===layer.cavity)continue;indices=Uint32Array.from(changed);values=Uint8Array.from(changed,i=>layer.mask[i]);stage.changedIndices+=changed.length;}
         }
         stage.changedLayers++;
-        const retired=this.retiredSurfaces.findIndex(e=>e.partitionId===partitionId&&e.layer.name===layer.name&&e.layer.kind===layer.kind&&e.layer.mask===layer.mask&&(!smoothing||e.pair.smoothingPrepared!==false));
+        const retired=this.retiredSurfaces.findIndex(e=>e.partitionId===(layer.cavity?this.modelIdentity(layer.cavity):partitionId)&&e.layer.name===layer.name&&e.layer.kind===layer.kind&&e.layer.mask===layer.mask&&(!smoothing||e.pair.smoothingPrepared!==false));
         if(retired>=0){stage.prepared.set(layer.name,this.retiredSurfaces.splice(retired,1)[0].pair);continue;}
-        const cached=!layer.labelSet?cachedSurface(layer.mask,this.affine,layer.kind,next.shape,smoothing,b?.surfaceReference):undefined,s=b?.surfaceReference?undefined:layer.surface;
+        const cached=!layer.labelSet?cachedSurface(layer.mask,this.affine,layer.kind,next.shape,smoothing,layer.cavity??b?.surfaceReference):undefined,s=b?.surfaceReference?undefined:layer.surface;
         const buffers=cached??(s?{positions:s.source,normals:s.sourceNormals,smoothPositions:s.positions,smoothNormals:s.normals,indices:s.indices}:undefined);
         if(buffers){const pair=buffers.positions.length?this.makeSurface(layer,buffers,!interaction?.readOnly):null;if(buffers.positions.length&&!pair)throw Error('Invalid prepared modeled surface');stage.prepared.set(layer.name,pair);}
         else stage.jobs.push({layer,indices,values});
@@ -962,8 +963,8 @@ export class VolumeRenderer {
         const layer=stage.waiting;if(!layer||layer==='pack'||layer.name!==event.data.layerId){this.failModelStage('unexpected modeled surface');return;}
         const buffers=event.data;if(!buffers.positions||!buffers.normals||buffers.positions.length!==buffers.normals.length||
           (buffers.smoothingPrepared!==false)!==stage.smoothing||
-          (stage.smoothing&&(!buffers.smoothPositions||!buffers.smoothNormals||buffers.smoothPositions.length!==buffers.positions.length||buffers.smoothNormals.length!==buffers.positions.length))){this.failModelStage('inconsistent modeled surface buffers');return;}
-        retainSurface(layer.mask,this.affine,layer.kind,buffers,stage.next.shape,modeledAnatomy(stage.next)?.surfaceReference);
+          (stage.smoothing&&(!buffers.smoothPositions||!buffers.smoothNormals||(!buffers.smoothIndices&&buffers.smoothPositions.length!==buffers.positions.length)||buffers.smoothNormals.length!==buffers.smoothPositions.length))){this.failModelStage('inconsistent modeled surface buffers');return;}
+        retainSurface(layer.mask,this.affine,layer.kind,buffers,stage.next.shape,layer.cavity??modeledAnatomy(stage.next)?.surfaceReference);
         const pair=buffers.positions.length?this.makeSurface(layer,buffers,!stage.interaction?.readOnly):null;if(buffers.positions.length&&!pair){this.failModelStage('invalid modeled surface');return;}
         stage.prepared.set(layer.name,pair);this.modelWorkerStates=new Map((event.data.resident??[]).map(e=>[e.layerId,e.identity]));
         this.canvas.dispatchEvent(new CustomEvent('anatomy-surface',{bubbles:true,detail:{name:layer.name,diagnostics:buffers.diagnostics,qa:layer.qa,empty:!buffers.positions.length}}));
@@ -974,7 +975,7 @@ export class VolumeRenderer {
     };
     if(job){
       stage.waiting=job.layer;const oldLayer=this.volume.compartments.find(l=>l.name===job.layer.name),previousIdentity=oldLayer?this.modelIdentity(oldLayer.mask):'',identity=this.modelIdentity(job.layer.mask),incremental=job.indices&&this.modelWorkerStates.get(job.layer.name)===previousIdentity;
-      const request:IncrementalSurfaceRequest={jobId:stage.generation,layerId:job.layer.name,previousIdentity,identity,shape:stage.next.shape,affine:this.affine,kind:job.layer.kind,retainChunks:!stage.initialMapping,smooth:stage.smoothing,partition:this.partitionRequest(worker,modeledAnatomy(stage.next)?.surfaceReference,stage.smoothing)};
+      const request:IncrementalSurfaceRequest={jobId:stage.generation,layerId:job.layer.name,previousIdentity,identity,shape:stage.next.shape,affine:this.affine,kind:job.layer.kind,retainChunks:!stage.initialMapping,smooth:stage.smoothing,partition:this.partitionRequest(worker,modeledAnatomy(stage.next)?.surfaceReference,stage.smoothing,job.layer.cavity)};
       if(incremental){request.indices=job.indices;request.values=job.values;this.displayWork.workerInputTransferBytes+=job.indices!.byteLength+job.values!.byteLength;worker.postMessage(request,[job.indices!.buffer,job.values!.buffer]);}
       else {request.mask=materializeLayerMask(stage.next,job.layer);this.displayWork.workerInputCloneBytes+=request.mask.byteLength;worker.postMessage(request);}
     }else{
@@ -1833,7 +1834,7 @@ export class VolumeRenderer {
       this.onReplayError(`Modeled anatomy could not be displayed: ${message}. The original source anatomy has been restored.`);
     };
     worker.onerror = () => failed("surface preparation failed");
-    worker.onmessage = (event: MessageEvent<{name:string;positions?:Float32Array;normals?:Float32Array;smoothPositions?:Float32Array;smoothNormals?:Float32Array;indices?:Uint32Array;error?:string;requestGeneration?:number;diagnostics?:SurfaceDiagnostics}>) => {
+    worker.onmessage = (event: MessageEvent<{name:string;positions?:Float32Array;normals?:Float32Array;smoothPositions?:Float32Array;smoothNormals?:Float32Array;smoothIndices?:Uint32Array;indices?:Uint32Array;error?:string;requestGeneration?:number;diagnostics?:SurfaceDiagnostics}>) => {
       if (this.disposed || generation !== this.replayGeneration) return;
       if(event.data.requestGeneration!==undefined&&event.data.requestGeneration!==generation)return;
       if (event.data.error) {failed(event.data.error);return;}

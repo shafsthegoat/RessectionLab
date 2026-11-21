@@ -47,6 +47,8 @@ export interface ViewerVolume {
     kind?: string;
     sourceIdentity?: string;
     appearanceSource?:SurfaceAppearanceSource;
+    /** Display-only cut support from accepted, locally stationary source cells. */
+    cavity?:import('./cavityGeometry').AcceptedCavity;
     displayKind?: string;
     sourceSeries?:string;
     alignment?:string;
