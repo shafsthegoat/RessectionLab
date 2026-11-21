@@ -1235,6 +1235,11 @@ def dispatch(session, operation, args, request, progress):
         result['branches'] = [b for b in result['branches'] if b['id'] == study_replay['branchId']]
     if practice_child:
         result['practiceEpisode'] = copy.deepcopy(record['practiceEpisodes'][record['branchId']])
+        if engine._operative:
+            from .surgical_walkthrough_guide import KEY, next_cue
+            cue = next_cue(artifacts.get(KEY), engine, record['branchId'], identity)
+            if cue is not None:
+                result['walkthroughCue'] = cue
         if record['position'] != len(record['branches'][record['branchId']]['actions']):
             result['readOnly'] = True
     if study_replay:

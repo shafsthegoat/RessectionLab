@@ -2,6 +2,7 @@ import {useRef, useState} from 'react';
 import type {KeyboardEvent, ReactNode} from 'react';
 import type {SurgicalAction, SurgicalOutcome, SurgicalPose} from './surgical-types';
 import type {SurgicalController} from './use-surgical';
+import {WalkthroughCue} from './WalkthroughCue';
 import {CranialPracticeTask} from './CranialPracticeTask';
 import {PracticeHoldControls} from './PracticeHoldControls';
 import {amount} from './SurgicalOutcomeSummary';
@@ -61,6 +62,7 @@ export function PracticeControls({c, blocked, settings, params, duration}: {
   return <section className="practice-controls" aria-label="Instrument practice" aria-busy={c.pending}
     data-practice-episode={result.branchId} data-practice-state-id={view.stateId} data-practice-action-status={outcome?.status ?? 'ready'}
     data-practice-accepted-position={JSON.stringify(actual)} data-practice-proposed-position={JSON.stringify(draft.position)}>
+    {result.walkthroughCue&&<WalkthroughCue key={view.stateId} c={c} cue={result.walkthroughCue} blocked={blocked} origin={result}/>}
     <CranialPracticeTask result={result}/>
     <fieldset disabled={blocked} className="surgical-controls">
       <label>Instrument<select aria-label="Practice instrument" value={slot.instrument} onChange={e => send('exchange', e.target.value)}>
@@ -72,7 +74,10 @@ export function PracticeControls({c, blocked, settings, params, duration}: {
         <button className="primary-button" onClick={() => send('apply')}>Apply tool</button>
         <button onClick={() => send(slot.active ? 'deactivate' : 'activate')}>{slot.active ? 'Deactivate tool' : 'Activate tool'}</button>
         {tool?.effect === 'retract' && <button onClick={() => send('hold')}>Hold tissue</button>}
-        {tool?.effect === 'grasp' && <><button onClick={() => send('grasp')}>Grasp tissue</button><button onClick={() => send('extract')}>Extract tissue</button></>}
+        {(tool?.effect === 'grasp' || (view.operativeExposureV1 && ['dressing_forceps','raney_clip_applier'].includes(slot.instrument))) &&
+          <button onClick={() => send('grasp')}>{tool?.effect === 'grasp' ? 'Grasp tissue' : 'Retrieve material'}</button>}
+        {tool?.effect === 'grasp' && (!view.operativeExposureV1 || slot.instrument === 'tumor_forceps') &&
+          <button onClick={() => send('extract')}>Extract tissue</button>}
         <button onClick={() => send('inspect')}>Observe interval</button>
         <button onClick={() => send('release')}>Release tool</button>
         <button disabled={!withdrawal} title={withdrawal ? `Check the route to ${coordinates(withdrawal.position)} mm RAS` : 'Place the instrument outside or propose an exterior tip pose first'} onClick={() => send('withdraw')}>Withdraw tool</button>

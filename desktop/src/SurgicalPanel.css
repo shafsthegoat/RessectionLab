@@ -130,3 +130,12 @@
 .practice-hold-buttons button {min-height:36px;touch-action:none;user-select:none}
 .practice-hold-buttons button[aria-pressed=true] {border-color:#9de9d5;background:#285849}
 .practice-hold-status {color:#c6e4df;font-size:11px;font-variant-numeric:tabular-nums}
+
+.exposure-controls { display: grid; gap: 8px; padding: 10px 0; }
+.exposure-controls header { display: flex; align-items: baseline; justify-content: space-between; gap: 6px; }
+.exposure-controls header span, .exposure-layers small { color: #9fb9bc; }
+.exposure-layers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; }
+.exposure-layers button { display: grid; gap: 3px; }
+.exposure-layers small { text-transform: capitalize; }
+.walkthrough-cue { display: grid; gap: 6px; border-left: 2px solid #77a99f; padding: 2px 0 4px 10px; }
+.walkthrough-cue small { text-transform: capitalize; color: #a0bbb7; }

@@ -2,6 +2,7 @@ import {PracticeControls} from './PracticeControls';
 import {practiceStartIssue} from './practice-input';
 import {SelectedPlanResult} from './SelectedPlanResult';
 import {SurgicalMovieExport} from './SurgicalMovieExport';
+import {ExposureControls} from './ExposureControls';
 import {SurgicalWorkflow} from './SurgicalWorkflow';
 import {workflowPlannerOptions} from './surgical-workflow-data';
 import type {SurgicalWorkflowStage} from './surgical-workflow-data';
@@ -209,7 +210,7 @@ export function SurgicalPanel({c,studyRecording=false,onFixture,onImport,availab
     // when its first observed frame is visible so loading cannot fast-forward it.
     const delay=observed?playbackClock.current.delay(observed.observedTimeSeconds,playback.milliseconds,playbackSpeed,performance.now()):0;
     const timer=setTimeout(()=>{void c.runPlayback({branchId:playback.branchId,position:playback.position,frameIndex:playback.frameIndex}).then(ok=>{if(!ok)setPlaying(false);});},delay);return()=>clearTimeout(timer);},[playing,c.pending,r,steps,playbackSpeed]);
-  const keys=['radiusMm',...(cusaSelected?['power',...(v2?['duty']:[])]:[]),...(v2&&tool?.id==='cranial_drill'?['rpm','forceN','duty']:v2&&(tool?.materials.includes('vessel')||(practice&&tool?.effect==='retract'))?['forceN']:[]),...(tool?.effect==='probe'?['amplitudeMa','frequencyHz','pulseWidthUs']:[]),...(['incise','kerf','sheet_cut','transect','irrigate'].includes(tool?.effect??'')||(practice&&['suction','coagulate','retract'].includes(tool?.effect??''))?['depthMm']:[]),...(['suction','irrigate'].includes(tool?.effect??'')?['flowMm3PerSecond']:[]),...(tool?.effect==='coagulate'?['power']:[]),...(['forceps','scissors'].includes(tool?.geometry??'')?['jawOpeningMm']:[])];
+  const keys=[...(v?.operativeExposureV1?[]:['radiusMm']),...(cusaSelected?['power',...(v2?['duty']:[])]:[]),...(v2&&tool?.id==='cranial_drill'?['rpm','forceN','duty']:v2&&(tool?.materials.includes('vessel')||(practice&&tool?.effect==='retract'))?['forceN']:[]),...(tool?.effect==='probe'?['amplitudeMa','frequencyHz','pulseWidthUs']:[]),...(['incise','kerf','sheet_cut','transect','irrigate'].includes(tool?.effect??'')||(practice&&['suction','coagulate','retract'].includes(tool?.effect??''))?['depthMm']:[]),...(['suction','irrigate'].includes(tool?.effect??'')?['flowMm3PerSecond']:[]),...(tool?.effect==='coagulate'?['power']:[]),...(['forceps','scissors'].includes(tool?.geometry??'')?['jawOpeningMm']:[])];
   const params=Object.fromEntries(keys.map(k=>[k,cusaSelected&&k==='radiusMm'?1.5:c.parameters[k]??(k==='radiusMm'?tool?.radiusMm:undefined)??specs[k].default]));
   const compatible=tool?.materials.length===0||v?.scene.regions.some(row=>tool?.materials.includes(row.material));
   const changeMap=(fn:(rows:SurgicalRegion[])=>void)=>{const rows=structuredClone(mapping??v?.scene.regions??[]);fn(rows);setMapping(rows);};
@@ -251,6 +252,8 @@ export function SurgicalPanel({c,studyRecording=false,onFixture,onImport,availab
     {!practice&&!studyRecording&&!v.planarBladeManeuver&&<SurgicalWorkflow key={workflowSceneId} c={c} artifact={cusaLearning} playRecorded={playRecordedBranch} stage={workflowStage} onStage={setWorkflowStage} cursor={planningCursor} onCursor={onPlanningCursor} pause={()=>{setPlaying(false);c.pauseFullCase();c.pausePlayback();}}/>}
     <div hidden={!practice&&!studyRecording&&!v.planarBladeManeuver&&workflowStage!=='rehearse'} className="workflow-rehearsal" aria-label="Rehearse and edit branch">
     <div className="surgical-slots">{Object.entries(v.slots).map(([s,t])=><button key={s} disabled={c.pending||playing||readOnly} aria-pressed={c.slot===s} onClick={()=>c.selectSlot(s)}><strong>{s} hand</strong><span>{t.instrument==='cusa'?'CUSA':v.catalog.find(x=>x.id===t.instrument)?.name}</span><small>{t.inserted?'Inserted':'Withdrawn'}{(observed?.effectiveActivation?.[s]??t.active)?' · active':t.inserted?' · inactive':''}{observed?' · observed':''}</small>{v.holds?.[s]&&<small>{v.holds[s].cells.length?`Holding ${v.holds[s].cells.length} source cell${v.holds[s].cells.length===1?'':'s'}`:'Hold empty · no retained tissue'}</small>}</button>)}</div>
+    {displayed?.operativeExposureV1&&<ExposureControls exposure={displayed.operativeExposureV1}
+      draft={c.pending||readOnly||playing||c.preview?undefined:point=>c.setPose({...c.pose,position:[...point]})}/>}
     {practice&&<PracticeControls key={r!.branchId} c={c} blocked={position<steps||c.pending||playing||readOnly||!!c.preview||!!v.planarBladeManeuver} params={params} duration={duration} settings={poseSettings}/>}
     {practice&&v.planarBladeManeuver&&<PlanarBladeManeuverPanel c={c} disabled={playing||readOnly} pause={()=>{setPlaying(false);c.pauseFullCase();}}/>}
     {!practice&&!studyRecording&&<><details><summary>Exchange instrument</summary><input aria-label="Search instruments" placeholder="Search instruments…" value={search} onChange={e=>setSearch(e.target.value)}/>

@@ -6,7 +6,7 @@ import type {Point3, Affine, Shape3} from './viewer/coordinates';
 export type SurgicalPose = {position:Point3;quaternion:[number,number,number,number]};
 export interface PlanarBladeGeometry {sizeMm:Point3;centerLocalMm:Point3;shaft:{a:Point3;b:Point3;radiusMm:number};inContact:boolean}
 export type SurgicalSlot = SurgicalPose & {instrument:string;active:boolean;inserted:boolean;grip:number[];parameters:Record<string,number>;contactGeometry?:Array<{a:Point3;b:Point3;radiusMm:number;part:string}>;planarBladeGeometry?:PlanarBladeGeometry};
-export interface SurgicalTool {physicalProfile?:{revision:1;parts:string[]};id:string;name:string;category:string;geometry:string;materials:string[];effect:string;radiusMm:number;shaftRadiusMm:number;workingLengthMm:number;parameters?:Record<string,{min:number;max:number;default:number;unit?:string}>;approximation?:string}
+export interface SurgicalTool {physicalProfile?:{revision:1|2;parts:string[];geometryHash:string;totalLengthMm?:number};id:string;name:string;category:string;geometry:string;materials:string[];effect:string;radiusMm:number;shaftRadiusMm:number;workingLengthMm:number;parameters?:Record<string,{min:number;max:number;default:number;unit?:string}>;approximation?:string}
 export interface SurgicalRegion {id:number;name:string;material:string;target:boolean;color:string}
 export interface SurgicalAction {slot:string;operation:string;maneuverPhase?:'approach'|'indent'|'hold'|'withdraw';mechanicsRevision?:1|2;clockRevision?:1;instrument?:string;pose?:SurgicalPose;path?:SurgicalPose[];parameters?:Record<string,number>;position?:PatientPosition;duration:number}
 export interface PlanarBladeManeuver {schema:'resectionlab.planar-blade-maneuver-view.v1';declarationId:string;phase:'ready'|'approached'|'indented'|'held'|'withdrawn';activePhase:string|null;available:boolean;refusal:string|null;inContact:boolean;normalReactionN:number|null;contactAreaMm2:number|null;maxDisplacementMm:number|null;offsetMm:number|null;nextActions:Array<{label:string;action:SurgicalAction}>;details:Record<string,unknown>;contactSurface:{positionsMm:Point3[];triangles:Array<[number,number,number]>;sourceIds:number[]}|null;opticalFrame?:{targetMm:Point3;outward:Point3}}
@@ -103,6 +103,7 @@ export interface SurgicalPracticeEpisode {
     actionsHash:string;checkpointSeal:string};
 }
 export interface SurgicalResponse {
+  walkthroughCue?:import('./WalkthroughCue').PracticeCue;
   practiceAdmission?:{available:boolean;reason:string|null;checkpointSeal:string|null};
   practiceEpisode?:SurgicalPracticeEpisode;
   practiceMetrics?:{originalTargetVolumeMm3:number|null;nonTargetBrainRemovedMm3:number|null};
