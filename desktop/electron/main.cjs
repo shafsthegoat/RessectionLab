@@ -52,6 +52,7 @@ if((secondaryDisplayOnly||automationHidden)&&process.platform==='darwin')app.set
 let secondaryDisplayId;
 let secondaryDisplayUnavailable=false;
 const casePaths = new Map();
+const unsavedPracticeNames = new Map();
 const studyReplaySources = new Map();
 const {StudyReplayRecorder}=require('./study-engine-recording.cjs');
 const replayRecorder=new StudyReplayRecorder();
@@ -140,7 +141,7 @@ function bindOperations() {
     rememberReplayMode(result);
     currentCasePath=filename;if(result?.caseHash)casePaths.set(result.caseHash,filename);await caseLibrary.remember(filename);return result;
   };
-  handle('workspaceInstalled', args=>{args=plainArgs(args,['caseHash','caseId']);currentCaseHash=args.caseHash;currentCaseName=String(args.caseId||'research-case').replace(/[^a-zA-Z0-9._-]/g,'-');rehearsalUnsaved.installed();return true;});
+  handle('workspaceInstalled', args=>{args=plainArgs(args,['caseHash','caseId']);currentCaseHash=args.caseHash;currentCaseName=String(args.caseId||'research-case').replace(/[^a-zA-Z0-9._-]/g,'-');unsavedPracticeNames.clear();rehearsalUnsaved.installed();return true;});
   handle('openWorkspace',async()=>{
     const filename=pendingOpenPath||await pick('Open patient workspace',['rsworkspace','ressectionlab','rslab','json']);pendingOpenPath=null;
     return filename?openWorkspace(path.resolve(filename)):null;
@@ -359,7 +360,7 @@ function bindOperations() {
     }});
   });
   handle('surgicalRehearsal', async args => {
-    args=plainArgs(args, ['includeSequenceOutcome','requestId','caseHash','command','expectedStateId','action','mapping','position','frameIndex','cacheOnly','timelineToken','viewFieldTokens','prefixToken','prefixFieldTokens','branchId','source','sceneIndex','acknowledgeResearchUnknowns','opponent','allowModeledBrainCorridor','scenario','maxActions','initialAccessRadiusMm','exploreExteriorFaces','cumulativeReentry','planningHorizon','beamWidth','policyInput','expectedComparisonSeal','constraints','candidateId','expectedPlanSeal','phase','offsetMm','contextVoxelShift']);
+    args=plainArgs(args, ['expectedEpisodeId','checkpointSeal','includeSequenceOutcome','requestId','caseHash','command','expectedStateId','action','mapping','position','frameIndex','cacheOnly','timelineToken','viewFieldTokens','prefixToken','prefixFieldTokens','branchId','source','sceneIndex','acknowledgeResearchUnknowns','opponent','allowModeledBrainCorridor','scenario','maxActions','initialAccessRadiusMm','exploreExteriorFaces','cumulativeReentry','planningHorizon','beamWidth','policyInput','expectedComparisonSeal','constraints','candidateId','expectedPlanSeal','phase','offsetMm','contextVoxelShift']);
     if(studyReplaySources.has(args.caseHash)&&!['inspect','seek','seekFrame'].includes(args.command))throw Error('STUDY_REPLAY_ONLY: use the recorded branch replay controls');
     if(args.command==='attachProtection'){
       if(!currentCaseHash||args.caseHash!==currentCaseHash||typeof args.expectedStateId!=='string'||!args.expectedStateId||args.source)throw Error('Choose the accepted state in the current workspace before attaching protection');
@@ -368,7 +369,14 @@ function bindOperations() {
       if(currentCaseHash!==caseHash)throw Error('Workspace changed while choosing protection');
       args={...args,protectionPath};
     }
-    const result=await engine.request('surgicalRehearsal',args,surgicalTimeoutMs(args.command));rehearsalUnsaved.changed(args,result);replayRecorder.observe(result);return result;
+    const result=await engine.request('surgicalRehearsal',args,surgicalTimeoutMs(args.command));
+    if(args.command==='practice' && result?.practiceEpisode){
+      const original=casePaths.get(args.caseHash);
+      const stem=original?path.basename(original,path.extname(original)):currentCaseName;
+      const suffix=String(result.practiceEpisode.episodeId).replace(/[^a-zA-Z0-9-]/g,'').slice(-8);
+      unsavedPracticeNames.set(args.caseHash,path.join(original?path.dirname(original):'',`${stem}-practice-${suffix}.ressectionlab`));
+    }
+    rehearsalUnsaved.changed(args,result);replayRecorder.observe(result);return result;
   });
   for (const op of ['createRehearsal','inspectRehearsal','stepRehearsal','compareRehearsal']) {
     handle(op, async args => {const result=await engine.request(op, plainArgs(args, op === 'stepRehearsal'
@@ -418,11 +426,13 @@ function bindOperations() {
   handle('importStructuralEvidence', args => importStructuralEvidence(args, { pick, request: (...requestArgs) => engine.request(...requestArgs) }));
   handle('saveCase', async args => {
     plainArgs(args, ['caseHash', 'workspace']);
-    const selected = await dialog.showSaveDialog(window, { title: 'Save anatomy workspace', defaultPath: casePaths.get(args.caseHash) || currentCaseName+'.ressectionlab', filters: [{ name: 'RessectionLab case', extensions: ['ressectionlab'] }] });
+    const practiceName=unsavedPracticeNames.get(args.caseHash);
+    const selected = await dialog.showSaveDialog(window, { title: practiceName?'Save practice episode':'Save anatomy workspace', defaultPath: practiceName || casePaths.get(args.caseHash) || currentCaseName+'.ressectionlab', filters: [{ name: 'RessectionLab case', extensions: ['ressectionlab'] }] });
     if (selected.canceled || !selected.filePath) return null;
     const result = await engine.request('saveCase', { ...args, path: selected.filePath, overwrite: true });
     currentCasePath = selected.filePath;
     casePaths.set(args.caseHash,selected.filePath);
+    unsavedPracticeNames.delete(args.caseHash);
     rehearsalUnsaved.saved();
     await caseLibrary.remember(selected.filePath);
     return result;

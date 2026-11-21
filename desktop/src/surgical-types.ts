@@ -94,3 +94,20 @@ export interface SelectedPlanDecision {
   measured:{actions:number;nonTargetRemovedMm3:number;targetRemovedMm3:number;originalTargetResidualMm3:number;elapsedSeconds:number;insertedTools:number;activeTools:number};
 }
 export interface SurgicalResponse {selectedPlanDecision?:SelectedPlanDecision}
+
+export interface SurgicalPracticeEpisode {
+  schema:'resectionlab.surgical-practice.v1';
+  episodeId:string;
+  parent:{branchId:string;position:number;stateId:string;caseHash:string;sceneId:string;
+    modelHash:string;targetBinding:{regionId:number;name:string;annotationHash:string};instrumentCatalogHash:string;
+    actionsHash:string;checkpointSeal:string};
+}
+export interface SurgicalResponse {
+  practiceAdmission?:{available:boolean;reason:string|null;checkpointSeal:string|null};
+  practiceEpisode?:SurgicalPracticeEpisode;
+  practiceMetrics?:{originalTargetVolumeMm3:number|null;nonTargetBrainRemovedMm3:number|null};
+}
+export interface SurgicalRequest {checkpointSeal?:string;expectedEpisodeId?:string}
+export interface SurgicalInteraction {
+  practiceHud?:{episodeId:string;originalTargetVolumeMm3?:number|null;nonTargetBrainRemovedMm3?:number|null};
+}

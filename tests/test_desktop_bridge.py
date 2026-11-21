@@ -107,6 +107,32 @@ def test_stale_saved_workspace_is_withheld(bridge, tmp_path):
     assert value["artifacts"]["withheldWorkspaceReason"] == "saved_workspace_case_version_mismatch"
 
 
+def test_new_practice_save_preserves_a_file_created_while_staging(bridge, tmp_path, monkeypatch):
+    from resectionlab import workspace_bundle
+
+    episode_id = "practice-24087e0d-f6db-4a1a-89c6-e573edf345cf"
+    source = tmp_path / "practice.ressectionlab"
+    case = create_synthetic_case((24, 24, 24))
+    save_case(case, source, artifacts={"surgical_toolbox": {
+        "branchId": episode_id, "practiceEpisodes": {episode_id: {"episodeId": episode_id}},
+    }})
+    opened = request(bridge, "open", "loadCase", {"path": str(source)})["result"]
+    save_workspace = workspace_bundle.save_workspace
+    destination = tmp_path / "shared.ressectionlab"
+
+    def save_during_competing_write(*args, **kwargs):
+        result = save_workspace(*args, **kwargs)
+        destination.write_bytes(b"concurrent workspace")
+        return result
+
+    monkeypatch.setattr(workspace_bundle, "save_workspace", save_during_competing_write)
+    result = request(bridge, "save", "saveCase", {
+        "caseHash": opened["caseHash"], "path": str(destination), "overwrite": True,
+    })
+    assert result["error"]["code"] == "PRACTICE_SAVE_AS"
+    assert destination.read_bytes() == b"concurrent workspace"
+
+
 def test_cancel_and_ping_are_immediate_while_worker_busy(bridge, monkeypatch):
     runtime, events = bridge
     entered = threading.Event()

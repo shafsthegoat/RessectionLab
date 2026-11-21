@@ -20,7 +20,7 @@ from .surgical_tools import TOOLS
 PROPERTY = 'reviewedTaskDomainV1'
 FIELDS = {'mode', 'shape', 'minimumVoxelBoundary', 'maximumVoxelBoundary',
           'reviewEvidenceSha256', 'maskSha256'}
-BRIDGE_COMMANDS = frozenset({'create', 'inspect', 'inspectArchive', 'preview', 'step',
+BRIDGE_COMMANDS = frozenset({'create', 'practice', 'inspect', 'inspectArchive', 'preview', 'step',
     'undo', 'redo', 'seek', 'selectBranch', 'branch', 'reset', 'seekFrame',
     'seekPrefix', 'seekPrefixFrame', 'selectScene'})
 POSE_OPERATIONS = frozenset({'place', 'move', 'apply', 'withdraw', 'hold', 'grasp', 'bladeManeuver'})

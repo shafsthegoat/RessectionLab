@@ -11,6 +11,7 @@ import numpy as np
 from .core import CaseData, SourceRef, freeze_json, thaw_json, semantic_digest
 from .surgical_scene import from_case, engineering_scene
 from .surgical_engine import SurgicalEngine
+from . import surgical_practice as practice
 from .surgical_replay_cache import SurgicalReplayCache
 
 OPERATIONS = frozenset({'surgicalRehearsal', 'createSurgicalFixture', 'importSurgicalScene', 'prepareSurgicalEnvironment', 'compareSurgicalAnatomy', 'compareBoundSurgicalReplays', 'openBoundSurgicalReplay'})
@@ -192,7 +193,8 @@ def dispatch(session, operation, args, request, progress):
         _require_json_budget(args, 256 * 1024, 'SURGICAL_REQUEST_LIMIT', 'Comparison request exceeds budget')
         from .surgical_anatomy_comparison import compare_anatomy
         before, after = (session._get_case(args[key]) for key in ('beforeCaseHash', 'afterCaseHash'))
-        if any('nativeStudyReplay' in entry.artifacts for entry in (before, after)):
+        if any('nativeStudyReplay' in item.artifacts or 'practiceEpisodes' in item.artifacts.get(ARTIFACT, {})
+               for item in (before, after)):
             raise ValueError('STUDY_REPLAY_ONLY: a recording cannot start a new branch comparison')
         result = compare_anatomy(before, after,
             changed_layers=args.get('changedLayers', ['vessels']), prefix=args.get('prefix', []),
@@ -296,6 +298,10 @@ def dispatch(session, operation, args, request, progress):
     if args.get('command') == 'plan' and args.get('opponent') in (
             'anatomy-staged-strategy', 'anatomy-cranial-strategy'):
         argument_keys.update({'planningHorizon', 'beamWidth'})
+    if args.get('command') in {'step', 'preview'}:
+        argument_keys.add('expectedEpisodeId')
+    if args.get('command') == 'practice':
+        argument_keys = {'caseHash', 'command', 'expectedStateId', 'branchId', 'position', 'checkpointSeal'}
     if args.get('command') == 'inspect':
         argument_keys.add('includeSequenceOutcome')
     if args.get('command') == 'seekPrefixFrame':
@@ -387,9 +393,12 @@ def dispatch(session, operation, args, request, progress):
         # already admitted. It returns before persistence. Borrow this object
         # rather than thawing every saved branch/path/checkpoint on each frame.
         # Replacement archives and all editable commands retain full admission.
-        artifacts = entry.artifacts if hot_frame or args.get('command') in PREFIX_COMMANDS else thaw_json(entry.artifacts)
+        hot_practice = (prior_admission and len(prior_admission) > 3 and prior_admission[3] is entry.artifacts
+                        and 'practiceEpisodes' in entry.artifacts.get(ARTIFACT, {})
+                        and not (args.get('command') == 'inspect' and args.get('branchId') is not None))
+        artifacts = entry.artifacts if hot_frame or hot_practice or args.get('command') in PREFIX_COMMANDS else thaw_json(entry.artifacts)
     command = args.get('command', 'inspect')
-    if command not in {'create', 'inspect', 'inspectArchive', 'preview', 'step', 'recoverExit', 'undo', 'redo', 'seek', 'branch', 'selectBranch', 'reset', 'selectScene', 'plan', 'fullCase', 'attachProtection', 'reevaluateConsequences', 'generateApproaches', 'previewApproach', 'applyApproach', 'generateStrategies', 'previewStrategy', 'applyStrategy', 'analyzeStrategySensitivity',
+    if command not in {'practice', 'create', 'inspect', 'inspectArchive', 'preview', 'step', 'recoverExit', 'undo', 'redo', 'seek', 'branch', 'selectBranch', 'reset', 'selectScene', 'plan', 'fullCase', 'attachProtection', 'reevaluateConsequences', 'generateApproaches', 'previewApproach', 'applyApproach', 'generateStrategies', 'previewStrategy', 'applyStrategy', 'analyzeStrategySensitivity',
                        'suggestPreparation','generatePreparations','previewPreparation','applyPreparation','seekFrame', *PREFIX_COMMANDS}:
         raise ValueError('Unsupported surgical command')
     study_replay = artifacts.get('nativeStudyReplay')
@@ -402,6 +411,24 @@ def dispatch(session, operation, args, request, progress):
                 or artifacts.get(ARTIFACT, {}).get('branchId') != study_replay['branchId']):
             raise ValueError('STUDY_REPLAY_ONLY: the source-bound recording permits replay of its recorded branch only')
     raw = artifacts.get(ARTIFACT)
+    source_role = (entry.case.metadata.get('data_case') or {}) if entry is not None else {}
+    practice_role_allowed = isinstance(source_role, (dict, MappingProxyType)) and not any(
+        source_role.get(k) for k in ('role', 'split', 'family_id'))
+    if command == 'practice' and not practice_role_allowed:
+        raise ValueError('Reserved or attributed cohort sources have no manual practice authorization.')
+    if command == 'practice' and (entry is None or not raw):
+        raise ValueError('Open a verified case checkpoint to start a separate practice episode.')
+    practice_child = raw is not None and ('practiceEpisodes' in raw or str(raw.get('branchId', '')).startswith('practice-'))
+    if (command in {'step', 'preview'} and (practice_child or 'expectedEpisodeId' in args)
+            and (not practice_child or args.get('expectedEpisodeId') != raw['branchId'])):
+        raise ValueError('The displayed practice episode changed. Refresh before applying another action.')
+    if practice_child:
+        if not practice_role_allowed or 'practiceEpisodes' not in raw or command not in practice.MANUAL_COMMANDS:
+            raise ValueError('Practice episodes permit manual actions at the accepted endpoint and read-only replay.')
+        if args.get('branchId', raw['branchId']) != raw['branchId']:
+            raise ValueError('This practice workspace contains only its own episode.')
+        if command in {'step', 'preview'} and raw['position'] != len(raw['branches'][raw['branchId']]['actions']):
+            raise ValueError('Return to the practice episode endpoint before applying another instrument action.')
     from .surgical_environment import (
         standardize, default_target_names, resolve_branch_scene, SCHEMA as ENVIRONMENT_SCHEMA)
     original_builder = scene_builder
@@ -569,7 +596,15 @@ def dispatch(session, operation, args, request, progress):
         # Microstep reads return before persistence and never mutate record or
         # the editable engine. Avoid copying the entire long archive twice.
         engine = cached[1]
-        record = cached[2] if command == 'seekFrame' else copy.deepcopy(cached[2])
+        if command == 'seekFrame':
+            record = cached[2]
+        elif practice_child:
+            # Child edits replace exactly one snapshot and timeline. These
+            # detached dictionaries preserve the last committed frame on error.
+            prior = cached[2]
+            record = {**prior, 'branches': dict(prior['branches']), 'timeline': dict(prior['timeline'])}
+        else:
+            record = copy.deepcopy(cached[2])
         base_scene = cached[4] if len(cached) > 4 else (
             scene_builder(record['mapping']) if record.get('cranialPlanningRoots') is not None else engine.scene)
     else:
@@ -580,6 +615,8 @@ def dispatch(session, operation, args, request, progress):
         full = SurgicalEngine.restore(scene, record['branches'][record['branchId']], check=request.check,
             use_cache=bool(record.get('fullCase')), verified_cache=replay_cache.verified_cache
             if getattr(session, 'surgical_cache_root', None) is not None else None)
+        if practice_child:
+            practice.verify_episode(full, record, identity)
         if record.get('sequentialEpisodes') is not None:
             from .surgical_recorded_sequential import validate_episode_record
             validate_episode_record(scene, record, identity, check=request.check)
@@ -605,6 +642,12 @@ def dispatch(session, operation, args, request, progress):
             bind_branch_root(base_scene, record, branch_id, root_id)
 
     cranial_computation = None
+    from .surgical_task_domain import reviewed_domain, action_rejection, BRIDGE_COMMANDS
+    task_domain = reviewed_domain(engine.scene)
+    cranial_request = command == 'plan' and args.get('opponent') == 'anatomy-cranial-strategy'
+    if task_domain is not None and command not in BRIDGE_COMMANDS and not cranial_request:
+        raise BridgeError('REVIEWED_TASK_DOMAIN_COMMAND_UNSUPPORTED',
+            'This reviewed task box admits manual checked actions and read-only replay; autonomous preparation/planning is not admitted.')
     from .surgical_planning_admission import require_planning_admission, planning_admission
     if command in {'plan','fullCase','recoverExit','generateApproaches','previewApproach','applyApproach',
             'generateStrategies','previewStrategy','applyStrategy','analyzeStrategySensitivity',
@@ -631,12 +674,6 @@ def dispatch(session, operation, args, request, progress):
     if 'planarBladeManeuverV1' in engine.scene.properties and command in ('plan', 'fullCase', 'recoverExit', 'attachProtection', 'generateApproaches', 'previewApproach', 'applyApproach', 'generateStrategies', 'previewStrategy', 'applyStrategy', 'analyzeStrategySensitivity',
         'suggestPreparation','generatePreparations','previewPreparation','applyPreparation'):
         raise ValueError('PLANAR_MANEUVER_ONLY: this opt-in scene admits only the declared blade actions and supported replay')
-    from .surgical_task_domain import reviewed_domain, action_rejection, BRIDGE_COMMANDS
-    task_domain = reviewed_domain(engine.scene)
-    cranial_request = command == 'plan' and args.get('opponent') == 'anatomy-cranial-strategy'
-    if task_domain is not None and command not in BRIDGE_COMMANDS and not cranial_request:
-        raise BridgeError('REVIEWED_TASK_DOMAIN_COMMAND_UNSUPPORTED',
-            'This reviewed task box admits manual checked actions and read-only replay; autonomous preparation/planning is not admitted.')
     outcome = None
     verified_display_state_id = None
     unchanged_tool = False
@@ -707,12 +744,19 @@ def dispatch(session, operation, args, request, progress):
             'playback': playback, 'branchId': branch_id, 'position': record['position'],
             **({} if compact else {'fullCase': copy.deepcopy(record.get('fullCase', {}).get(branch_id))}),
             'branches': [{'id': k, 'steps': len(v['actions']), 'parent': record.get('parents', {}).get(k)} for k,v in record['branches'].items()]}
+        if practice_child:
+            result['practiceEpisode'] = copy.deepcopy(record['practiceEpisodes'][branch_id])
+            result['practiceMetrics'] = practice.metrics(displayed, entry.case)
+            result['readOnly'] = True
         if study_replay:
             result['branches'] = [row for row in result['branches'] if row['id'] == branch_id]
             result['readOnly'] = True
         _require_json_budget(result, RESULT_BYTES, 'SURGICAL_RESULT_LIMIT', 'Playback frame exceeds the display budget')
         return result
-    if command in ('suggestPreparation','generatePreparations'):
+    if command == 'practice':
+        record = practice.start(engine, record, identity, args, base_scene)
+        practice_child = True
+    elif command in ('suggestPreparation','generatePreparations'):
         if args.get('acknowledgeResearchUnknowns') is not True:
             raise ValueError('Acknowledge the intracerebral preparation costs, assumed mechanics and missing anatomy')
         from . import surgical_preparation_planning as prep_planning
@@ -1122,7 +1166,7 @@ def dispatch(session, operation, args, request, progress):
             planned_ids.update(strategy_branches(record))
             from .surgical_preparation_workspace import protected_branches as preparation_branches
             planned_ids.update(preparation_branches(record))
-            if record['position'] != len(full['actions']) or record['branchId'] in planned_ids:
+            if not practice_child and (record['position'] != len(full['actions']) or record['branchId'] in planned_ids):
                 parent = {'branchId': record['branchId'], 'position': record['position']}
                 record['branchId'] = 'branch-' + str(len(record['branches']))
                 record.setdefault('parents', {})[record['branchId']] = parent
@@ -1189,6 +1233,20 @@ def dispatch(session, operation, args, request, progress):
     if study_replay:
         result['readOnly'] = True
         result['branches'] = [b for b in result['branches'] if b['id'] == study_replay['branchId']]
+    if practice_child:
+        result['practiceEpisode'] = copy.deepcopy(record['practiceEpisodes'][record['branchId']])
+        if record['position'] != len(record['branches'][record['branchId']]['actions']):
+            result['readOnly'] = True
+    if study_replay:
+        result['practiceAdmission'] = practice.refusal('This source-bound imported recording permits replay only.')
+    elif not practice_role_allowed:
+        result['practiceAdmission'] = practice.refusal('Reserved or attributed cohort sources have no manual practice authorization.')
+    elif entry is None:
+        result['practiceAdmission'] = practice.refusal('Open a verified case checkpoint to start practice.')
+    else:
+        result['practiceAdmission'] = practice.admission(engine, record, identity)
+        if result['practiceAdmission']['available'] or practice_child:
+            result['practiceMetrics'] = practice.metrics(engine, entry.case)
     if args.get('includeSequenceOutcome') is True:
         from .surgical_sequence_outcomes import sequence_outcome
         result['sequenceOutcome'] = sequence_outcome(engine)
@@ -1202,6 +1260,25 @@ def dispatch(session, operation, args, request, progress):
         if original['position'] != record['position']:
             entry.artifacts = MappingProxyType({**entry.artifacts,
                 ARTIFACT: MappingProxyType({**original, 'position': record['position']})})
+        cache[identity] = (None, engine, record, entry.artifacts, base_scene)
+        session.surgical_sessions = dict(list(cache.items())[-4:])
+        return result
+    if practice_child:
+        # Child navigation and instrument responses need no planner evaluation.
+        # The timeline is derived by cold replay of the authenticated action log.
+        _require_json_budget(result, RESULT_BYTES, 'SURGICAL_RESULT_LIMIT', 'Practice response exceeds the display budget')
+        request.begin_commit()
+        if result['changed'] or not admitted_bundle:
+            compact = {k: v for k, v in record.items() if k != 'timeline'}
+            preserved = dict(entry.artifacts)
+            if command == 'practice':
+                # A saved parent can be reopened from its original file. Keep
+                # unsaved siblings and editor changes as a complete prior scene.
+                prior_scenes = preserved.pop('surgical_prior_scenes', ())
+                if entry.surgical_environment_dirty:
+                    preserved['surgical_prior_scenes'] = (*prior_scenes, entry.artifacts[ARTIFACT])
+                entry.surgical_environment_dirty = True
+            entry.artifacts = MappingProxyType({**preserved, ARTIFACT: freeze_json(compact)})
         cache[identity] = (None, engine, record, entry.artifacts, base_scene)
         session.surgical_sessions = dict(list(cache.items())[-4:])
         return result
@@ -1335,6 +1412,8 @@ def dispatch(session, operation, args, request, progress):
             Path(name).unlink(missing_ok=True)
     else:
         entry.artifacts = freeze_json(artifacts)
+        if result['changed'] and command not in cursor_commands:
+            entry.surgical_environment_dirty = True
     cache[identity] = (semantic_digest(persisted_record) if destination else None, engine, record,
                        entry.artifacts if entry is not None else None, base_scene)
     session.surgical_sessions = dict(list(cache.items())[-4:])

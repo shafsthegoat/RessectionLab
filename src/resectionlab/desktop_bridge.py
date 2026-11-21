@@ -309,6 +309,22 @@ def _directory(value: Any) -> Path:
     return path.resolve()
 
 
+def _practice_save_identity(destination: Path, episodes: Mapping):
+    """An existing practice save may be replaced only by its own episode."""
+    try:
+        status = destination.stat()
+    except FileNotFoundError:
+        return None
+    try:
+        saved = read_case_artifacts(destination).get("surgical_toolbox", {})
+        same_episode = saved.get("practiceEpisodes") == thaw_json(episodes)
+    except (OSError, ValueError, AttributeError):
+        same_episode = False
+    if not same_episode:
+        raise BridgeError("PRACTICE_SAVE_AS", "Choose a new filename for this practice episode. The selected file belongs to another workspace.")
+    return status
+
+
 class BinaryTransfers:
     """Only generated numeric snapshots live here; source paths are never exposed."""
 
@@ -378,6 +394,7 @@ class _CaseEntry:
     # The public-goal episode is intentionally transient until v2 workspace
     # replay admission exists. Save refuses this current case explicitly.
     public_surface_contact_active: bool = False
+    surgical_environment_dirty: bool = False
 
 
 @dataclass
@@ -542,13 +559,13 @@ class BridgeSession:
                     episode=None,episode_selection=None,workspace_hash=None,
                     diagnostic_transfer_paths=(),
                     comparison_pair=None,comparison_actor_episode_id=None,
-                    public_surface_contact_active=True)
+                    public_surface_contact_active=True, surgical_environment_dirty=False)
                 extra={}
             else:
                 entry=replace(self.cases[case.semantic_hash],artifacts=freeze_json(artifacts),
                     diagnostic_transfer_paths=(),
                     comparison_pair=None,comparison_actor_episode_id=None,
-                    public_surface_contact_active=False,**restored)
+                    public_surface_contact_active=False, surgical_environment_dirty=False, **restored)
                 extra=self._workspace_payload(entry)
             request.begin_commit()
             self.cases[case.semantic_hash]=entry
@@ -638,7 +655,16 @@ class BridgeSession:
     @staticmethod
     def _display_artifacts(entry: _CaseEntry) -> dict:
         toolbox = entry.artifacts.get('surgical_toolbox')
-        if isinstance(toolbox, Mapping) and toolbox.get('fullCase'):
+        if isinstance(toolbox, Mapping) and 'practiceEpisodes' in toolbox:
+            # A navigation hint only. The first inspect restores the complete
+            # native history and verifies the parent before displaying a child.
+            result = {key: thaw_json(value) for key, value in entry.artifacts.items()
+                      if key not in ('surgical_toolbox', 'surgical_prior_scenes')}
+            branch = toolbox.get('branchId')
+            result['surgical_toolbox'] = {'schema': 'resectionlab.surgical-toolbox-display.v1',
+                'requiresReplayVerification': True, 'practiceEpisodeId': branch,
+                'branchId': branch, 'position': toolbox.get('position')}
+        elif isinstance(toolbox, Mapping) and toolbox.get('fullCase'):
             # The renderer only needs navigation metadata before admission.
             # Keep full actions/checkpoints privately for verified replay and
             # native round-trip, rather than copying them through JSONL twice.
@@ -1133,7 +1159,8 @@ class BridgeSession:
         if operation in {'generateRoutes','generateNativeRoutes','inspectRefinement','inspectAxisPlanning',
                          'trainPatient','nativeTraining','evaluateCandidate','replayTraining','exportCandidate'}:
             entry = self.cases.get(args.get('caseHash'))
-            if entry is not None and 'nativeStudyReplay' in entry.artifacts:
+            if entry is not None and ('nativeStudyReplay' in entry.artifacts or
+                    'practiceEpisodes' in (entry.artifacts.get('surgical_toolbox') or {})):
                 raise BridgeError('STUDY_REPLAY_ONLY', 'Use the recorded branch for this study. New planning requires a qualified source.')
             if entry is not None and entry.case.metadata.get('anatomy_workbench_only'):
                 raise BridgeError('ANATOMY_ONLY_CASE', 'This case is an anatomical inspection workspace. Its layers are not surgical targets or validated simulation anatomy.')
@@ -1663,15 +1690,18 @@ class BridgeSession:
         if operation == "saveCase":
             _keys(args, {"caseHash", "path", "workspace", "overwrite", "forFrozenExecution"})
             entry = self._get_case(args.get("caseHash"))
+            toolbox = entry.artifacts.get("surgical_toolbox", {})
+            practice = toolbox.get("practiceEpisodes") if isinstance(toolbox, Mapping) else None
             if args.get("forFrozenExecution") and ('nativeStudyReplay' in entry.artifacts or
-                    'cranialPlanningCandidateV1' in entry.case.metadata.get('surgical_properties', {})):
-                raise BridgeError('STUDY_REPLAY_ONLY', 'A recording or inspection workspace cannot start a frozen policy.')
+                    'cranialPlanningCandidateV1' in entry.case.metadata.get('surgical_properties', {}) or practice):
+                raise BridgeError('STUDY_REPLAY_ONLY', 'Recordings, inspection workspaces and manual practice episodes cannot start a frozen policy.')
             if entry.public_surface_contact_active:
                 raise BridgeError("CONTACT_EPISODE_TRANSIENT",
                                   "The current public contact episode cannot yet be saved as a workspace")
             destination = _path(args.get("path"), kind="case", output=True)
             if destination.exists() and args.get("overwrite") is not True:
                 raise BridgeError("DESTINATION_EXISTS", "Save destination already exists; the native dialog must confirm replacement")
+            existing_save = _practice_save_identity(destination, practice) if practice else None
             workspace = args.get("workspace", {})
             if not isinstance(workspace, dict) or len(json.dumps(workspace, allow_nan=False).encode()) > MAX_WORKSPACE_BYTES:
                 raise BridgeError("INVALID_ARGUMENT", "Workspace must be a bounded JSON object")
@@ -1702,9 +1732,28 @@ class BridgeSession:
                     imaging=imaging,episode=entry.episode,selection=selection,artifacts=artifacts,
                     originals=entry.originals)
                 request.begin_commit()
-                os.replace(staged,destination)
+                if practice and existing_save is None:
+                    # Reserve a new name after staging. A concurrent save cannot
+                    # turn a new child filename into an overwrite of its parent.
+                    try:
+                        with destination.open("xb"):
+                            pass
+                    except FileExistsError as error:
+                        raise BridgeError("PRACTICE_SAVE_AS", "The filename was taken while saving. Choose another filename.") from error
+                    try:
+                        os.replace(staged, destination)
+                    except OSError:
+                        destination.unlink(missing_ok=True)
+                        raise
+                else:
+                    if existing_save is not None:
+                        now = destination.stat()
+                        if not os.path.samestat(now, existing_save) or now.st_mtime_ns != existing_save.st_mtime_ns:
+                            raise BridgeError("PRACTICE_SAVE_AS", "The selected workspace changed while saving. Choose another filename.")
+                    os.replace(staged, destination)
             entry.artifacts=freeze_json(artifacts);entry.imaging_state=imaging
             entry.episode_selection=selection;entry.workspace_hash=workspace_hash
+            entry.surgical_environment_dirty = False
             return {"caseHash":entry.case.semantic_hash,"path":str(destination),"saved":True,"sessionHash":workspace_hash}
         if operation in {"nativeTraining", "trainPatient"}:
             return self._train_patient(args, request, progress)

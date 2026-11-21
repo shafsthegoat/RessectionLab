@@ -266,8 +266,8 @@ class SurgicalRLEnv(gym.Env):
         from .surgical_rl_protection import load_protection, restore_protection_contract
         from .imaging import read_case_artifacts
         artifacts = read_case_artifacts(path)
-        if 'nativeStudyReplay' in artifacts:
-            raise ValueError('STUDY_REPLAY_ONLY: a recorded branch cannot be reset into a fresh training environment')
+        if 'nativeStudyReplay' in artifacts or 'practiceEpisodes' in (artifacts.get('surgical_toolbox') or {}):
+            raise ValueError('STUDY_REPLAY_ONLY: a recorded or manual branch cannot be reset into a fresh training environment')
         scene = load_environment(path)
         record = artifacts.get('surgical_toolbox') or {}
         snapshot = record.get('branches', {}).get(record.get('branchId'), {})
