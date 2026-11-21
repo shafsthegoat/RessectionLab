@@ -71,7 +71,9 @@ async function holdSteps({label,count,click,byName,point,send,wait,read,observe,
   const firstInput = Date.now();
   observe((action,outcome,witness,received,ipcMs) => {
     const result = {requested:action,status:outcome.status,reason:outcome.reason,reasonCode:outcome.reasonCode,
-      completedFraction:outcome.completedFraction,eventKinds:[...new Set(outcome.events.map(e=>e.kind))],witness,
+      completedFraction:outcome.completedFraction,eventKinds:[...new Set(outcome.events.map(e=>e.kind))],
+      cusaAllocatedMm3:outcome.events.reduce((total,e)=>total+Number(e.allocatedCapacityMm3??0),0),
+      cusaRemovedCells:outcome.events.flatMap(e=>e.kind==='cusa_contact'&&Array.isArray(e.removedCells)?e.removedCells:[]),witness,
       backendResponseEpochMs:received,ipcMs};
     checkAction(before,witness,result,action);
     const row = {label,before:before.stateId,inputEpochMs:firstInput,result,heldInput:true};
