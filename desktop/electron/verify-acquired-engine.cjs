@@ -58,7 +58,18 @@ async function captureBoundStudy({episode, report, document, win, js, until, cli
   assert.equal(report.binding.endpointStateId, history.at(-1).stateAfter);
   report.episode = {path:episode, sha256:originalDigest, firstEffectPosition:first, stages:{}};
   const pane = "document.querySelector('[data-engine-replay-layout] [data-accepted-tools]')";
-  if (await js("!!document.querySelector('.engine-result-orbit')")) await click('Return to operative field');
+  await until(pane+'.dataset.surgicalStateId==='+JSON.stringify(history.at(-1).stateAfter)+
+    ` && document.querySelector('[aria-label="Surgical timeline"]')?.disabled===false`);
+  const {imagingState}=JSON.parse(execFileSync('unzip',['-p',episode,'workspace.json']));
+  const storedMode=imagingState?.states?.[imagingState.selectedSeriesId??'primary']?.viewer?.resultInspection;
+  if(storedMode)await until("document.querySelector('.rl-viewer[data-result-inspection]')?.dataset.resultInspection==="+JSON.stringify(storedMode));
+  const restored=await js("!!document.querySelector('.engine-result-orbit')");
+  report.episode.initialInspection={position:history.length,stateId:history.at(-1).stateAfter,
+    viewport:win.getContentSize(),storedMode:storedMode??null,dismissed:restored};
+  if(restored){
+    await click('Return to operative field');
+    await until("!document.querySelector('.engine-result-orbit,.rl-viewer[data-result-inspection]')");
+  }
   if (await js(pane+".dataset.operativeView") !== 'surgeon') await click('Surgeon / Microscope');
   for (const [width,height] of [[1440,900], [1050,720]]) {
     win.setContentSize(width,height);
@@ -76,6 +87,7 @@ async function captureBoundStudy({episode, report, document, win, js, until, cli
       await capture(name);
       const drawn = await js(`(()=>{const p=${pane}, v=p.closest('.rl-viewer'), ref=document.querySelector('.engine-intact-reference');
         return {state:p.dataset.surgicalStateId, removed:Number(p.dataset.removedCells), tools:JSON.parse(p.dataset.acceptedTools),
+          resultOverlay:!!document.querySelector('.engine-result-orbit,.rl-viewer[data-result-inspection]'),
           camera:JSON.parse(p.dataset.opticalCamera), viewport:p.getBoundingClientRect().toJSON(),
           sourceSnapshot:ref?.dataset.studySnapshot, nativeSeries:ref?.querySelector('.rl-viewer')?.dataset.sourceDisplayIdentity,
           operatedSource:v.dataset.sourceDisplayIdentity, appearance:p.dataset.operativeAppearance,
@@ -85,6 +97,7 @@ async function captureBoundStudy({episode, report, document, win, js, until, cli
       })()`);
       const response = report.boundaryResponses[id];
       assert(response);
+      assert.equal(drawn.resultOverlay,false,'Inspection returned after settling the capture');
       assert.equal(drawn.sourceSnapshot, document.snapshot_id);
       assert.equal(drawn.removed, response.removed);
       assert.deepEqual(drawn.tools, response.tools);
