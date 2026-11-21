@@ -8,16 +8,21 @@ const os = require('node:os');
 const path = require('node:path');
 const {createHash} = require('node:crypto');
 const {execFileSync} = require('node:child_process');
-const {app, dialog, ipcMain} = require('electron');
+const {app, BrowserWindow, dialog, ipcMain} = require('electron');
 const responseCheck = require('./response-practice-evidence.cjs');
 const {inputScript} = require('./verify-eden-planning-helpers.cjs');
 const {delay, summary, stateWitness, checkAction, startRecording} = require('./manual-practice-evidence.cjs');
+const {alignRendererClock, findCompletion, installPerformanceEvidence, observeSidecar, sampleGesture, viewerFramebuffer} = require('./practice-performance-evidence.cjs');
 
 const launch = performance.now();
 const wall = () => performance.timeOrigin + performance.now();
 const root = path.resolve(__dirname, '../..');
 const source = fs.realpathSync(process.argv[2]);
 const output = path.resolve(process.argv[3]);
+const matched = process.argv.includes('--matched-performance');
+const main = path.resolve(process.env.REHEARSAL_PERF_MAIN ?? path.join(__dirname, 'main.cjs'));
+const buildRoot = path.resolve(path.dirname(main), '../..');
+const sidecar = matched ? observeSidecar(main) : null;
 const complete = process.argv.includes('--complete-cranial') ? require('./complete-cranial-practice.cjs') : null;
 const pairedIndex = process.argv.indexOf('--paired-actions');
 assert(!complete || pairedIndex === -1, 'Choose one source task');
@@ -28,6 +33,8 @@ const gestureOnly = process.argv.includes('--continuous-benchmark');
 assert(!enclosed || paired, 'Provide enclosed control actions');
 const cold = process.argv.includes('--cold') || process.argv.includes('--cold-benchmark');
 const benchmark = process.argv.includes('--benchmark') || process.argv.includes('--cold-benchmark');
+const localRecordingSpool = process.argv.includes('--local-recording-spool');
+assert(!localRecordingSpool||!benchmark,'A recording spool requires the recording pass');
 const sample = process.argv.find(arg=>arg.startsWith('--cold-sample='))?.split('=')[1];
 assert(sample===undefined || (cold&&benchmark&&/^\d{1,2}$/.test(sample)), 'Use a numeric --cold-sample only for repeated cold benchmarks');
 const take = (benchmark ? 'benchmark' : 'interaction') + (cold ? '-cold' : '') + (sample ? '-'+sample : '');
@@ -39,26 +46,60 @@ assert(path.resolve(output).startsWith(path.join(root, 'testcases', 'outputs') +
 assert(!fs.existsSync(paper) && (cold || !fs.existsSync(saved)), 'Choose a fresh output');
 fs.mkdirSync(output, {recursive: true});
 const scratch = fs.mkdtempSync(path.join(os.tmpdir(), 'rslab-manual-'));
-const captureScratch = benchmark ? null : fs.mkdtempSync(path.join(output, '.compositor-'));
+const captureScratch = benchmark ? null : fs.mkdtempSync(path.join(localRecordingSpool?scratch:output, '.compositor-'));
 const report = {pid: process.pid, windowMode:'hidden', windowShown:false, mode: take, source, originalSha256: hashFile(original), inputFile: original,
-  gitHead:execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),
-  sourceFiles:Object.fromEntries(['desktop/electron/main.cjs','desktop/electron/verify-manual-practice.cjs','desktop/electron/manual-practice-evidence.cjs','desktop/electron/response-practice-evidence.cjs','desktop/electron/complete-cranial-practice.cjs',
+  gitHead:process.env.REHEARSAL_PERF_BUILD_REVISION ?? execFileSync('git',['rev-parse','HEAD'],{cwd:buildRoot,encoding:'utf8'}).trim(),
+  sourceFiles:Object.fromEntries(['desktop/electron/main.cjs',
     'src/resectionlab/desktop_bridge.py','src/resectionlab/surgical_bridge.py','src/resectionlab/surgical_practice.py','src/resectionlab/surgical_engine.py',
-    'src/resectionlab/surgical_deformation_v2.py','src/resectionlab/surgical_effects.py','src/resectionlab/surgical_bipolar_thermal.py','src/resectionlab/surgical_vascular_graph.py'].map(name=>[name,hashFile(path.join(root,name))])),
-  rendererAssets: {}, machine: {model: os.cpus()[0].model, totalGiB: os.totalmem()/2**30, os: os.release()},
+    'src/resectionlab/surgical_deformation_v2.py','src/resectionlab/surgical_effects.py','src/resectionlab/surgical_bipolar_thermal.py','src/resectionlab/surgical_vascular_graph.py'].map(name=>[name,hashFile(path.join(buildRoot,name))])),
+  rendererAssets: {}, machine: {model: os.cpus()[0].model, totalGiB: os.totalmem()/2**30, os: os.release(), arch:process.arch},
   actions: [], memory: [], timing: {}, captures: []};
-if(complete) report.sourceFiles['desktop/electron/complete-cranial-practice.cjs']=hashFile(require.resolve('./complete-cranial-practice.cjs'));
-for (const name of fs.readdirSync(path.join(root, 'desktop/dist/assets')).filter(n => /^index-.*\.(js|css)$/.test(n)))
-  report.rendererAssets[name] = hashFile(path.join(root, 'desktop/dist/assets', name));
+if(localRecordingSpool){
+  const device=execFileSync('df',['-P',captureScratch],{encoding:'utf8'}).trim().split('\n').at(-1).trim().split(/\s+/)[0];
+  const metadata=execFileSync('diskutil',['info','-plist',device]);
+  const fileSystem=execFileSync('plutil',['-extract','FilesystemType','raw','-o','-','-'],
+    {input:metadata,encoding:'utf8'}).trim();
+  assert.equal(fileSystem,'apfs','Use local APFS for disposable recording frames');
+  report.recordingSpool={path:captureScratch,fileSystem,device,removedWithProfile:true};
+}
+for (const name of ['verify-manual-practice.cjs','manual-practice-evidence.cjs','response-practice-evidence.cjs','complete-cranial-practice.cjs','practice-performance-evidence.cjs'])
+  report.sourceFiles['desktop/electron/'+name]=hashFile(path.join(__dirname,name));
+const assets = path.join(buildRoot, 'desktop/dist/assets');
+for (const name of fs.readdirSync(assets).filter(n => /\.(js|css)$/.test(n)))
+  report.rendererAssets[name] = hashFile(path.join(assets,name));
+if (matched) {
+  report.build = {main, packaged:app.isPackaged, executable:process.execPath, electron:process.versions.electron,
+    nativeBinaries:JSON.parse(process.env.REHEARSAL_PERF_NATIVE_BINARIES ?? '{}')};
+  report.actionStreamSha256 = paired ? hashFile(process.argv[pairedIndex+1]) : null;
+  report.performance = {timingEnabled:process.env.RESSECTIONLAB_REHEARSAL_TIMING==='1'};
+  for (const method of ['show','showInactive','focus']) BrowserWindow.prototype[method] = function () {
+    report.windowShown=true;
+    throw Error('Hidden performance verifier refused BrowserWindow.'+method);
+  };
+}
 const persist = () => fs.writeFileSync(paper, JSON.stringify(report, null, 2) + '\n');
 let latest = null, pending = null, observeHeldStep = null;
+const mainIpc = [];
 const handle = ipcMain.handle.bind(ipcMain);
 ipcMain.handle = (channel, handler) => handle(channel, async (...args) => {
   const started = wall();
-  const result = await handler(...args);
+  const request = args[1];
+  const row = matched && ['research:surgicalRehearsal','research:cancel'].includes(channel) ?
+    {channel, requestId:request?.requestId ?? (typeof request==='string'?request:null), command:request?.command,
+      source:request?.caseHash, expectedStateId:request?.expectedStateId, started} : null;
+  let result;
+  try {result = await handler(...args);}
+  catch (error) {
+    if (row) mainIpc.push({...row, received:wall(), error:String(error)});
+    throw error;
+  }
   const received = wall();
+  if (row) mainIpc.push({...row,received,branchId:result?.branchId,position:result?.position,
+    stateId:result?.view?.stateId,sceneId:result?.view?.scene?.sceneId,cancelled:result?.cancelled});
   if (channel === 'research:surgicalRehearsal' && result?.view && !result.playback) {
-    const item = {command: args[1].command, witness: stateWitness(result), admission: result.practiceAdmission,
+    let witness;
+    const item = {command: request.command, stateId:result.view.stateId, caseHash:result.caseHash,
+      get witness(){return witness ??= stateWitness(result);}, admission: result.practiceAdmission,
       episode: result.practiceEpisode, status: result.outcome?.status};
     if(complete) item.nativeView = result.view;
     if(observeHeldStep && item.command === 'step') {
@@ -70,13 +111,8 @@ ipcMain.handle = (channel, handler) => handle(channel, async (...args) => {
         ({stateBefore:row.stateBefore,stateAfter:row.stateAfter,status:row.status,operation:row.action.operation}));
     }
     if (pending && item.command === 'step') {
-      assert.equal(pending.result, undefined, 'A single input must dispatch exactly one engine action');
-      const {status, completedFraction, reasonCode, reason, events} = result.outcome;
-      pending.result = {requested:args[1].action, status, completedFraction, reasonCode, reason,
-        eventKinds:[...new Set((events ?? []).map(e => e.kind))],
-        cusaAllocatedMm3:(events??[]).reduce((sum,e)=>sum+Number(e.allocatedCapacityMm3??0),0),
-        cusaRemovedCells:(events??[]).flatMap(e=>e.kind==='cusa_contact'&&Array.isArray(e.removedCells)?e.removedCells:[]),witness:item.witness,
-        backendResponseEpochMs:received, ipcMs:received-started};
+      assert.equal(pending.receipt, undefined, 'A single input must dispatch exactly one engine action');
+      pending.receipt = {item, outcome:result.outcome, request, started, received};
     }
     latest = item;
   }
@@ -130,11 +166,16 @@ app.on('browser-window-created', (_, win) => {
       return summaryPoint;
     };
     const send = (method, payload) => wc.debugger.sendCommand('Input.' + method, payload);
+    const armInput = (type, label) => matched ?
+      js(`window.practicePerformance.input={expected:${q(type)},label:${q(label)}};null`) : undefined;
     const mouse = async (p, mark=false) => {
       const coords={x:p.x,y:p.y};
       await send('dispatchMouseEvent', {type:'mouseMoved',...coords});
       await send('dispatchMouseEvent', {type:'mousePressed',button:'left',buttons:1,clickCount:1,...coords});
-      if(mark) pending.inputEpochMs = wall();
+      if(mark) {
+        await armInput('click',pending.label);
+        pending.inputEpochMs = wall();
+      }
       await send('dispatchMouseEvent', {type:'mouseReleased',button:'left',buttons:0,clickCount:1,...coords});
     };
     const click = async (label, mark=false) => {console.log(take,'click',label);await mouse(await point(byName(label)), mark);};
@@ -165,6 +206,7 @@ app.on('browser-window-created', (_, win) => {
       const target=options.findIndex(o=>o.id===id),char=option[0].toLowerCase();
       const nextMatch=options.map((_,i)=>(i+current+1)%options.length).find(i=>options[i].label.toLowerCase().startsWith(char));
       assert.equal(nextMatch,target,'Native typeahead must select '+id);
+      await armInput('keydown','Practice instrument');
       pending.inputEpochMs=wall();
       await key(char,'Key'+char.toUpperCase(),char.toUpperCase().charCodeAt(0),{text:char});
     };
@@ -184,9 +226,9 @@ app.on('browser-window-created', (_, win) => {
       const onInput=e=>{if(!e.isTrusted)return;const t=e.target, control=t.closest?.('button,summary,input,select'), label=control?.getAttribute('aria-label')??control?.textContent.trim()??t.closest?.('[aria-label]')?.getAttribute('aria-label')??t.tagName;
         if(e.type!=='pointermove'){
           if(data.active)data.inputs.push({type:e.type,at:now(),key:e.key,label});
-          badge.style.display='block';badge.textContent=(e.type==='keydown'?e.key+' · ':e.type==='input'?'Edit · ':'Click · ')+label;
+          if(!${benchmark}){badge.style.display='block';badge.textContent=(e.type==='keydown'?e.key+' · ':e.type==='input'?'Edit · ':'Click · ')+label;}
         }
-        if(e.type.startsWith('pointer')){ring.style.display='block';ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px';ring.style.background=e.type==='pointerdown'?'#ffd27188':'transparent';}
+        if(!${benchmark}&&e.type.startsWith('pointer')){ring.style.display='block';ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px';ring.style.background=e.type==='pointerdown'?'#ffd27188':'transparent';}
       };
       for(const type of ['pointermove','pointerdown','keydown','input'])document.addEventListener(type,onInput,true);
     })()`);
@@ -225,6 +267,33 @@ app.on('browser-window-created', (_, win) => {
       fs.writeFileSync(path.join(output,name+'.png'),pic.toPNG());
       report.captures.push(name+'.png');
     };
+    const captureMatchedField = async (name,item) => {
+      const witness=item.result.witness;
+      if(latest.stateId!==witness.stateId)await js(inputScript('Surgical timeline',witness.position));
+      await ready(witness.stateId);
+      assert.deepEqual(latest.witness,witness);
+      await send('dispatchMouseEvent',{type:'mouseMoved',x:15,y:height-18});
+      await js('new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)))');
+      await delay(180);
+      const drawn=await snapshot(witness);
+      assert.deepEqual(drawn.camera,item.display.camera,'Matched still moved the optical camera');
+      assert(drawn.pane.x>=0&&drawn.pane.y>=0&&drawn.pane.right<=width&&drawn.pane.bottom<=height);
+      const x=Math.ceil(drawn.pane.left)+8,y=Math.ceil(drawn.pane.top)+8;
+      const crop={x,y,width:Math.floor(drawn.pane.right)-8-x,height:Math.floor(drawn.pane.bottom)-8-y};
+      assert(crop.width>0&&crop.height>0&&!win.isVisible());
+      const framebuffer=await js(`(${viewerFramebuffer.toString()})()`);
+      const pic=await wc.capturePage(crop,{stayHidden:true,stayAwake:true});
+      const file='matched-field-'+name+'.png';
+      const after=await snapshot(witness);
+      assert.deepEqual(after.camera,drawn.camera);
+      assert.equal(after.id,witness.stateId);
+      fs.writeFileSync(path.join(output,file),pic.toPNG());
+      report.captures.push(file);
+      const pixels=pic.getSize();
+      const capturePixelsPerCss={x:pixels.width/crop.width,y:pixels.height/crop.height};
+      return {name,file,cssCrop:crop,pixels,capturePixelsPerCss,framebuffer,camera:drawn.camera,caseHash:witness.caseHash,
+        stateId:witness.stateId,position:witness.position,physicalDigest:witness.physicalDigest};
+    };
     const memory = () => {
       const processes=app.getAppMetrics().map(p=>({pid:p.pid,type:p.type,workingSetKiB:p.memory.workingSetSize}));
       const children=execFileSync('ps',['-axo','pid=,ppid=,rss=,command='],{encoding:'utf8'}).split('\n')
@@ -239,8 +308,31 @@ app.on('browser-window-created', (_, win) => {
       const item={label,before:before.stateId};
       pending=item;
       await trigger();
-      await wait(()=>item.result,label+' engine response',12000);
-      const {witness,status}=item.result;
+      await wait(()=>item.receipt,label+' engine response',12000);
+      const {item:response,request,outcome,started,received}=item.receipt;
+      delete item.receipt;
+      const {status, completedFraction, reasonCode, reason, events} = outcome;
+      if (matched) {
+        const input=await js('window.practicePerformance.input?.trusted');
+        assert(input,'Missing trusted committed input event for '+label);
+        const completion=status==='rejected'?null:await waitForCompletion(input,response);
+        item.performance={requestId:request.requestId,expectedStateId:request.expectedStateId,input,
+          mainHandlerStartEpochMs:started,mainHandlerResultEpochMs:received,
+          rendererEventToListenerMs:input.at-input.eventAt,
+          rendererEventToGpuMs:completion?completion.fence.at-input.eventAt:null,
+          inputToGpuMs:completion?completion.fence.at-input.at:null,
+          inputToAcceptancePublicationMs:completion?completion.publication.at-input.at:null,
+          frame:completion?.frame,fence:completion?.fence,publication:completion?.publication};
+        assert.equal(request.expectedStateId,before.stateId);
+      }
+      const witness=response.witness;
+      if(matched)Object.assign(item.performance,{caseHash:witness.caseHash,branchId:witness.branchId,
+        position:witness.position,sceneId:witness.sceneId,stateId:witness.stateId});
+      item.result={requested:request.action,status,completedFraction,reasonCode,reason,
+        eventKinds:[...new Set((events??[]).map(e=>e.kind))],
+        cusaAllocatedMm3:(events??[]).reduce((sum,e)=>sum+Number(e.allocatedCapacityMm3??0),0),
+        cusaRemovedCells:(events??[]).flatMap(e=>e.kind==='cusa_contact'&&Array.isArray(e.removedCells)?e.removedCells:[]),witness,
+        backendResponseEpochMs:received,ipcMs:received-started};
       const drawn=await snapshot(witness);
       assert.equal(drawn.interactionMode,'navigate','Committed practice geometry must be unobscured after implicit jog/numeric placement');
       checkAction(before,witness,item.result,item.result.requested);
@@ -249,7 +341,7 @@ app.on('browser-window-created', (_, win) => {
       if(status!=='rejected') {
         const first=await js(`window.manualEvidence.fences.find(f=>f.stateId===${q(witness.stateId)} && f.at>=${item.inputEpochMs})`);
         assert(first,'New accepted state must be submitted to and completed by the GPU');
-        item.visibleMs=first.at-item.inputEpochMs;
+        item.visibleMs=matched?item.performance.inputToGpuMs:first.at-item.inputEpochMs;
       }
       item.acceptedMs=item.result.backendResponseEpochMs-item.inputEpochMs;
       item.display=drawn;
@@ -258,10 +350,20 @@ app.on('browser-window-created', (_, win) => {
         assert(!image.isEmpty());item.inputToCapturedViewportUpperBoundMs=wall()-item.inputEpochMs;
         assert.equal(await js("document.querySelector('[data-operative-readout-state]').dataset.operativeReadoutState"),witness.stateId);
       }
-      report.actions.push(item);pending=null;memory();persist();
+      report.actions.push(item);pending=null;
+      if(!matched || report.actions.length%8===0)memory();
+      if(!matched)persist();
       console.log(take,label,status,witness.position,witness.metrics.targetRemovedMm3);
       if(!benchmark)await delay(complete?230:paired?1300:2600);
       return witness;
+    };
+    const waitForCompletion = async (input,response) => {
+      let completion;
+      await wait(async()=>{
+        completion=await js(`(${findCompletion.toString()})(window.practicePerformance,${q(input)},${q(response.caseHash)},${q(response.stateId)})`);
+        return !!completion;
+      },'GPU frame and accepted publication for '+response.stateId,30000);
+      return completion;
     };
     const press = (label,expected='accepted') => action(label,()=>click(label,true),expected);
     const choose = async (id,expected='accepted') => {
@@ -297,6 +399,13 @@ app.on('browser-window-created', (_, win) => {
       await wc.debugger.sendCommand('Emulation.setFocusEmulationEnabled',{enabled:true});
       win.setContentSize(width,height);await until(`innerWidth===${width} && innerHeight===${height}`);
       assert(!win.isVisible());await installTelemetry();
+      if (matched) {
+        await js(`(${installPerformanceEvidence.toString()})()`);
+        await js('window.practicePerformance.active=true');
+        report.performance.clockStart=await alignRendererClock(js);
+        report.performance.viewport=await js('({width:innerWidth,height:innerHeight,pixelRatio:devicePixelRatio})');
+        report.performance.calibratedInput='Trusted DOM event receipt to accepted state-matched WebGL fence poll';
+      }
       await until("!!document.querySelector('.rl-viewer canvas') && !document.querySelector('.viewer-loading')",300000);
       report.coldCanvasMs=performance.now()-launch;
       report.gpu=app.getGPUFeatureStatus();assert(report.gpu.webgl==='enabled'||report.gpu.webgl2==='enabled','GPU WebGL is unavailable');
@@ -311,6 +420,7 @@ app.on('browser-window-created', (_, win) => {
       if(!await js("!!document.querySelector('[data-operative-view=surgeon][data-optical-camera]')"))await click('Surgeon / Microscope');
       await until("!!document.querySelector('[data-operative-view=surgeon][data-optical-camera]')");
       report.coldVerifiedBoundaryMs=performance.now()-launch;
+      if(matched)report.performance.framebuffer=await js(`(${viewerFramebuffer.toString()})()`);
       if(cold) {
         const previous=JSON.parse(fs.readFileSync(path.join(output, (benchmark?'benchmark':'interaction')+'.json')));
         assert.notEqual(report.pid,previous.pid);assert.equal(report.originalSha256,previous.savedSha256);
@@ -349,6 +459,10 @@ app.on('browser-window-created', (_, win) => {
         await ready(latest.witness.stateId);
         await click('left hand');
         await js('window.manualEvidence.active=true');
+        if (matched) {
+          report.performance.manualTraceStart=await js('performance.now()');
+          memory();
+        }
         const gestureUi={click,byName,point,send,wait,read:()=>latest,
           observe:fn=>{observeHeldStep=fn;},snapshot,report};
         if(gestureOnly){
@@ -422,6 +536,7 @@ app.on('browser-window-created', (_, win) => {
         // Continuous proposed pose input exercises the interactive render loop;
         // the accepted engine state must stay fixed until a command is submitted.
         const jogStart=await js('performance.now()');
+        if(matched)await js('window.practicePerformance.motion=true');
         await send('dispatchMouseEvent',{type:'mousePressed',x:padPoint.x,y:padPoint.y,button:'left',buttons:1,clickCount:1});
         for(let i=1;i<=75;i++){
           await send('dispatchMouseEvent',{type:'mouseMoved',x:padPoint.x+Math.round(Math.sin(i/14)*24),y:padPoint.y,buttons:1});
@@ -430,6 +545,22 @@ app.on('browser-window-created', (_, win) => {
         await send('dispatchMouseEvent',{type:'mouseReleased',x:padPoint.x,y:padPoint.y,button:'left',buttons:0,clickCount:1});
         const jogFrames=await js(`window.manualEvidence.frames.filter(f=>f.at>=${jogStart}).map(f=>f.at)`);
         report.timingJogCadenceMs=summary(jogFrames.slice(1).map((at,i)=>at-jogFrames[i]));
+        if(matched){
+          report.performance.jog=await js(`(()=>{
+            const data=window.practicePerformance,end=performance.now(),start=${jogStart},stateId=${q(latest.stateId)};
+            data.motion=false;
+            const frames=data.frames.filter(f=>f.at>=start&&f.at<=end&&f.stateId===stateId);
+            const fences=data.fences.filter(f=>f.completed&&f.at>=start&&f.at<=end&&f.stateId===stateId);
+            const panel=document.querySelector('[data-practice-proposed-position]');
+            return {start,end,stateId,pointerMoves:data.motions.length,
+              proposed:JSON.parse(panel.dataset.practiceProposedPosition),
+              accepted:JSON.parse(panel.dataset.practiceAcceptedPosition),
+              submissionIntervalsMs:frames.slice(1).map((f,i)=>f.at-frames[i].at),
+              matchingGpuIntervalsMs:fences.slice(1).map((f,i)=>f.at-fences[i].at)};
+          })()`);
+          assert(report.performance.jog.pointerMoves>=65,'Pointer jog delivery stopped');
+          assert.notDeepEqual(report.performance.jog.proposed,report.performance.jog.accepted,'The trusted jog never moved the proposed tip');
+        }
         assert.equal(latest.witness.stateId,report.actions.at(-1).result.witness.stateId);
         await key('PageDown','PageDown',34);await key('Escape','Escape',27);
         await press('Activate tool');
@@ -464,6 +595,7 @@ app.on('browser-window-created', (_, win) => {
         assert(Object.values(report.finalState.tools).every(t=>!t.inserted));
         await capture('withdrawn');
         report.telemetry=await js('window.manualEvidence.active=false;window.manualEvidence');
+        if(matched)report.performance.manualTraceFinish=await js('performance.now()');
         await click('Save');await until("document.body.innerText.includes('Workspace saved locally') && !document.querySelector('.viewer-loading')");
         assert(fs.existsSync(saved));report.savedSha256=hashFile(saved);report.saveWallEpochMs=wall();
         const eventLog=JSON.parse(execFileSync('python3',['-c',
@@ -472,6 +604,33 @@ app.on('browser-window-created', (_, win) => {
         const steps=report.actions.filter(a=>a.result.status!=='rejected');assert.equal(eventLog.stateId,report.finalState.stateId);
         assert.deepEqual(eventLog.actions,steps.map(a=>a.result.requested));
         report.savedActionsVerified=steps.length;
+        if(process.argv.includes('--interaction-cadence')){
+          assert(matched&&benchmark&&!paired&&!complete);
+          const acceptedRequests=mainIpc.filter(row=>row.command==='step').length;
+          const identity={source:report.finalState.caseHash,stateId:report.finalState.stateId};
+          report.performance.highCadence=[];
+          report.performance.highCadenceFramebuffer=await js(`(${viewerFramebuffer.toString()})()`);
+          for(const kind of ['proposal','camera'])for(let repeat=0;repeat<=3;repeat++){
+            const target=kind==='proposal'?byName('Instrument jog pad'):'document.querySelector("[data-accepted-tools]")';
+            const result=await sampleGesture({kind,identity,point:await point(target),js,send});
+            if(kind==='proposal')await key('Escape','Escape',27);
+            await ready(identity.stateId);
+            assert.deepEqual(latest.witness,report.finalState);
+            report.performance.highCadence.push({...result,repeat,warmup:repeat===0});
+          }
+          assert.deepEqual(await js(`(${viewerFramebuffer.toString()})()`),report.performance.highCadenceFramebuffer);
+          assert.equal(mainIpc.filter(row=>row.command==='step').length,acceptedRequests,'Gesture issued a committed action');
+        }
+        if(process.argv.includes('--performance-stills')){
+          assert(matched&&benchmark&&!complete&&!enclosed);
+          const controls=paired?[
+            ['retraction',3],['first-wet',10],['irrigation',24],['suction',30],['withdrawal',32],
+          ]:[['partial-contact',4],['removal',6],['withdrawal',14]];
+          await js('window.practicePerformance.active=false');
+          report.performance.stills=[];
+          for(const [name,index] of controls)
+            report.performance.stills.push(await captureMatchedField(name,report.actions[index]));
+        }
         if(process.argv.includes('--matched-stills')){
           assert(benchmark&&paired&&!enclosed);
           for(const after of [24,30]){
@@ -514,6 +673,39 @@ app.on('browser-window-created', (_, win) => {
           gpuFenceUpperBoundMs:summary(t.fences.map(f=>f.ms)),incrementalMeshWorkerMs:summary(t.mesh.filter(m=>m.incremental).map(m=>m.ms)),
           meshWorkerMs:summary(t.mesh.map(m=>m.ms)),electronAndEngineWorkingSetMiB:summary(report.memory.map(rows=>rows.reduce((sum,p)=>sum+p.workingSetKiB/1024,0)))};
       }
+      if (matched) {
+        report.performance.clockFinish=await alignRendererClock(js);
+        const {clockStart,clockFinish}=report.performance;
+        if(clockStart.valid&&clockFinish.valid){
+          const low=Math.min(clockStart.low,clockFinish.low),high=Math.max(clockStart.high,clockFinish.high);
+          const offset=(low+high)/2,maxErrorMs=(high-low)/2;
+          report.performance.crossProcessClockBound={low,high,maxErrorMs};
+          for(const {performance:row} of report.actions){
+            if(!row)continue;
+            row.inputToMainMs=row.mainHandlerStartEpochMs-(row.input.at+offset);
+            row.inputToMainMaxClockErrorMs=maxErrorMs;
+            if(row.frame)row.mainResponseToRenderStartMs=row.frame.at+offset-row.mainHandlerResultEpochMs;
+          }
+        }
+        if(report.actions.length && !observeHeldStep){
+          const timed=report.actions.filter(row=>row.performance&&row.result.status!=='rejected');
+          report.timing.acceptedMs=summary(timed.map(row=>row.performance.inputToMainMs+row.result.ipcMs));
+          report.timing.responseToVisibleGpuFenceMs=summary(timed.map(row=>row.performance.inputToGpuMs-
+            row.performance.inputToMainMs-row.result.ipcMs));
+        }
+        report.performance.trace=await js('window.practicePerformance.active=false;window.practicePerformance');
+        const firstMicroscope=report.performance.trace.frames.find(frame=>
+          frame.operativeView==='surgeon'&&frame.source===latest?.caseHash&&frame.stateId&&
+          report.performance.trace.fences.some(fence=>fence.serial===frame.serial&&fence.source===frame.source&&
+            fence.stateId===frame.stateId&&fence.completed));
+        report.performance.firstMicroscope=firstMicroscope??null;
+        report.performance.mainIpc=mainIpc;
+        report.performance.sidecarLifecycle=sidecar.lifecycle;
+        report.performance.stages=sidecar.stages;
+        report.performance.peakSidecarRequests=sidecar.peakPending();
+        report.performance.sidecarPids=sidecar.pids();
+        await sidecar.stop();
+      }
       assert(!win.isVisible()&&!report.windowShown);assert.equal(hashFile(original),report.originalSha256);
       report.passed=true;persist();console.log(paper);app.exit(0);
     } catch(error) {
@@ -521,7 +713,9 @@ app.on('browser-window-created', (_, win) => {
       report.body=await js('document.body.innerText.slice(0,18000)').catch(()=>null);
       report.focus=await js(`({focused:document.hasFocus(),active:document.activeElement?.outerHTML.slice(0,250),inputs:window.manualEvidence?.inputs?.slice(-8)})`).catch(()=>null);
       console.error(error);
-      await capture(take+'-failure').catch(()=>{});persist();app.exit(1);
+      await capture(take+'-failure').catch(()=>{});
+      await sidecar?.stop().catch(cleanup=>{report.cleanupError=String(cleanup);});
+      persist();app.exit(1);
     }
   });
 });
@@ -529,4 +723,4 @@ app.on('quit',()=>{
   fs.rmSync(scratch,{recursive:true,force:true});
   if(captureScratch)fs.rmSync(captureScratch,{recursive:true,force:true});
 });
-require('./main.cjs');
+require(main);
