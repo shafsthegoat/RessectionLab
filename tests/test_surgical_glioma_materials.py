@@ -231,6 +231,10 @@ def test_compartmental_biopsy_bleed_requires_actual_cut_and_seals_its_source_onl
         {'tissuePhysicsV2': default_profile(), **graph_props},
     )
     engine = SurgicalEngine(scene)
+    description = graph.descriptor(engine)
+    assert description['boundSourceCells'] == description['vesselSourceCells'] == 4
+    assert description['boundMicrovascularBedSourceCells'] == 2
+    assert description['edgeKinds']['microvascular-bed'] == 1
 
     def step(operation, point=None, duration=0.1, **extra):
         command = {'slot': 'left', 'operation': operation, 'duration': duration, **extra}

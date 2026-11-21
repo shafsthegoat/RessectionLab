@@ -497,6 +497,8 @@ class SurgicalEngine:
             initialize_cusa(self)
             parked_slots(self)
             exposure.initialize(self)
+            from . import surgical_bone_rest
+            surgical_bone_rest.initialize(self)
             self._operative_body_for_cell = {
                 cell: name for name, body in scene.properties['operativeExposureV1']['bodies'].items()
                 for cell in body['cells']}
@@ -619,6 +621,15 @@ class SurgicalEngine:
             moves.append((retained, destination))
         destinations = {}
         base = self.scene.labels.ravel()
+        if self._operative:
+            # Validate destinations in the current field. A reflected membrane
+            # vacates its source cells, while its folded surface still obstructs
+            # an instrument or a specimen at its new location.
+            operative_pairs = exposure.moved(self)
+            cleared.update(original for original, _ in operative_pairs)
+            from .surgical_physics_v2 import raster
+            soft_pairs = raster(self) if 'deformation' in self.state else []
+            cleared.update(original for original, _ in soft_pairs)
         for retained, destination in moves:
             for original, target in zip(retained, destination):
                 if target in destinations or (base[target] and target not in cleared):
@@ -627,9 +638,11 @@ class SurgicalEngine:
         memberships = {}
         if 'deformation' in self.state:
             from .surgical_physics_v2 import raster
-            pairs = raster(self)
+            pairs = soft_pairs if self._operative else raster(self)
             cleared.update(a for a, b in pairs)
             for original, target in pairs:
+                if self._operative and target in destinations:
+                    raise ValueError('DISPLACEMENT_COLLISION')
                 if base[target] and target not in cleared:
                     material = self.by_label[int(base[target])]['material']
                     if material not in ('soft_tissue', 'tumor'): raise ValueError('DISPLACEMENT_COLLISION')
@@ -642,9 +655,7 @@ class SurgicalEngine:
         if self._operative:
             # Deformed and carried material keeps its original identity, including
             # the multiple source memberships of a folded sheet in one raster cell.
-            pairs = exposure.moved(self)
-            cleared.update(original for original, _ in pairs)
-            for original, target in pairs:
+            for original, target in operative_pairs:
                 previous = destinations.get(target)
                 if previous is None and base[target] and target not in cleared:
                     previous = target + 1
@@ -974,14 +985,22 @@ class SurgicalEngine:
             self.occupancy()
         if op == 'place':
             if slot['inserted'] or slot['active'] or slot['grip']: raise ValueError('WITHDRAW_BEFORE_PLACE')
-            if len(points) != 1: raise ValueError('Placement requires one pose in free space')
-            tip = points[0]['position']; axis = rotation(points[0]['quaternion']).apply([0, 0, 1])
-            if self._operative:
-                require_exterior(self, key, points[0])
-            elif self.touched(np.asarray(tip) - axis * 40, tip, max(params['radiusMm'], tool['shaftRadiusMm'])):
-                raise ValueError('PLACE_OUTSIDE_MATERIAL: insert by a checked move or active stroke')
-            slot.update(points[0])
-            points = []
+            if self._operative and hasattr(self, '_bone_rest'):
+                if not points:
+                    raise ValueError('Placement requires an exterior pose or path')
+                for pose in points:
+                    require_exterior(self, key, pose)
+                # Keep the withdrawn hand at its actual starting pose. The
+                # normal substep loop records and checks the exterior transfer.
+            else:
+                if len(points) != 1: raise ValueError('Placement requires one pose in free space')
+                tip = points[0]['position']; axis = rotation(points[0]['quaternion']).apply([0, 0, 1])
+                if self._operative:
+                    require_exterior(self, key, points[0])
+                elif self.touched(np.asarray(tip) - axis * 40, tip, max(params['radiusMm'], tool['shaftRadiusMm'])):
+                    raise ValueError('PLACE_OUTSIDE_MATERIAL: insert by a checked move or active stroke')
+                slot.update(points[0])
+                points = []
         if op == 'withdraw' and not points:
             axis = rotation(slot['quaternion']).apply([0, 0, 1])
             points = [{'position': (np.asarray(slot['position']) - 50 * axis).tolist(), 'quaternion': slot['quaternion']}]
@@ -1070,6 +1089,8 @@ class SurgicalEngine:
                         events.append({'kind': 'cusa_contact_dwell' if cusa_v3 else 'drill_contact_dwell', 'position': contact_position, 'remainingPathMm': length * (1. - path_fraction)})
                         break
                 completed_length += segment_length
+        if reason and op == 'place' and self._operative and hasattr(self, '_bone_rest'):
+            raise ValueError(reason)
         if reason:
             events.append({'kind': 'contact_stop', 'reason': reason, 'position': contact_position})
         if done == 0: return {'status': 'rejected', 'reason': reason, 'completedFraction': 0., 'events': events}
@@ -1211,6 +1232,12 @@ class SurgicalEngine:
         if self._operative:
             from . import surgical_operative_exposure as exposure
             exposure.check_motion(self, key, op, p, q)
+            if hasattr(self, '_bone_rest'):
+                from .surgical_bone_rest import check_tool
+                check_tool(self, swept)
+                if op == 'place':
+                    from .surgical_exterior import require_outside_plane
+                    require_outside_plane(self, swept)
         if self._cranial_access is not None:
             from .surgical_bone_transport import check_tool_sweep
             check_tool_sweep(self, key, end_pose, op)
@@ -1471,6 +1498,9 @@ class SurgicalEngine:
         if self._operative:
             from .surgical_operative_exposure import summary
             cranial['operativeExposureV1'] = summary(self)
+            if hasattr(self, '_bone_rest'):
+                from .surgical_bone_rest import public_view
+                cranial['operativeExposureV1']['boneRest'] = public_view(self)
         if self._cranial_stages is not None:
             from .surgical_cranial_stages import stage_readiness
             cranial['cranialStages'] = stage_readiness(self)

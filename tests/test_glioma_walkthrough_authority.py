@@ -57,6 +57,20 @@ def test_intact_opening_refuses_direct_placement_and_swept_access(anatomy):
     assert SurgicalEngine.restore(scene, engine.snapshot(), force_verify=True).snapshot() == engine.snapshot()
 
 
+def test_active_aspirator_cannot_remove_intact_scalp(anatomy):
+    scene, landmarks = anatomy
+    engine = SurgicalEngine(scene)
+    center = np.asarray(landmarks['entryCenterRasMm'], dtype=float)
+    exterior = center + [0., 0., 16.]
+    assert engine.step(action('exchange', instrument='cusa'))['status'] == 'accepted'
+    assert engine.step(action('place', pose=pose(exterior)))['status'] == 'accepted'
+    outcome = engine.step(action('apply', pose=pose(center-[0., 0., 2.])))
+    assert outcome['status'] in ('rejected', 'partial')
+    assert outcome['reasonCode'] == 'OPERATIVE_DEEP_INSTRUMENT_ON_CRANIAL_LAYER'
+    assert not engine.state['removed']
+    assert engine.metrics()['targetRemovedMm3'] == engine.metrics()['nonTargetRemovedMm3'] == 0
+
+
 def test_exposure_replays_in_python_and_rejects_corrupted_checkpoint(anatomy):
     scene, _ = anatomy
     engine = SurgicalEngine(scene)
@@ -119,3 +133,23 @@ def test_carried_stay_uses_accepted_pose_and_cannot_support_tissue(anatomy):
         described = exposure.summary(engine)['objects'][-1]
         assert described['sourceCell'] == source
         assert described['positionMm'] == accepted.tolist()
+
+
+def test_carried_objects_remain_in_closure_inventory(anatomy):
+    from resectionlab import surgical_operative_exposure as exposure
+    scene, _ = anatomy
+    engine = SurgicalEngine(scene)
+    state = engine.state[exposure.PROPERTY]
+    config = scene.properties[exposure.PROPERTY]['bodies']
+    cargo = {'id': 'pad', 'kind': 'cottonoid', 'body': 'field', 'status': 'carried', 'heldBy': 'left'}
+    state['objects'].append(cargo)
+    state['bodies']['dura']['status'] = 'supported'
+    grip = config['dura']['gripCell']
+    point = exposure.source_position(engine, 'dura', grip)
+    with pytest.raises(ValueError, match='OPERATIVE_REMOVE_COUNTED_COTTONOID'):
+        exposure._grasp(engine, 'right', 'dura', point, np.array([1., 0., 0., 0.]), [grip])
+    cargo.update(kind='raney-clip', body='scalp')
+    state['bodies']['scalp']['status'] = 'seated'
+    anchor = config['scalp']['anchorCells'][0]
+    with pytest.raises(ValueError, match='OPERATIVE_REMOVE_SCALP_CLIP_BEFORE_CLOSURE'):
+        exposure._anchors(engine, 'needle_driver', 'scalp', 'right', scene.points([anchor])[0], [anchor])

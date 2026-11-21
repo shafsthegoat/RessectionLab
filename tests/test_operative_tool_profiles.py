@@ -160,3 +160,17 @@ def test_public_full_handles_check_bimanual_clearance_before_contact(generated_f
     assert collision['status']=='rejected' and 'TOOL_COLLISION' in collision['reason']
     assert engine.state_id==before
     assert engine.step(placement('right',47.))['status']=='accepted'
+
+
+def test_registered_stay_grip_stops_at_first_jaw_contact():
+    from scripts.glioma_bimanual_routes import _first_grip
+    tool,params=model('raney_clip_applier',jaw=0.,revision=2)
+    q=Rotation.from_euler('yx',[-22.,180.],degrees=True).as_quat()
+    normal=np.array([0.,np.cos(np.deg2rad(10.)),-np.sin(np.deg2rad(10.))])
+    center=np.array([18.,40.,78.])
+    point=_first_grip(tool,params,q,center,normal,.9)
+    obj=[(center,center,.9,'fixture')]
+    envelope=lambda p:[s for s in envelopes(tool,params,p,q) if s[3]=='working']
+    assert pair_conflict(envelope(point),obj)
+    assert not pair_conflict(envelope(point+.005*normal),obj)
+    assert (point-center)@normal > .9

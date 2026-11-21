@@ -471,13 +471,16 @@ def consequence_evidence(engine):
 
 def descriptor(engine):
     s = initialize(engine); p = engine.scene.properties[PROPERTY]
-    bound = {c for e in p['edges'] for c in e['sourceCells']}
+    bed = {c for e in p['edges'] if e['kind'] == 'microvascular-bed' for c in e['sourceCells']}
+    bound = {c for e in p['edges'] if e['kind'] != 'microvascular-bed' for c in e['sourceCells']}
     vessel_ids = [r['id'] for r in engine.scene.regions if r['material'] == 'vessel']
     return {'model': SCHEMA, 'status': 'numerically tested research model; patient flow and injury unvalidated',
         'supersedesLegacyVesselProfile': True, 'profile': copy.deepcopy(p),
         'coverage': copy.deepcopy(p['coverage']), 'nodeCount': len(p['nodes']), 'edgeCount': len(p['edges']),
         'boundSourceCells': len(bound), 'vesselSourceCells': int(np.isin(engine.scene.labels, vessel_ids).sum()),
-        'edgeKinds': {kind: sum(e['kind'] == kind for e in p['edges']) for kind in KINDS},
+        **({'boundMicrovascularBedSourceCells': len(bed)} if bed else {}),
+        'edgeKinds': {kind: sum(e['kind'] == kind for e in p['edges'])
+                      for kind in (KINDS + ('microvascular-bed',) if bed else KINDS)},
         'summary': metrics(engine), 'edges': copy.deepcopy(s['edges']),
         'limits': ['Pressure-supporting storage P=V/C, zero unstressed volume; no patient ICP or systemic blood-volume model.',
             'Declared conductance, compliance, fixed pressure boundaries and territory interfaces; no inferred microvascular tree.',

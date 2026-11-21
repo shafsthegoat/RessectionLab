@@ -26,12 +26,14 @@ CONTROLS = {
               'sha256:acd49ee35cda61286138c68d33e7ddc6c67ddafed20fad0444da144ae92f9a55'),
 }
 # Exact synthetic case manifests bind the raster, assignments and provenance.
-# The first grid is the incision-only recording. The second includes the biopsy neck.
+# Keep the incision scout and biopsy controls readable alongside the wider scalp exposure.
 CONVEXITY_CASES = {
     'sha256:a79b3d81bb593da6ef04a0925838053bb6b912878772ca066d22d405cb5ca86c':
         'sha256:4ace1749d19b920dd14fda0ed47cd802353d56e177b50be9c5a2a872d4112656',
     'sha256:80781bb098c0d874614472a3ccbc7c9c47963a81751d556685cc7e2f2604da41':
         'sha256:44fc58ffcc4ba2c22ba5f4fef3ff76ea0a7d3b72625554e6f4626c18d83ad023',
+    'sha256:ba6fe43ff7b1e6f50f2f0051690a5e758354120f2c846a53c9d7cebefb3a0945':
+        'sha256:368b168965cf135602da3c93269da448e1de7e2b9b916b2736cdad1c3321cbf0',
 }
 MANUAL_COMMANDS = {'inspect', 'inspectArchive', 'step', 'preview', 'seek', 'seekFrame', 'undo', 'redo', 'selectBranch'}
 

@@ -33,12 +33,18 @@ def parked_slots(engine):
                     quaternion=orientation.as_quat().tolist())
 
 
-def require_exterior(engine, key, pose):
+def require_outside_plane(engine, covers):
     point, normal = plane(engine.scene)
-    slot = engine.state['slots'][key]
-    tool = engine.tools[slot['instrument']]
-    for a, b, radius, _ in envelopes(tool, engine.parameters(slot), pose['position'], pose['quaternion']):
+    for a, b, radius, _ in covers:
         if min((a - point) @ normal, (b - point) @ normal) < radius:
             raise ValueError('OPERATIVE_EXTERIOR_REQUIRED: clear the full instrument above the entry surface')
+
+
+def require_exterior(engine, key, pose):
+    slot = engine.state['slots'][key]
+    tool = engine.tools[slot['instrument']]
+    covers = envelopes(tool, engine.parameters(slot), pose['position'], pose['quaternion'])
+    require_outside_plane(engine, covers)
+    for a, b, radius, _ in covers:
         if engine.touched(a, b, radius):
             raise ValueError('OPERATIVE_EXTERIOR_OCCUPIED')

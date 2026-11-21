@@ -1,7 +1,7 @@
 """Source invariants for the reusable, generated layered convexity case."""
 import numpy as np
 import pytest
-from scipy.ndimage import label
+from scipy.ndimage import binary_dilation, binary_fill_holes, label
 
 from scripts.generated_glioma_walkthrough_case import build_glioma_case, voxel
 from resectionlab.surgical_scene import original_target_memberships
@@ -79,3 +79,16 @@ def test_biopsy_target_requires_a_real_neck_cut_and_release(phantom):
         for upper in range(z+1, scene.shape[2]):
             if scene.labels[i, j, upper]:
                 assert np.ravel_multi_index((i, j, upper), scene.shape) in carried
+
+
+def test_exterior_skin_and_finite_bone_work_are_bound_to_mask_solids(phantom):
+    _, scene, _ = phantom
+    exterior = binary_dilation(~binary_fill_holes(scene.labels != 0))
+    assert set(np.unique(scene.labels[exterior])) == {0, 1}
+    config = scene.properties["operativeExposureV1"]
+    bone = config["bodies"]["bone"]
+    assert set(bone["kerfCells"]) <= set(bone["bladeCorridorCells"])
+    assert set(bone["kerfCells"]) == {right for _, right in bone["seamEdges"]}
+    assert not set(bone["cells"]).intersection(set(bone["portCells"]) | set(bone["bladeCorridorCells"]))
+    assert len(config["boneRest"]["pads"]) == 3
+    assert bone["pilotCenterMm"] == [44.75, 32., 61.]

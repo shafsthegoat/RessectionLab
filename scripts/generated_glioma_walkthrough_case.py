@@ -227,19 +227,30 @@ def build_glioma_case():
     exposure = exposure_declaration(SHAPE, case.affine, scalp=scalp, bone=bone, dura=dura,
                                     bone_material=bone["layerCells"], park_center=park,
                                     cottonoid_site=cottonoid, hemostat_site=hemostat)
-    # A round burr sweeps finite voxel solids. Derive the exact starter bore
-    # from the declared tool radius and its two physical axial endpoints,
-    # leaving the connected mobile flap and underlying dura intact.
+    # The pilot permits a half-cell lateral finishing pass around the center
+    # line. Removal still requires local contact and spent work. A second
+    # finite annulus admits only the guarded cutter beside the mobile flap.
     from resectionlab.geometry import GeometryScene, capsule_voxel_indices
-    pilot = np.array([32., 19.25, 61.])
+    pilot = np.array([44.75, 32., 61.])
     nominal_tip = np.array([pilot[0], pilot[1], 62.])
     cover = capsule_voxel_indices(GeometryScene(np.zeros(SHAPE, bool), case.affine),
-                                  [pilot[0], pilot[1], 67.], nominal_tip, 2.)
+                                  [pilot[0], pilot[1], 67.], nominal_tip, 2.5)
     bone_mask = np.isin(labels, [3, 4, 5])
     port = np.ravel_multi_index(cover[bone_mask[tuple(cover.T)]].T, SHAPE).tolist()
-    if set(port) & set(bone["cells"]):
-        raise ValueError("The authored burr passage intersects the carried flap")
-    exposure["bodies"]["bone"].update(pilotCenterMm=pilot.tolist(), portCells=sorted(port))
+    mobile = set(bone["cells"])
+    xyz = np.array(np.unravel_index(bone["layerCells"], SHAPE)).T + ORIGIN
+    radial = np.hypot(xyz[:, 0]-32, xyz[:, 1]-32)
+    stock = (radial <= 13.5) & (xyz[:, 2] >= 60) & (xyz[:, 2] <= 64)
+    candidates = np.array(bone["layerCells"])[stock]
+    from scipy.spatial import cKDTree
+    seam_ids = exposure["bodies"]["bone"]["kerfCells"]
+    seam = np.array(np.unravel_index(seam_ids, SHAPE)).T + ORIGIN
+    near_seam = cKDTree(seam).query(xyz[stock])[0] <= 2.5
+    collar = candidates[near_seam]
+    exposure["bodies"]["bone"].update(pilotCenterMm=pilot.tolist(), portCells=sorted(set(port)-mobile),
+                                      bladeCorridorCells=sorted(set(map(int, collar))-mobile))
+    from resectionlab.surgical_bone_rest import rest_declaration
+    exposure["boneRest"] = rest_declaration(SHAPE, case.affine, exposure["bodies"]["bone"])
     exposure["instrumentGeometryRevision"] = 2
     exposure["exterior"] = {"normalRas": [0, 0, 1], "pointRasMm": [32, 32, 70]}
     sample_site = [34, 30, 57]
