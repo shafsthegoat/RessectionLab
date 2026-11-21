@@ -205,6 +205,44 @@ def _clear_field(live, hand, entry):
     hand.withdraw('Withdraw the suction lumen from the cleared bed')
 
 
+def clear_pilot_debris(live, landmarks, hand):
+    """Suction a bounded amount of visible bone dust from the open pilot."""
+    body = live.view['operativeExposureV1']['bodies']
+    _require(body['dura']['status'] == 'closed', 'Pilot clearance requires covered cortex')
+    pilot = landmarks['exposure']['bodies']['bone']['pilotCenterMm']
+    cells = [int(c) for c, amount in live.view['debris'].items() if amount > 0.0]
+    near = (
+        [
+            xyz
+            for xyz in live.scene.points(cells)
+            if (xyz[0] - pilot[0]) ** 2 + (xyz[1] - pilot[1]) ** 2 <= 2.5**2
+        ]
+        if cells
+        else []
+    )
+    _require(near, 'No visible bone debris remains in the registered pilot')
+    top = max(near, key=lambda p: (p[2], -((p[0] - pilot[0]) ** 2) - (p[1] - pilot[1]) ** 2))
+    outlet = _above(top, 0.9)
+    before = live.view['metrics']
+    hand.prepare('frazier_suction', outlet, parameters={'flowMm3PerSecond': 8.0})
+    hand.contact('Bring suction to the visible pilot-rim debris', outlet, duration=0.45)
+    hand.action('Clear loose bone debris at the open pilot', 'apply', 0.8)
+    after = live.view['metrics']
+    uptake = after['debrisRemovedMm3'] - before['debrisRemovedMm3']
+    _require(uptake > 0.0, 'Pilot suction collected no actual bone debris')
+    _require(
+        abs(
+            before['debrisMm3']
+            - after['debrisMm3']
+            - uptake
+            - (after['debrisEscapedMm3'] - before['debrisEscapedMm3'])
+        )
+        < 1e-7,
+        'Pilot suction debris ledger does not reconcile',
+    )
+    hand.withdraw('Withdraw the suction lumen above the cleared pilot')
+
+
 def treat(live, landmarks, left, right):
     _require(
         live.view['operativeExposureV1']['accessOpen'], 'Deep treatment requires supported open exposure'

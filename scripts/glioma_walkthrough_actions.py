@@ -388,6 +388,8 @@ def expose_and_treat(live, landmarks, left, right, through):
         close_sites(live, "dura", right)
         live.save("dura-closed")
     if start <= stages.index("dura-closed"):
+        from glioma_intracranial_actions import clear_pilot_debris
+        clear_pilot_debris(live, landmarks, right)
         move_bone(live, left, closing=True)
         close_sites(live, "bone", right)
         live.save("bone-fixed")

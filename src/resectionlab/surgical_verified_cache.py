@@ -39,7 +39,7 @@ MAX_JSON_BYTES = 128 * 1024**2
 DEFAULT_DIRECTORY = Path(__file__).resolve().parents[2] / 'testcases/outputs/.verified-surgical-cache'
 _MODULES = ('core', 'geometry', 'surgical_scene', 'surgical_engine', 'surgical_tools',
             'surgical_tool_profiles', 'surgical_bone_rest', 'surgical_exterior', 'surgical_operative_exposure',
-            'surgical_exposure_geometry', 'surgical_glioma_materials',
+            'surgical_exposure_geometry', 'surgical_operative_clip', 'surgical_glioma_materials', 'surgical_specimen_sweep',
             'surgical_motion', 'surgical_effects', 'surgical_flow_display', 'surgical_physics', 'surgical_physics_v2',
             'surgical_drilling_v2', 'surgical_vessels_v2', 'surgical_deformation_v2',
             'surgical_continuum', 'surgical_continuum_solve', 'surgical_planar_contact', 'surgical_planar_maneuver',

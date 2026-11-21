@@ -1103,7 +1103,10 @@ class SurgicalEngine:
             slot = self.state['slots'][key]; slot['inserted'] = False
         if op in ('hold', 'grasp') and key in self.state['holds'] and 'target' not in self.state['holds'][key]:
             if self.state['holds'][key].get('kind') != 'bone-flap-v1':
-                self.state['holds'][key]['origin'] = self.state['slots'][key]['position'][:]
+                hold = self.state['holds'][key]
+                if self._operative and slot['instrument'] == 'tumor_forceps':
+                    hold['baseOffset'] = hold['offset'][:]
+                hold['origin'] = self.state['slots'][key]['position'][:]
         if active and not events:
             events.append({'kind': 'no_material_effect', 'reason': 'No compatible structure intersected by the working tip'})
         events.insert(0, {'kind': op, 'instrument': tool['name'], 'slot': key})
@@ -1311,11 +1314,20 @@ class SurgicalEngine:
             events = self._effect(key, op, eligible, p, q, dt)
         if self._operative and not active:
             events.extend(exposure.interact(self, key, op, p, q, False, dt, working_cells) or [])
+        operative_specimen = self._operative and slot['instrument'] == 'tumor_forceps' and key in self.state['holds']
+        if operative_specimen and params['jawOpeningMm'] > .5:
+            raise ValueError('OPERATIVE_RELEASE_SPECIMEN_BEFORE_OPENING_JAWS')
+        if self._operative and self.state['holds']:
+            from .surgical_specimen_sweep import check as check_specimen
+            for hand, hold in self.state['holds'].items():
+                if hand != key and self.state['slots'][hand]['instrument'] == 'tumor_forceps':
+                    check_specimen(self, hand, key, swept, hold['offset'])
         if key in self.state['holds']:
             self.occupancy()
-        if key in self.state['holds'] and (op == 'move' or self.state['holds'][key].get('kind') in ('bone-flap-v1', 'membrane-patch-v1')):
+        if key in self.state['holds'] and (op == 'move' or operative_specimen or self.state['holds'][key].get('kind') in ('bone-flap-v1', 'membrane-patch-v1')):
             from .surgical_effects import validate_hold_motion
-            validate_hold_motion(self, key)
+            if not operative_specimen or op == 'move':
+                validate_hold_motion(self, key)
             hold = self.state['holds'][key]
             if v2 and 'target' in hold:
                 from .surgical_deformation_v2 import set_target
@@ -1325,6 +1337,10 @@ class SurgicalEngine:
                     raise ValueError('FRAGMENT_ROTATION_UNSUPPORTED: translate the source-bound fragment')
                 delta = self.scene.inverse[:3, :3] @ (p - finite(hold['origin'], 3))
                 offset = (np.rint(delta).astype(int) + np.asarray(hold.get('baseOffset', [0,0,0]))).tolist()
+                if operative_specimen:
+                    if op != 'move' and offset != hold['offset']:
+                        validate_hold_motion(self, key)
+                    check_specimen(self, key, key, swept, offset)
                 if slot['instrument'] == 'bone_flap_holder':
                     from .surgical_bone_transport import check_sweep
                     check_sweep(self, key, offset, end_pose)

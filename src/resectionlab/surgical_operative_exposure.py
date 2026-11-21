@@ -377,6 +377,10 @@ def _surface_normal(engine, name, cell, state=None):
 
 
 def _object_position(engine, o, state=None):
+    if o['kind'] == 'raney-clip' and o['status'] == 'placed':
+        from .surgical_operative_clip import rest as clip_rest
+
+        return clip_rest(engine, o)[0]
     if o.get('body') == 'field' and 'sourceCell' in o and o['status'] not in ('carried', 'retrieved'):
         cell = o['sourceCell']
         shift = engine.state.get('deformation', {}).get(str(cell), [0.0, 0.0, 0.0])
@@ -399,6 +403,14 @@ def _object_envelope(engine, obj):
         a, b = obj['endpointsMm']
         return np.asarray(a), np.asarray(b), obj['radiusMm'], 'fixture'
     return point, point, obj['radiusMm'], 'fixture'
+
+
+def object_envelopes(engine, obj):
+    if obj['kind'] == 'raney-clip':
+        from .surgical_operative_clip import segments
+
+        return segments(engine, obj)
+    return [_object_envelope(engine, obj)]
 
 
 def _clear_body(engine, name, key, previous, proposed, p, q):
@@ -442,10 +454,11 @@ def _clear_body(engine, name, key, previous, proposed, p, q):
             else:
                 own_working.append((x, y, r))
     objects = [
-        _object_envelope(engine, o)
+        part
         for o in engine.state[PROPERTY]['objects']
         if o['status'] != 'retrieved'
         and (o['status'] == 'carried' or o['body'] != name or o.get('sourceCell') not in owned)
+        for part in object_envelopes(engine, o)
     ]
     bone_rest = None
     if hasattr(engine, '_bone_rest'):
@@ -543,7 +556,10 @@ def release(engine, key):
         from .surgical_exterior import plane
 
         point, normal = plane(engine.scene)
-        if np.dot(np.asarray(obj['positionMm']) - point, normal) < obj['radiusMm']:
+        if any(
+            min((a - point) @ normal, (b - point) @ normal) < radius
+            for a, b, radius, _ in object_envelopes(engine, obj)
+        ):
             raise ValueError('OPERATIVE_RETRIEVAL_REQUIRES_EXTERIOR')
         obj.update(status='retrieved', heldBy=None)
         obj.pop('offset', None)
@@ -638,6 +654,11 @@ def _pick(engine, key, tool, p, q):
             continue
         if obj['kind'] == 'retaining-stay' and _body(engine, obj['body'])['heldBy'] is None:
             raise ValueError('OPERATIVE_REGRASP_BEFORE_STAY_REMOVAL')
+        if obj['kind'] == 'raney-clip':
+            if _body(engine, 'scalp')['angleRad'] < math.pi / 2:
+                raise ValueError('OPERATIVE_SCALP_CLIP_NEEDS_OPEN_MARGIN')
+            obj['pickupQuaternion'] = q.tolist()
+            obj['carriedRotation'] = [0.0, 0.0, 0.0, 1.0]
         if obj['kind'] == 'retaining-stay':
             obj['reactionMomentNmm'] = 0.0
         obj.update(
@@ -826,12 +847,12 @@ def check_motion(engine, key, op, p, q):
     end = {'position': p, 'quaternion': q}
     swept = swept_envelopes(engine.tools[tool], engine._sweep_parameters(key, slot), slot, end)
     for obj in objs:
-        obstacle = _object_envelope(engine, obj)
+        obstacles = object_envelopes(engine, obj)
         allowed = _tool_may_touch_object(engine, key, op, obj, p)
         for a, b, r, part in swept:
             if part != 'shaft' and allowed:
                 continue
-            if pair_conflict([(a, b, r, part)], [obstacle]):
+            if pair_conflict([(a, b, r, part)], obstacles):
                 raise ValueError('OPERATIVE_PLACED_OBJECT_COLLISION:' + obj['kind'])
 
 
@@ -846,17 +867,40 @@ def interact(engine, key, op, p, q, active, dt, cells):
     if carried:
         old = np.asarray(carried['positionMm'])
         new = p + Rotation.from_quat(q).apply(carried['offset'])
-        if np.linalg.norm(new - old) > 1e-8:
-            if getattr(engine, '_protected_ids', None) and len(
-                engine.protection.capsule_hits(old, new, carried['radiusMm'], positions=engine._positions())
+        clip_rotation = None
+        if carried['kind'] == 'raney-clip':
+            clip_rotation = (
+                (Rotation.from_quat(q) * Rotation.from_quat(carried['pickupQuaternion']).inv())
+                .as_quat()
+                .tolist()
+            )
+        if (
+            np.linalg.norm(new - old) > 1e-8
+            or clip_rotation is not None
+            and not np.allclose(clip_rotation, carried['carriedRotation'], rtol=0, atol=1e-10)
+        ):
+            if clip_rotation is not None:
+                from .surgical_operative_clip import check_retrieval_sweep, segments
+
+                cargo_sweep = check_retrieval_sweep(
+                    engine, segments(engine, carried), segments(engine, carried, new, clip_rotation)
+                )
+            else:
+                blocked = set(engine.touched(old, new, carried['radiusMm'])) - set(
+                    engine.touched(old, old, carried['radiusMm'])
+                )
+                if blocked:
+                    raise ValueError('OPERATIVE_CARRIED_OBJECT_COLLISION')
+                cargo_sweep = [(old, new, carried['radiusMm'], 'fixture')]
+            if getattr(engine, '_protected_ids', None) and any(
+                len(engine.protection.capsule_hits(a, b, r, positions=engine._positions()))
+                for a, b, r, _ in cargo_sweep
             ):
                 raise ValueError('PROTECTED_STRUCTURE: carried material enters declared clearance')
-            blocked = set(engine.touched(old, new, carried['radiusMm'])) - set(
-                engine.touched(old, old, carried['radiusMm'])
-            )
-            if blocked:
-                raise ValueError('OPERATIVE_CARRIED_OBJECT_COLLISION')
-            cargo_sweep = [(old, new, carried['radiusMm'], 'fixture')]
+            if hasattr(engine, '_bone_rest'):
+                from .surgical_bone_rest import check_tool
+
+                check_tool(engine, cargo_sweep)
             for hand, slot in engine.state['slots'].items():
                 handle = engine.tools[slot['instrument']]
                 params = engine.parameters(slot)
@@ -870,12 +914,15 @@ def interact(engine, key, op, p, q, active, dt, cells):
                 if pair_conflict(cargo_sweep, parts):
                     raise ValueError('OPERATIVE_CARRIED_OBJECT_TOOL_COLLISION')
             other = [
-                _object_envelope(engine, o)
+                part
                 for o in engine.state[PROPERTY]['objects']
                 if o is not carried and o['status'] != 'retrieved'
+                for part in object_envelopes(engine, o)
             ]
             if pair_conflict(cargo_sweep, other):
                 raise ValueError('OPERATIVE_CARRIED_OBJECT_FIXTURE_COLLISION')
+        if clip_rotation is not None:
+            carried['carriedRotation'] = clip_rotation
         carried['positionMm'] = new.tolist()
         return []
     if name:
@@ -985,6 +1032,15 @@ def summary(engine):
         row = {**deepcopy(obj), 'positionMm': _object_position(engine, obj).tolist()}
         if 'surfaceOffsetMm' in obj and obj['status'] not in ('carried', 'retrieved'):
             row['normal'] = _surface_normal(engine, obj['body'], obj['sourceCell']).tolist()
+        if obj['kind'] == 'raney-clip':
+            from .surgical_operative_clip import rest as clip_rest
+
+            row['clipSegments'] = [
+                dict(aMm=a.tolist(), bMm=b.tolist(), radiusMm=r)
+                for a, b, r, _ in object_envelopes(engine, obj)
+            ]
+            row['sourceContactMm'] = engine.scene.points([obj['sourceCell']])[0].tolist()
+            row['incisionDirectionRas'] = clip_rest(engine, obj)[2].tolist()
         objects.append(row)
     closure_secure = (
         bodies['dura']['status'] == 'closed'

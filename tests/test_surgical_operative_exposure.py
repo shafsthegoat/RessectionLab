@@ -156,6 +156,89 @@ def test_registered_traction_material_response_and_timestep(scene):
     )
 
 
+def test_scalp_clip_pressure_backing_sweep_and_exterior_count(scene, monkeypatch):
+    from resectionlab.surgical_operative_clip import check_retrieval_sweep, segments
+
+    engine = SurgicalEngine(scene)
+    state = engine.state[exposure.PROPERTY]
+    cell = next(
+        e['sourceFace'][0] for e in scene.properties['vascularGraphV1']['edges'] if e['id'] == 'scalp'
+    )
+    point = scene.points([cell])[0]
+    exposure._place_object(engine, 'scalp', 'raney-clip', point, cell=cell)
+    obj = state['objects'][0]
+    record = exposure.summary(engine)['objects'][0]
+    backing = np.asarray(record['positionMm'])
+    normal = np.asarray(scene.properties[exposure.PROPERTY]['exterior']['normalRas'])
+    assert record['sourceContactMm'] == obj['positionMm'] == point.tolist()
+    assert (backing - point) @ normal > 2.0
+    assert record['clipSegments'][1]['aMm'] == point.tolist()
+    assert len(exposure.object_envelopes(engine, obj)) == len(record['clipSegments']) == 4
+    q = np.array([1.0, 0.0, 0.0, 0.0])
+    slot = engine.state['slots']['right']
+    slot.update(instrument='raney_clip_applier', quaternion=q.tolist(), parameters={'jawOpeningMm': 0.0})
+    with pytest.raises(ValueError, match='NEEDS_OPEN_MARGIN'):
+        exposure._pick(engine, 'right', slot['instrument'], backing, q)
+    state['bodies']['scalp']['angleRad'] = math.radians(100)
+    assert exposure._pick(engine, 'right', slot['instrument'], backing, q)
+
+    def try_travel(start, end):
+        # Public tool motion advances by at most one third of a source voxel.
+        count = math.ceil(np.linalg.norm(end - start) / 0.2)
+        previous = segments(engine, obj, start)
+        for next_point in np.linspace(start, end, count + 1)[1:]:
+            next_shape = segments(engine, obj, next_point)
+            check_retrieval_sweep(engine, previous, next_shape)
+            previous = next_shape
+
+    incision = np.asarray(record['incisionDirectionRas'])
+    with pytest.raises(ValueError, match='CARRIED_OBJECT_COLLISION'):
+        check_retrieval_sweep(
+            engine, segments(engine, obj, backing), segments(engine, obj, backing - 3 * incision)
+        )
+    inside = backing + 2.6 * incision
+    try_travel(backing, inside)
+    try_travel(inside, inside + 8 * normal)
+    assert (
+        len(
+            check_retrieval_sweep(
+                engine, segments(engine, obj, inside), segments(engine, obj, inside + 8 * normal)
+            )
+        )
+        > 64
+    )
+    # The backing clears the exterior plane before the pressure jaw does.
+    point_on_plane = np.asarray(scene.properties[exposure.PROPERTY]['exterior']['pointRasMm'])
+    just_outside = inside + (obj['radiusMm'] + 0.1 - (inside - point_on_plane) @ normal) * normal
+    obj['positionMm'] = just_outside.tolist()
+    with pytest.raises(ValueError, match='REQUIRES_EXTERIOR'):
+        exposure.release(engine, 'right')
+    obj['positionMm'] = (just_outside + 4 * normal).tolist()
+    assert exposure.release(engine, 'right')[0]['kind'] == 'exposure_object_retrieved'
+    assert obj['sourceCell'] == cell
+
+    # Simulate cancellation after the first full batch in an unobstructed sweep.
+    touched_many = engine.touched_many
+    batches = []
+
+    def observed(queries):
+        answer = touched_many(queries)
+        batches.append(len(queries))
+        return answer
+
+    def check():
+        if 64 in batches:
+            raise TimeoutError('cancelled between geometry batches')
+
+    monkeypatch.setattr(engine, 'touched_many', observed)
+    monkeypatch.setattr(engine, '_transition_check', check, raising=False)
+    with pytest.raises(TimeoutError, match='cancelled between geometry batches'):
+        check_retrieval_sweep(
+            engine, segments(engine, obj, inside), segments(engine, obj, inside + 8 * normal)
+        )
+    assert batches == [4, 64]
+
+
 def test_cutting_work_requires_local_perforation_and_releases_only_complete_bone(scene):
     engine = SurgicalEngine(scene)
     cfg = scene.properties[exposure.PROPERTY]['bodies']['bone']
