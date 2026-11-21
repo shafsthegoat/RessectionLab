@@ -1269,7 +1269,8 @@ def dispatch(session, operation, args, request, progress):
     if practice_child:
         # Child navigation and instrument responses need no planner evaluation.
         # The timeline is derived by cold replay of the authenticated action log.
-        _require_json_budget(result, RESULT_BYTES, 'SURGICAL_RESULT_LIMIT', 'Practice response exceeds the display budget')
+        _require_json_budget(result, RESULT_BYTES, 'SURGICAL_RESULT_LIMIT',
+                             'Practice response exceeds the display budget', _builtin_fast=True)
         request.begin_commit()
         if result['changed'] or not admitted_bundle:
             compact = {k: v for k, v in record.items() if k != 'timeline'}
