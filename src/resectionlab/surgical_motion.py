@@ -12,6 +12,7 @@ import numpy as np
 from scipy.spatial.transform import Rotation, Slerp
 from .geometry import segments_within_distance
 from . import geometry as _contact_geometry, native_backend
+from .surgical_tool_profiles import profile_segments
 
 
 def _function_state(function):
@@ -334,6 +335,11 @@ def _envelope_helpers_unchanged():
 
 
 def envelopes(tool, parameters, position, quaternion, inflation=0.):
+    if 'operativeToolProfileV1' in parameters:
+        parts = profile_segments(parameters['operativeToolProfileV1'], parameters.get('jawOpeningMm', 2.))
+        local = np.asarray([(a,b) for a,b,_,_,_ in parts], dtype=float)
+        points = Rotation.from_quat(quaternion).apply(local.reshape(-1,3)).reshape(local.shape) + position
+        return [(a,b,width+inflation,role) for (a,b),(_,_,width,role,_) in zip(points,parts)]
     if (native_backend.cpp_enabled() and _envelope_helpers_unchanged()
             and type(tool) is dict and type(parameters) is dict
             and _ordinary_vector(position, 3) and _ordinary_vector(quaternion, 4)
@@ -356,6 +362,19 @@ def _swept_envelopes_reference(tool, parameters, start, end):
 
 
 def swept_envelopes(tool, parameters, start, end):
+    if 'operativeJawSweepFromMm' in parameters and 'operativeToolProfileV1' in parameters:
+        first = parameters['operativeJawSweepFromMm']
+        last = parameters.get('jawOpeningMm', 2.)
+        if first != last:
+            mid = {k:v for k,v in parameters.items() if k != 'operativeJawSweepFromMm'}
+            mid['jawOpeningMm'] = (first+last)/2
+            # Distal jaw centerlines move at most half the aperture change.
+            # Only articulating components need this extra swept cover.
+            cover = swept_envelopes(tool,mid,start,end)
+            p0 = profile_segments(mid['operativeToolProfileV1'],first)
+            p1 = profile_segments(mid['operativeToolProfileV1'],last)
+            return [(a,b,r+abs(first-last)/4 if old[:2]!=new[:2] else r,role)
+                    for (a,b,r,role),old,new in zip(cover,p0,p1)]
     if not native_backend.cpp_enabled() or not _rotation_helpers_unchanged():
         return _swept_envelopes_reference(tool, parameters, start, end)
     if type(start) is not dict or type(end) is not dict:

@@ -25,5 +25,32 @@ TOOLS = {
 }
 
 
-def catalog():
+from .surgical_tool_profiles import PROFILE_INDEX, profile_segments
+
+
+OPERATIVE_TOOLS = {**TOOLS,
+    'raney_clip_applier': _tool('Raney scalp clip applier', 'Hemostasis', 'forceps', ['soft_tissue'], 'apply_clip'),
+    'dressing_forceps': _tool('Dressing forceps', 'Field materials', 'forceps', ['soft_tissue', 'tumor', 'membrane', 'vessel'], 'place_dressing'),
+    'needle_driver': _tool('Needle driver', 'Closure', 'forceps', ['soft_tissue', 'membrane'], 'approximate'),
+    'fixation_driver': _tool('Bone fixation driver', 'Closure', 'driver', ['bone'], 'fixate'),
+}
+for _name, _radius, _shaft in (('craniotome',.75,.85), ('cranial_drill',2.,.9),
+                               ('frazier_suction',1.5,1.5), ('irrigation',.55,.55)):
+    OPERATIVE_TOOLS[_name] = {**TOOLS[_name], 'radiusMm':_radius, 'shaftRadiusMm':_shaft}
+
+
+def tools_for_operative_profile(enabled):
+    return OPERATIVE_TOOLS if enabled else TOOLS
+
+
+def operative_tool_parameters(instrument, params):
+    return {**params, 'radiusMm': OPERATIVE_TOOLS[instrument]['radiusMm'],
+            'operativeToolProfileV1': PROFILE_INDEX[instrument]}
+
+
+def catalog(operative=False):
+    if operative:
+        return [dict(tool, id=name, workingLengthMm=40., approximation='fixed distal research profile in mm',
+                     physicalProfile={'revision':1, 'parts':[part[4] for part in profile_segments(PROFILE_INDEX[name], 2.)]})
+                for name, tool in OPERATIVE_TOOLS.items()]
     return [dict(v, id=k, workingLengthMm=40., approximation='generic research geometry') for k, v in TOOLS.items()]
