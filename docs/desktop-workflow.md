@@ -91,6 +91,17 @@ To generate the source volume, run the public-action policy, verify the cold rep
 
 Choose an empty output directory. Shafrir's mounted external QC directory is accessible under `testcases/outputs/glioma-operative-walkthrough-20261121/`. The command creates the guided start, the complete portable episode and `recording/operative-walkthrough.mp4`. Beside the completed case, `complete.json` holds the submitted actions and outcomes, `complete.states.jsonl.gz` contains the full physical state at every accepted boundary including the intact start, and `complete.replay.json` records the uncached verification and their identities. Add `--episode-only` for the executable case and its replay checks. The acquired comparison footage is cataloged on the private drive. [Local evidence locations](local-storage-ledger.md)
 
+The clone includes the 427 public inputs and their camera plan. A fresh build assigns its own practice ID and checks every physical state before applying those camera positions. To film the supplied episode directly, pass the portable case and the archived optical plan.
+
+```sh
+qc=testcases/outputs/glioma-operative-walkthrough-20261121
+.venv/bin/python scripts/build_glioma_walkthrough.py "$qc/new-export" \
+  --record-episode "$qc/episode/complete.ressectionlab" \
+  --shot-plan artifacts/generated-convexity-rehearsal-v1/shot-plan.json
+```
+
+To change the scripted operator's decisions, generate a source with `scripts/generated_glioma_walkthrough_case.py` and run `scripts/rehearse_glioma_walkthrough.py run` with its source file, `--landmarks` and an empty `--output` directory. The editable policy uses native tool exchanges, contact previews, movements, applications and withdrawals.
+
 ### Watch a recorded engine procedure
 
 In **Plan**, select the target and approach. In **Rehearse**, choose **Open recorded engine episode** and select the saved environment. The app checks the patient, study revision, target, source masks, reference pixels, instruments and recorded branch. When the recording identifies a native approach, its entry, target, radius and measurement identity must match the selected plan. An older recording can establish the patient and target without establishing an approach match.

@@ -68,3 +68,8 @@
 .field-presentation-readout span:empty {
   display: none;
 }
+
+.microscope-focus { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 6px; }
+.microscope-focus label { min-width: 0; }
+.microscope-focus input { width: 100%; min-width: 0; box-sizing: border-box; }
+.microscope-focus button { grid-column: 1 / -1; }

@@ -1,0 +1,3584 @@
+{
+  "caseHash": "sha256:ba6fe43ff7b1e6f50f2f0051690a5e758354120f2c846a53c9d7cebefb3a0945",
+  "branchId": "practice-14a133d6-57ee-445f-8e0c-d41b7e805d1a",
+  "sourceFileSha256": "856bccf0e68e1d3cd0bbda58014435bb4ed2a7a9f847c586529dba5f727c3bd4",
+  "anatomyLabel": "Generated glioma research case  /  Assigned anatomy and mechanics",
+  "overviewLabel": "Generated head with intact scalp and an external three-pad bone-flap rest",
+  "requireOpaqueOverview": true,
+  "requirePresentation": true,
+  "presentationSeconds": 105.0,
+  "approachZoom": {
+    "fromMm": 108
+  },
+  "chapters": [
+    {
+      "first": 0,
+      "last": 4,
+      "title": "Establish the operative approach",
+      "fieldMm": 49,
+      "angleDeg": 26,
+      "azimuthDeg": 20,
+      "phase": "approach",
+      "clearParked": true,
+      "focus": "opening"
+    },
+    {
+      "first": 5,
+      "last": 5,
+      "title": "Engage the scalp edge",
+      "fieldMm": 18,
+      "angleDeg": 45,
+      "azimuthDeg": 90,
+      "phase": "scalp",
+      "clearParked": true,
+      "focusHand": "right",
+      "focusPoint": [
+        22.5,
+        50.0,
+        63.33
+      ],
+      "focusSourceState": "sha256:34d8901f848f8fa22e493fe87c7851e894c2dddfaf02ef0974cecb1553d885bc"
+    },
+    {
+      "first": 6,
+      "last": 120,
+      "title": "Scalp incision",
+      "fieldMm": 49,
+      "angleDeg": 36,
+      "azimuthDeg": -65,
+      "phase": "scalp",
+      "clearParked": true,
+      "focus": "opening",
+      "withdrawnPoses": {
+        "right": {
+          "position": [
+            84.0,
+            17.0,
+            85.0
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "first": 121,
+      "last": 125,
+      "title": "Scalp hemostasis",
+      "fieldMm": 18,
+      "angleDeg": 42,
+      "azimuthDeg": 70,
+      "phase": "scalp",
+      "clearParked": true,
+      "focusHand": "right",
+      "focusPoint": [
+        32.0,
+        16.0,
+        66.0
+      ],
+      "focusSourceState": "sha256:746d0d9f187b586eccb3f28caa624e2870de683bc7c915eaefad9cd9963ddab0",
+      "withdrawnPoses": {
+        "right": {
+          "position": [
+            84.0,
+            17.0,
+            85.0
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "first": 126,
+      "last": 126,
+      "title": "Scalp grasp",
+      "fieldMm": 23,
+      "angleDeg": 43,
+      "azimuthDeg": -80,
+      "phase": "scalp",
+      "clearParked": true,
+      "focusHand": "right",
+      "focusPoint": [
+        32.0,
+        17.0,
+        66.68
+      ],
+      "focusSourceState": "sha256:3eeb0faab2968f9b1f147880dd590382424db2fce4030fed0717211ede8d5a85"
+    },
+    {
+      "first": 127,
+      "last": 134,
+      "title": "Reflect the attached scalp",
+      "fieldMm": 64,
+      "angleDeg": 35,
+      "azimuthDeg": -80,
+      "phase": "scalp",
+      "clearParked": true,
+      "focus": "opening",
+      "workingPoints": [
+        [
+          32.0,
+          18.72922155852539,
+          76.77838344540868
+        ],
+        [
+          32.0,
+          23.713172890994947,
+          85.710848711901
+        ],
+        [
+          32.0,
+          31.365033284336555,
+          92.45001004855828
+        ],
+        [
+          32.0,
+          40.784916210532785,
+          96.22896381961895
+        ],
+        [
+          32.0,
+          50.86723440303905,
+          96.63206369200638
+        ]
+      ],
+      "offsetMm": 7
+    },
+    {
+      "first": 135,
+      "last": 136,
+      "title": "Support the reflected scalp",
+      "fieldMm": 64,
+      "angleDeg": 35,
+      "azimuthDeg": -80,
+      "phase": "scalp",
+      "clearParked": true,
+      "focus": "opening",
+      "withdrawnPoses": {
+        "left": {
+          "position": [
+            -20.0,
+            17.0,
+            85.0
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "first": 137,
+      "last": 138,
+      "title": "Supported scalp",
+      "fieldMm": 64,
+      "angleDeg": 35,
+      "azimuthDeg": -80,
+      "phase": "scalp",
+      "clearParked": true,
+      "focus": "opening",
+      "withdrawnPoses": {
+        "right": {
+          "position": [
+            84.0,
+            17.0,
+            85.0
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "first": 139,
+      "last": 141,
+      "title": "Prepare the bone opening",
+      "fieldMm": 47,
+      "angleDeg": 31,
+      "azimuthDeg": 70,
+      "phase": "bone",
+      "clearParked": true,
+      "focus": "opening"
+    },
+    {
+      "first": 142,
+      "last": 156,
+      "title": "Open a pilot through the bone",
+      "fieldMm": 25,
+      "angleDeg": 37,
+      "azimuthDeg": 80,
+      "phase": "bone",
+      "clearParked": true,
+      "focusHand": "right",
+      "focusPoint": [
+        44.75,
+        32.0,
+        65.50000000098362
+      ],
+      "focusSourceState": "sha256:8a2e8fd23d808a4f0459252c227d42b70a7b5e2b9e4ec2ea976e74c89aaae8f2",
+      "withdrawnPoses": {
+        "right": {
+          "position": [
+            84.0,
+            17.0,
+            85.0
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "first": 157,
+      "last": 157,
+      "title": "Guarded cutter entry",
+      "fieldMm": 27,
+      "angleDeg": 30,
+      "azimuthDeg": 70,
+      "phase": "bone",
+      "clearParked": true,
+      "focusHand": "right",
+      "focusPoint": [
+        44.75,
+        32.0,
+        60.7
+      ],
+      "focusSourceState": "sha256:02296831b447164d7a231356c0d6360beba6c29ca0b00f692e58a55dcc7ab3cd"
+    },
+    {
+      "first": 158,
+      "last": 180,
+      "title": "Guarded craniotomy",
+      "fieldMm": 48,
+      "angleDeg": 31,
+      "azimuthDeg": 65,
+      "phase": "bone",
+      "clearParked": true,
+      "focus": "opening"
+    },
+    {
+      "first": 181,
+      "last": 181,
+      "title": "Withdraw the guarded cutter",
+      "fieldMm": 52,
+      "angleDeg": 28,
+      "azimuthDeg": -35,
+      "phase": "bone",
+      "clearParked": true,
+      "focus": "opening",
+      "withdrawnPoses": {
+        "right": {
+          "position": [
+            84.0,
+            17.0,
+            85.0
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "first": 182,
+      "last": 185,
+      "title": "Completed bone opening",
+      "fieldMm": 56,
+      "angleDeg": 30,
+      "azimuthDeg": -35,
+      "phase": "bone",
+      "clearParked": true,
+      "focus": "opening",
+      "withdrawnPoses": {
+        "right": {
+          "position": [
+            100.0,
+            5.0,
+            95.0
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "first": 186,
+      "last": 186,
+      "title": "Grasp the freed bone flap",
+      "fieldMm": 32,
+      "angleDeg": 38,
+      "azimuthDeg": 70,
+      "phase": "bone",
+      "clearParked": true,
+      "focusHand": "left",
+      "focusPoint": [
+        32.0,
+        22.0,
+        63.45
+      ],
+      "focusSourceState": "sha256:8df2af44deb5c44de080e9c81d86eb31118694e094535f0d5754a3abaaa1b35a"
+    },
+    {
+      "first": 187,
+      "last": 190,
+      "title": "Transfer the held flap to its support",
+      "fieldMm": 66,
+      "angleDeg": 32,
+      "azimuthDeg": -35,
+      "phase": "bone",
+      "clearParked": true,
+      "focus": "opening",
+      "workingPoints": [
+        [
+          32,
+          32,
+          66
+        ],
+        [
+          58,
+          32,
+          74
+        ],
+        [
+          32.0,
+          22.0,
+          79.78153846153964
+        ],
+        [
+          45.370402673795574,
+          22.0,
+          79.74260757177
+        ],
+        [
+          58.0,
+          22.0,
+          79.78153846153964
+        ],
+        [
+          58.0,
+          22.0,
+          75.78153846153964
+        ]
+      ],
+      "offsetMm": 2,
+      "focusPoint": [
+        45.0,
+        32.0,
+        70.0
+      ],
+      "supportPair": [
+        [
+          32,
+          32,
+          66
+        ],
+        [
+          58,
+          32,
+          74
+        ]
+      ]
+    },
+    {
+      "first": 191,
+      "last": 192,
+      "title": "Parked bone flap",
+      "fieldMm": 66,
+      "angleDeg": 32,
+      "azimuthDeg": -35,
+      "phase": "bone",
+      "clearParked": true,
+      "focus": "opening",
+      "withdrawnPoses": {
+        "left": {
+          "position": [
+            -20.0,
+            17.0,
+            85.0
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "focusPoint": [
+        45.0,
+        32.0,
+        70.0
+      ],
+      "offsetMm": 2,
+      "workingPoints": [
+        [
+          32,
+          32,
+          66
+        ],
+        [
+          58,
+          32,
+          74
+        ]
+      ],
+      "supportPair": [
+        [
+          32,
+          32,
+          66
+        ],
+        [
+          58,
+          32,
+          74
+        ]
+      ]
+    },
+    {
+      "first": 193,
+      "last": 196,
+      "title": "Dural exposure",
+      "fieldMm": 36,
+      "angleDeg": 32,
+      "azimuthDeg": 65,
+      "phase": "dura",
+      "clearParked": true,
+      "focus": "opening"
+    },
+    {
+      "first": 197,
+      "last": 212,
+      "title": "Position the dural scissors",
+      "fieldMm": 28,
+      "angleDeg": 36,
+      "azimuthDeg": 70,
+      "phase": "dura",
+      "clearParked": true,
+      "focusHand": "right",
+      "focusPoint": [
+        24.5,
+        37.0,
+        59.33
+      ],
+      "focusSourceState": "sha256:904d13299a19f46620913309ea92e56ce12caacf08c195cdcb2631691ebbcf04",
+      "withdrawnPoses": {
+        "right": {
+          "position": [
+            84.0,
+            17.0,
+            85.0
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "first": 213,
+      "last": 213,
+      "title": "Engage both dural cutting edges",
+      "fieldMm": 19,
+      "angleDeg": 37,
+      "azimuthDeg": 70,
+      "phase": "dura",
+      "clearParked": true,
+      "focusHand": "right",
+      "focusPoint": [
+        24.5,
+        37.0,
+        59.03
+      ],
+      "focusSourceState": "sha256:7af4849e28e6b802d3068549e1fc60adf5bd7a9ef2e2df0d1b1b06157096e358"
+    },
+    {
+      "first": 214,
+      "last": 224,
+      "title": "Dural incision",
+      "fieldMm": 37,
+      "angleDeg": 29,
+      "azimuthDeg": 70,
+      "phase": "dura",
+      "clearParked": true,
+      "focus": "opening",
+      "withdrawnPoses": {
+        "right": {
+          "position": [
+            84.0,
+            17.0,
+            85.0
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "first": 225,
+      "last": 225,
+      "title": "Grasp the dural edge",
+      "fieldMm": 21,
+      "angleDeg": 36,
+      "azimuthDeg": -80,
+      "phase": "dura",
+      "clearParked": true,
+      "focusHand": "right",
+      "focusPoint": [
+        32.0,
+        23.0,
+        59.68
+      ],
+      "focusSourceState": "sha256:22685fd8eb69939056eb1b21453ba54c40b1a4c3bc5fc9b8168e7f3391268d88"
+    },
+    {
+      "first": 226,
+      "last": 233,
+      "title": "Reflect the grasped dura",
+      "fieldMm": 52,
+      "angleDeg": 32,
+      "azimuthDeg": -80,
+      "phase": "dura",
+      "clearParked": true,
+      "focus": "opening",
+      "workingPoints": [
+        [
+          32.0,
+          23.615479685669733,
+          63.415402504782996
+        ],
+        [
+          32.0,
+          25.39176209892717,
+          66.74402089554766
+        ],
+        [
+          32.0,
+          28.126627958842707,
+          69.30637583626094
+        ],
+        [
+          32.0,
+          31.509566322864533,
+          70.83199799667048
+        ],
+        [
+          32.0,
+          35.1582401925358,
+          71.1706018894759
+        ]
+      ],
+      "offsetMm": 7
+    },
+    {
+      "first": 234,
+      "last": 235,
+      "title": "Dural retention",
+      "fieldMm": 47,
+      "angleDeg": 32,
+      "azimuthDeg": -80,
+      "phase": "dura",
+      "clearParked": true,
+      "focus": "opening",
+      "withdrawnPoses": {
+        "left": {
+          "position": [
+            -20.0,
+            17.0,
+            85.0
+          ],
+          "quaternion": [
+            1.0,
+            -5.551115123125783e-17,
+            0.0,
+            -6.464658024290153e-18
+          ]
+        }
+      }
+    },
+    {
+      "first": 236,
+      "last": 237,
+      "title": "Supported dura",
+      "fieldMm": 45,
+      "angleDeg": 30,
+      "azimuthDeg": -75,
+      "phase": "dura",
+      "clearParked": true,
+      "focus": "opening",
+      "withdrawnPoses": {
+        "right": {
+          "position": [
+            84.0,
+            17.0,
+            85.0
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "first": 238,
+      "last": 240,
+      "title": "Inspect the exposed cortex",
+      "fieldMm": 31,
+      "angleDeg": 22,
+      "azimuthDeg": 75,
+      "phase": "treatment",
+      "clearParked": true,
+      "focus": "opening"
+    },
+    {
+      "first": 241,
+      "last": 245,
+      "title": "Inspect functional evidence",
+      "fieldMm": 24,
+      "angleDeg": 20,
+      "azimuthDeg": 70,
+      "phase": "treatment",
+      "clearParked": true,
+      "focusHand": "right",
+      "focusPoint": [
+        30.0,
+        31.0,
+        57.65
+      ],
+      "focusSourceState": "sha256:1e4ef2f85bfcfbcb4ad90fcb8cde6dd67f4f74e6b6044891f78308fb23d2f089",
+      "withdrawnPoses": {
+        "right": {
+          "position": [
+            84.0,
+            17.0,
+            85.0
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "first": 246,
+      "last": 250,
+      "title": "Protect the operative field",
+      "fieldMm": 28,
+      "angleDeg": 23,
+      "azimuthDeg": 65,
+      "phase": "treatment",
+      "clearParked": true,
+      "focusHand": "right",
+      "focusPoint": [
+        28.0,
+        28.0,
+        56.25
+      ],
+      "focusSourceState": "sha256:1fecc562721e2da9f461bb4e9d2e2434389af26a3540b2947696defcb848280c",
+      "withdrawnPoses": {
+        "right": {
+          "position": [
+            84.0,
+            17.0,
+            85.0
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "first": 251,
+      "last": 255,
+      "title": "Support the exposed cortex",
+      "fieldMm": 32,
+      "angleDeg": 24,
+      "azimuthDeg": 70,
+      "phase": "treatment",
+      "clearParked": true,
+      "focusHand": "left",
+      "focusPoint": [
+        30.0,
+        31.0,
+        57.65
+      ],
+      "focusSourceState": "sha256:0d0627dc970e54162fa1361a23ce15a0a6f821d2c450076c387811753c5d4c7c"
+    },
+    {
+      "first": 256,
+      "last": 262,
+      "title": "Dissect under supported retraction",
+      "fieldMm": 32,
+      "angleDeg": 24,
+      "azimuthDeg": 70,
+      "phase": "treatment",
+      "clearParked": true,
+      "focus": "opening",
+      "withdrawnPoses": {
+        "right": {
+          "position": [
+            84.0,
+            17.0,
+            85.0
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "left": {
+          "position": [
+            -20.0,
+            17.0,
+            85.0
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "first": 263,
+      "last": 267,
+      "title": "Divide the specimen attachment",
+      "fieldMm": 23,
+      "angleDeg": 27,
+      "azimuthDeg": 75,
+      "phase": "treatment",
+      "clearParked": true,
+      "focusHand": "right",
+      "focusPoint": [
+        34.0,
+        31.5,
+        57.02
+      ],
+      "focusSourceState": "sha256:0ae75d9f4ee9e160c70057f8c145a8863ba8d1d1c9deb1ca3b7b3169b7e22037",
+      "withdrawnPoses": {
+        "right": {
+          "position": [
+            84.0,
+            17.0,
+            85.0
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "first": 268,
+      "last": 269,
+      "title": "Retrieve the local specimen",
+      "fieldMm": 29,
+      "angleDeg": 26,
+      "azimuthDeg": 75,
+      "phase": "treatment",
+      "clearParked": true,
+      "focusHand": "right",
+      "focusPoint": [
+        34.0,
+        30.0,
+        57.25
+      ],
+      "focusSourceState": "sha256:d14256f203d5d640c068db918cbfa37ed56351b60538384055293368d74e5e12"
+    },
+    {
+      "first": 270,
+      "last": 274,
+      "title": "Specimen transfer",
+      "fieldMm": 47,
+      "angleDeg": 29,
+      "azimuthDeg": -45,
+      "phase": "treatment",
+      "clearParked": true,
+      "focus": "opening",
+      "withdrawnPoses": {
+        "right": {
+          "position": [
+            84.0,
+            17.0,
+            85.0
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "first": 275,
+      "last": 275,
+      "title": "Bipolar contact",
+      "fieldMm": 22,
+      "angleDeg": 27,
+      "azimuthDeg": 65,
+      "phase": "treatment",
+      "clearParked": true,
+      "focusHand": "right",
+      "focusPoint": [
+        34.0,
+        32.0,
+        57.15
+      ],
+      "focusSourceState": "sha256:07268dabc69235647200aadbcd3dd0a01783ffdb4a7f75c25e29f75480bf6227"
+    },
+    {
+      "first": 276,
+      "last": 281,
+      "title": "Coagulate the recorded wound source",
+      "fieldMm": 22,
+      "angleDeg": 27,
+      "azimuthDeg": 65,
+      "phase": "treatment",
+      "clearParked": true,
+      "focusHand": "right",
+      "focusPoint": [
+        34.0,
+        32.0,
+        57.15
+      ],
+      "focusSourceState": "sha256:fb10e35e693edba2f3fa3002dd33aade6cd1e93654af60966fbd9e4f6aa52006",
+      "withdrawnPoses": {
+        "right": {
+          "position": [
+            84.0,
+            17.0,
+            85.0
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "first": 282,
+      "last": 308,
+      "title": "Debulk through the exposed corridor",
+      "fieldMm": 30,
+      "angleDeg": 21,
+      "azimuthDeg": 70,
+      "phase": "treatment",
+      "clearParked": true,
+      "focus": "opening",
+      "withdrawnPoses": {
+        "right": {
+          "position": [
+            84.0,
+            17.0,
+            85.0
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "first": 309,
+      "last": 313,
+      "title": "Irrigate the operative bed",
+      "fieldMm": 27,
+      "angleDeg": 23,
+      "azimuthDeg": 75,
+      "phase": "treatment",
+      "clearParked": true,
+      "focus": "opening",
+      "withdrawnPoses": {
+        "right": {
+          "position": [
+            84.0,
+            17.0,
+            85.0
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "first": 314,
+      "last": 319,
+      "title": "Clear the free fluid and debris",
+      "fieldMm": 27,
+      "angleDeg": 23,
+      "azimuthDeg": 75,
+      "phase": "treatment",
+      "clearParked": true,
+      "focus": "opening",
+      "withdrawnPoses": {
+        "right": {
+          "position": [
+            84.0,
+            17.0,
+            85.0
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "first": 320,
+      "last": 323,
+      "title": "Local hemostatic dressing",
+      "fieldMm": 26,
+      "angleDeg": 23,
+      "azimuthDeg": 70,
+      "phase": "treatment",
+      "clearParked": true,
+      "focusHand": "right",
+      "focusPoint": [
+        34.0,
+        32.0,
+        57.2
+      ],
+      "focusSourceState": "sha256:8a0da89d65e4ab508deaf17e9df3ffb3ace12eeec4eb1e550e75d4fada1d06b3",
+      "withdrawnPoses": {
+        "right": {
+          "position": [
+            84.0,
+            17.0,
+            85.0
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "first": 324,
+      "last": 327,
+      "title": "Cottonoid retrieval",
+      "fieldMm": 29,
+      "angleDeg": 23,
+      "azimuthDeg": 70,
+      "phase": "treatment",
+      "clearParked": true,
+      "focusHand": "right",
+      "focusPoint": [
+        28.0,
+        28.0,
+        57.6
+      ],
+      "focusSourceState": "sha256:a320ba8e11e16bb55feeff5b5980769523aa08e42cb81765e98487a2acec7b10",
+      "withdrawnPoses": {
+        "right": {
+          "position": [
+            84.0,
+            17.0,
+            85.0
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "first": 328,
+      "last": 328,
+      "title": "Review the cavity and field materials",
+      "fieldMm": 33,
+      "angleDeg": 21,
+      "azimuthDeg": 70,
+      "phase": "treatment",
+      "clearParked": true,
+      "focus": "opening"
+    },
+    {
+      "first": 329,
+      "last": 331,
+      "title": "Restore the exposed layers",
+      "fieldMm": 53,
+      "angleDeg": 33,
+      "azimuthDeg": 65,
+      "phase": "closure",
+      "clearParked": true,
+      "focus": "opening"
+    },
+    {
+      "first": 332,
+      "last": 335,
+      "title": "Re-grasp the supported dura",
+      "fieldMm": 26,
+      "angleDeg": 34,
+      "azimuthDeg": 70,
+      "phase": "closure",
+      "clearParked": true,
+      "focusHand": "right",
+      "focusPoint": [
+        32.0,
+        35.15824017527438,
+        70.62
+      ],
+      "focusSourceState": "sha256:3b6e0d796933c54e68906e9865a886169793f45c3b18052be6193b436532b28b"
+    },
+    {
+      "first": 336,
+      "last": 340,
+      "title": "Dural stay retrieval",
+      "fieldMm": 43,
+      "angleDeg": 30,
+      "azimuthDeg": -75,
+      "phase": "closure",
+      "clearParked": true,
+      "focus": "opening",
+      "withdrawnPoses": {
+        "left": {
+          "position": [
+            -20.0,
+            17.0,
+            85.0
+          ],
+          "quaternion": [
+            1.0,
+            -5.551115123125783e-17,
+            0.0,
+            -6.464658024290153e-18
+          ]
+        }
+      }
+    },
+    {
+      "first": 341,
+      "last": 350,
+      "title": "Return the supported dura",
+      "fieldMm": 47,
+      "angleDeg": 34,
+      "azimuthDeg": 70,
+      "phase": "closure",
+      "clearParked": true,
+      "focus": "opening",
+      "workingPoints": [
+        [
+          32.0,
+          31.509566309288715,
+          70.28139610232694
+        ],
+        [
+          32.0,
+          28.12662794998306,
+          68.75577393959172
+        ],
+        [
+          32.0,
+          25.391762094571583,
+          66.19341899910685
+        ],
+        [
+          32.0,
+          23.61547968451505,
+          62.86480061061634
+        ],
+        [
+          32.0,
+          23.0,
+          59.12939810924058
+        ]
+      ],
+      "offsetMm": 7,
+      "withdrawnPoses": {
+        "right": {
+          "position": [
+            84.0,
+            17.0,
+            85.0
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "first": 351,
+      "last": 359,
+      "title": "Approximate the dural margins",
+      "fieldMm": 33,
+      "angleDeg": 32,
+      "azimuthDeg": 70,
+      "phase": "closure",
+      "clearParked": true,
+      "focus": "opening",
+      "withdrawnPoses": {
+        "right": {
+          "position": [
+            84.0,
+            17.0,
+            85.0
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "first": 360,
+      "last": 360,
+      "title": "Suction at the pilot rim",
+      "fieldMm": 23,
+      "angleDeg": 36,
+      "azimuthDeg": 75,
+      "phase": "closure",
+      "clearParked": true,
+      "focusHand": "right",
+      "focusPoint": [
+        45.0,
+        32.0,
+        63.9
+      ],
+      "focusSourceState": "sha256:1f6c7d763319041a63404bb237e0b1f6e934135334bfa72a00cf02b422f9be57"
+    },
+    {
+      "first": 361,
+      "last": 362,
+      "title": "Clear the bone-cutting debris",
+      "fieldMm": 23,
+      "angleDeg": 36,
+      "azimuthDeg": 75,
+      "phase": "closure",
+      "clearParked": true,
+      "focusHand": "right",
+      "focusPoint": [
+        45.0,
+        32.0,
+        63.9
+      ],
+      "focusSourceState": "sha256:1ecf0d23ab31f0b4eb2cba4c852fe8b9360135b15fe11ef391e93fe00275e2de",
+      "withdrawnPoses": {
+        "right": {
+          "position": [
+            84.0,
+            17.0,
+            85.0
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "first": 363,
+      "last": 366,
+      "title": "Clear the flap replacement corridor",
+      "fieldMm": 56,
+      "angleDeg": 30,
+      "azimuthDeg": -35,
+      "phase": "closure",
+      "clearParked": true,
+      "focus": "opening",
+      "withdrawnPoses": {
+        "right": {
+          "position": [
+            100.0,
+            5.0,
+            95.0
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "first": 367,
+      "last": 367,
+      "title": "Re-grasp the parked bone",
+      "fieldMm": 32,
+      "angleDeg": 36,
+      "azimuthDeg": 75,
+      "phase": "closure",
+      "clearParked": true,
+      "focusHand": "left",
+      "focusPoint": [
+        58.0,
+        22.0,
+        76.02000000000118
+      ],
+      "focusSourceState": "sha256:93b9dbf9a96ba59f61c41300804254f9da180b0650b38dd32f0a6b840095e08d"
+    },
+    {
+      "first": 368,
+      "last": 371,
+      "title": "Replace the supported flap",
+      "fieldMm": 66,
+      "angleDeg": 32,
+      "azimuthDeg": -35,
+      "phase": "closure",
+      "clearParked": true,
+      "focus": "opening",
+      "workingPoints": [
+        [
+          32,
+          32,
+          66
+        ],
+        [
+          58,
+          32,
+          74
+        ],
+        [
+          58.0,
+          22.0,
+          80.02000000000083
+        ],
+        [
+          45.419981615452045,
+          22.0,
+          79.9758581534831
+        ],
+        [
+          32.0,
+          22.0,
+          80.02000000000083
+        ],
+        [
+          32.0,
+          22.0,
+          64.02000000000083
+        ]
+      ],
+      "offsetMm": 2,
+      "focusPoint": [
+        45.0,
+        32.0,
+        70.0
+      ],
+      "supportPair": [
+        [
+          32,
+          32,
+          66
+        ],
+        [
+          58,
+          32,
+          74
+        ]
+      ]
+    },
+    {
+      "first": 372,
+      "last": 376,
+      "title": "Restored bone seat",
+      "fieldMm": 55,
+      "angleDeg": 32,
+      "azimuthDeg": -75,
+      "phase": "closure",
+      "clearParked": true,
+      "focus": "opening",
+      "withdrawnPoses": {
+        "left": {
+          "position": [
+            -20.0,
+            17.0,
+            85.0
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "first": 377,
+      "last": 385,
+      "title": "Fix the replaced bone",
+      "fieldMm": 44,
+      "angleDeg": 30,
+      "azimuthDeg": 75,
+      "phase": "closure",
+      "clearParked": true,
+      "focus": "opening",
+      "withdrawnPoses": {
+        "right": {
+          "position": [
+            84.0,
+            17.0,
+            85.0
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "first": 386,
+      "last": 393,
+      "title": "Scalp clip retrieval",
+      "fieldMm": 24,
+      "angleDeg": 38,
+      "azimuthDeg": 65,
+      "phase": "closure",
+      "clearParked": true,
+      "focusHand": "right",
+      "focusPoint": [
+        32.0,
+        15.1,
+        68.28899999523162
+      ],
+      "focusSourceState": "sha256:95cec994904c071c22e421ec1bd0a6a314a3d6174994ce619b936f972655656e",
+      "withdrawnPoses": {
+        "right": {
+          "position": [
+            84.0,
+            17.0,
+            85.0
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "first": 394,
+      "last": 394,
+      "title": "Contact the reopened scalp source",
+      "fieldMm": 23,
+      "angleDeg": 35,
+      "azimuthDeg": 65,
+      "phase": "closure",
+      "clearParked": true,
+      "focusHand": "right",
+      "focusPoint": [
+        32.0,
+        16.0,
+        65.3
+      ],
+      "focusSourceState": "sha256:cf06acad87569c2d681037f6e83709366d169753502a889d7744f28cbc91ee06"
+    },
+    {
+      "first": 395,
+      "last": 400,
+      "title": "Scalp hemostasis after clip retrieval",
+      "fieldMm": 23,
+      "angleDeg": 35,
+      "azimuthDeg": 65,
+      "phase": "closure",
+      "clearParked": true,
+      "focusHand": "right",
+      "focusPoint": [
+        32.0,
+        16.0,
+        65.3
+      ],
+      "focusSourceState": "sha256:f76f5326231ddaf1e348963f29f2de5d123cd0c1a067cc29133d100d9f81b7a7",
+      "withdrawnPoses": {
+        "right": {
+          "position": [
+            84.0,
+            17.0,
+            85.0
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "first": 401,
+      "last": 404,
+      "title": "Re-grasp the supported scalp",
+      "fieldMm": 26,
+      "angleDeg": 37,
+      "azimuthDeg": 75,
+      "phase": "closure",
+      "clearParked": true,
+      "focusHand": "right",
+      "focusPoint": [
+        32.0,
+        50.867234389014264,
+        96.62
+      ],
+      "focusSourceState": "sha256:d833982539cbcf7cee5190c8e3cb4f83d7bc2fa1ea5a26a5619cd0d15fb5415c"
+    },
+    {
+      "first": 405,
+      "last": 409,
+      "title": "Scalp stay retrieval",
+      "fieldMm": 48,
+      "angleDeg": 34,
+      "azimuthDeg": -80,
+      "phase": "closure",
+      "clearParked": true,
+      "focus": "opening",
+      "withdrawnPoses": {
+        "left": {
+          "position": [
+            -20.0,
+            17.0,
+            85.0
+          ],
+          "quaternion": [
+            1.0,
+            -5.551115123125783e-17,
+            0.0,
+            -6.464658024290153e-18
+          ]
+        }
+      }
+    },
+    {
+      "first": 410,
+      "last": 419,
+      "title": "Return the reflected scalp",
+      "fieldMm": 64,
+      "angleDeg": 35,
+      "azimuthDeg": -80,
+      "phase": "closure",
+      "clearParked": true,
+      "focus": "opening",
+      "workingPoints": [
+        [
+          32.0,
+          40.784916199395056,
+          96.21690012337625
+        ],
+        [
+          32.0,
+          31.36503327702392,
+          92.43794635019671
+        ],
+        [
+          32.0,
+          23.713172887386484,
+          85.69878501356798
+        ],
+        [
+          32.0,
+          18.72922155756682,
+          76.76631974883243
+        ],
+        [
+          32.0,
+          17.0,
+          66.66793630614002
+        ]
+      ],
+      "offsetMm": 7,
+      "withdrawnPoses": {
+        "right": {
+          "position": [
+            84.0,
+            17.0,
+            85.0
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "first": 420,
+      "last": 425,
+      "title": "Approximate the scalp layers",
+      "fieldMm": 43,
+      "angleDeg": 34,
+      "azimuthDeg": 75,
+      "phase": "closure",
+      "clearParked": true,
+      "focus": "opening",
+      "withdrawnPoses": {
+        "right": {
+          "position": [
+            84.0,
+            17.0,
+            85.0
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "first": 426,
+      "last": 426,
+      "title": "Review closure and the final count",
+      "fieldMm": 55,
+      "angleDeg": 28,
+      "azimuthDeg": 65,
+      "phase": "closure",
+      "clearParked": true,
+      "focus": "opening"
+    }
+  ],
+  "stills": [
+    0,
+    4,
+    5,
+    6,
+    120,
+    121,
+    125,
+    126,
+    127,
+    134,
+    135,
+    136,
+    137,
+    138,
+    139,
+    141,
+    142,
+    156,
+    157,
+    158,
+    180,
+    181,
+    182,
+    185,
+    186,
+    187,
+    190,
+    191,
+    192,
+    193,
+    196,
+    197,
+    212,
+    213,
+    214,
+    224,
+    225,
+    226,
+    233,
+    234,
+    235,
+    236,
+    237,
+    238,
+    240,
+    241,
+    245,
+    246,
+    250,
+    251,
+    255,
+    256,
+    262,
+    263,
+    267,
+    268,
+    269,
+    270,
+    274,
+    275,
+    276,
+    281,
+    282,
+    308,
+    309,
+    313,
+    314,
+    319,
+    320,
+    323,
+    324,
+    327,
+    328,
+    329,
+    331,
+    332,
+    335,
+    336,
+    340,
+    341,
+    350,
+    351,
+    359,
+    360,
+    361,
+    362,
+    363,
+    366,
+    367,
+    368,
+    371,
+    372,
+    376,
+    377,
+    385,
+    386,
+    393,
+    394,
+    395,
+    400,
+    401,
+    404,
+    405,
+    409,
+    410,
+    419,
+    420,
+    425,
+    426
+  ],
+  "holdSecondsAtAction": {
+    "6": 0.7,
+    "7": 0.42,
+    "122": 0.7,
+    "127": 0.7,
+    "128": 0.42,
+    "136": 0.42,
+    "138": 0.42,
+    "143": 0.7,
+    "158": 0.7,
+    "159": 0.42,
+    "182": 0.42,
+    "183": 0.42,
+    "187": 0.7,
+    "188": 0.42,
+    "192": 0.42,
+    "198": 0.7,
+    "214": 0.7,
+    "215": 0.42,
+    "226": 0.7,
+    "227": 0.42,
+    "235": 0.42,
+    "237": 0.42,
+    "242": 0.7,
+    "247": 0.7,
+    "252": 0.7,
+    "257": 0.42,
+    "264": 0.7,
+    "269": 0.7,
+    "271": 0.42,
+    "276": 0.7,
+    "277": 0.7,
+    "283": 0.42,
+    "310": 0.42,
+    "315": 0.42,
+    "321": 0.7,
+    "325": 0.7,
+    "329": 0.42,
+    "333": 0.7,
+    "337": 0.42,
+    "342": 0.42,
+    "352": 0.42,
+    "361": 0.7,
+    "362": 0.7,
+    "364": 0.42,
+    "368": 0.7,
+    "369": 0.42,
+    "373": 0.42,
+    "378": 0.42,
+    "387": 0.7,
+    "395": 0.7,
+    "396": 0.7,
+    "402": 0.7,
+    "406": 0.42,
+    "411": 0.42,
+    "421": 0.42,
+    "427": 0.42
+  },
+  "actions": [
+    {
+      "stateAfter": "sha256:3ccf81533350ccfd46b49a649acd7d57eb589d9fe4cfb213b7a77961e27094d6",
+      "text": "Inspect intact scalp and registered approach"
+    },
+    {
+      "stateAfter": "sha256:6cc69ffbbd0eb7b61592886a321fc864ce62ac7134f261a827c5bb86e62c9e4f",
+      "text": "Select scalpel"
+    },
+    {
+      "stateAfter": "sha256:72f467ab87788c262ae6db50774bb5a5f240c2dcb061ea9d99588439020813b0",
+      "text": "Mount scalpel at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:2c2520d6af8a3bc89fdc09785a18b5927a63fd1a69e0228a5a44be87d9c1e644",
+      "text": "Align scalpel over the operative site"
+    },
+    {
+      "stateAfter": "sha256:852b41bc4ab7dca460f1a1daa1252daa26c4e9f502d35f76043837891075d041",
+      "text": "Approach intact scalp"
+    },
+    {
+      "stateAfter": "sha256:34d8901f848f8fa22e493fe87c7851e894c2dddfaf02ef0974cecb1553d885bc",
+      "text": "Engage scalp edge"
+    },
+    {
+      "stateAfter": "sha256:18727f8fdd52e29637b226530c95a4637aa5ec2ec27e96f02c832e75f9dabf5a",
+      "text": "Incise scalp around the calvarial contour"
+    },
+    {
+      "stateAfter": "sha256:b3e7c253d3635d121fff9efa3282654946169cb0ea10c531fcb9264a5258d3e8",
+      "text": "Incise scalp around the calvarial contour"
+    },
+    {
+      "stateAfter": "sha256:b5bfd0a50810a06e4b671721f34f031d8c3be8c121a5ee8e4932dcede05e4f69",
+      "text": "Incise scalp around the calvarial contour"
+    },
+    {
+      "stateAfter": "sha256:c6e1af5558b42514e311eb2500765747f5b2a83c83ac8930aa8729708fcd2b89",
+      "text": "Incise scalp around the calvarial contour"
+    },
+    {
+      "stateAfter": "sha256:f6d7035e66e8c68d6328cd64aa6e54d2717d5e42779c14cfa23e6cd950588ba9",
+      "text": "Incise scalp around the calvarial contour"
+    },
+    {
+      "stateAfter": "sha256:414af1a5586bfa6a2a7cccd3ba1d664fbb126942f9d9ebd529be6f7172796c0e",
+      "text": "Incise scalp around the calvarial contour"
+    },
+    {
+      "stateAfter": "sha256:393866a64a6b8b78f184af13f1509ad9e88d053754e7bda709686b2fe1990b8c",
+      "text": "Incise scalp around the calvarial contour"
+    },
+    {
+      "stateAfter": "sha256:a7cf55486bb48e8b4a416b0e11f0d31e081369c98eb1739e44747029b3e5ebf4",
+      "text": "Incise scalp around the calvarial contour"
+    },
+    {
+      "stateAfter": "sha256:8de1cdb4632989c5d2ede3628035ed818c2549d9241d9a7563c8909736ba8b49",
+      "text": "Incise scalp around the calvarial contour"
+    },
+    {
+      "stateAfter": "sha256:50d5161cad40729adba458f0fda529138ca4752283caff8c0ddc232bac9f0efc",
+      "text": "Incise scalp around the calvarial contour"
+    },
+    {
+      "stateAfter": "sha256:1f59c030371536833653db55451db65a72c84d1c19eeaf32e7e9852d234ece1f",
+      "text": "Incise scalp around the calvarial contour"
+    },
+    {
+      "stateAfter": "sha256:6c19d63eb209ec3baceff4816e9984399e36baca3623d7df5779c3255bf901ab",
+      "text": "Incise scalp around the calvarial contour"
+    },
+    {
+      "stateAfter": "sha256:ce8d90c9f8b77ecee64162e339c57f051dff35fe861cd90113c96b7dec8c2df2",
+      "text": "Incise scalp around the calvarial contour"
+    },
+    {
+      "stateAfter": "sha256:5220afeb167d598eca6548998a0f4b4a25cb86a93e3eb40cda1b151eff08217c",
+      "text": "Incise scalp around the calvarial contour"
+    },
+    {
+      "stateAfter": "sha256:987be6ae244a9ffbb6aca9d29e78e335f090e288f011f381fff11b59ca5cec0f",
+      "text": "Incise scalp around the calvarial contour"
+    },
+    {
+      "stateAfter": "sha256:da53233650a8810f2350113ef7c3453f5eaf9fe598ed566316491de075b1cc66",
+      "text": "Disengage scalp cutting instrument"
+    },
+    {
+      "stateAfter": "sha256:c4bf3a62a9e0c5362c680afc894a6b6c597385a9fdf8e88f18c39c07e1eee006",
+      "text": "Mount scalpel at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:4cbb386904dd7c21f01c49e5670ca885fe2a830f79094086d097589d39bed577",
+      "text": "Align scalpel over the operative site"
+    },
+    {
+      "stateAfter": "sha256:228c2549eea24abb7582380660cf67b901b0be42a607fbe5aa293d2b1c32e329",
+      "text": "Reach the superficial side of the remaining scalp attachment"
+    },
+    {
+      "stateAfter": "sha256:f9360479575f4554a2bc9a0f0a13b8fa3859ff93d1ac19d2daa36b39e808f667",
+      "text": "Divide the remaining deep scalp attachment under local clearance"
+    },
+    {
+      "stateAfter": "sha256:12fdb5c342320251168deeb0733568bc6d2bcab8f3c1232bf250401095616d7b",
+      "text": "Back the blade away from the adjacent table"
+    },
+    {
+      "stateAfter": "sha256:3c93b757524587fce178d4077bd7caf788609e5d8d171877408983027a0a6bcc",
+      "text": "Withdraw from the completed local cut"
+    },
+    {
+      "stateAfter": "sha256:0e6432104c0e341b4a7d179d4e11cae66a86334fd0073d667034279e3f72ab7f",
+      "text": "Mount scalpel at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:bca77e45ff18f3b02513c8b908bbdd980b84d4f5682fc5a63e2f12110d85a122",
+      "text": "Align scalpel over the operative site"
+    },
+    {
+      "stateAfter": "sha256:f7e4e64e744b8a4564877ab57e60eeda97109a02d08dd73f7541902756010ad1",
+      "text": "Reach the superficial side of the remaining scalp attachment"
+    },
+    {
+      "stateAfter": "sha256:c081672664608faf638e1063774b0b33d8f812db02a3550ef675ec2006be4b7a",
+      "text": "Divide the remaining deep scalp attachment under local clearance"
+    },
+    {
+      "stateAfter": "sha256:8b6bdfac840703919ec54292af9db94613f8866548bfd0ef4b2c475eae015974",
+      "text": "Back the blade away from the adjacent table"
+    },
+    {
+      "stateAfter": "sha256:c871848397f01a95361ed3481cf6541c54bece0db02e1320b05e0d070d669978",
+      "text": "Withdraw from the completed local cut"
+    },
+    {
+      "stateAfter": "sha256:d32d1960fbf3a1cd161573f11495423a7e974745042f3feb1e51b6866463fce1",
+      "text": "Mount scalpel at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:a6ff0e10d62508453ab4bd6131de40c53fd9bb7c9ca81dda858aa65181a6167f",
+      "text": "Align scalpel over the operative site"
+    },
+    {
+      "stateAfter": "sha256:7449b2c07538444f5469cbbe19a825fc17db05eaf1c84e07c89f1508fdbeea10",
+      "text": "Reach the superficial side of the remaining scalp attachment"
+    },
+    {
+      "stateAfter": "sha256:0d7c203027a2d37526b79fb4219f29e6db23785ed8cf356d252dcd259d759bb2",
+      "text": "Divide the remaining deep scalp attachment under local clearance"
+    },
+    {
+      "stateAfter": "sha256:43568fc78a6c5f232db9b69926fe56fc5a3c15a2c8c9c7b754023aadbec43bcb",
+      "text": "Back the blade away from the adjacent table"
+    },
+    {
+      "stateAfter": "sha256:d7fadbe5f19477a5dcda2540f1ac3a4c993af1dab7125fac28af5b6f3d30d984",
+      "text": "Withdraw from the completed local cut"
+    },
+    {
+      "stateAfter": "sha256:be37977b314049755807da84d50e426294c6d8e623b56464dc50d068660e1c30",
+      "text": "Mount scalpel at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:a6623be1dc496a2ccaa0c3988a737db2417f94ba7869c0403e76c0f0d2d138be",
+      "text": "Align scalpel over the operative site"
+    },
+    {
+      "stateAfter": "sha256:8facfdf295b3c7cb2f5aaa7ef2c8cad6e90c54473300bb91826cb98426385a5e",
+      "text": "Reach the superficial side of the remaining scalp attachment"
+    },
+    {
+      "stateAfter": "sha256:dbf5da37eabd3824d8755923da0d3f8d638087a1fa1763b95177d06a2a22ca85",
+      "text": "Divide the remaining deep scalp attachment under local clearance"
+    },
+    {
+      "stateAfter": "sha256:e61154fa322145a747761c76969498ad910a9f4ab99719eb1304573c86a29241",
+      "text": "Back the blade away from the adjacent table"
+    },
+    {
+      "stateAfter": "sha256:c87a1484e1a6b5bdc2e10bf72ad59e52f7694fc7b4c6f5d6f302bfeef8c712b7",
+      "text": "Withdraw from the completed local cut"
+    },
+    {
+      "stateAfter": "sha256:c1b94f25df111004b94da3d32002be8e6c1f6677d80f9ed7c89d08fb1f1c6c1a",
+      "text": "Mount scalpel at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:f96f063da1c46589ae971a6ae1ade8928ee7af328858656227b17dff71e6b67c",
+      "text": "Align scalpel over the operative site"
+    },
+    {
+      "stateAfter": "sha256:befae61fe6cec4b07842cade69e9312ad569760628f575217835157a73e196f2",
+      "text": "Reach the superficial side of the remaining scalp attachment"
+    },
+    {
+      "stateAfter": "sha256:ef680fec541edba842ca3c3e7c112fc620bfaea8addaae0be3b894976f7c02e7",
+      "text": "Divide the remaining deep scalp attachment under local clearance"
+    },
+    {
+      "stateAfter": "sha256:7d2ead57d5d5719cf709e0fdfc547222bb94f0412cbdf1b86e206aae62156939",
+      "text": "Back the blade away from the adjacent table"
+    },
+    {
+      "stateAfter": "sha256:f8b4df1d6af4a64a1359432ee0c631bae794b62d7d88fd0ee0f5b22e75b7d824",
+      "text": "Withdraw from the completed local cut"
+    },
+    {
+      "stateAfter": "sha256:b0a3dc74624ba45f0a0d556ca3730e320c9bec9870fba7069110286f22c3bef3",
+      "text": "Mount scalpel at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:351eb64a6c719360cc3c7922bd78b55e8b77a20f5a79776946d1d3d38da351e0",
+      "text": "Align scalpel over the operative site"
+    },
+    {
+      "stateAfter": "sha256:02048c3bc00247e65ccedf98809edb1d9ac3f85fc698260246ee60418eb7c949",
+      "text": "Reach the superficial side of the remaining scalp attachment"
+    },
+    {
+      "stateAfter": "sha256:0f86796cf2fbaa342e4340ba6228b030c38666f439a463971916c11d2a9e8974",
+      "text": "Divide the remaining deep scalp attachment under local clearance"
+    },
+    {
+      "stateAfter": "sha256:7e5e06cc6a228b47cc57df628ee1529a81a18273c634a35cadf06e1f722459f3",
+      "text": "Back the blade away from the adjacent table"
+    },
+    {
+      "stateAfter": "sha256:2ceed21fdef4328d16ff24644e2327fc9f0f65c321fdbbe4138574c9540375f9",
+      "text": "Withdraw from the completed local cut"
+    },
+    {
+      "stateAfter": "sha256:8798482b9ea2c3ecc64edca1600564c60af4d17979f26ff0c7751b72849f8321",
+      "text": "Mount scalpel at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:a1638e674fa3e9cae15920f2c39586b79ac61c178a818b67af767d9eca5e4551",
+      "text": "Align scalpel over the operative site"
+    },
+    {
+      "stateAfter": "sha256:4b73101d4fae779a6c34cfe40bdf0631cf5d3b2e45cc378259723b136c5d7f51",
+      "text": "Reach the superficial side of the remaining scalp attachment"
+    },
+    {
+      "stateAfter": "sha256:ee34d5880fe57a65d614f79acee89943ebf5a2ee9fdc96f04dafe954f4aa3c44",
+      "text": "Divide the remaining deep scalp attachment under local clearance"
+    },
+    {
+      "stateAfter": "sha256:28bd251dff9da9b0b6d7ba46912192677db8360878a35ebe1852e0bd1262cb94",
+      "text": "Back the blade away from the adjacent table"
+    },
+    {
+      "stateAfter": "sha256:dc333f48435e16dc61f966d192eb237e2027a2da6d0f0588a83a67e523147cc3",
+      "text": "Withdraw from the completed local cut"
+    },
+    {
+      "stateAfter": "sha256:89c87c9d54b825f7b17077479d690432654467fd48b4e5bfece556f68121b783",
+      "text": "Mount scalpel at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:f6426e3a53985f6b99bafa2540d08c2635843b191e95cea2ee89932259cddfad",
+      "text": "Align scalpel over the operative site"
+    },
+    {
+      "stateAfter": "sha256:9d3ffa6a0bd0eff9c9ded4c9cb987d80d397836d67cd6db2c18663e47c46deca",
+      "text": "Reach the superficial side of the remaining scalp attachment"
+    },
+    {
+      "stateAfter": "sha256:d5e4978c1bc20c52439f293471c413cb1c0592bd25a87faa325809f351cec1b2",
+      "text": "Divide the remaining deep scalp attachment under local clearance"
+    },
+    {
+      "stateAfter": "sha256:542326419c61f95dc6c5bc1cce7dddc3aa88c6530d1d04bf1eac9a7add5570d5",
+      "text": "Back the blade away from the adjacent table"
+    },
+    {
+      "stateAfter": "sha256:b7cf42aeb0589fdb9613b3404b5e3655bdcabd12b56724ab6c842b4021490092",
+      "text": "Withdraw from the completed local cut"
+    },
+    {
+      "stateAfter": "sha256:98818f3dd54596def42ce663fceab4cad7f13b991adf3954c24ab9c9c55298d2",
+      "text": "Mount scalpel at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:a97a38de3ae2fc9b0e1d5b8858cc00535703382cec98c1a3e3dc36b6f2651d3e",
+      "text": "Align scalpel over the operative site"
+    },
+    {
+      "stateAfter": "sha256:3705c3dd71d212a44c2d8767560e7fc20f8d34da9320ef3c4a2bae3a402d0ddf",
+      "text": "Reach the superficial side of the remaining scalp attachment"
+    },
+    {
+      "stateAfter": "sha256:32de83b24de258a314a59a4bec7f173a11973ae5c51323895986e12922baa58e",
+      "text": "Divide the remaining deep scalp attachment under local clearance"
+    },
+    {
+      "stateAfter": "sha256:e3e3e4c0a3cecd256ab038425e9be6241a48148c40f77fb368d3010410e74759",
+      "text": "Back the blade away from the adjacent table"
+    },
+    {
+      "stateAfter": "sha256:912bef97b5b5143b5c24d5750310507003333d9fe89c8bf4425068a8345e810b",
+      "text": "Withdraw from the completed local cut"
+    },
+    {
+      "stateAfter": "sha256:6564f9bc91289a1b5a5fe50aa41a609ff82666cc0213cbe6f4659bde0b31e732",
+      "text": "Mount scalpel at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:a6e07367a1146b5e3621d7fda2e1d4d39a37f8c2596463e859dd6363db1c803f",
+      "text": "Align scalpel over the operative site"
+    },
+    {
+      "stateAfter": "sha256:077c07fb19372b1c0b80e9b7edb2d1163af02e85ca7b59165f87d1b332127ee2",
+      "text": "Reach the superficial side of the remaining scalp attachment"
+    },
+    {
+      "stateAfter": "sha256:6457da2b0b5d080e493f700d6f0db8b6517a85f23412d86f8dd608ebdc8a1aa5",
+      "text": "Divide the remaining deep scalp attachment under local clearance"
+    },
+    {
+      "stateAfter": "sha256:45ec2b89bf1c9a1bbe983eed5c2f4d70016be23a4420b0d7d1a8d9d82ca3b59b",
+      "text": "Back the blade away from the adjacent table"
+    },
+    {
+      "stateAfter": "sha256:b0cd63604474cae73351b68acbf642812cc66de28e3546aeafb8f494fe9f37c2",
+      "text": "Withdraw from the completed local cut"
+    },
+    {
+      "stateAfter": "sha256:6eb811b016461687414cfe7f883dfc8b1c41dafa1c8b9506b05abac973761993",
+      "text": "Mount scalpel at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:d87eba577d996c0da18583a94cd12cd655acd0371661f0f4e38ceb8654868aff",
+      "text": "Align scalpel over the operative site"
+    },
+    {
+      "stateAfter": "sha256:9a7c100b59c5a9bbc6b714852b8bc94704e683f27fad98708935f22df8e3506c",
+      "text": "Reach the superficial side of the remaining scalp attachment"
+    },
+    {
+      "stateAfter": "sha256:62d21a3b6963001545b01d3d133ba057f59ac3ac882ea99ea63248f8ea4960e6",
+      "text": "Divide the remaining deep scalp attachment under local clearance"
+    },
+    {
+      "stateAfter": "sha256:ea0ad905dd58c95187c5d3f9d42e1ca16c500a4c08534a1ecab22fb5cc23bfb9",
+      "text": "Back the blade away from the adjacent table"
+    },
+    {
+      "stateAfter": "sha256:849c5eba207963e9e4a11009aa1c29951e9bffee1961f7a478e35d5d167820fb",
+      "text": "Withdraw from the completed local cut"
+    },
+    {
+      "stateAfter": "sha256:1d911e273b98f9d080f27231954ec70702258601e8e426d9407643e0acf9d055",
+      "text": "Mount scalpel at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:4e8fb498e296502ddd1a046e81d32612fe6730c3cb316a9e54fe6e9fb2fc3e09",
+      "text": "Align scalpel over the operative site"
+    },
+    {
+      "stateAfter": "sha256:07efeafb379c71e94a53a17de6ec27fa28ff605c5d37e742a597e089fef58665",
+      "text": "Reach the superficial side of the remaining scalp attachment"
+    },
+    {
+      "stateAfter": "sha256:44b5527e8f5e2b37d7631948ce1e6fe6b3d20aed88ef722d19e140357641dd0d",
+      "text": "Divide the remaining deep scalp attachment under local clearance"
+    },
+    {
+      "stateAfter": "sha256:a0f0edf8520926c0153ad671f0a9e1f853ba778a73a95e92ee3c7633ab16fae1",
+      "text": "Back the blade away from the adjacent table"
+    },
+    {
+      "stateAfter": "sha256:41a60cb57a1f2eda286e14e63cc17a9ddaae8a6f62b700717b1390d4c1c26f43",
+      "text": "Withdraw from the completed local cut"
+    },
+    {
+      "stateAfter": "sha256:653ec8c6f3399e779c286acb172812b4fbecfb13c02b7bd48efa684301567020",
+      "text": "Mount scalpel at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:d735f42a8b7521e8b758b0c4db15d7df509175f1d3c8a4cc447359f95ece3357",
+      "text": "Align scalpel over the operative site"
+    },
+    {
+      "stateAfter": "sha256:b0f4fe62f21c682a757ff11a33e54d4aecfd64fbbd8f2ddf9158852f845804b4",
+      "text": "Reach the superficial side of the remaining scalp attachment"
+    },
+    {
+      "stateAfter": "sha256:a749bf0f202c872c6f95abd16b9210293fbacac9315d270f296d5329fdd8a134",
+      "text": "Divide the remaining deep scalp attachment under local clearance"
+    },
+    {
+      "stateAfter": "sha256:1eaaf4ed7b193cb6ff3653b20e7a92184093589b8a50e87ebf3f014af6d92dd1",
+      "text": "Back the blade away from the adjacent table"
+    },
+    {
+      "stateAfter": "sha256:8744ea8909945868781cba87a398b8eff0e6022011ce19a639210811c044e0f7",
+      "text": "Withdraw from the completed local cut"
+    },
+    {
+      "stateAfter": "sha256:abd06289aad590f2cd4c7d2d77a058f34164d4369ed364fd679f6cd82a873c80",
+      "text": "Mount scalpel at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:0c700491fd1001dcae7723e77567f4171496b5adb63c5379f8714d713e35102d",
+      "text": "Align scalpel over the operative site"
+    },
+    {
+      "stateAfter": "sha256:58e1d9fb184ff3a4f71b3a51df29b22b4247f86d0f3c2e3e515c2cd526b492f1",
+      "text": "Reach the superficial side of the remaining scalp attachment"
+    },
+    {
+      "stateAfter": "sha256:a5756bd318cb569d426507778f77114b619fdd71e39e8f96018a137a3f4534ce",
+      "text": "Divide the remaining deep scalp attachment under local clearance"
+    },
+    {
+      "stateAfter": "sha256:ac4188095c3ce824279e1732b979abccc254834477e3bba989db7ae8f88a7ba1",
+      "text": "Back the blade away from the adjacent table"
+    },
+    {
+      "stateAfter": "sha256:838450413c143b576659adfbec2a4a1d5521a0854e7130622d53a2071b73bfa1",
+      "text": "Withdraw from the completed local cut"
+    },
+    {
+      "stateAfter": "sha256:0c6dd64e960b6396fbf3360a4b42708ef1e49f8f3a12d44898051b9195ebaf2f",
+      "text": "Mount scalpel at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:83364f42f5dbdfc2ad4f83784fc4852f6c17fa1d78e57f5d9dc4b348e8a790df",
+      "text": "Align scalpel over the operative site"
+    },
+    {
+      "stateAfter": "sha256:baed360f3e7c1045a3b61493978556fb1a334dd956ff05df5129c92dbf688e18",
+      "text": "Reach the superficial side of the remaining scalp attachment"
+    },
+    {
+      "stateAfter": "sha256:93098b917c08a2fffc0621697d8916d99b3bf1dcc508053915af5d8b38f1fb6e",
+      "text": "Divide the remaining deep scalp attachment under local clearance"
+    },
+    {
+      "stateAfter": "sha256:76863b320df5c1035813c3d2d5b3a9bf07637bfe04359ef286d8972697913ce6",
+      "text": "Back the blade away from the adjacent table"
+    },
+    {
+      "stateAfter": "sha256:93b74fb1284ca9a2534d19353c95a697003ce084f5aad620599d12020e0e0dfe",
+      "text": "Withdraw from the completed local cut"
+    },
+    {
+      "stateAfter": "sha256:74542c82e24e329ef52444fae65cc0c6c539aed7d112f419f7d9a4f574e3e31f",
+      "text": "Mount scalpel at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:a4ba389369843a96c06289356a322bd31da786f4cf836dbb4d31e0fb3b7e452c",
+      "text": "Align scalpel over the operative site"
+    },
+    {
+      "stateAfter": "sha256:96a58a2cd0a203875010a93d5e5f99ab6c5d2acae04bbce08be98e4f1be36e60",
+      "text": "Reach the superficial side of the remaining scalp attachment"
+    },
+    {
+      "stateAfter": "sha256:f4b7080ebe61a46f2e1ab816f33ca4ece4ba728c0e460ff174ea6dc435c520b8",
+      "text": "Divide the remaining deep scalp attachment under local clearance"
+    },
+    {
+      "stateAfter": "sha256:6645a882944c3ea661e8f08b4d1ea40e1e95a7faa6e65d7a793b84491dbe131f",
+      "text": "Back the blade away from the adjacent table"
+    },
+    {
+      "stateAfter": "sha256:5e579921e65849b3155a7f613afb8903d69075060b36b3c71ca19a630b765058",
+      "text": "Withdraw from the completed local cut"
+    },
+    {
+      "stateAfter": "sha256:0996686d4e47eff6a46749c6a805ff37f92334951c2e664e8b1a321067c62396",
+      "text": "Select raney clip applier"
+    },
+    {
+      "stateAfter": "sha256:7ef0ae5ba9ce0cb523d8df546bb021ecd41d22860ed43162886877d9a55e8c0e",
+      "text": "Mount raney clip applier at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:43623bb946609a5943f828cff8d8ec81e97fedb21d56e49fbb44bb17f076251b",
+      "text": "Align raney clip applier over the operative site"
+    },
+    {
+      "stateAfter": "sha256:746d0d9f187b586eccb3f28caa624e2870de683bc7c915eaefad9cd9963ddab0",
+      "text": "Clip the incised scalp margin"
+    },
+    {
+      "stateAfter": "sha256:14377cffbfe018f17ffcbb8862f58e0d000250487c2fba0927efd298923f1c36",
+      "text": "Withdraw raney clip applier"
+    },
+    {
+      "stateAfter": "sha256:9adea58f68f3598e6b6aefa92d57e6a0df43c21fd863525222e02a8479608c4a",
+      "text": "Select membrane forceps"
+    },
+    {
+      "stateAfter": "sha256:5a293a1a68fefa41abfbdd9ae1807b978eeb3e53c2342c0a1bb447193b32c7da",
+      "text": "Mount membrane forceps at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:8a19af092e66de84d7ccac0141692fd8d90969f664cbd754a0c5476fd8af4b1d",
+      "text": "Align membrane forceps over the operative site"
+    },
+    {
+      "stateAfter": "sha256:3eeb0faab2968f9b1f147880dd590382424db2fce4030fed0717211ede8d5a85",
+      "text": "Grasp scalp material"
+    },
+    {
+      "stateAfter": "sha256:73e16b74a794819c7a80254ecbee21f47c23171d8ab7f1f666b0026a271340a2",
+      "text": "Reflect scalp about its attachments"
+    },
+    {
+      "stateAfter": "sha256:add478cc229533ebe2b6c23469c786a4733c2eacd617e143dea9270c925cfa39",
+      "text": "Reflect scalp about its attachments"
+    },
+    {
+      "stateAfter": "sha256:245a82580cdb14a1a47ef2e0ad70aa3f301091079c36f2e9b03c12afd4de7f92",
+      "text": "Reflect scalp about its attachments"
+    },
+    {
+      "stateAfter": "sha256:7981ef77b1bfc4ddae4c961284640aa103b38a0542675335930459e98c23b552",
+      "text": "Reflect scalp about its attachments"
+    },
+    {
+      "stateAfter": "sha256:71db36950f1459bfa2db0bf050d19afdb941f411dfe867aa27e44f675679fd26",
+      "text": "Reflect scalp about its attachments"
+    },
+    {
+      "stateAfter": "sha256:91fe11af52660071036a747128d3e5295890698df897a7e5974f3badebfb67f6",
+      "text": "Select raney clip applier"
+    },
+    {
+      "stateAfter": "sha256:41c6bd978f050979c5e9e2d150315a84238298d52cd64294878dd9ee85ead1c2",
+      "text": "Mount raney clip applier at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:1d8f97b5b3ce4db753fc39121fe942415fddec07ab3e3921bbf88cffeaf7aa49",
+      "text": "Approach beside the supporting hand"
+    },
+    {
+      "stateAfter": "sha256:086e4e9c87e73ee90326646760ccab79f3f9b712c7433a8552c10e3c28f4e33f",
+      "text": "Secure the reflected scalp"
+    },
+    {
+      "stateAfter": "sha256:a38e5407eb4fcdd057673c4f0234a9614d863f9faf7b511913875652818052ff",
+      "text": "Withdraw raney clip applier along the exterior approach"
+    },
+    {
+      "stateAfter": "sha256:beca75e3e9def0683065c6e129ac0f26a1e9b05fb3c4132bf45c323f3ed6474a",
+      "text": "Release supported scalp"
+    },
+    {
+      "stateAfter": "sha256:83289c2f14e24d9885b12b1cbddd1b6e2d36b6cedb42af7f4bc62dd08bc8bbb2",
+      "text": "Withdraw scalp forceps"
+    },
+    {
+      "stateAfter": "sha256:e8e397e282a159acf640295d096ccea8ab5a9ac09537bb92b74676e04da09bce",
+      "text": "Select cranial drill"
+    },
+    {
+      "stateAfter": "sha256:1f3e54d3b6b9de0c26aa1a223f8e5b58d0c996db7d5960e594b793b0c422fd34",
+      "text": "Mount cranial drill at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:417865f35a046e2d7b634a45d914165f92a7ad7b879c5183c9d4eec54592fd7b",
+      "text": "Align cranial drill over the operative site"
+    },
+    {
+      "stateAfter": "sha256:8a2e8fd23d808a4f0459252c227d42b70a7b5e2b9e4ec2ea976e74c89aaae8f2",
+      "text": "Perforate local outer table, diplo\u00eb and inner table"
+    },
+    {
+      "stateAfter": "sha256:7a797bd8c4b3564683fffb96153afec315bf1b5e606af70e1a29073359caed49",
+      "text": "Perforate local outer table, diplo\u00eb and inner table"
+    },
+    {
+      "stateAfter": "sha256:961e6b7e8bb3ed46fe1e0271066e3425d75fdc939b2a7f6337f1b13c2cfc71f5",
+      "text": "Perforate local outer table, diplo\u00eb and inner table"
+    },
+    {
+      "stateAfter": "sha256:783d71af86e823b9e34f112a60a39d05609efa59f8b2d9ef33008ddf3e0e8ead",
+      "text": "Perforate local outer table, diplo\u00eb and inner table"
+    },
+    {
+      "stateAfter": "sha256:dfa733b3a4284aab992c8b60e484ddadb5c29556a3f3c0e66288af1fd4a2f0f1",
+      "text": "Perforate local outer table, diplo\u00eb and inner table"
+    },
+    {
+      "stateAfter": "sha256:130a38d00598ed9996bdc0c1131882f9685075c4cc31065286c1c39223cb3695",
+      "text": "Perforate local outer table, diplo\u00eb and inner table"
+    },
+    {
+      "stateAfter": "sha256:97acd138e376ad505b6b056630ec1b21dc5cf2bffd7c70c1df21b582d649403d",
+      "text": "Perforate local outer table, diplo\u00eb and inner table"
+    },
+    {
+      "stateAfter": "sha256:95982355590cc4e2ff3fd7482f711d20f3cd835243b33e5b415db5f41b66825e",
+      "text": "Perforate local outer table, diplo\u00eb and inner table"
+    },
+    {
+      "stateAfter": "sha256:c0d3649caa441344877d19e534689040ef51cf92ce35f04ef5df373310026ffb",
+      "text": "Perforate local outer table, diplo\u00eb and inner table"
+    },
+    {
+      "stateAfter": "sha256:7ebb7edbc5cc17f1d5148fc2eb4e2f3b76319b5e87615ca59b04cfff4c68a2db",
+      "text": "Perforate local outer table, diplo\u00eb and inner table"
+    },
+    {
+      "stateAfter": "sha256:a7201142528be3d39221e0558f30aaac2f7c1533a5a138d246abe03649425fcd",
+      "text": "Perforate local outer table, diplo\u00eb and inner table"
+    },
+    {
+      "stateAfter": "sha256:776d95d0587e9c5c4b55dd65d9fd810df4790a16157b7286797d9f009c0e68e2",
+      "text": "Disengage and withdraw burr"
+    },
+    {
+      "stateAfter": "sha256:f133f869da50c3ba1c012d3a7503d59d9bd60b024bd5a574dbf35b36674e048a",
+      "text": "Select craniotome"
+    },
+    {
+      "stateAfter": "sha256:14c48c703fe52574481a3f760d27b0eb277fa7d75dd8bcf9ef79dac48865471e",
+      "text": "Mount craniotome at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:9ee1faecd81eadeb89271e5a2cb7c0421d200b9febc295d59f08d167403a94e6",
+      "text": "Align craniotome over the operative site"
+    },
+    {
+      "stateAfter": "sha256:02296831b447164d7a231356c0d6360beba6c29ca0b00f692e58a55dcc7ab3cd",
+      "text": "Seat guarded foot in the actual perforation"
+    },
+    {
+      "stateAfter": "sha256:ae467dae72f1f525d092fef4a83e6421a643673f0cc1b6ef95310588f3f149d9",
+      "text": "Cut the guarded circumferential kerf"
+    },
+    {
+      "stateAfter": "sha256:713efea774223346a4e0e34e6145a875fe47a7d43252acfbed7bfe4e0f359e3e",
+      "text": "Cut the guarded circumferential kerf"
+    },
+    {
+      "stateAfter": "sha256:72dd745caffc409e37ac3d72b92281a7600997b9e3be183e89884adc1bfac161",
+      "text": "Cut the guarded circumferential kerf"
+    },
+    {
+      "stateAfter": "sha256:58b2a52c952168f6e97e69451a5727309c771d5487021c0e84d26921a88ea19d",
+      "text": "Cut the guarded circumferential kerf"
+    },
+    {
+      "stateAfter": "sha256:97a2bc8bdbce4f0a1438154ec17e2509eb4222f5babfd2bf2180b59f671bf513",
+      "text": "Cut the guarded circumferential kerf"
+    },
+    {
+      "stateAfter": "sha256:b1a080538b45ad697efcce17c716cd53f4f29880cb367971f8b0af5f2d847c86",
+      "text": "Cut the guarded circumferential kerf"
+    },
+    {
+      "stateAfter": "sha256:3d49a4f11c48e7abcc75b15ef3e8d0c7d8177765682b16548e844a52b287c203",
+      "text": "Cut the guarded circumferential kerf"
+    },
+    {
+      "stateAfter": "sha256:5d0063b933f61ccc2b5d5b7dd4dc31c56eeb0354e6f27a084f5c05ed9f81f5e7",
+      "text": "Cut the guarded circumferential kerf"
+    },
+    {
+      "stateAfter": "sha256:b2e8077d46202da6ebf3bdb66278c7852f3cd56b28303e1b5a4221e907d3f3c6",
+      "text": "Cut the guarded circumferential kerf"
+    },
+    {
+      "stateAfter": "sha256:613eb5106d6e69beff7f181011be338cc39812d45b904f8db1fa9a9c3fbf76eb",
+      "text": "Cut the guarded circumferential kerf"
+    },
+    {
+      "stateAfter": "sha256:ddfd71f447197732c58a104aa9b28e69c83e5e769a73e20e41b2319bcf05b3b3",
+      "text": "Cut the guarded circumferential kerf"
+    },
+    {
+      "stateAfter": "sha256:9b8d9a9c030c02e461aa0c67a242c6de4532e9bdb7e002830493179a6959e05d",
+      "text": "Cut the guarded circumferential kerf"
+    },
+    {
+      "stateAfter": "sha256:6a35d33ec2d1c67eb200dff7dcc38aaa29eecc31ed973bfbfe0e151fd3587271",
+      "text": "Cut the guarded circumferential kerf"
+    },
+    {
+      "stateAfter": "sha256:7024748ebbf4e561ee3f50ff71aed55c5e1bc426602f79db30516fd31ca2bc7a",
+      "text": "Cut the guarded circumferential kerf"
+    },
+    {
+      "stateAfter": "sha256:4a4ca11054b45ac9da59f20374641446268bfa3483ad72e0b0d3f2db25856436",
+      "text": "Cut the guarded circumferential kerf"
+    },
+    {
+      "stateAfter": "sha256:29d9e7f98b505fc88ef676746962b24d0f9f1ac71477ad14175cb81587f213a5",
+      "text": "Cut the guarded circumferential kerf"
+    },
+    {
+      "stateAfter": "sha256:a5f065746cfd3e21c653891553c8fc95522c7be2ca838f73a53f0af86d058cc6",
+      "text": "Cut the guarded circumferential kerf"
+    },
+    {
+      "stateAfter": "sha256:8392caeb6d3cfd53a31b80aacf5273f0b29cfba760633acb593cc2e7ecf7e40a",
+      "text": "Cut the guarded circumferential kerf"
+    },
+    {
+      "stateAfter": "sha256:70763b6aad87eba67a946991838371fccdcbc3d481590192107fe21f3cff3b48",
+      "text": "Cut the guarded circumferential kerf"
+    },
+    {
+      "stateAfter": "sha256:b7000eb7044960b01818ba0f7cdd8313e2c34cd3dbfbbc17ef3ab8baccacf85d",
+      "text": "Cut the guarded circumferential kerf"
+    },
+    {
+      "stateAfter": "sha256:3dcfc68f1a0434534a49bcebad18b6b843c6e247e1b15f1555d1fdeed1a83167",
+      "text": "Cut the guarded circumferential kerf"
+    },
+    {
+      "stateAfter": "sha256:025f6c5448ada3ee02803e2c7469bb1aaa38874d3bc0f15a64a8da18a527dc8c",
+      "text": "Cut the guarded circumferential kerf"
+    },
+    {
+      "stateAfter": "sha256:affac6d3c5a9ab1c8a0af2905a95d863f15c4b5cbe831f064f66e4241278889c",
+      "text": "Cut the guarded circumferential kerf"
+    },
+    {
+      "stateAfter": "sha256:c9c45b25d59d1fc79ff2c1b00fb4b699cd70a3385669aed2e8a8350cdb75239e",
+      "text": "Return the guarded cutter through the completed kerf"
+    },
+    {
+      "stateAfter": "sha256:0dc59dc056b827cebc828e4e2c98f4bc00f6ba1d3956c2fc1a1e15b1e0dae47f",
+      "text": "Retire the opposite instrument clear of the bone transfer"
+    },
+    {
+      "stateAfter": "sha256:ef8a1f0ee6ec4b65007b995b1e8546b77bedee71e04e780fe12650d30d02fdb1",
+      "text": "Select bone flap holder"
+    },
+    {
+      "stateAfter": "sha256:defc6fb002a6429ea911f4c061c6f003ef60531f0e935b80ddd72f8a4ec61daf",
+      "text": "Mount bone flap holder at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:5878dd3471e0dc40c00b562092f587839e7e485f272ae077597a11d1c6a615a0",
+      "text": "Align bone flap holder over the operative site"
+    },
+    {
+      "stateAfter": "sha256:8df2af44deb5c44de080e9c81d86eb31118694e094535f0d5754a3abaaa1b35a",
+      "text": "Grasp freed bone flap"
+    },
+    {
+      "stateAfter": "sha256:38a0991899014bfa9d3f2664dbeba3446fbdf1f14e74066b676aac301c718e38",
+      "text": "Carry held flap to its exterior support"
+    },
+    {
+      "stateAfter": "sha256:9d99811873121f395ef7ce0da98e786b4cd6676b46350ff073beb209b08bb93d",
+      "text": "Carry held flap to its exterior support"
+    },
+    {
+      "stateAfter": "sha256:c673ff3703fc0846c15cb1676e47895320f26ada071660dc07574f5e1d0fe3d6",
+      "text": "Carry held flap to its exterior support"
+    },
+    {
+      "stateAfter": "sha256:5ed4d808f838d642feb4d6a524ed5d09764a468ad3ce8459b0b8150e3ddbdae7",
+      "text": "Carry held flap to its exterior support"
+    },
+    {
+      "stateAfter": "sha256:b351b7794ac79c9d8c3d9cdb05027899278a88e097fb38d0b14cc9b11cfd916a",
+      "text": "Release parked bone flap"
+    },
+    {
+      "stateAfter": "sha256:9a2647b14d1e9e4f333be912e13de3232589824c4d0d85dd8175ac2242cc3f35",
+      "text": "Withdraw bone holder"
+    },
+    {
+      "stateAfter": "sha256:f6691f91998a8ac47efc1210cde7dcec9a68e23caacbd016ff63292d91c21f17",
+      "text": "Select dural scissors"
+    },
+    {
+      "stateAfter": "sha256:0c58ddb033686f128e8e812c2d47b4a6e94b71646d007e40da3796846455c871",
+      "text": "Mount dural scissors at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:8c12b7feb900ff8a1458dfdd3d4d960caa572ceb4c6bd2a42ddf8961a8863f8a",
+      "text": "Align dural scissors over the operative site"
+    },
+    {
+      "stateAfter": "sha256:76d02c23f5be487d29f9142255d4ea9e05ac20af395860b577e9a2b5ac1e891a",
+      "text": "Approach intact dura"
+    },
+    {
+      "stateAfter": "sha256:904d13299a19f46620913309ea92e56ce12caacf08c195cdcb2631691ebbcf04",
+      "text": "Scissor contact \u00b7 no dural attachment divided"
+    },
+    {
+      "stateAfter": "sha256:b215193d4f200223f90649255458882082ccb262892a68084d8a436ff128db81",
+      "text": "Scissor contact \u00b7 no dural attachment divided"
+    },
+    {
+      "stateAfter": "sha256:408df05684a4d1a45c3007e45f862bbead7102652edd9d905d88c714ab099f5a",
+      "text": "Scissor contact \u00b7 no dural attachment divided"
+    },
+    {
+      "stateAfter": "sha256:d2a43288f298fed254c50ac37ffc7a1eca9179c760ee757aea6273bcbdbc8cc1",
+      "text": "Scissor contact \u00b7 no dural attachment divided"
+    },
+    {
+      "stateAfter": "sha256:bad0e33d0435dcab844adae4a2e268a441964adbf12e91796a6f6af35864938b",
+      "text": "Scissor contact \u00b7 no dural attachment divided"
+    },
+    {
+      "stateAfter": "sha256:325a9880c75405731ec2e28adc6bed87c5715745e2c295a2c67dd9d2ed69b494",
+      "text": "Scissor contact \u00b7 no dural attachment divided"
+    },
+    {
+      "stateAfter": "sha256:e65edfc8d0ad2d18d237dee25b6653235fb114496f09ba4b829ec5f2d3a0572f",
+      "text": "Scissor contact \u00b7 no dural attachment divided"
+    },
+    {
+      "stateAfter": "sha256:c120a6387548c65ce6acf4c7d161b4c92eac58bab0fe98a38cf656c9fadad572",
+      "text": "Scissor contact \u00b7 no dural attachment divided"
+    },
+    {
+      "stateAfter": "sha256:26a9edbf334d244cc0fe082905763339714f481b37b2032adbcbf867f2747005",
+      "text": "Disengage dura cutting instrument"
+    },
+    {
+      "stateAfter": "sha256:f4f69b6af4fbc897168e5d316c5cdaac0e021ec46286510af7fc28c27ea1a8bb",
+      "text": "Mount dural scissors at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:c25d46b548f394091e60f2e69186a0f38c6ab859b2958b0f705a26ab3c750b2f",
+      "text": "Align dural scissors over the operative site"
+    },
+    {
+      "stateAfter": "sha256:93ef334a65a3686fd36471d9da59cb239b54fe133c02ec54fa54833766e4d698",
+      "text": "Scissor contact \u00b7 no dural attachment divided"
+    },
+    {
+      "stateAfter": "sha256:a0665f452d9770d03a0597c4ef4ad823cb1316ab793b0546d960c8da2e995709",
+      "text": "Withdraw from the completed local cut"
+    },
+    {
+      "stateAfter": "sha256:819e884234a373f78d874fff923ed535550fde81cd251d177da1795da76759ea",
+      "text": "Mount dural scissors at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:bc2d20febe297d09eddced3660eed5f012643a900eb26e917cc010b05d941bbd",
+      "text": "Align dural scissors over the operative site"
+    },
+    {
+      "stateAfter": "sha256:ceb79228dfcf1d60f8470727661d7833ec06a2654e9ad16c42342463a44e190e",
+      "text": "Approach intact dura"
+    },
+    {
+      "stateAfter": "sha256:7af4849e28e6b802d3068549e1fc60adf5bd7a9ef2e2df0d1b1b06157096e358",
+      "text": "Engage both dural cutting edges"
+    },
+    {
+      "stateAfter": "sha256:c0b6bee74b20a1b5627bf37d4336230025d5b614984935816e202971ca9c7ff6",
+      "text": "Divide the dural attachment under the closed scissor edges"
+    },
+    {
+      "stateAfter": "sha256:53ab9d82081263b9cffd9412ebb41881ba58817c32f3c5e84090718bc36e6abc",
+      "text": "Divide the dural attachment under the closed scissor edges"
+    },
+    {
+      "stateAfter": "sha256:e91dcbe6975d031858739d5cf722760d44f32cdfcc6a391fecdc286827b1fca4",
+      "text": "Divide the dural attachment under the closed scissor edges"
+    },
+    {
+      "stateAfter": "sha256:0e09b31a4412f4db5448c53585e0a0c2348450094cd2b5a3358fd84cc420e7d3",
+      "text": "Divide the dural attachment under the closed scissor edges"
+    },
+    {
+      "stateAfter": "sha256:85f0977cb747e00e3db65e88879e68746dbc547f76d0207655006579ecc49b9a",
+      "text": "Divide the dural attachment under the closed scissor edges"
+    },
+    {
+      "stateAfter": "sha256:2579b732b4f651b2e668e3cf471327ffca629d8cf57c24840ee8a879a22f7b51",
+      "text": "Divide the dural attachment under the closed scissor edges"
+    },
+    {
+      "stateAfter": "sha256:760ee30618406415cafb01925802d02440dced8f3b737b5b57434966588f1b85",
+      "text": "Divide the dural attachment under the closed scissor edges"
+    },
+    {
+      "stateAfter": "sha256:5f3ce4efd84cca80763f37c94ce6cfebcafce7cf9c9e8dd3b3765877b84be9a0",
+      "text": "Disengage the dural scissors from the divided course"
+    },
+    {
+      "stateAfter": "sha256:1d1a855bfe4ac0d93598cdcca5c845cd5c7eed6cbfc012ae2ecc2e5692afebdc",
+      "text": "Select membrane forceps"
+    },
+    {
+      "stateAfter": "sha256:c304506330afd1992c752dbf97d7590a7870b6639ee0935367df80713f94277c",
+      "text": "Mount membrane forceps at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:29389f09ff8c7c8626d9ffa915573a7b408d513aac8f31cf9007d41d045bb062",
+      "text": "Align membrane forceps over the operative site"
+    },
+    {
+      "stateAfter": "sha256:22685fd8eb69939056eb1b21453ba54c40b1a4c3bc5fc9b8168e7f3391268d88",
+      "text": "Grasp dura material"
+    },
+    {
+      "stateAfter": "sha256:35abea4da1001765a08f03d32cb8a41ea984cbbbde98b93bc534807cfe720568",
+      "text": "Reflect dura about its attachments"
+    },
+    {
+      "stateAfter": "sha256:c48f4b89a6baa51b07ae6806e66483f12038b5281b7882673ae0b730a2bc4b58",
+      "text": "Reflect dura about its attachments"
+    },
+    {
+      "stateAfter": "sha256:6527c41083a996e1ef2af565f140ef789ba4ecc6300d8c3d011089a43d5b2713",
+      "text": "Reflect dura about its attachments"
+    },
+    {
+      "stateAfter": "sha256:81df1d50eaac84f734614a3f0bfca21c206ef6247b3d48fc648e49b30672f92f",
+      "text": "Reflect dura about its attachments"
+    },
+    {
+      "stateAfter": "sha256:491eed1f5db2739665fb4fdab1e90273bec45d8a26e4166a7979a981b8b153e6",
+      "text": "Reflect dura about its attachments"
+    },
+    {
+      "stateAfter": "sha256:002e8fdd1c6c6e766addb5182bb0de9c9efb6fd8a90be7078ad9e49297574f8d",
+      "text": "Select raney clip applier"
+    },
+    {
+      "stateAfter": "sha256:3d08d3bcc181c8c2b6a50d7cbafdcbe915ff53551d625027eff1309c6ec574a0",
+      "text": "Mount raney clip applier at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:75d80e2259b1900b0ac05f3b4bc7169470c2600f1f84e665eb04fe187b0f7bec",
+      "text": "Approach beside the supporting hand"
+    },
+    {
+      "stateAfter": "sha256:d0423a8944fd28549a487b74ee2d1323658e99d711d89eedfce021b93c420208",
+      "text": "Secure the reflected dura"
+    },
+    {
+      "stateAfter": "sha256:767f8c9c11c1254339eb8d771ba8186018cd4e5e3a7a336a8bd926fbbd766001",
+      "text": "Withdraw raney clip applier along the exterior approach"
+    },
+    {
+      "stateAfter": "sha256:b29de66d3c6e9bb8c58637bff68a45245fa1d60b56818c4b3b3c797ed4f93c8d",
+      "text": "Release supported dura"
+    },
+    {
+      "stateAfter": "sha256:787da0e5d4d4c678ad669a70e2cd9290d4f2c11e36260ce6a4de8b46f7e7e4ca",
+      "text": "Withdraw dura forceps"
+    },
+    {
+      "stateAfter": "sha256:cdc75747d785a664748d3fba54ea0cf309380c9c47286623649d08f2cfa19256",
+      "text": "Select cortical probe"
+    },
+    {
+      "stateAfter": "sha256:0e98f104a8b914078ae5adbedcfa207b0e35da8c6924b79c0b7070f7173663b9",
+      "text": "Mount cortical probe at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:06862193a7e7ddf3f7fff7f5f22b1671574ac9731e4621c3f23457a12a9a5ec4",
+      "text": "Align cortical probe over the operative site"
+    },
+    {
+      "stateAfter": "sha256:1e4ef2f85bfcfbcb4ad90fcb8cde6dd67f4f74e6b6044891f78308fb23d2f089",
+      "text": "Map the exposed cortical site"
+    },
+    {
+      "stateAfter": "sha256:627de26864fc1c54f9ca1ea7765d0a9126eeb32595b00da07a846f38850b37bd",
+      "text": "Withdraw the cortical mapping probe"
+    },
+    {
+      "stateAfter": "sha256:ca9baf59bdabaf19c26917cfd627b0498b540e9231127ff422c600ca90275f7d",
+      "text": "Select dressing forceps"
+    },
+    {
+      "stateAfter": "sha256:df2b1b0a966ac455753db7bd00904e273bf6c402b2b2fcad498c387c63c1aba8",
+      "text": "Mount dressing forceps at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:3f7d49dcc9de11b630f0a7f12bb4bb2cdd25cc0e41f46425ea8de3b040de2725",
+      "text": "Align dressing forceps over the operative site"
+    },
+    {
+      "stateAfter": "sha256:1fecc562721e2da9f461bb4e9d2e2434389af26a3540b2947696defcb848280c",
+      "text": "Place the counted protective cottonoid"
+    },
+    {
+      "stateAfter": "sha256:33157c212ee794bad2237088672875cf60dbb3f2603511af330f1e895729376d",
+      "text": "Withdraw dressing forceps"
+    },
+    {
+      "stateAfter": "sha256:bfd9cadfa5e2e903744c27bc3c7edfea7202f21bf6138eec9708735deb877dea",
+      "text": "Select brain retractor"
+    },
+    {
+      "stateAfter": "sha256:8222252355fabd5cf7c9abd2ace4d2dc44e25e6f0e613d6e69600709e4599eb1",
+      "text": "Mount brain retractor at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:d78a94fe0ea95efa053b6201cfed2d70e651524aa22418cbfe79776aa45e03fd",
+      "text": "Align brain retractor over the operative site"
+    },
+    {
+      "stateAfter": "sha256:0d0627dc970e54162fa1361a23ce15a0a6f821d2c450076c387811753c5d4c7c",
+      "text": "Seat the retractor blade on the exposed cortex"
+    },
+    {
+      "stateAfter": "sha256:8eeb21804d1faf08da3b006a675c08d597972bd25cf8abf7a21784616ce594eb",
+      "text": "Apply controlled traction and maintain the working space"
+    },
+    {
+      "stateAfter": "sha256:6b9ecfbe5f833d76b26cf1378576dda5384d7e55801f9ed0aba7a93646feed6d",
+      "text": "Select dissector"
+    },
+    {
+      "stateAfter": "sha256:a1e15406abb0d414864637450e2ece23860e37e4d940f7288d9a8af2d6b66d48",
+      "text": "Mount dissector at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:486c9f704c86a55e28d446828bee80a7716a4ec38966d8e3f394d081d3f8ae95",
+      "text": "Align dissector over the operative site"
+    },
+    {
+      "stateAfter": "sha256:e019f459d60cd6b0bbddf6623a1d262186e2562913add9e613f1d4820421870f",
+      "text": "Release the visible specimen attachment under retraction"
+    },
+    {
+      "stateAfter": "sha256:834b7cf70c8835ef23a2650599c13d475d9ff0405ad70766ed9261934ca19378",
+      "text": "Withdraw the blunt dissector"
+    },
+    {
+      "stateAfter": "sha256:c847a19e85acf913c7132fe7dbc69719401d0dab8a20e3df63da305da85beb3b",
+      "text": "Release the cortex and allow viscoelastic recovery"
+    },
+    {
+      "stateAfter": "sha256:152770a22ced84669bb712c651dfb9a0c7dd10b0868588e815de2519704ac836",
+      "text": "Withdraw the retractor blade"
+    },
+    {
+      "stateAfter": "sha256:d3b9c702e81e0c88d9a3cc6807cb113e0e577832a7755330500bbdc986c1eda4",
+      "text": "Select micro scissors"
+    },
+    {
+      "stateAfter": "sha256:e77864d61d0cd34a994e5e2d588cf289ff8b72cbf5c713a9799aafbf93f1fe04",
+      "text": "Mount micro scissors at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:8bbabd34ed87aa05b01844c90573cc70d1bbae70f2a6269428efe33375a5946c",
+      "text": "Align micro scissors over the operative site"
+    },
+    {
+      "stateAfter": "sha256:0ae75d9f4ee9e160c70057f8c145a8863ba8d1d1c9deb1ca3b7b3169b7e22037",
+      "text": "Divide the exposed specimen neck with closed microscissors"
+    },
+    {
+      "stateAfter": "sha256:8b1b463cb74df46d6cd1b6f0b2ab54e09cce7e7018fba20eba24eb55f2d022fc",
+      "text": "Withdraw the microscissors clear of the specimen"
+    },
+    {
+      "stateAfter": "sha256:f753777e5bd98fd40bd04b48e30844b53ba79b0ce79dbf6e2baf6fb09d49580c",
+      "text": "Select tumor forceps"
+    },
+    {
+      "stateAfter": "sha256:89fc4bc862160629264c7db7c938ffceb957a6701283a4d48d603f443d8635c3",
+      "text": "Mount tumor forceps at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:c220c8aa77ad0de16863b89ef47a7583d190b2f8ec0932b3dcbbd5a948629bf2",
+      "text": "Align tumor forceps over the operative site"
+    },
+    {
+      "stateAfter": "sha256:d14256f203d5d640c068db918cbfa37ed56351b60538384055293368d74e5e12",
+      "text": "Grasp the detached local specimen"
+    },
+    {
+      "stateAfter": "sha256:1950e794ed56f51c1e64a1d8a620b91574879364cb6e66eb8b629f9ea4a4e9bf",
+      "text": "Carry the specimen through the exposed opening"
+    },
+    {
+      "stateAfter": "sha256:05902e18ada9b1895026f17768f73542405579e244f776a2e9cf18e9248cf710",
+      "text": "Transfer the specimen at the exterior"
+    },
+    {
+      "stateAfter": "sha256:46baea0e1a19357d7c98e2df29386a811d51db4b7dee5430bb5ac8d75154c864",
+      "text": "Withdraw the emptied specimen forceps"
+    },
+    {
+      "stateAfter": "sha256:5592f7d546189b114fdf4644a48bf7c2a13199eb1f3586e53deb5543bf7a1b59",
+      "text": "Select bipolar forceps"
+    },
+    {
+      "stateAfter": "sha256:cbc5502a649f8ebbfdbd8f4383dc27b700bc696d3407455c777104eae2bd36b0",
+      "text": "Mount bipolar forceps at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:20df0f5b3eb019a3f453b9306664fbdb0f5c98dec4a6e30ce0ea51f2dce3542f",
+      "text": "Align bipolar forceps over the operative site"
+    },
+    {
+      "stateAfter": "sha256:07268dabc69235647200aadbcd3dd0a01783ffdb4a7f75c25e29f75480bf6227",
+      "text": "Approximate the bipolar tips on the oozing biopsy bed"
+    },
+    {
+      "stateAfter": "sha256:fb10e35e693edba2f3fa3002dd33aade6cd1e93654af60966fbd9e4f6aa52006",
+      "text": "Deliver local bipolar energy to the retained stump"
+    },
+    {
+      "stateAfter": "sha256:ba5346b3af5b3781ef7de3cac0fc1c30263196b736f069c10e419daa63c9f26f",
+      "text": "Deactivate the bipolar forceps"
+    },
+    {
+      "stateAfter": "sha256:557dc8b44bd8f4739405f8b321fe51cd03767a4fe42efaf27e54d754ce3595ef",
+      "text": "Disengage the bipolar tips"
+    },
+    {
+      "stateAfter": "sha256:a271fbe50eb728edb8c4c99f09dda593bdfde964bdbbce346eae10af3eed90f6",
+      "text": "Select cusa"
+    },
+    {
+      "stateAfter": "sha256:1db48a1a106fa2f77573e0d302037a113a74c01248d567a246021a1e68a9820c",
+      "text": "Mount cusa at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:782b9f6ddbb355c8d772f65b9b0717d40d23bcda456781f711beb3f2ca67a772",
+      "text": "Align cusa over the operative site"
+    },
+    {
+      "stateAfter": "sha256:5b453ea91043ff12fcd566cebe7fc0f56db7f0daf4960a9ba09308ad31989722",
+      "text": "Approach the planned superficial debulking corridor"
+    },
+    {
+      "stateAfter": "sha256:ebc27d792e1f87cba7e1645752b11427389997a8217c2ba948b6ea395b8f0b0d",
+      "text": "Engage the ultrasonic tip at the planned entry"
+    },
+    {
+      "stateAfter": "sha256:9e753c5502711f02ee7c77b2435814e87f2832c22456f1bb31ed46356f86dd30",
+      "text": "Debulk the reachable tissue under direct contact"
+    },
+    {
+      "stateAfter": "sha256:8b485c0457a1d9f6d6dcd2303e3ac6a67221c48d7184fd10f2e3352a74e467a7",
+      "text": "Debulk the reachable tissue under direct contact"
+    },
+    {
+      "stateAfter": "sha256:6cc7f0743dc0d7b1a2bb2b7ee7b94908f83851b430fdfde261ecfdffb0b4a115",
+      "text": "Debulk the reachable tissue under direct contact"
+    },
+    {
+      "stateAfter": "sha256:f4f8f102d8cf7e71041b95d68a9668946534bbd65940ce39f46b563b78861c6a",
+      "text": "Debulk the reachable tissue under direct contact"
+    },
+    {
+      "stateAfter": "sha256:17d571e17003681a0d65904454c7345e1d34d6dcf0acfca1ecbb599b6ffa037e",
+      "text": "Debulk the reachable tissue under direct contact"
+    },
+    {
+      "stateAfter": "sha256:1b91b5174ee6fc448a282c813438b0230d7918c46142b3ecb7f435ecdb77fc10",
+      "text": "Debulk the reachable tissue under direct contact"
+    },
+    {
+      "stateAfter": "sha256:47fb1749570aba16fa4638ff3cf871ba3575c032815b9e98f8bffd54a2c83bf0",
+      "text": "Debulk the reachable tissue under direct contact"
+    },
+    {
+      "stateAfter": "sha256:b36abcdee9b524401de2074409cd5e55fdf6fb2a38afce5440611aed799334e6",
+      "text": "Debulk the reachable tissue under direct contact"
+    },
+    {
+      "stateAfter": "sha256:2a268d6a504949b0e8d4b06b2a58a4b45267b40c96376ff707e78ac67370df12",
+      "text": "Debulk the reachable tissue under direct contact"
+    },
+    {
+      "stateAfter": "sha256:9bab1f8a0a379ef1da571460180e2511b1a0745737fdbf1945e0fb2eba50afd2",
+      "text": "Debulk the reachable tissue under direct contact"
+    },
+    {
+      "stateAfter": "sha256:02f41339f578ea07d3405b7b3ee056eb79092eb69acd4c9d65f7bdff9a0c647c",
+      "text": "Debulk the reachable tissue under direct contact"
+    },
+    {
+      "stateAfter": "sha256:0c4708b17cab51b9a0fc62cd2e0c6c624ddc64efd861f9d79b7f8172ed234830",
+      "text": "Debulk the reachable tissue under direct contact"
+    },
+    {
+      "stateAfter": "sha256:b52e1891bab7bec3eb69d80778424b34594d6c08b3dbaaaec0261a425e8398c8",
+      "text": "Debulk the reachable tissue under direct contact"
+    },
+    {
+      "stateAfter": "sha256:d2509e69fab86237b3f8cf49bace7298b33d9944c0e10525d491a5b492e6ba31",
+      "text": "Debulk the reachable tissue under direct contact"
+    },
+    {
+      "stateAfter": "sha256:ce3254a7dc21c0c7a20db29f40a1ac411bd5657bd9e207dc4d775bfbee655c74",
+      "text": "Debulk the reachable tissue under direct contact"
+    },
+    {
+      "stateAfter": "sha256:7b7358ddb35c08f4f5b6bb1d7c02c8f775e63dadcb3dfe89ec727bd01022e269",
+      "text": "Debulk the reachable tissue under direct contact"
+    },
+    {
+      "stateAfter": "sha256:80c4200addb2fe4062b9e65fd0499f125e7ee339d413e5b7cc294ee8534fd3be",
+      "text": "Debulk the reachable tissue under direct contact"
+    },
+    {
+      "stateAfter": "sha256:b7db6b25ac753beab55089e15cec6e2005cf6b44040827f3d8a17a7958691b4b",
+      "text": "Debulk the reachable tissue under direct contact"
+    },
+    {
+      "stateAfter": "sha256:0ba6bb3cbaba5b256b8036023c45942374a43adcaadcaf476b92ba8e775a5753",
+      "text": "Debulk the reachable tissue under direct contact"
+    },
+    {
+      "stateAfter": "sha256:0ceeab89ded727893c7c4c26d2d394f608934a11775307134e1fe2afefb04cd2",
+      "text": "Deactivate ultrasonic aspiration"
+    },
+    {
+      "stateAfter": "sha256:4fc736440be67df2788ad33068b3ba0ed183276623c690b6ffe764327b39230a",
+      "text": "Withdraw the aspirator through the treated corridor"
+    },
+    {
+      "stateAfter": "sha256:dac7be1ac706d1a3c7f260ed29393657f4e884c21124b5e843d00bab070d5a8f",
+      "text": "Select irrigation"
+    },
+    {
+      "stateAfter": "sha256:4ff5ff2a38430f14a62a5a9ed748cc0642e4c44122b357736a5fe9e74da1d27d",
+      "text": "Mount irrigation at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:d8ca9f7726dccb1eef6d4441660680d3aca869bfbf72a5fe66fc4325aa3620c0",
+      "text": "Align irrigation over the operative site"
+    },
+    {
+      "stateAfter": "sha256:f0b4054af97811187b05d08af09256fea7e39cef9d9cea36f3585fee4ff23fca",
+      "text": "Approach the cavity with irrigation inactive"
+    },
+    {
+      "stateAfter": "sha256:030bb495ab2a5438a7d0ce8ef023eb2a7071604cf86ed21bc46fc4731f79e252",
+      "text": "Irrigate the operative bed"
+    },
+    {
+      "stateAfter": "sha256:78fded35e62d14b65c792f1bf6f85e058cf5fd80113d8254c1b911b905caaee0",
+      "text": "Withdraw the irrigation nozzle"
+    },
+    {
+      "stateAfter": "sha256:bc7382c3ba851e124df278ca0af5fecf8752da4a92c23763f78053e0f2cfc0a2",
+      "text": "Select frazier suction"
+    },
+    {
+      "stateAfter": "sha256:ad494806c0f52ddd8a8defcf41ae92d0a4ceb83e38a7c088c251f4edacaa79bd",
+      "text": "Mount frazier suction at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:f15442dae0000eb164882b8b432618633a4bf48924e0e674ea1704186106aacb",
+      "text": "Align frazier suction over the operative site"
+    },
+    {
+      "stateAfter": "sha256:b76d4defe9fc8e61f78874cfae64b71686f0d883709e88a4af3cf798846c1b02",
+      "text": "Aspirate the visible irrigation pool"
+    },
+    {
+      "stateAfter": "sha256:b70b21a63947171ea4fe6f680178791883a6906ac8aaba33fa64e4aca2c4762b",
+      "text": "Hold the suction lumen above the visible pool"
+    },
+    {
+      "stateAfter": "sha256:d86de7447dc7ccc74dfd6632ac6fe40585da0bfac74984009a1e6aff17577db0",
+      "text": "Withdraw the suction lumen from the cleared bed"
+    },
+    {
+      "stateAfter": "sha256:cf640170e61466e3b3f3d05965618313e32f88791699a132705c8d1cfb50bc4b",
+      "text": "Select dressing forceps"
+    },
+    {
+      "stateAfter": "sha256:0e4f057eff3de70dd08511466a2d469cf5a388c49833d90d6695124c5ec61caa",
+      "text": "Mount dressing forceps at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:ddeddcae6fc4a86a06573e9d5baf49757447ca69e63373e26b9147e58299c813",
+      "text": "Align dressing forceps over the operative site"
+    },
+    {
+      "stateAfter": "sha256:8a0da89d65e4ab508deaf17e9df3ffb3ace12eeec4eb1e550e75d4fada1d06b3",
+      "text": "Place the intended-retained hemostatic dressing on the biopsy bed"
+    },
+    {
+      "stateAfter": "sha256:59176400cc3f122806c5e6d7e3a9fa868b9db631942bb19b138c2a375624189c",
+      "text": "Withdraw dressing forceps"
+    },
+    {
+      "stateAfter": "sha256:3964a73bcd4d886946ea4b7302a7ba98d4657c1f1357e666614b36785b6908d4",
+      "text": "Mount dressing forceps at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:30858aa460e6f7010e5f2d446f7132b2c09a986ab65511b01d021a375e0b6874",
+      "text": "Align dressing forceps over the operative site"
+    },
+    {
+      "stateAfter": "sha256:a320ba8e11e16bb55feeff5b5980769523aa08e42cb81765e98487a2acec7b10",
+      "text": "Retrieve the counted cottonoid"
+    },
+    {
+      "stateAfter": "sha256:562239773e647cc6a39587355b156c8bed2abf7cb53ee552177bd8dedc29f094",
+      "text": "Carry object to the exterior count"
+    },
+    {
+      "stateAfter": "sha256:e652aacfb9e24561bafcd8c28d00cad2af29626f6f4f1d2a836fbb1169daba5b",
+      "text": "Release retrieved object at the exterior"
+    },
+    {
+      "stateAfter": "sha256:52148dda5537bf0f1f1437dc1a59246a90309e9eb51d8f23cbea7d5a4dd5df57",
+      "text": "Withdraw dressing forceps"
+    },
+    {
+      "stateAfter": "sha256:6d90598c2213962e69d9cd3f7e11ef053674edc49b0a58dd3f799c0a7a898f12",
+      "text": "Review cavity, source-local hemostasis and field-material count"
+    },
+    {
+      "stateAfter": "sha256:df9ebe42d842286d92e1b9fb1efef8d54514bdebb8607746d42243f8a543fef7",
+      "text": "Select membrane forceps"
+    },
+    {
+      "stateAfter": "sha256:ff9a5fa8907be6c9f1afc4482815a019cbb24aedb02617352d650fc33b4b9a18",
+      "text": "Mount membrane forceps at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:58c3f0ed9b0f1d3795057b520c886791d6db6f85293ffe123a8c613000b4a4c3",
+      "text": "Align membrane forceps over the operative site"
+    },
+    {
+      "stateAfter": "sha256:3b6e0d796933c54e68906e9865a886169793f45c3b18052be6193b436532b28b",
+      "text": "Regrasp supported dura"
+    },
+    {
+      "stateAfter": "sha256:938f5c8226fb3b232497f8ca3b26f573307638caf2b6ae43caac0e032b6208ba",
+      "text": "Select raney clip applier"
+    },
+    {
+      "stateAfter": "sha256:5b476a666bc275621eb8421435c3d6b003abcc8bb3e45726f84bb9bf6b241a33",
+      "text": "Mount raney clip applier at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:962222e12f0ec79ca070a1aa7df3706b3a35f77ebc22e28cd1c098ca40b18040",
+      "text": "Approach beside the supporting hand"
+    },
+    {
+      "stateAfter": "sha256:2485e9c82633bfe8855f854f7cb8abc7d302c287795b4b37a105fa5ec9bca3ff",
+      "text": "Retrieve the dura retaining stay"
+    },
+    {
+      "stateAfter": "sha256:a7f6450dc071da0a4271bb36e5379b286fc7138c37d1a3ed8e0a99a72a4ba450",
+      "text": "Lift the stay away from the retained surface"
+    },
+    {
+      "stateAfter": "sha256:0e68b9cec69867597e82f76f0d8f8955eccaa42e2eb00927af0bce323c21a45e",
+      "text": "Carry the stay to the exterior count"
+    },
+    {
+      "stateAfter": "sha256:5b5fa3ec15ebcf3a9706547ce6689375246fa3ef438756fc1764c8e752febcd1",
+      "text": "Release retrieved stay at the exterior"
+    },
+    {
+      "stateAfter": "sha256:228b55a0293720bcad03652515abab925170fdff210b8bdd5b15c01ff9c6df97",
+      "text": "Withdraw raney clip applier along the exterior approach"
+    },
+    {
+      "stateAfter": "sha256:514ea8303d46afcadd30bf9938cacfaadaeb2fa4ea3bc0af0645e10431e640ae",
+      "text": "Return dura about its attachments"
+    },
+    {
+      "stateAfter": "sha256:f77b90d46cfa374f4366f5a5eaa2e4115a3b8eeae8ca0080dc8993cae9356306",
+      "text": "Return dura about its attachments"
+    },
+    {
+      "stateAfter": "sha256:1630d8a3a115ff144168a1582728f9fcf1a8b0a33569c382958029dd4db9d8f0",
+      "text": "Return dura about its attachments"
+    },
+    {
+      "stateAfter": "sha256:5882674219c2daa14f9accd3504b0db70fec22195a11bf60642c20bf4ee267f0",
+      "text": "Return dura about its attachments"
+    },
+    {
+      "stateAfter": "sha256:a2aabcffbfcf1824e31a129cd5a756f1c96e77efe2f090f9b74026c3b30a773d",
+      "text": "Return dura about its attachments"
+    },
+    {
+      "stateAfter": "sha256:c3a5eecf32b480f993fef16da437f5970cd0271cd1afbd3a50a67efd2bfde0fd",
+      "text": "Release reapproximated dura"
+    },
+    {
+      "stateAfter": "sha256:d9900a5b47cb60245e2ab33fe994ecba9bb3602e28b06d670f9c47f1e3dbdc2f",
+      "text": "Withdraw dura forceps"
+    },
+    {
+      "stateAfter": "sha256:bf8e7b12076d3a56e6001e2c26110ece5d699041a50feda95b7c6805c20645dc",
+      "text": "Select needle driver"
+    },
+    {
+      "stateAfter": "sha256:6947cf5db6028271606d75048b58b8966f4865e0edcab7f2ee6fd5f65971e206",
+      "text": "Mount needle driver at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:3e5f721b54871644d376e2ef247ae6728f5d0e86df65324a116a46768a9c2dcf",
+      "text": "Align needle driver over the operative site"
+    },
+    {
+      "stateAfter": "sha256:a42b8ff0418148a2bad64c3747178de57b7ede212e4b9c781321a55be2098823",
+      "text": "Approximate dura margins at anchor 1"
+    },
+    {
+      "stateAfter": "sha256:82f5da4f0fea8458c12ca1a2d08390302193d1cdd8da110d5c3ce56506e81993",
+      "text": "Withdraw needle driver"
+    },
+    {
+      "stateAfter": "sha256:2fb4335f37d66d82cc48caaccaa6e1b3c4130701bc9f6828a1b6038e5dcc1cdc",
+      "text": "Mount needle driver at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:f2f4283a35f580a1401bffa8def7134a364c404ee807e04df6ac265a6f0c1b26",
+      "text": "Align needle driver over the operative site"
+    },
+    {
+      "stateAfter": "sha256:9f1dbe34826bca3bbd8d431a35bd6764dd4fb92e7bfc025bba2ff76ad6ca06c6",
+      "text": "Approximate dura margins at anchor 2"
+    },
+    {
+      "stateAfter": "sha256:c4550f7ae4733954fcfcf8d62e832c18fc087d0b84e3920a52bdfcfc129e1e93",
+      "text": "Withdraw needle driver"
+    },
+    {
+      "stateAfter": "sha256:2daea64c7e694bb258a06c4e46c174333ec75a2b75d03272f2c79d87bfa0e754",
+      "text": "Select frazier suction"
+    },
+    {
+      "stateAfter": "sha256:512134843f37fff7758880020f53e24fb50691d080a0286c6ef0f8de410547cf",
+      "text": "Mount frazier suction at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:c3599448fbec3dddea0ff578f98bfedf90dd20b425f84f31e39e95dd2c764ca3",
+      "text": "Align frazier suction over the operative site"
+    },
+    {
+      "stateAfter": "sha256:1f6c7d763319041a63404bb237e0b1f6e934135334bfa72a00cf02b422f9be57",
+      "text": "Bring suction to the visible pilot-rim debris"
+    },
+    {
+      "stateAfter": "sha256:1ecf0d23ab31f0b4eb2cba4c852fe8b9360135b15fe11ef391e93fe00275e2de",
+      "text": "Clear loose bone debris at the open pilot"
+    },
+    {
+      "stateAfter": "sha256:e7a360067cb9d44e0218e99a8b2d179eb396c52efefe68e1c22a3df60ca5007d",
+      "text": "Withdraw the suction lumen above the cleared pilot"
+    },
+    {
+      "stateAfter": "sha256:425f81d4e72b2e70ccfdc9bdfacb07196273f29c8e49c05f77c607aa2c10275d",
+      "text": "Retire the opposite instrument clear of the bone transfer"
+    },
+    {
+      "stateAfter": "sha256:6cb18dfb9b0b710f72a78c70156be4c8a67a3b241952ed1f2b80a65898fbe975",
+      "text": "Select bone flap holder"
+    },
+    {
+      "stateAfter": "sha256:552de57634597dfef90ef1fbcf0bba951da3735b222c56919f1292bb3064c18e",
+      "text": "Mount bone flap holder at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:8dff674ff7fa91030949d1e359b34e295942fc91d1d8d07630ce953262f12296",
+      "text": "Align bone flap holder over the operative site"
+    },
+    {
+      "stateAfter": "sha256:93b9dbf9a96ba59f61c41300804254f9da180b0650b38dd32f0a6b840095e08d",
+      "text": "Grasp parked bone flap"
+    },
+    {
+      "stateAfter": "sha256:89b5b859a99e240fd4310efc7c5b678bf3b25f018f9b05c35fe036820bca439c",
+      "text": "Carry held flap to its original seat"
+    },
+    {
+      "stateAfter": "sha256:2421e5e580a47d145ed2d18116aa604499863ddabc0b1367bc3ac401835ee26c",
+      "text": "Carry held flap to its original seat"
+    },
+    {
+      "stateAfter": "sha256:89292e47b8230a82bc284a47a28499a0e3313f47d67b045d1a2a91a356fd0e47",
+      "text": "Carry held flap to its original seat"
+    },
+    {
+      "stateAfter": "sha256:f92abbe9aa35ed79192d677ac3c5d095d965002c94f54071d7c4a1bdc04c4ce8",
+      "text": "Carry held flap to its original seat"
+    },
+    {
+      "stateAfter": "sha256:9a07eba4c815a4f96d0e7483c57a2ce59f1244eab65635379f5e3d3c8da81a9b",
+      "text": "Release replaced bone flap"
+    },
+    {
+      "stateAfter": "sha256:b498ba3076a364d70765894fada4a7261aca550e4b38ccaa6ae379fe562e2c1a",
+      "text": "Withdraw bone holder"
+    },
+    {
+      "stateAfter": "sha256:4e733283dff2b0adb493561d4ad32b85616c5ee8a0dd6bfd0edaf9bb6eb3dece",
+      "text": "Select fixation driver"
+    },
+    {
+      "stateAfter": "sha256:cd73c1119f3bee79110c67f406d67222740ae3fb89c66ce5bcce1e46bc77a805",
+      "text": "Mount fixation driver at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:bc570ee0a39aaa978085db6d4737b9f87024c583fa0d6a5b11422fe9a3771594",
+      "text": "Align fixation driver over the operative site"
+    },
+    {
+      "stateAfter": "sha256:ac7ceb4dad06732946eeb02e8f1d0ee3d7da8d56282729830579151b62fcb6c8",
+      "text": "Fix bone margins at anchor 1"
+    },
+    {
+      "stateAfter": "sha256:e5053bf9ef07ee139b6ca7969786279224e0ea2a7e46de3dd6e2e50ec0a30531",
+      "text": "Withdraw fixation driver"
+    },
+    {
+      "stateAfter": "sha256:bfdd49f093c3fc182bdd9b1acbf69e721d8c9c79520be85a29becb184445f28d",
+      "text": "Mount fixation driver at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:65a411ad2f59226676dceda689cca8aae232bfa79d3e01433469f003c4ccb204",
+      "text": "Align fixation driver over the operative site"
+    },
+    {
+      "stateAfter": "sha256:fe32b76c1f7b4b956fd7e874a10e44c09a2dab720de3e695cf28729733950d14",
+      "text": "Fix bone margins at anchor 2"
+    },
+    {
+      "stateAfter": "sha256:c3690ed386b8caa63b801d170b590fb11828e838b51e55009231b76d46a167ec",
+      "text": "Withdraw fixation driver"
+    },
+    {
+      "stateAfter": "sha256:1dad4ced8d6cec76565089173f2f6305a9b1cac2b8d1be55684f22fc883698d3",
+      "text": "Select raney clip applier"
+    },
+    {
+      "stateAfter": "sha256:e8050a697d6224d10b181671ad33948acf572cc0b758d356b66917abece8c7b5",
+      "text": "Mount raney clip applier at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:7334dff3703c68eafb7c241c8085c4e4f4b25f5eebca3283429332185080c5c0",
+      "text": "Align raney clip applier over the operative site"
+    },
+    {
+      "stateAfter": "sha256:95cec994904c071c22e421ec1bd0a6a314a3d6174994ce619b936f972655656e",
+      "text": "Regrasp temporary scalp hemostasis clip"
+    },
+    {
+      "stateAfter": "sha256:f65b800e8d22c6c4de4289cc286f06aeba6012e73ead69f3e54ca058fe313669",
+      "text": "Disengage the clip jaws through the open scalp incision"
+    },
+    {
+      "stateAfter": "sha256:38fe264794f6f7b64cb276168b6cd2f4e4e6cdaa3ca239af31321ba91c73c149",
+      "text": "Lift closed clip jaws clear of the scalp and carry to count"
+    },
+    {
+      "stateAfter": "sha256:73372c7b9013de643666e0cbf24fd1bee0f1dc334bac3e57fdd7bb0194b9fab8",
+      "text": "Count the removed scalp clip outside the head"
+    },
+    {
+      "stateAfter": "sha256:1902723cd56fb24fe52dfd049fe53066df8f288d9133b80852d88e1164198c44",
+      "text": "Withdraw scalp clip applier"
+    },
+    {
+      "stateAfter": "sha256:8feedc416178a93b06a56847b08329338033fa8ed0adf94e319dd5196bbbb6e2",
+      "text": "Select bipolar forceps"
+    },
+    {
+      "stateAfter": "sha256:1b8718898b5ab6ce021ca34d51a1599d9afbe57d987a8a6862da8525384ca88c",
+      "text": "Mount bipolar forceps at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:b7bf178ec7fca622e04cd1593a01d5b6abe35a0275d2a314da518e5f9b809efd",
+      "text": "Align bipolar forceps over the operative site"
+    },
+    {
+      "stateAfter": "sha256:cf06acad87569c2d681037f6e83709366d169753502a889d7744f28cbc91ee06",
+      "text": "Approximate bipolar tips on the previously clipped scalp stump"
+    },
+    {
+      "stateAfter": "sha256:f76f5326231ddaf1e348963f29f2de5d123cd0c1a067cc29133d100d9f81b7a7",
+      "text": "Seal the scalp stump after clip retrieval"
+    },
+    {
+      "stateAfter": "sha256:48c4da41028f37d88e9eac7f0e7f56c3dc19c63643f9b314c3bf8ef0c47a544c",
+      "text": "Stop bipolar energy at the scalp"
+    },
+    {
+      "stateAfter": "sha256:50ad214379d57717cf8208fcdb2236c002bca17434c62fc94d597e88f340cfd0",
+      "text": "Withdraw scalp bipolar"
+    },
+    {
+      "stateAfter": "sha256:d5be5e2f6d99b7d4dae3e5fe226619a620eda4a4e1fff1157732a856564f0064",
+      "text": "Select membrane forceps"
+    },
+    {
+      "stateAfter": "sha256:39a0da8240ea42277e28c8389818eab1f1b27c45e81777384e1eb7dce9031dae",
+      "text": "Mount membrane forceps at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:71b4c390ff2a7db96b7873e7250d5ba9209dfb39216b74d493c86abc48b1a122",
+      "text": "Align membrane forceps over the operative site"
+    },
+    {
+      "stateAfter": "sha256:d833982539cbcf7cee5190c8e3cb4f83d7bc2fa1ea5a26a5619cd0d15fb5415c",
+      "text": "Regrasp supported scalp"
+    },
+    {
+      "stateAfter": "sha256:af9747de9243587858ef67ef44c5a620af41956cc28bc9c6770c7caef85dea2b",
+      "text": "Select raney clip applier"
+    },
+    {
+      "stateAfter": "sha256:5cc5cde0e7867661d1b0b8f3e48a02d4a317e758f01b4a5e9f31a4445a8d300a",
+      "text": "Mount raney clip applier at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:6a25872f9569f6449fc76f868466c934d78ad1f9f4d04046c2aee2b4ea1a5b08",
+      "text": "Approach beside the supporting hand"
+    },
+    {
+      "stateAfter": "sha256:e9596d244f1aba0186a3c3ef12f28feaf403b9340eb10d7ddabf313010ebab64",
+      "text": "Retrieve the scalp retaining stay"
+    },
+    {
+      "stateAfter": "sha256:63fb8d024a76d5117c890b547bb4d9511f9281ea9a7494a8096b952ccb51f294",
+      "text": "Lift the stay away from the retained surface"
+    },
+    {
+      "stateAfter": "sha256:ca48dd86975068db5cf7f9527512ab0663c2102eb713356187506904e27a4b17",
+      "text": "Carry the stay to the exterior count"
+    },
+    {
+      "stateAfter": "sha256:263dd2402ddee31d0b7763bb84270e4f122438d7275a58270769435c5204351a",
+      "text": "Release retrieved stay at the exterior"
+    },
+    {
+      "stateAfter": "sha256:a3142f3baa02513510a541110397a66e5939ed605ea1ef0d6354f9157ad21a74",
+      "text": "Withdraw raney clip applier along the exterior approach"
+    },
+    {
+      "stateAfter": "sha256:5c3a63bfc0e9ed4dce2bb2443f3bced5f88f0a2c38ed0dec737f1d5fe6ea39f1",
+      "text": "Return scalp about its attachments"
+    },
+    {
+      "stateAfter": "sha256:534ab18e6ffe288cedafc2be1c74cdb135a0497ebd53865da35f8d55e7c8434d",
+      "text": "Return scalp about its attachments"
+    },
+    {
+      "stateAfter": "sha256:467c4ec666f48279f657f825fdfe6e50a523e202597f4c30eb6a25be363b0bf0",
+      "text": "Return scalp about its attachments"
+    },
+    {
+      "stateAfter": "sha256:1543107fea2d400a2e07ccb47b4308a9bafdd45865dad11c5710f5625b6d9baa",
+      "text": "Return scalp about its attachments"
+    },
+    {
+      "stateAfter": "sha256:a64812340a133038950dafaf6f9e7e1d477d937b51567adb0dda026702fb19d9",
+      "text": "Return scalp about its attachments"
+    },
+    {
+      "stateAfter": "sha256:e61bc9beb7320094b59583039e7754ea1ac4baf4957fb8fd0cc5c472592f7240",
+      "text": "Release reapproximated scalp"
+    },
+    {
+      "stateAfter": "sha256:18b9e10f262083838e72fd47b33ed61610d902866da60dc8ce4e029e62233849",
+      "text": "Withdraw scalp forceps"
+    },
+    {
+      "stateAfter": "sha256:29f47d99e62d4ca7f56300f30136b4b7ace10afe5df2aa0af3d8b2f46e5ef2fc",
+      "text": "Select needle driver"
+    },
+    {
+      "stateAfter": "sha256:bcc57a979e9d669cab79862903b3cc85085ddbc5946050c2034974d6d0f9b4e8",
+      "text": "Mount needle driver at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:573eb8497c0070778ffc4ec93a0798caaa0ca0d3b6284118014e9683949234fa",
+      "text": "Align needle driver over the operative site"
+    },
+    {
+      "stateAfter": "sha256:4095bf161234881d5471c4c632cabb833e1701204dbfc54cb7b6b9f5038c7080",
+      "text": "Approximate scalp margins at anchor 1"
+    },
+    {
+      "stateAfter": "sha256:f918cd805de9b1f4dab42541a9b4f0645a0ba802ecf6116ff56223419693dfde",
+      "text": "Withdraw needle driver"
+    },
+    {
+      "stateAfter": "sha256:bbda97a3139d63346feaf72be771d346ce3b530679be7531ae708bfde4c05854",
+      "text": "Mount needle driver at the parked hand"
+    },
+    {
+      "stateAfter": "sha256:f3f4e7032bfdab7efd53fdb149e3f381bf99b82afe49612ccb31885621db5844",
+      "text": "Align needle driver over the operative site"
+    },
+    {
+      "stateAfter": "sha256:6c245554362562b13924f7f2f9579d169061c39cb946019893bc4010dc152039",
+      "text": "Approximate scalp margins at anchor 2"
+    },
+    {
+      "stateAfter": "sha256:59b304a4469dbbf769e7a91fe10812f1d4d9822351f65748e6359d92287b75b5",
+      "text": "Withdraw needle driver"
+    },
+    {
+      "stateAfter": "sha256:2fb465393bbaa0d82ea88e313ba67397f4ed217cd0b301573a7aacbb2388c19b",
+      "text": "Review fixation, scalp approximation and final object count"
+    }
+  ],
+  "phaseWeights": {
+    "approach": 5,
+    "scalp": 18,
+    "bone": 19,
+    "dura": 14,
+    "treatment": 26,
+    "closure": 17,
+    "inspection": 1
+  },
+  "matchBefore": {
+    "21": {
+      "stateId": "sha256:987be6ae244a9ffbb6aca9d29e78e335f090e288f011f381fff11b59ca5cec0f",
+      "caseHash": "sha256:ba6fe43ff7b1e6f50f2f0051690a5e758354120f2c846a53c9d7cebefb3a0945",
+      "shot": {
+        "first": 6,
+        "last": 120,
+        "title": "Scalp incision",
+        "fieldMm": 49,
+        "angleDeg": 36,
+        "azimuthDeg": 65,
+        "phase": "scalp",
+        "focus": "opening",
+        "clearParked": false
+      },
+      "fieldMm": 49,
+      "camera": {
+        "position": [
+          117.22260221220424,
+          -7.794387764392653,
+          190.22217265190403
+        ],
+        "target": [
+          31.988306010928962,
+          31.951017291713455,
+          60.77945355191257
+        ],
+        "up": [
+          0.1366130179161827,
+          0.968655293292549,
+          0.2074700125612345
+        ]
+      },
+      "beforeFile": "v4-opening-review/action-021.png",
+      "beforeSha256": "7e5317556837e9f27c0a553a9b7d8cdfd4f1cac01f14e82cf63769e279184f80",
+      "beforeRenderer": "index-D-2QWj75.js"
+    },
+    "144": {
+      "stateId": "sha256:7a797bd8c4b3564683fffb96153afec315bf1b5e606af70e1a29073359caed49",
+      "caseHash": "sha256:ba6fe43ff7b1e6f50f2f0051690a5e758354120f2c846a53c9d7cebefb3a0945",
+      "shot": {
+        "first": 142,
+        "last": 156,
+        "title": "Open a pilot through the bone",
+        "fieldMm": 25,
+        "angleDeg": 37,
+        "azimuthDeg": 80,
+        "phase": "bone",
+        "focusHand": "right",
+        "clearParked": false
+      },
+      "fieldMm": 25,
+      "camera": {
+        "position": [
+          139.57753610869742,
+          15.279346869930421,
+          192.84293110841756
+        ],
+        "target": [
+          44.75,
+          32,
+          65.06124950085072
+        ],
+        "up": [
+          0.06227765779954488,
+          0.9945244576339909,
+          0.08392017937790289
+        ]
+      },
+      "beforeFile": "v4-opening-review/action-144.png",
+      "beforeSha256": "383446deb573f7751f9b7a3c9db6ac8e0e2c244b3a65d6df57082ee1255572a5",
+      "beforeRenderer": "index-D-2QWj75.js"
+    }
+  }
+}

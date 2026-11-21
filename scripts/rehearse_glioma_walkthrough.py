@@ -159,6 +159,24 @@ class DesktopEpisode:
         print(f"{name}   {result['position']}   {result['finalId']}   {path}", flush=True)
 
 
+def perform_recorded(live, path):
+    """Submit the archived operator inputs to a fresh editable desktop branch."""
+    with gzip.open(path, "rt") as stream:
+        guide = json.load(stream)
+    if (guide["schema"] != "resectionlab.convexity-operating-inputs.v1"
+            or guide["caseHash"] != live.case_hash or guide["intactState"] != live.view["stateId"]
+            or live.last["position"] != 0):
+        raise ValueError("Recorded operator inputs require their original intact source")
+    for index, step in enumerate(guide["steps"], 1):
+        live.phase = step["phase"]
+        response = live.step(step["label"], step["action"], allowed_partial=(step["reason"],))
+        if (response["status"] != step["status"] or live.view["stateId"] != step["stateAfter"]
+                or live.last["position"] != index):
+            raise ValueError(f"The operator input at boundary {index} reached a different physical outcome")
+    if live.view["stateId"] != guide["finalState"] or not live.view["operativeExposureV1"]["complete"]:
+        raise ValueError("The recorded inputs did not reproduce the complete episode")
+
+
 def audit(package, guided_start=None, *, require_complete=False):
     """Independently replay the exact saved source and check each submitted request."""
     receipt = json.loads(package.with_suffix(".json").read_text())
@@ -232,6 +250,7 @@ def main():
     run.add_argument("--resume", action="store_true", help="Resume a named verified checkpoint on the same practice branch")
     run.add_argument("--landmarks", type=Path, required=True)
     run.add_argument("--output", type=Path, required=True)
+    run.add_argument("--recorded-inputs", type=Path, help="Submit a sealed complete operator input sequence on the intact source")
     run.add_argument("--through", choices=("approach", "scalp", "bone", "dura", "treatment", "closure"), default="closure")
     verify = commands.add_parser("audit")
     verify.add_argument("package", type=Path)
@@ -241,6 +260,8 @@ def main():
     if args.command == "audit":
         audit(args.package, args.guided_start, require_complete=args.require_complete)
         return
+    if args.recorded_inputs and (args.resume or args.through != "closure"):
+        parser.error("Recorded operator input replay starts from intact skin and ends at closure")
     output = args.output.absolute()
     if ".." in output.parts or not output.is_relative_to(ROOT / "testcases" / "outputs"):
         parser.error("Choose a new directory under testcases/outputs")
@@ -254,7 +275,10 @@ def main():
             if phases.index(args.through) < phases.index(live.phase):
                 parser.error("The selected checkpoint is already beyond the requested phase")
         try:
-            perform(live, landmarks, args.through)
+            if args.recorded_inputs:
+                perform_recorded(live, args.recorded_inputs)
+            else:
+                perform(live, landmarks, args.through)
         except Exception:
             live.save("last-accepted")
             raise
