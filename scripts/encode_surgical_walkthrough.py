@@ -28,6 +28,33 @@ def fonts():
     raise RuntimeError('Install an Arial or DejaVu Sans regular/bold pair for the caption bands.')
 
 
+def balance_chapter_lengths(actions, frames, amounts, minimum):
+    """Keep short named views legible within each phase's original time budget."""
+    phases = defaultdict(dict)
+    for index, (native, _, _, _, phase) in enumerate(actions):
+        chapter = frames[native[-1]]['chapter']
+        phases[phase].setdefault(chapter, []).append(index)
+    for chapters in phases.values():
+        lengths = {name: sum(amounts[i] + actions[i][3] for i in group)
+                   for name, group in chapters.items()}
+        floor = min(FPS, sum(lengths.values()) // len(chapters))
+        for name in sorted(chapters, key=lengths.get):
+            while lengths[name] < floor:
+                donors = [other for other, group in chapters.items()
+                          if lengths[other] > floor and any(amounts[i] > minimum for i in group)]
+                if not donors:
+                    break
+                donor = max(donors, key=lengths.get)
+                # Keep every committed boundary and authored contact hold. Resample
+                # available native motion from the longest shot in this phase.
+                remove = max(chapters[donor], key=lambda i: amounts[i])
+                add = max(chapters[name], key=lambda i: actions[i][1] / amounts[i])
+                amounts[remove] -= 1
+                amounts[add] += 1
+                lengths[donor] -= 1
+                lengths[name] += 1
+
+
 def frame_schedule(report):
     plan, frames = report['plan'], report['frames']
     seconds = float(plan.get('presentationSeconds', 90))
@@ -78,10 +105,15 @@ def frame_schedule(report):
     weighted = available - minimum * len(actions)
     weight = sum(a[2] for a in actions)
     cumulative = assigned = 0
-    for indices, duration, cost, hold, phase in actions:
+    amounts = []
+    for _, _, cost, _, _ in actions:
         cumulative += cost
         amount = minimum + round(weighted * cumulative / weight) - assigned
         assigned += amount - minimum
+        amounts.append(amount)
+    if phase_weights:
+        balance_chapter_lengths(actions, frames, amounts, minimum)
+    for amount, (indices, duration, _, hold, _) in zip(amounts, actions, strict=True):
         begin = frames[indices[0]]['time']
         step = 0
         for j in range(amount):

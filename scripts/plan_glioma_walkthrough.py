@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 from pathlib import Path
 
 
@@ -62,11 +63,16 @@ CUES = [
     ('Review cavity', 'Review the cavity and field materials', 33, 21, 70, 'opening'),
     ('Return dura about', 'Return the supported dura', 47, 34, 70, 'opening'),
     ('Approximate dura margins', 'Approximate the dural margins', 33, 32, 70, 'opening'),
+    ('Bring suction to the visible pilot-rim debris', 'Suction at the pilot rim', 23, 36, 75, 'hand'),
+    ('Clear loose bone debris', 'Clear the bone-cutting debris', 23, 36, 75, 'hand'),
     ('Grasp parked bone flap', 'Re-grasp the parked bone', 32, 36, 75, 'hand'),
     ('Carry held flap to its original seat', 'Replace the supported flap', 80, 32, -80, 'opening'),
     ('Fix bone margins', 'Fix the replaced bone', 44, 30, 75, 'opening'),
     ('Return scalp about', 'Return the reflected scalp', 64, 35, -80, 'opening'),
-    ('Remove the scalp hemostasis clip', 'Scalp clip retrieval', 24, 38, 65, 'hand'),
+    ('Regrasp supported scalp', 'Re-grasp the supported scalp', 26, 37, 75, 'hand'),
+    ('Regrasp supported dura', 'Re-grasp the supported dura', 26, 34, 70, 'hand'),
+    ('Regrasp temporary scalp hemostasis clip', 'Scalp clip retrieval', 24, 38, 65, 'hand'),
+    ('Approximate bipolar tips on the previously clipped', 'Contact the reopened scalp source', 23, 35, 65, 'hand'),
     ('Seal the scalp stump after clip retrieval', 'Scalp hemostasis after clip retrieval', 23, 35, 65, 'hand'),
     ('Approximate scalp margins', 'Approximate the scalp layers', 43, 34, 75, 'opening'),
     ('Review fixation', 'Review closure and the final count', 55, 28, 65, 'opening'),
@@ -98,6 +104,8 @@ def plan(history, seconds):
         cue = next((c[1:] for c in CUES if row['label'].startswith(c[0])), None)
         if cue:
             title, fov, tilt, azimuth, focus = cue
+            if phase == 'closure' and row['label'].startswith('Retire the opposite instrument clear of the bone transfer'):
+                title = 'Clear the flap replacement corridor'
             current = (title, fov, tilt, azimuth, row['action']['slot'] if focus == 'hand' else focus)
         title, fov, tilt, azimuth, focus = current
         if not chapters or title != chapters[-1]['title'] or phase != chapters[-1]['phase']:
@@ -168,6 +176,6 @@ if __name__ == '__main__':
             before = (args.match_before / f'action-{boundary:03}.png').resolve(strict=True)
             result['matchBefore'][boundary] = {'stateId': old['stateId'], 'caseHash': result['caseHash'],
                 'shot': {**shot, 'clearParked': False}, 'fieldMm': old['fieldMm'], 'camera': old['camera'],
-                'beforeFile': str(before), 'beforeSha256': hashlib.sha256(before.read_bytes()).hexdigest(),
+                'beforeFile': os.path.relpath(before, args.output.parent.resolve()), 'beforeSha256': hashlib.sha256(before.read_bytes()).hexdigest(),
                 'beforeRenderer': previous['rendererAsset']}
     args.output.write_text(json.dumps(result, indent=2) + '\n')

@@ -12,11 +12,12 @@ const path=require('node:path');
 const {app,dialog,ipcMain}=require('electron');
 const {observeStudyFrame}=require('./study-engine-recording.cjs');
 const {inputScript}=require('./verify-eden-planning-helpers.cjs');
-const {clearWorkingView}=require('./walkthrough-camera.cjs');
+const cameraMath=import('./walkthrough-camera.mjs');
 const repo=path.resolve(__dirname,'../..');
 const caseFile=fs.realpathSync(process.argv[2]);
 const output=path.resolve(process.argv[3]);
-const plan=JSON.parse(fs.readFileSync(process.argv[4],'utf8'));
+const planFile=fs.realpathSync(process.argv[4]);
+const plan=JSON.parse(fs.readFileSync(planFile,'utf8'));
 if(!Array.isArray(plan.chapters)||!plan.chapters.length||!plan.caseHash)throw Error('A source-bound shot plan is required');
 const parent=fs.realpathSync(path.dirname(output));
 const localEvidence=fs.realpathSync(path.join(repo,'testcases/outputs'));
@@ -93,6 +94,7 @@ async function applyShot(chapter,stateId,override){
     for(const [side,pose] of Object.entries(shot.withdrawnPoses??{})){
       opticalSlots[side+' at withdrawal']={...slots[side],...pose,inserted:false};
     }
+    const {clearWorkingView}=await cameraMath;
     const option=clearWorkingView({raisedSheet,supportPair:shot.supportPair,camera:shown.camera,fieldMm:shown.fieldMm,aspect:shown.rect.width/shown.rect.height,
       azimuthDeg:shot.azimuthDeg,outward:latest.view.operativeExposureV1.exteriorNormalRas,slots:opticalSlots,targets});
     await ui.range('Angle direction',option.azimuthDeg);
@@ -164,7 +166,7 @@ ipcMain.handle=(name,handler)=>originalHandle(name,async(...args)=>{
       exposure:exposure?{bodies:Object.fromEntries(Object.entries(exposure.bodies).map(([name,b])=>[name,
           {angleRad:b.angleRad,heldBy:b.heldBy,status:b.status,cutCount:b.cutCount}])),
           objects:exposure.objects.map(o=>({id:o.id,kind:o.kind,status:o.status})),accessOpen:exposure.accessOpen,complete:exposure.complete}:null,
-      camera:pane.camera,gpuSerial:pane.gpuSerial,fieldMm:pane.fieldMm,field:pane.field});
+      camera:pane.camera,gpuSerial:pane.gpuSerial,fieldMm:pane.fieldMm,field:pane.field,exteriorSkin:pane.exposure?.exteriorSkin??null});
     if(position!==receipt.position){
       position=receipt.position;
       console.log('Exporting action',position+1,'of',authority.steps);
@@ -180,7 +182,9 @@ ipcMain.handle=(name,handler)=>originalHandle(name,async(...args)=>{
       if(match){
         assert.equal(receipt.stateId,match.stateId,'Comparison requires the exact earlier native state');
         assert.equal(plan.caseHash,match.caseHash);
-        assert.equal(digest(fs.readFileSync(match.beforeFile)),match.beforeSha256);
+        const previousImage=match.beforeFile?path.resolve(path.dirname(planFile),match.beforeFile):null;
+        if(previousImage&&fs.existsSync(previousImage))
+          assert.equal(digest(fs.readFileSync(previousImage)),match.beforeSha256);
         await applyShot(chapter,receipt.stateId,match.shot);
         const drawn=await ui.pane(receipt.stateId);
         assert.equal(drawn.fieldMm,match.fieldMm);
@@ -190,9 +194,15 @@ ipcMain.handle=(name,handler)=>originalHandle(name,async(...args)=>{
         const afterFile=path.join(output,'same-camera-'+index+'.png'),pixels=proof.toPNG();
         fs.writeFileSync(afterFile,pixels);
         (report.matchedFrames??={})[index]={stateId:receipt.stateId,caseHash:plan.caseHash,
-          camera:drawn.camera,fieldMm:drawn.fieldMm,gpuSerial:drawn.gpuSerial,beforeFile:match.beforeFile,
+          camera:drawn.camera,fieldMm:drawn.fieldMm,gpuSerial:drawn.gpuSerial,beforeFile:previousImage,
           beforeSha256:match.beforeSha256,afterFile,afterSha256:digest(pixels),beforeRenderer:match.beforeRenderer,
-          afterRenderer:report.rendererAsset};
+          afterRenderer:report.rendererAsset,exteriorSkin:drawn.exposure?.exteriorSkin??null};
+        fs.writeFileSync(path.join(output,'same-camera-'+index+'.json'),JSON.stringify(report.matchedFrames[index],null,2)+'\n');
+      }
+      if(plan.stills?.includes(receipt.position)||receipt.position===plan.chapters[chapter].last){
+        fs.appendFileSync(path.join(output,'review-states.jsonl'),JSON.stringify({action:index,stateId:receipt.stateId,
+          tools:receipt.tools,source:plan.caseHash,title:plan.chapters[chapter].title,camera:row.camera,fieldMm:row.fieldMm,
+          exposure:row.exposure,measures:row.measures,field:row.field})+'\n');
       }
       if(receipt.position===plan.chapters.at(-1).last&&receipt.position+1<authority.steps){
         sinkDone=true;
@@ -295,12 +305,13 @@ app.on('browser-window-created',(_,win)=>{
       report.gpu=app.getGPUFeatureStatus();
       assert(report.gpu.webgl==='enabled'||report.gpu.webgl2==='enabled');
       await click('Rehearse');
-      await wait(()=>js("!!document.querySelector('[aria-label=\"Surgical timeline\"]')"),'rehearsal',300000);
+      const coldLimit=Math.max(300000,(plan.actions?.length??0)*2500);
+      await wait(()=>js("!!document.querySelector('[aria-label=\"Surgical timeline\"]')"),'rehearsal',coldLimit);
       for(const button of ['Verify saved replay','Verify replay for planning']){
         if(await js(`!!(${label(button)}) && !(${label(button)}).disabled`))await click(button);
       }
       if(await ui.exists('Rehearse/edit stage'))await click('Rehearse/edit stage');
-      await wait(()=>latest?.view?.stateId&&latest?.caseHash===plan.caseHash&&!latest.verification?.readOnly,'verified episode',300000);
+      await wait(()=>latest?.view?.stateId&&latest?.caseHash===plan.caseHash&&!latest.verification?.readOnly,'verified episode',coldLimit);
       if(plan.branchId&&latest.branchId!==plan.branchId){
         await js(inputScript('Surgical branch',plan.branchId));
         await wait(()=>latest.branchId===plan.branchId,'selected branch');

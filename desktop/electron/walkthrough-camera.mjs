@@ -1,12 +1,11 @@
-'use strict';
-const {Vector3,Quaternion,Ray}=require('three');
+import {Vector3,Quaternion,Ray} from 'three';
 
 const point=values=>new Vector3(...values);
 const radians=degrees=>degrees*Math.PI/180;
 
 // Select only the optical azimuth. The same accepted capsules used by native
 // collision and drawing determine whether a parked instrument masks the work.
-function clearWorkingView({camera,fieldMm,aspect,azimuthDeg,outward,slots,targets,raisedSheet=[],supportPair}){
+export function clearWorkingView({camera,fieldMm,aspect,azimuthDeg,outward,slots,targets,raisedSheet=[],supportPair}){
   const target=point(camera.target),position=point(camera.position),axis=point(outward).normalize();
   const distance=position.distanceTo(target),direction=position.clone().sub(target).normalize();
   const reference=Math.abs(axis.dot(new Vector3(0,1,0)))>.9?new Vector3(1,0,0):new Vector3(0,1,0);
@@ -70,4 +69,3 @@ function clearWorkingView({camera,fieldMm,aspect,azimuthDeg,outward,slots,target
   }
   return best;
 }
-module.exports={clearWorkingView};

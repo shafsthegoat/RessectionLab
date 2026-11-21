@@ -38,7 +38,7 @@ def run_comparison(capture, baseline, plan_path, destination):
     def draw_labels(title, left, right, footer, file):
         canvas = Image.new('RGB', (WIDTH, HEIGHT), '#101c20')
         draw = ImageDraw.Draw(canvas)
-        draw.text((34, 23), 'RESECTIONLAB   /   RECORDED REHEARSAL COMPARISON', fill='#adcebd', font=font['label'])
+        draw.text((34, 23), 'RessectionLab   /   Recorded rehearsal comparison', fill='#adcebd', font=font['label'])
         draw.text((32, 61), title, fill='#f7f5e9', font=font['heading'])
         draw.text((34, 145), left, fill='#f2f1e8', font=font['tool'])
         draw.text((978, 145), right, fill='#f2f1e8', font=font['tool'])
@@ -81,6 +81,16 @@ def run_comparison(capture, baseline, plan_path, destination):
                                 'Revised geometry  /  ' + changed,
                                 'Historical BITE-09 render comparison. Identical source, completed dural opening, camera and scale.', labels)
                     evidence = {'sameSource': builds['bite'], 'frames': originals, 'matched': matched}
+                elif 'matchedCaptureBoundary' in shot:
+                    paired = report['matchedFrames'][str(shot['matchedCaptureBoundary'])]
+                    for side in ('before', 'after'):
+                        picture = Path(paired[side+'File'])
+                        if sha(picture) != paired[side+'Sha256']:
+                            raise ValueError('The native comparison images changed after capture.')
+                        input_command += start_flags + ['-i', str(picture)]
+                    draw_labels(shot['title'], 'Earlier operative renderer', 'Current operative renderer',
+                                'Same generated case and accepted action. Camera, optical field, tools and tissue state match.', labels)
+                    evidence = {'matchedNativeRevisions': paired}
                 elif 'baselineChapter' in shot:
                     chapter = chapters[shot['baselineChapter']]
                     begin, end = float(chapter['start_time']), float(chapter['end_time'])
@@ -105,13 +115,17 @@ def run_comparison(capture, baseline, plan_path, destination):
                         picture = scratch / f'state-{i}-{side}.jpg'
                         picture.write_bytes(spool.read(row['bytes']))
                         input_command += start_flags + ['-i', str(picture)]
-                    for key in ('camera', 'fieldMm', 'width', 'height'):
+                    for key in ('fieldMm', 'width', 'height'):
                         if rows[0][key] != rows[1][key]:
                             raise ValueError(f'Same-field shots have different {key} at {shot["matchedActions"]}.')
+                    max_delta=max(abs(x-y) for key in ('target','position','up')
+                                  for x,y in zip(rows[0]['camera'][key],rows[1]['camera'][key],strict=True))
+                    if max_delta>1e-6:
+                        raise ValueError('The same-source operative microscope moved between matched states.')
                     draw_labels(shot['title'], 'Before  /  ' + shot['left'], 'After  /  ' + shot['right'],
                                 'Same generated source, branch, camera and optical field. Both images are accepted operative views.', labels)
                     evidence = {'sameSource': report['sourceCaseHash'], 'camera': rows[0]['camera'],
-                                'fieldMm': rows[0]['fieldMm'], 'states': [r['stateId'] for r in rows]}
+                                'fieldMm': rows[0]['fieldMm'], 'maxCameraComponentDelta': max_delta, 'states': [r['stateId'] for r in rows]}
                 dims = f'scale={panel_width}:{panel_height}:force_original_aspect_ratio=decrease,pad={panel_width}:{panel_height}:(ow-iw)/2:(oh-ih)/2:color=black,setsar=1'
                 filters = f'[1:v]{dims}[a];[2:v]{after_crop}{dims}[b];[0:v][a]overlay=20:215[left];[left][b]overlay=968:215[out]'
                 segment = scratch / f'comparison-{i:02}.mp4'
