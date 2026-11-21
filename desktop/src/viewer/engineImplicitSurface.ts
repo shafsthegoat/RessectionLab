@@ -11,6 +11,7 @@ import {indexedSurfaceNormals} from './surfaceNormals.ts';
 export interface EngineSurfaceReference {
   owner: Uint16Array;
   protectedRegions: number[];
+  exteriorSkinRegion?:number;
   cavity?:AcceptedCavity;
 }
 export const ENGINE_SURFACE_POLICY = 'engine-shared-implicit-v1';
@@ -77,6 +78,13 @@ export function engineImplicitSurface(points:Float32Array,indices:Uint32Array,no
   // Direct-mapped cache bounds scratch use even on a very large or sparse
   // surface. Recomputing a collision yields precisely the same field value.
   const slots=Math.min(32768,2**Math.ceil(Math.log2(Math.max(1,points.length/3))));
+  // An exterior tissue on a generated multilayer shell can be one cell
+  // thick. Its own indicator mixes its inner and outer opposing normals.
+  // At native skin/air edges, estimate the outer boundary from all occupied
+  // source materials. Protected structures and cut lips retain their source.
+  const skin=kind==='soft_tissue'?reference.exteriorSkinRegion:undefined;
+  const exterior=skin?new Float32Array(slots*4):undefined;
+  const nearProtected=skin?new Uint8Array(slots):undefined;
   const keys=new Int32Array(slots).fill(-1),magnitude=new Float64Array(slots),cutMagnitude=new Float64Array(slots),protectedNode=new Uint8Array(slots),peerNode=new Uint8Array(slots);
   const gx=new Float64Array(slots),gy=new Float64Array(slots),gz=new Float64Array(slots);
   const paddedY=ny+2,paddedZ=nz+2;
@@ -86,7 +94,7 @@ export function engineImplicitSurface(points:Float32Array,indices:Uint32Array,no
     const i=x*yz+y*nz+z,valid=x>=0&&x<nx&&y>=0&&y<ny&&z>=0&&z<nz;
     const label=valid?owner[i]:0;
     const interior=x>=2&&x<nx-2&&y>=2&&y<ny-2&&z>=2&&z<nz-2;
-    let same=0,px=0,py=0,pz=0;
+    let same=0,px=0,py=0,pz=0,filled=0,fx=0,fy=0,fz=0,guarded=false;
     const nearCut=cavity?.near.has(i)&&label===cavity.region;
     let materialMass=0,activeSame=0;
     let peerNearby=false;
@@ -101,6 +109,10 @@ export function engineImplicitSurface(points:Float32Array,indices:Uint32Array,no
     for(const k of kernel){
       const inGrid=interior||(x+k.x>=0&&x+k.x<nx&&y+k.y>=0&&y+k.y<ny&&z+k.z>=0&&z+k.z<nz);
       const j=i+k.offset,other=inGrid?owner[j]:0;
+      if(exterior&&other){
+        filled+=k.weight;fx-=k.x*k.weight;fy-=k.y*k.weight;fz-=k.z*k.weight;
+        if(k.near&&protectedIds.has(other))guarded=true;
+      }
       if(nearCut&&other===label){
         materialMass+=k.weight;
         if(!!mask[j]===!!mask[i])activeSame+=k.weight;
@@ -137,6 +149,9 @@ export function engineImplicitSurface(points:Float32Array,indices:Uint32Array,no
     protectedNode[slot]=Number(pin);peerNode[slot]=Number(peerNearby);
     keys[slot]=key;
     magnitude[slot]=pin?1:Math.min(1,Math.max(minimumWeight,1.6*(2*occupancy-1)));
+    if(exterior&&nearProtected){
+      exterior[4*slot]=filled/kernelMass-.5;exterior[4*slot+1]=fx;exterior[4*slot+2]=fy;exterior[4*slot+3]=fz;nearProtected[slot]=Number(guarded);
+    }
     gx[slot]=px;gy[slot]=py;gz[slot]=pz;
     return slot;
   }
@@ -147,8 +162,22 @@ export function engineImplicitSurface(points:Float32Array,indices:Uint32Array,no
     const lx=Math.floor(x),ly=Math.floor(y),lz=Math.floor(z);
     const dx=Math.ceil(x)-lx,dy=Math.ceil(y)-ly,dz=Math.ceil(z)-lz;
     const lo=sample(lx,ly,lz),wl=magnitude[lo],cl=cutMagnitude[lo],protectedLo=protectedNode[lo],peerLo=peerNode[lo],vx=gx[lo],vy=gy[lo],vz=gz[lo];
+    const exteriorLo=exterior?.[4*lo]??0,skinX=exterior?.[4*lo+1]??0,skinY=exterior?.[4*lo+2]??0,skinZ=exterior?.[4*lo+3]??0,guardLo=nearProtected?.[lo];
     const hi=sample(lx+dx,ly+dy,lz+dz),wh=magnitude[hi],ch=cutMagnitude[hi];
-    let t=wl/(wl+wh);
+    let t=wl/(wl+wh),exteriorEdge=false;
+    if(exterior&&nearProtected&&!guardLo&&!nearProtected[hi]){
+      const il=lx*yz+ly*nz+lz,ih=il+dx*yz+dy*nz+dz;
+      const lowLabel=owner[il],highLabel=owner[ih];
+      exteriorEdge=(lowLabel===skin&&!highLabel&&!!mask[il])||(highLabel===skin&&!lowLabel&&!!mask[ih]);
+      if(exteriorEdge){
+        // Preserve signs, edge topology and strict source-side ownership;
+        // there is exactly one crossing inside the original edge. Cap in RAS.
+        const sign=lowLabel===skin?1:-1;
+        const v0=Math.max(.035,sign*exteriorLo),v1=Math.max(.035,-sign*exterior[4*hi]);
+        const limit=Math.min(.43,.96*cap/physicalLength(affine,dx,dy,dz));
+        t=Math.max(.5-limit,Math.min(.5+limit,v0/(v0+v1)));
+      }
+    }
     if(cavity){
       const lower=lx*yz+ly*nz+lz,upper=lower+dx*yz+dy*nz+dz;
       if(cavity.near.has(lower)&&cavity.near.has(upper)){
@@ -170,7 +199,9 @@ export function engineImplicitSurface(points:Float32Array,indices:Uint32Array,no
     // Derivative of the physical Gaussian is proportional to the physical
     // moment of the indicator. Reflecting/shearing the grid transforms the
     // moment first, independently of the stored source-frame normal covector.
-    const mx=vx*(1-t)+gx[hi]*t,my=vy*(1-t)+gy[hi]*t,mz=vz*(1-t)+gz[hi]*t;
+    const mx=exteriorEdge?skinX*(1-t)+exterior![4*hi+1]*t:vx*(1-t)+gx[hi]*t;
+    const my=exteriorEdge?skinY*(1-t)+exterior![4*hi+2]*t:vy*(1-t)+gy[hi]*t;
+    const mz=exteriorEdge?skinZ*(1-t)+exterior![4*hi+3]*t:vz*(1-t)+gz[hi]*t;
     gradient[i]=a*mx+b*my+c*mz;gradient[i+1]=d*mx+e*my+f*mz;gradient[i+2]=g*mx+h*my+j*mz;
   }
   if(diagnostics.maxDisplacementMm>cap)throw Error('Engine display displacement exceeded the physical source bound');

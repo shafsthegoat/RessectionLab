@@ -15,12 +15,21 @@ function samples(field:Record<string,number>|undefined,shape:Point3):FieldSample
   }
   return result;
 }
+function woundOnlyField(view:SurgicalView):boolean{
+  if(!view.operativeExposureV1||!view.sources?.length||view.sources.some(s=>s.kind!=='modeled-vessel-wound'))return false;
+  const added=view.metrics.fluidAddedMm3,blood=view.metrics.modeledVesselFluidGeneratedMm3;
+  // With an initially empty generated field and a single kind of input, all
+  // occupied free cells have that origin. Following irrigation the ledger
+  // carries a mixture with unknown per-cell proportions.
+  return typeof added==='number'&&typeof blood==='number'&&blood>0&&Math.abs(added-blood)<=1e-10*Math.max(1,added);
+}
 export function retainedFieldOptics(view:SurgicalView) {
   const fluid=samples(view.fluid,view.scene.shape),debris=samples(view.debris,view.scene.shape);
   if(!fluid.length&&!debris.length)return null;
   const grid=new THREE.Matrix4().fromArray(view.scene.affine.flat()).transpose();
   const capacity=Math.abs(grid.determinant());
   if(!Number.isFinite(capacity)||capacity<1e-12)return null;
+  const bloodOnly=woundOnlyField(view);
   const group=new THREE.Group();
   group.name='effect:retained-field';
   const joined=joinedFreeField(fluid,view.scene.shape,capacity);
@@ -31,8 +40,8 @@ export function retainedFieldOptics(view:SurgicalView) {
     if(!entries.length)continue;
     const liquid=name==='fluid';
     const geometry=liquid?new THREE.SphereGeometry(.5,12,8):new THREE.IcosahedronGeometry(.5);
-    const material=new THREE.MeshStandardMaterial({color:liquid?'#a8bdc1':'#bbaa8b',roughness:liquid?.14:.86,
-      metalness:0,transparent:liquid,opacity:liquid?.57:1,depthWrite:!liquid});
+    const material=new THREE.MeshStandardMaterial({color:liquid?(bloodOnly?'#8d3933':'#a8bdc1'):'#bbaa8b',roughness:liquid?.14:.86,
+      metalness:0,transparent:liquid,opacity:liquid?(bloodOnly?.80:.57):1,depthWrite:!liquid});
     if(liquid&&joined){
       const pool=new THREE.Mesh(joined.geometry,material.clone());pool.name='field:free-surface';
       placeInSourceFrame(pool,view.scene.affine);
@@ -68,7 +77,7 @@ export function retainedFieldOptics(view:SurgicalView) {
     texture.format=THREE.RedFormat;texture.unpackAlignment=1;
     texture.minFilter=texture.magFilter=THREE.LinearFilter;texture.needsUpdate=true;
   }
-  group.userData.fieldSummary={stateId:view.stateId,fluidCells:fluid.length,debrisCells:debris.length,
+  group.userData.fieldSummary={stateId:view.stateId,...(view.operativeExposureV1?{fluidOrigin:bloodOnly?'vascular sources only':'mixed or unknown'}:{}),fluidCells:fluid.length,debrisCells:debris.length,
     fluidMm3:fluid.reduce((sum,item)=>sum+item.amount,0),debrisMm3:debris.reduce((sum,item)=>sum+item.amount,0),
     wetTextureBytes:texture?bytes:0,joinedFluidCells:joined?.joined.size??0};
   return {group,texture,worldToCell:grid.clone().invert(),origin:texture?new THREE.Vector3(...lower).subScalar(1):new THREE.Vector3()};

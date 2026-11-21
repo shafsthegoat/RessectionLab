@@ -155,3 +155,30 @@ test('a cut spanning source material boundaries keeps raw contact geometry, clos
   }
   assert.equal(hash(owner),before);
 });
+
+test('generated skin exterior settles onto its multilayer source envelope while inner interfaces and protected vessel contacts remain fixed',()=>{
+  const shape=[22,22,25],affine=identity;
+  const owner=grid(shape,(x,y,z)=>{
+    const roof=Math.floor(18-.015*(x-10)**2-.034*(y-10)**2);
+    if(x===8&&y===9&&z===roof)return 13;
+    return z>roof?0:z>=roof-1?1:2;
+  },Uint16Array);
+  const mask=Uint8Array.from(owner,id=>Number(id===1)),base={owner,protectedRegions:[13]};
+  const before=prepareSurface(mask,shape,affine,'soft_tissue',true,base);
+  const after=prepareSurface(mask,shape,affine,'soft_tissue',true,{...base,exteriorSkinRegion:1});
+  assert.deepEqual(before.indices,after.indices);assert.deepEqual(before.positions,after.positions);
+  const cell=(x,y,z)=>owner[(x*shape[1]+y)*shape[2]+z];
+  let changed=0,checkedInterfaces=0;
+  for(let i=0;i<after.positions.length;i+=3){
+    const p=[...after.positions.slice(i,i+3)],prev=before.smoothPositions.subarray(i,i+3),next=after.smoothPositions.subarray(i,i+3);
+    assert(Math.hypot(...p.map((v,k)=>v-next[k]))<=.50001);
+    const diff=Math.hypot(...p.map((_,k)=>prev[k]-next[k]));
+    if(diff>1e-6)changed++;
+    if(p.some((v,k)=>v<1||v>=shape[k]-1))continue;
+    const a=cell(...p.map(Math.floor)),b=cell(...p.map(Math.ceil));
+    if((a&&b)||Math.hypot(p[0]-8,p[1]-9)<.8){
+      assert(diff<1e-6);checkedInterfaces++;
+    }
+  }
+  assert(changed>120);assert(checkedInterfaces>100);
+});

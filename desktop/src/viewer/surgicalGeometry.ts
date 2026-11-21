@@ -40,7 +40,7 @@ export function updateSurgicalToolAnimation(group:THREE.Group,sourceSeconds:numb
 /** Generic research geometry, tip at local origin and working axis along +Z. */
 export function surgicalToolMesh(tool:SurgicalTool,slot:SurgicalSlot,ghost=false){
   if(tool.id==='brain_retractor'&&slot.parameters.planarBladeContactRevision===1&&slot.planarBladeGeometry)return planarBladeToolMesh(tool,slot,ghost);
-  if(tool.physicalProfile?.revision===1&&slot.contactGeometry?.length===tool.physicalProfile.parts.length){
+  if(tool.physicalProfile&&slot.contactGeometry?.length===tool.physicalProfile.parts.length){
     const group=operativeInstrument(tool,slot,ghost);updateSurgicalToolMesh(group,slot,ghost);return group;
   }
   if(slot.contactGeometry&&!ghost)return contactToolMesh(tool,slot);

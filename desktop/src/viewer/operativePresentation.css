@@ -1,0 +1,70 @@
+.rl-viewer.rl-viewer[data-field-presentation='true'] {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
+  max-height: none;
+  display: grid;
+  grid-template: 1fr / 1fr;
+  gap: 0;
+  border: 0;
+  border-radius: 0;
+  isolation: isolate;
+}
+.rl-viewer.rl-viewer[data-field-presentation='true'] > .rl-viewer-anatomy {
+  grid-area: 1/1;
+  display: block;
+  border: 0;
+  border-radius: 0;
+}
+.rl-viewer.rl-viewer[data-field-presentation='true'] .rl-viewer-anatomy-image {
+  inset: 0;
+}
+.rl-viewer[data-field-presentation='true']
+  :is(.rl-viewer-slice, .engine-section, .rl-viewer-annotations, .rl-body-guide, .rl-control-popover) {
+  display: none;
+}
+.rl-viewer.rl-viewer[data-field-presentation='true'] > .rl-viewer-layoutbar {
+  position: absolute;
+  inset: 10px 10px auto auto;
+  width: auto;
+  min-height: 0;
+  height: auto;
+  z-index: 7;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+.rl-viewer[data-field-presentation='true'] .rl-primary-tools {
+  padding: 0;
+  background: transparent;
+  border: 0;
+}
+.rl-viewer[data-field-presentation='true'] .rl-primary-tools > :not(.field-expand) {
+  display: none;
+}
+.rl-viewer[data-field-presentation='true'] .field-expand {
+  background: #17201ed9;
+  border: 1px solid #62736c;
+}
+.field-presentation-readout {
+  position: absolute;
+  left: 14px;
+  bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 9px;
+  pointer-events: none;
+  background: #131b19cb;
+  color: #e4e9e4;
+  border-radius: 4px;
+  font:
+    11px/1.4 system-ui,
+    sans-serif;
+}
+.field-presentation-readout span:empty {
+  display: none;
+}

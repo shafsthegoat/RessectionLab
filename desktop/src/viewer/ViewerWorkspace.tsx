@@ -60,6 +60,7 @@ import {
   structuralProposalReviewLabel,
 } from "./structuralProposal";
 import "./viewer.css";
+import "./operativePresentation.css";
 
 const PLANES: SlicePlane[] = ["axial", "coronal", "sagittal"];
 const TITLES: Record<SlicePlane, string> = {
@@ -188,6 +189,16 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     [proposalReviewLabel, setProposalReviewLabel] = useState<string | null>(
       null,
     );
+  const [fieldExpanded,setFieldExpanded]=useState(false);
+  const fieldPresentable=!!surgicalView&&(settings.operativeView==='surgeon'||!!surgicalView.operativeExposureV1)&&!resultParts;
+  const fieldPresentation=fieldExpanded&&fieldPresentable;
+  useEffect(()=>{
+    if(!fieldPresentation)return;
+    const escape=(event:globalThis.KeyboardEvent)=>{if(event.key==='Escape')setFieldExpanded(false);};
+    document.addEventListener('keydown',escape);
+    return ()=>document.removeEventListener('keydown',escape);
+  },[fieldPresentation]);
+  useEffect(()=>{engine.current?.setFieldPresentation(fieldPresentation);},[fieldPresentation,ready,graphicsGeneration,rendererIdentity]);
   const [expanded, setExpanded] = useState<SlicePlane | null>(null);
   const [navigationMode,setNavigationMode]=useState<'orbit'|'pan'>('orbit');
   const [controlPanel,setControlPanel]=useState<'layout'|'appearance'|'clip'|'info'|null>(null);
@@ -727,6 +738,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
       onPointerUpCapture={event=>{if((event.target as HTMLInputElement).type==='range')engine.current?.endInteraction();}}
       onPointerCancelCapture={()=>engine.current?.endInteraction()}
       data-layout={layout}
+      data-field-presentation={fieldPresentation||undefined}
       data-engine-section-layout={showEngineSection||undefined}
       data-result-inspection={resultParts}
       data-source-case-hash={caseData?.caseHash}
@@ -751,6 +763,12 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
         {resultParts&&<div className="result-heading"><strong>3D result</strong>
           <button onClick={()=>inspectResult(undefined)}>Return to operative field</button></div>}
         <div className="rl-primary-tools">
+          {fieldPresentable&&<button className="field-expand"
+            aria-label={fieldPresentation?'Restore operative workspace':'Expand operative field'}
+            title={fieldPresentation?'Restore operative workspace (Esc)':'Expand operative field'}
+            aria-pressed={fieldPresentation} onClick={()=>{setFieldExpanded(!fieldPresentation);setControlPanel(null);setExpanded(null);}}>
+            {fieldPresentation?<Minimize2 size={16}/>:<Maximize2 size={16}/>}
+          </button>}
           <div className="rl-viewer-title">
             <strong>3D View</strong>
             <span title={settings.operativeView==='surgeon' ? 'Operative field · illustrative material' : `${signalName} · ${volumeDisplayed ? 'source volume + structures' : 'segmentation surfaces'}`}>
@@ -884,15 +902,20 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
           }}
           aria-label={props.surgicalInteraction?.mode==='draw'?'3-D source anatomy. Drag on anatomy to draw a proposed instrument stroke.':`3-D source anatomy. Drag to ${navigationMode==='pan'?'pan':'rotate'}, scroll to zoom, double-click to set linked cursor.`}
         >
-          {surgicalView&&<OperativeLegend scene={surgicalView.scene} settings={settings} cursor={currentCursor}
+          {fieldPresentation&&surgicalView&&<div className="field-presentation-readout" role="status">
+            <b>{surgicalView.operativeExposureV1?'Generated anatomy':'Operative field'}</b>
+            <span>{displayedSurgical?.preview?'Preview':modelDisplayPending?'Preparing accepted state':settings.microscope?.inspectionTransparency||settings.microscope?.inspectionCutaway?'Inspection only · anatomy exposed by view':settings.operativeView==='surgeon'?'Opaque microscope':Object.values(settings.layerOpacity??{}).some(o=>o<1)?'Inspection only · transparent anatomy':'External scalp overview'}</span>
+            <span>{Object.values(surgicalView.slots).filter(s=>s.inserted).map(s=>s.instrument.replaceAll('_',' ')).join(' · ')}</span>
+          </div>}
+          {surgicalView&&!fieldPresentation&&<OperativeLegend scene={surgicalView.scene} settings={settings} cursor={currentCursor}
             visible={visibleLayers} picked={pickedLayer?.sceneId===surgicalView.scene.sceneId?pickedLayer.name:null}
             onPick={inspectRegion} onSmooth={setSmoothSurfaces}/>}
-          {settings.operativeView==='surgeon'&&settings.microscope&&geometrySource&&geometry&&surgicalView&&
+          {!fieldPresentation&&settings.operativeView==='surgeon'&&settings.microscope&&geometrySource&&geometry&&surgicalView&&
             (!displayedSurgical?.preview||displayedSurgical.recordedFrame)&&
             <OperativeSourceLocator source={geometrySource} bounds={geometry.bounds} inverse={geometry.inverse}
               microscope={settings.microscope} labelsOnly={!!props.segmentationOnly} stateId={surgicalView.stateId}/>}
-          {displayedSurgical?.practiceHud&&surgicalView&&<PracticeHud interaction={displayedSurgical} view={surgicalView} membrane={membrane}/>}
-          {!displayedSurgical?.practiceHud&&settings.operativeView==='surgeon'&&surgicalView&&(showEngineSection?
+          {!fieldPresentation&&displayedSurgical?.practiceHud&&surgicalView&&<PracticeHud interaction={displayedSurgical} view={surgicalView} membrane={membrane}/>}
+          {!fieldPresentation&&!displayedSurgical?.practiceHud&&settings.operativeView==='surgeon'&&surgicalView&&(showEngineSection?
             <details className="engine-frame-metrics" data-operative-readout-state={surgicalView.stateId}>
               <summary>{membrane??'Engine'} · {Number(surgicalView.metrics.elapsedSeconds).toFixed(1)} s</summary>
               {operativeMeasurements}
@@ -987,7 +1010,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
             <span>{props.generatedSignal?'Generated image section':`Source ${signalName} section`} · {TITLES[activePlane]} · {'XYZ'[PLANE_AXES[activePlane][2]]} {currentCursor[PLANE_AXES[activePlane][2]].toFixed(1)} mm</span>
             <button aria-label="Exit source section" onClick={exitSourceSection}>Exit section</button>
           </div>}
-          <div className="rl-body-guide" hidden={settings.showOrientationGuide===false}>
+          <div className="rl-body-guide" hidden={fieldPresentation||settings.showOrientationGuide===false}>
             <div ref={orientationGuide} className="rl-body-guide-image" role="img" aria-label="Body orientation guide. Mint head follows the brain. Anatomical reference.">
               <span data-guide-side="right" aria-hidden="true">R</span>
               <span data-guide-side="left" aria-hidden="true">L</span>

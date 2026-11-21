@@ -7,6 +7,9 @@ export const operativeColors={brain:'#c68788',grayMatter:'#b38b8b',whiteMatter:'
 export function operativeSurfaceStyle(kind:string|undefined,settings:ViewerWorkspaceSettings){
   if(settings.operativeView!=='surgeon'||settings.microscope?.tissueStyle==='labels')return null;
   switch(kind){
+    case 'scalp':return {color:'#bf8d7e',roughness:.64};
+    case 'galea':return {color:'#d4b8a2',roughness:.67};
+    case 'diploe':return {color:'#ae8b71',roughness:.88};
     case 'brain':case 'soft_tissue':case 'tissue':case 'head-envelope':return {color:operativeColors.brain,roughness:.53};
     case 'gray-matter':case 'grayMatter':return {color:operativeColors.grayMatter,roughness:.53};
     case 'white-matter':case 'whiteMatter':return {color:operativeColors.whiteMatter,roughness:.64};
@@ -21,6 +24,8 @@ export function operativeSurfaceStyle(kind:string|undefined,settings:ViewerWorks
 }
 
 export function applyOperativeSurface(material:THREE.MeshStandardMaterial,kind:string|undefined,settings:ViewerWorkspaceSettings){
+  const active=material.userData.tissueFinish;
+  if(active)active.value=settings.microscope?.tissueStyle!=='labels'&&(settings.operativeView==='surgeon'||settings.layerOpacity&&Object.values(settings.layerOpacity).every(o=>o===1));
   const style=operativeSurfaceStyle(kind,settings);
   if(style){material.color.set(style.color);material.roughness=style.roughness;material.metalness=0;}
   else material.roughness=kind==='tumor'?.48:['vessel','vessels','artery','vein','sinus'].includes(kind??'')?.32:.52;

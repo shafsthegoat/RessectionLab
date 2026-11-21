@@ -55,6 +55,9 @@ export interface ViewerVolume {
     qa?: AnatomyQuality;
     surfaceDiagnostics?: import('./surfacePolicy').SurfaceDiagnostics;
     mask: Uint8Array;
+    /** Static remainder when an accepted body has its own continuous surface. */
+    generatedFinish?:boolean;
+    surfaceMask?: Uint8Array;
     labelSet?: string;
     labelValue?: number;
     color: string;
