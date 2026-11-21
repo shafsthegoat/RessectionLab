@@ -69,6 +69,21 @@ test('source and mapping changes use a complete independent fallback; invalid na
   assert.throws(()=>modeledVolume(a,view(a,{moved:[[0,-1]]})),/Invalid displacement/);
 });
 
+test('cutting stationary brain retains its registered signal and rebuilds the changed mask',()=>{
+  const s=source();
+  const brain=s.compartments[0];
+  brain.mask.fill(1);
+  brain.kind='brain';
+  brain.appearanceSource={seriesId:'t1',modality:'T1',affine,shape:s.shape,data:s.mri};
+  const initial=modeledVolume(s,view(s));
+  const cut=modeledVolume(s,view(s,{removed:[8]}));
+  assert.equal(cut.compartments[0].mask[8],0);
+  assert.equal(initial.compartments[0].mask[8],1);
+  assert.equal(cut.compartments[0].appearanceSource,brain.appearanceSource);
+  assert.equal(cut.compartments[0].displayKind,'brain');
+  assert.equal(cut.compartments[0].sourceIdentity,undefined);
+});
+
 test('whole membrane patch rendering survives release and clears only after actual extraction',()=>{
   const count=125,mask=new Uint8Array(count);mask[62]=mask[63]=1;
   const region={id:31,name:'source membrane',material:'membrane',color:'#82c8d8',target:false};

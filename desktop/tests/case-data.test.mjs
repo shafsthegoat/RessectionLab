@@ -76,6 +76,30 @@ test("LPS is converted once without resampling voxel data", async () => {
   assert.deepEqual([...data.compartments[0].mask], [0, 0, 0, 0, 0, 0, 0, 1]);
   assert.equal(input.affine[0][0], 2);
 });
+test("bound engine brain walls sample the matching acquired reference on the converted grid", async () => {
+  const input = fixture();
+  input.frame = "LPS+";
+  input.compartments.push({...input.compartments[0], name: "brain"});
+  input.metadata.anatomy_layers = {brain: {kind: "brain"}, enhancing_target: {kind: "tumor"}};
+  input.artifacts = {
+    nativeStudyReplay: {caseHash: input.caseHash, patientId: "p", sourceSnapshotId: "revision"},
+    surgical_toolbox: {exactGridReplay: {sourceManifest: {
+      patient_id: "p", snapshot_id: "revision", reference_series: "t1",
+      series: [{id: "t1", modality: "T1", original: {sha256: hash}}],
+    }}},
+  };
+  input.sourceRefs = [{source_id: "structural", provenance: "observed", sha256: hash}];
+  const data = await hydrateCase(input, api());
+  const signal = data.compartments[1].appearanceSource;
+  assert.equal(signal.data, data.mri);
+  assert.deepEqual(signal.affine, data.affine);
+  assert.equal(data.compartments[0].appearanceSource, undefined);
+  input.artifacts.nativeStudyReplay.sourceSnapshotId = "different-revision";
+  assert.equal((await hydrateCase(input, api())).compartments[1].appearanceSource, undefined);
+  input.artifacts.nativeStudyReplay.sourceSnapshotId = "revision";
+  input.sourceRefs[0].provenance = "simulated";
+  assert.equal((await hydrateCase(input, api())).compartments[1].appearanceSource, undefined);
+});
 test("annotation centering preserves the recorded source point and converts LPS exactly once", async () => {
   for (const frame of ["RAS+", "LPS+"]) {
     const input = fixture();

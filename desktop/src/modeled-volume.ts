@@ -76,6 +76,9 @@ function validateGrid(source:ViewerVolume,view:SurgicalView){
 function compartment(region:SurgicalRegion,original:Base['originals'][number],mask:Uint8Array,difference:number):Layer {
   const {layer,labels}=original,unchanged=!!layer&&difference===0,sameKind=surfaceKind(layer?.kind)===surfaceKind(region.material);
   return {...(unchanged?layer:{}),name:region.name,color:region.color,kind:region.material,
+    // A cut changes mesh ownership, not the registered acquisition sampled on
+    // its stationary walls. The renderer withholds modulation during motion.
+    ...(layer?.appearanceSource && sameKind ? {appearanceSource:layer.appearanceSource,displayKind:layer.displayKind??layer.kind} : {}),
     mask:unchanged&&layer&&!labels?layer.mask:mask,labelSet:undefined,labelValue:undefined,
     surface:unchanged&&sameKind?layer?.surface:undefined,surfaceDiagnostics:unchanged&&sameKind?layer?.surfaceDiagnostics:undefined,
     sourceIdentity:unchanged?layer?.sourceIdentity:undefined,qa:unchanged?layer?.qa:undefined};

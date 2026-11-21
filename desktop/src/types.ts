@@ -192,6 +192,8 @@ export interface ViewerCase {
     mask: Uint8Array;
     kind?:string;
     sourceIdentity?:string;
+    displayKind?:string;
+    appearanceSource?:import('./viewer/contracts').SurfaceAppearanceSource;
     qa?:import('./viewer/contracts').AnatomyQuality;
     color: string;
     mesh?: {

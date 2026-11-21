@@ -6,6 +6,7 @@ import type {
   ViewerCase,
 } from "./types";
 import {registerSourceInspection} from './modeled-volume.ts';
+import type {SurfaceAppearanceSource} from './viewer/contracts';
 
 export function anatomyColor(name: string): string {
   const key = name.toLowerCase();
@@ -196,6 +197,28 @@ export function displayBrainMask(payload:CasePayload):boolean {
 const objectRecord = (value: unknown): value is Record<string, unknown> =>
   !!value && typeof value === "object" && !Array.isArray(value);
 
+/** The bound engine archive carries reference pixels on its own physical grid.
+ * A synthetic lesion can share an acquired background. Its contour is never
+ * evidence of an acquired tumor signal. */
+function recordedBrainSignal(payload: CasePayload, mri: Float32Array, affine: ViewerCase["affine"]): SurfaceAppearanceSource | undefined {
+  const receipt = payload.verifiedStudyReplay ?? payload.artifacts?.nativeStudyReplay;
+  if (!objectRecord(receipt) || receipt.caseHash !== payload.caseHash) return;
+  const toolbox = payload.artifacts?.surgical_toolbox;
+  const exact = objectRecord(toolbox) ? toolbox.exactGridReplay : undefined;
+  const adapter = payload.metadata.surgical_adapter;
+  const manifest = objectRecord(exact) ? exact.sourceManifest : objectRecord(adapter) ? adapter.sourceManifest : undefined;
+  if (!objectRecord(manifest) || !Array.isArray(manifest.series) ||
+      manifest.patient_id !== receipt.patientId || manifest.snapshot_id !== receipt.sourceSnapshotId) return;
+  const series = manifest.series.find(row => objectRecord(row) && row.id === manifest.reference_series);
+  if (!objectRecord(series) || !objectRecord(series.original) || typeof series.id !== "string" ||
+      typeof series.modality !== "string" || !["T1", "T1CE", "T2", "FLAIR"].includes(series.modality)) return;
+  const sha = series.original.sha256;
+  if (typeof sha !== "string" || !/^[a-f0-9]{64}$/.test(sha) ||
+      !payload.sourceRefs?.some(source => source.provenance === "observed" && source.sha256 === sha)) return;
+  return {seriesId: series.id, modality: series.modality, sourceSha256: sha, signalSha256: payload.mri.sha256,
+    shape: payload.shape, affine, data: mri};
+}
+
 function validatePlannedDerivative(payload: CasePayload, marker: Record<string, unknown>) {
   const adapter = payload.metadata.surgical_adapter;
   const route = objectRecord(adapter) && adapter.selectedApproach;
@@ -244,6 +267,7 @@ export async function hydrateCase(
     affine[0] = affine[0].map((value) => -value);
     affine[1] = affine[1].map((value) => -value);
   }
+  const brainSignal = recordedBrainSignal(payload, mri, affine);
   const result: ViewerCase = {
     caseId: payload.caseId,
     caseHash: payload.caseHash,
@@ -270,9 +294,11 @@ export async function hydrateCase(
         1e-5 * Math.max(1, layer.volumeMm3)
       )
         throw new Error(`${layer.name} volume disagrees with its source grid.`);
+      const kind = (payload.metadata.anatomy_layers as Record<string,{kind?:string}>|undefined)?.[layer.name]?.kind;
       return {
         name: layer.name,
-        kind: (payload.metadata.anatomy_layers as Record<string,{kind?:string}>|undefined)?.[layer.name]?.kind,
+        kind,
+        ...(kind === "brain" && brainSignal ? {appearanceSource: brainSignal, displayKind: kind} : {}),
         sourceIdentity: `${payload.caseHash}:${layer.name}:${layer.array.sha256}`,
         qa: layer.qa,
         volumeMm3: layer.volumeMm3 ?? selected * voxelVolumeMm3,
