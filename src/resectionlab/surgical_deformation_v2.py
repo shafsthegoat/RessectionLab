@@ -154,11 +154,22 @@ def release(engine, key):
     engine.state['holds'].pop(key, None)
 
 
-def _system(engine, p, ids, anchors, bonds):
+def _system(engine, p, ids, anchors, retained, blocked):
     held = tuple(sorted({c for h in _holds(engine) for c in h['cells']} & set(ids)))
-    signature = (tuple(ids), tuple(_material(engine, c) for c in ids), tuple(anchors), tuple(bonds), held, tuple((k, p[k]) for k in sorted(profile())))
+    shape = engine.scene.shape
+    strides = {1, shape[2], shape[1] * shape[2]}
+    # Only cuts between potential axial neighbors can alter this system. At
+    # most three forward pairs per active node enter the cache, even with a
+    # large cut ledger elsewhere. _neighbors handles the actual grid bounds.
+    local_cuts = frozenset((a, b) for a, b in blocked
+                           if a in retained and b in retained and b - a in strides)
+    grid = (tuple(shape), engine.scene.affine[:3, :3].tobytes())
+    signature = (grid, tuple(ids), tuple(_material(engine, c) for c in ids), tuple(anchors),
+                 local_cuts, held, tuple((k, p[k]) for k in sorted(profile())))
     cached = getattr(engine, '_deformation_system_v2', None)
     if cached and cached[0] == signature: return cached[1:]
+    bonds = sorted((c, n) for c in ids for n, _ in _neighbors(engine, c)
+                   if c < n and n in retained and (c, n) not in local_cuts)
     n = len(ids); index = {c: i for i, c in enumerate(ids)}
     stiffness = np.array([p['tumorStiffnessNPerMm'] if _material(engine, c) == 'tumor' else p['brainStiffnessNPerMm'] for c in ids])
     rows = []; cols = []; vals = []; dr = []; dc = []; dv = []
@@ -220,10 +231,8 @@ def tick(engine, dt):
             if int(c) not in ids: field.pop(c)
     if not ids: return
     blocked = _blocked(engine); retained = set(ids)
-    bonds = sorted((c, n) for c in ids for n, _ in _neighbors(engine, c)
-                   if c < n and n in retained and (c, n) not in blocked)
     anchors = sorted(set(model['anchors']) & retained)
-    solve, free, index, edges, K = _system(engine, p, ids, anchors, bonds)
+    solve, free, index, edges, K = _system(engine, p, ids, anchors, retained, blocked)
     h = p['fixedStepSeconds']; total = model['remainderSeconds'] + dt
     steps = int(np.floor((total + 1e-12) / h))
     model['remainderSeconds'] = max(0., round(total - steps*h, 14))

@@ -45,6 +45,50 @@ def test_nonuniform_partition_and_replay_are_identical():
     assert a.state == b.state == replay.state
 
 
+def test_cached_bonds_match_fresh_assembly_across_hold_cut_and_removal(monkeypatch):
+    import resectionlab.surgical_deformation_v2 as brain
+    warm, center = held()
+    cold, _ = held()
+    adjacent = cell(warm, (6, 7, 6))
+    outside = [cell(warm, (0, 0, 0)), cell(warm, (0, 0, 1))]
+    adjacent_cut = sorted((center, adjacent))
+    original_neighbors = brain._neighbors
+    calls = []
+
+    def neighbors(e, c):
+        if e is warm:
+            calls.append(c)
+        return original_neighbors(e, c)
+
+    monkeypatch.setattr(brain, '_neighbors', neighbors)
+
+    def compare(expect_assembly):
+        calls.clear()
+        cold.__dict__.pop('_deformation_system_v2', None)
+        tick(warm, 1 / 120)
+        tick(cold, 1 / 120)
+        assert bool(calls) == expect_assembly
+        assert warm.state == cold.state
+
+    compare(True)
+    compare(False)
+    for e in (warm, cold):
+        e.state['cutEdges'].append(outside)
+    compare(False)
+    for e in (warm, cold):
+        e.state['transectedEdges'].append(adjacent_cut)
+    compare(True)
+    for e in (warm, cold):
+        release(e, 'left')
+    compare(True)
+    for e in (warm, cold):
+        begin_hold(e, 'right', [adjacent], [6., 7., 6.])
+    compare(True)
+    for e in (warm, cold):
+        e.state['removed'].append(center)
+    compare(True)
+
+
 def test_two_holds_and_removal_never_regenerate():
     e, c = held(); d = cell(e, (8, 6, 6))
     begin_hold(e, 'right', [d], [8, 6, 6]); set_target(e, 'right', [7.7, 6, 6]); tick(e, .2)
