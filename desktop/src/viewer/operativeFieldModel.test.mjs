@@ -71,6 +71,8 @@ test('aspirator annulus has an open lumen and a separate long shaft',()=>{
   m.cusa.updateMatrixWorld(true);assert.equal(ray.intersectObject(tip).length,0);
   ray.ray.origin.x=1.25;assert.ok(ray.intersectObject(tip).length>0);
   assert.ok(new THREE.Box3().setFromObject(shaft).getSize(new THREE.Vector3()).z>40);
+  const body=new THREE.Box3().setFromObject(m.cusa);
+  assert.ok(Math.max(body.max.x,body.max.y)<=1.6*1.6+1e-6,'proximal collar stays below 1.6 tip radii when viewed end-on');
   const bounds=new THREE.Box3().setFromObject(tip);
   assert.ok(Math.abs(bounds.min.z)<1e-6,'preserve the distal contact plane');
   assert.ok(Math.max(bounds.max.x,bounds.max.y)<=1.6+1e-6,'the mouth fits the modeled radius');

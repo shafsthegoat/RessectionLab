@@ -104,3 +104,23 @@
 .planning-evidence button{justify-self:start}
 .planning-evidence pre,.approach-access-evidence pre{max-height:240px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;font-size:11px}
 .planning-evidence code{overflow-wrap:anywhere}
+
+.practice-entry {margin-top:6px}
+.practice-controls {display:grid;gap:7px;min-width:0}
+.practice-controls>fieldset {gap:7px}
+.practice-tools {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}
+.practice-tools button {text-align:center;font-size:11px;line-height:1.3}
+.practice-controls select {max-width:72%}
+.practice-jog {display:grid;gap:2px;touch-action:none;user-select:none;cursor:crosshair}
+.practice-jog span,.practice-pose p {font-size:11px;line-height:1.5}
+.practice-jog span {color:#a9c1cb}
+.practice-pose {font-variant-numeric:tabular-nums}
+.practice-pose button {padding:1px 4px;font-size:10px}
+.practice-controls details p {overflow-wrap:anywhere}
+.operative-readout.practice-hud {max-width:320px;font-size:11px}
+.practice-hud dl {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 12px;margin:2px 0}
+.practice-hud dl div {display:grid;gap:1px}
+.practice-hud dt {color:#c1cbc9;font-size:10px}
+.practice-hud dd {margin:0;font-size:12px}
+.surgical-panel[data-practice-active="true"] .rehearsal-state {padding-block:4px}
+.surgical-panel[data-practice-active="true"] .rehearsal-state>strong {font-size:12px}

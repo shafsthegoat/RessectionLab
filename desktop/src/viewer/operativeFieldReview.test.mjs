@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import * as THREE from 'three';
 import {operativeVoxelSurface} from './operativeVoxelSurface.ts';
 import {operativeEntryCover,operativeFieldContext} from './operativeFieldContext.ts';
-import {operativeSectionVisible,operativeSectionContext} from './operativeSectionContext.ts';
+import {operativeSectionContext} from './operativeSectionContext.ts';
 import {fieldTargetOnOverview} from './operativeFieldSlice.ts';
 
 const field={shape:[2,2,2],origin:[0,0,0],spacingMm:2,voxels:Uint8Array.of(8,0,0,0,8,0,0,0),
@@ -55,16 +55,6 @@ test('surrounding source geometry maps the patient target to the local origin an
   assert.equal(operativeFieldContext(volume,scanField,'collection').children[0].geometry.hasAttribute('scanSignal'),false);
   volume.compartments[0].sourceSupport.sampledDataSha256='raw';
   assert.equal(operativeFieldContext(volume,field,'collection').children.length,0);
-});
-
-test('depth following retains the exterior for shallow work and respects explicit view choices',()=>{
-  const route={stations:{bone:28,dura:22,brain:16,tumor:12},spacingMm:.5,routeRadiusMm:3};
-  assert(!operativeSectionVisible(route,'dura','follow'));
-  assert(operativeSectionVisible(route,'brain','follow'));
-  assert(operativeSectionVisible(route,'tumor','follow'));
-  assert(!operativeSectionVisible({...route,stations:{bone:null,dura:null,brain:14,tumor:12}},'tumor','follow'));
-  assert(!operativeSectionVisible(route,'tumor','exterior'));
-  assert(operativeSectionVisible(route,'overview','section'));
 });
 
 test('intact MRI continuation samples the matching source outside the operated footprint only',()=>{

@@ -12,5 +12,5 @@ export function rehearsalPresentation(regions:SurgicalRegion[],settings:ViewerWo
 export function initialRehearsalPresentation(regions:SurgicalRegion[],settings:ViewerWorkspaceSettings={}):ViewerWorkspaceSettings {
   const defaults=rehearsalPresentation(regions);
   return {...defaults,...settings,volumeRendering:{...defaults.volumeRendering,...settings.volumeRendering},
-    layerColor:{...defaults.layerColor,...settings.layerColor},layerOpacity:{...defaults.layerOpacity,...settings.layerOpacity}};
+    layerColor:{...Object.fromEntries(regions.map(region=>[region.name,region.color])),...settings.layerColor},layerOpacity:{...defaults.layerOpacity,...settings.layerOpacity}};
 }

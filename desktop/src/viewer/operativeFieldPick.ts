@@ -18,13 +18,20 @@ export function pickOperativeStructure(scene:THREE.Scene,camera:THREE.Camera,ndc
     const {directId,role,detail,offset,openingLimit,kerf,patchRadius,exterior}=identity;
     const point=hit.point.clone();
     if(directId){
-      if(Math.hypot(point.x,point.y)<=patchRadius&&point.z>=field.origin[2]-.5*field.spacingMm&&point.z<=field.origin[2]+(field.shape[2]-.5)*field.spacingMm)continue;
+      // The ray hit the retracted pose. Report its original acquisition point.
+      if(identity.cortex&&hit.face&&hit.barycoord){
+        const p=mesh.geometry.getAttribute('position'),face=hit.face,weights=hit.barycoord.toArray();
+        point.set(0,0,0);
+        [face.a,face.b,face.c].forEach((v,i)=>point.addScaledVector(new THREE.Vector3().fromBufferAttribute(p,v),weights[i]));
+        point.applyMatrix4(mesh.matrixWorld);
+      }
+      if(point.z<(identity.cortex?.activeFloor.value??Infinity)&&Math.hypot(point.x,point.y)<=patchRadius&&point.z>=field.origin[2]-.5*field.spacingMm&&point.z<=field.origin[2]+(field.shape[2]-.5)*field.spacingMm)continue;
     }else{
       if(!hit.face||!hit.barycoord)continue;
       const p=mesh.geometry.getAttribute('position'),face=hit.face,weights=hit.barycoord.toArray();
       point.set(0,0,0);
       [face.a,face.b,face.c].forEach((v,i)=>point.addScaledVector(new THREE.Vector3().fromBufferAttribute(p,v),weights[i]));
-      if(exterior?.value&&Math.hypot(point.x,point.y)>patchRadius)continue;
+      if(exterior?.value&&(Math.hypot(point.x,point.y)>patchRadius||point.z>=(identity.cortexLocal?.activeFloor.value??Infinity)))continue;
       if(openingLimit?.value>=0){
         const angle=THREE.MathUtils.euclideanModulo(Math.atan2(point.y,point.x),2*Math.PI);
         if((angle<openingLimit.value)!==kerf)continue;

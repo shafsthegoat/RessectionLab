@@ -1,6 +1,7 @@
 import * as THREE from 'three';
-import type {Point3} from './coordinates';
-import type {MicroscopeSettings,ViewerCameraState} from './workspaceSettings';
+import {transformPoint,type Point3} from './coordinates.ts';
+import type {SurgicalView} from '../surgical-types';
+import type {MicroscopeSettings,ViewerCameraState,ViewerWorkspaceSettings} from './workspaceSettings';
 
 /** Optical controls use RAS mm only; they never enter a surgical request. */
 export function microscopeCamera(s:MicroscopeSettings):ViewerCameraState {
@@ -14,6 +15,28 @@ export function microscopeCamera(s:MicroscopeSettings):ViewerCameraState {
   const up=reference.clone().addScaledVector(direction,-reference.dot(direction)).normalize();
   return {target:target.toArray() as Point3,position:target.clone().addScaledVector(direction,s.workingDistanceMm).toArray() as Point3,up:up.toArray() as Point3};
 }
-export function microscopeFov(s:MicroscopeSettings):number {
+export function microscopeFov(s:Pick<MicroscopeSettings,'workingDistanceMm'|'fieldMm'>):number {
   return THREE.MathUtils.radToDeg(2*Math.atan(s.fieldMm/(2*s.workingDistanceMm)));
+}
+
+
+/** Establish the microscope once per scene. An explicit saved view takes
+ * precedence, including an external camera or a pinned inspection section. */
+export function defaultSurgeonView(view:SurgicalView,settings:ViewerWorkspaceSettings,annotationCenter:Point3|null=null):ViewerWorkspaceSettings {
+  if(settings.operativeView)return settings;
+  const slots=Object.values(view.slots);
+  const slot=slots.find(item=>item.inserted&&item.active)??slots.find(item=>item.inserted)??slots[0];
+  if(!slot)return settings;
+  const blade=view.planarBladeManeuver?.opticalFrame;
+  // Tool +Z points into the working field. A small off-axis angle keeps the
+  // tip visible beside the shaft without moving it or exposing hidden tissue.
+  const outward=new THREE.Vector3(0,0,-1).applyQuaternion(new THREE.Quaternion(...slot.quaternion).normalize());
+  const center=blade?.targetMm??(slot.inserted?slot.position:annotationCenter)
+    ??transformPoint(view.scene.affine,view.scene.shape.map(n=>(n-1)/2) as Point3);
+  const microscope:MicroscopeSettings={target:[...center],outward:blade?[...blade.outward]:outward.toArray(),
+    angleDeg:blade?30:12,azimuthDeg:0,workingDistanceMm:160,fieldMm:blade?12:42,focusOffsetMm:0,light:2.5,
+    ...settings.microscope,inspectionTransparency:false,inspectionCutaway:false};
+  return {...settings,operativeView:'surgeon',microscope,externalCamera:settings.camera,camera:microscopeCamera(microscope),
+    layout:'3d-focus',showPlane:false,contextStyle:'uniform',clipping:undefined,clipBox:undefined,obliqueClip:undefined,
+    volumeRendering:{...settings.volumeRendering,enabled:false}};
 }

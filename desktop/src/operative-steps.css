@@ -40,11 +40,7 @@
   flex-wrap: wrap; max-width: 94%; gap: 9px; padding: 4px 8px; border-radius: 4px; background: #101514df; font-size: 11px;
 }
 .operative-legend span::before {content: ''; width: 8px; height: 8px; margin-right: 5px; border-radius: 50%; display: inline-block; background: var(--tissue);}
-.operative-legend [data-tissue=bone] {--tissue: #e5d8bc;}
-.operative-legend [data-tissue=dura] {--tissue: #d7b2a0;}
-.operative-legend [data-tissue=brain] {--tissue: #c68788;}
-.operative-legend [data-tissue=tumor] {--tissue: #65bfd3;}
-.operative-legend [data-tissue=vessels] {--tissue: #be4349;}
+.operative-legend [data-tissue=tumor]::before {border-radius:2px;box-shadow:0 0 0 1px #e1c3ce;}
 .operative-transport {padding: 11px 16px; border-top: 1px solid #313a35; background: #171d1b;}
 .operative-stage-title {justify-content: space-between; color: #dce6df;}
 .operative-stage-title span {color: #9eafa4; font-variant-numeric: tabular-nums;}
@@ -60,7 +56,6 @@
 .operative-chapters button:disabled {opacity: .62;}
 .operative-options {margin-top: 8px; flex-wrap: wrap; color: #b9c6be; font-size: 12px;}
 .operative-options label {display: flex; align-items: center; gap: 5px;}
-.operative-options select {color:#dce8e1;background:#1c2621;border:1px solid #405048;border-radius:4px;font:inherit;padding:2px 4px;}
 .operative-options input {accent-color: #8dd9b7;}
 .operative-conflict {color: #f2c89a; font-size: 12px; padding-bottom: 5px; max-height: 4em; overflow: auto;}
 .operative-playback :is(button,input,summary):focus-visible {outline: 2px solid #9fe1c0; outline-offset: 1px;}
@@ -82,7 +77,9 @@
 .operative-picked {position:absolute;z-index:2;top:32px;right:10px;max-width:min(260px,48%);max-height:50%;overflow:auto;background:#17201ef2;border:1px solid #405249;border-radius:4px;padding:8px 10px;font-size:11px;overflow-wrap:anywhere}
 .operative-picked small,.operative-picked strong{display:block}
 .operative-picked button{float:right;margin-left:6px;cursor:pointer}
-.operative-topline .operative-frame-choice {margin-left:auto;min-height:24px;padding:2px 7px;color:#c2d8cc;font-size:11px;}
+.operative-topline select {margin-left:auto;width:auto;max-width:50%;min-height:27px;border:1px solid #46564e;border-radius:4px;background:#202a25;color:#dce8e1;font:inherit;}
+.operative-playback select:focus-visible {outline:2px solid #9fe1c0;outline-offset:1px;}
+.surgeon-view-modes button[aria-pressed=true] {border-color:#75b998;box-shadow:inset 0 -2px #75b998;}
 
 /* Keep the planning renderer and its patient camera alive beside the changing
    local field. Both reference panes follow the selected study and approach. */
@@ -166,6 +163,5 @@
 }
 .operative-sweep-choice {display:grid; gap:4px; margin:10px 0;}
 .operative-sweep-choice select {background:#1c2621;color:#dce8e1;border:1px solid #405048;border-radius:4px;padding:4px;}
-.operative-section-reveal {position:absolute;inset:0;width:100%;height:100%;pointer-events:none;background:#090c10;}
 
 .operative-field-canvas[data-entry-caption]:not([data-entry-caption=""])::after {content:attr(data-entry-caption);}

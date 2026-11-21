@@ -33,11 +33,12 @@ test('source contrast on the section cap preserves tissue color and physical lig
   material.onBeforeCompile(shader,{});
   assert.match(shader.fragmentShader,/dFdx\(vRestPosition\)/);
   assert.match(shader.fragmentShader,/diffuseColor\.rgb\*=exp2/);
-  assert.equal(shader.fragmentShader.slice(shader.fragmentShader.indexOf('#include <normal_fragment_begin>')),
-    THREE.ShaderLib.standard.fragmentShader.slice(THREE.ShaderLib.standard.fragmentShader.indexOf('#include <normal_fragment_begin>')));
+  assert.match(shader.fragmentShader,/#include <normal_fragment_begin>/);
+  assert.match(shader.fragmentShader,/targetRim/);
   assert.match(shader.fragmentShader,/mix\(diffuseColor.rgb,sampledAlbedo,section/);
   assert.match(shader.fragmentShader,/roughnessFactor=mix\(roughnessFactor,0.94,section\)/);
-  assert(material.color.b>material.color.r);
+  assert.equal('#'+material.color.getHexString(),tissueColors.tumor);
+  assert.notEqual(tissueColors.tumor,tissueColors.ventricles);
   material.dispose();texture.dispose();
 });
 

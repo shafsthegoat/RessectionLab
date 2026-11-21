@@ -1,39 +1,27 @@
 import * as THREE from 'three';
 import type {ViewerWorkspaceSettings} from './workspaceSettings';
-const surfaceUniforms=new WeakMap<THREE.MeshStandardMaterial,{value:boolean}>();
+// Tissue colour is illustrative. Linked slice overlays retain the original label palette.
+export const operativeColors={brain:'#c68788',grayMatter:'#b38b8b',whiteMatter:'#dbc1b1',bone:'#d5bd91',
+  dura:'#c8aaa0',tumor:'#aa7188',csf:'#a3b9bc',ventricles:'#82a8b3',artery:'#b85f58',vein:'#7e7489',sinus:'#746a85'} as const;
 
-/** Illustrative optical appearance only. No anatomical detail or geometry is
- * generated, and source-label colours remain unchanged in the linked MRI. */
 export function operativeSurfaceStyle(kind:string|undefined,settings:ViewerWorkspaceSettings){
   if(settings.operativeView!=='surgeon'||settings.microscope?.tissueStyle==='labels')return null;
-  if(['brain','soft_tissue','tissue','head-envelope'].includes(kind??''))return {color:'#b77b79',roughness:.6};
-  // The caller has already applied the label color used in the linked slices.
-  if(kind==='tumor')return {color:null,roughness:.78};
-  if(kind==='vessel'||kind==='vessels')return {color:'#ac6579',roughness:.67};
-  if(['bone','skull'].includes(kind??''))return {color:'#ded0b1',roughness:.8};
-  if(['membrane','dura'].includes(kind??''))return {color:'#c8aaa0',roughness:.57};
-  return null;
+  switch(kind){
+    case 'brain':case 'soft_tissue':case 'tissue':case 'head-envelope':return {color:operativeColors.brain,roughness:.53};
+    case 'gray-matter':case 'grayMatter':return {color:operativeColors.grayMatter,roughness:.53};
+    case 'white-matter':case 'whiteMatter':return {color:operativeColors.whiteMatter,roughness:.64};
+    case 'tumor':return {color:operativeColors.tumor,roughness:.58};
+    case 'vessel':case 'vessels':return {color:'#ac6579',roughness:.67};
+    case 'artery':case 'vein':case 'sinus':return {color:operativeColors[kind],roughness:.46};
+    case 'bone':case 'skull':return {color:operativeColors.bone,roughness:.86};
+    case 'membrane':case 'dura':return {color:operativeColors.dura,roughness:.55};
+    case 'csf':case 'ventricles':return {color:operativeColors[kind],roughness:.44};
+    default:return null;
+  }
 }
+
 export function applyOperativeSurface(material:THREE.MeshStandardMaterial,kind:string|undefined,settings:ViewerWorkspaceSettings){
   const style=operativeSurfaceStyle(kind,settings);
-  const existing=surfaceUniforms.get(material);
-  if(existing)existing.value=!!style;
-  else{
-    const enabled={value:!!style};surfaceUniforms.set(material,enabled);
-    const previous=material.onBeforeCompile,key=material.customProgramCacheKey();
-    material.onBeforeCompile=(shader,renderer)=>{
-      previous.call(material,shader,renderer);shader.uniforms.uOperativeSurface=enabled;
-      shader.vertexShader='varying vec3 vOperativeWorld;\n'+shader.vertexShader.replace('#include <worldpos_vertex>','#include <worldpos_vertex>\nvOperativeWorld=(modelMatrix*vec4(transformed,1.0)).xyz;');
-      shader.fragmentShader=`uniform bool uOperativeSurface;varying vec3 vOperativeWorld;
-        float opHash(vec3 p){return fract(sin(dot(p,vec3(12.9898,78.233,37.719)))*43758.5453);}
-        float opNoise(vec3 p){vec3 i=floor(p),f=fract(p);f=f*f*(3.0-2.0*f);return mix(mix(mix(opHash(i),opHash(i+vec3(1,0,0)),f.x),mix(opHash(i+vec3(0,1,0)),opHash(i+vec3(1,1,0)),f.x),f.y),mix(mix(opHash(i+vec3(0,0,1)),opHash(i+vec3(1,0,1)),f.x),mix(opHash(i+vec3(0,1,1)),opHash(i+vec3(1,1,1)),f.x),f.y),f.z);}
-      `+shader.fragmentShader;
-      // Restrained illustrative albedo only: no bump/displacement, anatomical
-      // folds or vessel-like patterns, and no time-varying visual noise.
-      shader.fragmentShader=shader.fragmentShader.replace('#include <color_fragment>','#include <color_fragment>\nif(uOperativeSurface)diffuseColor.rgb*=0.95+0.065*opNoise(vOperativeWorld*.85)+0.035*opNoise(vOperativeWorld*3.0);');
-    };
-    material.customProgramCacheKey=()=>`operative-optics-v1-${key}`;material.needsUpdate=true;
-  }
-  if(style){if(style.color)material.color.set(style.color);material.roughness=style.roughness;material.metalness=0;}
+  if(style){material.color.set(style.color);material.roughness=style.roughness;material.metalness=0;}
   else material.roughness=kind==='tumor'?.48:['vessel','vessels','artery','vein','sinus'].includes(kind??'')?.32:.52;
 }

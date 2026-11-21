@@ -1,4 +1,4 @@
-import {useEffect,useRef,useState} from 'react';
+import {useEffect,useMemo,useRef,useState} from 'react';
 import {ChevronLeft,ChevronRight,Pause,Play,RotateCcw} from 'lucide-react';
 import type {NativeAnatomyApi} from './native-anatomy-data';
 import type {ViewerVolume} from './viewer/contracts';
@@ -8,8 +8,8 @@ import {operativeSteps,playableSteps,readOperativeField,timelinePose} from './op
 import type {Detail,OperativeField,OperativeIntensity,OperativePhase} from './operative-field';
 import {OperativeFieldCanvas} from './viewer/OperativeFieldCanvas';
 import {entryApproachEnd} from './viewer/operativeCameraPath';
-import {operativeSectionVisible,type OperativeViewChoice} from './viewer/operativeSectionContext';
-import {missingOperativeSkull,loadOperativeSkull} from './viewer/operativeResidentContext';
+import type {OperativeViewChoice} from './viewer/operativeSectionContext';
+import {missingOperativeSurfaces,loadOperativeSurfaces} from './viewer/operativeResidentContext';
 import {fieldTargetOnOverview} from './viewer/operativeFieldSlice';
 import type {AspirationPattern} from './viewer/operativeAspiration';
 import type {OperativeModel} from './viewer/operativeFieldModel';
@@ -56,10 +56,10 @@ function SourceOverviewInset({field,image,phase}:{field:OperativeField;image:Ope
   const z=phase==='overview'?null:field.stations[phase],t=(z??0)/field.entryDepthMm;
   const station=view.targetPx.map((v,i)=>v+t*(view.entryPx[i]-v));
   return <figure className="operative-overview" title={image.sourceSeries+' · full source plane through entry and target'}>
-    <div className="operative-overview-plane"><canvas ref={ref} width={view.shape[1]} height={view.shape[0]} aria-label="Source scan with the saved route and original local target outline"/>
+    <div className="operative-overview-plane"><canvas ref={ref} width={view.shape[1]} height={view.shape[0]} aria-label="Linked source slice with the saved route and original local target outline"/>
     {z!==null&&<svg viewBox={`0 0 ${view.shape[1]} ${view.shape[0]}`} aria-label={phase+' station on saved route'}><circle cx={station[0]} cy={station[1]} r="3.5"/></svg>}</div>
     <span className="operative-up">{orientation(view.upRas)}</span><span className="operative-right">{orientation(view.rightRas)}</span>
-    <figcaption>{image.modality} · route plane<br/>Cyan · local target{z!==null?' · ring · step':''}</figcaption>
+    <figcaption>{image.modality} · linked route slice<br/>Cyan · local target{z!==null?' · ring · step':''}</figcaption>
   </figure>;
 }
 const legend={bone:'Skull',dura:'Dura',brain:'Brain',tumor:'Selected target',vessels:'Vessels'};
@@ -82,20 +82,20 @@ export function OperativeSteps({api,collectionId,route,linkedOverview=false,sour
     return ()=>{live=false};
   },[api,collectionId,route.sourceSnapshotId,route.id,route.parameterHash,route.targetLayerId,attempt]);
   const [localContext,setLocalContext]=useState<{field:OperativeField;base:ViewerVolume;volume:ViewerVolume;issue?:string}|null>(null);
-  const missing=field&&missingOperativeSkull(sourceVolume,field,collectionId);
+  const missing=useMemo(()=>field?missingOperativeSurfaces(sourceVolume,field,collectionId):[],[sourceVolume,field,collectionId]);
   useEffect(()=>{
-    if(!field||!sourceVolume||!missing)return;
+    if(!field||!sourceVolume||!missing.length)return;
     const controller=new AbortController();
-    loadOperativeSkull(api,sourceVolume,missing,controller.signal).then(volume=>{
-      if(!controller.signal.aborted)setLocalContext({field,base:sourceVolume,volume});
+    loadOperativeSurfaces(api,sourceVolume,missing,controller.signal).then(({volume,issue})=>{
+      if(!controller.signal.aborted)setLocalContext({field,base:sourceVolume,volume,issue});
     }).catch(cause=>{
       if(!controller.signal.aborted)setLocalContext({field,base:sourceVolume,volume:sourceVolume,issue:cause instanceof Error?cause.message:String(cause)});
     });
     return ()=>controller.abort();
   },[api,field,sourceVolume,missing]);
   const resolved=localContext?.base===sourceVolume&&localContext?.field===field?localContext:null;
-  if(!field||(missing&&!resolved))return <div className="operative-placeholder" role={error?'alert':'status'}>
-    <strong>{error?'Operative field unavailable':missing?'Preparing the registered exterior…':'Preparing the operative field…'}</strong>
+  if(!field||(missing.length>0&&!resolved))return <div className="operative-placeholder" role={error?'alert':'status'}>
+    <strong>{error?'Operative field unavailable':missing.length?'Preparing the registered exterior…':'Preparing the operative field…'}</strong>
     <p>{error||'Sampling the selected approach in aligned patient anatomy.'}</p>
     {error&&<button onClick={()=>setAttempt(n=>n+1)}>Retry preview</button>}
   </div>;
@@ -103,18 +103,17 @@ export function OperativeSteps({api,collectionId,route,linkedOverview=false,sour
 }
 
 function OperativePlayback({field,sourceVolume,contextIssue,visibleLayers,collectionId,linkedOverview}:{field:OperativeField;visibleLayers?:Readonly<Record<string,boolean>>;contextIssue?:string;sourceVolume:ViewerVolume|null;collectionId:string;linkedOverview:boolean}){
-  const [retract,setRetract]=useState(true),[choice,setChoice]=useState<OperativeViewChoice>('follow'),[raw,setRaw]=useState(false);
+  const [retract,setRetract]=useState(true),[choice,setChoice]=useState<OperativeViewChoice>('operative'),[raw,setRaw]=useState(false);
   const [sweepPattern,setSweepPattern]=useState<AspirationPattern>('overlapping');
   const [value,setValue]=useState(0),[playing,setPlaying]=useState(false);
-  const [contextLayers,setContextLayers]=useState<string[]>([]),[fitExterior,setFitExterior]=useState(false);
+  const [contextLayers,setContextLayers]=useState<string[]>([]);
   const [vesselDisplay,setVesselDisplay]=useState<OperativeModel['vesselDisplay']|null>(null);
   const superficialVessels=vesselDisplay?.superficialVoxels??0;
   const vascularStyle=unclassifiedVesselAppearance(field.layers,vesselDisplay?.conflictingVoxels??0);
   const clock=useRef(0),steps=playableSteps(field,retract),end=steps.length;
   const pose=timelinePose(steps,value);
-  const locatingEntry=(fitExterior||choice!=='section')&&contextLayers.length>0&&(pose.phase==='overview'||(pose.phase===steps[0]?.id&&pose.progress<entryApproachEnd));
+  const locatingEntry=(choice!=='section')&&contextLayers.length>0&&(pose.phase==='overview'||(pose.phase===steps[0]?.id&&pose.progress<entryApproachEnd));
   const stageDescription=locatingEntry?'Locate the planned entry on the intact surface':descriptions[pose.phase];
-  const cutaway=!fitExterior&&operativeSectionVisible(field,pose.phase,choice);
   const proxies=field.layers.filter(l=>l.role==='dura'&&l.sampledVoxels>0);
   const duraLabel=proxies.length&&proxies.every(l=>l.proxy)?'Dural proxy':
     proxies.length&&proxies.every(l=>l.model&&l.evidence==='Source-derived estimate')?'Dural estimate':'Dura';
@@ -150,12 +149,14 @@ function OperativePlayback({field,sourceVolume,contextIssue,visibleLayers,collec
     setPlaying(false);clock.current=nextValue;setValue(nextValue);setRetract(next);
   }
   const routePlane=field.intensity?.overview&&<SourceOverviewInset field={field} image={field.intensity} phase={pose.phase}/>;
-  return <section className="operative-playback" aria-label="Operative steps" data-operative-phase={pose.phase} data-operative-progress={pose.progress.toFixed(3)} data-field-view={cutaway?'section':'exterior'}>
-    <div className="operative-topline"><div><strong>Operative field</strong><small>{field.spacingMm.toFixed(2)} mm display grid · Geometric preview · {cutaway?'Corridor section':contextLayers.length?'Exterior':'Sampled local exterior'}</small></div>
-        {contextLayers.length>0&&<button className="operative-frame-choice" aria-pressed={fitExterior} onClick={()=>setFitExterior(value=>!value)}>{fitExterior?'Follow operative step':'Fit source anatomy'}</button>}
+  return <section className="operative-playback" aria-label="Operative steps" data-operative-phase={pose.phase} data-operative-progress={pose.progress.toFixed(3)} data-field-view={choice}>
+    <div className="operative-topline"><div><strong>Operative field</strong><small>{field.spacingMm.toFixed(2)} mm display grid · Geometric preview</small></div>
+      <select aria-label="Operative field view" value={choice} onChange={e=>setChoice(e.target.value as OperativeViewChoice)}>
+        <option value="operative">Operative microscope</option><option value="exterior">External anatomy</option><option value="section">Inspection cutaway</option>
+      </select>
       <details className="operative-sources"><summary>Field evidence</summary><div>
         {field.intensity&&<p><b>Surface contrast</b><br/>{field.intensity.modality} · {field.intensity.sourceSeries} · acquired scan intensities. Inspection cutaway shows the surrounding scan at its source display brightness when registered context is available.</p>}
-        {contextIssue&&<p>Surrounding skull unavailable · {contextIssue}</p>}
+        {contextIssue&&<p>Surrounding anatomy · {contextIssue}</p>}
         {contextLayers.length>0&&<p><b>Surrounding anatomy</b><br/>{contextLayers.join(', ')} · registered surface outside the sampled opening</p>}
         {superficialVessels>0&&<p><b>Exposed skull</b><br/>{superficialVessels.toLocaleString()} superficial vessel samples are hidden with the overlying tissue. Anatomy shows the source estimates.</p>}
         {proxies.length>0&&<p><b>{duraLabel}</b><br/>The reflected flap follows the sampled dural sheet. Field voxel faces shows the full sampled label thickness.</p>}
@@ -172,9 +173,9 @@ function OperativePlayback({field,sourceVolume,contextIssue,visibleLayers,collec
         {[...new Set([...field.blockers,...field.stationIssues,...field.unknowns])].map(reason=><p key={reason}>{reason}</p>)}
       </div></details>
     </div>
-    <div className="operative-image"><OperativeFieldCanvas visibleLayers={visibleLayers} sweepPattern={sweepPattern} sourceVolume={sourceVolume} collectionId={collectionId} field={field} phase={pose.phase} progress={pose.progress} withRetraction={retract} cutaway={cutaway} raw={raw} fitExterior={fitExterior} depthFraming={choice==='follow'} onContext={setContextLayers} onVesselDisplay={setVesselDisplay}/>
+    <div className="operative-image"><OperativeFieldCanvas visibleLayers={visibleLayers} sweepPattern={sweepPattern} sourceVolume={sourceVolume} collectionId={collectionId} field={field} phase={pose.phase} progress={pose.progress} withRetraction={retract} view={choice} raw={raw} onContext={setContextLayers} onVesselDisplay={setVesselDisplay}/>
       {!linkedOverview&&routePlane}
-      <div className="operative-legend" aria-label="Visible tissues">{tissues.filter(role=>role!=='vessels'||vesselDisplay?.unclassifiedVoxels).map(role=><span key={role} data-tissue={role} style={role==='vessels'?{'--tissue':vascularStyle.color} as React.CSSProperties:undefined}>{role==='dura'?duraLabel:role==='vessels'?vascularStyle.label:legend[role]}</span>)}
+      <div className="operative-legend" aria-label="Visible tissues">{tissues.filter(role=>role!=='vessels'||vesselDisplay?.unclassifiedVoxels).map(role=><span key={role} data-tissue={role} style={{'--tissue':role==='vessels'?vascularStyle.color:tissueColors[role]} as React.CSSProperties}>{role==='dura'?duraLabel:role==='vessels'?vascularStyle.label:legend[role]}</span>)}
         {details.map(key=><span key={key} style={{'--tissue':tissueColors[key]} as React.CSSProperties}>{detailLabels[key]}</span>)}
         {!tissues.includes('vessels')&&<small>Vessels unmapped here</small>}
       </div>
@@ -198,9 +199,6 @@ function OperativePlayback({field,sourceVolume,contextIssue,visibleLayers,collec
           onClick={()=>seek(index+1)}>{step.label}{detail&&<small>{detail}</small>}</button>;
       })}</div>
       <div className="operative-options">
-        <label>Field view <select aria-label="Operative field view" value={choice} onChange={e=>{
-          setChoice(e.target.value as OperativeViewChoice);setFitExterior(false);
-        }}><option value="follow">Follow operative depth</option><option value="exterior">Exterior</option><option value="section">Inspection cutaway</option></select></label>
         <label title="Exact faces of cells on the sampled local display grid at this geometric step"><input type="checkbox" checked={raw} onChange={e=>setRaw(e.target.checked)}/>Field voxel faces</label>
         <label><input type="checkbox" checked={retract&&field.stations.brain!==null} disabled={field.stations.brain===null} onChange={toggleRetractor}/>Include retraction</label>
       </div>

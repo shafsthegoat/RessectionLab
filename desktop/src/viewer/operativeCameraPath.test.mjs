@@ -5,7 +5,7 @@ import {entryApproachEnd,operativeCameraPose,operativeSourceFit} from './operati
 
 const field={stations:{bone:32.8,dura:25.6,brain:18.4,tumor:12.5},spacingMm:.3125,radiusMm:24,routeRadiusMm:2};
 const source={center:new THREE.Vector3(25,-30,-40),size:210};
-const pose=(phase,progress,section=false,retract=true)=>operativeCameraPose(field,8.6,source,phase,progress,retract,section,false,true);
+const pose=(phase,progress,view='operative',retract=true)=>operativeCameraPose(field,8.6,source,phase,progress,retract,view);
 
 test('the source fit follows actual world-transformed geometry',()=>{
   const group=new THREE.Group();
@@ -24,11 +24,15 @@ test('the planned entry precedes a held view for both openings',()=>{
   assert.deepEqual(pose('bone',entryApproachEnd),pose('dura',1));
 });
 
-test('the section turns continuously, then keeps a single camera throughout aspiration',()=>{
-  assert.deepEqual(pose('dura',1),pose('brain',0,true));
-  const partial=pose('brain',.10,true),held=pose('brain',.24,true);
-  assert(partial.sectionBlend>0&&partial.sectionBlend<1);
-  assert.deepEqual(held,pose('tumor',0,true));assert.deepEqual(held,pose('tumor',1,true));
-  assert(held.center.z>field.stations.tumor&&held.center.z<field.stations.bone);
-  assert.deepEqual(pose('tumor',.15,true,false),pose('tumor',1,true,false));
+test('deep retraction and aspiration preserve the opaque opening until the user selects inspection',()=>{
+  const opening=pose('dura',1);
+  const apertureFraction=2*8.6/opening.size;
+  assert(apertureFraction>.5&&apertureFraction<.7, 'frame the aperture and its surrounding intact rim');
+  for(const phase of ['brain','tumor'])for(const progress of [0,.24,.5,1]){
+    assert.deepEqual(pose(phase,progress),opening);
+    assert.deepEqual(pose(phase,progress,'exterior').center,source.center);
+    const section=pose(phase,progress,'section');
+    assert.equal(section.center.z,field.stations[phase]);
+    assert.notDeepEqual(section.bearing,opening.bearing);
+  }
 });

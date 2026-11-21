@@ -1,20 +1,10 @@
 import * as THREE from 'three';
 import {operativeSourceIdentity} from './operativeSourceIdentity.ts';
-import type {OperativeField,OperativePhase} from '../operative-field';
+import type {OperativeField} from '../operative-field';
 import type {ViewerVolume} from './contracts';
 import {sampleTrilinear,type Point3} from './coordinates.ts';
 
-export type OperativeViewChoice='follow'|'exterior'|'section';
-
-/** Only reveal a section automatically when the modeled station lies beneath
- * an overlying source layer. A shallow surface lesion can stay in exterior view. */
-export function operativeSectionVisible(field:OperativeField,phase:OperativePhase,choice:OperativeViewChoice){
-  if(choice!=='follow')return choice==='section';
-  if(phase!=='brain'&&phase!=='tumor')return false;
-  const surface=field.stations.bone??field.stations.dura??field.stations.brain;
-  const station=field.stations[phase];
-  return surface!==null&&station!==null&&surface-station>Math.max(3*field.spacingMm,field.routeRadiusMm);
-}
+export type OperativeViewChoice='operative'|'exterior'|'section';
 
 /** Extend the cut face with the acquisition that supplied the operative contrast.
  * No original scan pixels are drawn through the operated field. */

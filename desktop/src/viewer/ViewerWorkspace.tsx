@@ -1,3 +1,5 @@
+import {PracticeHud} from './PracticeHud';
+import {membraneTransport} from './membraneTransport';
 import {resultMembership} from './resultInspectionData';
 import {EngineOperatedSection} from './EngineOperatedSection';
 import {OperativeSourceLocator} from './OperativeSourceLocator';
@@ -699,7 +701,9 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   const volumeDisplayed = scanVolume.enabled && !(fusedContext&&settings.volumeRendering?.isolateLabels) && !modeled && !passiveMode && !rehearsalMode;
   const inspected = !diagnosticRequested && !rehearsalRequested && !replay && !passiveRequested && !structuralProposal && !priorLayer &&
     displayedInspection?.caseHash === caseData.caseHash ? displayedInspection : null;
+  const membrane=surgicalView&&!displayedSurgical?.preview?membraneTransport(surgicalView):null;
   const operativeMeasurements=surgicalView&&<>
+            {!showEngineSection&&membrane&&<span>{membrane}</span>}
             <span>Owned target removed {Number(surgicalView.metrics.targetRemovedMm3).toFixed(1)} mm³ · Whole target remaining {surgicalView.originalTargetResidualMm3==null?'unknown':`${surgicalView.originalTargetResidualMm3.toFixed(1)} mm³`}</span>
             <span>CUSA pending work {Number(surgicalView.metrics.cusaPendingCapacityMm3??0).toFixed(2)} mm³ · suction {Number(surgicalView.metrics.fluidRemovedMm3??0).toFixed(2)} mm³</span>
             <span>Field fluid {Number(surgicalView.metrics.fluidPresentMm3??0).toFixed(2)} mm³ · source grid {surgicalView.scene.resolutionMm.map(n=>n.toFixed(1)).join(' × ')} mm</span>
@@ -883,9 +887,10 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
             (!displayedSurgical?.preview||displayedSurgical.recordedFrame)&&
             <OperativeSourceLocator source={geometrySource} bounds={geometry.bounds} inverse={geometry.inverse}
               microscope={settings.microscope} labelsOnly={!!props.segmentationOnly} stateId={surgicalView.stateId}/>}
-          {settings.operativeView==='surgeon'&&surgicalView&&(showEngineSection?
+          {displayedSurgical?.practiceHud&&surgicalView&&<PracticeHud interaction={displayedSurgical} view={surgicalView} membrane={membrane}/>}
+          {!displayedSurgical?.practiceHud&&settings.operativeView==='surgeon'&&surgicalView&&(showEngineSection?
             <details className="engine-frame-metrics" data-operative-readout-state={surgicalView.stateId}>
-              <summary>Engine · {Number(surgicalView.metrics.elapsedSeconds).toFixed(1)} s</summary>
+              <summary>{membrane??'Engine'} · {Number(surgicalView.metrics.elapsedSeconds).toFixed(1)} s</summary>
               {operativeMeasurements}
             </details>:
             <div className="operative-readout" data-operative-readout-state={surgicalView.stateId}>

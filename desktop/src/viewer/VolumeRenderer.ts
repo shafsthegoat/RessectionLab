@@ -4,6 +4,7 @@ import {TransformControls} from "three/addons/controls/TransformControls.js";
 import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
 import {cachedSurface,retainSurface} from './surfaceCache';
 import type {SurfaceDiagnostics} from './surfacePolicy';
+import {retainedFieldOptics,SurgicalWetting} from "./surgicalFieldOptics";
 import {surgicalToolMesh,surgicalEffectGroup,surgicalToolGeometryKey,updateSurgicalToolMesh,updateSurgicalToolAnimation} from "./surgicalGeometry";
 import {surgicalFlowGroup,updateSurgicalFlowAnimation} from './surgicalFlowGeometry';
 import type {SurgicalInteraction} from "../surgical-types";
@@ -16,6 +17,7 @@ import {LabelTextureUpdates} from './labelTextureUpdates';
 import {MAX_ENGINE_REFERENCE_BYTES} from './engineImplicitSurface';
 import type {EnginePartitionRequest,EngineSurfaceReference} from './engineImplicitSurface';
 import {modeledAnatomy} from './modeledAnatomy';
+import {maskSurface} from './surface';
 import {SourcePickingBvh} from './sourcePickingBvh';
 import type {PreparedSurface} from './prepareSurface';
 import type {IncrementalSurfaceRequest} from './incrementalSurface';
@@ -736,7 +738,8 @@ export class VolumeRenderer {
     );
     placeInSourceFrame(mesh, this.affine);
     mesh.castShadow=true;mesh.receiveShadow=true;
-    applyOperativeSurface(mesh.material,layer.kind,this.workspaceSettings);
+    applyOperativeSurface(mesh.material,layer.displayKind??layer.kind,this.workspaceSettings);
+    if(this.fieldOptics?.texture)this.surgicalWetting?.install(mesh.material);
     if(vessel)applyVesselDepthMaterial(mesh.material,this.patientBounds??this.bounds);
     applySourceContextMaterial(mesh.material,this.workspaceSettings.contextStyle==='shell'&&CONTEXT_SURFACES.has(layer.displayKind??layer.kind??''),
       this.workspaceSettings.presentation==='segmentation'&&['bone','skull'].includes(layer.kind??''));
@@ -745,7 +748,8 @@ export class VolumeRenderer {
     mesh.userData.corticalContact = ['csf','ventricles','dura','skull','bone'].includes(displayKind);
     mesh.userData.cranialBoundary=this.cranialBoundary(displayKind,this.workspaceSettings);
     const source=layer.appearanceSource;
-    if(source&&['gray-matter','cerebral-cortex','cerebellar-cortex'].includes(displayKind)){
+    const nativeCortex=['gray-matter','cerebral-cortex','cerebellar-cortex'].includes(displayKind);
+    if(source&&(nativeCortex||['brain','soft_tissue'].includes(displayKind))){
       let signal=this.corticalSignals.get(source.seriesId);
       if(!signal){
         const active=source.data===this.volume.mri&&source.shape.every((n,i)=>n===this.volume.shape[i]);
@@ -754,8 +758,8 @@ export class VolumeRenderer {
           worldToVoxel:matrix(inverseAffine(source.affine))};
         this.corticalSignals.set(source.seriesId,signal);
       }
-      mesh.userData.corticalSignalEnabled=installCorticalSignal(mesh.material,signal,
-        this.workspaceSettings.presentation==='segmentation'&&this.workspaceSettings.operativeView!=='surgeon');
+      mesh.userData.nativeCortex=nativeCortex;
+      mesh.userData.corticalSignalEnabled=installCorticalSignal(mesh.material,signal,this.showCorticalSignal(mesh));
     }
     this.picking?.install(mesh,geometry,eagerPicking);
     return {mesh,source:geometry,smooth,smoothingPrepared};
@@ -1077,6 +1081,7 @@ export class VolumeRenderer {
   setWorkspaceSettings(settings: ViewerWorkspaceSettings): void {
     if(this.workspaceSettings?.showOrientationGuide!==settings.showOrientationGuide)this.requestRender(false);
     this.workspaceSettings = settings;
+    this.updateFieldAppearance();
     if(this.surgicalGhost)this.surgicalGhost.visible=!!this.surgicalInteraction&&!this.surgicalInteraction.readOnly&&(settings.operativeView!=='surgeon'||this.surgicalInteraction.mode!=='navigate');
     const surgeon=settings.operativeView==='surgeon'&&settings.microscope;
     if(this.scene){
@@ -1138,12 +1143,12 @@ export class VolumeRenderer {
       const mesh=this.surfaces.get(layer.name);
       if(mesh){
         mesh.userData.cranialBoundary=this.cranialBoundary(layer.displayKind??layer.kind,settings);
-        if(mesh.userData.corticalSignalEnabled)mesh.userData.corticalSignalEnabled.value=settings.presentation==='segmentation'&&settings.operativeView!=='surgeon';
+        if(mesh.userData.corticalSignalEnabled)mesh.userData.corticalSignalEnabled.value=this.showCorticalSignal(mesh);
         mesh.visible=this.surfaceVisible(layer.name);
         const material=mesh.material as THREE.MeshStandardMaterial;
         material.color.set(appearance.color);material.opacity=appearance.opacity;
         setNativeContextLighting(material,this.surfaceSmoothing && settings.operativeView !== 'surgeon');
-        applyOperativeSurface(material,layer.kind,settings);
+        applyOperativeSurface(material,layer.displayKind??layer.kind,settings);
         applySourceContextMaterial(material,settings.contextStyle==='shell'&&CONTEXT_SURFACES.has(layer.displayKind??layer.kind??''),
           settings.presentation==='segmentation'&&['bone','skull'].includes(layer.kind??''));
         const transparent = appearance.opacity < 1;
@@ -1237,9 +1242,85 @@ export class VolumeRenderer {
     this.operativeLight.target.position.copy(this.controls.target);
   }
 
+  private microscopeTissueView(){
+    return this.workspaceSettings?.operativeView==='surgeon'&&this.workspaceSettings.microscope?.tissueStyle!=='labels';
+  }
+
+  private showCorticalSignal(mesh:THREE.Mesh){
+    if(this.sourceSignalDisplaced)return false;
+    return this.workspaceSettings?.operativeView==='surgeon'?this.microscopeTissueView():
+      mesh.userData.nativeCortex&&this.workspaceSettings?.presentation==='segmentation';
+  }
+
+  private updateFieldAppearance(){
+    const optical=this.microscopeTissueView()&&!this.surgicalEffectsPreview;
+    if(this.fieldOptics)this.fieldOptics.group.visible=optical;
+    this.surgicalWetting?.update(this.fieldOptics,!!optical);
+    for(const child of this.surgicalEffects?.children??[]){
+      if(child.name==='effect:fluid'||child.name==='effect:debris')child.visible=!this.fieldOptics||!optical;
+      // Both fields are cumulative exposure records. A marker left at a former
+      // contact cannot describe the instrument's current point of contact.
+      if(child.name==='effect:contact'||child.name==='effect:thermal')child.visible=!optical;
+      if(child.name==='effect:cut'||child.name==='effect:cut-faces'){
+        const material=(child as THREE.LineSegments<THREE.BufferGeometry,THREE.LineBasicMaterial>).material;
+        material.color.set(optical?'#77554d':'#f4d16e');
+        if(child.name==='effect:cut-faces')material.opacity=optical?.18:this.surgicalEffectsPreview?.16:.28;
+      }
+    }
+    // Keep retrospective interval droplets behind intervening opaque tissue.
+    const droplets=this.surgicalFlow?.getObjectByName('flow:ledger-droplets') as THREE.Mesh|undefined;
+    if(droplets)(droplets.material as THREE.Material).depthTest=!!optical;
+  }
+
+  /** A fixed Q1 maneuver may name one component within a larger layer. Keep
+   * the unaffected mask surface and its picks in the same registered frame. */
+  private updatePlanarPartition(view:SurgicalInteraction['view']|undefined){
+    const maneuver=view?.planarBladeManeuver,ids=maneuver?.contactSurface?.sourceIds;
+    if(!this.volume||!this.surfaces||(!ids?.length&&!this.planarBladeSurfaceLayers?.size))return;
+    const source=modeledAnatomy(this.volume)?.source??this.volume;
+    const declaration=ids?.length?(maneuver?.declarationId??JSON.stringify(ids)):undefined;
+    if(this.planarSource===source&&this.planarDeclaration===declaration){
+      for(const [name,rest] of this.planarRemainder??[]){
+        const mesh=this.surfaces.get(name);
+        if(mesh){rest.material=mesh.material;mesh.visible=this.surfaceVisible(name);}
+      }
+      return;
+    }
+    this.planarSource=source;this.planarDeclaration=declaration;
+    this.planarBladeSurfaceLayers=new Set();
+    this.planarRemainder??=new Map();
+    for(const mesh of this.planarRemainder.values()){
+      mesh.removeFromParent();mesh.geometry.dispose(); // Material belongs to the source mesh.
+    }
+    this.planarRemainder.clear();
+    if(ids?.length){
+      const body=new Set(ids),owner=modeledAnatomy(this.volume)?.surfaceReference?.owner;
+      for(const layer of source.compartments){
+        const mask=materializeLayerMask(source,layer);
+        const region=view?.scene.regions?.find(item=>item.name===layer.name);
+        const owns=(id:number)=>owner&&region?owner[id]===region.id:!!mask[id];
+        if(!ids.some(owns))continue;
+        this.planarBladeSurfaceLayers.add(layer.name);
+        const mesh=this.surfaces.get(layer.name);
+        if(!mesh||!mask.some((value,id)=>value&&owns(id)&&!body.has(id)))continue;
+        const remainder=mask.map((value,id)=>Number(value&&owns(id)&&!body.has(id)));
+        const geometry=new THREE.BufferGeometry();
+        geometry.setAttribute('position',new THREE.BufferAttribute(maskSurface(remainder,this.volume.shape),3));
+        geometry.computeVertexNormals();
+        const rest=new THREE.Mesh(geometry,mesh.material);
+        rest.userData.compartment=layer.name;rest.castShadow=true;rest.receiveShadow=true;
+        placeInSourceFrame(rest,this.affine);
+        this.anatomy.add(rest);this.planarRemainder.set(layer.name,rest);
+      }
+    }
+    for(const [name,mesh] of this.surfaces)mesh.visible=this.surfaceVisible(name);
+  }
+
   private surfaceVisible(name:string):boolean {
-    if(this.planarBladeSurfaceLayers?.has(name))return false;
-    return this.workspaceSettings?.operativeView==='surgeon'&&!this.workspaceSettings.microscope?.inspectionTransparency ? true : this.visible?.[name]!==false;
+    const visible=this.workspaceSettings?.operativeView==='surgeon'&&!this.workspaceSettings.microscope?.inspectionTransparency||this.visible?.[name]!==false;
+    const rest=this.planarRemainder?.get(name);
+    if(rest)rest.visible=visible;
+    return visible&&!this.planarBladeSurfaceLayers?.has(name);
   }
 
   /** Display-only styling for derived anatomy/effects. Instrument groups never
@@ -1339,6 +1420,12 @@ export class VolumeRenderer {
   private surgicalEffectsPreview = false;
   private surgicalEffects: THREE.Group | null = null;
   private planarBladeSurfaceLayers = new Set<string>();
+  private planarSource?:ViewerVolume;
+  private planarDeclaration?:string;
+  private planarRemainder=new Map<string,THREE.Mesh>();
+  private sourceSignalDisplaced=false;
+  private fieldOptics:ReturnType<typeof retainedFieldOptics>=null;
+  private surgicalWetting?:SurgicalWetting;
   private surgicalFlow: THREE.Group | null = null;
   private surgicalFlowSource: SurgicalInteraction['flowDisplay'];
   private surgicalAnimation:{key:string;startedAt:number;speed:number;startSeconds:number;endSeconds:number}|null=null;
@@ -1369,16 +1456,13 @@ export class VolumeRenderer {
     // leave both the previous endpoint and its transfer evidence installed.
     const preparedFlow=incomingFlow!==this.surgicalFlowSource?(incomingFlow?surgicalFlowGroup(incomingView!,incomingFlow):null):undefined;
     this.surgicalInteraction=interaction;
-    // Only the declared opt-in body replaces its rounded display surface.
-    // Exact Q1 corners remain an overlay; source masks and linked MPR do not change.
-    const planarIds=incomingView?.planarBladeManeuver?.contactSurface?.sourceIds??[];
-    if(this.volume&&this.surfaces&&(planarIds.length||this.planarBladeSurfaceLayers?.size)){
-      const source=modeledAnatomy(this.volume)?.source??this.volume;
-      this.planarBladeSurfaceLayers=new Set(planarIds.length?source.compartments.filter(layer=>{
-        const mask=materializeLayerMask(source,layer);return planarIds.some(id=>!!mask[id]);
-      }).map(layer=>layer.name):[]);
-      for(const [name,mesh] of this.surfaces)mesh.visible=this.surfaceVisible(name);
+    if(this.surgicalEffectsView!==incomingView){
+      this.sourceSignalDisplaced=!!incomingView&&(incomingView.moved.some(([a,b])=>a!==b)||
+        Object.values(incomingView.deformation??{}).some(delta=>delta.some(value=>value!==0)));
+      for(const mesh of this.surfaces?.values()??[])if(mesh.userData.corticalSignalEnabled)
+        mesh.userData.corticalSignalEnabled.value=this.showCorticalSignal(mesh);
     }
+    this.updatePlanarPartition(incomingView);
     const frame=interaction?.recordedFrame,display=interaction?.preview?undefined:interaction?.playbackDisplay;
     const animationKey=frame?JSON.stringify([frame.branchId,frame.position,frame.frameIndex,incomingView?.stateId]):null;
     if(animationKey!==this.surgicalAnimationKey){
@@ -1395,6 +1479,7 @@ export class VolumeRenderer {
         const data=this.panes.anatomy.dataset;
         for(const key of ['renderedToolSlots','surgicalStateId','removedCells','positionEffects','maxShiftMm','acceptedTools'])delete data[key];
       }
+      this.fieldOptics?.texture?.dispose();this.fieldOptics=null;this.surgicalWetting?.update(null,false);
       this.surgicalEffects=null;this.surgicalEffectsView=null;this.surgicalEffectsOutcome=undefined;
       this.surgicalFlow=null;this.surgicalFlowSource=undefined;
       this.surgicalAnimation=null;this.surgicalAnimationKey=null;
@@ -1423,9 +1508,21 @@ export class VolumeRenderer {
       if(interaction.preview)this.displayWork.previewStateInstalls++;
       if(this.surgicalEffects){disposeObject(this.surgicalEffects);this.surgicalGroup.remove(this.surgicalEffects);}
       this.surgicalEffects=surgicalEffectGroup(view,!!interaction.preview,interaction.outcome);
+      this.fieldOptics?.texture?.dispose();
+      this.fieldOptics=interaction.preview?null:retainedFieldOptics(view);
+      if(this.fieldOptics){
+        this.surgicalEffects.add(this.fieldOptics.group);
+        if(this.fieldOptics.texture){
+          this.surgicalWetting??=new SurgicalWetting();
+          for(const mesh of this.surfaces?.values()??[])if(mesh.material instanceof THREE.MeshStandardMaterial)this.surgicalWetting.install(mesh.material);
+        }
+      }
+      const body=this.surgicalEffects.getObjectByName('effect:planar-blade-q1-surface');
+      if(body&&this.planarBladeSurfaceLayers?.size===1)body.userData.compartment=[...this.planarBladeSurfaceLayers][0];
       this.surgicalGroup.add(this.surgicalEffects);this.displayWork.effectBuilds++;
       this.surgicalEffectsView=view;this.surgicalEffectsOutcome=interaction.outcome;this.surgicalEffectsPreview=!!interaction.preview;
     }
+    this.updateFieldAppearance();
     if(interaction.planningOverlay!==this.planningOverlaySource){
       if(this.planningGroup){disposeObject(this.planningGroup);this.surgicalGroup.remove(this.planningGroup);}
       this.planningOverlaySource=interaction.planningOverlay;
@@ -2206,6 +2303,8 @@ export class VolumeRenderer {
         ...(this.anatomy.visible
           ? Array.from(this.surfaces.values()).filter((mesh) => mesh.visible && (mesh.material as THREE.MeshStandardMaterial).opacity > 0)
           : []),
+        ...(this.anatomy.visible?[...(this.planarRemainder?.values()??[])].filter(mesh=>mesh.visible&&(mesh.material as THREE.MeshStandardMaterial).opacity>0):[]),
+        ...(this.anatomy.visible?(this.surgicalEffects?.children??[]).filter(object=>object.name==='effect:planar-blade-q1-surface'&&object.visible):[]),
         ...this.replayGroup.children.filter((mesh) => mesh.visible &&
           (!(mesh instanceof THREE.Mesh)||Array.isArray(mesh.material)||mesh.material.opacity>0)),
       ],
@@ -2246,7 +2345,7 @@ export class VolumeRenderer {
     for(const entry of this.retiredSurfaces){geometries.add(entry.pair.source);geometries.add(entry.pair.smooth);}
     if(this.modelStage)for(const pair of this.modelStage.prepared.values())if(pair){geometries.add(pair.source);geometries.add(pair.smooth);}
     const corticalTextures=Array.from(this.corticalSignals.values(),signal=>signal.texture);
-    const textures=[...corticalTextures,...(this.scanVolume.supportTexture?[this.scanVolume.supportTexture]:[]),...(this.scanVolume.patientTexture?[this.scanVolume.patientTexture]:[]),this.mriTexture,this.labelTexture,this.fusionTexture,this.removedTexture,this.proposalTexture,
+    const textures=[...(this.fieldOptics?.texture?[this.fieldOptics.texture]:[]),...corticalTextures,...(this.scanVolume.supportTexture?[this.scanVolume.supportTexture]:[]),...(this.scanVolume.patientTexture?[this.scanVolume.patientTexture]:[]),this.mriTexture,this.labelTexture,this.fusionTexture,this.removedTexture,this.proposalTexture,
       this.diagnosticStateTexture,this.diagnosticCoverageTexture,this.priorTexture,this.priorCoverageTexture];
     const geometryBytes=geometryBufferBytes(geometries),textureBytes=[...new Set(textures)].reduce((sum,texture)=>{
       const data=texture.image?.data as ArrayBufferView|undefined;return sum+(data?.byteLength??0);
@@ -2368,6 +2467,7 @@ export class VolumeRenderer {
         animated:surgicalAnimationActive,approximation:'Retrospective source-interval overlay; 3x radius display gain',
         glyphInstances:this.surgicalFlow?.children.reduce((sum,object)=>sum+(object instanceof THREE.InstancedMesh&&object.name!=='flow:ledger-droplets'?object.count:0),0)??0,
         dropletInstances:(this.surgicalFlow?.getObjectByName('flow:ledger-droplets') as THREE.InstancedMesh|undefined)?.count??0}:null,
+      fieldOptics:this.fieldOptics?.group.visible?this.fieldOptics.group.userData.fieldSummary:null,
       picking:this.picking?.stats()??null}}));
     if(surgicalAnimationActive)this.needsFrame=true;
     const gl=this.renderer.getContext() as WebGL2RenderingContext;
@@ -2408,6 +2508,8 @@ export class VolumeRenderer {
     this.resultInspection?.dispose();
     this.picking?.dispose();
     if (this.disposed) return;
+    this.fieldOptics?.texture?.dispose();
+    this.updatePlanarPartition(undefined);
     this.disposed = true;
     this.pendingSurgicalPublication=null;
     if(this.surgicalGizmo){this.scene.remove(this.surgicalGizmo.getHelper());this.surgicalGizmo.dispose();}

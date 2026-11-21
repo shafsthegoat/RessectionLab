@@ -2,6 +2,8 @@ import * as THREE from 'three';
 import type { OperativeField,FieldLayer as SourceLayer } from '../operative-field';
 import type { FieldLayer } from './operativeFieldModel';
 
+import {operativeColors} from './operativeMaterial.ts';
+
 type Signal = NonNullable<OperativeField['intensity']>;
 
 /** The second channel carries acquisition coverage through GPU interpolation.
@@ -23,15 +25,14 @@ export function operativeSignalTexture(signal: Signal) {
 }
 
 export const tissueColors = {
-  grayMatter:'#b38b8b',whiteMatter:'#e2d7c3',csf:'#8bbfdb',ventricles:'#5b92c4',
-  artery:'#cd5954',vein:'#7283ca',sinus:'#5769ad',enhancing:'#ce77a5',nonenhancingCore:'#9571b3',
+  ...operativeColors,enhancing:'#ce77a5',nonenhancingCore:'#9571b3',
   perilesionalSignal:'#cb9e60',tumorCore:'#b289bd',wholeAbnormality:'#a686ad',lesionContext:'#a487ad',
 };
 const tissues = {
-  bone: { color: '#e5d8bc', roughness: 0.76, contrast: 0.68, section: 0.2 },
-  dura: { color: '#d7b2a0', roughness: 0.38, contrast: 0.48, section: 0.32 },
-  brain: { color: '#c68788', roughness: 0.6, contrast: 1.4, section: 0.83 },
-  tumor: { color: '#65bfd3', roughness: 0.55, contrast: 1.02, section: 0.64 },
+  bone: { color: operativeColors.bone, roughness: 0.86, contrast: 0.68, section: 0.2 },
+  dura: { color: operativeColors.dura, roughness: 0.55, contrast: 0.48, section: 0.32 },
+  brain: { color: operativeColors.brain, roughness: 0.53, contrast: 1.4, section: 0.83 },
+  tumor: { color: operativeColors.tumor, roughness: 0.58, contrast: 1.02, section: 0.64 },
   vessel: { color: '#be4349', roughness: 0.38, contrast: 0.4, section: 0.16 },
 };
 
@@ -54,11 +55,20 @@ export function operativeTissueMaterial(
 ) {
   const fluid=name==='csf'||name==='ventricles';
   const base=name==='boneFlap'?'bone':name==='duraFlap'?'dura':name==='artery'||name==='vein'||name==='sinus'?'vessel':
-    name==='whiteMatter'||name==='grayMatter'||fluid?'brain':name in tissueColors?'tumor':name;
+    name==='whiteMatter'||name==='grayMatter'||fluid?'brain':name in tissues?name:'tumor';
   const tissue=tissues[base as keyof typeof tissues];
   const generic=name==='vessel'?unclassifiedVesselAppearance(field.layers,conflictingVoxels):null;
   const color=generic?.color??(name in tissueColors?tissueColors[name as keyof typeof tissueColors]:tissue.color);
   const material = new THREE.MeshStandardMaterial({ color, roughness:generic?.roughness??tissue.roughness, transparent:fluid, opacity:fluid ? .42 : 1, depthWrite:!fluid });
+  const addTargetRim=(shader:string)=>name==='tumor'?shader.replace('#include <opaque_fragment>',
+    `// A depth-tested silhouette follows only the visible residual target.
+    float targetRim=1.-smoothstep(.06,.24,abs(dot(geometryNormal,geometryViewDir)));
+    outgoingLight=mix(outgoingLight,vec3(.60,.40,.46),.53*targetRim);
+    #include <opaque_fragment>`):shader;
+  if(name==='tumor'){
+    material.onBeforeCompile=shader=>{shader.fragmentShader=addTargetRim(shader.fragmentShader);};
+    material.customProgramCacheKey=()=>'operative-target-rim';
+  }
   const signal = field.intensity;
   if (!signal || !texture) return material;
 
@@ -100,7 +110,7 @@ export function operativeTissueMaterial(
       uniform vec3 uCropMin, uCropMax;
       varying vec3 vFieldUVW, vRestPosition;
     ` +
-      shader.fragmentShader.replace(
+      addTargetRim(shader.fragmentShader).replace(
         '#include <color_fragment>',
         `#include <color_fragment>
       // The closed mesh has flat caps exactly on the cut/crop planes. Use
@@ -134,6 +144,6 @@ export function operativeTissueMaterial(
         // response distinct from the lit exterior and the reflected membrane.
         roughnessFactor=mix(roughnessFactor,0.94,section);`);
   };
-  material.customProgramCacheKey = () => 'operative-acquired-albedo-v6';
+  material.customProgramCacheKey = () => name==='tumor'?'operative-acquired-target-rim':'operative-acquired-albedo-v6';
   return material;
 }
