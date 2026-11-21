@@ -57,6 +57,53 @@ def test_complete_cusa_actions_exact(compiled,monkeypatch):
     compare_actions(compiled,engine,actions,monkeypatch)
 
 
+@pytest.mark.parametrize('jaw', [0, 0.0])
+def test_articulated_jaw_placement_partial_and_cold_snapshot(compiled, monkeypatch, jaw):
+    from resectionlab.generated_cpp_fixture import pose, request
+
+    labels = np.zeros((8, 8, 8), np.uint16)
+    labels[:, :, 4] = 1
+    scene = SurgicalScene(labels, np.eye(4), [{'id': 1, 'name': 'Obstacle', 'material': 'bone'}], {}, {})
+    actions = [request('configure', mechanicsRevision=2, clockRevision=1),
+               request('exchange', instrument='tumor_forceps'),
+               request('place', pose=pose(3, 3, -3), parameters={'radiusMm': 1.5, 'jawOpeningMm': jaw})]
+    reference = SurgicalEngine(scene)
+    native = compare_actions(compiled, reference, actions, monkeypatch)
+    placed = compiled.simulation_data(native, 'snapshot')
+    assert type(placed['checkpoint']['state']['slots']['left']['parameters']['jawOpeningMm']) is type(jaw)
+    assert SurgicalEngine.restore(scene, placed).state_id == placed['stateId']
+
+    move = request('move', pose=pose(3, 3, 6), parameters={'jawOpeningMm': 8})
+    with monkeypatch.context() as patch:
+        patch.setattr(backend, '_module', None)
+        expected = reference.step(move)
+    actual = compiled.simulation_step(native, move, compiled.SimulationStopToken())
+    assert actual == expected and actual['status'] == 'partial'
+    assert 0 < reference.state['slots']['left']['parameters']['jawOpeningMm'] < 8
+    stopped = compiled.simulation_data(native, 'snapshot')
+    replay = SurgicalEngine.restore(scene, stopped)
+    assert replay.state_id == stopped['stateId']
+    assert replay.history == compiled.simulation_data(native, 'history')
+
+
+def test_guarded_native_integer_jaw_preserves_existing_checkpoint(compiled):
+    from resectionlab.generated_cpp_fixture import request
+
+    labels = np.zeros((8, 8, 8), np.uint16)
+    labels[7, 7, 7] = 1
+    scene = SurgicalScene(labels, np.eye(4), [{'id': 1, 'name': 'Guard', 'material': 'bone', 'protected': True}], {}, {})
+    engine = SurgicalEngine(scene)
+    outside = {'position': [32, 32, 55], 'quaternion': [0, 0, 0, 1]}
+    for action in (request('configure', mechanicsRevision=2, clockRevision=1),
+                   request('exchange', instrument='tumor_forceps'),
+                   request('place', path=[outside], parameters={'radiusMm': 1.5, 'jawOpeningMm': 0})):
+        assert engine.step(action)['status'] == 'accepted'
+    snapshot = engine.snapshot()
+    # Recorded with the previously shipped resident engine.
+    assert snapshot['stateId'] == 'sha256:92bb2db22ebf2d3d244abb231d2eb187de2fdb3cd44174047015f64f161e7f45'
+    assert SurgicalEngine.restore(scene, snapshot).state_id == snapshot['stateId']
+
+
 def test_complete_native_cranial_opening_and_preparation(compiled,monkeypatch):
     from resectionlab.generated_cpp_fixture import (joint_source,bone_actions,
         membrane_cut_actions,membrane_grasp_actions,request,pose)

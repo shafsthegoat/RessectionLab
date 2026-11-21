@@ -177,7 +177,8 @@ inline ValidatedAction validate(const State& engine, const Value& action) {
 inline Value execute(State& engine, const Value& action, double duration, Value points, const StopToken& stop) {
     const auto key = action.at("slot").as_string(), op = action.at("operation").as_string();
     auto& slot = engine.state.at("slots").at(key);
-    const double previous_jaw = parameters(engine, slot).at("jawOpeningMm").as_number();
+    const Value previous_jaw_value = parameters(engine, slot).at("jawOpeningMm");
+    const double previous_jaw = previous_jaw_value.as_number();
     Value events = Value::array();
     if (op == "configure" || op == "position") {
         for (const auto& hand : engine.state.at("slots").as_object())
@@ -232,7 +233,13 @@ inline Value execute(State& engine, const Value& action, double duration, Value 
     }
     const double jaw_target = params.at("jawOpeningMm").as_number();
     const bool articulate = revised(engine) && one_of(instrument.geometry, {"forceps", "scissors"}) && previous_jaw != jaw_target;
-    if (articulate) slot.at("parameters").set("jawOpeningMm", previous_jaw);
+    // Unprotected snapshots take the historical reference replay path. Preserve
+    // its JSON number type. Atomic-protection native snapshots already bind the
+    // double endpoint in their persisted state IDs.
+    const bool reference_jaw_type = engine.scene->protected_cells.empty();
+    if (articulate) slot.at("parameters").set("jawOpeningMm",
+        reference_jaw_type ? previous_jaw_value : Value(previous_jaw));
+    const Value final_jaw = reference_jaw_type ? params.at("jawOpeningMm") : Value(jaw_target);
     const bool cusa = instrument.id == "cusa" && cusa_v3::profile(engine) != nullptr;
     if (cusa) cusa_v3::validate_parameters(params);
     const Value progress_reason = cusa ? Value("TISSUE_ASPIRATION_IN_PROGRESS") : Value();
@@ -314,8 +321,11 @@ inline Value execute(State& engine, const Value& action, double duration, Value 
             const auto q = segment.rotation.at(t);
             Value old = engine.state;
             try {
-                if (articulate) engine.state.at("slots").at(key).at("parameters").set("jawOpeningMm",
-                    done+1 == total ? jaw_target : previous_jaw+(jaw_target-previous_jaw)*(done+1)/total);
+                if (articulate) {
+                    engine.state.at("slots").at(key).at("parameters").set("jawOpeningMm",
+                        done+1 == total ? final_jaw
+                                        : Value(previous_jaw+(jaw_target-previous_jaw)*(done+1)/total));
+                }
                 extend(events, physical_substep(engine, key, op, p, q, active, duration/total, stop));
             } catch (const std::invalid_argument& error) {
                 stop.check(); const std::string text = error.what(); const auto code = text.substr(0,text.find(':'));
