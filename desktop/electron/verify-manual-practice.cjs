@@ -17,7 +17,9 @@ const wall = () => performance.timeOrigin + performance.now();
 const root = path.resolve(__dirname, '../..');
 const source = fs.realpathSync(process.argv[2]);
 const output = path.resolve(process.argv[3]);
+const complete = process.argv.includes('--complete-cranial') ? require('./complete-cranial-practice.cjs') : null;
 const pairedIndex = process.argv.indexOf('--paired-actions');
+assert(!complete || pairedIndex === -1, 'Choose one source task');
 const paired = pairedIndex >= 0 ? JSON.parse(fs.readFileSync(process.argv[pairedIndex+1], 'utf8')) : null;
 const cold = process.argv.includes('--cold') || process.argv.includes('--cold-benchmark');
 const benchmark = process.argv.includes('--benchmark') || process.argv.includes('--cold-benchmark');
@@ -40,10 +42,11 @@ const report = {pid: process.pid, windowMode:'hidden', windowShown:false, mode: 
     'src/resectionlab/surgical_deformation_v2.py','src/resectionlab/surgical_effects.py','src/resectionlab/surgical_bipolar_thermal.py','src/resectionlab/surgical_vascular_graph.py'].map(name=>[name,hashFile(path.join(root,name))])),
   rendererAssets: {}, machine: {model: os.cpus()[0].model, totalGiB: os.totalmem()/2**30, os: os.release()},
   actions: [], memory: [], timing: {}, captures: []};
+if(complete) report.sourceFiles['desktop/electron/complete-cranial-practice.cjs']=hashFile(require.resolve('./complete-cranial-practice.cjs'));
 for (const name of fs.readdirSync(path.join(root, 'desktop/dist/assets')).filter(n => /^index-.*\.(js|css)$/.test(n)))
   report.rendererAssets[name] = hashFile(path.join(root, 'desktop/dist/assets', name));
 const persist = () => fs.writeFileSync(paper, JSON.stringify(report, null, 2) + '\n');
-let latest = null, pending = null;
+let latest = null, pending = null, observeHeldStep = null;
 const handle = ipcMain.handle.bind(ipcMain);
 ipcMain.handle = (channel, handler) => handle(channel, async (...args) => {
   const started = wall();
@@ -52,6 +55,10 @@ ipcMain.handle = (channel, handler) => handle(channel, async (...args) => {
   if (channel === 'research:surgicalRehearsal' && result?.view && !result.playback) {
     const item = {command: args[1].command, witness: stateWitness(result), admission: result.practiceAdmission,
       episode: result.practiceEpisode, status: result.outcome?.status};
+    if(complete) item.nativeView = result.view;
+    if(observeHeldStep && item.command === 'step') {
+      observeHeldStep(args[1].action, result.outcome, item.witness, received, received-started);
+    }
     if(cold&&result.practiceEpisode){
       const rows=result.timeline??result.view.history;
       if(rows?.length)report.coldHistory=rows.slice(result.practiceEpisode.parent.position).map(row=>
@@ -223,7 +230,8 @@ app.on('browser-window-created', (_, win) => {
       const drawn=await snapshot(witness);
       assert.equal(drawn.interactionMode,'navigate','Committed practice geometry must be unobscured after implicit jog/numeric placement');
       checkAction(before,witness,item.result,item.result.requested);
-      assert.equal(status,expected,label+' returned '+status+' ('+(item.result.reasonCode??item.result.reason)+')');
+      const allowed = Array.isArray(expected) ? expected : [expected];
+      assert(allowed.includes(status),label+' returned '+status+' ('+(item.result.reasonCode??item.result.reason)+')');
       if(status!=='rejected') {
         const first=await js(`window.manualEvidence.fences.find(f=>f.stateId===${q(witness.stateId)} && f.at>=${item.inputEpochMs})`);
         assert(first,'New accepted state must be submitted to and completed by the GPU');
@@ -238,7 +246,7 @@ app.on('browser-window-created', (_, win) => {
       }
       report.actions.push(item);pending=null;memory();persist();
       console.log(take,label,status,witness.position,witness.metrics.targetRemovedMm3);
-      if(!benchmark)await delay(paired?1300:2600);
+      if(!benchmark)await delay(complete?230:paired?1300:2600);
       return witness;
     };
     const press = (label,expected='accepted') => action(label,()=>click(label,true),expected);
@@ -278,6 +286,7 @@ app.on('browser-window-created', (_, win) => {
       await until("!!document.querySelector('.rl-viewer canvas') && !document.querySelector('.viewer-loading')",300000);
       report.coldCanvasMs=performance.now()-launch;
       report.gpu=app.getGPUFeatureStatus();assert(report.gpu.webgl==='enabled'||report.gpu.webgl2==='enabled','GPU WebGL is unavailable');
+      if(complete&&!benchmark) stopRecording=record();
       await click('Rehearse');
       await until("!!document.querySelector('[aria-label=\"Surgical timeline\"]')",300000);
       const verify=await js(`[...document.querySelectorAll('button')].find(b=>['Verify saved replay','Verify replay for planning'].includes(b.textContent.trim())&&!b.disabled)?.textContent.trim()`);
@@ -297,7 +306,7 @@ app.on('browser-window-created', (_, win) => {
         const restored=await snapshot(latest.witness);
         assert.deepEqual(restored.camera,previous.actions.at(-1).display.camera,'Cold reopen changed the optical field');
         report.restoredCamera=restored.camera;
-        if(!benchmark)stopRecording=record();
+        if(!benchmark&&!stopRecording)stopRecording=record();
         await capture('cold-reopened');
         await click('Previous recorded state');
         const prior=previous.actions.findLast(a=>a.result.witness.position===previous.finalState.position-1).result.witness;
@@ -311,11 +320,13 @@ app.on('browser-window-created', (_, win) => {
         // Prepare the verified post-membrane checkpoint through the existing timeline.
         if(paired){await js(inputScript('Surgical branch','configured-start'));await wait(()=>latest?.witness.branchId==='configured-start','paired source branch');}
         await until(`(${byName('Surgical timeline')})?.disabled===false`);
-        await js(inputScript('Surgical timeline',paired?1:105));
-        await wait(()=>latest?.witness.position===(paired?1:105),'verified post-membrane boundary',300000);
+        const startPosition=complete?complete.parentPosition:paired?1:105;
+        await js(inputScript('Surgical timeline',startPosition));
+        await wait(()=>latest?.witness.position===startPosition,'verified source boundary',300000);
         await ready(latest.witness.stateId);report.parent=latest.witness;
         await until(`!!(${byName('Practice from this verified state')}) && !(${byName('Practice from this verified state')}).disabled`);
-        if(!benchmark)stopRecording=record();
+        if(!benchmark&&!stopRecording)stopRecording=record();
+        if(complete) report.approach=await complete.inspectApproach({click,js,capture,recorded:!benchmark});
         const recordingStarted=performance.now();
         await click('Practice from this verified state');await wait(()=>latest?.episode,'child episode');
         assert.notEqual(latest.witness.branchId,report.parent.branchId);
@@ -324,7 +335,10 @@ app.on('browser-window-created', (_, win) => {
         await ready(latest.witness.stateId);
         await click('left hand');
         await js('window.manualEvidence.active=true');
-        if(paired) {
+        if(complete) {
+          await complete.run({number,press,choose,capture,click,report,read:()=>latest,recorded:!benchmark,
+            byName,point,send,wait,snapshot,js,key,observe:fn=>{observeHeldStep=fn;}});
+        } else if(paired) {
           const labels={hold:'Hold tissue',apply:'Apply tool',move:'Move tool',place:'Place tool',withdraw:'Withdraw tool',release:'Release tool',inspect:'Observe interval'};
           const parameterNames={radiusMm:'Tip radius · mm',forceN:'Contact force · N',power:'Power · model units',
             jawOpeningMm:'Jaw opening · mm',depthMm:'Working depth · mm',flowMm3PerSecond:'Flow · mm³/s'};
@@ -420,15 +434,16 @@ app.on('browser-window-created', (_, win) => {
       }
       if(stopRecording){report.movie=await stopRecording(path.join(output,take+'.mp4'));stopRecording=undefined;
         if(!cold){
-          assert(report.movie.wallSeconds>=60 && report.movie.wallSeconds<=120,'Manual take must be 60–120 wall seconds');
+          if(!complete) assert(report.movie.wallSeconds>=60 && report.movie.wallSeconds<=120,'Manual take must be 60–120 wall seconds');
           for(const item of report.actions.filter(a=>a.result.status!=='rejected')){
             const frame=report.movie.stateChanges.find(f=>f.stateId===item.result.witness.stateId);
+            if(!frame && item.heldInput) continue; // A continuous tick can fall between real compositor samples.
             assert(frame,'Recording missed accepted state '+item.result.witness.stateId);
             item.firstRecordedFrame=frame.frame;
             item.inputToFirstRecordedFrameMs=report.movie.firstCaptureEpochMs+frame.offsetMs-item.inputEpochMs;
           }
         }}
-        if(!benchmark&&!cold){
+        if(!benchmark&&!cold&&!complete){
           win.setContentSize(1050,720);await until('innerWidth===1050 && innerHeight===720');
           await point(byName('Place tool'));await point(byName('Instrument jog pad'));await capture('compact-controls');
           assert((await js('document.documentElement.scrollWidth'))<=1050,'Compact workspace has horizontal overflow');
@@ -446,7 +461,7 @@ app.on('browser-window-created', (_, win) => {
       assert(!win.isVisible()&&!report.windowShown);assert.equal(hashFile(original),report.originalSha256);
       report.passed=true;persist();console.log(paper);app.exit(0);
     } catch(error) {
-      report.error=String(error.stack??error);report.latest=latest;report.pending=pending;
+      report.error=String(error.stack??error);report.latest=latest&&{...latest,nativeView:undefined};report.pending=pending;
       report.body=await js('document.body.innerText.slice(0,18000)').catch(()=>null);
       report.focus=await js(`({focused:document.hasFocus(),active:document.activeElement?.outerHTML.slice(0,250),inputs:window.manualEvidence?.inputs?.slice(-8)})`).catch(()=>null);
       console.error(error);
