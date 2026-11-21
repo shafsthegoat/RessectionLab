@@ -1,3 +1,4 @@
+import {surgicalFieldAmounts} from '../full-case-presentation';
 import {PracticeHud} from './PracticeHud';
 import {membraneTransport} from './membraneTransport';
 import {resultMembership} from './resultInspectionData';
@@ -702,11 +703,13 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   const inspected = !diagnosticRequested && !rehearsalRequested && !replay && !passiveRequested && !structuralProposal && !priorLayer &&
     displayedInspection?.caseHash === caseData.caseHash ? displayedInspection : null;
   const membrane=surgicalView&&!displayedSurgical?.preview?membraneTransport(surgicalView):null;
-  const operativeMeasurements=surgicalView&&<>
+  const fieldAmounts=useMemo(()=>surgicalView?surgicalFieldAmounts(surgicalView):null,[surgicalView]);
+  const operativeMeasurements=surgicalView&&fieldAmounts&&<>
             {!showEngineSection&&membrane&&<span>{membrane}</span>}
             <span>Owned target removed {Number(surgicalView.metrics.targetRemovedMm3).toFixed(1)} mm³ · Whole target remaining {surgicalView.originalTargetResidualMm3==null?'unknown':`${surgicalView.originalTargetResidualMm3.toFixed(1)} mm³`}</span>
             <span>CUSA pending work {Number(surgicalView.metrics.cusaPendingCapacityMm3??0).toFixed(2)} mm³ · suction {Number(surgicalView.metrics.fluidRemovedMm3??0).toFixed(2)} mm³</span>
-            <span>Field fluid {Number(surgicalView.metrics.fluidPresentMm3??0).toFixed(2)} mm³ · source grid {surgicalView.scene.resolutionMm.map(n=>n.toFixed(1)).join(' × ')} mm</span>
+            <span>Free-field fluid {fieldAmounts.spatialFluidMm3.toFixed(2)} mm³ · outlet reservoir {fieldAmounts.reservoirFluidMm3?.toFixed(2)??'unknown'} mm³ · retained total {fieldAmounts.retainedFluidMm3?.toFixed(2)??'unknown'} mm³</span>
+            <span>Source grid {surgicalView.scene.resolutionMm.map(n=>n.toFixed(1)).join(' × ')} mm</span>
   </>;
   const clearInspection = () => {
     inspectionSelection.current.clear(inspectionTool ?? null);

@@ -1,13 +1,13 @@
 import * as THREE from 'three';
+import {joinedFreeField,type FieldSample} from './freeFieldSurface.ts';
 import type {SurgicalView} from '../surgical-types';
 import type {Point3} from './coordinates';
 import {placeInSourceFrame} from './sceneGeometry.ts';
 
 /** Display the current native free-cell inventories. Reservoirs have no spatial
  * extent and total modeled blood is never apportioned among mixed field cells. */
-type Sample = {cell:Point3; amount:number};
-function samples(field:Record<string,number>|undefined,shape:Point3):Sample[] {
-  const [nx,ny,nz]=shape,result:Sample[]=[];
+function samples(field:Record<string,number>|undefined,shape:Point3):FieldSample[] {
+  const [nx,ny,nz]=shape,result:FieldSample[]=[];
   for(const [key,amount] of Object.entries(field??{})){
     const cell=Number(key);
     if(Number.isSafeInteger(cell)&&cell>=0&&cell<nx*ny*nz&&Number.isFinite(amount)&&amount>0)
@@ -23,23 +23,32 @@ export function retainedFieldOptics(view:SurgicalView) {
   if(!Number.isFinite(capacity)||capacity<1e-12)return null;
   const group=new THREE.Group();
   group.name='effect:retained-field';
-  // At most one rounded optical footprint per occupied free cell. Dimensions
-  // saturate at the cell faces even when confined cells temporarily overfill.
+  const joined=joinedFreeField(fluid,view.scene.shape,capacity);
+  const [,ny,nz]=view.scene.shape;
+  // Isolated deposits remain volume-scaled. Adjacent free cells share one
+  // neutral optical surface. A confined or overfilled cell adds no extra reach.
   for(const [name,entries] of [['fluid',fluid],['debris',debris]] as const){
     if(!entries.length)continue;
     const liquid=name==='fluid';
     const geometry=liquid?new THREE.SphereGeometry(.5,12,8):new THREE.IcosahedronGeometry(.5);
-    const material=new THREE.MeshStandardMaterial({color:liquid?'#aab8b9':'#bbaa8b',roughness:liquid?.22:.86,
-      metalness:0,transparent:liquid,opacity:liquid?.46:1,depthWrite:!liquid});
+    const material=new THREE.MeshStandardMaterial({color:liquid?'#a8bdc1':'#bbaa8b',roughness:liquid?.14:.86,
+      metalness:0,transparent:liquid,opacity:liquid?.57:1,depthWrite:!liquid});
+    if(liquid&&joined){
+      const pool=new THREE.Mesh(joined.geometry,material.clone());pool.name='field:free-surface';
+      placeInSourceFrame(pool,view.scene.affine);
+      pool.receiveShadow=true;pool.raycast=()=>{};group.add(pool);
+    }
     const mesh=new THREE.InstancedMesh(geometry,material,entries.length);
     mesh.name='field:'+name;mesh.raycast=()=>{};mesh.receiveShadow=true;
     placeInSourceFrame(mesh,view.scene.affine);
     const matrix=new THREE.Matrix4();
     entries.forEach(({cell,amount},index)=>{
-      const diameter=Math.cbrt(Math.min(1,amount/capacity));
+      const inPool=liquid&&joined?.joined.has((cell[0]*ny+cell[1])*nz+cell[2]);
+      const diameter=inPool?0:Math.cbrt(Math.min(1,amount/capacity));
       matrix.makeScale(diameter,diameter,diameter).setPosition(...cell);
       mesh.setMatrixAt(index,matrix);
     });
+    mesh.visible=!liquid||joined?.joined.size!==entries.length;
     mesh.instanceMatrix.needsUpdate=true;group.add(mesh);
   }
   const lower:Point3=[Infinity,Infinity,Infinity],upper:Point3=[-Infinity,-Infinity,-Infinity];
@@ -61,7 +70,7 @@ export function retainedFieldOptics(view:SurgicalView) {
   }
   group.userData.fieldSummary={stateId:view.stateId,fluidCells:fluid.length,debrisCells:debris.length,
     fluidMm3:fluid.reduce((sum,item)=>sum+item.amount,0),debrisMm3:debris.reduce((sum,item)=>sum+item.amount,0),
-    wetTextureBytes:texture?bytes:0};
+    wetTextureBytes:texture?bytes:0,joinedFluidCells:joined?.joined.size??0};
   return {group,texture,worldToCell:grid.clone().invert(),origin:texture?new THREE.Vector3(...lower).subScalar(1):new THREE.Vector3()};
 }
 type Field=ReturnType<typeof retainedFieldOptics>;
@@ -94,8 +103,9 @@ export class SurgicalWetting {
         if (uWetVisible) {
           vec3 uvw=(vWetCell-uWetOrigin+0.5).zyx/vec3(textureSize(uWetDensity,0));
           float wet=texture(uWetDensity,uvw).r;
-          roughnessFactor=mix(roughnessFactor,min(roughnessFactor,.24),wet);
-          diffuseColor.rgb*=1.-.22*wet;
+          float film=smoothstep(.015,.62,wet);
+          roughnessFactor=mix(roughnessFactor,min(roughnessFactor,.16),film);
+          diffuseColor.rgb*=1.-.20*film;
         }`);
     };
     material.customProgramCacheKey=()=>key+'/retained-field-wetting-v1';material.needsUpdate=true;

@@ -562,7 +562,7 @@ test('surgeon wetting and retained material follow the accepted affine and ledge
   const original=structuredClone(view);
   r.setSurgical({...input,view});
   const optics=r.fieldOptics;
-  assert.deepEqual(optics.group.userData.fieldSummary,{stateId:'irrigated',fluidCells:2,debrisCells:1,fluidMm3:4.5,debrisMm3:.75,wetTextureBytes:36});
+  assert.deepEqual(optics.group.userData.fieldSummary,{stateId:'irrigated',fluidCells:2,debrisCells:1,fluidMm3:4.5,debrisMm3:.75,wetTextureBytes:36,joinedFluidCells:2});
   const texels=optics.texture.image.data;
   assert.deepEqual([...texels.filter(n=>n>0)],[128,64],'normalized by the absolute affine determinant');
   const pool=optics.group.getObjectByName('field:fluid'),m=new THREE.Matrix4();

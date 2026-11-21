@@ -19,7 +19,7 @@ export function SurgicalOutcomeSummary({c}:{c:SurgicalController}) {
       <div><small>Owned target removed · mm³</small><strong data-surgical-metric="targetRemovedMm3">{metricAmount(summary.targetRemovedMm3)}</strong></div>
       <div><small>Whole target remaining · mm³</small><strong data-surgical-metric="originalTargetResidualMm3">{metricAmount(v.originalTargetResidualMm3)}</strong></div>
       <div><small>Other removed · mm³</small><strong data-surgical-metric="nonTargetRemovedMm3">{metricAmount(v.metrics.nonTargetRemovedMm3)}</strong></div>
-      <div><small>Modeled field fluid · mm³</small><strong data-surgical-metric="fluidPresentMm3">{metricAmount(v.metrics.fluidPresentMm3)}</strong></div>
+      <div><small>Retained fluid incl. reservoirs · mm³</small><strong data-surgical-metric="fluidPresentMm3">{metricAmount(v.metrics.fluidPresentMm3)}</strong></div>
     </div>
     <p className="surgical-note">{summary.targetRemovedPercent===null?'Unknown fraction':amount(summary.targetRemovedPercent)+'%'} of {amount(summary.initialTargetMm3)} mm³ owned target removed. Owned target remaining {amount(summary.targetRemainingMm3)} mm³. Functional injury remains Unknown.</p>
     {opening&&<div aria-label="Native bone opening">
@@ -67,7 +67,7 @@ export function SurgicalOutcomeSummary({c}:{c:SurgicalController}) {
       <div><small>Fluid suctioned · mm³</small><strong>{amount(summary.fluidSuctionedMm3)}</strong></div>
       <div><small>Elapsed simulation · s</small><strong>{amount(summary.elapsedSeconds)}</strong></div>
     </div>
-    <p className="surgical-note">Modeled blood uses the wound-source ledger; suction can include irrigation fluid. Blue glyphs scale with each cell's recorded fluid volume, not a reconstructed fluid surface. Reservoirs are counted separately; field clearance does not restore vessel patency.</p>
+    <p className="surgical-note">Modeled blood uses the wound-source ledger; suction can include irrigation fluid. In the microscope, neutral wetting follows recorded free cells. The outlet reservoir contributes only to the retained total. Vessel patency is recorded separately.</p>
       <p>Contact · cell·s: <span data-surgical-metric="contactCellSeconds">{amount(v.metrics.contactCellSeconds)}</span></p>
     </details>
     <details><summary>Complete-sequence breakdown</summary>

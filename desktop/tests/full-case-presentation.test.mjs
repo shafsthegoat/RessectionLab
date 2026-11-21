@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {fullCaseStateSummary,recordedFullCasePhase,operativeFieldFrame,acceptedCloseTool,closeToolFrame,followCloseToolFrame,closeToolPresentation,closeToolWindowPresentation,sourceContainsPoint} from '../src/full-case-presentation.ts';
+import {surgicalFieldAmounts,fullCaseStateSummary,recordedFullCasePhase,operativeFieldFrame,acceptedCloseTool,closeToolFrame,followCloseToolFrame,closeToolPresentation,closeToolWindowPresentation,sourceContainsPoint} from '../src/full-case-presentation.ts';
 import {validCameraState} from '../src/viewer/workspaceSettings.ts';
 const view=()=>({scene:{environment:{target:{initialVolumeMm3:100}},regions:[{name:'declared skull',material:'bone'},{name:'target',material:'tumor'}]},metrics:{targetRemovedMm3:20,removedByLabelMm3:{'declared skull':7,target:20}},fluid:{10:2,12:3},sources:[{kind:'modeled-vessel-wound',bleedingActive:false,reservoirMm3:1},{kind:'modeled-vessel-wound',bleedingActive:true,reservoirMm3:2}],vesselsV2:{wounds:{one:{},two:{}},faces:{a:{patent:false},b:{patent:false},c:{patent:true}}}});
 test('replay accounting uses selected source grid and label ownership, and separates spatial fluid from reservoirs and patency',()=>{
@@ -153,4 +153,12 @@ test('follow reframes accepted tool exchanges and leaves unavailable or out-of-s
   const source={shape:[10,10,10],affine:[[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]],frame:'RAS+'};
   assert.equal(sourceContainsPoint(source,exchanged.center),false,'caller can retain linked source slices outside acquired support');
   v.slots.right.inserted=false;v.slots.left.inserted=false;assert.equal(followCloseToolFrame(v,'left',{},current,previous,original,true),null);
+});
+
+test('retained fluid distinguishes spatial cells and the blocked source at the displayed boundary',()=>{
+  const blocked={...view(),fluid:{},sources:[{reservoirMm3:.8}],metrics:{fluidPresentMm3:.8}};
+  assert.deepEqual(surgicalFieldAmounts(blocked),{spatialFluidMm3:0,reservoirFluidMm3:.8,retainedFluidMm3:.8});
+  const open={...blocked,fluid:{98:.5,99:.3},sources:[{reservoirMm3:0}]};
+  assert.deepEqual(surgicalFieldAmounts(open),{spatialFluidMm3:.8,reservoirFluidMm3:0,retainedFluidMm3:.8});
+  assert.equal(surgicalFieldAmounts({...open,sources:undefined}).reservoirFluidMm3,null);
 });
