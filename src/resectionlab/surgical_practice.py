@@ -25,6 +25,14 @@ CONTROLS = {
     THERMAL: ('sha256:3d860b9d648ab5fa606f0f18f01d4749e27d1e5a3405d3c0a0ca732e5cb6369a',
               'sha256:acd49ee35cda61286138c68d33e7ddc6c67ddafed20fad0444da144ae92f9a55'),
 }
+# Exact synthetic case manifests bind the raster, assignments and provenance.
+# The first grid is the incision-only recording. The second includes the biopsy neck.
+CONVEXITY_CASES = {
+    'sha256:a79b3d81bb593da6ef04a0925838053bb6b912878772ca066d22d405cb5ca86c':
+        'sha256:4ace1749d19b920dd14fda0ed47cd802353d56e177b50be9c5a2a872d4112656',
+    'sha256:80781bb098c0d874614472a3ccbc7c9c47963a81751d556685cc7e2f2604da41':
+        'sha256:44fc58ffcc4ba2c22ba5f4fef3ff76ea0a7d3b72625554e6f4626c18d83ad023',
+}
 MANUAL_COMMANDS = {'inspect', 'inspectArchive', 'step', 'preview', 'seek', 'seekFrame', 'undo', 'redo', 'selectBranch'}
 
 
@@ -34,6 +42,30 @@ def refusal(reason):
 
 def model_hash(snapshot):
     return semantic_digest({k: v for k, v in snapshot.items() if k not in ('actions', 'checkpoint', 'stateId')})
+
+
+def _convexity_target(scene, memberships, targets):
+    # The digital phantom has two disjoint source masks for one lesion. Validate
+    # its independently reproduced physical grid before sealing their joint task.
+    from .core import array_digest
+    from .surgical_planning_admission import source_classification
+    names = ('Glioma margin', 'Glioma core')
+    grid_digest = CONVEXITY_CASES.get(scene.source.get('caseHash'))
+    if (grid_digest is None
+            or source_classification(scene) != 'generated-engineering'
+            or scene.source.get('caseId') != 'generated-convexity-glioma-v1'
+            or array_digest(scene.labels) != grid_digest
+            or array_digest(scene.affine) != 'sha256:b3dc49c8f1845a33a08c25a2b84532bd67f6b33a124ec36bad0103a47df549ca'
+            or memberships is None or set(memberships) != set(names)
+            or [(r['id'], r['name']) for r in targets] != list(zip((9, 10), names))):
+        raise ValueError('The generated glioma grid and its source target masks must match the qualified anatomy.')
+    parts = []
+    for region in targets:
+        name = region['name']
+        if not np.array_equal(memberships[name], np.flatnonzero(scene.labels.ravel() == region['id'])):
+            raise ValueError('The glioma source mask differs from its qualified anatomical membership.')
+        parts.append({'regionId': region['id'], 'name': name, 'annotationHash': scene.source['annotationHashes'][name]})
+    return {'name': 'Glioma core and margin', 'regions': parts, 'annotationHash': semantic_digest(parts)}
 
 
 def source_binding(engine, case_hash, snapshot, record):
@@ -47,6 +79,8 @@ def source_binding(engine, case_hash, snapshot, record):
         model = model_hash(snapshot)
         if CONTROLS[case_hash] != (scene.identity, model):
             raise ValueError('The scene, physics or permission contract differs from the qualified practice control.')
+    elif engine._operative:
+        model = model_hash(snapshot)
     elif PROPERTY in scene.properties:
         # The native procedure gate verifies generated provenance, observed
         # domain, tissue permissions, guard and versioned physical models.
@@ -60,15 +94,19 @@ def source_binding(engine, case_hash, snapshot, record):
         raise ValueError('No qualified manual practice domain for this source and target.')
     memberships = original_target_memberships(scene)
     targets = [r for r in scene.regions if r.get('target') and r['material'] == 'tumor']
-    if memberships is None or len(targets) != 1 or len(memberships) != 1:
-        raise ValueError('Practice requires one bound treatment target.')
-    name = targets[0]['name']
-    if name not in memberships or not len(memberships[name]):
-        raise ValueError('Practice target has no original source membership.')
+    if engine._operative:
+        target_binding = _convexity_target(scene, memberships, targets)
+    else:
+        if memberships is None or len(targets) != 1 or len(memberships) != 1:
+            raise ValueError('Practice requires one bound treatment target.')
+        name = targets[0]['name']
+        if name not in memberships or not len(memberships[name]):
+            raise ValueError('Practice target has no original source membership.')
+        target_binding = {'regionId': targets[0]['id'], 'name': name, 'annotationHash': scene.source['annotationHashes'][name]}
     from .surgical_tools import catalog
     return {'caseHash': case_hash, 'sceneId': scene.identity, 'modelHash': model,
-            'targetBinding': {'regionId': targets[0]['id'], 'name': name, 'annotationHash': scene.source['annotationHashes'][name]},
-            'instrumentCatalogHash': semantic_digest(catalog())}
+            'targetBinding': target_binding,
+            'instrumentCatalogHash': semantic_digest(catalog(operative=engine._operative_tool_revision))}
 
 
 def checkpoint(binding, branch_id, position, state_id, actions):
@@ -156,7 +194,10 @@ def metrics(engine, case):
     if brain is None:
         layers = case.metadata.get('anatomy_layers', {})
         names = [r['name'] for r in engine.scene.regions if layers.get(r['name'], {}).get('kind') == 'brain']
-        if len(names) == 1:
+        if engine._operative:
+            brain = np.isin(engine.scene.labels, [r['id'] for r in engine.scene.regions
+                if layers.get(r['name'], {}).get('kind') in ('grayMatter', 'whiteMatter')])
+        elif len(names) == 1:
             brain = case.compartments.get(names[0])
         elif case.semantic_hash == THERMAL and engine.scene.identity == CONTROLS[THERMAL][0]:
             # The frozen coupon labels its complete modeled brain compartment

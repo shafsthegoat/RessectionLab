@@ -8,14 +8,15 @@ from resectionlab.surgical_motion import envelopes, pair_conflict, swept_envelop
 from resectionlab.surgical_tools import catalog, operative_tool_parameters, tools_for_operative_profile
 
 
-def model(name, jaw=2.):
-    return tools_for_operative_profile(True)[name], operative_tool_parameters(name,{'jawOpeningMm':jaw})
+def model(name, jaw=2., revision=1):
+    return tools_for_operative_profile(True)[name], operative_tool_parameters(name,{'jawOpeningMm':jaw},revision)
 
 
 def test_source_opt_in_and_stable_contact_geometry():
     assert len(catalog())==17 and all('physicalProfile' not in row for row in catalog())
     full=catalog(operative=True)
     assert len(full)==21 and len({row['id'] for row in full})==21
+    assert len({row['physicalProfile']['geometryHash'] for row in full})==21
     for row in full:
         tool,params=model(row['id'])
         parts=envelopes(tool,params,[0,0,0],[0,0,0,1])
@@ -39,15 +40,16 @@ def test_guard_cannot_cut_and_tip_clearance_does_not_clear_the_craniotome():
 
 
 @pytest.mark.parametrize('name',['bipolar_forceps','dural_scissors','bone_flap_holder','raney_clip_applier'])
-def test_continuous_rotation_translation_and_aperture_are_inside_swept_cover(name):
-    tool,p=model(name,jaw=8.)
+@pytest.mark.parametrize('revision',[1,2])
+def test_continuous_rotation_translation_and_aperture_are_inside_swept_cover(name,revision):
+    tool,p=model(name,jaw=8.,revision=revision)
     p['operativeJawSweepFromMm']=0.
     poses=[{'position':[0.,0.,0.],'quaternion':[0.,0.,0.,1.]},
            {'position':[.2,-.1,.1],'quaternion':Rotation.from_euler('xyz',[.03,-.015,.025]).as_quat()}]
     envelope=swept_envelopes(tool,p,*poses)
     rot=Slerp([0.,1.],Rotation.from_quat([v['quaternion'] for v in poses]))
     for t in np.linspace(0,1,17):
-        _,live=model(name,jaw=8*t)
+        _,live=model(name,jaw=8*t,revision=revision)
         at=envelopes(tool,live,t*np.asarray(poses[1]['position']),rot(t).as_quat())
         for (x,y,r,role),(a,b,inflated,check_role) in zip(at,envelope):
             assert role==check_role
@@ -118,3 +120,43 @@ def test_public_new_tools_require_source_opt_in_and_valid_exterior(generated_fie
     invalid=from_case(replace(case,metadata=metadata),scene.regions)
     with pytest.raises(ValueError,match='OPERATIVE_EXTERIOR_PLANE_REQUIRED'):
         SurgicalEngine(invalid)
+
+
+def test_full_handle_sweep_blocks_mid_arc_and_leaves_tip_tight():
+    tool,parameters=model('cusa',revision=2)
+    def pose(degrees):
+        return {'position':[0.,0.,0.],'quaternion':Rotation.from_euler('y',degrees,degrees=True).as_quat()}
+    rows=catalog(operative=2)
+    for name in ('cusa','cranial_drill','dural_scissors','needle_driver','frazier_suction'):
+        row=next(t for t in rows if t['id']==name)
+        instrument,params=model(name,revision=2)
+        parts=envelopes(instrument,params,**pose(0))
+        extent=-min(min(a[2],b[2])-r for a,b,r,_ in parts)
+        assert extent==pytest.approx(row['physicalProfile']['totalLengthMm'])
+    marker=np.array([0.,0.,-162.])
+    obstacle=[(marker,marker,.5,'shaft')]
+    assert not pair_conflict(envelopes(tool,parameters,**pose(-14)),obstacle)
+    assert not pair_conflict(envelopes(tool,parameters,**pose(14)),obstacle)
+    swept=swept_envelopes(tool,parameters,pose(-14),pose(14))
+    assert pair_conflict(swept,obstacle)
+    # A rotation around the contact point cannot enlarge the centered CUSA sphere.
+    assert next(r for a,b,r,role in swept if role=='working')==1.5
+    distal=envelopes(tool,model('cusa')[1],**pose(0))
+    assert not pair_conflict(distal,obstacle)
+
+
+def test_public_full_handles_check_bimanual_clearance_before_contact(generated_field):
+    from resectionlab.surgical_engine import SurgicalEngine
+    _,scene=generated_field
+    engine=SurgicalEngine(scene)
+    for hand,name in [('left','cranial_drill'),('right','cusa')]:
+        result=engine.step(dict(slot=hand,instrument=name,operation='exchange',duration=.1))
+        assert result['status']=='accepted'
+    def placement(hand,x):
+        return dict(slot=hand,operation='place',duration=.1,pose={'position':[x,32.,78.],'quaternion':[1.,0.,0.,0.]})
+    assert engine.step(placement('left',24.))['status']=='accepted'
+    before=engine.state_id
+    collision=engine.step(placement('right',39.))
+    assert collision['status']=='rejected' and 'TOOL_COLLISION' in collision['reason']
+    assert engine.state_id==before
+    assert engine.step(placement('right',47.))['status']=='accepted'

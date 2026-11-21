@@ -37,11 +37,36 @@ export function operativeInstrument(tool:SurgicalTool,slot:SurgicalSlot,ghost:bo
     const direction=length?b.clone().sub(a).normalize():new THREE.Vector3(0,0,1);
     frame.quaternion.setFromUnitVectors(yAxis,direction);group.add(frame);
 
-    if(form==='shaft'){
-      cylinder(frame,r*.95,length,steel);
+    if(form==='finger-loop'){
+      const loop=new THREE.Shape();
+      loop.absellipse(0,0,r*.89,length/2+r*.85,0,2*Math.PI,false,0);
+      const hole=new THREE.Path();hole.absellipse(0,0,r*.62,length/2+r*.51,0,2*Math.PI,true,0);
+      loop.holes.push(hole);
+      const mesh=metalwork(frame,new THREE.ExtrudeGeometry(loop,{depth:r*.24,bevelEnabled:false,curveSegments:24}),steel);
+      mesh.position.z=-r*.12;
+    }else if(form==='motor-handpiece'||form==='ultrasonic-handpiece'||form==='driver-grip'){
+      solid(frame,r*.88,length,form==='driver-grip'?ceramic:body);
+      for(let j=1;j<8;j++)cylinder(frame,r*.95,length*.012,insulation,length*(j/9-.47));
+    }else if(form==='flat-handle'||form==='spring-grip'||form==='lever-arm'){
+      const mesh=metalwork(frame,new THREE.CapsuleGeometry(r*.94,length,4,16),steel);
+      mesh.scale.z=.42;
+      if(form!=='lever-arm')for(let j=0;j<5;j++){
+        const ridge=cylinder(frame,r*.96,length*.009,body,length*(j/12-.3));ridge.scale.z=.48;
+      }
+    }else if(form==='valve-grip'||form==='pencil-grip'){
+      solid(frame,r*.88,length,form==='valve-grip'?steel:body);
+      for(const fraction of [-.35,-.27,.33])cylinder(frame,r*.96,length*.025,insulation,length*fraction);
+    }else if(form==='proximal-shank'||form==='angled-neck'){
+      solid(frame,r,length,steel);
+    }else if(form==='shaft'){
+      const shank=cylinder(frame,r*.95,length,steel);
+      if(tool.id==='scalpel'){
+        shank.scale.x=.58;
+        shank.scale.z=.34;
+      }
       // Short bands at the rear of the declared distal shaft. They never
       // extend the modeled working length into an unreviewed handle.
-      for(const y of [.9,1.5,2.1])cylinder(frame,r,.15,body,-length/2+y);
+      for(const y of [.9,1.5,2.1])cylinder(frame,r,.15,body,-length/2+y).scale.copy(shank.scale);
     }else if(form==='fluted-burr'){
       const rotor=new THREE.Group();frame.add(rotor);
       rotor.name='instrument:profile-burr';
@@ -81,7 +106,7 @@ export function operativeInstrument(tool:SurgicalTool,slot:SurgicalSlot,ghost:bo
             vertices.push(...center.clone().addScaledVector(edge,side*w*r).addScaledVector(normal,h*r).toArray());
         }
         const blade=new THREE.BufferGeometry();blade.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));
-        blade.setIndex([0,1,4,1,5,4,1,2,5,2,6,5,2,3,6,3,7,6,3,0,7,0,4,7,0,3,1,1,3,2,4,5,7,5,6,7]);
+        blade.setIndex([0,4,1,1,4,5,1,5,2,2,5,6,2,6,3,3,6,7,3,7,0,0,7,4,0,1,3,1,2,3,4,7,5,5,7,6]);
         blade.computeVertexNormals();frame.position.set(0,0,0);frame.quaternion.identity();
         metalwork(frame,blade,bevel);
       }

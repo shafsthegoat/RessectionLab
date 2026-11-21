@@ -12,7 +12,7 @@ import numpy as np
 from scipy.spatial.transform import Rotation, Slerp
 from .geometry import segments_within_distance
 from . import geometry as _contact_geometry, native_backend
-from .surgical_tool_profiles import profile_segments
+from .surgical_tool_profiles import assembly_segments, profile_segments
 
 
 def _function_state(function):
@@ -336,7 +336,8 @@ def _envelope_helpers_unchanged():
 
 def envelopes(tool, parameters, position, quaternion, inflation=0.):
     if 'operativeToolProfileV1' in parameters:
-        parts = profile_segments(parameters['operativeToolProfileV1'], parameters.get('jawOpeningMm', 2.))
+        parts = assembly_segments(parameters['operativeToolProfileV1'], parameters.get('jawOpeningMm', 2.),
+                                  parameters.get('operativeToolAssemblyRevision', 1))
         local = np.asarray([(a,b) for a,b,_,_,_ in parts], dtype=float)
         points = Rotation.from_quat(quaternion).apply(local.reshape(-1,3)).reshape(local.shape) + position
         return [(a,b,width+inflation,role) for (a,b),(_,_,width,role,_) in zip(points,parts)]
@@ -361,7 +362,44 @@ def _swept_envelopes_reference(tool, parameters, start, end):
     return envelopes(tool, parameters, (a + b) / 2, q, inflation)
 
 
+def _full_instrument_sweep(tool, parameters, start, end):
+    """Bound translation, rigid angular travel and jaw travel per capsule.
+
+    A centerline's rigid displacement from its midpoint pose is bounded by
+    2*reach*sin(angle/4). Capsule radius is rotationally invariant. Aperture
+    endpoints interpolate linearly, independently of orientation.
+    """
+    first, last = np.asarray(start['position']), np.asarray(end['position'])
+    jaw = parameters.get('jawOpeningMm',2.)
+    prior = parameters.get('operativeJawSweepFromMm',jaw)
+    translation = np.linalg.norm(last-first)/2
+    q0, q1 = start['quaternion'], end['quaternion']
+    q = q0
+    rotation_factor = 0.
+    if not np.array_equal(q0,q1):
+        rotations = Rotation.from_quat([q0,q1])
+        angle = (rotations[1]*rotations[0].inv()).magnitude()
+        rotation_factor = 2*np.sin(angle/4)
+        q = Slerp([0.,1.],rotations)(.5).as_quat()
+    mid = {**parameters, 'jawOpeningMm':(prior+jaw)/2} if jaw!=prior else parameters
+    result = envelopes(tool,mid,(first+last)/2,q,translation)
+    if not rotation_factor and jaw==prior:
+        return result
+    index = parameters['operativeToolProfileV1']
+    mid_parts = assembly_segments(index,mid['jawOpeningMm'],2)
+    initial = assembly_segments(index,prior,2)
+    final = assembly_segments(index,jaw,2)
+    inflated = []
+    for (a,b,r,role),part,left,right in zip(result,mid_parts,initial,final):
+        reach = max(np.linalg.norm(part[0]),np.linalg.norm(part[1]))
+        jaw_travel = max(np.linalg.norm(np.subtract(left[k],right[k])) for k in (0,1))/2 if left!=right else 0.
+        inflated.append((a,b,r+rotation_factor*reach+jaw_travel,role))
+    return inflated
+
+
 def swept_envelopes(tool, parameters, start, end):
+    if parameters.get('operativeToolAssemblyRevision')==2:
+        return _full_instrument_sweep(tool, parameters, start, end)
     if 'operativeJawSweepFromMm' in parameters and 'operativeToolProfileV1' in parameters:
         first = parameters['operativeJawSweepFromMm']
         last = parameters.get('jawOpeningMm', 2.)

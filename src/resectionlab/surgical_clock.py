@@ -52,7 +52,7 @@ def advance_instruments(engine, key, op, p, q, active, dt, working_cells, eligib
         effective = bool(active if acting else slot['active'])
         if not (effective or slot['inserted'] or acting and op not in ('inspect', 'place', 'exchange')):
             continue
-        tool = TOOLS[slot['instrument']]
+        tool = getattr(engine, 'tools', TOOLS)[slot['instrument']]
         params = engine.parameters(slot)
         position = p if acting else np.asarray(slot['position'])
         quaternion = q if acting else np.asarray(slot['quaternion'])
@@ -60,8 +60,10 @@ def advance_instruments(engine, key, op, p, q, active, dt, working_cells, eligib
             contacts = set(working_cells)
             effect_cells = eligible
         else:
-            tip = set(engine.touched(position, position, params['radiusMm']))
-            revised = engine.state.get('toolMechanicsRevision') in (1, 2) and tool['effect'] not in ('remove', 'suction', 'irrigate', 'probe')
+            operative = getattr(engine, '_operative', False)
+            tip = set() if operative else set(engine.touched(position, position, params['radiusMm']))
+            revised = operative or (engine.state.get('toolMechanicsRevision') in (1, 2)
+                and tool['effect'] not in ('remove', 'suction', 'irrigate', 'probe'))
             contacts = set() if revised else set(tip)
             for a, b, radius, part in envelopes(tool, params, position, quaternion):
                 cells = set(engine.touched(a, b, radius))
@@ -71,12 +73,16 @@ def advance_instruments(engine, key, op, p, q, active, dt, working_cells, eligib
                 else:
                     contacts.update(cells)
             effect_cells = sorted(contacts if revised else tip)
+        permitted = set()
+        if getattr(engine, '_operative', False):
+            from .surgical_operative_exposure import permits_contact
+            permitted = permits_contact(engine, hand, op if acting else 'apply', contacts)
         if effective and tool['materials'] and any(
                 engine.by_label[int(engine.scene.labels.flat[cell])]['material'] not in tool['materials']
-                for cell in contacts):
+                for cell in contacts - permitted):
             raise ValueError('ACTIVE_TOOL_UNSUPPORTED_MATERIAL:' + hand)
         effect_cells = [cell for cell in effect_cells
-                        if engine.by_label[int(engine.scene.labels.flat[cell])]['material'] in tool['materials']]
+                        if cell in permitted or engine.by_label[int(engine.scene.labels.flat[cell])]['material'] in tool['materials']]
         records.append((hand, tool, params, position, quaternion, effective, contacts, effect_cells))
 
     events = []

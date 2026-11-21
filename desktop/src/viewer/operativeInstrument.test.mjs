@@ -11,16 +11,16 @@ import json
 from resectionlab.surgical_tools import catalog,operative_tool_parameters
 from resectionlab.surgical_motion import envelopes
 rows=[]
-for tool in catalog(operative=True):
+for tool in catalog(operative=True)+catalog(operative=2):
  for jaw in (0.,5.):
-  params=operative_tool_parameters(tool["id"],{"jawOpeningMm":jaw})
+  params=operative_tool_parameters(tool["id"],{"jawOpeningMm":jaw},tool["physicalProfile"]["revision"])
   cover=envelopes(tool,params,[0,0,0],[0,0,0,1])
   rows.append([tool,[dict(a=a.tolist(),b=b.tolist(),radiusMm=r,part=part) for a,b,r,part in cover],jaw])
 print(json.dumps(rows))
 `;
 test('the 21 physical profile meshes and proposed tools fit every native local contact cover',()=>{
   const rows=JSON.parse(execFileSync(cwd+'.venv/bin/python',['-c',probe],{cwd,encoding:'utf8'}));
-  assert.equal(rows.length,42);
+  assert.equal(rows.length,84);
   for(const [tool,cover,jaw] of rows){
     for(const ghost of [false,true]){
       const slot={position:[0,0,0],quaternion:[0,0,0,1],parameters:{jawOpeningMm:jaw,rpm:15000},
@@ -42,6 +42,15 @@ test('the 21 physical profile meshes and proposed tools fit every native local c
             if(segment.distanceSq()===0)nearest.copy(segment.start);
             else segment.closestPointToPoint(vertex,true,nearest);
             assert(vertex.distanceTo(nearest)<=radiusMm+2e-5,tool.id+' '+frame.name+' must fit the checked profile');
+          }
+          if(['blade-heel','blade-point','scissor-edge'].includes(tool.physicalProfile.parts[i])){
+            const indices=mesh.geometry.index, p=new THREE.Vector3(),q=new THREE.Vector3(),r=new THREE.Vector3();
+            let windingVolume=0;
+            for(let k=0;k<indices.count;k+=3){
+              p.fromBufferAttribute(positions,indices.getX(k));q.fromBufferAttribute(positions,indices.getX(k+1));
+              r.fromBufferAttribute(positions,indices.getX(k+2));windingVolume+=p.dot(q.cross(r))/6;
+            }
+            assert(windingVolume>0,'beveled cutting steel must render its outward face');
           }
           vertices+=positions.count;
         });

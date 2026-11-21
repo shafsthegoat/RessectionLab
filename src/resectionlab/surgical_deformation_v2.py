@@ -164,7 +164,9 @@ def _system(engine, p, ids, anchors, retained, blocked):
     local_cuts = frozenset((a, b) for a, b in blocked
                            if a in retained and b in retained and b - a in strides)
     grid = (tuple(shape), engine.scene.affine[:3, :3].tobytes())
-    signature = (grid, tuple(ids), tuple(_material(engine, c) for c in ids), tuple(anchors),
+    material_profile = engine.scene.properties.get('gliomaMaterialsV1')
+    signature = (grid, engine.scene.identity if material_profile else None,
+                 tuple(ids), tuple(_material(engine, c) for c in ids), tuple(anchors),
                  local_cuts, held, tuple((k, p[k]) for k in sorted(profile())))
     cached = getattr(engine, '_deformation_system_v2', None)
     if cached and cached[0] == signature: return cached[1:]
@@ -172,6 +174,10 @@ def _system(engine, p, ids, anchors, retained, blocked):
                    if c < n and n in retained and (c, n) not in local_cuts)
     n = len(ids); index = {c: i for i, c in enumerate(ids)}
     stiffness = np.array([p['tumorStiffnessNPerMm'] if _material(engine, c) == 'tumor' else p['brainStiffnessNPerMm'] for c in ids])
+    if material_profile:
+        from .surgical_glioma_materials import material_values
+        # Pa -> N/mm² times representative face area / bond length (mm).
+        stiffness = 1e-6 * engine.scene.voxel_mm3 ** (1/3) * material_values(engine, ids, 'equilibriumShearPa')
     rows = []; cols = []; vals = []; dr = []; dc = []; dv = []
     rest = np.column_stack(np.unravel_index(ids, engine.scene.shape)) @ engine.scene.affine[:3, :3].T
     edges = []
@@ -194,7 +200,11 @@ def _system(engine, p, ids, anchors, retained, blocked):
     K += sparse.diags(np.repeat(stiffness * .05, 3))
     hold_diag = np.repeat([p['holdStiffnessNPerMm'] if c in held else 0 for c in ids], 3)
     free = np.repeat([c not in anchors for c in ids], 3)
-    A = K + sparse.diags(hold_diag + p['dragNsPerMm'] / p['fixedStepSeconds'])
+    effective_K = K
+    if material_profile:
+        tau = material_profile['relaxationSeconds']
+        effective_K = K * (1 + material_profile['maxwellShearRatio'] * tau / (tau + p['fixedStepSeconds']))
+    A = effective_K + sparse.diags(hold_diag + p['dragNsPerMm'] / p['fixedStepSeconds'])
     solve = factorized(A[free][:, free].tocsc()) if free.any() else lambda rhs: np.empty(0)
     cached = (signature, solve, free, index, edges, K)
     engine._deformation_system_v2 = cached
@@ -229,6 +239,18 @@ def tick(engine, dt):
     for field in (engine.state['deformation'], model['velocities']):
         for c in list(field):
             if int(c) not in ids: field.pop(c)
+    material_profile = engine.scene.properties.get('gliomaMaterialsV1')
+    if material_profile:
+        retained_ids = set(ids)
+        memory_field = model.setdefault('maxwellMemoryMm', {})
+        for c in list(memory_field):
+            if int(c) not in retained_ids:
+                memory_field.pop(c)
+        if not ids and 'activeReferenceVolumeMm3' in model:
+            model.update(activeNodes=0, elasticEnergyNmm=0., summedHandleLoadN=0.,
+                         maxNeighborDisplacementRatio=0., maxGradientNorm=0.,
+                         activeReferenceVolumeMm3=0., activeDeformedVolumeMm3=0.,
+                         minVolumeRatio=1., maxVolumeRatio=1.)
     if not ids: return
     blocked = _blocked(engine); retained = set(ids)
     anchors = sorted(set(model['anchors']) & retained)
@@ -237,6 +259,13 @@ def tick(engine, dt):
     steps = int(np.floor((total + 1e-12) / h))
     model['remainderSeconds'] = max(0., round(total - steps*h, 14))
     u = np.array([engine.state['deformation'].get(str(c), [0., 0., 0.]) for c in ids])
+    if material_profile:
+        from .surgical_glioma_materials import gradient_stencil
+        stencil = gradient_stencil(engine, ids, edges)
+        memory = np.array([memory_field.get(str(c), [0., 0., 0.]) for c in ids])
+        tau = material_profile['relaxationSeconds']
+        memory_weight = tau / (tau + h)
+        branch_ratio = material_profile['maxwellShearRatio']
     targets = np.zeros_like(u)
     for hold in _holds(engine):
         delta = np.subtract(hold.get('target', hold['origin']), hold['origin'])
@@ -281,6 +310,8 @@ def tick(engine, dt):
     velocity = np.zeros_like(u)
     for _ in range(steps):
         old = u.copy(); rhs = (p['dragNsPerMm'] / h * u + forcing).ravel()
+        if material_profile:
+            rhs += (branch_ratio * memory_weight) * (K @ memory.ravel())
         result = np.zeros(u.size); result[free] = solve(rhs[free]); u = result.reshape((-1, 3))
         if diagnostic is not None:
             diagnostic['substeps'] += 1
@@ -295,6 +326,9 @@ def tick(engine, dt):
             ratio = max((float(np.linalg.norm(u[j] - u[i]) / length) for i, j, length in edges), default=0.)
             diagnostic['maxPreStrainProjectionNeighborRatio'] = max(diagnostic['maxPreStrainProjectionNeighborRatio'], ratio)
         if scale < 1: u *= scale
+        if material_profile:
+            from .surgical_glioma_materials import limit_gradient
+            u = limit_gradient(stencil, u)
         # Conservative swept point-in-source-cell obstacle constraint; collision
         # integration additionally accounts for the displaced voxel's extent.
         collision = False
@@ -306,6 +340,8 @@ def tick(engine, dt):
         # Reject the coupled increment as a whole: clamping single nodes would
         # introduce fresh strain discontinuities after the strain projection.
         if collision: u = old
+        if material_profile:
+            memory = memory_weight * memory + (1 - memory_weight) * u
         if track_mechanics:
             mechanical.record_lattice_step(engine, labels, edge_nodes, edge_lengths, u, h)
             if retractor_cells:
@@ -317,13 +353,18 @@ def tick(engine, dt):
             ku = K @ u.ravel() + diagnostic_hold_diagonal * u.ravel()
             kold = K @ old.ravel() + diagnostic_hold_diagonal * old.ravel()
             kdelta = K @ delta + diagnostic_hold_diagonal * delta
-            residual = (ku + p['dragNsPerMm'] / h * delta - forcing.ravel())[free]
+            residual = ku + p['dragNsPerMm'] / h * delta - forcing.ravel()
+            if material_profile:
+                residual += branch_ratio * (K @ (u - memory).ravel())
+            residual = residual[free]
             diagnostic['maxFreeResidualN'] = max(diagnostic['maxFreeResidualN'], float(np.max(np.abs(residual), initial=0.)))
             # Constant-target implicit Euler balance includes the hold-spring
             # quadratic potential, viscous and algorithmic dissipation. This
             # is solver verification, not measured retractor work.
             change = .5 * (u.ravel() @ ku - old.ravel() @ kold)
             balance = forcing.ravel() @ delta - change - p['dragNsPerMm'] / h * (delta @ delta) - .5 * delta @ kdelta
+            if material_profile:
+                balance -= branch_ratio * ((u - memory).ravel() @ (K @ delta))
             diagnostic['maxAbsDiscreteEnergyBalanceNmm'] = max(diagnostic['maxAbsDiscreteEnergyBalanceNmm'], abs(float(balance)))
         velocity = (u - old) / h
     if steps:
@@ -333,3 +374,9 @@ def tick(engine, dt):
         model['maxNeighborDisplacementRatio'] = max((float(np.linalg.norm(u[j] - u[i]) / length) for i, j, length in edges), default=0.)
         model['activeNodes'] = len(ids)
         model['model'] = p['model']
+        if material_profile:
+            from .surgical_glioma_materials import record_lattice
+            record_lattice(engine, ids, stencil, u, memory, K, targets * force_scale[:, None], held, p)
+    if material_profile:
+        from .surgical_glioma_materials import move_vessels
+        move_vessels(engine)

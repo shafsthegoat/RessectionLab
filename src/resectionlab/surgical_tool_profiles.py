@@ -7,6 +7,8 @@ limbs obstruct motion, while only the exposed blades/tips produce contacts.
 from __future__ import annotations
 
 from functools import lru_cache
+from hashlib import sha256
+import json
 
 # Stable explicit indices are replay data. Never derive them from a dictionary's order.
 PROFILE_IDS = (
@@ -102,3 +104,90 @@ def profile_segments(index, aperture_mm):
                  'insulated-arm' if name=='bipolar_forceps' else 'forceps-arm','shaft')
             part((side*(.8+half*.5),0,-3),(side*half,0,0),tip_radius,form)
     return tuple(parts)
+
+
+@lru_cache(maxsize=len(PROFILE_IDS))
+def profile_geometry_hash(index):
+    """Bind the complete piecewise rigid geometry and its linear aperture law."""
+    endpoints = [profile_segments(index, jaw) for jaw in (0.,12.)]
+    contract = ['operative-distal-segments-mm-v1', PROFILE_IDS[index-1], [0.,12.], endpoints]
+    return 'sha256:'+sha256(json.dumps(contract,separators=(',',':'),allow_nan=False).encode()).hexdigest()
+
+# Total outer axial extent and the depth of the shaft-to-handle junction in mm.
+# Sources and dimensional assumptions are identified in the surgical toolbox API.
+# Radius bounds the transverse grip body (individual arms in a paired spring grip).
+ASSEMBLIES = {
+    'cranial_drill':(172.,70.,9.,'motor'),
+    'craniotome':(172.,70.,9.,'motor'),
+    'cusa':(194.,80.,10.,'ultrasonic'),
+    'frazier_suction':(180.,100.,4.,'suction'),
+    'irrigation':(155.,75.,3.2,'suction'),
+    'scalpel':(143.,43.,4.2,'flat'),
+    'brain_retractor':(185.,82.,4.2,'flat'),
+    'periosteal_elevator':(165.,65.,4.3,'flat'),
+    'dissector':(175.,76.,3.,'pencil'),
+    'cortical_probe':(165.,72.,3.8,'pencil'),
+    'subcortical_probe':(165.,72.,3.8,'pencil'),
+    'fixation_driver':(136.,48.,6.5,'driver'),
+    'bipolar_forceps':(195.,75.,2.1,'spring'),
+    'tumor_forceps':(160.,62.,1.8,'spring'),
+    'bone_flap_holder':(165.,65.,2.5,'ring'),
+    'membrane_forceps':(150.,60.,1.6,'spring'),
+    'raney_clip_applier':(165.,55.,2.6,'ring'),
+    'dressing_forceps':(155.,62.,1.8,'spring'),
+    'needle_driver':(180.,65.,2.1,'spring'),
+    'dural_scissors':(170.,65.,2.1,'ring'),
+    'micro_scissors':(155.,62.,1.7,'spring'),
+}
+
+
+@lru_cache(maxsize=32)
+def proximal_segments(index):
+    name = PROFILE_IDS[index-1]
+    length, neck, radius, style = ASSEMBLIES[name]
+    shaft_radius = profile_segments(index, 0.)[0][2]
+    result = []
+    def member(a, b, r, form):
+        result.append((a,b,r,'shaft',form))
+    member((0,0,-40),(0,0,-neck),shaft_radius,'proximal-shank')
+    if style in ('spring','ring'):
+        width = 4. if style=='spring' else 8.5
+        if style=='ring':
+            pivot = length-29
+            for sign in (-1,1):
+                member((0,0,-neck),(sign*width,0,-pivot),radius,'lever-arm')
+                # A filled capsule encloses each transverse finger loop and
+                # its central void; collision remains deliberately conservative.
+                member((sign*width,0,-pivot),(sign*width,0,-length+7.5),7.5,'finger-loop')
+        else:
+            for sign in (-1,1):
+                bend=(sign*width,0,-(neck+length)/2)
+                member((0,0,-neck),bend,radius,'spring-grip')
+                member(bend,(0,0,-length+radius),radius,'spring-grip')
+    elif style=='suction':
+        # Slight bend and a thickened proximal valve/hose connector. Tubing
+        # starts after the terminal socket and is outside this rigid body.
+        bend=(5.,0.,-neck-13)
+        member((0,0,-neck),bend,shaft_radius,'angled-neck')
+        member(bend,(5.,0.,-length+radius),radius,'valve-grip')
+    else:
+        form={'motor':'motor-handpiece','ultrasonic':'ultrasonic-handpiece',
+              'flat':'flat-handle','pencil':'pencil-grip','driver':'driver-grip'}[style]
+        member((0,0,-neck),(0,0,-length+radius),radius,form)
+    return tuple(result)
+
+
+def assembly_segments(index, aperture_mm, revision):
+    distal=profile_segments(index,aperture_mm)
+    if revision==1:
+        return distal
+    if revision!=2:
+        raise ValueError('UNKNOWN_OPERATIVE_ASSEMBLY_REVISION')
+    return distal+proximal_segments(index)
+
+
+@lru_cache(maxsize=32)
+def assembly_geometry_hash(index):
+    endpoints=[assembly_segments(index,jaw,2) for jaw in (0.,12.)]
+    contract=['operative-full-device-segments-mm-v2',PROFILE_IDS[index-1],[0.,12.],endpoints]
+    return 'sha256:'+sha256(json.dumps(contract,separators=(',',':'),allow_nan=False).encode()).hexdigest()

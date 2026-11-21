@@ -169,12 +169,17 @@ def apply(engine, cells, dt, params, *, position=None, active=True):
     # JSON integer pairs keep this state replayable without Python objects.
     remaining = Fraction.from_float(budget)
     volume = Fraction.from_float(float(engine.scene.voxel_mm3))
+    resistance = None
+    if ids and 'gliomaMaterialsV1' in engine.scene.properties:
+        from .surgical_glioma_materials import material_values
+        resistance = material_values(engine, ids, 'referenceCapacityPerSolidVolume')
     new = []
     spent = []
-    for cell in ids if budget > 0. else ():
+    for index, cell in enumerate(ids if budget > 0. else ()):
         key = str(cell)
         old = Fraction(*state['progressExact'][key]) if key in state['progressExact'] else Fraction(0)
-        required = volume - old
+        threshold = volume if resistance is None else volume * Fraction.from_float(float(resistance[index]))
+        required = threshold - old
         allocated = min(required, remaining)
         if allocated <= 0.:
             continue
@@ -184,6 +189,8 @@ def apply(engine, cells, dt, params, *, position=None, active=True):
         # No epsilon/percentage rounding can authorize whole-cell removal.
         if allocated >= required:
             new.append(cell)
+            if resistance is not None:
+                state['resistanceCapacityMm3'] = state.get('resistanceCapacityMm3', 0.) + float(threshold-volume)
             state['progressMm3'].pop(key, None)
             state['progressExact'].pop(key, None)
             state['contactSeconds'].pop(key, None)
@@ -241,12 +248,17 @@ def metrics(engine):
         'cusaPendingCapacityMm3': pending,
         'cusaUnusedCapacityMm3': state.get('unusedCapacityMm3', 0.),
         'cusaDiscardedCapacityMm3': state.get('discardedCapacityMm3', 0.),
-        'cusaPendingCells': len(state.get('progressMm3', {}))}
+        'cusaPendingCells': len(state.get('progressMm3', {})),
+        **({'cusaResistanceCapacityMm3': state.get('resistanceCapacityMm3', 0.)}
+           if 'gliomaMaterialsV1' in engine.scene.properties else {})}
 
 
 def descriptor(engine):
+    heterogeneous = 'gliomaMaterialsV1' in engine.scene.properties
     return {'enabled': profile(engine) is not None, 'profile': copy.deepcopy(profile(engine)),
         'calibration': 'uncalibrated assumed research surrogate',
+        **({'materialResponse': 'Finite reference-capacity cost varies spatially across overlapping assigned brain and tumor ranges.'}
+           if heterogeneous else {}),
         'activation': 'power and duty are dimensionless fractions in [0,1]',
         'limits': ['Fixed generic catalog geometry is not a manufacturer tip specification.',
             'Rate, constant capture, and material response are uncalibrated engineering assumptions.',

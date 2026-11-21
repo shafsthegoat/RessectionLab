@@ -25,7 +25,8 @@ TOOLS = {
 }
 
 
-from .surgical_tool_profiles import PROFILE_INDEX, profile_segments
+from .surgical_tool_profiles import (ASSEMBLIES, PROFILE_INDEX, assembly_geometry_hash,
+                                    assembly_segments, profile_geometry_hash)
 
 
 OPERATIVE_TOOLS = {**TOOLS,
@@ -43,14 +44,26 @@ def tools_for_operative_profile(enabled):
     return OPERATIVE_TOOLS if enabled else TOOLS
 
 
-def operative_tool_parameters(instrument, params):
+def operative_tool_parameters(instrument, params, revision=1):
     return {**params, 'radiusMm': OPERATIVE_TOOLS[instrument]['radiusMm'],
-            'operativeToolProfileV1': PROFILE_INDEX[instrument]}
+            'operativeToolProfileV1': PROFILE_INDEX[instrument],
+            **({'operativeToolAssemblyRevision':2} if revision==2 else {})}
 
 
 def catalog(operative=False):
     if operative:
-        return [dict(tool, id=name, workingLengthMm=40., approximation='fixed distal research profile in mm',
-                     physicalProfile={'revision':1, 'parts':[part[4] for part in profile_segments(PROFILE_INDEX[name], 2.)]})
-                for name, tool in OPERATIVE_TOOLS.items()]
+        revision = 2 if operative==2 else 1
+        rows = []
+        for name,tool in OPERATIVE_TOOLS.items():
+            index = PROFILE_INDEX[name]
+            profile = {'revision':revision,
+                       'geometryHash':assembly_geometry_hash(index) if revision==2 else profile_geometry_hash(index),
+                       'parts':[part[4] for part in assembly_segments(index,2.,revision)]}
+            if revision==2:
+                total,working,*_ = ASSEMBLIES[name]
+                profile['totalLengthMm'] = total
+                rows.append(dict(tool,id=name,workingLengthMm=working,approximation='fixed whole-instrument research profile in mm',physicalProfile=profile))
+            else:
+                rows.append(dict(tool,id=name,workingLengthMm=40.,approximation='fixed distal research profile in mm',physicalProfile=profile))
+        return rows
     return [dict(v, id=k, workingLengthMm=40., approximation='generic research geometry') for k, v in TOOLS.items()]

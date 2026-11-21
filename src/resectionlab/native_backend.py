@@ -16,6 +16,7 @@ import platform
 import sys
 import sysconfig
 import threading
+from contextlib import contextmanager
 import numpy as np
 from types import BuiltinFunctionType, CodeType, FunctionType, WrapperDescriptorType
 
@@ -331,16 +332,30 @@ def run_trajectory(*args):
     return _module.run_trajectory(*args)
 
 
-def physical_substep(*args):
-    _check_live(resident_sources=False)
-    _counters['bindingCalls'] += 1
-    _counters['physicalSubstepCalls'] += 1
-    _execution.depth = getattr(_execution, 'depth', 0) + 1
+@contextmanager
+def _substep_file_guard(*, resident_sources):
+    """Check files around one bounded candidate step and bindings at every use."""
+    _check_live(resident_sources=resident_sources)
+    parent_depth = getattr(_execution, 'depth', 0)
+    _execution.depth = parent_depth + 1
     try:
-        return _module.physical_substep(*args)
+        yield
     finally:
-        _execution.depth -= 1
-        _check_live(resident_sources=False)
+        _execution.depth = parent_depth
+        _check_live(resident_sources=resident_sources)
+
+
+def physical_substep(*args):
+    with _substep_file_guard(resident_sources=False):
+        _counters['bindingCalls'] += 1
+        _counters['physicalSubstepCalls'] += 1
+        return _module.physical_substep(*args)
+
+
+def operative_python_substep(advance, *args):
+    """Python owns tissue state; constituent geometry kernels remain native."""
+    with _substep_file_guard(resident_sources=True):
+        return advance(*args)
 
 
 def owned_digest(value, dumps, sha256, fallback):

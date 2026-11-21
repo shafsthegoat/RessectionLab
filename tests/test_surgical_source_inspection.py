@@ -152,7 +152,7 @@ def test_candidate_presence_blocks_no_bone_no_registry_and_direct_adapter_search
     assert dto['present'] and not dto['available'] and dto['roots'] == []
     assert dto['blockers'][0]['code'] == REASON
     assert dto['blockers'][1]['code'] == 'LOCAL_MATERIAL_AND_STAGE_REVIEW_REQUIRED'
-    with pytest.raises(ValueError, match='QUALIFIED_COMPLETE_SEQUENCE_ROOT_REQUIRED'):
+    with pytest.raises(ValueError, match=REASON):
         planning.compare_cranial_strategies(scene, record)
     assert not engine.actions and not engine.history
 

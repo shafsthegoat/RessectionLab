@@ -84,7 +84,7 @@ def _stock(engine):
     if type(engine.scene.properties) is dict and any(name in engine.scene.properties
             for name in ('tissuePhysicsV2', 'brainContinuumV1', 'vascularGraphV1',
                          'bipolarThermalV1', 'planarBladeManeuverV1', 'retractorSurfaceContactV1',
-                         'surgicalProcedurePolicyV1')):
+                         'surgicalProcedurePolicyV1', 'operativeExposureV1', 'gliomaMaterialsV1')):
         return False
     if not _numeric_qualified():
         return False
@@ -183,6 +183,8 @@ def create(engine):
         # must continue through the reference transition that validates it.
         return None, 'detached-cranial-stage-witness'
     scene = engine.scene
+    if 'operativeExposureV1' in scene.properties or 'gliomaMaterialsV1' in scene.properties:
+        return None, 'advanced-operative-profile'
     scene.require_cache_source()
     from .surgical_craniotomy import _original_targets, validate_contract
     access = validate_contract(scene) if engine._cranial_access is not None else None

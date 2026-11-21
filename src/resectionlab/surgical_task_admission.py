@@ -148,7 +148,7 @@ def _validate_task(value):
 
 
 def _models(engine):
-    return {'physicsHash': semantic_digest(engine.scene.properties), 'instrumentCatalogHash': semantic_digest(catalog()),
+    return {'physicsHash': semantic_digest(engine.scene.properties), 'instrumentCatalogHash': semantic_digest(catalog(operative=engine._operative_tool_revision)),
             'toolMechanicsRevision': 2, 'physicalClockRevision': 1}
 
 
@@ -160,6 +160,8 @@ def _compatible_models(engine, models):
     # Adding the unrelated holder does not alter any of its tools or physics.
     # Recompute the complete preceding catalog, rather than accepting a caller's
     # arbitrary old hash; any change to an existing instrument still refuses.
+    if engine._operative:
+        return False
     for extra_ids in ({'membrane_forceps'}, {'membrane_forceps', 'bone_flap_holder'}):
         preceding = dict(current, instrumentCatalogHash=semantic_digest(
             [tool for tool in catalog() if tool['id'] not in extra_ids]))

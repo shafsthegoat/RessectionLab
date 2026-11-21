@@ -19,6 +19,9 @@ def default_profile():
 def enabled(engine): return 'tissuePhysicsV2' in engine.scene.properties
 
 def validate(scene):
+    if 'gliomaMaterialsV1' in scene.properties:
+        from .surgical_glioma_materials import validate as validate_materials
+        validate_materials(scene)
     p = scene.properties.get('tissuePhysicsV2')
     if p is None: return
     if scene.properties.get('tissuePhysics') is not None: raise ValueError('AMBIGUOUS_PHYSICS_VERSION')
@@ -77,7 +80,10 @@ def descriptor(engine):
     return {'enabled': True, 'profile': copy.deepcopy(engine.scene.properties['tissuePhysicsV2']),
         'capabilities': {'patientCalibratedPhysiology': False, 'globalPerfusion': False,
             'damageTriggeredVesselWounds': True, 'coupledDeformation': True, 'workLimitedDrilling': True},
-        'brain': continuum_descriptor(engine) or {'model': brain.profile()['model']}, 'bone': bone.descriptor(engine), 'vessel': vessel.descriptor(engine),
+        'brain': continuum_descriptor(engine) or (
+            {'model': engine.scene.properties['gliomaMaterialsV1']['schema'],
+             'assignment': copy.deepcopy(engine.scene.properties['gliomaMaterialsV1'])} if 'gliomaMaterialsV1' in engine.scene.properties
+            else {'model': brain.profile()['model']}), 'bone': bone.descriptor(engine), 'vessel': vessel.descriptor(engine),
         **({'mechanicalExposure': exposure} if exposure is not None else {}),
         **({'bipolarThermal': thermal_descriptor(engine)} if 'bipolarThermalV1' in engine.scene.properties else {}),
         'limits': ['Uncalibrated research mechanics; no clinical outcome prediction.',

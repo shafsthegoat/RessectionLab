@@ -77,7 +77,8 @@ def standardize(scene, target_names=None, physics_profile=None):
     source['environmentSchema'] = SCHEMA
     regions = copy.deepcopy(scene.regions)
     for region in regions:
-        region['color'] = COLORS.get(region['material'], region.get('color', '#92a7b8'))
+        if 'operativeExposureV1' not in properties:
+            region['color'] = COLORS.get(region['material'], region.get('color', '#92a7b8'))
         if target_names is not None:
             region['target'] = region['name'] in target_names
     return propagate_original_target_memberships(scene,
