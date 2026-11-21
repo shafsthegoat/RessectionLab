@@ -41,10 +41,28 @@ def initialize(engine):
         initialize_bipolar_thermal(engine)
 
 def raster(engine):
-    removed = set(engine.state['removed']); pairs = []
-    for key, displacement in sorted(engine.state.get('deformation', {}).items(), key=lambda item:int(item[0])):
-        cell = int(key)
-        if cell in removed: continue
+    removed = set(engine.state['removed'])
+    retained = [(int(key), displacement)
+                for key, displacement in sorted(engine.state.get('deformation', {}).items(), key=lambda item: int(item[0]))
+                if int(key) not in removed]
+    if not retained:
+        return []
+    grid_size = int(np.prod(engine.scene.shape))
+    # The infinity norm of the inverse affine bounds the excursion along
+    # every voxel axis. A displacement bounded by a quarter-cell cannot
+    # reach a rounding face from an integer voxel center. All cells which
+    # could cross a face retain the original matrix-vector rounding order.
+    displacements = np.asarray([row[1] for row in retained])
+    stationary = np.zeros(len(retained), dtype=bool)
+    if displacements.shape == (len(retained), 3) and displacements.dtype == np.float64:
+        inverse_norm = np.linalg.norm(engine.scene.inverse[:3, :3], ord=np.inf)
+        with np.errstate(over='ignore', invalid='ignore'):
+            stationary = np.max(np.abs(displacements), axis=1) * inverse_norm < .25
+    pairs = []
+    for (cell, displacement), unchanged in zip(retained, stationary):
+        if unchanged and 0 <= cell < grid_size:
+            pairs.append([cell, cell])
+            continue
         ijk = np.rint(np.asarray(np.unravel_index(cell, engine.scene.shape)) + engine.scene.inverse[:3,:3] @ displacement).astype(int)
         if np.any(ijk < 0) or np.any(ijk >= engine.scene.shape): raise ValueError('DISPLACEMENT_OUTSIDE_GRID')
         pairs.append([cell, int(np.ravel_multi_index(ijk, engine.scene.shape))])

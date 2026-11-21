@@ -271,6 +271,13 @@ def tick(engine, dt):
     removed_array = np.fromiter(removed, dtype=np.int64)
     blocking_labels = np.array([label for label, region in engine.by_label.items()
         if region.get('material') in ('bone', 'vessel', 'unknown')], dtype=engine.scene.labels.dtype)
+    # For every bond the displacement difference is at most 2*sqrt(3)
+    # times the largest absolute node component. Staying below one eighth
+    # of the shortest bond's allowed extension leaves the projection idle,
+    # including ample margin for roundoff. Keep the exact scalar test near
+    # the limit, outside ordinary magnitudes, or when collecting diagnostics.
+    strain_limit = p['maxEdgeStrain'] * min((length for _, _, length in edges), default=0.)
+    safe_component = strain_limit / 8 if 2e-15 < strain_limit < 1e150 and diagnostic is None else 0.
     velocity = np.zeros_like(u)
     for _ in range(steps):
         old = u.copy(); rhs = (p['dragNsPerMm'] / h * u + forcing).ravel()
@@ -280,7 +287,9 @@ def tick(engine, dt):
             diagnostic['displacementCapNodeSteps'] += int(np.count_nonzero(np.linalg.norm(u, axis=1) > p['maxDisplacementMm']))
         u *= np.minimum(1., p['maxDisplacementMm'] / np.maximum(np.linalg.norm(u, axis=1), 1e-15))[:, None]
         # Global rescaling preserves continuity while bounding every bond strain.
-        scale = min((p['maxEdgeStrain'] * length / max(np.linalg.norm(u[j] - u[i]), 1e-15) for i, j, length in edges), default=1.)
+        scale = 1.
+        if not (safe_component and np.max(np.abs(u)) < safe_component):
+            scale = min((p['maxEdgeStrain'] * length / max(np.linalg.norm(u[j] - u[i]), 1e-15) for i, j, length in edges), default=1.)
         if diagnostic is not None:
             diagnostic['strainProjectionSteps'] += int(scale < 1)
             ratio = max((float(np.linalg.norm(u[j] - u[i]) / length) for i, j, length in edges), default=0.)

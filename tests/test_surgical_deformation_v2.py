@@ -45,6 +45,27 @@ def test_nonuniform_partition_and_replay_are_identical():
     assert a.state == b.state == replay.state
 
 
+def test_strain_screen_matches_full_scalar_projection_during_contact_and_recovery():
+    from resectionlab.surgical_deformation_v2 import diagnostic_scope
+    fast, _ = held()
+    exact, _ = held()
+    for e in (fast, exact):
+        e.scene.properties['tissuePhysicsV2']['brain']['maxEdgeStrain'] = .05
+    projected = 0
+    for target in ([6.001, 6., 6.], [7., 6.5, 6.2], None):
+        for e in (fast, exact):
+            if target is None:
+                release(e, 'left')
+            else:
+                set_target(e, 'left', target)
+        with diagnostic_scope() as verified:
+            tick(exact, .2)
+        projected += verified['strainProjectionSteps']
+        tick(fast, .2)
+        assert fast.state == exact.state
+    assert projected > 0
+
+
 def test_cached_bonds_match_fresh_assembly_across_hold_cut_and_removal(monkeypatch):
     import resectionlab.surgical_deformation_v2 as brain
     warm, center = held()
