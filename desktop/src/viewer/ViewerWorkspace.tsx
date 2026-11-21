@@ -866,6 +866,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
       <div className="rl-viewer-anatomy rl-viewer-pane">
         <div
           className="rl-viewer-anatomy-image"
+          data-practice-interaction={displayedSurgical?.practiceHud?displayedSurgical.mode:undefined}
           ref={anatomy}
           onPointerDown={event=>{if(props.surgicalInteraction?.mode==='draw'){const p=engine.current?.pick(event.clientX,event.clientY);if(p){event.currentTarget.setPointerCapture(event.pointerId);props.surgicalInteraction.onStroke(p,'start');}}}}
           onPointerMove={event=>{if(event.buttons===1&&props.surgicalInteraction?.mode==='draw'){const p=engine.current?.pick(event.clientX,event.clientY);if(p)props.surgicalInteraction.onStroke(p,'move');}}}

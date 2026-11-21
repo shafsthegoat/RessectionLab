@@ -1,5 +1,5 @@
 import {Quaternion, Vector3} from 'three';
-import type {SurgicalPose, SurgicalResponse} from './surgical-types';
+import type {SurgicalInteraction, SurgicalPose, SurgicalResponse} from './surgical-types';
 
 type Jog = {offset: [number, number, number]} | {pitch: number; yaw: number};
 
@@ -27,6 +27,18 @@ export function jogPracticePose(start: SurgicalPose, jog: Jog): SurgicalPose {
   const pitch = new Quaternion().setFromAxisAngle(new Vector3(1, 0, 0), jog.pitch * Math.PI / 180);
   const yaw = new Quaternion().setFromAxisAngle(new Vector3(0, 1, 0), jog.yaw * Math.PI / 180);
   return {position: [...start.position], quaternion: orientation.multiply(yaw).multiply(pitch).normalize().toArray()};
+}
+
+/** A numeric edit or jog temporarily reveals the transform handles. Explicit
+ * viewport choices survive submission, while an acknowledged pose has no
+ * overlapping draft. Quaternion sign does not change physical orientation. */
+export function practiceViewportMode(mode: SurgicalInteraction['mode'], pose: SurgicalPose,
+  accepted: SurgicalPose | undefined, publishing: boolean): SurgicalInteraction['mode'] {
+  if (mode !== 'navigate' || !accepted || publishing) return mode;
+  const moved = pose.position.some((value,i) => Math.abs(value - accepted.position[i]) > 1e-5);
+  const dot = pose.quaternion.reduce((sum,value,i) => sum + value * accepted.quaternion[i], 0);
+  const rotated = 1 - Math.abs(dot) > 1e-9;
+  return moved || rotated ? 'translate' : 'navigate';
 }
 
 export function practiceStartIssue(result: SurgicalResponse | null, studyRecording: boolean, preview: boolean) {

@@ -1082,7 +1082,11 @@ export class VolumeRenderer {
     if(this.workspaceSettings?.showOrientationGuide!==settings.showOrientationGuide)this.requestRender(false);
     this.workspaceSettings = settings;
     this.updateFieldAppearance();
-    if(this.surgicalGhost)this.surgicalGhost.visible=!!this.surgicalInteraction&&!this.surgicalInteraction.readOnly&&(settings.operativeView!=='surgeon'||this.surgicalInteraction.mode!=='navigate');
+    if(this.surgicalGhost){
+      const interaction=this.surgicalInteraction;
+      this.surgicalGhost.visible=!!interaction&&!interaction.readOnly&&
+        (interaction.mode!=='navigate'||(!interaction.practiceHud&&settings.operativeView!=='surgeon'));
+    }
     const surgeon=settings.operativeView==='surgeon'&&settings.microscope;
     if(this.scene){
       this.scene.environmentIntensity=surgeon?.25:1;
@@ -1568,7 +1572,8 @@ export class VolumeRenderer {
       this.surgicalGizmo.addEventListener('dragging-changed',event=>{this.controls.enabled=!event.value;if(event.value)this.beginInteraction();else this.endInteraction();});
       this.surgicalGizmo.addEventListener('objectChange',()=>{if(this.surgicalGhost&&this.surgicalInteraction){this.surgicalInteraction.onPose({position:this.surgicalGhost.position.toArray(),quaternion:this.surgicalGhost.quaternion.toArray()});this.requestRender();}});
     }
-    this.surgicalGhost.visible=!interaction.readOnly&&(this.workspaceSettings?.operativeView!=='surgeon'||mode!=='navigate');
+    this.surgicalGhost.visible=!interaction.readOnly&&
+      (mode!=='navigate'||(!interaction.practiceHud&&this.workspaceSettings?.operativeView!=='surgeon'));
     this.surgicalGhost.position.set(...pose.position);this.surgicalGhost.quaternion.set(...pose.quaternion);
     const selected=view.slots[selectedSlot],tool=selected?view.catalog.find(t=>t.id===selected.instrument):undefined;
     const ghostSlot=selected?{...selected,parameters:{...selected.parameters,...interaction.parameters},position:[0,0,0] as Point3,quaternion:[0,0,0,1] as [number,number,number,number]}:null;

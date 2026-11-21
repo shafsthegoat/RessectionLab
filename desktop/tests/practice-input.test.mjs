@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import {checkPracticeReceipt, jogPracticePose, matchesPracticeParent, practiceDrag, practiceJogKey, practiceStartIssue, practiceWithdrawalPose, savedPracticeEpisode} from '../src/practice-input.ts';
+import {checkPracticeReceipt, jogPracticePose, matchesPracticeParent, practiceDrag, practiceJogKey, practiceStartIssue, practiceViewportMode, practiceWithdrawalPose, savedPracticeEpisode} from '../src/practice-input.ts';
 
 const pose = {position:[2,3,4], quaternion:[0,0,0,1]};
 test('jogs follow instrument axes, depth, angle and a bounded drag without changing the input pose', () => {
@@ -63,4 +63,17 @@ test('checked withdrawal uses the exterior pose of this hand and instrument at t
   assert.equal(practiceWithdrawalPose(at(5),'left'),undefined);
   assert.deepEqual(practiceWithdrawalPose(at(6),'left'),pose);
   assert.deepEqual(practiceWithdrawalPose(at(6),'right').position,[20,20,20]);
+});
+test('transient jog handles disappear at publication, including partial endpoints, while chosen gizmos remain available',()=>{
+  const draft=jogPracticePose(pose,practiceJogKey('PageDown'));
+  assert.equal(practiceViewportMode('navigate',draft,pose,false),'translate');
+  assert.equal(practiceViewportMode('navigate',jogPracticePose(pose,practiceJogKey('ArrowRight',true)),pose,false),'translate');
+  const partial={...draft,position:[2,3,4.2]};
+  assert.equal(practiceViewportMode('navigate',draft,partial,true),'navigate');
+  assert.equal(practiceViewportMode('navigate',partial,partial,false),'navigate');
+  assert.equal(practiceViewportMode('navigate',{...pose,quaternion:[0,0,0,-1]},pose,false),'navigate');
+  for(const mode of ['rotate','translate','draw']) {
+    assert.equal(practiceViewportMode(mode,draft,pose,false),mode);
+    assert.equal(practiceViewportMode(mode,partial,partial,true),mode);
+  }
 });

@@ -38,16 +38,12 @@ export function PracticeControls({c, blocked, settings, params, duration}: {
     setRequest({action, position:result.position, previousOutcome:result.outcome});
     void c.runPracticeAction(action);
   };
-  const propose = (pose: SurgicalPose) => {
-    c.setMode('translate');
-    c.setPose(pose);
-  };
   function jogKey(event: KeyboardEvent<HTMLButtonElement>) {
     if (blocked || event.altKey || event.metaKey || event.ctrlKey) return;
     const jog = practiceJogKey(event.key, event.shiftKey);
     if (jog) {
       event.preventDefault();
-      propose(jogPracticePose(draft, jog));
+      c.setPose(jogPracticePose(draft, jog));
     } else if (event.key === 'Enter') {
       event.preventDefault();
       if (!event.repeat) send('move');
@@ -87,7 +83,7 @@ export function PracticeControls({c, blocked, settings, params, duration}: {
         onPointerMove={event => {
           const start = drag.current;
           if (!blocked && start?.id === event.pointerId && event.buttons === 1)
-            propose(jogPracticePose(start.pose, practiceDrag(event.clientX - start.x, event.clientY - start.y, start.depth)));
+            c.setPose(jogPracticePose(start.pose, practiceDrag(event.clientX - start.x, event.clientY - start.y, start.depth)));
         }}
         onPointerUp={() => {drag.current = null;}} onLostPointerCapture={() => {drag.current = null;}}
         onPointerCancel={() => {drag.current = null;c.cancel();}}>

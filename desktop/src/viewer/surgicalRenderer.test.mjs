@@ -70,6 +70,17 @@ test('observed effective activation colors both tools without mutating latched s
   r.setSurgical(input);assert.equal(r.surgicalGhost.visible,true);
   assert.equal(r.surgicalSlots.get('left').group.userData.surgicalAccent.color.getHexString(),'41677a');
 });
+test('settled practice shows only the accepted tool in external and microscope views, preserving explicit edit handles',()=>{
+  const r=renderer(),input={...interaction(),practiceHud:{episodeId:'practice'}};
+  for(const operativeView of ['external','surgeon']){
+    r.workspaceSettings={operativeView};
+    for(const [mode,visible] of [['navigate',false],['translate',true],['rotate',true],['draw',true]]){
+      r.setSurgical({...input,mode});
+      assert.equal(r.surgicalGhost.visible,visible);
+      assert.equal(r.surgicalSlots.get('left').group.visible,true);
+    }
+  }
+});
 test('draw path grows a reusable bounded-capacity buffer, hides on cancel and releases recorded state on exit',()=>{
   const r=renderer(),input=interaction();r.setSurgical(input);
   const path=Array.from({length:3},(_,i)=>({position:[i,2,3],quaternion:[0,0,0,1]}));r.setSurgical({...input,path});const line=r.surgicalPath,geometry=line.geometry;
