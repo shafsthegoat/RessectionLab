@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import type {SurgicalView} from '../surgical-types';
 import type {Point3,Shape3} from './coordinates';
+import {sameArray,sameFieldEntries,sameSurgicalGrid} from './surgicalDisplayInputs.ts';
 
 const bucketSize=8;
 const zero:Point3=[0,0,0];
@@ -9,6 +10,14 @@ const index=(x:number,y:number,z:number,[,ny,nz]:Shape3)=>(x*ny+y)*nz+z;
 const bucket=(x:number,y:number,z:number,shape:Shape3)=>
   (Math.floor(x/bucketSize)*(Math.ceil(shape[1]/bucketSize)+2)+Math.floor(y/bucketSize))*(Math.ceil(shape[2]/bucketSize)+2)+Math.floor(z/bucketSize);
 type Cell={shift:Point3;residual:Point3;ambiguous:boolean};
+
+/** The caller also requires the same immutable volume/geometry installation. */
+export function sameAcceptedMotion(a:SurgicalView|undefined,b:SurgicalView|undefined):boolean {
+  if(a===b)return true;
+  return !!a&&!!b&&!!a.planarBladeManeuver===!!b.planarBladeManeuver&&sameSurgicalGrid(a.scene,b.scene)&&
+    sameArray(a.scene.regions,b.scene.regions,(p,q)=>p.id===q.id&&p.material===q.material)&&
+    sameArray(a.removed,b.removed)&&sameArray(a.moved,b.moved,(p,q)=>sameArray(p,q))&&sameFieldEntries(a.deformation,b.deformation,(p,q)=>sameArray(p,q));
+}
 
 /** Accepted movement is defined on source cells. The displayed mask already
  * includes rounded transport. Carry only its subvoxel remainder onto soft

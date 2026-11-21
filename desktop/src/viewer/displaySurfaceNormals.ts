@@ -1,5 +1,18 @@
 import {inverseAffine} from './coordinates.ts';
 import type {Affine} from './coordinates';
+import type {PreparedSurface} from './prepareSurface';
+
+export interface DisplayNormalWork {displayNormalsPrepared?:true;displayNormalsMs?:number}
+export type PreparedDisplaySurface=PreparedSurface&DisplayNormalWork;
+
+/** Finalize the lighting attribute after either worker conditioning policy.
+ * The unmodified source normals still accompany the same exact picking mesh. */
+export function prepareDisplayNormals<T extends PreparedSurface>(surface:T,affine:Affine,enabled?:boolean):T&DisplayNormalWork {
+  if(!enabled||!surface.smoothNormals)return surface;
+  const started=performance.now();
+  const smoothNormals=displaySurfaceNormals(surface.smoothNormals,surface.indices,affine);
+  return {...surface,smoothNormals,displayNormalsPrepared:true,displayNormalsMs:performance.now()-started};
+}
 
 /** Lighting normals only: bounded diffusion over existing triangle edges.
  * Work in physical space so anisotropic or mirrored acquisitions receive the

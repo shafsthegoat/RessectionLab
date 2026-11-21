@@ -7,7 +7,7 @@ import {maskSurface} from './surface.ts';
 import {IncrementalSurfaceIntersectionAudit} from './surfaceSafety.ts';
 import {IncrementalSurfaceFilter} from './incrementalSurfaceFilter.ts';
 import type {Affine,Shape3} from './coordinates';
-export interface IncrementalSurfaceRequest {jobId:number;layerId:string;previousIdentity:string;identity:string;shape:Shape3;affine:Affine;kind?:string;mask?:Uint8Array;indices?:Uint32Array;values?:Uint8Array;retainChunks?:boolean;smooth?:boolean;partition?:EnginePartitionRequest}
+export interface IncrementalSurfaceRequest {jobId:number;layerId:string;previousIdentity:string;identity:string;shape:Shape3;affine:Affine;kind?:string;mask?:Uint8Array;indices?:Uint32Array;values?:Uint8Array;retainChunks?:boolean;smooth?:boolean;partition?:EnginePartitionRequest;fairDisplayNormals?:boolean}
 // Small lesions remesh most of their source chunks on each cut. The measured
 // certificate overhead exceeded any savings there; retain the full audit.
 const MIN_CERTIFICATE_FACES=100000;

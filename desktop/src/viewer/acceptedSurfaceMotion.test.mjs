@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import * as THREE from 'three';
-import {AcceptedSurfaceMotion,applyAcceptedSurfaceMotion} from './acceptedSurfaceMotion.ts';
+import {AcceptedSurfaceMotion,applyAcceptedSurfaceMotion,sameAcceptedMotion} from './acceptedSurfaceMotion.ts';
 import {installRetractionMorph} from './retractionMorph.ts';
 import {retractionOffset} from './operativeFieldModel.ts';
 
@@ -18,6 +18,23 @@ function geometry(points){
   result.setAttribute('normal',new THREE.Float32BufferAttribute(points.flatMap(()=>[0,0,1]),3));
   return result;
 }
+
+test('fresh accepted receipts can reuse transport only for the same displacement inputs',()=>{
+  const original={...view({[id(4,4,4)]:[.04,.02,.3]},[[id(4,4,4),id(4,4,4)]]),stateId:'prior'};
+  const same=structuredClone(original);same.stateId='new';same.slots={left:{active:true}};
+  assert(sameAcceptedMotion(original,same));
+  for(const mutate of [
+    next=>{next.deformation[id(4,4,4)][0]+=.001},
+    next=>next.removed.push(id(4,4,4)),
+    next=>{next.moved[0][1]=id(4,4,5)},
+    next=>{next.scene.affine[0][1]+=.001},
+    next=>{next.scene.regions[0].material='vessel'},
+    next=>{next.planarBladeManeuver={}},
+  ]){
+    const changed=structuredClone(same);mutate(changed);
+    assert.equal(sameAcceptedMotion(original,changed),false);
+  }
+});
 
 test('unique integer transport moves MRI lookup to the originating cell on raw and conditioned surfaces',()=>{
   const from=id(2,3,4),to=id(4,3,4),owner=storage(Uint16Array),mask=storage(Uint8Array);
