@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import {checkPracticeReceipt, jogPracticePose, matchesPracticeParent, practiceDrag, practiceJogKey, practiceStartIssue, practiceViewportMode, practiceWithdrawalPose, savedPracticeEpisode} from '../src/practice-input.ts';
+import {checkPracticeReceipt, jogPracticePose, matchesPracticeParent, practiceHoldPose, practiceHoldStop, practiceDrag, practiceJogKey, practiceStartIssue, practiceViewportMode, practiceWithdrawalPose, savedPracticeEpisode} from '../src/practice-input.ts';
 
 const pose = {position:[2,3,4], quaternion:[0,0,0,1]};
 test('jogs follow instrument axes, depth, angle and a bounded drag without changing the input pose', () => {
@@ -76,4 +76,18 @@ test('transient jog handles disappear at publication, including partial endpoint
     assert.equal(practiceViewportMode(mode,draft,pose,false),mode);
     assert.equal(practiceViewportMode(mode,partial,partial,true),mode);
   }
+});
+
+test('continuous inputs use one half millimeter along the accepted shaft and stop at an engine or identity boundary',()=>{
+  const side={position:[2,3,4],quaternion:[0,Math.SQRT1_2,0,Math.SQRT1_2]};
+  assert(Math.abs(practiceHoldPose('advance',side).position[0]-2.5)<1e-7);
+  assert(Math.abs(practiceHoldPose('retract',side).position[0]-1.5)<1e-7);
+  assert.deepEqual(practiceHoldPose('apply',side).position,side.position);
+  const outcome={status:'accepted',completedFraction:1,events:[],reason:null};
+  const next={...child,position:child.position+1,view:{...child.view,stateId:'accepted-step'},outcome};
+  assert.equal(practiceHoldStop(child,next),null);
+  for(const patch of [{branchId:'other'},{readOnly:true},{position:child.position},{view:child.view},
+    {outcome:{...outcome,reason:'TISSUE_ASPIRATION_IN_PROGRESS'}},{outcome:{...outcome,status:'partial'}},
+    {outcome:{...outcome,status:'rejected'}},{outcome:{...outcome,events:[{kind:'contact_stop'}]}}])
+    assert(practiceHoldStop(child,{...next,...patch}));
 });

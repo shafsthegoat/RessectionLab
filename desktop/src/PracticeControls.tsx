@@ -2,6 +2,7 @@ import {useRef, useState} from 'react';
 import type {KeyboardEvent, ReactNode} from 'react';
 import type {SurgicalAction, SurgicalOutcome, SurgicalPose} from './surgical-types';
 import type {SurgicalController} from './use-surgical';
+import {PracticeHoldControls} from './PracticeHoldControls';
 import {amount} from './SurgicalOutcomeSummary';
 import {jogPracticePose, practiceDrag, practiceJogKey, practiceWithdrawalPose} from './practice-input';
 
@@ -15,6 +16,7 @@ export function PracticeControls({c, blocked, settings, params, duration}: {
   duration: number;
 }) {
   const drag = useRef<{id: number; x: number; y: number; pose: SurgicalPose; depth: boolean} | null>(null);
+  const [continuous,setContinuous] = useState(false);
   const [request, setRequest] = useState<{action: SurgicalAction; position: number; previousOutcome: SurgicalOutcome | null} | null>(null);
   const result = c.result, view = c.view, slot = view?.slots[c.slot];
   if (!result || !view || !slot) return null;
@@ -73,6 +75,15 @@ export function PracticeControls({c, blocked, settings, params, duration}: {
         <button onClick={() => send('release')}>Release tool</button>
         <button disabled={!withdrawal} title={withdrawal ? `Check the route to ${coordinates(withdrawal.position)} mm RAS` : 'Place the instrument outside or propose an exterior tip pose first'} onClick={() => send('withdraw')}>Withdraw tool</button>
       </div>
+    </fieldset>
+    <div role="group" aria-label="Instrument control mode" className="practice-mode">
+      <button type="button" aria-pressed={!continuous} disabled={blocked} onClick={()=>setContinuous(false)}>Jog and commit</button>
+      <button type="button" aria-pressed={continuous} disabled={blocked} onClick={()=>{if(!continuous)c.cancel();setContinuous(true);}}>Hold controls</button>
+    </div>
+    {continuous ? <PracticeHoldControls c={c} blocked={blocked} params={params} onRequest={(action,origin)=>{
+      setRequest({action,position:origin.position,previousOutcome:origin.outcome});
+    }}/> :
+    <fieldset disabled={blocked} className="surgical-controls">
       <button type="button" aria-label="Instrument jog pad" aria-describedby="practice-jog-help" className="practice-jog"
         onKeyDown={jogKey}
         onPointerDown={event => {
@@ -89,14 +100,15 @@ export function PracticeControls({c, blocked, settings, params, duration}: {
         onPointerCancel={() => {drag.current = null;c.cancel();}}>
         <strong>Jog instrument</strong><span>Drag across shaft · Shift-drag for depth</span>
       </button>
-    </fieldset>
+
+    </fieldset>}
     {slot.inserted&&!withdrawal&&<p className="surgical-warning">Propose an exterior pose for checked withdrawal. This hand has no recorded exterior placement.</p>}
     <div className="practice-pose" aria-live="polite">
       <p><strong>Accepted tip</strong> {coordinates(actual)} mm RAS · {slot.active ? 'active' : 'inactive'}</p>
       {proposed && <p><strong>Proposed tip</strong> {coordinates(draft.position)} mm RAS{tiltDegrees > .01 ? ' · '+amount(tiltDegrees,1)+'° from accepted' : ''} · {c.path.length ? c.path.length+' stroke points' : 'uncommitted'} <button disabled={blocked} onClick={c.cancel}>Discard</button></p>}
       {attempted && lastRequested && outcome.status !== 'accepted' && <p>Requested tip {coordinates(lastRequested)} mm RAS</p>}
     </div>
-    <p id="practice-jog-help" className="surgical-note">On the jog pad, arrows shift 0.5 mm, Page Down / Up advances or retracts, and Shift + arrows tilts 2°. Enter moves to the proposal. Escape discards it.</p>
+    {!continuous&&<p id="practice-jog-help" className="surgical-note">On the jog pad, arrows shift 0.5 mm, Page Down / Up advances or retracts, and Shift + arrows tilts 2°. Enter moves to the proposal. Escape discards it.</p>}
     {settings}
       <details><summary>Source checkpoint and model limits</summary>
         <p>Parent {parent.branchId} · action {parent.position}</p><p>{parent.stateId}</p>

@@ -96,3 +96,27 @@ export function practiceWithdrawalPose(result: SurgicalResponse, hand: string): 
     }
   }
 }
+
+export type PracticeHoldKind = 'advance' | 'retract' | 'apply';
+export const practiceHoldStepMs = 100;
+export const practiceHoldLimit = 20;
+
+export function practiceHoldPose(kind: PracticeHoldKind, accepted: SurgicalPose): SurgicalPose {
+  return jogPracticePose(accepted,{offset:[0,0,kind === 'advance' ? .5 : kind === 'retract' ? -.5 : 0]});
+}
+
+/** A repeated slice must have an acknowledged native endpoint. Refusals,
+ * partial progress, and contact-limited work require a new user gesture. */
+export function practiceHoldStop(before: SurgicalResponse, after: SurgicalResponse): string | null {
+  if (!before.practiceEpisode || after.branchId !== before.branchId || after.caseHash !== before.caseHash ||
+      after.practiceEpisode?.parent.checkpointSeal !== before.practiceEpisode.parent.checkpointSeal ||
+      after.practiceEpisode?.episodeId !== before.practiceEpisode.episodeId || after.readOnly || after.playback)
+    return 'Practice state changed.';
+  const outcome = after.outcome;
+  if (!outcome || outcome.status !== 'accepted') return outcome?.status === 'partial' ? 'Contact limit · partial action retained.' :
+    outcome?.status === 'rejected' ? 'Action refused.' : 'No accepted action.';
+  if (after.position !== before.position+1 || after.view.stateId === before.view.stateId) return 'No new accepted endpoint.';
+  if (outcome.reason || (outcome.completedFraction !== undefined && outcome.completedFraction < 1) ||
+      outcome.events.some(event => event.kind === 'contact_stop')) return 'Engine limit reached.';
+  return null;
+}

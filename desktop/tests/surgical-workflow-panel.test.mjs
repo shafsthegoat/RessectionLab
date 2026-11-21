@@ -5,8 +5,8 @@ import {createServer} from 'vite';
 import React from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
 import {fixture as stagedFixture,seal} from './staged-strategy-fixture.mjs';
-let server,Workflow,Preparation,Alternatives,SurgicalPanel,Staged;
-before(async()=>{server=await createServer({root:fileURLToPath(new URL('../',import.meta.url)),logLevel:'error',server:{middlewareMode:true,hmr:false,ws:false},appType:'custom'});({SurgicalWorkflow:Workflow}=await server.ssrLoadModule('/src/SurgicalWorkflow.tsx'));({PreparationPlanningPanel:Preparation}=await server.ssrLoadModule('/src/PreparationPlanningPanel.tsx'));({WorkflowAlternatives:Alternatives}=await server.ssrLoadModule('/src/WorkflowAlternatives.tsx'));({SurgicalPanel}=await server.ssrLoadModule('/src/SurgicalPanel.tsx'));({StagedStrategiesPanel:Staged}=await server.ssrLoadModule('/src/StagedStrategiesPanel.tsx'));});
+let server,Workflow,Preparation,Alternatives,SurgicalPanel,Staged,HoldControls;
+before(async()=>{server=await createServer({root:fileURLToPath(new URL('../',import.meta.url)),logLevel:'error',server:{middlewareMode:true,hmr:false,ws:false},appType:'custom'});({SurgicalWorkflow:Workflow}=await server.ssrLoadModule('/src/SurgicalWorkflow.tsx'));({PreparationPlanningPanel:Preparation}=await server.ssrLoadModule('/src/PreparationPlanningPanel.tsx'));({WorkflowAlternatives:Alternatives}=await server.ssrLoadModule('/src/WorkflowAlternatives.tsx'));({SurgicalPanel}=await server.ssrLoadModule('/src/SurgicalPanel.tsx'));({PracticeHoldControls:HoldControls}=await server.ssrLoadModule('/src/PracticeHoldControls.tsx'));({StagedStrategiesPanel:Staged}=await server.ssrLoadModule('/src/StagedStrategiesPanel.tsx'));});
 after(async()=>{await server?.close();});
 function nodes(tree){if(!tree||typeof tree!=='object')return [];if(Array.isArray(tree))return tree.flatMap(nodes);return [tree,...nodes(tree.props?.children)];}
 const find=(tree,predicate)=>nodes(tree).find(predicate);
@@ -110,4 +110,46 @@ test('eligible paired source uses the single primary staged draft, preserves edi
  find(panel,node=>node.type==='button'&&node.props.children==='Generate staged source strategies').props.onClick();await new Promise(resolve=>setImmediate(resolve));assert.equal(calls[0].planningHorizon,3);assert.equal(calls[0].beamWidth,3);assert.deepEqual(events,['compare']);panel=h.render({...draft,stage:'compare'});const cards=find(panel,node=>node.type?.name==='WorkflowAlternatives');assert(cards);assert.equal(cards.props.rows[0].nonTargetMm3,80);assert.equal(cards.props.rows[0].fractionRemoved,null);cards.props.onSelect(f.alternative.branchId);await new Promise(resolve=>setImmediate(resolve));assert.deepEqual(calls.at(-1),{command:'selectBranch',branchId:f.alternative.branchId,position:5});assert.deepEqual(events,['compare','rehearse']);
  panel=h.render(draft);assert(nodes(panel).some(node=>node.props?.role==='status'&&String(node.props.children).includes('current branch edits do not recalculate')));f.response.branchId='edited-continuation';f.response.position=1;f.response.view.stateId=seal('d');panel=h.render({...draft,stage:'compare'});assert(nodes(panel).some(node=>node.props?.role==='status'&&String(node.props.children).includes('Edits have not been recomputed')));f.response.view.scene.sceneId=seal('b');panel=h.render({...draft,stage:'compare'});assert(!find(panel,node=>node.type?.name==='WorkflowAlternatives'),'anatomy/source edits cannot keep the recorded comparison eligible');
  }finally{h.close();}
+});
+
+test('held practice submits only from a displayed receipt and ignores late replies after release or focus loss',async()=>{
+  globalThis.window=new EventTarget();
+  globalThis.document=new EventTarget();
+  const calls=[],pose={position:[0,0,0],quaternion:[0,0,0,1]};
+  const view={stateId:'start',slots:{left:{...pose,instrument:'cusa'}}};
+  const origin={view,branchId:'child',caseHash:'case',position:3,practiceEpisode:{episodeId:'child',parent:{checkpointSeal:'seal'}}};
+  const c={result:origin,view,slot:'left',pending:false,setPose(){},cancel(){},
+    action(operation,parameters,duration){return {slot:this.slot,operation,parameters,duration};},
+    runPracticeAction(action,from,signal){return new Promise(resolve=>calls.push({action,from,signal,resolve}));}};
+  const h=harness(HoldControls),props={c,params:{},blocked:false,onRequest(){}};
+  const key=(s,repeat=false)=>({key:s,repeat,preventDefault(){}});
+  const tick=()=>new Promise(resolve=>setImmediate(resolve));
+  const interval=()=>new Promise(resolve=>setTimeout(resolve,115));
+  const button=(label)=>find(h.render({...props,blocked:c.pending}),node=>node.type==='button'&&node.props.children===label);
+  try {
+    button('Hold to advance').props.onKeyDown(key(' '));
+    button('Hold to advance').props.onKeyDown(key(' ',true));
+    assert.equal(calls.length,1);assert.equal(calls[0].from,origin);
+    assert.equal(calls[0].action.duration,.1);assert.deepEqual(calls[0].action.path[0].position,[0,0,.5]);
+    const accepted={...origin,position:4,view:{stateId:'first',slots:{left:{...view.slots.left,position:[0,0,.5]}}},
+      outcome:{status:'accepted',reason:null,events:[],completedFraction:1}};
+    c.pending=true;calls[0].resolve(accepted);await tick();h.render({...props,blocked:true});
+    await interval();assert.equal(calls.length,1,'backend completion cannot race GPU acknowledgement');
+    c.pending=false;c.result=accepted;c.view=accepted.view;h.render(props);await interval();
+    assert.equal(calls.length,2);assert.equal(calls[1].from,accepted);assert.deepEqual(calls[1].action.path[0].position,[0,0,1]);
+    button('Hold to advance').props.onKeyUp(key(' '));assert(calls[1].signal.aborted);
+    button('Hold to apply').props.onKeyDown(key('Enter'));assert.equal(calls.length,3);
+    calls[1].resolve({...accepted,position:5});await tick();h.render(props);
+    await interval();assert.equal(calls.length,3,'released gesture cannot rearm its successor');
+    window.dispatchEvent(new Event('blur'));assert(calls[2].signal.aborted);
+    calls[2].resolve(null);await tick();assert.equal(h.render(props).props['data-practice-hold'],'idle');
+    const pointer={pointerId:7,isPrimary:true,button:0,currentTarget:{focus(){},setPointerCapture(){}}};
+    button('Hold to retract').props.onPointerDown(pointer);assert.equal(calls.length,4);
+    button('Hold to retract').props.onLostPointerCapture(pointer);assert(calls[3].signal.aborted);
+    calls[3].resolve(null);await tick();assert.equal(h.render(props).props['data-practice-hold'],'idle');
+    button('Hold to apply').props.onPointerDown(pointer);
+    const partial={...accepted,position:5,view:{...accepted.view,stateId:'partial'},outcome:{...accepted.outcome,status:'partial',completedFraction:.3}};
+    c.result=partial;c.view=partial.view;calls[4].resolve(partial);await tick();h.render(props);
+    await interval();assert.equal(calls.length,5);assert.equal(h.render(props).props['data-practice-hold'],'idle');
+  } finally {h.close();delete globalThis.window;delete globalThis.document;}
 });

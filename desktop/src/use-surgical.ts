@@ -21,6 +21,8 @@ import {cusaActionParameters} from './cusa-research.ts';
 export {modeledVolume} from './modeled-volume.ts';
 import type {SurgicalAction,SurgicalOutcome,SurgicalApi,SurgicalPose,SurgicalRegion,SurgicalResponse,SurgicalView,SurgicalInteraction} from './surgical-types';
 
+type PracticeStepRequest = {origin:SurgicalResponse;signal?:AbortSignal;receipt:SurgicalResponse|null};
+
 export function validateMapping(regions:SurgicalRegion[]):string|null {
   if(!regions.length)return 'Map at least one source region.';
   if(new Set(regions.map(r=>r.id)).size!==regions.length||new Set(regions.map(r=>r.name)).size!==regions.length)return 'Region IDs and names must be unique.';
@@ -78,7 +80,7 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
   });
   function stopPlayback(){replayOwner.current=null;replayLane.current!.stop();}
   const desired=useRef({result:desiredResult,preview:desiredPreview,previewOutcome:desiredPreviewOutcome});desired.current={result:desiredResult,preview:desiredPreview,previewOutcome:desiredPreviewOutcome};
-  const requestQueue=useRef<SurgicalRequestQueue<{command:string;extra:Record<string,unknown>;caseHash:string;source:ViewerVolume;generation:number}>|null>(null);
+  const requestQueue=useRef<SurgicalRequestQueue<{command:string;extra:Record<string,unknown>;caseHash:string;source:ViewerVolume;generation:number;practiceStep?:PracticeStepRequest}>|null>(null);
   useEffect(()=>{stopPlayback();replayPendingLease.current=null;setReplayPending(false);timelineStream.current.clear();comparisonContext.current.clear();pauseFullCase();generation.current++;requestQueue.current?.invalidate();busy.current=false;backendResult.current=null;acceptedResponseSource.current=null;displayAdmission.current.invalidate();pendingPoseView.current=null;setPlanningOverlay(null);setApproachPreview(null);setResult(null);setDesiredResult(null);setDesiredPreview(null);setDesiredPreviewOutcome(null);setDisplayFailed(false);setPreview(null);setPreviewOutcome(null);setPath([]);setMode('navigate');setSlot('left');setPending(false);setError(null);},[source]);
   useEffect(()=>()=>{stopPlayback();fullCaseComputation.current.pause();generation.current++;requestQueue.current?.invalidate();},[]);
   function acceptedFullCaseState(allowPreview=false){
@@ -93,8 +95,9 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
     return acceptedFullCaseState()&&!busy.current&&!manualRequests.current&&replayPendingLease.current===null&&
       !replayLane.current!.active&&fullCaseScenarioAvailable(c.result,c.source?.caseHash,scenario);
   }
-  async function execute(command:string,extra:Record<string,unknown>,isCurrent:()=>boolean):Promise<boolean>{
-    const c=current.current;if(!c.enabled||!c.source||!c.api?.surgicalRehearsal||busy.current)return false;
+  async function execute(command:string,extra:Record<string,unknown>,isCurrent:()=>boolean,practiceStep?:PracticeStepRequest):Promise<boolean>{
+    const signal=practiceStep?.signal;
+    const c=current.current;if((practiceStep&&c.result!==practiceStep.origin)||signal?.aborted||!c.enabled||!c.source||!c.api?.surgicalRehearsal||busy.current)return false;
     if(prefixCommand(command)&&(responseSource.current!==c.source||acceptedResponseSource.current!==c.source||c.result?.caseHash!==c.source.caseHash)){setError('Inspect this source checkpoint before reconstructing a read-only prefix.');return false;}
     if(command==='plan'&&extra.opponent==='anatomy-cranial-strategy'){
       const issue=cranialGenerationIssue(c.result);
@@ -127,6 +130,14 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
     const token=generation.current;busy.current=true;setPending(true);setPendingCommand(command);setError(null);
     const request={id:'surgical-'+crypto.randomUUID(),cancel:!prefixCommand(command)&&!frameCommand(command)?c.api.cancel:undefined};
     activeRequest.current=request;setCancelling(false);
+    // Cancellation is addressed to this slice. A commit that wins the race
+    // must still reach display admission even after its gesture has ended.
+    const abortSlice=()=>{
+      if(request.cancel)void request.cancel(request.id).catch(error=>{
+        if(activeRequest.current===request&&generation.current===token)setError('The current interval may finish. '+String(error));
+      });
+    };
+    signal?.addEventListener('abort',abortSlice,{once:true});
     try{
       if(prefixRestart)timelineStream.current.clear();
       const branchId=String(extra.branchId??c.result?.branchId??''),timelineToken=frameCommand(command)?timelineStream.current.token(c.source.caseHash,branchId):undefined;
@@ -160,8 +171,9 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
       setApproachPreview(null);
       if(command==='preview'){const response=next as unknown as (SurgicalOutcome&{view:SurgicalView})|null;setDesiredPreview(response?.view??null);setDesiredPreviewOutcome(response?{status:response.status,reason:response.reason,completedFraction:response.completedFraction,events:response.events}:null);return !!response;}
       setDesiredPreview(null);setDesiredPreviewOutcome(null);pendingPoseView.current=next?.view??null;responseSource.current=c.source;setDesiredResult(next);
+      if(practiceStep)practiceStep.receipt=next;
       return !!next;
-    }catch(e){if(token===generation.current){timelineStream.current.clear();setError(String(e));}return false;}finally{if(activeRequest.current===request){activeRequest.current=null;setCancelling(false);}if(token===generation.current){busy.current=false;setPending(false);setPendingCommand(null);}}
+    }catch(e){if(token===generation.current){timelineStream.current.clear();if(!(signal?.aborted&&/cancelled/i.test(String(e))))setError(String(e));}return false;}finally{signal?.removeEventListener('abort',abortSlice);if(activeRequest.current===request){activeRequest.current=null;setCancelling(false);}if(token===generation.current){busy.current=false;setPending(false);setPendingCommand(null);}}
   }
   async function cancelComputation(){
     const request=activeRequest.current;if(!request?.cancel||cancelling)return false;
@@ -177,9 +189,9 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
   }
   if(!requestQueue.current)requestQueue.current=new SurgicalRequestQueue(async(item,isCurrent)=>{
     if(item.generation!==generation.current||current.current.source!==item.source)return false;
-    return execute(item.command,item.extra,isCurrent);
+    return execute(item.command,item.extra,isCurrent,item.practiceStep);
   },item=>['seek','seekFrame','seekPrefix','seekPrefixFrame'].includes(item.command));
-  async function run(command:string,extra:Record<string,unknown>={}):Promise<boolean>{
+  async function run(command:string,extra:Record<string,unknown>={},practiceStep?:PracticeStepRequest):Promise<boolean>{
     if(command!=='fullCase')pauseFullCase();
     const c=current.current;if(!c.enabled||!c.source||!c.api?.surgicalRehearsal)return false;
     if(c.result?.practiceEpisode&&(command==='step'||command==='preview'))extra={...extra,expectedEpisodeId:c.result.practiceEpisode.episodeId};
@@ -188,15 +200,17 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
     try{
       if(barrier)await barrier;
       if(token!==generation.current||current.current.source!==c.source||!current.current.enabled)return false;
-      return await requestQueue.current!.request({command,extra:structuredClone(extra),caseHash:c.source.caseHash,source:c.source,generation:token});
+      return await requestQueue.current!.request({command,extra:structuredClone(extra),caseHash:c.source.caseHash,source:c.source,generation:token,practiceStep});
     }catch(cause){if(current.current.source===c.source)setError(String(cause));return false;}
     finally{manualRequests.current--;setManualPending(n=>n-1);}
   }
-  function runPracticeAction(action:SurgicalAction){
+  async function runPracticeAction(action:SurgicalAction,origin?:SurgicalResponse,signal?:AbortSignal){
     const c=current.current,r=c.result;
-    if(c.recordingOnly||!r?.practiceEpisode||r.practiceEpisode.episodeId!==r.branchId||r.readOnly||r.verification?.readOnly||r.playback||r.position!==r.branches.find(b=>b.id===r.branchId)?.steps||
-      !acceptedFullCaseState()||busy.current||manualRequests.current||replayPendingLease.current!==null||replayLane.current!.active)return Promise.resolve(false);
-    return run('step',{action});
+    if(signal?.aborted||(origin&&origin!==r)||c.recordingOnly||!r?.practiceEpisode||r.practiceEpisode.episodeId!==r.branchId||r.readOnly||r.verification?.readOnly||r.playback||r.position!==r.branches.find(b=>b.id===r.branchId)?.steps||
+      !acceptedFullCaseState()||busy.current||manualRequests.current||replayPendingLease.current!==null||replayLane.current!.active)return null;
+    const step:PracticeStepRequest={origin:r,signal,receipt:null};
+    const ok=await run('step',{action,expectedStateId:r.view.stateId},step);
+    return ok?step.receipt:null;
   }
   function startPlayback(){
     const c=current.current;
