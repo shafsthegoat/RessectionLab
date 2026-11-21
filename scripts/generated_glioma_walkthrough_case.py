@@ -24,7 +24,7 @@ ORIGIN = (-30, -28, -16)
 CENTER_XY = (32, 32)
 SCOPE = ("Independent generated convexity phantom with synthetic image contrast, vessel identity, "
          "folds and mechanical assignments. Physiological mapping and patient tissue properties are unknown.")
-# IDs 1 through 12 map to categorical ownership, independently of dictionary ordering.
+# Source label IDs follow this declaration order.
 LAYERS = (
     ("Scalp skin", "soft_tissue", "scalp", "#bd887d", 0.64),
     ("Galea", "soft_tissue", "galea", "#baaaa0", 0.57),
