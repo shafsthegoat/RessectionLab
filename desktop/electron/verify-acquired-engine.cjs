@@ -103,6 +103,11 @@ async function captureBoundStudy({episode, report, document, win, js, until, cli
       assert.deepEqual(drawn.tools, response.tools);
       assert.equal(response.caseHash, report.binding.caseHash);
       assert.equal(response.position, position);
+      if(process.argv.includes('--inspect-acquired-geometry')){
+        drawn.diagnostic=await require('./verify-acquired-geometry.cjs').captureGeometry({win,js,until,capture,name,width,height});
+        assert.equal(await js(pane+'.dataset.surgicalStateId'),drawn.state);
+        assert.deepEqual(await js('JSON.parse('+pane+'.dataset.opticalCamera)'),drawn.camera);
+      }
       report.episode.stages[name]=drawn;
       if(ablate && width===1440 && stage==='contact'){
         await js('window.boundSignalReview.suppress=true');

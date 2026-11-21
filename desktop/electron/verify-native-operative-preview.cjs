@@ -16,8 +16,11 @@
 // --acquired-episode FILE compares the same plan, field, and two bound engine
 // boundaries. --compare-bound-signal captures a fixed-state shader control.
 // --capture-field-labels exports the checked local field for a numeric audit.
+// --inspect-acquired-geometry pairs each operative capture with neutral face
+// shading and exact vertex/index hashes. --geometry-reference FILE pins the
+// geometric opening to the camera matrices from a prior acquired report.
 // baseline, prepare, stale and no-target exercise simpler study states.
-const {app, dialog, ipcMain} = require('electron');
+const {app, dialog, ipcMain, nativeImage} = require('electron');
 const {execFileSync} = require('node:child_process');
 const {recordingSize,framePixels,recordOperativePlayback} = require('./verify-operative-recording.cjs');
 const assert = require('node:assert/strict');
@@ -50,6 +53,7 @@ execFileSync(path.join(root,'.venv/bin/python'),['-c','from resectionlab.patient
 process.argv.push('--automation-hidden','--anatomy',path.join(startup,'patient-anatomy.json'));
 delete process.env.RESSECTIONLAB_DEV_URL;
 const report = {mode, manifest, patient:document.patient_id, sourceSnapshot:document.snapshot_id, everVisible:false, captures:[], errors:[]};
+const geometryReview = process.argv.includes('--inspect-acquired-geometry');
 const acquiredReview = process.argv.includes('--acquired-review');
 const started = performance.now();
 const flagValue = name => {
@@ -212,6 +216,18 @@ app.on('browser-window-created', (_, win) => {
     const capture = async name => {
       await pause(350);
       assert.equal(win.isVisible(),false);
+      if(geometryReview&&report.emulatedDeviceScale){
+        const {data}=await win.webContents.debugger.sendCommand('Page.captureScreenshot',{
+          format:'png',fromSurface:true,captureBeyondViewport:false,
+        });
+        const png=Buffer.from(data,'base64'),size=await js('({width:innerWidth,height:innerHeight})');
+        assert.equal(png.readUInt32BE(16),size.width);
+        assert.equal(png.readUInt32BE(20),size.height);
+        fs.writeFileSync(path.join(output,name+'.png'),png);
+        report.captures.push({name,...size});
+        console.log('Captured '+name);
+        return nativeImage.createFromBuffer(png);
+      }
       const shot = await win.webContents.capturePage(undefined,{stayHidden:true,stayAwake:true});
       const size = await js('({width:innerWidth,height:innerHeight})');
       const image = shot.getSize().width === size.width ? shot : shot.resize(size);
@@ -242,6 +258,18 @@ app.on('browser-window-created', (_, win) => {
     try {
       report.rendererAsset = await js("document.querySelector('script[type=module][src]')?.src.split('/').pop()");
       await until(`document.querySelector('footer')?.textContent.includes('Add a source scan')`);
+      if(geometryReview){
+        if(await js('window.devicePixelRatio')!==1){
+          win.webContents.debugger.attach('1.3');
+          await win.webContents.debugger.sendCommand('Emulation.setDeviceMetricsOverride',{
+            width:0,height:0,mobile:false,deviceScaleFactor:1,
+          });
+          report.emulatedDeviceScale=true;
+        }
+        report.devicePixelRatio=await js('window.devicePixelRatio');
+        assert.equal(report.devicePixelRatio,1,'Acquired geometry comparison requires a matched compositor scale');
+        await js('('+require('./verify-acquired-geometry.cjs').observeGeometry+')()');
+      }
       if(mode==='compare-anatomy' || acquiredReview || process.argv.includes('--preserve-plan-view') || process.argv.includes('--source-support') || process.argv.includes('--visual-review') || process.argv.includes('--expect-presentation')) await js(`document.addEventListener('anatomy-frame',event=>{
         const {cameraState,cursor,sourceSignalFingerprint}=event.detail;
         window.operativeVerificationFrame={cameraState,cursor,sourceSignalFingerprint};
@@ -569,7 +597,7 @@ app.on('browser-window-created', (_, win) => {
           await saveStudy();
           await click('Plan');await ready();
         }
-        if(process.argv.includes('--acceptance-views'))await js('('+require('./verify-operative-camera.cjs').observeField+')()');
+        if(geometryReview || process.argv.includes('--acceptance-views'))await js('('+require('./verify-operative-camera.cjs').observeField+')()');
         await click('Preview operative steps');
         await previewReady();
         const field = report.plans.findLast(p=>p.action==='operativeField');
@@ -577,6 +605,16 @@ app.on('browser-window-created', (_, win) => {
         assert.equal(field.target,targetLayer.id);
         if(boundEpisode){
           await require('./verify-acquired-engine.cjs').captureBoundStudy({episode:boundEpisode,report,document,win,js,until,click,capture,field});
+          finish();return;
+        }
+        if(geometryReview){
+          const prior=flagValue('--geometry-reference');
+          const reference=prior?JSON.parse(fs.readFileSync(prior,'utf8')):null;
+          if(reference){
+            assert(reference.passed && reference.sourceSnapshot===report.sourceSnapshot && reference.selected===report.selected);
+            assert.equal(reference.plans.findLast(p=>p.action==='operativeField').fieldLabelSha256,field.fieldLabelSha256);
+          }
+          await require('./verify-acquired-geometry.cjs').captureOpening({win,js,until,capture,report,reference});
           finish();return;
         }
         if(process.argv.includes('--field-review')){
