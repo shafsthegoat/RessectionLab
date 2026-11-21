@@ -4,7 +4,9 @@ const {inputScript}=require('./verify-eden-planning-helpers.cjs');
 
 async function setFieldView(js,choice){
   if(await js('!!document.querySelector(\'[aria-label="Operative field view"]\')')){
-    await js(inputScript('Operative field view',choice));
+    const hasMicroscope=await js(`!!document.querySelector('[aria-label="Operative field view"] option[value="operative"]')`);
+    const value=choice==='follow'&&hasMicroscope?'operative':choice==='operative'&&!hasMicroscope?'follow':choice;
+    await js(inputScript('Operative field view',value));
     return;
   }
   // The same physical view can also be captured on the exterior-first build.
@@ -12,7 +14,7 @@ async function setFieldView(js,choice){
     if(toggle.checked!==${choice==='section'})toggle.click()})()`);
 }
 
-async function verifyOperativeCorridor({win,js,until,capture,match,cameras,moviePoses,acceptance,ablations,expectEntry,expectOuterHead}){
+async function verifyOperativeCorridor({win,js,until,capture,match,cameras,moviePoses,acceptance,ablations,expectEntry,expectOuterHead,acquiredReview}){
   const current=()=>js(`(()=>{
     const panel=document.querySelector('.operative-playback'),canvas=panel.querySelector('.operative-field-canvas canvas');
     const legend=panel.querySelector('.operative-legend [data-tissue="vessels"]');
@@ -105,6 +107,55 @@ async function verifyOperativeCorridor({win,js,until,capture,match,cameras,movie
     assert.equal(views['section-'+width].removed,endpoint.removed);
     assert.equal(views['exterior-'+width].removed,endpoint.removed);
     await setFieldView(js,'follow');
+    if(acquiredReview&&cameras){
+      const optical=await js(`[...document.querySelector('[aria-label="Operative field view"]').options].some(option=>option.value==='operative')`);
+      assert(optical,'Expected an explicit opaque operative view');
+      for(const [label,position,prior] of [['exposure',2,'exposure'],['endpoint',end,'exterior']]){
+        await seek(position);await key('Home');
+        await js('new Promise(done=>requestAnimationFrame(()=>requestAnimationFrame(done)))');
+        const reference=cameras[prior+'-'+width],name='opaque-matched-'+label+'-'+width;
+        await js('window.__operativeQA.paint('+JSON.stringify(reference.submitted)+')');
+        await snap(name);
+        const drawn=views[name];
+        assert.equal(drawn.view,'operative');
+        assert.equal(drawn.removed,reference.removed);
+        for(const k of ['matrixWorld','projectionMatrix'])assert.deepEqual(drawn.submitted[k],reference.submitted[k]);
+        for(const k of ['width','height'])assert.equal(drawn.field[k],reference.field[k]);
+        await js('window.__operativeQA.paint(null)');
+      }
+      assert.equal(endpoint.view,'operative');
+      assert.equal(views['section-'+width].view,'section');
+      assert.equal(views['exterior-'+width].view,'exterior');
+      if(width===1440){
+        views.operativeOrbitTiming=await js(`(async()=>{
+          const probe=window.__operativeQA,gl=probe.last.renderer.getContext();
+          const timer=gl.getExtension('EXT_disjoint_timer_query_webgl2');
+          const frames=[],canvas=document.querySelector('.operative-field-canvas canvas');
+          const next=()=>new Promise(resolve=>requestAnimationFrame(resolve));
+          let disjoint=timer&&!!gl.getParameter(timer.GPU_DISJOINT_EXT);
+          probe.sampling={timer,frames};
+          try{
+            for(let i=0;i<80;i++){
+              canvas.dispatchEvent(new KeyboardEvent('keydown',{key:i%2?'ArrowLeft':'ArrowRight'}));
+              await next();
+              if(timer&&gl.getParameter(timer.GPU_DISJOINT_EXT))disjoint=true;
+            }
+          }finally{probe.sampling=null;}
+          const pending=()=>frames.some(f=>f.query&&!gl.getQueryParameter(f.query,gl.QUERY_RESULT_AVAILABLE));
+          const start=performance.now();
+          while(pending()&&performance.now()-start<1500)await next();
+          if(timer&&gl.getParameter(timer.GPU_DISJOINT_EXT))disjoint=true;
+          return {method:'Alternating local optical camera arrow-key orbit at the unchanged geometric endpoint',
+            cpuMs:frames.map(f=>f.cpuMs),renderIntervalsMs:frames.slice(1).map((f,i)=>f.start-frames[i].start),
+            gpuElapsedMs:frames.flatMap(f=>{
+              if(!f.query)return [];
+              const ms=!disjoint&&gl.getQueryParameter(f.query,gl.QUERY_RESULT_AVAILABLE)?
+                gl.getQueryParameter(f.query,gl.QUERY_RESULT)/1e6:null;
+              gl.deleteQuery(f.query);return ms===null?[]:[ms];
+            }),disjoint};
+        })()`);
+      }
+    }
     if(endpoint.view==='section'){
       assert(views['section-'+width].sectionSource);
       assert.equal(views['exterior-'+width].view,'exterior');

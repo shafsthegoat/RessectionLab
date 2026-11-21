@@ -11,6 +11,11 @@
 // --match-operative-cameras and --match-movie-poses accept prior report and movie-state JSON paths.
 // --geometry-ablations toggles exact cell faces and exterior at fixed camera and timeline.
 // --capture-both-sweeps captures legacy controls then replays the default; --preserve-plan-view verifies the saved start.
+// --acquired-review measures cold reopen and records the native camera and source layers.
+// In baseline mode it stops after the anatomical captures. In preview mode
+// --acquired-episode FILE compares the same plan, field, and two bound engine
+// boundaries. --compare-bound-signal captures a fixed-state shader control.
+// --capture-field-labels exports the checked local field for a numeric audit.
 // baseline, prepare, stale and no-target exercise simpler study states.
 const {app, dialog, ipcMain} = require('electron');
 const {execFileSync} = require('node:child_process');
@@ -45,28 +50,58 @@ execFileSync(path.join(root,'.venv/bin/python'),['-c','from resectionlab.patient
 process.argv.push('--automation-hidden','--anatomy',path.join(startup,'patient-anatomy.json'));
 delete process.env.RESSECTIONLAB_DEV_URL;
 const report = {mode, manifest, patient:document.patient_id, sourceSnapshot:document.snapshot_id, everVisible:false, captures:[], errors:[]};
+const acquiredReview = process.argv.includes('--acquired-review');
+const started = performance.now();
 const flagValue = name => {
   const index = process.argv.indexOf(name);
   return index<0 ? null : path.resolve(process.argv[index+1]);
 };
 const archive = flagValue('--open-archive');
+const boundEpisode = flagValue('--acquired-episode');
+if (boundEpisode) assert(acquiredReview && archive && fs.statSync(boundEpisode).isFile());
 if(archive) {
   assert(archive.startsWith(fixtureRoot) && fs.statSync(archive).isFile());
   report.openedArchive={filename:archive,sha256:hash(fs.readFileSync(archive))};
 }
 const saveTo = flagValue('--export');
 if(saveTo) assert(saveTo.startsWith(fixtureRoot) && !fs.existsSync(saveTo));
-dialog.showOpenDialog = async () => ({canceled:false, filePaths:[archive ?? manifest]});
+dialog.showOpenDialog = async (...args) => {
+  const recording = /recorded engine episode/i.test(args.at(-1)?.title ?? '');
+  assert(!recording || boundEpisode, 'Expected an explicit procedural save');
+  return {canceled:false, filePaths:[recording ? boundEpisode : archive ?? manifest]};
+};
 dialog.showSaveDialog = async () => {
   assert(saveTo && !fs.existsSync(saveTo),'Unexpected save dialog');
   return {canceled:false,filePath:saveTo};
 };
 let activeRequests = 0;
+let labelPacket;
 const handle = ipcMain.handle.bind(ipcMain);
 ipcMain.handle = (channel, handler) => handle(channel, async (...args) => {
   activeRequests++;
   try {
     const result = await handler(...args);
+    if(process.argv.includes('--capture-field-labels')){
+      if(channel==='research:anatomyPlan' && args[1].action==='operativeField'){
+        const {intensity, ...metadata}=result;
+        labelPacket=metadata.labels;
+        fs.writeFileSync(path.join(output,'field-metadata.json'),JSON.stringify(metadata,null,2)+'\n');
+      }
+      if(channel==='research:readAsset' && labelPacket && args[1]===labelPacket.assetId){
+        const bytes=Buffer.from(result);
+        assert.equal(bytes.length,labelPacket.byteLength);
+        assert.equal(hash(bytes),labelPacket.sha256);
+        fs.writeFileSync(path.join(output,'field-labels.bin'),bytes);
+      }
+    }
+    if(boundEpisode && channel==='research:openBoundSurgicalReplay') report.binding=result.verifiedStudyReplay;
+    if(boundEpisode && channel==='research:surgicalRehearsal' && result?.view) {
+      const v=result.view;
+      (report.boundaryResponses??={})[v.stateId]={caseHash:result.caseHash,position:result.position,sceneId:v.scene?.sceneId,
+        metrics:v.metrics,removed:v.removed.length,contact:v.contact.length,
+        tools:Object.fromEntries(Object.entries(v.slots).map(([slot,{instrument,inserted,position,quaternion}])=>
+          [slot,{instrument,inserted,position,quaternion}]))};
+    }
     if(channel==='research:prepareSurgicalEnvironment') {
       report.engineInspection={request:args[1],caseHash:result.caseHash};
     }
@@ -117,6 +152,12 @@ function finish(error) {
   fs.writeFileSync(reportPath, JSON.stringify(report,null,2)+'\n');
   console.log(report.passed ? reportPath : JSON.stringify(report));
   process.exitCode = report.passed ? 0 : 1;
+  if(boundEpisode){
+    // A verified recording can still carry a dirty workspace presentation.
+    // This disposable harness has no file to save and no user to answer a dialog.
+    fs.rmSync(profile,{recursive:true,force:true});
+    app.exit(process.exitCode);return;
+  }
   app.quit();
 }
 app.once('will-quit', () => {
@@ -201,7 +242,7 @@ app.on('browser-window-created', (_, win) => {
     try {
       report.rendererAsset = await js("document.querySelector('script[type=module][src]')?.src.split('/').pop()");
       await until(`document.querySelector('footer')?.textContent.includes('Add a source scan')`);
-      if(mode==='compare-anatomy' || process.argv.includes('--preserve-plan-view') || process.argv.includes('--source-support') || process.argv.includes('--visual-review') || process.argv.includes('--expect-presentation')) await js(`document.addEventListener('anatomy-frame',event=>{
+      if(mode==='compare-anatomy' || acquiredReview || process.argv.includes('--preserve-plan-view') || process.argv.includes('--source-support') || process.argv.includes('--visual-review') || process.argv.includes('--expect-presentation')) await js(`document.addEventListener('anatomy-frame',event=>{
         const {cameraState,cursor,sourceSignalFingerprint}=event.detail;
         window.operativeVerificationFrame={cameraState,cursor,sourceSignalFingerprint};
       })`);
@@ -239,6 +280,13 @@ app.on('browser-window-created', (_, win) => {
       }
       await until(`JSON.parse(document.querySelector('.rl-viewer')?.dataset.sourceDisplayIdentity || '[]')[3]===${JSON.stringify(document.snapshot_id)}`);
       await ready();
+      if(acquiredReview){
+        report.coldReadyMs=performance.now()-started;
+        report.gpu=await app.getGPUInfo('basic');
+        report.processWorkingSetsKiB=app.getAppMetrics().map(({type,memory})=>({type,workingSet:memory.workingSetSize}));
+        report.nativePresentation=await presentation();
+        report.sourceDisplayIdentity=await js("JSON.parse(document.querySelector('.rl-viewer').dataset.sourceDisplayIdentity)");
+      }
       const priorPresentation=flagValue('--expect-presentation');
       if(priorPresentation){
         assert(archive && priorPresentation.startsWith(fixtureRoot));
@@ -276,6 +324,7 @@ app.on('browser-window-created', (_, win) => {
         if(mode==='source-switch'){finish();return;}
       }
       await both('anatomy');
+      if(acquiredReview && mode==='baseline'){finish();return;}
       if(process.argv.includes('--visual-review')){
         await js("document.querySelector('.anatomy-presets button:nth-child(2)').click()");
         await ready();
@@ -345,7 +394,7 @@ app.on('browser-window-created', (_, win) => {
         assert.equal((await read()).checked,false);
       }
 
-      if(mode==='preview' && document.series.length>1 && !process.argv.includes('--cortical-switch')) {
+      if(mode==='preview' && document.series.length>1 && !acquiredReview && !process.argv.includes('--cortical-switch')) {
         const reference = document.reference_series;
         await js(studyScanSelectionScript(reference));
         await ready();
@@ -526,6 +575,10 @@ app.on('browser-window-created', (_, win) => {
         const field = report.plans.findLast(p=>p.action==='operativeField');
         assert.equal(field.approach,report.selected);
         assert.equal(field.target,targetLayer.id);
+        if(boundEpisode){
+          await require('./verify-acquired-engine.cjs').captureBoundStudy({episode:boundEpisode,report,document,win,js,until,click,capture,field});
+          finish();return;
+        }
         if(process.argv.includes('--field-review')){
           const acceptance=process.argv.includes('--acceptance-views');
           const bothSweeps=process.argv.includes('--capture-both-sweeps');
@@ -550,7 +603,7 @@ app.on('browser-window-created', (_, win) => {
           const movieReference=flagValue('--match-movie-poses');
           if(movieReference)assert(movieReference.startsWith(fixtureRoot));
           const moviePoses=movieReference?JSON.parse(fs.readFileSync(movieReference)):null;
-          report.corridorViews=await verifyOperativeCorridor({win,js,until,capture,match,cameras,moviePoses,acceptance,ablations:process.argv.includes('--geometry-ablations')});
+          report.corridorViews=await verifyOperativeCorridor({win,js,until,capture,match,cameras,moviePoses,acceptance,acquiredReview,ablations:process.argv.includes('--geometry-ablations')});
           if(process.argv.includes('--expect-vascular-estimate')){
             assert(field.layers.some(l=>l.role==='vessels'&&l.model&&l.vascularContextOnly&&l.voxels>0));
             assert.equal(report.corridorViews['endpoint-1440'].vesselLegend?.label,'Vascular estimate');
@@ -593,6 +646,9 @@ app.on('browser-window-created', (_, win) => {
           if(await js(`!!(${fit})`)){
             await click('Fit source anatomy');await capture('whole-source');
             await click('Follow operative step');
+          }else if(await js(`!!document.querySelector('[aria-label="Operative field view"] option[value="operative"]')`)){
+            await setFieldView(js,'exterior');await capture('whole-source');
+            await setFieldView(js,'operative');
           }
           await setFieldView(js,'section');
           await click('Tumor aspiration');
