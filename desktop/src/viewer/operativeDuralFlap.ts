@@ -22,8 +22,7 @@ export function updateDuralFold(mesh:THREE.Mesh,lift:number) {
 /** A two-sided representative surface for the reflected *estimated* label.
  * Each face is inside one occupied column run. Distinct or missing bands
  * cannot be connected by a triangle crossing an unsupported cell. */
-export function estimatedDuralFlap(grid:Grid,mask:Uint8Array,bounds:VoxelBounds,firstY:number,
-  hinge:THREE.Vector3,radius:number) {
+export function estimatedDuralSheet(grid:Grid,mask:Uint8Array,bounds:VoxelBounds,firstY:number,hinge:THREE.Vector3) {
   const {shape:[,ny,nz],spacingMm:s,origin}=grid;
   const bands:Band[]=[];
   const corners=new Map<number,Band[]>();
@@ -81,6 +80,13 @@ export function estimatedDuralFlap(grid:Grid,mask:Uint8Array,bounds:VoxelBounds,
   const geometry=new THREE.BufferGeometry();
   const rest=new THREE.Float32BufferAttribute(position,3);
   geometry.setAttribute('position',rest);geometry.setIndex(indices);geometry.computeVertexNormals();
+  return geometry;
+}
+
+export function estimatedDuralFlap(grid:Grid,mask:Uint8Array,bounds:VoxelBounds,firstY:number,
+  hinge:THREE.Vector3,radius:number) {
+  const geometry=estimatedDuralSheet(grid,mask,bounds,firstY,hinge);
+  const rest=geometry.getAttribute('position'),s=grid.spacingMm;
   if(!rest.count)return geometry;
 
   // Mark a bend only when the lifted label reaches the geometric hinge.

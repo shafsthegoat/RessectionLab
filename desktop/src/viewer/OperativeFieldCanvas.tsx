@@ -9,7 +9,7 @@ import type {AspirationPattern} from './operativeAspiration';
 import { operativeVoxelSurface } from './operativeVoxelSurface.ts';
 import { operativeSurface } from './operativeSurface.ts';
 import {duraReflectionAngle} from './operativeDuralFlap.ts';
-import { prepareOperativeOpening } from './operativeOpening.ts';
+import { boneFlapTransfer, prepareOperativeOpening } from './operativeOpening.ts';
 import { operativeInstruments } from './operativeInstruments.ts';
 import { operativeSignalTexture,operativeTissueMaterial } from './operativeFieldAppearance.ts';
 
@@ -86,6 +86,7 @@ function fieldScene(host:HTMLDivElement, field:OperativeField, sourceVolume:View
     mesh.name=name;mesh.castShadow=name!=='csf'&&name!=='ventricles';mesh.receiveShadow=true;
     scene.add(mesh);return [name,mesh];
   })) as Record<FieldLayer,THREE.Mesh<THREE.BufferGeometry,THREE.MeshStandardMaterial>>;
+  const transferBone=boneFlapTransfer(model);
   const openings={
     bone:prepareOperativeOpening('bone',model,meshes.bone,meshes.boneFlap,
       operativeTissueMaterial('bone',field,texture,new THREE.Vector3(),sectionY),new THREE.Vector3(0,0,boneZ)),
@@ -310,8 +311,8 @@ function fieldScene(host:HTMLDivElement, field:OperativeField, sourceVolume:View
     for(const kind of ['bone','dura'] as const){
       const {angle,fraction,lift,cutting}=openings[kind].update(cutaway?model.firstSectionRow:0,amounts[kind],raw);
       if(kind==='bone'){
-        meshes.boneFlap.position.set(-opening*1.6*lift,opening*.22*lift,boneZ+opening*(.49*lift+.4*Math.sin(Math.PI*lift)));
-        meshes.boneFlap.rotation.y=-.33*lift;
+        const [dx,dy,dz]=transferBone(lift);
+        meshes.boneFlap.position.set(dx,dy,boneZ+dz);
       }else{
         meshes.duraFlap.position.set(hingeX,0,hingeZ);meshes.duraFlap.rotation.y=lift*duraReflectionAngle;
       }

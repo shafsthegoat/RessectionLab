@@ -120,12 +120,11 @@ function extract(
   thin: boolean,
   iterations: number,
   sheet: boolean,
-  conditioned?: ConditionedField
+  field: ConditionedField
 ): Extracted {
   if (b.low.some((v, i) => v > b.high[i])) return empty();
   const [nx, ny, nz] = grid.shape;
-  const field = conditioned ?? operativeSurfaceField(grid, mask, b, thin),
-    yz = field.yz,
+  const yz = field.yz,
     sz = field.sz;
   const section = firstY > 0 ? operativeSectionContour(grid, mask, firstY) : undefined;
   const corners = [0, yz, sz, yz + sz, 1, yz + 1, sz + 1, yz + sz + 1];
@@ -363,6 +362,7 @@ function extract(
 type CachedExterior = {
   row: number;
   thin: boolean;
+  preserveOccupancy: boolean;
   field: ConditionedField;
   part: Extracted;
   seam: Map<number, number>;
@@ -464,7 +464,13 @@ export function operativeSurface(
   if (full.low.some((v, a) => v > full.high[a])) return new THREE.BufferGeometry();
   const change = editable.get(mask),
     halo = iterations + 7;
-  if (!change) return toGeometry(extract(grid, mask, full, firstY, thin, iterations, sheet));
+  // A selected target owns measured cells on both sides of its cavity.
+  // Smooth subcell edge positions and normals while retaining every sign.
+  const preserveOccupancy = kind === 'tumor';
+  if (!change) {
+    const field = operativeSurfaceField(grid, mask, full, thin, preserveOccupancy);
+    return toGeometry(extract(grid, mask, full, firstY, thin, iterations, sheet, field));
+  }
   // Eight independent checkerboard batches limit the topology predicate's
   // dependency radius. Update the scalar patch separately so the larger
   // mesh-normal halo never forces re-filtering the whole target on scrub.
@@ -475,8 +481,8 @@ export function operativeSurface(
     region.high[2] = full.high[2];
   }
 
-  if (!change.cached || change.cached.row !== firstY || change.cached.thin !== thin) {
-    const field = operativeSurfaceField(grid, mask, full, thin);
+  if (!change.cached || change.cached.row !== firstY || change.cached.thin !== thin || change.cached.preserveOccupancy !== preserveOccupancy) {
+    const field = operativeSurfaceField(grid, mask, full, thin, preserveOccupancy);
     const data = extract(grid, mask, full, firstY, thin, iterations, sheet, field);
     const part = partition(data, grid, region, false),
       seam = new Map<number, number>();
@@ -492,7 +498,7 @@ export function operativeSurface(
       )
         seam.set(part.keys[i], i);
     }
-    change.cached = { row: firstY, thin, field, part, seam };
+    change.cached = { row: firstY, thin, preserveOccupancy, field, part, seam };
     change.dirty = undefined;
     return toGeometry(data);
   }
@@ -502,7 +508,7 @@ export function operativeSurface(
       pad(change.dirty, filterHalo)
     );
     if (!patch.low.some((v, i) => v > patch.high[i])) {
-      const updated = operativeSurfaceField(grid, mask, pad(patch, 9), thin);
+      const updated = operativeSurfaceField(grid, mask, pad(patch, 9), thin, preserveOccupancy);
       copyConditionedRegion(change.cached.field, updated, patch);
     }
     change.dirty = undefined;

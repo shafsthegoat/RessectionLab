@@ -159,7 +159,7 @@ function OperativePlayback({field,sourceVolume,contextIssue,visibleLayers,collec
         {contextIssue&&<p>Surrounding anatomy · {contextIssue}</p>}
         {contextLayers.length>0&&<p><b>Surrounding anatomy</b><br/>{contextLayers.join(', ')} · registered surface outside the sampled opening</p>}
         {superficialVessels>0&&<p><b>Exposed skull</b><br/>{superficialVessels.toLocaleString()} superficial vessel samples are hidden with the overlying tissue. Anatomy shows the source estimates.</p>}
-        {proxies.length>0&&<p><b>{duraLabel}</b><br/>The reflected flap follows the sampled dural sheet. Field voxel faces shows the full sampled label thickness.</p>}
+        {proxies.length>0&&<p><b>{duraLabel}</b><br/>The reflected flap follows a sheet inside the estimated dural band. Where the sampled skull surrounds the opening, the exposed rim also follows that sheet. Field voxel faces shows the full label thickness.</p>}
         {steps.some(step=>step.id==='tumor')&&<label className="operative-sweep-choice">Geometric aspiration sweep
           <select value={sweepPattern} onChange={e=>{setPlaying(false);setSweepPattern(e.target.value as AspirationPattern);}}>
             <option value="overlapping">Overlapping passes</option><option value="spiral">Original spiral</option>
