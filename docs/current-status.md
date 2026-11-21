@@ -3,7 +3,7 @@
 Repository upkeep follows the [maintenance policy](../CONTRIBUTING.md): keep current-use material,
 retire obsolete code/docs/artifacts, and archive useful history outside the tracked tree.
 
-As of November 19, 2026, the maintained application is Electron/React/TypeScript
+As of November 21, 2026, the maintained application is Electron/React/TypeScript
 with the Python engine and optional compiled C++ backend. This tree combines
 the November 16 structure-aware harm and canonical endpoint work (`b80d2e9e`,
 PR #20), repository cleanup and archive restoration support, and the completed
@@ -37,6 +37,16 @@ study keeps eight synthetic targets separate from its healthy anatomy.
 [Use the native workbench](patient-anatomy-workbench.md#prepare-a-patient-study) ·
 [Reproduce the desktop checks](fresh-patient-reproduction.md#desktop-workflow-and-smoke-test) ·
 [Resume the versioned migration](data-rebuild.md#native-study-migration).
+
+## Interactive operative practice
+
+A verified generated checkpoint can start a separate editable episode. The child retains its source, target, physical model, action prefix and original target volume. In Rehearse, mouse or keyboard input proposes an instrument pose. Place, move, activate, apply and withdraw send checked actions to the engine. A contact-limited advance leaves the instrument at its accepted endpoint. Saving and reopening restores the independent episode. [Practice from an accepted state](desktop-workflow.md#practice-from-an-accepted-engine-state)
+
+The BITE-09 geometric microscope exposes the registered gray-matter estimate through a 14.03 mm dural window. It reuses 4,152 native surface vertices at their planning positions. The existing source conditioning displaced vertices by at most 0.6993 mm. Both original target components survived at the geometric endpoint. The cavity-facing raw-to-conditioned p95 distance was 0.144 mm. The raw mesh had three edge-connected shells and the conditioned mesh had five, so exact display-mesh topology remains a limitation. In the distinct UCSF-PDGM-0004 episode, stationary brain surfaces carry that study's verified MRI signal throughout recorded removal and withdrawal. The coarse brain envelope limits the visible detail. TopCoW-014 retains its own named vascular classes. Acquired episodes remain available for inspection under their existing permissions. [Acquired comparisons and numerical receipts](local-storage-ledger.md)
+
+On the generated vascular and tissue control, four held cells reached 0.692 mm peak displacement, falling to 0.066 mm one modeled second after release. Two modeled wound ports emitted 5.979 mm³ before cumulative bipolar contact dose sealed them. Irrigation added 5 mm³ and suction removed 5 mm³. A fresh engine process reproduced the committed history and terminal state. These measurements describe the declared control. Held-out tension RMSE was 0.590 mN against 0.485 mN for zero force. Both frozen 16-to-20 mm stress-stability gates still fail. [Donor benchmark](continuum-donor-transfer.md) · [Stability results](continuum-domain-sensitivity.md). Functional risk on acquired studies remains unknown.
+
+On the M2 Pro with 16 GiB at 1440 × 900, a continuous cranial jog produced frames at 20.0/21.3 ms median/p95. The 14 committed manual inputs reached an engine response in 44.3/58.4 ms and a completed frame with the matching state in 79.9/99.3 ms. In the separate recording, the first captured compositor frame measured 117.0/150.23 ms. Three fresh processes restored the saved editable child in 5.49/5.57 s. On the tissue and wound fixture, one-second modeled strokes and withdrawals exceeded the 150 ms target. Reusing unchanged tissue-neighbor bonds reduced input-to-visible p95 from 417.1 to 329.6 ms. All 33 previously captured actions retained their accepted state identities. [Private recordings and benchmark receipts](local-storage-ledger.md)
 
 ## Continuous operative rehearsal
 

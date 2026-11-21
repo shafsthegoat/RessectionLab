@@ -30,13 +30,13 @@ selected approach.
 
 In **Anatomy** or **Plan**, choose **Cranial view → Cortex and target · planning** to see the selected tumor and approach against the cortex and head outline. **Internal boundaries · inspection** brings a selected internal structure and the head silhouette forward. The visible structures also have contours on the native slices. The controls for individual layers remain available. The source details distinguish supplied annotations from model estimates.
 
-**Follow operative depth** starts at the saved entry on the registered exterior, holds the opening in view, then turns toward the longitudinal section as the deeper tissue comes into view. The right pane keeps the intact head and source MRI visible. **Inspection cutaway** allows a separate fixed-angle comparison at the same timeline position. Cyan identifies residual target. **Field voxel faces** exposes the exact local display-grid cells used by the geometric demonstration.
+**Operative microscope** approaches the saved entry on the registered exterior and keeps the opening in view during deeper work. Choose **External anatomy** to locate it on the surrounding surface or **Inspection cutaway** to see a longitudinal section at the same timeline position. The linked source slice marks the original target in cyan. The residual target in the 3D field has a plum surface and a pale rim. **Field voxel faces** shows the sampled display-grid cells.
 
 To try the geometric workflow on one study, use the reviewed **BITE-09**
 planning workspace. Inspect the supplied tumor on its source MRI in
 **Anatomy**, then use **Show target** in **Plan** to center the slices at the
 planned endpoint. In **Rehearse**, pause at the dural opening or aspiration
-and switch between **Follow operative depth** and **Inspection cutaway**
+and switch between **Operative microscope** and **Inspection cutaway**
 to inspect that moment. The reviewed workspace and walkthrough are indexed
 in the [local storage ledger](local-storage-ledger.md).
 
@@ -60,6 +60,20 @@ subsets require a separate verified implementation. Supplied tract bundles
 can be inspected. Raw DWI, MRV and SWI alone do not produce named tracts,
 veins or sinuses in this build. [MONAI bundle](https://huggingface.co/MONAI/brats_mri_segmentation/blob/main/docs/README.md)
 · [mmFormer subset evaluation](https://arxiv.org/abs/2206.02425).
+
+### Practice from an accepted engine state
+
+On Shafrir’s HDD, `qc/interactive-operative-practice-20261121/Open cranial practice.command` opens a working copy of the saved opening in this checkout. The verified case opens directly in **Rehearse**, with both tools withdrawn and all 27 mm³ of the original target remaining. You can also open `ready/cranial-opening-105.ressectionlab` from that collection in **Cases**.
+
+To create a new episode from the frozen parent instead, start in **Cases**. Open `generated-cleanup/final/complete.ressectionlab` from the continuous rehearsal collection, then select **Rehearse → Rehearse/edit**. If the archive opens in read-only preview, choose **Verify replay for planning**. Use the surgical timeline to select action boundary **105**, then choose **Practice from this verified state**. The child episode starts with the parent's accepted tissue, tool poses, elapsed time and original-target ledger. Its checkpoint is listed under **Source checkpoint and model limits**.
+
+Choose a hand and an instrument. **Pose, stroke and tool settings** provides RAS coordinates, angle, duration and the parameters supported by that instrument. A drag on **Jog instrument** proposes lateral movement. Shift-drag changes depth. With the pad focused, arrow keys nudge by 0.5 mm, Page Down and Page Up change depth, and Shift with an arrow tilts by 2°. **Place tool**, **Move tool** and **Apply tool** submit one checked request. Escape discards a draft. A partial action shows the tip position the engine reached and retains its completed work. A rejection leaves the accepted state available for another proposal.
+
+The microscope and HUD show the same accepted state. Target percentages use the original target on the engine grid. The square control has no separately declared brain mask, so its non-target brain loss reads **Unknown**. A second generated control, `testcases/cases/generated-bipolar-thermal-controls.ressectionlab`, supports tissue holding, release, modeled vessel wounds, coagulation, irrigation and suction. Select its **configured-start** branch to practice from boundary **1**.
+
+Choose **Withdraw tool**, then **Save** to write the practice episode to its own file. Open that file in a fresh app process to replay its history. Return to its final accepted boundary to resume input. Imported native-study recordings can be opened from the selected plan for synchronized inspection. Their replay permissions and any acquired-source refusal are shown beside the practice action.
+
+The [local storage ledger](local-storage-ledger.md) locates the frozen sources, recordings, state checks and measured response times. [Recreate the cranial control](#reproduce-continuous-rehearsal).
 
 ### Watch a recorded engine procedure
 
@@ -103,11 +117,11 @@ The full vascular estimates are available in **Anatomy**. Original scan
 spacing and supplied contours are available in **Scans**.
 
 Use **Show target** in Plan to reveal the selected annotation and center the
-linked slices at the editable endpoint. In a deep geometric rehearsal,
-**Follow operative depth** opens a longitudinal section through the working
-field. Its surrounding grayscale plane comes from the matching acquisition.
-**Exterior** returns to the surface view. The BITE-09 example uses the supplied
-tumor contour and MRI-derived tissue estimates.
+linked slices at the editable endpoint. In a deep geometric rehearsal, choose
+**Inspection cutaway** to open the longitudinal section. The grayscale plane
+comes from the matching acquisition. Choose **Operative microscope** to return
+to the opening. The BITE-09 example uses the supplied tumor contour and
+MRI-derived tissue estimates.
 
 ### Compare two recorded procedures on one target
 

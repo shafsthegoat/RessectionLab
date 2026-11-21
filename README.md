@@ -17,7 +17,10 @@ replay shows the instrument actions and tissue changes recorded by
 In **Rehearse**, play the recorded instrument motion and tissue changes together
 or export the observed engine frames as a movie. The microscope and linked
 source slices identify the treatment target and vascular estimates. The
-generated cranial example now includes suction cleanup and checked withdrawal.
+generated cranial example supports a separate editable practice episode after
+verified opening. Use the mouse or keyboard to place, move, activate and
+withdraw an instrument, then save and reopen the accepted state.
+[Practice controls and starting case](docs/desktop-workflow.md#practice-from-an-accepted-engine-state).
 The selected acquired glioma route ends at an intact STOP before access.
 [See the demonstration and its evidence limits](docs/current-status.md#continuous-operative-rehearsal).
 The [cleanup execution record](docs/cleanup-execution-20261116.md) documents the
