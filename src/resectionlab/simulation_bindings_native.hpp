@@ -132,6 +132,63 @@ template<class T> inline std::vector<T> array(const py::array& input,std::initia
     std::vector<T> result(static_cast<std::size_t>(input.size()));
     std::memcpy(result.data(),input.data(),result.size()*sizeof(T)); return result;
 }
+
+template<class T> inline const T* borrowed_buffer(const py::array& input, std::initializer_list<py::ssize_t> shape) {
+    if (!input.dtype().is(py::dtype::of<T>()) || !(input.flags() & py::array::c_style) ||
+            input.ndim() != static_cast<py::ssize_t>(shape.size()) ||
+            reinterpret_cast<std::uintptr_t>(input.data()) % alignof(T)) return nullptr;
+    std::size_t axis = 0;
+    for (auto length : shape) {
+        if (length >= 0 && input.shape(axis) != length) return nullptr;
+        ++axis;
+    }
+    return static_cast<const T*>(input.data());
+}
+
+inline py::object deformation_sweep(const py::array& rest, const py::array& old, const py::array& proposed,
+        const py::array& labels, const py::array& inverse, const py::array& removed, const py::array& blocked) {
+    const auto* source = borrowed_buffer<double>(rest, {-1, 3});
+    if (!source || rest.shape(0) < 1 || rest.shape(0) > 2000) return py::str("unsupported-buffers");
+    const auto nodes = rest.shape(0);
+    const auto* previous = borrowed_buffer<double>(old, {nodes, 3});
+    const auto* next = borrowed_buffer<double>(proposed, {nodes, 3});
+    const auto* grid = borrowed_buffer<std::uint16_t>(labels, {-1, -1, -1});
+    const auto* transform = borrowed_buffer<double>(inverse, {4, 4});
+    const auto* absent = borrowed_buffer<std::int64_t>(removed, {-1});
+    const auto* obstacles = borrowed_buffer<std::uint16_t>(blocked, {-1});
+    if (!previous || !next || !grid || !transform || !absent || !obstacles ||
+            labels.size() < 1 || labels.size() > 128000000 || sizeof(py::ssize_t) != 8)
+        return py::str("unsupported-buffers");
+    const std::array<std::size_t, 3> shape{
+        static_cast<std::size_t>(labels.shape(0)), static_cast<std::size_t>(labels.shape(1)),
+        static_cast<std::size_t>(labels.shape(2))};
+    // Python owns and sorts the small removed-source index per tick; never
+    // copy the scene label volume or let a writable buffer race this read.
+    bool collision = false;
+    const char* fallback = deformation::buffers::obstacle_sweep(source, previous, next, nodes, grid,
+        shape, transform, absent, removed.size(), obstacles, blocked.size(), collision);
+    if (fallback) return py::str(fallback);
+    return py::bool_(collision);
+}
+
+inline py::object deformation_strain_candidates(const py::array& displacement, const py::array& edges,
+        const py::array& lengths, double max_strain) {
+    if (!deformation::buffers::binary64) return py::str("floating-point-format");
+    if (std::fegetround() != FE_TONEAREST) return py::str("rounding-mode");
+    const auto* u = borrowed_buffer<double>(displacement, {-1, 3});
+    const auto* nodes = borrowed_buffer<std::int64_t>(edges, {-1, 2});
+    if (!u || !nodes || displacement.shape(0) < 1 || displacement.shape(0) > 2000 ||
+            edges.shape(0) > 6000) return py::str("unsupported-buffers");
+    const auto* rest_lengths = borrowed_buffer<double>(lengths, {edges.shape(0)});
+    if (!rest_lengths) return py::str("unsupported-buffers");
+    std::vector<std::size_t> candidates;
+    if (!deformation::buffers::strain_candidates(u, displacement.shape(0), nodes, rest_lengths,
+            edges.shape(0), max_strain, candidates)) return py::str("native-numeric-domain");
+    py::tuple result(candidates.size());
+    for (std::size_t i = 0; i != candidates.size(); ++i) result[i] = py::int_(candidates[i]);
+    return result;
+}
+
 inline std::shared_ptr<Scene> scene(const py::array& labels,const py::array& affine,
                                   const py::array& inverse,const py::array& spacing,
                                   double voxel_mm3,const Value& metadata) {
@@ -189,6 +246,13 @@ inline std::string unsupported(const State& engine) {
 }
 
 inline void bind(py::module_& module) {
+    module.def("deformation_sweep", &deformation_sweep,
+        py::arg("rest").noconvert(), py::arg("old").noconvert(), py::arg("proposed").noconvert(),
+        py::arg("labels").noconvert(), py::arg("inverse").noconvert(),
+        py::arg("removed_sorted").noconvert(), py::arg("blocking_labels").noconvert());
+    module.def("deformation_strain_candidates", &deformation_strain_candidates,
+        py::arg("displacement").noconvert(), py::arg("edges").noconvert(),
+        py::arg("lengths").noconvert(), py::arg("max_strain"));
     py::register_exception<UnsupportedBoundary>(module,"UnsupportedSimulationBoundary",PyExc_TypeError);
     module.def("simulation_json_guard",[](py::object guard) { return resectionlab_json::guard_matches(guard.ptr()); });
     py::class_<Engine,std::shared_ptr<Engine>>(module,"ResidentEngine");

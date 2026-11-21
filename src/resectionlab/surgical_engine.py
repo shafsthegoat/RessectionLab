@@ -193,6 +193,61 @@ def _copy_atomic_type(kind):
     return kind is float or kind is int or kind is str or kind is bool or kind is type(None)
 
 
+def _capture_displacement_dispatch():
+    stock_type = _removed_stock_type
+    module_type = stock_type(_removed_builtins)
+    if stock_type(np) is not module_type or stock_type(itertools) is not module_type:
+        return None
+    numpy_scope, itertools_scope = np.__dict__, itertools.__dict__
+    frombuffer = numpy_scope.get('frombuffer')
+    if stock_type(frombuffer) is not _removed_c_function_type:
+        return None
+    owner = frombuffer.__self__
+    if (stock_type(owner) is not module_type or owner.__name__ != 'numpy._core._multiarray_umath' or
+            not _removed_known_c_function(frombuffer, 'frombuffer', owner, 'numpy') or
+            owner.__dict__.get('frombuffer') is not frombuffer):
+        return None
+    isfinite, float64 = numpy_scope.get('isfinite'), numpy_scope.get('float64')
+    chain = itertools_scope.get('chain')
+    for cls, name, module in ((array, 'array', 'array'), (chain, 'chain', 'itertools'),
+                              (stock_type(isfinite), 'ufunc', 'numpy'), (float64, 'float64', 'numpy')):
+        # Only immutable C types can prove their methods at import time.
+        if (stock_type(cls) is not stock_type or not (cls.__flags__ & 256) or
+                cls.__name__ != name or cls.__module__ != module):
+            return None
+    if isfinite.__name__ != 'isfinite' or owner.__dict__.get('isfinite') is not isfinite:
+        return None
+    builtins = [('type', stock_type), ('dict', _removed_stock_dict), ('str', ''.__class__),
+                ('list', _removed_stock_list), ('float', (0.).__class__), ('tuple', _removed_proof_tuple)]
+    for name in ('all', 'len', 'sorted'):
+        function = _removed_builtins.__dict__.get(name)
+        if not _removed_known_c_function(function, name, _removed_builtins, 'builtins'):
+            return None
+        builtins.append((name, function))
+    return (builtins, (('np', np), ('itertools', itertools), ('array', array)),
+            ((numpy_scope, 'frombuffer', frombuffer), (numpy_scope, 'isfinite', isfinite),
+             (numpy_scope, 'float64', float64), (itertools_scope, 'chain', chain)))
+
+
+def _displacement_dispatch_unchanged():
+    if (_displacement_dispatch is None or
+            _removed_stock_type(_displacement_globals) is not _removed_stock_dict or
+            _removed_stock_type(_displacement_builtins) is not _removed_stock_dict):
+        return False
+    builtins, globals_, attributes = _displacement_dispatch
+    for name, original in builtins:
+        if (_displacement_globals.get(name, original) is not original or
+                _displacement_builtins.get(name) is not original):
+            return False
+    for name, original in globals_:
+        if _displacement_globals.get(name) is not original:
+            return False
+    for namespace, name, original in attributes:
+        if namespace.get(name) is not original:
+            return False
+    return True
+
+
 def _displacement_snapshot(field):
     """Exact private cache identity for built-in finite float triples.
 
@@ -201,6 +256,13 @@ def _displacement_snapshot(field):
     as JSON. Unusual containers/leaves retain the canonical validation path.
     This identity never replaces a public state digest or serialized value.
     """
+    # Short maps stay cheap, and isolated lookups avoid a second native file
+    # identity check that costs more than taking the Python snapshot.
+    if (_removed_stock_type(field) is _removed_stock_dict and _removed_stock_dict.__len__(field) >= 64 and
+            native_backend.displacement_snapshot_enabled() and _displacement_dispatch_unchanged()):
+        native = native_backend.try_displacement_snapshot(field)
+        if native is not None:
+            return native
     if type(field) is not dict or not all(type(key) is str for key in field):
         return None
     keys = tuple(sorted(field))
@@ -212,6 +274,11 @@ def _displacement_snapshot(field):
     if values.itemsize != 8 or not np.isfinite(np.frombuffer(values, dtype=np.float64)).all():
         return None
     return keys, values.tobytes()
+
+
+_displacement_globals = _displacement_snapshot.__globals__
+_displacement_builtins = _displacement_snapshot.__builtins__
+_displacement_dispatch = _capture_displacement_dispatch()
 
 
 _engine_copy_fallback = object()

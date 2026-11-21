@@ -16,10 +16,15 @@ import numpy as np
 from scipy import sparse
 from scipy.sparse.linalg import factorized
 
-from . import surgical_mechanical_exposure as mechanical
+from . import native_backend, surgical_mechanical_exposure as mechanical
 
 
 _diagnostics = ContextVar('surgical_deformation_diagnostics', default=None)
+_kernel_execution = ContextVar('surgical_deformation_kernel_execution', default=None)
+_strain_margin = 1. + 64. * np.finfo(np.float64).eps
+_sweep_samples = (.25, .5, .75, 1.)
+_numpy_error_defaults = {'divide': 'warn', 'over': 'warn', 'under': 'ignore', 'invalid': 'warn'}
+_integer_coordinate_limit = float(1 << (np.dtype(int).itemsize * 8 - 1))
 
 
 @contextmanager
@@ -39,6 +44,25 @@ def diagnostic_scope():
         yield report
     finally:
         _diagnostics.reset(token)
+
+
+@contextmanager
+def kernel_execution_scope():
+    """Count actual lattice kernel work, including uncommitted attempts."""
+    report = dict(latticeTicks=0, continuumTicks=0, latticeSubsteps=0,
+        sweepNativeCalls=0, sweepNativeSamplePoints=0, sweepVectorCalls=0, sweepScalarCalls=0, sweepFallbackReasons={},
+        strainNativeCalls=0, strainNativeEdges=0, strainVectorCalls=0, strainRefinedEdges=0,
+        strainIdleSubsteps=0, strainFallbackReasons={})
+    token = _kernel_execution.set(report)
+    try:
+        yield report
+    finally:
+        _kernel_execution.reset(token)
+
+
+def _record_fallback(report, kernel, reason):
+    reasons = report[kernel]
+    reasons[reason] = reasons.get(reason, 0) + 1
 
 
 def profile():
@@ -196,7 +220,10 @@ def _system(engine, p, ids, anchors, retained, blocked):
     free = np.repeat([c not in anchors for c in ids], 3)
     A = K + sparse.diags(hold_diag + p['dragNsPerMm'] / p['fixedStepSeconds'])
     solve = factorized(A[free][:, free].tocsc()) if free.any() else lambda rhs: np.empty(0)
-    cached = (signature, solve, free, index, edges, K)
+    edge_nodes = np.array([(i, j) for i, j, _ in edges], dtype=np.int64).reshape(-1, 2)
+    edge_lengths = np.array([length for _, _, length in edges], dtype=float)
+    shortest = min((length for _, _, length in edges), default=0.)
+    cached = (signature, solve, free, index, edge_nodes, edge_lengths, shortest, K)
     engine._deformation_system_v2 = cached
     return cached[1:]
 
@@ -210,15 +237,107 @@ def _obstacle_collision(engine, vox, inside, removed, blocking_labels):
     return bool(np.any(blocked & ~np.isin(cells, removed)))
 
 
+def _sweep_scalar(engine, rest, old, proposed, removed, blocking_labels, execution=None):
+    if execution is not None: execution['sweepScalarCalls'] += 1
+    inverse = engine.scene.inverse
+    collision = False
+    for alpha in _sweep_samples:
+        world = rest + old + alpha * (proposed - old)
+        vox = np.rint(world @ inverse[:3, :3].T + inverse[:3, 3]).astype(int)
+        inside = np.all((vox >= 0) & (vox < engine.scene.shape), axis=1)
+        collision |= _obstacle_collision(engine, vox, inside, removed, blocking_labels)
+    return collision
+
+
+def _sweep_numpy(engine, rest, old, proposed, removed, blocking_labels, execution=None):
+    inverse = engine.scene.inverse
+    # Keep the original affine multiplication shape at each alpha so BLAS
+    # evaluates it in the same order. Classify the rounded samples together.
+    with np.errstate(all='ignore'):
+        start = rest + old
+        travel = proposed - old
+        worlds = [(start + alpha * travel) @ inverse[:3, :3].T for alpha in _sweep_samples]
+        rounded = np.rint(np.concatenate(worlds) + inverse[:3, 3])
+    if not np.all((rounded >= -_integer_coordinate_limit) & (rounded < _integer_coordinate_limit)):
+        # Keep the original per-sample validation and warning/exception order.
+        if execution is not None: _record_fallback(execution, 'sweepFallbackReasons', 'vector-numeric-domain')
+        return _sweep_scalar(engine, rest, old, proposed, removed, blocking_labels, execution)
+    if execution is not None: execution['sweepVectorCalls'] += 1
+    vox = rounded.astype(int)
+    inside = np.all((vox >= 0) & (vox < engine.scene.shape), axis=1)
+    return _obstacle_collision(engine, vox, inside, removed, blocking_labels)
+
+
+def _strain_candidates_numpy(u, edges, lengths, max_strain):
+    if u.dtype != np.float64:
+        return None
+    if max_strain and not 1e-120 <= max_strain <= 1e120:
+        return None
+    if not np.all((lengths >= 1e-120) & (lengths <= 1e120)):
+        return None
+    # Speculative scores only decide which edges to refine. Let the original
+    # scalar arithmetic handle extreme values (and any configured FP errors).
+    with np.errstate(all='ignore'):
+        delta = u[edges[:, 1]] - u[edges[:, 0]]
+        norms = np.linalg.norm(delta, axis=1)
+        zero = norms == 0.
+        if not np.all(zero | ((norms >= 1e-120) & (norms <= 1e120))) or np.any(delta[zero]):
+            return None
+        if max_strain:
+            scores = max_strain * lengths / np.maximum(norms, 1e-15)
+            return np.flatnonzero(scores <= scores.min() * _strain_margin)
+        scores = norms / lengths
+        best = scores.max()
+        return np.flatnonzero(scores >= best / _strain_margin) if best else (0,)
+
+
+def _strain_extreme(u, edges, lengths, max_strain, native, execution, fallback=None):
+    if not len(lengths):
+        return 1. if max_strain else 0.
+    candidates = None
+    if native is not None and fallback is None:
+        selected = native(u, edges, lengths, max_strain)
+        if type(selected) is str:
+            fallback = selected
+        else:
+            candidates = selected
+            if execution is not None:
+                execution['strainNativeCalls'] += 1
+                execution['strainNativeEdges'] += len(lengths)
+    scalar_reference = fallback in ('diagnostic-reference', 'numpy-error-policy', 'rounding-mode', 'floating-point-format')
+    if candidates is None and not scalar_reference:
+        if execution is not None:
+            _record_fallback(execution, 'strainFallbackReasons', fallback or 'native-numeric-domain')
+        candidates = _strain_candidates_numpy(u, edges, lengths, max_strain)
+        if execution is not None and candidates is not None:
+            execution['strainVectorCalls'] += 1
+    if candidates is None:
+        candidates = range(len(lengths))
+        if execution is not None:
+            reason = fallback if scalar_reference else 'scalar-numeric-domain'
+            _record_fallback(execution, 'strainFallbackReasons', reason)
+    if execution is not None:
+        execution['strainRefinedEdges'] += len(candidates)
+    # Evaluate contenders in their original edge order with the stock scalar
+    # norm. A BLAS reduction may differ by ulps from the batched estimate.
+    if max_strain:
+        return min(max_strain * lengths[k] / max(np.linalg.norm(u[edges[k, 1]] - u[edges[k, 0]]), 1e-15)
+                   for k in candidates)
+    return max(float(np.linalg.norm(u[edges[k, 1]] - u[edges[k, 0]]) / lengths[k]) for k in candidates)
+
+
 def tick(engine, dt):
     initialize(engine)
     if not np.isfinite(dt) or dt < 0: raise ValueError('INVALID_DEFORMATION_TIME')
     p = _settings(engine); model = engine.state['deformationModel']; removed = set(engine.state['removed'])
     diagnostic = _diagnostics.get()
+    execution = _kernel_execution.get()
     if diagnostic is not None: diagnostic['ticks'] += 1
     if 'brainContinuumV1' in engine.scene.properties:
         from .surgical_continuum import tick as continuum_tick
+        if execution is not None: execution['continuumTicks'] += 1
         return continuum_tick(engine, dt, diagnostic)
+    if execution is not None: execution['latticeTicks'] += 1
     if 'patientPosition' in engine.state:
         from .surgical_position import activate_exposed_patch
         activate_exposed_patch(engine, radius_mm=p['radiusMm'], max_nodes=p['maxNodes'])
@@ -232,10 +351,19 @@ def tick(engine, dt):
     if not ids: return
     blocked = _blocked(engine); retained = set(ids)
     anchors = sorted(set(model['anchors']) & retained)
-    solve, free, index, edges, K = _system(engine, p, ids, anchors, retained, blocked)
+    solve, free, index, edge_nodes, edge_lengths, shortest, K = _system(engine, p, ids, anchors, retained, blocked)
     h = p['fixedStepSeconds']; total = model['remainderSeconds'] + dt
     steps = int(np.floor((total + 1e-12) / h))
     model['remainderSeconds'] = max(0., round(total - steps*h, 14))
+    sweep, strain_candidates, no_native = None, None, None
+    if steps:
+        # A batched estimate may skip an edge where a caller configured
+        # per-operation floating-point errors. Honor these policies verbatim.
+        if np.geterr() == _numpy_error_defaults:
+            sweep, strain_candidates, no_native = native_backend.deformation_kernels()
+        else:
+            no_native = 'numpy-error-policy'
+    strain_fallback = 'diagnostic-reference' if diagnostic is not None else no_native
     u = np.array([engine.state['deformation'].get(str(c), [0., 0., 0.]) for c in ids])
     targets = np.zeros_like(u)
     for hold in _holds(engine):
@@ -260,8 +388,6 @@ def tick(engine, dt):
     track_mechanics = steps and mechanical.enabled(engine)
     if track_mechanics:
         labels = engine.scene.labels.ravel()[ids]
-        edge_nodes = np.asarray([(i, j) for i, j, _ in edges], dtype=int).reshape(-1, 2)
-        edge_lengths = np.asarray([length for _, _, length in edges])
         retractor_cells = sorted({c for key, hold in engine.state['holds'].items()
                                   if 'target' in hold and engine.state['slots'][key]['instrument'] == 'brain_retractor'
                                   for c in hold['cells'] if c in index})
@@ -269,40 +395,50 @@ def tick(engine, dt):
         effective_targets = targets[retractor_nodes] * force_scale[retractor_nodes, None]
     rest = np.column_stack(np.unravel_index(ids, engine.scene.shape)) @ engine.scene.affine[:3, :3].T + engine.scene.affine[:3, 3]
     removed_array = np.fromiter(removed, dtype=np.int64)
+    if sweep is not None: removed_array.sort()
     blocking_labels = np.array([label for label, region in engine.by_label.items()
         if region.get('material') in ('bone', 'vessel', 'unknown')], dtype=engine.scene.labels.dtype)
     # For every bond the displacement difference is at most 2*sqrt(3)
     # times the largest absolute node component. Staying below one eighth
     # of the shortest bond's allowed extension leaves the projection idle,
-    # including ample margin for roundoff. Keep the exact scalar test near
-    # the limit, outside ordinary magnitudes, or when collecting diagnostics.
-    strain_limit = p['maxEdgeStrain'] * min((length for _, _, length in edges), default=0.)
+    # including ample margin for roundoff. Resolve the edge limit near the
+    # threshold, outside ordinary magnitudes, or when collecting diagnostics.
+    strain_limit = p['maxEdgeStrain'] * shortest
     safe_component = strain_limit / 8 if 2e-15 < strain_limit < 1e150 and diagnostic is None else 0.
     velocity = np.zeros_like(u)
     for _ in range(steps):
         old = u.copy(); rhs = (p['dragNsPerMm'] / h * u + forcing).ravel()
         result = np.zeros(u.size); result[free] = solve(rhs[free]); u = result.reshape((-1, 3))
+        if execution is not None: execution['latticeSubsteps'] += 1
         if diagnostic is not None:
             diagnostic['substeps'] += 1
             diagnostic['displacementCapNodeSteps'] += int(np.count_nonzero(np.linalg.norm(u, axis=1) > p['maxDisplacementMm']))
         u *= np.minimum(1., p['maxDisplacementMm'] / np.maximum(np.linalg.norm(u, axis=1), 1e-15))[:, None]
         # Global rescaling preserves continuity while bounding every bond strain.
         scale = 1.
-        if not (safe_component and np.max(np.abs(u)) < safe_component):
-            scale = min((p['maxEdgeStrain'] * length / max(np.linalg.norm(u[j] - u[i]), 1e-15) for i, j, length in edges), default=1.)
+        if safe_component and np.max(np.abs(u)) < safe_component:
+            if execution is not None: execution['strainIdleSubsteps'] += 1
+        else:
+            scale = _strain_extreme(u, edge_nodes, edge_lengths, p['maxEdgeStrain'],
+                strain_candidates, execution, strain_fallback)
         if diagnostic is not None:
             diagnostic['strainProjectionSteps'] += int(scale < 1)
-            ratio = max((float(np.linalg.norm(u[j] - u[i]) / length) for i, j, length in edges), default=0.)
+            ratio = _strain_extreme(u, edge_nodes, edge_lengths, 0., None, None, 'diagnostic-reference')
             diagnostic['maxPreStrainProjectionNeighborRatio'] = max(diagnostic['maxPreStrainProjectionNeighborRatio'], ratio)
         if scale < 1: u *= scale
         # Conservative swept point-in-source-cell obstacle constraint; collision
         # integration additionally accounts for the displaced voxel's extent.
-        collision = False
-        for alpha in (.25, .5, .75, 1.):
-            world = rest + old + alpha * (u - old)
-            vox = np.rint(world @ engine.scene.inverse[:3, :3].T + engine.scene.inverse[:3, 3]).astype(int)
-            inside = np.all((vox >= 0) & (vox < np.array(engine.scene.shape)), axis=1)
-            collision |= _obstacle_collision(engine, vox, inside, removed_array, blocking_labels)
+        collision = (no_native if sweep is None else
+            sweep(rest, old, u, engine.scene.labels, engine.scene.inverse, removed_array, blocking_labels))
+        if type(collision) is str:
+            if execution is not None:
+                _record_fallback(execution, 'sweepFallbackReasons', collision)
+            sweep_fallback = _sweep_scalar if collision in (
+                'numpy-error-policy', 'numeric-domain', 'rounding-mode', 'floating-point-format') else _sweep_numpy
+            collision = sweep_fallback(engine, rest, old, u, removed_array, blocking_labels, execution)
+        elif execution is not None:
+            execution['sweepNativeCalls'] += 1
+            execution['sweepNativeSamplePoints'] += len(_sweep_samples) * len(rest)
         # Reject the coupled increment as a whole: clamping single nodes would
         # introduce fresh strain discontinuities after the strain projection.
         if collision: u = old
@@ -330,6 +466,7 @@ def tick(engine, dt):
         engine.state['deformation'] = {str(c): u[i].tolist() for i, c in enumerate(ids)}
         model['velocities'] = {str(c): velocity[i].tolist() for i, c in enumerate(ids)}
         model['elasticEnergyNmm'] = float(.5 * u.ravel() @ (K @ u.ravel()))
-        model['maxNeighborDisplacementRatio'] = max((float(np.linalg.norm(u[j] - u[i]) / length) for i, j, length in edges), default=0.)
+        model['maxNeighborDisplacementRatio'] = _strain_extreme(u, edge_nodes, edge_lengths, 0.,
+            strain_candidates, execution, strain_fallback)
         model['activeNodes'] = len(ids)
         model['model'] = p['model']

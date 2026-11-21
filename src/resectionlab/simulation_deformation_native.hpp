@@ -2,6 +2,8 @@
 
 #include <algorithm>
 #include <array>
+#include <cfloat>
+#include <cfenv>
 #include <charconv>
 #include <cmath>
 #include <cstdint>
@@ -46,6 +48,105 @@ std::vector<Point> gravity_forces_n(State&, const std::vector<std::int64_t>&, co
 }
 
 namespace deformation {
+
+inline constexpr std::array<double, 4> sweep_samples{.25, .5, .75, 1.};
+
+namespace buffers {
+
+// These small kernels borrow aligned, contiguous NumPy arrays only while the
+// binding holds the GIL. The Python lattice still owns the factor and increment.
+inline constexpr double strain_margin = 1. + 64. * std::numeric_limits<double>::epsilon();
+inline constexpr bool binary64 = std::numeric_limits<double>::is_iec559 && sizeof(double) == 8
+    && FLT_EVAL_METHOD == 0;
+
+inline bool ordinary_magnitude(double value) noexcept {
+    return value >= 1e-120 && value <= 1e120;
+}
+
+inline bool strain_candidates(const double* u, std::size_t nodes, const std::int64_t* edges,
+        const double* lengths, std::size_t count, double max_strain, std::vector<std::size_t>& candidates) {
+    const bool projection = max_strain != 0.;
+    if (projection && !ordinary_magnitude(max_strain)) return false;
+    double best = projection ? std::numeric_limits<double>::infinity() : 0.;
+    std::vector<double> scores; scores.reserve(count);
+    for (std::size_t edge = 0; edge < count; ++edge) {
+        const auto first = static_cast<std::uint64_t>(edges[2 * edge]);
+        const auto second = static_cast<std::uint64_t>(edges[2 * edge + 1]);
+        if (first >= nodes || second >= nodes || !ordinary_magnitude(lengths[edge])) return false;
+        Point delta;
+        for (int axis = 0; axis < 3; ++axis) delta[axis] = u[3 * second + axis] - u[3 * first + axis];
+        const double norm = point_norm(delta);
+        if (!ordinary_magnitude(norm) && delta != Point{}) return false;
+        const double score = projection ? (max_strain * lengths[edge]) / std::max(norm, 1e-15) :
+            norm / lengths[edge];
+        scores.push_back(score);
+        best = projection ? std::min(best, score) : std::max(best, score);
+    }
+    // The three nonnegative squares have no cancellation. Allow much more
+    // than their rounding error (including reassociation/FMA) before asking
+    // the caller to re-evaluate every possible winner with its scalar norm.
+    const double boundary = projection ? best * strain_margin : best / strain_margin;
+    for (std::size_t edge = 0; edge < count; ++edge) {
+        if (projection ? scores[edge] <= boundary : scores[edge] >= boundary)
+            candidates.push_back(edge);
+        if (!projection && best == 0.) break;
+    }
+    return true;
+}
+
+inline const char* obstacle_sweep(const double* rest, const double* old, const double* proposed,
+        std::size_t nodes, const std::uint16_t* labels, const std::array<std::size_t, 3>& shape,
+        const double* inverse, const std::int64_t* removed, std::size_t removed_count,
+        const std::uint16_t* blocked, std::size_t blocked_count, bool& collision) {
+    if (!binary64) return "floating-point-format";
+    if (std::fegetround() != FE_TONEAREST) return "rounding-mode";
+    std::array<int, 3> columns{-1, -1, -1};
+    for (int row = 0; row < 3; ++row) {
+        if (!std::isfinite(inverse[4 * row + 3])) return "unsupported-affine";
+        for (int column = 0; column < 3; ++column) {
+            const double coefficient = inverse[4 * row + column];
+            if (coefficient == 0.) continue;
+            if (!std::isfinite(coefficient) || columns[row] != -1) return "unsupported-affine";
+            columns[row] = column;
+        }
+        if (columns[row] == -1) return "unsupported-affine";
+    }
+    if (columns[0] == columns[1] || columns[0] == columns[2] || columns[1] == columns[2])
+        return "unsupported-affine";
+
+    for (std::size_t node = 0; node < nodes; ++node) {
+        Point from, change;
+        for (int axis = 0; axis < 3; ++axis) {
+            const auto component = 3 * node + columns[axis];
+            from[axis] = rest[component] + old[component];
+            change[axis] = proposed[component] - old[component];
+        }
+        for (double alpha : sweep_samples) {
+            std::array<std::size_t, 3> voxel{};
+            bool inside = true;
+            for (int axis = 0; axis < 3; ++axis) {
+                // With one nonzero per row the NumPy/BLAS dot has only one
+                // product. Preserve its addition sites and ties-to-even.
+                const double world = from[axis] + alpha * change[axis];
+                const double position = world * inverse[4 * axis + columns[axis]] + inverse[4 * axis + 3];
+                const double rounded = std::nearbyint(position);
+                if (!std::isfinite(rounded) || rounded < -0x1p63 || rounded >= 0x1p63)
+                    return "numeric-domain";
+                if (rounded < 0. || rounded >= static_cast<double>(shape[axis])) inside = false;
+                else voxel[axis] = static_cast<std::size_t>(rounded);
+            }
+            if (!inside) { collision = true; continue; }
+            const auto cell = static_cast<std::int64_t>((voxel[0] * shape[1] + voxel[1]) * shape[2] + voxel[2]);
+            const auto label = labels[cell];
+            if (blocked_count && std::find(blocked, blocked + blocked_count, label) != blocked + blocked_count
+                    && !(removed_count && std::binary_search(removed, removed + removed_count, cell)))
+                collision = true;
+        }
+    }
+    return nullptr;
+}
+
+}  // namespace buffers
 
 struct Diagnostics {
     std::uint64_t ticks = 0, substeps = 0, targetCapNodeTicks = 0, forceCapNodeTicks = 0;
@@ -758,7 +859,7 @@ inline void tick(State& engine, double dt, const StopToken& stop, Diagnostics* d
         }
         if (scale < 1.) for (auto& value : u) for (double& component : value) component *= scale;
         bool collision = false; std::vector<Point> world(ids.size());
-        for (double alpha : {.25, .5, .75, 1.}) {
+        for (double alpha : sweep_samples) {
             for (std::size_t i = 0; i < ids.size(); ++i) {
                 pulse(); for (int axis = 0; axis < 3; ++axis)
                     world[i][axis] = (rest[i][axis] + old[i][axis]) + alpha * (u[i][axis] - old[i][axis]);

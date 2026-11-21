@@ -251,10 +251,95 @@ def test_displacement_snapshot_unusual_values_keep_canonical_fallback(value):
     assert _displacement_snapshot({'1': value}) is None
 
 
-def test_displacement_occupancy_key_matches_json_reference_after_public_edits():
+@pytest.fixture
+def native_displacement_executor(monkeypatch):
+    from resectionlab import native_backend
+    if not native_backend.cpp_enabled():
+        pytest.skip('Compiled displacement snapshot required')
+    monkeypatch.setattr(native_backend._execution, 'depth', 1, raising=False)
+    return native_backend
+
+
+def test_native_displacement_snapshot_matches_reference_and_observes_public_edits(monkeypatch, native_displacement_executor):
+    from resectionlab import surgical_engine as module
+    native_backend = native_displacement_executor
+    field = {str(cell): [0., -0., np.nextafter(0., 1.).item()] for cell in range(128)}
+    field.update({'é': [1., 2., 3.], '😀': [-3., -2., -1.], '\ud800': [0., 0., 0.]})
+    for mutate in (lambda: None, lambda: field['1'].__setitem__(1, 0.),
+                   lambda: field.update({'1': [1., 0., 0.]}), lambda: field.pop('2')):
+        mutate()
+        with monkeypatch.context() as patch:
+            patch.setattr(module, '_displacement_dispatch_unchanged', lambda: False)
+            reference = module._displacement_snapshot(field)
+        native_backend.reset_counters()
+        assert module._displacement_snapshot(field) == reference
+        assert module._displacement_snapshot(dict(reversed(list(field.items())))) == reference
+        counters = native_backend.backend_identity()['counters']
+        assert counters['displacementSnapshotCalls'] == 2
+        assert counters['displacementSnapshotFallbackCalls'] == 0
+
+
+def test_native_displacement_snapshot_falls_back_without_invoking_custom_objects(native_displacement_executor):
+    from resectionlab import surgical_engine as module
+    native_backend = native_displacement_executor
+    class Row(list):
+        def __iter__(self): raise AssertionError('Custom row iterated during snapshot admission')
+        def __len__(self): raise AssertionError('Custom row measured during snapshot admission')
+    class Key(str):
+        __hash__ = str.__hash__
+        def __lt__(self, other): raise AssertionError('Custom key sorted during snapshot admission')
+    class Float(float):
+        def __float__(self): raise AssertionError('Custom float coerced during snapshot admission')
+    field = {str(cell): [0., 0., 0.] for cell in range(128)}
+    native_backend.reset_counters()
+    for unusual in (Row([0., 0., 0.]), [Float(0.), 0., 0.], [False, 0., 0.], [float('nan'), 0., 0.]):
+        field['1'] = unusual
+        assert module._displacement_snapshot(field) is None
+    field['1'] = [0., 0., 0.]
+    field[Key('custom')] = [0., 0., 0.]
+    assert module._displacement_snapshot(field) is None
+    counters = native_backend.backend_identity()['counters']
+    assert counters['displacementSnapshotCalls'] == counters['displacementSnapshotFallbackCalls'] == 5
+
+
+@pytest.mark.parametrize('target,name', [('engine', 'sorted'), ('engine', 'array'),
+                                         ('numpy', 'frombuffer'), ('numpy', 'isfinite')])
+def test_displacement_snapshot_preserves_replaced_helper_errors(monkeypatch, native_displacement_executor, target, name):
+    from resectionlab import surgical_engine as module
+    native_backend = native_displacement_executor
+    def hook(*args, **kwargs):
+        raise RuntimeError('custom ' + name)
+    owner = module if target == 'engine' else np
+    field = {str(cell): [0., 0., 0.] for cell in range(128)}
+    monkeypatch.setattr(owner, name, hook, raising=False)
+    if name != 'sorted':  # Sorted is captured from builtins and checked against caller globals.
+        assert module._capture_displacement_dispatch() is None
+    native_backend.reset_counters()
+    with pytest.raises(RuntimeError, match='custom ' + name):
+        module._displacement_snapshot(field)
+    assert native_backend.backend_identity()['counters']['displacementSnapshotCalls'] == 0
+
+
+@pytest.mark.parametrize('count,depth', [(0, 1), (63, 1), (128, 0)])
+def test_small_and_unbounded_displacements_skip_native_dispatch(monkeypatch, count, depth):
+    from resectionlab import native_backend, surgical_engine as module
+    if not native_backend.cpp_enabled():
+        pytest.skip('Compiled displacement snapshot required')
+    field = {str(cell): [0., -0., 0.] for cell in range(count)}
+    expected = native_backend._module.try_displacement_snapshot(field)
+    monkeypatch.setattr(native_backend._execution, 'depth', depth, raising=False)
+    def forbidden():
+        pytest.fail('A small or unbounded displacement checked native dispatch')
+    monkeypatch.setattr(module, '_displacement_dispatch_unchanged', forbidden)
+    assert module._displacement_snapshot(field) == expected
+
+
+@pytest.mark.parametrize('count', [1, 128])
+def test_displacement_occupancy_key_matches_json_reference_after_public_edits(count):
     actual, reference = SurgicalEngine(source()), LegacyKeyEngine(source())
-    cell = str(int(np.ravel_multi_index((9, 9, 9), actual.scene.shape)))
-    for engine in (actual, reference): engine.state['deformation'] = {cell: [0., 0., 0.]}
+    cells = [str(cell) for cell in np.flatnonzero(actual.scene.labels)[:count]]
+    cell = cells[0]
+    for engine in (actual, reference): engine.state['deformation'] = {key: [0., 0., 0.] for key in cells}
     previous = actual.occupancy()
     for value in [-0., .125, .25, 0.]:
         for engine in (actual, reference): engine.state['deformation'][cell][0] = value
@@ -270,6 +355,10 @@ def test_displacement_occupancy_key_matches_json_reference_after_public_edits():
     actual.state['deformation'][cell][0] = 0.
     actual.occupancy()
     assert type(actual._occupancy_cache[0][1]) is tuple
+    for engine in (actual, reference):
+        engine.state['deformation'][cell][0] = float('nan')
+        with pytest.raises(ValueError, match='nonfinite'):
+            engine.occupancy()
 
 
 @pytest.mark.parametrize('v2', [False, True])

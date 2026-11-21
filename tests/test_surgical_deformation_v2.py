@@ -203,3 +203,144 @@ def test_solver_state_is_bit_identical_to_scalar_obstacle_reference(monkeypatch)
     for dt in (.008, .009, .014): tick(b, dt)
     release(b, 'left'); tick(b, .01)
     assert a.state == b.state
+
+
+def test_strain_extrema_refine_native_and_numpy_contenders_exactly():
+    from resectionlab import native_backend
+    from resectionlab.surgical_deformation_v2 import _strain_extreme, kernel_execution_scope
+    _, native, _ = native_backend.deformation_kernels()
+    rng = np.random.default_rng(91704)
+    # The duplicated orientations tie or differ by only one component ulp.
+    # Scalar winning-edge arithmetic must still determine the canonical number.
+    u = np.vstack((
+        np.zeros((1, 3)), [1., 2., 3.], [3., np.nextafter(2., 3.), 1.],
+        rng.normal(0., .1, (200, 3)),
+    ))
+    edges = np.column_stack((np.zeros(len(u) - 1, dtype=np.int64), np.arange(1, len(u), dtype=np.int64)))
+    lengths = np.ones(len(edges))
+    reductions = (0., .65, float(np.nextafter(np.linalg.norm(u[1]), 0.)))
+    for max_strain in reductions:
+        expected = _strain_extreme(u, edges, lengths, max_strain, None, None, 'diagnostic-reference')
+        with kernel_execution_scope() as report:
+            vector = _strain_extreme(u, edges, lengths, max_strain, None, report, 'reference-selected')
+            selected = _strain_extreme(u, edges, lengths, max_strain, native, report)
+        assert np.float64(vector).tobytes() == np.float64(selected).tobytes() == np.float64(expected).tobytes()
+        assert report['strainVectorCalls'] == (1 if native is not None else 2)
+        assert report['strainNativeCalls'] == int(native is not None)
+        assert 2 <= report['strainRefinedEdges'] < 2 * len(lengths)
+
+
+def test_strain_extreme_uses_scalar_for_values_outside_batched_numeric_domain():
+    from resectionlab import native_backend
+    from resectionlab.surgical_deformation_v2 import _strain_extreme, kernel_execution_scope
+    _, native, _ = native_backend.deformation_kernels()
+    u = np.array([[0., 0., 0.], [1e-180, 2e-180, 3e-180]])
+    edges = np.array([[0, 1]], dtype=np.int64)
+    lengths = np.array([1.])
+    expected = _strain_extreme(u, edges, lengths, .65, None, None, 'diagnostic-reference')
+    with kernel_execution_scope() as report:
+        actual = _strain_extreme(u, edges, lengths, .65, native, report)
+    assert actual == expected
+    assert report['strainNativeCalls'] == report['strainVectorCalls'] == 0
+    assert report['strainFallbackReasons']['scalar-numeric-domain'] == 1
+
+
+def test_native_obstacle_samples_match_scalar_including_transient_collision():
+    from resectionlab import native_backend
+    from resectionlab.surgical_deformation_v2 import _sweep_numpy
+    sweep, _, _ = native_backend.deformation_kernels()
+    if sweep is None:
+        pytest.skip('C++ extension is unavailable')
+    e = engine()
+    e.scene.labels = e.scene.labels.astype(np.uint16)
+    e.scene.labels[1, 0, 0] = 3
+    blocking = np.array([3, 4], dtype=np.uint16)
+    obstacle = cell(e, (1, 0, 0))
+    # The first quarter touches the obstacle. The intended endpoint is clear.
+    # Test signed/permuted and anisotropic physical axes with a translation.
+    e.scene.inverse = np.array([[0., 2., 0., 2.], [0., 0., -.25, -1.],
+                                [-.5, 0., 0., 1.], [0., 0., 0., 1.]])
+    e.scene.affine = np.linalg.inv(e.scene.inverse)
+    rest = np.ascontiguousarray(e.scene.affine[:3, 3][None, :])
+    old = np.zeros_like(rest)
+    proposed = (np.array([[4., 0., 0.]]) @ e.scene.affine[:3, :3].T).copy()
+    for removed, expected in (([], True), ([obstacle], False)):
+        absent = np.array(removed, dtype=np.int64)
+        assert _sweep_numpy(e, rest, old, proposed, absent, blocking) is expected
+        assert sweep(rest, old, proposed, e.scene.labels, e.scene.inverse, absent, blocking) is expected
+    # Negative half-to-even remains in the grid, but one ulp beyond it exits.
+    # The second node is stationary at 0.5, which rounds to the even cell 0.
+    e.scene.inverse = np.eye(4)
+    rest = np.array([[-.5, 0., 0.], [.5, 0., 0.]])
+    stationary = np.zeros_like(rest)
+    for first, expected in ((-.5, False), (np.nextafter(-.5, -1.), True)):
+        rest[0, 0] = first
+        assert _sweep_numpy(e, rest, stationary, stationary, absent, blocking) is expected
+        assert sweep(rest, stationary, stationary, e.scene.labels, e.scene.inverse, absent, blocking) is expected
+    e.scene.inverse[0, 1] = .125
+    assert sweep(rest, stationary, stationary, e.scene.labels, e.scene.inverse, absent, blocking) == 'unsupported-affine'
+
+
+def test_lattice_reports_actual_sweep_and_strain_dispatch_with_exact_state(monkeypatch):
+    from resectionlab import native_backend
+    from resectionlab.surgical_deformation_v2 import diagnostic_scope, kernel_execution_scope
+    sweep, _, _ = native_backend.deformation_kernels()
+    if sweep is None:
+        pytest.skip('C++ extension is unavailable')
+    a, _ = held()
+    a.scene.labels = a.scene.labels.astype(np.uint16)
+    a.scene.labels[7, 6, 6] = 3
+    a.scene.properties['tissuePhysicsV2']['brain']['maxEdgeStrain'] = .05
+    b = copy.deepcopy(a)
+    with kernel_execution_scope() as report:
+        for dt in (.008, .009, .014): tick(a, dt)
+        release(a, 'left')
+        tick(a, .01)
+    assert report['sweepNativeCalls'] == report['latticeSubsteps'] > 0
+    assert report['sweepNativeSamplePoints'] == 4 * report['latticeSubsteps'] * len(a.state['deformation'])
+    assert report['strainNativeCalls'] > 0 and report['strainNativeEdges'] > report['strainRefinedEdges']
+    assert not report['sweepFallbackReasons']
+    monkeypatch.setattr(native_backend, 'deformation_kernels', lambda: (None, None, 'test-reference'))
+    with diagnostic_scope(), kernel_execution_scope() as reference:
+        for dt in (.008, .009, .014): tick(b, dt)
+        release(b, 'left')
+        tick(b, .01)
+    assert reference['sweepFallbackReasons'] == {'test-reference': report['latticeSubsteps']}
+    assert a.state == b.state
+
+
+def test_custom_numpy_errors_keep_original_sample_order_and_strain_path():
+    from resectionlab.surgical_deformation_v2 import _sweep_scalar, kernel_execution_scope
+    a, _ = held()
+    a.scene.labels = a.scene.labels.astype(np.uint16)
+    with np.errstate(under='raise'), kernel_execution_scope() as report:
+        tick(a, 1 / 120)
+    assert report['sweepNativeCalls'] == report['sweepVectorCalls'] == report['strainNativeCalls'] == 0
+    assert report['sweepScalarCalls'] == 1
+    assert report['sweepFallbackReasons'] == {'numpy-error-policy': 1}
+
+    rest = np.zeros((1, 3))
+    proposed = rest.copy()
+    proposed[0, 0] = np.nextafter(0., 1.)
+    with np.errstate(under='raise'), pytest.raises(FloatingPointError, match='underflow'):
+        _sweep_scalar(a, rest, rest, proposed, np.zeros(0, np.int64), np.zeros(0, np.uint16))
+
+
+def test_native_sweep_refuses_unaligned_buffers_and_unrepresentable_integer_coordinates():
+    from resectionlab import native_backend
+    sweep, _, _ = native_backend.deformation_kernels()
+    if sweep is None:
+        pytest.skip('C++ extension is unavailable')
+    rest = np.zeros((1, 3))
+    labels = np.zeros((2, 2, 2), np.uint16)
+    absent = np.zeros(0, np.int64)
+    blocking = np.zeros(0, np.uint16)
+    inverse = np.eye(4)
+    unaligned = np.ndarray((1, 3), np.float64, buffer=bytearray(25), offset=1)
+    assert sweep(unaligned, rest, rest, labels, inverse, absent, blocking) == 'unsupported-buffers'
+    swapped = labels.astype(labels.dtype.newbyteorder('S'))
+    assert sweep(rest, rest, rest, swapped, inverse, absent, blocking) == 'unsupported-buffers'
+    inverse[0, 3] = float(1 << 63)
+    assert sweep(rest, rest, rest, labels, inverse, absent, blocking) == 'numeric-domain'
+    inverse[0, 3] = -float(1 << 63)
+    assert sweep(rest, rest, rest, labels, inverse, absent, blocking) is True

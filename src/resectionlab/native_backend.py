@@ -121,6 +121,7 @@ def _load():
                                'segment_predicate_batch', 'run_trajectory', 'physical_substep', 'owned_digest',
                                'function_identities', 'occupancy_values', 'canonical_json_digest',
                                'motion_envelopes', 'cranial_cells_partition',
+                               'deformation_sweep', 'deformation_strain_candidates', 'try_displacement_snapshot',
                                'simulation_create', 'simulation_identity', 'simulation_clone',
                                'simulation_data', 'simulation_import', 'simulation_step',
                                'simulation_prepare', 'simulation_query', 'simulation_json', 'simulation_stats',
@@ -156,7 +157,8 @@ def reset_counters():
                      engineCopyCalls=0, engineCopyFallbackCalls=0, trajectoryCalls=0,
                      physicalSubstepCalls=0, ownedDigestCalls=0, cacheIdentityCalls=0,
                      occupancyCalls=0, canonicalDigestCalls=0, canonicalDigestFallbackCalls=0,
-                     motionEnvelopeCalls=0, cranialCellsCalls=0, batchSizes={})
+                     motionEnvelopeCalls=0, cranialCellsCalls=0, displacementSnapshotCalls=0,
+                     displacementSnapshotFallbackCalls=0, batchSizes={})
     _counters['residentActionCalls'] = 0
     if _module is not None:
         _module.simulation_stats(True)
@@ -241,6 +243,30 @@ def backend_identity():
 def cpp_enabled():
     _check_live()
     return _module is not None
+
+
+def deformation_kernels():
+    """Pin the checked buffer kernels for one Python deformation tick."""
+    if not cpp_enabled():
+        return None, None, _identity['fallbackReason'] or 'reference-selected'
+    return _module.deformation_sweep, _module.deformation_strain_candidates, None
+
+
+def displacement_snapshot_enabled():
+    """Use the exact snapshot inside the existing verified executor boundary."""
+    return _module is not None and _execution.__dict__.get('depth', 0) > 0
+
+
+def try_displacement_snapshot(field):
+    if _module is None:
+        return None
+    _check_live()
+    _counters['bindingCalls'] += 1
+    _counters['displacementSnapshotCalls'] += 1
+    result = _module.try_displacement_snapshot(field)
+    if result is None:
+        _counters['displacementSnapshotFallbackCalls'] += 1
+    return result
 
 
 def reference_call(count=1, *, unsupported=False):

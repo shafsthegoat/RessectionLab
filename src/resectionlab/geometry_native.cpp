@@ -16,6 +16,7 @@
 #include "motion_native.hpp"
 #include "validation_native.hpp"
 #include "simulation_bindings_native.hpp"
+#include "displacement_snapshot_native.hpp"
 #include "file_identity_native.hpp"
 
 namespace py = pybind11;
@@ -334,6 +335,7 @@ PYBIND11_MODULE(_geometry_cpp, module) {
     bind_executor_state(module);
     bind_executor_cache(module);
     bind_executor_occupancy(module);
+    bind_displacement_snapshot(module);
     bind_canonical_json(module);
     bind_motion_native(module);
     bind_validation_native(module);
