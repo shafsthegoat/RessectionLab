@@ -1,3 +1,4 @@
+import {installRetractionMorph} from './retractionMorph';
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
@@ -244,14 +245,7 @@ function fieldScene(host:HTMLDivElement, field:OperativeField, sourceVolume:View
     const layer=model.layers[name];
     const surfaceKind=['artery','vein','sinus'].includes(name)?'vessel':name;
     const next=raw?operativeVoxelSurface(field,layer.mask,layer.bounds,row):operativeSurface(field,layer.mask,layer.bounds,row,surfaceKind);
-    const position=next.getAttribute('position');
-    if(position&&field.stations.brain!==null) {
-      const displaced=new Float32Array(position.count*3);
-      for(let i=0;i<position.count;i++){
-        displaced.set(retractionOffset(position.getX(i),position.getY(i),position.getZ(i),opening,brainZ),i*3);
-      }
-      next.morphAttributes.position=[new THREE.BufferAttribute(displaced,3)];next.morphTargetsRelative=true;
-    }
+    if(field.stations.brain!==null)installRetractionMorph(next,opening,brainZ);
     if(original){originalGeometry.set(sourceKey,next);retained.add(next);}
     return next;
   }

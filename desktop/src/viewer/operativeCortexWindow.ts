@@ -1,7 +1,8 @@
 import * as THREE from 'three';
 import type {FieldLayer, OperativeField} from '../operative-field';
 import {detailBits} from '../operative-field.ts';
-import {operativeDimensions, retractionOffset} from './operativeFieldModel.ts';
+import {operativeDimensions} from './operativeFieldModel.ts';
+import {installRetractionMorph} from './retractionMorph.ts';
 
 /** Reuse native cortical triangles only superficial to the selected lesion and
  * all conflicts with the local tissue partition. The deeper measured interface
@@ -34,23 +35,14 @@ export type CortexWindow=NonNullable<ReturnType<typeof corticalSourceWindow>>;
  * represent the same physical shift as the local geometric illustration. */
 export function corticalRetraction(mesh:THREE.Mesh,field:OperativeField,radius:number,window:CortexWindow){
   const p=mesh.geometry.getAttribute('position'),v=new THREE.Vector3(),m=mesh.matrixWorld;
-  const localToNative=new THREE.Matrix3().setFromMatrix4(m).invert();
-  const offsets=new Float32Array(p.count*3);
   const {opening}=operativeDimensions(field);
   let exposedVertices=0;
   for(let i=0;i<p.count;i++){
     v.fromBufferAttribute(p,i).applyMatrix4(m);
     if(v.z>=window.floor&&v.z<=window.top&&v.x*v.x+v.y*v.y<=radius*radius)exposedVertices++;
-    // Include both ends of crossing triangles. Clipping uses rest positions,
-    // so stopping the morph on the cutoff plane would tug the seam apart.
-    const station=field.stations.brain;
-    if(station===null||Math.abs(v.x)>4*opening||Math.abs(v.y)>4*opening||Math.abs(v.z-station)>4*opening)continue;
-    const [dx,dy,dz]=retractionOffset(v.x,v.y,v.z,opening,station);
-    v.set(dx,dy,dz).applyMatrix3(localToNative).toArray(offsets,3*i);
   }
-  if(exposedVertices){
-    mesh.geometry.morphAttributes.position=[new THREE.BufferAttribute(offsets,3)];
-    mesh.geometry.morphTargetsRelative=true;
+  if(exposedVertices&&field.stations.brain!==null){
+    installRetractionMorph(mesh.geometry,opening,field.stations.brain,m);
     mesh.updateMorphTargets();
   }
   return exposedVertices;

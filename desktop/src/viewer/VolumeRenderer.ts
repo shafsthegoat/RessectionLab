@@ -1,3 +1,4 @@
+import type {SurgicalView} from '../surgical-types';
 import { ResultInspectionScene } from './ResultInspectionScene';
 import {interactivePlanningGroup} from './interactivePlanningGeometry';
 import {TransformControls} from "three/addons/controls/TransformControls.js";
@@ -69,6 +70,7 @@ import { validateDiagnosticLayer } from "./diagnosticLayer";
 import type { CheckedDiagnosticLayer, LoadedDiagnosticLayer } from "./diagnosticLayer";
 import { physicalBounds, placeInSourceFrame } from "./sceneGeometry";
 import { surfaceCameraDistance } from './surfaceCameraFit';
+import {AcceptedSurfaceMotion,applyAcceptedSurfaceMotion} from './acceptedSurfaceMotion';
 import {installCorticalSignal,type CorticalSignal} from './cranialDepth';
 import { ScanVolumeRenderer } from './ScanVolumeRenderer';
 import type { VolumeRenderingSettings } from './volumeTransfer';
@@ -988,7 +990,7 @@ export class VolumeRenderer {
     // their CPU surface cache for source restoration, but release GPU/BVH here.
     for(const [name,pair]of stage.prepared){const old=oldVolume.compartments.find(l=>l.name===name);if(old)this.retireSurface(old,!stage.initialMapping);
       this.preparedSourceLayers.add(name);if(pair){pair.mesh.geometry=this.surfaceSmoothing?pair.smooth:pair.source;pair.mesh.visible=this.visible[name]!==false;this.surfaceGeometry.set(name,{source:pair.source,smooth:pair.smooth,smoothingPrepared:pair.smoothingPrepared});this.surfaces.set(name,pair.mesh);this.anatomy.add(pair.mesh);}}
-    this.volume=stage.next;
+    this.volume=stage.next;this.motionVolume=undefined;
     if(stage.packed){this.labelTexture.image.data=stage.packed.data;this.labelCodes=stage.packed.codes;}
     if(stage.patch){const data=this.labelTexture.image.data as Uint8Array;stage.patch.indices.forEach((index,i)=>data.set(stage.patch!.values.subarray(i*4,i*4+4),index*4));}
     this.labelTextureUpdates.update(this.renderer,this.labelTexture,this.volume.shape,stage.patch,!!stage.packed);
@@ -1251,7 +1253,6 @@ export class VolumeRenderer {
   }
 
   private showCorticalSignal(mesh:THREE.Mesh){
-    if(this.sourceSignalDisplaced)return false;
     return this.workspaceSettings?.operativeView==='surgeon'?this.microscopeTissueView():
       mesh.userData.nativeCortex&&this.workspaceSettings?.presentation==='segmentation';
   }
@@ -1365,6 +1366,8 @@ export class VolumeRenderer {
     this.surfaces.forEach((mesh, name) => {
       const pair = this.surfaceGeometry.get(name);
       if (pair) mesh.geometry = enabled ? pair.smooth : pair.source;
+      const transport=mesh.userData.corticalSignalEnabled?.transport;
+      if(transport)transport.value=mesh.geometry.hasAttribute('corticalRestOffset');
       setNativeContextLighting(mesh.material as THREE.MeshStandardMaterial,
         enabled && this.workspaceSettings?.operativeView !== 'surgeon');
     });
@@ -1427,7 +1430,24 @@ export class VolumeRenderer {
   private planarSource?:ViewerVolume;
   private planarDeclaration?:string;
   private planarRemainder=new Map<string,THREE.Mesh>();
-  private sourceSignalDisplaced=false;
+  private motionView?:SurgicalView;
+  private motionVolume?:ViewerVolume;
+  private updateAcceptedSurfaces(view:SurgicalView|undefined){
+    if(this.motionView===view&&this.motionVolume===this.volume)return;
+    this.motionView=view;this.motionVolume=this.volume;
+    const owner=this.volume&&modeledAnatomy(this.volume)?.surfaceReference?.owner;
+    const field=owner&&view&&!view.planarBladeManeuver&&(view.moved.length||Object.keys(view.deformation??{}).length)
+      ?new AcceptedSurfaceMotion(view,owner):null;
+    for(const layer of this.volume?.compartments??[]){
+      const pair=this.surfaceGeometry?.get(layer.name);if(!pair)continue;
+      const mesh=this.surfaces.get(layer.name),signal=mesh?.userData.corticalSignalEnabled;
+      const registered=!!signal;
+      const soft=['brain','soft_tissue','tumor'].includes(layer.kind??'');
+      if(registered)applyAcceptedSurfaceMotion(pair.source,field,layer.mask,false,true);
+      if(pair.smooth!==pair.source&&(soft||registered))applyAcceptedSurfaceMotion(pair.smooth,field,layer.mask,soft,registered);
+      if(signal?.transport)signal.transport.value=mesh!.geometry.hasAttribute('corticalRestOffset');
+    }
+  }
   private fieldOptics:ReturnType<typeof retainedFieldOptics>=null;
   private surgicalWetting?:SurgicalWetting;
   private surgicalFlow: THREE.Group | null = null;
@@ -1461,11 +1481,10 @@ export class VolumeRenderer {
     const preparedFlow=incomingFlow!==this.surgicalFlowSource?(incomingFlow?surgicalFlowGroup(incomingView!,incomingFlow):null):undefined;
     this.surgicalInteraction=interaction;
     if(this.surgicalEffectsView!==incomingView){
-      this.sourceSignalDisplaced=!!incomingView&&(incomingView.moved.some(([a,b])=>a!==b)||
-        Object.values(incomingView.deformation??{}).some(delta=>delta.some(value=>value!==0)));
       for(const mesh of this.surfaces?.values()??[])if(mesh.userData.corticalSignalEnabled)
         mesh.userData.corticalSignalEnabled.value=this.showCorticalSignal(mesh);
     }
+    this.updateAcceptedSurfaces(incomingView??undefined);
     this.updatePlanarPartition(incomingView);
     const frame=interaction?.recordedFrame,display=interaction?.preview?undefined:interaction?.playbackDisplay;
     const animationKey=frame?JSON.stringify([frame.branchId,frame.position,frame.frameIndex,incomingView?.stateId]):null;

@@ -598,15 +598,15 @@ test('a dispersed field keeps every cell footprint without allocating a full-gri
   assert.equal(r.fieldOptics.group.getObjectByName('field:fluid').count,2);
   assert.equal(r.fieldOptics.group.userData.fieldSummary.fluidMm3,1.03);
 });
-test('registered microscope contrast follows physical motion including subcell displacements and restores on release',()=>{
+test('a local accepted movement preserves registered microscope contrast on the remaining anatomy',()=>{
   const r=renderer(),input=interaction(),mesh=new THREE.Mesh();
   mesh.userData.corticalSignalEnabled={value:false};mesh.userData.nativeCortex=false;
   r.surfaces=new Map([['brain',mesh]]);
   r.workspaceSettings={operativeView:'surgeon',microscope:{tissueStyle:'illustrative'}};
   r.setSurgical(input);assert.equal(mesh.userData.corticalSignalEnabled.value,true);
   r.setSurgical({...input,view:{...input.view,moved:[[13,13]],deformation:{13:[.04,0,0]}}});
-  assert.equal(mesh.userData.corticalSignalEnabled.value,false);
-  r.setSurgical({...input,view:{...input.view,moved:[[13,14]]}});assert.equal(mesh.userData.corticalSignalEnabled.value,false);
+  assert.equal(mesh.userData.corticalSignalEnabled.value,true);
+  r.setSurgical({...input,view:{...input.view,moved:[[13,14]]}});assert.equal(mesh.userData.corticalSignalEnabled.value,true);
   r.setSurgical(input);assert.equal(mesh.userData.corticalSignalEnabled.value,true);
   r.workspaceSettings.microscope.tissueStyle='labels';assert.equal(r.showCorticalSignal(mesh),false);
   r.workspaceSettings={presentation:'segmentation'};assert.equal(r.showCorticalSignal(mesh),false);

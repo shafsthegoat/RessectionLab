@@ -7,26 +7,27 @@ type Surface = {mesh:THREE.Mesh;material:THREE.Material};
 /** Sample the originating acquisition on both solid and translucent cortical
  * surfaces. The volume peels reuse this same material hook. */
 export function installCorticalSignal(material:THREE.MeshStandardMaterial,signal:CorticalSignal,enabled:boolean) {
-  const active={value:enabled};
+  const active={value:enabled,transport:{value:false}};
   const previous=material.onBeforeCompile,key=material.customProgramCacheKey();
   material.onBeforeCompile=(shader,renderer)=>{
     previous.call(material,shader,renderer);
     shader.uniforms.uCorticalSignalEnabled=active;
+    shader.uniforms.uCorticalTransport=active.transport;
     shader.uniforms.uCorticalScan={value:signal.texture};
     shader.uniforms.uCorticalWindow={value:new THREE.Vector2(...signal.window)};
     shader.uniforms.uCorticalWorldToVoxel={value:signal.worldToVoxel};
-    shader.vertexShader='uniform mat4 uCorticalWorldToVoxel; varying vec3 vCorticalVoxel;\n'+shader.vertexShader.replace('#include <begin_vertex>',
-      '#include <begin_vertex>\nvCorticalVoxel=(uCorticalWorldToVoxel*modelMatrix*vec4(position,1.)).xyz;');
-    shader.fragmentShader='uniform bool uCorticalSignalEnabled; uniform highp sampler3D uCorticalScan; uniform vec2 uCorticalWindow; varying vec3 vCorticalVoxel;\n'+
+    shader.vertexShader='uniform bool uCorticalTransport; uniform mat4 uCorticalWorldToVoxel; attribute vec3 corticalRestOffset; attribute float corticalUnknown; varying float vCorticalUnknown; varying vec3 vCorticalVoxel;\n'+shader.vertexShader.replace('#include <begin_vertex>',
+      '#include <begin_vertex>\nvCorticalVoxel=(uCorticalWorldToVoxel*modelMatrix*vec4(position+(uCorticalTransport?corticalRestOffset:vec3(0.)),1.)).xyz; vCorticalUnknown=uCorticalTransport?corticalUnknown:0.;');
+    shader.fragmentShader='uniform bool uCorticalSignalEnabled; uniform highp sampler3D uCorticalScan; uniform vec2 uCorticalWindow; varying float vCorticalUnknown; varying vec3 vCorticalVoxel;\n'+
       shader.fragmentShader.replace('#include <color_fragment>',`#include <color_fragment>
         vec3 uvw=(vCorticalVoxel.zyx+0.5)/vec3(textureSize(uCorticalScan,0));
-        if(uCorticalSignalEnabled&&all(greaterThanEqual(uvw,vec3(0.)))&&all(lessThanEqual(uvw,vec3(1.)))){
+        if(uCorticalSignalEnabled&&vCorticalUnknown<.0001&&all(greaterThanEqual(uvw,vec3(0.)))&&all(lessThanEqual(uvw,vec3(1.)))){
           float signalValue=texture(uCorticalScan,uvw).r;
           float brightness=clamp((signalValue-uCorticalWindow.x)/(uCorticalWindow.y-uCorticalWindow.x),0.,1.);
           diffuseColor.rgb*=exp2((brightness-.45)*1.15);
         }`);
   };
-  material.customProgramCacheKey=()=>key+'/source-cortical-signal';
+  material.customProgramCacheKey=()=>key+'/transported-cortical-signal';
   return active;
 }
 
