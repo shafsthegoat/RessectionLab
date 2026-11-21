@@ -77,6 +77,20 @@ Choose **Withdraw tool**, then **Save** to write the practice episode to its own
 
 The [local storage ledger](local-storage-ledger.md) locates the frozen sources, recordings, state checks and measured response times. [Recreate the cranial control](#reproduce-continuous-rehearsal).
 
+### Rehearse the generated convexity glioma
+
+Open the guided start workspace in the desktop app and choose **Rehearse**. Each cue identifies the hand, tool and purpose. **Preview maneuver** displays the proposed action without advancing the episode. Select **Dismiss preview**, then **Perform maneuver** to commit it. Under **Maneuver settings** you can edit its duration and the final tool-tip position in RAS millimeters. The manual pose, jaw, power and path controls are also available. A different resulting state leaves the remaining practice under manual control. The complete saved episode supports ordinary observed playback, pause and seek.
+
+**Operative exposure** shows which layer is held, reflected, parked or closed, the severed edge count and placed or retrieved materials. Select a grip or closure landmark to copy its RAS position into the proposed tool pose. A bone flap travels with the holder, rests on three declared external supports and returns to its seat for fixation. Stay removal, pad retrieval and tissue approximation are explicit actions. Cortical probing records the available functional evidence. The generated case has no physiological mapping observations.
+
+To generate the source volume, run the public-action policy, verify the cold replay, build the guided start and record the desktop presentation, run this from the checkout using the project Python environment, the installed desktop dependencies, FFmpeg and Node 24.
+
+```sh
+.venv/bin/python scripts/build_glioma_walkthrough.py testcases/outputs/glioma-walkthrough-reproduction
+```
+
+Choose an empty output directory. Shafrir's mounted external QC directory is accessible under `testcases/outputs/glioma-operative-walkthrough-20261121/`. The command creates the guided start, the complete portable episode and `recording/operative-walkthrough.mp4`. Beside the completed case, `complete.json` holds the submitted actions and outcomes, `complete.states.jsonl.gz` contains the full physical state at every accepted boundary including the intact start, and `complete.replay.json` records the uncached verification and their identities. Add `--episode-only` for the executable case and its replay checks. The acquired comparison footage is cataloged on the private drive. [Local evidence locations](local-storage-ledger.md)
+
 ### Watch a recorded engine procedure
 
 In **Plan**, select the target and approach. In **Rehearse**, choose **Open recorded engine episode** and select the saved environment. The app checks the patient, study revision, target, source masks, reference pixels, instruments and recorded branch. When the recording identifies a native approach, its entry, target, radius and measurement identity must match the selected plan. An older recording can establish the patient and target without establishing an approach match.

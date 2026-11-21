@@ -87,6 +87,35 @@ async function encodeStudyReplay(directory,samples,source,rect,signal) {
   return {captured:samples.length,timedImages:intervals.length,simulatedSeconds:last.milliseconds/1000,terminalHoldSeconds:1,captionBandPixels:layout.height};
 }
 
+function observeStudyFrame(s,response) {
+  if(!s) return;
+  const p=response?.playback,v=response?.view;
+  s.receipt=null;
+  if(response?.caseHash!==s.caseHash || response.branchId!==s.branchId) return;
+  s.source??=v?.scene?.source?.caseId??v?.scene?.sceneId?.slice(0,19)??'Recorded engine episode';
+  if(response.timeline) s.actions=response.timeline;
+  const comparison=response.cranialPlanning;
+  if(comparison?.selectedBranchId===s.branchId) {
+    const selected=comparison.alternatives.find(row=>row.branchId===s.branchId);
+    if(selected) s.endpoint={stateId:selected.finalStateId,reason:selected.stopReason,rootId:selected.rootId};
+  }
+  s.steps=response.branches?.find(b=>b.id===s.branchId)?.steps??s.steps;
+  if(!p?.readOnly || !v) return;
+  const action=s.actions?.[p.position];
+  if(!action || !s.steps) throw Error('Verified branch action history is unavailable for export.');
+  if((p.frameIndex===0 && v.stateId!==action.stateBefore) ||
+     (p.frameIndex===p.frameCount-1 && v.stateId!==action.stateAfter))
+    throw Error('Observed recording boundary differs from the archived action.');
+  s.receipt={position:p.position,frameIndex:p.frameIndex,frameCount:p.frameCount,time:p.observedTimeSeconds,
+    stateId:v.stateId,branchId:s.branchId,steps:s.steps,kind:p.frames[p.frameIndex].kind,operation:action.action.operation,
+    endpoint:p.frameIndex===p.frameCount-1 && p.position===s.steps-1 && s.endpoint?.stateId===v.stateId?
+      s.endpoint.rootId+' · '+s.endpoint.reason.replaceAll('_',' ').toLowerCase():null,
+    status:action.status,removedCells:v.removed.length,targetRemoved:v.metrics.targetRemovedMm3,
+    nonTargetRemoved:v.metrics.nonTargetRemovedMm3,originalResidual:v.originalTargetResidualMm3??null,
+    contactCells:v.contact.length,tools:Object.fromEntries(Object.entries(v.slots).map(([k,t])=>[k,{
+      instrument:t.instrument,position:t.position,quaternion:t.quaternion,inserted:t.inserted}]))};
+}
+
 class StudyReplayRecorder {
   constructor() {this.session=null;}
   async begin({choose,caseHash,branchId,source}) {
@@ -102,33 +131,7 @@ class StudyReplayRecorder {
     return session.id;
   }
   observe(response) {
-    const s=this.session;
-    if(!s) return;
-    const p=response?.playback,v=response?.view;
-    s.receipt=null;
-    if(response?.caseHash!==s.caseHash || response.branchId!==s.branchId) return;
-    s.source??=v?.scene?.source?.caseId??v?.scene?.sceneId?.slice(0,19)??'Recorded engine episode';
-    if(response.timeline) s.actions=response.timeline;
-    const comparison=response.cranialPlanning;
-    if(comparison?.selectedBranchId===s.branchId) {
-      const selected=comparison.alternatives.find(row=>row.branchId===s.branchId);
-      if(selected) s.endpoint={stateId:selected.finalStateId,reason:selected.stopReason,rootId:selected.rootId};
-    }
-    s.steps=response.branches?.find(b=>b.id===s.branchId)?.steps??s.steps;
-    if(!p?.readOnly || !v) return;
-    const action=s.actions?.[p.position];
-    if(!action || !s.steps) throw Error('Verified branch action history is unavailable for export.');
-    if((p.frameIndex===0 && v.stateId!==action.stateBefore) ||
-       (p.frameIndex===p.frameCount-1 && v.stateId!==action.stateAfter))
-      throw Error('Observed recording boundary differs from the archived action.');
-    s.receipt={position:p.position,frameIndex:p.frameIndex,frameCount:p.frameCount,time:p.observedTimeSeconds,
-      stateId:v.stateId,branchId:s.branchId,steps:s.steps,kind:p.frames[p.frameIndex].kind,operation:action.action.operation,
-      endpoint:p.frameIndex===p.frameCount-1 && p.position===s.steps-1 && s.endpoint?.stateId===v.stateId?
-        s.endpoint.rootId+' · '+s.endpoint.reason.replaceAll('_',' ').toLowerCase():null,
-      status:action.status,removedCells:v.removed.length,targetRemoved:v.metrics.targetRemovedMm3,
-      nonTargetRemoved:v.metrics.nonTargetRemovedMm3,originalResidual:v.originalTargetResidualMm3??null,
-      contactCells:v.contact.length,tools:Object.fromEntries(Object.entries(v.slots).map(([k,t])=>[k,{
-        instrument:t.instrument,position:t.position,quaternion:t.quaternion,inserted:t.inserted}]))};
+    observeStudyFrame(this.session,response);
   }
   async command(args,win) {
     const s=this.session;
@@ -171,4 +174,4 @@ class StudyReplayRecorder {
     if(s.directory) await fs.rm(s.directory,{recursive:true,force:true});
   }
 }
-module.exports={captionLayout,movieIntervals,StudyReplayRecorder};
+module.exports={observeStudyFrame,captionLayout,movieIntervals,StudyReplayRecorder};
