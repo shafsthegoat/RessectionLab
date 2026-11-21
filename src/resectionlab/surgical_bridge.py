@@ -1237,7 +1237,8 @@ def dispatch(session, operation, args, request, progress):
         result['practiceEpisode'] = copy.deepcopy(record['practiceEpisodes'][record['branchId']])
         if engine._operative:
             from .surgical_walkthrough_guide import KEY, next_cue
-            cue = next_cue(artifacts.get(KEY), engine, record['branchId'], identity)
+            guide = (entry.artifacts if entry is not None else artifacts).get(KEY)
+            cue = next_cue(guide, engine, record['branchId'], identity, owner=entry)
             if cue is not None:
                 result['walkthroughCue'] = cue
         if record['position'] != len(record['branches'][record['branchId']]['actions']):

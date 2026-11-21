@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 from collections.abc import Mapping
 from pathlib import Path
+from types import MappingProxyType
 import json
 
 from .core import semantic_digest, thaw_json
@@ -58,7 +59,21 @@ def attach(start_path, completed_path, labels_path, destination, *, verified_eng
     save_case(case, destination, artifacts=artifacts)
 
 
-def next_cue(guide, engine, branch, case_hash):
+def _intact_guide(guide, owner):
+    # The desktop owns deeply frozen archive values. Reuse a seal only for
+    # that exact installed object. Mutable tooling inputs are checked afresh.
+    immutable = (owner is not None and type(guide) is MappingProxyType and owner.artifacts.get(KEY) is guide)
+    cached = getattr(owner, 'walkthrough_guide_check', None)
+    if immutable and cached and cached[0] is guide:
+        return cached[1]
+    seal = guide.get('guideHash')
+    intact = isinstance(seal, str) and seal == semantic_digest({k:v for k,v in guide.items() if k != 'guideHash'})
+    if immutable:
+        owner.walkthrough_guide_check = (guide, intact)
+    return intact
+
+
+def next_cue(guide, engine, branch, case_hash, *, owner=None):
     """Return a proposal only at its exact physical boundary. A cue grants no permission."""
     if not (engine._operative and isinstance(guide, Mapping) and guide.get('schema') == SCHEMA
             and guide.get('caseHash') == case_hash and guide.get('sceneId') == engine.scene.identity
@@ -66,7 +81,7 @@ def next_cue(guide, engine, branch, case_hash):
         return None
     steps = guide.get('steps', ())
     position = len(engine.actions)
-    if not isinstance(steps, (list, tuple)) or not 0 < len(steps) <= 8192:
+    if not isinstance(steps, (list, tuple)) or not 0 < len(steps) <= 8192 or not _intact_guide(guide, owner):
         return None
     status = {'position':position, 'count':len(steps)}
     state = engine.state_id

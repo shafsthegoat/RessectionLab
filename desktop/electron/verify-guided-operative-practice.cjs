@@ -9,17 +9,21 @@ const path = require('node:path');
 const {app, dialog, ipcMain} = require('electron');
 const {setTimeout:delay} = require('node:timers/promises');
 const source = fs.realpathSync(process.argv[2]), output = path.resolve(process.argv[3]);
+const editPath=process.argv.includes('--path');
 fs.mkdirSync(output,{recursive:true});
 const reportPath=path.join(output,'guided-ui.json'), edited=path.join(output,'guided-edit.ressectionlab');
 assert(!fs.existsSync(reportPath)&&!fs.existsSync(edited),'Select a fresh output directory');
 const scratch=fs.mkdtempSync(path.join(os.tmpdir(),'rslab-guided-'));
-const record={source,windowEverVisible:false,actions:[],screens:[]};
+const record={source,windowEverVisible:false,actions:[],previews:[],screens:[]};
 let latest,win;
 const nativeHandle=ipcMain.handle.bind(ipcMain);
 ipcMain.handle=(channel,handler)=>nativeHandle(channel,async(...args)=>{
   const result=await handler(...args);
   if(channel==='research:surgicalRehearsal'&&result?.view){
-    if(args[1].command==='preview')record.preview={status:result.status,stateId:result.view.stateId,request:args[1].action};
+    if(args[1].command==='preview'){
+      record.preview={status:result.status,stateId:result.view.stateId,request:args[1].action};
+      record.previews.push(record.preview);
+    }
     else if(!result.playback){
       latest=result;
       if(args[1].command==='step')record.actions.push({request:args[1].action,
@@ -57,6 +61,7 @@ app.on('browser-window-created',(_,window)=>{
       }
     }
     async function capture(name){
+      await js('new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)))');
       assert(!win.isVisible()); const image=await wc.capturePage(undefined,{stayHidden:true,stayAwake:true});
       fs.writeFileSync(path.join(output,name+'.png'),image.resize({width:1080}).toPNG());
       record.screens.push(name);
@@ -72,12 +77,14 @@ app.on('browser-window-created',(_,window)=>{
     async function displayed(id){
       await wait(()=>js(`document.querySelector('.surgical-panel')?.dataset.stateId===${JSON.stringify(id)}
         && document.querySelector('[data-accepted-tools]')?.dataset.surgicalStateId===${JSON.stringify(id)}
-        && document.querySelector('.rl-viewer')?.dataset.surfacesPending==='0'`),'rendered native boundary');
+        && document.querySelector('.rl-viewer')?.dataset.rendererReady==='true'
+        && window.guidedPracticeGpuState===${JSON.stringify(id)}`),'rendered native boundary');
     }
     const control=()=>js("document.querySelector('[aria-label=\"Instrument practice\"]')?.dataset??null");
     const ready=()=>js("document.querySelector('[aria-label=\"Instrument practice\"]')?.getAttribute('aria-busy')==='false' && document.querySelector('.rl-viewer')?.dataset.surfacesPending==='0'");
     try{
       wc.debugger.attach('1.3');await wc.debugger.sendCommand('Emulation.setFocusEmulationEnabled',{enabled:true});
+      await js("document.addEventListener('anatomy-gpu',({detail})=>{if(detail.completed)window.guidedPracticeGpuState=detail.surgicalStateId})");
       win.setSize(1380,880);assert(!win.isVisible());
       await clickExpr(byText('Rehearse'));
       await wait(()=>js("!!document.querySelector('[aria-label=\"Surgical timeline\"]')"),'surgical workspace',150000);
@@ -99,15 +106,16 @@ app.on('browser-window-created',(_,window)=>{
       assert.deepEqual(record.preview.request,guide.action);assert.equal(record.preview.status,'accepted');
       await wait(()=>js(`!!(${byText('Dismiss preview')})`),'visible preview');
       record.performEnabledDuringPreview=await js(`!(${byText('Perform maneuver')}).disabled`);
+      assert.equal(record.performEnabledDuringPreview,false);
       await displayed(record.preview.stateId);await capture('01-guided-preview');
       await clickExpr(byText('Dismiss preview'));await wait(ready,'dismissed preview');
       await clickExpr(byText('Perform maneuver'));await wait(()=>record.actions.length===1,'recorded guided action');
       await wait(ready,'committed geometry');assert.deepEqual(record.actions[0].request,guide.action);
       assert.equal(record.actions[0].stateId,record.preview.stateId);assert.equal(latest.walkthroughCue.position,guide.position+1);
-      await capture('02-guided-next');
+      await displayed(record.actions[0].stateId);await capture('02-guided-next');
       let cue=latest.walkthroughCue;
-      while(cue.status==='ready'&&!cue.action.pose&&!cue.action.path?.length){
-        assert(cue.position<8,'Select an operative guide with an early pose-taking action');
+      while(cue.status==='ready'&&(editPath?!(cue.action.path?.length>1):!cue.action.pose&&!cue.action.path?.length)){
+        assert(cue.position<12,'Select an operative guide with an early editable maneuver');
         const count=record.actions.length;
         await clickExpr(byText('Perform maneuver'));await wait(()=>record.actions.length===count+1,'next exact cue');
         await wait(ready,'next accepted surface');
@@ -115,6 +123,7 @@ app.on('browser-window-created',(_,window)=>{
       }
       assert.equal(cue.status,'ready');
       const tip=cue.action.path?.at(-1)??cue.action.pose;
+      record.originalEditedCue=cue;
       const altered=Number(cue.action.duration??1)+.06, changedR=Number((tip.position[0]+.2).toFixed(4));
       const component=field('Guided tip R');
       assert.equal(await js(`Number((${component}).value)`),tip.position[0]);
@@ -135,7 +144,7 @@ app.on('browser-window-created',(_,window)=>{
       assert.equal(record.actions.at(-1).stateId,record.preview.stateId);
       assert.equal(record.actions.at(-1).cue.status,'modified');await wait(ready,'edited geometry');
       assert(await js("document.body.innerText.includes('Your episode follows a different path')"));
-      win.setSize(1050,720);await capture('03-edited-compact');
+      win.setSize(1050,720);await displayed(record.actions.at(-1).stateId);await capture('03-edited-compact');
       await clickExpr(byText('Save'));await wait(()=>fs.existsSync(edited),'edited practice save');
       record.saved=edited;record.passed=true;assert(!record.windowEverVisible);write();app.exit(0);
     }catch(e){

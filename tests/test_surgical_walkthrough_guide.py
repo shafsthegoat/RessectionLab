@@ -1,5 +1,6 @@
 from types import SimpleNamespace
 
+from resectionlab.core import semantic_digest
 from resectionlab.surgical_walkthrough_guide import SCHEMA, next_cue
 
 
@@ -8,8 +9,12 @@ def test_cue_requires_matching_source_branch_and_physical_boundary():
     guide = {'schema':SCHEMA, 'caseHash':'case', 'sceneId':'scene', 'branchId':'branch',
              'steps':[{'before':'a','after':'b','action':action,'phase':'scalp','label':'Engage blade'}],
              'endpoint':'b'}
+    guide['guideHash'] = semantic_digest(guide)
     engine = SimpleNamespace(_operative=True, scene=SimpleNamespace(identity='scene'), actions=[], state_id='a')
     assert next_cue(guide, engine, 'branch', 'case')['action'] == action
+    guide['steps'][0]['label'] = 'Altered cue'
+    assert next_cue(guide, engine, 'branch', 'case') is None
+    guide['steps'][0]['label'] = 'Engage blade'
     assert next_cue(guide, engine, 'other-branch', 'case') is None
     assert next_cue(guide, engine, 'branch', 'other-case') is None
     engine.state_id = 'changed-before'
