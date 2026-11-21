@@ -8,13 +8,31 @@ const coordinates=(i:number,[,ny,nz]:Shape3):Point3=>[Math.floor(i/(ny*nz)),Math
 const index=(x:number,y:number,z:number,[,ny,nz]:Shape3)=>(x*ny+y)*nz+z;
 const bucket=(x:number,y:number,z:number,shape:Shape3)=>
   (Math.floor(x/bucketSize)*(Math.ceil(shape[1]/bucketSize)+2)+Math.floor(y/bucketSize))*(Math.ceil(shape[2]/bucketSize)+2)+Math.floor(z/bucketSize);
-type Cell={shift:Point3;residual:Point3;ambiguous:boolean};
+type Cell={shift:Point3;residual:Point3;ambiguous:boolean;vesselRegion?:number};
+
+function attachedVesselSites(view:SurgicalView,owner:Uint16Array,soft:Set<number>){
+  const brain=view.physics?.brain, assignment=brain?.assignment, schema='resectionlab.generated-glioma-materials.v1';
+  const supported=new Set<number>();
+  if(view.scene.source?.procedurePolicySourceClass!=='generated-engineering'||brain?.model!==schema||
+    assignment?.schema!==schema||assignment.kind!=='assigned-generated-research'||!Array.isArray(assignment.vesselAttachments))return supported;
+  const vessels=new Set(view.scene.regions.filter(r=>r.material==='vessel').map(r=>r.id));
+  const removed=new Set(view.removed);
+  const broken=new Set([...view.cutEdges??[],...view.transectedEdges??[]].map(([a,b])=>Math.min(a,b)+','+Math.max(a,b)));
+  for(const [site,support] of assignment.vesselAttachments){
+    const delta=view.deformation?.[site],donor=view.deformation?.[support];
+    if(vessels.has(owner[site])&&soft.has(owner[support])&&!removed.has(site)&&!removed.has(support)&&
+      !broken.has(Math.min(site,support)+','+Math.max(site,support))&&delta?.length===3&&donor?.length===3&&
+      delta.some(Boolean)&&delta.every((v,i)=>Number.isFinite(v)&&v===donor[i]))supported.add(site);
+  }
+  return supported;
+}
 
 /** Accepted movement is defined on source cells. The displayed mask already
  * includes rounded transport. Carry only its subvoxel remainder onto soft
  * surfaces; reverse the integer part when looking up the registered MRI. */
 export class AcceptedSurfaceMotion {
   readonly cells=new Map<number,Cell>();
+  readonly movingVesselRegions=new Set<number>();
   readonly buckets=new Set<number>();
   readonly bounds=new THREE.Box3();
   readonly shape:Shape3;
@@ -27,12 +45,14 @@ export class AcceptedSurfaceMotion {
       const list=incoming.get(to)??[]; list.push(source); incoming.set(to,list);
     }
     const soft=new Set(view.scene.regions.filter(r=>['brain','soft_tissue','tumor'].includes(r.material)).map(r=>r.id));
+    const attached=attachedVesselSites(view,owner,soft);
     const voxelToWorld=new THREE.Matrix4().fromArray(view.scene.affine.flat()).transpose();
     const inverse=new THREE.Matrix3().setFromMatrix4(voxelToWorld).invert();
     const vector=new THREE.Vector3();
     const targets=new Set([...incoming.keys(),...Object.keys(view.deformation??{}).map(id=>destinations.get(+id)??+id)]);
-    const fixedOwner=(i:number)=>(!cleared.has(i)&&owner[i]!==0&&!soft.has(owner[i]))||
-      incoming.get(i)?.some(source=>!soft.has(owner[source]));
+    const fixed=(source:number,vesselRegion?:number)=>!soft.has(owner[source])&&!attached.has(source)&&owner[source]!==vesselRegion;
+    const fixedOwner=(i:number,vesselRegion?:number)=>(!cleared.has(i)&&owner[i]!==0&&fixed(i,vesselRegion))||
+      incoming.get(i)?.some(source=>fixed(source,vesselRegion));
     for(const to of targets){
       const sources=[...(incoming.get(to)??[])];
       if(!cleared.has(to)&&owner[to])sources.push(to);
@@ -43,8 +63,9 @@ export class AcceptedSurfaceMotion {
       if(!ambiguous&&source===to&&!delta?.some(Boolean))continue;
       const origin=coordinates(source,shape),p=coordinates(to,shape);
       const shift=p.map((v,j)=>v-origin[j]) as Point3;
+      const vesselRegion=attached.has(source)?owner[source]:undefined;
       let residual:Point3=zero;
-      if(!ambiguous&&delta&&soft.has(owner[source])){
+      if(!ambiguous&&delta&&(soft.has(owner[source])||vesselRegion!==undefined)){
         const d=vector.set(...delta).applyMatrix3(inverse).toArray();
         const remainder=d.map((v,j)=>v-shift[j]) as Point3;
         // Reject inconsistent source/raster pairs. The parent's authoritative
@@ -54,11 +75,12 @@ export class AcceptedSurfaceMotion {
           for(let x=Math.max(0,p[0]-1);x<=Math.min(shape[0]-1,p[0]+1)&&!fixed;x++)
             for(let y=Math.max(0,p[1]-1);y<=Math.min(shape[1]-1,p[1]+1)&&!fixed;y++)
               for(let z=Math.max(0,p[2]-1);z<=Math.min(shape[2]-1,p[2]+1);z++)
-                if(fixedOwner(index(x,y,z,shape))){fixed=true;break;}
+                if(fixedOwner(index(x,y,z,shape),vesselRegion)){fixed=true;break;}
           if(!fixed)residual=remainder;
         }
       }
-      this.cells.set(to,{shift,residual,ambiguous});
+      if(vesselRegion!==undefined&&residual.some(Boolean))this.movingVesselRegions.add(vesselRegion);
+      this.cells.set(to,{shift,residual,ambiguous,vesselRegion});
       this.bounds.expandByPoint(vector.set(...p));
       // Rounded transport has a one-cell edge guard in addition to its interpolation stencil.
       const radius=ambiguous||shift.some(Boolean)?2:1;
@@ -71,7 +93,7 @@ export class AcceptedSurfaceMotion {
   /** C1 interpolation of accepted neighboring center remainders. At material
    * boundaries the MRI may be transported only when all contributing owners
    * have the same reverse mapping. Ambiguous triangles get no inferred signal. */
-  sample(position:Point3,mask:Uint8Array,registered=true){
+  sample(position:Point3,mask:Uint8Array,registered=true,vesselRegion?:number){
     const shape=this.shape,base=position.map(Math.floor);
     const t=position.map((v,j)=>v-base[j]),h=t.map(v=>v*v*(3-2*v)),dh=t.map(v=>6*v*(1-v));
     const shift:Point3=[0,0,0],gradient=new Float64Array(9);
@@ -87,7 +109,9 @@ export class AcceptedSurfaceMotion {
         if(cell?.ambiguous||mapped?.some((v,j)=>v!==gridShift[j]))ambiguous=true;
         mapped=gridShift;
       }
-      if(!cell)continue;
+      // At a vessel boundary the donor tissue and other branches cannot
+      // extend the vessel. Only its own attached sites contribute movement.
+      if(!cell||(vesselRegion!==undefined&&(!mask[id]||cell.vesselRegion!==vesselRegion)))continue;
       affected=true;
       for(let j=0;j<3;j++){
         const d=cell.residual[j];shift[j]+=weight*d;
@@ -122,7 +146,7 @@ const attr=(geometry:THREE.BufferGeometry,name:string)=>geometry.getAttribute(na
 /** Private display attributes. Registered mask, raw geometry and worker/cache
  * arrays remain immutable. Per-frame work visits the changed 8-cell buckets. */
 export function applyAcceptedSurfaceMotion(geometry:THREE.BufferGeometry,field:AcceptedSurfaceMotion|null,
-  mask:Uint8Array,moveGeometry:boolean,registered:boolean){
+  mask:Uint8Array,moveGeometry:boolean,registered:boolean,vesselRegion?:number){
   let state=states.get(geometry);
   if(!field?.cells.size)field=null;
   if((!state&&!field)||state?.field===field)return;
@@ -149,7 +173,7 @@ export function applyAcceptedSurfaceMotion(geometry:THREE.BufferGeometry,field:A
     const n=new THREE.Vector3(),matrix=new THREE.Matrix3();
     for(const key of field.buckets)for(const i of state.buckets.get(key)??[]){
       const p:Point3=[base.getX(i),base.getY(i),base.getZ(i)];
-      const {shift,gradient:g,sourceShift,ambiguous}=field.sample(p,mask,registered);
+      const {shift,gradient:g,sourceShift,ambiguous}=field.sample(p,mask,registered,vesselRegion);
       const deform=moveGeometry&&(shift.some(Boolean)||g.some(Boolean));
       if(!deform&&!(registered&&(ambiguous||sourceShift.some(Boolean))))continue;
       if(deform){

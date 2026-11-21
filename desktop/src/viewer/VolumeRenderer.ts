@@ -768,6 +768,7 @@ export class VolumeRenderer {
       mesh.userData.nativeCortex=nativeCortex;
       mesh.userData.corticalSignalEnabled=installCorticalSignal(mesh.material,signal,this.showCorticalSignal(mesh));
     }
+    this.exposure?.bindNativeSkinDomain(mesh,layer.name);
     this.picking?.install(mesh,geometry,eagerPicking);
     return {mesh,source:geometry,smooth,smoothingPrepared};
   }
@@ -1460,8 +1461,11 @@ export class VolumeRenderer {
       const generatedTissue=layer.generatedFinish&&['grayMatter','whiteMatter','tumor','artery','vein'].includes(layer.displayKind??'');
       const registered=!!signal||!!generatedTissue;
       const soft=['brain','soft_tissue','tumor'].includes(layer.kind??'');
+      const vesselRegion=layer.kind==='vessel'?motion?.scene.regions.find(r=>r.name===layer.name&&r.material==='vessel')?.id:undefined;
+      const movingVessel=vesselRegion!==undefined&&field?.movingVesselRegions.has(vesselRegion)===true;
       if(registered)applyAcceptedSurfaceMotion(pair.source,field,layer.mask,false,true);
-      if(pair.smooth!==pair.source&&(soft||registered))applyAcceptedSurfaceMotion(pair.smooth,field,layer.mask,soft,registered);
+      if(pair.smooth!==pair.source&&(soft||registered||vesselRegion!==undefined))
+        applyAcceptedSurfaceMotion(pair.smooth,field,layer.mask,soft||movingVessel,registered,movingVessel?vesselRegion:undefined);
       if(generatedTissue)for(const g of [pair.source,pair.smooth]){
         if(g.hasAttribute('corticalRestOffset')){
           g.setAttribute('finishRestOffset',g.getAttribute('corticalRestOffset'));
@@ -1513,9 +1517,11 @@ export class VolumeRenderer {
     if(incomingView&&exposureOwner){
       if(!this.exposure){this.exposure=new OperativeExposureScene();this.exposure.setSmooth(this.surfaceSmoothing!==false);this.scene.add(this.exposure.group);}
       this.exposure.update(incomingView,this.volume,exposureOwner);
+      for(const [name,mesh] of this.surfaces??[])this.exposure.bindNativeSkinDomain(mesh,name);
       this.exposure.appearance(this.volume,this.workspaceSettings,name=>this.surfaceVisible(name));
       if(this.panes?.anatomy)this.panes.anatomy.dataset.exposureGeometry=JSON.stringify({
         ...(incomingView.operativeExposureV1!.boneRest?{boneRest:incomingView.operativeExposureV1!.boneRest}:{}),
+        ...(this.exposure.exteriorEvidence?{exteriorSkin:this.exposure.exteriorEvidence}:{}),
         surfaces:this.exposure.picks.map(m=>({name:m.name,vertices:m.geometry.attributes.position.count})),
         objects:incomingView.operativeExposureV1!.objects.filter(o=>o.status!=='retrieved').map(o=>o.id),
         edges:Object.fromEntries(Object.entries(incomingView.operativeExposureV1!.bodies).map(([k,b])=>[k,b.cutCount]))});

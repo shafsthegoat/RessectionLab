@@ -28,6 +28,8 @@ export interface OperativeExposureObject {
   sourceCell?: number;
   normal?: Point3;
   endpointsMm?: [Point3, Point3];
+  sourceContactMm?: Point3;
+  clipSegments?: Array<{aMm: Point3; bMm: Point3; radiusMm: number}>;
   body: ExposureBodyName | 'field';
 }
 export interface OperativeExposure {

@@ -52,6 +52,41 @@ test('many-to-one or mixed raster origins withhold only local MRI and fixed stru
   assert.deepEqual(pinned.sample([3,4,4],mask).shift,[0,0,0]);
 });
 
+test('generated vessel motion follows only its declared, intact source attachment and matching accepted tissue shift',()=>{
+  const site=id(4,4,4),tissue=id(4,4,3),fixed=id(5,4,4);
+  const owner=storage(Uint16Array),mask=storage(Uint8Array);
+  owner[site]=owner[fixed]=2;owner[tissue]=1;mask[site]=mask[fixed]=1;
+  const delta=new THREE.Vector3(.25,0,0).applyMatrix3(linear).toArray();
+  const native=view({[site]:delta,[tissue]:delta,[fixed]:delta});
+  const schema='resectionlab.generated-glioma-materials.v1';
+  native.scene.source={procedurePolicySourceClass:'generated-engineering'};
+  native.physics={brain:{model:schema,assignment:{schema,kind:'assigned-generated-research',vesselAttachments:[[site,tissue]]}}};
+  const field=new AcceptedSurfaceMotion(native,owner),pts=[[4,4,4],[5,4,4],[4,4,3]];
+  assert.deepEqual([...field.movingVesselRegions],[2]);
+  const original=geometry(pts),smooth=original.clone();
+  applyAcceptedSurfaceMotion(smooth,field,mask,true,true,2);
+  close(vec(smooth.getAttribute('position'),0),new THREE.Vector3(4.25,4,4));
+  // An attached cell cannot animate an untethered vessel center or extend the
+  // vessel mesh onto the donor cell. Source registration and masks stay put.
+  assert.deepEqual([...smooth.getAttribute('position').array.slice(3)],pts.slice(1).flat());
+  applyAcceptedSurfaceMotion(original,field,mask,false,true);
+  assert.deepEqual([...original.getAttribute('position').array],pts.flat());
+  assert.equal(mask[site],1);assert.equal(owner[site],2);
+  for(const changed of [
+    {...native,physics:undefined},
+    {...native,scene:{...native.scene,source:{procedurePolicySourceClass:'acquired'}}},
+    {...native,deformation:{[site]:delta,[tissue]:[0,0,0]}},
+    {...native,removed:[tissue]},
+    {...native,cutEdges:[[tissue,site]]},
+    {...native,moved:[[fixed,site]]},
+  ]){
+    const inactive=new AcceptedSurfaceMotion(changed,owner);
+    assert.equal(inactive.movingVesselRegions.size,0);
+    applyAcceptedSurfaceMotion(smooth,inactive,mask,false,true);
+    assert.deepEqual([...smooth.getAttribute('position').array],pts.flat());
+  }
+});
+
 test('conditioned surface and lighting follow the local accepted gradient and raw/generated sources stay untouched',()=>{
   const pos=[4.25,4.33,4],cell=id(4,4,4),owner=storage(Uint16Array),mask=storage(Uint8Array);
   owner[cell]=mask[cell]=1;

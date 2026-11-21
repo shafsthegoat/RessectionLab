@@ -13,7 +13,9 @@ export function ExposureControls({exposure, draft}: {
 }) {
   const [selected, select] = useState<ExposureBodyName>('scalp');
   const body = exposure.bodies[selected];
-  const placed = exposure.objects.filter(item => item.status !== 'retrieved');
+  const carried = exposure.objects.filter(item => item.status === 'carried').length;
+  const retrieved = exposure.objects.filter(item => item.status === 'retrieved').length;
+  const placed = exposure.objects.length - carried - retrieved;
   return <section className="exposure-controls" aria-label="Operative exposure">
     <header><h3>Operative exposure</h3>
       <span>{exposure.complete ? 'Closure complete' : exposure.accessOpen ? 'Open surgical field' : 'Layered exposure'}</span>
@@ -36,7 +38,7 @@ export function ExposureControls({exposure, draft}: {
       </div>
     </details>
     {exposure.objects.length > 0 && <details>
-      <summary>Field count · {placed.length} in place · {exposure.objects.length - placed.length} retrieved</summary>
+      <summary>Field count · {placed} in place · {carried} carried · {retrieved} retrieved</summary>
       <ul>{exposure.objects.map(item => <li key={item.id}>{describe(item.kind)} · {item.body} · {describe(item.status)}</li>)}</ul>
     </details>}
   </section>;

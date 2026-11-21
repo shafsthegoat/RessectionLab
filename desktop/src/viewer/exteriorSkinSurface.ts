@@ -1,142 +1,157 @@
 import type {Affine, Point3, Shape3} from './coordinates';
 import {cIndex} from './coordinates.ts';
 import {sourceVoxel} from './exposureAnatomy.ts';
-import {maskSurfaceRegion} from './surface.ts';
-import {prepareSurfaceSoup} from './prepareSurface.ts';
 
-/** When a generated skin is just one native cell thick, marching its skin and
- * galea separately can connect galea to outside air across a tetrahedral
- * diagonal. Recover only that small part of the external contour supported
- * by an intact skin/air voxel face. The flap and editable sites stay free. */
+export const EXTERIOR_AIR = 1,
+  ORIGINAL_SKIN = 2,
+  INTACT_FACE = 4;
+
+/** Source-certified external skin faces around tetrahedral diagonal shortcuts.
+ * Points lie exactly on native rectangular skin/air faces. Quarter faces meet
+ * on the same grid as the local visibility test on the other tissue meshes. */
 export function exteriorSkinSurface(
   owner: Uint16Array,
   shape: Shape3,
   affine: Affine,
   skin: number,
-  galea: number,
-  mobile: ReadonlySet<number>,
+  protectedIds: ReadonlySet<number>,
 ) {
-  const stride = [shape[1] * shape[2], shape[2], 1];
-  // Distance to a supporting face is evaluated in source-cell units. The
-  // opt-in generated model is isotropic; leave other grids on their ordinary path.
-  const cols = stride.map((_, a) => affine.slice(0, 3).map((row) => row[a]));
-  const h2 = cols[0].reduce((s, v) => s + v * v, 0);
-  if (
-    !(h2 > 0) ||
-    cols.some((u, a) =>
-      cols.some((v, b) => Math.abs(u.reduce((s, n, i) => s + n * v[i], 0) - (a === b ? h2 : 0)) > 1e-7 * h2),
-    )
-  )
-    return;
-  const outside = (p: Point3) => p.some((n, a) => n < 0 || n >= shape[a]);
-  const edgeStep = (p: Point3, axis: number, sign: number) => {
-    const q: Point3 = [...p];
-    q[axis] += sign;
-    return q;
-  };
-  // An unobstructed axis ray certifies exterior air without presuming that
-  // internal air pockets are accessible. A concave, ambiguous site is skipped.
-  const openAir = new Map<number, boolean>();
-  const open = (id: number) => {
-    let result = openAir.get(id);
-    if (result !== undefined) return result;
-    const p = sourceVoxel(id, shape);
-    result = stride.some((step, axis) =>
-      [-1, 1].some((sign) => {
-        let j = id;
-        for (let i = p[axis] + sign; i >= 0 && i < shape[axis]; i += sign) {
-          j += sign * step;
-          if (owner[j]) return false;
-        }
-        return true;
-      }),
-    );
-    openAir.set(id, result);
-    return result;
-  };
-  const corners: Point3[] = Array.from({length: 8}, (_, i) => [i & 1, (i >> 1) & 1, (i >> 2) & 1]);
-  const cornerOffset = corners.map((p) => cIndex(shape, p));
-  const candidates = new Set<number>();
-  for (let id = 0; id < owner.length; id++) {
-    if (owner[id] !== galea || mobile.has(id)) continue;
-    const p = sourceVoxel(id, shape);
-    if (p.some((v, a) => v < 1 || v > shape[a] - 2)) continue;
-    const diagonalAir = cornerOffset
-      .slice(1)
-      .some((offset) => [-1, 1].some((sign) => !owner[id + sign * offset] && open(id + sign * offset)));
-    if (diagonalAir) for (const offset of cornerOffset) candidates.add(id - offset);
-  }
-  if (!candidates.size) return;
-  const occupied = Uint8Array.from(owner, (id) => Number(id !== 0));
-  const reference = Uint16Array.from(owner, (id) => (id === galea ? skin : id));
-  type Face = {center: Point3; axis: number};
-  const sourceSupport = new Set<number>(),
-    soup: number[] = [],
-    supportFaces: Face[][] = [];
-  for (const start of candidates) {
-    const cube = cornerOffset.map((offset) => start + offset);
-    if (cube.some((id) => mobile.has(id) || (owner[id] !== 0 && owner[id] !== skin && owner[id] !== galea))) continue;
-    if (cube.some((id) => !owner[id] && !open(id))) continue;
-    const exposed = cube.some(
-      (id) => owner[id] === galea && stride.some((step) => !owner[id - step] || !owner[id + step]),
-    );
-    if (exposed) continue;
-    const origin = sourceVoxel(start, shape);
-    const {positions} = maskSurfaceRegion(occupied, shape, origin, origin);
-    const diagonalCrossing = (i: number) => {
-      const p = [positions[i], positions[i + 1], positions[i + 2]];
-      const a = owner[cIndex(shape, p.map(Math.floor) as Point3)],
-        b = owner[cIndex(shape, p.map(Math.ceil) as Point3)];
-      return (a === galea && !b) || (b === galea && !a);
-    };
-    const faces: Face[] = [];
-    for (const id of cube) {
-      if (owner[id] !== skin) continue;
-      const p = sourceVoxel(id, shape);
-      for (let axis = 0; axis < 3; axis++)
-        for (const sign of [-1, 1]) {
-          const q = edgeStep(p, axis, sign);
-          if (outside(q) || !cube.includes(cIndex(shape, q)) || owner[cIndex(shape, q)]) continue;
-          faces.push({center: edgeStep(p, axis, 0.5 * sign), axis});
-        }
+  const [nx, ny, nz] = shape,
+    strides = [ny * nz, nz, 1];
+  const flags = new Uint8Array(owner.length),
+    queue = new Int32Array(owner.length);
+  let front = 0,
+    end = 0;
+  const addAir = (id: number) => {
+    if (!owner[id] && !(flags[id] & EXTERIOR_AIR)) {
+      flags[id] |= EXTERIOR_AIR;
+      queue[end++] = id;
     }
-    for (let i = 0; i < positions.length; i += 9) {
-      if (!diagonalCrossing(i) && !diagonalCrossing(i + 3) && !diagonalCrossing(i + 6)) continue;
-      if (faces.length) {
-        supportFaces.push(faces);
-        soup.push(...positions.subarray(i, i + 9));
-        for (const id of cube) sourceSupport.add(id);
+  };
+  for (let x = 0; x < nx; x++)
+    for (let y = 0; y < ny; y++)
+      for (let z = 0; z < nz; z++) {
+        const id = (x * ny + y) * nz + z;
+        if (owner[id] === skin) flags[id] = ORIGINAL_SKIN;
+        else if (x === 0 || x === nx - 1 || y === 0 || y === ny - 1 || z === 0 || z === nz - 1) addAir(id);
       }
+  while (front < end) {
+    const id = queue[front++],
+      [x, y, z] = sourceVoxel(id, shape);
+    if (x > 0) addAir(id - strides[0]);
+    if (x < nx - 1) addAir(id + strides[0]);
+    if (y > 0) addAir(id - nz);
+    if (y < ny - 1) addAir(id + nz);
+    if (z > 0) addAir(id - 1);
+    if (z < nz - 1) addAir(id + 1);
+  }
+  const corners: Point3[] = Array.from({length: 8}, (_, i) => [i & 1, (i >> 1) & 1, i >> 2]);
+  const offsets = corners.map((p) => cIndex(shape, p)),
+    affected = new Set<number>();
+  for (let id = 0; id < owner.length; id++) {
+    if (!owner[id] || owner[id] === skin) continue;
+    const p = sourceVoxel(id, shape);
+    if (p.some((n, a) => n < 2 || n > shape[a] - 3)) continue;
+    if (offsets.some((k) => (flags[id + k] | flags[id - k]) & EXTERIOR_AIR)) {
+      // Include the continuous one-cell collar on the same external boundary.
+      for (let x = -2; x <= 1; x++)
+        for (let y = -2; y <= 1; y++) for (let z = -2; z <= 1; z++) affected.add(id + cIndex(shape, [x, y, z]));
     }
   }
-  if (!soup.length) return;
-  const surface = prepareSurfaceSoup(Float32Array.from(soup), occupied, shape, affine, 'soft_tissue', true, {
-    owner: reference,
-    protectedRegions: [],
-    exteriorSkinRegion: skin,
-  });
-  const p = surface.smoothPositions!,
-    keep = [];
-  let maxFaceDistanceMm = 0;
-  for (let i = 0; i < surface.indices.length; i += 3) {
-    // All three conditioned vertices must lie within half a native cell of
-    // the SAME true skin/air face. Convexity then bounds the entire triangle.
-    const distance = Math.min(
-      ...supportFaces[i / 3].map(({center, axis}) =>
-        Math.max(
-          ...[0, 1, 2].map((corner) => {
-            const v = 3 * surface.indices[i + corner];
-            return Math.hypot(...center.map((n, a) => Math.max(0, Math.abs(p[v + a] - n) - (axis === a ? 0 : 0.5))));
-          }),
-        ),
-      ),
-    );
-    if (distance <= 0.500001) {
-      maxFaceDistanceMm = Math.max(maxFaceDistanceMm, distance * Math.sqrt(h2));
-      keep.push(...surface.indices.subarray(i, i + 3));
+  const soup: number[] = [],
+    normalValues: number[] = [],
+    indices: number[] = [];
+  const support = new Set<number>(),
+    cubes = new Map<number, [number, number]>(),
+    normalCache = new Map<number, number[]>();
+  const normalAt = (v: Point3) => {
+    const key = (Math.round(v[0] * 2) * ny * 2 + Math.round(v[1] * 2)) * nz * 2 + Math.round(v[2] * 2);
+    const cached = normalCache.get(key);
+    if (cached) return cached;
+    const n = [0, 0, 0];
+    for (let x = Math.max(0, Math.floor(v[0]) - 2); x <= Math.min(nx - 1, Math.ceil(v[0]) + 2); x++)
+      for (let y = Math.max(0, Math.floor(v[1]) - 2); y <= Math.min(ny - 1, Math.ceil(v[1]) + 2); y++)
+        for (let z = Math.max(0, Math.floor(v[2]) - 2); z <= Math.min(nz - 1, Math.ceil(v[2]) + 2); z++) {
+          if (!(flags[(x * ny + y) * nz + z] & EXTERIOR_AIR)) continue;
+          const d = [x - v[0], y - v[1], z - v[2]];
+          const ras = affine.slice(0, 3).map((r) => r[0] * d[0] + r[1] * d[1] + r[2] * d[2]);
+          const w = Math.exp(-0.5 * ras.reduce((s, q) => s + q * q, 0));
+          for (let a = 0; a < 3; a++) n[a] += w * ras[a];
+        }
+    // Affine transpose converts a physical normal to Three's source-frame covector.
+    const local = [0, 1, 2].map((a) => n.reduce((s, q, k) => s + q * affine[k][a], 0)),
+      l = Math.hypot(...local) || 1;
+    for (let a = 0; a < 3; a++) local[a] /= l;
+    normalCache.set(key, local);
+    return local;
+  };
+  for (const start of affected) {
+    const ids = offsets.map((k) => start + k);
+    if (!ids.some((id) => owner[id] === skin) || !ids.some((id) => flags[id] & EXTERIOR_AIR)) continue;
+    if (ids.some((id) => protectedIds.has(owner[id]))) continue;
+    // A real face-exposed interior layer is a genuine opening, never a
+    // tetrahedral shortcut. Both sides stay on their ordinary native paths.
+    if (
+      ids.some(
+        (id) => owner[id] && owner[id] !== skin && strides.some((k) => (flags[id - k] | flags[id + k]) & EXTERIOR_AIR),
+      )
+    )
+      continue;
+    const origin = sourceVoxel(start, shape),
+      first = indices.length;
+    for (let i = 0; i < 8; i++)
+      if (owner[ids[i]] === skin)
+        for (let axis = 0; axis < 3; axis++) {
+          const j = i ^ (1 << axis);
+          if (!(flags[ids[j]] & EXTERIOR_AIR)) continue;
+          const b = (axis + 1) % 3,
+            c = (axis + 2) % 3,
+            n = corners[j][axis] - corners[i][axis];
+          const p = origin.map((q, k) => q + corners[i][k]) as Point3;
+          p[axis] += 0.5 * n;
+          const vertex = soup.length / 3;
+          for (const [u, v] of [
+            [0, 0],
+            [1, 0],
+            [1, 1],
+            [0, 1],
+          ]) {
+            const point: Point3 = [...p];
+            point[b] += (0.5 - corners[i][b]) * u;
+            point[c] += (0.5 - corners[i][c]) * v;
+            soup.push(...point);
+            normalValues.push(...normalAt(point));
+          }
+          const positive = (0.5 - corners[i][b]) * (0.5 - corners[i][c]) * n > 0;
+          indices.push(...(positive ? [0, 1, 2, 0, 2, 3] : [0, 2, 1, 0, 3, 2]).map((q) => q + vertex));
+        }
+    if (indices.length > first) {
+      cubes.set(start, [first, indices.length]);
+      flags[start] |= INTACT_FACE;
+      for (const id of ids) support.add(id);
     }
   }
-  if (!keep.length) return;
-  surface.indices = Uint32Array.from(keep);
-  return {surface, sourceSupport, maxFaceDistanceMm};
+  if (!indices.length) return;
+  const sourceIndices = Uint32Array.from(indices);
+  let hidden = new Set<number>();
+  return {
+    positions: Float32Array.from(soup),
+    normals: Float32Array.from(normalValues),
+    indices: sourceIndices,
+    flags,
+    sourceSupport: support,
+    cubes,
+    update(changed: Iterable<number>) {
+      const next = new Set<number>();
+      for (const id of changed) if (support.has(id)) for (const k of offsets) if (cubes.has(id - k)) next.add(id - k);
+      if (next.size === hidden.size && [...next].every((o) => hidden.has(o))) return;
+      for (const o of hidden) flags[o] |= INTACT_FACE;
+      for (const o of next) flags[o] &= ~INTACT_FACE;
+      hidden = next;
+      if (!hidden.size) return sourceIndices;
+      const visible: number[] = [];
+      for (const [o, [a, b]] of cubes) if (!hidden.has(o)) for (let j = a; j < b; j++) visible.push(sourceIndices[j]);
+      return Uint32Array.from(visible);
+    },
+  };
 }

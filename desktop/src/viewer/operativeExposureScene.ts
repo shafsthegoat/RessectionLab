@@ -5,6 +5,7 @@ import type {ViewerVolume} from './contracts';
 import {bodyNames, bodyIsDisplaced, sourceCenter} from './exposureAnatomy.ts';
 import {buildExposureSurface, ExposureBodyTransport} from './exposureBodySurface.ts';
 import {exteriorSkinSurface} from './exteriorSkinSurface.ts';
+import {ExteriorSkinDomain} from './exteriorSkinDomain.ts';
 import {placeInSourceFrame} from './sceneGeometry.ts';
 import {generatedTissueFinish} from './generatedTissueFinish.ts';
 import {applyOperativeSurface} from './operativeMaterial.ts';
@@ -52,7 +53,23 @@ function fixture(o: OperativeExposureObject) {
     ? new THREE.Vector3(...o.endpointsMm[0]).distanceTo(new THREE.Vector3(...o.endpointsMm[1]))
     : undefined;
   const pt = (x: number, y: number, z: number) => new THREE.Vector3(x * r, y * r, z * r);
-  if (o.kind === 'raney-clip' || o.kind === 'retaining-stay') {
+  if (o.clipSegments?.length) {
+    const origin = new THREE.Vector3(...o.positionMm);
+    for (const {aMm, bMm, radiusMm} of o.clipSegments) {
+      const a = new THREE.Vector3(...aMm),
+        b = new THREE.Vector3(...bMm),
+        d = b.clone().sub(a),
+        len = d.length();
+      const mesh = solid(
+        len ? new THREE.CapsuleGeometry(radiusMm, len, 6, 16) : new THREE.SphereGeometry(radiusMm, 18, 12),
+        '#a7a9a6',
+        0.58,
+      );
+      mesh.position.copy(a).lerp(b, 0.5).sub(origin);
+      if (len) mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), d.divideScalar(len));
+      group.add(mesh);
+    }
+  } else if (o.kind === 'raney-clip' || o.kind === 'retaining-stay') {
     const color = o.kind === 'raney-clip' ? '#a6a3a0' : '#b8a38b';
     for (const side of [-1, 1]) {
       bar(group, pt(-0.58, side * 0.26, 0.48), pt(0.6, side * 0.34, 0.3), 0.09 * r, color, 0.6);
@@ -182,8 +199,8 @@ export class OperativeExposureScene {
   private smooth = true;
   private exterior?: {
     mesh: THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
-    support: Set<number>;
-    unchanged: boolean;
+    contour: NonNullable<ReturnType<typeof exteriorSkinSurface>>;
+    domain: ExteriorSkinDomain;
     opaque: boolean;
   };
   private bodies = new Map<ExposureBodyName, BodyDisplay>();
@@ -200,8 +217,18 @@ export class OperativeExposureScene {
   get picks() {
     return [...this.bodies.values()].flatMap((b) => b.surfaces.map((s) => s.mesh).filter((m) => m.visible));
   }
+  get exteriorEvidence() {
+    return this.exterior ? {active:this.exterior.domain.enabled,visibleFaceTriangles:this.exterior.mesh.geometry.drawRange.count/3,
+      nativeFaceTriangles:this.exterior.contour.indices.length/3} : undefined;
+  }
   private refreshExterior() {
-    if (this.exterior) this.exterior.mesh.visible = this.smooth && this.exterior.unchanged && this.exterior.opaque;
+    if (this.exterior) {
+      this.exterior.mesh.visible = this.smooth && this.exterior.opaque;
+      this.exterior.domain.enabled = this.exterior.mesh.visible;
+    }
+  }
+  bindNativeSkinDomain(mesh: THREE.Mesh, layerName: string) {
+    if (this.exterior) this.exterior.domain.bind(mesh, layerName === this.exterior.mesh.userData.compartment);
   }
   setSmooth(enabled: boolean) {
     this.smooth = enabled;
@@ -222,6 +249,7 @@ export class OperativeExposureScene {
     for (const child of [...this.group.children]) discard(child);
     this.bodies.clear();
     this.fixtures.clear();
+    this.exterior?.domain.dispose();
     this.exterior = undefined;
     this.rest = undefined;
     this.restKey = undefined;
@@ -246,15 +274,16 @@ export class OperativeExposureScene {
           view.scene.shape,
           view.scene.affine,
           skinId,
-          galeaId,
-          new Set(state.bodies.scalp.cells),
+          new Set(
+            view.scene.regions.filter((r) => r.material === 'vessel' || r.material === 'membrane').map((r) => r.id),
+          ),
         );
         if (contour) {
-          const {surface} = contour,
-            geometry = new THREE.BufferGeometry();
-          geometry.setAttribute('position', new THREE.BufferAttribute(surface.smoothPositions!, 3));
-          geometry.setAttribute('normal', new THREE.BufferAttribute(surface.smoothNormals!, 3));
-          geometry.setIndex(new THREE.BufferAttribute(surface.indices, 1));
+          const geometry = new THREE.BufferGeometry();
+          geometry.setAttribute('position', new THREE.BufferAttribute(contour.positions, 3));
+          geometry.setAttribute('normal', new THREE.BufferAttribute(contour.normals, 3));
+          geometry.setIndex(new THREE.BufferAttribute(contour.indices.slice(), 1).setUsage(THREE.DynamicDrawUsage));
+          geometry.setDrawRange(0,contour.indices.length);
           const mesh = new THREE.Mesh(geometry, new THREE.MeshStandardMaterial({side: THREE.DoubleSide}));
           generatedTissueFinish(mesh.material, 'scalp', false);
           mesh.userData.compartment = skin.name;
@@ -263,7 +292,12 @@ export class OperativeExposureScene {
           mesh.receiveShadow = true;
           placeInSourceFrame(mesh, view.scene.affine);
           this.group.add(mesh);
-          this.exterior = {mesh, support: contour.sourceSupport, unchanged: true, opaque: false};
+          this.exterior = {
+            mesh,
+            contour,
+            domain: new ExteriorSkinDomain(contour.flags, view.scene.shape),
+            opaque: false,
+          };
         }
       }
       const center = (b: OperativeExposureBody) =>
@@ -319,12 +353,17 @@ export class OperativeExposureScene {
     }
     if (this.rest) this.rest.userData.engaged = state.boneRest?.engaged;
     if (this.exterior) {
-      const {support} = this.exterior;
-      this.exterior.unchanged =
-        !view.removed.some((id) => support.has(id)) &&
-        !view.moved.some(([a, b]) => support.has(a) || support.has(b)) &&
-        !state.bodies.scalp.seamEdges.some(([a, b]) => support.has(a) || support.has(b));
-      this.refreshExterior();
+      const {contour, mesh, domain} = this.exterior,
+        scalp = state.bodies.scalp;
+      const changed = [...view.removed, ...view.moved.flat(), ...scalp.seamEdges.flat()];
+      if (bodyIsDisplaced(scalp, view.scene.shape, view.scene.affine)) changed.push(...scalp.cells);
+      const indices = contour.update(changed);
+      if (indices) {
+        const index=mesh.geometry.index!;
+        index.array.set(indices);index.needsUpdate=true;
+        mesh.geometry.setDrawRange(0,indices.length);
+        domain.texture.needsUpdate = true;
+      }
     }
     const removed = new Set(view.removed);
 
@@ -387,7 +426,7 @@ export class OperativeExposureScene {
     for (const obj of state.objects) {
       if (obj.status === 'retrieved') continue;
       current.add(obj.id);
-      const key = JSON.stringify([obj.kind, obj.radiusMm, obj.endpointsMm]);
+      const key = JSON.stringify([obj.kind, obj.radiusMm, obj.endpointsMm, obj.clipSegments]);
       let record = this.fixtures.get(obj.id);
       if (!record || record.key !== key) {
         if (record) discard(record.model);
@@ -403,7 +442,9 @@ export class OperativeExposureScene {
           anchor = transport.byId.get(obj.sourceCell);
         if (anchor !== undefined) normal.applyQuaternion(transport.rotation[anchor]);
       }
-      if (obj.endpointsMm) {
+      if (obj.clipSegments?.length) {
+        model.quaternion.identity();
+      } else if (obj.endpointsMm) {
         const [a, b] = obj.endpointsMm.map((p) => new THREE.Vector3(...p));
         const direction = b.clone().sub(a).normalize(),
           across = new THREE.Vector3().crossVectors(normal, direction).normalize();
@@ -442,7 +483,8 @@ export class OperativeExposureScene {
           !transparent &&
           settings.microscope?.tissueStyle !== 'labels' &&
           !settings.microscope?.inspectionCutaway &&
-          !settings.microscope?.inspectionTransparency;
+          !settings.microscope?.inspectionTransparency &&
+          !settings.clipping?.enabled && !settings.obliqueClip?.enabled && !settings.clipBox?.enabled;
         this.refreshExterior();
       }
     }

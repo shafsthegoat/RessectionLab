@@ -281,17 +281,36 @@ test('intact diagonal outer skin reconstruction requires nearby true faces and w
     if (filled[i] && steps.some((k) => !filled[i + k] || !filled[i - k])) owner[i] = 1;
   }
   const before = owner.slice();
-  const contour = exteriorSkinSurface(owner, shape, affine, 1, 2, new Set());
-  assert(contour.surface.indices.length > 0);
-  assert(contour.maxFaceDistanceMm <= 0.500001);
+  const contour = exteriorSkinSurface(owner, shape, affine, 1, new Set());
+  assert(contour.indices.length > 0);
+  // Every emitted quarter-face triangle lies exactly in at least one real
+  // rectangular native skin/air face in its registered cube.
+  for (const [origin, [a, b]] of contour.cubes) {
+    const base = [Math.floor(origin / (ny * nz)), Math.floor(origin / nz) % ny, origin % nz];
+    for (let i = a; i < b; i += 3) {
+      const pts = [0, 1, 2].map((c) =>
+        contour.positions.slice(3 * contour.indices[i + c], 3 * contour.indices[i + c] + 3),
+      );
+      const axis = [0, 1, 2].find((k) => pts[0][k] === pts[1][k] && pts[1][k] === pts[2][k]);
+      assert.notEqual(axis, undefined);
+      const midpoint = pts[0].map((_, k) => pts.reduce((sum, point) => sum + point[k] / 3, 0)),
+        p = Array.from(midpoint, Math.round);
+      p[axis] = base[axis];
+      const low = id(...p);
+      p[axis]++;
+      const high = id(...p);
+      assert((owner[low] === 1 && owner[high] === 0) || (owner[high] === 1 && owner[low] === 0));
+    }
+  }
   assert.deepEqual(owner, before);
-  assert.equal(exteriorSkinSurface(owner, shape, affine, 1, 2, contour.sourceSupport), undefined);
+  assert.equal(contour.update(contour.sourceSupport).length, 0);
+  assert.deepEqual(contour.update([]), contour.indices);
   // A genuine exterior galea face cannot be hidden as a diagonal artifact.
   const inside = [...contour.sourceSupport].find((c) => owner[c] === 2 && steps.some((k) => owner[c + k] === 1));
   const outer = steps.map((k) => inside + k).find((c) => owner[c] === 1);
   const withHole = owner.slice();
   withHole[outer] = 0;
-  assert(!exteriorSkinSurface(withHole, shape, affine, 1, 2, new Set())?.sourceSupport.has(inside));
+  assert(!exteriorSkinSurface(withHole, shape, affine, 1, new Set())?.sourceSupport.has(inside));
   volume.compartments[0].displayKind = 'scalp';
   volume.compartments[1].displayKind = 'galea';
   const display = new OperativeExposureScene(),
@@ -311,9 +330,49 @@ test('intact diagonal outer skin reconstruction requires nearby true faces and w
   display.appearance(volume, {...settings, microscope: {tissueStyle: 'labels'}}, () => true);
   assert(!mesh.visible);
   display.appearance(volume, settings, () => true);
+  const initial = mesh.geometry.drawRange.count;
   display.update({...view, removed: [inside]}, volume, owner);
-  assert(!mesh.visible);
-  display.update(view, volume, owner);
   assert(mesh.visible);
+  assert(mesh.geometry.drawRange.count < initial);
+  assert(mesh.geometry.drawRange.count > 0);
+  display.update(view, volume, owner);
+  assert.equal(mesh.geometry.drawRange.count, initial);
+  display.clear();
+});
+
+test('Raney backing and jaws use the actual accepted RAS capsules, including a retrieved clip', () => {
+  const {owner, view, volume} = model();
+  const a = [5, 7, 11],
+    b = [5.4, 7.2, 9.6],
+    o = {
+      id: 'raney-clip-1',
+      kind: 'raney-clip',
+      status: 'placed',
+      positionMm: a,
+      sourceContactMm: b,
+      normal: [1, 0, 0],
+      radiusMm: 0.58,
+      body: 'scalp',
+      clipSegments: [
+        {aMm: a, bMm: a, radiusMm: 0.58},
+        {aMm: a, bMm: b, radiusMm: 0.16},
+      ],
+    };
+  const display = new OperativeExposureScene();
+  const current = (objects) => ({...view, operativeExposureV1: {...view.operativeExposureV1, objects}});
+  display.update(current([o]), volume, owner);
+  const group = display.group.children.flatMap((c) => c.children).find((c) => c.userData.operativeObject?.id === o.id);
+  assert.equal(group.children.length, 2);
+  group.updateWorldMatrix(true, true);
+  assert.equal(group.children[0].geometry.parameters.radius, 0.58);
+  assert(group.children[0].getWorldPosition(new THREE.Vector3()).distanceTo(new THREE.Vector3(...a)) < 1e-9);
+  const jaw = group.children[1],
+    dir = new THREE.Vector3().subVectors(new THREE.Vector3(...b), new THREE.Vector3(...a));
+  assert.equal(jaw.geometry.parameters.radius, 0.16);
+  assert(Math.abs(jaw.geometry.parameters.height - dir.length()) < 1e-9);
+  assert(jaw.localToWorld(new THREE.Vector3(0, -dir.length() / 2, 0)).distanceTo(new THREE.Vector3(...a)) < 1e-9);
+  assert(jaw.localToWorld(new THREE.Vector3(0, dir.length() / 2, 0)).distanceTo(new THREE.Vector3(...b)) < 1e-9);
+  display.update(current([{...o, status: 'retrieved'}]), volume, owner);
+  assert.equal(group.parent, null);
   display.clear();
 });
