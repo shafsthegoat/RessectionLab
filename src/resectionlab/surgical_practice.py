@@ -16,7 +16,10 @@ SCHEMA = 'resectionlab.surgical-practice.v1'
 # other than the actions and their resulting checkpoint.
 CRANIAL = 'sha256:9818506d2f779b8fece10d048e0f21e2357f86851936ad0f5b86ee6f6cfaa1e0'
 THERMAL = 'sha256:c298887cb67b1034d782d682b01ee03cdaf86ee13237602eb3239ec114d5a710'
+BLOCKED_OUTLET = 'sha256:33adb0e7a4405f6dc5231512a637fc519f3339bc3967b01dbfb2f8627962ed9e'
 CONTROLS = {
+    BLOCKED_OUTLET: ('sha256:8cb4482db8d770aca0983389f1d7bcd828a4d7c777bde83f3a69785d252e7d0b',
+                     'sha256:f7b9fcc8a6c749812a6c6827907e8b0a92447debfefdbbf6ce91199fdf200631'),
     CRANIAL: ('sha256:8364dc4a5e12d30d3111362488b775160f0cc7b836e434c1bf4dc5a2cf179478',
               'sha256:c9d8d4d94acfa20f9c8a57c01dfb36b58562722ad32ce18e71550d9b1e9167a9'),
     THERMAL: ('sha256:3d860b9d648ab5fa606f0f18f01d4749e27d1e5a3405d3c0a0ca732e5cb6369a',

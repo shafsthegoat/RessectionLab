@@ -90,7 +90,7 @@ def pose(z=-5., *, x=9.):
     return {'position': [x, 9., z], 'quaternion': [0., 0., 0., 1.]}
 
 
-def make_surrogate(*, rescue=True, causal_cusa=True):
+def surrogate_scene(*, rescue=True, causal_cusa=True):
     """Declared generated coupon, not a patient or a vascular anatomy estimate."""
     labels = np.zeros((24, 24, 20), np.uint16)
     labels[8:11, 8:11, 8:11] = 1
@@ -102,9 +102,13 @@ def make_surrogate(*, rescue=True, causal_cusa=True):
             'id': 'declared-preinjured-fixture',
             'cell': int(np.ravel_multi_index((9, 9, 9), labels.shape)),
             'rateMm3PerSecond': .1, 'coagulationExposure': .02, 'patent': False}]
-    scene = SurgicalScene(labels, np.eye(4), [
+    return SurgicalScene(labels, np.eye(4), [
         {'id': 1, 'name': 'Synthetic target', 'material': 'tumor', 'target': True}],
         {'kind': 'generated skill fixture'}, properties)
+
+
+def make_surrogate(*, rescue=True, causal_cusa=True):
+    scene = surrogate_scene(rescue=rescue, causal_cusa=causal_cusa)
     task = SkillTask('resection', 'preinjured_rescue' if rescue else 'prevention')
     env = SurgicalRLEnv(scene, config=task.config(
         require_critical_coverage=False, max_steps=64, max_seconds=60.))

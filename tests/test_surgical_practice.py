@@ -225,3 +225,44 @@ def test_unsaved_parent_siblings_survive_starting_practice(practice_source):
     assert len(original['branches']) == 2
     child = surgical(session, 'practice', **selection(sibling))
     assert len(child['branches']) == 1 and thaw_json(entry.artifacts['surgical_prior_scenes'])[-1] == original
+
+
+def test_exact_enclosed_outlet_control_preserves_native_blockage(tmp_path, monkeypatch):
+    monkeypatch.syspath_prepend(str(SCRIPTS))
+    from prepare_blocked_outlet_practice import control
+    from resectionlab.imaging import save_case
+    from resectionlab.surgical_practice import BLOCKED_OUTLET, CONTROLS, model_hash
+    case, record = control()
+    assert case.semantic_hash == BLOCKED_OUTLET
+    native = record['branches']['main']
+    assert (native['sceneId'], model_hash(native)) == CONTROLS[BLOCKED_OUTLET]
+    session = BridgeSession(tmp_path / 'cache')
+    parent = tmp_path / 'enclosed.ressectionlab'
+    save_case(case, parent, artifacts={'surgical_toolbox': record})
+    try:
+        request(session, 'loadCase', path=str(parent))
+        def run(command, **args):
+            return request(session, 'surgicalRehearsal', caseHash=BLOCKED_OUTLET, command=command, **args)
+        source = run('inspect')
+        assert source['practiceAdmission']['available']
+        child = run('practice', **selection(source))
+        episode = child['practiceEpisode']['episodeId']
+        def step(result, operation, duration=.1, **args):
+            return run('step', expectedStateId=result['view']['stateId'], expectedEpisodeId=episode,
+                       action={'slot': 'left', 'operation': operation, 'duration': duration, **args})
+        waiting = step(child, 'inspect', 15.)
+        assert waiting['view']['fluid'] == {}
+        assert waiting['view']['sources'][0]['reservoirMm3'] == pytest.approx(1.5)
+        assert waiting['view']['metrics']['fluidPresentMm3'] == pytest.approx(1.5)
+        exchanged = step(waiting, 'exchange', instrument='cusa')
+        def pose(z):
+            return {'position': [9., 9., z], 'quaternion': [0., 0., 0., 1.]}
+        placed = step(exchanged, 'place', pose=pose(-5.), parameters={'radiusMm': 1.5, 'power': 1., 'duty': 1.})
+        opened = step(placed, 'apply', 3., pose=pose(8.8))
+        assert opened['outcome']['status'] == 'partial'
+        view = opened['view']
+        assert view['sources'][0]['reservoirMm3'] == 0
+        assert sum(view['fluid'].values()) == pytest.approx(view['metrics']['fluidPresentMm3'])
+        assert view['metrics']['fluidPresentMm3'] > 1.5
+    finally:
+        session.close()
