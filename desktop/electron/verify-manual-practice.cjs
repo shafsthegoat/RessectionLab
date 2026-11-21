@@ -9,6 +9,7 @@ const path = require('node:path');
 const {createHash} = require('node:crypto');
 const {execFileSync} = require('node:child_process');
 const {app, dialog, ipcMain} = require('electron');
+const responseCheck = require('./response-practice-evidence.cjs');
 const {inputScript} = require('./verify-eden-planning-helpers.cjs');
 const {delay, summary, stateWitness, checkAction, startRecording} = require('./manual-practice-evidence.cjs');
 
@@ -21,6 +22,10 @@ const complete = process.argv.includes('--complete-cranial') ? require('./comple
 const pairedIndex = process.argv.indexOf('--paired-actions');
 assert(!complete || pairedIndex === -1, 'Choose one source task');
 const paired = pairedIndex >= 0 ? JSON.parse(fs.readFileSync(process.argv[pairedIndex+1], 'utf8')) : null;
+const detail = process.argv.includes('--response-detail');
+const enclosed = process.argv.includes('--enclosed-outlet');
+const gestureOnly = process.argv.includes('--continuous-benchmark');
+assert(!enclosed || paired, 'Provide enclosed control actions');
 const cold = process.argv.includes('--cold') || process.argv.includes('--cold-benchmark');
 const benchmark = process.argv.includes('--benchmark') || process.argv.includes('--cold-benchmark');
 const sample = process.argv.find(arg=>arg.startsWith('--cold-sample='))?.split('=')[1];
@@ -37,7 +42,7 @@ const scratch = fs.mkdtempSync(path.join(os.tmpdir(), 'rslab-manual-'));
 const captureScratch = benchmark ? null : fs.mkdtempSync(path.join(output, '.compositor-'));
 const report = {pid: process.pid, windowMode:'hidden', windowShown:false, mode: take, source, originalSha256: hashFile(original), inputFile: original,
   gitHead:execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),
-  sourceFiles:Object.fromEntries(['desktop/electron/main.cjs','desktop/electron/verify-manual-practice.cjs','desktop/electron/manual-practice-evidence.cjs',
+  sourceFiles:Object.fromEntries(['desktop/electron/main.cjs','desktop/electron/verify-manual-practice.cjs','desktop/electron/manual-practice-evidence.cjs','desktop/electron/response-practice-evidence.cjs','desktop/electron/complete-cranial-practice.cjs',
     'src/resectionlab/desktop_bridge.py','src/resectionlab/surgical_bridge.py','src/resectionlab/surgical_practice.py','src/resectionlab/surgical_engine.py',
     'src/resectionlab/surgical_deformation_v2.py','src/resectionlab/surgical_effects.py','src/resectionlab/surgical_bipolar_thermal.py','src/resectionlab/surgical_vascular_graph.py'].map(name=>[name,hashFile(path.join(root,name))])),
   rendererAssets: {}, machine: {model: os.cpus()[0].model, totalGiB: os.totalmem()/2**30, os: os.release()},
@@ -189,13 +194,15 @@ app.on('browser-window-created', (_, win) => {
       await ready(witness.stateId);
       const drawn=await js(`(()=>{const p=document.querySelector('[data-accepted-tools]'),h=document.querySelector('[data-operative-readout-state]');
         return {id:p.dataset.surgicalStateId,tools:JSON.parse(p.dataset.acceptedTools),removed:Number(p.dataset.removedCells),interactionMode:p.dataset.practiceInteraction,
-          view:p.dataset.operativeView,camera:JSON.parse(p.dataset.opticalCamera??'null'),hud:h?.dataset.operativeReadoutState,
+          view:p.dataset.operativeView,fieldMm:Number(document.querySelector('[aria-label=\"Field / magnification\"]')?.value),pane:p.getBoundingClientRect().toJSON(),camera:JSON.parse(p.dataset.opticalCamera??'null'),hud:h?.dataset.operativeReadoutState,
           readout:h?.textContent,quantities:Object.fromEntries([...h?.querySelectorAll('dl > div')??[]].map(row=>[row.querySelector('dt').textContent,row.querySelector('dd').textContent])),field:window.manualEvidence.latestFrame?.field,frame:window.manualEvidence.latestFence}})()`);
       assert.equal(drawn.view,'surgeon');assert.equal(drawn.hud,witness.stateId);
       assert.equal(drawn.id,witness.stateId);assert.deepEqual(drawn.tools,witness.tools);assert.equal(drawn.removed,witness.removedCells);
       assert.equal(drawn.frame?.stateId,witness.stateId);assert.equal(drawn.frame.source,witness.caseHash);
       if(drawn.quantities['Original target remaining']!==undefined){
-        const expected={'Original target remaining':witness.remaining,'Field fluid':witness.metrics.fluidPresentMm3,'Field debris':witness.metrics.debrisMm3};
+        const expected={'Original target remaining':witness.remaining,...(drawn.quantities['Field fluid']!==undefined?{'Field fluid':witness.metrics.fluidPresentMm3}:{
+          'Free-field fluid':witness.freeField.fluidMm3,'Outlet reservoir':witness.reservoirMm3,
+          'Retained fluid total':witness.metrics.fluidPresentMm3}),'Field debris':witness.metrics.debrisMm3};
         for(const [key,value] of Object.entries(expected))assert.equal(drawn.quantities[key],(+value.toFixed(2))+' mm³');
       }
       if(witness.freeField.fluidCells||witness.freeField.debrisCells){
@@ -203,10 +210,17 @@ app.on('browser-window-created', (_, win) => {
         for(const key of ['fluidCells','debrisCells','fluidMm3','debrisMm3'])
           assert(Math.abs(drawn.field[key]-witness.freeField[key])<1e-6,'Visible per-cell field inventory differs: '+key);
       }
+      if(drawn.field?.joinedFluidCells!==undefined){
+        assert(drawn.field.joinedFluidCells>=0 && drawn.field.joinedFluidCells<=witness.freeField.fluidCells);
+      }
+      if(witness.reservoirMm3>0 && !witness.freeField.fluidCells){
+        assert.equal(drawn.field?.fluidCells??0,0);assert.equal(drawn.field?.wetTextureBytes??0,0);
+        assert.equal(drawn.field?.joinedFluidCells??0,0);
+      }
       return drawn;
     };
     const capture = async name => {
-      if(benchmark && !name.endsWith('-failure')) return;
+      if(benchmark && !name.endsWith('-failure') && !name.startsWith('matched-')) return;
       const pic=await wc.capturePage(undefined,{stayHidden:true,stayAwake:true});
       fs.writeFileSync(path.join(output,name+'.png'),pic.toPNG());
       report.captures.push(name+'.png');
@@ -292,7 +306,7 @@ app.on('browser-window-created', (_, win) => {
       const verify=await js(`[...document.querySelectorAll('button')].find(b=>['Verify saved replay','Verify replay for planning'].includes(b.textContent.trim())&&!b.disabled)?.textContent.trim()`);
       if(verify)await click(verify);
       if(await js(`!!(${byName('Rehearse/edit stage')})`))await click('Rehearse/edit stage');
-      await wait(()=>latest?.witness?.caseHash===(paired?'sha256:c298887cb67b1034d782d682b01ee03cdaf86ee13237602eb3239ec114d5a710':'sha256:9818506d2f779b8fece10d048e0f21e2357f86851936ad0f5b86ee6f6cfaa1e0'),'frozen source');
+      await wait(()=>latest?.witness?.caseHash===(enclosed?'sha256:33adb0e7a4405f6dc5231512a637fc519f3339bc3967b01dbfb2f8627962ed9e':paired?'sha256:c298887cb67b1034d782d682b01ee03cdaf86ee13237602eb3239ec114d5a710':'sha256:9818506d2f779b8fece10d048e0f21e2357f86851936ad0f5b86ee6f6cfaa1e0'),'frozen source');
       await ready(latest.witness.stateId);
       if(!await js("!!document.querySelector('[data-operative-view=surgeon][data-optical-camera]')"))await click('Surgeon / Microscope');
       await until("!!document.querySelector('[data-operative-view=surgeon][data-optical-camera]')");
@@ -318,9 +332,9 @@ app.on('browser-window-created', (_, win) => {
         report.replayed=[prior.stateId,previous.finalState.stateId];
       } else {
         // Prepare the verified post-membrane checkpoint through the existing timeline.
-        if(paired){await js(inputScript('Surgical branch','configured-start'));await wait(()=>latest?.witness.branchId==='configured-start','paired source branch');}
+        if(paired&&!enclosed){await js(inputScript('Surgical branch','configured-start'));await wait(()=>latest?.witness.branchId==='configured-start','paired source branch');}
         await until(`(${byName('Surgical timeline')})?.disabled===false`);
-        const startPosition=complete?complete.parentPosition:paired?1:105;
+        const startPosition=complete?complete.parentPosition:enclosed?0:paired?1:105;
         await js(inputScript('Surgical timeline',startPosition));
         await wait(()=>latest?.witness.position===startPosition,'verified source boundary',300000);
         await ready(latest.witness.stateId);report.parent=latest.witness;
@@ -335,14 +349,28 @@ app.on('browser-window-created', (_, win) => {
         await ready(latest.witness.stateId);
         await click('left hand');
         await js('window.manualEvidence.active=true');
-        if(complete) {
+        const gestureUi={click,byName,point,send,wait,read:()=>latest,
+          observe:fn=>{observeHeldStep=fn;},snapshot,report};
+        if(gestureOnly){
+          await responseCheck.benchmarkHold({...gestureUi,choose,number,press,js});
+        } else if(complete) {
           await complete.run({number,press,choose,capture,click,report,read:()=>latest,recorded:!benchmark,
             byName,point,send,wait,snapshot,js,key,observe:fn=>{observeHeldStep=fn;}});
         } else if(paired) {
           const labels={hold:'Hold tissue',apply:'Apply tool',move:'Move tool',place:'Place tool',withdraw:'Withdraw tool',release:'Release tool',inspect:'Observe interval'};
           const parameterNames={radiusMm:'Tip radius · mm',forceN:'Contact force · N',power:'Power · model units',
-            jawOpeningMm:'Jaw opening · mm',depthMm:'Working depth · mm',flowMm3PerSecond:'Flow · mm³/s'};
+            jawOpeningMm:'Jaw opening · mm',depthMm:'Working depth · mm',duty:'Drill duty fraction',flowMm3PerSecond:'Flow · mm³/s'};
           const sampled=[];
+          const optics = async () => {
+            const range=byName('Field / magnification');
+            await mouse(await point(range));await key('Home','Home',36);
+            assert.equal(Number(await js(`(${range}).value`)),12);
+            await click('Microscope settings and inspection');
+          };
+          if(detail) {
+            await optics();
+            assert.equal((await snapshot(latest.witness)).fieldMm,12);
+          }
           for(const [i,row] of paired.entries()){
             assert.equal(row.slot,'left');
             await number('Action duration',row.duration);
@@ -356,9 +384,22 @@ app.on('browser-window-created', (_, win) => {
               await number('Tool roll',row.pose.quaternion[2]===0?0:90);
             }
             const label=row.operation==='deactivate'?(await js(`!!(${byName('Deactivate tool')})`)?'Deactivate tool':'Release tool'):labels[row.operation];
-            assert(label,'Unsupported fixture input '+row.operation);sampled.push(await press(label));
+            assert(label,'Unsupported fixture input '+row.operation);
+            const partial=enclosed&&[3,8,14].includes(i);
+            sampled.push(await press(label,partial?'partial':'accepted'));
+            if(detail && !enclosed && i===9){
+              await click('Center field on accepted tip once');
+              await click('Microscope settings and inspection');
+            }
+            if(detail && (enclosed?[0,3,9,14,21]:[1,2,3,4,5,9,11,16,22,28]).includes(i)){
+              await delay(300);await capture('detail-'+String(i).padStart(2,'0')+'-'+row.operation);
+              (report.detailFrames??=[]).push({index:i,drawn:await snapshot(sampled[i]),stateId:sampled[i].stateId});
+            }
             if([3,5,9,16,22,28].includes(i))await capture('paired-'+i+'-'+row.operation);
           }
+          if(detail) responseCheck.checkCameras(report.detailFrames,enclosed);
+          if(enclosed)report.outletEffects=responseCheck.checkOutlet(sampled);
+          else {
           const retracted=sampled[3].metrics.brainMaxDisplacementMm, released=sampled[4].metrics.brainMaxDisplacementMm, relaxed=sampled[5].metrics.brainMaxDisplacementMm;
           assert(retracted>released && released>relaxed && relaxed>=0);
           assert(sampled[11].bleedingSources>0 && sampled[11].emittedMm3>0);
@@ -370,6 +411,7 @@ app.on('browser-window-created', (_, win) => {
           assert(Math.abs(irrigated-5)<1e-6 && Math.abs(aspirated-5)<1e-6);
           report.pairedEffects={retracted,released,relaxed,earlyWoundEmittedMm3:sampled[11].emittedMm3,finalWoundEmittedMm3:latest.witness.emittedMm3,finalFieldPresentMm3:latest.witness.metrics.fluidPresentMm3,ports:sampled[16].woundPorts,
             bipolarHeatJ:sampled[16].metrics.bipolarHeatInputJ,irrigatedMm3:irrigated,aspiratedMm3:aspirated};
+          }
         } else {
         await choose('cusa');
         await number('Tool position R',32);await number('Tool position A',32);await number('Tool position S',55);
@@ -430,11 +472,25 @@ app.on('browser-window-created', (_, win) => {
         const steps=report.actions.filter(a=>a.result.status!=='rejected');assert.equal(eventLog.stateId,report.finalState.stateId);
         assert.deepEqual(eventLog.actions,steps.map(a=>a.result.requested));
         report.savedActionsVerified=steps.length;
-        if(!benchmark)await delay(Math.max(1200,62000-(performance.now()-recordingStarted)));
+        if(process.argv.includes('--matched-stills')){
+          assert(benchmark&&paired&&!enclosed);
+          for(const after of [24,30]){
+            const item=report.actions[after];
+            const boundary=item.result.witness;
+            await js(inputScript('Surgical timeline',boundary.position));
+            await ready(boundary.stateId);
+            assert.deepEqual(latest.witness,boundary);
+            const drawn=await snapshot(boundary);
+            assert.deepEqual(drawn.camera,item.display.camera);
+            await capture('matched-'+(after===24?'irrigated':'suctioned'));
+            (report.matchedStills??=[]).push({after,stateId:boundary.stateId,drawn});
+          }
+        }
+        if(!benchmark)await delay(Math.max(1200,(detail?0:62000)-(performance.now()-recordingStarted)));
       }
       if(stopRecording){report.movie=await stopRecording(path.join(output,take+'.mp4'));stopRecording=undefined;
         if(!cold){
-          if(!complete) assert(report.movie.wallSeconds>=60 && report.movie.wallSeconds<=120,'Manual take must be 60–120 wall seconds');
+          if(!complete&&!detail) assert(report.movie.wallSeconds>=60 && report.movie.wallSeconds<=120,'Manual take must be 60–120 wall seconds');
           for(const item of report.actions.filter(a=>a.result.status!=='rejected')){
             const frame=report.movie.stateChanges.find(f=>f.stateId===item.result.witness.stateId);
             if(!frame && item.heldInput) continue; // A continuous tick can fall between real compositor samples.
@@ -443,7 +499,7 @@ app.on('browser-window-created', (_, win) => {
             item.inputToFirstRecordedFrameMs=report.movie.firstCaptureEpochMs+frame.offsetMs-item.inputEpochMs;
           }
         }}
-        if(!benchmark&&!cold&&!complete){
+        if(!benchmark&&!cold&&!complete&&!detail){
           win.setContentSize(1050,720);await until('innerWidth===1050 && innerHeight===720');
           await point(byName('Place tool'));await point(byName('Instrument jog pad'));await capture('compact-controls');
           assert((await js('document.documentElement.scrollWidth'))<=1050,'Compact workspace has horizontal overflow');

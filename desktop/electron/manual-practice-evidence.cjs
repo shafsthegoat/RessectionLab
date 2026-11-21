@@ -34,7 +34,7 @@ function stateWitness(result) {
       [id,{cell:p.cell,sealFraction:p.sealFraction}])),
     bleedingSources:(view.sources??[]).filter(s=>s.bleedingActive).length,
     emittedMm3:view.metrics.vesselPhysicsV2?.emittedMm3??0,
-    reservoirMm3:view.metrics.vesselPhysicsV2?.blockedOutletReservoirMm3??0,
+    reservoirMm3:(view.sources??[]).reduce((sum,s)=>sum+(s.reservoirMm3??0),0),
     vascularResidualMm3:view.metrics.vesselPhysicsV2?.conservationResidualMm3??null,
     freeField: Object.fromEntries(['fluid','debris'].flatMap(name=>{
       const quantities=Object.values(view[name]??{}).filter(x=>Number.isFinite(x)&&x>0);
@@ -72,6 +72,8 @@ function checkAction(before, after, outcome, requested) {
   const balance = state => {const m=state.metrics;return m.fluidPresentMm3 + m.fluidEscapedMm3 + m.fluidRemovedMm3 - m.fluidAddedMm3;};
   // fluidPresentMm3 already includes the free cells and any blocked outlet reservoir.
   assert(Math.abs(balance(after) - balance(before)) < 1e-6);
+  assert(Math.abs(after.freeField.fluidMm3+after.reservoirMm3-after.metrics.fluidPresentMm3)<1e-6,
+    'Free field and outlet reservoirs must account for all retained fluid');
   if(after.vascularResidualMm3!==null)assert(Math.abs(after.vascularResidualMm3)<1e-6);
 }
 
