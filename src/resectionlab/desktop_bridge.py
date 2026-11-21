@@ -27,7 +27,7 @@ import sys
 import tempfile
 import threading
 import time
-from types import ModuleType, FunctionType, BuiltinFunctionType
+from types import ModuleType, FunctionType, BuiltinFunctionType, MappingProxyType
 import uuid
 from typing import Any, Callable
 
@@ -1714,7 +1714,8 @@ class BridgeSession:
                 workspace['rehearsalView'] = checked_saved_view(self, entry, workspace['rehearsalView'])
             imaging=view_state(entry.case,list(entry.display_sources.values()),workspace.pop('imaging',entry.imaging_state))
             selection=replay_state(entry.episode,workspace.pop('episodeReplay',entry.episode_selection))
-            artifacts = thaw_json(entry.artifacts)
+            original_artifacts = entry.artifacts
+            artifacts = thaw_json(original_artifacts)
             prior_workspace = artifacts.get("workspace", {})
             if prior_workspace.get("case_hash") != entry.case.semantic_hash:
                 prior_workspace = {}
@@ -1724,6 +1725,11 @@ class BridgeSession:
                 prior_workspace["routes"] = thaw_json(entry.routes)["candidates"]
                 artifacts["route_search"] = thaw_json(entry.routes)
             artifacts["workspace"] = prior_workspace
+            updated = {**original_artifacts, "workspace": freeze_json(prior_workspace)}
+            new_routes = entry.routes is not None and entry.routes is not original_artifacts.get("route_search")
+            if entry.routes is not None:
+                updated["route_search"] = entry.routes
+            saved_artifacts = MappingProxyType(updated)
             request.check()
             progress(0.2, "Saving imaging, source versions, and evaluated routes")
             with tempfile.TemporaryDirectory(prefix=".resection-save-", dir=destination.parent) as temporary:
@@ -1731,6 +1737,8 @@ class BridgeSession:
                 workspace_hash=save_workspace(entry.case,staged,sources=entry.display_sources.values(),
                     imaging=imaging,episode=entry.episode,selection=selection,artifacts=artifacts,
                     originals=entry.originals)
+                if entry.artifacts is not original_artifacts or self.cases.get(entry.case.semantic_hash) is not entry:
+                    raise BridgeError("WORKSPACE_CHANGED", "The open workspace changed while the save was staged.")
                 request.begin_commit()
                 if practice and existing_save is None:
                     # Reserve a new name after staging. A concurrent save cannot
@@ -1751,7 +1759,16 @@ class BridgeSession:
                         if not os.path.samestat(now, existing_save) or now.st_mtime_ns != existing_save.st_mtime_ns:
                             raise BridgeError("PRACTICE_SAVE_AS", "The selected workspace changed while saving. Choose another filename.")
                     os.replace(staged, destination)
-            entry.artifacts=freeze_json(artifacts);entry.imaging_state=imaging
+            # Only presentation and route-search metadata were written. Keep
+            # the exact immutable simulation archive that the live owner read.
+            owners = getattr(self, 'surgical_sessions', {})
+            key = entry.case.semantic_hash
+            admitted = owners.get(key)
+            if (not new_routes and admitted is not None and len(admitted) == 5
+                    and admitted[0] is None and admitted[3] is original_artifacts):
+                owners[key] = (*admitted[:3], saved_artifacts, admitted[4])
+            entry.artifacts = saved_artifacts
+            entry.imaging_state=imaging
             entry.episode_selection=selection;entry.workspace_hash=workspace_hash
             entry.surgical_environment_dirty = False
             return {"caseHash":entry.case.semantic_hash,"path":str(destination),"saved":True,"sessionHash":workspace_hash}

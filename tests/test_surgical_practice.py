@@ -266,3 +266,58 @@ def test_exact_enclosed_outlet_control_preserves_native_blockage(tmp_path, monke
         assert view['metrics']['fluidPresentMm3'] > 1.5
     finally:
         session.close()
+
+
+def test_workspace_save_keeps_only_the_admitted_live_surgery_owner(practice_source, tmp_path, monkeypatch):
+    from resectionlab.core import freeze_json
+
+    session, _, _ = practice_source
+    source = surgical(session, 'inspect')
+    child = surgical(session, 'practice', **selection(source))
+    key = child['caseHash']
+    entry = session._get_case(key)
+    toolbox = entry.artifacts['surgical_toolbox']
+    owner = session.surgical_sessions[key]
+    assert owner[3] is entry.artifacts
+
+    calls = []
+    original_restore = SurgicalEngine.restore.__func__
+
+    def restore(cls, *args, **kwargs):
+        calls.append(args[0].identity)
+        return original_restore(cls, *args, **kwargs)
+
+    monkeypatch.setattr(SurgicalEngine, 'restore', classmethod(restore))
+    archive = tmp_path/'layout.ressectionlab'
+    request(session, 'saveCase', caseHash=key, path=str(archive), workspace={'cursor': [1, 2, 3]})
+    assert session.surgical_sessions[key][1] is owner[1]
+    assert session.surgical_sessions[key][3] is entry.artifacts
+    assert entry.artifacts['surgical_toolbox'] is toolbox
+    assert surgical(session, 'inspect')['view']['stateId'] == child['view']['stateId']
+    assert not calls
+
+    # A failed save cannot publish its layout or rebind an admission.
+    owner = session.surgical_sessions[key]
+    prior = entry.artifacts
+    canceled = _Request('cancel-save')
+    other = tmp_path/'canceled.ressectionlab'
+    with pytest.raises(ValueError, match='cancel'):
+        session.execute('saveCase', {'caseHash':key, 'path':str(other), 'workspace':{'cursor':[4, 5, 6]}},
+                        canceled, lambda *_: canceled.cancel())
+    assert entry.artifacts is prior and session.surgical_sessions[key] is owner
+    assert not other.exists()
+
+    # Even byte-equal externally replaced input cannot inherit hot admission via Save.
+    entry.artifacts = freeze_json(thaw_json(entry.artifacts))
+    request(session, 'saveCase', caseHash=key, path=str(tmp_path/'changed.ressectionlab'),
+            workspace={'cursor':[7, 8, 9]})
+    assert session.surgical_sessions[key][3] is not entry.artifacts
+    assert surgical(session, 'inspect')['view']['stateId'] == child['view']['stateId']
+    assert calls
+
+    # A newly evaluated route inventory still invalidates that hot owner.
+    owner = session.surgical_sessions[key]
+    entry.routes = freeze_json({'candidates': []})
+    request(session, 'saveCase', caseHash=key, path=str(tmp_path/'routes.ressectionlab'), workspace={})
+    assert session.surgical_sessions[key] is owner
+    assert owner[3] is not entry.artifacts and entry.artifacts['route_search'] is entry.routes
