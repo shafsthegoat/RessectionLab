@@ -96,32 +96,63 @@ async function holdSteps({label,count,click,byName,point,send,wait,read,observe,
 
 async function jogToStation(ui, target) {
   const pad=ui.byName('Instrument jog pad');
-  const origin=await ui.point(pad);
-  const xy={x:origin.x,y:origin.y};
-  const draft=await ui.js("JSON.parse(document.querySelector('[data-practice-proposed-position]').dataset.practiceProposedPosition)");
-  let dx=target[0]-draft[0], dy=target[1]-draft[1];
-  // The regular pad maps 20 pixels to one tool-local mm, bounded to 4 mm.
-  // Move the visible pointer in small increments so the live draft is legible.
-  while(Math.abs(dx)+Math.abs(dy)>1e-8) {
-    const stepX=Math.max(-2,Math.min(2,dx)), stepY=Math.max(-2,Math.min(2,dy));
-    await ui.send('dispatchMouseEvent',{type:'mouseMoved',...xy});
-    await ui.send('dispatchMouseEvent',{type:'mousePressed',button:'left',buttons:1,clickCount:1,...xy});
-    for(let j=1;j<=4;j++) {
-      await ui.send('dispatchMouseEvent',{type:'mouseMoved',buttons:1,x:xy.x+5*j*stepX,y:xy.y-5*j*stepY});
-      if(ui.recorded) await delay(17);
+  const readDraft=()=>ui.js("JSON.parse(document.querySelector('[data-practice-proposed-position]').dataset.practiceProposedPosition)");
+  const equal=(left,right)=>left.every((n,i)=>Math.abs(n-right[i])<1e-7);
+  let draft=await readDraft();
+  let gestures=0;
+  while(gestures<12 && Math.hypot(target[0]-draft[0],target[1]-draft[1])>1e-7){
+    // Opening the proposed-tip readout can move the pad in the scroll panel.
+    // Each gesture starts at its actual rectangle and at the displayed draft.
+    const p=await ui.point(pad);
+    draft=await readDraft();
+    const dx=Math.max(-2,Math.min(2,target[0]-draft[0]));
+    const dy=Math.max(-2,Math.min(2,target[1]-draft[1]));
+    const wanted=[draft[0]+dx,draft[1]+dy,draft[2]];
+    const endpoint={x:p.x+20*dx,y:p.y-20*dy};
+    await ui.send('dispatchMouseEvent',{type:'mouseMoved',x:p.x,y:p.y});
+    await ui.send('dispatchMouseEvent',{type:'mousePressed',button:'left',buttons:1,clickCount:1,x:p.x,y:p.y});
+    try {
+      for(let j=1;j<=4;j++){
+        await ui.send('dispatchMouseEvent',{type:'mouseMoved',buttons:1,x:p.x+5*j*dx,y:p.y-5*j*dy});
+        if(ui.recorded) await delay(18);
+      }
+      // Chromium may coalesce a last pointermove while the proposal is being
+      // drawn. Leave the pointer down and observe the actual accepted UI input.
+      for(let n=0;n<5 && !equal(await readDraft(),wanted);n++){
+        await delay(20);
+        await ui.send('dispatchMouseEvent',{type:'mouseMoved',buttons:1,...endpoint});
+      }
+    } finally {
+      await ui.send('dispatchMouseEvent',{type:'mouseReleased',button:'left',buttons:0,clickCount:1,...endpoint});
     }
-    await ui.send('dispatchMouseEvent',{type:'mouseReleased',button:'left',buttons:0,clickCount:1,x:xy.x+20*stepX,y:xy.y-20*stepY});
-    dx-=stepX;dy-=stepY;
+    const next=await readDraft();
+    gestures++;
+    if(equal(draft,next)) break;
+    draft=next;
   }
+  // Use the same visible pose settings to refine any sub-step rounding or a
+  // clipped gesture in the compact pad. Verify the draft before any commit.
+  draft=await readDraft();
+  const refined=[];
+  for(let i=0;i<2;i++) if(Math.abs(draft[i]-target[i])>1e-7) {
+    const axis=['R','A'][i];
+    await ui.number('Tool position '+axis,target[i]);
+    refined.push(axis);
+  }
+  await ui.point(pad);
   await ui.js(`(${pad}).focus({preventScroll:true})`);
-  const depth=target[2]-draft[2];
+  const depth=target[2]-(await readDraft())[2];
   assert(Number.isInteger(depth*2));
   for(let j=0;j<Math.abs(depth)*2;j++) {
     if(depth>0) await ui.key('PageDown','PageDown',34);
     else await ui.key('PageUp','PageUp',33);
   }
-  const requested=await ui.js("JSON.parse(document.querySelector('[data-practice-proposed-position]').dataset.practiceProposedPosition)");
-  assert.deepEqual(requested,target,'Jog pad proposal must coincide with the source-bound station');
+  if(Math.abs((await readDraft())[2]-target[2])>1e-7) {
+    await ui.number('Tool position S',target[2]);
+    refined.push('S');
+  }
+  assert(equal(await readDraft(),target),'Jog pad proposal must coincide with the source-bound station');
+  (ui.report.jogStations??=[]).push({target,gestures,refined});
 }
 
 async function run(ui) {
@@ -149,7 +180,18 @@ async function run(ui) {
   assert.equal(state().remaining,27);
   assert.equal(state().metrics.debrisMm3,236);
   const baseline = state().metrics;
+  const inspectTask = async (expected, name) => {
+    const card='details[aria-label="Practice task"]';
+    await ui.wait(()=>ui.js(`document.querySelector('${card}')?.dataset.taskState===${JSON.stringify(state().stateId)}`),expected);
+    await click('Practice task');
+    const text=await ui.js(`document.querySelector('${card}').innerText`);
+    assert(text.includes(expected));
+    await mark(name);
+    await click('Practice task');
+    return text;
+  };
   report.task={endpoint,startStages:opening,originalToolStates:view().slots};
+  report.task.atEntry=await inspectTask('Grasp and extract the cut membrane patch','02-task-at-entry');
   await duration(.1);
   await choose('membrane_forceps');
   // Select the existing microscope range using native keyboard input. The
@@ -249,6 +291,7 @@ async function run(ui) {
   report.task.finalProtection=final.protection;
   report.task.finalToolStates=final.slots;
   await mark('09-clean-field-withdrawn');
+  report.task.atGoal=await inspectTask('Modeled endpoint reached','09-verified-task-endpoint');
   await click('Inspection cutaway');
   await delay(350);
   await mark('10-final-inspection-cutaway');
