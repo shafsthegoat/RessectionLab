@@ -44,10 +44,12 @@ const report = {pid: process.pid, windowMode:'hidden', windowShown:false, mode: 
   gitHead:execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),
   sourceFiles:Object.fromEntries(['desktop/electron/main.cjs','desktop/electron/verify-manual-practice.cjs','desktop/electron/manual-practice-evidence.cjs','desktop/electron/response-practice-evidence.cjs','desktop/electron/complete-cranial-practice.cjs',
     'src/resectionlab/desktop_bridge.py','src/resectionlab/surgical_bridge.py','src/resectionlab/surgical_practice.py','src/resectionlab/surgical_engine.py',
-    'src/resectionlab/surgical_deformation_v2.py','src/resectionlab/surgical_effects.py','src/resectionlab/surgical_bipolar_thermal.py','src/resectionlab/surgical_vascular_graph.py'].map(name=>[name,hashFile(path.join(root,name))])),
+    'src/resectionlab/surgical_deformation_v2.py','src/resectionlab/simulation_engine_native.hpp','src/resectionlab/surgical_effects.py','src/resectionlab/surgical_bipolar_thermal.py','src/resectionlab/surgical_vascular_graph.py'].map(name=>[name,hashFile(path.join(root,name))])),
   rendererAssets: {}, machine: {model: os.cpus()[0].model, totalGiB: os.totalmem()/2**30, os: os.release()},
   actions: [], memory: [], timing: {}, captures: []};
 if(complete) report.sourceFiles['desktop/electron/complete-cranial-practice.cjs']=hashFile(require.resolve('./complete-cranial-practice.cjs'));
+report.nativeBuilds=Object.fromEntries(fs.readdirSync(path.join(root,'src/resectionlab'))
+  .filter(name=>/^_geometry_cpp.*\.(so|pyd)$/.test(name)).map(name=>[name,hashFile(path.join(root,'src/resectionlab',name))]));
 for (const name of fs.readdirSync(path.join(root, 'desktop/dist/assets')).filter(n => /^index-.*\.(js|css)$/.test(n)))
   report.rendererAssets[name] = hashFile(path.join(root, 'desktop/dist/assets', name));
 const persist = () => fs.writeFileSync(paper, JSON.stringify(report, null, 2) + '\n');
@@ -295,10 +297,18 @@ app.on('browser-window-created', (_, win) => {
     try {
       wc.setBackgroundThrottling(false);wc.debugger.attach('1.3');
       await wc.debugger.sendCommand('Emulation.setFocusEmulationEnabled',{enabled:true});
+      if(process.argv.includes('--dpr-one') && await js('window.devicePixelRatio')!==1){
+        await wc.debugger.sendCommand('Emulation.setDeviceMetricsOverride',{width:0,height:0,mobile:false,deviceScaleFactor:1});
+        await until('window.devicePixelRatio===1');
+      }
       win.setContentSize(width,height);await until(`innerWidth===${width} && innerHeight===${height}`);
       assert(!win.isVisible());await installTelemetry();
       await until("!!document.querySelector('.rl-viewer canvas') && !document.querySelector('.viewer-loading')",300000);
       report.coldCanvasMs=performance.now()-launch;
+      report.displayScale=await js(`({cssSize:[innerWidth,innerHeight],devicePixelRatio,
+        canvases:[...document.querySelectorAll('.rl-viewer canvas')].map(e=>{
+          const r=e.getBoundingClientRect();return {drawingBuffer:[e.width,e.height],cssSize:[r.width,r.height]};
+        })})`);
       report.gpu=app.getGPUFeatureStatus();assert(report.gpu.webgl==='enabled'||report.gpu.webgl2==='enabled','GPU WebGL is unavailable');
       if(complete&&!benchmark) stopRecording=record();
       await click('Rehearse');
@@ -311,6 +321,15 @@ app.on('browser-window-created', (_, win) => {
       if(!await js("!!document.querySelector('[data-operative-view=surgeon][data-optical-camera]')"))await click('Surgeon / Microscope');
       await until("!!document.querySelector('[data-operative-view=surgeon][data-optical-camera]')");
       report.coldVerifiedBoundaryMs=performance.now()-launch;
+      report.displayScale.operative=await js(`(()=>{const e=document.querySelector('.rl-viewer canvas');
+        const r=e.getBoundingClientRect();
+        return {drawingBuffer:[e.width,e.height],cssSize:[r.width,r.height],devicePixelRatio};
+      })()`);
+      if(process.argv.includes('--dpr-one')){
+        assert.equal(report.displayScale.operative.devicePixelRatio,1);
+        for(const [i,value] of report.displayScale.operative.drawingBuffer.entries())
+          assert(Math.abs(value-report.displayScale.operative.cssSize[i])<=1,'Nonmatching operative framebuffer scale');
+      }
       if(cold) {
         const previous=JSON.parse(fs.readFileSync(path.join(output, (benchmark?'benchmark':'interaction')+'.json')));
         assert.notEqual(report.pid,previous.pid);assert.equal(report.originalSha256,previous.savedSha256);
