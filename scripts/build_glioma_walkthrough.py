@@ -14,6 +14,8 @@ def build(output, episode_only, recorded_episode=None, shot_plan=None):
     # Keep the checkout's testcases/outputs path when it points at an
     # external evidence volume. The public authoring tool uses that path.
     output = output.absolute()
+    if recorded_episode is None and ('..' in output.parts or not output.is_relative_to(ROOT/'testcases/outputs')):
+        raise ValueError('Choose an empty directory under testcases/outputs for the newly generated rehearsal.')
     if output.exists() and any(output.iterdir()):
         raise ValueError('Choose an empty output directory for this rehearsal.')
     output.mkdir(parents=True, exist_ok=True)
@@ -37,18 +39,19 @@ def build(output, episode_only, recorded_episode=None, shot_plan=None):
     plan = output/'shot-plan.json'
     if shot_plan is not None:
         shutil.copyfile(shot_plan, plan)
-    elif recorded_episode is not None:
-        run(sys.executable, 'scripts/plan_glioma_walkthrough.py', complete.with_suffix('.json'), plan, '--seconds', '96')
     else:
-        # New independently created practice branches have their own UUID and
-        # portable file hash. Rebind optics only after matching every state.
+        # An independently created practice has its own UUID and file hash.
+        # The edited presentation applies to any exact physical reproduction.
         optics = json.loads((RECORDED/'shot-plan.json').read_text())
         history = json.loads(complete.with_suffix('.json').read_text())
-        if (optics['caseHash'] != history['caseHash'] or
-                [a['stateAfter'] for a in history['actions']] != [a['stateAfter'] for a in optics['actions']]):
+        if (optics['caseHash'] == history['caseHash'] and
+                [a['stateAfter'] for a in history['actions']] == [a['stateAfter'] for a in optics['actions']]):
+            optics.update(branchId=history['branchId'], sourceFileSha256=history['sha256'])
+            plan.write_text(json.dumps(optics, indent=2) + '\n')
+        elif recorded_episode is not None:
+            run(sys.executable, 'scripts/plan_glioma_walkthrough.py', complete.with_suffix('.json'), plan, '--seconds', '96')
+        else:
             raise ValueError('The saved optical plan requires the exact recorded physical sequence')
-        optics.update(branchId=history['branchId'], sourceFileSha256=history['sha256'])
-        plan.write_text(json.dumps(optics, indent=2) + '\n')
     record = output/'recording'
     run('pnpm', '--dir', 'desktop', 'build')
     run(ROOT/'desktop/node_modules/.bin/electron', 'desktop/electron/record-surgical-walkthrough.cjs', complete, record, plan)
