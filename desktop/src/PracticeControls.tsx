@@ -2,6 +2,7 @@ import {useRef, useState} from 'react';
 import type {KeyboardEvent, ReactNode} from 'react';
 import type {SurgicalAction, SurgicalOutcome, SurgicalPose} from './surgical-types';
 import type {SurgicalController} from './use-surgical';
+import {CranialPracticeTask} from './CranialPracticeTask';
 import {PracticeHoldControls} from './PracticeHoldControls';
 import {amount} from './SurgicalOutcomeSummary';
 import {jogPracticePose, practiceDrag, practiceJogKey, practiceWithdrawalPose} from './practice-input';
@@ -60,6 +61,7 @@ export function PracticeControls({c, blocked, settings, params, duration}: {
   return <section className="practice-controls" aria-label="Instrument practice" aria-busy={c.pending}
     data-practice-episode={result.branchId} data-practice-state-id={view.stateId} data-practice-action-status={outcome?.status ?? 'ready'}
     data-practice-accepted-position={JSON.stringify(actual)} data-practice-proposed-position={JSON.stringify(draft.position)}>
+    <CranialPracticeTask result={result}/>
     <fieldset disabled={blocked} className="surgical-controls">
       <label>Instrument<select aria-label="Practice instrument" value={slot.instrument} onChange={e => send('exchange', e.target.value)}>
         {view.catalog.map(item => <option key={item.id} value={item.id}>{item.name}</option>)}

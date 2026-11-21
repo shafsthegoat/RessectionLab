@@ -153,3 +153,29 @@ test('held practice submits only from a displayed receipt and ignores late repli
     await interval();assert.equal(calls.length,5);assert.equal(h.render(props).props['data-practice-hold'],'idle');
   } finally {h.close();delete globalThis.window;delete globalThis.document;}
 });
+
+test('boundary-99 practice task follows exact stage evidence, original target, complete collection and exterior exit',async()=>{
+  const {CranialPracticeTask}=await server.ssrLoadModule('/src/CranialPracticeTask.tsx');
+  const parent={position:99,caseHash:'case',sceneId:'scene',checkpointSeal:'sha256:b54fff661810b8798c961181d57ac699d4759a3e4465949426adcfeec70afbe3'};
+  const membrane={retainedRimIntact:true,removedMembraneMm3:49,actualNativeExtractionEvents:1};
+  const stage={stateId:'endpoint',sceneId:'scene',contractHash:'sha256:00e861fa8802c8dacd44ab13d0f55402ab94b335c55f26a3b5402da2aeaa820d',
+    assessmentCurrent:true,bonePrefixVerified:true,boundaryCutComplete:true,patchExtracted:true,workEntrySupported:true,wholeExitComplete:true,membrane};
+  const metrics={nonTargetRemovedMm3:334,targetRemovedMm3:27,debrisMm3:0,debrisRemovedMm3:236.0000000000002,fluidPresentMm3:0};
+  const result={position:198,branchId:'practice',practiceEpisode:{episodeId:'practice',parent},caseHash:'case',practiceMetrics:{originalTargetVolumeMm3:27},
+    view:{stateId:'endpoint',scene:{sceneId:'scene'},metrics,originalTargetResidualMm3:0,cranialStages:stage}};
+  const html=(r=result)=>renderToStaticMarkup(React.createElement(CranialPracticeTask,{result:r}));
+  assert.match(html(),/Modeled endpoint reached/);
+  const atView=patch=>({...result,view:{...result.view,...patch}});
+  assert.match(html(atView({cranialStages:{...stage,patchExtracted:false,patchHeld:true}})),/Transport the held patch/);
+  assert.match(html(atView({originalTargetResidualMm3:1})),/Aspirate the remaining original target/);
+  assert.match(html(atView({metrics:{...metrics,debrisRemovedMm3:230}})),/Collect the remaining kerf debris/);
+  assert.match(html(atView({metrics:{...metrics,fluidPresentMm3:.5}})),/Clear the remaining modeled fluid/);
+  assert.match(html(atView({cranialStages:{...stage,wholeExitComplete:false}})),/Release and withdraw/);
+  assert.match(html(atView({metrics:{...metrics,nonTargetRemovedMm3:335}})),/Review retained rim and non-target/);
+  assert.match(html(atView({cranialStages:{...stage,membrane:{...membrane,retainedRimIntact:false}}})),/Review retained rim and non-target/);
+  assert.match(html(atView({cranialStages:{...stage,stateId:'previous'}})),/Current task evidence unavailable/);
+  assert.match(html(atView({originalTargetResidualMm3:undefined})),/Current task evidence unavailable/);
+  assert.equal(html({...result,practiceEpisode:{...result.practiceEpisode,parent:{...parent,checkpointSeal:'other'}}}),'');
+  assert.equal(html({...result,position:98}),'');
+  assert.equal(html({...result,playback:{}}),'');
+});
