@@ -411,6 +411,9 @@ def dispatch(session, operation, args, request, progress):
                 or artifacts.get(ARTIFACT, {}).get('branchId') != study_replay['branchId']):
             raise ValueError('STUDY_REPLAY_ONLY: the source-bound recording permits replay of its recorded branch only')
     raw = artifacts.get(ARTIFACT)
+    timing = getattr(request, 'rehearsal_timing', None)
+    if timing is not None and raw is not None:
+        timing.bind_source(raw.get('branchId'), raw.get('position'))
     source_role = (entry.case.metadata.get('data_case') or {}) if entry is not None else {}
     practice_role_allowed = isinstance(source_role, (dict, MappingProxyType)) and not any(
         source_role.get(k) for k in ('role', 'split', 'family_id'))

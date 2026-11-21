@@ -39,6 +39,7 @@ from .native_resection import NATIVE_GENERIC_TOOLS
 from .imaging import create_synthetic_case, inspect_nifti, load_case, load_nifti_case, read_case_artifacts, save_case
 from .planning import SearchConfig, generate_candidate_routes
 from .rehearsal_bridge import OPERATIONS as REHEARSAL_OPERATIONS
+from .rehearsal_timing import RehearsalTimingMonitor, RequestTiming
 
 PROTOCOL_VERSION = 1
 MAX_REQUEST_BYTES = 1024 * 1024
@@ -406,6 +407,7 @@ class _Request:
     committing: bool = False
     lock: threading.Lock = field(default_factory=threading.Lock)
     _native_stop: Any = field(default=None, init=False, repr=False, compare=False)
+    rehearsal_timing: RequestTiming | None = field(default=None, init=False, repr=False, compare=False)
 
     def __post_init__(self):
         if type(self) is _Request and _Request.check is _NATIVE_REQUEST_CHECK[0] and _Request.check.__code__ is _NATIVE_REQUEST_CHECK[1]:
@@ -1878,8 +1880,9 @@ class BridgeSession:
 class BridgeRuntime:
     """One numerical worker; cancellation, timeouts and ping never wait on it."""
 
-    def __init__(self, transfer_dir: Path, emit: Callable[[dict], None], *, max_cases: int = 2, run_dir: Path | None = None,
-                 observed_source_root: Path | None = None, prefix_worker: dict | None = None):
+    def __init__(self, transfer_dir: Path, emit: Callable[..., None], *, max_cases: int = 2, run_dir: Path | None = None,
+                 observed_source_root: Path | None = None, prefix_worker: dict | None = None,
+                 rehearsal_timing: RehearsalTimingMonitor | None = None):
         self.session = BridgeSession(transfer_dir, max_cases=max_cases, run_dir=run_dir,
                                      observed_source_root=observed_source_root)
         if prefix_worker is not None:
@@ -1891,6 +1894,7 @@ class BridgeRuntime:
                 raise
         self.run_dir = self.session.run_dir
         self.emit = emit
+        self._rehearsal_timing = rehearsal_timing
         self._lock = threading.RLock()
         self._requests: dict[str, _Request] = {}
         self._seen: set[str] = set()
@@ -1904,7 +1908,11 @@ class BridgeRuntime:
             request.terminal = True
             if request.timer:
                 request.timer.cancel()
-            self.emit({"id": request.request_id, "event": event, **payload})
+            message = {"id": request.request_id, "event": event, **payload}
+            if request.rehearsal_timing is not None:
+                self.emit(message, timing=request.rehearsal_timing)
+            else:
+                self.emit(message)
 
     def submit(self, message: Any) -> None:
         request_id = message.get("id") if isinstance(message, dict) else None
@@ -1976,11 +1984,15 @@ class BridgeRuntime:
                 if len(self._requests) >= MAX_PENDING:
                     raise BridgeError("BUSY", "Too many queued numerical jobs")
                 request = _Request(request_id)
+                if self._rehearsal_timing is not None:
+                    request.rehearsal_timing = RequestTiming.for_operation(request_id, operation, copied_args)
                 self._requests[request_id] = request
                 request.timer = threading.Timer(timeout / 1000, self._timeout, args=(request,))
                 request.timer.daemon = True
                 request.timer.start()
                 self.emit({"id": request_id, "event": "started"})
+                if request.rehearsal_timing is not None:
+                    request.rehearsal_timing.queued_ns = time.monotonic_ns()
                 self._executor.submit(self._work, operation, copied_args, request)
         except Exception as exc:
             self.emit({"id": request_id if isinstance(request_id, str) else None, "event": "error",
@@ -1991,13 +2003,26 @@ class BridgeRuntime:
             self._terminal(request, "error", error={"code": "TIMEOUT", "message": "Operation exceeded its declared time budget"})
 
     def _work(self, operation: str, args: dict, request: _Request) -> None:
+        timing = request.rehearsal_timing
+        if timing is not None:
+            timing.add('queue', time.monotonic_ns() - timing.queued_ns)
+
         def progress(fraction: float, message: str, details: dict | None = None) -> None:
             with self._lock:
                 if not request.terminal and not request.cancelled.is_set():
                     self.emit({"id": request.request_id, "event": "progress", "progress": {"fraction": float(fraction), "message": message, **(details or {})}})
         try:
-            result = self.session.execute(operation, args, request, progress)
-            request.check()
+            if timing is None:
+                result = self.session.execute(operation, args, request, progress)
+                request.check()
+            else:
+                with self._rehearsal_timing.sample(timing):
+                    started_ns = time.monotonic_ns()
+                    try:
+                        result = self.session.execute(operation, args, request, progress)
+                        request.check()
+                    finally:
+                        timing.add('dispatch', time.monotonic_ns() - started_ns)
             self._terminal(request, "result", result=result)
         except Exception as exc:
             if request.cancelled.is_set() or getattr(exc, "code", None) == "CANCELLED":
@@ -2005,6 +2030,8 @@ class BridgeRuntime:
             else:
                 self._terminal(request, "error", error={"code": getattr(exc, "code", "OPERATION_FAILED"), "message": str(exc)})
         finally:
+            if timing is not None:
+                timing.write(sys.stderr)
             self.session.prune_transfers()
             with self._lock:
                 self._requests.pop(request.request_id, None)
@@ -2037,6 +2064,7 @@ def main() -> int:
     parser.add_argument("--prefix-worker-source", type=Path)
     parser.add_argument("--prefix-worker-sha256")
     parser.add_argument("--prefix-worker-branch")
+    parser.add_argument("--rehearsal-timing", action="store_true", help=argparse.SUPPRESS)
     args = parser.parse_args()
     prefix_arguments = (args.prefix_worker_role, args.prefix_worker_source,
                         args.prefix_worker_sha256, args.prefix_worker_branch)
@@ -2051,14 +2079,24 @@ def main() -> int:
     # the wire protocol and route all incidental prints to stderr.
     sys.stdout = sys.stderr
     output_lock = threading.Lock()
-    def emit(event: dict) -> None:
+    def emit(event: dict, *, timing: RequestTiming | None = None) -> None:
+        started_ns = time.monotonic_ns() if timing is not None else 0
         encoded = json.dumps(event, separators=(",", ":"), allow_nan=False)
+        serialized_ns = time.monotonic_ns() if timing is not None else 0
         with output_lock:
+            locked_ns = time.monotonic_ns() if timing is not None else 0
             protocol_output.write(encoded + "\n")
             protocol_output.flush()
-    runtime = BridgeRuntime(args.transfer_dir, emit, run_dir=args.run_dir,
-                            observed_source_root=args.observed_source_root, prefix_worker=prefix_worker)
+        if timing is not None:
+            # ensure_ascii is the wire encoder default, so each character is one byte.
+            timing.record_response(event, len(encoded) + 1, started_ns, serialized_ns,
+                                   locked_ns, time.monotonic_ns())
+    timings = RehearsalTimingMonitor() if args.rehearsal_timing else None
+    runtime = None
     try:
+        runtime = BridgeRuntime(args.transfer_dir, emit, run_dir=args.run_dir,
+                               observed_source_root=args.observed_source_root, prefix_worker=prefix_worker,
+                               rehearsal_timing=timings)
         while not runtime._closed:
             line = sys.stdin.buffer.readline(MAX_REQUEST_BYTES + 1)
             if not line:
@@ -2076,7 +2114,12 @@ def main() -> int:
                 continue
             runtime.submit(request)
     finally:
-        runtime.close()
+        try:
+            if runtime is not None:
+                runtime.close()
+        finally:
+            if timings is not None:
+                timings.close()
     return 0
 
 
