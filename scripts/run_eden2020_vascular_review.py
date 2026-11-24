@@ -16,7 +16,7 @@ import numpy as np
 from resectionlab.data_root import ROOT_ENV, atomic_json, checked_root, safe_path
 from resectionlab.patient_anatomy import PatientImagingCollection, digest, file_hash
 from resectionlab.vascular_cleanup import (
-    HIDDEN, RETAINED, UNCERTAIN, ComponentPolicy, classify_components, restore_hidden_components,
+    HIDDEN, RETAINED, UNCERTAIN, ComponentPolicy, classify_components, review_component_visibility,
 )
 
 
@@ -155,7 +155,7 @@ def process(case, out, data_root):
     return result, False
 
 
-def restore_components(case, out, components, reason):
+def save_component_review(case, out, *, restore, exclude, reason):
     parent = out / "report.json"
     report = load_json(parent)
     partition = out / "partition.npy"
@@ -166,7 +166,8 @@ def restore_components(case, out, components, reason):
     target = safe_path(out, "reviewed")
     target.mkdir(exist_ok=True)
     manual_review = {
-        "restored_components": sorted(set(components)),
+        "restored_components": sorted(set(restore)),
+        **({"excluded_components": sorted(set(exclude))} if exclude else {}),
         "reason": reason.strip(),
         "parent_report_sha256": file_hash(parent),
         "parent_partition_sha256": report["partition_sha256"],
@@ -180,15 +181,16 @@ def restore_components(case, out, components, reason):
                 raise ValueError("An existing component review records a different decision")
             if revised_partition.is_file() and file_hash(revised_partition) == existing["partition_sha256"]:
                 return existing, True
-        values, analysis = restore_hidden_components(
-            np.load(partition, mmap_mode="r", allow_pickle=False), report["analysis"], components
+        values, analysis = review_component_visibility(
+            np.load(partition, mmap_mode="r", allow_pickle=False), report["analysis"],
+            restore=restore, exclude=exclude,
         )
         write_partition(revised_partition, values)
         result = {
             **report,
             "manual_review": manual_review,
             "status": "candidate" if analysis["hidden_voxels"] else "retained_baseline",
-            "source_review_status": "explicit component restoration",
+            "source_review_status": "explicit component review",
             "partition_sha256": file_hash(revised_partition),
             "analysis": analysis,
         }
@@ -253,14 +255,16 @@ def main():
     parser.add_argument("--cohort", action="store_true", help="Run every authoritative restricted subject")
     parser.add_argument("--graph", action="store_true", help="Audit branches and possible gaps using existing case partitions")
     parser.add_argument("--restore", action="append", help="Restore an explicitly reviewed hidden component to uncertain")
-    parser.add_argument("--reason", help="Source evidence for an explicit restoration")
+    parser.add_argument("--exclude", action="append", help="Hide an explicitly reviewed uncertain component")
+    parser.add_argument("--reason", help="Source evidence for an explicit visibility decision")
     args = parser.parse_args()
     if bool(args.subject) == args.cohort:
         parser.error("Select --subject or --cohort")
-    if args.restore and (args.cohort or args.graph or len(args.subject) != 1 or not (args.reason or "").strip()):
-        parser.error("--restore requires exactly one --subject and a source-review --reason")
-    if args.reason and not args.restore:
-        parser.error("--reason belongs to a component restoration")
+    component_review = bool(args.restore or args.exclude)
+    if component_review and (args.cohort or args.graph or len(args.subject) != 1 or not (args.reason or "").strip()):
+        parser.error("Component review requires exactly one --subject and a source-review --reason")
+    if args.reason and not component_review:
+        parser.error("--reason belongs to a component review")
     data_root = checked_root(os.environ.get(ROOT_ENV, DATA_ROOT), expected_uuid=VOLUME_UUID)
     cases = inventory(data_root)
     subjects = sorted(cases if args.cohort else set(args.subject))
@@ -269,10 +273,12 @@ def main():
     root = safe_path(data_root, RUN)
     directory = safe_path(root, "cases")
     directory.mkdir(parents=True, exist_ok=True)
-    if args.restore:
+    if component_review:
         subject = subjects[0]
         out = safe_path(directory, subject)
-        report, cached = restore_components(cases[subject], out, args.restore, args.reason)
+        report, cached = save_component_review(
+            cases[subject], out, restore=args.restore or (), exclude=args.exclude or (), reason=args.reason
+        )
         print(subject, report["manual_review"], "(cached)" if cached else "", flush=True)
         return 0
     stage = "graphs" if args.graph else "processing"

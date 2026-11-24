@@ -6,7 +6,7 @@ import pytest
 
 from resectionlab.anatomy_bridge import VASCULAR_REVIEW_MANIFEST, dispatch
 from resectionlab.patient_anatomy import PatientImagingCollection, digest, file_hash
-from resectionlab.vascular_cleanup import HIDDEN, RETAINED, UNCERTAIN, classify_components, restore_hidden_components
+from resectionlab.vascular_cleanup import HIDDEN, RETAINED, UNCERTAIN, classify_components, review_component_visibility
 
 
 def test_native_review_preserves_pial_and_bright_extracranial_candidates():
@@ -32,13 +32,16 @@ def test_native_review_preserves_pial_and_bright_extracranial_candidates():
     assert np.all(partition[12:14, 14:17, 24] == UNCERTAIN)
     assert np.all(partition[48:54, 5:9, 24] == HIDDEN)
     component = next(row for row in report["components"] if row["state"] == HIDDEN)
-    restored, revised = restore_hidden_components(partition, report, [component["id"]])
+    restored, revised = review_component_visibility(partition, report, restore=[component["id"]])
     np.testing.assert_array_equal(restored > 0, mask)
     assert not np.any(restored == HIDDEN)
     assert report["hidden_voxels"] == component["voxels"]
     assert revised["uncertain_voxels"] == report["uncertain_voxels"] + component["voxels"]
-    with pytest.raises(ValueError, match="Unknown or visible source component"):
-        restore_hidden_components(partition, report, ["component-0"])
+    excluded, rereviewed = review_component_visibility(restored, revised, exclude=[component["id"]])
+    np.testing.assert_array_equal(excluded, partition)
+    assert rereviewed["hidden_voxels"] == report["hidden_voxels"]
+    with pytest.raises(ValueError, match="Unknown source component"):
+        review_component_visibility(partition, report, restore=["component-0"])
 
 
 def test_no_source_support_abstains_and_preserves_all_components():

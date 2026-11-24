@@ -203,28 +203,33 @@ def classify_components(mask, signal, scores, native_affine, *, policy=Component
     }
 
 
-def restore_hidden_components(partition, report, component_ids):
-    """Restore entire reviewed components in a fresh visibility partition."""
+def review_component_visibility(partition, report, *, restore=(), exclude=()):
+    """Move reviewed whole components between uncertain and hidden visibility."""
+    if set(restore) & set(exclude):
+        raise ValueError("A source component has conflicting review decisions")
     result = np.array(partition, copy=True)
     analysis = {**report, "components": [row.copy() for row in report["components"]]}
     components = {row["id"]: row for row in analysis["components"]}
-    for name in sorted(set(component_ids)):
+    actions = [(name, HIDDEN, UNCERTAIN) for name in sorted(set(restore))]
+    actions.extend((name, UNCERTAIN, HIDDEN) for name in sorted(set(exclude)))
+    for name, previous, current in actions:
         row = components.get(name)
-        if row is None or row["state"] != HIDDEN:
-            raise ValueError(f"Unknown or visible source component: {name}")
+        if row is None or row["state"] != previous:
+            raise ValueError(f"Unknown source component or incompatible visibility state: {name}")
         start, stop = np.asarray(row["bounds_ijk"], dtype=int)
         anchor = np.asarray(np.unravel_index(row["source_anchor_cell"], result.shape))
         if (np.any(start < 0) or np.any(stop > result.shape)
                 or np.any(anchor < start) or np.any(anchor >= stop)):
             raise ValueError(f"Invalid source component bounds: {name}")
         region = result[tuple(slice(a, b) for a, b in zip(start, stop))]
-        labels, _ = ndi.label(region == HIDDEN, structure=CONNECTIVITY)
+        labels, _ = ndi.label(region == previous, structure=CONNECTIVITY)
         selected = labels[tuple(anchor - start)]
         if not selected or np.count_nonzero(labels == selected) != row["voxels"]:
-            raise ValueError(f"Hidden source component differs from the review receipt: {name}")
-        region[labels == selected] = UNCERTAIN
-        row.update(state=UNCERTAIN, reason="explicit component review")
-        analysis["hidden_voxels"] -= row["voxels"]
-        analysis["uncertain_voxels"] += row["voxels"]
-        analysis["hidden_components"] -= 1
+            raise ValueError(f"Source component differs from the review receipt: {name}")
+        region[labels == selected] = current
+        row.update(state=current, reason="explicit component review")
+        direction = 1 if current == HIDDEN else -1
+        analysis["hidden_voxels"] += direction * row["voxels"]
+        analysis["uncertain_voxels"] -= direction * row["voxels"]
+        analysis["hidden_components"] += direction
     return result, analysis

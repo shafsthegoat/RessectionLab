@@ -64,8 +64,9 @@ members and open read-only. The native score surface is the vascular review
 default. Conditioned surfaces are available as a separate presentation choice.
 
 A scoped source review can restore a proposed exclusion to the uncertain set
-with `--restore COMPONENT --reason REASON`. The reviewed partition is saved
-beside the initial partition and keeps its source binding. The source review
+with `--restore COMPONENT --reason REASON` or hide a reviewed artifact with
+`--exclude COMPONENT --reason REASON`. The reviewed partition is saved beside
+the initial partition and keeps its source binding. The source review
 and application captures provide the private comparison evidence. The
 companions are for research display. Patient-specific surgical admission
 requires its own source registration and mechanics evidence.
