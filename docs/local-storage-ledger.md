@@ -155,6 +155,8 @@ The reciprocal tissue attachments, matched TopCoW mechanics and signed
 walkthrough are indexed at `qc/native-wall-reciprocal-attachment-20261124-v1/README.md`.
 The signed native TOF correction, matched score-surface preview and cohort
 picker checks are indexed at `qc/native-tof-local-correction-20261124-v1/README.md`.
+The signed faint vessel context comparisons, physical-cut and pick controls,
+and 2048-pixel exports are indexed at `qc/vessel-slab-context-20261124-v1/README.md`.
 The ordinary EDEN diffusion checks and source-role audit are at
 `qc/ordinary-diffusion-baseline-20261124-v1/README.md`.
 
