@@ -100,12 +100,15 @@ def test_anatomy_model_attribution_comes_from_native_provenance(name, provenance
     assert layer['provenance'] == 'estimated'
 
 
-def native_wall_fixture(tmp_path, *, registration='reviewed'):
+def native_wall_fixture(tmp_path, *, registration='reviewed', isolated_pair=False):
     shape = (65, 65, 65)
     affine = np.diag([-.5, .5, .5, 1.])
     affine[:3, 3] = [16., -16., -16.]
     x, y, z = np.ogrid[:shape[0], :shape[1], :shape[2]]
     scores = np.broadcast_to(np.clip(.5 + (2.45 - np.hypot(y - 32, z - 34)) / 4, 0, 1), shape).astype(np.float32)
+    if isolated_pair:
+        scores[33:37, 49:52, 32:35] = .42
+        scores[34, 50, 33], scores[35, 50, 33] = .67, .59
     brain = np.broadcast_to((x > 4) & (z > 8) & (z <= 32), shape).astype(np.uint8)
     study = PatientImagingCollection.create(tmp_path / 'native-wall', 'native-wall-fixture')
     for series, modality, values in (('t1', 'T1', brain + np.broadcast_to(z / 64, shape)), ('tof', 'TOF', scores)):
@@ -202,8 +205,9 @@ def test_local_native_wall_samples_only_covered_brain_and_vascular_labels(tmp_pa
 
 def test_local_native_wall_desktop_contact_and_replay_keep_the_installed_geometry(tmp_path):
     from resectionlab.desktop_bridge import BridgeSession, _Request
+    from resectionlab.surgical_vessel_surface import ISOLATED_SOURCE_GEOMETRY
 
-    study, _, _ = native_wall_fixture(tmp_path)
+    study, _, _ = native_wall_fixture(tmp_path, isolated_pair=True)
 
     def call(session, operation, args):
         return session.execute(operation, args, _Request(operation), lambda *_: None)
@@ -212,7 +216,10 @@ def test_local_native_wall_desktop_contact_and_replay_keep_the_installed_geometr
         layer = next(layer for layer in payload['compartments'] if layer['name'] == 'vessels')
         surface = layer['vesselSurface']
         receipt = payload['metadata']['surgical_adapter']['nativeWall']
+        assert receipt['geometryPolicy'] == ISOLATED_SOURCE_GEOMETRY
+        assert receipt['sourceRetainedIsolatedComponents'] == 1
         assert ':'.join(surface[key]['sha256'] for key in ('positions', 'indices', 'sourceCells')) == receipt['geometryBinding']
+        assert receipt['geometryBinding'] != receipt['sourceCrossingBinding']
         assert 'scoreLighting' in surface
         return receipt['geometryBinding']
 

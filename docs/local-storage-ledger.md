@@ -120,6 +120,8 @@ optical cache and preserved cut controls are at
 `qc/directional-optical-depth-20261124-v1/README.md`.
 The native brain contour comparison is at
 `qc/brain-envelope-geometry-20261124.5di2hjsv/README.md`.
+The isolated native vessel wall section comparison and archived replay checks
+are at `qc/native-vessel-section-tail-20261124-v1/README.md`.
 The ordinary EDEN diffusion checks and source-role audit are at
 `qc/ordinary-diffusion-baseline-20261124-v1/README.md`.
 

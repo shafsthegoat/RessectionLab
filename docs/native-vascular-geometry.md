@@ -13,11 +13,17 @@ Acquisition edges and nonmanifold mesh edges stay pinned. The physical audit
 checks for reversed or collapsed faces and newly intersecting nonincident
 triangles after final position quantization.
 
-The versioned `source-conditioned-v1` research wall keeps ownership from the
-original native crossings. Its conditioned positions and triangle indices
-provide the canonical wall for admitted collision and rendering. The source
-shape remains separately available for inspection. Measured section areas
-describe the mesh geometry derived from the available label or score field.
+The research wall keeps ownership from the original native crossings. Its
+positions and triangle indices provide the canonical wall for admitted
+collision and rendering. Newly prepared native-wall rehearsals use
+`source-conditioned-v2`. It keeps the original crossings for a wholly interior
+component with at most two 26-connected positive sample centers when the
+triangle audit accepts the replacement. Eligibility comes from the complete
+original interior component, so it excludes crop edges and fragments created
+by edits. Existing `source-conditioned-v1` cases and replays keep their original
+reconstruction. The source shape remains available for inspection. Measured
+sections describe the mesh derived from the score field. Vessel identity and
+lumen caliber remain unresolved at the scale of two positive samples.
 
 Use `scripts/measure_vessel_surface_sections.py --compare-previous` with the
 native study and matching source-branch JSON. The receipt pairs sections on

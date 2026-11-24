@@ -14,6 +14,8 @@ from . import surgical_vessel_vertex_motion as vertex_kinematics
 
 GEOMETRY_PROPERTY = 'operative_vascular_geometry'
 CONDITIONED_GEOMETRY = 'source-conditioned-v1'
+ISOLATED_SOURCE_GEOMETRY = 'source-conditioned-v2'
+CONDITIONED_GEOMETRIES = (CONDITIONED_GEOMETRY, ISOLATED_SOURCE_GEOMETRY)
 
 
 @dataclass(frozen=True)
@@ -35,17 +37,18 @@ def source_cell_radius(scene):
     return float(np.linalg.norm(corners, axis=1).max())
 
 
-def _wall_geometry(scores, mask, affine, policy, *, cancelled=None):
+def _wall_geometry(scores, mask, affine, policy, *, native_mask=None, cancelled=None):
     from .anatomy_geometry import vascular_mesh_source_cells, vascular_probability_mesh
 
     if policy is None:
         raw = vascular_probability_mesh(scores, mask)
         return None if raw is None else (*raw, vascular_mesh_source_cells(raw[0], mask))
-    if policy != CONDITIONED_GEOMETRY:
+    if policy not in CONDITIONED_GEOMETRIES:
         raise ValueError('VASCULAR_WALL_REQUIRES_SUPPORTED_GEOMETRY_POLICY')
     from .anatomy_geometry import conditioned_vascular_probability_mesh
 
-    mesh = conditioned_vascular_probability_mesh(scores, mask, affine,
+    mesh = conditioned_vascular_probability_mesh(scores, mask, affine, native_mask=native_mask,
+                                                 retain_isolated_components=policy == ISOLATED_SOURCE_GEOMETRY,
                                                  **({'cancelled': cancelled} if cancelled is not None else {}))
     return None if mesh is None else (mesh.positions, mesh.indices, mesh.normals, mesh.source_cells)
 
@@ -418,9 +421,10 @@ def _edit_wall(engine, rods, wall, removed, cuts):
     if retired:
         mask = np.zeros(scene.shape, dtype=bool)
         mask.flat[source.cells] = True
+        native = mask.copy() if source.geometry_policy == ISOLATED_SOURCE_GEOMETRY else None
         mask.flat[list(retired)] = False
         if mask.any():
-            geometry = _wall_geometry(source.scores, mask, scene.affine, source.geometry_policy)
+            geometry = _wall_geometry(source.scores, mask, scene.affine, source.geometry_policy, native_mask=native)
             if geometry is None:
                 raise ValueError('VESSEL_WALL_SWEEP_UNSUPPORTED: retained score-wall contour is unavailable')
             ijk, faces, _, source_cells = geometry
@@ -441,7 +445,7 @@ def _edit_wall(engine, rods, wall, removed, cuts):
         axis /= np.linalg.norm(axis)
         reach = 1.65 * np.max(rods.radius[[i, j]]) + wall.cell_extent
         row_a, row_b = np.searchsorted(source.cells, [rods.cells[i], rods.cells[j]])
-        conditioned = source.geometry_policy == CONDITIONED_GEOMETRY
+        conditioned = source.geometry_policy in CONDITIONED_GEOMETRIES
         # A conditioned crossing can graze a plane at the original midpoint.
         # Move the clipping bands within the kerf so the declared point of
         # transection remains inside the gap and both rings close.

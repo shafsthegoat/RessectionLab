@@ -104,6 +104,44 @@ def test_packaged_policy_copy_matches_canonical_resource():
     assert json.loads(desktop.read_text()) == POLICY
 
 
+def test_native_wall_retains_only_complete_isolated_source_components():
+    pytest.importorskip('vtkmodules')
+    from resectionlab.anatomy_geometry import conditioned_vascular_probability_mesh
+
+    shape = (25, 25, 23)
+    _, y, z = np.ogrid[:25, :25, :23]
+    scores = np.broadcast_to(np.clip(.5 + (2.45 - np.hypot(y - 12, z - 12)) / 4, 0, 1), shape).astype(np.float32)
+    scores[6:10, 3:6, 5:8] = .42
+    scores[7, 4, 6], scores[8, 4, 6] = .67, .59
+    scores[7, 3, 6], scores[7, 5, 6] = .39, .47
+    scores[:3, 19:22, 12:15] = .42
+    scores[0, 20, 13], scores[1, 20, 13] = .67, .59
+    mask = scores >= .5
+    source_scores, source_mask = scores.copy(), mask.copy()
+    affine = np.diag([.30, .30, .45, 1.])
+    previous = conditioned_vascular_probability_mesh(scores, mask, affine)
+    current = conditioned_vascular_probability_mesh(scores, mask, affine, retain_isolated_components=True)
+    owners = np.ravel_multi_index(([7, 8], [4, 4], [6, 6]), shape)
+    isolated = np.isin(previous.source_cells, owners)
+    assert isolated.any() and np.any(previous.source[isolated] != previous.positions[isolated])
+    assert current.diagnostics['sourceRetainedIsolatedComponents'] == 1
+    np.testing.assert_array_equal(current.positions[isolated], previous.source[isolated])
+    np.testing.assert_array_equal(current.positions[~isolated], previous.positions[~isolated])
+    for name in ('source', 'indices', 'source_cells'):
+        np.testing.assert_array_equal(getattr(current, name), getattr(previous, name))
+    np.testing.assert_array_equal(scores, source_scores)
+    np.testing.assert_array_equal(mask, source_mask)
+
+    # A third original foreground sample was removed. The resulting pair
+    # must keep the accepted edited-wall conditioning.
+    scores[9, 4, 6] = .63
+    edited_previous = conditioned_vascular_probability_mesh(scores, mask, affine)
+    edited_current = conditioned_vascular_probability_mesh(
+        scores, mask, affine, retain_isolated_components=True, native_mask=scores >= .5,
+    )
+    np.testing.assert_array_equal(edited_current.positions, edited_previous.positions)
+
+
 def test_publisher_surface_retains_geometry_after_portable_reopen(tmp_path):
     import nibabel as nib
     from resectionlab.anatomy_geometry import mesh

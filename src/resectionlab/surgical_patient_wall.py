@@ -12,7 +12,7 @@ from .anatomy_model_registry import ANGIOGRAPHY, source_volume
 from .core import array_digest, semantic_digest
 from .surgical_glioma_materials import research_profile
 from .surgical_vessel_rods import MODEL, GEOMETRY, SECTION_MECHANICS, section_profile
-from .surgical_vessel_surface import CONDITIONED_GEOMETRY, GEOMETRY_PROPERTY
+from .surgical_vessel_surface import CONDITIONED_GEOMETRIES, GEOMETRY_PROPERTY, ISOLATED_SOURCE_GEOMETRY
 from . import surgical_vessel_vertex_motion as vertex_motion, surgical_wall_sweep as wall_sweep
 from .vascular_source_branches import build_source_branches
 
@@ -206,7 +206,8 @@ def qualifying_properties(grid, masks, row, patient_id, *, cancelled=lambda: Fal
         'edges': edges, 'boundaries': [], 'regions': [], 'compressionForceN': .04,
         'coagulationDose': 2., 'clotRatePerSecond': 0.,
     }
-    geometry = conditioned_vascular_probability_mesh(scores, mask, affine, cancelled=cancelled)
+    geometry = conditioned_vascular_probability_mesh(scores, mask, affine, retain_isolated_components=True,
+                                                     cancelled=cancelled)
     if geometry is None or not len(geometry.indices):
         raise ValueError('The local window has no usable native score surface')
     receipt = {
@@ -215,9 +216,10 @@ def qualifying_properties(grid, masks, row, patient_id, *, cancelled=lambda: Fal
         'centerRasMm': grid.center.tolist(), 'sourceImageSha256': grid.source_sha256,
         'sourceMaskSha256': row['data']['sha256'], 'sourceScoresSha256': row['probability']['sha256'],
         'localMaskHash': array_digest(mask), 'localScoreHash': array_digest(scores),
-        'geometryPolicy': CONDITIONED_GEOMETRY,
+        'geometryPolicy': ISOLATED_SOURCE_GEOMETRY,
         'geometryBinding': vertex_motion.geometry_binding(geometry.positions, geometry.indices, geometry.source_cells),
         'sourceCrossingBinding': vertex_motion.geometry_binding(geometry.source, geometry.indices, geometry.source_cells),
+        'sourceRetainedIsolatedComponents': geometry.diagnostics.get('sourceRetainedIsolatedComponents', 0),
         'branches': {branch_id: source_cells for branch_id, (_, source_cells) in chains.items()},
         'branchIdentityBasis': 'source study branch graph' if grid.source_branches is not None else 'local trace with original native source cell indices',
         'assumptions': assumptions, 'scope': 'cursor-local mechanical rehearsal',
@@ -231,8 +233,9 @@ def validate_saved_wall(scene, case, receipt):
     profile = scene.properties.get('gliomaMaterialsV1', {})
     if (not isinstance(receipt, dict) or receipt.get('schema') != SCHEMA or len(walls) != 1
             or 'vessels' not in case.compartments
-            or receipt.get('geometryPolicy') != CONDITIONED_GEOMETRY
-            or case.metadata.get(GEOMETRY_PROPERTY) != CONDITIONED_GEOMETRY
+            or receipt.get('geometryPolicy') not in CONDITIONED_GEOMETRIES
+            or receipt.get('geometryPolicy') != case.metadata.get(GEOMETRY_PROPERTY)
+            or receipt.get('geometryPolicy') != walls[0].geometry_policy
             or receipt.get('geometryBinding') != walls[0].geometry_binding
             or receipt.get('localMaskHash') != array_digest(case.compartments['vessels'])
             or receipt.get('localScoreHash') != array_digest(walls[0].scores)

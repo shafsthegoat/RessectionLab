@@ -12,7 +12,8 @@ from scipy import ndimage as ndi
 from .patient_anatomy import digest, affine, world, file_hash
 from .core import immutable_array
 from .surface_fairing import (
-    fair_surface, surface_kind, broad_context_surface, NATIVE_POLICY, NATIVE_VASCULAR_POLICY,
+    fair_surface, intersection_vertices, surface_kind, broad_context_surface, NATIVE_POLICY,
+    NATIVE_VASCULAR_POLICY,
 )
 
 
@@ -126,7 +127,49 @@ class ConditionedVascularWall:
     diagnostics: dict
 
 
-def conditioned_vascular_probability_mesh(scores, mask, affine, *, cancelled=lambda: False):
+def _retain_isolated_score_components(source, positions, faces, owners, mask, native_mask, affine, cancelled):
+    """Retain native crossings of completely sampled, single- or two-center components."""
+    labels, count = ndi.label(native_mask, structure=np.ones((3, 3, 3), bool))
+    sizes = np.bincount(labels.ravel(), minlength=count + 1)
+    eligible = sizes <= 2
+    eligible[0] = False
+    for axis in range(3):
+        border = np.swapaxes(labels, 0, axis)[[0, -1]]
+        eligible[np.unique(border)] = False
+    if mask is not native_mask:
+        # An edit can split the original material. Its new fragments do not
+        # provide the original isolated-component evidence.
+        eligible &= np.bincount(labels[mask], minlength=count + 1) == sizes
+    if not eligible.any():
+        return positions, {}
+    groups = labels.ravel()[owners]
+    corner_groups = groups[faces]
+    corner_selected = eligible[corner_groups]
+    mixed = corner_selected.any(axis=1) & ~corner_selected.all(axis=1)
+    eligible[corner_groups[mixed].ravel()] = False
+    changed = eligible[groups] & np.any(source != positions, axis=1)
+    if not changed.any():
+        return positions, {}
+
+    candidate = positions.copy()
+    candidate[changed] = source[changed]
+    # Each selected closed component uses its original faces and coordinates.
+    # Check contact with other components before accepting the replacement.
+    linear = np.asarray(affine)[:3, :3]
+    physical = candidate.astype(float) @ linear.T
+    raw = source.astype(float) @ linear.T
+    previous = positions.astype(float) @ linear.T
+    if (len(intersection_vertices(raw, physical, faces, cancelled))
+            or len(intersection_vertices(previous, physical, faces, cancelled))):
+        return positions, {}
+    return candidate, {
+        'sourceRetainedIsolatedComponents': len(np.unique(groups[changed])),
+        'maxDisplacementMm': float(np.linalg.norm(physical - raw, axis=1).max(initial=0.)),
+    }
+
+
+def conditioned_vascular_probability_mesh(scores, mask, affine, *, retain_isolated_components=False,
+                                          native_mask=None, cancelled=lambda: False):
     """Build the versioned wall shared by research collision and rendering."""
     if cancelled():
         raise InterruptedError("Vascular wall preparation cancelled")
@@ -139,6 +182,11 @@ def conditioned_vascular_probability_mesh(scores, mask, affine, *, cancelled=lam
         raw, faces, affine, "vessel", mask=np.pad(cropped, 1), mask_origin=origin,
         source_shape=mask.shape, cancelled=cancelled,
     )
+    if retain_isolated_components:
+        positions, retention = _retain_isolated_score_components(
+            raw, positions, faces, owners, mask, mask if native_mask is None else native_mask, affine, cancelled,
+        )
+        diagnostics.update(retention)
     return ConditionedVascularWall(
         immutable_array(raw), immutable_array(positions), immutable_array(faces),
         immutable_array(normals(positions, faces)), immutable_array(owners), diagnostics,
