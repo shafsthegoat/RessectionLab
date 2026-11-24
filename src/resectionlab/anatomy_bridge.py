@@ -290,6 +290,10 @@ def dispatch(session, operation, args, request, progress):
             if previous_mri and not Path(previous_mri["path"]).is_file():
                 previous_mri = None
             support = {"headSupport": cache["headSupport"]} if previous_mri and "headSupport" in cache else {}
+            if previous_mri and "ctExterior" in cache:
+                previous_exterior = cache["ctExterior"]
+                if previous_exterior is None or Path(previous_exterior["mask"]["path"]).is_file():
+                    support["ctExterior"] = previous_exterior
             cache = {"key": cache_key, "layers": {}, "label_sets": {}, "mri": previous_mri, "tracts": None, **support}
         # Publish only a complete response. A cancelled/failed preparation may
         # have temporary transfer files pruned and must not cache those paths.
@@ -545,6 +549,14 @@ def dispatch(session, operation, args, request, progress):
                 if preview:
                     support = resample(support, affine(reference["affine"]), shape, native, order=0)
                 cache["headSupport"] = transfer(support, "uint8")
+        if ("ctExterior" not in cache and reference["modality"] in {"CT", "CTA"} and
+                not preview and not args.get("original")):
+            from .anatomy_ct_exterior import ct_exterior_sheet
+
+            exterior = ct_exterior_sheet(c, reference, check=request.check)
+            cache["ctExterior"] = None if exterior is None else {
+                **exterior, "mask": transfer(exterior["mask"], "uint8"), "signalSha256": cache["mri"]["sha256"],
+            }
         # Resolve source-textured cortical and operative surroundings. Mesh
         # vertices are in the selected display lattice, while these affines map
         # the acquisition's actual display samples into the same physical frame.
@@ -580,6 +592,7 @@ def dispatch(session, operation, args, request, progress):
             "affine": displayed.tolist(),
             "mri": cache["mri"],
             **({"headSupport": cache["headSupport"]} if "headSupport" in cache else {}),
+            **({"ctExterior": cache["ctExterior"]} if cache.get("ctExterior") is not None else {}),
             "compartments": layers,
             "labelSets": list(label_sets.values()),
             "modality": reference["modality"],
