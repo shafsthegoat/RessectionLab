@@ -16,6 +16,7 @@ function fieldSettings({centerRasMm:target, layers}:NativeWallSourceScan):Viewer
     layout:showsVessels?'3d-focus':'mri-review', showPlane:false, sliceOverlay:'contour',
     camera:{target, position:[target[0]+24,target[1]-98,target[2]+59], up:[0,0,1]},
     vesselShading:'balanced',
+    volumeRendering:showsVessels?{density:.22}:undefined,
     layerOpacity:Object.fromEntries(layers.filter(layer=>layer.kind==='brain').map(layer=>[layer.id,showsVessels?.055:.14])),
   };
 }
@@ -107,7 +108,8 @@ export function NativeWallSourceDialog({api,caseHash,close}:{api:ResectionApi&Na
             {scan&&<button className="outline-button" disabled={!volume} onClick={()=>{setCursor(scan.centerRasMm);setSettings(fieldSettings(scan));}}>Reset to saved field</button>}
           </div>
           <p className="native-wall-source-scope">{scan?.independent?'Native acquisition coordinates · study-wide alignment unreviewed':'Registered patient coordinates'}
-            {source.locallyReviewed?' · Cross-acquisition review applies to the saved crop':''}</p>
+            {source.locallyReviewed?' · Cross-acquisition review applies to the saved crop':''}
+            {scan?.layers.length?` · ${scan.layers.map(layer=>layer.label).join(' · ')}`:''}</p>
         </>}
         {error&&<p role="alert">{error}</p>}
         {loading&&<p role="status">{source?'Loading the acquired scan…':'Verifying the original study and rehearsal field…'}</p>}
