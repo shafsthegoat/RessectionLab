@@ -113,9 +113,10 @@ The paired sliding benchmark and TopCoW-014 replay are indexed in
 
 The paired CTA and MRA index also holds the cold-verified TopCoW-012 v5
 contact and withdrawal, collision screen, source-colour check and operative
-film. The matched CTA framing checks are at
-`qc/cta-anterior-frame-20261124.GrMFTrO0/README.md`. The directional optical
-cache and preserved cut controls are at
+film. Its lattice assembly benchmark records exact accepted-state parity
+and timing on the same contact and withdrawal. The matched CTA framing
+index is `qc/cta-anterior-frame-20261124.GrMFTrO0/README.md`. The directional
+optical cache and preserved cut controls are at
 `qc/directional-optical-depth-20261124-v1/README.md`.
 The native brain contour comparison is at
 `qc/brain-envelope-geometry-20261124.5di2hjsv/README.md`.

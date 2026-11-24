@@ -189,21 +189,30 @@ def _system(engine, p, ids, anchors, retained, blocked):
         from .surgical_glioma_materials import material_values
         # Pa -> N/mm² times representative face area / bond length (mm).
         stiffness = 1e-6 * engine.scene.voxel_mm3 ** (1/3) * material_values(engine, ids, 'equilibriumShearPa')
-    rows = []; cols = []; vals = []; dr = []; dc = []; dv = []
     rest = np.column_stack(np.unravel_index(ids, engine.scene.shape)) @ engine.scene.affine[:3, :3].T
-    edges = []
-    for a, b in bonds:
-        i, j = index[a], index[b]; vector = rest[j] - rest[i]; length = np.linalg.norm(vector); direction = vector / length
-        k = 2 * stiffness[i] * stiffness[j] / (stiffness[i] + stiffness[j])
-        edges.append((i, j, length))
-        for axis in range(3):
-            ai, bj = 3 * i + axis, 3 * j + axis
-            rows.extend((ai, ai, bj, bj)); cols.extend((ai, bj, ai, bj)); vals.extend((k, -k, -k, k))
-            # Each endpoint estimates divergence from incident oriented differences.
-            for node in (i, j):
-                dr.extend((node, node)); dc.extend((ai, bj)); dv.extend((-direction[axis] / (2 * length), direction[axis] / (2 * length)))
-    K = sparse.coo_matrix((vals, (rows, cols)), shape=(3*n, 3*n)).tocsr()
-    D = sparse.coo_matrix((dv, (dr, dc)), shape=(n, 3*n)).tocsr()
+    first, second = np.asarray([(index[a], index[b]) for a, b in bonds], dtype=int).reshape(-1, 2).T
+    vectors = rest[second] - rest[first]
+    # Keep the scalar norm for each bond. A batched reduction can round
+    # differently and change the stored trajectories of older rehearsals.
+    lengths = np.asarray([np.linalg.norm(vector) for vector in vectors])
+    edges = [(int(a), int(b), length) for a, b, length in zip(first, second, lengths)]
+    axes = np.arange(3)
+    a_dof, b_dof = 3 * first[:, None] + axes, 3 * second[:, None] + axes
+    bond_stiffness = 2 * stiffness[first] * stiffness[second] / (stiffness[first] + stiffness[second])
+    # Match the original bond, axis, and endpoint entry order before CSR
+    # conversion so repeated coefficients are still summed in the same order.
+    rows = np.stack((a_dof, a_dof, b_dof, b_dof), axis=2).ravel()
+    cols = np.stack((a_dof, b_dof, a_dof, b_dof), axis=2).ravel()
+    entries = np.column_stack((bond_stiffness, -bond_stiffness, -bond_stiffness, bond_stiffness))
+    values = np.broadcast_to(entries[:, None, :], (len(edges), 3, 4)).ravel()
+    K = sparse.coo_matrix((values, (rows, cols)), shape=(3*n, 3*n)).tocsr()
+    # Each endpoint estimates divergence from incident oriented differences.
+    projected = (vectors / lengths[:, None]) / (2 * lengths[:, None])
+    divergence_shape = (len(edges), 3, 2, 2)
+    rows = np.broadcast_to(np.column_stack((first, second))[:, None, :, None], divergence_shape).ravel()
+    cols = np.broadcast_to(np.stack((a_dof, b_dof), axis=2)[:, :, None, :], divergence_shape).ravel()
+    values = np.broadcast_to(np.stack((-projected, projected), axis=2)[:, :, None, :], divergence_shape).ravel()
+    D = sparse.coo_matrix((values, (rows, cols)), shape=(n, 3*n)).tocsr()
     cell_length_squared = abs(np.linalg.det(engine.scene.affine[:3, :3])) ** (2 / 3)
     K += D.T @ sparse.diags(stiffness * p['bulkPenaltyRatio'] * cell_length_squared) @ D
     # Weak local foundation represents unresolved surrounding tissue and removes

@@ -3,6 +3,7 @@ from types import SimpleNamespace
 import copy
 import numpy as np
 import pytest
+from scipy import sparse
 from resectionlab.surgical_deformation_v2 import begin_hold, set_target, release, tick, profile
 
 
@@ -23,6 +24,53 @@ def held():
     e = engine(); c = cell(e, (6, 6, 6))
     begin_hold(e, 'left', [c], [6, 6, 6]); set_target(e, 'left', [6.4, 6, 6])
     return e, c
+
+
+def test_batched_lattice_retains_scalar_sparse_entry_order(monkeypatch):
+    from resectionlab import surgical_deformation_v2 as brain
+
+    e = engine()
+    e.scene.affine[:3, :3] = [[.65, -.21, .04], [.3, 1.1, 0.], [0., .13, 1.37]]
+    coordinates = [(6, 6, 6), (6, 6, 7), (6, 7, 6), (7, 6, 6)]
+    ids = [cell(e, p) for p in coordinates]
+    e.scene.labels[coordinates[2]] = 2
+    settings = profile()
+    original_coo = sparse.coo_matrix
+    captured = []
+
+    def capture_entries(entries, *args, **kwargs):
+        if len(captured) < 2:
+            values, (rows, cols) = entries
+            captured.append((np.array(rows), np.array(cols), np.array(values)))
+        return original_coo(entries, *args, **kwargs)
+
+    monkeypatch.setattr(brain.sparse, 'coo_matrix', capture_entries)
+    _, _, _, edges, _ = brain._system(e, settings, ids, [ids[1]], set(ids), {(ids[0], ids[1])})
+
+    rest = np.array(coordinates) @ e.scene.affine[:3, :3].T
+    stiffness = np.array([settings['brainStiffnessNPerMm']] * 4)
+    stiffness[2] = settings['tumorStiffnessNPerMm']
+    expected_springs, expected_divergence = [], []
+    expected_edges = []
+    for a, b in [(0, 2), (0, 3)]:
+        delta = rest[b] - rest[a]
+        length = np.linalg.norm(delta)
+        direction = delta / length
+        k = 2 * stiffness[a] * stiffness[b] / (stiffness[a] + stiffness[b])
+        expected_edges.append((a, b, length))
+        for axis in range(3):
+            i, j = 3 * a + axis, 3 * b + axis
+            expected_springs.extend(((i, i, k), (i, j, -k), (j, i, -k), (j, j, k)))
+            for node in (a, b):
+                expected_divergence.extend(((node, i, -direction[axis] / (2 * length)),
+                                            (node, j, direction[axis] / (2 * length))))
+    assert edges == expected_edges
+    assert len(captured) == 2
+    for (rows, cols, values), expected in zip(captured, (expected_springs, expected_divergence)):
+        row, col, value = zip(*expected)
+        np.testing.assert_array_equal(rows, row)
+        np.testing.assert_array_equal(cols, col)
+        np.testing.assert_array_equal(values.view(np.uint64), np.asarray(value).view(np.uint64))
 
 
 def test_neighbors_deform_smoothly_and_recover_over_time():
