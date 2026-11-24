@@ -41,6 +41,16 @@ def _linked_vascular_review(path):
     return PatientImagingCollection(path.parent, document)
 
 
+def open_anatomy_manifest(path):
+    """Open the selected native manifest and verify linked review provenance."""
+    path = Path(path).resolve()
+    if path.name == "patient-anatomy.json":
+        return PatientImagingCollection(path.parent)
+    if path.name == VASCULAR_REVIEW_MANIFEST or VASCULAR_REVIEW_REVISION.fullmatch(path.name):
+        return _linked_vascular_review(path)
+    raise ValueError("Select a native study or vascular review manifest")
+
+
 def _retain(session, result):
     if isinstance(result, dict):
         if "path" in result and "byteLength" in result:
@@ -83,10 +93,8 @@ def dispatch(session, operation, args, request, progress):
         if path.suffix == ".rsworkspace":
             from .anatomy_package import open_package
             path = open_package(path, args["workingRoot"], check=request.check)
-        linked = path.name == VASCULAR_REVIEW_MANIFEST or VASCULAR_REVIEW_REVISION.fullmatch(path.name) is not None
-        if path.name != "patient-anatomy.json" and not linked:
-            raise ValueError("Select a native study or vascular review manifest")
-        c = _linked_vascular_review(path) if linked else PatientImagingCollection(path.parent)
+        c = open_anatomy_manifest(path)
+        linked = path.name != "patient-anatomy.json"
         key = str(uuid.uuid4())
         session.anatomy_collections = {key: c}
         session.anatomy_linked_review = (key, path) if linked else None

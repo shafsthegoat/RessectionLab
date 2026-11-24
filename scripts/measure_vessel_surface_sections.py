@@ -11,8 +11,9 @@ from vtkmodules.vtkCommonCore import reference, vtkPoints
 from vtkmodules.vtkCommonDataModel import vtkCellArray, vtkPolyData, vtkStaticCellLocator
 from vtkmodules.vtkFiltersModeling import vtkSelectEnclosedPoints
 
+from resectionlab.anatomy_bridge import open_anatomy_manifest
 from resectionlab.anatomy_geometry import mesh, vascular_cleanup_source
-from resectionlab.patient_anatomy import PatientImagingCollection, world
+from resectionlab.patient_anatomy import file_hash, world
 
 
 def locate_surface(points, faces):
@@ -121,7 +122,7 @@ def audit(collection, layer, samples, *, conditioned=True):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("study", type=Path, help="Native review patient-anatomy.json")
+    parser.add_argument("study", type=Path, help="Canonical or linked native review manifest")
     parser.add_argument("branches", type=Path, help="Source-owned native graph JSON")
     parser.add_argument("--layer", action="append", required=True)
     parser.add_argument("--sections", type=int, default=128)
@@ -130,7 +131,9 @@ def main():
     args = parser.parse_args()
     if not 1 <= args.sections <= 512:
         parser.error("Use 1–512 section stations")
-    collection = PatientImagingCollection(args.study.parent)
+    manifest = args.study.resolve()
+    manifest_hash = file_hash(manifest)
+    collection = open_anatomy_manifest(manifest)
     graph = json.loads(args.branches.read_text())
     source = collection.series(collection.layer(args.layer[0])["source_series"])
     if graph["source_scan_sha256"] != source["original"]["sha256"]:
@@ -161,10 +164,15 @@ def main():
                 "fraction_change_p0_p5_p50_p95_p100": np.percentile(changes, [0, 5, 50, 95, 100]).tolist()
                 if changes else None,
             })
+    if file_hash(manifest) != manifest_hash:
+        raise ValueError("The selected study manifest changed during the audit")
     args.output.write_text(json.dumps({
         "method": "32-ray first-boundary polygon perpendicular to an interior source-centerline station",
         "meaning": "Approximate local display section area. Sections with an exterior center or missing rays are unmeasured.",
         "source_scan_sha256": graph["source_scan_sha256"],
+        "study_manifest": str(manifest),
+        "study_manifest_sha256": manifest_hash,
+        "study_snapshot_id": collection.identity(),
         "requested_sections": args.sections,
         "display_surface": "native" if args.source_only else "conditioned",
         "results": results,

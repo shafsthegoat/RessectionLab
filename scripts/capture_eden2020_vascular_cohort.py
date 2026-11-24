@@ -16,6 +16,7 @@ import time
 import numpy as np
 
 from build_eden2020_vascular_companion import CANDIDATE, HDD_ROOT, HDD_UUID, RUN, SOURCE
+from resectionlab.anatomy_bridge import open_anatomy_manifest
 from resectionlab.anatomy_geometry import mesh, read_source_branch_graph, source_branch_cache_path, vascular_cleanup_source
 from resectionlab.data_root import atomic_json, checked_root, safe_path, sha256_file
 from resectionlab.patient_anatomy import PatientImagingCollection, world
@@ -46,7 +47,19 @@ def install_graph(collection, candidate, prepared):
     return {'file': str(cache), 'sha256': checksum, 'reused': False}
 
 
-def capture_case(electron, desktop, manifest, collection, selected, output, subject):
+def prepare_contour(collection, layer, subject):
+    # Prime assets outside the bounded interactive request. A slow native score
+    # read can finish once here and all subsequent views reuse its contour.
+    surface = mesh(collection, layer, display_source=vascular_cleanup_source(collection, layer), conditioned=False)
+    triangles, field = len(surface['indices']), str(surface.get('surface_field', ''))
+    if not triangles or field not in {'native-probability', 'filtered-native-probability'}:
+        raise ValueError(f'{layer["id"]} did not yield a validated native score contour')
+    print(f'{subject} {layer["id"]}: {triangles:,} native triangles', flush=True)
+    return field
+
+
+def capture_case(electron, desktop, manifest, collection, selected, output, subject,
+                 *, baseline=None, display_settings=None):
     scan = collection.series(selected['source_series'])
     frame = np.asarray(scan['affine'])
     shape = np.asarray(scan['data']['shape'])
@@ -54,23 +67,25 @@ def capture_case(electron, desktop, manifest, collection, selected, output, subj
     positive = np.argwhere(collection.mask(selected))
     if not len(positive):
         raise ValueError('Selected vessel mask is empty')
-    # Prime assets outside the bounded interactive request. A slow native score
-    # read can finish once here and all subsequent views reuse its contour.
-    surface = mesh(collection, selected, display_source=vascular_cleanup_source(collection, selected), conditioned=False)
-    triangles, surface_field = len(surface['indices']), str(surface.get('surface_field', ''))
-    del surface
-    if not triangles or surface_field not in {'native-probability', 'filtered-native-probability'}:
-        raise ValueError('Selected vessel mask did not yield a validated native score contour')
-    print(f'{subject} source contour prepared ({triangles:,} triangles)', flush=True)
+    surface_field = prepare_contour(collection, selected, subject)
+    if baseline is not None:
+        if baseline['source_series'] != selected['source_series'] or baseline['affine'] != selected['affine']:
+            raise ValueError('Matched views require the same native acquisition and lattice')
+        fields = {baseline['id']: prepare_contour(collection, baseline, subject), selected['id']: surface_field}
+        layer_ids = [baseline['id'], selected['id']]
+    else:
+        fields = {selected['id']: surface_field}
+        layer_ids = [selected['id']]
     points = world(frame, positive)
     cursor = np.median(points, axis=0)
     cursor[2] = np.percentile(points[:, 2], 30)
     recipe = [{
-        'name': 'native-tof-superior', 'seriesId': scan['id'], 'layers': [selected['id']],
+        'name': 'native-tof-superior', 'seriesId': scan['id'], 'layers': layer_ids,
         'cursor': cursor.tolist(), 'sourceSection': True,
-        'settings': {'activePlane': 'axial', 'camera': {
+        'settings': {**(display_settings or {}), 'activePlane': 'axial', 'camera': {
             'position': (center+[0., -.47, 470.]).tolist(), 'target': center.tolist(), 'up': [0., 1., 0.],
         }},
+        **({'compareLayerIds': layer_ids} if baseline is not None else {}),
     }]
     attempt = 1
     while (output/f'{subject}-review-{attempt:02d}').exists():
@@ -97,11 +112,27 @@ def capture_case(electron, desktop, manifest, collection, selected, output, subj
     receipt = json.loads(report.read_text()) if report.is_file() else {}
     if exit_code or not receipt.get('passed') or not receipt['views'][0].get('section'):
         raise ValueError(f'Hidden application capture failed. See {log}')
-    surface_receipt = next((item['surfaceDiagnostics'] for item in receipt['views'][0]['surfaces'] if item['name']==selected['id']), {})
-    if not surface_receipt.get('sourceSurfaceOnly') or surface_receipt.get('surfaceField') != surface_field:
-        raise ValueError('Hidden application submitted a different vessel representation')
+    view = receipt['views'][0]
+    submitted = {item['name']: item['surfaceDiagnostics'] for item in view['surfaces']}
+    for layer_id, field in fields.items():
+        diagnostics = submitted.get(layer_id, {})
+        if not diagnostics.get('sourceSurfaceOnly') or diagnostics.get('surfaceField') != field:
+            raise ValueError('Hidden application submitted a different vessel representation')
+    if baseline is not None:
+        if (view.get('comparison', {}).get('layer') != selected['id'] or not view.get('baselineSection')
+                or view['view']['visible'].get(selected['id']) is not False):
+            raise ValueError('Hidden application did not record a distinct baseline and selected layer')
+        baseline_images = [view['filename'], view['baselineSection']['filename']]
+        selected_images = [view['comparison']['filename'], view['section']['filename']]
+    else:
+        baseline_images = []
+        selected_images = [view['filename'], view['section']['filename']]
+    if not all(Path(path).is_file() for path in [*baseline_images, *selected_images]):
+        raise ValueError('Hidden application capture evidence is incomplete')
     return {'report': str(report), 'snapshot_id': receipt['snapshotId'], 'surface_field': surface_field,
-            'layer': selected['id'], 'images': [receipt['views'][0]['filename'], receipt['views'][0]['section']['filename']]}
+            'layer': selected['id'], 'images': selected_images,
+            'baseline_layer': baseline['id'] if baseline is not None else None,
+            'baseline_images': baseline_images, 'display_settings': display_settings or {}}
 
 
 def main():
@@ -109,6 +140,9 @@ def main():
     parser.add_argument('--subject', action='append', help='Repeat to restrict to specific staged subjects')
     parser.add_argument('--graphs-only', action='store_true')
     parser.add_argument('--follow-minutes', type=int, default=0, help='Wait for publication of pending studies within this window')
+    parser.add_argument('--match-baseline', action='store_true', help='Capture the original and selected vessel layers at the same camera')
+    parser.add_argument('--output', type=Path, help='Capture directory relative to the verified HDD root')
+    parser.add_argument('--display-settings', type=Path, help='Shared viewer settings JSON for the matched comparison')
     args = parser.parse_args()
     if not 0<=args.follow_minutes<=720:
         parser.error('Follow minutes must be between 0 and 720')
@@ -116,8 +150,11 @@ def main():
     root = data_root/RUN
     studies = root/'studies'
     source_studies = data_root/SOURCE
-    output = root/'app'/'cohort'
-    output.mkdir(exist_ok=True)
+    output = safe_path(data_root, args.output) if args.output else root/'app'/('cohort-matched' if args.match_baseline else 'cohort')
+    output.mkdir(parents=True, exist_ok=True)
+    display_settings = json.loads(args.display_settings.read_text()) if args.display_settings else {}
+    if not isinstance(display_settings, dict):
+        parser.error('Display settings must be a JSON object')
     status_path = output/('graph-status.json' if args.graphs_only else 'status.json')
     status = json.loads(status_path.read_text()) if status_path.exists() else {}
     packaging_path = root/'cohort-packaging.json'
@@ -163,7 +200,7 @@ def main():
                 attempted.add(attempt)
                 if published and sha256_file(manifest) != published['sha256']:
                     raise ValueError('Published vascular study manifest checksum differs')
-                collection = PatientImagingCollection(manifest.parent, json.loads(manifest.read_text()))
+                collection = open_anatomy_manifest(manifest)
                 candidate = collection.layer(CANDIDATE)
                 record['partition_status'] = collection.document['vascular_review']['status']
                 try:
@@ -173,12 +210,23 @@ def main():
                     record['graph_error'] = str(error)
                     if args.graphs_only:
                         raise
-                previous = record.get('capture', {})
-                evidence = [previous.get('report'), *previous.get('images', [])]
-                complete = previous.get('snapshot_id') == collection.identity() and all(p and Path(p).is_file() for p in evidence)
-                if not args.graphs_only and not complete:
+                if not args.graphs_only:
                     selected = collection.layer(collection.document['display']['initial_layers'][0])
-                    record['capture'] = capture_case(electron, desktop, manifest, collection, selected, output, subject)
+                    baseline = vascular_cleanup_source(collection, candidate) if args.match_baseline else None
+                    if args.match_baseline and baseline is None:
+                        raise ValueError('Original baseline membership cannot be resolved for a matched capture')
+                    if baseline is not None and baseline['id'] == selected['id']:
+                        selected = candidate
+                    previous = record.get('capture', {})
+                    evidence = [previous.get('report'), *previous.get('images', []), *previous.get('baseline_images', [])]
+                    complete = (previous.get('snapshot_id') == collection.identity()
+                                and previous.get('layer') == selected['id']
+                                and previous.get('baseline_layer') == (baseline['id'] if baseline is not None else None)
+                                and previous.get('display_settings', {}) == display_settings
+                                and all(path and Path(path).is_file() for path in evidence))
+                    if not complete:
+                        record['capture'] = capture_case(electron, desktop, manifest, collection, selected, output, subject,
+                                                         baseline=baseline, display_settings=display_settings)
                 record['state'] = 'captured' if record.get('capture') else 'graph prepared' if record['graph'] else 'graph unavailable'
                 record.pop('error', None)
             except (OSError, ValueError, KeyError, StopIteration, subprocess.TimeoutExpired) as error:

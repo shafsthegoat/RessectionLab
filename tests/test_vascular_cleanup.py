@@ -4,7 +4,7 @@ from types import SimpleNamespace
 import numpy as np
 import pytest
 
-from resectionlab.anatomy_bridge import VASCULAR_REVIEW_MANIFEST, dispatch
+from resectionlab.anatomy_bridge import VASCULAR_REVIEW_MANIFEST, dispatch, open_anatomy_manifest
 from resectionlab.patient_anatomy import PatientImagingCollection, digest, file_hash
 from resectionlab.vascular_cleanup import HIDDEN, RETAINED, UNCERTAIN, classify_components, review_component_visibility
 
@@ -71,6 +71,8 @@ def test_alternate_review_manifest_binds_and_preserves_canonical_anatomy(tmp_pat
     review["snapshot_id"] = digest(review)
     path = tmp_path / VASCULAR_REVIEW_MANIFEST
     path.write_text(json.dumps(review))
+    assert open_anatomy_manifest(path).identity() == review["snapshot_id"]
+    assert open_anatomy_manifest(manifest).identity() == base.identity()
     session = SimpleNamespace()
     opened = dispatch(session, "anatomyOpen", {"path": str(path)}, None, None)
     assert opened["readOnlyStudy"] and opened["document"] == review
