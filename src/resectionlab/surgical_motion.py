@@ -15,6 +15,10 @@ from . import geometry as _contact_geometry, native_backend
 from .surgical_tool_profiles import assembly_segments, profile_segments
 
 
+AXIAL_SWEEP_PROPERTY = 'toolSweepPolicy'
+AXIAL_SWEEP_POLICY = 'axial-dissector-capsule-v2'
+
+
 def _function_state(function):
     keywords = function.__kwdefaults__
     return (function, function.__code__, function.__defaults__,
@@ -427,6 +431,42 @@ def swept_envelopes(tool, parameters, start, end):
     inflation = np.linalg.norm(b - a) / 2 + 84 * np.sin(angle / 4)
     q = np.frombuffer(q_bytes, dtype=np.float64).copy()
     return envelopes(tool, parameters, (a + b) / 2, q, inflation)
+
+
+def axial_dissector_sweep(tool, parameters, start, end):
+    """Cover near-axial motion of a fixed generic dissector, or use the v1 bound."""
+    if (tool['geometry'] != 'dissector' or {'operativeToolProfileV1',
+            'operativeToolAssemblyRevision', 'operativeJawSweepFromMm',
+            'contactGeometryRevision'} & parameters.keys()):
+        return swept_envelopes(tool, parameters, start, end)
+
+    first, last = np.asarray(start['position']), np.asarray(end['position'])
+    delta = last - first
+    travel = np.linalg.norm(delta)
+    if not 1e-5 <= travel <= .5 or np.abs([first, last]).max() > 4096.:
+        return swept_envelopes(tool, parameters, start, end)
+    rotations = Rotation.from_quat([start['quaternion'], end['quaternion']])
+    angle = (rotations[1] * rotations[0].inv()).magnitude()
+    if angle > 1e-7:
+        return swept_envelopes(tool, parameters, start, end)
+
+    midpoint = Slerp([0., 1.], rotations)(.5)
+    axis = midpoint.apply([0., 0., 1.])
+    axial = np.dot(delta, axis)
+    transverse = np.linalg.norm(delta - axial * axis)
+    if transverse > 1e-6:
+        return swept_envelopes(tool, parameters, start, end)
+
+    # Both rigid centerlines are parallel to the tool axis. Their axial
+    # translations over the interval lie in the extended midpoint segments.
+    # At any time the remaining translation is at most transverse/2. Each
+    # centerline point is within 42 mm of the tip and turns at most angle/2
+    # from the midpoint, giving the same rotational chord bound as v1.
+    # Pad outward for float64 operations in the restricted RAS domain.
+    extension = abs(axial) / 2 * axis
+    pad = transverse / 2 + 84 * np.sin(angle / 4) + 1e-8
+    return [(a - extension, b + extension, radius + pad, part)
+            for a, b, radius, part in envelopes(tool, parameters, (first + last) / 2, midpoint.as_quat())]
 
 
 def _trajectory_quaternion(interpolation, index, count, chunk, rotation_type, slerp_type):

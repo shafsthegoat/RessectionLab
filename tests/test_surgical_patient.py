@@ -128,6 +128,7 @@ def native_wall_fixture(tmp_path, *, registration='reviewed', isolated_pair=Fals
 def test_standard_environment_local_native_wall_preserves_source_and_reopens(tmp_path):
     from resectionlab.surgical_environment import load_environment
     from resectionlab.surgical_engine import SurgicalEngine
+    from resectionlab.surgical_motion import AXIAL_SWEEP_POLICY, AXIAL_SWEEP_PROPERTY
     from resectionlab.surgical_rl_protection import GuardConfig
     from resectionlab.surgical_vessel_rods import view
 
@@ -146,11 +147,65 @@ def test_standard_environment_local_native_wall_preserves_source_and_reopens(tmp
     assert report['resolutionMm'] == [.5, .5, .5]
     scene = load_environment(report['casePath'])
     engine = SurgicalEngine(scene, guard_config=GuardConfig(require_critical_coverage=False))
+    assert scene.properties[AXIAL_SWEEP_PROPERTY] == AXIAL_SWEEP_POLICY
     assert report['environment']['sceneId'] == scene.identity
     assert scene._vessel_source_walls[0].geometry_binding == wall['geometryBinding']
     assert {edge['edgeId'] for edge in view(engine)['segments']} == set(wall['branches'])
     assert any(site['activeSupportCells'] for site in view(engine)['sites'])
     assert study.identity() == PatientImagingCollection(study.root).identity()
+
+
+def test_target_free_native_wall_saves_keep_their_declared_sweep_policy(tmp_path, monkeypatch):
+    from dataclasses import replace
+
+    from resectionlab import surgical_motion as motion
+    from resectionlab.core import thaw_json
+    from resectionlab.imaging import save_case
+    from resectionlab.surgical_engine import SurgicalEngine
+    from resectionlab.surgical_rl_protection import GuardConfig
+
+    study, _, _ = native_wall_fixture(tmp_path)
+    prepared = prepare_surgical_environment(study.root, tmp_path / 'prepared', layer_ids={'brain': 'brain', 'vessels': 'vessels'},
+                                            native_wall_center=[0., 0., 1.])
+    fresh = load_case(prepared['casePath'])
+    metadata = thaw_json(fresh.metadata)
+    del metadata['surgical_properties'][motion.AXIAL_SWEEP_PROPERTY]
+    historical_path = tmp_path / 'legacy-native-wall.ressectionlab'
+    save_case(replace(fresh, metadata=metadata), historical_path)
+    historical = from_case(load_case(historical_path))
+    current = from_case(fresh)
+    assert historical.identity != current.identity
+    assert all(not row.get('target') for row in historical.regions)
+    assert historical._vessel_source_walls[0].geometry_binding == current._vessel_source_walls[0].geometry_binding
+    changed_extent = {'slot': 'left', 'operation': 'move', 'pose': {
+        'position': [0., 0., 5.8], 'quaternion': [1., 0., 0., 0.]},
+        'parameters': {'depthMm': .5}, 'duration': .08}
+    fixed_extent = {**changed_extent, 'pose': {**changed_extent['pose'], 'position': [0., 0., 5.7]}}
+    del fixed_extent['parameters']
+    calls = []
+    axial = motion.axial_dissector_sweep
+
+    def observe(*args):
+        calls.append(args)
+        return axial(*args)
+
+    monkeypatch.setattr(motion, 'axial_dissector_sweep', observe)
+    snapshots = []
+    for scene in (historical, current):
+        engine = SurgicalEngine(scene, guard_config=GuardConfig(require_critical_coverage=False))
+        for action in ({'slot': 'left', 'operation': 'exchange', 'instrument': 'dissector', 'duration': .08},
+                       {'slot': 'left', 'operation': 'place', 'pose': {**changed_extent['pose'], 'position': [0., 0., 6.]}, 'duration': .08},
+                       changed_extent):
+            assert engine.step(action)['status'] == 'accepted'
+        assert not calls
+        assert engine.step(fixed_extent)['status'] == 'accepted'
+        assert bool(calls) == (scene is current)
+        snapshots.append(engine.snapshot())
+    with pytest.raises(ValueError, match='Saved scene or engine version differs'):
+        SurgicalEngine.restore(current, snapshots[0], force_verify=True)
+    calls.clear()
+    restored = SurgicalEngine.restore(historical, snapshots[0], force_verify=True)
+    assert restored.snapshot() == snapshots[0] and not calls
 
 
 def test_native_wall_requires_reviewed_alignment_even_when_estimated_is_allowed(tmp_path):

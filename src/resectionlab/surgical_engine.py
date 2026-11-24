@@ -411,6 +411,16 @@ class SurgicalEngine:
         from .surgical_source_inspection import inspection_only
         self._source_inspection_only = inspection_only(scene)
         self._operative = 'operativeExposureV1' in scene.properties
+        from .surgical_motion import AXIAL_SWEEP_PROPERTY, AXIAL_SWEEP_POLICY
+        self._axial_tool_sweep = AXIAL_SWEEP_PROPERTY in scene.properties
+        if self._axial_tool_sweep and (
+                scene.properties[AXIAL_SWEEP_PROPERTY] != AXIAL_SWEEP_POLICY
+                or self._operative or self._source_inspection_only
+                or not (scene.source.get('adapter') or {}).get('nativeWall')
+                or not getattr(scene, '_vessel_source_walls', ())
+                or not vessel_rods.wall_sweep_enabled(self)
+                or not vessel_rods.bounded_tissue_capacity_enabled(self)):
+            raise ValueError('TOOL_SWEEP_POLICY_REQUIRES_SUPPORTED_NATIVE_WALL')
         self.tools = TOOLS
         self._operative_tool_revision = 0
         if self._operative:
@@ -869,6 +879,8 @@ class SurgicalEngine:
                 if refusal is not None:
                     return None, refusal
             duration, points = candidate._validate(action)
+            if candidate._axial_tool_sweep and action['operation'] in ('move', 'withdraw'):
+                candidate._fixed_dissector_extent = not {'radiusMm', 'depthMm'}.intersection(action.get('parameters', {}))
             result = candidate._execute(copy.deepcopy(action), duration, points, check=check)
         except _OperationCheckFailed as interrupted:
             raise interrupted.cause from None
@@ -877,6 +889,7 @@ class SurgicalEngine:
             return None, {'status': 'rejected', 'reason': str(error), 'reasonCode': str(error).split(':')[0] if str(error).split(':')[0].isupper() else 'INVALID_ACTION', 'completedFraction': 0., 'elapsedSeconds': 0., 'stateId': before, 'events': [], 'deltas': {}, 'metrics': self.metrics()}
         finally:
             candidate.__dict__.pop('_transition_check',None)
+            candidate.__dict__.pop('_fixed_dissector_extent', None)
         if check is not None: check()
         result['reasonCode'] = result['reason'].split(':')[0] if result.get('reason') else None
         result.setdefault('elapsedSeconds', candidate.state['elapsedSeconds'] - before_time if result['status'] != 'rejected' else 0.)
@@ -1234,7 +1247,7 @@ class SurgicalEngine:
         if op == 'bladeManeuver':
             from .surgical_planar_maneuver import advance
             return advance(self, key, p, q, dt)
-        from .surgical_motion import envelopes, swept_envelopes, pair_conflict
+        from .surgical_motion import axial_dissector_sweep, envelopes, swept_envelopes, pair_conflict
         guarded_wall = vessel_rods.wall_sweep_enabled(self)
         if guarded_wall:
             wall_topology = vessel_rods.wall_topology(self)
@@ -1266,7 +1279,10 @@ class SurgicalEngine:
             and tool['effect'] not in ('remove', 'suction', 'irrigate', 'probe'))
         tip_cells = [] if self._operative else self.touched(previous, p, params['radiusMm'])
         end_pose = {'position': p, 'quaternion': q}
-        swept = swept_envelopes(tool, self._sweep_parameters(key, slot) if self._operative else params, slot, end_pose)
+        sweep = swept_envelopes
+        if not active and slot['instrument'] == 'dissector' and getattr(self, '_fixed_dissector_extent', False):
+            sweep = axial_dissector_sweep
+        swept = sweep(tool, self._sweep_parameters(key, slot) if self._operative else params, slot, end_pose)
         if self._operative:
             from . import surgical_operative_exposure as exposure
             exposure.check_motion(self, key, op, p, q)

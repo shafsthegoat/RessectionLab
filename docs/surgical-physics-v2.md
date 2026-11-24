@@ -250,3 +250,40 @@ accepted boundary. [Paired experiment and film](local-storage-ledger.md)
 The parallel-vessel control uses two independently supported 13-site rods and a 784-triangle native score wall. The same 0.4 s dissector stroke rolls back under v1 and advances under v2. The passive vessel moves 0.133 mm, reaches 0.250 mm with continued loading, and recoils below one quarter of that displacement after withdrawal and relaxation. The accepted wall clears the guard and cold replay reproduces its pose and subsequent receipts. Run `.venv/bin/python -m pytest -q tests/test_surgical_vessel_rods.py -k inter_vessel_contact`.
 
 On an Apple M2 Pro with the native sweep guard, the accepted contact stroke took 470 ms at the median of five trials. The projection accounted for 67 ms across 26 correction calls. A well-separated vessel control took 293 ms with v1 and 292 ms with v2 and required no projection. These timings cover the engine action, including collision checks and state publication.
+
+#### Continuous swept cover for axial dissector motion
+
+New ordinary cursor-local native-wall preparations bind
+`toolSweepPolicy: axial-dissector-capsule-v2` into the scene identity. Saved
+scenes with no sweep declaration use the original midpoint capsule cover.
+The second policy applies to passive motion and withdrawal of the fixed
+generic dissector. It uses the original cover when instrument extent is
+specified in the action, or when a substep exceeds the qualified range. The
+absolute RAS coordinates are at most 4096 mm, substep travel is between
+10⁻⁵ mm and 0.5 mm, lateral travel is at most 10⁻⁶ mm and rotation is at most
+10⁻⁷ radians. Operative tools, active dissection and other instruments use
+their established cover.
+
+For each capsule, the midpoint-pose centerline has unit direction `u`.
+The displacement between the two tips has axial component `αu` and
+transverse component `d⊥`. A point on the centerline would move by at most
+`|α|/2` along `u` from its midpoint location if orientation were fixed.
+Extending both ends by that distance covers the projected axial travel.
+The remaining translation is at most `‖d⊥‖/2`. Shortest-arc interpolation
+with endpoint angle `θ` moves each point at most `84 sin(θ/4)` mm from
+its orientation at the midpoint, since the centerline is within 42 mm of
+the tip. Adding these two distances and outward numerical padding to the
+capsule radius encloses every interpolated capsule throughout the substep.
+The material guards still use swept cell coverage. The continuous wall
+intersection, local fold and facet compression tests are independent.
+
+On the reviewed TopCoW-012 field, a single 380 ms endpoint request completed
+contact and a single 500 ms endpoint request withdrew the tool. The prepared
+case retained the native score, mask, source crossings and wall triangles.
+Contact moved the modeled wall up to 0.00765 mm and loaded the same two
+source owners as the recorded fine-waypoint run. Withdrawal cleared both
+contacts and left 0.00649 mm of wall displacement. All 105 assigned supports
+remained attached. The two requests took 2.11 s and 3.93 s through the bridge
+on the M2 Pro. The original direct request still replays its earlier partial
+stop at step 8 of 11. Both old histories and all four new action boundaries
+cold-replayed exactly. [Evidence and receipts](local-storage-ledger.md)
