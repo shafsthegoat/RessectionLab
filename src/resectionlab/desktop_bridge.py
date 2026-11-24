@@ -655,6 +655,7 @@ class BridgeSession:
     def prune_transfers(self) -> None:
         """Discard generated arrays belonging to failed or cancelled imports."""
         retained = set(getattr(self, 'anatomy_transfer_paths', ()))
+        retained.update(getattr(self, 'anatomy_vessel_field_paths', ()))
         inspection = getattr(self, 'native_wall_source', None)
         if inspection:
             retained.update(inspection.transfer_paths)

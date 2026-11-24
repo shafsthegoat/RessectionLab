@@ -73,9 +73,44 @@ def test_open_native_vessel_fairing_preserves_the_rim_collar_and_tiny_source_cro
     np.testing.assert_array_equal(display[tiny], source[tiny])
     np.testing.assert_array_equal(scores, original_scores)
     np.testing.assert_array_equal(mask, original_scores >= .5)
-    assert diagnostic['policy'] == 'native-bounded-open-vessel-v1'
+    assert diagnostic['policy'] == 'native-bounded-open-vessel-v2'
     assert 0 < diagnostic['maxDisplacementMm'] <= .4 * .7 * .55
     assert not len(intersection_vertices(world(affine, source), world(affine, display), faces))
+
+
+def test_section_containment_requires_the_entire_void_ring():
+    from resectionlab.vessel_section_stability import _section_roles
+
+    points = np.array([[-2, -2], [2, -2], [2, 2], [-2, 2],
+                       [1, .4], [3, .4], [3, 1], [1, 1],
+                       [-1.5, .4], [-.5, .4], [-.5, 1], [-1.5, 1]])
+    rings = [list(range(i, i + 4)) for i in (0, 4, 8)]
+    assert _section_roles(rings, points).tolist() == [1] * 4 + [0] * 4 + [2] * 4
+
+
+def test_open_section_guard_restores_a_merged_junction_without_reverting_other_moves(monkeypatch):
+    from resectionlab import vessel_section_stability as section
+    from resectionlab.anatomy_geometry import _indexed_contour
+
+    x, y, z = np.indices((25, 25, 21), dtype=float)
+    first, second = [2.4 - np.hypot(x - axis, y - 12) for axis in (7, 17)]
+    bridge = np.minimum.reduce((1.2 - np.abs(y - 12), 5.1 - np.abs(x - 12), z - 10.3))
+    scores = (.5 + np.clip(np.maximum.reduce((first, second, bridge)) * .2, -.4, .4)).astype(np.float32)
+    source, faces, _ = _indexed_contour(scores, probability=True)
+    candidate = source.copy()
+    candidate[np.abs(source[:, 2] - 10.3) < .45, 2] -= .3
+    elsewhere = (source[:, 2] > 14.) & (source[:, 2] < 17.)
+    candidate[elsewhere, 1] += .08
+    plane = np.array([7., 12., 10.15]), np.array([0., 0., 1.])
+    before, _ = section._cut(source, faces, *plane)
+    merged, _ = section._cut(candidate, faces, *plane)
+    assert section._changed_section(before, merged)
+    monkeypatch.setattr(section, '_source_stations', lambda *_: [plane])
+    guarded, diagnostic = section.preserve_open_sections(source, candidate, faces, scores >= .5, np.eye(4), cancelled=lambda: False)
+    after, _ = section._cut(guarded, faces, *plane)
+    assert not section._changed_section(before, after)
+    assert diagnostic['sectionCorrections'] == 1 and diagnostic['sectionRestoredVertices'] > 0
+    np.testing.assert_array_equal(guarded[elsewhere], candidate[elsewhere])
 
 
 def test_native_vascular_wall_reduces_caliber_error_and_keeps_source_owners():

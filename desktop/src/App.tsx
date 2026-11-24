@@ -1,6 +1,6 @@
 import {RecordedStrategyComparison} from './RecordedStrategyComparison';
 import {NativeApproachPanel} from './NativeApproachPanel';
-import {NativeWallSourceDialog} from './NativeWallSourceDialog';
+import {NativeVesselFieldDialog, NativeWallSourceDialog} from './NativeWallSourceDialog';
 import {useSurgical} from "./use-surgical";
 import {caseImageEvidence,caseLayerEvidence,conditionalRehearsalNotice} from './data-case-evidence';
 import {SurgicalPanel} from "./SurgicalPanel";
@@ -24,7 +24,7 @@ import {scanLabel} from './native-study-state';
 import {useNativeWorkspace} from './use-native-workspace';
 import {NativeSidebar,NativeCorrectionBar,NativeResearch} from './NativeWorkspacePanels';
 import {isNativeBinding} from './native-anatomy-data';
-import type {NativeAnatomyApi} from './native-anatomy-data';
+import type {NativeAnatomyApi,NativeVesselFieldRequest} from './native-anatomy-data';
 import {useDiagnosticLayer} from "./use-diagnostic-layer";
 import { ImagingWorkspacePanel } from "./ImagingWorkspacePanel";
 import { useWorkspaceImaging } from "./use-workspace-imaging";
@@ -573,6 +573,7 @@ export default function App() {
   const [newStudyTimepoint,setNewStudyTimepoint]=useState('preoperative');
   const [payload, setPayload] = useState<CasePayload | null>(null);
   const [sourceInspectionOpen,setSourceInspectionOpen]=useState(false);
+  const [vesselField,setVesselField]=useState<NativeVesselFieldRequest|null>(null);
   const [caseData, setCaseData] = useState<ViewerCase | null>(null);
   const [visibleLayers, setVisibleLayers] = useState<Record<string, boolean>>(
     {},
@@ -806,7 +807,8 @@ export default function App() {
   const publicGoalMarker = useMemo(() => episodeVisible && activeContactView && activeContactView.source.caseHash === payload?.caseHash ? contactGoalMarker(activeContactView,activeContactStep) : null,
     [episodeVisible,activeContactView,activeContactStep,payload?.caseHash]);
   const actorReplayVisible = useRef(false);
-  const fileNavigationBlocked = openingStartupWorkspace || sourceInspectionOpen || !!native.draft || !api || busy || comparison.pending || engineStopped || readonly;
+  const sourceDialogOpen=sourceInspectionOpen||!!vesselField;
+  const fileNavigationBlocked = openingStartupWorkspace || sourceDialogOpen || !!native.draft || !api || busy || comparison.pending || engineStopped || readonly;
   const nativeWallSource=(payload?.metadata.surgical_adapter as {nativeWall?:{schema?:string}}|undefined)?.nativeWall;
   const restoreSourceView = () => {
     resetDisplayToPrimary();
@@ -1462,14 +1464,14 @@ export default function App() {
   useEffect(() => {
     if (!api) return;
     return api.onEvent((event) => {
-      if (event.event !== "menuAction" || busy || sourceInspectionOpen || comparison.pending || engineStopped || readonly) return;
+      if (event.event !== "menuAction" || busy || sourceDialogOpen || comparison.pending || engineStopped || readonly) return;
       if (event.action === "openCase") void load("openCase");
       if (event.action === "saveCase" && (payload||native.binding)) void (native.binding?native.save():save());
     });
   }, [
     api,
     native.binding,native.series,native.state,native.draft,
-    busy,sourceInspectionOpen,
+    busy,sourceDialogOpen,
     engineStopped,
     readonly,
     payload,
@@ -1602,6 +1604,7 @@ export default function App() {
     <div data-native-series={native.binding?native.series:undefined} data-native-view-state={native.binding?JSON.stringify(native.viewState):undefined} className={`app-shell poc-workbench ${native.binding?"native-workspace":""} ${libraryOpen?"library-open":""} ${workbenchTab === "research" && !native.binding ? "research-open" : "anatomy-only"} ${casePanel ? "" : "case-panel-collapsed"}`}>
       {sourceInspectionOpen&&payload&&nativeApi&&<NativeWallSourceDialog api={nativeApi} caseHash={payload.caseHash}
         close={()=>setSourceInspectionOpen(false)}/>}
+      {vesselField&&nativeApi&&<NativeVesselFieldDialog api={nativeApi} request={vesselField} close={()=>setVesselField(null)}/>}
       <header className="app-header">
         <div className="brand">
           <Logo />
@@ -1638,7 +1641,7 @@ export default function App() {
           className="header-button save-button"
           onClick={native.binding?()=>native.save():save}
           title={showEngineRecording?'Save recorded procedure and playback position':native.binding?'Save native study and plan':undefined}
-          disabled={(!payload&&!native.binding) || busy || sourceInspectionOpen || !!native.draft || engineStopped || readonly || native.binding?.readOnlyStudy}
+          disabled={(!payload&&!native.binding) || busy || sourceDialogOpen || !!native.draft || engineStopped || readonly || native.binding?.readOnlyStudy}
         >
           <ArrowDownToLine size={15} />
           <span>Save</span>
@@ -1797,7 +1800,8 @@ export default function App() {
           </>}
         </>:native.binding?<>
           {workbenchTab==='research'?<NativeApproachPanel workspace={native} onPreview={openOperative} onEditStateChange={setPlanningEditsPending}/>:<NativeSidebar workspace={native} tab={workbenchTab==='data'?'data':'anatomy'}
-            onOpenAnatomy={()=>setWorkbenchTab('anatomy')} onOpenPlan={()=>setWorkbenchTab('research')} onOpenScans={()=>setWorkbenchTab('data')}/>}
+            onOpenAnatomy={()=>setWorkbenchTab('anatomy')} onOpenPlan={()=>setWorkbenchTab('research')} onOpenScans={()=>setWorkbenchTab('data')}
+            onInspectVessel={setVesselField}/>}
         </>:<>
         {workbenchTab!=="research" && <>
             <h1 title={title}>{title}</h1><p className="case-subtitle">{displayedSource ? String(displayedSource.metadata.selected_modality??'Source image') : 'Open a case to begin'}</p>

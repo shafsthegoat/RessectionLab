@@ -12,7 +12,7 @@ from scipy import ndimage as ndi
 from .patient_anatomy import digest, affine, world, file_hash
 from .core import immutable_array
 from .surface_fairing import (
-    fair_surface, intersection_vertices, surface_kind, broad_context_surface, NATIVE_POLICY,
+    fair_surface, intersection_vertices, surface_kind, broad_context_surface, NATIVE_POLICY, POLICY,
     NATIVE_VASCULAR_POLICY, OPEN_VASCULAR_POLICY,
 )
 
@@ -336,6 +336,8 @@ def local_source_contour(collection, row, slices):
 
 def condition_open_vascular_contour(source, faces, mask, affine, *, cancelled=lambda: False):
     """Condition a native score surface while holding its open rims fixed."""
+    from .vessel_section_stability import preserve_open_sections
+
     if len(faces) > 80_000:
         return source, {'policy': OPEN_VASCULAR_POLICY, 'kind': 'vessel', 'maxDisplacementMm': 0.,
                         'fallbackReason': 'Field exceeds the interactive vessel geometry budget. Source contour retained.'}
@@ -343,7 +345,21 @@ def condition_open_vascular_contour(source, faces, mask, affine, *, cancelled=la
                                          source_shape=mask.shape, cancelled=cancelled, open_field=True)
     owners = vascular_mesh_source_cells(source, mask)
     positions, retained = _retain_isolated_score_components(source, positions, faces, owners, mask, mask, affine, cancelled)
-    return positions, {**diagnostics, **retained}
+    guarded, sections = preserve_open_sections(source, positions, faces, mask, affine, cancelled=cancelled)
+    if sections['sectionRestoredVertices']:
+        linear = np.asarray(affine)[:3, :3]
+        raw, guarded_mm = source.astype(float) @ linear.T, guarded.astype(float) @ linear.T
+        changed = np.any(guarded != positions, axis=1)[faces].any(axis=1)
+        original_tri, new_tri = raw[faces[changed]], guarded_mm[faces[changed]]
+        old_normal = np.cross(original_tri[:, 1] - original_tri[:, 0], original_tri[:, 2] - original_tri[:, 0])
+        normal = np.cross(new_tri[:, 1] - new_tri[:, 0], new_tri[:, 2] - new_tri[:, 0])
+        flipped = np.any(np.einsum('ij,ij->i', normal, old_normal) <= 0.)
+        collapsed = np.any(np.linalg.norm(normal, axis=1) < POLICY['minimumFaceAreaRatio'] * np.linalg.norm(old_normal, axis=1))
+        if flipped or collapsed or len(intersection_vertices(raw, guarded_mm, faces, cancelled)):
+            guarded, guarded_mm = source, raw
+            sections['fallbackReason'] = 'Source contour retained after the section repair geometry check.'
+        sections['maxDisplacementMm'] = float(np.linalg.norm(guarded_mm - raw, axis=1).max(initial=0.))
+    return guarded, {**diagnostics, **retained, **sections}
 
 
 def vascular_cleanup_source(collection, row):

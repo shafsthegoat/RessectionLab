@@ -92,12 +92,20 @@ contours end openly at the window edges. For a native vessel score layer,
 **Conditioned contour** uses bounded fairing around the original triangles.
 **Source contour** shows the original score crossings at the same camera.
 Both share acquired slices, label overlays and open rim coordinates.
+Conditioning restores source vertices where a sampled section would change
+its connected outline or enclosed voids.
 **Full acquisition** restores the surrounding scan and its ordinary surfaces.
 When preparation used a local alignment review, the angiogram opens in its own
 acquisition frame at the corresponding voxel. Use the linked slices to examine
 the acquired signal, **Volume** to add it to the 3D field, and **Reset to saved
 field** to recenter both views. **Return to rehearsal** restores the open action
 boundary and instrument poses, including unsaved work.
+
+In ordinary **Anatomy**, select a scored vessel layer on its own angiography
+scan and choose **Inspect local vessel field**. The same contour controls open
+at the linked cursor. Alignment previews open the acquired field in independent
+native coordinates. **Return to Anatomy** resumes the full view at its existing
+camera and cursor.
 
 ### Practice from an accepted engine state
 

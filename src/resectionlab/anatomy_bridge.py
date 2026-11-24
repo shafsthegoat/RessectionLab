@@ -94,6 +94,7 @@ def dispatch(session, operation, args, request, progress):
         session.anatomy_collections = {key: c}
         session.anatomy_drafts = {}
         session.anatomy_removal = {}
+        session.anatomy_vessel_field_paths = set()
         return {"collectionId": key, "document": c.document, "viewState": read_view(c)}
     if operation == "anatomyOpen":
         session.anatomy_plan_cache = None
@@ -111,6 +112,7 @@ def dispatch(session, operation, args, request, progress):
         session.anatomy_drafts = {}
         session.anatomy_removal = {}
         session.anatomy_transfer_paths = set()
+        session.anatomy_vessel_field_paths = set()
         session.anatomy_packages = {key: package_path} if package_path and not args.get("readOnlyPackage") else {}
         return {"collectionId": key, "document": c.document,
                 "viewState": None if linked else read_view(c), "readOnlyStudy": linked}
@@ -120,6 +122,8 @@ def dispatch(session, operation, args, request, progress):
     if inspection:
         if operation != 'anatomyView':
             raise ValueError('Native-wall source inspection is read-only')
+        if 'localVesselField' in args:
+            raise ValueError('Select an ordinary Anatomy study for this inspection')
         scan = inspection.scans.get(args.get('seriesId'))
         if scan is None:
             raise ValueError('This scan is outside the saved rehearsal source binding')
@@ -163,6 +167,19 @@ def dispatch(session, operation, args, request, progress):
     if key in session.anatomy_removal and session.anatomy_removal[key][0] != current_id:
         session.anatomy_removal.pop(key)
     request.check()
+    if operation == 'anatomyView' and 'localVesselField' in args:
+        if key in session.anatomy_drafts:
+            raise ValueError('Resolve the current correction before opening the vessel field')
+        from .native_source_field import anatomy_vessel_field
+
+        manifest_hash = hashlib.sha256(manifest.read_bytes()).digest()
+        view, paths = anatomy_vessel_field(c, args.get('seriesId'), args['localVesselField'],
+                                        session.transfers.array, request.check, progress)
+        if hashlib.sha256(manifest.read_bytes()).digest() != manifest_hash:
+            raise ValueError('The source study changed while opening the vessel field')
+        request.check()
+        session.anatomy_vessel_field_paths = paths
+        return view
     if operation == "anatomyLocalAlignment":
         from .anatomy_local_alignment import local_alignment_evidence
 

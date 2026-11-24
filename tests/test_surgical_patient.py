@@ -247,7 +247,7 @@ def test_native_wall_source_inspection_keeps_live_state_and_checks_relocated_sou
                     faces = np.fromfile(comp['surface']['indices']['path'], '<u4').reshape(-1, 3)
                     raw = np.fromfile(comp['surface']['source']['path'], '<f4').reshape(-1, 3)
                     points = np.fromfile(comp['surface']['positions']['path'], '<f4').reshape(-1, 3)
-                    assert comp['surfaceDiagnostics']['policy'] == 'native-bounded-open-vessel-v1'
+                    assert comp['surfaceDiagnostics']['policy'] == 'native-bounded-open-vessel-v2'
                     assert not comp['surfaceDiagnostics']['sourceSurfaceOnly']
                     assert not np.array_equal(raw, points)
                     edges = np.sort(faces[:, [[0, 1], [1, 2], [2, 0]]].reshape(-1, 2), axis=1)
@@ -274,6 +274,53 @@ def test_native_wall_source_inspection_keeps_live_state_and_checks_relocated_sou
         after = call('surgicalRehearsal', {**key, 'command': 'inspect'})
         assert (after['branchId'], after['position'], after['view']['stateId'], after['view']['slots']) == (
             before['branchId'], before['position'], before['view']['stateId'], before['view']['slots'])
+    finally:
+        session.close()
+
+
+def test_anatomy_vessel_field_keeps_the_full_view_cache_and_native_preview_coordinates(tmp_path):
+    from resectionlab.desktop_bridge import BridgeSession, _Request
+
+    study, _, _ = native_wall_fixture(tmp_path, registration='unreviewed')
+    estimated = np.eye(4)
+    estimated[:3, 3] = [.5, -.25, .75]
+    study.set_registration('tof', estimated, status='unreviewed', method='display test')
+    study.save()
+    manifest = study.root / 'patient-anatomy.json'
+    original = manifest.read_bytes()
+    session = BridgeSession(tmp_path / 'bridge')
+    try:
+        def call(op, args):
+            return session.execute(op, args, _Request(op), lambda *_: None)
+
+        binding = call('anatomyOpen', {'path': str(manifest)})
+        selection = {'collectionId': binding['collectionId'], 'snapshotId': binding['document']['snapshot_id'], 'seriesId': 'tof'}
+        full = call('anatomyView', {**selection, 'layers': ['vessels'], 'previewAlignment': True})
+        cache = session.anatomy_view_cache
+        transfers = session.anatomy_transfer_paths.copy()
+        assert full['registrationStatus'] == 'alignment preview' and full['shape'] == [65, 65, 65]
+        request = {'layerId': 'vessels', 'center': [.5, -.25, 1.75], 'frame': 'alignment preview'}
+        field = call('anatomyView', {**selection, 'localVesselField': request})
+        assert field['sourceFieldCursorRasMm'] == [0., 0., 1.]
+        assert field['registrationStatus'] == 'independent source frame' and not field['patientFrameReady']
+        assert field['shape'] == [49, 49, 49]
+        native = np.array(study.series('tof')['affine'])
+        start = np.asarray(field['sourceField']['startIJK'])
+        crop = tuple(slice(i, i + 49) for i in start)
+        native[:3, 3] += native[:3, :3] @ start
+        np.testing.assert_array_equal(field['affine'], native)
+        assert Path(field['mri']['path']).read_bytes() == study.array(study.series('tof')['data'])[crop].astype('<f4').tobytes()
+        assert session.anatomy_view_cache is cache and session.anatomy_transfer_paths == transfers
+        layer, = field['compartments']
+        assert layer['surfaceDiagnostics']['policy'] == 'native-bounded-open-vessel-v2'
+        assert layer['surfaceDiagnostics']['sectionStations'] > 0
+        with pytest.raises(ValueError, match='on its active acquisition'):
+            call('anatomyView', {**selection, 'seriesId': 't1', 'localVesselField': request})
+        with pytest.raises(ValueError, match='Choose a scored vessel layer'):
+            call('anatomyView', {**selection, 'localVesselField': {**request, 'radius': 99}})
+        with pytest.raises(ValueError, match='Anatomy changed'):
+            call('anatomyView', {**selection, 'snapshotId': 'wrong', 'localVesselField': request})
+        assert original == manifest.read_bytes()
     finally:
         session.close()
 

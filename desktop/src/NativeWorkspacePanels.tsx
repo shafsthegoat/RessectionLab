@@ -10,7 +10,7 @@ import {inverseAffine,rasAffine,sampleTrilinear,transformPoint,volumeBounds} fro
 import type {ViewerVolume} from './viewer/contracts';
 import type {Point3} from './viewer/coordinates';
 import {scanLabel,studyTimepoint,studyLabel,sourceEvidenceLabel,defaultAnatomyPresentation,studyLayerDisplayKind,isCtaCoverageLayer} from './native-study-state';
-import type {NativeVesselGraph,VesselScope} from './native-anatomy-data';
+import type {NativeVesselFieldRequest,NativeVesselGraph,VesselScope} from './native-anatomy-data';
 import type {NativeWorkspace} from './use-native-workspace';
 import {AnatomyInspection} from './AnatomyInspection';
 import {NativeImportPanel} from './NativeImportPanel';
@@ -121,8 +121,9 @@ function NativeScanPreview({volume,label,modality}:{volume:ViewerVolume|null;lab
   return <span className="study-scan-preview">{volume&&sourceSignal?<><canvas ref={canvas} width="240" height="148" role="img" aria-label={`${label} · central sagittal section of the source scan`}/><span>Sagittal · source scan</span></>:<span className="study-scan-preview-empty">{sourceSignal?'Loading source preview…':'Source preview unavailable for this layer'}</span>}</span>;
 }
 
-export function NativeSidebar({workspace:w,tab,onOpenAnatomy,onOpenPlan,onOpenScans}:{
+export function NativeSidebar({workspace:w,tab,onOpenAnatomy,onOpenPlan,onOpenScans,onInspectVessel}:{
   workspace:NativeWorkspace;tab:'data'|'anatomy';onOpenAnatomy:()=>void;onOpenPlan:()=>void;onOpenScans:()=>void;
+  onInspectVessel?:(request:NativeVesselFieldRequest)=>void;
 }){
   const [selected,setSelected]=useState<string|null>(w.draft?w.editLayer:w.selectedStructure),[editing,setEditing]=useState(!!w.draft),[size,setSize]=useState(0);
   const [componentPage,setComponentPage]=useState(0),[componentOrder,setComponentOrder]=useState('smallest');
@@ -148,6 +149,11 @@ export function NativeSidebar({workspace:w,tab,onOpenAnatomy,onOpenPlan,onOpenSc
   const layerInspector=layer&&<section className="layer-inspector"><div className="inspector-heading"><strong>{layer.label}</strong><button aria-label="Close layer details" disabled={!!w.draft} onClick={()=>choose(null)}>×</button></div>
         <div className="tool-row"><input type="color" aria-label={`${layer.label} color`} value={w.state.settings.layerColor?.[layer.id]??layer.color} onChange={e=>w.setSettings(withLayerColor(w.state.settings,layer.id,layer.kind,e.target.value))}/><label>Opacity<input aria-label={`${layer.label} opacity`} type="range" min="0" max="1" step=".01" value={layerAppearance(layer.id,layer.color,w.state.settings,studyLayerDisplayKind(layer)).opacity} onChange={e=>w.setSettings({...w.state.settings,layerOpacity:{...w.state.settings.layerOpacity,[layer.id]:+e.target.value}})}/></label><button disabled={w.busy} onClick={()=>w.setVisible(Object.fromEntries(b.document.layers.map(l=>[l.id,l.id===layer.id])))}>Isolate</button></div>
         <p className="subtle layer-review-status">{combinedLayer?'Display layer · combined supplied annotations':layer.review_status.replaceAll('_',' ')}{!combinedLayer&&w.volume?.compartments.find(l=>l.name===layer.id)?.volumeMm3!=null&&<> · source {(w.volume.compartments.find(l=>l.name===layer.id)!.volumeMm3!/1000).toFixed(2)} mL</>}</p>
+        {onInspectVessel&&tab==='anatomy'&&!combinedLayer&&!w.draft&&layer.source_series===w.series&&source&&['CTA','TOF','MRA'].includes(source.modality)&&
+          ['vessel','vessels','artery','vein','sinus'].includes(layer.kind)&&(layer.probability||(layer.provenance as {vascular_cleanup?:unknown}|null)?.vascular_cleanup)?
+          <button className="outline-button" disabled={blocked||!w.state.cursor||!w.volume} onClick={()=>{
+            if(w.state.cursor)onInspectVessel({...w.args(),seriesId:w.series,localVesselField:{layerId:layer.id,center:w.state.cursor,frame:w.registration}});
+          }}>Inspect local vessel field</button>:null}
         {w.volume?.compartments.find(l=>l.name===layer.id)?.qa&&(()=>{const q=w.volume!.compartments.find(l=>l.name===layer.id)!.qa!;return <details className="unified-details" open={q.voxelCount===0}><summary>Anatomy quality · {q.voxelCount===0?'empty segmentation':q.issues.length?'review findings':'source checks complete'}</summary><p>{q.componentCount.toLocaleString()} source components · anatomical accuracy unmeasured</p>{q.issues.map(issue=><p key={issue}>{issue}</p>)}<p>Findings do not change the source. Inspect linked slices before accepting corrections.</p></details>})()}
         {!combinedLayer&&!w.draft&&['all','exterior-air'].includes(w.vesselScope)&&layer.source_series===w.series&&['vessel','vessels','artery','vein','sinus'].includes(layer.kind)&&
           (layer.provenance as {model?:string}|null)?.model!=='siam-v2'&&<NativeVesselBranchPanel key={`${b.document.snapshot_id}/${layer.id}`} workspace={w} layerId={layer.id}/>}
