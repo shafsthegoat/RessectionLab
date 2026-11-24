@@ -37,9 +37,10 @@ export function NativeReviewSection({plane, label, showOverlay, pick, onPick}:{
       }
     }
   },[plane,showOverlay,height,width,pick,axis,horizontal,vertical]);
-  return <figure>
+  return <figure style={plane.startIjk?{overflowX:'auto'}:undefined}>
     <canvas ref={canvas} width={width} height={height} role="img" aria-label={label}
-      style={{aspectRatio:(width*horizontal)/(height*vertical),cursor:onPick&&showOverlay?'crosshair':undefined}}
+      style={{aspectRatio:(width*horizontal)/(height*vertical),minWidth:plane.startIjk?width:undefined,
+        cursor:onPick&&showOverlay?'crosshair':undefined}}
       onClick={onPick&&showOverlay&&axes&&plane.startIjk?event=>{
         const box=event.currentTarget.getBoundingClientRect();
         const x=Math.floor((event.clientX-box.left)*width/box.width),y=Math.floor((event.clientY-box.top)*height/box.height);

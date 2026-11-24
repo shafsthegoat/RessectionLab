@@ -342,7 +342,8 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
   const refresh=()=>binding?loadView(binding,series,scanState,original):Promise.resolve();
   async function edit(action:string,points:Point3[]=[],extra:Args={},layerId=editLayer){if(!binding||binding.readOnlyStudy||!api||!layerId)return;await run(async()=>{
     const nativeErase=action==='erase-attached-tof'||draft?.mode==='erase-attached-tof';
-    const view=nativeErase?{...scanState,settings:{...scanState.settings,camera:readCamera.current?.()??scanState.settings.camera}}:scanState;
+    const view=nativeErase?{...scanState,visible:{...scanState.visible,[layerId]:true},
+      settings:{...scanState.settings,camera:readCamera.current?.()??scanState.settings.camera}}:scanState;
     const result=await api.anatomyEdit({...args(),action,layerId,points,radiusMm:radius,threshold,author,...extra});
     let b={...binding,document:result.document};
     let retired:RetiredClipping[]|undefined;

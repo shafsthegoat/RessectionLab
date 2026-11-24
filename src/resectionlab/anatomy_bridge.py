@@ -668,6 +668,14 @@ def dispatch(session, operation, args, request, progress):
             session.anatomy_drafts.pop(key, None)
         elif action == "commit":
             draft = session.anatomy_drafts[key]
+            if draft.mode == ATTACHED_ERASE:
+                from .vascular_cleanup import review_attached_tof_layer
+
+                if np.array_equal(draft.mask, draft.original):
+                    raise ValueError("The native TOF preview has no change to accept")
+                _, receipt = review_attached_tof_layer(c, c.layer(draft.layer_id), check=request.check)
+                if receipt.get("reviewId") != draft.operations[0]["reviewId"]:
+                    raise ValueError("Attached vessel review changed; discard the draft and refresh")
             c = PatientImagingCollection(c.root, c.document)
             request.begin_commit()
             c.commit_edit(

@@ -236,6 +236,9 @@ def test_native_attached_edit_is_local_and_preserves_other_score_crossings(tmp_p
     np.testing.assert_array_equal(changed_positions[changed_positions[:, 0] < 26], raw_positions[raw_positions[:, 0] < 26])
     assert view(original=True)["surface"]["positions"]["sha256"] == original["surface"]["positions"]["sha256"]
     assert call("anatomyEdit", {**selection, "action": "undo"})["draft"]["changedVoxels"] == 0
+    with pytest.raises(ValueError, match="no change to accept"):
+        call("anatomyEdit", {**selection, "action": "commit", "author": "source reviewer"})
+    assert file_hash(manifest) == initial_hash
     assert call("anatomyEdit", {**selection, "action": "redo"})["draft"]["changedVoxels"] == preview["draft"]["changedVoxels"]
     call("anatomyEdit", {**selection, "action": "reject"})
     assert file_hash(manifest) == initial_hash
