@@ -235,7 +235,7 @@ export function engineImplicitSurface(points:Float32Array,indices:Uint32Array,no
   }
   const display=joined??{positions,smoothNormals,smoothIndices:undefined};
   const region=reference.nativeBrainRegion;
-  const refined=kind==='brain'&&region&&region===reference.layerRegion?fairNativeBrainSurface(points,display.positions,
+  const refined=(kind==='brain'||kind==='soft_tissue')&&region&&region===reference.layerRegion?fairNativeBrainSurface(points,display.positions,
     positions,display.smoothNormals,display.smoothIndices??indices,owner,mask,region,shape,affine,diagnostics.maxDisplacementMm):undefined;
   if(refined){
     diagnostics.policy=NATIVE_BRAIN_SURFACE_POLICY;

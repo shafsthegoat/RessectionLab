@@ -120,7 +120,8 @@ export function referenceModeledVolume(source:ViewerVolume,view:SurgicalView,cap
     compartments.push({...layer,labelSet:undefined,labelValue:undefined,mask:labels?Uint8Array.from(labels,n=>Number(n===layer.labelValue)):layer.mask});
   }
   const skin=view.operativeExposureV1&&regions.find((_,i)=>originals[i]?.layer?.kind==='scalp')?.id;
-  const nativeBrainRegion=regions.find((region,i)=>region.material==='brain'&&originals[i]?.layer?.appearanceSource?.nativeWallCrop)?.id;
+  const nativeBrainRegion=regions.find((region,i)=>(region.material==='brain'||region.material==='soft_tissue')&&
+    originals[i]?.layer?.appearanceSource?.nativeWallCrop)?.id;
   capture?.({surfaceReference:{owner:original,nativeBrainRegion,...(skin?{exteriorSkinRegion:skin}:{}),protectedRegions:regions.filter(r=>['vessel','membrane'].includes(r.material)).map(r=>r.id)},owner:original,regions:structuredClone(regions),originals,priority,
     vessels:bindNativeVesselSurfaces(source,original,regions),vesselTopology:new Map()},differences);
   return displayVolume(source,compartments,stateKey(view,coupled));

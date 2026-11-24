@@ -202,8 +202,8 @@ test('native brain fairing is layer-bound and leaves caps, adjacent vessels and 
   assert.equal(intact.diagnostics.policy,NATIVE_BRAIN_SURFACE_POLICY);
   const cutMask=mask.slice();cutMask[removed]=0;
   // A single accepted deletion has no separate cavity packet.
-  const cutBase=prepareSurface(cutMask,shape,affine,'brain',true,reference);
-  const engine=new IncrementalSurfaceEngine(),job={layerId:'brain',shape,affine,kind:'brain'};
+  const cutBase=prepareSurface(cutMask,shape,affine,'soft_tissue',true,reference);
+  const engine=new IncrementalSurfaceEngine(),job={layerId:'brain',shape,affine,kind:'soft_tissue'};
   engine.prepare({...job,jobId:1,identity:'rest',previousIdentity:'',mask:mask.slice(),partition:{key:'native',reference,layerRegion:1}});
   const cut=engine.prepare({...job,jobId:2,identity:'cut',previousIdentity:'rest',indices:Uint32Array.of(removed),values:Uint8Array.of(0),
     partition:{key:'native',layerRegion:1}});

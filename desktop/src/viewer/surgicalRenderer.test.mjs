@@ -311,11 +311,12 @@ test('only the checked native crop brain passes a conditioning region to the mod
     brain.appearanceSource={nativeWallCrop:true,seriesId:'cta',modality:'CTA',shape:source.shape,
       data:source.mri,affine:source.affine,softTissueWindow:[9,107]};
     const view={stateId:'native-local',scene:{shape:source.shape,affine:source.affine,regions:[
-      {id:13,name:'brain',material:'brain',color:brain.color},{id:21,name:'vessel',material:'vessel',color:'#bb3344'}]},
+      {id:13,name:'brain',material:'soft_tissue',color:brain.color},{id:21,name:'vessel',material:'vessel',color:'#bb3344'}]},
       removed:[12],moved:[]};
     assert.equal(r.installSurgicalState(modeledVolume(source,view),{view}),true);
     const worker=r.modelWorker;
     assert.equal(worker.messages[0].layerId,'brain');
+    assert.equal(worker.messages[0].kind,'soft_tissue');
     assert.equal(worker.messages[0].partition.reference.nativeBrainRegion,13);
     assert.equal(worker.messages[0].partition.layerRegion,13);
     assert.equal(brain.mask[12],1);
