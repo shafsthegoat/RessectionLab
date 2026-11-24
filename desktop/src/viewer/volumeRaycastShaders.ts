@@ -9,8 +9,10 @@ precision highp sampler3D;
 in vec2 vUv;
 out vec4 outColor;
 uniform sampler3D uVolume;
-uniform sampler3D uHeadSupport;
+uniform sampler3D uAuxiliary;
 uniform bool uUseHeadSupport;
+uniform int uContextCoverageLayer;
+uniform vec3 uContextRadius;
 uniform sampler2D uTransfer;
 uniform vec2 uOpticalSize;
 uniform vec3 uOpticalGrid;
@@ -97,7 +99,7 @@ vec4 transferAt(float value){
   return textureLod(uTransfer,vec2(level,0.5/uOpticalSize.y),0.0);
 }
 bool supported(vec3 p){
-  return !uUseHeadSupport || texture(uHeadSupport,((p+0.5)/uShape).zyx).r>0.0;
+  return !uUseHeadSupport || texture(uAuxiliary,((p+0.5)/uShape).zyx).r>0.0;
 }
 ivec4 labelsAt(vec3 labelPoint){
   vec3 labelUv=(labelPoint+0.5)/uLabelShape;
@@ -112,10 +114,40 @@ bool selectedLabel(ivec4 packed){
   }
   return false;
 }
-void applyContext(inout vec4 tissue,float value,ivec4 packed,bool selected){
+bool requiresLabels(){
+  return uIsolate||(uCt&&(!uScanPresentation||uSkullMode==1)&&uContextLayerCount>0&&uContextCoverageLayer<0);
+}
+vec3 contextTint(vec3 acquired,vec3 color,float value){
+  float mineral=smoothstep(180.0,1600.0,value);
+  vec3 tint=mix(vec3(0.68,0.53,0.40),vec3(1.13,1.11,1.06),mineral);
+  return mix(color*tint,acquired,0.24);
+}
+float contextCoverage(vec3 p){
+  vec3 uv=((p+0.5)/uShape).zyx;
+  vec3 delta=uContextRadius.zyx/uShape.zyx;
+  // A sub-voxel tetrahedral footprint filters optical mask coverage over
+  // a boundary without averaging the acquired intensity or label IDs.
+  return 0.25*(texture(uAuxiliary,uv+delta).r+
+    texture(uAuxiliary,uv+delta*vec3(1.0,-1.0,-1.0)).r+
+    texture(uAuxiliary,uv+delta*vec3(-1.0,1.0,-1.0)).r+
+    texture(uAuxiliary,uv+delta*vec3(-1.0,-1.0,1.0)).r);
+}
+void applyContext(inout vec4 tissue,float value,ivec4 packed,bool selected,vec3 p){
   tissue.a*=uDensity;
   if(uIsolate&&!selected){tissue.a=0.0;return;}
   if(!uCt || (uScanPresentation&&uSkullMode!=1))return;
+  if(uContextCoverageLayer>=0){
+    int layer=uContextCoverageLayer;
+    float coverage=contextCoverage(p);
+    vec4 context=uLayerColor[layer];
+    float clearWeight=1.0-coverage;
+    float skullWeight=coverage*context.a*uLayerEnabled[layer];
+    float weight=clearWeight+skullWeight;
+    vec3 tint=contextTint(tissue.rgb,context.rgb,value);
+    tissue.rgb=(clearWeight*tissue.rgb+skullWeight*tint)/max(weight,0.000001);
+    tissue.a*=weight;
+    return;
+  }
   // Contrast and mineralized tissue overlap in HU. A source context label,
   // when present, alone receives the skull controls and its chosen color.
   if(uContextLayerCount>0){
@@ -130,9 +162,7 @@ void applyContext(inout vec4 tissue,float value,ivec4 packed,bool selected){
     if(context.a>=0.0){
       // Keep the configured hue while letting marrow, trabecular and compact
       // regions receive distinct color from the underlying acquired value.
-      float mineral=smoothstep(180.0,1600.0,value);
-      vec3 tint=mix(vec3(0.68,0.53,0.40),vec3(1.13,1.11,1.06),mineral);
-      tissue.rgb=mix(context.rgb*tint,tissue.rgb,0.24);
+      tissue.rgb=contextTint(tissue.rgb,context.rgb,value);
       if(context.a<=0.0)tissue.a=0.0;
       else if(uSkullMode==1)tissue.a=10000.0;
       else tissue.a*=context.a;
@@ -185,8 +215,8 @@ float opticalProbe(vec3 p,vec3 world,float footprint){
   float value=scalar(p);
   vec4 tissue=transferAt(value);
   ivec4 packed=ivec4(0);
-  if(uIsolate||uContextLayerCount>0)packed=labelsAt((uLabelWorldToVoxel*vec4(world,1.0)).xyz);
-  applyContext(tissue,value,packed,!uIsolate||selectedLabel(packed));
+  if(requiresLabels())packed=labelsAt((uLabelWorldToVoxel*vec4(world,1.0)).xyz);
+  applyContext(tissue,value,packed,!uIsolate||selectedLabel(packed),p);
   if(uGradientOpacity&&tissue.a>0.0)tissue.a*=boundaryExtinction(normalizedGradient(scalarNormal(p)));
   return min(tissue.a,1.5);
 }
@@ -271,7 +301,7 @@ void main(){
   vec3 light=uScanPresentation?normalize(mat3(uCameraWorld)*vec3(-0.48,0.62,0.72)):
     normalize(vec3(-0.4,-0.5,0.75)-direction*0.7);
   vec3 sky=normalize(light-0.65*direction);
-  bool useLabels=uIsolate||(uCt&&(!uScanPresentation||uSkullMode==1)&&uContextLayerCount>0);
+  bool useLabels=requiresLabels();
   for(int i=0;i<1536;i++){
     if(accumulated.a>0.995)break;
     if(boundary<uSurfaceCount && surfaceT[boundary]<=t+0.000001){
@@ -296,7 +326,7 @@ void main(){
     bool selected=previousSelected;
     if(uIsolate&&any(notEqual(packed,previousLabels)))selected=selectedLabel(packed);
     previousSelected=selected;previousLabels=packed;
-    applyContext(tissue,value,packed,selected);
+    applyContext(tissue,value,packed,selected,p);
     if(tissue.a>0.0){
       // Central differences and the affine covector transform give signal/mm,
       // not signal/voxel. Automatic MRI context emphasizes acquired boundaries

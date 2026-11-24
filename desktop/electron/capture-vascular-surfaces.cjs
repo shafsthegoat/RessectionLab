@@ -257,8 +257,12 @@ app.on('browser-window-created',(_event,window)=>{
       window.setSize(windowSize.width,windowSize.height);
       if(expected?.views[0]?.size){
         const {width,height}=expected.views[0].size;
-        window.setContentSize(width/deviceScale,height/deviceScale);
+        const referenceCaptureScale=expected.views[0].captureScale??deviceScale;
+        const contentSize=expected.contentSize??[width/referenceCaptureScale,height/referenceCaptureScale];
+        window.setContentSize(...contentSize);
       }
+      report.contentSize=window.getContentSize();
+      if(expected?.contentSize)assert.deepEqual(report.contentSize,expected.contentSize,'Matched logical viewport changed');
       window.webContents.setBackgroundThrottling(false);
       report.memory={peakSampledElectronWorkingSetBytes:0,pollMs:500};
       memoryPoll=setInterval(()=>{
@@ -326,6 +330,7 @@ app.on('browser-window-created',(_event,window)=>{
           const reference=expected.views.find(view=>view.name===recipe.name);
           assert(reference,`Missing matched view ${recipe.name}`);
           for(const key of ['seriesId','sourceSha256','scope','size'])assert.deepEqual(record[key],reference[key],`Matched ${key} changed`);
+          if(reference.captureScale!==undefined)assert.deepEqual(record.pane,reference.pane,'Matched anatomy pane changed');
           for(const key of ['sourceSignalFingerprint','cursor'])assert.deepEqual(record.frame[key],reference.frame[key],`Matched ${key} changed`);
           for(const key of ['position','target','up'])assert(record.frame.cameraState[key].every((value,i)=>
             Math.abs(value-reference.frame.cameraState[key][i])<1e-9),`Matched camera ${key} changed`);

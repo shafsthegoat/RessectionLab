@@ -212,6 +212,42 @@ test('acquired Scan bounds its settled GPU draw while retaining the source grid 
   }finally{scan.dispose();}
 });
 
+test('transparent CTA feathers only optical coverage while exact masks and scan support stay independent',()=>{
+  const renderer={extensions:{has:()=>true},getPixelRatio:()=>1,getClearColor:out=>out.set(0),getClearAlpha:()=>1,
+    setClearColor(){},setRenderTarget(){},clear(){},render(){}};
+  const mask=new Uint8Array(60);mask[31]=1;
+  const original=mask.slice(),layer={name:'bone',kind:'bone',color:'#ded0b6',mask};
+  const volume={...source,affine:[[.4,0,0,0],[0,.7,0,0],[0,0,3,0],[0,0,0,1]],compartments:[layer]};
+  const scan=new ScanVolumeRenderer(renderer,volume,[0,1000]);
+  const supported=new ScanVolumeRenderer(renderer,{...volume,headSupport:{data:mask,sha256:'source-support'}},[0,1000]);
+  const render=pass=>pass.render(new THREE.Scene(),new THREE.PerspectiveCamera(),640,480,false,()=>{});
+  const settings={presentation:'vascular',skullMode:'transparent',layerOpacity:{bone:.04}};
+  try{
+    scan.configure({shadows:false},'CTA',null);
+    scan.labels(null,{},settings,[]);render(scan);
+    const uniforms=scan.material.uniforms,aux=uniforms.uAuxiliary.value;
+    assert.equal(uniforms.uContextCoverageLayer.value,0);
+    assert.ok(uniforms.uContextRadius.value.distanceTo(new THREE.Vector3(.68,.68,.2))<1e-9);
+    assert.equal(aux.magFilter,THREE.LinearFilter);
+    assert.equal(aux.image.data[31],255);
+    assert.equal(aux.image.data[30],0);
+    assert.deepEqual(mask,original);
+    assert.equal(scan.texture.image.data,source.mri);
+    for(const [visible,view] of [ [{bone:false},settings], [{},{...settings,presentation:'scan'}], [{},{...settings,skullMode:'exterior'}] ]){
+      scan.labels(null,visible,view,[]);render(scan);
+      assert.equal(uniforms.uContextCoverageLayer.value,-1);
+      assert.equal(uniforms.uAuxiliary.value,null);
+    }
+    scan.labels(null,{},settings,[]);render(scan);assert.equal(uniforms.uAuxiliary.value,aux);
+    scan.configure({shadows:false,isolateLabels:true},'CTA',null);render(scan);
+    assert.equal(uniforms.uContextCoverageLayer.value,-1);
+    supported.configure({shadows:false},'CTA',null);
+    supported.labels(null,{},settings,[]);render(supported);
+    assert.equal(supported.material.uniforms.uAuxiliary.value,supported.supportTexture);
+    assert.equal(supported.material.uniforms.uContextCoverageLayer.value,-1);
+  }finally{scan.dispose();supported.dispose();}
+});
+
 test('acquired Scan export uses independent targets and rebinds the regular quality after capture',()=>{
   const renderer={extensions:{has:()=>true},getPixelRatio:()=>2,getClearColor:out=>out.set(0),getClearAlpha:()=>1,
     setClearColor(){},setRenderTarget(){},clear(){},render(){}};

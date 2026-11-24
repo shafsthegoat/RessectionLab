@@ -65,6 +65,7 @@ export class ScanVolumeRenderer {
   private enabled = true;
   private readonly spacing:number;
   readonly supportTexture?:THREE.Data3DTexture;
+  private contextCoverage?: {mask:Uint8Array; texture:THREE.Data3DTexture};
   private layers: ViewerVolume["compartments"];
   private readonly ownsTexture: boolean;
   private readonly background = new THREE.Color();
@@ -87,6 +88,8 @@ export class ScanVolumeRenderer {
     this.spacing=1/Math.max(...inverse.slice(0,3).map(row=>Math.hypot(...row.slice(0,3))));
     const worldToVoxel=new THREE.Matrix4().set(...inverse.flat() as Parameters<THREE.Matrix4['set']>);
     const shape=new THREE.Vector3(...volume.shape);
+    const footprintRadius=(axis:number)=>Math.min(.68,.6/Math.hypot(affine[0][axis],affine[1][axis],affine[2][axis]));
+    const contextRadius=new THREE.Vector3(footprintRadius(0),footprintRadius(1),footprintRadius(2));
     this.sourceOptics={signal:volume.mri,shape:volume.shape,affine,inverse,support:volume.headSupport?.data};
     this.ownsTexture=!sourceTexture;
     this.texture=sourceTexture??new THREE.Data3DTexture(volume.mri,volume.shape[2],volume.shape[1],volume.shape[0]);
@@ -105,7 +108,8 @@ export class ScanVolumeRenderer {
     this.volumeTarget=new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,depthBuffer:false});
     this.material=new THREE.ShaderMaterial({glslVersion:THREE.GLSL3,vertexShader:volumeVertexShader,
       fragmentShader:volumeFragmentShader,depthTest:false,depthWrite:false,toneMapped:false,uniforms:{
-        uHeadSupport:{value:this.supportTexture??null},uUseHeadSupport:{value:!!this.supportTexture},
+        uAuxiliary:{value:this.supportTexture??null},uUseHeadSupport:{value:!!this.supportTexture},uContextCoverageLayer:{value:-1},
+        uContextRadius:{value:contextRadius},
         uVolume:{value:this.texture},uTransfer:{value:null},uScene:{value:this.sceneTarget.texture},uDrawScalar:{value:true},
         uOpticalSize:{value:new THREE.Vector2()},uOpticalGrid:{value:new THREE.Vector3()},uOpticalColumns:{value:1},
         uOpticalCache:{value:false},
@@ -238,7 +242,42 @@ export class ScanVolumeRenderer {
   get estimatedTargetBytes(){
     const live=targetBytes({scene:this.sceneTarget,volume:this.volumeTarget,accumulation:this.accumulation,surfaces:this.surfacePass});
     const drag=this.interactionTargets?renderTargetBytes(this.interactionTargets.scene)+renderTargetBytes(this.interactionTargets.volume):0;
-    return live+drag+(this.transfer?.image.data?.byteLength??0);
+    return live+drag+(this.transfer?.image.data?.byteLength??0)+(this.contextCoverage?.texture.image.data?.byteLength??0);
+  }
+
+  /** In transparent CT context, interpolate the optical coverage of one
+   * independent skull mask. Packed labels stay nearest-filtered for all
+   * membership queries. Reuse the auxiliary sampler on scans without a
+   * source support field to fit the WebGL2 fragment sampler budget. */
+  private configureContextCoverage() {
+    const u=this.material.uniforms;
+    const index=u.uContextLayers.value[0];
+    const layer=this.layers[index];
+    const opacity=u.uLayerColor.value[index]?.w;
+    const mask=this.enabled&&u.uCt.value&&u.uSkullMode.value===2&&!u.uScanPresentation.value&&
+      !u.uIsolate.value&&!this.supportTexture&&u.uContextLayerCount.value===1&&layer&&!layer.labelSet&&
+      u.uLayerEnabled.value[index]===1&&opacity>0&&opacity<1
+      ? layer.mask : undefined;
+    if(!mask||mask.length!==this.sourceOptics.signal.length){
+      u.uAuxiliary.value=this.supportTexture??null;
+      u.uContextCoverageLayer.value=-1;
+      return;
+    }
+    if(this.contextCoverage?.mask!==mask){
+      this.contextCoverage?.texture.dispose();
+      const [x,y,z]=this.sourceOptics.shape;
+      const coverage=new Uint8Array(mask.length);
+      for(let offset=0;offset<mask.length;offset++)coverage[offset]=mask[offset]?255:0;
+      const texture=new THREE.Data3DTexture(coverage,z,y,x);
+      texture.format=THREE.RedFormat;
+      texture.type=THREE.UnsignedByteType;
+      texture.minFilter=texture.magFilter=THREE.LinearFilter;
+      texture.unpackAlignment=1;
+      texture.needsUpdate=true;
+      this.contextCoverage={mask,texture};
+    }
+    u.uAuxiliary.value=this.contextCoverage.texture;
+    u.uContextCoverageLayer.value=index;
   }
   render(scene: THREE.Scene, camera: THREE.PerspectiveCamera, width: number, height: number,
     interactive: boolean, restoreViewport: ()=>void, longEdge=360, cranialSurfaces=false) {
@@ -279,6 +318,7 @@ export class ScanVolumeRenderer {
     const {scene:sceneTarget,volume:volumeTarget,accumulation,surfaces:surfacePass}=targets;
     if(sceneTarget.width!==w||sceneTarget.height!==h){sceneTarget.setSize(w,h);volumeTarget.setSize(w,h);}
     const isExport=exportOriginY!==undefined;
+    this.configureContextCoverage();
     if(this.enabled)this.prepareOpticalAtlas(isExport);
     const uniforms=this.material.uniforms;
     uniforms.uDrawScalar.value=this.enabled;
@@ -321,7 +361,7 @@ export class ScanVolumeRenderer {
   }
   dispose(){
     this.cancelOpticalPreparation();
-    this.sceneTarget.dispose();this.volumeTarget.dispose();if(this.ownsTexture)this.texture.dispose();this.supportTexture?.dispose();this.transfer?.dispose();
+    this.sceneTarget.dispose();this.volumeTarget.dispose();if(this.ownsTexture)this.texture.dispose();this.supportTexture?.dispose();this.contextCoverage?.texture.dispose();this.transfer?.dispose();
     this.interactionTargets?.scene.dispose();this.interactionTargets?.volume.dispose();
     this.surfacePass.dispose();this.accumulation.forEach(t=>t.dispose());this.accumulateMaterial.dispose();
     for(const scene of [this.rayScene,this.blitScene,this.accumulateScene])scene.traverse(child=>{if(child instanceof THREE.Mesh)child.geometry.dispose();});
