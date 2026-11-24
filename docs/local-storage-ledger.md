@@ -133,11 +133,16 @@ The matched GPU recaptures and structural control are indexed at
 `qc/eden2020-glioma-5714812/current-rendered-cohort-20261124.abYhYE2c/README.md`.
 The native TOF context and untouched source controls are at
 `qc/eden2020-glioma-5714812/tof-context-response-20261124/README.md`.
+The matched TOF ray timings and pixel checks are at
+`qc/eden2020-glioma-5714812/tof-ray-performance-20261124/README.md`.
 The local structural tissue and held-out fiducial checks are at
 `qc/eden2020-glioma-5714812/mechanical-tissue-evidence-20261124-v1/README.md`.
 The independent native CSF correspondence, alternative stock wall field and
 withheld local registration are indexed at
 `qc/eden2020-glioma-5714812/independent-csf-landmarks-20261124-v1/README.md`.
+The independent native dark-pocket and structural-tensor checks against
+held-out pose perturbations are at
+`qc/eden2020-glioma-5714812/independent-3d-observability-20261124-v1/README.md`.
 The mixed MRI Vessels and compact label comparisons are at
 `qc/mr-vessel-context-20261124.swCjfRex/README.md`.
 The standalone TopCoW-014 optical reference is at
