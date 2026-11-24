@@ -13,7 +13,7 @@ import numpy as np
 
 from .anatomy_local_wall_review import native_wall_alignment_review
 from .anatomy_package import open_package
-from .anatomy_geometry import _indexed_contour, appearance_kind, local_source_contour, normals
+from .anatomy_geometry import _indexed_contour, appearance_kind, condition_open_vascular_contour, local_source_contour, normals
 from .anatomy_sampling import native_field_bounds, sample_layer
 from .core import thaw_json
 from .patient_anatomy import PatientImagingCollection, file_hash, world
@@ -191,12 +191,20 @@ def local_source_view(inspection, scan, snapshot_id, transfer, check, progress):
         mask, coverage = sample_layer(collection, row, displayed, shape, check, {}, frames=(layer_affine, full_affine))
         started = perf_counter()
         faces = np.empty((0, 3), np.uint32)
+        display_vertices = None
+        diagnostics = {'policy': 'native-open-field-v1', 'kind': 'context' if row['kind'] == 'brain' else 'vessel',
+                       'maxDisplacementMm': 0.}
         contour_field = 'limited-coverage'
         if coverage.all():
             if row['data']['shape'] == series['data']['shape'] and np.allclose(layer_affine, full_affine, rtol=0, atol=1e-5):
                 points, faces, contour_field = local_source_contour(collection, row, source_slices)
                 transform = np.linalg.solve(displayed, layer_affine)
                 vertices = world(transform, points + start).astype(np.float32)
+                if len(faces) and row['kind'] in {'vessel', 'vessels', 'artery', 'vein', 'sinus'} and contour_field == 'native-probability':
+                    conditioned, diagnostics = condition_open_vascular_contour(points, faces, mask, layer_affine,
+                                                                               cancelled=lambda: bool(check()))
+                    if diagnostics['maxDisplacementMm'] > 0:
+                        display_vertices = world(transform, conditioned + start).astype(np.float32)
                 if np.linalg.det(transform[:3, :3]) < 0:
                     faces = faces[:, ::-1]
             else:
@@ -207,13 +215,14 @@ def local_source_view(inspection, scan, snapshot_id, transfer, check, progress):
         if len(faces):
             vertex_asset = asset(vertices, 'float32')
             normal_asset = asset(normals(vertices, faces), 'float32')
-            geometry = {'positions': vertex_asset, 'source': vertex_asset, 'indices': asset(faces, 'uint32'),
-                        'normals': normal_asset, 'sourceNormals': normal_asset}
+            geometry = {'positions': asset(display_vertices, 'float32') if display_vertices is not None else vertex_asset,
+                        'source': vertex_asset, 'indices': asset(faces, 'uint32'), 'sourceNormals': normal_asset,
+                        'normals': asset(normals(display_vertices, faces), 'float32') if display_vertices is not None else normal_asset}
         layers.append({'name': row['id'], 'label': row['label'], 'kind': row['kind'], 'displayKind': appearance_kind(row),
                        'color': row['color'], 'sourceSeries': series['id'], 'mask': asset(mask, 'uint8'),
                        'alignment': 'independent' if independent else collection.document['transforms'][series['id']]['status'],
-                       'surface': geometry, 'surfaceDiagnostics': {'policy': 'native-open-field-v1', 'kind': 'context' if row['kind'] == 'brain' else 'vessel',
-                           'surfaceField': contour_field, 'sourceSurfaceOnly': True, 'maxDisplacementMm': 0.,
+                       'surface': geometry, 'surfaceDiagnostics': {**diagnostics,
+                           'surfaceField': contour_field, 'sourceSurfaceOnly': display_vertices is None,
                            'triangles': len(faces), 'preparationMs': (perf_counter() - started) * 1000}})
     check_source_current(inspection, scan['seriesId'])
     check()

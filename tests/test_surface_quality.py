@@ -45,6 +45,39 @@ def test_physical_intersection_gate_detects_only_new_contacts():
     assert len(intersection_vertices(source, points, faces)) == 6
 
 
+def test_open_native_vessel_fairing_preserves_the_rim_collar_and_tiny_source_crossings():
+    from scipy import ndimage as ndi
+    from resectionlab.anatomy_geometry import _indexed_contour, condition_open_vascular_contour, vascular_mesh_source_cells
+    from resectionlab.patient_anatomy import world
+
+    x, y, z = np.indices((27, 25, 25), dtype=float)
+    radius = np.hypot(y - 8. - .14 * x, z - 8.)
+    scores = (.5 + np.clip((3.1 + .35 * np.sin(.9 * x) - radius) * .22, -.4, .4)).astype(np.float32)
+    scores[13:15, 20, 19] = [.68, .59]
+    mask = scores >= .5
+    original_scores = scores.copy()
+    source, faces, _ = _indexed_contour(scores, probability=True)
+    affine = np.diag([-.55, .62, .8, 1.])
+    display, diagnostic = condition_open_vascular_contour(source, faces, mask, affine)
+
+    edges, uses = np.unique(np.sort(faces[:, [0, 1, 1, 2, 2, 0]].reshape(-1, 2), axis=1), axis=0, return_counts=True)
+    collar = np.isin(np.arange(len(source)), edges[uses == 1])
+    assert collar.any()
+    for _ in range(2):
+        collar[edges[collar[edges].any(axis=1)].ravel()] = True
+    np.testing.assert_array_equal(display[collar], source[collar])
+    labels, _ = ndi.label(mask, structure=np.ones((3, 3, 3), dtype=bool))
+    owners = vascular_mesh_source_cells(source, mask)
+    tiny = labels.ravel()[owners] == labels[13, 20, 19]
+    assert tiny.any()
+    np.testing.assert_array_equal(display[tiny], source[tiny])
+    np.testing.assert_array_equal(scores, original_scores)
+    np.testing.assert_array_equal(mask, original_scores >= .5)
+    assert diagnostic['policy'] == 'native-bounded-open-vessel-v1'
+    assert 0 < diagnostic['maxDisplacementMm'] <= .4 * .7 * .55
+    assert not len(intersection_vertices(world(affine, source), world(affine, display), faces))
+
+
 def test_native_vascular_wall_reduces_caliber_error_and_keeps_source_owners():
     pytest.importorskip("vtkmodules")
     from resectionlab.anatomy_geometry import (

@@ -13,7 +13,7 @@ from .patient_anatomy import digest, affine, world, file_hash
 from .core import immutable_array
 from .surface_fairing import (
     fair_surface, intersection_vertices, surface_kind, broad_context_surface, NATIVE_POLICY,
-    NATIVE_VASCULAR_POLICY,
+    NATIVE_VASCULAR_POLICY, OPEN_VASCULAR_POLICY,
 )
 
 
@@ -332,6 +332,18 @@ def local_source_contour(collection, row, slices):
         return (np.empty((0, 3), np.float32), np.empty((0, 3), np.uint32), field)
     positions, indices, _ = _indexed_contour(values, field != 'categorical')
     return positions, indices, field
+
+
+def condition_open_vascular_contour(source, faces, mask, affine, *, cancelled=lambda: False):
+    """Condition a native score surface while holding its open rims fixed."""
+    if len(faces) > 80_000:
+        return source, {'policy': OPEN_VASCULAR_POLICY, 'kind': 'vessel', 'maxDisplacementMm': 0.,
+                        'fallbackReason': 'Field exceeds the interactive vessel geometry budget. Source contour retained.'}
+    positions, diagnostics = fair_surface(source, faces, affine, 'vessel', mask=mask,
+                                         source_shape=mask.shape, cancelled=cancelled, open_field=True)
+    owners = vascular_mesh_source_cells(source, mask)
+    positions, retained = _retain_isolated_score_components(source, positions, faces, owners, mask, mask, affine, cancelled)
+    return positions, {**diagnostics, **retained}
 
 
 def vascular_cleanup_source(collection, row):

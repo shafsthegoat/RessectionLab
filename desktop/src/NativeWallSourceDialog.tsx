@@ -41,6 +41,8 @@ export function NativeWallSourceDialog({api,caseHash,close}:{api:ResectionApi&Na
   const [visible,setVisible]=useState<Record<string,boolean>>({});
   const [loading,setLoading]=useState(true);
   const [error,setError]=useState('');
+  const hasConditionedVessels=extent==='local'&&volume?.compartments.some(layer=>
+    layer.surfaceDiagnostics?.kind==='vessel'&&layer.surfaceDiagnostics.sourceSurfaceOnly===false);
 
   async function loadScan(bound:NativeWallSourceInspection, next:NativeWallSourceScan, view:SourceExtent=next.localField?'local':'full') {
     const current=++generation.current;
@@ -121,6 +123,12 @@ export function NativeWallSourceDialog({api,caseHash,close}:{api:ResectionApi&Na
                 onClick={()=>{if(extent!=='local')void loadScan(source,scan,'local');}}>Saved field</button>
               <button className="outline-button" aria-pressed={extent==='full'} disabled={loading}
                 onClick={()=>{if(extent!=='full')void loadScan(source,scan,'full');}}>Full acquisition</button>
+            </div>}
+            {hasConditionedVessels&&<div role="group" aria-label="Vessel contour">
+              <button className="outline-button" aria-pressed={settings.smoothSurfaces===false}
+                onClick={()=>setSettings(previous=>({...previous,smoothSurfaces:false}))}>Source contour</button>
+              <button className="outline-button" aria-pressed={settings.smoothSurfaces!==false}
+                onClick={()=>setSettings(previous=>({...previous,smoothSurfaces:true}))}>Conditioned contour</button>
             </div>}
             {scan&&<button className="outline-button" disabled={!volume} onClick={()=>{setCursor(scan.centerRasMm);setSettings(fieldSettings(scan,extent));}}>Reset to saved field</button>}
           </div>

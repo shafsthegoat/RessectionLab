@@ -88,8 +88,11 @@ acquired scans at the saved field. The app verifies the exact study revision,
 acquisitions and selected label and score arrays. If the source has moved,
 choose its original manifest or a portable copy with **Locate source study**.
 **Saved field** opens a native-resolution window around the recorded crop. Its
-contours end openly at the window edges. **Full acquisition** restores the
-surrounding scan and its ordinary source-study surfaces.
+contours end openly at the window edges. For a native vessel score layer,
+**Conditioned contour** uses bounded fairing around the original triangles.
+**Source contour** shows the original score crossings at the same camera.
+Both share acquired slices, label overlays and open rim coordinates.
+**Full acquisition** restores the surrounding scan and its ordinary surfaces.
 When preparation used a local alignment review, the angiogram opens in its own
 acquisition frame at the corresponding voxel. Use the linked slices to examine
 the acquired signal, **Volume** to add it to the 3D field, and **Reset to saved

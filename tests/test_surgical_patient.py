@@ -245,12 +245,17 @@ def test_native_wall_source_inspection_keeps_live_state_and_checks_relocated_sou
                 if scan == 'tof':
                     assert field['startIJK'] == opened['cropStartIJK']
                     faces = np.fromfile(comp['surface']['indices']['path'], '<u4').reshape(-1, 3)
+                    raw = np.fromfile(comp['surface']['source']['path'], '<f4').reshape(-1, 3)
                     points = np.fromfile(comp['surface']['positions']['path'], '<f4').reshape(-1, 3)
+                    assert comp['surfaceDiagnostics']['policy'] == 'native-bounded-open-vessel-v1'
+                    assert not comp['surfaceDiagnostics']['sourceSurfaceOnly']
+                    assert not np.array_equal(raw, points)
                     edges = np.sort(faces[:, [[0, 1], [1, 2], [2, 0]]].reshape(-1, 2), axis=1)
                     unique_edges, counts = np.unique(edges, axis=0, return_counts=True)
                     boundary = unique_edges[counts == 1]
                     # The long vessel reaches both x faces without synthesized end caps.
                     assert set(np.unique(points[boundary, 0])) == {0., 48.}
+                    np.testing.assert_array_equal(raw[boundary], points[boundary])
                 full = call('anatomyView', {**args, 'sourceExtent': 'full'})
                 assert 'sourceField' not in full and full['shape'] == [65, 65, 65]
                 assert full['registrationStatus'] == status

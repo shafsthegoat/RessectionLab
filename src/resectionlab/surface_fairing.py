@@ -13,6 +13,7 @@ POLICY = json.loads(resources.files('resectionlab').joinpath('surface_policy.jso
 NATIVE_POLICY = POLICY['native']
 NATIVE_VASCULAR_POLICY = POLICY['nativeVascular']
 PUBLISHER_CTA_POLICY = 'source-bound-publisher-cta-fairing-v1'
+OPEN_VASCULAR_POLICY = 'native-bounded-open-vessel-v1'
 
 
 def surface_kind(kind):
@@ -192,7 +193,8 @@ def _vascular_normal_balance(original, filtered, faces, operator):
 
 
 def fair_surface(points, faces, affine, kind, *, mask=None, mask_origin=None, native=False,
-                 source_shape=None, categorical=False, cancelled=lambda: False, publisher_cta=False):
+                 source_shape=None, categorical=False, cancelled=lambda: False, publisher_cta=False,
+                 open_field=False):
     points, faces = np.asarray(points, np.float32), np.asarray(faces, np.uint32)
     if points.ndim != 2 or points.shape[1] != 3 or faces.ndim != 2 or faces.shape[1] != 3:
         raise ValueError('Display surfaces require three coordinates and three corners per triangle')
@@ -209,6 +211,10 @@ def fair_surface(points, faces, affine, kind, *, mask=None, mask_origin=None, na
         if not (native_vessel and categorical):
             raise ValueError('Publisher CTA fairing requires the aligned native categorical mask')
         policy_version = PUBLISHER_CTA_POLICY
+    if open_field:
+        if not native_vessel or categorical or publisher_cta:
+            raise ValueError('Open-field fairing requires a native vessel score contour')
+        policy_version = OPEN_VASCULAR_POLICY
     triangle_budget = NATIVE_POLICY['maxContextTriangles'] if native_context else POLICY['maxContextTriangles']
     if profile_kind == 'context' and len(faces) > triangle_budget:
         return points.copy(), {'policy':policy_version, 'kind':'context', 'maxDisplacementMm':0.,
@@ -251,6 +257,10 @@ def fair_surface(points, faces, affine, kind, *, mask=None, mask_origin=None, na
     pinned = degree == 0
     pinned[a[uses != 2]] = True
     pinned[b[uses != 2]] = True
+    if open_field:
+        # Retain the two face rings bordering open and irregular edges.
+        pinned |= (adjacency @ pinned) > 0
+        pinned |= (adjacency @ pinned) > 0
     if native_vessel:
         pinned |= ((points <= 0) | (points >= np.asarray(source_shape) - 1)).any(axis=1)
         fragile = np.broadcast_to(limit == 0, (n,))
@@ -309,7 +319,10 @@ def fair_surface(points, faces, affine, kind, *, mask=None, mask_origin=None, na
         delta *= .8
     if broad_context:
         retain_normal_displacement(delta, filtered, faces, cancelled)
-    filtered = original+delta*np.minimum(1, .999/np.maximum(cap_ratio(delta), 1e-30))[:, None]
+    bounded = np.minimum(1, .999/np.maximum(cap_ratio(delta), 1e-30))
+    if open_field:
+        bounded *= .4  # Preserve the caliber of narrow open-field sections.
+    filtered = original+delta*bounded[:, None]
     del delta
 
     def quantize():
