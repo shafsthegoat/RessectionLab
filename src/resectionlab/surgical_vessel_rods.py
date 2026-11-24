@@ -782,8 +782,7 @@ def tick(engine, dt, *, tool_motion=None, excluded_tissue=(), tool_clock_hand=No
 
     swept = wall_sweep_enabled(engine)
     constrain_axes = working_axis_constraint_enabled(engine)
-    if swept:
-        prior_wall = tuple(surfaces.frames(engine, rods, position, radius, bonds))
+    prior_wall = tuple(surfaces.frames(engine, rods, position, radius, bonds)) if swept else None
     soft_friction = section.get('tissueFrictionCoefficient', 0.) if soft_contact else 0.
     soft_contacts = tissue_contact.contacts(
         engine, prior_wall, bonds, tuple(set(engine.state['removed']).union(excluded_tissue)),
@@ -792,10 +791,11 @@ def tick(engine, dt, *, tool_motion=None, excluded_tissue=(), tool_clock_hand=No
     attachment_displacement = np.zeros_like(position) if elastic_supports else None
     inverse = engine.scene.inverse[:3, :3]
 
-    def contact(positions, radii, rate, *, measure_compression=False, tissue_wall_rate=None):
+    def contact(positions, radii, rate, *, frames=None, measure_compression=False, tissue_wall_rate=None):
         force, compression, touched = _tool_contact(pairs, positions, radii, rods.radius, tools)
         if native and tools:
-            frames = tuple(surfaces.frames(engine, rods, positions, radii, bonds))
+            if frames is None:
+                frames = tuple(surfaces.frames(engine, rods, positions, radii, bonds))
             if section is None:
                 load, collapse, contacts = _native_tool_contact(engine, frames, rods, positions, tools)
             else:
@@ -832,12 +832,14 @@ def tick(engine, dt, *, tool_motion=None, excluded_tissue=(), tool_clock_hand=No
                 tools, sampled_motion = _rigid_tool_sample(endpoint_tools, tool_clock_hand, age, tool_motion)
         previous = position.copy()
         base = inertial * (previous + STEP_SECONDS * old_rate) + damping * previous + support_force
-        for _ in range(SOLVER_ITERATIONS):
+        for iteration in range(SOLVER_ITERATIONS):
             project = operators @ position
             scale = np.linalg.norm(project, axis=1)[:, None]
             target = np.where(scale > 1e-15, project * norms / np.maximum(scale, 1e-15), rest_projection)
             slip_rate = (position - previous) / STEP_SECONDS if soft_friction else None
-            force, _, _ = contact(position, radius, old_rate, tissue_wall_rate=slip_rate)
+            # The first iteration starts at the previously certified pose.
+            force, _, _ = contact(position, radius, old_rate, frames=prior_wall if iteration == 0 else None,
+                                  tissue_wall_rate=slip_rate)
             position = solve(base + transpose @ target + force)
         if section is None:
             position = _valid_motion(engine, rods, previous, position, retained)

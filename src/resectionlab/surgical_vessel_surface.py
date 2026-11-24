@@ -122,6 +122,7 @@ class Wall:
     cell_extent: float
     influenced: np.ndarray
     links: np.ndarray
+    link_endpoints: np.ndarray
     fractions: np.ndarray
     weights: np.ndarray
     radial_offsets: np.ndarray
@@ -169,11 +170,12 @@ def definitions(engine, rods):
         reference_margin = 1.3 * cell_extent
         weight = np.clip(1 - (d[rows, closest] - radii[rows, closest] - reference_margin) / reference_margin, 0, 1)
         influenced = np.flatnonzero(allowed[rows, closest] & (weight > 0))
+        links = near[rows, closest][influenced]
         walls.append(Wall(
             source, engine.scene.shape, points, triangles, cKDTree(centers),
             float(np.linalg.norm(triangles - centers[:, None], axis=2).max()), cKDTree(points),
             cell_extent, influenced,
-            near[rows, closest][influenced], fraction[rows, closest][influenced], weight[influenced],
+            links, immutable_array(bonds[links]), fraction[rows, closest][influenced], weight[influenced],
             points[influenced] - foot[rows, closest][influenced],
         ))
     cached = tuple(walls)
@@ -181,14 +183,12 @@ def definitions(engine, rods):
     return cached
 
 
-def _offsets(wall, rods, position, radius, live_bonds):
+def _offsets(wall, delta, scale, live):
     offsets = np.zeros_like(wall.positions)
-    links = np.array([(rods.bonds[k][0], rods.bonds[k][1]) for k in wall.links], dtype=int).reshape(-1, 2)
+    links = wall.link_endpoints
     # Edited faces belong to their nearest surviving side. Native walls fall
     # back to individual source-cell surfaces at a local ownership edit.
-    fraction = np.where(np.isin(wall.links, live_bonds), wall.fractions, np.rint(wall.fractions))
-    delta = position - rods.rest
-    scale = 1. - radius / rods.radius
+    fraction = wall.fractions if live is None else np.where(live[wall.links], wall.fractions, np.rint(wall.fractions))
     blend = (1 - fraction)[:, None] * delta[links[:, 0]] + fraction[:, None] * delta[links[:, 1]]
     radial = (1 - fraction) * scale[links[:, 0]] + fraction * scale[links[:, 1]]
     offsets[wall.influenced] = wall.weights[:, None] * (blend - radial[:, None] * wall.radial_offsets)
@@ -529,13 +529,19 @@ def frames(engine, rods, position, radius, live_bonds):
     blocked.extend(row['cutFace'] for row in engine.state.get('vascularGraphV1', {}).get('edges', {}).values()
                    if row['cutFace'])
     vertex_transport = engine.scene.properties.get('gliomaMaterialsV1', {}).get(vertex_kinematics.PROPERTY) == vertex_kinematics.POLICY
+    delta = position - rods.rest
+    scale = 1. - radius / rods.radius
+    live = None
+    if len(live_bonds) != len(rods.bonds):
+        live = np.zeros(len(rods.bonds), dtype=bool)
+        live[np.asarray(live_bonds, dtype=int)] = True
     for wall in definitions(engine, rods):
-        offsets, links, fraction = _offsets(wall, rods, position, radius, live_bonds)
+        offsets, links, fraction = _offsets(wall, delta, scale, live)
         extent = float(np.linalg.norm(offsets, axis=1).max())
         edited = _edit_wall(engine, rods, wall, removed, blocked) if removed or blocked else None
         if vertex_transport:
             field = _vertex_field(engine, wall, rods, edited, live_bonds)
-            shifts = field.offsets(position - rods.rest, 1. - radius / rods.radius)
+            shifts = field.offsets(delta, scale)
             wall = replace(wall, vertex_motion=vertex_kinematics.VertexMotion(field, shifts))
             extent = max(extent, float(np.linalg.norm(shifts, axis=1).max(initial=0.)))
         yield wall, offsets, links, fraction, extent, edited

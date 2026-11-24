@@ -278,7 +278,14 @@ def _activate_contact_patch(engine, model, cells, excluded, max_nodes, *, reserv
     if len(active) > max_nodes:
         raise ValueError('VESSEL_TISSUE_NODE_LIMIT: insufficient local lattice nodes for contact')
     blocked = _blocked(engine)
-    cache = {}
+    # Growing the lattice patch does not change which source neighbors can
+    # exchange load. Cuts and excluded cells invalidate these lookups.
+    topology = (frozenset(blocked), frozenset(excluded))
+    cached = getattr(engine, '_vessel_tissue_neighbor_cache', None)
+    if cached is None or cached[0] != topology:
+        cached = topology, {}
+        engine._vessel_tissue_neighbor_cache = cached
+    cache = cached[1]
 
     def neighbors(cell):
         if cell not in cache:

@@ -40,7 +40,7 @@ def _face_normals(vertices):
     return np.cross(edge[:, None, :], vertices[:, 2:] - vertices[:, :1])
 
 
-def _facet_areas_clear(rest, before, after):
+def _facet_areas_clear(reference, before, after):
     first = _face_normals(before)[:, 0]
     middle = _face_normals((before + after) / 2.)[:, 0]
     last = _face_normals(after)[:, 0]
@@ -52,7 +52,6 @@ def _facet_areas_clear(rest, before, after):
     b = end - area - a
     t = np.clip(-b / (2. * np.maximum(a, 1e-30)), 0., 1.)
     lowest = np.minimum(np.minimum(area, end), np.where(a > 0., area + t * (b + t * a), area))
-    reference = np.linalg.norm(_face_normals(rest)[:, 0], axis=1)
     return bool(np.all(lowest >= _MIN_AREA_RATIO * np.maximum(area, reference)))
 
 
@@ -81,36 +80,53 @@ def _hinges_clear(before, after, depth=0):
 
 
 def _local_face_guard(rest, faces, owners):
-    points = np.empty((int(faces.max()) + 1, 3))
-    point_owners = np.empty(len(points), dtype=int)
+    reference = np.linalg.norm(_face_normals(rest)[:, 0], axis=1)
+    points = np.zeros((int(faces.max()) + 1, 3))
+    point_owners = np.zeros(len(points), dtype=int)
     points[faces] = rest
     point_owners[faces] = owners
     adjacent = _shared_edge_quads(faces)
-    nearby = points[adjacent]
     adjacent_owners = point_owners[adjacent]
+    shared_points = np.array_equal(points[faces], rest) and np.array_equal(point_owners[faces], owners)
+
+    # Adjacent triangles reuse most owner comparisons. Compare each pair's
+    # increments once, then gather the affected facets and hinges in order.
+    pivot_owners = np.r_[np.repeat(owners[:, 0], 2), np.repeat(adjacent_owners[:, 0], 3)]
+    other_owners = np.r_[owners[:, 1:].ravel(), adjacent_owners[:, 1:].ravel()]
+    pairs, inverse = np.unique(np.sort(np.column_stack((pivot_owners, other_owners)), axis=1),
+                              axis=0, return_inverse=True)
+    first_owner, second_owner = pairs.T
+    face_pairs = inverse[:2 * len(faces)].reshape(-1, 2)
+    hinge_pairs = inverse[2 * len(faces):].reshape(-1, 3)
 
     def clear(prior, candidate, static):
-        increment = candidate - prior
-        changed = np.any(increment != 0., axis=1)
-        if not static and not changed.any():
-            return True
+        if static:
+            facets = np.arange(len(faces))
+            hinges = np.arange(len(adjacent))
+        else:
+            increment = candidate - prior
+            if not np.any(increment):
+                return True
+            moving = np.any(increment[first_owner] != increment[second_owner], axis=1)
+            facets = np.flatnonzero(moving[face_pairs].any(axis=1))
+            hinges = np.flatnonzero(moving[hinge_pairs].any(axis=1))
+            if not (len(facets) or len(hinges)):
+                return True
 
-        def moving(bindings):
-            active = np.flatnonzero(changed[bindings].any(axis=1))
-            delta = increment[bindings[active]]
-            return active[(delta[:, :1] != delta[:, 1:]).any(axis=(1, 2))]
-
-        facets = np.arange(len(owners)) if static else moving(owners)
+        before = points + prior[point_owners]
+        after = before if candidate is prior else points + candidate[point_owners]
         if len(facets):
-            start = rest[facets] + prior[owners[facets]]
-            end = rest[facets] + candidate[owners[facets]]
-            if not _facet_areas_clear(rest[facets], start, end):
+            if shared_points:
+                corners = faces[facets]
+                start, end = before[corners], after[corners]
+            else:
+                start = rest[facets] + prior[owners[facets]]
+                end = rest[facets] + candidate[owners[facets]]
+            if not _facet_areas_clear(reference[facets], start, end):
                 return False
-        hinges = np.arange(len(adjacent_owners)) if static else moving(adjacent_owners)
         if len(hinges):
-            start = nearby[hinges] + prior[adjacent_owners[hinges]]
-            end = nearby[hinges] + candidate[adjacent_owners[hinges]]
-            if not _hinges_clear(start, end):
+            corners = adjacent[hinges]
+            if not _hinges_clear(before[corners], after[corners]):
                 return False
         return True
 
