@@ -34,6 +34,8 @@ TOOL_CONTACT_CLOCK_PROPERTY = 'vesselToolContactClockPolicy'
 AXIAL_TOOL_CONTACT_CLOCK_POLICY = 'passive-dissector-fixed-tick-v1'
 TOOL_CONTACT_CLOCK_POLICY = 'passive-dissector-rigid-tick-v2'
 TOOL_CONTACT_CLOCK_POLICIES = (AXIAL_TOOL_CONTACT_CLOCK_POLICY, TOOL_CONTACT_CLOCK_POLICY)
+ATTACHMENT_COUPLING_PROPERTY = 'vesselAttachmentCouplingPolicy'
+ATTACHMENT_COUPLING_POLICY = 'reciprocal-source-springs-v1'
 TISSUE_FRICTION_MODELS = (SECTION_TISSUE_FRICTION_MODEL, SECTION_TISSUE_CAPACITY_MODEL)
 TISSUE_CONTACT_MODELS = (SECTION_TISSUE_CONTACT_MODEL, *TISSUE_FRICTION_MODELS)
 STEP_SECONDS = 1 / 120
@@ -79,6 +81,10 @@ def soft_contact_enabled(engine):
 
 def bounded_tissue_capacity_enabled(engine):
     return (mechanics(engine) or {}).get('model') == SECTION_TISSUE_CAPACITY_MODEL
+
+
+def reciprocal_attachments_enabled(engine):
+    return engine.scene.properties.get(ATTACHMENT_COUPLING_PROPERTY) == ATTACHMENT_COUPLING_POLICY
 
 
 def validate_section_profile(profile, bounded):
@@ -151,6 +157,21 @@ class Rods:
     bonds: tuple
     supports: tuple
     bending_rigidity: tuple | None
+
+
+@dataclass(frozen=True)
+class TissueLoads:
+    wall_reactions: dict[int, np.ndarray]
+    # Each receiver has a count and the sum of its rods' mean accepted offsets.
+    attachment_targets: dict[int, tuple[int, np.ndarray]]
+
+
+def _attachment_targets(supports, mean_displacement):
+    targets = {}
+    for site, cell in supports:
+        count, offset = targets.get(cell, (0, 0.))
+        targets[cell] = count + 1, offset + mean_displacement[site]
+    return targets
 
 
 def _section_rigidity(radius, thickness_ratio, modulus):
@@ -687,13 +708,30 @@ def tick(engine, dt, *, tool_motion=None, excluded_tissue=(), tool_clock_hand=No
         tools = endpoint_tools
     soft_contact = soft_contact_enabled(engine)
     tissue_moving = soft_contact and any(any(delta) for delta in deformation.values())
+    elastic_supports = ()
+    rigid_support_offsets = {}
+    if reciprocal_attachments_enabled(engine):
+        constrained_cells = {cell for _, cell in supports}.intersection(excluded_tissue)
+        elastic_supports = tuple((i, cell) for i, cell in supports if cell not in constrained_cells)
+        if constrained_cells:
+            # A rigid holder prescribes a cell displacement. The intact
+            # spring follows that displacement and reacts against the holder.
+            for fragment in (*engine.state['holds'].values(), *engine.state.get('detachedFragments', ())):
+                receivers = constrained_cells.intersection(fragment['cells'])
+                if 'target' not in fragment and receivers:
+                    offset = engine.scene.affine[:3, :3] @ fragment['offset']
+                    rigid_support_offsets.update(dict.fromkeys(receivers, offset))
     if not tools and not velocities and not compressed and not any(str(c) in deformation for c in rods.cells) and not any(
-            np.any(deformation.get(str(cell), (0., 0., 0.))) for _, cell in supports) and not tissue_moving:
+            np.any(deformation.get(str(cell), (0., 0., 0.))) for _, cell in supports) and not tissue_moving and not any(
+            np.any(offset) for offset in rigid_support_offsets.values()):
+        if elastic_supports and engine.state['deformationModel']['active']:
+            return TissueLoads({}, _attachment_targets(elastic_supports, np.zeros_like(position)))
         return
     support_force = np.zeros_like(position)
     support_count = np.zeros(len(position))
     for i, cell in supports:
-        support_force[i] += rods.rest[i] + np.asarray(deformation.get(str(cell), (0., 0., 0.)))
+        offset = rigid_support_offsets.get(cell, deformation.get(str(cell), (0., 0., 0.)))
+        support_force[i] += rods.rest[i] + np.asarray(offset)
         support_count[i] += 1
     support_force *= SUPPORT_N_PER_MM
     spring_key = (bonds, tuple(support_count))
@@ -727,6 +765,7 @@ def tick(engine, dt, *, tool_motion=None, excluded_tissue=(), tool_clock_hand=No
         engine, prior_wall, bonds, tuple(set(engine.state['removed']).union(excluded_tissue)),
         friction=soft_friction) if soft_contact else ()
     reactions = [np.zeros((len(contact.patch.cells), 3)) for contact in soft_contacts]
+    attachment_displacement = np.zeros_like(position) if elastic_supports else None
     inverse = engine.scene.inverse[:3, :3]
 
     def contact(positions, radii, rate, *, measure_compression=False, tissue_wall_rate=None):
@@ -827,6 +866,8 @@ def tick(engine, dt, *, tool_motion=None, excluded_tissue=(), tool_clock_hand=No
             prior_wall = next_wall
         radius = proposed_radius
         old_rate = (position - previous) / STEP_SECONDS
+        if attachment_displacement is not None:
+            attachment_displacement += position - rods.rest
         for interface, reaction in zip(soft_contacts, reactions):
             loads = interface.loads(position - rods.rest, 1. - radius / rods.radius, inverse, wall_rate=old_rate)
             np.add.at(reaction, interface.patch.indices, -loads)
@@ -841,13 +882,14 @@ def tick(engine, dt, *, tool_motion=None, excluded_tissue=(), tool_clock_hand=No
                 field[key] = np.asarray(value).tolist()
             else:
                 field.pop(key, None)
-    if soft_contacts:
+    if soft_contacts or elastic_supports:
         result = {}
         for interface, reaction in zip(soft_contacts, reactions):
             for cell, load in zip(interface.patch.cells, reaction / steps):
                 if np.any(load):
                     result[int(cell)] = result.get(int(cell), 0.) + load
-        return result
+        targets = _attachment_targets(elastic_supports, attachment_displacement / steps) if elastic_supports else {}
+        return TissueLoads(result, targets)
 
 
 def view(engine):
@@ -862,6 +904,7 @@ def view(engine):
     return {
         'model': MODEL,
         **({'sectionModel': mechanics(engine)['model']} if mechanics(engine) is not None else {}),
+        **({'attachmentCouplingPolicy': ATTACHMENT_COUPLING_POLICY} if reciprocal_attachments_enabled(engine) else {}),
         'sites': [{'sourceCell': rods.cells[i], 'restPositionMm': rods.rest[i].tolist(),
                    'positionMm': position[i].tolist(), 'restRadiusMm': float(rods.radius[i]), 'radiusMm': float(radius[i]),
                    'activeSupportCells': support_by_site.get(i, [])} for i in retained],

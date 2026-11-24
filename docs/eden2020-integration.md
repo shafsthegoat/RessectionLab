@@ -218,6 +218,9 @@ declared coverage. The engine models motion around the retained traces. Other
 vessel surfaces in the box remain visible and participate in contact.
 Stiffness, tissue springs and caliber estimates are research assignments. The
 local scene declares zero pressure and no physiological flow boundaries.
+New ordinary preparations let intact springs transfer accepted vessel motion
+back to their assigned tissue cells. The preparation receipt records the
+attachment model, and historical recordings retain the model they saved.
 Field-edge faces indicate where coverage stops. A selected saved approach still
 opens in its separate inspection mode.
 

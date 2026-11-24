@@ -165,7 +165,7 @@ def release(engine, key):
     engine.state['holds'].pop(key, None)
 
 
-def _system(engine, p, ids, anchors, retained, blocked):
+def _system(engine, p, ids, anchors, retained, blocked, attachment_stiffness=None):
     held = tuple(sorted({c for h in _holds(engine) for c in h['cells']} & set(ids)))
     shape = engine.scene.shape
     strides = {1, shape[2], shape[1] * shape[2]}
@@ -179,6 +179,8 @@ def _system(engine, p, ids, anchors, retained, blocked):
     signature = (grid, engine.scene.identity if material_profile else None,
                  tuple(ids), tuple(_material(engine, c) for c in ids), tuple(anchors),
                  local_cuts, held, tuple((k, p[k]) for k in sorted(profile())))
+    if attachment_stiffness:
+        signature += (tuple(attachment_stiffness.items()),)
     cached = getattr(engine, '_deformation_system_v2', None)
     if cached and cached[0] == signature: return cached[1:]
     bonds = sorted((c, n) for c in ids for n, _ in _neighbor_ids(shape, c)
@@ -225,6 +227,8 @@ def _system(engine, p, ids, anchors, retained, blocked):
         tau = material_profile['relaxationSeconds']
         effective_K = K * (1 + material_profile['maxwellShearRatio'] * tau / (tau + p['fixedStepSeconds']))
     A = effective_K + sparse.diags(hold_diag + p['dragNsPerMm'] / p['fixedStepSeconds'])
+    if attachment_stiffness:
+        A += sparse.diags(np.repeat([attachment_stiffness.get(c, 0.) for c in ids], 3))
     solve = factorized(A[free][:, free].tocsc()) if free.any() else lambda rhs: np.empty(0)
     cached = (signature, solve, free, index, edges, K)
     engine._deformation_system_v2 = cached
@@ -317,6 +321,7 @@ def tick(engine, dt, *, vessel_tool_motion=None, vessel_tool_clock_hand=None):
     distributed = False
     coupled_vessels = False
     wall_reactions = {}
+    attachment_targets = {}
     if material_profile:
         from .surgical_glioma_materials import move_vessels, retained_vessel_segments, vessel_displacements as vessel_motion
         from . import surgical_vessel_rods as rods
@@ -324,26 +329,39 @@ def tick(engine, dt, *, vessel_tool_motion=None, vessel_tool_clock_hand=None):
         if distributed:
             coupled_vessels = rods.soft_contact_enabled(engine)
             if coupled_vessels:
-                # Advance rods against the current lattice and hold their mean
-                # accepted contact reaction over this lattice increment.
-                if vessel_tool_clock_hand is None:
-                    wall_reactions = rods.tick(engine, dt, tool_motion=vessel_tool_motion, excluded_tissue=rigid) or {}
-                else:
-                    wall_reactions = rods.tick(engine, dt, tool_motion=vessel_tool_motion, excluded_tissue=rigid,
-                                               tool_clock_hand=vessel_tool_clock_hand) or {}
-                if wall_reactions:
+                # Advance rods against the current lattice and hand off the
+                # accepted mean contact forces and support targets.
+                loads = rods.tick(engine, dt, tool_motion=vessel_tool_motion, excluded_tissue=rigid,
+                                  tool_clock_hand=vessel_tool_clock_hand)
+                if loads is not None:
+                    wall_reactions, attachment_targets = loads.wall_reactions, loads.attachment_targets
+                receivers = wall_reactions
+                if attachment_targets:
+                    receivers = wall_reactions.copy()
+                    deformation = engine.state['deformation']
+                    for cell, (count, offset) in attachment_targets.items():
+                        tissue_offset = np.asarray(deformation.get(str(cell), (0., 0., 0.)))
+                        force = rods.SUPPORT_N_PER_MM * (offset - count * tissue_offset)
+                        if np.any(force):
+                            receivers[cell] = receivers.get(cell, 0.) + force
+                if receivers:
                     excluded = removed | rigid
                     reserve = 0
                     if rods.bounded_tissue_capacity_enabled(engine):
                         active = set(model['active']) - excluded
-                        supplied = len(wall_reactions)
-                        wall_reactions, omitted = _bounded_contact_reactions(wall_reactions, active)
+                        supplied = len(receivers)
+                        receivers, omitted = _bounded_contact_reactions(receivers, active)
                         reserve = min(CONTACT_RECEPTOR_RESERVE_NODES, p['maxNodes'] // 3)
                         if diagnostic is not None:
                             diagnostic['maxOmittedWallReactionN'] = max(diagnostic['maxOmittedWallReactionN'], omitted)
-                            diagnostic['omittedWallReceptorTicks'] += supplied - len(wall_reactions)
-                    if wall_reactions:
-                        _activate_contact_patch(engine, model, wall_reactions, excluded, p['maxNodes'], reserve_nodes=reserve)
+                            diagnostic['omittedWallReceptorTicks'] += supplied - len(receivers)
+                    if receivers:
+                        _activate_contact_patch(engine, model, receivers, excluded, p['maxNodes'], reserve_nodes=reserve)
+                    if not attachment_targets:
+                        wall_reactions = receivers
+                    else:
+                        active = set(model['active']) - excluded
+                        wall_reactions = {cell: force for cell, force in wall_reactions.items() if cell in active}
             vessel_displacements = {str(cell): value for cell, value in vessel_motion(engine).items()}
         elif retained_vessel_segments(engine):
             deformation = engine.state['deformation']
@@ -377,7 +395,9 @@ def tick(engine, dt, *, vessel_tool_motion=None, vessel_tool_clock_hand=None):
         return
     blocked = _blocked(engine)
     anchors = sorted(set(model['anchors']) & retained)
-    solve, free, index, edges, K = _system(engine, p, ids, anchors, retained, blocked)
+    attachment_stiffness = {cell: rods.SUPPORT_N_PER_MM * attachment_targets[cell][0]
+                            for cell in ids if cell in attachment_targets}
+    solve, free, index, edges, K = _system(engine, p, ids, anchors, retained, blocked, attachment_stiffness)
     h = p['fixedStepSeconds']; total = model['remainderSeconds'] + dt
     steps = int(np.floor((total + 1e-12) / h))
     model['remainderSeconds'] = max(0., round(total - steps*h, 14))
@@ -411,6 +431,17 @@ def tick(engine, dt, *, vessel_tool_motion=None, vessel_tool_clock_hand=None):
         diagnostic['forceCapNodeTicks'] += int(np.count_nonzero(np.linalg.norm(forcing, axis=1) > p['maxForceN']))
     force_scale = np.minimum(1., p['maxForceN'] / np.maximum(np.linalg.norm(forcing, axis=1), 1e-15))
     forcing *= force_scale[:, None]
+    if attachment_stiffness:
+        # Use the same spring energy as the rod solve, with the mean accepted
+        # rod displacement held fixed during this lattice increment. Implicit
+        # receptor stiffness keeps multiple springs on one cell stable.
+        attachment_drive = np.zeros_like(u)
+        for cell in attachment_stiffness:
+            attachment_drive[index[cell]] = rods.SUPPORT_N_PER_MM * attachment_targets[cell][1]
+        attachment_diagonal = np.asarray([attachment_stiffness.get(cell, 0.) for cell in ids])[:, None]
+        forcing += attachment_drive
+        if diagnostic is not None:
+            diagnostic_hold_diagonal = diagnostic_hold_diagonal + np.repeat(attachment_diagonal.ravel(), 3)
     track_mechanics = steps and mechanical.enabled(engine)
     if track_mechanics or coupled_vessels:
         edge_nodes = np.asarray([(i, j) for i, j, _ in edges], dtype=int).reshape(-1, 2)
@@ -477,6 +508,13 @@ def tick(engine, dt, *, vessel_tool_motion=None, vessel_tool_clock_hand=None):
         # Reject the coupled increment as a whole: clamping single nodes would
         # introduce fresh strain discontinuities after the strain projection.
         if collision: u = old
+        if attachment_stiffness:
+            # The implicit spring contributes only its relative displacement
+            # load. Reject an out-of-domain combined load instead of clipping
+            # one endpoint of a spring.
+            combined_load = forcing - attachment_diagonal * u
+            if np.any(np.linalg.norm(combined_load, axis=1) > p['maxForceN'] + 1e-12):
+                raise ValueError('VESSEL_ATTACHMENT_LOAD_LIMIT: coupled tissue force exceeds the numerical bound')
         if material_profile:
             memory = memory_weight * memory + (1 - memory_weight) * u
         if track_mechanics:

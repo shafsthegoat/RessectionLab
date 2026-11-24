@@ -425,11 +425,15 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
     if local_wall is not None:
         from .surgical_motion import AXIAL_SWEEP_PROPERTY, AXIAL_SWEEP_POLICY
         from .surgical_patient_wall import qualifying_properties
-        from .surgical_vessel_rods import TOOL_CONTACT_CLOCK_PROPERTY, TOOL_CONTACT_CLOCK_POLICY
+        from .surgical_vessel_rods import STEP_SECONDS, TOOL_CONTACT_CLOCK_PROPERTY, TOOL_CONTACT_CLOCK_POLICY
         from .surgical_vessel_surface import GEOMETRY_PROPERTY
 
         check()
-        wall_properties, binding = qualifying_properties(local_wall, masks, rows['vessels'], manifest['patient_id'])
+        brain_profile = physics.get('brain')
+        reciprocal = physics_key == 'tissuePhysicsV2' and (
+            brain_profile is None or isinstance(brain_profile, dict) and brain_profile.get('fixedStepSeconds') == STEP_SECONDS)
+        wall_properties, binding = qualifying_properties(local_wall, masks, rows['vessels'], manifest['patient_id'],
+                                                         reciprocal_attachments=reciprocal)
         adapter['nativeWall'] = binding
         if native_alignment is not None:
             adapter['nativeWallAlignmentReview'] = copy.deepcopy(native_alignment)

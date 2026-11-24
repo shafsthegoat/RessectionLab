@@ -429,6 +429,16 @@ class SurgicalEngine:
                 or not vessel_rods.wall_sweep_enabled(self)
                 or not vessel_rods.bounded_tissue_capacity_enabled(self)):
             raise ValueError('VESSEL_TOOL_CONTACT_CLOCK_REQUIRES_SUPPORTED_NATIVE_WALL')
+        if vessel_rods.ATTACHMENT_COUPLING_PROPERTY in scene.properties:
+            from .surgical_deformation_v2 import _settings
+            if (not vessel_rods.reciprocal_attachments_enabled(self)
+                    or self._operative or self._source_inspection_only
+                    or not scene.properties.get('tissuePhysicsV2') or 'brainContinuumV1' in scene.properties
+                    or not getattr(scene, '_vessel_source_walls', ())
+                    or not vessel_rods.wall_sweep_enabled(self)
+                    or not vessel_rods.bounded_tissue_capacity_enabled(self)
+                    or _settings(self)['fixedStepSeconds'] != vessel_rods.STEP_SECONDS):
+                raise ValueError('VESSEL_ATTACHMENT_COUPLING_REQUIRES_SUPPORTED_NATIVE_WALL')
         self.tools = TOOLS
         self._operative_tool_revision = 0
         if self._operative:

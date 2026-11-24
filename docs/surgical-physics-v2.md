@@ -229,6 +229,23 @@ The same checked action path enforces shaft clearance, working-axis clearance,
 wall sweep, and the hard node limit. Earlier profiles retain their recorded
 activation behavior.
 
+New ordinary native-wall rehearsals with matching 120 Hz rod and tissue
+steps declare `reciprocal-source-springs-v1` in both the scene and the
+native-wall receipt. An intact spring pulls its assigned tissue cell toward
+the accepted rod displacement over the current engine increment. Its target
+is the mean of the wall-checked rod ticks. Each spring contributes 0.035 N/mm
+to its receiver's implicit lattice diagonal. Several rods on one tissue
+cell contribute through the sum of their spring forces. Cutting the source
+attachment or removing either endpoint ends that contribution. Rigid holders
+prescribe their support displacement while they own a cell.
+
+The rod and tissue use the same spring law, with the other side held fixed
+during each solve. Their evaluated forces can differ within an increment
+because of this lag. Wall contact and sliding friction remain separate
+loads. The tissue budget and wall clearance still apply. These stiffnesses
+and attachments are model assignments. Older saves keep their original
+one-way support behavior.
+
 On the reviewed local TopCoW-012 CTA/MRA crop, v4 reached the 2,000-node limit
 before meaningful contact. The ordinary v5 preparation retained the exact
 source crop and wall binding and completed a checked approach, contact, and

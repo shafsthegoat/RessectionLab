@@ -13,14 +13,14 @@ from resectionlab import surgical_vessel_surface as surfaces
 from resectionlab import surgical_vessel_tissue_contact as tissue_contact
 from resectionlab.surgical_engine import SurgicalEngine
 from resectionlab.surgical_physics_v2 import default_profile
-from resectionlab.surgical_scene import from_case
+from resectionlab.surgical_scene import SurgicalScene, from_case, propagate_original_target_memberships
 from resectionlab import native_backend, surgical_wall_sweep, surgical_vessel_vertex_motion as vertex_motion
 from resectionlab.surgical_wall_sweep_reference import WallSweepReference
 
 
 def _fixture(*, guarded=False, vertex_transport=False, section_mechanics=False, conditioned=False,
              section_overrides=None, vessel_contact=False, parallel=False, soft_contact=False, soft_bank=False,
-             tissue_friction=None, bounded_tissue=False):
+             tissue_friction=None, bounded_tissue=False, shared_support=False):
     shape = (35, 35, 30)
     spacing = .4
     affine = np.diag([spacing, spacing, spacing, 1.])
@@ -28,6 +28,8 @@ def _fixture(*, guarded=False, vertex_transport=False, section_mechanics=False, 
     sites = [(i, 15, 15) for i in range(11, 24)]
     other = [(i, 15, 19) for i in range(11, 24)] if parallel else [(i, 23, 15) for i in range(11, 14)]
     support = {sites[i]: (sites[i][0], 15, 17) for i in (0, 6, 12)}
+    if shared_support:
+        support.update({sites[i]: support[sites[6]] for i in (5, 7, 8)})
     if parallel:
         support.update({other[i]: (other[i][0], 15, 21) for i in (0, 6, 12)})
     radius = .77 if parallel else .66
@@ -341,6 +343,62 @@ def test_native_vessel_contact_pushes_and_releases_retained_soft_tissue(bounded_
         assert replay.step(action) == result
     assert replay.state['deformation'] == coupled.state['deformation']
     assert 0. < tissue_motion(coupled) < .35 * loaded
+
+
+def test_reciprocal_attachments_pull_a_shared_tissue_cell_and_release_on_cut(monkeypatch):
+    legacy = _fixture(guarded=True, vertex_transport=True, section_mechanics=True, conditioned=True,
+                      soft_contact=True, bounded_tissue=True, shared_support=True)
+    source = legacy.scene
+    active = SurgicalScene(source.labels, source.affine, source.regions, source.source, {
+        **source.properties, rods.ATTACHMENT_COUPLING_PROPERTY: rods.ATTACHMENT_COUPLING_POLICY})
+    coupled = SurgicalEngine(propagate_original_target_memberships(source, active))
+    definition = rods.definitions(coupled)
+    receiver = max((cell for _, cell in definition.supports),
+                   key=lambda cell: sum(target == cell for _, target in definition.supports))
+    bindings = [(site, cell) for site, cell in definition.supports if cell == receiver]
+    severed = coupled.clone()
+    severed.state['cutEdges'] = sorted(sorted((definition.cells[site], cell)) for site, cell in bindings)
+    for engine in (legacy, coupled, severed):
+        for site, _ in bindings:
+            engine.state['deformation'][str(definition.cells[site])] = [0., 0., -.045]
+
+    tick = rods.tick
+    observed = []
+
+    def capture(engine, *args, **kwargs):
+        loads = tick(engine, *args, **kwargs)
+        observed.append(loads)
+        return loads
+
+    monkeypatch.setattr(rods, 'tick', capture)
+    with tissue.diagnostic_scope() as diagnostics:
+        for engine in (legacy, severed, coupled):
+            tissue.tick(engine, 4 * rods.STEP_SECONDS)
+    legacy_loads, cut_loads, coupled_loads = observed
+    assert receiver not in legacy_loads.wall_reactions
+    assert receiver not in cut_loads.wall_reactions
+    assert receiver not in coupled_loads.wall_reactions
+    assert receiver not in legacy_loads.attachment_targets and receiver not in cut_loads.attachment_targets
+    assert str(receiver) not in legacy.state['deformation'] and str(receiver) not in severed.state['deformation']
+    count, summed_offset = coupled_loads.attachment_targets[receiver]
+    assert count == len(bindings) == 4
+    shift = np.array(coupled.state['deformation'][str(receiver)])
+    assert summed_offset[2] / count < shift[2] < -.01
+    assert receiver in coupled.state['deformationModel']['active']
+    assert receiver not in coupled.state['deformationModel']['anchors']
+    assert diagnostics['maxFreeResidualN'] < 1e-8
+    assert not severed.state['removed']
+    assert rods._topology(severed, definition)[2] == rods._topology(coupled, definition)[2]
+    release = coupled.clone()
+    release.state['cutEdges'] = severed.state['cutEdges']
+    for engine in (coupled, release):
+        tissue.tick(engine, .1)
+        frames = rods._accepted_frames(engine, definition)
+        assert surgical_wall_sweep.is_clear(engine, frames, frames, static=True)
+    assert receiver not in observed[-1].attachment_targets
+    intact_shift = coupled.state['deformation'][str(receiver)][2]
+    released_shift = release.state['deformation'][str(receiver)][2]
+    assert abs(intact_shift - released_shift) > .005
 
 
 def test_wall_reaction_omission_is_bounded_per_receptor_and_in_aggregate():
