@@ -40,7 +40,7 @@ import type { KeyboardEvent, PointerEvent } from "react";
 import { VolumeRenderer } from "./VolumeRenderer";
 import { clippingForBounds, clippingPositionInBounds, newClippingPosition, usesPatientCutaway } from './workspaceSettings';
 import type { ViewerWorkspaceSettings } from './workspaceSettings';
-import { canBalanceTofContext, volumeSettings, isCtModality } from './volumeTransfer';
+import { canBalanceTofContext, volumeSettings, isCtAngiography, isCtModality } from './volumeTransfer';
 import type { VolumePreset } from './volumeTransfer';
 import {
   PLANE_AXES,
@@ -121,6 +121,9 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   const signalName = props.segmentationOnly ? 'segmentation only' : props.generatedSignal ? "generated image signal" : (props.sourceLabel ?? "MRI");
   const [localSettings,setLocalSettings] = useState<ViewerWorkspaceSettings>({});
   const settings=props.workspaceSettings ?? localSettings;
+  const ctaCutaway=Boolean(caseData?.displayIdentity&&isCtAngiography(signalName)&&
+    settings.presentation!=='scan'&&!settings.operativeView&&settings.clipping?.enabled&&
+    settings.clipping.axis==='z'&&settings.clipping.flipped);
   const patientCutawayActive=usesPatientCutaway(settings,!!caseData?.patientContext?.boundsRasMm);
   const scanVolume=volumeSettings(settings.volumeRendering,signalName);
   const latestSettings=useRef(settings);latestSettings.current=settings;
@@ -1119,6 +1122,15 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
           {depthSlabBox&&!corridorCrop&&<div className="rl-source-section-readout" role="status">
             <span>{TITLES[activePlane]} {depthSlabThickness} mm slab · linked slices stay full</span>
             <button aria-label="Exit vessel slab in 3D" onClick={()=>setDepthSlab(null)}>Exit slab</button>
+          </div>}
+          {ctaCutaway&&!surgicalView&&!sourceSectionActive&&!depthSlabBox&&!corridorCrop&&!settings.clipBox?.enabled&&
+            !settings.obliqueClip?.enabled&&!props.vesselTrace?.isolationRadiusMm&&<div className="rl-source-section-readout" role="status">
+            <span>Axial CTA cut · Z {settings.clipping!.value.toFixed(1)} mm · linked slices stay full</span>
+            <button aria-label="Show full CTA head" onClick={()=>{
+              engine.current?.fitCamera('anatomy');
+              changeSettings({...settings,clipping:undefined,
+                camera:engine.current?.getCameraState()??null});
+            }}>Full head</button>
           </div>}
           {!sourceSectionActive&&(!depthSlabBox||corridorCrop)&&!surgicalView&&(corridorCrop||settings.clipBox?.enabled||props.vesselTrace?.isolationRadiusMm)&&
             <div className="rl-source-section-readout" role="status">

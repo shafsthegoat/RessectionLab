@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { followSourceSection, restoreSourceSection, sourceDepthSlabAtCursor, sourceSectionAtCursor, sourceSectionSnapshot } from './sourceSection.ts';
+import { ctaArterialCutaway, followSourceSection, restoreSourceSection, sourceDepthSlabAtCursor, sourceSectionAtCursor, sourceSectionSnapshot } from './sourceSection.ts';
 import { inverseAffine, rasAffine, transformPoint, volumeBounds } from './coordinates.ts';
 
 test('section uses linked RAS millimeters on an oblique LPS source and exposes its camera-facing cut', () => {
@@ -14,6 +14,42 @@ test('section uses linked RAS millimeters on an oblique LPS source and exposes i
   assert.equal(sourceSectionAtCursor(source,cursor,bounds,[-100,0,0]).clipping.flipped,false);
   assert.equal(next.clipBox,source.clipBox); assert.equal(next.obliqueClip,source.obliqueClip); assert.equal(next.volumeRendering,source.volumeRendering);
   assert.deepEqual(source,before);
+});
+
+test('fresh CTA cutaway clears all source and display artery vertices and preserves acquired settings',()=>{
+  const mesh=(z,displayed=z)=>({
+    source:Float32Array.from([38,65,z,64,33,z,55,52,z-12]),
+    positions:Float32Array.from([38,65,displayed,64,33,displayed,55,52,z-12]),
+    indices:Uint32Array.from([0,1,2]),
+  });
+  const skull=mesh(20);
+  skull.source.set([15,10,20,100,109,20,100,10,20]);
+  skull.positions=skull.source;
+  const artery={name:'artery',kind:'artery',sourceSeries:'cta',surface:mesh(50,51)};
+  const volume={displayIdentity:'source',modality:'CTA',frame:'RAS+',shape:[140,140,130],
+    affine:[[.5,0,0,-30],[0,.5,0,-35],[0,0,1,-110],[0,0,0,1]],
+    compartments:[artery,{name:'bone',kind:'bone',sourceSeries:'cta',surface:skull}]};
+  const settings={presentation:'segmentation',volumeRendering:{enabled:true,density:.12,shadows:true},sliceOverlay:'contour'};
+  const visible={artery:true,bone:true};
+  const cut=ctaArterialCutaway(volume,'cta',visible,settings);
+  assert.equal(cut.clipping.value,-51);
+  assert.equal(cut.clipping.flipped,true);
+  assert.equal(cut.showPlane,false);
+  assert.equal(cut.volumeRendering,settings.volumeRendering);
+  assert.ok(cut.camera.position[2]>cut.clipping.value);
+  assert.equal(ctaArterialCutaway({...volume,modality:'TOF'},'cta',visible,settings),undefined);
+  assert.equal(ctaArterialCutaway(volume,'cta',{...visible,bone:false},settings),undefined);
+  assert.equal(ctaArterialCutaway(volume,'different',visible,settings),undefined);
+  const withTarget={...volume,compartments:[
+    ...volume.compartments,{name:'target',kind:'tumor',sourceSeries:'cta',surface:mesh(100)},
+  ]};
+  assert.equal(ctaArterialCutaway(withTarget,'cta',{...visible,target:true},settings),undefined);
+  assert.deepEqual(ctaArterialCutaway(withTarget,'cta',{...visible,target:true},settings,
+    [{id:'target',role:'context',provenance:{kind:'simulated_observation'}}]),cut);
+  const wide=mesh(53);
+  wide.source[8]=-30;
+  assert.equal(ctaArterialCutaway({...volume,compartments:[{...artery,surface:wide},volume.compartments[1]]},
+    'cta',visible,settings),undefined);
 });
 
 test('section follows the linked cursor and chosen axis without changing source window or extra cuts', () => {

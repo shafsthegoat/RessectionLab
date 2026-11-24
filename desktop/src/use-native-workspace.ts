@@ -11,6 +11,7 @@ import type {ViewerVesselTrace,ViewerVolume} from './viewer/contracts';
 import type {Point3} from './viewer/coordinates';
 import {rasAffine,transformPoint,volumeBounds} from './viewer/coordinates';
 import {newClippingPosition,usesPatientCutaway,viewerCutaway} from './viewer/workspaceSettings';
+import {ctaArterialCutaway} from './viewer/sourceSection';
 import type {ViewerWorkspaceSettings,ViewerCameraState,ViewerCutaway} from './viewer/workspaceSettings';
 export const nativeDefaults=():ViewerWorkspaceSettings=>({layout:'3d-focus',showPlane:false,sliceOverlay:'contour',layerOpacity:{brain:.06,tumor:1,vessels:1,bone:1,'scalp-envelope':.02,__fragment_review:1},volumeRendering:{enabled:true,density:.18}});
 const retiredClippingMessage='Alignment updated · A cutaway outside the new field was cleared.';
@@ -154,7 +155,7 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
   function resetLayers(){packing.current?.abort();packing.current=null;failedLayers.current={};setLayerErrors({});setPendingLayers([]);unavailableRef.current=[];}
   async function prepared(next:ViewerVolume){const controller=new AbortController();packing.current=controller;try{return await prepareNativeLabels(next,controller.signal)}finally{if(packing.current===controller)packing.current=null;}}
   const run=async(job:()=>Promise<void>)=>{if(active.current)return;active.current=true;setBusy(true);try{await layerTask.current;await job()}catch(e){setMessage(e instanceof Error?e.message:String(e))}finally{active.current=false;setBusy(false)}};
-  async function loadView(b:Binding,s:string,view:NativeScanState,raw=false,extra:Args={},legacyCutaway=false){
+  async function loadView(b:Binding,s:string,view:NativeScanState,raw=false,extra:Args={},legacyCutaway=false,freshOpening=false){
     if(!api)return;setOriginal(raw);const seq=++generation.current;
     resetLayers();installVolume(null);setUnavailable([]);setMessage('Preparing anatomy…');
     const ids=Object.keys(view.visible).filter(id=>view.visible[id]);
@@ -171,6 +172,15 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
       if(legacyCutaway&&usesPatientCutaway(next.settings,!!hydrated.patientContext?.boundsRasMm)){
         setPatientCutaway(viewerCutaway(next.settings));
         next.settings={...next.settings,...viewerCutaway({})};
+      }
+      if(freshOpening&&!result.unavailableLayers.some(id=>view.visible[id])){
+        const opening=ctaArterialCutaway(hydrated,s,view.visible,next.settings,b.document.layers);
+        if(opening){
+          if(usesPatientCutaway(opening,!!hydrated.patientContext?.boundsRasMm)){
+            setPatientCutaway(viewerCutaway(opening));
+            next.settings={...opening,...viewerCutaway({})};
+          }else next.settings=opening;
+        }
       }
       setStates(all=>({...all,[s]:next}));installVolume(hydrated);setRegistration(result.registrationStatus);setScanFrameReviewed(result.patientFrameReady??result.registrationStatus==='patient frame');setUnavailable(result.unavailableLayers);unavailableRef.current=result.unavailableLayers;
       setMessage(result.unavailableLayers.length?'Some structures need scan alignment.':result.registrationStatus==='alignment preview'?'Alignment preview · review in Scans':'Anatomy ready');
@@ -189,7 +199,7 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
     setStates(s?{...views,[s]:v}:{});
     // Recorded episodes and saved approaches belong to this exact source revision.
     // Registration changes are made through intake, preparation or explicit review.
-    if(s)await run(()=>loadView(b,s,v,false,{},!!saved&&saved.patientCutaway===undefined));
+    if(s)await run(()=>loadView(b,s,v,false,{},!!saved&&saved.patientCutaway===undefined,!saved));
     else setMessage('Add a source scan to begin.');
   },[api]);
   async function create(patientId:string,timepoint='preoperative'):Promise<Binding|null>{let result:Binding|null=null;await run(async()=>{result=await api!.anatomyCreate({patientId,timepoint})});if(result)await install(result);return result;}

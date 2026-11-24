@@ -49,6 +49,7 @@ for(const recipe of recipes){
   if(recipe.useDefaultState)assert(recipes.length===1&&!recipe.settings&&!recipe.cursor&&!recipe.scope&&!recipe.compareLayerIds,
     'A default-state capture cannot supply view overrides');
   if(recipe.inspectCtExteriorToggle)assert(recipe.useDefaultState,'Check the detached CT signal control from the ordinary default');
+  if(recipe.inspectCtaFullHead)assert(recipe.useDefaultState,'Compare the ordinary CTA opening with the Full head control');
   assert(recipe.applyVesselsPreset===undefined||typeof recipe.applyVesselsPreset==='boolean');
   assert(recipe.applyScanPreset===undefined||typeof recipe.applyScanPreset==='boolean');
   assert(!recipe.applyScanPreset||!recipe.applyVesselsPreset,'Apply one ordinary preset per capture');
@@ -497,6 +498,42 @@ app.on('browser-window-created',(_event,window)=>{
             return image;
           };
           record.publisherSmoothing={source:await inspect(false),restored:await inspect(true)};
+        }
+        if(recipe.inspectCtaFullHead){
+          const opening=view.patientCutaway?.clipping?.enabled?view.patientCutaway.clipping:record.view.settings.clipping;
+          assert(opening?.enabled&&opening.axis==='z'&&opening.flipped,'Expected an ordinary source-linked CTA cut');
+          let returned;
+          if(view.patientCutaway?.clipping?.enabled){
+            const preset=async name=>{
+              const before=await submittedFrame();
+              const button=`[...document.querySelectorAll('[aria-label="Anatomy presentation"] button')].find(e=>e.textContent.trim()===${JSON.stringify(name)})`;
+              await until(`!!(${button})&&!(${button}).disabled`,`CTA ${name} presentation`);
+              await js(`(${button}).click()`);
+              await until(`(${button}).getAttribute('aria-pressed')==='true'`,`CTA ${name} presentation active`);
+              await settledFrame(before.serial);
+              return nativeView();
+            };
+            const scan=await preset('Scan');
+            assert.equal(scan.states[view.seriesId].settings.presentation,'scan');
+            assert.deepEqual(scan.patientCutaway.clipping,opening,'Scan changed the shared 3D cutaway');
+            const returnedView=await preset('Structures');
+            assert.deepEqual(returnedView.patientCutaway.clipping,opening);
+            assert.deepEqual(returnedView.states[view.seriesId].visible,record.view.visible);
+            returned=await capture(`${recipe.name}-structures-return`);
+            assertSameGeometry(returned);
+          }
+          const before=await submittedFrame();
+          await click('Show full CTA head');
+          await settledFrame(before.serial);
+          const current=await nativeView(),state=current.states[view.seriesId];
+          assert(!current.patientCutaway?.clipping?.enabled&&!state.settings.clipping?.enabled);
+          assert.deepEqual(state.visible,record.view.visible);
+          assert.deepEqual(state.settings.volumeRendering,record.view.settings.volumeRendering);
+          assert.deepEqual(state.cursor,record.view.cursor);
+          const full=await capture(`${recipe.name}-full-head`);
+          assert.equal(full.frame.displayIdentity,record.frame.displayIdentity);
+          assert.equal(full.frame.sourceSignalFingerprint,record.frame.sourceSignalFingerprint);
+          record.ctaOpening={clipping:opening,returned,fullHead:full,fullHeadState:current};
         }
         if(recipe.inspectBalancedTof){
           const calibrated=record.frame.scanQuality?.tofContextDensity;
