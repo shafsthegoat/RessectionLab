@@ -601,18 +601,7 @@ export class VolumeRenderer {
     this.sourceRemaining=remaining;
     onSurfaceStatus(remaining);
     this.worker.onmessage = (
-      event: MessageEvent<{
-        name: string;
-        positions?: Float32Array;
-        normals?: Float32Array;
-        smoothPositions?: Float32Array;
-        smoothNormals?: Float32Array;
-        smoothIndices?: Uint32Array;
-        indices?: Uint32Array;
-        diagnostics?: SurfaceDiagnostics;
-        representation?:PreparedSurface['representation'];
-        error?: string;
-      }>,
+      event: MessageEvent<Partial<PreparedSurface> & {name: string; error?: string}>,
     ) => {
       if (this.disposed||sourceGeneration!==this.sourceSurfaceGeneration) return;
       const requestStarted=sourceRequests.get(event.data.name);
@@ -652,7 +641,7 @@ export class VolumeRenderer {
         if(remaining===0&&this.mode==='anatomy'&&!this.cameraRestored)this.fitCamera('anatomy');
         this.finishInitialSurgical();this.requestRender();return;
       }
-      this.installSurface(layer,{positions,normals,smoothPositions:event.data.smoothPositions,smoothNormals:event.data.smoothNormals,smoothIndices:event.data.smoothIndices,indices:event.data.indices,representation:event.data.representation,diagnostics:event.data.diagnostics});
+      this.installSurface(layer,{...event.data,positions,normals});
       this.finishInitialSurgical();
       if (remaining === 0 && this.mode === "anatomy" && !this.cameraRestored) this.fitCamera("anatomy");
       this.requestRender();
@@ -1606,6 +1595,7 @@ export class VolumeRenderer {
         const receipt={mode:vessel.mode,triangles:vessel.indices.length/3,
           movedVertices:display.movedVertices,maxVertexOffsetMm:display.maxVertexOffsetMm,maxMotionWitness:display.maxMotionWitness,
           geometryIdentity:vessel.geometryIdentity,
+          sourceVolumeBoundary:geometry.hasAttribute('vesselRestNative'),
           ...(view?.vesselMechanics?.vertexDisplacementsByLabel?.[vessel.region]?{
             vertexGeometryBinding:vessel.geometryBinding,vertices:vessel.sourceCells.length}:{}),
           ...((vessel.cuboidCount??0)>0?{cuboidCount:vessel.cuboidCount}:{})};

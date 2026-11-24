@@ -398,6 +398,7 @@ for(const withScore of [false,true])test(`modeled native vessels share live posi
     assert.equal(restBoundary.getZ(0),Math.fround(-.2));
     r.setSurfaceSmoothing(true);
     assert.equal(mesh.geometry,pair.smooth);
+    assert.equal(mesh.geometry.userData.operativeVessel.sourceVolumeBoundary,true);
     assert.equal(mesh.geometry.userData.operativeVessel.normalStyle,withScore?'source-score-gradient-0.30mm':'bounded-lighting');
     r.setSurfaceSmoothing(false);
     assert.equal(mesh.geometry,pair.source);assert.equal(mesh.geometry.userData.operativeVessel.normalStyle,'physical-indexed');

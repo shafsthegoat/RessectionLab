@@ -70,6 +70,9 @@ function matchedNativeWallReceipt(plan, stateId, anatomyPane, operativePane, ana
   assert(anatomy && operative, 'The exact native probability vessel wall must be visible in both views');
   assert.equal(operative.mode, anatomy.mode);
   assert.equal(operative.triangles, anatomy.triangles);
+  assert.equal(operative.vertices, anatomy.vertices);
+  assert.equal(operative.vertexGeometryBinding, anatomy.vertexGeometryBinding,
+    'The matched views have different indexed source-wall geometry');
   assert.equal(operative.movedVertices, 0);
   assert.equal(anatomy.movedVertices, 0);
   return {

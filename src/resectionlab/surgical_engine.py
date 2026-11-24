@@ -421,9 +421,9 @@ class SurgicalEngine:
                 or not vessel_rods.wall_sweep_enabled(self)
                 or not vessel_rods.bounded_tissue_capacity_enabled(self)):
             raise ValueError('TOOL_SWEEP_POLICY_REQUIRES_SUPPORTED_NATIVE_WALL')
-        self._vessel_tool_clock = vessel_rods.TOOL_CONTACT_CLOCK_PROPERTY in scene.properties
-        if self._vessel_tool_clock and (
-                scene.properties[vessel_rods.TOOL_CONTACT_CLOCK_PROPERTY] != vessel_rods.TOOL_CONTACT_CLOCK_POLICY
+        self._vessel_tool_clock = scene.properties.get(vessel_rods.TOOL_CONTACT_CLOCK_PROPERTY)
+        if vessel_rods.TOOL_CONTACT_CLOCK_PROPERTY in scene.properties and (
+                self._vessel_tool_clock not in vessel_rods.TOOL_CONTACT_CLOCK_POLICIES
                 or self._operative or self._source_inspection_only
                 or not getattr(scene, '_vessel_source_walls', ())
                 or not vessel_rods.wall_sweep_enabled(self)
@@ -1465,10 +1465,12 @@ class SurgicalEngine:
                 turn = (rotation(q) * previous_vessel_tool_rotation.inv()).as_rotvec()
                 travel = p - previous
                 tool_motion = {key: (p, travel / dt, turn / dt)}
-                if (self._vessel_tool_clock and fixed_passive_dissector
-                        and self.state.get('toolMechanicsRevision') != 2
-                        and np.linalg.norm(turn) <= 1e-12
-                        and np.linalg.norm(travel - np.dot(travel, axis) * axis) <= 1e-6):
+                sample_clock = (self._vessel_tool_clock is not None and fixed_passive_dissector
+                                and self.state.get('toolMechanicsRevision') != 2)
+                if sample_clock and self._vessel_tool_clock == vessel_rods.AXIAL_TOOL_CONTACT_CLOCK_POLICY:
+                    sample_clock = (np.linalg.norm(turn) <= 1e-12
+                                    and np.linalg.norm(travel - np.dot(travel, axis) * axis) <= 1e-6)
+                if sample_clock:
                     brain.tick(self, dt, vessel_tool_motion=tool_motion, vessel_tool_clock_hand=key)
                 else:
                     brain.tick(self, dt, vessel_tool_motion=tool_motion)

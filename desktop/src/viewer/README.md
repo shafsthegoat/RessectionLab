@@ -56,6 +56,8 @@ paths require full sampled brain coverage and the accepted wall binding. The
 albedo window uses the 15th and 90th percentiles of the brain-mask samples.
 Source-colour mode retains the label palette and saved vessel colours.
 
+An already-modeled vessel keeps its score-derived lighting and the gray source-volume boundary markers when the viewer starts or rebuilds. The local matched anatomy and microscope record checks the indexed position, triangle, and owner binding when the case supplies that binding.
+
 ## Estimated envelope inspection
 
 A selected structural proposal uses a separate texture and a lavender dashed contour on the three original MRI planes. It never enters the target compartment list, removed-tissue mask, working brain mask, 3D anatomy, or planning metrics. The display gate requires an estimated, view-only record bound to the exact case version, native dimensions, binary cells, and canonical RAS affine. LPS conversion preserves source voxel indexing. Review-required, accepted, and rejected estimates retain distinct status labels; a free-form description cannot change those labels or permit cortical access. Clearing/changing evidence disposes the previous texture before validation; replay suppresses the contour. Source-coordinate sampling determines the contour's physical alignment without resampling the stored mask.

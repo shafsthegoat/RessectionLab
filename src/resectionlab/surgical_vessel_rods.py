@@ -11,6 +11,7 @@ from itertools import combinations
 import numpy as np
 from scipy import sparse
 from scipy.sparse.linalg import factorized
+from scipy.spatial.transform import Rotation
 
 from .surgical_glioma_materials import PROPERTY, oriented_source_cells
 from . import surgical_vessel_surface as surfaces
@@ -30,7 +31,9 @@ SECTION_TISSUE_CONTACT_MODEL = 'linear-annular-research-contact-v3'
 SECTION_TISSUE_FRICTION_MODEL = 'linear-annular-research-contact-v4'
 SECTION_TISSUE_CAPACITY_MODEL = 'linear-annular-research-contact-v5'
 TOOL_CONTACT_CLOCK_PROPERTY = 'vesselToolContactClockPolicy'
-TOOL_CONTACT_CLOCK_POLICY = 'passive-dissector-fixed-tick-v1'
+AXIAL_TOOL_CONTACT_CLOCK_POLICY = 'passive-dissector-fixed-tick-v1'
+TOOL_CONTACT_CLOCK_POLICY = 'passive-dissector-rigid-tick-v2'
+TOOL_CONTACT_CLOCK_POLICIES = (AXIAL_TOOL_CONTACT_CLOCK_POLICY, TOOL_CONTACT_CLOCK_POLICY)
 TISSUE_FRICTION_MODELS = (SECTION_TISSUE_FRICTION_MODEL, SECTION_TISSUE_CAPACITY_MODEL)
 TISSUE_CONTACT_MODELS = (SECTION_TISSUE_CONTACT_MODEL, *TISSUE_FRICTION_MODELS)
 STEP_SECONDS = 1 / 120
@@ -443,14 +446,30 @@ def _work_capsules(engine):
                 yield hand, a, b, radius, params['forceN']
 
 
-def _swept_work_capsules(engine, lo, hi, hand, shift):
-    """Select capsules with a possible contact anywhere in the translation."""
+def _swept_work_capsules(engine, lo, hi, hand, shift, swing=None):
+    """Select capsules with a possible contact anywhere along the substep."""
     for tool in _work_capsules(engine):
         start_shift = shift if tool[0] == hand else 0.
         minimum = np.minimum(tool[1], tool[2]) + np.minimum(0., start_shift)
         maximum = np.maximum(tool[1], tool[2]) + np.maximum(0., start_shift)
-        if np.all(minimum - tool[3] <= hi) and np.all(maximum + tool[3] >= lo):
+        bound = tool[3]
+        if swing is not None and tool[0] == hand:
+            origin, angle = swing
+            reach = max(np.linalg.norm(tool[1] - origin), np.linalg.norm(tool[2] - origin))
+            # Any point on the capsule's axis is within reach of the tip.
+            bound += 2 * reach * np.sin(min(np.pi, angle) / 2) + 1e-10
+        if np.all(minimum - bound <= hi) and np.all(maximum + bound >= lo):
             yield tool
+
+
+def _rigid_tool_sample(tools, hand, age, motion):
+    """Evaluate geometry and the friction velocity pivot at the same tick."""
+    origin, linear, angular = motion[hand]
+    tip = origin - age * linear
+    inverse_turn = Rotation.from_rotvec(-age * angular)
+    sampled = tuple((key, tip + inverse_turn.apply(a - origin), tip + inverse_turn.apply(b - origin), radius, force)
+                    if key == hand else (key, a, b, radius, force) for key, a, b, radius, force in tools)
+    return sampled, {**motion, hand: (tip, linear, angular)}
 
 
 def _native_tool_contact(engine, frames, rods, position, tools):
@@ -652,13 +671,19 @@ def tick(engine, dt, *, tool_motion=None, excluded_tissue=(), tool_clock_hand=No
     old_rate = np.array([velocities.get(str(c), (0., 0., 0.)) for c in rods.cells])
     extent = (np.max(rods.radius) + 2 * np.linalg.norm(engine.scene.spacing))
     lo, hi = np.min(position, axis=0) - extent, np.max(position, axis=0) + extent
+    swing = None
+    sampled_motion = tool_motion or {}
     if tool_clock_hand is None:
         tools = tuple(tool for tool in _work_capsules(engine)
                       if np.all(np.minimum(tool[1], tool[2]) - tool[3] <= hi)
                       and np.all(np.maximum(tool[1], tool[2]) + tool[3] >= lo))
     else:
-        tool_velocity = tool_motion[tool_clock_hand][1]
-        endpoint_tools = tuple(_swept_work_capsules(engine, lo, hi, tool_clock_hand, -dt * tool_velocity))
+        origin, tool_velocity, angular = tool_motion[tool_clock_hand]
+        if engine.scene.properties.get(TOOL_CONTACT_CLOCK_PROPERTY) == TOOL_CONTACT_CLOCK_POLICY:
+            angle = dt * np.linalg.norm(angular)
+            if angle > 1e-12:
+                swing = (origin, angle)
+        endpoint_tools = tuple(_swept_work_capsules(engine, lo, hi, tool_clock_hand, -dt * tool_velocity, swing))
         tools = endpoint_tools
     soft_contact = soft_contact_enabled(engine)
     tissue_moving = soft_contact and any(any(delta) for delta in deformation.values())
@@ -712,7 +737,7 @@ def tick(engine, dt, *, tool_motion=None, excluded_tissue=(), tool_clock_hand=No
                 load, collapse, contacts = _native_tool_contact(engine, frames, rods, positions, tools)
             else:
                 load, collapse, contacts = _native_patch_contact(engine, frames, rods, positions, rate, tools,
-                                                                tool_motion or {}, section['frictionCoefficient'],
+                                                                sampled_motion, section['frictionCoefficient'],
                                                                 measure_compression)
             force += load
             compression = np.maximum(compression, collapse)
@@ -736,9 +761,12 @@ def tick(engine, dt, *, tool_motion=None, excluded_tissue=(), tool_clock_hand=No
             # total includes the prior fractional tick. The first sample is
             # STEP_SECONDS minus that remainder into this engine interval.
             age = min(dt, max(0., total - (step + 1) * STEP_SECONDS))
-            shift = age * tool_velocity
-            tools = tuple((hand, a - shift, b - shift, width, force) if hand == tool_clock_hand
-                          else (hand, a, b, width, force) for hand, a, b, width, force in endpoint_tools)
+            if swing is None:
+                shift = age * tool_velocity
+                tools = tuple((hand, a - shift, b - shift, width, force) if hand == tool_clock_hand
+                              else (hand, a, b, width, force) for hand, a, b, width, force in endpoint_tools)
+            else:
+                tools, sampled_motion = _rigid_tool_sample(endpoint_tools, tool_clock_hand, age, tool_motion)
         previous = position.copy()
         base = inertial * (previous + STEP_SECONDS * old_rate) + damping * previous + support_force
         for _ in range(SOLVER_ITERATIONS):
