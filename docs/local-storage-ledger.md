@@ -44,6 +44,11 @@ The continuation at
 indexes the superficial compartment views, structural context, model trials,
 and calibrated wall audit.
 
+The focused display and rehearsal follow-up at
+`qc/eden2020-glioma-5714812/vascular-reconstruction-continuity-20261123-v4/README.md`
+indexes field-edge and skull comparisons, wider-vessel views, and the
+source-to-operative walkthrough.
+
 Paths below are relative to the RessectionLab root. This compact ledger covers
 that area, not unrelated personal files elsewhere on the HDD. Presence does not
 establish scientific readiness or a completed build; consult each run's receipts.

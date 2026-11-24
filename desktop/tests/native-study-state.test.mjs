@@ -53,10 +53,11 @@ test('vascular presentation mutes the reviewed peripheral layers and keeps the m
   const group={id:'vesselfm-review-posterior-superficial',kind:'vessels',source_series:'tof',color:'#8d877a',
     provenance:{method:'Review display group of complete native TOF components',evidence_use:'context_only'}};
   const fieldEdge={...group,id:'vesselfm-review-field-edge'};
+  const skullExterior={...group,id:'vesselfm-review-skull-exterior'};
   const network={...group,id:'vesselfm-review-intracranial-priority',color:'#b75848'};
   const estimate={...group,provenance:{kind:'model'}};
-  const settings=anatomyPresentation({},[group,fieldEdge,network],'vascular','TOF','tof');
-  for(const peripheral of [group,fieldEdge]){
+  const settings=anatomyPresentation({},[group,fieldEdge,skullExterior,network],'vascular','TOF','tof');
+  for(const peripheral of [group,fieldEdge,skullExterior]){
     assert.equal(settings.layerColor[peripheral.id],peripheral.color);
     assert.equal(settings.layerOpacity[peripheral.id],.32);
   }

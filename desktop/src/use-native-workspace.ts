@@ -78,11 +78,14 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
     const {available,cortex,visible}=initialNativeLayers(b.document,s,independent);
     const structures=(!independent&&b.document.series.length>1)||cortex.length>0||hasAngiographicArteries(available,modality,s);
     const review=b.document.vascular_review;
+    const fieldEdgeReview=review?.field_edge_compartment_review?.disjoint_union_matches_selected===true;
+    const skullExteriorReview=review?.skull_exterior_compartment_review?.disjoint_union_matches_selected===true;
     const separatedReview=nativeVascularReview(b)&&b.readOnlyStudy&&s===b.document.reference_series&&
-      (review?.posterior_compartment_review?.disjoint_union_matches_selected===true||
-        review?.field_edge_compartment_review?.disjoint_union_matches_selected===true);
+      (review?.posterior_compartment_review?.disjoint_union_matches_selected===true||fieldEdgeReview);
     const mode=separatedReview?'vascular':structures?'segmentation':defaultAnatomyPresentation(modality);
-    const settings=anatomyPresentation(nativeDefaults(),available,mode,modality,s);
+    const appearanceLayers=separatedReview&&skullExteriorReview?presentationLayers(b.document,s):available;
+    const settings=anatomyPresentation(nativeDefaults(),appearanceLayers,mode,modality,s);
+    if(separatedReview&&fieldEdgeReview)settings.vesselShading='large';
     return {cursor:s===b.document.reference_series?b.document.display?.cursor_ras_mm??null:null,
       settings:nativeVascularReview(b)?{...settings,smoothSurfaces:false}:settings,visible};
   };

@@ -73,7 +73,7 @@ export function anatomyPresentation(settings:ViewerWorkspaceSettings,layers:Bind
       layerOpacity[layer.id]=displayKind==='brain'?.16:.08;
     }else if(['vessels','vessel','artery','vein','sinus'].includes(layer.kind)){
       const source=layer.provenance as {kind?:string;publisher_class_id?:number;method?:string;evidence_use?:string}|null;
-      const reviewedPeripheral=['vesselfm-review-posterior-superficial','vesselfm-review-field-edge'].includes(layer.id)&&
+      const reviewedPeripheral=['vesselfm-review-posterior-superficial','vesselfm-review-field-edge','vesselfm-review-skull-exterior'].includes(layer.id)&&
         source?.evidence_use==='context_only'&&
         source.method==='Review display group of complete native TOF components';
       const namedArtery=layer.kind==='artery'&&source?.kind==='supplied_annotation'&&

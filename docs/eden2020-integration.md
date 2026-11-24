@@ -110,8 +110,15 @@ superficial tissue labels remain research estimates.
 For reviewed field-edge signal, pass `--compartment field-edge` and a native
 field-edge screen that binds the acquired TOF, selected mask and candidate
 component anchors. Inspect the native planes before approving anchors. The
-field-edge estimate opens muted and selectable, with the intact union
-available for comparison.
+field-edge estimate opens muted and selectable, with wider vessels emphasized.
+Use **Vessel shading** to review fine detail or select the intact union to
+compare the full estimate.
+
+A field-edge review can be extended with `--compartment skull-exterior` and
+a source-bound MRI skull screen of whole exterior components. The startup view
+focuses on the remaining network. Both exterior layers and the original union
+are selectable. Open or ambiguous skull sections retain their original vessel
+evidence.
 
 The PTNT_4509 teaching rehearsal preserves the acquired TOF lattice and
 source-bound vessel triangles. The exposure banks, vessel attachments and

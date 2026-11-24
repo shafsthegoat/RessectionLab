@@ -33,6 +33,19 @@ COMPARTMENTS = {
         "receipt": "field_edge_compartment_review",
         "screen": "native_screen",
         "scope": "Read-only research display using acquired TOF field-edge evidence",
+        "screen_version": "native-tof-field-edge-v1",
+    },
+    "skull-exterior": {
+        "name": "skull-exterior component review",
+        "main_id": "vesselfm-review-skull-priority",
+        "main_label": "Main TOF network · skull priority",
+        "source_id": MAIN,
+        "id": "vesselfm-review-skull-exterior",
+        "label": "Outside-skull estimate · structure uncertain",
+        "receipt": "skull_exterior_compartment_review",
+        "screen": "structural_screen",
+        "scope": "Read-only research display using acquired TOF and estimated skull boundaries",
+        "screen_version": "native-tof-mri-skull-exterior-v1",
     },
 }
 
@@ -41,8 +54,8 @@ def stage(root, selected_path, screen_path, anchors, *, compartment="posterior")
     group = COMPARTMENTS[compartment]
     screen_sha = sha256_file(screen_path)
     evidence = json.loads(screen_path.read_text())
-    if compartment == "field-edge" and evidence.get("version") != "native-tof-field-edge-v1":
-        raise ValueError("The field-edge group requires a source-reviewed native screen")
+    if group.get("screen_version") and evidence.get("version") != group["screen_version"]:
+        raise ValueError(f"The {compartment} group requires its source-reviewed screen")
     selected_sha = sha256_file(selected_path)
     if evidence["study_sha256"] != selected_sha:
         raise ValueError("The structural screen belongs to another TOF review")
@@ -57,7 +70,9 @@ def stage(root, selected_path, screen_path, anchors, *, compartment="posterior")
             raise ValueError("The screened structural source manifest has changed")
     study = open_anatomy_manifest(selected_path)
     canonical = PatientImagingCollection(canonical_path.parent)
-    layer = study.layer(CANDIDATE)
+    source_id = group.get("source_id", CANDIDATE)
+    main_id = group.get("main_id", MAIN)
+    layer = study.layer(source_id)
     scan = study.series(layer["source_series"])
     baseline = vascular_cleanup_source(study, layer)
     if (study.document["exposure"] != "private" or scan["modality"] != "TOF"
@@ -65,6 +80,9 @@ def stage(root, selected_path, screen_path, anchors, *, compartment="posterior")
             or scan["original"]["sha256"] != evidence["scan_sha256"]
             or layer["data"] != evidence["selected_native_grid"] or baseline is None):
         raise ValueError("Review geometry or patient identity differs from structural evidence")
+    if compartment == "skull-exterior" and not study.document["vascular_review"].get(
+            "field_edge_compartment_review", {}).get("disjoint_union_matches_selected"):
+        raise ValueError("Skull-exterior review extends a source-bound field-edge case")
     candidates = {row["source_anchor_cell"]: row for row in evidence["major_components"]}
     if missing := set(anchors) - candidates.keys():
         raise ValueError(f"Reviewed anchors were not measured on the structural screen: {sorted(missing)}")
@@ -77,7 +95,7 @@ def stage(root, selected_path, screen_path, anchors, *, compartment="posterior")
     document.update(clinical_validation=False, training_admitted=False, simulation_admission=False)
     trial = PatientImagingCollection(selected_path.parent, document)
     for name, title, color, mask in (
-        (MAIN, group["main_label"], layer["color"], main_mask),
+        (main_id, group["main_label"], layer["color"], main_mask),
         (group["id"], group["label"], "#8d877a", compartment_mask),
     ):
         result = deepcopy(layer)
@@ -106,7 +124,7 @@ def stage(root, selected_path, screen_path, anchors, *, compartment="posterior")
         "disjoint_union_matches_selected": True,
         "simulation_admission": False,
     }
-    trial.document["display"]["initial_layers"] = [MAIN, group["id"]]
+    trial.document["display"]["initial_layers"] = [main_id] if compartment == "skull-exterior" else [main_id, group["id"]]
     trial.document["snapshot_id"] = trial.identity()
     path = selected_path.with_name(f"vascular-review.{trial.identity()[:12]}.anatomy.json")
     if (sha256_file(selected_path) != selected_sha or sha256_file(canonical_path) != canonical_sha
