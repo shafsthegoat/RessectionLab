@@ -20,8 +20,15 @@ _EVIDENCE_ORDER = {
 }
 
 
-def _gap_sections(signal, mask, source_affine, candidate, *, check):
-    """Sample two longitudinal planes and a transverse plane on one TOF window."""
+def _review_window(signal):
+    values = signal.ravel(order="K")[::max(1, signal.size // 96_000)]
+    samples = values[np.isfinite(values) & (values != 0)]
+    low, high = map(float, np.percentile(samples, [1, 99.5])) if samples.size else (0., 1.)
+    return (low, high) if high > low else (min(0., low), max(1., high))
+
+
+def _gap_sections(signal, mask, source_affine, candidate, window, *, check):
+    """Sample two longitudinal planes and a transverse plane on the scan window."""
     points = np.asarray(candidate["points_ras_mm"])
     clear = ~np.asarray(candidate["center_predicted_vessel"])
     center = points[clear].mean(axis=0)
@@ -35,7 +42,8 @@ def _gap_sections(signal, mask, source_affine, candidate, *, check):
     offsets = np.arange(-int(np.ceil(4 / step)), int(np.ceil(4 / step)) + 1) * step
     x, y = np.meshgrid(offsets, offsets)
     left, right = (points[clear][[0, -1]] - center) @ tangent
-    path = (x >= left - step / 2) & (x <= right + step / 2) & (np.abs(y) < step / 2)
+    dashes = (np.rint(x / step).astype(int) % 2) == 0
+    path = (x >= left - step / 2) & (x <= right + step / 2) & (np.abs(y) < step / 2) & dashes
     sections = []
     for title, horizontal, vertical, marking in (
         ("Along gap · first plane", tangent, across, path),
@@ -52,8 +60,7 @@ def _gap_sections(signal, mask, source_affine, candidate, *, check):
         overlay = np.where(covered, np.where(marking & ~estimate, 2, outline), 0).astype(np.uint8)
         sections.append((title, gray, overlay))
 
-    available = np.concatenate([gray[np.isfinite(gray)] for _, gray, _ in sections])
-    low, high = map(float, np.percentile(available, [1, 99])) if available.size else (0., 1.)
+    low, high = window
     scale = max(high - low, np.finfo(np.float32).eps * max(abs(high), 1.0))
     return {"window": [low, high], "sections": [
         {"title": title, "shape": list(gray.shape), "spacingMm": [step, step],
@@ -127,8 +134,8 @@ def tof_gap_review(collection, layer_id, series_id, *, finding_id=None, review_i
         coverage = {**gaps["coverage"], "candidatesOutsideSelectedLayer": len(hypotheses) - len(candidates),
                     "findingsTruncated": len(candidates) > _MAX_FINDINGS}
         candidates = {candidate["id"]: candidate for candidate in candidates[:_MAX_FINDINGS]}
-        cache = collection._tof_gap_review_cache = (expected_id, coverage, candidates)
-    _, coverage, candidates = cache
+        cache = collection._tof_gap_review_cache = (expected_id, coverage, candidates, _review_window(signal))
+    _, coverage, candidates, window = cache
 
     findings = [{"id": item["id"], "evidence": item["state"], "distanceMm": item["geometry"]["distance_mm"],
                  "endpointCells": item["source_cell_ids"], "branchIds": item["branch_ids"],
@@ -152,5 +159,5 @@ def tof_gap_review(collection, layer_id, series_id, *, finding_id=None, review_i
             displayed = frame
         displayed_center = world(displayed @ np.linalg.inv(frame), center)
         result["preview"] = {"findingId": candidate["id"], "centerRasMm": displayed_center.tolist(),
-                             **_gap_sections(signal, mask, frame, candidate, check=check)}
+                             **_gap_sections(signal, mask, frame, candidate, window, check=check)}
     return result

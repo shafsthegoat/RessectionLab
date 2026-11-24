@@ -69,6 +69,7 @@
 .native-evidence-detail dd{margin:0;color:#deeaef;overflow-wrap:anywhere}
 
 .native-attached-sections{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:8px}
+.native-gap-sections{grid-template-columns:repeat(2,minmax(0,1fr))}
 .native-attached-sections figure{margin:0;min-width:0}
 .native-attached-sections canvas{display:block;width:100%;height:auto;background:#0b1217;image-rendering:pixelated}
 .native-attached-sections figcaption{font-size:10px;color:#aebfc8;margin:4px 0}

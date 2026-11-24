@@ -45,9 +45,10 @@ properties are independent evidence.
 
 In **Anatomy**, select a vessel layer on its acquired TOF and open **TOF gap
 review**. **Find nearby branch endpoints** checks short gaps between compatible
-source-bound paths. The same local signal window applies to two sections along
-the proposed path and one across its midpoint. The amber marks show the sampled
-path, while cyan shows the source estimate contour. Use **Show gap overlay** to
+source-bound paths. One TOF signal window applies across all findings and
+sections. The view shows two sections along the proposed path and one across
+its midpoint. Amber marks the sampled path and cyan outlines the source
+estimate. Use **Show gap overlay** to
 inspect the acquired signal by itself or **Center linked slices** to check the
 original planes. Weak-signal candidates and partial graph coverage remain
 visible. The reconstruction and quantitative anatomy continue to use the

@@ -50,8 +50,8 @@ export function NativeVesselGapReview({workspace,layerId}:{workspace:NativeWorks
         <label><input type="checkbox" checked={showOverlay} onChange={event=>setShowOverlay(event.target.checked)}/> Show gap overlay</label>
         <button disabled={workspace.busy} onClick={()=>workspace.setCursor(preview.centerRasMm)}>Center linked slices</button>
       </div>
-      {showOverlay&&<p><span className="attached-source-label">Cyan estimate contour</span> · <span className="attached-finding-label">amber proposed path</span></p>}
-      <div className="native-attached-sections">{preview.sections.map(plane=><NativeReviewSection key={plane.title}
+      <p><span className="attached-source-label">Cyan estimate contour</span> · <span className="attached-finding-label">amber path samples</span></p>
+      <div className="native-attached-sections native-gap-sections">{preview.sections.map(plane=><NativeReviewSection key={plane.title}
         plane={plane} label={plane.title} showOverlay={showOverlay}/>)}</div>
     </>}
   </details>;

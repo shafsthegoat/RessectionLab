@@ -129,6 +129,7 @@ def test_native_gap_inspector_pairs_acquired_planes_with_source_cells_without_an
     assert len(result["preview"]["sections"]) == 3
     weak = call("anatomyVesselGapReview", {**args, "reviewId": result["reviewId"], "findingId": negative["id"]})
     assert weak["preview"]["findingId"] == negative["id"]
+    assert weak["preview"]["window"] == result["preview"]["window"]
     assert weak["reviewId"] == result["reviewId"]
     assert weak["predictedVoxelsAdded"] == 0
     assert {file: file_hash(file) for file in study.root.rglob("*") if file.is_file()} == contents
