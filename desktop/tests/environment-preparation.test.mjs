@@ -48,7 +48,8 @@ function fixture(pairs){
   const rows=[['brain','brain','ready'],['tumor','synthetic-lesion','ready'],['bone','skull','ready'],
     ['vessels','published-arteries','ready'],['vessels','cta-score','ready'],['vessels','tof-score','estimated_alignment']];
   const calls=[];
-  const props={binding:{collectionId:'study',document:{snapshot_id:'exact-revision',layers:rows.map(([,id])=>({id,label:id}))}},
+  const props={binding:{collectionId:'study',document:{snapshot_id:'exact-revision',series:[{id:'ct',modality:'CTA'},{id:'tof',modality:'MRA'}],
+    layers:rows.map(([,id])=>({id,label:id,source_series:id==='tof-score'?'tof':'ct'}))}},
     options:{referenceIssue:null,nativeWall:{referenceIssue:null,pairs},layers:rows.map(([role,layerId,status])=>({role,layerId,status}))},
     patientCursor:null,busy:false,onAnatomy(){},onPrepare:async (args,isCurrent)=>calls.push({args,isCurrent})};
   return {props,calls};
@@ -59,6 +60,7 @@ test('a unique reviewed pair prepares directly and leaves the separate standard 
   let tree=ui.render(props);
   assert.equal(control(tree,'Rehearsal environment').props.value,'native-wall');
   assert.equal(control(tree,'Environment tumor layer'),undefined);
+  assert(find(tree,node=>node.type==='dd'&&node.props.children==='tof-score · MRA'));
   const prepare=button(tree,'Prepare reviewed local wall');
   assert.equal(prepare.props.disabled,false);
   prepare.props.onClick();

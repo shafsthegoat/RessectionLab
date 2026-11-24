@@ -370,7 +370,7 @@
   gap: 1px;
   border-block: 1px solid #2c332e;
 }
-.poc-workbench .environment-preparation .environment-mode {
+.poc-workbench .environment-preparation .environment-layer-row.environment-mode {
   grid-template-columns: 72px minmax(0, 1fr);
   align-items: center;
 }

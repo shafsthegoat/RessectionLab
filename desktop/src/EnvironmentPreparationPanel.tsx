@@ -37,6 +37,11 @@ export function EnvironmentPreparationPanel({binding,approach,routeName,measurem
   const unavailable=options?.layers.filter(layer=>layer.status==='unavailable')??[];
   const unreviewed=selected.filter(layer=>layer.status==='estimated_alignment');
   const label=(id:string)=>binding.document.layers.find(layer=>layer.id===id)?.label??id;
+  const sourceLabel=(id:string)=>{
+    const sourceId=binding.document.layers.find(layer=>layer.id===id)?.source_series;
+    const series=binding.document.series.find(scan=>scan.id===sourceId);
+    return series?`${label(id)} · ${series.label??series.modality}`:label(id);
+  };
   const canPrepare=!!options&&!options.referenceIssue&&selected.length>0&&(!approach||selected.some(layer=>layer.role==='tumor'))&&
     selected.every(layer=>layer.status==='ready'||layer.status==='estimated_alignment'&&allow);
   const missing=roles.filter(role=>!selected.some(layer=>layer.role===role));
@@ -76,13 +81,13 @@ export function EnvironmentPreparationPanel({binding,approach,routeName,measurem
         <span className="environment-layer-role">Source pair</span>
         <select aria-label="Native wall source pair" value={pair?pairId(pair):''} onChange={e=>{setChosenPair(e.target.value);setError(null);}}>
           <option value="">Choose a pair</option>{pairs.map(candidate=><option key={pairId(candidate)} value={pairId(candidate)}>
-            {label(candidate.brainLayerId)} + {label(candidate.vesselLayerId)}{candidate.scope==='reviewed-crop'?' · reviewed field':''}
+            {sourceLabel(candidate.brainLayerId)} + {sourceLabel(candidate.vesselLayerId)}{candidate.scope==='reviewed-crop'?' · reviewed field':''}
           </option>)}
         </select>
       </label>}
       {pair&&<><dl className="environment-layer-list environment-native-pair">
-        <div className="environment-layer-row"><dt className="environment-layer-role">Brain</dt><dd>{label(pair.brainLayerId)}</dd></div>
-        <div className="environment-layer-row"><dt className="environment-layer-role">Vessels</dt><dd>{label(pair.vesselLayerId)}</dd></div>
+        <div className="environment-layer-row"><dt className="environment-layer-role">Brain</dt><dd>{sourceLabel(pair.brainLayerId)}</dd></div>
+        <div className="environment-layer-row"><dt className="environment-layer-role">Vessels</dt><dd>{sourceLabel(pair.vesselLayerId)}</dd></div>
       </dl>
       <p className="surgical-note">{wallCenter?`${reviewed?'Reviewed field centre':'Patient cursor'} [${wallCenter.map(n=>n.toFixed(1)).join(', ')}] RAS mm.`:
         'Place the patient cursor near a vessel in Anatomy.'}</p></>}

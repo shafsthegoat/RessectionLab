@@ -1714,6 +1714,18 @@ export default function App() {
         {alignmentUncertain&&<p className="poc-caution" role="status">Derived MRA alignment is reviewed for overlays with unresolved quantitative accuracy. Precise navigation and clinical vascular clearance are unsupported; skull CT is unavailable.</p>}
         {workbenchTab==='rehearsal'?<>
           {native.binding ? <>
+            {!showOperative&&<EnvironmentPreparationPanel key={native.binding.collectionId+"/"+native.binding.document.snapshot_id+"/"+!!native.planning.rehearsalOptions+"/"+routeKey}
+              approach={!operativeIssue&&nativeRoute?.targetLayerId?{approachId:nativeRoute.id,parameterHash:nativeRoute.parameterHash,measurementHash:nativeRoute.measurementHash,
+                targetLayerId:nativeRoute.targetLayerId,snapshotId:nativeRoute.sourceSnapshotId}:undefined}
+              routeName={nativeRoute?.name} measurements={nativeRoute?.measurements}
+              binding={native.binding} options={native.planning.rehearsalOptions} busy={busy||!!native.draft||planningEditsPending}
+              sourceEditing={!!native.draft||planningEditsPending}
+              patientCursor={native.patientFrameReady?native.state.cursor:null} onAnatomy={()=>setWorkbenchTab('data')} onPrepare={async (options,sourceIsCurrent)=>{
+                if(!api?.prepareSurgicalEnvironment)throw Error('Restart the app to load environment preparation.');
+                const generation=++caseGeneration.current;
+                const prepared=await api.prepareSurgicalEnvironment(options);
+                if(prepared&&await installCase(prepared,api,generation,undefined,sourceIsCurrent))setWorkbenchTab('rehearsal');
+              }}/>}
             <section className="operative-inspector">
               <h2>Selected approach</h2>
               {nativeRoute&&<strong>{nativeRoute.name}</strong>}
@@ -1747,18 +1759,7 @@ export default function App() {
                 native.planning.approaches.map(route=>[route.id,route.measurementHash,route.assessmentStatus])])}
               compare={api.compareBoundSurgicalReplays} disabled={busy||!!native.draft||planningEditsPending||native.planning.pending}
               request={{collectionId:currentSelection.collectionId,snapshotId:currentSelection.snapshotId,targetLayerId:currentSelection.targetLayerId}}/>}
-            {!showOperative&&<EnvironmentPreparationPanel key={native.binding.collectionId+"/"+native.binding.document.snapshot_id+"/"+!!native.planning.rehearsalOptions+"/"+routeKey}
-            approach={!operativeIssue&&nativeRoute?.targetLayerId?{approachId:nativeRoute.id,parameterHash:nativeRoute.parameterHash,measurementHash:nativeRoute.measurementHash,
-              targetLayerId:nativeRoute.targetLayerId,snapshotId:nativeRoute.sourceSnapshotId}:undefined}
-            routeName={nativeRoute?.name} measurements={nativeRoute?.measurements}
-            binding={native.binding} options={native.planning.rehearsalOptions} busy={busy||!!native.draft||planningEditsPending}
-            sourceEditing={!!native.draft||planningEditsPending}
-            patientCursor={native.patientFrameReady?native.state.cursor:null} onAnatomy={()=>setWorkbenchTab('data')} onPrepare={async (options,sourceIsCurrent)=>{
-            if(!api?.prepareSurgicalEnvironment)throw Error('Restart the app to load environment preparation.');
-            const generation=++caseGeneration.current;
-            const prepared=await api.prepareSurgicalEnvironment(options);
-            if(prepared&&await installCase(prepared,api,generation,undefined,sourceIsCurrent))setWorkbenchTab('rehearsal');
-          }}/>}</> : <>
+          </> : <>
             {showEngineRecording&&replayReceipt&&<section className="operative-inspector engine-recording-info" aria-label="Source-verified recorded episode">
               <h2>{viewingStudyRecording?'Study-linked recording':'Saved procedural recording'}</h2>
               <strong>{replayReceipt.recordedApproach?.name??'Recorded engine episode'}</strong>
