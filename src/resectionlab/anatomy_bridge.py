@@ -27,6 +27,7 @@ from .anatomy_display import (
 VASCULAR_REVIEW_MANIFEST = "vascular-review.anatomy.json"
 VASCULAR_REVIEW_REVISION = re.compile(r"vascular-review\.[0-9a-f]{12}\.anatomy\.json")
 VASCULAR_REVIEW_READS = {
+    "anatomyLocalAlignment",
     "anatomyView", "anatomySample", "anatomyGraph", "anatomySection", "anatomyComponents",
     "anatomyAttachedVesselReview",
 }
@@ -70,7 +71,7 @@ def _retain(session, result):
 
 def dispatch(session, operation, args, request, progress):
     # A source read does not change the cached view or its transfer descriptors.
-    if operation not in {"anatomyView", "anatomySample", "anatomyAttachedVesselReview"}:
+    if operation not in {"anatomyView", "anatomySample", "anatomyAttachedVesselReview", "anatomyLocalAlignment"}:
         session.anatomy_view_cache = None
     if not hasattr(session, "anatomy_collections"):
         session.anatomy_packages = {}
@@ -136,6 +137,14 @@ def dispatch(session, operation, args, request, progress):
     if key in session.anatomy_removal and session.anatomy_removal[key][0] != current_id:
         session.anatomy_removal.pop(key)
     request.check()
+    if operation == "anatomyLocalAlignment":
+        from .anatomy_local_alignment import local_alignment_evidence
+
+        progress(.1, "Checking coverage and image correspondence in the local field")
+        result = local_alignment_evidence(c, args.get("seriesId"), args.get("center"), check=request.check)
+        if json.loads(manifest.read_text()).get("snapshot_id") != current_id:
+            raise ValueError("Anatomy changed during the local alignment screen")
+        return result
     if operation == "anatomyInspectIntake":
         from .anatomy_intake import inspect_intake
         return inspect_intake(args["kind"], args["paths"], check=request.check)

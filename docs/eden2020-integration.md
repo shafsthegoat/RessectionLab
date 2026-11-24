@@ -75,6 +75,12 @@ range. VesselFM score summaries are uncalibrated. Thin joins can fall
 outside this screen, and sections near the acquisition faces have limited
 context. The operation runs only on a source-bound, unedited TOF estimate.
 
+A separate connected exterior-air trial yielded one small candidate for
+exact geometry comparison. The strictest local deletion preserved the
+audited voxel topology and the measurable nearby source section, while
+changing the indexed score surface's Euler characteristic. The source
+review and matched silhouettes support retaining the region for inspection.
+
 Run the review and package steps from the primary checkout.
 Replace the repeated subject selection with `--cohort` to run or resume the
 component, branch and attached reviews for the whole restricted source inventory.
@@ -201,6 +207,24 @@ head studies currently abstain from this local cross-acquisition mechanics
 path. Estimated alignment remains available through **Prepare standard
 environment** with its explicit research choice. The independent TOF view
 continues to support native reconstruction and source inspection.
+
+In **Scans → Alignment & registration**, choose the moving scan and a **Review
+position**, then select **Check local alignment evidence**. The 24 mm RAS
+field reports overlap of the acquired grids. Twenty-seven image comparisons
+report edge agreement and search shifts while allowing contrast inversion. Competing matches,
+peaks at the edge of the search, and uncovered regions remain visible. Open
+**Local measurements** and load paired source slices at any probe for manual
+landmark review. The screen retains the current transform and review status.
+
+Five prospective fields used the frozen graph anchors for PTNT_4509,
+PTNT_0952, PTNT_9937, and PTNT_5387 and the earlier PTNT_4509 teaching
+junction. The entire sampled field was within both acquisitions for each
+comparison. Only 9–13 of 27 probes per field had a distinct peak. The
+PTNT_4509 teaching junction had a 0.50 mm median shift across its 13 distinct
+peaks, with nine peaks at the search limit and five competing matches. These
+shifts describe image-texture correspondence under the current transform.
+Landmark residuals throughout the intended domain and positive mechanical
+tissue evidence remain unestablished. See the [private storage ledger](local-storage-ledger.md).
 
 The TopCoW-014 CTA study qualified in limited research mode using its existing
 CTA-derived brain estimate and the stock vesselFM mask and scores on the same

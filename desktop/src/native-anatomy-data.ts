@@ -37,6 +37,13 @@ export type AcquisitionContribution={seriesId:string;label:string;modality:strin
   qc:string|null;warnings:string[];disposition:string;reason:string;layerCount:number;emptyLayers:string[];uses:string[];modelInputs:string[];suppliedTracts:string[];asset:boolean};
 export type RegistrationSection={pixels:ArrayDescriptor;size:number;frame:string;movingStatus:string|null;
   center:Point3;u:Point3;v:Point3;spacingMm:number;sourceFromSection?:number[][];voxelFromSection?:number[][];sourceShape?:number[]};
+export interface LocalAlignmentEvidence {
+  snapshotId:string;centerRasMm:Point3;transformStatus:string;fieldWidthMm:number;
+  sampleCount:number;commonCoverageCount:number;movingCoverageCount:number;referenceCoverageCount:number;
+  shiftLimitMm:number;shiftStepMm:number;
+  patches:Array<{centerRasMm:Point3;status:'insufficient_source_coverage'|'weak_image_structure'|'search_boundary'|'competing_matches'|'distinguishable_peak';
+    movingSamplingShiftMm?:Point3;candidateScore?:number;bestScore?:number}>;
+}
 export type NativeVesselBranch={branch_id:string;closed:boolean;length_mm:number;source_cells:number[];
   start_ras_mm:Point3;end_ras_mm:Point3;midpoint_ras_mm:Point3;preview_ras_mm:Point3[];
   unsupported_diagonal_edges:number;connectivity:string};
@@ -79,6 +86,7 @@ export interface NativeAnatomyApi {
   anatomySaveView(args:Args):Promise<{saved:boolean}>;
   anatomyComponents(args:Args):Promise<ComponentReview>;
   anatomyAttachedVesselReview(args:Args):Promise<AttachedVesselReview>;
+  anatomyLocalAlignment(args:Args):Promise<LocalAlignmentEvidence>;
   anatomyGraph(args:Args):Promise<NativeVesselGraph>;
   anatomyCreate(args:Args):Promise<Binding|null>;
   anatomyReconstruct(args:Args):Promise<{document:Document;result:unknown}>;

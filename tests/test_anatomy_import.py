@@ -8,6 +8,7 @@ import numpy as np
 import pydicom
 import pytest
 import SimpleITK as sitk
+from scipy import ndimage as ndi
 
 from resectionlab.anatomy_import import (
     imaging_modality, import_anatomy_derivative, import_dicom, import_nifti_series,
@@ -31,6 +32,44 @@ def collection(tmp_path):
     import_nifti_series(c, source, series_id="t1", modality="T1")
     c.save("fresh source")
     return c
+
+
+def test_local_alignment_evidence_is_source_bound_and_keeps_review_pending(tmp_path):
+    shape = (57, 57, 57)
+    values = ndi.gaussian_filter(np.random.default_rng(31).normal(size=shape), 1.6).astype(np.float32)
+    moving = -ndi.shift(values, (1., -.5, .5), order=1, prefilter=False)
+    c = PatientImagingCollection.create(tmp_path / 'field-study', 'patient-a')
+    for sid, modality, image in [('t1', 'T1', values), ('tof', 'TOF', moving)]:
+        import_nifti_series(c, volume(tmp_path / f'{sid}.nii.gz', image), series_id=sid, modality=modality)
+    c.set_registration('tof', np.eye(4), status='unreviewed', method='generated comparison')
+    c.save('Paired generated source control')
+    manifest = c.root / 'patient-anatomy.json'
+    original_manifest = manifest.read_bytes()
+    session = BridgeSession(tmp_path / 'transfers')
+
+    def call(operation, args):
+        return session.execute(operation, args, _Request(operation), lambda *_: None)
+
+    try:
+        opened = call('anatomyOpen', {'path': str(manifest)})
+        binding = {'collectionId': opened['collectionId'], 'snapshotId': c.identity(), 'seriesId': 'tof'}
+        central = call('anatomyLocalAlignment', {**binding, 'center': [28., 28., 28.]})
+        assert central['commonCoverageCount'] == central['sampleCount'] == 25**3
+        assert central['transformStatus'] == 'unreviewed'
+        assert central['movingImageSha256'] == c.series('tof')['original']['sha256']
+        middle = next(p for p in central['patches'] if p['centerRasMm'] == central['centerRasMm'])
+        assert middle['status'] == 'distinguishable_peak'
+        np.testing.assert_allclose(middle['movingSamplingShiftMm'], [1., -.5, .5], atol=.5)
+        assert middle['bestScore'] > middle['candidateScore']
+
+        edge = call('anatomyLocalAlignment', {**binding, 'center': [2., 28., 28.]})
+        assert edge['commonCoverageCount'] == 15 * 25**2
+        assert any(p['status'] == 'insufficient_source_coverage' for p in edge['patches'])
+        assert manifest.read_bytes() == original_manifest
+        with pytest.raises(ValueError, match='Anatomy changed'):
+            call('anatomyLocalAlignment', {**binding, 'snapshotId': 'stale', 'center': [2., 28., 28.]})
+    finally:
+        session.close()
 
 
 def test_semantic_sequence_required_for_nifti_and_dicom_family():
