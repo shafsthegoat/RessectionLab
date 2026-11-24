@@ -250,6 +250,13 @@ diagnostic fit missed a held-out point by 2.37 mm. The provisional TOF points
 also fell short of the 3D spread requirement. The review retains the raw
 landmark and alternative crops with the unchanged transform.
 
+PTNT_7195 had positive estimated tissue support near 71 of 77 sites on the
+original native trace. An alternative field preserved six measurable native
+ventricular boundaries across three directions. The three closest edges
+belonged to the same lateral wall, and a deliberate 1.5 mm superior shift
+still matched five edges within 1 mm. The local rehearsal review remains
+withheld. [Private source evidence index](local-storage-ledger.md)
+
 The Scans review panel also supports a review for one native-wall field. Select
 the reference brain estimate, moving angiography scores, and review position.
 Pair at least four spatially distributed landmarks. The review checks nearby
