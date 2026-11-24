@@ -54,6 +54,11 @@ The cohort continuation at
 links the native exterior screens, matched desktop views and the certified
 PTNT_4509 free-span contact and recoil rehearsal.
 
+The next vascular continuation at
+`qc/eden2020-glioma-5714812/vascular-reconstruction-continuity-20261123-v6/README.md`
+links the cursor-centered vessel depth views, native TOF challenger runs and the
+same-branch support-release and contact walkthrough.
+
 Paths below are relative to the RessectionLab root. This compact ledger covers
 that area, not unrelated personal files elsewhere on the HDD. Presence does not
 establish scientific readiness or a completed build; consult each run's receipts.
