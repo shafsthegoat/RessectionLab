@@ -126,6 +126,16 @@ At an explicit cut, the displayed 3D source-image plane writes its actual depth 
 
 In **Vessels**, choose **Clip → Vessel slab at cursor** to inspect a narrower depth along the selected anatomical plane. Its thickness is in millimeters and it follows the linked cursor while retaining the full transverse field. The native surface and source panes remain available. **Exit slab** restores the prior 3D cut.
 
+On a native TOF or MRA with a source-bound vascular layer, **Vessels** balances
+the automatic full-depth backdrop using the acquired signal. It estimates
+brightness along 243 sampled rays in physical millimeters and blends the volume using
+a density bounded to 0.008–0.035. The estimate is fixed per selected source
+and transfer, so it stays steady while orbiting. **Balance TOF context** in
+Appearance restores the preset after a manual density adjustment. Scan,
+physical cuts and slabs, isolation, and authored transfers use their stored
+volume settings. Choosing Vessels retains the selected source or conditioned
+surface.
+
 When Vessels has visible, admitted MR cortex and a primary vascular layer, it
 uses the nearest cortical surface for context and samples that surface from
 its own structural acquisition. The 3D volume starts disabled. **Show scan

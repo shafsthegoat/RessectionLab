@@ -103,6 +103,12 @@ test('mixed MR Vessels starts with visible source cortex and vessels, with the n
   assert.equal(vessels.layerOpacity.network,1);
   assert.ok(vessels.layerOpacity.skull<vessels.layerOpacity.cortex);
   assert.notEqual(vessels.layerColor.skull,vessels.layerColor['ct-skull']);
+  assert.equal(vessels.volumeRendering.balanceTofContext,undefined);
+  const independentTof=anatomyPresentation({},[network],'vascular','TOF','tof',{visible,series});
+  assert.equal(independentTof.volumeRendering.balanceTofContext,true);
+  assert.equal(independentTof.layerColor.network,'#c16d72');
+  assert.equal(anatomyPresentation({smoothSurfaces:false},[network],'vascular','TOF','tof').smoothSurfaces,false);
+  assert.equal(anatomyPresentation({},[network],'scan','TOF','tof').volumeRendering.balanceTofContext,undefined);
   assert.ok(vessels.layerOpacity.lesion>0&&vessels.layerOpacity.lesion<1);
   assert.equal(present('segmentation').layerOpacity.lesion,1);
   for(const view of [present('scan'),present('segmentation'),present('vascular','CTA'),
@@ -261,9 +267,12 @@ test('saved context and physical slice framing reopen detached and reject malfor
   for(const show of [true,false]){
     const savedCt={volumeRendering:{preset:'ct-angiography',showCtExteriorSignal:show}};
     assert.deepEqual(checkedViewerSettings(source,savedCt),savedCt);
+    const savedTof={presentation:'vascular',volumeRendering:{preset:'auto',balanceTofContext:show}};
+    assert.deepEqual(checkedViewerSettings(source,savedTof),savedTof);
   }
   for(const invalid of ['false',0,null]){
     assert.throws(()=>checkedViewerSettings(source,{volumeRendering:{showCtExteriorSignal:invalid}}));
+    assert.throws(()=>checkedViewerSettings(source,{volumeRendering:{balanceTofContext:invalid}}));
   }
   for(const fit of ['image','anatomy'])for(const zoom of [.5,1,4])for(const contextStyle of ['shell','uniform']){
     const saved={sliceFraming:{fit,zoom},contextStyle};

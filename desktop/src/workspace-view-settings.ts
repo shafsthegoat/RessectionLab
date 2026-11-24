@@ -30,14 +30,14 @@ export function checkedViewerSettings(source:CasePayload,input:unknown):ViewerWo
   if(value.skullMode!==undefined&&!['exterior','transparent','cutaway'].includes(value.skullMode))return fail();
   if(value.volumeRendering!==undefined){
     const volume=value.volumeRendering as Record<string,unknown>;
-    if(!volume||typeof volume!=='object'||Array.isArray(volume)||Object.keys(volume).some(k=>!['enabled','preset','density','window','points','shadows','isolateLabels','showCtExteriorSignal'].includes(k))||
+    if(!volume||typeof volume!=='object'||Array.isArray(volume)||Object.keys(volume).some(k=>!['enabled','preset','density','window','points','shadows','isolateLabels','showCtExteriorSignal','balanceTofContext'].includes(k))||
       ('enabled'in volume&&typeof volume.enabled!=='boolean')||
       ('preset'in volume&&!['auto','ct-bone','ct-tissue','ct-angiography','mri'].includes(volume.preset as string))||
       ('density'in volume&&(typeof volume.density!=='number'||!Number.isFinite(volume.density)||volume.density<0||volume.density>2)))return fail();
   }
   const volume=value.volumeRendering;
   if(volume){
-    if((['shadows','isolateLabels','showCtExteriorSignal'] as const).some(k=>k in volume&&typeof volume[k]!=='boolean'))return fail();
+    if((['shadows','isolateLabels','showCtExteriorSignal','balanceTofContext'] as const).some(k=>k in volume&&typeof volume[k]!=='boolean'))return fail();
     if(volume.window&&(!Array.isArray(volume.window)||volume.window.length!==2||!volume.window.every(Number.isFinite)||volume.window[1]<=volume.window[0]))return fail();
     if(volume.points&&(!Array.isArray(volume.points)||volume.points.length<2||volume.points.length>32||volume.points.some((p,i)=>!Array.isArray(p)||p.length!==5||p.some(v=>!Number.isFinite(v)||v<0||v>1)||(i>0&&p[0]<=volume.points![i-1][0]))))return fail();
   }

@@ -1,11 +1,33 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {DataUtils} from 'three';
-import {isCtModality,volumeSettings,volumeTransfer,volumeRayInterval,opticalAlpha,mriBoundaryExtinction} from './volumeTransfer.ts';
-import {buildDirectionalOpticalDepth,buildOpticalDensity,CT_EXTERIOR_AIR_HU,CT_EXTERIOR_TEXTURE_LIMIT_BYTES,ctExteriorDisplaySignal,OPTICAL_KEY_LIGHTS,volumeOpticalAtlas} from './volumeOpticalDensity.ts';
+import {canBalanceTofContext,isCtModality,volumeSettings,volumeTransfer,volumeRayInterval,opticalAlpha,mriBoundaryExtinction} from './volumeTransfer.ts';
+import {balancedTofDensity,buildDirectionalOpticalDepth,buildOpticalDensity,CT_EXTERIOR_AIR_HU,CT_EXTERIOR_TEXTURE_LIMIT_BYTES,ctExteriorDisplaySignal,OPTICAL_KEY_LIGHTS,volumeOpticalAtlas} from './volumeOpticalDensity.ts';
 import {inverseAffine,transformPoint} from './coordinates.ts';
 import {checkedViewerSettings} from '../workspace-view-settings.ts';
 const identity=[[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]];
+test('TOF context calibration uses physical ray length and leaves native samples intact',()=>{
+  const shape=[10,10,10],signal=new Float32Array(1000).fill(1),before=signal.slice();
+  const sourceFor=spacing=>{
+    const affine=[[-spacing,0,0,100],[0,spacing,0,-15],[0,0,spacing,12],[0,0,0,1]];
+    return {signal,shape,affine,inverse:inverseAffine(affine)};
+  };
+  const transfer=volumeTransfer('mri',[0,1],{},'TOF');
+  const thin=balancedTofDensity(sourceFor(12),transfer),thick=balancedTofDensity(sourceFor(24),transfer);
+  assert.ok(thin>.018&&thin<.035);
+  assert.ok(thick>.008&&Math.abs(2*thick-thin)<1e-9);
+  assert.equal(balancedTofDensity(sourceFor(6),transfer),.035);
+  assert.equal(balancedTofDensity({...sourceFor(12),support:new Uint8Array(signal.length)},transfer),undefined);
+  assert.equal(balancedTofDensity({...sourceFor(12),signal:new Float32Array(signal.length)},transfer),undefined);
+  assert.deepEqual(signal,before);
+});
+test('only automatic acquired MR angiography can balance vascular context',()=>{
+  for(const modality of ['TOF','MR angiography','3D_TOF_MRA'])assert.equal(canBalanceTofContext(undefined,modality),true);
+  for(const modality of ['T1CE','CTA','TOF diagnostic','generated image signal TOF'])
+    assert.equal(canBalanceTofContext({balanceTofContext:true},modality),false);
+  for(const settings of [{preset:'mri'},{window:[0,1]},{points:[]},{isolateLabels:true}])
+    assert.equal(canBalanceTofContext(settings,'TOF'),false);
+});
 test('volume rays use millimetres on mirrored, anisotropic and oblique grids, including camera inside',()=>{
   assert.deepEqual(volumeRayInterval([-10,1,1],[1,0,0],[3,3,3],identity),[9.5,12.5]);
   assert.deepEqual(volumeRayInterval([1,1,1],[1,0,0],[3,3,3],identity),[0,1.5]);

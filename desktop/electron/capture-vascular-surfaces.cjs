@@ -49,6 +49,8 @@ for(const recipe of recipes){
   if(recipe.inspectCtExteriorToggle)assert(recipe.useDefaultState,'Check the detached CT signal control from the ordinary default');
   assert(recipe.applyVesselsPreset===undefined||typeof recipe.applyVesselsPreset==='boolean');
   if(recipe.inspectSourceVolumeToggle)assert(recipe.applyVesselsPreset,'Check the volume control after applying the ordinary Vessels preset');
+  if(recipe.inspectBalancedTof)assert(recipe.applyVesselsPreset||recipe.settings?.volumeRendering?.balanceTofContext===true,
+    'Enable balanced TOF context before comparing the control');
   if(recipe.expectLabelTextureBytesPerVoxel!==undefined){
     assert([1,2,4].includes(recipe.expectLabelTextureBytesPerVoxel),'Unsupported number of label texture channels');
     assert(typeof recipe.settings?.volumeRendering?.enabled==='boolean','Specify the acquired volume state in a live label check');
@@ -439,6 +441,27 @@ app.on('browser-window-created',(_event,window)=>{
           };
           record.ctExteriorToggle={show:await inspect(true),restore:await inspect(false)};
         }
+        if(recipe.inspectBalancedTof){
+          const calibrated=record.frame.scanQuality?.tofContextDensity;
+          assert(Number.isFinite(calibrated),'Missing calibrated TOF density');
+          const toggle=`[...document.querySelectorAll('label')].find(label=>label.textContent.trim()==='Balance TOF context')?.querySelector('input[type=checkbox]')`;
+          const inspect=async(enabled,label)=>{
+            const before=await submittedFrame();
+            await click('Appearance');
+            await until(`!!(${toggle})&&!(${toggle}).disabled`,'available TOF balance control');
+            await js(`(${toggle}).click()`);
+            await click('Close view controls');
+            await settledFrame(before.serial);
+            const state=(await nativeView()).states[view.seriesId];
+            assert.equal(state.settings.volumeRendering.balanceTofContext,enabled);
+            assert.deepEqual(state.visible,record.view.visible);
+            const image=await capture(`${recipe.name}-${label}`);
+            assertSameGeometry(image);
+            assert.equal(image.frame.scanQuality?.tofContextDensity,enabled?calibrated:undefined);
+            return image;
+          };
+          record.tofContextToggle={manual:await inspect(false,'manual'),restored:await inspect(true,'restored')};
+        }
         if(recipe.depthSlab){
           const captures=[];
           const captureSlab=async(suffix,previous)=>{
@@ -494,7 +517,11 @@ app.on('browser-window-created',(_event,window)=>{
           const signal=await neutralSectionComparison(image.filename);
           return {view:sectionView,patientCutaway:sectionWorkspace.patientCutaway,...image,sourceSignalNeutralPixels:signal.neutralPixels};
         };
-        if(recipe.sourceSection&&!recipe.compareLayerIds)record.section=await captureSection();
+        if(recipe.sourceSection&&!recipe.compareLayerIds){
+          record.section=await captureSection();
+          if(recipe.inspectBalancedTof)assert.equal(record.section.frame.scanQuality?.tofContextDensity,undefined,
+            'The physical source section must use its ordinary volume density');
+        }
         if(recipe.contextVolume){
           await click('Show scan volume with structures');
           await wait(650);

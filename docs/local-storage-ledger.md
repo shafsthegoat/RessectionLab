@@ -131,8 +131,13 @@ The 30-study EDEN completion table is at
 `qc/eden2020-glioma-5714812/cohort-reconciliation-20261124-v1/README.md`.
 The matched GPU recaptures and structural control are indexed at
 `qc/eden2020-glioma-5714812/current-rendered-cohort-20261124.abYhYE2c/README.md`.
+The native TOF context and untouched source controls are at
+`qc/eden2020-glioma-5714812/tof-context-response-20261124/README.md`.
 The local structural tissue and held-out fiducial checks are at
 `qc/eden2020-glioma-5714812/mechanical-tissue-evidence-20261124-v1/README.md`.
+The independent native CSF correspondence, alternative stock wall field and
+withheld local registration are indexed at
+`qc/eden2020-glioma-5714812/independent-csf-landmarks-20261124-v1/README.md`.
 The mixed MRI Vessels and compact label comparisons are at
 `qc/mr-vessel-context-20261124.swCjfRex/README.md`.
 The standalone TopCoW-014 optical reference is at
@@ -144,6 +149,8 @@ The TopCoW-014 paired v5 loading and recoil replay is in the existing
 `qc/topcow014-ordinary-native-wall-20261124-v1/README.md` index. The operative
 source-terrace and crop-face audit is at
 `qc/operative-tissue-staircase-20261124-v1/README.md`.
+Its edited TopCoW-014 witness records guard coverage and the retained source
+shelves during the signed held contact.
 
 Paths below are relative to the RessectionLab root. This compact ledger covers
 that area, not unrelated personal files elsewhere on the HDD. Presence does not

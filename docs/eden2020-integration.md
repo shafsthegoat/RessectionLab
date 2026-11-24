@@ -208,6 +208,12 @@ path. Estimated alignment remains available through **Prepare standard
 environment** with its explicit research choice. The independent TOF view
 continues to support native reconstruction and source inspection.
 
+In the full-depth native TOF **Vessels** view, the automatic volume backdrop
+uses the acquisition's signal and affine to balance context brightness.
+Choose **Balance TOF context** in Appearance to compare, or set Scan density
+manually. Source overlays, physical sections, and vessel surfaces retain
+their exact acquired and segmented inputs.
+
 The current cohort reconciliation binds all 30 acquired studies and 29
 chosen vascular reviews to their live source identities. Hidden desktop
 recapture reproduced all 29 selected native surface hashes at the archived

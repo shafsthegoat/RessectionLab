@@ -1,5 +1,6 @@
 import type {Binding, CranialView, Layer, NativeScanState, NativeViewState, VesselScope} from './native-anatomy-data';
 import type {ViewerWorkspaceSettings} from './viewer/workspaceSettings';
+import {isMrAngiography} from './viewer/volumeTransfer.ts';
 
 export type AnatomyPresentation = 'scan'|'segmentation'|'vascular';
 type PresentationEvidence = {
@@ -75,6 +76,7 @@ export function anatomyPresentation(settings:ViewerWorkspaceSettings,layers:Laye
   const cranial=mode==='segmentation'&&corticalLayers(layers).length>0;
   const nativeVessels=!scan&&hasNativeAngiographicVessels(layers,modality,seriesId);
   const vesselFocus=vascular||nativeVessels;
+  const nativeTofVessels=vascular&&nativeVessels&&isMrAngiography(modality);
   const sourceModality=new Map(evidence?.series.map(series=>[series.id,series.modality]));
   const visibleLayers=evidence?layers.filter(layer=>evidence.visible[layer.id]):[];
   const sourcedVesselContext=vascular&&!ct&&mrModality(modality)&&
@@ -107,7 +109,7 @@ export function anatomyPresentation(settings:ViewerWorkspaceSettings,layers:Laye
       const namedArtery=layer.kind==='artery'&&source?.kind==='supplied_annotation'&&
         Number.isInteger(layer.label_value)&&(layer.label_value??0)>0&&source.publisher_class_id===layer.label_value;
       layerColor[layer.id]=(namedArtery||reviewedEvidence)&&/^#[0-9a-f]{6}$/i.test(layer.color)?layer.color:
-        layer.kind==='artery'?'#aa352b':layer.kind==='vein'?'#42668f':layer.kind==='sinus'?'#54548b':'#a74b52';
+        layer.kind==='artery'?'#aa352b':layer.kind==='vein'?'#42668f':layer.kind==='sinus'?'#54548b':nativeTofVessels?'#c16d72':'#a74b52';
       layerOpacity[layer.id]=reviewedEvidence?(scan?.08:.32):scan?(['vein','sinus'].includes(layer.kind)?.08:.16):
         cranial&&layer.kind==='vessels'&&!nativeVessels?.09:1;
     }else if(layer.kind==='tumor'){
@@ -131,12 +133,14 @@ export function anatomyPresentation(settings:ViewerWorkspaceSettings,layers:Laye
     else if(layer.kind==='ventricles')layerOpacity[layer.id]=scan?.055:vascular?.08:.26;
     else if(['brain-region','cerebellar-white-matter','cerebellar-cortex','brainstem'].includes(layer.kind))layerOpacity[layer.id]=scan?.035:vascular?.055:.42;
   }
-  return {...settings,presentation:mode,layout:'3d-focus',sliceOverlay:'contour',sliceFraming:{fit:'anatomy',zoom:1},contextStyle:scan?'uniform':'shell',smoothSurfaces:scan||sourcedVesselContext?(settings.smoothSurfaces??true):true,showPlane:false,
+  return {...settings,presentation:mode,layout:'3d-focus',sliceOverlay:'contour',sliceFraming:{fit:'anatomy',zoom:1},contextStyle:scan?'uniform':'shell',smoothSurfaces:scan||sourcedVesselContext||nativeTofVessels?(settings.smoothSurfaces??true):true,showPlane:false,
     skullMode:mode==='segmentation'&&!cranial&&!nativeVessels?'exterior':'transparent',sourcedVesselContext:sourcedVesselContext||undefined,layerColor,layerOpacity,
     // Explicit presentation action only. Saved contrast, opacity and transfer
     // choices are otherwise restored verbatim; source signal is never altered.
     volumeRendering:{enabled:!sourcedVesselContext,preset:'auto',density:scan?(ct?.26:.28):ct?(vesselFocus?.12:.075):(nativeVessels?.018:vascular?.035:.025),
-      shadows:scan||!ct||sameSourceBone,showCtExteriorSignal:settings.volumeRendering?.showCtExteriorSignal},
+      ...(nativeTofVessels?{balanceTofContext:true}:{}),
+      shadows:scan||!ct||sameSourceBone,
+      ...(settings.volumeRendering?.showCtExteriorSignal!==undefined?{showCtExteriorSignal:settings.volumeRendering.showCtExteriorSignal}:{})},
     clipping:settings.clipping?{...settings.clipping,enabled:false}:undefined,
     clipBox:settings.clipBox?{...settings.clipBox,enabled:false}:undefined,
     obliqueClip:settings.obliqueClip?{...settings.obliqueClip,enabled:false}:undefined};

@@ -2,7 +2,7 @@ import type { Affine, Point3 } from './coordinates';
 import { inverseAffine, rasAffine } from './coordinates.ts';
 
 export type VolumePreset = 'auto' | 'ct-bone' | 'ct-tissue' | 'ct-angiography' | 'mri';
-export interface VolumeRenderingSettings { enabled?: boolean; preset?: VolumePreset; density?: number; window?: [number,number]; shadows?: boolean; isolateLabels?: boolean; showCtExteriorSignal?: boolean; points?: Array<[number,number,number,number,number]> }
+export interface VolumeRenderingSettings { enabled?: boolean; preset?: VolumePreset; density?: number; window?: [number,number]; shadows?: boolean; isolateLabels?: boolean; showCtExteriorSignal?: boolean; balanceTofContext?: boolean; points?: Array<[number,number,number,number,number]> }
 export const VOLUME_TRANSFER_WIDTH = 1024;
 export function intensityWindow(values: Float32Array): [number, number] {
   const sampled:number[]=[];
@@ -17,6 +17,15 @@ export function intensityWindow(values: Float32Array): [number, number] {
 }
 
 export const isCtModality=(modality:string)=>/^\s*(CT|CTA)(\b|[-_\s])/i.test(modality);
+const MR_ANGIOGRAPHY=/\b(?:MRA|TOF)\b|\bMR(?:I)?[-_\s]+angiogra(?:phy|m)\b/i;
+export const isMrAngiography=(modality:string)=>MR_ANGIOGRAPHY.test(modality.replaceAll('_',' '))&&
+  !isCtModality(modality)&&!/segmentation only|analytic signal|generated image signal|diagnostic/i.test(modality);
+
+export function canBalanceTofContext(input:VolumeRenderingSettings|undefined, modality:string) {
+  return isMrAngiography(modality)&&(input?.preset===undefined||input.preset==='auto')&&
+    !input?.isolateLabels&&input?.window===undefined&&input?.points===undefined;
+}
+
 export function volumeSettings(input: VolumeRenderingSettings = {}, modality = 'MRI') {
   const ct=isCtModality(modality), acquired=!/segmentation only|analytic signal|generated image signal/i.test(modality);
   const explicit=input.preset && ['ct-bone','ct-tissue','ct-angiography','mri'].includes(input.preset)?input.preset:null;
@@ -54,7 +63,7 @@ export function volumeTransfer(preset: Exclude<VolumePreset,'auto'>, window: [nu
   if(preset==='mri'&&!custom?.points){
     // MRI has arbitrary intensity units. Sequence changes presentation only;
     // signal never creates a vessel/tumor label or a missing scan.
-    const brightBlood=/\b(?:MRA|TOF)\b|\bMR(?:I)?[-_\s]+angiogra(?:phy|m)\b/i.test(modality);
+    const brightBlood=MR_ANGIOGRAPHY.test(modality);
     if(brightBlood){
       // A declared angiographic acquisition supports high-signal emphasis.
       // Neutral ivory preserves its signal provenance: bright voxels are not

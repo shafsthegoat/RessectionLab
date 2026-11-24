@@ -39,7 +39,7 @@ import type { KeyboardEvent, PointerEvent } from "react";
 import { VolumeRenderer } from "./VolumeRenderer";
 import { clippingForBounds, clippingPositionInBounds, newClippingPosition, usesPatientCutaway } from './workspaceSettings';
 import type { ViewerWorkspaceSettings } from './workspaceSettings';
-import { volumeSettings, isCtModality } from './volumeTransfer';
+import { canBalanceTofContext, volumeSettings, isCtModality } from './volumeTransfer';
 import type { VolumePreset } from './volumeTransfer';
 import {
   PLANE_AXES,
@@ -877,7 +877,20 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
           {controlPanel==='appearance'&&<>
             <label><input type="checkbox" aria-label="Scan volume" checked={scanVolume.enabled} disabled={props.segmentationOnly||props.generatedSignal||Boolean(replay)||passiveRequested||rehearsalRequested} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,enabled:e.target.checked}})}/>Scan volume</label>
             <label>Preset<select aria-label="Volume rendering preset" value={settings.volumeRendering?.preset??'auto'} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,preset:e.target.value as VolumePreset}})}><option value="auto">Automatic · {signalName}</option><option value="ct-bone" disabled={!isCtModality(signalName)}>CT bone</option><option value="ct-tissue" disabled={!isCtModality(signalName)}>CT tissue</option><option value="ct-angiography" disabled={!isCtModality(signalName)}>CT angiography · contrast scan</option><option value="mri">{/MRA|TOF|angiogra/i.test(signalName)?'Bright-blood MR signal':'MRI tissue'}</option></select></label>
-            <label>Scan density<input aria-label="Scan volume density" type="range" min="0" max="2" step=".01" value={scanVolume.density} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,density:+e.target.value}})}/></label>
+            <label>Scan density<input aria-label="Scan volume density" type="range" min="0" max="2" step=".01" value={scanVolume.density}
+              onChange={e=>{
+                const volumeRendering={...settings.volumeRendering,density:+e.target.value};
+                delete volumeRendering.balanceTofContext;
+                changeSettings({...settings,volumeRendering});
+              }}/></label>
+            {caseData?.displayIdentity&&settings.presentation==='vascular'&&settings.contextStyle==='shell'&&!settings.operativeView&&
+              !settings.clipping?.enabled&&!settings.clipBox?.enabled&&!settings.obliqueClip?.enabled&&!corridorCrop&&!depthSlabBox&&
+              canBalanceTofContext(settings.volumeRendering,signalName)&&
+              <label title="Set volume strength from this acquisition's signal and physical depth. Adjusting scan density switches to manual.">
+                <input type="checkbox" checked={settings.volumeRendering?.balanceTofContext===true}
+                  onChange={event=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,balanceTofContext:event.target.checked}})}/>
+                Balance TOF context
+              </label>}
             {caseData?.ctExterior&&(settings.presentation==='segmentation'||settings.presentation==='vascular')&&
               !settings.clipping?.enabled&&!settings.clipBox?.enabled&&!settings.obliqueClip?.enabled&&
               !corridorCrop&&!depthSlabBox&&!settings.volumeRendering?.isolateLabels&&

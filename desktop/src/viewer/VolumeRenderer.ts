@@ -1259,7 +1259,7 @@ export class VolumeRenderer {
       }
       shader.uniforms.uFusionOpacity.value=Number.isFinite(settings.fusion?.opacity) ? Math.max(0,Math.min(1,settings.fusion!.opacity)) : .5;
     });
-    this.scanVolume?.configure(settings.volumeRendering, this.volumeModality, this.clipPlane);
+    this.scanVolume?.configure(settings.volumeRendering,this.volumeModality,this.clipPlane,this.balanceTofContext(settings));
     this.scanVolume.labels(this.labelTexture,this.visible,settings,this.extraClipPlanes);
     this.applyTractAppearance();
     this.applyVesselTraceAppearance();
@@ -1462,10 +1462,14 @@ export class VolumeRenderer {
   setVolumeRendering(settings: VolumeRenderingSettings | undefined, modality: string): void {
     const wasAngiographic = this.ctAngiogramFrame();
     this.volumeModality = modality;
-    this.scanVolume.configure(settings, modality, this.clipPlane);
+    this.scanVolume.configure(settings,modality,this.clipPlane,this.balanceTofContext(this.workspaceSettings));
     if (this.mode === 'anatomy' && !this.cameraRestored && wasAngiographic !== this.ctAngiogramFrame())
       this.fitCamera('anatomy');
     this.requestRender();
+  }
+
+  private balanceTofContext(settings:ViewerWorkspaceSettings|undefined):boolean {
+    return settings?.presentation==='vascular'&&settings.contextStyle==='shell'&&!settings.operativeView&&!this.extraClipPlanes?.length;
   }
 
   /** Reversible mesh-only display; masks, slice textures and metrics are untouched. */

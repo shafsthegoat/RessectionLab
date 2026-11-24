@@ -15,6 +15,54 @@ export type OpticalSource = {
 };
 export type OpticalContext = {mask: Uint8Array; radius: Point3};
 
+/** Estimate typical TOF backdrop brightness from short, fixed native-grid
+ * quadratures. Physical ray lengths and gradients account for anisotropy
+ * without using vessel segmentation or the camera. */
+export function balancedTofDensity(source:OpticalSource, transfer:OpticalTransfer):number|undefined {
+  const {signal,shape,affine,inverse,support}=source;
+  const stride=[shape[1]*shape[2],shape[2],1];
+  const [a,b,c]=inverse;
+  const inverseRange=1/(transfer.range[1]-transfer.range[0]);
+  const radiance=Float32Array.from({length:VOLUME_TRANSFER_WIDTH},(_,i)=>{
+    const q=i*4;
+    return (transfer.data[q]*.2126+transfer.data[q+1]*.7152+transfer.data[q+2]*.0722)*transfer.data[q+3];
+  });
+  const rays:number[]=[];
+  for(let axis=0;axis<3;axis++){
+    const first=(axis+1)%3, second=(axis+2)%3;
+    const length=shape[axis]*Math.hypot(affine[0][axis],affine[1][axis],affine[2][axis]);
+    const samples=Math.min(shape[axis],192,Math.max(1,Math.ceil(length/2)));
+    const step=length/samples;
+    const voxel:Point3=[0,0,0];
+    for(let i=0;i<9;i++)for(let j=0;j<9;j++){
+      voxel[first]=Math.floor(shape[first]*(.15+.7*(i+.5)/9));
+      voxel[second]=Math.floor(shape[second]*(.15+.7*(j+.5)/9));
+      let integral=0;
+      for(let s=0;s<samples;s++){
+        voxel[axis]=Math.floor(shape[axis]*(s+.5)/samples);
+        const [x,y,z]=voxel;
+        const q=x*stride[0]+y*stride[1]+z;
+        const value=signal[q];
+        if((support&&!support[q])||!Number.isFinite(value))continue;
+        const k=Math.max(0,Math.min(VOLUME_TRANSFER_WIDTH-1,(value-transfer.range[0])*inverseRange*VOLUME_TRANSFER_WIDTH-.5));
+        const lo=Math.floor(k),hi=Math.min(lo+1,VOLUME_TRANSFER_WIDTH-1);
+        const light=radiance[lo]+(radiance[hi]-radiance[lo])*(k-lo);
+        if(light===0)continue;
+        const gx=signal[q+(x<shape[0]-1?stride[0]:0)]-signal[q-(x>0?stride[0]:0)];
+        const gy=signal[q+(y<shape[1]-1?stride[1]:0)]-signal[q-(y>0?stride[1]:0)];
+        const gz=signal[q+(z<shape[2]-1?1:0)]-signal[q-(z>0?1:0)];
+        const gradient=.5*inverseRange*Math.hypot(a[0]*gx+b[0]*gy+c[0]*gz,a[1]*gx+b[1]*gy+c[1]*gz,a[2]*gx+b[2]*gy+c[2]*gz);
+        integral+=light*mriBoundaryExtinction(Number.isFinite(gradient)?gradient:0)*step;
+      }
+      rays.push(integral);
+    }
+  }
+  rays.sort((x,y)=>x-y);
+  const typical=rays[Math.floor(rays.length/2)];
+  // Limit the boost on faint acquisitions so context stays subordinate to fine vessels.
+  return typical>.05?Math.max(.008,Math.min(.035,.1224/typical)):undefined;
+}
+
 /** A separate display texture preserves the raw acquisition and provides the
  * exact same air-filled values to primary sampling and both shadow scales. */
 export function ctExteriorDisplaySignal(signal:Float32Array, shape:Point3, exterior:OpticalExterior) {

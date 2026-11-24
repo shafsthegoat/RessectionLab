@@ -2,8 +2,8 @@ import {packAnatomyLabels,MAX_ANATOMY_LAYERS} from './labelPacking';
 import * as THREE from 'three';
 import type { ViewerVolume } from './contracts';
 import { inverseAffine, rasAffine } from './coordinates.ts';
-import { isCtModality, volumeSettings, volumeTransfer } from './volumeTransfer.ts';
-import {CT_EXTERIOR_AIR_HU, CT_EXTERIOR_TEXTURE_LIMIT_BYTES, ctExteriorDisplaySignal, finishOpticalPreparation, opticalAtlasSteps, OPTICAL_KEY_LIGHTS, volumeOpticalAtlas, type OpticalContext, type OpticalSource} from './volumeOpticalDensity.ts';
+import { canBalanceTofContext, isCtModality, volumeSettings, volumeTransfer } from './volumeTransfer.ts';
+import {balancedTofDensity, CT_EXTERIOR_AIR_HU, CT_EXTERIOR_TEXTURE_LIMIT_BYTES, ctExteriorDisplaySignal, finishOpticalPreparation, opticalAtlasSteps, OPTICAL_KEY_LIGHTS, volumeOpticalAtlas, type OpticalContext, type OpticalSource} from './volumeOpticalDensity.ts';
 import {layerAppearance} from './workspaceSettings';
 import type {ViewerWorkspaceSettings} from './workspaceSettings';
 import type { VolumeRenderingSettings } from './volumeTransfer';
@@ -68,6 +68,8 @@ export class ScanVolumeRenderer {
   private exteriorPresentation=false;
   private showCtExteriorSignal=false;
   private preset = '';
+  private calibratedTofDensity?:number|null;
+  private activeTofContextDensity?:number;
   private automaticMriTransfer=false;
   private shellContext=false;
   private enabled = true;
@@ -148,7 +150,7 @@ export class ScanVolumeRenderer {
     this.blitScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2,2),this.blitMaterial));
     this.accumulateScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2,2),this.accumulateMaterial));
   }
-  configure(input: VolumeRenderingSettings | undefined, modality: string, clip: THREE.Plane | null) {
+  configure(input: VolumeRenderingSettings | undefined, modality: string, clip: THREE.Plane | null, balanceTof=false) {
     const settings=volumeSettings(input,modality);this.enabled=settings.enabled&&settings.density>0;
     this.showCtExteriorSignal=input?.showCtExteriorSignal===true;
     const signature=JSON.stringify([settings.preset,input?.window,input?.points,modality]);
@@ -158,6 +160,7 @@ export class ScanVolumeRenderer {
       this.transferLut=lut;
       this.installOpticalAtlas(volumeOpticalAtlas(lut));
       this.failedOpticalSelection=undefined;
+      this.calibratedTofDensity=undefined;
       this.automaticMriTransfer=lut.gradientOpacity;
       this.material.uniforms.uRange.value.set(...lut.range);this.preset=signature;
     }
@@ -167,7 +170,12 @@ export class ScanVolumeRenderer {
     this.material.uniforms.uGradientOpacity.value=this.automaticMriTransfer&&this.shellContext;
     this.material.uniforms.uShadows.value=input?.shadows!==false;
     this.material.uniforms.uIsolate.value=input?.isolateLabels===true;
-    this.material.uniforms.uDensity.value=settings.density;
+    this.activeTofContextDensity=undefined;
+    if(this.enabled&&balanceTof&&!clip&&input?.balanceTofContext&&canBalanceTofContext(input,modality)&&this.transferLut){
+      if(this.calibratedTofDensity===undefined)this.calibratedTofDensity=balancedTofDensity(this.sourceOptics,this.transferLut)??null;
+      this.activeTofContextDensity=this.calibratedTofDensity??undefined;
+    }
+    this.material.uniforms.uDensity.value=this.activeTofContextDensity??settings.density;
     this.material.uniforms.uClipEnabled.value=!!clip;
     if(clip)this.material.uniforms.uClipPlane.value.set(clip.normal.x,clip.normal.y,clip.normal.z,clip.constant);
     if(!this.enabled||input?.shadows===false||input?.isolateLabels)this.cancelOpticalPreparation();
@@ -400,7 +408,7 @@ export class ScanVolumeRenderer {
       this.material.defines.DIRECTIONAL_OPTICS===1?'directional-atlas':u.uContextCoverageLayer.value>=0?'skull-atlas':'source-atlas';
     const ctExteriorDisplay=!!this.exteriorVolume&&u.uVolume.value===this.exteriorVolume.texture;
     return {width:w,height:h,samples:interactive?1:this.samples,opticsPending:this.opticsPending,shadowSampling,
-      ctExteriorDisplay,ctExteriorBytes:this.estimatedCtExteriorBytes};
+      ctExteriorDisplay,ctExteriorBytes:this.estimatedCtExteriorBytes,tofContextDensity:this.activeTofContextDensity};
   }
 
   renderExportSample(scene:THREE.Scene,camera:THREE.PerspectiveCamera,targets:ScanVolumeExportTargets,
