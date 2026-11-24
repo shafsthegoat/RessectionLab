@@ -126,6 +126,8 @@ The native brain contour comparison is at
 `qc/brain-envelope-geometry-20261124.5di2hjsv/README.md`.
 The isolated native vessel wall section comparison and archived replay checks
 are at `qc/native-vessel-section-tail-20261124-v1/README.md`.
+The jointly conditioned publisher CTA meshes, matched desktop captures and
+whole-mesh source audits are at `qc/native-publisher-wall-20261124-v1/README.md`.
 The ordinary EDEN diffusion checks and source-role audit are at
 `qc/ordinary-diffusion-baseline-20261124-v1/README.md`.
 

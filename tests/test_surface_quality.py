@@ -193,6 +193,72 @@ def test_publisher_surface_retains_geometry_after_portable_reopen(tmp_path):
         mesh(restored, layer)
 
 
+def test_publisher_cta_fairing_uses_one_exact_full_mesh_for_named_partitions(tmp_path):
+    import nibabel as nib
+    from resectionlab.anatomy_geometry import _indexed_contour, mesh
+    from resectionlab.anatomy_publisher_surface import POLICY
+    from resectionlab.patient_anatomy import PatientImagingCollection, world
+    from resectionlab.surface_fairing import PUBLISHER_CTA_POLICY
+
+    frame = np.diag([-.5, .5, .625, 1.])
+    frame[:3, 3] = [12., -18., 25.]
+    shape = (24, 24, 24)
+    x, y, z = np.indices(shape)
+    mask = ((x - 10 + .17 * z)**2 + (y - 13 + .35 * z)**2 < 3.7**2) & (z > 2) & (z < 21)
+    source = tmp_path / 'cta.nii'
+    image = nib.Nifti1Image(np.where(mask, 450., 40.).astype(np.float32), frame)
+    image.header.set_xyzt_units('mm')
+    nib.save(image, source)
+    asset = tmp_path / 'source.vtp'
+    asset.write_bytes(b'source shape for the portable partition control')
+    collection = PatientImagingCollection.create(tmp_path / 'study', 'publisher-fairing-control')
+    scan = collection.add_series(source, series_id='cta', modality='CTA')
+    raw, triangles, _ = _indexed_contour(mask.astype(np.uint8), False)
+    exact = world(frame, raw).astype(np.float32)
+    labels = np.where(mask, np.where(z > 11, 2, 1), 0).astype(np.uint8)
+
+    def add(layer_id, values, label, points, indices):
+        row = collection.add_layer(values, scan['affine'], layer_id=layer_id, source_series='cta',
+                                   kind='artery', role='context', color='#ef7968', label_value=label)
+        row['publisher_surface'] = {
+            'schema': POLICY, 'original': collection.original(asset), 'vertices_ras_mm': collection.put_array(points),
+            'triangles': collection.put_array(indices), 'source_series': 'cta', 'source_sha256': scan['original']['sha256'],
+            'source_affine': scan['affine'], 'mask_sha256': row['data']['sha256'],
+            'mask_label_value': label, 'mask_revision': 0,
+        }
+        return row
+
+    whole = add('whole', mask.astype(np.uint8), 1, exact, triangles)
+    assignments = raw[triangles, 2].mean(axis=1) > 11
+    children = []
+    for side in (False, True):
+        faces = np.flatnonzero(assignments == side).astype(np.uint32)
+        vertices, indices = np.unique(triangles[faces], return_inverse=True)
+        member = add(f'branch-{int(side)}', labels, 1+int(side), exact[vertices], indices.reshape(-1, 3).astype(np.uint32))
+        member['publisher_surface'].update(publisher_vertex_ids=collection.put_array(vertices),
+                                           publisher_face_ids=collection.put_array(faces))
+        children.append((member, vertices, faces))
+    collection.save()
+    assert np.intersect1d(children[0][1], children[1][1]).size > 0
+    actual = mesh(collection, whole)
+    source_only = mesh(collection, whole, conditioned=False)
+    np.testing.assert_array_equal(actual['source'], source_only['positions'])
+    np.testing.assert_array_equal(actual['indices'], triangles[:, ::-1])
+    assert actual['max_displacement_mm'] > 0 and actual['policy_version'] == PUBLISHER_CTA_POLICY
+    assert source_only['policy_version'] == POLICY
+    for member, vertices, faces in children:
+        displayed = mesh(collection, member)
+        assert displayed['cache_hit'] and displayed['policy_version'] == PUBLISHER_CTA_POLICY
+        np.testing.assert_array_equal(displayed['positions'], actual['positions'][vertices])
+        np.testing.assert_array_equal(displayed['normals'], actual['normals'][vertices])
+        np.testing.assert_array_equal(vertices[displayed['indices']], actual['indices'][faces])
+        np.testing.assert_array_equal(source_only['positions'][vertices], mesh(collection, member, conditioned=False)['positions'])
+    member, _, faces = children[0]
+    bogus = {**member, 'publisher_surface': {**member['publisher_surface'],
+                                           'publisher_face_ids': collection.put_array(np.roll(faces, 1))}}
+    assert mesh(collection, bogus)['policy_version'] == POLICY
+
+
 def test_empty_native_mesh_has_explicit_descriptor_without_zero_length_transfer(tmp_path):
     import nibabel as nib
     from resectionlab.patient_anatomy import PatientImagingCollection

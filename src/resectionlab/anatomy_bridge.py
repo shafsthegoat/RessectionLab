@@ -480,10 +480,17 @@ def dispatch(session, operation, args, request, progress):
                 if p.size:
                     raw_transfer = transfer(raw, "float32")
                     raw_normals = transfer(normals(raw, faces), "float32")
+                    if geometry.get("shared_publisher_normals") and not source_surface_only:
+                        # Preserve continuous shading across named seams by
+                        # carrying the whole surface normals into display IJK.
+                        conditioned_normals = geometry["normals"] @ np.linalg.inv(transform[:3, :3])
+                        conditioned_normals /= np.maximum(np.linalg.norm(conditioned_normals, axis=1, keepdims=True), 1e-20)
+                    else:
+                        conditioned_normals = None if source_surface_only else normals(p, faces)
                     record["surface"] = {
                         "positions": raw_transfer if source_surface_only else transfer(p, "float32"),
                         "source": raw_transfer,
-                        "normals": raw_normals if source_surface_only else transfer(normals(p, faces), "float32"),
+                        "normals": raw_normals if source_surface_only else transfer(conditioned_normals, "float32"),
                         "sourceNormals": raw_normals,
                         "indices": transfer(faces, "uint32"),
                     }

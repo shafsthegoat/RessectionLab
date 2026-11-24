@@ -52,6 +52,8 @@ for(const recipe of recipes){
   assert(!recipe.applyScanPreset||!recipe.applyVesselsPreset,'Apply one ordinary preset per capture');
   if(recipe.inspectCtBoneOverlay)assert(recipe.applyScanPreset||recipe.settings?.volumeRendering?.showCtBoneOverlay===false,
     'Start with the acquired CT bone view before comparing the overlay');
+  if(recipe.inspectPublisherSmoothing)assert(recipe.settings?.smoothSurfaces===true,
+    'Start with conditioned publisher geometry before comparing source positions');
   if(recipe.inspectSourceVolumeToggle)assert(recipe.applyVesselsPreset,'Check the volume control after applying the ordinary Vessels preset');
   if(recipe.inspectBalancedTof)assert(recipe.applyVesselsPreset||recipe.settings?.volumeRendering?.balanceTofContext===true,
     'Enable balanced TOF context before comparing the control');
@@ -473,6 +475,28 @@ app.on('browser-window-created',(_event,window)=>{
             return image;
           };
           record.ctBoneOverlay={enabled:await inspect(true),restored:await inspect(false)};
+        }
+        if(recipe.inspectPublisherSmoothing){
+          const layers=record.surfaces.filter(layer=>recipe.layers.includes(layer.name)&&layer.surfaceDiagnostics?.publisherSourceSha256);
+          assert(layers.length&&layers.every(layer=>layer.surfaceDiagnostics.policy==='source-bound-publisher-cta-fairing-v1'));
+          assert(layers.some(layer=>layer.surfaceDiagnostics.maxDisplacementMm>0));
+          const toggle=`document.querySelector('input[aria-label="Smooth 3D surfaces"]')`;
+          const inspect=async enabled=>{
+            const before=await submittedFrame();
+            await click('Appearance');
+            await until(`!!(${toggle})&&!(${toggle}).disabled`,'ordinary surface smoothing');
+            assert.equal(await js(`(${toggle}).checked`),!enabled);
+            await js(`(${toggle}).click()`);
+            await click('Close view controls');
+            await settledFrame(before.serial);
+            const state=(await nativeView()).states[view.seriesId];
+            assert.deepEqual(state.visible,record.view.visible);
+            assert.deepEqual(state.settings,{...record.view.settings,smoothSurfaces:enabled});
+            const image=await capture(`${recipe.name}-${enabled?'restore-conditioned':'publisher-source'}`);
+            assertSameGeometry(image);
+            return image;
+          };
+          record.publisherSmoothing={source:await inspect(false),restored:await inspect(true)};
         }
         if(recipe.inspectBalancedTof){
           const calibrated=record.frame.scanQuality?.tofContextDensity;

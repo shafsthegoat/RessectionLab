@@ -37,6 +37,17 @@ EDEN TOFs at the frozen native crop bounds. Across the crops, the median case
 95th-percentile absolute section area change fell from 18.5% to 2.6%. The
 physical audit found zero introduced nonincident contacts.
 
+## Supplied CTA surface display
+
+**Smooth 3D surfaces** applies bounded fairing to the complete publisher CTA
+surface in its native physical frame. Named branches take their display vertices
+and normals from that same surface using the publisher face and vertex IDs, so
+the class seams stay coincident. Disabling the control draws the exact supplied
+positions. Missing or mismatched partitions are shown in their exact source form.
+The native mask supports the displacement bounds. Original mask, mesh indices,
+source picking and the research wall use their existing source representations.
+[Matched publisher validation](local-storage-ledger.md)
+
 ## Source-owned branch geometry
 
 The existing TopBrain CTA001 now has reproducible, source-owned centerline

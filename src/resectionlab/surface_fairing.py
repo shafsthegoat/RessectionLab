@@ -12,6 +12,7 @@ from scipy.spatial import cKDTree
 POLICY = json.loads(resources.files('resectionlab').joinpath('surface_policy.json').read_text())
 NATIVE_POLICY = POLICY['native']
 NATIVE_VASCULAR_POLICY = POLICY['nativeVascular']
+PUBLISHER_CTA_POLICY = 'source-bound-publisher-cta-fairing-v1'
 
 
 def surface_kind(kind):
@@ -19,7 +20,7 @@ def surface_kind(kind):
 
 
 def coefficients(kind, *, native_context=False, broad_context=False, native_vessel=False,
-                 categorical=False):
+                 categorical=False, publisher_cta=False):
     profile = POLICY['profiles'][surface_kind(kind)]
     if native_vessel:
         profile = NATIVE_VASCULAR_POLICY
@@ -29,6 +30,10 @@ def coefficients(kind, *, native_context=False, broad_context=False, native_vess
         # The coarser label surface needs a narrower spatial filter to preserve
         # thin categorical ends and rapid changes in caliber.
         pass_band = profile['categoricalPassBand']
+    if publisher_cta:
+        # The supplied VTP has more vertices per voxel than Surface Nets.
+        # A lower band reaches the acquisition-scale steps in this topology.
+        pass_band = .14
     if broad_context:
         pass_band = NATIVE_POLICY['broadContext']['passBand']
     theta = np.arccos(1-pass_band)
@@ -187,7 +192,7 @@ def _vascular_normal_balance(original, filtered, faces, operator):
 
 
 def fair_surface(points, faces, affine, kind, *, mask=None, mask_origin=None, native=False,
-                 source_shape=None, categorical=False, cancelled=lambda: False):
+                 source_shape=None, categorical=False, cancelled=lambda: False, publisher_cta=False):
     points, faces = np.asarray(points, np.float32), np.asarray(faces, np.uint32)
     if points.ndim != 2 or points.shape[1] != 3 or faces.ndim != 2 or faces.shape[1] != 3:
         raise ValueError('Display surfaces require three coordinates and three corners per triangle')
@@ -200,6 +205,10 @@ def fair_surface(points, faces, affine, kind, *, mask=None, mask_origin=None, na
     policy_version = NATIVE_POLICY['broadContext']['version'] if broad_context else NATIVE_POLICY['version'] if native else POLICY['version']
     if native_vessel:
         policy_version = NATIVE_VASCULAR_POLICY['version']
+    if publisher_cta:
+        if not (native_vessel and categorical):
+            raise ValueError('Publisher CTA fairing requires the aligned native categorical mask')
+        policy_version = PUBLISHER_CTA_POLICY
     triangle_budget = NATIVE_POLICY['maxContextTriangles'] if native_context else POLICY['maxContextTriangles']
     if profile_kind == 'context' and len(faces) > triangle_budget:
         return points.copy(), {'policy':policy_version, 'kind':'context', 'maxDisplacementMm':0.,
@@ -251,7 +260,7 @@ def fair_surface(points, faces, affine, kind, *, mask=None, mask_origin=None, na
     operator = sparse.diags(1/np.maximum(degree, 1)) @ adjacency
     del adjacency
     c = coefficients(profile_kind, native_context=native_context, broad_context=broad_context,
-                     native_vessel=native_vessel, categorical=categorical)
+                     native_vessel=native_vessel, categorical=categorical, publisher_cta=publisher_cta)
     filtered = c[0]*original
     previous, current = original.copy(), np.zeros_like(original)
     for j in range(1, len(c)):
@@ -296,6 +305,8 @@ def fair_surface(points, faces, affine, kind, *, mask=None, mask_origin=None, na
         return ratio
 
     delta = filtered-original
+    if publisher_cta:
+        delta *= .8
     if broad_context:
         retain_normal_displacement(delta, filtered, faces, cancelled)
     filtered = original+delta*np.minimum(1, .999/np.maximum(cap_ratio(delta), 1e-30))[:, None]

@@ -375,11 +375,15 @@ def mesh(collection, row, *, cancelled=lambda: False, display_source=None, condi
         if display_source["data"] == row["data"] and display_source["label_value"] == row["label_value"]:
             return mesh(collection, display_source, cancelled=cancelled, conditioned=conditioned)
     if display_source is None and row.get("publisher_surface") is not None:
-        from .anatomy_publisher_surface import publisher_surface
+        from .anatomy_publisher_surface import conditioned_publisher_cta, publisher_surface
 
         supplied = publisher_surface(collection, row, cancelled=cancelled)
         if supplied is not None:
-            return {**supplied, "normals": normals(supplied["positions"], supplied["indices"]),
+            if conditioned:
+                supplied = conditioned_publisher_cta(collection, row, supplied, cancelled=cancelled)
+            if "normals" not in supplied:
+                supplied["normals"] = normals(supplied["positions"], supplied["indices"])
+            return {**supplied,
                     "preparation_ms": (perf_counter() - started) * 1000}
     display_kind = display_surface_kind(row)
     profile = surface_kind(display_kind)
