@@ -15,6 +15,7 @@ from scipy.sparse.linalg import factorized
 from .surgical_glioma_materials import PROPERTY, oriented_source_cells
 from . import surgical_vessel_surface as surfaces
 from . import surgical_vessel_vertex_motion as vertex_motion
+from . import surgical_wall_contact as wall_contact
 from . import surgical_wall_sweep as wall_sweep
 
 
@@ -23,6 +24,7 @@ FIELD = 'vesselMechanics'
 GEOMETRY = 'vesselRodGeometry'
 SECTION_MECHANICS = 'vesselSectionMechanics'
 SECTION_MODEL = 'linear-annular-research-v1'
+SECTION_CONTACT_MODEL = 'linear-annular-research-contact-v2'
 STEP_SECONDS = 1 / 120
 SUPPORT_N_PER_MM = .035
 CONTACT_N_PER_MM = .18
@@ -36,10 +38,10 @@ SOLVER_ITERATIONS = 4
 CONTACT_MARGIN_MM = 1e-7
 
 
-def section_profile():
+def section_profile(*, vessel_contact=False):
     """Assumed local tangent response and radial compliance for sensitivity studies."""
     return {
-        'model': SECTION_MODEL,
+        'model': SECTION_CONTACT_MODEL if vessel_contact else SECTION_MODEL,
         'provenance': 'assumed-research',
         'axialModulusMPa': {'artery': 1.8, 'vein': .7, 'uncertain': 1.},
         'wallThicknessToLumenRadius': .15,
@@ -62,7 +64,7 @@ def validate_section_profile(profile, bounded):
             or profile.get(wall_sweep.PROPERTY) != wall_sweep.POLICY
             or profile.get(vertex_motion.PROPERTY) != vertex_motion.POLICY
             or not isinstance(section, dict) or set(section) != set(section_profile())
-            or section['model'] != SECTION_MODEL
+            or section['model'] not in (SECTION_MODEL, SECTION_CONTACT_MODEL)
             or section['provenance'] != 'assumed-research'
             or not isinstance(section['axialModulusMPa'], dict)
             or set(section['axialModulusMPa']) != set(section_profile()['axialModulusMPa'])
@@ -587,6 +589,11 @@ def _valid_motion(engine, rods, old, new, retained):
     return new
 
 
+def _valid_section_motion(engine, rods, previous, trial, retained, first, second, reference_length):
+    return (np.all(np.linalg.norm(trial[first] - trial[second], axis=1) >= MIN_CENTERLINE_STRETCH * reference_length)
+            and _valid_motion(engine, rods, previous, trial, retained) is trial)
+
+
 def tick(engine, dt, *, tool_motion=None):
     rods = definitions(engine)
     retained, retired, bonds, supports = _topology(engine, rods)
@@ -630,6 +637,7 @@ def tick(engine, dt, *, tool_motion=None):
     pairs = _capsules(rods, retained, bonds)
     native = bool(getattr(engine.scene, '_vessel_source_walls', ()))
     section = mechanics(engine)
+    vessel_contact = section is not None and section['model'] == SECTION_CONTACT_MODEL
     radial_response = .35 if section is None else -np.expm1(-STEP_SECONDS / section['radialRelaxationSeconds'])
     if native:
         labels = engine.scene.labels.ravel()
@@ -695,16 +703,26 @@ def tick(engine, dt, *, tool_motion=None):
             for fraction in (1., .5, .25, .125, .0625, .03125, .015625):
                 trial = previous + fraction * delta
                 trial_radius = radius + fraction * radial_delta
-                if (np.any(np.linalg.norm(trial[first] - trial[second], axis=1) < MIN_CENTERLINE_STRETCH * reference_length)
-                        or _valid_motion(engine, rods, previous, trial, retained) is previous):
+                if not _valid_section_motion(engine, rods, previous, trial, retained, first, second, reference_length):
                     continue
                 next_wall = tuple(surfaces.frames(engine, rods, trial, trial_radius, bonds))
-                if wall_sweep.is_clear(engine, prior_wall, next_wall):
-                    position, proposed_radius, prior_wall = trial, trial_radius, next_wall
-                    if fraction < 1.:
-                        _, _, touched = contact(position, proposed_radius, (position - previous) / STEP_SECONDS,
-                                                measure_compression=True)
-                    break
+                corrected = False
+                if not wall_sweep.is_clear(engine, prior_wall, next_wall):
+                    if fraction < 1. or not vessel_contact:
+                        continue
+                    trial = wall_contact.resolve(engine, prior_wall, next_wall, bonds, trial, solve)
+                    if trial is None or not _valid_section_motion(
+                            engine, rods, previous, trial, retained, first, second, reference_length):
+                        continue
+                    next_wall = tuple(surfaces.frames(engine, rods, trial, trial_radius, bonds))
+                    if not wall_sweep.is_clear(engine, prior_wall, next_wall):
+                        continue
+                    corrected = True
+                position, proposed_radius, prior_wall = trial, trial_radius, next_wall
+                if corrected or fraction < 1.:
+                    _, _, touched = contact(position, proposed_radius, (position - previous) / STEP_SECONDS,
+                                            measure_compression=True)
+                break
             else:
                 raise ValueError('VESSEL_WALL_SWEEP_UNSAFE: no limited section response retained clearance')
         elif swept:
@@ -737,7 +755,7 @@ def view(engine):
     frames = _accepted_frames(engine, rods, position, radius, bonds)
     return {
         'model': MODEL,
-        **({'sectionModel': SECTION_MODEL} if mechanics(engine) is not None else {}),
+        **({'sectionModel': mechanics(engine)['model']} if mechanics(engine) is not None else {}),
         'sites': [{'sourceCell': rods.cells[i], 'restPositionMm': rods.rest[i].tolist(),
                    'positionMm': position[i].tolist(), 'restRadiusMm': float(rods.radius[i]), 'radiusMm': float(radius[i]),
                    'activeSupportCells': support_by_site.get(i, [])} for i in retained],

@@ -58,21 +58,40 @@ support. The full-volume COSTA, SPOCKMIP and Vessel-MAYON comparisons also
 missed bright native TOF paths. VesselFM remains the reconstruction estimate.
 The restricted local review tracks the source comparisons and failures.
 
+In **Anatomy**, select the native TOF vessel estimate and open **Attached
+vessel uncertainty** in its layer inspector. The on-demand review finds
+physically thick low-signal regions with a nearby face-adjacent brighter
+part of the estimate. Three native sections show the original TOF signal,
+the estimate contour and the review footprint. The signal window is shared
+across the three views. **Show review overlay** switches the same sections
+back to acquired signal alone. A weak-signal region can contain a genuine
+vessel. This inspection preserves reconstruction geometry, source labels,
+saved views, correction drafts and rehearsal inputs.
+
+The screen samples the low decile of foreground TOF signal, uses a 1 mm
+distance-to-background core and requires at least 2.5 mm³ after a physical
+opening. It measures nearby signal against the foreground interquartile
+range. VesselFM score summaries are uncalibrated. Thin joins can fall
+outside this screen, and sections near the acquisition faces have limited
+context. The operation runs only on a source-bound, unedited TOF estimate.
+
 Run the component, branch and package steps from the primary checkout.
-Replace the repeated subject selection with `--cohort` to resume the first
-two steps for the whole restricted source inventory.
+Replace the repeated subject selection with `--cohort` to run or resume the
+component, branch and attached reviews for the whole restricted source inventory.
 
 ```sh
 .venv/bin/python scripts/run_eden2020_vascular_review.py --subject PTNT_4509
 .venv/bin/python scripts/run_eden2020_vascular_review.py --graph --subject PTNT_4509
+.venv/bin/python scripts/run_eden2020_vascular_review.py --attached --subject PTNT_4509
 .venv/bin/python scripts/build_eden2020_vascular_companion.py --subject PTNT_4509 --linked-source
 ```
 
 The private run is under
 `qc/eden2020-glioma-5714812/vascular-reconstruction-20261123-v1/` on the data
 volume. Read `workflow.json` for the frozen model and cleanup policy,
-`processing.json` for per-subject processing, and `graphs.json` for branch
-coverage. Open the source-linked `vascular-review.anatomy.json` or a standalone
+`processing.json` for per-subject processing, `graphs.json` for branch coverage
+and `attached.json` for the attached-region screen and its exact native cell
+receipts. Open the source-linked `vascular-review.anatomy.json` or a standalone
 companion's `patient-anatomy.json` in Cases, then select the original or cleanup
 under **Vessels**. Linked views reuse the canonical source study's checked
 members and open read-only. The native score surface is the vascular review

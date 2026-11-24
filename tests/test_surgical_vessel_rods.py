@@ -17,15 +17,18 @@ from resectionlab import native_backend, surgical_wall_sweep, surgical_vessel_ve
 from resectionlab.surgical_wall_sweep_reference import WallSweepReference
 
 
-def _fixture(*, guarded=False, vertex_transport=False, section_mechanics=False, conditioned=False, section_overrides=None):
+def _fixture(*, guarded=False, vertex_transport=False, section_mechanics=False, conditioned=False,
+             section_overrides=None, vessel_contact=False, parallel=False):
     shape = (35, 35, 30)
     spacing = .4
     affine = np.diag([spacing, spacing, spacing, 1.])
     grid = np.moveaxis(np.indices(shape), 0, -1)
     sites = [(i, 15, 15) for i in range(11, 24)]
-    other = [(i, 23, 15) for i in range(11, 14)]
+    other = [(i, 15, 19) for i in range(11, 24)] if parallel else [(i, 23, 15) for i in range(11, 14)]
     support = {sites[i]: (sites[i][0], 15, 17) for i in (0, 6, 12)}
-    radius = .66
+    if parallel:
+        support.update({other[i]: (other[i][0], 15, 21) for i in (0, 6, 12)})
+    radius = .77 if parallel else .66
     distances = np.minimum(*(np.linalg.norm(grid - np.clip(grid, chain[0], chain[-1]), axis=-1)
                              for chain in (sites, other)))
     scores = np.clip(.5 + radius - distances * spacing, 0., 1.).astype(np.float32)
@@ -45,7 +48,7 @@ def _fixture(*, guarded=False, vertex_transport=False, section_mechanics=False, 
     if vertex_transport:
         props[materials.PROPERTY][vertex_motion.PROPERTY] = vertex_motion.POLICY
     if section_mechanics:
-        section = rods.section_profile()
+        section = rods.section_profile(vessel_contact=vessel_contact)
         if section_overrides:
             section.update(section_overrides)
         props[materials.PROPERTY][rods.SECTION_MECHANICS] = section
@@ -236,6 +239,58 @@ def test_section_stiffness_sensitivity_under_the_same_tool_path():
         excursions.append(np.linalg.norm(position - definition.rest, axis=1).max())
     assert excursions[0] > excursions[1] > excursions[2]
     assert excursions[2] < .92 * excursions[0]
+
+
+def test_native_inter_vessel_contact_transfers_load_and_replays_without_crossing():
+    control, resolved = (_fixture(guarded=True, vertex_transport=True, section_mechanics=True,
+                                  conditioned=True, parallel=True, vessel_contact=enabled)
+                         for enabled in (False, True))
+    expected_binding = control.scene._vessel_source_walls[0].geometry_binding
+    assert resolved.scene._vessel_source_walls[0].geometry_binding == expected_binding
+    for engine in (control, resolved):
+        for action in (_action('exchange', instrument='dissector'), _action('place', z=4.)):
+            assert engine.step(action)['status'] == 'accepted'
+        definition = rods.definitions(engine)
+        position, radius = rods._current(engine, definition)
+        np.testing.assert_array_equal(position, definition.rest)
+        np.testing.assert_array_equal(radius, definition.radius)
+
+    advance = _action('move', z=4.9, dt=.4)
+    original = control.snapshot()
+    rejected = control.step(advance)
+    assert (rejected['status'], rejected['reasonCode']) == ('rejected', 'VESSEL_WALL_SWEEP_UNSAFE')
+    assert control.snapshot() == original
+
+    definition = rods.definitions(resolved)
+    second = definition.rest[:, 2] > 7.
+    second_cells = set(np.asarray(definition.cells)[second])
+
+    def passive_excursion(engine):
+        frames = rods._accepted_frames(engine, definition)
+        assert surgical_wall_sweep.is_clear(engine, frames, frames, static=True)
+        view = engine.view()[rods.FIELD]
+        assert view['sectionModel'] == rods.SECTION_CONTACT_MODEL
+        assert view['vertexDisplacementsByLabel']['2']['geometryBinding'] == expected_binding
+        assert not second_cells.intersection(view['contactedCells'].get('left', ()))
+        positions, radii = rods._current(engine, definition)
+        assert np.min(radii / definition.radius) >= 1. - rods.MAX_COMPRESSION
+        return float((positions - definition.rest)[second, 2].max())
+
+    assert resolved.step(advance)['status'] == 'accepted'
+    first_contact = passive_excursion(resolved)
+    assert .10 < first_contact < .18
+    assert resolved.step(_action('move', z=5.05, dt=.26))['status'] == 'accepted'
+    loaded = passive_excursion(resolved)
+    assert first_contact < loaded < .30
+
+    replay = SurgicalEngine.restore(resolved.scene, json.loads(json.dumps(resolved.snapshot())), force_verify=True)
+    assert replay.view()[rods.FIELD] == resolved.view()[rods.FIELD]
+    for action in (_action('withdraw', z=4., dt=.35), _action('inspect', dt=.5)):
+        receipt = resolved.step(action)
+        assert receipt['status'] == 'accepted'
+        assert replay.step(action) == receipt
+    assert replay.view()[rods.FIELD] == resolved.view()[rods.FIELD]
+    assert 0. <= passive_excursion(resolved) < .25 * loaded
 
 
 def test_removed_positive_reextracts_native_wall_without_erasing_untouched_triangles():

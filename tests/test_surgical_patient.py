@@ -137,6 +137,7 @@ def test_standard_environment_local_native_wall_preserves_source_and_reopens(tmp
     crop = tuple(slice(i, i + size) for i, size in zip(start, case.mri.shape))
     np.testing.assert_array_equal(case.vascular_probabilities['vessels'], scores[crop])
     np.testing.assert_array_equal(case.compartments['brain'], brain[crop])
+    assert report['sourceLayers']['brain']['sampledCoverageCells'] == case.mri.size
     assert wall['sourceImageSha256'] == study.series('tof')['original']['sha256']
     assert wall['sourceScoresSha256'] == study.layer('vessels')['probability']['sha256']
     assert report['resolutionMm'] == [.5, .5, .5]
@@ -157,14 +158,46 @@ def test_native_wall_requires_reviewed_alignment_even_when_estimated_is_allowed(
     assert not (tmp_path / 'result').exists()
 
 
-def test_local_native_wall_refuses_context_only_brain(tmp_path):
+@pytest.mark.parametrize('evidence_use', ['context_only', 'native-lattice inspection only'])
+def test_local_native_wall_refuses_inspection_only_brain(tmp_path, evidence_use):
     study, _, _ = native_wall_fixture(tmp_path)
-    study.layer('brain')['provenance']['evidence_use'] = 'context_only'
+    study.layer('brain')['provenance']['evidence_use'] = evidence_use
     study.save()
     with pytest.raises(ValueError, match='cannot use brain as mechanical anatomy'):
         prepare_surgical_environment(study.root, tmp_path / 'result', layer_ids={'brain': 'brain', 'vessels': 'vessels'},
                                      native_wall_center=[0., 0., 1.])
     assert not (tmp_path / 'result').exists()
+
+
+def test_local_native_wall_checks_anatomical_roles(tmp_path):
+    study, _, _ = native_wall_fixture(tmp_path)
+    with pytest.raises(ValueError, match='cannot use vessels for the brain material'):
+        prepare_surgical_environment(study.root, tmp_path / 'result', layer_ids={'brain': 'vessels', 'vessels': 'brain'},
+                                     native_wall_center=[0., 0., 1.])
+    assert not (tmp_path / 'result').exists()
+
+
+def test_local_native_wall_samples_only_covered_brain_and_vascular_labels(tmp_path):
+    study, _, brain = native_wall_fixture(tmp_path)
+    study.layer('brain')['coverage_fields'] = {'supported_axial_indices': [30, 31, 32]}
+    study.save()
+    layers = {'brain': 'brain', 'vessels': 'vessels'}
+    center = [0., 0., 1.]
+    report = prepare_surgical_environment(study.root, tmp_path / 'result', layer_ids=layers, native_wall_center=center)
+    case = load_case(report['casePath'])
+    start = report['nativeWall']['sourceStartIJK']
+    shape = case.mri.shape
+    crop = tuple(slice(i, i + n) for i, n in zip(start, shape))
+    expected = brain[crop].astype(bool) & np.isin(np.arange(start[2], start[2] + shape[2]), [30, 31, 32])
+    np.testing.assert_array_equal(case.compartments['brain'], expected)
+    assert report['sourceLayers']['brain']['sampledCoverageCells'] == 3 * shape[0] * shape[1]
+    assert any('Brain source coverage is partial' in warning for warning in report['warnings'])
+
+    study.layer('vessels')['coverage_fields'] = {'inference_bounds_voxel_inclusive': [[10, 0, 0], [64, 64, 64]]}
+    study.save()
+    with pytest.raises(ValueError, match='outside scored vascular coverage'):
+        prepare_surgical_environment(study.root, tmp_path / 'uncovered', layer_ids=layers, native_wall_center=center)
+    assert not (tmp_path / 'uncovered').exists()
 
 
 def test_local_native_wall_desktop_contact_and_replay_keep_the_installed_geometry(tmp_path):
@@ -204,6 +237,7 @@ def test_local_native_wall_desktop_contact_and_replay_keep_the_installed_geometr
             state = call(session, 'surgicalRehearsal', {**case_args, 'command': 'step', 'expectedStateId': state['view']['stateId'],
                 'action': {**action, 'slot': 'left'}})
         motion = state['view']['vesselMechanics']
+        assert motion['sectionModel'] == 'linear-annular-research-contact-v2'
         assert motion['contactedCells']['left']
         assert motion['vertexDisplacementsByLabel']['2']['geometryBinding'] == geometry
         assert motion['vertexDisplacementsByLabel']['2']['indices']

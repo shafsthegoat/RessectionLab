@@ -14,6 +14,7 @@ import {AnatomyInspection} from './AnatomyInspection';
 import {NativeImportPanel} from './NativeImportPanel';
 import {NativePreparePanel} from './NativePreparePanel';
 import {NativeRegistrationReview} from './NativeRegistrationReview';
+import {NativeAttachedVesselReview} from './NativeAttachedVesselReview';
 import {AcquisitionContributions,NativeLayerEvidence,rehearsalAvailability} from './NativeStudyEvidence';
 import './unified-anatomy.css';
 
@@ -144,6 +145,9 @@ export function NativeSidebar({workspace:w,tab,onOpenAnatomy,onOpenPlan,onOpenSc
         {w.volume?.compartments.find(l=>l.name===layer.id)?.qa&&(()=>{const q=w.volume!.compartments.find(l=>l.name===layer.id)!.qa!;return <details className="unified-details" open={q.voxelCount===0}><summary>Anatomy quality · {q.voxelCount===0?'empty segmentation':q.issues.length?'review findings':'source checks complete'}</summary><p>{q.componentCount.toLocaleString()} source components · anatomical accuracy unmeasured</p>{q.issues.map(issue=><p key={issue}>{issue}</p>)}<p>Findings do not change the source. Inspect linked slices before accepting corrections.</p></details>})()}
         {!w.draft&&['all','exterior-air'].includes(w.vesselScope)&&layer.source_series===w.series&&['vessel','vessels','artery','vein','sinus'].includes(layer.kind)&&
           (layer.provenance as {model?:string}|null)?.model!=='siam-v2'&&<NativeVesselBranchPanel key={`${b.document.snapshot_id}/${layer.id}`} workspace={w} layerId={layer.id}/>}
+        {!w.draft&&source?.modality==='TOF'&&layer.source_series===w.series&&layer.kind==='vessels'&&!!layer.probability&&
+          (layer.provenance as {model?:string}|null)?.model==='vesselfm'&&
+          <NativeAttachedVesselReview key={`${b.collectionId}/${b.document.snapshot_id}/${layer.id}`} workspace={w} layerId={layer.id}/>}
         {!b.readOnlyStudy&&<button className="edit-segmentation" disabled={w.busy||!w.canEditLayer(layer.id)} onClick={()=>{setEditing(!editing);w.setTool('navigate');w.setEditLayer(layer.id)}}>{editing?'Close tools':'Edit segmentation'}</button>}
         {editing&&['vessels','artery','vein','sinus'].includes(layer.kind)&&<div className="vessel-review-note"><p>Disconnected pieces are model estimates. Inspect them on the source slices before keeping or removing them.</p><button disabled={w.busy||!!w.draft||!w.canEditLayer(layer.id)} onClick={()=>{setEditing(true);w.setEditLayer(layer.id);void w.reviewFragments(layer.id)}}>Inspect vessel fragments</button></div>}
         {editing&&<div className="correction-tools"><label>Tool<select aria-label="Correction tool" value={w.tool} onChange={e=>w.setTool(e.target.value)}><option value="navigate">Navigate</option><option value="paint">Paint</option><option value="erase">Erase</option></select></label><label>Brush radius · mm<input type="number" min=".25" max="50" step=".25" value={w.radius} onChange={e=>w.setRadius(+e.target.value)}/></label>

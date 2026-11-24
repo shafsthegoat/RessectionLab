@@ -78,6 +78,7 @@ export interface NativeAnatomyApi {
   anatomySavePackage(args:Args):Promise<{path:string}|null>;
   anatomySaveView(args:Args):Promise<{saved:boolean}>;
   anatomyComponents(args:Args):Promise<ComponentReview>;
+  anatomyAttachedVesselReview(args:Args):Promise<AttachedVesselReview>;
   anatomyGraph(args:Args):Promise<NativeVesselGraph>;
   anatomyCreate(args:Args):Promise<Binding|null>;
   anatomyReconstruct(args:Args):Promise<{document:Document;result:unknown}>;
@@ -157,6 +158,18 @@ export interface NativeScanState {cranialView?:CranialView;cursor:Point3|null;vi
 export interface RetiredClipping {seriesId:string|null;cutaway:import('./viewer/workspaceSettings').ViewerCutaway}
 export interface NativeViewState {schema:'patient-anatomy-view-v1';patientId:string;snapshotId:string;seriesId:string;states:Record<string,NativeScanState>;scalarTransferBasis?:'selected-acquisition-v1';patientCutaway?:import('./viewer/workspaceSettings').ViewerCutaway;vesselScope?:VesselScope;vesselDisplayVersion?:2;selectedApproachId?:string|null;selectedPlanningTargetId?:string|null;selectedApproachIds?:Record<string,string|null>;selectedStructure?:string|null}
 export interface ComponentReview {reviewId:string;layerId:string;components:Array<{id:number;voxels:number;volumeMm3:number;center:Point3}>}
+export interface AttachedVesselFinding {
+  id:string;centerIjk:Point3;voxels:number;volumeMm3:number;peakCoreRadiusMm:number;
+  signalP90:number;attachmentSignalP75:number;uncalibratedModelScoreMedian:number;
+}
+export interface AttachedVesselSection {
+  axis:number;index:number;shape:[number,number];spacingMm:[number,number];image:string;overlay:string;
+}
+export interface AttachedVesselReview {
+  snapshotId:string;reviewId?:string;status:'complete'|'partial'|'unavailable';reason?:string;
+  sourceLayer?:string;sourceSeries?:string;findings?:AttachedVesselFinding[];
+  preview?:{findingId:string;window:[number,number];sections:AttachedVesselSection[]};
+}
 export function isNativeBinding(value:unknown):value is Binding {return !!value&&typeof value==='object'&&'collectionId' in value&&'document' in value;}
 
 export type VesselScope='brain'|'all'|'intracranial'|'excluded'|'exterior-air';

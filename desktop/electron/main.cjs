@@ -180,6 +180,7 @@ function bindOperations() {
   const anatomyKeys = {
     anatomySaveView: ['viewState','saveArchive'],
     anatomyComponents: ['layerId'],
+    anatomyAttachedVesselReview: ['layerId','seriesId','findingId','reviewId'],
     anatomyGraph: ['layerId','point','displaySeriesId'],
     anatomyReconstruct: ['seriesId','model','synthsegVersion','brainLayerId'],
     anatomyPlan: ['action','approach','approachId','parameterHash','reviewApproachId','assess','start','end','radiusMm','patchRadiusMm','entryPatch','constraints','targetLayerId','candidateBinding','sensitivityConfig'], anatomyRemoval: ['point','radiusMm','reset'],

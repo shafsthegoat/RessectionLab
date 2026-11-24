@@ -1,13 +1,14 @@
 """Conservative, reversible review of native angiographic vessel predictions."""
 
+from base64 import b64encode
 from dataclasses import asdict, dataclass
 
 import numpy as np
-from scipy import ndimage as ndi
+from scipy import ndimage as ndi, sparse
 from scipy.spatial import cKDTree
 
 from .anatomy_siam_display import _head_support
-from .patient_anatomy import affine, digest, world
+from .patient_anatomy import affine, digest, file_hash, world
 
 
 RETAINED, UNCERTAIN, HIDDEN = 1, 2, 3
@@ -17,6 +18,14 @@ _AIR_CLEARANCE_MM = 2.0
 _MAX_LABEL_CELLS = 128_000_000
 _MAX_NEIGHBORHOOD_CELLS = 4_000_000
 _MAX_EXTERIOR_FOREGROUND = 4_000_000
+ATTACHED_REVIEW = "native-tof-attached-uncertainty-v1"
+_ATTACHED_DARK_PERCENTILE = 10.0
+_ATTACHED_CORE_RADIUS_MM = 1.0
+_ATTACHED_MINIMUM_VOLUME_MM3 = 2.5
+_ATTACHED_CONTEXT_MM = 2.0
+_ATTACHED_ANCHOR_CONTRAST_IQR = 0.15
+_MAX_ATTACHED_WEAK_CELLS = 500_000
+_MAX_ATTACHED_FINDINGS = 24
 
 
 @dataclass(frozen=True)
@@ -214,6 +223,278 @@ def supported_tof_layer(collection, row, *, check=lambda: None):
         }
         cache[key] = data, receipt
     return ({**row, "data": data, "label_value": 1} if data else row), receipt
+
+
+def _weak_components(points, shape, check):
+    """Keep sparse weak-signal components off the full native-sized label grid."""
+    flat = np.ravel_multi_index(points.T, shape)
+    strides = np.cumprod((1, *shape[:0:-1]))[::-1]
+    starts, stops = [], []
+    for step in np.argwhere(CONNECTIVITY) - 1:
+        if tuple(step) <= (0, 0, 0):
+            continue
+        check()
+        valid = np.ones(len(points), dtype=bool)
+        for axis in np.flatnonzero(step):
+            limit = shape[axis] - 1 if step[axis] > 0 else 0
+            valid &= points[:, axis] != limit
+        source = np.flatnonzero(valid)
+        target = flat[source] + step @ strides
+        index = np.searchsorted(flat, target).clip(max=len(flat) - 1)
+        adjacent = flat[index] == target
+        starts.append(source[adjacent].astype(np.int32))
+        stops.append(index[adjacent].astype(np.int32))
+    row, col = np.concatenate(starts), np.concatenate(stops)
+    graph = sparse.coo_matrix((np.ones(len(row), dtype=bool), (row, col)), shape=(len(flat), len(flat)))
+    return sparse.csgraph.connected_components(graph, directed=False)[1]
+
+
+def attached_vessel_uncertainty(mask, signal, scores, native_affine, *, check=lambda: None):
+    """Locate thick, weak-signal regions attached to a brighter TOF estimate.
+
+    Returned C-order source cells are an inspection footprint. A low-signal
+    lumen is possible, so these findings carry no exclusion or correction.
+    """
+    mask = np.asarray(mask)
+    signal = np.asarray(signal)
+    scores = np.asarray(scores)
+    if (mask.dtype != np.bool_ or mask.ndim != 3 or mask.shape != signal.shape
+            or signal.dtype.kind not in "fui" or scores.shape != mask.shape
+            or scores.dtype.kind != "f"):
+        raise ValueError("Expected a native binary prediction, TOF signal and model scores")
+    frame = affine(native_affine)
+    spacing = np.linalg.norm(frame[:3, :3], axis=0)
+    axes = frame[:3, :3] / spacing
+    limits = {
+        "nativeSignalPercentile": _ATTACHED_DARK_PERCENTILE,
+        "minimumCoreRadiusMm": _ATTACHED_CORE_RADIUS_MM,
+        "minimumFootprintMm3": _ATTACHED_MINIMUM_VOLUME_MM3,
+        "contextRadiusMm": _ATTACHED_CONTEXT_MM,
+        "minimumNeighborContrastForegroundIqr": _ATTACHED_ANCHOR_CONTRAST_IQR,
+        "maximumWeakForegroundVoxels": _MAX_ATTACHED_WEAK_CELLS,
+        "maximumFindings": _MAX_ATTACHED_FINDINGS,
+    }
+    result = {
+        "algorithm": ATTACHED_REVIEW,
+        "status": "unavailable",
+        "sourceForegroundVoxels": int(np.count_nonzero(mask)),
+        "limits": limits,
+        "findings": [],
+    }
+    if not np.allclose(axes.T @ axes, np.eye(3), atol=1e-5):
+        return {}, {**result, "reason": "Native TOF lattice is sheared"}
+    if spacing.max() > _ATTACHED_CORE_RADIUS_MM / 1.5:
+        return {}, {**result, "reason": "Native lattice undersamples the physical screen"}
+    foreground = result["sourceForegroundVoxels"]
+    if not 100 <= foreground <= _MAX_EXTERIOR_FOREGROUND:
+        return {}, {**result, "reason": "Source foreground is too sparse or exceeds review workspace"}
+
+    check()
+    points = np.column_stack(np.nonzero(mask))
+    image_values = signal[tuple(points.T)]
+    if not np.isfinite(image_values).all():
+        return {}, {**result, "reason": "Native foreground signal has missing measurements"}
+    dark, lo, hi = np.percentile(image_values, [_ATTACHED_DARK_PERCENTILE, 25, 75])
+    scale = float(hi - lo)
+    if scale <= np.finfo(np.float32).eps * max(abs(float(lo)), abs(float(hi)), 1.0):
+        return {}, {**result, "reason": "Native foreground signal has insufficient contrast"}
+    weak_cells = image_values <= dark
+    if np.count_nonzero(weak_cells) > _MAX_ATTACHED_WEAK_CELLS:
+        return {}, {**result, "reason": "Weak native foreground exceeds review workspace"}
+    weak = points[weak_cells]
+    del points, image_values
+    labels = _weak_components(weak, mask.shape, check)
+    ordered = np.argsort(labels, kind="stable")
+    sizes = np.bincount(labels)
+    offsets = np.r_[0, sizes.cumsum()]
+    voxel_volume = float(abs(np.linalg.det(frame[:3, :3])))
+    component_ids = np.flatnonzero(sizes * voxel_volume >= _ATTACHED_MINIMUM_VOLUME_MM3)
+    component_ids = component_ids[np.argsort(-sizes[component_ids], kind="stable")]
+    spacing = np.asarray(spacing)
+    lattice_shape = np.array(mask.shape)
+    footprints = {}
+    review_limited = 0
+    for label in component_ids:
+        check()
+        cells = weak[ordered[offsets[label]:offsets[label + 1]]]
+        lower, upper = cells.min(axis=0), cells.max(axis=0)
+        local_shape = upper - lower + 1
+        if np.any((local_shape + 1) * spacing < 2 * _ATTACHED_CORE_RADIUS_MM):
+            continue
+        if np.prod(local_shape + 2) > _MAX_NEIGHBORHOOD_CELLS:
+            review_limited += 1
+            continue
+        group = np.zeros(local_shape, dtype=bool)
+        group[tuple((cells - lower).T)] = True
+        distance = ndi.distance_transform_edt(np.pad(group, 1), sampling=spacing)[1:-1, 1:-1, 1:-1]
+        core = distance >= _ATTACHED_CORE_RADIUS_MM
+        if not core.any():
+            continue
+        clearance = np.minimum(lower + .5, lattice_shape - upper - .5) * spacing
+        if np.any(clearance <= _ATTACHED_CONTEXT_MM):
+            continue
+        start, context = _bounds(cells, spacing, mask.shape, _ATTACHED_CONTEXT_MM)
+        source = signal[context]
+        if source.size > _MAX_NEIGHBORHOOD_CELLS or not np.isfinite(source).all():
+            review_limited += 1
+            continue
+        local_mask = mask[context]
+        weak_region = np.zeros(source.shape, bool)
+        weak_region[tuple((cells - start).T)] = True
+        # A physical opening localizes the thick portion and leaves
+        # peripheral low-signal filaments outside the inspection footprint.
+        opened = group & (ndi.distance_transform_edt(~core, sampling=spacing) < _ATTACHED_CORE_RADIUS_MM)
+        stations = np.argwhere(opened) + lower
+        volume = len(stations) * voxel_volume
+        if volume < _ATTACHED_MINIMUM_VOLUME_MM3:
+            continue
+        station_in_context = np.ones(source.shape, dtype=bool)
+        station_in_context[tuple((stations - start).T)] = False
+        ring = ndi.distance_transform_edt(station_in_context, sampling=spacing) <= _ATTACHED_CONTEXT_MM
+        touching = ndi.binary_dilation(weak_region) & ring & ~weak_region & local_mask & (source > dark)
+        if not touching.any():
+            continue
+        location = tuple(stations.T)
+        measured = signal[location]
+        candidate90 = float(np.percentile(measured, 90))
+        attachment75 = float(np.percentile(source[touching], 75))
+        contrast = (attachment75 - candidate90) / scale
+        if contrast < _ATTACHED_ANCHOR_CONTRAST_IQR:
+            continue
+        values = scores[location]
+        if not np.isfinite(values).all() or np.any((values < 0) | (values > 1)):
+            review_limited += 1
+            continue
+        check()
+        background = source[~local_mask & ring]
+        center = np.array(np.unravel_index(distance.argmax(), distance.shape)) + lower
+        footprint = np.ravel_multi_index(location, mask.shape)
+        finding_id = f"attached-{int(footprint[0])}"
+        footprints[finding_id] = footprint
+        result["findings"].append({
+            "id": finding_id,
+            "centerIjk": center.tolist(),
+            "centerRasMm": world(frame, center).tolist(),
+            "boundsIjk": [stations.min(axis=0).tolist(), (stations.max(axis=0) + 1).tolist()],
+            "voxels": len(stations),
+            "volumeMm3": volume,
+            "peakCoreRadiusMm": float(distance.max()),
+            "foregroundContactVoxels": int(np.count_nonzero(touching)),
+            "signalP90": candidate90,
+            "backgroundSignalMedian": float(np.median(background)) if background.size else None,
+            "attachmentSignalP75": attachment75,
+            "attachmentContrastForegroundIqr": contrast,
+            "uncalibratedModelScoreMedian": float(np.median(values)),
+        })
+        if len(footprints) == _MAX_ATTACHED_FINDINGS:
+            break
+    result.update(
+        status="partial" if review_limited or len(footprints) == _MAX_ATTACHED_FINDINGS else "complete",
+        foregroundDarkSignalCeiling=float(dark),
+        foregroundSignalIqr=scale,
+        groupsSkippedForMissingEvidenceOrWorkspace=review_limited,
+    )
+    result["findings"].sort(key=lambda finding: -finding["voxels"])
+    return footprints, result
+
+
+def review_attached_tof_layer(collection, row, *, check=lambda: None):
+    """Bind read-only attachment findings to the native acquisition and scores."""
+    from .anatomy_model_registry import source_volume
+
+    provenance = row.get("provenance", {})
+    series = collection.series(row["source_series"])
+    if (row["kind"] != "vessels" or provenance.get("model") != "vesselfm"
+            or row.get("edits") or not row.get("probability")
+            or series["modality"] != "TOF" or not source_volume(series)):
+        return {}, {"status": "unavailable", "reason": "Select an unedited native TOF vesselFM estimate"}
+    if (row["affine"] != series["affine"] or row["data"]["shape"] != series["data"]["shape"]
+            or row["probability"]["shape"] != series["data"]["shape"]
+            or provenance.get("source") != series["original"]["sha256"]):
+        return {}, {"status": "unavailable", "reason": "Source identity or native lattice could not be verified"}
+    try:
+        collection.require_native_geometry(series)
+        collection.require_native_geometry(row)
+    except ValueError:
+        return {}, {"status": "unavailable", "reason": "The source lattice requires geometry review"}
+    check()
+    original = collection.path(series["original"]["path"])
+    original_key = (str(original), original.stat().st_mtime_ns, series["original"]["sha256"])
+    if original_key not in collection._verified:
+        if file_hash(original) != series["original"]["sha256"]:
+            raise ValueError("Original native TOF checksum differs")
+        collection._verified.add(original_key)
+    identity = {
+        "algorithm": ATTACHED_REVIEW,
+        "sourceSeries": series["id"],
+        "sourceLayer": row["id"],
+        "sourceSha256": series["original"]["sha256"],
+        "sourceSignalSha256": series["data"]["sha256"],
+        "sourceDataSha256": row["data"]["sha256"],
+        "sourceScoreSha256": row["probability"]["sha256"],
+        "sourceShape": series["data"]["shape"],
+        "sourceAffineRasMm": series["affine"],
+        "sourceLabel": row["label_value"],
+    }
+    # Resolve and verify all array members even for a previously seen identity.
+    source_array = collection.array(series["data"])
+    predicate_array = collection.array(row["data"])
+    scores = collection.array(row["probability"])
+    check()
+    review_id = digest(identity)
+    cached = getattr(collection, "_attached_tof_review_cache", None)
+    if cached is not None and cached[0] == review_id:
+        return cached[1], cached[2]
+    footprints, analysis = attached_vessel_uncertainty(
+        predicate_array == row["label_value"], source_array, scores, series["affine"], check=check,
+    )
+    receipt = {**analysis, **identity, "reviewId": review_id}
+    collection._attached_tof_review_cache = (review_id, footprints, receipt)
+    return footprints, receipt
+
+
+def attached_tof_sections(collection, row, cells, finding, *, check=lambda: None):
+    """Return small, paired source and review overlays through the native core."""
+    series = collection.series(row["source_series"])
+    signal = collection.array(series["data"])
+    labels = collection.array(row["data"])
+    spacing = np.linalg.norm(affine(series["affine"])[:3, :3], axis=0)
+    center = np.asarray(finding["centerIjk"], dtype=int)
+    lower, upper = np.asarray(finding["boundsIjk"])
+    half_extent = np.clip(np.maximum(center - lower, upper - 1 - center) + np.ceil(2 / spacing), 1, 48).astype(int)
+    lo = np.maximum(0, center - half_extent)
+    hi = np.minimum(np.shape(signal), center + half_extent + 1)
+
+    planes, measurements = [], []
+    for axis, index in enumerate(center):
+        check()
+        section = [slice(a, b) for a, b in zip(lo, hi)]
+        section[axis] = int(index)
+        section = tuple(section)
+        gray = signal[section].T
+        estimate = labels[section].T == row["label_value"]
+        outline = estimate & ~ndi.binary_erosion(estimate, border_value=1)
+        u, v = [dimension for dimension in range(3) if dimension != axis]
+        ijk = np.repeat(center[:, None], gray.size, axis=1)
+        uu, vv = np.meshgrid(np.arange(lo[u], hi[u]), np.arange(lo[v], hi[v]))
+        ijk[u], ijk[v] = uu.ravel(), vv.ravel()
+        inside = np.isin(np.ravel_multi_index(ijk, signal.shape), cells).reshape(gray.shape)
+        overlay = np.where(inside, 2, outline).astype(np.uint8)
+        measurements.append(gray[np.isfinite(gray)])
+        planes.append((axis, index, [spacing[v], spacing[u]], gray, overlay))
+    available = np.concatenate(measurements)
+    low, high = map(float, np.percentile(available, [1, 99]))
+    scale = max(high - low, np.finfo(np.float32).eps * max(abs(high), 1.0))
+    sections = []
+    for axis, index, pixel_spacing, gray, overlay in planes:
+        normalized = np.nan_to_num((gray.astype(float) - low) / scale, nan=0, posinf=0, neginf=0)
+        pixels = np.clip(normalized * 255, 0, 255).astype(np.uint8)
+        sections.append({
+            "axis": axis, "index": int(index), "shape": list(gray.shape), "spacingMm": pixel_spacing,
+            "image": b64encode(pixels.tobytes()).decode("ascii"),
+            "overlay": b64encode(overlay.tobytes()).decode("ascii"),
+        })
+    return {"window": [low, high], "sections": sections}
 
 
 def classify_components(mask, signal, scores, native_affine, *, policy=ComponentPolicy()):

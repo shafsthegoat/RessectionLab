@@ -1,3 +1,4 @@
+import base64
 import json
 from pathlib import Path
 from types import SimpleNamespace
@@ -12,7 +13,7 @@ from resectionlab.anatomy_workspace import save_view
 from resectionlab.desktop_bridge import BridgeSession, _Request
 from resectionlab.patient_anatomy import PatientImagingCollection, digest, file_hash
 from resectionlab.vascular_cleanup import (
-    HIDDEN, RETAINED, UNCERTAIN, classify_components, review_component_visibility,
+    HIDDEN, RETAINED, UNCERTAIN, attached_vessel_uncertainty, classify_components, review_component_visibility,
     separate_reviewed_components,
 )
 
@@ -60,6 +61,103 @@ def test_no_source_support_abstains_and_preserves_all_components():
     np.testing.assert_array_equal(partition > 0, mask)
     assert report["hidden_components"] == 0
     assert report["reference_signal_available"] is False
+
+
+def _attached_fixture():
+    shape = (80, 76, 44)
+    mask = np.zeros(shape, dtype=bool)
+    mask[14:61, 31:40, 17:27] = True
+    weak = np.zeros(shape, dtype=bool)
+    weak[31:40, 40:48, 18:26] = True       # Wide attached weak-signal lobe.
+    weak[32, 48:58, 20] = True             # Narrow low-signal continuation.
+    weak[7:14, 54:61, 17:24] = True        # Detached lobe.
+    weak[68:75, 1:8, 1:8] = True           # Lobe touching the native extent guard.
+    bright = np.zeros(shape, dtype=bool)
+    bright[22, 39:52, 22] = True           # Small bright branch.
+    bright[34:42, 25:31, 17:27] = True     # Substantial bright continuation.
+    bright[67:69, 4, 4] = True
+    mask |= weak | bright
+    signal = np.broadcast_to(np.linspace(60, 160, shape[0], dtype=np.float32)[:, None, None], shape).copy()
+    signal[weak] = 6
+    signal[bright] = 300
+    scores = np.where(mask, 0.93, 0.03).astype(np.float32)
+    frame = np.diag([.4, .4, .5, 1.0])
+    frame[:3, 3] = [9, -3, 71]
+    return mask, signal, scores, frame, bright
+
+
+def test_attached_screen_keeps_thin_detached_bright_and_boundary_controls_out_of_overlay():
+    mask, signal, scores, frame, bright = _attached_fixture()
+    originals = [array.copy() for array in (mask, signal, scores)]
+    for array in (mask, signal, scores):
+        array.setflags(write=False)
+    cells, report = attached_vessel_uncertainty(mask, signal, scores, frame)
+
+    assert report["status"] == "complete"
+    finding, = report["findings"]
+    ix, iy, iz = np.unravel_index(cells[finding["id"]], mask.shape)
+    assert np.all((31 <= ix) & (ix < 40) & (40 <= iy) & (iy < 48) & (18 <= iz) & (iz < 26))
+    assert np.all(mask[ix, iy, iz])
+    assert not np.any(bright[ix, iy, iz])
+    assert len(ix) > 300
+    assert finding["volumeMm3"] == pytest.approx(len(ix) * .4 * .4 * .5)
+    assert finding["uncalibratedModelScoreMedian"] == pytest.approx(.93)
+    np.testing.assert_allclose(finding["centerRasMm"], frame[:3, 3] + np.diag(frame)[:3] * finding["centerIjk"])
+    scaled, _ = attached_vessel_uncertainty(mask, signal * 3 + 12, scores, frame)
+    np.testing.assert_array_equal(scaled[finding["id"]], cells[finding["id"]])
+    for original, array in zip(originals, (mask, signal, scores)):
+        np.testing.assert_array_equal(original, array)
+
+
+def test_attached_review_uses_bound_native_sections_without_writes(tmp_path):
+    mask, signal, scores, frame, _ = _attached_fixture()
+    image = nib.Nifti1Image(signal, frame)
+    image.header.set_xyzt_units("mm")
+    scan_path = tmp_path / "tof.nii"
+    nib.save(image, scan_path)
+    collection = PatientImagingCollection.create(tmp_path / "study", "native-attached-tof")
+    source = collection.add_series(scan_path, series_id="tof", modality="TOF")
+    layer = collection.add_layer(
+        mask.astype(np.uint8), source["affine"], layer_id="estimate", kind="vessels", source_series="tof",
+        role="context", color="#b83946",
+        provenance={"model": "vesselfm", "source": source["original"]["sha256"]}, probability=scores,
+    )
+    collection.save()
+    manifest = collection.root / "patient-anatomy.json"
+    initial = {file: file_hash(file) for file in collection.root.rglob("*") if file.is_file()}
+    bridge = BridgeSession(tmp_path / "transfers")
+
+    def call(op, args):
+        return bridge.execute(op, args, _Request("tof-attachment"), lambda *_: None)
+
+    opened = call("anatomyOpen", {"path": str(manifest)})
+    args = {"collectionId": opened["collectionId"], "snapshotId": collection.identity(),
+            "seriesId": "tof", "layerId": "estimate"}
+    op = "anatomyAttachedVesselReview"
+    report = call(op, args)
+    finding, = report["findings"]
+    assert report["sourceSha256"] == source["original"]["sha256"]
+    assert report["sourceScoreSha256"] == layer["probability"]["sha256"]
+    assert report["sourceDataSha256"] == layer["data"]["sha256"]
+    with pytest.raises(ValueError, match="refresh the findings"):
+        call(op, {**args, "reviewId": "stale", "findingId": finding["id"]})
+    with pytest.raises(ValueError, match="native TOF"):
+        call(op, {**args, "seriesId": "other-scan"})
+    assert {**report} == call(op, args)
+    sections = report["preview"]
+    assert sections == call(op, {**args, "reviewId": report["reviewId"], "findingId": finding["id"]})["preview"]
+    assert len(sections["sections"]) == 3
+    for plane in sections["sections"]:
+        assert plane["index"] == finding["centerIjk"][plane["axis"]]
+        assert len(base64.b64decode(plane["image"])) == np.prod(plane["shape"])
+        assert 2 in base64.b64decode(plane["overlay"])
+    assert bridge.anatomy_drafts == {}
+    assert initial == {file: file_hash(file) for file in collection.root.rglob("*") if file.is_file()}
+    assert not list(bridge.transfers.root.iterdir())
+    with collection.path(source["original"]["path"]).open("ab") as stream:
+        stream.write(b"source changed")
+    with pytest.raises(ValueError, match="TOF checksum differs"):
+        call(op, args)
 
 
 def test_native_view_hides_only_detached_exterior_air_and_restores_complete_scores(tmp_path):

@@ -9,6 +9,7 @@ import os
 from pathlib import Path
 import re
 from tempfile import NamedTemporaryFile
+from time import perf_counter
 
 import nibabel as nib
 import numpy as np
@@ -16,7 +17,8 @@ import numpy as np
 from resectionlab.data_root import ROOT_ENV, atomic_json, checked_root, safe_path
 from resectionlab.patient_anatomy import PatientImagingCollection, digest, file_hash
 from resectionlab.vascular_cleanup import (
-    HIDDEN, RETAINED, UNCERTAIN, ComponentPolicy, classify_components, review_component_visibility,
+    HIDDEN, RETAINED, UNCERTAIN, ComponentPolicy, classify_components, review_attached_tof_layer,
+    review_component_visibility,
 )
 
 
@@ -249,11 +251,66 @@ def process_graph(case, out):
     return result, False
 
 
+def process_attached(case, out, data_root, algorithm_sha256):
+    start = perf_counter()
+    manifest = Path(case["manifest"]).resolve()
+    if (not manifest.is_relative_to(safe_path(data_root, COLLECTION).parent)
+            or manifest.name != "patient-anatomy.json" or file_hash(manifest) != case["sha256"]):
+        raise ValueError("The restricted source manifest differs from the frozen collection")
+    collection = PatientImagingCollection(manifest.parent)
+    if collection.document["patient_id"] != f'EDEN2020:{case["subject"]}':
+        raise ValueError("Prepared EDEN2020 subject does not match its source identity")
+    evidence_path = out / "attached-review.json"
+    cells_path = out / "attached-review-cells.npz"
+    source = [row for row in collection.document["series"] if row["modality"] == "TOF"]
+    stamp = {"source_manifest_sha256": case["sha256"], "algorithm_sha256": algorithm_sha256}
+    if evidence_path.is_file():
+        previous = load_json(evidence_path)
+        if any(previous.get(key) != value for key, value in stamp.items()):
+            raise ValueError("Existing attachment review belongs to a different source or algorithm")
+        cells_sha = previous.get("footprints_sha256")
+        if not cells_sha or (cells_path.is_file() and file_hash(cells_path) == cells_sha):
+            return previous, True
+    if not source:
+        result = {**stamp, "status": "missing_input", "reason": "No acquired TOF"}
+        atomic_json(evidence_path, result)
+        return result, False
+    if len(source) != 1:
+        raise ValueError("Attachment review requires one native TOF acquisition")
+    baselines = [
+        row for row in collection.document["layers"]
+        if row["source_series"] == source[0]["id"] and row["provenance"].get("model") == "vesselfm"
+    ]
+    if len(baselines) != 1:
+        raise ValueError("Expected one pinned native vesselFM estimate")
+    footprints, report = review_attached_tof_layer(collection, baselines[0])
+    if footprints:
+        with NamedTemporaryFile(dir=out, delete=False) as stream:
+            temporary = Path(stream.name)
+            try:
+                np.savez_compressed(stream, **footprints)
+                stream.flush()
+                os.fsync(stream.fileno())
+                os.replace(temporary, cells_path)
+            finally:
+                temporary.unlink(missing_ok=True)
+    result = {
+        **stamp,
+        **report,
+        "footprints_sha256": file_hash(cells_path) if footprints else None,
+        "reviewed_voxels": sum(map(len, footprints.values())),
+        "elapsed_seconds": perf_counter() - start,
+    }
+    atomic_json(evidence_path, result)
+    return result, False
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--subject", action="append", help="Repeat to run individual pilot subjects")
     parser.add_argument("--cohort", action="store_true", help="Run every authoritative restricted subject")
     parser.add_argument("--graph", action="store_true", help="Audit branches and possible gaps using existing case partitions")
+    parser.add_argument("--attached", action="store_true", help="Review thick areas of weak native TOF signal without changing the estimate")
     parser.add_argument("--restore", action="append", help="Restore an explicitly reviewed hidden component to uncertain")
     parser.add_argument("--exclude", action="append", help="Hide an explicitly reviewed uncertain component")
     parser.add_argument("--reason", help="Source evidence for an explicit visibility decision")
@@ -261,6 +318,8 @@ def main():
     if bool(args.subject) == args.cohort:
         parser.error("Select --subject or --cohort")
     component_review = bool(args.restore or args.exclude)
+    if args.attached and (args.graph or component_review):
+        parser.error("Choose the attachment screen separately from branch or component review")
     if component_review and (args.cohort or args.graph or len(args.subject) != 1 or not (args.reason or "").strip()):
         parser.error("Component review requires exactly one --subject and a source-review --reason")
     if args.reason and not component_review:
@@ -281,7 +340,7 @@ def main():
         )
         print(subject, report["manual_review"], "(cached)" if cached else "", flush=True)
         return 0
-    stage = "graphs" if args.graph else "processing"
+    stage = "attached" if args.attached else "graphs" if args.graph else "processing"
     receipt = root / f"{stage}.json"
     failed = False
     with (root / f".{stage}.lock").open("a") as lock:
@@ -292,6 +351,10 @@ def main():
             "collection_sha256": file_hash(safe_path(data_root, COLLECTION)),
             "policy_sha256": digest(asdict(ComponentPolicy())),
         }
+        if args.attached:
+            from resectionlab import vascular_cleanup
+
+            binding["policy_sha256"] = file_hash(vascular_cleanup.__file__)
         run = load_json(receipt) if receipt.exists() else {
             **binding,
             "cases": {subject: {"status": "pending"} for subject in sorted(cases)},
@@ -302,7 +365,16 @@ def main():
             out = safe_path(directory, subject)
             out.mkdir(exist_ok=True)
             try:
-                if args.graph:
+                if args.attached:
+                    report, cached = process_attached(cases[subject], out, data_root, binding["policy_sha256"])
+                    row = {
+                        "status": report["status"],
+                        "report": str((out / "attached-review.json").relative_to(root)),
+                        "findings": len(report.get("findings", [])),
+                        "reviewed_voxels": report.get("reviewed_voxels"),
+                        "elapsed_seconds": report.get("elapsed_seconds"),
+                    }
+                elif args.graph:
                     row, cached = process_graph(cases[subject], out)
                 else:
                     report, cached = process(cases[subject], out, data_root)

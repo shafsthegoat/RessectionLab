@@ -49,7 +49,7 @@ _MODULES = ('core', 'geometry', 'anatomy_geometry', 'surface_fairing', 'surgical
             'surgical_vascular_graph', 'surgical_bipolar_thermal',
             'surgical_occupancy', 'surgical_rl_protection', 'surgical_geometry_cache',
             'surgical_vessel_rods', 'surgical_vessel_surface', 'surgical_vessel_vertex_motion',
-            'surgical_wall_sweep', 'surgical_wall_sweep_reference',
+            'surgical_wall_sweep', 'surgical_wall_sweep_reference', 'surgical_wall_contact',
             'surgical_verified_cache', 'surgical_cusa_v3', 'surgical_clock', 'surgical_idle_native',
             'build_surgical_idle_native', 'surgical_cranial_stages', 'surgical_membrane_transport',
             'native_backend', 'surgical_native_engine', 'surgical_native_control')

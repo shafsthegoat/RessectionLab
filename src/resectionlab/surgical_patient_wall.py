@@ -6,6 +6,7 @@ from itertools import permutations
 import numpy as np
 from scipy import ndimage
 
+from .anatomy_evidence import inference_bounds
 from .anatomy_geometry import conditioned_vascular_probability_mesh, read_source_branch_graph, source_branch_cache_path
 from .anatomy_model_registry import ANGIOGRAPHY, source_volume
 from .core import array_digest, semantic_digest
@@ -59,6 +60,13 @@ def native_wall_grid(collection, row, registration, center):
     start, stop = anchor - half, anchor + half + 1
     if np.any(start < 0) or np.any(stop > shape) or np.prod(stop - start) > 2_000_000:
         raise ValueError('The 24 mm local wall domain requires complete native scan coverage within the working budget')
+    bounds = inference_bounds(row)
+    supported_slices = row.get('coverage_fields', {}).get('supported_axial_indices')
+    if (bounds is not None and (np.any(start < bounds[0]) or np.any(stop - 1 > bounds[1]))
+            or supported_slices is not None and (not isinstance(supported_slices, list)
+                or any(type(index) is not int or not 0 <= index < shape[2] for index in supported_slices)
+                or not set(range(start[2], stop[2])).issubset(supported_slices))):
+        raise ValueError('The local wall domain extends outside scored vascular coverage')
     crop = tuple(slice(lo, hi) for lo, hi in zip(start, stop))
     grid = patient_affine.copy()
     grid[:3, 3] += grid[:3, :3] @ start
@@ -174,7 +182,7 @@ def qualifying_properties(grid, masks, row, patient_id, *, cancelled=lambda: Fal
                          'sites': rod_sites}
     profile[wall_sweep.PROPERTY] = wall_sweep.POLICY
     profile[vertex_motion.PROPERTY] = vertex_motion.POLICY
-    profile[SECTION_MECHANICS] = section_profile()
+    profile[SECTION_MECHANICS] = section_profile(vessel_contact=True)
     profile['axialStiffnessN']['uncertain'] = .04
     profile['effectiveLumenAreaMm2']['uncertain'] = 1.
 

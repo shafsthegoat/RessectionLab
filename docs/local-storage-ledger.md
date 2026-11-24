@@ -84,6 +84,11 @@ The November 24 desktop reconstruction comparisons are indexed at
 physical geometry audits, TOF cohort inventory and mechanics controls to their
 source and build receipts. Restricted EDEN images and results stay on the HDD.
 
+The next CT context and native wall checks are indexed at
+`qc/cta-context-20261124-v1/README.md`. The index links the matched scalar and
+optical coverage controls, ordinary CTA view, faint-ringing measurements and
+paired-wall contact benchmark.
+
 Paths below are relative to the RessectionLab root. This compact ledger covers
 that area, not unrelated personal files elsewhere on the HDD. Presence does not
 establish scientific readiness or a completed build; consult each run's receipts.

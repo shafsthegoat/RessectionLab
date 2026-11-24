@@ -67,3 +67,10 @@
 .native-evidence-detail dl div{display:grid;grid-template-columns:1fr 1.3fr;gap:8px;padding:6px 0;border-bottom:1px solid #21333d}
 .native-evidence-detail dt{color:#91a4af}
 .native-evidence-detail dd{margin:0;color:#deeaef;overflow-wrap:anywhere}
+
+.native-attached-sections{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:8px}
+.native-attached-sections figure{margin:0;min-width:0}
+.native-attached-sections canvas{display:block;width:100%;height:auto;background:#0b1217;image-rendering:pixelated}
+.native-attached-sections figcaption{font-size:10px;color:#aebfc8;margin:4px 0}
+.attached-source-label{color:#4bd6ec}
+.attached-finding-label{color:#ffc55e}

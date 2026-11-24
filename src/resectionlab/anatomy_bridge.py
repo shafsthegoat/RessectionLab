@@ -26,7 +26,10 @@ from .anatomy_display import (
 
 VASCULAR_REVIEW_MANIFEST = "vascular-review.anatomy.json"
 VASCULAR_REVIEW_REVISION = re.compile(r"vascular-review\.[0-9a-f]{12}\.anatomy\.json")
-VASCULAR_REVIEW_READS = {"anatomyView", "anatomySample", "anatomyGraph", "anatomySection", "anatomyComponents"}
+VASCULAR_REVIEW_READS = {
+    "anatomyView", "anatomySample", "anatomyGraph", "anatomySection", "anatomyComponents",
+    "anatomyAttachedVesselReview",
+}
 
 
 def _linked_vascular_review(path):
@@ -67,7 +70,7 @@ def _retain(session, result):
 
 def dispatch(session, operation, args, request, progress):
     # A source read does not change the cached view or its transfer descriptors.
-    if operation not in {"anatomyView", "anatomySample"}:
+    if operation not in {"anatomyView", "anatomySample", "anatomyAttachedVesselReview"}:
         session.anatomy_view_cache = None
     if not hasattr(session, "anatomy_collections"):
         session.anatomy_packages = {}
@@ -179,6 +182,30 @@ def dispatch(session, operation, args, request, progress):
         if draft and draft.layer_id != args["layerId"]:
             raise ValueError("Finish the current layer correction first")
         report, _ = component_review(c, args["layerId"], draft.mask if draft else None)
+        return report
+    if operation == "anatomyAttachedVesselReview":
+        from .vascular_cleanup import attached_tof_sections, review_attached_tof_layer
+
+        row = c.layer(args["layerId"])
+        if row["source_series"] != args["seriesId"]:
+            raise ValueError("Open the vessel estimate's native TOF acquisition")
+        footprints, receipt = review_attached_tof_layer(c, row, check=request.check)
+        report = {**receipt, "snapshotId": current_id}
+        finding_id = args.get("findingId")
+        findings = report.get("findings", [])
+        if finding_id is None:
+            finding = findings[0] if findings else None
+        else:
+            if type(finding_id) is not str or finding_id not in footprints or args.get("reviewId") != report.get("reviewId"):
+                raise ValueError("Attached vessel review changed; refresh the findings")
+            finding = next(item for item in findings if item["id"] == finding_id)
+        if finding is not None:
+            report["preview"] = {"findingId": finding["id"], **attached_tof_sections(
+                c, row, footprints[finding["id"]], finding, check=request.check,
+            )}
+        request.check()
+        if json.loads(manifest.read_text()).get("snapshot_id") != current_id:
+            raise ValueError("Anatomy changed; reload the patient")
         return report
     if operation == "anatomyView":
         reference = c.series(args.get("seriesId", c.document["reference_series"]))

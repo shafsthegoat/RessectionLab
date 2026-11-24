@@ -118,7 +118,10 @@ def _check_layer_export(collection, role, row):
 
 def _wall_layer_issue(role, row):
     provenance = row.get('provenance', {})
-    if provenance.get('kind') in {'synthetic', 'simulated', 'generated'} or provenance.get('evidence_use') == 'context_only':
+    if row['kind'] not in ENVIRONMENT_KINDS[role]:
+        return f"Local native-wall rehearsal cannot use {row['label']} for the {role} material"
+    if (provenance.get('kind') in {'synthetic', 'simulated', 'generated'}
+            or provenance.get('evidence_use') not in (None, 'positive_labels_only')):
         return f"Local native-wall rehearsal cannot use {row['label']} as mechanical anatomy"
     if role == 'vessels' and (not row.get('probability') or row.get('edits') or row.get('revision') != 0):
         return 'Local native-wall rehearsal requires an intact native angiography score layer'
@@ -294,6 +297,7 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
     source_refs.append(SourceRef('source-manifest', manifest_uri, manifest_hash, native_frame='RAS+'))
     local_wall = None
     if native_wall_center is not None:
+        from .anatomy_sampling import sample_layer
         from .surgical_patient_wall import native_wall_grid
 
         local_wall = native_wall_grid(collection, rows['vessels'], affines[rows['vessels']['source_series']], native_wall_center)
@@ -302,14 +306,30 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
         warnings[2] = 'Tissue attachments and vessel mechanics are assigned research assumptions. There is no measured patient wall material, attachment map, or circulation model.'
     mri = _resample(collection.array(reference['data']), reference_affine, target_affine, shape)
     masks, layer_report = {}, {}
+    sampling_cache = {}
     for name in selected_order:
         check()
         row = rows[name]
         raw = collection.array(row['data'])
         registered = affines[row['source_series']] @ np.asarray(row['affine'])
-        source_wall = local_wall is not None and name == 'vessels'
-        sampled = local_wall.mask if source_wall else _resample(
-            raw, registered, target_affine, shape, label=row['label_value'], conservative=name in ('bone', 'vessels'))
+        support_cells = None
+        if local_wall is not None and name == 'vessels':
+            sampled = local_wall.mask
+            sampling = 'exact native crop'
+            support_cells = sampled.size
+        elif local_wall is not None:
+            source = collection.series(row['source_series'])
+            frames = (registered, affines[row['source_series']] @ np.asarray(source['affine']))
+            sampled, covered = sample_layer(collection, row, target_affine, shape, check, sampling_cache, frames=frames)
+            sampling = 'nearest-neighbor center inside acquired and declared label coverage'
+            support_cells = int(covered.sum())
+            if support_cells < sampled.size:
+                warnings.append(f'{name.capitalize()} source coverage is partial in the local domain. '
+                                'Uncovered cells supply no mechanical material.')
+        else:
+            conservative = name in ('bone', 'vessels')
+            sampled = _resample(raw, registered, target_affine, shape, label=row['label_value'], conservative=conservative)
+            sampling = 'any-hit <=0.5mm samples' if conservative else 'nearest-neighbor center'
         if not sampled.any():
             if local_wall is not None and name not in ('brain', 'vessels'):
                 warnings.append(f'The selected {name} layer has no occupied samples in the local domain.')
@@ -326,8 +346,9 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
             'reviewStatus': row.get('review_status'),
             'uncertainty': copy.deepcopy(row.get('uncertainty')), 'scoreMeaning': row.get('score_meaning'),
             'probability': copy.deepcopy(row.get('probability')),
-            'sampling': ('exact native crop' if source_wall else 'any-hit <=0.5mm samples'
-                         if name in ('bone', 'vessels') else 'nearest-neighbor center')}
+            'sampling': sampling}
+        if support_cells is not None:
+            layer_report[name]['sampledCoverageCells'] = support_cells
     selected_order = tuple(masks)
     overlaps = {a + ':' + b: int(np.count_nonzero(masks[a] & masks[b])) for a, b in itertools.combinations(selected_order, 2)}
     ownership = np.zeros(shape, np.uint8)
