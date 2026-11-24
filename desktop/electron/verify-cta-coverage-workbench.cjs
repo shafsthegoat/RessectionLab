@@ -3,6 +3,7 @@
 // Exercise the ordinary intake, coverage controls and portable workspace in a hidden window.
 const {app,dialog,ipcMain}=require('electron');
 const assert=require('node:assert/strict');
+const {createHash}=require('node:crypto');
 const fs=require('node:fs');
 const path=require('node:path');
 const {inputScript}=require(path.join(process.env.CTA_COVERAGE_DESKTOP??__dirname+'/..','electron/verify-eden-planning-helpers.cjs'));
@@ -40,6 +41,7 @@ ipcMain.handle=(channel,handler)=>originalHandle(channel,async(event,...args)=>{
 
 const delay=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 const stem=filename=>path.basename(filename).replace(/\.nii(?:\.gz)?$/i,'');
+const hash=filename=>createHash('sha256').update(fs.readFileSync(filename)).digest('hex');
 app.on('browser-window-created',(_event,window)=>{
   window.on('show',()=>{report.windowEverVisible=true; window.hide();});
   window.webContents.once('did-finish-load',async()=>{
@@ -152,6 +154,33 @@ app.on('browser-window-created',(_event,window)=>{
         await click('Scans');
         await click('Save patient study file…');
         await wait(()=>report.operations.some(row=>row.channel==='research:anatomySavePackage'&&!row.error),'portable CTA package');
+        if(config.verifyCorrection){
+          const archiveSha=hash(config.package);
+          await click('3D workspace');
+          await click('Combined arteries');
+          await pressed('Combined arteries');
+          await click(config.verifyCorrection);
+          await click('Edit segmentation');
+          await js(inputScript('Correction author','Hidden workbench verification'));
+          await click('Review fragments');
+          const firstFragment=`document.querySelector('input[aria-label^="Select fragment "]')`;
+          await wait(()=>js(`!!(${firstFragment})&&!(${firstFragment}).disabled`),'reviewed wider arterial fragments');
+          await js(`(${firstFragment}).click()`);
+          await click('Preview removal (1)');
+          await wait(()=>js(`!!document.querySelector('.unified-correction')`),'source annotation correction preview');
+          assert.equal((await state()).snapshotId,result.snapshotId);
+          await click('Accept correction');
+          await wait(async()=>(await state()).snapshotId!==result.snapshotId,'accepted correction revision');
+          const retired=await capture('retired-combination');
+          const document=JSON.parse(fs.readFileSync(path.join(config.workspace,'patient-anatomy.json'),'utf8'));
+          const [option]=document.display.cta_arterial_coverage;
+          const visible=retired.state.states[retired.state.seriesId].visible;
+          assert(option.retired&&!document.layers.some(layer=>layer.id===result.layerId));
+          assert(!visible[result.layerId]&&option.focus_layers.every(id=>visible[id])&&option.wider_layers.every(id=>!visible[id]));
+          assert.equal(retired.signal,combined.signal);
+          assert.equal(hash(config.package),archiveSha,'Correction changed the previously saved portable study');
+          report.correction={originalSnapshot:result.snapshotId,newSnapshot:document.snapshot_id,archiveSha256:archiveSha};
+        }
       }else{
         await wait(async()=>(await state())?.patientId===config.patient,'cold portable CTA workspace');
         await click('3D workspace');
