@@ -1,10 +1,11 @@
 """Open an exact native-wall source study without replacing a live rehearsal."""
 
 from contextlib import ExitStack
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import hashlib
 from pathlib import Path
 import tempfile
+from time import perf_counter
 from urllib.parse import unquote, urlparse
 import uuid
 
@@ -12,9 +13,10 @@ import numpy as np
 
 from .anatomy_local_wall_review import native_wall_alignment_review
 from .anatomy_package import open_package
-from .anatomy_sampling import sample_layer
+from .anatomy_geometry import _indexed_contour, appearance_kind, local_source_contour, normals
+from .anatomy_sampling import native_field_bounds, sample_layer
 from .core import thaw_json
-from .patient_anatomy import PatientImagingCollection, world
+from .patient_anatomy import PatientImagingCollection, file_hash, world
 from .surgical_patient import _check_layer_export, _resample, _source_registration, _wall_layer_issue
 from .surgical_patient_wall import SCHEMA, native_wall_grid
 
@@ -26,6 +28,8 @@ class SourceInspection:
     manifest_sha: str
     storage: tempfile.TemporaryDirectory
     scans: dict
+    originals: dict
+    transfer_paths: set[str] = field(default_factory=set)
 
     @property
     def workspace(self):
@@ -41,13 +45,23 @@ def _manifest_hash(path):
 
 
 def _check_original(collection, original, check):
-    digest = hashlib.sha256()
-    with collection.path(original['path']).open('rb') as stream:
-        while block := stream.read(4 * 1024**2):
-            check()
-            digest.update(block)
-    if digest.hexdigest() != original['sha256']:
+    path = collection.path(original['path'])
+    before = _fingerprint(path)
+    if file_hash(path, check=check) != original['sha256'] or _fingerprint(path) != before:
         raise ValueError('The acquired source file differs from the saved rehearsal')
+    return before
+
+
+def _fingerprint(path):
+    status = path.stat()
+    return status.st_dev, status.st_ino, status.st_size, status.st_mtime_ns, status.st_ctime_ns
+
+
+def check_source_current(inspection, series_id):
+    collection = inspection.collection
+    if (_manifest_hash(collection.root / 'patient-anatomy.json') != inspection.manifest_sha
+            or _fingerprint(collection.path(collection.series(series_id)['original']['path'])) != inspection.originals[series_id]):
+        raise ValueError('The native study changed; reopen the source inspection')
 
 
 def _source_manifest_hint(ref):
@@ -57,6 +71,21 @@ def _source_manifest_hint(ref):
             and path.is_absolute() and path.name == 'patient-anatomy.json'):
         return path
     return None
+
+
+def _native_field(scan, displayed, field_grid, field_shape, vessel_start):
+    native_shape = scan['data']['shape']
+    if vessel_start is not None:
+        start, extent, partial = np.asarray(vessel_start), np.asarray(field_shape), False
+    else:
+        start, stop, partial = native_field_bounds(displayed, native_shape, field_grid, field_shape)
+        extent = stop - start
+    if np.any(extent < 2) or np.prod(extent, dtype=np.int64) > 2_000_000:
+        return None
+    cropped = displayed.copy()
+    cropped[:3, 3] = world(displayed, [start])[0]
+    return {'startIJK': start.tolist(), 'shape': extent.tolist(), 'nativeShape': native_shape,
+            'affine': cropped.tolist(), 'partialCoverage': partial}
 
 
 def _verify_study(case, adapter, wall, refs, collection, check):
@@ -73,6 +102,7 @@ def _verify_study(case, adapter, wall, refs, collection, check):
     scoped = adapter.get('nativeWallAlignmentReview')
     scans = {}
     frames = {}
+    originals = {}
     for sid in dict.fromkeys([reference['id'], *(row['source_series'] for row in rows.values())]):
         check()
         scan = collection.series(sid)
@@ -80,7 +110,7 @@ def _verify_study(case, adapter, wall, refs, collection, check):
         ref = refs.get(sid)
         if not ref or not ref.sha256 == original['sha256'] or ref.provenance != 'observed' or ref.native_frame != 'RAS+':
             raise ValueError('The acquired source binding differs from the saved rehearsal')
-        _check_original(collection, original, check)
+        originals[sid] = _check_original(collection, original, check)
         transform, unreviewed = _source_registration(collection, scan)
         if unreviewed and (sid != vessels['source_series'] or not scoped):
             raise ValueError('The saved rehearsal has no checked correspondence to this source')
@@ -118,7 +148,82 @@ def _verify_study(case, adapter, wall, refs, collection, check):
         if not np.array_equal(mask, case.compartments.get(role)):
             raise ValueError('Anatomy samples differ from the saved rehearsal field')
         scans[source_sid]['layers'].append({'id': row['id'], 'kind': row['kind'], 'label': row['label']})
-    return scans
+    for sid, scan in scans.items():
+        series = collection.series(sid)
+        native = np.asarray(series['affine'])
+        displayed = native if scan['independent'] else frames[sid] @ native
+        start = grid.start if sid == vessels['source_series'] else None
+        scan['localField'] = _native_field(series, displayed, grid.affine, grid.mask.shape, start)
+    return scans, originals
+
+
+def local_source_view(inspection, scan, snapshot_id, transfer, check, progress):
+    collection = inspection.collection
+    if snapshot_id != collection.identity():
+        raise ValueError('The native study changed; reopen the source inspection')
+    check_source_current(inspection, scan['seriesId'])
+    field = scan['localField']
+    if not field:
+        raise ValueError('The saved field is unavailable in this native grid; open the full acquisition')
+    series = collection.series(scan['seriesId'])
+    shape = tuple(field['shape'])
+    displayed = np.asarray(field['affine'])
+    start = np.asarray(field['startIJK'])
+    source_slices = tuple(slice(a, a + length) for a, length in zip(start, shape))
+    independent = scan['independent']
+    registration = np.eye(4) if independent else collection.registration_matrix(series['id'], require_geometry=True)
+    full_affine = registration @ np.asarray(series['affine'])
+    paths = set()
+
+    def asset(data, dtype):
+        descriptor = transfer(data, dtype)
+        paths.add(descriptor['path'])
+        return descriptor
+
+    progress(.15, 'Reading the acquired native samples at the saved field')
+    check()
+    signal = asset(collection.array(series['data'], check=check)[source_slices], 'float32')
+    layers = []
+    for selected in scan['layers']:
+        check()
+        row = collection.layer(selected['id'])
+        layer_affine = registration @ np.asarray(row['affine'])
+        mask, coverage = sample_layer(collection, row, displayed, shape, check, {}, frames=(layer_affine, full_affine))
+        started = perf_counter()
+        faces = np.empty((0, 3), np.uint32)
+        contour_field = 'limited-coverage'
+        if coverage.all():
+            if row['data']['shape'] == series['data']['shape'] and np.allclose(layer_affine, full_affine, rtol=0, atol=1e-5):
+                points, faces, contour_field = local_source_contour(collection, row, source_slices)
+                transform = np.linalg.solve(displayed, layer_affine)
+                vertices = world(transform, points + start).astype(np.float32)
+                if np.linalg.det(transform[:3, :3]) < 0:
+                    faces = faces[:, ::-1]
+            else:
+                # Independently sampled anatomy from a different grid uses its aligned label in this view.
+                vertices, faces, _ = _indexed_contour(mask.astype(np.uint8), probability=False)
+                contour_field = 'aligned-categorical'
+        geometry = {'empty': True}
+        if len(faces):
+            vertex_asset = asset(vertices, 'float32')
+            normal_asset = asset(normals(vertices, faces), 'float32')
+            geometry = {'positions': vertex_asset, 'source': vertex_asset, 'indices': asset(faces, 'uint32'),
+                        'normals': normal_asset, 'sourceNormals': normal_asset}
+        layers.append({'name': row['id'], 'label': row['label'], 'kind': row['kind'], 'displayKind': appearance_kind(row),
+                       'color': row['color'], 'sourceSeries': series['id'], 'mask': asset(mask, 'uint8'),
+                       'alignment': 'independent' if independent else collection.document['transforms'][series['id']]['status'],
+                       'surface': geometry, 'surfaceDiagnostics': {'policy': 'native-open-field-v1', 'kind': 'context' if row['kind'] == 'brain' else 'vessel',
+                           'surfaceField': contour_field, 'sourceSurfaceOnly': True, 'maxDisplacementMm': 0.,
+                           'triangles': len(faces), 'preparationMs': (perf_counter() - started) * 1000}})
+    check_source_current(inspection, scan['seriesId'])
+    check()
+    inspection.transfer_paths = paths
+    return {'snapshotId': snapshot_id, 'caseId': collection.document['patient_id'],
+            'caseHash': 'sha256:' + hashlib.sha256(f"{snapshot_id}:{series['id']}:local:{field['startIJK']}:{shape}".encode()).hexdigest(),
+            'frame': 'RAS+', 'shape': field['shape'], 'affine': field['affine'], 'mri': signal, 'sourceField': field,
+            'compartments': layers, 'modality': scan['modality'], 'unavailableLayers': [], 'alignmentPreviews': [],
+            'displayPreview': None, 'patientFrameReady': not independent,
+            'registrationStatus': 'independent source frame' if independent else 'patient frame'}
 
 
 def open_source_inspection(session, case, selected, check):
@@ -145,7 +250,7 @@ def open_source_inspection(session, case, selected, check):
             if _manifest_hash(manifest) != manifest_ref.sha256:
                 raise ValueError('Choose the exact study revision used to prepare this rehearsal')
             collection = PatientImagingCollection(manifest.parent)
-            scans = _verify_study(case, adapter, wall, refs, collection, check)
+            scans, originals = _verify_study(case, adapter, wall, refs, collection, check)
             if _manifest_hash(manifest) != manifest_ref.sha256:
                 raise ValueError('The native study changed during source verification')
             check()
@@ -153,7 +258,7 @@ def open_source_inspection(session, case, selected, check):
             if current is not None:
                 close_source_inspection(session, current.key)
             key = str(uuid.uuid4())
-            session.native_wall_source = SourceInspection(key, collection, manifest_ref.sha256, storage, scans)
+            session.native_wall_source = SourceInspection(key, collection, manifest_ref.sha256, storage, scans, originals)
             cleanup.pop_all()
     except (OSError, ValueError) as error:
         if selected:

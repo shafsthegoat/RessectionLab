@@ -58,9 +58,15 @@ def digest(value):
     ).hexdigest()
 
 
-def file_hash(path):
+def file_hash(path, *, check=None):
     with open(path, "rb") as f:
-        return hashlib.file_digest(f, "sha256").hexdigest()
+        if check is None:
+            return hashlib.file_digest(f, "sha256").hexdigest()
+        digest = hashlib.sha256()
+        while block := f.read(4 * 1024**2):
+            check()
+            digest.update(block)
+        return digest.hexdigest()
 
 
 def affine(value):
@@ -245,14 +251,21 @@ class PatientImagingCollection:
             "dtype": data.dtype.name,
         }
 
-    def array(self, ref):
+    def array(self, ref, *, check=None):
         p = self.path(ref["path"])
-        if p.stat().st_size > MAX_ARRAY + 4096:
+        status = p.stat()
+        if status.st_size > MAX_ARRAY + 4096:
             raise ValueError("Oversized anatomy member")
-        key = (str(p), p.stat().st_mtime_ns, ref["sha256"])
+        key = (str(p), status.st_mtime_ns, ref["sha256"])
         if key not in self._verified:
-            if file_hash(p) != ref["sha256"]:
+            if file_hash(p, check=check) != ref["sha256"]:
                 raise ValueError("Anatomy array checksum differs")
+            if check is not None:
+                # A read can update atime. Modification and identity must stay fixed.
+                newest = p.stat()
+                if (status.st_dev, status.st_ino, status.st_size, status.st_mtime_ns, status.st_ctime_ns) != (
+                        newest.st_dev, newest.st_ino, newest.st_size, newest.st_mtime_ns, newest.st_ctime_ns):
+                    raise ValueError("Anatomy array changed during verification")
             self._verified.add(key)
         a = np.load(p, mmap_mode="r", allow_pickle=False)
         if list(a.shape) != ref["shape"] or a.dtype.name != ref["dtype"]:

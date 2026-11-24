@@ -1,5 +1,6 @@
 import hashlib
 import json
+from pathlib import Path
 import nibabel as nib
 import numpy as np
 import pytest
@@ -222,13 +223,47 @@ def test_native_wall_source_inspection_keeps_live_state_and_checks_relocated_sou
                 call('anatomyView', {**binding, 'seriesId': 'other'})
             for scan, layer, status in [('t1', 'brain', 'patient frame'), ('tof', 'vessels', 'independent source frame')]:
                 # Study-wide preview and arbitrary overlays must remain outside the inspection.
-                view = call('anatomyView', {**binding, 'seriesId': scan, 'layers': ['other'], 'previewAlignment': True})
+                args = {**binding, 'seriesId': scan, 'layers': ['other'], 'previewAlignment': True}
+                view = call('anatomyView', {**args, 'sourceExtent': 'local'})
                 assert view['registrationStatus'] == status and not view['alignmentPreviews']
-                assert view['shape'] == [65, 65, 65] and view['displayPreview'] is None
-                assert [(comp['name'], comp['sourceSeries']) for comp in view['compartments']] == [(layer, scan)]
+                assert view['shape'] == [49, 49, 49] and view['displayPreview'] is None
+                field = next(row['localField'] for row in opened['scans'] if row['seriesId'] == scan)
+                assert view['sourceField'] == field and field['nativeShape'] == [65, 65, 65]
+                start = np.asarray(field['startIJK'])
+                crop = tuple(slice(i, i + n) for i, n in zip(start, field['shape']))
+                native = np.array(study.series(scan)['affine'])
+                native[:3, 3] += native[:3, :3] @ start
+                np.testing.assert_array_equal(view['affine'], native)
+                volume = study.series(scan)
+                collection = session.native_wall_source.collection
+                source_samples = collection.array(volume['data'])[crop].astype('<f4')
+                assert Path(view['mri']['path']).read_bytes() == source_samples.tobytes()
+                comp, = view['compartments']
+                assert (comp['name'], comp['sourceSeries']) == (layer, scan)
+                source_mask = (collection.array(study.layer(layer)['data'])[crop] == 1).astype(np.uint8)
+                assert Path(comp['mask']['path']).read_bytes() == source_mask.tobytes()
+                if scan == 'tof':
+                    assert field['startIJK'] == opened['cropStartIJK']
+                    faces = np.fromfile(comp['surface']['indices']['path'], '<u4').reshape(-1, 3)
+                    points = np.fromfile(comp['surface']['positions']['path'], '<f4').reshape(-1, 3)
+                    edges = np.sort(faces[:, [[0, 1], [1, 2], [2, 0]]].reshape(-1, 2), axis=1)
+                    unique_edges, counts = np.unique(edges, axis=0, return_counts=True)
+                    boundary = unique_edges[counts == 1]
+                    # The long vessel reaches both x faces without synthesized end caps.
+                    assert set(np.unique(points[boundary, 0])) == {0., 48.}
+                full = call('anatomyView', {**args, 'sourceExtent': 'full'})
+                assert 'sourceField' not in full and full['shape'] == [65, 65, 65]
+                assert full['registrationStatus'] == status
             scratch = session.native_wall_source.workspace
             call('closeNativeWallSource', {'collectionId': binding['collectionId']})
             assert not scratch.exists()
+        opened = call('inspectNativeWallSource', {**key, 'path': str(manifest)})
+        binding = {name: opened[name] for name in ('collectionId', 'snapshotId')}
+        acquisition.write_bytes(original_scan + b'changed after verification')
+        with pytest.raises(ValueError, match='study changed'):
+            call('anatomyView', {**binding, 'seriesId': 'tof', 'sourceExtent': 'local'})
+        acquisition.write_bytes(original_scan)
+        call('closeNativeWallSource', {'collectionId': binding['collectionId']})
         assert files() == source_before
         assert session._get_case(case['caseHash']) is entry
         after = call('surgicalRehearsal', {**key, 'command': 'inspect'})

@@ -297,9 +297,8 @@ def _display_geometry(collection, row, result, cache_hit, started):
     return {**result, "cache_hit": cache_hit, "preparation_ms": (perf_counter() - started) * 1000}
 
 
-def _field_values(collection, row, mask, slices, display_source):
+def _field_values(collection, row, cropped, slices, display_source):
     source = display_source if display_source is not None else row
-    cropped = mask[slices]
     probability = source.get("probability")
     if probability is None or source.get("edits"):
         return cropped.astype(np.uint8), "categorical"
@@ -323,6 +322,16 @@ def _field_values(collection, row, mask, slices, display_source):
     # Only removed positives and excluded ties cross below the contour.
     # Uncut interfaces retain their source field.
     return _suppress_vascular_scores(values, cropped), "native-probability" if display_source is None else "filtered-native-probability"
+
+
+def local_source_contour(collection, row, slices):
+    """Read a native sublattice and leave any cut surface edges open."""
+    mask = collection.array(row['data'])[slices] == row['label_value']
+    values, field = _field_values(collection, row, mask, slices, vascular_cleanup_source(collection, row))
+    if not mask.any() or min(mask.shape) < 2:
+        return (np.empty((0, 3), np.float32), np.empty((0, 3), np.uint32), field)
+    positions, indices, _ = _indexed_contour(values, field != 'categorical')
+    return positions, indices, field
 
 
 def vascular_cleanup_source(collection, row):
@@ -456,7 +465,7 @@ def mesh(collection, row, *, cancelled=lambda: False, display_source=None, condi
     hi = np.minimum(mask.shape, np.array([axis[-1] for axis in bounds]) + 3)
     slices = tuple(slice(a, b) for a, b in zip(lo, hi))
     cropped = mask[slices]
-    values, field = _field_values(collection, row, mask, slices, display_source)
+    values, field = _field_values(collection, row, cropped, slices, display_source)
     values = np.pad(values, 1)
     if cancelled():
         raise InterruptedError("Mesh preparation cancelled")

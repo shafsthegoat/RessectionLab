@@ -123,16 +123,23 @@ def dispatch(session, operation, args, request, progress):
         scan = inspection.scans.get(args.get('seriesId'))
         if scan is None:
             raise ValueError('This scan is outside the saved rehearsal source binding')
-        from .surgical_native_wall_source import _manifest_hash
+        from .surgical_native_wall_source import check_source_current, local_source_view
+
+        extent = args.get('sourceExtent', 'full')
+        if extent == 'local':
+            return local_source_view(inspection, scan, args.get('snapshotId'), session.transfers.array, request.check, progress)
+        if extent != 'full':
+            raise ValueError('Choose a local field or full acquisition')
 
         c = inspection.collection
-        if _manifest_hash(c.root / 'patient-anatomy.json') != inspection.manifest_sha:
-            raise ValueError('The native study changed; reopen the source inspection')
+        check_source_current(inspection, scan['seriesId'])
         args = {'collectionId': key, 'snapshotId': args.get('snapshotId'), 'seriesId': scan['seriesId'],
                 'layers': [layer['id'] for layer in scan['layers']], 'original': True}
     else:
         if key not in session.anatomy_collections:
             raise ValueError("Patient collection is not open")
+        if 'sourceExtent' in args:
+            raise ValueError('Source inspection requires a saved rehearsal binding')
         c = session.anatomy_collections[key]
     manifest = c.root / "patient-anatomy.json"
     linked_review = getattr(session, "anatomy_linked_review", None)
@@ -670,8 +677,9 @@ def dispatch(session, operation, args, request, progress):
             "snapshotId": c.identity(),
             "draft": bool(session.anatomy_drafts.get(key)),
         }
-        if inspection and _manifest_hash(manifest) != inspection.manifest_sha:
-            raise ValueError('The native study changed while loading its source slices')
+        if inspection:
+            check_source_current(inspection, reference['id'])
+            inspection.transfer_paths.clear()
         session.anatomy_transfer_paths = set()
         _retain(session, result)
         if cacheable:
