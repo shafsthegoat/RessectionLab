@@ -254,6 +254,9 @@ would cross an axis, the solver tries successively smaller displacement and
 caliber increments and retains a clear pose. Axes are checked for both hands
 again at the accepted action boundary. The state records limited ticks by
 hand. Earlier saves replay with their declared policy.
+The operative view draws the accepted instruments from the same local
+contact envelopes, including the working length and radius configured in
+the saved action.
 
 On the reviewed local TopCoW-012 CTA/MRA crop, v4 reached the 2,000-node limit
 before meaningful contact. The ordinary v5 preparation retained the exact

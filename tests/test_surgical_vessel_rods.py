@@ -421,6 +421,11 @@ def test_parked_dissector_limits_wall_recoil_during_other_hand_inspection():
         assert not rods.compliant_cells(engine, engine.touched(a, b, 0.))
         action = _action('inspect', slot='right', dt=rods.STEP_SECONDS)
         assert engine.step(action)['status'] == 'accepted'
+        if constrained:
+            shown = engine.observe()['slots']['left']['contactGeometry']
+            working, = (part for part in shown if part['part'] != 'shaft')
+            np.testing.assert_allclose(np.asarray([working['a'], working['b']]) + [6.8, 6., z], [a, b], atol=1e-12, rtol=0.)
+            assert working['radiusMm'] == .16
         frames = rods._accepted_frames(engine, definition)
         assert surgical_wall_sweep.is_clear(engine, frames, frames, static=True)
         return engine, rods.compliant_cells(engine, engine.touched(a, b, 0.)), definition

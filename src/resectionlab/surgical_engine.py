@@ -1602,7 +1602,7 @@ class SurgicalEngine:
     def observe(self, *, _state_id=None):
         from .surgical_position import describe_position
         slots = copy.deepcopy(self.state['slots'])
-        if self.state.get('toolMechanicsRevision') in (1, 2):
+        if self.state.get('toolMechanicsRevision') in (1, 2) or vessel_rods.working_axis_constraint_enabled(self):
             from .surgical_motion import envelopes
             for key, slot in slots.items():
                 slot['contactGeometry'] = [{'a': a.tolist(), 'b': b.tolist(), 'radiusMm': radius, 'part': part}
