@@ -61,17 +61,20 @@ export function initialNativeLayers(study:Binding['document'],seriesId:string,in
     const selected=initial?initial.includes(layer.id):cortex.includes(layer)||!['brain-region','review-region','head-envelope'].includes(layer.kind);
     return [layer.id,selected&&(!independent||layer.source_series===seriesId)];
   }));
-  const option=ctaCoverageDeclarations(study).find(option=>option.series_id===seriesId);
-  const combined=ctaCoverageOptions(study,seriesId);
-  if(option&&!initial){
-    if(combined)applyCtaCoverageVisibility(visible,combined,true);
-    else if(option.retired){
-      for(const id of option.wider_layers??[])visible[id]=false;
-      for(const id of option.focus_layers)if(owned.some(layer=>layer.id===id))visible[id]=true;
+  const admittedIds=new Set(admitted.map(layer=>layer.id));
+  const coverage=ctaCoverageDeclarations(study).filter(option=>admittedIds.has(option.layer_id)||option.focus_layers.some(id=>admittedIds.has(id)));
+  if(!initial){
+    for(const option of coverage){
+      const combined=ctaCoverageOptions(study,option.series_id);
+      if(combined)applyCtaCoverageVisibility(visible,combined,true);
+      else if(option.retired){
+        for(const id of option.wider_layers??[])visible[id]=false;
+        for(const id of option.focus_layers)if(admittedIds.has(id))visible[id]=true;
+      }
     }
   }
   const resolved=resolveCtaCoverageVisibility(study,visible);
-  return {available:option?admitted.filter(layer=>resolved[layer.id]):available,cortex,visible:resolved};
+  return {available:coverage.length?admitted.filter(layer=>resolved[layer.id]):available,cortex,visible:resolved};
 }
 
 function ctaCoverageDeclarations(study:Binding['document']){

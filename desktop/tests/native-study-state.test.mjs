@@ -83,6 +83,22 @@ test('ordinary CTA defaults replace all imported coverage members and retire edi
   assert.deepEqual(initialNativeLayers(study,'cta',false).visible,{focus:true,field:false,distal:false,skull:true});
 });
 
+test('a shared frame opens each CTA with one coverage layer',()=>{
+  const study={reference_series:'first',transforms:{second:{status:'reviewed'}},series:[],layers:[],display:{cta_arterial_coverage:[]}};
+  for(const id of ['first','second']){
+    const row=suffix=>({id:`${id}-${suffix}`,kind:'artery',source_series:id,revision:0,label_value:1,data:{sha256:`${id}-${suffix}`}});
+    const focus=row('focus'),wider=row('wider'),combined=row('combined');
+    study.series.push({id,modality:'CTA',original:{sha256:id}});
+    study.layers.push(focus,wider,{...combined,provenance:{kind:'derived_annotation_union',source_scan_sha256:id,
+      input_layers:[focus,wider].map(input=>({id:input.id,data_sha256:input.data.sha256,revision:0,label_value:1}))}});
+    study.display.cta_arterial_coverage.push({series_id:id,layer_id:combined.id,focus_layers:[focus.id],wider_layers:[wider.id]});
+  }
+  const shared=initialNativeLayers(study,'first',false).visible;
+  assert.deepEqual(Object.keys(shared).filter(id=>shared[id]),['first-combined','second-combined']);
+  const independent=initialNativeLayers(study,'second',true).visible;
+  assert.deepEqual(Object.keys(independent).filter(id=>independent[id]),['second-combined']);
+});
+
 test('scan and anatomy presets preserve the study colors of supplied arterial classes',()=>{
   const branch={id:'left-ica',kind:'artery',source_series:'ct',color:'#278c69',label_value:6,
     provenance:{kind:'supplied_annotation',publisher_class_id:6}};
