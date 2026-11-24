@@ -897,12 +897,15 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
           onPointerMove={event=>{if(event.buttons===1&&props.surgicalInteraction?.mode==='draw'){const p=engine.current?.pick(event.clientX,event.clientY);if(p)props.surgicalInteraction.onStroke(p,'move');}}}
           onPointerUp={event=>{if(props.surgicalInteraction?.mode==='draw'){const p=engine.current?.pick(event.clientX,event.clientY);if(p)props.surgicalInteraction.onStroke(p,'end');}}}
           onDoubleClick={(event) => {
+            let sourceLayer:string|null=null;
             const point = engine.current?.pick(event.clientX, event.clientY, name=>{
               if (surgicalView) inspectRegion(name);
-              else if (name) props.onPickStructure?.(name);
+              else sourceLayer=name;
             });
-            if (point && geometry)
+            if (point && geometry){
               onCursorChange(fusedContext?point:clampCursor(point, geometry.bounds));
+              if(sourceLayer)props.onPickStructure?.(sourceLayer,point);
+            }
           }}
           aria-label={props.surgicalInteraction?.mode==='draw'?'3-D source anatomy. Drag on anatomy to draw a proposed instrument stroke.':`3-D source anatomy. Drag to ${navigationMode==='pan'?'pan':'rotate'}, scroll to zoom, double-click to set linked cursor.`}
         >
@@ -1014,6 +1017,12 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
             <span>{props.generatedSignal?'Generated image section':`Source ${signalName} section`} · {TITLES[activePlane]} · {'XYZ'[PLANE_AXES[activePlane][2]]} {currentCursor[PLANE_AXES[activePlane][2]].toFixed(1)} mm</span>
             <button aria-label="Exit source section" onClick={exitSourceSection}>Exit section</button>
           </div>}
+          {!sourceSectionActive&&!surgicalView&&(corridorCrop||settings.clipBox?.enabled||props.vesselTrace?.isolationRadiusMm)&&
+            <div className="rl-source-section-readout" role="status">
+              <span>{props.vesselTrace?.isolationRadiusMm?'3D branch crop · linked slices retain full anatomy':corridorCrop?'3D corridor crop':'3D box crop'}</span>
+              {corridorCrop?<button onClick={()=>setCropApproach(false)}>Exit corridor crop</button>:
+                !props.vesselTrace?.isolationRadiusMm&&settings.clipBox?.enabled&&<button onClick={()=>changeSettings({...settings,clipBox:undefined})}>Clear box</button>}
+            </div>}
           <div className="rl-body-guide" hidden={fieldPresentation||settings.showOrientationGuide===false}>
             <div ref={orientationGuide} className="rl-body-guide-image" role="img" aria-label="Body orientation guide. Mint head follows the brain. Anatomical reference.">
               <span data-guide-side="right" aria-hidden="true">R</span>

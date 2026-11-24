@@ -5,6 +5,7 @@ import os
 import json
 import tempfile
 from time import perf_counter
+from itertools import product
 import numpy as np
 from scipy import ndimage as ndi
 from skimage.morphology import skeletonize
@@ -64,6 +65,66 @@ def _arrays(poly):
     else:
         raise ValueError("Unexpected VTK surface cell topology")
     return points, faces
+
+
+def _indexed_contour(values, probability):
+    raw, faces = _arrays(_poly(values, probability))
+    triangles = raw[faces]
+    areas = np.linalg.norm(
+        np.cross(triangles[:, 1] - triangles[:, 0], triangles[:, 2] - triangles[:, 0]), axis=1)
+    # Threshold ties may emit zero-area VTK triangles.
+    keep = areas > 1e-12
+    return raw, faces[keep], int(np.count_nonzero(~keep))
+
+
+def _suppress_vascular_scores(values, mask):
+    """Reflect excluded positives without shifting the retained score samples."""
+    excluded = ~mask & (values >= .5)
+    if excluded.any():
+        below = np.nextafter(values.dtype.type(.5), values.dtype.type(0))
+        values[excluded] = np.minimum(1 - values[excluded], below)
+    return values
+
+
+def vascular_probability_mesh(scores, mask):
+    """Raw native isosurface for a score-bound case compartment."""
+    if np.any(scores[mask] < .5) or not mask.any():
+        # A correction may introduce categorically supplied cells. The old
+        # score field cannot describe that revision.
+        return None
+    axes = [np.flatnonzero(mask.any(axis=tuple(i for i in range(3) if i != axis))) for axis in range(3)]
+    lo = np.maximum(0, np.array([axis[0] for axis in axes]) - 2)
+    hi = np.minimum(mask.shape, np.array([axis[-1] for axis in axes]) + 3)
+    crop = tuple(slice(a, b) for a, b in zip(lo, hi))
+    values = _suppress_vascular_scores(scores[crop].copy(order="C"), mask[crop])
+    positions, indices, _ = _indexed_contour(np.pad(values, 1), probability=True)
+    positions = (positions + lo - 1).astype(np.float32)
+    return positions, indices, normals(positions, indices)
+
+
+def vascular_mesh_source_cells(positions, mask):
+    """Bind every score crossing to the nearest positive endpoint of its native edge."""
+    rounded = np.rint(positions)
+    positions = np.where(np.abs(positions - rounded) <= 1e-5, rounded, positions)
+    floor = np.floor(positions).astype(np.int64)
+    ceil = np.ceil(positions).astype(np.int64)
+    if np.any(np.count_nonzero(floor != ceil, axis=1) > 1):
+        raise ValueError("Vascular surface must use native score edges")
+    distance = np.full(len(positions), np.inf)
+    source = np.full(len(positions), np.iinfo(np.uint32).max, dtype=np.uint32)
+    for step in product((0, 1), repeat=3):
+        candidate = np.where(step, ceil, floor)
+        inside = ((candidate >= 0) & (candidate < mask.shape)).all(axis=1)
+        rows = np.flatnonzero(inside)
+        occupied = rows[mask[tuple(candidate[rows].T)]]
+        error = np.sum((candidate[occupied] - positions[occupied])**2, axis=1)
+        take = error < distance[occupied]
+        accepted = occupied[take]
+        distance[accepted] = error[take]
+        source[accepted] = np.ravel_multi_index(candidate[accepted].T, mask.shape)
+    if not np.isfinite(distance).all():
+        raise ValueError("Vascular surface contains an unbound source crossing")
+    return source
 
 
 def normals(points, faces):
@@ -170,11 +231,7 @@ def _field_values(collection, row, mask, slices, display_source):
     # Match explicit source membership for scores exactly at the isovalue.
     # Only removed positives and excluded ties cross below the contour.
     # Uncut interfaces retain their source field.
-    suppressed = ~cropped & (original | (values == .5))
-    if suppressed.any():
-        below = np.nextafter(values.dtype.type(.5), values.dtype.type(0))
-        values[suppressed] = np.minimum(1 - values[suppressed], below)
-    return values, "native-probability" if display_source is None else "filtered-native-probability"
+    return _suppress_vascular_scores(values, cropped), "native-probability" if display_source is None else "filtered-native-probability"
 
 
 def vascular_cleanup_source(collection, row):
@@ -268,16 +325,7 @@ def mesh(collection, row, *, cancelled=lambda: False, display_source=None, condi
     values = np.pad(values, 1)
     if cancelled():
         raise InterruptedError("Mesh preparation cancelled")
-    raw, faces = _arrays(_poly(values, field != "categorical"))
-    triangles = raw[faces]
-    areas = np.linalg.norm(
-        np.cross(triangles[:, 1] - triangles[:, 0], triangles[:, 2] - triangles[:, 0]),
-        axis=1,
-    )
-    degenerate = int(np.count_nonzero(areas <= 1e-12))
-    # Exact threshold ties can emit zero-area VTK triangles. They represent no
-    # boundary area; omit only those faces from both versions, retaining vertices.
-    faces = faces[areas > 1e-12]
+    raw, faces, degenerate = _indexed_contour(values, field != "categorical")
     a = affine(row["affine"])
     # Quantize in final source coordinates before all geometry safety checks.
     offset = lo - 1

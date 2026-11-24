@@ -43,11 +43,16 @@ def initialize(engine):
         from .surgical_bipolar_thermal import initialize as initialize_bipolar_thermal
         initialize_bipolar_thermal(engine)
 
-def raster(engine):
+def raster(engine, *, include_rods=True):
     removed = set(engine.state['removed'])
+    excluded = ()
+    if not include_rods:
+        from . import surgical_vessel_rods as rods
+        if rods.enabled(engine):
+            excluded = rods.definitions(engine).index
     retained = [(int(key), displacement)
                 for key, displacement in sorted(engine.state.get('deformation', {}).items(), key=lambda item: int(item[0]))
-                if int(key) not in removed]
+                if int(key) not in removed and int(key) not in excluded]
     if not retained:
         return []
     grid_size = int(np.prod(engine.scene.shape))

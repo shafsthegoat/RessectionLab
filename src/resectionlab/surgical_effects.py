@@ -176,19 +176,23 @@ def apply_effect(engine, key, op, cells, p, q, dt):
         from .surgical_physics import vessel_profile, record_vessel_transections
         profile = vessel_profile(engine) or engine.scene.properties.get('tissuePhysicsV2', {}).get('vessel')
         if 'strands' not in engine.scene.properties and _source_geometry(engine).get('topology') != 'strand' and profile is None: raise ValueError('MISSING_STRAND_PROPERTIES')
+        from . import surgical_vessel_rods as rods
         edges = []
         for strand in engine.scene.properties.get('strands', []):
             eligible = set(strand['cells'])
             edges.extend(_edges(engine, sorted(set(cells) & eligible), eligible))
-        if profile is not None:
+        if rods.enabled(engine):
+            edges = rods.cut_candidates(engine, set(cells), p, orientation.apply([0., 1., 0.]), params['depthMm'])
+        elif profile is not None:
             labels = engine.scene.labels.ravel()
             local_vessels = [i for i in cells if engine.by_label[int(labels[i])]['material'] == 'vessel']
             for i in local_vessels:
                 edges.extend((min(i, j), max(i, j)) for j in _neighbors(engine, i)
                              if labels[j] and j not in engine.state['removed'] and engine.by_label[int(labels[j])]['material'] == 'vessel')
         normal = orientation.apply([0., 1., 0.])
-        edges = [edge for edge in edges
-                 if (lambda side: side.min() <= 0 < side.max())((_current_points(engine, edge) - p) @ normal)]
+        if not rods.enabled(engine):
+            edges = [edge for edge in edges
+                     if (lambda side: side.min() <= 0 < side.max())((_current_points(engine, edge) - p) @ normal)]
         count = _record_edges(engine, 'transectedEdges', edges)
         soft_count = 0
         if state.get('toolMechanicsRevision') in (1, 2):
@@ -550,10 +554,14 @@ def _current_points(engine, cells):
         points = engine.scene.points([positions.get(i, i) for i in ids])
         if engine.scene.properties.get('gliomaMaterialsV1', {}).get('vesselMotionModel'):
             from .surgical_glioma_materials import vessel_displacements
-            motion = vessel_displacements(engine)
+            from . import surgical_vessel_rods as rods
+            motion = rods.source_points(engine, ids) if rods.enabled(engine) else {}
+            displacement = {} if rods.enabled(engine) else vessel_displacements(engine)
             for index, cell in enumerate(ids):
                 if cell in motion:
-                    points[index] = engine.scene.points([cell])[0] + motion[cell]
+                    points[index] = motion[cell]
+                elif cell in displacement:
+                    points[index] = engine.scene.points([cell])[0] + displacement[cell]
         if engine.state.get('toolMechanicsRevision') not in (1, 2): return points
     else: points = engine.scene.points(ids)
     locations = {int(cell): index for index, cell in enumerate(ids)}

@@ -397,6 +397,8 @@ def save_case(case: CaseData, path: str | Path, *, artifacts: Mapping[str, Any] 
         raise ImagingError('INVALID_SURGICAL_ARCHIVE', str(error)) from error
     arrays: dict[str, np.ndarray] = {"mri": case.mri, "affine": case.affine}
     index: dict[str, dict[str, str]] = {"compartments": {}, "source_compartments": {}}
+    if case.vascular_probabilities:
+        index["vascular_probabilities"] = {}
     for group in index:
         for position, (name, values) in enumerate(getattr(case, group).items()):
             key = f"{group}_{position}"
@@ -514,6 +516,10 @@ def load_case(path: str | Path) -> CaseData:
                     for name, record in manifest["structural_evidence"].items()
                 }
             extra = {"structural_evidence": structural} if structural else {}
+            if manifest["array_index"].get("vascular_probabilities"):
+                extra["vascular_probabilities"] = {
+                    name: arrays[key] for name, key in manifest["array_index"]["vascular_probabilities"].items()
+                }
             if manifest.get("critical_evidence"):
                 from .critical_evidence import CriticalStructureEvidence
                 extra["critical_evidence"] = {

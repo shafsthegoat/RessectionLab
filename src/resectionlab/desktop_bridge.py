@@ -484,7 +484,8 @@ class BridgeSession:
 
     @staticmethod
     def _case_array_bytes(case: CaseData) -> int:
-        arrays = [case.mri, case.affine, *case.compartments.values(), *case.source_compartments.values()]
+        arrays = [case.mri, case.affine, *case.compartments.values(), *case.source_compartments.values(),
+                  *case.vascular_probabilities.values()]
         arrays.extend(item.mask for item in case.structural_evidence.values())
         for item in case.critical_evidence.values():
             arrays.extend((item.mask, item.annotation_coverage, item.affine_ras_mm))
@@ -586,6 +587,20 @@ class BridgeSession:
             except ValueError as error:
                 brain_support.update(reviewStatus="supplied_unverified", reason=str(error))
         from .anatomy_qa import mask_quality
+        vessel_surfaces = {}
+        if case.vascular_probabilities:
+            from .anatomy_geometry import vascular_mesh_source_cells, vascular_probability_mesh
+            for name, scores in case.vascular_probabilities.items():
+                if name not in case.compartments:
+                    continue
+                request.check()
+                mesh = vascular_probability_mesh(scores, case.compartments[name])
+                if mesh is not None and len(mesh[1]):
+                    positions, indices, normals = mesh
+                    vessel_surfaces[name] = {"positions": self.transfers.array(positions, "float32"),
+                        "indices": self.transfers.array(indices, "uint32"),
+                        "normals": self.transfers.array(normals, "float32"),
+                        "sourceCells": self.transfers.array(vascular_mesh_source_cells(positions, case.compartments[name]), "uint32")}
         descriptor = {
             "caseId": case.case_id, "caseHash": case.semantic_hash, "planningHash": case.planning_hash,
             "revision": case.revision, "frame": case.frame, "physicalUnits": "mm",
@@ -594,7 +609,8 @@ class BridgeSession:
             "intensityRange": [float(case.mri.min()), float(case.mri.max())],
             "compartments": [{"name": name, "qa": mask_quality(mask, case.semantic_hash+":"+name), "volumeMm3": float(np.count_nonzero(mask) * case.voxel_volume_mm3),
                               "array": self.transfers.array(mask, "uint8"),
-                              "sourceArray": self.transfers.array(case.source_compartments.get(name, mask), "uint8")}
+                              "sourceArray": self.transfers.array(case.source_compartments.get(name, mask), "uint8"),
+                              **({"vesselSurface": vessel_surfaces[name]} if name in vessel_surfaces else {})}
                              for name, mask in case.compartments.items()],
             "brainMask": None if case.brain_mask is None else self.transfers.array(case.brain_mask, "uint8"),
             "brainSupport": brain_support,
@@ -641,6 +657,7 @@ class BridgeSession:
                 retained.add(cached.descriptor["brainMask"]["path"])
             for compartment in cached.descriptor["compartments"]:
                 retained.update((compartment["array"]["path"], compartment["sourceArray"]["path"]))
+                retained.update(array["path"] for array in compartment.get("vesselSurface", {}).values())
             for proposal in cached.descriptor["structuralEvidence"]:
                 retained.add(proposal["array"]["path"])
             for proposal in cached.descriptor["priorProposals"]:

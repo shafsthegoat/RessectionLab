@@ -73,6 +73,9 @@ class SurgicalScene:
     def require_cache_source(self):
         from .surgical_planning_admission import validate_source_binding
         validate_source_binding(self)
+        if hasattr(self, '_vessel_source_wall_proof'):
+            from .surgical_vessel_surface import require_binding
+            require_binding(self)
         arrays = (self.labels, self.affine, self.inverse, self.spacing)
         if (self.identity != self._cache_identity or self.voxel_mm3 != self._cache_voxel_mm3 or any(
                 current is not original or current.shape != shape or current.dtype.str != dtype or current.strides != strides
@@ -246,6 +249,10 @@ def from_case(case, mapping=None):
            if 'working_grid_refinement' in case.metadata else {})}, properties)
     _bind_original_target_memberships(scene, {r['name']: immutable_array(
         np.flatnonzero(masks[r['name']]), np.int64) for r in regions if r.get('target')})
+    from .surgical_vessel_rods import MODEL
+    if properties.get('gliomaMaterialsV1', {}).get('vesselMotionModel') == MODEL and case.vascular_probabilities:
+        from .surgical_vessel_surface import bind_case
+        bind_case(scene, case)
     from .surgical_planning_admission import bind_case_source
     bind_case_source(scene, case)
     if 'recordedSequentialEpisodeV1' in case.metadata:
@@ -289,6 +296,9 @@ def propagate_original_target_memberships(source, target):
         _bind_original_target_memberships(target, retained)
     from .surgical_planning_admission import propagate_source_binding
     propagate_source_binding(source, target)
+    if hasattr(source, '_vessel_source_walls'):
+        from .surgical_vessel_surface import propagate_binding
+        propagate_binding(source, target)
     return target
 
 

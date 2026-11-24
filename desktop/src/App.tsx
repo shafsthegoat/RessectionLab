@@ -2120,7 +2120,7 @@ export default function App() {
               routes={native.binding?(native.patientFrameReady?nativeRoutes:[]):display.primaryOverlaysPermitted?viewerRoutes:[]}
               selectedStructure={native.binding?native.selectedStructure:null}
               vesselTrace={native.binding&&workbenchTab==='anatomy'?native.vesselTrace:null}
-              onPickStructure={native.binding?native.setSelectedStructure:undefined}
+              onPickStructure={native.binding?native.pickStructureWithPoint:undefined}
               structureFocusRequest={native.structureFocusRequest}
               structureFocusPoint={native.structureFocusPoint}
               cameraMode={cameraMode}

@@ -7,6 +7,32 @@ import type {
 } from "./types";
 import {registerSourceInspection} from './modeled-volume.ts';
 import type {SurfaceAppearanceSource} from './viewer/contracts';
+import {surfaceKind} from './viewer/surfacePolicy.ts';
+
+function validateVesselSurface(surface:NonNullable<CasePayload['compartments'][number]['vesselSurface']>) {
+  const {positions,normals,indices,sourceCells}=surface;
+  for(const [name,descriptor,width,dtype] of [['positions',positions,3,'float32'],['normals',normals,3,'float32'],
+    ['indices',indices,3,'uint32'],['sourceCells',sourceCells,1,'uint32']] as const){
+    if(!descriptor||descriptor.dtype!==dtype||descriptor.byteOrder!=='little'||descriptor.order!=='C'||
+      !descriptor.assetId||!/^[a-f0-9]{64}$/.test(descriptor.sha256)||descriptor.shape.length!==(width===1?1:2)||
+      !Number.isSafeInteger(descriptor.shape[0])||descriptor.shape[0]<=0||(width===3&&descriptor.shape[1]!==width)||
+      descriptor.byteLength!==descriptor.shape[0]*width*4||descriptor.byteLength>128*1024**2)throw Error(`Invalid vessel surface ${name}.`);
+  }
+  if(positions.shape[0]!==normals.shape[0]||positions.shape[0]!==sourceCells.shape[0])throw Error('Vessel surface source cells disagree with its vertices.');
+}
+
+async function hydrateVesselSurface(raw:NonNullable<CasePayload['compartments'][number]['vesselSurface']>,api:ResectionApi){
+  async function read(d:ArrayDescriptor){
+    const bytes=await api.readAsset(d.assetId);if(bytes.byteLength!==d.byteLength)throw Error('Incomplete vessel surface transfer.');
+    return bytes.slice().buffer;
+  }
+  const [p,n,i,c]=await Promise.all([read(raw.positions),read(raw.normals),read(raw.indices),read(raw.sourceCells)]);
+  const positions=new Float32Array(p),normals=new Float32Array(n),indices=new Uint32Array(i),vesselSourceCells=new Uint32Array(c);
+  if(indices.some(i=>i>=vesselSourceCells.length)||!positions.every(Number.isFinite)||!normals.every(Number.isFinite))throw Error('Invalid vessel surface values.');
+  return {surface:{source:positions,positions,sourceNormals:normals,normals,indices},vesselSourceCells,
+    surfaceDiagnostics:{policy:'native-source-isosurface-v1',kind:'vessel',maxDisplacementMm:0,restoredComponents:0,
+      intersectionCheck:'passed',surfaceField:'native-probability',triangles:indices.length/3,sourceSurfaceOnly:true} as const};
+}
 
 export function anatomyColor(name: string): string {
   const key = name.toLowerCase();
@@ -161,6 +187,7 @@ export function validateCaseDescriptor(payload: CasePayload): {
     validateArray(layer.array, "uint8", layer.name);
     if (layer.sourceArray)
       validateArray(layer.sourceArray, "uint8", `${layer.name} source`);
+    if(layer.vesselSurface)validateVesselSurface(layer.vesselSurface);
   });
   if (payload.brainMask)
     validateArray(payload.brainMask, "uint8", "Brain mask");
@@ -249,9 +276,10 @@ export async function hydrateCase(
   const { voxelVolumeMm3 } = validateCaseDescriptor(payload);
   const layers = [...(displayBrainMask(payload)?[{name:'brain',array:payload.brainMask!,volumeMm3:null}]:[]),
     ...payload.compartments.map(layer=>({...layer,volumeMm3:layer.volumeMm3 as number|null}))];
-  const [mriBytes, ...maskBytes] = await Promise.all([
+  const [mriBytes, maskBytes, vesselSurfaces] = await Promise.all([
     api.readAsset(payload.mri.assetId),
-    ...layers.map((layer) => api.readAsset(layer.array.assetId)),
+    Promise.all(layers.map((layer) => api.readAsset(layer.array.assetId))),
+    Promise.all(layers.map(layer=>'vesselSurface' in layer&&layer.vesselSurface?hydrateVesselSurface(layer.vesselSurface,api):undefined)),
   ]);
   if (mriBytes.byteLength !== payload.mri.byteLength)
     throw new Error("MRI transfer is incomplete.");
@@ -295,12 +323,15 @@ export async function hydrateCase(
       )
         throw new Error(`${layer.name} volume disagrees with its source grid.`);
       const kind = (payload.metadata.anatomy_layers as Record<string,{kind?:string}>|undefined)?.[layer.name]?.kind;
+      const vessel=vesselSurfaces[index];
+      if(vessel&&(surfaceKind(kind)!=='vessel'||vessel.vesselSourceCells.some(i=>!mask[i])))throw Error('Vessel surface differs from the declared native mask.');
       return {
         name: layer.name,
         kind,
         ...(kind === "brain" && brainSignal ? {appearanceSource: brainSignal, displayKind: kind} : {}),
         sourceIdentity: `${payload.caseHash}:${layer.name}:${layer.array.sha256}`,
         qa: layer.qa,
+        ...vessel,
         volumeMm3: layer.volumeMm3 ?? selected * voxelVolumeMm3,
         mask,
         color: String((payload.metadata.anatomy_layers as Record<string,{color?:string}>|undefined)?.[layer.name]?.color ?? anatomyColor(layer.name)),

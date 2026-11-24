@@ -43,6 +43,7 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
   const [progress,setProgress]=useState<BridgeEvent['progress']>();
   const [structureFocusPoint,setStructureFocusPoint]=useState<Point3|null>(null);
   const [vesselTrace,setVesselTrace]=useState<ViewerVesselTrace|null>(null);
+  const [vesselPick,setVesselPick]=useState<{layerId:string;point:Point3;key:string}|null>(null);
   const [vesselScope,setVesselScope]=useState<VesselScope>('all');
   const scopeRef=useRef<VesselScope>('all');
   const [unavailable,setUnavailable]=useState<string[]>([]),[draft,setDraft]=useState<Draft>(null),[original,setOriginal]=useState(false);
@@ -85,6 +86,10 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
   const previousCranialView=useRef<{key:string;view:NativeScanState;structure:string|null}|null>(null);
   const compositionKey=JSON.stringify([binding?.collectionId,binding?.document.snapshot_id,series]);
   useEffect(()=>setVesselTrace(null),[compositionKey,selectedStructure,vesselScope,draft]);
+  function pickStructureWithPoint(layerId:string,point:Point3){
+    setSelectedStructure(layerId);
+    setVesselPick({layerId,point,key:compositionKey});
+  }
   const composable=binding&&patientFrameReady?presentationLayers(binding.document,series).filter(layer=>!unavailable.includes(layer.id)):[];
   const hasCranialView=corticalLayers(composable).length>0;
   const patientField=volume?.patientContext?.field;
@@ -398,6 +403,7 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
   const displayRoutes=state.cranialView==='inspection'?[]:state.cranialView==='planning'
     ?planning.routes.filter(route=>route.selected):planning.routes;
   return {displayRoutes,composeCranialView,hasCranialView,canRestoreCranialView:previousCranialView.current?.key===compositionKey,
-    vesselTrace,setVesselTrace,readCamera,viewState:currentViewState(),patientFrameReady,planning,selectedStructure,setSelectedStructure,structureFocusRequest,structureFocusPoint,focusStructure:(id:string,point?:Point3)=>{setStructureFocusPoint(point??null);setSelectedStructure(id);setStructureFocusRequest(n=>n+1);},present,changeSkullMode,canEditLayer,vesselScope,changeVesselScope,savePackage,api,binding,volume,series,state,busy,progress,pendingLayers,layerErrors,retryLayer,message,registration,unavailable,draft,original,editLayer,setEditLayer,tool,setTool,radius,setRadius,threshold,setThreshold,author,setAuthor,review,components,args,run,install,create,clear,selectScan,setVisible,refresh,edit,onStroke,save,reviewFragments,highlight,compare,change,runPreparation,setMessage,setCursor:(cursor:Point3)=>updateState({cursor}),setSettings:(settings:ViewerWorkspaceSettings)=>updateSettings(skullDisplay(settings)),cancel};
+    vesselTrace,setVesselTrace,vesselPick:vesselPick?.key===compositionKey&&vesselPick.layerId===selectedStructure?vesselPick:null,pickStructureWithPoint,
+    readCamera,viewState:currentViewState(),patientFrameReady,planning,selectedStructure,setSelectedStructure,structureFocusRequest,structureFocusPoint,focusStructure:(id:string,point?:Point3)=>{setStructureFocusPoint(point??null);setSelectedStructure(id);setStructureFocusRequest(n=>n+1);},present,changeSkullMode,canEditLayer,vesselScope,changeVesselScope,savePackage,api,binding,volume,series,state,busy,progress,pendingLayers,layerErrors,retryLayer,message,registration,unavailable,draft,original,editLayer,setEditLayer,tool,setTool,radius,setRadius,threshold,setThreshold,author,setAuthor,review,components,args,run,install,create,clear,selectScan,setVisible,refresh,edit,onStroke,save,reviewFragments,highlight,compare,change,runPreparation,setMessage,setCursor:(cursor:Point3)=>updateState({cursor}),setSettings:(settings:ViewerWorkspaceSettings)=>updateSettings(skullDisplay(settings)),cancel};
 }
 export type NativeWorkspace=ReturnType<typeof useNativeWorkspace>;

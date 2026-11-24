@@ -239,9 +239,14 @@ def tick(engine, dt):
     material_profile = engine.scene.properties.get('gliomaMaterialsV1')
     retained = set(ids)
     vessel_displacements = {}
+    distributed = False
     if material_profile:
-        from .surgical_glioma_materials import move_vessels, retained_vessel_segments
-        if retained_vessel_segments(engine):
+        from .surgical_glioma_materials import move_vessels, retained_vessel_segments, vessel_displacements as vessel_motion
+        from . import surgical_vessel_rods as rods
+        distributed = rods.enabled(engine)
+        if distributed:
+            vessel_displacements = {str(cell): value for cell, value in vessel_motion(engine).items()}
+        elif retained_vessel_segments(engine):
             deformation = engine.state['deformation']
             vessel_displacements = {str(vessel): deformation[str(vessel)]
                                     for vessel, _ in material_profile['vesselAttachments']
@@ -262,7 +267,10 @@ def tick(engine, dt):
                          maxNeighborDisplacementRatio=0., maxGradientNorm=0.,
                          activeReferenceVolumeMm3=0., activeDeformedVolumeMm3=0.,
                          minVolumeRatio=1., maxVolumeRatio=1.)
-    if not ids: return
+    if not ids:
+        if distributed:
+            rods.tick(engine, dt)
+        return
     blocked = _blocked(engine)
     anchors = sorted(set(model['anchors']) & retained)
     solve, free, index, edges, K = _system(engine, p, ids, anchors, retained, blocked)
@@ -388,5 +396,7 @@ def tick(engine, dt):
         if material_profile:
             from .surgical_glioma_materials import record_lattice
             record_lattice(engine, ids, stencil, u, memory, K, targets * force_scale[:, None], held, p)
-    if material_profile:
+    if distributed:
+        rods.tick(engine, dt)
+    elif material_profile:
         move_vessels(engine)

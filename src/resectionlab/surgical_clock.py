@@ -77,12 +77,16 @@ def advance_instruments(engine, key, op, p, q, active, dt, working_cells, eligib
         if getattr(engine, '_operative', False):
             from .surgical_operative_exposure import permits_contact
             permitted = permits_contact(engine, hand, op if acting else 'apply', contacts)
+        from . import surgical_vessel_rods as rods
+        compliant = rods.compliant_cells(engine, contacts) if rods.allows_tip_contact(
+            engine, hand, op if acting else 'apply') else set()
+        permitted.update(compliant)
         if effective and tool['materials'] and any(
                 engine.by_label[int(engine.scene.labels.flat[cell])]['material'] not in tool['materials']
                 for cell in contacts - permitted):
             raise ValueError('ACTIVE_TOOL_UNSUPPORTED_MATERIAL:' + hand)
-        effect_cells = [cell for cell in effect_cells
-                        if cell in permitted or engine.by_label[int(engine.scene.labels.flat[cell])]['material'] in tool['materials']]
+        effect_cells = [cell for cell in effect_cells if cell not in compliant
+                        and (cell in permitted or engine.by_label[int(engine.scene.labels.flat[cell])]['material'] in tool['materials'])]
         records.append((hand, tool, params, position, quaternion, effective, contacts, effect_cells))
 
     events = []

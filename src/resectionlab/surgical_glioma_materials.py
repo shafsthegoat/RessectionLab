@@ -51,10 +51,12 @@ def _bounded(value, low, high):
 
 
 def validate(scene):
+    from . import surgical_vessel_rods as rods
+
     p = scene.properties.get(PROPERTY)
     if p is None:
         return
-    optional = {'scalpSeamCell', 'biopsyNeckFace', 'vesselMotionModel'}
+    optional = {'scalpSeamCell', 'biopsyNeckFace', 'vesselMotionModel', rods.GEOMETRY}
     if (
         not isinstance(p, dict)
         or set(p) | optional != set(research_profile()) | optional
@@ -65,7 +67,7 @@ def validate(scene):
     ):
         raise ValueError('GLIOMA_MATERIALS_REQUIRE_VERSIONED_LOCAL_LATTICE')
     if 'vesselMotionModel' in p:
-        if p['vesselMotionModel'] != RETAINED_VESSEL_SEGMENTS:
+        if p['vesselMotionModel'] not in (RETAINED_VESSEL_SEGMENTS, rods.MODEL):
             raise ValueError('GLIOMA_VESSEL_MOTION_MODEL_REQUIRED')
         if 'vascularGraphV1' not in scene.properties:
             raise ValueError('GLIOMA_VESSEL_MOTION_REQUIRES_MAPPED_SOURCE_CHAINS')
@@ -109,6 +111,7 @@ def validate(scene):
         ):
             raise ValueError('GLIOMA_VESSEL_IDENTITY_PROFILE_REQUIRED')
     attachments = p['vesselAttachments']
+    distributed = p.get('vesselMotionModel') == rods.MODEL
     edges = {
         c
         for e in scene.properties.get('vascularGraphV1', {}).get('edges', [])
@@ -116,6 +119,10 @@ def validate(scene):
         for c in e['sourceCells']
     }
     materials = {r['id']: r['material'] for r in scene.regions}
+    if distributed:
+        rods.validate_geometry(scene, p, edges)
+    elif rods.GEOMETRY in p:
+        raise ValueError('GLIOMA_ROD_GEOMETRY_REQUIRES_DISTRIBUTED_MOTION')
     if not isinstance(attachments, list) or len(attachments) > 512:
         raise ValueError('GLIOMA_VESSEL_ATTACHMENT_LIMIT')
     seen = set()
@@ -128,17 +135,22 @@ def validate(scene):
             raise ValueError('GLIOMA_ATTACHMENT_REQUIRES_SOURCE_PAIR')
         vessel, tissue = pair
         if (
-            vessel in seen
+            ((vessel, tissue) if distributed else vessel) in seen
             or vessel not in edges
             or materials.get(int(scene.labels.flat[tissue])) not in SOFT
-            or sum(
-                abs(a - b)
-                for a, b in zip(np.unravel_index(vessel, scene.shape), np.unravel_index(tissue, scene.shape))
-            )
-            != 1
         ):
             raise ValueError('GLIOMA_ATTACHMENT_REQUIRES_MAPPED_ADJACENT_TISSUE')
-        seen.add(vessel)
+        if distributed and rods.GEOMETRY in p:
+            from .surgical_vessel_surface import source_cell_radius
+            cx, cy, cz, radius = p[rods.GEOMETRY]['sites'][str(vessel)]
+            distance = np.linalg.norm(scene.points([tissue])[0] - (cx, cy, cz))
+            valid = distance <= radius + 2 * source_cell_radius(scene) + 1e-7
+        else:
+            valid = sum(abs(a - b) for a, b in zip(np.unravel_index(vessel, scene.shape),
+                                                  np.unravel_index(tissue, scene.shape))) == 1
+        if not valid:
+            raise ValueError('GLIOMA_ATTACHMENT_REQUIRES_MAPPED_ADJACENT_TISSUE')
+        seen.add((vessel, tissue) if distributed else vessel)
     scalp_cell = p.get('scalpSeamCell')
     if scalp_cell is not None and (
         type(scalp_cell) is not int
@@ -181,16 +193,24 @@ def retained_vessel_segments(engine):
 
 
 def vessel_displacements(engine):
+    from . import surgical_vessel_rods as rods
+
     deformation = engine.state.get('deformation', {})
-    if not deformation or not retained_vessel_segments(engine):
+    if not deformation or not (retained_vessel_segments(engine) or rods.enabled(engine)):
         return {}
     removed = set(engine.state['removed'])
-    return {vessel: deformation[str(vessel)] for vessel, _ in engine.scene.properties[PROPERTY]['vesselAttachments']
+    cells = rods.definitions(engine).cells if rods.enabled(engine) else (
+        vessel for vessel, _ in engine.scene.properties[PROPERTY]['vesselAttachments'])
+    return {vessel: deformation[str(vessel)] for vessel in cells
             if vessel not in removed and str(vessel) in deformation and any(deformation[str(vessel)])}
 
 
 def continuous_vessel_contacts(engine, a, b, radius, raster_contacts):
     """Test owned vessel voxels at their accepted subvoxel centers."""
+    from . import surgical_vessel_rods as rods
+
+    if rods.enabled(engine):
+        return rods.contacts(engine, a, b, radius, raster_contacts)
     displacement = vessel_displacements(engine)
     if not displacement:
         return raster_contacts
@@ -205,8 +225,12 @@ def continuous_vessel_contacts(engine, a, b, radius, raster_contacts):
 
 
 def validate_vessel_chains(scene):
+    from . import surgical_vessel_rods as rods
+
     edges = scene.properties['vascularGraphV1']['edges']
-    kinds = scene.properties[PROPERTY]['axialStiffnessN']
+    profile = scene.properties[PROPERTY]
+    kinds = profile['axialStiffnessN']
+    sites = profile.get(rods.GEOMETRY, {}).get('sites', {})
     chains = [edge for edge in edges if edge['kind'] in kinds]
     if not chains:
         raise ValueError('GLIOMA_VESSEL_MOTION_REQUIRES_MAPPED_SOURCE_CHAINS')
@@ -218,6 +242,9 @@ def validate_vessel_chains(scene):
                 or any(sum(abs(i - j) for i, j in np.unravel_index(pair, scene.shape)) != 1
                        for pair in pairs)):
             raise ValueError('GLIOMA_VESSEL_MOTION_REQUIRES_UNIQUE_ORDERED_SOURCE_FACES')
+        if sites and any(np.linalg.norm(np.subtract(sites[str(i)][:3], sites[str(j)][:3])) < .05 * min(scene.spacing)
+                         for i, j in pairs):
+            raise ValueError('GLIOMA_ROD_GEOMETRY_REQUIRES_DISTINCT_NEIGHBORS')
         claimed.update(pairs)
 
 
@@ -258,6 +285,7 @@ def generated_vascular_properties(
     p = research_profile()
     if vessel_motion_model is not None:
         p['vesselMotionModel'] = vessel_motion_model
+    if vessel_motion_model == RETAINED_VESSEL_SEGMENTS:
         p['assignment'] += (' Source-bound vessel sites follow their assigned soft support and retain their last '
                             'accepted position if that support disappears. Neighbor strain and wound behavior are '
                             'assigned engineering estimates. Free-vessel dynamics are unresolved.')
@@ -443,6 +471,10 @@ def record_lattice(engine, ids, stencil, u, memory, K, targets, held, settings):
 
 def move_vessels(engine):
     """A declared surface attachment transfers displacement to its source vessel cell."""
+    from . import surgical_vessel_rods as rods
+
+    if rods.enabled(engine):
+        return
     p = engine.scene.properties[PROPERTY]
     deformation = engine.state['deformation']
     if not p['vesselAttachments'] or not deformation:
@@ -534,7 +566,9 @@ def biopsy_wound(engine, graph_state):
 
 def vessel_load(engine, edge, row):
     """Engineering tether traction at a mapped face; transection uses normal port accounting."""
-    if retained_vessel_segments(engine):
+    from . import surgical_vessel_rods as rods
+
+    if retained_vessel_segments(engine) or rods.enabled(engine):
         return _source_segment_load(engine, edge, row)
     p = engine.scene.properties[PROPERTY]
     a, b = edge['sourceFace']
@@ -558,12 +592,16 @@ def vessel_load(engine, edge, row):
 
 def _source_segment_load(engine, edge, row):
     """Evaluate each surviving oriented bond of the declared source chain."""
+    from . import surgical_vessel_rods as rods
+
     p = engine.scene.properties[PROPERTY]
     cells = oriented_source_cells(edge)
     removed = set(engine.state['removed'])
     cut_face = set(row['cutFace'] or ())
-    pairs = [(a, b) for a, b in zip(cells, cells[1:])
-             if a not in removed and b not in removed and {a, b} != cut_face]
+    blocked = {tuple(sorted(pair)) for name in ('cutEdges', 'transectedEdges')
+               for pair in engine.state.get(name, ())} if rods.enabled(engine) else set()
+    pairs = [(a, b) for a, b in zip(cells, cells[1:]) if a not in removed and b not in removed
+             and {a, b} != cut_face and tuple(sorted((a, b))) not in blocked]
     strain = 0.0
     loaded_face = None
     resistance = 1.0
@@ -572,7 +610,8 @@ def _source_segment_load(engine, edge, row):
         sources = sorted({cell for pair in pairs for cell in pair})
         indices = {cell: i for i, cell in enumerate(sources)}
         a, b = np.asarray([[indices[cell] for cell in pair] for pair in pairs]).T
-        rest = engine.scene.points(sources)
+        rest = (np.array(list(rods.source_points(engine, sources, rest=True).values()))
+                if rods.enabled(engine) else engine.scene.points(sources))
         current = rest + np.asarray([deformation.get(str(cell), [0., 0., 0.]) for cell in sources])
         spans = np.linalg.norm(rest[b] - rest[a], axis=1)
         extension = np.maximum(0., np.linalg.norm(current[b] - current[a], axis=1) / spans - 1)

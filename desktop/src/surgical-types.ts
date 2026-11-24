@@ -21,6 +21,16 @@ export interface SurgicalDeformationModel {active?:number[];anchors?:number[];re
 export interface SurgicalDrillingV2 {workJ:Record<string,number>;temperatureC:Record<string,number>;thermalDoseCSeconds?:Record<string,number>;inputEnergyJ:number;cuttingWorkJ:number;heatGeneratedJ:number;coolingLossJ:number;unusedEnergyJ:number;removedVolumeMm3:number}
 export interface SurgicalVesselsV2 {faces:Record<string,Record<string,unknown>>;wounds:Record<string,Record<string,unknown>>;contactDose?:Record<string,number>;remainingMm3:number;refilledMm3:number;generatedMm3:number;initialMm3:number;elapsedSeconds:number;pressurePa:number}
 export interface SurgicalEnvironment {schema:string;standardized:boolean;physicsSchema:string|null;anatomy:Record<string,string>;target:{regionIds:number[];initialVolumeMm3:number};coverageMeaning:string}
+export interface SurgicalVesselMechanics {
+  model:'distributed-source-rods-v1';
+  sites:Array<{sourceCell:number;restPositionMm:Point3;positionMm:Point3;restRadiusMm:number;radiusMm:number;activeSupportCells:number[]}>;
+  segments:Array<{sourceCells:[number,number];edgeId:string}>;
+  contactedCells:Record<string,number[]>;
+  surfaceDisplacements?:Record<string,Point3>;
+  geometryModeByLabel?:Record<string,'native-probability-wall'|'edited-native-wall'|'accepted-source-cuboids'>;
+  editedWallsByLabel?:Record<string,{identity:string;positionsIJK:Point3[];triangles:[number,number,number][];sourceCells:number[];cuboidSourceCells?:number[]}>;
+}
+export interface SurgicalView {vesselMechanics?:SurgicalVesselMechanics}
 export interface SurgicalProtection {configured:boolean;mode:string;contractId:string|null;status:string;missingRequired:string[];clearanceMm?:number;criticalMaxDisplacementMm?:number;anatomicalCompleteness:string;clinicalValidation:string;structures:Array<{id:string;name:string;sourceCells:number;provenance:unknown;reviewStatus:string}>;unknownStructures:string[]}
 export interface SurgicalCraniotomySummary {contractHash:string;phase:string;method?:'milling';kerfRemovedMm3:number;flapEvacuatedMm3:number;declaredBoneRemovedMm3:number;milledBoneMm3?:number;milling?:{debrisRemovedMm3:number|null;debrisPresentMm3:number|null;debrisEscapedMm3:number|null;treatmentEntrySupported:false};apertureEvacuated:boolean;openingComplete:boolean;transport:string;clinicalValidation:string}
 export interface SurgicalCranialStagesSummary {schema:'resectionlab.cranial-stages.v1';contractHash:string;stateId:string;sceneId:string;phase:string;assessmentCurrent:boolean;startingExposure:string;sourceUnknowns:string[];patchCells:number;requiredBoundaryEdges:number;cutBoundaryEdges:number;boundaryCutComplete:boolean;patchHeld:boolean;patchDetached:boolean;patchExtracted:boolean;bonePrefixVerified:boolean;duraCleared:boolean;workEntrySupported:boolean;wholeExitComplete:boolean;clinicalValidation:string;reason:string|null;membrane?:{removedMembraneMm3:number;actualNativeExtractionEvents:number;retainedRimIntact:boolean}}

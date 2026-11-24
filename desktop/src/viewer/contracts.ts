@@ -66,6 +66,8 @@ export interface ViewerVolume {
     sourceSupport?: TissueDisplaySupport;
     /** Cached indexed display geometry. Masks remain the quantitative source. */
     surface?: {positions: Float32Array; source: Float32Array; normals: Float32Array; sourceNormals: Float32Array; indices: Uint32Array};
+    /** For a score-derived mesh on the exact engine grid, one native source cell per vertex. */
+    vesselSourceCells?: Uint32Array;
   }>;
 }
 
@@ -99,6 +101,8 @@ export interface ViewerRoute {
 export interface ViewerVesselTrace {
   layerId:string;
   points:Point3[];
+  /** Display a physical neighborhood of the verified source centerline. */
+  isolationRadiusMm?:number;
 }
 
 export interface ViewerWorkspaceProps {
@@ -134,7 +138,7 @@ export interface ViewerWorkspaceProps {
   selectedStructure?: string | null;
   vesselTrace?: ViewerVesselTrace | null;
   /** A double-click on a registered native label selects its source evidence. */
-  onPickStructure?: (name: string) => void;
+  onPickStructure?: (name: string, point:Point3) => void;
   /** Explicit focus command; selecting a row alone does not move a restored camera. */
   structureFocusRequest?: number;
   /** An assessed source-RAS concern location, when focusing a local intersection. */

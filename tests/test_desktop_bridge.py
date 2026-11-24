@@ -70,6 +70,53 @@ def test_case_binary_roundtrip_versions_and_null_clinical_fields(bridge):
         assert compartment["array"]["dtype"] == "uint8"
 
 
+def test_native_vascular_scores_round_trip_and_bind_mesh_to_source_cells(bridge, tmp_path):
+    pytest.importorskip('vtkmodules')
+    from dataclasses import replace
+    from resectionlab.imaging import load_case
+    from resectionlab.workspace_bundle import save_workspace
+
+    base = create_synthetic_case((24, 24, 24))
+    scores = np.zeros(base.mri.shape, dtype=np.float32)
+    scores[5:16, 9, 10] = .9
+    scores[5:16, 10, 10] = .35
+    scores[18, 18, 18] = .97
+    mask = scores >= .5
+    mask[18, 18, 18] = False
+    name = 'vessel'
+    case = replace(base, compartments={name: mask}, source_compartments=None,
+                   metadata={'anatomy_layers': {name: {'kind': 'vessel'}}})
+    native = replace(case, vascular_probabilities={name: scores})
+    assert native.semantic_hash != case.semantic_hash
+    assert native.planning_hash == case.planning_hash
+    path = save_case(native, tmp_path / 'score-bound.ressectionlab')
+    cold = load_case(path)
+    np.testing.assert_array_equal(cold.vascular_probabilities[name], scores)
+    path = tmp_path / 'score-bound-workspace.ressectionlab'
+    save_workspace(native, path, sources=[], imaging=None, episode=None, selection=None, artifacts={})
+    result = request(bridge, 'score-case', 'loadCase', {'path': str(path)})
+    assert result['event'] == 'result', result
+    layer = result['result']['compartments'][0]
+    surface = layer['vesselSurface']
+
+    def read(field, dtype):
+        descriptor = surface[field]
+        return np.fromfile(descriptor['path'], dtype=dtype).reshape(descriptor['shape'])
+
+    positions, owners = read('positions', '<f4'), read('sourceCells', '<u4')
+    assert len(owners) == len(positions)
+    assert mask.ravel()[owners].all()
+    assert positions[:, 0].max() < 16
+    # This wall crosses the retained .9 -> .35 score edge away from its midpoint.
+    assert positions[:, 1].max() == pytest.approx(9 + (.9 - .5) / (.9 - .35), abs=1e-5)
+    correction = mask.copy()
+    correction[5, 8, 10] = True
+    edited = save_case(native.revised(compartments={name: correction}), tmp_path / 'edited.ressectionlab')
+    result = request(bridge, 'edited-score-case', 'loadCase', {'path': str(edited)})
+    assert result['event'] == 'result', result
+    assert 'vesselSurface' not in result['result']['compartments'][0]
+
+
 def test_generate_save_reopen_retains_real_evaluator_records(bridge, tmp_path):
     value = synthetic(bridge)
     generated = request(bridge, "routes", "generateRoutes", {"caseHash": value["caseHash"]})

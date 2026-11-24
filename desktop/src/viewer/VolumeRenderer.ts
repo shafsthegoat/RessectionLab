@@ -23,14 +23,15 @@ import type {EnginePartitionRequest,EngineSurfaceReference} from './engineImplic
 import {modeledAnatomy} from './modeledAnatomy';
 import {maskSurface} from './surface';
 import {SourcePickingBvh} from './sourcePickingBvh';
-import type {PreparedSurface} from './prepareSurface';
+import {prepareOperativeVessel,type PreparedSurface} from './prepareSurface';
 import type {IncrementalSurfaceRequest} from './incrementalSurface';
 import {scanFitPoints} from './scanCameraFit';
 import {mprView,sourceSignalBounds} from './mprFraming';
 import {applySourceContextMaterial} from './sourceContextMaterial';
 import {installNativeContextLighting,setNativeContextLighting} from './nativeContextLighting';
 import {displaySurfaceNormals} from './displaySurfaceNormals';
-import {applyVesselDepthMaterial} from './anatomySurfaceMaterial';
+import {applyVesselDepthMaterial,setVesselDepthAppearance,createVesselInspectionFocus,setVesselInspectionFocus,
+  vesselInspectionContains,type VesselInspectionFocus} from './anatomySurfaceMaterial';
 import {microscopeFov} from './microscope';
 import {applyOperativeSurface} from './operativeMaterial';
 import {surfaceKind} from './surfacePolicy';
@@ -75,6 +76,7 @@ import type { CheckedDiagnosticLayer, LoadedDiagnosticLayer } from "./diagnostic
 import { physicalBounds, placeInSourceFrame } from "./sceneGeometry";
 import { surfaceCameraDistance } from './surfaceCameraFit';
 import {AcceptedSurfaceMotion,acceptedVesselSurfaceMotion,applyAcceptedSurfaceMotion} from './acceptedSurfaceMotion';
+import {deformOperativeVessel} from './operativeVesselSurface';
 import {installCorticalSignal,type CorticalSignal} from './cranialDepth';
 import { ScanVolumeRenderer } from './ScanVolumeRenderer';
 import type { VolumeRenderingSettings } from './volumeTransfer';
@@ -242,6 +244,7 @@ export class VolumeRenderer {
   private readonly tractObjects = new Map<string, THREE.LineSegments<THREE.BufferGeometry,THREE.LineBasicMaterial>>();
   private selectedStructure:string|null=null;
   private vesselTrace?:THREE.Line<THREE.BufferGeometry,THREE.LineBasicMaterial>;
+  private vesselInspectionFocus?:VesselInspectionFocus;
   private readonly surfaceGeometry = new Map<string, { source: THREE.BufferGeometry; smooth: THREE.BufferGeometry; smoothingPrepared?:boolean }>();
   private surfaceSmoothing = true;
   private patientBounds?:Bounds3;
@@ -611,6 +614,7 @@ export class VolumeRenderer {
         smoothIndices?: Uint32Array;
         indices?: Uint32Array;
         diagnostics?: SurfaceDiagnostics;
+        representation?:PreparedSurface['representation'];
         error?: string;
       }>,
     ) => {
@@ -645,14 +649,14 @@ export class VolumeRenderer {
         return;
       }
 
-      if(event.data.indices)retainSurface(layer.surfaceMask??layer.mask,this.affine,layer.kind,{...event.data,positions,normals:normals!,indices:event.data.indices},this.volume.shape,layer.cavity??reference);
+      if(event.data.indices&&event.data.representation!=='operative-vessel')retainSurface(layer.surfaceMask??layer.mask,this.affine,layer.kind,{...event.data,positions,normals:normals!,indices:event.data.indices},this.volume.shape,layer.cavity??reference);
       this.canvas.dispatchEvent(new CustomEvent('anatomy-surface',{bubbles:true,detail:{name:layer.name,diagnostics:event.data.diagnostics??layer.surfaceDiagnostics,qa:layer.qa,empty:!positions.length}}));
       if(remaining===0){this.worker.terminate();this.sourceWorkerActive=false;}
       if(!positions.length){
         if(remaining===0&&this.mode==='anatomy'&&!this.cameraRestored)this.fitCamera('anatomy');
         this.finishInitialSurgical();this.requestRender();return;
       }
-      this.installSurface(layer,{positions,normals,smoothPositions:event.data.smoothPositions,smoothNormals:event.data.smoothNormals,smoothIndices:event.data.smoothIndices,indices:event.data.indices});
+      this.installSurface(layer,{positions,normals,smoothPositions:event.data.smoothPositions,smoothNormals:event.data.smoothNormals,smoothIndices:event.data.smoothIndices,indices:event.data.indices,representation:event.data.representation,diagnostics:event.data.diagnostics});
       this.finishInitialSurgical();
       if (remaining === 0 && this.mode === "anatomy" && !this.cameraRestored) this.fitCamera("anatomy");
       this.requestRender();
@@ -665,8 +669,10 @@ export class VolumeRenderer {
       );
     };
     volume.compartments.forEach((layer) => {
+      const vessel=modeledAnatomy(volume)?.vesselSurfaces?.get(layer.name);
       const cached=!layer.labelSet?cachedSurface(layer.surfaceMask??layer.mask,this.affine,layer.kind,this.volume.shape,true,layer.cavity??reference):undefined;
-      if(cached){this.worker.onmessage?.(new MessageEvent('message',{data:{name:layer.name,...cached}}));}
+      if(vessel){this.worker.onmessage?.(new MessageEvent('message',{data:{name:layer.name,...prepareOperativeVessel(vessel)}}));}
+      else if(cached){this.worker.onmessage?.(new MessageEvent('message',{data:{name:layer.name,...cached}}));}
       else if (layer.surface&&!reference) {
         const s = layer.surface;
         this.worker.onmessage?.(new MessageEvent('message', {data: {name: layer.name,
@@ -691,32 +697,37 @@ export class VolumeRenderer {
     this.requestRender();
   }
 
-  private makeSurface(layer:ViewerVolume['compartments'][number],buffers:{positions:Float32Array;normals:Float32Array;smoothPositions?:Float32Array;smoothNormals?:Float32Array;smoothIndices?:Uint32Array;indices?:Uint32Array;smoothingPrepared?:boolean;representation?:PreparedSurface['representation'];activeBounds?:Bounds3},eagerPicking=true):SurfacePair|null {
-    const {positions,normals}=buffers;
+  private makeSurface(layer:ViewerVolume['compartments'][number],buffers:Omit<PreparedSurface,'indices'>&{indices?:Uint32Array},eagerPicking=true):SurfacePair|null {
+    const {positions,normals,indices}=buffers,operativeVessel=buffers.representation==='operative-vessel';
     const onError=this.onError;
     const geometry = new THREE.BufferGeometry();
+    const sourcePositions=new THREE.BufferAttribute(operativeVessel?positions.slice():positions,3);
+    const sourceNormals=new THREE.BufferAttribute(operativeVessel?normals.slice():normals,3);
+    if(operativeVessel){sourcePositions.setUsage(THREE.DynamicDrawUsage);sourceNormals.setUsage(THREE.DynamicDrawUsage);}
     geometry.setAttribute(
       "position",
-      new THREE.BufferAttribute(positions, 3),
+      sourcePositions,
     );
-    geometry.setAttribute("normal", new THREE.BufferAttribute(normals, 3));
+    geometry.setAttribute("normal",sourceNormals);
     const { smoothPositions, smoothNormals } = buffers;
-    const smoothingPrepared=buffers.smoothingPrepared!==false&&!layer.surfaceDiagnostics?.sourceSurfaceOnly;
-    if (smoothingPrepared&&(!smoothPositions || !smoothNormals || (!buffers.smoothIndices && smoothPositions.length !== positions.length) || smoothNormals.length !== smoothPositions.length)) {
+    const hasSmooth=!operativeVessel&&buffers.smoothingPrepared!==false&&!layer.surfaceDiagnostics?.sourceSurfaceOnly;
+    const onlyNormals=operativeVessel&&indices&&buffers.diagnostics?.surfaceField==='native-probability';
+    if (hasSmooth&&(!smoothPositions || !smoothNormals || (!buffers.smoothIndices && smoothPositions.length !== positions.length) || smoothNormals.length !== smoothPositions.length)) {
       geometry.dispose();
       onError("Display surface buffers do not match the source triangles.");
       return null;
     }
     // Raw display uses the exact source geometry, without fairing or derived
     // lighting normals, and does not allocate a duplicate GPU geometry.
-    const smooth = smoothingPrepared?new THREE.BufferGeometry():geometry;
-    if (buffers.indices) {
-      geometry.setIndex(new THREE.BufferAttribute(buffers.indices, 1));
-      smooth.setIndex(new THREE.BufferAttribute(buffers.smoothIndices??buffers.indices, 1));
+    const smooth = hasSmooth||onlyNormals?new THREE.BufferGeometry():geometry;
+    if (indices) {
+      const sourceIndices=new THREE.BufferAttribute(indices,1);
+      geometry.setIndex(sourceIndices);
+      if(smooth!==geometry)smooth.setIndex(buffers.smoothIndices?new THREE.BufferAttribute(buffers.smoothIndices,1):sourceIndices);
     }
     if(buffers.representation==='stable-source-ids'){
       const bounds=buffers.activeBounds;
-      if(smoothingPrepared||!buffers.indices?.length||!bounds||bounds.some(row=>row.length!==3||row.some(value=>!Number.isFinite(value)))||bounds[0].some((value,axis)=>value>bounds[1][axis])){
+      if(hasSmooth||!buffers.indices?.length||!bounds||bounds.some(row=>row.length!==3||row.some(value=>!Number.isFinite(value)))||bounds[0].some((value,axis)=>value>bounds[1][axis])){
         geometry.dispose();if(smooth!==geometry)smooth.dispose();onError('Stable source display requires raw indexed triangles and active bounds.');return null;
       }
       // Historical registry slots must not affect framing, raycast rejection,
@@ -725,11 +736,17 @@ export class VolumeRenderer {
       geometry.boundingSphere=geometry.boundingBox.getBoundingSphere(new THREE.Sphere());
       geometry.userData.sourceIndexing='stable-source-ids';
     }
-    if(smoothingPrepared)smooth.setAttribute("position", new THREE.BufferAttribute(smoothPositions!, 3));
+    if(hasSmooth)smooth.setAttribute("position", new THREE.BufferAttribute(smoothPositions!, 3));
     const vessel=surfaceKind(layer.kind)==='vessel';
     const displayKind=layer.displayKind??layer.kind??'';
     const fairNormals=vessel||layer.generatedFinish||CONTEXT_SURFACES.has(displayKind)||Boolean(layer.surface&&['brain-region','gray-matter','white-matter','cerebellar-cortex','dura','csf','ventricles'].includes(displayKind));
-    if(smoothingPrepared)smooth.setAttribute("normal", new THREE.BufferAttribute(fairNormals&&buffers.indices ? displaySurfaceNormals(smoothNormals!,buffers.smoothIndices??buffers.indices,this.affine) : smoothNormals!, 3));
+    if(hasSmooth)smooth.setAttribute("normal", new THREE.BufferAttribute(fairNormals&&buffers.indices ? displaySurfaceNormals(smoothNormals!,buffers.smoothIndices??buffers.indices,this.affine) : smoothNormals!, 3));
+    if(onlyNormals&&indices){
+      const lighting=displaySurfaceNormals(normals,indices,this.affine);
+      smooth.setAttribute('position',sourcePositions);
+      smooth.setAttribute('normal',new THREE.BufferAttribute(lighting.slice(),3).setUsage(THREE.DynamicDrawUsage));
+      smooth.userData.restOperativeLightingNormals=lighting;
+    }
     const appearance = layerAppearance(layer.name,layer.color,this.workspaceSettings,layer.displayKind??layer.kind);
     const mesh = new THREE.Mesh(
       this.surfaceSmoothing ? smooth : geometry,
@@ -748,8 +765,13 @@ export class VolumeRenderer {
     mesh.castShadow=true;mesh.receiveShadow=true;
     if(layer.generatedFinish)generatedTissueFinish(mesh.material,displayKind,false);
     applyOperativeSurface(mesh.material,layer.displayKind??layer.kind,this.workspaceSettings);
+    if(operativeVessel&&this.workspaceSettings.layerColor?.[layer.name])mesh.material.color.set(appearance.color);
     if(this.fieldOptics?.texture)this.surgicalWetting?.install(mesh.material);
-    if(vessel)applyVesselDepthMaterial(mesh.material,this.patientBounds??this.bounds);
+    if(vessel){
+      const grid=layer.surface&&!operativeVessel?this.vesselLabelGrid(this.volume.compartments.indexOf(layer)):undefined;
+      applyVesselDepthMaterial(mesh.material,this.patientBounds??this.bounds,grid);
+      setVesselDepthAppearance(mesh.material,this.workspaceSettings,layer,grid);
+    }
     applySourceContextMaterial(mesh.material,this.workspaceSettings.contextStyle==='shell'&&CONTEXT_SURFACES.has(layer.displayKind??layer.kind??''),
       this.workspaceSettings.presentation==='segmentation'&&['bone','skull'].includes(layer.kind??''));
     mesh.visible = this.surfaceVisible(layer.name);
@@ -772,7 +794,11 @@ export class VolumeRenderer {
     }
     this.exposure?.bindNativeSkinDomain(mesh,layer.name);
     this.picking?.install(mesh,geometry,eagerPicking);
-    return {mesh,source:geometry,smooth,smoothingPrepared};
+    return {mesh,source:geometry,smooth,smoothingPrepared:operativeVessel||hasSmooth||layer.surfaceDiagnostics?.sourceSurfaceOnly===true};
+  }
+  private vesselLabelGrid(index:number){
+    const code=this.labelCodes[index];
+    return this.volume.displayIdentity&&code?.[1]?{texture:this.labelTexture,shape:this.volume.shape,worldToVoxel:matrix(inverseAffine(this.affine)),code}:undefined;
   }
   private cranialBoundary(kind:string|undefined,settings:ViewerWorkspaceSettings) {
     if(!this.volume.displayIdentity||settings.presentation!=='segmentation'||settings.contextStyle!=='shell'||
@@ -783,13 +809,14 @@ export class VolumeRenderer {
     return undefined;
   }
 
-  private installSurface(layer:ViewerVolume['compartments'][number],buffers:PreparedSurface|{positions:Float32Array;normals:Float32Array;smoothPositions?:Float32Array;smoothNormals?:Float32Array;smoothIndices?:Uint32Array;indices?:Uint32Array}) {
+  private installSurface(layer:ViewerVolume['compartments'][number],buffers:Omit<PreparedSurface,'indices'>&{indices?:Uint32Array}) {
     const pair=this.makeSurface(layer,buffers);if(!pair)return;
     if (this.volume.displayIdentity && layer.surface && surfaceKind(layer.kind)==='context') {
       installNativeContextLighting(pair.mesh.material as THREE.MeshStandardMaterial, this.patientBounds??this.bounds,
         this.surfaceSmoothing && this.workspaceSettings.operativeView !== 'surgeon');
     }
     this.surfaceGeometry.set(layer.name,{source:pair.source,smooth:pair.smooth,smoothingPrepared:pair.smoothingPrepared});this.surfaces.set(layer.name,pair.mesh);this.anatomy.add(pair.mesh);
+    this.applyVesselTraceAppearance();
     this.applyStructureHighlight();
   }
 
@@ -912,9 +939,19 @@ export class VolumeRenderer {
       const partitionId=b?.surfaceReference?this.modelIdentity(b.surfaceReference):undefined;
       for(const layer of next.compartments){
         const old=this.volume.compartments.find(l=>l.name===layer.name);
+        const vessel=b?.vesselSurfaces?.get(layer.name),oldVessel=a?.vesselSurfaces?.get(layer.name);
+        if(vessel){
+          if(vessel===oldVessel&&this.preparedSourceLayers.has(layer.name))continue;
+          const buffers=prepareOperativeVessel(vessel);
+          const pair=buffers.positions.length?this.makeSurface(layer,buffers,false):null;
+          if(buffers.positions.length&&!pair)throw Error('Invalid operative vessel surface');
+          stage.prepared.set(layer.name,pair);stage.changedLayers++;
+          this.canvas.dispatchEvent(new CustomEvent('anatomy-surface',{bubbles:true,detail:{name:layer.name,diagnostics:buffers.diagnostics,qa:layer.qa,empty:!pair}}));
+          continue;
+        }
         const needsSmoothing=smoothing&&this.surfaceGeometry.get(layer.name)?.smoothingPrepared===false;
         let indices:Uint32Array|undefined,values:Uint8Array|undefined;
-        if(a?.surfaceReference===b?.surfaceReference&&old&&old.kind===layer.kind&&this.preparedSourceLayers.has(layer.name)){
+        if(!oldVessel&&a?.surfaceReference===b?.surfaceReference&&old&&old.kind===layer.kind&&this.preparedSourceLayers.has(layer.name)){
           if(old.cavity===layer.cavity&&(old.surfaceMask??old.mask)===(layer.surfaceMask??layer.mask)&&!old.labelSet&&!layer.labelSet&&!needsSmoothing)continue;
           if(candidates&&!old.surfaceMask&&!layer.surfaceMask){const changed=candidates.filter(i=>old.mask[i]!==layer.mask[i]);if(!changed.length&&!needsSmoothing&&old.cavity===layer.cavity)continue;indices=Uint32Array.from(changed);values=Uint8Array.from(changed,i=>layer.mask[i]);stage.changedIndices+=changed.length;}
         }
@@ -1130,7 +1167,7 @@ export class VolumeRenderer {
     // materials. Compare values so cloned or in-place edited settings work too.
     const signature = JSON.stringify([settings.layerOpacity, settings.layerColor,
       settings.clipping, settings.clipBox, settings.obliqueClip,
-      settings.fusion?.opacity, settings.volumeRendering,settings.skullMode,settings.sliceOverlay,settings.contextStyle,settings.presentation,settings.operativeView,settings.microscope?.inspectionTransparency,settings.microscope?.inspectionCutaway,settings.microscope?.tissueStyle]);
+      settings.fusion?.opacity, settings.volumeRendering,settings.skullMode,settings.sliceOverlay,settings.contextStyle,settings.presentation,settings.operativeView,settings.microscope?.inspectionTransparency,settings.microscope?.inspectionCutaway,settings.microscope?.tissueStyle,settings.vesselShading]);
     if (signature === this.appearanceSignature) return;
     if(this.appearanceSignature!=null){this.beginInteraction();this.endInteraction();}
     this.appearanceSignature = signature;
@@ -1165,6 +1202,10 @@ export class VolumeRenderer {
         material.color.set(appearance.color);material.opacity=appearance.opacity;
         setNativeContextLighting(material,this.surfaceSmoothing && settings.operativeView !== 'surgeon');
         applyOperativeSurface(material,layer.displayKind??layer.kind,settings);
+        const operativeVessel=modeledAnatomy(this.volume)?.vesselSurfaces?.has(layer.name);
+        if(operativeVessel&&settings.layerColor?.[layer.name])material.color.set(appearance.color);
+        if(layer.surface&&surfaceKind(layer.kind)==='vessel'&&!operativeVessel)
+          setVesselDepthAppearance(material,settings,layer,this.vesselLabelGrid(index));
         applySourceContextMaterial(material,settings.contextStyle==='shell'&&CONTEXT_SURFACES.has(layer.displayKind??layer.kind??''),
           settings.presentation==='segmentation'&&['bone','skull'].includes(layer.kind??''));
         const transparent = appearance.opacity < 1;
@@ -1220,6 +1261,8 @@ export class VolumeRenderer {
 
   private applyVesselTraceAppearance():void {
     const line=this.vesselTrace;
+    const focus=modeledAnatomy(this.volume)?.surfaceReference?undefined:this.vesselInspectionFocus;
+    this.surfaces?.forEach((mesh,name)=>setVesselInspectionFocus(mesh.material as THREE.MeshStandardMaterial,name===line?.name?focus:undefined));
     if(!line)return;
     line.visible=this.visible[line.name]!==false;
     const planes=[...this.extraClipPlanes,...(this.clipPlane?[this.clipPlane]:[])];
@@ -1228,18 +1271,21 @@ export class VolumeRenderer {
   }
 
   setVesselTrace(trace:ViewerVesselTrace|null):void {
+    this.vesselInspectionFocus?.path.dispose();this.vesselInspectionFocus=undefined;
     if(this.vesselTrace){
       this.vesselTrace.removeFromParent();disposeObject(this.vesselTrace);this.vesselTrace=undefined;
     }
     if(trace&&trace.points.length>=2&&trace.points.length<=2048&&
         this.volume.compartments.some(layer=>layer.name===trace.layerId)&&
         trace.points.every(p=>p.length===3&&p.every(Number.isFinite))){
+      this.vesselInspectionFocus=createVesselInspectionFocus(trace);
       const geometry=new THREE.BufferGeometry().setFromPoints(trace.points.map(p=>new THREE.Vector3(...p)));
       const material=new THREE.LineBasicMaterial({color:'#83f8ff',depthTest:false,depthWrite:false,toneMapped:false});
       this.vesselTrace=new THREE.Line(geometry,material);
       this.vesselTrace.name=trace.layerId;this.vesselTrace.renderOrder=6;
-      this.scene.add(this.vesselTrace);this.applyVesselTraceAppearance();
+      this.scene.add(this.vesselTrace);
     }
+    this.applyVesselTraceAppearance();
     this.requestRender();
   }
 
@@ -1474,7 +1520,7 @@ export class VolumeRenderer {
   private updateAcceptedSurfaces(view:SurgicalView|undefined){
     if(this.motionView===view&&this.motionVolume===this.volume)return;
     this.motionView=view;this.motionVolume=this.volume;
-    const owner=this.volume&&modeledAnatomy(this.volume)?.surfaceReference?.owner;
+    const anatomy=this.volume&&modeledAnatomy(this.volume),owner=anatomy?.surfaceReference?.owner;
     let motion=view;
     if(view?.operativeExposureV1&&view.moved.length){
       // These retained bodies have their own continuous surfaces. Their
@@ -1487,6 +1533,31 @@ export class VolumeRenderer {
     for(const layer of this.volume?.compartments??[]){
       const pair=this.surfaceGeometry?.get(layer.name);if(!pair)continue;
       const mesh=this.surfaces.get(layer.name),signal=mesh?.userData.corticalSignalEnabled;
+      const vessel=anatomy?.vesselSurfaces?.get(layer.name);
+      if(vessel){
+        const geometry=pair.source,lighting=pair.smooth.userData.restOperativeLightingNormals as Float32Array|undefined;
+        const display=view?deformOperativeVessel(vessel,view,this.affine):{...vessel,movedVertices:0,maxVertexOffsetMm:0,maxMotionWitness:undefined};
+        const previous=geometry.userData.operativeVessel;
+        if(display.movedVertices||previous?.movedVertices){
+          for(const [name,values] of [['position',display.positions],['normal',display.normals]] as const){
+            const attribute=geometry.getAttribute(name);attribute.array.set(values);attribute.needsUpdate=true;
+          }
+          if(lighting){
+            const normals=pair.smooth.getAttribute('normal');
+            normals.array.set(display.movedVertices?displaySurfaceNormals(display.normals,vessel.indices,this.affine):lighting);
+            normals.needsUpdate=true;
+          }
+          geometry.computeBoundingBox();geometry.computeBoundingSphere();
+          if(lighting){pair.smooth.boundingBox=geometry.boundingBox;pair.smooth.boundingSphere=geometry.boundingSphere;}
+        }
+        const receipt={mode:vessel.mode,triangles:vessel.indices.length/3,
+          movedVertices:display.movedVertices,maxVertexOffsetMm:display.maxVertexOffsetMm,maxMotionWitness:display.maxMotionWitness,
+          geometryIdentity:vessel.geometryIdentity,
+          ...((vessel.cuboidCount??0)>0?{cuboidCount:vessel.cuboidCount}:{})};
+        geometry.userData.operativeVessel={...receipt,normalStyle:'physical-indexed'};
+        if(lighting)pair.smooth.userData.operativeVessel={...receipt,normalStyle:'bounded-lighting'};
+        continue;
+      }
       const generatedTissue=layer.generatedFinish&&['grayMatter','whiteMatter','tumor','artery','vein'].includes(layer.displayKind??'');
       const registered=!!signal||!!generatedTissue;
       const soft=['brain','soft_tissue','tumor'].includes(layer.kind??'');
@@ -1510,6 +1581,10 @@ export class VolumeRenderer {
       const motion=mesh.visible?acceptedVesselSurfaceMotion(mesh.geometry):undefined;
       return motion?[{layer:name,...motion}]:[];
     });
+  }
+  private displayedOperativeVessels(){
+    return [...this.surfaces].flatMap(([layer,mesh])=>mesh.visible&&mesh.geometry.userData.operativeVessel?
+      [{layer,...mesh.geometry.userData.operativeVessel}]:[]);
   }
   private fieldOptics:ReturnType<typeof retainedFieldOptics>=null;
   private surgicalWetting?:SurgicalWetting;
@@ -2422,6 +2497,9 @@ export class VolumeRenderer {
     const planes=[...(this.extraClipPlanes??[]),...(this.clipPlane?[this.clipPlane]:[])];
     const hit=hits.find(item=>{
       if(!planes.every(plane=>plane.distanceToPoint(item.point)>=0))return false;
+      const focus=this.vesselInspectionFocus;
+      if(focus&&!modeledAnatomy(this.volume)?.surfaceReference&&item.object.userData.compartment===this.vesselTrace?.name&&
+        !vesselInspectionContains(focus,item.point))return false;
       if(item.object!==this.sourcePlane)return true;
       // The source-plane shader discards empty/out-of-field pixels. A quad
       // intersection there must allow the next visible anatomy hit through.
@@ -2578,6 +2656,7 @@ export class VolumeRenderer {
         dropletInstances:(this.surgicalFlow?.getObjectByName('flow:ledger-droplets') as THREE.InstancedMesh|undefined)?.count??0}:null,
       fieldOptics:this.fieldOptics?.group.visible?this.fieldOptics.group.userData.fieldSummary:null,
       displacedVesselSurfaces:this.displayedVesselMotion(renderedView),
+      operativeVesselSurfaces:this.displayedOperativeVessels(),
       picking:this.picking?.stats()??null}}));
     if(surgicalAnimationActive)this.needsFrame=true;
     const gl=this.renderer.getContext() as WebGL2RenderingContext;
@@ -2620,6 +2699,7 @@ export class VolumeRenderer {
     this.picking?.dispose();
     if (this.disposed) return;
     this.fieldOptics?.texture?.dispose();
+    this.vesselInspectionFocus?.path.dispose();
     this.updatePlanarPartition(undefined);
     this.disposed = true;
     this.pendingSurgicalPublication=null;

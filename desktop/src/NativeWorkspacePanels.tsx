@@ -1,10 +1,12 @@
 import {NativeCranialView} from './NativeCranialView';
 import {NativeStructureControls} from './NativeStructureControls';
 import {layerAppearance} from './viewer/workspaceSettings';
+import type {VesselShading,ViewerWorkspaceSettings} from './viewer/workspaceSettings';
 import {useEffect,useRef,useState} from 'react';
 import {Check,ChevronRight,ScanLine} from 'lucide-react';
 import {inverseAffine,rasAffine,sampleTrilinear,transformPoint,volumeBounds} from './viewer/coordinates';
 import type {ViewerVolume} from './viewer/contracts';
+import type {Point3} from './viewer/coordinates';
 import {scanLabel,studyTimepoint,studyLabel,sourceEvidenceLabel,defaultAnatomyPresentation,studyLayerDisplayKind} from './native-study-state';
 import type {NativeVesselGraph,VesselScope} from './native-anatomy-data';
 import type {NativeWorkspace} from './use-native-workspace';
@@ -18,24 +20,71 @@ import './unified-anatomy.css';
 function NativeVesselBranchPanel({workspace:w,layerId}:{workspace:NativeWorkspace;layerId:string}){
   const [result,setResult]=useState<NativeVesselGraph|null>(null);
   const [branchId,setBranchId]=useState<string|null>(null);
+  const details=useRef<HTMLDetailsElement>(null);
+  const consumedPick=useRef<NativeWorkspace['vesselPick']>(null);
+  const active=useRef(false);
+  const priorClip=useRef<ViewerWorkspaceSettings['clipBox']>(undefined);
+  const [localClip,setLocalClip]=useState<ViewerWorkspaceSettings['clipBox']>(undefined);
+  const currentClip=w.state.settings.clipBox;
+  const localCrop=!!(localClip&&currentClip?.enabled&&localClip.min.every((value,axis)=>value===currentClip.min[axis])&&
+    localClip.max.every((value,axis)=>value===currentClip.max[axis]));
+  const isolation=w.vesselTrace?.layerId===layerId?w.vesselTrace.isolationRadiusMm:undefined;
+  useEffect(()=>{active.current=true;return()=>{active.current=false;};},[]);
   const branches=result?.branches??[],branch=branches.find(item=>item.branch_id===branchId)??branches[0];
-  const inspect=()=>w.run(async()=>{
-    const graph=await w.api!.anatomyGraph({...w.args(),layerId,displaySeriesId:w.series,point:w.state.cursor});
-    setResult(graph);setBranchId(null);w.setVesselTrace(null);
+  const inspect=(point:Point3,fromSurface=false)=>w.run(async()=>{
+    const graph=await w.api!.anatomyGraph({...w.args(),layerId,displaySeriesId:w.series,point});
+    if(!active.current)return;
+    const selected=graph.branches?.[0];
+    setResult(graph);setBranchId(selected?.branch_id??null);
+    const nearest=graph.nearest;
+    const local=nearest&&nearest.distance_mm<=Math.max(2,(nearest.radius_mm??0)+1.5);
+    w.setVesselTrace(fromSurface&&local&&selected&&selected.preview_ras_mm.length>1?{layerId,points:selected.preview_ras_mm}:null);
   });
-  return <details className="unified-details" data-vessel-branches={branches.length}>
+  const pick=w.vesselPick;
+  useEffect(()=>{
+    if(!pick||pick.layerId!==layerId||w.busy||consumedPick.current===pick)return;
+    consumedPick.current=pick;
+    if(details.current){details.current.open=true;details.current.scrollIntoView({block:'nearest'});}
+    void inspect(pick.point,true);
+  },[pick,w.busy,layerId]);
+  const cropBranch=()=>{
+    if(!branch)return;
+    if(localCrop){w.setSettings({...w.state.settings,clipBox:priorClip.current});setLocalClip(undefined);return;}
+    const points=branch.preview_ras_mm;
+    if(points.length<2)return;
+    priorClip.current=w.state.settings.clipBox;
+    const min=[0,1,2].map(axis=>Math.min(...points.map(point=>point[axis]))-8) as Point3;
+    const max=[0,1,2].map(axis=>Math.max(...points.map(point=>point[axis]))+8) as Point3;
+    const next={enabled:true,min,max};
+    w.setSettings({...w.state.settings,clipBox:next});
+    w.focusStructure(layerId,branch.midpoint_ras_mm);setLocalClip(next);
+  };
+  return <details ref={details} className="unified-details" data-vessel-branches={branches.length} data-vessel-isolation={isolation!==undefined}>
     <summary>Vessel branch inspection</summary>
-    <button disabled={w.busy||!w.state.cursor} onClick={()=>void inspect()}>Inspect branches at cursor</button>
+    <button disabled={w.busy||!w.state.cursor} onClick={()=>w.state.cursor&&void inspect(w.state.cursor)}>Inspect branches at cursor</button>
+    {!result&&<p className="subtle">Double-click a vessel in 3D to find its nearest source branch.</p>}
     {result&&!result.nearest&&<p role="status">No source centerline is available for this layer.</p>}
     {result?.nearest&&<p className="subtle">Nearest source cell {result.nearest.source_cell_id} · {result.nearest.distance_mm.toFixed(2)} mm from the query.{result.nearest.radius_mm!=null&&<> Distance to background cell centers {result.nearest.radius_mm.toFixed(2)} mm.</>}{result.nearest.radius_limited_by_image_extent&&<> Distance estimate limited by scan extent.</>}{result.nearest.radius_limited_by_workspace&&<> Distance estimate limited by sampling bounds.</>}</p>}
     {branch&&<>
-      {branches.length>1&&<label>Branch<select aria-label="Vessel branch" value={branch.branch_id} onChange={event=>{setBranchId(event.target.value);w.setVesselTrace(null);}}>{branches.map(item=><option key={item.branch_id} value={item.branch_id}>{item.branch_id.slice(0,10)} · {item.length_mm.toFixed(1)} mm</option>)}</select></label>}
+      {branches.length>1&&<label>Branch<select aria-label="Vessel branch" value={branch.branch_id} onChange={event=>{
+        const selected=branches.find(item=>item.branch_id===event.target.value);
+        if(!selected)return;
+        if(localCrop){w.setSettings({...w.state.settings,clipBox:priorClip.current});setLocalClip(undefined);}
+        setBranchId(selected.branch_id);
+        if(w.vesselTrace)w.setVesselTrace(selected.preview_ras_mm.length>1?{layerId,points:selected.preview_ras_mm}:null);
+      }}>{branches.map(item=><option key={item.branch_id} value={item.branch_id}>{item.branch_id.slice(0,10)} · {item.length_mm.toFixed(1)} mm</option>)}</select></label>}
       <p className="subtle">Branch <code title={branch.branch_id}>{branch.branch_id.replace(/^branch-/,'').slice(0,12)}</code> · {branch.length_mm.toFixed(1)} mm · {branch.source_cells.length.toLocaleString()} source skeleton cells{branch.closed?' · closed path':''}.</p>
       {branch.connectivity==='source-h0-h1-matched-cavities-unrepresented'&&<p className="subtle">Source cavities are absent from the path graph.</p>}
       {!branch.connectivity.startsWith('source-h0-h1-matched')&&<p className="subtle">Source topology for this path is unverified.</p>}
       {branch.unsupported_diagonal_edges>0&&<p className="subtle">{branch.unsupported_diagonal_edges} diagonal steps lack support by adjoining source faces.</p>}
       <div className="tool-row"><button onClick={()=>w.focusStructure(layerId,branch.midpoint_ras_mm)}>Frame branch midpoint</button><button onClick={()=>w.setCursor(branch.start_ras_mm)}>Start slice</button><button onClick={()=>w.setCursor(branch.end_ras_mm)}>End slice</button></div>
       {branch.preview_ras_mm.length>1&&<button aria-pressed={!!w.vesselTrace} onClick={()=>w.setVesselTrace(w.vesselTrace?null:{layerId,points:branch.preview_ras_mm})}>{w.vesselTrace?'Hide branch trace':'Show branch trace'}</button>}
+      {branch.preview_ras_mm.length>1&&<button aria-pressed={localCrop} onClick={cropBranch}>{localCrop?'Restore previous crop':'Crop around branch'}</button>}
+      {branch.preview_ras_mm.length>1&&<button aria-pressed={isolation!==undefined} onClick={()=>{
+        const isolationRadiusMm=isolation===undefined?Math.min(5,Math.max(1.6,(result?.nearest?.radius_mm??0)+.8)):undefined;
+        w.setVesselTrace({layerId,points:branch.preview_ras_mm,isolationRadiusMm});
+      }}>{isolation===undefined?'Isolate branch area':'Show surrounding vessels'}</button>}
+      {isolation!==undefined&&<p role="status">3D crop within {isolation.toFixed(1)} mm of the source trace. Linked slices retain the full layer.</p>}
     </>}
   </details>;
 }
@@ -161,6 +210,10 @@ export function NativeSidebar({workspace:w,tab,onOpenAnatomy,onOpenPlan,onOpenSc
         </div>}
       <p className="presentation-source">{model&&w.state.settings.presentation!=='scan'?'Linked slices · ':''}{sourceEvidenceLabel(source,b.document.series)}</p>
       <NativeStructureControls volume={w.volume} layers={b.document.layers} tracts={b.document.tractography} visibleLayers={w.state.visible} onVisibilityChange={w.setVisible} settings={w.state.settings} onSettingsChange={w.setSettings} selectedStructure={w.selectedStructure} onSelectStructure={choose} onFocusStructure={w.focusStructure} unavailable={unavailable} pendingLayers={w.pendingLayers} layerErrors={w.layerErrors} onRetryLayer={w.retryLayer} selectionInspector={layerInspector} disabled={w.busy||!!w.draft} showSelectionControls={!!w.selectedStructure&&!layer}/>
+      {w.state.settings.presentation==='vascular'&&b.document.layers.some(l=>['vessel','vessels','artery','vein','sinus'].includes(l.kind))&&
+        <label className="vascular-shading">Vessel shading<select aria-label="Vessel shading" value={w.state.settings.vesselShading??'balanced'} disabled={blocked||w.vesselScope!=='all'} onChange={e=>w.setSettings({...w.state.settings,vesselShading:e.target.value as VesselShading})}>
+          <option value="balanced">Depth and caliber</option><option value="large">Emphasize wider vessels</option><option value="fine">Emphasize finer vessels</option><option value="source">Source layer colors</option>
+        </select><span>Depth and local mask thickness guide shading. Source geometry and risk constraints are preserved.</span></label>}
       <details className="anatomy-display-tools"><summary>Display & fragments</summary>
         {b.document.layers.some(l=>(l.provenance as {model?:string}|null)?.model==='siam-v2')&&<>
           <label><input type="checkbox" aria-label="Unfiltered SIAM estimates (QC)" checked={w.original} disabled={blocked} onChange={w.compare}/>Unfiltered SIAM estimates (QC)</label>

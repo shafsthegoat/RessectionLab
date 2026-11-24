@@ -25,6 +25,7 @@ export function validMicroscopeSettings(value:unknown):value is MicroscopeSettin
   return (s.tissueStyle===undefined||['operative','labels'].includes(s.tissueStyle))&&['inspectionTransparency','inspectionCutaway'].every(key=>s[key as 'inspectionTransparency']===undefined||typeof s[key as 'inspectionTransparency']==='boolean');
 }
 export interface ViewerClipping { axis: 'x'|'y'|'z'; value: number; enabled: boolean; flipped?: boolean }
+export type VesselShading = 'balanced'|'large'|'fine'|'source';
 /** Display choices only. No setting changes source arrays, masks or registration. */
 export interface ViewerWorkspaceSettings {
   showOrientationGuide?: boolean;
@@ -39,6 +40,7 @@ export interface ViewerWorkspaceSettings {
   sliceFraming?: {fit:'image'|'anatomy';zoom:number};
   contextStyle?: 'shell'|'uniform';
   presentation?: 'scan'|'segmentation'|'vascular';
+  vesselShading?: VesselShading;
   layerOpacity?: Record<string, number>;
   layerColor?: Record<string, string>;
   camera?: ViewerCameraState | null;

@@ -149,6 +149,8 @@ def _case_layout(archive,limit,*,extension=False):
     keys=['mri','affine']
     for group in ('compartments','source_compartments'):
         keys.extend(manifest['array_index'][group].values())
+    score_keys=tuple(manifest['array_index'].get('vascular_probabilities', {}).values())
+    keys.extend(score_keys)
     for row in manifest.get('structural_evidence',{}).values():keys.append(row['array_key'])
     for row in manifest.get('critical_evidence',{}).values():keys.extend([row['mask_key'],row['coverage_key']])
     for row in manifest.get('prior_proposals',{}).values():keys.extend([row['data_key'],row['coverage_key']])
@@ -177,6 +179,8 @@ def _case_layout(archive,limit,*,extension=False):
                     raise ValueError('Declared NPY shape/expanded size mismatch')
                 if info.filename=='mri.npy' and (len(shape)!=3 or dtype.kind!='f'):
                     raise ValueError('Source image is not 3D floating point')
+                if info.filename[:-4] in score_keys and (len(shape)!=3 or dtype!=np.dtype('<f4')):
+                    raise ValueError('Vascular probability is not a 3D float32 source grid')
                 if info.filename=='affine.npy' and shape!=(4,4):raise ValueError('Affine must be 4x4')
     return expanded
 
@@ -216,7 +220,7 @@ def _viewer_cutaway(viewer, *, corners, frame_name):
 
 def _viewer_state(case,viewer,cases):
     """Bound display preferences without treating them as image registration."""
-    if not isinstance(viewer,dict) or set(viewer)-{'showOrientationGuide','smoothSurfaces','skullMode','volumeRendering','layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast','clipBox','obliqueClip','sliceOverlay','presentation','sliceFraming','contextStyle','operativeView','microscope','externalCamera','resultInspection','resultCamera'}:
+    if not isinstance(viewer,dict) or set(viewer)-{'showOrientationGuide','smoothSurfaces','skullMode','volumeRendering','layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast','clipBox','obliqueClip','sliceOverlay','presentation','vesselShading','sliceFraming','contextStyle','operativeView','microscope','externalCamera','resultInspection','resultCamera'}:
         raise ValueError('Unknown viewer settings')
     if 'showOrientationGuide' in viewer and type(viewer['showOrientationGuide']) is not bool:
         raise ValueError('Invalid body orientation guide flag')
@@ -255,6 +259,8 @@ def _viewer_state(case,viewer,cases):
         raise ValueError('Invalid slice annotation style')
     if 'presentation' in viewer and viewer['presentation'] not in ('scan','segmentation','vascular'):
         raise ValueError('Invalid anatomy presentation')
+    if 'vesselShading' in viewer and viewer['vesselShading'] not in ('balanced','large','fine','source'):
+        raise ValueError('Invalid vessel shading')
     if 'skullMode' in viewer and viewer['skullMode'] not in {'exterior','transparent','cutaway'}:
         raise ValueError('Invalid skull display mode')
     if 'smoothSurfaces' in viewer and type(viewer['smoothSurfaces']) is not bool:raise ValueError('Invalid surface display flag')

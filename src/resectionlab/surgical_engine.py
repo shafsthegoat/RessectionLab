@@ -22,6 +22,7 @@ from scipy.spatial.transform import Rotation, Slerp
 from .core import semantic_digest
 from .native_backend import native_engine_copy
 from . import native_backend
+from . import surgical_vessel_rods as vessel_rods
 from .geometry import GeometryScene, capsule_voxel_indices, segment_segment_distance
 from .surgical_tools import TOOLS, catalog
 from .surgical_cusa_v3 import profile as cusa_profile
@@ -606,6 +607,8 @@ class SurgicalEngine:
         from .surgical_occupancy import MaterialOccupancy
         removed = set(self.state['removed'])
         cleared = set(removed)
+        if vessel_rods.enabled(self):
+            cleared.update(vessel_rods.definitions(self).index)
         moves = []
         held_ids = set()
         for hold in [*self.state['holds'].values(), *self.state.get('detachedFragments', [])]:
@@ -628,7 +631,7 @@ class SurgicalEngine:
             operative_pairs = exposure.moved(self)
             cleared.update(original for original, _ in operative_pairs)
             from .surgical_physics_v2 import raster
-            soft_pairs = raster(self) if 'deformation' in self.state else []
+            soft_pairs = raster(self, include_rods=False) if 'deformation' in self.state else []
             cleared.update(original for original, _ in soft_pairs)
         for retained, destination in moves:
             for original, target in zip(retained, destination):
@@ -638,7 +641,7 @@ class SurgicalEngine:
         memberships = {}
         if 'deformation' in self.state:
             from .surgical_physics_v2 import raster
-            pairs = soft_pairs if self._operative else raster(self)
+            pairs = soft_pairs if self._operative else raster(self, include_rods=False)
             cleared.update(a for a, b in pairs)
             for original, target in pairs:
                 if self._operative and target in destinations:
@@ -1034,7 +1037,7 @@ class SurgicalEngine:
         if total > 20000: raise ValueError('PATH_TOO_LONG: split this stroke into shorter actions')
         if any(np.linalg.norm(np.subtract(q['position'], p['position'])) > 250 for p, q, _ in segments):
             raise ValueError('PATH_TOO_LONG')
-        if native_backend._module is not None and not self._operative:
+        if native_backend._module is not None and not self._operative and not vessel_rods.enabled(self):
             done, reason, contact_position, path_fraction = native_backend.run_trajectory(
                 self, key, op, segments, active, duration, total, articulate,
                 jaw_target, previous_jaw, progress_reason, cusa_v3, check, events)
@@ -1144,6 +1147,11 @@ class SurgicalEngine:
         if self.scene.properties.get('gliomaMaterialsV1', {}).get('vesselMotionModel'):
             from .surgical_glioma_materials import vessel_displacements
             motion = {cell: delta for cell, delta in vessel_displacements(self).items() if cell in self._protected_ids}
+        if vessel_rods.enabled(self):
+            centers = self.scene.points(self.protection.cells)
+            accepted = vessel_rods.source_points(self, self.protection.cells)
+            motion.update({cell: accepted[cell] - centers[i] for i, cell in enumerate(self.protection.cells)
+                           if cell in accepted})
         if not motion:
             if not any(cell != destination for cell, destination in mapping.items()): return None
             return self.scene.points([mapping.get(int(cell), int(cell)) for cell in self.protection.cells])
@@ -1215,6 +1223,8 @@ class SurgicalEngine:
         if native_backend._module is not None:
             if self._operative:
                 return native_backend.operative_python_substep(self._physical_substep_reference, key, op, p, q, active, dt)
+            if vessel_rods.enabled(self):
+                return self._physical_substep_reference(key, op, p, q, active, dt)
             return native_backend.physical_substep(self, key, op, p, q, active, dt)
         return self._physical_substep_reference(key, op, p, q, active, dt)
 
@@ -1279,6 +1289,9 @@ class SurgicalEngine:
         if self._operative:
             held.update(exposure.held_cells(self, key))
             special_contacts.update(exposure.permits_contact(self, key, op, working_cells))
+        compliant = vessel_rods.compliant_cells(self, working_cells) if vessel_rods.allows_tip_contact(self, key, op) else set()
+        if compliant:
+            special_contacts.update(compliant)
         if set(shaft_cells) - self._shaft_held_cells(key): raise ValueError('SHAFT_COLLISION')
         if cusa_v3 and active and self.state.get('toolMechanicsRevision') != 2 and working_cells - held - set(self.touched(p, p, params['radiusMm'])):
             raise ValueError('RETAINED_TISSUE_COLLISION: CUSA body requires a cleared corridor')
@@ -1290,9 +1303,10 @@ class SurgicalEngine:
         if tool['effect'] not in ('suction', 'irrigate') and working_cells - held and op not in ('withdraw', 'release', 'deactivate', 'inspect', 'exchange'):
             if any(self.by_label[int(self.scene.labels.ravel()[i])]['material'] not in tool['materials'] for i in working_cells - held - special_contacts):
                 raise ValueError('UNSUPPORTED_MATERIAL')
-            if not active and key not in self.state['holds'] and working_cells - held: raise ValueError('RETAINED_TISSUE_COLLISION')
+            if not active and key not in self.state['holds'] and working_cells - held - compliant: raise ValueError('RETAINED_TISSUE_COLLISION')
         effect_cells = sorted(working_cells) if self.state.get('toolMechanicsRevision') in (1, 2) and tool['effect'] not in ('remove','suction','irrigate','probe') else tip_cells
-        eligible = [i for i in effect_cells if i in special_contacts or self.by_label[int(self.scene.labels.ravel()[i])]['material'] in tool['materials']]
+        eligible = [i for i in effect_cells if i not in compliant
+                    and (i in special_contacts or self.by_label[int(self.scene.labels.ravel()[i])]['material'] in tool['materials'])]
         field_action = active and tool['effect'] in ('suction', 'irrigate')
         if field_action and self._operative and working_cells:
             # A fluid tool has no cutting law. Rotation and lateral travel of the
@@ -1318,7 +1332,7 @@ class SurgicalEngine:
                 for a,b,radius,part in envelopes(tool,params,p,q):
                     if part != 'shaft': current_contacts.update(self.touched(a,b,radius))
             if current_contacts - previous_contacts: raise ValueError('WITHDRAWAL_PATH_BLOCKED')
-        tip_checks = [i for i in tip_cells if i not in held] if self._operative else tip_cells
+        tip_checks = [i for i in tip_cells if i not in compliant and (not self._operative or i not in held)]
         if tip_checks and not field_action and (not active and key not in self.state['holds'] or any(self.by_label[int(self.scene.labels.ravel()[i])]['material'] not in tool['materials'] for i in tip_checks if i not in special_contacts)):
             if op not in ('withdraw', 'release', 'deactivate', 'inspect', 'exchange'):
                 raise ValueError('UNSUPPORTED_MATERIAL' if active else 'RETAINED_TISSUE_COLLISION')
@@ -1376,9 +1390,12 @@ class SurgicalEngine:
                     if part != 'shaft': contacts.update(self.touched(a,b,radius))
                 other_cells = sorted(contacts)
             other_eligible = [i for i in other_cells if self.by_label[int(self.scene.labels.ravel()[i])]['material'] in other_tool['materials']]
-            if other_tool['materials'] and len(other_eligible) != len(other_cells):
+            compliant_other = vessel_rods.compliant_cells(self, other_cells) if vessel_rods.allows_tip_contact(
+                self, other_key, 'apply') else set()
+            if other_tool['materials'] and set(other_cells) - set(other_eligible) - compliant_other:
                 raise ValueError('OTHER_ACTIVE_TOOL_UNSUPPORTED_MATERIAL:' + other_key)
-            events.extend(self._effect(other_key, 'apply', other_eligible, np.asarray(other['position']), np.asarray(other['quaternion']), dt))
+            events.extend(self._effect(other_key, 'apply', [i for i in other_eligible if i not in compliant_other],
+                                       np.asarray(other['position']), np.asarray(other['quaternion']), dt))
             if v2:
                 from .surgical_vessels_v2 import contact
                 contact(self, other_cells, dt, self.parameters(other)['forceN'])
@@ -1406,6 +1423,8 @@ class SurgicalEngine:
             # Force is an explicit proxy, never inferred from a segmentation.
             if not shared_clock: vessel.contact(self, vessels, dt, params['forceN'] if active else 0.)
             brain.tick(self, dt)
+            if compliant:
+                vessel_rods.check_working_axis(self, key, op)
             self.occupancy()
             # Coupled tissue moves after the ordinary swept-tool check.
             # Recheck every physical shaft against the updated occupancy so a
@@ -1580,6 +1599,7 @@ class SurgicalEngine:
                     'transectedEdges', 'flapComponents', 'debris', 'sources', 'meshCutEdges', 'meshSeams',
                     'vesselConnections', 'vesselWounds', 'deformation', 'deformationModel', 'drillingV2', 'vesselsV2') if name not in omitted},
                 **({'vascularGraphV1': copy.deepcopy(self.state['vascularGraphV1'])} if 'vascularGraphV1' in self.state else {}),
+                **({vessel_rods.FIELD: vessel_rods.view(self)} if vessel_rods.enabled(self) else {}),
                 **({'bipolarThermalV1': copy.deepcopy(self.state['bipolarThermalV1'])} if 'bipolarThermalV1' in self.state else {}),
                 **({'cusaV3': copy.deepcopy(self.state['cusaV3'])} if 'cusaV3' in self.state else {}),
                 **planar_view}
