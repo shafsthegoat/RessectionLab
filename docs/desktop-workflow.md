@@ -88,8 +88,10 @@ acquired scans at the saved field. The app verifies the exact study revision,
 acquisitions and selected label and score arrays. If the source has moved,
 choose its original manifest or a portable copy with **Locate source study**.
 When preparation used a local alignment review, the angiogram opens in its own
-acquisition frame at the corresponding voxel. **Return to rehearsal** restores
-the open action boundary and instrument poses, including unsaved work.
+acquisition frame at the corresponding voxel. Use the linked slices to examine
+the acquired signal, **Volume** to add it to the 3D field, and **Reset to saved
+field** to recenter both views. **Return to rehearsal** restores the open action
+boundary and instrument poses, including unsaved work.
 
 ### Practice from an accepted engine state
 
