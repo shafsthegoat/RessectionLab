@@ -220,7 +220,7 @@ def _viewer_cutaway(viewer, *, corners, frame_name):
 
 def _viewer_state(case,viewer,cases):
     """Bound display preferences without treating them as image registration."""
-    if not isinstance(viewer,dict) or set(viewer)-{'showOrientationGuide','smoothSurfaces','skullMode','volumeRendering','layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast','clipBox','obliqueClip','sliceOverlay','presentation','vesselShading','sliceFraming','contextStyle','operativeView','microscope','externalCamera','resultInspection','resultCamera'}:
+    if not isinstance(viewer,dict) or set(viewer)-{'showOrientationGuide','smoothSurfaces','skullMode','volumeRendering','layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast','clipBox','obliqueClip','sliceOverlay','presentation','sourcedVesselContext','vesselShading','sliceFraming','contextStyle','operativeView','microscope','externalCamera','resultInspection','resultCamera'}:
         raise ValueError('Unknown viewer settings')
     if 'showOrientationGuide' in viewer and type(viewer['showOrientationGuide']) is not bool:
         raise ValueError('Invalid body orientation guide flag')
@@ -259,6 +259,8 @@ def _viewer_state(case,viewer,cases):
         raise ValueError('Invalid slice annotation style')
     if 'presentation' in viewer and viewer['presentation'] not in ('scan','segmentation','vascular'):
         raise ValueError('Invalid anatomy presentation')
+    if 'sourcedVesselContext' in viewer and type(viewer['sourcedVesselContext']) is not bool:
+        raise ValueError('Invalid sourced vessel context flag')
     if 'vesselShading' in viewer and viewer['vesselShading'] not in ('balanced','large','fine','source'):
         raise ValueError('Invalid vessel shading')
     if 'skullMode' in viewer and viewer['skullMode'] not in {'exterior','transparent','cutaway'}:
@@ -266,14 +268,14 @@ def _viewer_state(case,viewer,cases):
     if 'smoothSurfaces' in viewer and type(viewer['smoothSurfaces']) is not bool:raise ValueError('Invalid surface display flag')
     volume=viewer.get('volumeRendering')
     if 'volumeRendering' in viewer:
-        if (not isinstance(volume,dict) or set(volume)-{'enabled','preset','density','window','points','shadows','isolateLabels'} or
+        if (not isinstance(volume,dict) or set(volume)-{'enabled','preset','density','window','points','shadows','isolateLabels','showCtExteriorSignal'} or
                 ('enabled' in volume and type(volume['enabled']) is not bool) or
                 ('preset' in volume and volume['preset'] not in {'auto','ct-bone','ct-tissue','ct-angiography','mri'}) or
                 ('density' in volume and (type(volume['density']) not in (int,float) or
                     not math.isfinite(volume['density']) or not 0<=volume['density']<=2))):
             raise ValueError('Invalid scan volume rendering settings')
     if volume:
-        for flag in ('shadows','isolateLabels'):
+        for flag in ('shadows','isolateLabels','showCtExteriorSignal'):
             if flag in volume and type(volume[flag]) is not bool:raise ValueError('Invalid volume display flag')
         window=volume.get('window')
         if window is not None and (not isinstance(window,list) or len(window)!=2 or not all(type(v) in (int,float) and math.isfinite(v) for v in window) or window[1]<=window[0]):raise ValueError('Invalid intensity window')

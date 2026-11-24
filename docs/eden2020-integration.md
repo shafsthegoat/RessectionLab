@@ -209,12 +209,14 @@ environment** with its explicit research choice. The independent TOF view
 continues to support native reconstruction and source inspection.
 
 The current cohort reconciliation binds all 30 acquired studies and 29
-chosen vascular reviews to their live source identities. Six current native
-section checks and three cold research-workspace opens supplement the
-historical 29-case GPU captures. The current app preflight returns no
-qualified ordinary EDEN native-wall layer pair. The completion table records
-that distinction and the original acquisition, registration and header
-exceptions per study. [Local evidence index](local-storage-ledger.md)
+chosen vascular reviews to their live source identities. Hidden desktop
+recapture reproduced all 29 selected native surface hashes at the archived
+physical cameras. Each TOF review includes an acquired-source cut and a
+separate scalar context view. The study without acquired TOF opened in
+structural MRI. The completion table also records the six native section
+checks and three cold research-workspace opens. No EDEN study qualified for
+the ordinary native-wall layer pair in the current preflight.
+[Local evidence index](local-storage-ledger.md)
 
 In **Scans → Alignment & registration**, choose the moving scan and a **Review
 position**, then select **Check local alignment evidence**. The 24 mm RAS
@@ -233,6 +235,12 @@ peaks, with nine peaks at the search limit and five competing matches. These
 shifts describe image-texture correspondence under the current transform.
 Landmark residuals throughout the intended domain and positive mechanical
 tissue evidence remain unestablished. See the [private storage ledger](local-storage-ledger.md).
+
+In the PTNT_5387 follow-up, nearby candidate landmarks in the native TOF
+fit the existing transform about as well as the selected candidates, and a
+diagnostic fit missed a held-out point by 2.37 mm. The provisional TOF points
+also fell short of the 3D spread requirement. The review retains the raw
+landmark and alternative crops with the unchanged transform.
 
 The Scans review panel also supports a review for one native-wall field. Select
 the reference brain estimate, moving angiography scores, and review position.

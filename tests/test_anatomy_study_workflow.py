@@ -272,6 +272,8 @@ def test_anatomy_presentation_survives_native_and_portable_reopen(patient, tmp_p
                                              'showOrientationGuide': mode == 'segmentation',
                                              'contextStyle': 'shell', 'sliceFraming': {'fit': 'anatomy', 'zoom': 1.25},
                                              'volumeRendering': {'preset': 'auto', 'density': .085}}}}}
+    if mode == 'vascular':
+        state['states']['mri']['settings']['sourcedVesselContext'] = True
     save_view(patient, state)
     assert read_view(Collection(patient.root)) == state
     dest = tmp_path/'presentation.rsworkspace'
@@ -292,6 +294,10 @@ def test_anatomy_presentation_survives_native_and_portable_reopen(patient, tmp_p
         broken['states']['mri']['settings']['showOrientationGuide'] = invalid
         with pytest.raises(ValueError, match='orientation guide'):
             save_view(patient, broken)
+    broken = deepcopy(state)
+    broken['states']['mri']['settings']['sourcedVesselContext'] = 'true'
+    with pytest.raises(ValueError, match='sourced vessel context flag'):
+        save_view(patient, broken)
     assert read_view(patient) == state
 
 

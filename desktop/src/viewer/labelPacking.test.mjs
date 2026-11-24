@@ -17,6 +17,30 @@ test('missing category sources and malformed independent masks cannot silently p
  assert.throws(()=>packAnatomyLabels({shape:[2,2,2],compartments:[{mask:new Uint8Array(2)}]}));
 });
 
+test('native label packing uses one or two channels and preserves every membership across layouts',()=>{
+ const shape=[2,3,4],count=24;
+ const labelSets=[{id:'regions',data:Uint16Array.from({length:count},(_,i)=>[0,78,1024][i%3])}];
+ const region={name:'region',labelSet:'regions',labelValue:1024,mask:new Uint8Array()};
+ const masks=Array.from({length:17},(_,i)=>({
+   name:`mask-${i}`,mask:Uint8Array.from({length:count},(_,j)=>Number((i+j)%3!==0)),
+ }));
+ for(const [compartments,channels] of [[[],1],[[region],1],[masks.slice(0,8),1],
+   [masks.slice(0,9),2],[[region,...masks.slice(0,8)],2],[masks,4]]){
+  const volume={shape,compartments,labelSets};
+  const legacy=packAnatomyLabels(volume),compact=packAnatomyLabels(volume,true);
+  assert.equal(compact.data.byteLength,count*channels);
+  assert.deepEqual(compact.codes,legacy.codes);
+  for(const [index,layer] of compartments.entries()){
+   const [channel,code]=compact.codes[index],mask=materializeLayerMask(volume,layer);
+   for(let i=0;i<count;i++){
+    const value=compact.data[i*channels+channel];
+    assert.equal(value,legacy.data[i*4+channel]);
+    assert.equal(code<0?(value&-code)!==0:value===code,Boolean(mask[i]));
+   }
+  }
+ }
+});
+
 test('65 source masks compact disjoint tissues while retaining every overlapping tract and target membership',()=>{
  const compartments=[];
  compartments.push({name:'brain',mask:Uint8Array.from({length:128},(_,i)=>i<100?1:0)});

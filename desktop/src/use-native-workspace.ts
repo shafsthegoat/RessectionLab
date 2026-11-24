@@ -85,7 +85,7 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
       (review?.posterior_compartment_review?.disjoint_union_matches_selected===true||fieldEdgeReview||focusedReview);
     const mode=separatedReview||(angiography&&!/^\s*CT/i.test(modality))?'vascular':structures?'segmentation':defaultAnatomyPresentation(modality);
     const appearanceLayers=separatedReview&&focusedReview?presentationLayers(b.document,s):available;
-    const settings=anatomyPresentation(nativeDefaults(),appearanceLayers,mode,modality,s);
+    const settings=anatomyPresentation(nativeDefaults(),appearanceLayers,mode,modality,s,{visible,series:b.document.series});
     if(separatedReview&&(fieldEdgeReview||focusedReview))settings.vesselShading='large';
     return {cursor:s===b.document.reference_series?b.document.display?.cursor_ras_mm??null:null,
       settings:nativeVascularReview(b)?{...settings,smoothSurfaces:false}:settings,visible};
@@ -205,11 +205,13 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
     let v=migrateSkullView(separate?destination:nextScanState(scanState,destination,linked),binding.document.layers);
     if(patientCutawayActive&&alignment!=='unavailable')v={...v,settings:{...v.settings,
       presentation:scanState.settings.presentation,camera:readCamera.current?.()??scanState.settings.camera}};
+    if(inspectLayer)v={...v,visible:{...v.visible,[inspectLayer]:true}};
     if(mode){
       const modality=binding.document.series.find(scan=>scan.id===s)?.modality??'MRI';
-      v={...v,settings:skullDisplay({...anatomyPresentation(v.settings,presentationLayers(binding.document,s,volume?.patientContext?.sources),mode,modality,s),...viewerCutaway(v.settings)})};
+      const admitted=presentationLayers(binding.document,s,volume?.patientContext?.sources);
+      const preset=anatomyPresentation(v.settings,admitted,mode,modality,s,{visible:v.visible,series:binding.document.series});
+      v={...v,settings:skullDisplay({...preset,...viewerCutaway(v.settings)})};
     }
-    if(inspectLayer)v={...v,visible:{...v.visible,[inspectLayer]:true}};
     generation.current++;resetLayers();installVolume(null);setSeries(s);setStates(all=>({...all,[s]:v}));setReview(null);setComponents([]);setEditLayer(null);
     void run(()=>loadView(binding,s,v));
   }
@@ -218,7 +220,8 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
     const scan=binding.document.series.find(s=>s.id===series);
     const available=presentationLayers(binding.document,series,volume?.patientContext?.sources);
     updateState({cranialView:undefined});
-    const settings=anatomyPresentation(state.settings,available,mode,scan?.modality??'MRI',series);
+    const visible=Object.fromEntries(Object.entries(state.visible).filter(([id])=>!unavailable.includes(id)));
+    const settings=anatomyPresentation(state.settings,available,mode,scan?.modality??'MRI',series,{visible,series:binding.document.series});
     if(usesPatientCutaway(settings,!!patientBounds)===patientCutawayActive)updateSettings(settings);
     else updateState({settings:skullDisplay({...settings,...viewerCutaway(scanState.settings)})});
     if(mode==='segmentation'){

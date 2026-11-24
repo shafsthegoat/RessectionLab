@@ -129,6 +129,14 @@ The ordinary EDEN diffusion checks and source-role audit are at
 
 The 30-study EDEN completion table is at
 `qc/eden2020-glioma-5714812/cohort-reconciliation-20261124-v1/README.md`.
+The matched GPU recaptures and structural control are indexed at
+`qc/eden2020-glioma-5714812/current-rendered-cohort-20261124.abYhYE2c/README.md`.
+The local structural tissue and held-out fiducial checks are at
+`qc/eden2020-glioma-5714812/mechanical-tissue-evidence-20261124-v1/README.md`.
+The mixed MRI Vessels and compact label comparisons are at
+`qc/mr-vessel-context-20261124.swCjfRex/README.md`.
+The standalone TopCoW-014 optical reference is at
+`qc/integrated-anatomy-20261124-v1/offline-ospray-topcow014-v1/README.md`.
 The matched CTA posterior sheet checks are at
 `qc/ct-exterior-display-20261124.C0XzMdHW/README.md` and the original planes
 at `qc/cta-detached-band-source-review-20261124-v1/source-band-witness.png`.

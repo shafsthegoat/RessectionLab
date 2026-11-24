@@ -96,6 +96,13 @@ The October 4, 2026 integration check used `outputs/desktop-bridge/native-ucsf00
 
 The main application accepts native patient collections and historical cases through the same Open and library flow. Native collections hydrate their original scalar grid, shared categorical label sets and indexed source/display meshes. The anatomy inventory is independent of residency: visibility changes on resident layers do not retransfer source images or rebuild the renderer. Missing layers load serially in the background, with per-layer progress/retry and latest-selection handling. Label packing uses a worker and bounded source-buffer copies. Validated additions update the current renderer atomically; failures retain the admitted view. Native source/revision/preview generations invalidate residency and reject late responses. One scalar GPU texture is shared by source slices and volume rendering. Camera-only frames composite cached source slices; layout or image/overlay changes invalidate the affected cache. A new source or revision invalidates pending loads; one scalar image is retained for reuse during same-scan edits.
 
+The native label worker uses one or two bytes per voxel when the resident labels
+fit in R8 or RG8. Every bit mask and categorical value retains its original
+membership, including overlaps. Larger inventories use RGBA8. When new resident
+layers require more channels, the renderer updates the source slices, volume and
+vessel thickness sampling together. Modeled tissue states retain the RGBA8
+layout for sparse updates.
+
 The layer texture packs independent binary masks in byte banks and maps categorical regions through shared byte palettes. Four channels retain overlapping groups without allocating a full mask per brain region; the current 38-layer patient collection fits in two channels. The metadata limit is 128 layers; four texture channels bound resident label groups. Invalid groups are reported rather than silently omitted.
 
 Layout, Appearance, Clip and Fit are the primary toolbar controls. Per-scan view state is saved beside the native collection in `workspace-view.json`, separately from anatomy identity. Fragment review is bound to the exact starting mask and snapshot; it highlights user-selected components and requires a correction commit to change anatomy. Quantitative masks and model outputs remain unchanged by rendering, visibility, framing and preview rejection.
@@ -118,6 +125,12 @@ New multi-scan studies, studies with an identified cortical label, and angiogram
 At an explicit cut, the displayed 3D source-image plane writes its actual depth so scalar tissue behind the section cannot veil the acquired image. Primary, box and oblique clips apply consistently to that plane and its picking. Uncut reference planes retain their translucent appearance; linked 2D image panes remain unclipped.
 
 In **Vessels**, choose **Clip → Vessel slab at cursor** to inspect a narrower depth along the selected anatomical plane. Its thickness is in millimeters and it follows the linked cursor while retaining the full transverse field. The native surface and source panes remain available. **Exit slab** restores the prior 3D cut.
+
+When Vessels has visible, admitted MR cortex and a primary vascular layer, it
+uses the nearest cortical surface for context and samples that surface from
+its own structural acquisition. The 3D volume starts disabled. **Show scan
+volume with structures** enables the active acquisition at the same camera and
+source cursor. Saved views restore their recorded volume and appearance choices.
 
 Settled Scan uses ray steps of one source spacing and at most 640 intervals. Lighting uses two scales of cached optical density for softer key-light shadows and ambient occlusion. The cache maps source values to extinction before averaging at roughly 4 mm spacing, capped at 56 cells per axis. It includes source support and the physical gradient weighting used for automatic MRI shells. Preparation runs in short tasks after the first draw, then restarts accumulation for the current acquisition and transfer. Export completes any pending cache before its first sample. Shadow probes honor active clipping planes. Label isolation and explicit CT skull overrides use exact source membership for each probe. The largest cache occupies 1.76 MiB, including the transfer row. Primary ray samples and linked source slices keep their existing resolution. The colored fill approximates scattered light.
 

@@ -40,6 +40,8 @@ export interface ViewerWorkspaceSettings {
   sliceFraming?: {fit:'image'|'anatomy';zoom:number};
   contextStyle?: 'shell'|'uniform';
   presentation?: 'scan'|'segmentation'|'vascular';
+  /** Use the nearest source-bound cortical surface as context in Vessels. */
+  sourcedVesselContext?: boolean;
   vesselShading?: VesselShading;
   layerOpacity?: Record<string, number>;
   layerColor?: Record<string, string>;

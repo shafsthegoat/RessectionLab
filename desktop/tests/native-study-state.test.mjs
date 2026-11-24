@@ -81,6 +81,41 @@ test('vascular presentation mutes the reviewed peripheral layers and keeps the m
   assert.equal(anatomyPresentation({},[estimate],'vascular','TOF','tof').layerOpacity[group.id],1);
 });
 
+test('mixed MR Vessels starts with visible source cortex and vessels, with the native volume available',()=>{
+  const cortex={id:'cortex',kind:'brain-region',source_series:'t1',provenance:{model:'supersynth',label_ontology:{value:3}}};
+  const network={id:'network',kind:'vessels',source_series:'tof',provenance:{kind:'image_derived_estimate'}};
+  const skull={id:'skull',kind:'skull',source_series:'t1',provenance:{kind:'image_derived_estimate'}};
+  const lesion={id:'lesion',kind:'tumor',source_series:'t1'};
+  const acquiredSkull={...skull,id:'ct-skull',source_series:'cta'};
+  const peripheral={...network,id:'vesselfm-review-field-edge',provenance:{
+    method:'Review display group of complete native TOF components',evidence_use:'context_only'}};
+  const layers=[cortex,network,skull,lesion,acquiredSkull,peripheral];
+  const series=[{id:'t1',modality:'T1CE'},{id:'tof',modality:'TOF'},{id:'cta',modality:'CTA'}];
+  const visible={cortex:true,network:true,skull:true,lesion:true,'ct-skull':true,[peripheral.id]:true};
+  const snapshot=structuredClone({layers,series,visible});
+  const present=(mode='vascular',modality='T1CE',admitted=layers,visibility=visible)=>
+    anatomyPresentation({},admitted,mode,modality,'t1',{visible:visibility,series});
+  const vessels=present();
+  assert.equal(vessels.sourcedVesselContext,true);
+  assert.equal(vessels.volumeRendering.enabled,false);
+  assert.ok(vessels.volumeRendering.density>0);
+  assert.equal(anatomyPresentation({smoothSurfaces:false},layers,'vascular','T1CE','t1',{visible,series}).smoothSurfaces,false);
+  assert.equal(vessels.layerOpacity.network,1);
+  assert.ok(vessels.layerOpacity.skull<vessels.layerOpacity.cortex);
+  assert.notEqual(vessels.layerColor.skull,vessels.layerColor['ct-skull']);
+  assert.ok(vessels.layerOpacity.lesion>0&&vessels.layerOpacity.lesion<1);
+  assert.equal(present('segmentation').layerOpacity.lesion,1);
+  for(const view of [present('scan'),present('segmentation'),present('vascular','CTA'),
+    present('vascular','unknown'),present('vascular','T1CE',[network]),
+    present('vascular','T1CE',[cortex,skull]),present('vascular','T1CE',layers,{...visible,cortex:false}),
+    present('vascular','T1CE',layers,{...visible,network:false}),
+    present('vascular','TOF',[{...cortex,source_series:'tof'},network])]){
+    assert.equal(view.sourcedVesselContext,undefined);
+    assert.equal(view.volumeRendering.enabled,true);
+  }
+  assert.deepEqual({layers,series,visible},snapshot);
+});
+
 test('cortical presentation requires an identified cortical label and preserves target and source data',()=>{
   const siam=value=>({kind:'brain-region',label_ontology:{value},provenance:{model:'siam-v2'}});
   const cortex={id:'cortex',...siam(1)},deep={id:'deep',...siam(6)};
@@ -220,6 +255,16 @@ test('Scan explicitly restores acquired signal and restrained overlays without o
 
 test('saved context and physical slice framing reopen detached and reject malformed extents',()=>{
   const source={compartments:[],brainMask:null,metadata:{}};
+  const savedVessels={presentation:'vascular',sourcedVesselContext:true,volumeRendering:{enabled:true}};
+  assert.deepEqual(checkedViewerSettings(source,savedVessels),savedVessels);
+  assert.throws(()=>checkedViewerSettings(source,{...savedVessels,sourcedVesselContext:'true'}));
+  for(const show of [true,false]){
+    const savedCt={volumeRendering:{preset:'ct-angiography',showCtExteriorSignal:show}};
+    assert.deepEqual(checkedViewerSettings(source,savedCt),savedCt);
+  }
+  for(const invalid of ['false',0,null]){
+    assert.throws(()=>checkedViewerSettings(source,{volumeRendering:{showCtExteriorSignal:invalid}}));
+  }
   for(const fit of ['image','anatomy'])for(const zoom of [.5,1,4])for(const contextStyle of ['shell','uniform']){
     const saved={sliceFraming:{fit,zoom},contextStyle};
     const reopened=checkedViewerSettings(source,saved);

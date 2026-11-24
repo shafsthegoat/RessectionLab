@@ -280,7 +280,7 @@ function modeledFixture(){
     {name:'brain',kind:'brain',color:'#aabbcc',mask:new Uint8Array(count).fill(1)},
     {name:'vessel',kind:'vessel',color:'#bb3344',mask:Uint8Array.from({length:count},(_,i)=>Number(i%20===0))}]};
   const r=Object.create(VolumeRenderer.prototype),packed=packAnatomyLabels(source),work={};
-  const uniforms={uLayerCount:{value:2},uVisibleBits:{value:3},uLayerEnabled:{value:new Float32Array(128)},uLayerCodes:{value:Array.from({length:128},()=>new THREE.Vector2())}};
+  const uniforms={uLabels:{value:null},uLayerCount:{value:2},uVisibleBits:{value:3},uLayerEnabled:{value:new Float32Array(128)},uLayerCodes:{value:Array.from({length:128},()=>new THREE.Vector2())}};
   for(const key of ['surgicalUpdates','toolBuilds','effectBuilds','pathBufferBuilds','sourceWorkerBuilds','replayWorkerBuilds','sourceRemeshedLayers','replayRemeshedLayers','workerInputCloneBytes','workerInputTransferBytes','workerResultTransferBytes','modelWorkerBuilds','modelRemeshedLayers','modelRemeshedChunks','modelCommits'])work[key]=0;
   Object.assign(r,{volume:source,affine,bounds:[[0,0,0],[5,4,3]],workspaceSettings:{},extraClipPlanes:[],clipPlane:null,surfaceSmoothing:true,visible:{},
     anatomy:new THREE.Group(),surfaces:new Map(),surfaceGeometry:new Map(),preparedSourceLayers:new Set(),retiredSurfaces:[],
@@ -332,6 +332,33 @@ test('modeled tissue stages labels/surfaces/tools atomically, reuses unchanged M
     const brainA=r.surfaces.get('brain');r.installSurgicalState(b,{view:{stateId:'b'}});assert.equal(worker.messages.at(-1).mask,undefined);assert.deepEqual([...worker.messages.at(-1).indices],[23]);worker.flush();submitPreparedState(r);
     assert.equal(r.volume,b);assert.equal(r.surfaces.get('vessel'),vessel);assert.equal(r.labelTexture,texture);assert.deepEqual(texture.image.data,packAnatomyLabels(b).data);
     const requests=worker.messages.length;r.installSurgicalState(a,interactionA);submitPreparedState(r);assert.equal(r.volume,a);assert.equal(r.surfaces.get('brain'),brainA);assert.equal(worker.messages.length,requests);assert.deepEqual(source.compartments[0].mask,sourceCopy);
+  }finally{mock.restore();}
+});
+test('modeled installation and native restoration rebind compact and sparse label formats',()=>{
+  const mock=modelWorkerMock();try{
+    const {r,source,derive,uniforms}=modeledFixture(),next=derive([22]);
+    const packed=packAnatomyLabels(source,true);
+    source.packedLabels=packed;
+    const compact=new THREE.Data3DTexture(packed.data,4,5,6);compact.format=THREE.RedFormat;
+    r.labelTexture=compact;r.labelCodes=packed.codes;uniforms.uLabels.value=compact;
+    let disposed=0;compact.addEventListener('dispose',()=>disposed++);
+    assert(r.installSurgicalState(next,{view:{stateId:'modeled'}}));
+    while(r.modelWorker.queue.length)r.modelWorker.flush();
+    assert.equal(r.labelTexture,compact);
+    submitPreparedState(r);
+    const modeled=r.labelTexture;
+    assert.equal(modeled.format,THREE.RGBAFormat);
+    assert.equal(uniforms.uLabels.value,modeled);
+    assert.equal(disposed,1);
+    assert.deepEqual(modeled.image.data,packAnatomyLabels(next).data);
+    modeled.addEventListener('dispose',()=>disposed++);
+    assert(r.installSurgicalState(source,null));
+    while(r.modelWorker?.queue.length)r.modelWorker.flush();
+    submitPreparedState(r);
+    assert.equal(r.labelTexture.format,THREE.RedFormat);
+    assert.equal(uniforms.uLabels.value,r.labelTexture);
+    assert.equal(r.labelTexture.image.data,packed.data);
+    assert.equal(disposed,2);
   }finally{mock.restore();}
 });
 for(const withScore of [false,true])test(`modeled native vessels share live positions and indices with ${withScore?'score-bound':'legacy'} lighting`,async()=>{

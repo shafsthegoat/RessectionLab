@@ -47,6 +47,13 @@ for(const recipe of recipes){
   if(recipe.useDefaultState)assert(recipes.length===1&&!recipe.settings&&!recipe.cursor&&!recipe.scope&&!recipe.compareLayerIds,
     'A default-state capture cannot supply view overrides');
   if(recipe.inspectCtExteriorToggle)assert(recipe.useDefaultState,'Check the detached CT signal control from the ordinary default');
+  assert(recipe.applyVesselsPreset===undefined||typeof recipe.applyVesselsPreset==='boolean');
+  if(recipe.inspectSourceVolumeToggle)assert(recipe.applyVesselsPreset,'Check the volume control after applying the ordinary Vessels preset');
+  if(recipe.expectLabelTextureBytesPerVoxel!==undefined){
+    assert([1,2,4].includes(recipe.expectLabelTextureBytesPerVoxel),'Unsupported number of label texture channels');
+    assert(typeof recipe.settings?.volumeRendering?.enabled==='boolean','Specify the acquired volume state in a live label check');
+    assert(exportName!==recipe.name,'Measure live label storage in an export-free view');
+  }
   assert(!recipe.compareLayerIds||recipe.compareLayerIds.length===2&&recipe.compareLayerIds.every(id=>recipe.layers.includes(id)));
   assert(recipe.depthSlab===undefined||typeof recipe.depthSlab==='boolean');
   assert(!recipe.branchLayerId||recipe.layers.includes(recipe.branchLayerId));
@@ -287,9 +294,9 @@ app.on('browser-window-created',(_event,window)=>{
         if(window.vascularTimes.size>12)window.vascularTimes.delete(window.vascularTimes.keys().next().value);
       });document.addEventListener('anatomy-frame',e=>{
         const {serial,at,interactive,surfaceQuality,scanQuality,cameraState,cursor,displayIdentity,sourceSignalFingerprint,
-          cpuMs,gpuTimingSupported,estimatedAllocation}=e.detail;
+          cpuMs,gpuTimingSupported,estimatedAllocation,volume}=e.detail;
         window.vascularFrame={serial,at,interactive,surfaceQuality,scanQuality,cameraState,cursor,displayIdentity,sourceSignalFingerprint,
-          cpuMs,gpuTimingSupported,estimatedAllocation};
+          cpuMs,gpuTimingSupported,estimatedAllocation,volume};
         window.vascularSubmitted.set(serial,window.vascularFrame);
         if(window.vascularSubmitted.size>12)window.vascularSubmitted.delete(window.vascularSubmitted.keys().next().value);
         if(window.vascularGesture&&at>=window.vascularGesture.start&&!window.vascularGesture.frame)
@@ -324,6 +331,17 @@ app.on('browser-window-created',(_event,window)=>{
         }
         if(recipe.compareLayerIds)await setLayer(recipe.compareLayerIds[1],false);
         await wait(450);
+        let beforeVesselsPreset;
+        if(recipe.applyVesselsPreset){
+          const previous=(await nativeView()).states[recipe.seriesId];
+          beforeVesselsPreset={view:previous,...await capture(`${recipe.name}-before-vessels`)};
+          const preset=`[...document.querySelectorAll('[aria-label="Anatomy presentation"] button')].find(e=>e.textContent.trim()==='Vessels')`;
+          await until(`!!(${preset})&&!(${preset}).disabled`,'enabled ordinary Vessels presentation');
+          await js(`(${preset}).click()`);
+          await until(`(${preset}).getAttribute('aria-pressed')==='true'`,'ordinary Vessels presentation');
+          await settledFrame(beforeVesselsPreset.frame.serial);
+          await wait(450);
+        }
         const view=await nativeView();
         const frame=await settledFrame();
         assert.equal(view.seriesId,recipe.seriesId);
@@ -341,6 +359,23 @@ app.on('browser-window-created',(_event,window)=>{
         const surfaces=lastPayload.compartments.map(({name,sourceSeries,alignment,surfaceDiagnostics,surface,displayFilter})=>({name,sourceSeries,alignment,surfaceDiagnostics,sourceSurfaceSha256:surface?.source?.sha256,empty:surface?.empty??false,displayFilter}));
         const record={name:recipe.name,seriesId:view.seriesId,sourceSha256:lastPayload.mri.sha256,scope:view.vesselScope,view:view.states[view.seriesId],surfaces,
           readyMs:performance.now()-openStarted,...await capture(recipe.name)};
+        const assertSameGeometry=previous=>{
+          for(const key of ['position','target','up'])
+            assert(record.frame.cameraState[key].every((n,i)=>Math.abs(n-previous.frame.cameraState[key][i])<1e-9),`Presentation changed camera ${key}`);
+          for(const key of ['cursor','displayIdentity','sourceSignalFingerprint'])
+            assert.deepEqual(record.frame[key],previous.frame[key],`Presentation changed ${key}`);
+        };
+        if(beforeVesselsPreset){
+          assertSameGeometry(beforeVesselsPreset);
+          assert.deepEqual(record.view.visible,beforeVesselsPreset.view.visible,'Vessels preset changed visible anatomy');
+          record.beforeVesselsPreset=beforeVesselsPreset;
+        }
+        if(recipe.expectLabelTextureBytesPerVoxel!==undefined){
+          const voxels=lastPayload.shape.reduce((a,b)=>a*b,1);
+          assert.equal(record.frame.estimatedAllocation?.labelTextureBytes,voxels*recipe.expectLabelTextureBytesPerVoxel,
+            'Label texture storage does not match the expected bytes per voxel');
+          assert.equal(record.frame.volume,recipe.settings.volumeRendering.enabled,'Unexpected acquired volume state in live label check');
+        }
         if(lastPayload.ctExterior){
           const {schema,offset,mask,signalSha256}=lastPayload.ctExterior;
           assert.equal(signalSha256,record.sourceSha256);
@@ -355,6 +390,9 @@ app.on('browser-window-created',(_event,window)=>{
           for(const key of ['position','target','up'])assert(record.frame.cameraState[key].every((value,i)=>
             Math.abs(value-reference.frame.cameraState[key][i])<1e-9),`Matched camera ${key} changed`);
           assert.deepEqual(record.view.visible,reference.view.visible,'Matched layer visibility changed');
+          if(recipe.expectLabelTextureBytesPerVoxel!==undefined)
+            assert.deepEqual(record.surfaces.map(row=>[row.name,row.sourceSeries,row.sourceSurfaceSha256]),
+              reference.surfaces.map(row=>[row.name,row.sourceSeries,row.sourceSurfaceSha256]),'Compact label texture changed source surface identity');
           for(const key of ['clipping','clipBox','obliqueClip','activePlane','showPlane'])
             assert.deepEqual(record.view.settings[key],reference.view.settings[key],`Matched ${key} changed`);
         }
@@ -364,6 +402,23 @@ app.on('browser-window-created',(_event,window)=>{
             assert(record.export.frame.cameraState[key].every((n,i)=>Math.abs(n-record.frame.cameraState[key][i])<1e-9),
               `3D export changed live camera ${key}`);
           assert.deepEqual(record.export.frame.sourceSignalFingerprint,record.frame.sourceSignalFingerprint,'3D export changed acquired signal');
+        }
+        if(recipe.inspectSourceVolumeToggle){
+          assert.equal(record.view.settings.sourcedVesselContext,true,'Mixed MRI Vessels did not use the sourced cortex');
+          assert.equal(record.frame.volume,false,'Mixed MRI Vessels unexpectedly enabled the source volume');
+          const inspect=async enabled=>{
+            const before=await submittedFrame();
+            await click(enabled?'Show scan volume with structures':'Show structures only');
+            await settledFrame(before.serial);
+            const image=await capture(`${recipe.name}-${enabled?'with-volume':'restore-context'}`);
+            assert.equal(image.frame.volume,enabled);
+            assertSameGeometry(image);
+            const state=(await nativeView()).states[view.seriesId];
+            assert.equal(state.settings.sourcedVesselContext,true);
+            assert.deepEqual(state.visible,record.view.visible,'Volume toggle changed visible anatomy');
+            return image;
+          };
+          record.sourceVolumeToggle={enabled:await inspect(true),restored:await inspect(false)};
         }
         if(recipe.inspectCtExteriorToggle){
           assert(record.ctExterior,'Missing source-bound detached CT support');
