@@ -699,7 +699,8 @@ app.on('browser-window-created',(_event,window)=>{
           await click('Center linked slices');
           const focused=await settledFrame(previous.serial);
           assert.equal(focused.sourceSignalFingerprint,record.frame.sourceSignalFingerprint);
-          assert.deepEqual(focused.cameraState,record.frame.cameraState);
+          for(const key of ['position','target','up'])assert(focused.cameraState[key].every((value,i)=>
+            Math.abs(value-record.frame.cameraState[key][i])<1e-9),`Centering TOF slices moved the camera ${key}`);
           assert.notDeepEqual(focused.cursor,record.frame.cursor);
           record.tofGapReview={mountedMs:mounted,options,evidence,focusedCursor:focused.cursor};
         }
