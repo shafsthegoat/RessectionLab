@@ -4,7 +4,6 @@ from contextlib import ExitStack
 from dataclasses import dataclass
 import hashlib
 from pathlib import Path
-import shutil
 import tempfile
 from urllib.parse import unquote, urlparse
 import uuid
@@ -25,8 +24,12 @@ class SourceInspection:
     key: str
     collection: PatientImagingCollection
     manifest_sha: str
-    workspace: Path
+    storage: tempfile.TemporaryDirectory
     scans: dict
+
+    @property
+    def workspace(self):
+        return Path(self.storage.name)
 
 
 def _manifest_hash(path):
@@ -135,8 +138,9 @@ def open_source_inspection(session, case, selected, check):
         raise ValueError('Choose the saved patient-anatomy.json or portable study')
     try:
         with ExitStack() as cleanup:
-            workspace = Path(tempfile.mkdtemp(prefix='native-wall-source-', dir=session.transfers.root))
-            cleanup.callback(shutil.rmtree, workspace)
+            storage = tempfile.TemporaryDirectory(prefix='native-wall-source-', dir=session.transfers.root)
+            cleanup.callback(storage.cleanup)
+            workspace = Path(storage.name)
             manifest = open_package(path, workspace / 'study', check=check) if path.suffix == '.rsworkspace' else path
             if _manifest_hash(manifest) != manifest_ref.sha256:
                 raise ValueError('Choose the exact study revision used to prepare this rehearsal')
@@ -149,7 +153,7 @@ def open_source_inspection(session, case, selected, check):
             if current is not None:
                 close_source_inspection(session, current.key)
             key = str(uuid.uuid4())
-            session.native_wall_source = SourceInspection(key, collection, manifest_ref.sha256, workspace, scans)
+            session.native_wall_source = SourceInspection(key, collection, manifest_ref.sha256, storage, scans)
             cleanup.pop_all()
     except (OSError, ValueError) as error:
         if selected:
@@ -168,4 +172,4 @@ def close_source_inspection(session, key):
         if cache and cache['key'][0][0] == key:
             session.anatomy_view_cache = None
             session.anatomy_transfer_paths.clear()
-        shutil.rmtree(inspection.workspace)
+        inspection.storage.cleanup()

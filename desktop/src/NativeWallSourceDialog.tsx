@@ -11,10 +11,12 @@ import type {Point3} from './viewer/coordinates';
 import type {ViewerWorkspaceSettings} from './viewer/workspaceSettings';
 
 function fieldSettings({centerRasMm:target, layers}:NativeWallSourceScan):ViewerWorkspaceSettings {
+  const showsVessels=layers.some(layer=>['vessel','vessels','artery','vein','sinus'].includes(layer.kind));
   return {
-    layout:'3d-focus', showPlane:false, sliceOverlay:'contour',
-    camera:{target, position:[target[0],target[1]-58,target[2]+34], up:[0,0,1]},
-    layerOpacity:Object.fromEntries(layers.filter(layer=>layer.kind==='brain').map(layer=>[layer.id,layers.length>1?.18:.6])),
+    layout:showsVessels?'3d-focus':'mri-review', showPlane:false, sliceOverlay:'contour',
+    camera:{target, position:[target[0]+24,target[1]-98,target[2]+59], up:[0,0,1]},
+    vesselShading:'balanced',
+    layerOpacity:Object.fromEntries(layers.filter(layer=>layer.kind==='brain').map(layer=>[layer.id,showsVessels?.055:.14])),
   };
 }
 
