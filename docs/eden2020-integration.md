@@ -75,7 +75,7 @@ range. VesselFM score summaries are uncalibrated. Thin joins can fall
 outside this screen, and sections near the acquisition faces have limited
 context. The operation runs only on a source-bound, unedited TOF estimate.
 
-Run the component, branch and package steps from the primary checkout.
+Run the review and package steps from the primary checkout.
 Replace the repeated subject selection with `--cohort` to run or resume the
 component, branch and attached reviews for the whole restricted source inventory.
 
@@ -184,12 +184,16 @@ rehearsal workspace controls.
 Preparation requires reviewed or source-provided alignment for every selected
 acquisition, an unchanged native score layer, adequate source coverage around
 the cursor, a continuous local vascular trace, nearby patient-derived tissue
-samples, and a clear initial wall. The engine models motion around the retained
-traces. Other vessel surfaces in the box remain visible and participate in
-contact. Stiffness, tissue springs and caliber estimates are research
-assignments. The local scene declares zero pressure and no physiological flow
-boundaries. Field-edge faces indicate where coverage stops. A selected saved
-approach still opens in its separate inspection mode.
+samples, and a clear initial wall. The selected layer must match its material
+role. Display and inspection annotations are excluded. Tissue sampling respects
+acquired and declared label coverage, with uncovered cells supplying no
+mechanical material. The entire vascular crop must lie within the score field's
+declared coverage. The engine models motion around the retained traces. Other
+vessel surfaces in the box remain visible and participate in contact.
+Stiffness, tissue springs and caliber estimates are research assignments. The
+local scene declares zero pressure and no physiological flow boundaries.
+Field-edge faces indicate where coverage stops. A selected saved approach still
+opens in its separate inspection mode.
 
 The primary restricted native inventory has 30 studies and 29 acquired TOF
 score layers. Each TOF-to-patient alignment is marked `unreviewed`, so these
@@ -198,11 +202,37 @@ path. Estimated alignment remains available through **Prepare standard
 environment** with its explicit research choice. The independent TOF view
 continues to support native reconstruction and source inspection.
 
-The inspected CTA candidates paired native scores with brain masks declared
-for display context. Those masks remain useful for anatomy review and are
-excluded from the local mechanical domain. A generated regression fixture
-exercises the full ordinary preparation, instrument contact, save and
-cold-replay path.
+The TopCoW-014 CTA study qualified in limited research mode using its existing
+CTA-derived brain estimate and the stock vesselFM mask and scores on the same
+acquired lattice. The model scores came from the frozen annotated CTA
+comparison. The publisher contour served as same-voxel inspection guidance.
+The simulated domain contains the selected CTA-derived brain and vessel
+estimates. Both contacted voxels had strong acquired contrast. An exploratory
+aspiration stopped at the material guard. The final recording used a shorter
+stroke that accepted all 12 actions, reproduced from a cold process at every
+action boundary.
+
+The modeled aspiration removed three brain-estimate cells (0.687 mm³),
+releasing two assumed supports. The same dissector movement displaced 505 wall
+vertices, with maximum endpoint displacement of 0.046 mm before the release
+and 0.047 mm after it. At the final withdrawal the residual was 0.0013 mm.
+An equal-duration inactive control retained the supports and reproduced the
+0.046 mm peak with the same two contacted cells. Passive advance into the
+retained tissue encountered the collision guard, so the control waited at
+the last clear pose before repeating the same dissector stroke. Access,
+attachment and constitutive assumptions apply throughout. The six
+other inspected CTA studies used brain masks declared for display context and
+were refused by the local mode. The IXI265 T1 and MRA showed good central
+ventricular alignment, with unresolved cross-modality correspondence across
+the prospective working domain, so its transform stayed unreviewed.
+
+The [private storage ledger](local-storage-ledger.md) locates the TopCoW-014
+source study, action record and local source sections. To reproduce the
+preparation, select **Estimated brain envelope** and **Unclassified vessel
+candidates · vesselfm** in the native study and place the patient cursor at the
+RAS position recorded in its preparation receipt. Use **Prepare native wall
+at cursor** in the Rehearsal panel. The saved replay opens directly in the
+operative workspace.
 
 The PTNT_4509 teaching rehearsal preserves the acquired TOF lattice and
 source-bound vessel triangles. The exposure banks, vessel attachments and

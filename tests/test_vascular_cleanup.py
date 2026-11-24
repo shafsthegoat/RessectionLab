@@ -139,6 +139,8 @@ def test_attached_review_uses_bound_native_sections_without_writes(tmp_path):
     assert report["sourceSha256"] == source["original"]["sha256"]
     assert report["sourceScoreSha256"] == layer["probability"]["sha256"]
     assert report["sourceDataSha256"] == layer["data"]["sha256"]
+    with pytest.raises(ValueError, match="Anatomy changed"):
+        call(op, {**args, "snapshotId": "stale"})
     with pytest.raises(ValueError, match="refresh the findings"):
         call(op, {**args, "reviewId": "stale", "findingId": finding["id"]})
     with pytest.raises(ValueError, match="native TOF"):

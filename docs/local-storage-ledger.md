@@ -87,7 +87,15 @@ source and build receipts. Restricted EDEN images and results stay on the HDD.
 The next CT context and native wall checks are indexed at
 `qc/cta-context-20261124-v1/README.md`. The index links the matched scalar and
 optical coverage controls, ordinary CTA view, faint-ringing measurements and
-paired-wall contact benchmark.
+paired-wall contact benchmark. It also links the CADS-465 high-resolution
+export, the signed macOS checks and the preceding bundle's restore receipt.
+
+The same-CTA TopCoW-014 rehearsal is indexed at
+`qc/topcow014-ordinary-native-wall-20261124-v1/README.md`. It connects the
+qualified local study and source sections to the 12-action contact and
+support-release replay, cold checks and captured walkthrough. The EDEN2020
+attached-region cohort table and source-pane checks are indexed in
+`qc/eden2020-glioma-5714812/vascular-reconstruction-20261123-v1/README.md`.
 
 Paths below are relative to the RessectionLab root. This compact ledger covers
 that area, not unrelated personal files elsewhere on the HDD. Presence does not
