@@ -39,6 +39,11 @@ The native-wall rehearsal and matched TOF comparisons are indexed in
 The index links the model receipts, source-local measurements, portable rehearsal
 and inspected app evidence. The published source scans and v1 companions are reused.
 
+The continuation at
+`qc/eden2020-glioma-5714812/vascular-reconstruction-continuity-20261123-v3/README.md`
+indexes the superficial compartment views, structural context, model trials,
+and calibrated wall audit.
+
 Paths below are relative to the RessectionLab root. This compact ledger covers
 that area, not unrelated personal files elsewhere on the HDD. Presence does not
 establish scientific readiness or a completed build; consult each run's receipts.
