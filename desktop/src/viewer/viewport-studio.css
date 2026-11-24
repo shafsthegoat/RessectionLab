@@ -285,6 +285,7 @@
   cursor: pointer;
 }
 .rl-source-section-readout button:focus-visible { outline: 1px solid #92edce; outline-offset: 2px; }
+.rl-source-section-readout button[aria-pressed=true] { border-color: #82cfa7; background: #345943; color: #edfff4; }
 .rl-cta-coverage {
   position: absolute;
   right: 12px;

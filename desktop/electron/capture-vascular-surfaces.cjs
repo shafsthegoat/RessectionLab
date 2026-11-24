@@ -68,6 +68,7 @@ for(const recipe of recipes){
   }
   assert(!recipe.compareLayerIds||recipe.compareLayerIds.length===2&&recipe.compareLayerIds.every(id=>recipe.layers.includes(id)));
   assert(recipe.depthSlab===undefined||typeof recipe.depthSlab==='boolean');
+  assert(recipe.slabContext===undefined||typeof recipe.slabContext==='boolean'&&recipe.depthSlab);
   assert(!recipe.branchLayerId||recipe.layers.includes(recipe.branchLayerId));
   if(recipe.tofGapReview)assert(recipe.layers.includes(recipe.tofGapReview.layerId)&&
     Array.isArray(recipe.tofGapReview.findingIds)&&recipe.tofGapReview.findingIds.length>0&&
@@ -309,9 +310,9 @@ app.on('browser-window-created',(_event,window)=>{
         if(window.vascularTimes.size>12)window.vascularTimes.delete(window.vascularTimes.keys().next().value);
       });document.addEventListener('anatomy-frame',e=>{
         const {serial,at,interactive,surfaceQuality,scanQuality,cameraState,cursor,displayIdentity,sourceSignalFingerprint,
-          cpuMs,gpuTimingSupported,estimatedAllocation,volume}=e.detail;
+          cpuMs,gpuTimingSupported,estimatedAllocation,volume,sliceDraws,vesselSlabContext}=e.detail;
         window.vascularFrame={serial,at,interactive,surfaceQuality,scanQuality,cameraState,cursor,displayIdentity,sourceSignalFingerprint,
-          cpuMs,gpuTimingSupported,estimatedAllocation,volume};
+          cpuMs,gpuTimingSupported,estimatedAllocation,volume,sliceDraws,vesselSlabContext};
         window.vascularSubmitted.set(serial,window.vascularFrame);
         if(window.vascularSubmitted.size>12)window.vascularSubmitted.delete(window.vascularSubmitted.keys().next().value);
         if(window.vascularGesture&&at>=window.vascularGesture.start&&!window.vascularGesture.frame)
@@ -412,7 +413,7 @@ app.on('browser-window-created',(_event,window)=>{
           for(const key of ['clipping','clipBox','obliqueClip','activePlane','showPlane'])
             assert.deepEqual(record.view.settings[key],reference.view.settings[key],`Matched ${key} changed`);
         }
-        if(exportName===recipe.name){
+        if(exportName===recipe.name&&!recipe.slabContext){
           record.export=await exportView(recipe.name);
           for(const key of ['position','target','up'])
             assert(record.export.frame.cameraState[key].every((n,i)=>Math.abs(n-record.frame.cameraState[key][i])<1e-9),
@@ -596,16 +597,35 @@ app.on('browser-window-created',(_event,window)=>{
           };
           let before=await submittedFrame();
           const slabButton=button('Vessel slab at cursor');
+          const contextLabel='Faint vessel context outside slab';
+          const toggleContext=async(enabled,suffix)=>{
+            const prior=await submittedFrame();
+            await click(contextLabel);
+            await until(`(${button(contextLabel)})?.getAttribute('aria-pressed')==='${enabled}'`,'faint context control state');
+            const updated=await settledFrame(prior.serial);
+            assert.equal(updated.vesselSlabContext,enabled);
+            assert.equal(updated.sliceDraws,0,'Context toggle invalidated a linked slice');
+            return captureSlab(suffix,prior);
+          };
           await until(`!!(${slabButton})?.closest('.rl-primary-tools')`,'vessel slab in the 3D toolbar');
           await click('Vessel slab at cursor');
           await until(`(${slabButton})?.getAttribute('aria-pressed')==='true'`,'active vessel slab');
           await click('Clip');await js(inputScript('Slab thickness',44));await click('Close view controls');
           await settledFrame(before.serial);
           captures.push({millimeters:44,...await captureSlab('slab-44',before)});
+          if(recipe.slabContext){
+            captures[0].context=await toggleContext(true,'slab-44-context');
+            if(exportName===recipe.name)record.export=await exportView(`${recipe.name}-slab-44-context`);
+            captures[0].contextOff=await toggleContext(false,'slab-44-context-off');
+          }
           before=await submittedFrame();
           await click('Clip');await js(inputScript('Slab thickness',28));await click('Close view controls');
           await settledFrame(before.serial);
           captures.push({millimeters:28,...await captureSlab('slab-28',before)});
+          if(recipe.slabContext){
+            captures[1].context=await toggleContext(true,'slab-28-context');
+            captures[1].contextOff=await toggleContext(false,'slab-28-context-off');
+          }
           before=await submittedFrame();
           await click('Exit vessel slab in 3D');await settledFrame(before.serial);
           assert.equal(await js(`(${slabButton}).getAttribute('aria-pressed')`),'false');

@@ -10,6 +10,7 @@ import type { VolumeRenderingSettings } from './volumeTransfer';
 import { volumeVertexShader, volumeFragmentShader } from './volumeRaycastShaders';
 import {SurfaceVolumePass} from './SurfaceVolumePass';
 import {renderTargetBytes} from './renderResourceEstimate';
+import {renderAnatomyScene,type VesselSlabContext} from './vesselSlabContext';
 
 type VolumeTargets = {
   scene: THREE.WebGLRenderTarget;
@@ -393,8 +394,8 @@ export class ScanVolumeRenderer {
     u.uContextCoverageLayer.value=index;
   }
   render(scene: THREE.Scene, camera: THREE.PerspectiveCamera, width: number, height: number,
-    interactive: boolean, restoreViewport: ()=>void, longEdge=360, cranialSurfaces=false) {
-    if(!this.enabled&&!cranialSurfaces){this.renderer.render(scene,camera);return;}
+    interactive: boolean, restoreViewport: ()=>void, longEdge=360, cranialSurfaces=false, context?:VesselSlabContext) {
+    if(!this.enabled&&!cranialSurfaces){renderAnatomyScene(this.renderer,scene,camera,context);return;}
     const pixelRatio=this.renderer.getPixelRatio();
     // Both scalar and translucent-surface compositing reuse the same live
     // targets. Linked slices and the high-resolution export have separate budgets.
@@ -411,7 +412,7 @@ export class ScanVolumeRenderer {
     const volumeTarget=interactive?this.interactionTargets!.volume:this.volumeTarget;
     try {
       this.blitMaterial.map=this.renderSample(scene,camera,{scene:sceneTarget,volume:volumeTarget,accumulation:this.accumulation,surfaces:this.surfacePass},
-        w,h,interactive,this.samples).texture;
+        w,h,interactive,this.samples,undefined,context).texture;
       this.samples=interactive?0:this.samples+1;
     } finally {
       this.renderer.setRenderTarget(null);
@@ -427,12 +428,12 @@ export class ScanVolumeRenderer {
   }
 
   renderExportSample(scene:THREE.Scene,camera:THREE.PerspectiveCamera,targets:ScanVolumeExportTargets,
-    width:number,height:number,sample:number,originY:number) {
-    return this.renderSample(scene,camera,targets,width,height,false,sample,originY);
+    width:number,height:number,sample:number,originY:number,context?:VesselSlabContext) {
+    return this.renderSample(scene,camera,targets,width,height,false,sample,originY,context);
   }
 
   private renderSample(scene:THREE.Scene,camera:THREE.PerspectiveCamera,targets:VolumeTargets,
-    w:number,h:number,interactive:boolean,sample:number,exportOriginY?:number) {
+    w:number,h:number,interactive:boolean,sample:number,exportOriginY?:number,context?:VesselSlabContext) {
     const {scene:sceneTarget,volume:volumeTarget,accumulation,surfaces:surfacePass}=targets;
     if(sceneTarget.width!==w||sceneTarget.height!==h){sceneTarget.setSize(w,h);volumeTarget.setSize(w,h);}
     const isExport=exportOriginY!==undefined;
@@ -457,7 +458,8 @@ export class ScanVolumeRenderer {
       this.renderer.setClearColor(0,0);
       if(interactive||sample===0){
         scene.traverse(o=>{if(o instanceof THREE.Mesh && o.visible && o.userData.compartment && !Array.isArray(o.material) && o.material.opacity<1){hidden.push(o);o.visible=false;}});
-        this.renderer.setRenderTarget(sceneTarget);this.renderer.clear();this.renderer.render(scene,camera);
+        this.renderer.setRenderTarget(sceneTarget);this.renderer.clear();
+        renderAnatomyScene(this.renderer,scene,camera,context);
         hidden.forEach(o=>o.visible=true);
         const surfaces=surfacePass.render(this.renderer,scene,camera,sceneTarget.depthTexture!,w,h,interactive);
         uniforms.uSurfaceCount.value=surfaces.count;

@@ -18,6 +18,7 @@ import {GpuFrameTimer} from './gpuFrameTimer';
 import {renderAnatomyPng} from './anatomyExport';
 import {geometryBufferBytes,renderTargetBytes} from './renderResourceEstimate';
 import {SurfaceInteractionRenderer} from './surfaceInteractionRenderer';
+import {VesselSlabContext} from './vesselSlabContext';
 import {LabelTextureUpdates} from './labelTextureUpdates';
 import {MAX_ENGINE_REFERENCE_BYTES} from './engineImplicitSurface';
 import type {EnginePartitionRequest,EngineSurfaceReference} from './engineImplicitSurface';
@@ -44,7 +45,7 @@ import type {ViewerPublicGoal} from './publicGoal';
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { clippingForBounds, layerAppearance, usesPatientCutaway, validCameraState } from './workspaceSettings';
-import type { ViewerCameraState, ViewerWorkspaceSettings } from './workspaceSettings';
+import type { ViewerCameraState, ViewerCutaway, ViewerWorkspaceSettings } from './workspaceSettings';
 import { checkedFusionTransform } from './registeredFusion';
 import type { ViewerRegisteredFusion } from './registeredFusion';
 import {
@@ -151,6 +152,18 @@ function disposeObject(object: THREE.Object3D): void {
     }
   });
 }
+
+function extraCutawayPlanes({clipBox:box,obliqueClip:oblique}:ViewerCutaway):THREE.Plane[] {
+  const planes:THREE.Plane[]=[];
+  if(box?.enabled && [...box.min,...box.max].every(Number.isFinite))for(let i=0;i<3;i++){
+    const n=new THREE.Vector3().setComponent(i,1);
+    planes.push(new THREE.Plane(n,-box.min[i]),new THREE.Plane(n.clone().negate(),box.max[i]));
+  }
+  if(oblique?.enabled && [...oblique.normal,oblique.offset].every(Number.isFinite) && Math.hypot(...oblique.normal)>1e-5){
+    planes.push(new THREE.Plane(new THREE.Vector3(...oblique.normal),oblique.offset).normalize());
+  }
+  return planes;
+}
 function dataTexture(
   data: Float32Array | Uint8Array,
   shape: [number, number, number],
@@ -240,6 +253,7 @@ export class VolumeRenderer {
   private priorTexture: THREE.Data3DTexture;
   private priorCoverageTexture: THREE.Data3DTexture;
   private readonly surfaces = new Map<string, THREE.Mesh>();
+  private vesselSlabContext?:VesselSlabContext;
   private readonly tractObjects = new Map<string, THREE.LineSegments<THREE.BufferGeometry,THREE.LineBasicMaterial>>();
   private selectedStructure:string|null=null;
   private vesselTrace?:THREE.Line<THREE.BufferGeometry,THREE.LineBasicMaterial>;
@@ -1143,6 +1157,36 @@ export class VolumeRenderer {
   }
   fitResultInspection(){this.resultInspection?.requestFit();this.requestRender(false);}
 
+  setVesselSlabContext(slab?:{axis:number; min:number; max:number; prior:ViewerCutaway}):void {
+    if(!slab){
+      if(!this.vesselSlabContext)return;
+      this.vesselSlabContext.dispose();
+      this.vesselSlabContext=undefined;
+    }else{
+      const bounds=usesPatientCutaway(this.workspaceSettings,!!this.patientClipBounds)?this.patientClipBounds!:this.sourceClipBounds??this.bounds;
+      const cut=clippingForBounds(slab.prior.clipping,bounds), planes=extraCutawayPlanes(slab.prior);
+      if(cut.enabled){
+        const normal=new THREE.Vector3().setComponent({x:0,y:1,z:2}[cut.axis],cut.flipped?-1:1);
+        planes.push(new THREE.Plane(normal,cut.flipped?cut.value:-cut.value));
+      }
+      this.vesselSlabContext??=new VesselSlabContext();
+      this.vesselSlabContext.configure(slab.axis,slab.min,slab.max,planes);
+    }
+    this.requestRender(false);
+  }
+
+  private visibleVesselSlabContext():VesselSlabContext|undefined {
+    const context=this.vesselSlabContext;
+    if(!context||!this.anatomy.visible||this.replayActive||this.passiveActive||this.vesselInspectionFocus||
+        this.workspaceSettings.operativeView==='surgeon')return undefined;
+    const surfaces=this.volume.compartments.flatMap(layer=>{
+      const mesh=this.surfaces.get(layer.name);
+      return surfaceKind(layer.kind)==='vessel'&&mesh?.material instanceof THREE.MeshStandardMaterial
+        ?[mesh as THREE.Mesh<THREE.BufferGeometry,THREE.MeshStandardMaterial>]:[];
+    });
+    return context.update(surfaces)?context:undefined;
+  }
+
   setWorkspaceSettings(settings: ViewerWorkspaceSettings): void {
     if(this.workspaceSettings?.showOrientationGuide!==settings.showOrientationGuide)this.requestRender(false);
     this.workspaceSettings = settings;
@@ -1197,16 +1241,7 @@ export class VolumeRenderer {
     // Its real depth terminates scalar rays, so retained volume behind it
     // cannot veil the diagnostic texture. Uncut reference planes stay translucent.
     if(this.sourcePlane)this.sourcePlane.material.depthWrite=clipping.enabled;
-    this.extraClipPlanes=[];
-    const box=operativeOcclusion?undefined:settings.clipBox;
-    if(box?.enabled && [...box.min,...box.max].every(Number.isFinite))for(let i=0;i<3;i++){
-      const n=new THREE.Vector3().setComponent(i,1);
-      this.extraClipPlanes.push(new THREE.Plane(n,-box.min[i]),new THREE.Plane(n.clone().negate(),box.max[i]));
-    }
-    const oblique=operativeOcclusion?undefined:settings.obliqueClip;
-    if(oblique?.enabled && [...oblique.normal,oblique.offset].every(Number.isFinite) && Math.hypot(...oblique.normal)>1e-5){
-      const n=new THREE.Vector3(...oblique.normal);this.extraClipPlanes.push(new THREE.Plane(n,oblique.offset).normalize());
-    }
+    this.extraClipPlanes=operativeOcclusion?[]:extraCutawayPlanes(settings);
     this.volume.compartments.forEach((layer,index)=>{
       const appearance=layerAppearance(layer.name,layer.color,settings,layer.displayKind??layer.kind);
       const mesh=this.surfaces.get(layer.name);
@@ -2635,7 +2670,7 @@ export class VolumeRenderer {
       camera.aspect=viewport.width/viewport.height;
       const scan=!this.replayActive&&!this.passiveActive&&
         (this.scanVolume.active||this.hasTranslucentCranialSurfaces())?this.scanVolume:null;
-      const {blob,metrics}=await renderAnatomyPng(this.renderer,this.scene,camera,scan,job.signal);
+      const {blob,metrics}=await renderAnatomyPng(this.renderer,this.scene,camera,scan,job.signal,this.visibleVesselSlabContext());
       this.canvas.dispatchEvent(new CustomEvent('anatomy-export',{bubbles:true,detail:metrics}));
       return blob;
     } finally {
@@ -2712,6 +2747,7 @@ export class VolumeRenderer {
     let orientationGuideVisible=false;
     let surfaceQuality:{adaptive:boolean;width:number;height:number}|null=null;
     let scanQuality:ReturnType<ScanVolumeRenderer['render']>|null=null;
+    let slabContext:VesselSlabContext|undefined;
     if(main&&this.resultInspection&&renderedView&&!this.surgicalInteraction?.preview&&modeledAnatomy(this.volume)?.surfaceReference){
       this.resultInspection.render(this.renderer,this.volume,renderedView,this.surfaces,main.w,main.h);
     } else if (main) {
@@ -2719,9 +2755,10 @@ export class VolumeRenderer {
       this.camera.aspect = main.w / main.h;
       this.camera.updateProjectionMatrix();
       const cranialSurfaces=!this.scanVolume.active&&this.hasTranslucentCranialSurfaces();
+      slabContext=this.visibleVesselSlabContext();
       if (this.replayActive || this.passiveActive||(!this.scanVolume.active&&!cranialSurfaces))
-        surfaceQuality=this.surfaceInteraction.render(this.renderer,this.scene,this.camera,main.w,main.h,this.interacting,this.budget.longEdge,()=>{viewport(this.panes.anatomy);});
-      else scanQuality=this.scanVolume.render(this.scene,this.camera,main.w,main.h,this.interacting,()=>{viewport(this.panes.anatomy);},this.budget.longEdge,cranialSurfaces)??null;
+        surfaceQuality=this.surfaceInteraction.render(this.renderer,this.scene,this.camera,main.w,main.h,this.interacting,this.budget.longEdge,()=>{viewport(this.panes.anatomy);},slabContext);
+      else scanQuality=this.scanVolume.render(this.scene,this.camera,main.w,main.h,this.interacting,()=>{viewport(this.panes.anatomy);},this.budget.longEdge,cranialSurfaces,slabContext)??null;
       if(this.workspaceSettings.showOrientationGuide!==false){
         this.orientationGuide.setPosture(renderedView?.positionEffects);
         orientationGuideVisible=this.orientationGuide.render(this.renderer,this.camera,root,this.paneBounds!.panes.get(this.panes.orientationGuide)!);
@@ -2751,7 +2788,7 @@ export class VolumeRenderer {
     this.gpuTimer?.end();
     this.lastSubmittedSurgicalView=renderedView;
     const interactive=this.interacting,cpuMs=performance.now()-frameStarted,cameraState=this.getCameraState(),renderedTractIds=this.tractObjects?[...this.tractObjects].filter(([,object])=>object.visible&&(object.geometry.getAttribute('position')?.count??0)>0).map(([id])=>id):[];
-    this.canvas.dispatchEvent(new CustomEvent('anatomy-frame',{bubbles:true,detail:{serial,at:frameStarted,cpuMs,cpuMeasurement:'CPU-frame-submission',interactive,volume:this.scanVolume.active,sliceDraws,longEdge:scanQuality?Math.max(scanQuality.width,scanQuality.height):interactive?this.budget.longEdge:1300,scanQuality,
+    this.canvas.dispatchEvent(new CustomEvent('anatomy-frame',{bubbles:true,detail:{serial,at:frameStarted,cpuMs,cpuMeasurement:'CPU-frame-submission',interactive,volume:this.scanVolume.active,sliceDraws,vesselSlabContext:!!slabContext,longEdge:scanQuality?Math.max(scanQuality.width,scanQuality.height):interactive?this.budget.longEdge:1300,scanQuality,
       resources:{...this.renderer.info.memory},drawCalls:this.renderer.info.render.calls,drawStatistics:{...this.renderer.info.render},gpuTimingSupported:this.gpuTimer?.supported??false,
       estimatedAllocation:this.estimateAllocation(),displayWork:{...this.displayWork},workers:{source:this.sourceWorkerActive?1:0,replay:this.replayWorker?1:0,modeled:this.modelWorker?1:0,picking:this.picking?.stats().workerLive??0},surfaceQuality,
       surfaceCache:{budgetBytes:RETIRED_SURFACE_BUDGET_BYTES,retiredBytes:this.retiredSurfaces.reduce((sum,entry)=>sum+entry.bytes,0),retiredEntries:this.retiredSurfaces.length},
@@ -2808,6 +2845,7 @@ export class VolumeRenderer {
     if (this.disposed) return;
     this.fieldOptics?.texture?.dispose();
     this.vesselInspectionFocus?.path.dispose();
+    this.vesselSlabContext?.dispose();
     this.updatePlanarPartition(undefined);
     this.disposed = true;
     this.anatomyExport?.abort(new Error('The 3D view was closed during export.'));

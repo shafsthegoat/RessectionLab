@@ -146,6 +146,8 @@ At an explicit cut, the displayed 3D source-image plane writes its actual depth 
 
 In **Vessels**, choose **Vessel slab at cursor** in the 3D toolbar to focus on the depth around the linked cursor. Use **Clip** to change the anatomical plane or thickness in millimeters. The slab retains the full transverse field and the linked slices keep their full coverage. Toggle the toolbar button or choose **Exit slab** to restore the prior 3D cut.
 
+Choose **Faint context** to see distant courses from the currently displayed vessel surfaces. This background follows any prior cut and fades with distance from the slab. The foreground stays fully shaded, and 3D picking remains inside the slab. The same presentation is available in the 3D PNG export.
+
 On a native TOF or MRA with a source-bound vascular layer, **Vessels** balances
 the automatic full-depth backdrop using the acquired signal. It estimates
 brightness along 243 sampled rays in physical millimeters and blends the volume using

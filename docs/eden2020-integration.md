@@ -70,7 +70,10 @@ Source-plane checks found weak signal in some remote groups and coherent
 signal along nearby vessels. The tested scans showed no consistent offset
 along the phase-encoding direction to support a shared ghosting explanation.
 In **Vessels**, the 3D toolbar's **Vessel slab at cursor** control reduces
-through-depth overlap for local inspection. Exit restores the prior 3D cut.
+through-depth overlap for local inspection. **Faint context** shows the
+out-of-slab vessel courses behind the focused foreground, with visibility
+falling off with physical distance. Linked source slices and slab picking
+retain their coverage. Exit restores the prior 3D cut.
 
 The available attached-wall trials found that dark-signal subtraction can
 create pits, split adjacent geometry or narrow sections with plausible source

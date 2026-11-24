@@ -38,7 +38,7 @@ import {
 } from "lucide-react";
 import type { KeyboardEvent, PointerEvent } from "react";
 import { VolumeRenderer } from "./VolumeRenderer";
-import { clippingForBounds, clippingPositionInBounds, newClippingPosition, usesPatientCutaway } from './workspaceSettings';
+import { clippingForBounds, clippingPositionInBounds, newClippingPosition, usesPatientCutaway, viewerCutaway } from './workspaceSettings';
 import type { ViewerWorkspaceSettings } from './workspaceSettings';
 import { canBalanceTofContext, volumeSettings, isCtAngiography, isCtModality } from './volumeTransfer';
 import type { VolumePreset } from './volumeTransfer';
@@ -250,7 +250,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   const [sourceSection,setSourceSection]=useState<{identity:typeof rendererIdentity;patientCutaway:boolean;previous:SourceSectionSnapshot}|null>(null);
   const sourceSectionActive=Boolean(sourceSection&&sourceSection.identity===rendererIdentity&&sourceSection.patientCutaway===patientCutawayActive);
   const sourceSectionAllowed=!props.segmentationOnly&&settings.operativeView!=='surgeon';
-  const [depthSlab,setDepthSlab]=useState<{identity:typeof rendererIdentity;patientCutaway:boolean}|null>(null);
+  const [depthSlab,setDepthSlab]=useState<{identity:typeof rendererIdentity;patientCutaway:boolean;context:boolean}|null>(null);
   const [depthSlabThickness,setDepthSlabThickness]=useState(44);
   const depthSlabAllowed=sourceSectionAllowed&&settings.presentation==='vascular'&&!props.generatedSignal&&
     !displayedSurgical&&!replay&&!passiveRequested&&!rehearsalRequested;
@@ -310,7 +310,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     if(depthSlabActive){setDepthSlab(null);return;}
     if(!depthSlabAllowed||!cutawayBounds)return;
     if(sourceSectionActive)exitSourceSection();
-    setDepthSlab({identity:rendererIdentity,patientCutaway:patientCutawayActive});
+    setDepthSlab({identity:rendererIdentity,patientCutaway:patientCutawayActive,context:false});
   };
   useEffect(()=>{
     if(!sourceSection)return;
@@ -335,6 +335,9 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   const restoreApproachView=()=>{if(previousApproachCamera.current)changeSettings({...latestSettings.current,camera:previousApproachCamera.current});previousApproachCamera.current=null;setApproachViewMode(null);setCropApproach(false);};
   const approachViewSignature=selectedApproach?JSON.stringify([selectedApproach.route_id,selectedApproach.entry_mm,selectedApproach.target_mm,selectedApproach.tool,selectedApproach.window?.radius_mm]):null;
   const corridorCrop=useMemo(()=>cropApproach&&selectedApproach&&caseData?approachClipBox(selectedApproach,caseData.frame):undefined,[cropApproach,approachViewSignature,caseData?.frame]);
+  const slabContextAllowed=!!depthSlabBox&&!corridorCrop&&!props.vesselTrace?.isolationRadiusMm;
+  const slabContextActive=slabContextAllowed&&depthSlab?.context===true;
+  const priorSlabCut=useMemo(()=>viewerCutaway(settings),[settings.clipping,settings.clipBox,settings.obliqueClip]);
   useEffect(()=>{previousApproachCamera.current=null;setApproachViewMode(null);setCropApproach(false);},[rendererIdentity]);
   useEffect(()=>{
     if(!approachViewMode||!selectedApproach||!caseData)return;
@@ -427,6 +430,11 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
       ?{...settings,clipping:undefined,obliqueClip:undefined,clipBox:depthSlabBox}:settings;
     engine.current?.setWorkspaceSettings(presentation);
   },[ready,graphicsGeneration,caseData,settings,corridorCrop,depthSlabBox]);
+  useEffect(()=>{
+    const axis=PLANE_AXES[activePlane][2];
+    engine.current?.setVesselSlabContext(slabContextActive&&depthSlabBox
+      ?{axis,min:depthSlabBox.min[axis],max:depthSlabBox.max[axis],prior:priorSlabCut}:undefined);
+  },[ready,graphicsGeneration,caseData,depthSlabBox,activePlane,slabContextActive,priorSlabCut]);
   useEffect(()=>{engine.current?.restoreCamera(settings.camera);},[ready,graphicsGeneration,caseData,settings.camera]);
   useEffect(()=>{engine.current?.setSelectedStructure(props.selectedStructure??null);},[ready,graphicsGeneration,caseData,props.selectedStructure]);
   useEffect(()=>{engine.current?.setVesselTrace(props.vesselTrace??null);},[ready,graphicsGeneration,caseData,props.vesselTrace]);
@@ -1125,6 +1133,9 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
           </div>}
           {depthSlabBox&&!corridorCrop&&<div className="rl-source-section-readout" role="status">
             <span>{TITLES[activePlane]} {depthSlabThickness} mm slab · linked slices stay full</span>
+            {slabContextAllowed&&<button aria-label="Faint vessel context outside slab" aria-pressed={slabContextActive}
+              title="Show more distant vessels faintly behind the focused slab"
+              onClick={()=>setDepthSlab(current=>current&&{...current,context:!current.context})}>Faint context</button>}
             <button aria-label="Exit vessel slab in 3D" onClick={()=>setDepthSlab(null)}>Exit slab</button>
           </div>}
           {ctaCoverage&&!surgicalView&&<div className="rl-cta-coverage" role="group" aria-label="CTA arterial layers">

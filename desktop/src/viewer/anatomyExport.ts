@@ -3,6 +3,7 @@ import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { GpuFrameTimer } from './gpuFrameTimer';
 import { renderTargetBytes } from './renderResourceEstimate';
 import { ScanVolumeExportTargets, type ScanVolumeRenderer } from './ScanVolumeRenderer';
+import { renderAnatomyScene, type VesselSlabContext } from './vesselSlabContext';
 
 export const ANATOMY_PNG_LONG_EDGE = 2048;
 const SCAN_SAMPLES = 32;
@@ -66,7 +67,7 @@ async function waitForGpu(gl: WebGL2RenderingContext, signal: AbortSignal) {
 
 export async function renderAnatomyPng(
   renderer: THREE.WebGLRenderer, scene: THREE.Scene, camera: THREE.PerspectiveCamera,
-  scan: ScanVolumeRenderer | null, signal: AbortSignal,
+  scan: ScanVolumeRenderer | null, signal: AbortSignal, slabContext?:VesselSlabContext,
 ) {
   const started = performance.now();
   signal.throwIfAborted();
@@ -112,10 +113,10 @@ export async function renderAnatomyPng(
           if (meshTarget) {
             renderer.setRenderTarget(meshTarget);
             renderer.clear();
-            renderer.render(scene,tileCamera);
+            renderAnatomyScene(renderer,scene,tileCamera,slabContext);
           }
           const linear = scan && depthPass
-            ? scan.renderExportSample(scene,tileCamera,depthPass,width,band.height,sample,height - band.top - band.height)
+            ? scan.renderExportSample(scene,tileCamera,depthPass,width,band.height,sample,height - band.top - band.height,slabContext)
             : meshTarget!;
           if (sample === samples - 1) outputPass.render(renderer,outputTarget,linear,0,false);
         } finally {
