@@ -213,9 +213,11 @@ chosen vascular reviews to their live source identities. Hidden desktop
 recapture reproduced all 29 selected native surface hashes at the archived
 physical cameras. Each TOF review includes an acquired-source cut and a
 separate scalar context view. The study without acquired TOF opened in
-structural MRI. The completion table also records the six native section
-checks and three cold research-workspace opens. No EDEN study qualified for
-the ordinary native-wall layer pair in the current preflight.
+structural MRI. A second pass using the renderer in the signed build matched
+all 30 selected Anatomy panes pixel-for-pixel while reducing known label
+texture storage. The completion table also records the six native section
+checks and three cold research-workspace opens. The current preflight found
+zero qualified ordinary EDEN native-wall layer pairs.
 [Local evidence index](local-storage-ledger.md)
 
 In **Scans → Alignment & registration**, choose the moving scan and a **Review
