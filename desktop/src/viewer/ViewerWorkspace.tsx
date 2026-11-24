@@ -160,6 +160,9 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   const activePlane=settings.activePlane??'axial',contrast=settings.contrast??1,showPlane=settings.showPlane??false;
   const displayedSurgical=committedSurgical?.identity===rendererIdentity?committedSurgical.interaction:null;
   const surgicalView=displayedSurgical?.preview??displayedSurgical?.view;
+  const operativeVessels=committedSurgical&&modeledAnatomy(committedSurgical.volume)?.vesselSurfaces;
+  const sourceVolumeBoundary=operativeVessels&&[...operativeVessels].some(([name,surface])=>
+    surface.sourceVolumeBoundary&&visibleLayers[name]!==false);
   const showEngineSection=!!(props.engineInspection&&surgicalView&&!displayedSurgical?.preview&&committedSurgical);
   const resultOrbit=useRef<HTMLDivElement>(null);
   const inspectable=showEngineSection&&committedSurgical&&!!modeledAnatomy(committedSurgical.volume)?.surfaceReference;
@@ -939,10 +942,11 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
             <b>{surgicalView.operativeExposureV1?'Generated anatomy':'Operative field'}</b>
             <span>{displayedSurgical?.preview?'Preview':modelDisplayPending?'Preparing accepted state':settings.microscope?.inspectionTransparency||settings.microscope?.inspectionCutaway?'Inspection only · anatomy exposed by view':settings.operativeView==='surgeon'?'Opaque microscope':Object.values(settings.layerOpacity??{}).some(o=>o<1)?'Inspection only · transparent anatomy':'External scalp overview'}</span>
             <span>{Object.values(surgicalView.slots).filter(s=>s.inserted).map(s=>s.instrument.replaceAll('_',' ')).join(' · ')}</span>
+            {sourceVolumeBoundary&&<span>Gray vessel ends mark the source volume boundary</span>}
           </div>}
           {surgicalView&&!fieldPresentation&&<OperativeLegend scene={surgicalView.scene} settings={settings} cursor={currentCursor}
             visible={visibleLayers} picked={pickedLayer?.sceneId===surgicalView.scene.sceneId?pickedLayer.name:null}
-            onPick={inspectRegion} onSmooth={setSmoothSurfaces}/>}
+            onPick={inspectRegion} onSmooth={setSmoothSurfaces} sourceVolumeBoundary={sourceVolumeBoundary||undefined}/>}
           {!fieldPresentation&&settings.operativeView==='surgeon'&&settings.microscope&&geometrySource&&geometry&&surgicalView&&
             (!displayedSurgical?.preview||displayedSurgical.recordedFrame)&&
             <OperativeSourceLocator source={geometrySource} bounds={geometry.bounds} inverse={geometry.inverse}

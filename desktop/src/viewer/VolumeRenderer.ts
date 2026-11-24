@@ -772,7 +772,13 @@ export class VolumeRenderer {
     if(this.fieldOptics?.texture)this.surgicalWetting?.install(mesh.material);
     if(vessel){
       const grid=layer.surface&&!operativeVessel?this.vesselLabelGrid(this.volume.compartments.indexOf(layer)):undefined;
-      applyVesselDepthMaterial(mesh.material,this.patientBounds??this.bounds,grid);
+      const sourceShape=buffers.sourceVolumeBoundary?this.volume.shape:undefined;
+      if(sourceShape){
+        const rest=new THREE.BufferAttribute(positions,3);
+        geometry.setAttribute('vesselRestNative',rest);
+        if(smooth!==geometry)smooth.setAttribute('vesselRestNative',rest);
+      }
+      applyVesselDepthMaterial(mesh.material,this.patientBounds??this.bounds,grid,sourceShape);
       setVesselDepthAppearance(mesh.material,this.workspaceSettings,layer,grid);
     }
     applySourceContextMaterial(mesh.material,this.workspaceSettings.contextStyle==='shell'&&CONTEXT_SURFACES.has(layer.displayKind??layer.kind??''),

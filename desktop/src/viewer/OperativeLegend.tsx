@@ -1,12 +1,14 @@
 import {useMemo} from 'react';
 import type {SurgicalView} from '../surgical-types';
 import type {Point3} from './coordinates';
+import {vesselSourceBoundaryColor} from './anatomySurfaceMaterial';
 import {operativeLegend,originalLabelLocation} from './operativeLegendData';
 import type {ViewerWorkspaceSettings} from './workspaceSettings';
 
-export function OperativeLegend({scene,settings,cursor,picked,onPick,onSmooth,visible}:{
+export function OperativeLegend({scene,settings,cursor,picked,onPick,onSmooth,visible,sourceVolumeBoundary}:{
   scene:SurgicalView['scene'];settings:ViewerWorkspaceSettings;cursor:Point3;
-  picked:string|null;onPick:(name:string|null)=>void;onSmooth:(smooth:boolean)=>void;visible:Record<string,boolean>
+  picked:string|null;onPick:(name:string|null)=>void;onSmooth:(smooth:boolean)=>void;visible:Record<string,boolean>;
+  sourceVolumeBoundary?:boolean;
 }){
   const rows=useMemo(()=>operativeLegend(scene,settings),[scene.sceneId,settings.layerColor,settings.operativeView,settings.microscope?.tissueStyle]);
   const selected=rows.find(r=>r.name===picked);
@@ -24,6 +26,9 @@ export function OperativeLegend({scene,settings,cursor,picked,onPick,onSmooth,vi
       <button aria-pressed={!smooth} onClick={()=>onSmooth(false)}>Source edges</button>
       <button aria-pressed={smooth} onClick={()=>onSmooth(true)}>Conditioned edges</button>
     </div>
+    {sourceVolumeBoundary&&<span className="operative-source-boundary-key">
+      <i aria-hidden="true" style={{background:vesselSourceBoundaryColor}}/>Source volume boundary
+    </span>}
     {selected&&<div className="operative-layer-inspection" role="status">
       <strong>{selected.layerId??selected.name}</strong>
       {selected.method&&<span>{selected.method}{selected.review?' · '+selected.review:''}</span>}

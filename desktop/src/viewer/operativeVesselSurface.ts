@@ -14,6 +14,7 @@ export interface OperativeVesselSurface {
   scoreLighting?:Float32Array;
   cuboidCount?:number;
   geometryIdentity?:string;
+  sourceVolumeBoundary?:boolean;
 }
 type RestVessel=OperativeVesselSurface&{sites:number[]};
 type EditedWall=NonNullable<NonNullable<SurgicalView['vesselMechanics']>['editedWallsByLabel']>[string];
@@ -23,6 +24,11 @@ export function vesselGeometryToken(view:SurgicalView){
 }
 const sitePoint=(id:number,[,ny,nz]:Shape3):Point3=>[Math.floor(id/(ny*nz)),Math.floor(id/nz)%ny,id%nz];
 const edgeKey=(a:number,b:number)=>a<b?`${a},${b}`:`${b},${a}`;
+
+/** Probability contours close across padded samples outside the source volume. */
+function crossesSourceVolumeBoundary(positions:Float32Array,shape:Shape3){
+  return positions.some((value,index)=>value< -1e-5||value>shape[index%3]-1+1e-5);
+}
 
 /** Admit only score-contour edge crossings on the exact modeled source grid. */
 function bindCrossings(positions:Float32Array,mask:Uint8Array,shape:Shape3):Uint32Array|undefined {
@@ -63,7 +69,8 @@ export function bindNativeVesselSurfaces(source:ViewerVolume,owner:Uint16Array,r
     }
     const scoreLighting=field==='native-probability'&&layer.vesselScoreLighting?.length===sourceCells.length*4
       ?layer.vesselScoreLighting:undefined;
-    if(bound)result.set(name,{mode:'native-probability',region:id,positions,normals,indices,sourceCells,sites,scoreLighting});
+    if(bound)result.set(name,{mode:'native-probability',region:id,positions,normals,indices,sourceCells,sites,scoreLighting,
+      sourceVolumeBoundary:crossesSourceVolumeBoundary(positions,source.shape)});
   }
   return result;
 }
@@ -121,7 +128,8 @@ function editedNativeWall(wall:EditedWall,region:number,owner:Uint16Array,remove
   positions.set(cubes.positions,positionsIJK.length*3);cells.set(cubes.sourceCells,sourceCells.length);
   for(let i=0;i<cubes.indices.length;i++)indices[triangles.length*3+i]=sourceCells.length+cubes.indices[i];
   return {mode:'edited-native-wall',region,positions,indices,sourceCells:cells,
-    normals:indexedSurfaceNormals(positions,indices,affine),cuboidCount:cuboidSourceCells.length,geometryIdentity:wall.identity};
+    normals:indexedSurfaceNormals(positions,indices,affine),cuboidCount:cuboidSourceCells.length,geometryIdentity:wall.identity,
+    sourceVolumeBoundary:crossesSourceVolumeBoundary(positions,shape)};
 }
 
 export function acceptedVesselSurfaces(rests:Map<string,RestVessel>,owner:Uint16Array,overrides:Map<number,number>,view:SurgicalView,

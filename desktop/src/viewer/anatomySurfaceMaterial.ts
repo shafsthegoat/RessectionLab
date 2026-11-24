@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import type {Bounds3,Point3} from './coordinates';
+import type {Bounds3,Point3,Shape3} from './coordinates';
 import type {ViewerVesselTrace} from './contracts';
 import type {ViewerWorkspaceSettings} from './workspaceSettings';
 
@@ -70,9 +70,31 @@ export function setVesselInspectionFocus(material:THREE.MeshStandardMaterial,foc
 
 const vesselColors:Record<string,string>={artery:'#b33e32',vein:'#3e688c',sinus:'#4b5a88'};
 const shadingValue={source:0,balanced:1,large:2,fine:3};
+export const vesselSourceBoundaryColor='#747c81';
+
+/** Distinguish the padded source closure while keeping it opaque and pickable. */
+function shadeVesselSourceBoundary(shader:Parameters<THREE.MeshStandardMaterial['onBeforeCompile']>[0],shape:Shape3){
+  shader.uniforms.uVesselSourceLastSample={value:new THREE.Vector3(shape[0]-1,shape[1]-1,shape[2]-1)};
+  shader.uniforms.uVesselSourceBoundaryColor={value:new THREE.Color(vesselSourceBoundaryColor)};
+  shader.vertexShader='attribute vec3 vesselRestNative;\nvarying vec3 vVesselRestNative;\n'+shader.vertexShader;
+  shader.vertexShader=shader.vertexShader.replace('#include <begin_vertex>',`
+    #include <begin_vertex>
+    vVesselRestNative=vesselRestNative;`);
+  shader.fragmentShader=`
+    uniform vec3 uVesselSourceLastSample;
+    uniform vec3 uVesselSourceBoundaryColor;
+    varying vec3 vVesselRestNative;
+  `+shader.fragmentShader;
+  shader.fragmentShader=shader.fragmentShader.replace('#include <roughnessmap_fragment>',`
+    vec3 sourceExcess=max(-vVesselRestNative,vVesselRestNative-uVesselSourceLastSample);
+    float sourceBoundary=smoothstep(0.00001,0.035,max(sourceExcess.x,max(sourceExcess.y,sourceExcess.z)));
+    diffuseColor.rgb=mix(diffuseColor.rgb,uVesselSourceBoundaryColor,sourceBoundary);
+    #include <roughnessmap_fragment>
+    roughnessFactor=mix(roughnessFactor,0.72,sourceBoundary);`);
+}
 
 /** Only radiance changes. Depth, source triangles, masks and picks remain authoritative. */
-export function applyVesselDepthMaterial(material:THREE.MeshStandardMaterial,bounds:Bounds3,grid?:VesselLabelGrid) {
+export function applyVesselDepthMaterial(material:THREE.MeshStandardMaterial,bounds:Bounds3,grid?:VesselLabelGrid,sourceShape?:Shape3) {
   const center=new THREE.Vector3(...bounds[0].map((v,i)=>(v+bounds[1][i])/2));
   const radius=Math.max(1,new THREE.Vector3(...bounds[1]).distanceTo(new THREE.Vector3(...bounds[0]))*.5);
   const previous=material.onBeforeCompile,previousKey=material.customProgramCacheKey();
@@ -92,6 +114,7 @@ export function applyVesselDepthMaterial(material:THREE.MeshStandardMaterial,bou
       float anatomyDepth=(length(vViewPosition)-length((viewMatrix*vec4(uAnatomyCenter,1.0)).xyz))/uAnatomyRadius;
       outgoingLight*=mix(1.08,0.56,smoothstep(-0.65,0.65,anatomyDepth));
       #include <opaque_fragment>`);
+    if(sourceShape)shadeVesselSourceBoundary(shader,sourceShape);
     if(!style)return;
     Object.assign(shader.uniforms,style);
     shader.vertexShader=`
@@ -180,7 +203,7 @@ export function applyVesselDepthMaterial(material:THREE.MeshStandardMaterial,bou
       }else outgoingLight*=mix(1.08,0.56,smoothstep(-0.65,0.65,anatomyDepth));
     `);
   };
-  material.customProgramCacheKey=()=>`anatomy-vessel-depth-v2-${!!style}-${previousKey}`;
+  material.customProgramCacheKey=()=>`anatomy-vessel-depth-v3-${!!style}-${!!sourceShape}-${previousKey}`;
   material.needsUpdate=true;
 }
 

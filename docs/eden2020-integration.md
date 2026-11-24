@@ -137,6 +137,11 @@ mechanical properties are modeled. The private continuity run index links the
 portable workspace, recorded actions, source and collision checks, and hidden
 replay commands. See the [private storage ledger](local-storage-ledger.md).
 
+Gray faces in a score-bound operative view mark where the source volume ends.
+The marker follows the rest coordinates of the wall through deformation and
+distinguishes the source boundary from interior transection caps. These faces
+retain the same opaque geometry for contact and source inspection.
+
 For a new score-bound rod rehearsal, pass `--guard-native-wall` to
 `scripts/prepare_tof_bifurcation_rehearsal.py`. The saved materials policy
 checks the continuous motion of nonadjacent score triangles at each rod step.

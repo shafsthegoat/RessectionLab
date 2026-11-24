@@ -69,6 +69,11 @@ The next continuation at
 links the TOF-only Vessel-MAYON comparison and the guarded native-wall
 workspace, replay receipts, and matched app views.
 
+The next native wall continuation at
+`qc/eden2020-glioma-5714812/vascular-reconstruction-continuity-20261123-v9/README.md`
+indexes the 29-case motion screen, matched operative boundary views and film,
+and the separate native surface and recoil experiments.
+
 Paths below are relative to the RessectionLab root. This compact ledger covers
 that area, not unrelated personal files elsewhere on the HDD. Presence does not
 establish scientific readiness or a completed build; consult each run's receipts.

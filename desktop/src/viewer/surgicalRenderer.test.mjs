@@ -338,7 +338,7 @@ for(const withScore of [false,true])test(`modeled native vessels share live posi
   const {modeledVolume}=await server.ssrLoadModule('/src/modeled-volume.ts');
   const mock=modelWorkerMock();try{
     const {r,source}=modeledFixture(),layer=source.compartments[1];
-    const rest=Float32Array.of(2,0,.2,3,0,.2,2,.3,0,3,.3,0),normals=Float32Array.of(0,0,1,0,0,1,0,1,0,0,1,0);
+    const rest=Float32Array.of(2,0,-.2,3,0,-.2,2,.3,0,3,.3,0),normals=Float32Array.of(0,0,1,0,0,1,0,1,0,0,1,0);
     layer.surface={source:rest,positions:rest,sourceNormals:normals,normals,indices:Uint32Array.of(0,1,2,2,1,3)};
     layer.surfaceDiagnostics={surfaceField:'native-probability'};
     if(withScore)layer.vesselScoreLighting=Float32Array.of(.1,0,1,1,.1,0,1,1,0,1,.1,1,0,1,.1,1);
@@ -350,16 +350,25 @@ for(const withScore of [false,true])test(`modeled native vessels share live posi
     while(r.modelWorker.queue.length)r.modelWorker.flush();submitPreparedState(r);
     assert.equal(r.modelWorker.messages.filter(m=>m.layerId==='vessel').length,0);
     const pair=r.surfaceGeometry.get('vessel'),mesh=r.surfaces.get('vessel'),position=pair.source.getAttribute('position');
+    const restBoundary=pair.source.getAttribute('vesselRestNative');
     assert.equal(mesh.material.color.getHexString(),'a64c45');
     assert.equal(pair.smooth.getAttribute('position'),position);
     assert.equal(pair.smooth.getIndex(),pair.source.getIndex());
+    assert.equal(pair.smooth.getAttribute('vesselRestNative'),restBoundary);
+    assert.notEqual(restBoundary,position);
+    assert.equal(restBoundary.array,rest);
+    const shader={uniforms:{},vertexShader:THREE.ShaderLib.standard.vertexShader,fragmentShader:THREE.ShaderLib.standard.fragmentShader};
+    mesh.material.onBeforeCompile(shader,{});
+    assert.match(shader.vertexShader,/vVesselRestNative=vesselRestNative/);
+    assert.match(shader.fragmentShader,/diffuseColor.rgb=mix\(diffuseColor.rgb,uVesselSourceBoundaryColor,sourceBoundary\)/);
+    assert.deepEqual(shader.uniforms.uVesselSourceLastSample.value.toArray(),source.shape.map(n=>n-1));
     assert.notEqual(pair.smooth.getAttribute('normal'),pair.source.getAttribute('normal'));
     const restLighting=pair.smooth.getAttribute('normal').array.slice();
     r.updateAcceptedSurfaces({...view,vesselMechanics:{...view.vesselMechanics,surfaceDisplacements:{40:[0,0,.2]}}});
     assert.equal(pair.source.getAttribute('position'),position);
     assert.equal(pair.smooth.getAttribute('position'),position);
-    assert.equal(position.getZ(0),Math.fround(rest[2]+.2));
-    assert.equal(rest[2],Math.fround(.2));
+    assert.ok(Math.abs(position.getZ(0))<1e-7);
+    assert.equal(restBoundary.getZ(0),Math.fround(-.2));
     r.setSurfaceSmoothing(true);
     assert.equal(mesh.geometry,pair.smooth);
     assert.equal(mesh.geometry.userData.operativeVessel.normalStyle,withScore?'source-score-gradient-0.30mm':'bounded-lighting');
