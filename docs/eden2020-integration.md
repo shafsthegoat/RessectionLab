@@ -361,12 +361,13 @@ plane-sensitive junction measurements are indexed in the [private storage ledger
 Anatomy and Rehearsal use the same native source field and check the conditioned
 contour at eligible centerline stations. The independent fixed-plane audit
 matched 3,444 EDEN sections, and every source center-containing outline
-remained measurable. The conditioner restored four vertices each in PTNT_4503
-and PTNT_4509. In PTNT_0869, a separate audit plane lost a 0.0014 mm² void
-inside a preserved outline. Whole-ring containment also corrected an earlier
-PTNT_8238 measurement that had counted a separate outline as an enclosed void
-when a test ray aligned with a vertex. PTNT_8532 remains unavailable for this
-TOF check.
+remained measurable with its enclosed-loop count intact. The conditioner
+restored four vertices each in PTNT_4503 and PTNT_4509. Explicit loop counts
+restored 22 vertices in PTNT_0869, preserving a 0.0014 mm² source void that
+previously closed when all of its crossing edges disappeared. Whole-ring
+containment also corrected an earlier PTNT_8238 measurement that had counted
+a separate outline as an enclosed void when a test ray aligned with a vertex.
+PTNT_8532 remains unavailable for this TOF check.
 
 Gray faces in a score-bound operative view mark where the source volume ends.
 The marker follows the rest coordinates of the wall through deformation and
