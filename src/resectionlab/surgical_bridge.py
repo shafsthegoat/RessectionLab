@@ -239,7 +239,7 @@ def dispatch(session, operation, args, request, progress):
             {'sources': [], 'imagingState': None, 'episode': None, 'selection': None, 'sessionHash': None})
         return {**installed, 'verifiedStudyReplay': receipt, 'verifiedTargetSampling': sampling}
     if operation == 'prepareSurgicalEnvironment':
-        _keys(args, {'collectionId', 'snapshotId', 'layers', 'allowUnreviewedRegistration', 'approach'})
+        _keys(args, {'collectionId', 'snapshotId', 'layers', 'allowUnreviewedRegistration', 'approach', 'nativeWallCenter'})
         from .surgical_patient import prepare_surgical_environment
         from .imaging import load_case, read_case_artifacts
         collection = getattr(session, 'anatomy_collections', {}).get(args['collectionId'])
@@ -249,11 +249,13 @@ def dispatch(session, operation, args, request, progress):
             raise ValueError('Accept or discard the segmentation draft before preparing an environment')
         if type(args.get('allowUnreviewedRegistration', False)) is not bool:
             raise ValueError('Research registration choice must be explicit')
-        progress(0.1, 'Preparing standard 1 mm research environment from selected source masks')
+        center = args.get('nativeWallCenter')
+        progress(0.1, 'Preparing a local native vascular wall and patient tissue' if center is not None else
+                 'Preparing standard 1 mm research environment from selected source masks')
         with tempfile.TemporaryDirectory(prefix='surgical-environment-') as directory:
             report = prepare_surgical_environment(collection.root, directory, layer_ids=args['layers'],
                 resolution_mm=1., allow_unreviewed_registration=args.get('allowUnreviewedRegistration', False),
-                approach=args.get('approach'))
+                approach=args.get('approach'), native_wall_center=center, check=request.check)
             if report['sourceCollectionHash'] != args['snapshotId']:
                 raise ValueError('Source collection changed during environment preparation')
             request.check()

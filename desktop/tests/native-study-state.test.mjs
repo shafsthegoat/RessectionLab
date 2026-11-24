@@ -45,8 +45,18 @@ test('scan and anatomy presets preserve the study colors of supplied arterial cl
     {...branch,id:'mismatched',label_value:7},{...branch,id:'estimate',provenance:{kind:'model',publisher_class_id:6}}];
   for(const mode of ['scan','segmentation','vascular']){
     const result=anatomyPresentation({},layers,mode,'CTA','ct');
-    assert.deepEqual(result.layerColor,{'left-ica':'#278c69',union:'#b75848',mismatched:'#b75848',estimate:'#b75848'});
+    assert.deepEqual(result.layerColor,{'left-ica':'#278c69',union:'#aa352b',mismatched:'#aa352b',estimate:'#aa352b'});
   }
+});
+
+test('an unclassified native TOF network gets foreground emphasis without an artery color or a CT bone profile',()=>{
+  const layers=[{id:'network',kind:'vessels',source_series:'tof'},{id:'bone',kind:'skull'},{id:'artery',kind:'artery',source_series:'tof'}];
+  const view=anatomyPresentation({},layers,'segmentation','3D TOF','tof');
+  assert.equal(view.layerOpacity.network,1);
+  assert.notEqual(view.layerColor.network,view.layerColor.artery);
+  assert.equal(view.skullMode,'transparent');
+  assert.ok(view.volumeRendering.density<.03);
+  assert.equal(anatomyPresentation({},layers,'segmentation','T1','other').skullMode,'exterior');
 });
 
 test('vascular presentation mutes the reviewed peripheral layers and keeps the main network opaque',()=>{
@@ -127,6 +137,9 @@ test('legacy skull transparency migrates without rewriting explicitly selected m
 test('legacy vessel filters migrate once; explicit new choices survive save and reopen',async()=>{
   const {vesselScopeForView}=await import('../src/native-study-state.ts');
   assert.equal(vesselScopeForView(),'all');
+  assert.equal(vesselScopeForView(null,true),'exterior-air');
+  assert.equal(vesselScopeForView({vesselDisplayVersion:2,vesselScope:'all'},true),'all');
+  assert.equal(vesselScopeForView({vesselDisplayVersion:2,vesselScope:'exterior-air'},true),'exterior-air');
   for(const vesselScope of ['brain','intracranial','excluded','all',undefined]){
     const legacy={vesselScope,states:{mri:{settings:{contrast:4}}}};
     const before=structuredClone(legacy);
@@ -231,14 +244,14 @@ test('body orientation guide saves per scan, accepts old settings and rejects no
   for(const value of [null,0,1,'false',[],{}])assert.throws(()=>checkedViewerSettings(source,{showOrientationGuide:value}));
 });
 
-test('patient 3D camera and density follow linked slices while unaligned scans keep a separate cursor',()=>{
+test('linked slices share the patient camera and keep acquisition-specific scalar settings',()=>{
   const current={cursor:[32,15,11],visible:{lesion:true,artery:true},settings:{
     presentation:'segmentation',camera:{position:[0,0,100],target:[4,3,2],up:[0,1,0]},volumeRendering:{density:.12},contrast:1}};
   const saved={cursor:[1,2,3],visible:{},settings:{contrast:2,volumeRendering:{density:.7}}};
   const linked=nextScanState(current,saved);
   assert.deepEqual(linked.cursor,current.cursor);
   assert.deepEqual(linked.settings.camera,current.settings.camera);
-  assert.deepEqual(linked.settings.volumeRendering,current.settings.volumeRendering);
+  assert.deepEqual(linked.settings.volumeRendering,saved.settings.volumeRendering);
   assert.equal(linked.settings.contrast,2);
   assert.deepEqual(nextScanState(current,saved,false).cursor,saved.cursor);
 });

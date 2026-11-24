@@ -15,6 +15,13 @@ function argument(name){
   assert(index>=0&&process.argv[index+1],`Pass ${name}`);
   return path.resolve(process.argv[index+1]);
 }
+function dimension(name,fallback){
+  const index=process.argv.indexOf(name);
+  if(index<0)return fallback;
+  const value=Number(process.argv[index+1]);
+  assert(Number.isInteger(value)&&value>=480&&value<=2560,`Invalid ${name}`);
+  return value;
+}
 const source=fs.realpathSync(argument('--anatomy'));
 const linked=/^vascular-review(?:\.[0-9a-f]{12})?\.anatomy\.json$/.test(path.basename(source));
 assert(linked||path.basename(source)==='patient-anatomy.json');
@@ -23,8 +30,14 @@ const output=argument('--output');
 fs.mkdirSync(output);
 const document=JSON.parse(fs.readFileSync(source,'utf8'));
 const recipes=JSON.parse(fs.readFileSync(argument('--views'),'utf8'));
+const expected=process.argv.includes('--expected')?JSON.parse(fs.readFileSync(argument('--expected'),'utf8')):null;
+const windowSize={width:dimension('--width',1440),height:dimension('--height',960)};
+const deviceScale=expected?.deviceScale??(expected?.views[0]?.size.width===windowSize.width*2?2:1);
+assert([1,2].includes(deviceScale),'Unsupported reference display scale');
+const exportName=process.argv.includes('--export-view')?process.argv[process.argv.indexOf('--export-view')+1]:undefined;
 assert(Array.isArray(recipes)&&recipes.length&&recipes.length<=32);
 assert.equal(new Set(recipes.map(r=>r.name)).size,recipes.length);
+assert(!process.argv.includes('--export-view')||recipes.some(recipe=>recipe.name===exportName),'Unknown export view');
 const scans=new Map(document.series.map(scan=>[scan.id,scan]));
 const layers=new Set([...document.layers,...document.tractography??[]].map(layer=>layer.id));
 for(const recipe of recipes){
@@ -43,19 +56,22 @@ for(const recipe of recipes){
     new Set(recipe.compareVesselShading).size===recipe.compareVesselShading.length&&
     recipe.compareVesselShading.every(mode=>['source','balanced','large','fine'].includes(mode)));
   assert(!recipe.preset||['superior','anterior','left','oblique'].includes(recipe.preset));
-  assert(!recipe.scope||['all','brain','intracranial','excluded'].includes(recipe.scope));
+  assert(!recipe.scope||['all','brain','intracranial','excluded','exterior-air'].includes(recipe.scope));
   assert(!recipe.rotationFrames||Number.isInteger(recipe.rotationFrames)&&recipe.rotationFrames>=2&&recipe.rotationFrames<=120);
   assert(!recipe.rotationFrames||!recipe.compareLayerIds,'Use separate recipes for simultaneous camera comparisons and rotation');
 }
 
 const profile=fs.mkdtempSync(path.join(os.tmpdir(),'rslab-vessel-capture-'));
 app.setPath('userData',profile);
+app.commandLine.appendSwitch('force-device-scale-factor',String(deviceScale));
 process.argv.push('--automation-hidden');
 if(process.platform==='darwin')app.setActivationPolicy('accessory');
 dialog.showOpenDialog=async()=>({canceled:false,filePaths:[source]});
 const hash=file=>createHash('sha256').update(fs.readFileSync(file)).digest('hex');
 const report={source,snapshotId:document.snapshot_id,manifestSha256:hash(source),canonicalManifestSha256:hash(canonical),
-  views:[],errors:[],windowEverVisible:false,passed:false};
+  windowSize,deviceScale,views:[],errors:[],windowEverVisible:false,passed:false};
+const processStarted=performance.now();
+let memoryPoll;
 const wait=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 const persist=()=>fs.writeFileSync(path.join(output,'report.json'),JSON.stringify(report,null,2));
 let activeRecipe=recipes[0],openCount=0,lastPayload;
@@ -69,9 +85,11 @@ function exitCapture(event){
 function finish(error){
   if(finished)return;
   finished=true;
+  clearInterval(memoryPoll);
   if(error){report.error=error.stack??String(error);console.error(report.error);}
   report.manifestUnchanged=hash(source)===report.manifestSha256;
   report.canonicalManifestUnchanged=hash(canonical)===report.canonicalManifestSha256;
+  report.wallMs=performance.now()-processStarted;
   report.passed=!error&&!report.windowEverVisible&&!report.errors.length&&report.manifestUnchanged&&report.canonicalManifestUnchanged&&report.views.length===recipes.length;
   persist();
   exitCode=report.passed?0:1;
@@ -132,6 +150,7 @@ app.on('browser-window-created',(_event,window)=>{
     const submittedFrame=()=>js('window.vascularFrame??null');
     const settledFrame=async(after=0)=>{
       await until(`window.vascularFrame?.serial>${after}&&window.vascularFrame.interactive===false&&
+        window.vascularFrame.scanQuality?.opticsPending!==true&&
         window.vascularGpu?.completed===true&&window.vascularGpu.serial===window.vascularFrame.serial&&
         window.vascularGpu.displayIdentity===window.vascularFrame.displayIdentity`,'settled GPU-completed anatomy frame');
       return submittedFrame();
@@ -140,10 +159,63 @@ app.on('browser-window-created',(_event,window)=>{
       assert(!window.isVisible());
       const frame=interactive?await submittedFrame():await settledFrame();
       const filename=path.join(output,name+'.png');
-      const image=await window.webContents.capturePage(undefined,{stayHidden:true,stayAwake:true});
+      let image=await window.webContents.capturePage(undefined,{stayHidden:true,stayAwake:true});
       assert(!image.isEmpty());
+      const backingSize=image.getSize(),referenceSize=expected?.views[0]?.size;
+      // macOS can return a Retina backing bitmap even for a hidden window
+      // with the same logical size and Chromium device scale as the reference.
+      if(referenceSize&&backingSize.width!==referenceSize.width){
+        const scale=backingSize.width/referenceSize.width;
+        assert([.5,2].includes(scale)&&backingSize.height===referenceSize.height*scale,'Matched capture viewport changed');
+        image=image.resize({...referenceSize,quality:'best'});
+      }
       fs.writeFileSync(filename,image.toPNG());
-      return {filename,size:image.getSize(),frame};
+      const size=image.getSize(),captureScale=size.width/window.getContentSize()[0];
+      const telemetry=await js(`({fence:window.vascularGpu?.serial===${frame?.serial??0}?window.vascularGpu:null,
+        gpu:window.vascularTimes.get(${frame?.serial??0})??null,pane:(()=>{const box=document.querySelector('.rl-viewer-anatomy-image').getBoundingClientRect();
+          return {x:Math.ceil(box.x),y:Math.ceil(box.y),width:Math.floor(box.width)-1,height:Math.floor(box.height)-1};})()})`);
+      const pane=Object.fromEntries(Object.entries(telemetry.pane).map(([key,value])=>[key,Math.round(value*captureScale)]));
+      return {filename,size,backingSize,captureScale,frame,...telemetry,pane};
+    };
+    const exportView=async name=>{
+      await until(`!!(${button('Export 3D PNG')})&&!(${button('Export 3D PNG')}).disabled`,'ready 3D PNG export');
+      const started=performance.now();
+      const result=await js(`new Promise((resolve,reject)=>{
+        const create=URL.createObjectURL, click=HTMLAnchorElement.prototype.click;
+        let exported,stats;
+        const restore=()=>{clearTimeout(deadline);observer.disconnect();
+          document.removeEventListener('anatomy-export',receive);
+          URL.createObjectURL=create;HTMLAnchorElement.prototype.click=click;};
+        const finish=()=>{if(!exported||!stats)return;
+          restore();
+          const reader=new FileReader();reader.onerror=()=>reject(reader.error);
+          reader.onload=()=>resolve({data:reader.result,stats});reader.readAsDataURL(exported);};
+        const receive=e=>{stats=e.detail;finish();};
+        const deadline=setTimeout(()=>{restore();reject(Error('Timed out waiting for the 3D PNG'));},300000);
+        const observer=new MutationObserver(()=>{
+          const status=document.querySelector('[aria-label="3D PNG export status"]')?.textContent;
+          if(status&&status!=='Rendering 3D PNG…'&&status!=='3D PNG ready.'){
+            restore();reject(Error(status));
+          }
+        });
+        const urls=new Map();
+        URL.createObjectURL=function(blob){const url=create.call(this,blob);urls.set(url,blob);return url;};
+        HTMLAnchorElement.prototype.click=function(){
+          if(this.download==='resectionlab-3d.png'&&urls.has(this.href)){exported=urls.get(this.href);finish();}
+          else click.call(this);
+        };
+        document.addEventListener('anatomy-export',receive);
+        observer.observe(document.querySelector('.rl-viewer'),{childList:true,subtree:true,characterData:true});
+        (${button('Export 3D PNG')}).click();
+      })`);
+      const filename=path.join(output,`${name}-export.png`);
+      assert(result.data.startsWith('data:image/png;base64,'));
+      const bytes=Buffer.from(result.data.split(',')[1],'base64');
+      fs.writeFileSync(filename,bytes);
+      const size=nativeImage.createFromBuffer(bytes).getSize();
+      assert.equal(Math.max(size.width,size.height),2048);
+      const frame=await settledFrame();
+      return {filename,size,wallMs:performance.now()-started,stats:result.stats,frame,sha256:hash(filename)};
     };
     const setLayer=async(id,visible)=>{
       const element=`[...document.querySelectorAll('.native-structure-row')].find(row=>row.dataset.structureId===${JSON.stringify(id)})?.querySelector('.native-structure-visibility')`;
@@ -156,8 +228,12 @@ app.on('browser-window-created',(_event,window)=>{
     const neutralSectionComparison=async(baseline,candidate=baseline)=>{
       const box=await js(`(()=>{const r=document.querySelector('.rl-viewer-anatomy-image').getBoundingClientRect();
         return {x:Math.ceil(r.x),y:Math.ceil(r.y),width:Math.floor(r.width)-1,height:Math.floor(r.height)-1};})()`);
-      const a=nativeImage.createFromPath(baseline).crop(box).toBitmap();
-      const b=candidate===baseline?a:nativeImage.createFromPath(candidate).crop(box).toBitmap();
+      const crop=filename=>{
+        const image=nativeImage.createFromPath(filename),scale=image.getSize().width/window.getContentSize()[0];
+        return image.crop(Object.fromEntries(Object.entries(box).map(([key,value])=>[key,Math.round(value*scale)]))).toBitmap();
+      };
+      const a=crop(baseline);
+      const b=candidate===baseline?a:crop(candidate);
       assert(a.length>0&&a.length===b.length);
       let neutral=0,matched=0,totalDelta=0;
       for(let i=0;i<a.length;i+=4){
@@ -178,15 +254,35 @@ app.on('browser-window-created',(_event,window)=>{
       return {neutralPixels:neutral,matchedWithinTwoLevels:matched,meanAbsoluteDifference:totalDelta/neutral};
     };
     try{
-      window.setSize(1440,960);
+      window.setSize(windowSize.width,windowSize.height);
+      if(expected?.views[0]?.size){
+        const {width,height}=expected.views[0].size;
+        window.setContentSize(width/deviceScale,height/deviceScale);
+      }
       window.webContents.setBackgroundThrottling(false);
-      await js(`document.addEventListener('anatomy-frame',e=>{
-        const {serial,interactive,surfaceQuality,cameraState,cursor,displayIdentity,sourceSignalFingerprint}=e.detail;
-        window.vascularFrame={serial,interactive,surfaceQuality,cameraState,cursor,displayIdentity,sourceSignalFingerprint};
+      report.memory={peakSampledElectronWorkingSetBytes:0,pollMs:500};
+      memoryPoll=setInterval(()=>{
+        const bytes=app.getAppMetrics().reduce((sum,process)=>sum+process.memory.workingSetSize*1024,0);
+        report.memory.peakSampledElectronWorkingSetBytes=Math.max(report.memory.peakSampledElectronWorkingSetBytes,bytes);
+      },report.memory.pollMs);
+      await js(`window.vascularTimes=new Map();document.addEventListener('anatomy-gpu-time',e=>{
+        window.vascularTimes.set(e.detail.serial,e.detail);
+        if(window.vascularTimes.size>12)window.vascularTimes.delete(window.vascularTimes.keys().next().value);
+      });document.addEventListener('anatomy-frame',e=>{
+        const {serial,interactive,surfaceQuality,scanQuality,cameraState,cursor,displayIdentity,sourceSignalFingerprint,
+          cpuMs,gpuTimingSupported,estimatedAllocation}=e.detail;
+        window.vascularFrame={serial,interactive,surfaceQuality,scanQuality,cameraState,cursor,displayIdentity,sourceSignalFingerprint,
+          cpuMs,gpuTimingSupported,estimatedAllocation};
       });document.addEventListener('anatomy-gpu',e=>{
-        const {serial,completed,displayIdentity}=e.detail;window.vascularGpu={serial,completed,displayIdentity};
+        window.vascularGpu=e.detail;
       });`);
+      if(expected){
+        assert(expected.passed&&!expected.windowEverVisible,'Reference capture did not pass in a hidden window');
+        for(const key of ['snapshotId','manifestSha256','canonicalManifestSha256'])assert.equal(report[key],expected[key],`Matched ${key} changed`);
+        if(expected.windowSize)assert.deepEqual(report.windowSize,expected.windowSize);
+      }
       for(const [index,recipe] of recipes.entries()){
+        const openStarted=performance.now();
         activeRecipe=recipe;
         if(index){
           const previous=await js(`document.querySelector('.rl-viewer')?.dataset.sourceDisplayIdentity`);
@@ -222,7 +318,25 @@ app.on('browser-window-created',(_event,window)=>{
         assert.deepEqual(lastPayload.unavailableLayers.filter(id=>recipe.layers.includes(id)),[]);
         const surfaces=lastPayload.compartments.map(({name,sourceSeries,alignment,surfaceDiagnostics,surface,displayFilter})=>({name,sourceSeries,alignment,surfaceDiagnostics,sourceSurfaceSha256:surface?.source?.sha256,empty:surface?.empty??false,displayFilter}));
         const record={name:recipe.name,seriesId:view.seriesId,sourceSha256:lastPayload.mri.sha256,scope:view.vesselScope,view:view.states[view.seriesId],surfaces,
-          ...await capture(recipe.name)};
+          readyMs:performance.now()-openStarted,...await capture(recipe.name)};
+        if(expected){
+          const reference=expected.views.find(view=>view.name===recipe.name);
+          assert(reference,`Missing matched view ${recipe.name}`);
+          for(const key of ['seriesId','sourceSha256','scope','size'])assert.deepEqual(record[key],reference[key],`Matched ${key} changed`);
+          for(const key of ['sourceSignalFingerprint','cursor'])assert.deepEqual(record.frame[key],reference.frame[key],`Matched ${key} changed`);
+          for(const key of ['position','target','up'])assert(record.frame.cameraState[key].every((value,i)=>
+            Math.abs(value-reference.frame.cameraState[key][i])<1e-9),`Matched camera ${key} changed`);
+          assert.deepEqual(record.view.visible,reference.view.visible,'Matched layer visibility changed');
+          for(const key of ['clipping','clipBox','obliqueClip','activePlane','showPlane'])
+            assert.deepEqual(record.view.settings[key],reference.view.settings[key],`Matched ${key} changed`);
+        }
+        if(exportName===recipe.name){
+          record.export=await exportView(recipe.name);
+          for(const key of ['position','target','up'])
+            assert(record.export.frame.cameraState[key].every((n,i)=>Math.abs(n-record.frame.cameraState[key][i])<1e-9),
+              `3D export changed live camera ${key}`);
+          assert.deepEqual(record.export.frame.sourceSignalFingerprint,record.frame.sourceSignalFingerprint,'3D export changed acquired signal');
+        }
         if(recipe.depthSlab){
           const captures=[];
           const captureSlab=async(suffix,previous)=>{

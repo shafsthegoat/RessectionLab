@@ -1,6 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {DataUtils} from 'three';
 import {isCtModality,volumeSettings,volumeTransfer,volumeRayInterval,opticalAlpha,mriBoundaryExtinction} from './volumeTransfer.ts';
+import {buildOpticalDensity,volumeOpticalAtlas} from './volumeOpticalDensity.ts';
+import {inverseAffine} from './coordinates.ts';
 import {checkedViewerSettings} from '../workspace-view-settings.ts';
 const identity=[[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]];
 test('volume rays use millimetres on mirrored, anisotropic and oblique grids, including camera inside',()=>{
@@ -126,20 +129,70 @@ test('transparent MRI context retains precise extinction and emphasizes physical
   assert.ok(coarse<full*.25,'uniform interior context must recede visibly');
 });
 
-test('unclassified CTA signal is neutral ivory with the original HU extinction and custom transfers intact',()=>{
+test('CTA tapers lower HU haze, gives high HU a cooler tint and honors custom transfer points',()=>{
   const lut=volumeTransfer('ct-angiography',[-1000,2000],undefined,'CTA');
-  const original=[[-1000,0],[80,0],[140,.01],[220,.12],[360,.38],[600,.5],[900,.52],[1800,.8],[3000,1]];
+  const sample=hu=>lut.data.slice(Math.round((hu+1000)/4000*1023)*4,Math.round((hu+1000)/4000*1023)*4+4);
   assert.deepEqual(lut.range,[-1000,3000]);
-  for(let i=0;i<1024;i++){
-    const hu=lut.range[0]+i/1023*(lut.range[1]-lut.range[0]);
-    let knot=0;while(knot<original.length-2&&hu>original[knot+1][0])knot++;
-    const [a,alphaA]=original[knot],[b,alphaB]=original[knot+1],t=Math.max(0,Math.min(1,(hu-a)/(b-a)));
-    assert.ok(Math.abs(lut.data[i*4+3]-(alphaA*(1-t)+alphaB*t))<1e-7,'classification-independent extinction must stay unchanged');
-    const rgb=lut.data.slice(i*4,i*4+3);
-    assert.ok(Math.max(...rgb)-Math.min(...rgb)<.1,'unclassified CTA must not acquire the rust arterial hue');
-  }
+  assert.equal(sample(85)[3],0);
+  assert.ok(sample(220)[3]<.07);
+  const [midR,midG,midB,midExtinction]=sample(360);
+  assert.ok(midExtinction>.30&&midExtinction<.35);
+  assert.ok(midR>midG&&midG>midB&&midB>.32,'mid HU remains warm beige');
+  const [highR,highG,highB,highExtinction]=sample(1800);
+  assert.ok(highExtinction>.8&&highB>highG&&highG>highR);
+  assert.ok(highR>.90&&highB-highR<.08,'mineral HU remains close to neutral');
   const points=[[0,0,0,0,0],[.5,.8,.2,.1,.2],[1,1,.8,.4,.9]],saved=structuredClone(points);
   assert.deepEqual(volumeTransfer('ct-angiography',[-1000,2000],{points},'CTA').data,
     volumeTransfer('ct-bone',[-1000,2000],{points,window:[-1000,3000]},'CTA').data,'explicit saved colors/extinction take precedence over the automatic preset');
   assert.deepEqual(points,saved);
+});
+
+test('coarse shadow density integrates extinction after the nonlinear transfer with source support',()=>{
+  const lut=volumeTransfer('ct-angiography',[-1000,3000],undefined,'CTA');
+  const signal=new Float32Array([-1000,1000]);
+  const source={signal,shape:[2,1,1],affine:identity,inverse:identity};
+  const sampled=buildOpticalDensity(source,lut);
+  assert.deepEqual(sampled.grid,[1,1,1]);
+  // A transfer of the mean HU would produce transparent air/background.
+  assert.ok(sampled.fine[0]>.30&&sampled.fine[0]<.32);
+  assert.equal(sampled.fine[0],sampled.fine[1]);
+  assert.equal(buildOpticalDensity({...source,support:new Uint8Array([0,1])},lut).fine[0],sampled.fine[0]);
+  assert.equal(buildOpticalDensity({...source,support:new Uint8Array([1,0])},lut).fine[0],0);
+  assert.deepEqual(signal,new Float32Array([-1000,1000]));
+});
+
+test('secondary MRI shell density uses the physical derivative from the acquisition affine',()=>{
+  const lut=volumeTransfer('mri',[0,1],undefined,'T1CE');
+  const source=(spacing, signal)=>{
+    const affine=[[0,-2,0,0],[-spacing,0,0,0],[0,0,6,0],[0,0,0,1]];
+    return {signal:new Float32Array(signal),shape:[3,1,1],affine,inverse:inverseAffine(affine)};
+  };
+  const a=buildOpticalDensity(source(4,[.4,.5,.6]),lut);
+  const b=buildOpticalDensity(source(8,[.3,.5,.7]),lut);
+  assert.deepEqual(a.grid,[3,1,1]);
+  assert.ok(Math.abs(a.fine[3]/a.fine[2]-mriBoundaryExtinction(.025))<1e-7);
+  assert.ok(Math.abs(a.fine[3]-b.fine[3])<1e-7);
+});
+
+test('transfer row and both optical scales survive atlas packing in source XYZ order',()=>{
+  const lut=volumeTransfer('mri',[0,1],undefined,'TOF');
+  const affine=[[4,0,0,0],[0,4,0,0],[0,0,4,0],[0,0,0,1]];
+  const shape=[56,5,56];
+  const signal=new Float32Array(shape.reduce((n,v)=>n*v,1));
+  const x=19,y=2,z=27;
+  signal[(x*shape[1]+y)*shape[2]+z]=1;
+  const source={signal,shape,affine,inverse:inverseAffine(affine)};
+  const atlas=volumeOpticalAtlas(lut,source);
+  assert.deepEqual(atlas.grid,shape);
+  const read=(col,row,channel)=>DataUtils.fromHalfFloat(atlas.data[4*(row*atlas.width+col)+channel]);
+  const row=1+Math.floor(x/atlas.columns)*shape[1]+y;
+  const col=(x%atlas.columns)*shape[2]+z;
+  assert.ok(Math.abs(read(col,row,0)-lut.data.at(-1))<.0005);
+  assert.ok(Math.abs(read(col,row,1)-lut.data.at(-1)/8)<.0001);
+  assert.equal(read(col+1,row,0),0);
+  assert.ok(read(col+1,row,1)>0);
+  // Preserve an extinction value below the old 8-bit quantization threshold.
+  const faint=lut.data.findIndex((v,i)=>i%4===3&&v>.0007&&v<.001);
+  assert.ok(Math.abs(read((faint-3)/4,0,3)-lut.data[faint])<.000001);
+  assert.equal(volumeOpticalAtlas(lut).data.byteLength,8192);
 });

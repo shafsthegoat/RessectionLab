@@ -3,6 +3,19 @@ import { inverseAffine, rasAffine } from './coordinates.ts';
 
 export type VolumePreset = 'auto' | 'ct-bone' | 'ct-tissue' | 'ct-angiography' | 'mri';
 export interface VolumeRenderingSettings { enabled?: boolean; preset?: VolumePreset; density?: number; window?: [number,number]; shadows?: boolean; isolateLabels?: boolean; points?: Array<[number,number,number,number,number]> }
+export const VOLUME_TRANSFER_WIDTH = 1024;
+export function intensityWindow(values: Float32Array): [number, number] {
+  const sampled:number[]=[];
+  const stride=Math.max(1,Math.floor(values.length/16000));
+  for(let i=0;i<values.length;i+=stride)
+    if(Number.isFinite(values[i])&&values[i]!==0)sampled.push(values[i]);
+  sampled.sort((a,b)=>a-b);
+  if(!sampled.length)return [0,1];
+  const low=sampled[Math.floor(sampled.length*.005)];
+  const high=sampled[Math.min(sampled.length-1,Math.floor(sampled.length*.995))];
+  return [low,Math.max(low+1e-6,high)];
+}
+
 export const isCtModality=(modality:string)=>/^\s*(CT|CTA)(\b|[-_\s])/i.test(modality);
 export function volumeSettings(input: VolumeRenderingSettings = {}, modality = 'MRI') {
   const ct=isCtModality(modality), acquired=!/segmentation only|analytic signal|generated image signal/i.test(modality);
@@ -24,12 +37,12 @@ export function volumeTransfer(preset: Exclude<VolumePreset,'auto'>, window: [nu
     [0, .52,.30,.18,0], [150,.65,.45,.28,0], [230,.75,.57,.38,.04],
     [400,.91,.78,.56,.27], [900,.98,.91,.76,.65], [1800,1,.98,.91,.95], [3000,1,1,.99,1],
   ] : preset === 'ct-angiography' ? [
-    // Acquired CTA intensity alone does not classify a vessel. Neutral ivory
-    // keeps unclassified contrast/bone signal distinct from the source-bound
-    // rust arteries and blue veins. Extinction and HU knots are unchanged.
-    [-1000,.08,.09,.10,0], [80,.35,.36,.37,0], [140,.55,.56,.57,.01],
-    [220,.72,.73,.72,.12], [360,.84,.85,.83,.38], [600,.91,.91,.88,.5],
-    [900,.96,.96,.92,.52], [1800,.99,.99,.96,.8], [3000,1,1,.99,1],
+    // CTA signal can be iodine or mineral. A low opacity shoulder limits
+    // soft-tissue haze. The warmer mid-HU and cooler high-HU shades reveal
+    // intensity variation while remaining distinct from vessel label colors.
+    [-1000,.08,.09,.10,0], [110,.38,.36,.35,0], [170,.53,.48,.43,.008],
+    [235,.67,.60,.51,.073], [365,.82,.75,.62,.33], [620,.90,.85,.76,.49],
+    [1000,.95,.93,.87,.62], [1800,.96,.97,.98,.85], [3000,.99,1,1,1],
   ] : preset === 'ct-tissue' ? [
     [-1000,.15,.10,.09,0], [-500,.42,.20,.13,0], [-120,.62,.38,.24,.004],
     [20,.73,.43,.28,.045], [90,.81,.55,.37,.07], [180,.84,.60,.42,.045],
@@ -59,10 +72,11 @@ export function volumeTransfer(preset: Exclude<VolumePreset,'auto'>, window: [nu
   // Extinction values are deliberately small in transparent context views.
   // Byte quantization erased values below 1/510 and produced visible opacity
   // bands; retain the actual transfer in floating point through compositing.
-  const data = new Float32Array(1024*4);
+  const data = new Float32Array(VOLUME_TRANSFER_WIDTH*4);
   const linear = (n: number) => n <= .04045 ? n/12.92 : ((n+.055)/1.055)**2.4;
-  for(let i=0;i<1024;i++) {
-    const value = preset === 'mri' ? i/1023 : range[0]+i/1023*(range[1]-range[0]);
+  for(let i=0;i<VOLUME_TRANSFER_WIDTH;i++) {
+    const normalized=i/(VOLUME_TRANSFER_WIDTH-1);
+    const value = preset === 'mri' ? normalized : range[0]+normalized*(range[1]-range[0]);
     let k=0; while(k<knots.length-2 && value>knots[k+1][0])k++;
     const a=knots[k],b=knots[k+1],t=Math.max(0,Math.min(1,(value-a[0])/(b[0]-a[0])));
     for(let channel=0;channel<4;channel++) {

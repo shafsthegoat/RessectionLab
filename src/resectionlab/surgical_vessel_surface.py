@@ -12,6 +12,10 @@ from .geometry import _segment_cell_distances
 from . import surgical_vessel_vertex_motion as vertex_kinematics
 
 
+GEOMETRY_PROPERTY = 'operative_vascular_geometry'
+CONDITIONED_GEOMETRY = 'source-conditioned-v1'
+
+
 @dataclass(frozen=True)
 class SourceWall:
     label: int
@@ -23,6 +27,7 @@ class SourceWall:
     scores: np.ndarray
     geometry_binding: str | None = None
     positions_ijk: np.ndarray | None = None
+    geometry_policy: str | None = None
 
 
 def source_cell_radius(scene):
@@ -30,10 +35,29 @@ def source_cell_radius(scene):
     return float(np.linalg.norm(corners, axis=1).max())
 
 
-def bind_case(scene, case):
-    """Use the same extraction and source-owner map carried by the desktop."""
+def _wall_geometry(scores, mask, affine, policy, *, cancelled=None):
     from .anatomy_geometry import vascular_mesh_source_cells, vascular_probability_mesh
 
+    if policy is None:
+        raw = vascular_probability_mesh(scores, mask)
+        return None if raw is None else (*raw, vascular_mesh_source_cells(raw[0], mask))
+    if policy != CONDITIONED_GEOMETRY:
+        raise ValueError('VASCULAR_WALL_REQUIRES_SUPPORTED_GEOMETRY_POLICY')
+    from .anatomy_geometry import conditioned_vascular_probability_mesh
+
+    mesh = conditioned_vascular_probability_mesh(scores, mask, affine,
+                                                 **({'cancelled': cancelled} if cancelled is not None else {}))
+    return None if mesh is None else (mesh.positions, mesh.indices, mesh.normals, mesh.source_cells)
+
+
+def case_wall_geometry(case, name, *, cancelled=None):
+    """Canonical contour and source owner indices for contact and rendering."""
+    return _wall_geometry(case.vascular_probabilities[name], case.compartments[name], case.affine,
+                          case.metadata.get(GEOMETRY_PROPERTY), cancelled=cancelled)
+
+
+def bind_case(scene, case):
+    """Use the same extraction and source-owner map carried by the desktop."""
     walls = []
     for region in scene.regions:
         name = region['name']
@@ -42,18 +66,18 @@ def bind_case(scene, case):
         mask = case.compartments[name]
         if np.any(scene.labels[mask] != region['id']):
             raise ValueError('VASCULAR_WALL_REQUIRES_EXACT_NATIVE_MATERIAL_OWNERSHIP')
-        result = vascular_probability_mesh(case.vascular_probabilities[name], mask)
+        result = case_wall_geometry(case, name)
         if result is None:
             raise ValueError('VASCULAR_WALL_REQUIRES_VALID_SOURCE_PROBABILITIES')
-        ijk, triangles, _ = result
-        owners = vascular_mesh_source_cells(ijk, mask)
+        ijk, triangles, _, owners = result
         cells = np.flatnonzero(mask)
         components = ndimage.label(mask)[0].flat[cells]
         walls.append(SourceWall(region['id'], immutable_array(cells), immutable_array(components),
                                 immutable_array(ijk @ scene.affine[:3, :3].T + scene.affine[:3, 3]),
                                 immutable_array(triangles), immutable_array(np.searchsorted(cells, owners)),
                                 case.vascular_probabilities[name],
-                                vertex_kinematics.geometry_binding(ijk, triangles, owners), immutable_array(ijk)))
+                                vertex_kinematics.geometry_binding(ijk, triangles, owners), immutable_array(ijk),
+                                case.metadata.get(GEOMETRY_PROPERTY)))
     scene._vessel_source_walls = tuple(walls)
     scene._vessel_source_wall_proof = (scene.identity, scene._vessel_source_walls)
 
@@ -180,7 +204,7 @@ def _candidates(tree, a, b, radius, extent):
     return np.array(sorted({i for row in hits for i in row}), dtype=int)
 
 
-def _triangle_distances(a, b, triangles):
+def _triangle_distances(a, b, triangles, *, with_points=False):
     """Closest triangle-to-segment vectors in millimeters."""
     first, second, third = triangles.transpose((1, 0, 2))
     u, v = second - first, third - first
@@ -198,21 +222,26 @@ def _triangle_distances(a, b, triangles):
         t = (pv * uu - pu * uv) / det
         return (s >= -1e-10) & (t >= -1e-10) & (s + t <= 1 + 1e-10) & (normal2 > 1e-30)
 
-    differences, valid = [], []
+    differences, valid, closest = [], [], []
     for point in (a, b):
         distance = np.sum((point - first) * normal, axis=1) / np.maximum(normal2, 1e-30)
         delta = -distance[:, None] * normal
         differences.append(delta)
         valid.append(inside(point + delta))
+        if with_points:
+            closest.append(point + delta)
     denominator = normal @ axis
     fraction = np.sum((first - a) * normal, axis=1) / np.where(np.abs(denominator) > 1e-20, denominator, 1.)
     differences.append(np.zeros_like(first))
     valid.append((np.abs(denominator) > 1e-20) & (fraction >= 0) & (fraction <= 1)
                  & inside(a + fraction[:, None] * axis))
+    if with_points:
+        closest.append(a + fraction[:, None] * axis)
 
     for start, end in ((first, second), (second, third), (third, first)):
         # Endpoint projections and the unconstrained line-to-line solution.
-        differences.extend((_projection(a, start, end)[0] - a, _projection(b, start, end)[0] - b,
+        from_a, from_b = _projection(a, start, end)[0], _projection(b, start, end)[0]
+        differences.extend((from_a - a, from_b - b,
                             start - _projection(start, a, b)[0], end - _projection(end, a, b)[0]))
         valid.extend([np.ones(len(first), dtype=bool)] * 4)
         edge = end - start
@@ -227,10 +256,14 @@ def _triangle_distances(a, b, triangles):
         t = (edge2 * axis_from - dot * edge_from) / safe
         differences.append(from_edge + s[:, None] * edge - t[:, None] * axis)
         valid.append((det > 1e-20) & (s >= 0) & (s <= 1) & (t >= 0) & (t <= 1))
+        if with_points:
+            closest.extend((from_a, from_b, start, end, start + s[:, None] * edge))
     differences = np.asarray(differences)
     distances = np.where(valid, np.linalg.norm(differences, axis=2), np.inf)
     rows = np.arange(len(first))
     k = distances.argmin(axis=0)
+    if with_points:
+        return distances[k, rows], differences[k, rows], np.asarray(closest)[k, rows]
     return distances[k, rows], differences[k, rows]
 
 
@@ -262,7 +295,46 @@ def _cut_patch(vertices, triangles, center, axis, reach, half_gap):
         yield sorted(component), signed
 
 
-def _closed_cut(vertices, owners, triangles, center, axis, first, second, half_gap, reach):
+def _concave_cap(points, ring, radial, axis):
+    """Triangulate a closed cut ring that surrounds the mapped vessel axis."""
+    following = np.roll(radial, -1, axis=0)
+    turn = np.cross(radial, following) @ axis
+    total_turn = np.arctan2(turn, np.einsum('ij,ij->i', radial, following)).sum()
+    if not np.isclose(abs(total_turn), 2. * np.pi, atol=1e-6):
+        return None
+    # Reverse the boundary so cap edges oppose the exterior face winding.
+    remaining = ring[::-1]
+    winding = -np.sign(total_turn)
+    points = np.asarray(points)
+    cap = []
+    while len(remaining) > 3:
+        current = points[remaining]
+        before = np.roll(current, 1, axis=0)
+        after = np.roll(current, -1, axis=0)
+        area = winding * (np.cross(current - before, after - before) @ axis)
+        for at in np.argsort(-area, kind='stable'):
+            if area[at] <= 1e-12:
+                return None
+            a, b, c = before[at], current[at], after[at]
+            other = np.ones(len(current), dtype=bool)
+            other[[(at - 1) % len(current), at, (at + 1) % len(current)]] = False
+            p = current[other]
+            if np.any(((winding * (np.cross(b - a, p - a) @ axis)) >= -1e-12)
+                      & ((winding * (np.cross(c - b, p - b) @ axis)) >= -1e-12)
+                      & ((winding * (np.cross(a - c, p - c) @ axis)) >= -1e-12)):
+                continue
+            cap.append((remaining[at - 1], remaining[at], remaining[(at + 1) % len(remaining)]))
+            del remaining[at]
+            break
+        else:
+            return None
+    a, b, c = points[remaining]
+    if winding * (np.cross(b - a, c - a) @ axis) <= 1e-12:
+        return None
+    return [*cap, tuple(remaining)]
+
+
+def _closed_cut(vertices, owners, triangles, center, axis, first, second, half_gap, reach, *, concave=False):
     """Open a narrow planar gap only when both level contours close around the trace."""
     for patch, distances in _cut_patch(vertices, triangles, center, axis, reach, half_gap):
         points = vertices.tolist()
@@ -310,8 +382,12 @@ def _closed_cut(vertices, owners, triangles, center, axis, first, second, half_g
             radial = np.asarray(points)[ring] - plane
             winding = np.cross(radial, np.roll(radial, -1, axis=0)) @ axis
             if not (np.all(winding > 1e-10) or np.all(winding < -1e-10)):
-                valid = False
-                break
+                cap_faces = _concave_cap(points, ring, radial, axis) if concave else None
+                if cap_faces is None:
+                    valid = False
+                    break
+                replacement.extend(cap_faces)
+                continue
             cap = len(points)
             points.append(plane.tolist())
             bindings.append(int(stump))
@@ -325,8 +401,6 @@ def _closed_cut(vertices, owners, triangles, center, axis, first, second, half_g
 
 
 def _edit_wall(engine, rods, wall, removed, cuts):
-    from .anatomy_geometry import vascular_mesh_source_cells, vascular_probability_mesh
-
     scene = engine.scene
     source = wall.source
     label = source.label
@@ -346,9 +420,12 @@ def _edit_wall(engine, rods, wall, removed, cuts):
         mask.flat[source.cells] = True
         mask.flat[list(retired)] = False
         if mask.any():
-            ijk, faces, _ = vascular_probability_mesh(source.scores, mask)
+            geometry = _wall_geometry(source.scores, mask, scene.affine, source.geometry_policy)
+            if geometry is None:
+                raise ValueError('VESSEL_WALL_SWEEP_UNSUPPORTED: retained score-wall contour is unavailable')
+            ijk, faces, _, source_cells = geometry
             vertices = ijk @ scene.affine[:3, :3].T + scene.affine[:3, 3]
-            owners = np.searchsorted(source.cells, vascular_mesh_source_cells(ijk, mask))
+            owners = np.searchsorted(source.cells, source_cells)
         else:
             vertices, faces, owners = np.empty((0, 3)), np.empty((0, 3), dtype=int), np.empty(0, dtype=int)
     bonds = {tuple(sorted((rods.cells[i], rods.cells[j]))): (i, j) for i, j, _, _ in rods.bonds}
@@ -364,7 +441,17 @@ def _edit_wall(engine, rods, wall, removed, cuts):
         axis /= np.linalg.norm(axis)
         reach = 1.65 * np.max(rods.radius[[i, j]]) + wall.cell_extent
         row_a, row_b = np.searchsorted(source.cells, [rods.cells[i], rods.cells[j]])
-        cut = _closed_cut(vertices, owners, faces, points.mean(axis=0), axis, row_a, row_b, half_gap, reach)
+        conditioned = source.geometry_policy == CONDITIONED_GEOMETRY
+        # A conditioned crossing can graze a plane at the original midpoint.
+        # Move the clipping bands within the kerf so the declared point of
+        # transection remains inside the gap and both rings close.
+        offsets = (0., -.75, .75) if conditioned else (0.,)
+        for offset in offsets:
+            center = points.mean(axis=0) + offset * half_gap * axis
+            cut = _closed_cut(vertices, owners, faces, center, axis, row_a, row_b, half_gap,
+                              reach, concave=conditioned)
+            if cut is not None:
+                break
         if cut is None:
             fallback.extend(face)
         else:
@@ -454,7 +541,7 @@ def query(engine, frame, a, b, radius):
     return contact_features(engine, frame, a, b, radius)[:3]
 
 
-def contact_features(engine, frame, a, b, radius):
+def contact_features(engine, frame, a, b, radius, *, with_points=False):
     wall, offsets, _, _, extent, edited = frame
     box_owners = np.empty((0, 3), dtype=int)
     box_distances = np.empty(0)
@@ -481,16 +568,23 @@ def contact_features(engine, frame, a, b, radius):
     hits = _candidates(tree, a, b, radius, tri_extent + extent)
     corners = elements[hits]
     triangles = source_triangles[hits] + motion[corners if motion_bindings is None else motion_bindings[corners]]
-    distances, difference = _triangle_distances(a, b, triangles)
+    distances, difference, *closest = _triangle_distances(a, b, triangles, with_points=with_points)
     accepted = distances <= radius + 1e-7
     box_corners = np.full(box_owners.shape, -1, dtype=int)
     if not np.any(accepted) and wall.cell_tree.query(a)[0] <= wall.cell_extent + extent + 1e-7:
         hit = _interior_contact(tree, tri_extent, elements, source_triangles, motion_bindings, motion, extent, a)
         if hit is not None:
             vertices, delta = hit
+            if with_points:
+                rest = wall.source.vertices[vertices] if edited is None else (
+                    edited.positions_ijk[vertices] @ engine.scene.affine[:3, :3].T + engine.scene.affine[:3, 3])
+                current = rest + motion[vertices if motion_bindings is None else bindings[vertices]]
+                return bindings[vertices][None], np.zeros(1), delta[None], vertices[None], (a - delta)[None], current[None]
             return (np.vstack((bindings[vertices], box_owners)), np.r_[0., box_distances],
                     np.vstack((delta, box_differences)), np.vstack((vertices, box_corners)))
     vertices = corners[accepted]
+    if with_points:
+        return bindings[vertices], distances[accepted], difference[accepted], vertices, closest[0][accepted], triangles[accepted]
     return (np.vstack((bindings[vertices], box_owners)), np.r_[distances[accepted], box_distances],
             np.vstack((difference[accepted], box_differences)), np.vstack((vertices, box_corners)))
 

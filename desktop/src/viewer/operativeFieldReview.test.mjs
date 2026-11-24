@@ -43,10 +43,9 @@ test('surrounding source geometry maps the patient target to the local origin an
   assert.equal(operativeFieldContext(volume,field,'other').children.length,0);
   // The inspected MRI origin maps to voxel [1,0,0] in the contributing CT.
   const ctFrame=[[1,0,0,11],[0,1,0,20],[0,0,1,30],[0,0,0,1]];
-  const ct={seriesId:'bone-ct',modality:'CT',sourceSha256:'ct-original',signalSha256:'ct-signal',
+  const ct={seriesId:'bone-ct',modality:'CT',intensityUnits:'HU',sourceSha256:'ct-original',signalSha256:'ct-signal',
     data:Float32Array.of(2000,2000,2000,2000,500,0,0,0),shape:[2,2,2],affine:ctFrame};
   volume.compartments[0].appearanceSource=ct;
-  volume.patientContext={sources:[{seriesId:'bone-ct',sourceSha256:'ct-original',displayWindow:[0,1000]}]};
   const scanField={...field,intensity:{sourceSeries:'series',sourceSha256:'mr-original',window:[20,60]}};
   const mesh=operativeFieldContext(volume,scanField,'collection').children[0];
   assert.equal(mesh.geometry.getAttribute('scanSignal').array[0],128);

@@ -253,6 +253,9 @@ def from_case(case, mapping=None):
     if properties.get('gliomaMaterialsV1', {}).get('vesselMotionModel') == MODEL and case.vascular_probabilities:
         from .surgical_vessel_surface import bind_case
         bind_case(scene, case)
+    if 'nativeWall' in adapter:
+        from .surgical_patient_wall import validate_saved_wall
+        validate_saved_wall(scene, case, adapter['nativeWall'])
     from .surgical_planning_admission import bind_case_source
     bind_case_source(scene, case)
     if 'recordedSequentialEpisodeV1' in case.metadata:

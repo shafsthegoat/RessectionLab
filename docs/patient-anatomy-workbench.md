@@ -22,13 +22,12 @@ scan and choose **Recalculate alignment** to replace the scout reference and
 rebuild alignment against the diagnostic scan.
 
 Use **Anatomy → Structures** to view registered layers together. The source
-selector changes the linked scan for slice review. A layer can extend beyond
-that scan's field of view in 3D. The study-wide intensity backdrop uses the
-brightest separately windowed contribution at each location. Read quantitative
-signal values on the original scan. An unaligned series stays independently
-inspectable until its transform is resolved. The fused view shares one cutaway
-in patient RAS across aligned scans. Single-scan inspection keeps separate
-cutaway settings for each source. Both settings are saved in the patient study.
+selector changes the acquisition used for 3D scan signal and linked slices.
+Each layer retains its own acquisition geometry and can extend beyond the
+selected scan's field of view. Structures and Vessels share one cutaway in
+patient RAS across aligned scans. Scan keeps a separate cutaway and intensity
+transfer for each acquisition. An unaligned series remains inspectable in its
+own frame. The patient study saves both shared and per-acquisition cutaways.
 In **Plan & compare**, explicitly select a nonempty lesion label. The selection
 binds the mask, source and registration chain. Missing vascular and functional
 coverage remains unassessed. Quantitative comparison needs an admissible

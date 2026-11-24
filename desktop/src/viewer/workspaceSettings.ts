@@ -60,8 +60,8 @@ export function viewerCutaway({clipping,clipBox,obliqueClip}:ViewerWorkspaceSett
   return {clipping,clipBox,obliqueClip};
 }
 
-export function usesPatientContext(settings:ViewerWorkspaceSettings,hasField:boolean):boolean {
-  return hasField&&settings.presentation!=='scan';
+export function usesPatientCutaway(settings:ViewerWorkspaceSettings,hasPatientBounds:boolean):boolean {
+  return hasPatientBounds&&settings.presentation!=='scan';
 }
 
 export function clippingPositionInBounds(axis:ViewerClipping['axis'],value:number,bounds:Bounds3):boolean {

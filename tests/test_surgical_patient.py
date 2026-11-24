@@ -4,7 +4,7 @@ import nibabel as nib
 import numpy as np
 import pytest
 from resectionlab.patient_anatomy import PatientImagingCollection
-from resectionlab.surgical_patient import prepare_surgical_patient, surgical_environment_options, ORDER
+from resectionlab.surgical_patient import prepare_surgical_environment, prepare_surgical_patient, surgical_environment_options, ORDER
 from resectionlab.imaging import load_case
 from resectionlab.surgical_scene import from_case
 
@@ -98,3 +98,126 @@ def test_anatomy_model_attribution_comes_from_native_provenance(name, provenance
     layer = _anatomy_metadata(name, {'provenance': provenance})
     assert layer['model']['name'] == expected
     assert layer['provenance'] == 'estimated'
+
+
+def native_wall_fixture(tmp_path, *, registration='reviewed'):
+    shape = (65, 65, 65)
+    affine = np.diag([-.5, .5, .5, 1.])
+    affine[:3, 3] = [16., -16., -16.]
+    x, y, z = np.ogrid[:shape[0], :shape[1], :shape[2]]
+    scores = np.broadcast_to(np.clip(.5 + (2.45 - np.hypot(y - 32, z - 34)) / 4, 0, 1), shape).astype(np.float32)
+    brain = np.broadcast_to((x > 4) & (z > 8) & (z <= 32), shape).astype(np.uint8)
+    study = PatientImagingCollection.create(tmp_path / 'native-wall', 'native-wall-fixture')
+    for series, modality, values in (('t1', 'T1', brain + np.broadcast_to(z / 64, shape)), ('tof', 'TOF', scores)):
+        image = nib.Nifti1Image(values.astype(np.float32), affine)
+        image.header.set_xyzt_units('mm')
+        path = tmp_path / f'{series}.nii.gz'
+        nib.save(image, path)
+        study.add_series(path, series_id=series, modality=modality, timepoint='preoperative')
+    study.set_registration('tof', np.eye(4), status=registration, method='explicit test registration')
+    study.add_layer(brain, affine, layer_id='brain', source_series='t1', kind='brain', role='context', color='#aaaaaa')
+    study.add_layer((scores >= .5).astype(np.uint8), affine, layer_id='vessels', source_series='tof', kind='vessels',
+                    role='context', color='#aa2222', probability=scores)
+    study.save()
+    return study, scores, brain
+
+
+def test_standard_environment_local_native_wall_preserves_source_and_reopens(tmp_path):
+    from resectionlab.surgical_environment import load_environment
+    from resectionlab.surgical_engine import SurgicalEngine
+    from resectionlab.surgical_rl_protection import GuardConfig
+    from resectionlab.surgical_vessel_rods import view
+
+    study, scores, brain = native_wall_fixture(tmp_path)
+    report = prepare_surgical_environment(study.root, tmp_path / 'result', layer_ids={'brain': 'brain', 'vessels': 'vessels'},
+                                          native_wall_center=[0., 0., 1.])
+    case = load_case(report['casePath'])
+    wall = report['nativeWall']
+    start = wall['sourceStartIJK']
+    crop = tuple(slice(i, i + size) for i, size in zip(start, case.mri.shape))
+    np.testing.assert_array_equal(case.vascular_probabilities['vessels'], scores[crop])
+    np.testing.assert_array_equal(case.compartments['brain'], brain[crop])
+    assert wall['sourceImageSha256'] == study.series('tof')['original']['sha256']
+    assert wall['sourceScoresSha256'] == study.layer('vessels')['probability']['sha256']
+    assert report['resolutionMm'] == [.5, .5, .5]
+    scene = load_environment(report['casePath'])
+    engine = SurgicalEngine(scene, guard_config=GuardConfig(require_critical_coverage=False))
+    assert report['environment']['sceneId'] == scene.identity
+    assert scene._vessel_source_walls[0].geometry_binding == wall['geometryBinding']
+    assert {edge['edgeId'] for edge in view(engine)['segments']} == set(wall['branches'])
+    assert any(site['activeSupportCells'] for site in view(engine)['sites'])
+    assert study.identity() == PatientImagingCollection(study.root).identity()
+
+
+def test_native_wall_requires_reviewed_alignment_even_when_estimated_is_allowed(tmp_path):
+    study, _, _ = native_wall_fixture(tmp_path, registration='unreviewed')
+    with pytest.raises(ValueError, match='reviewed source alignment: tof'):
+        prepare_surgical_environment(study.root, tmp_path / 'result', layer_ids={'brain': 'brain', 'vessels': 'vessels'},
+                                     native_wall_center=[0., 0., 1.], allow_unreviewed_registration=True)
+    assert not (tmp_path / 'result').exists()
+
+
+def test_local_native_wall_refuses_context_only_brain(tmp_path):
+    study, _, _ = native_wall_fixture(tmp_path)
+    study.layer('brain')['provenance']['evidence_use'] = 'context_only'
+    study.save()
+    with pytest.raises(ValueError, match='cannot use brain as mechanical anatomy'):
+        prepare_surgical_environment(study.root, tmp_path / 'result', layer_ids={'brain': 'brain', 'vessels': 'vessels'},
+                                     native_wall_center=[0., 0., 1.])
+    assert not (tmp_path / 'result').exists()
+
+
+def test_local_native_wall_desktop_contact_and_replay_keep_the_installed_geometry(tmp_path):
+    from resectionlab.desktop_bridge import BridgeSession, _Request
+
+    study, _, _ = native_wall_fixture(tmp_path)
+
+    def call(session, operation, args):
+        return session.execute(operation, args, _Request(operation), lambda *_: None)
+
+    def check_surface(payload):
+        layer = next(layer for layer in payload['compartments'] if layer['name'] == 'vessels')
+        surface = layer['vesselSurface']
+        receipt = payload['metadata']['surgical_adapter']['nativeWall']
+        assert ':'.join(surface[key]['sha256'] for key in ('positions', 'indices', 'sourceCells')) == receipt['geometryBinding']
+        assert 'scoreLighting' in surface
+        return receipt['geometryBinding']
+
+    session = BridgeSession(tmp_path / 'transfers')
+    try:
+        opened = call(session, 'anatomyOpen', {'path': str(study.root / 'patient-anatomy.json')})
+        binding = {'collectionId': opened['collectionId'], 'snapshotId': opened['document']['snapshot_id']}
+        source_graph = call(session, 'anatomyGraph', {**binding, 'layerId': 'vessels', 'displaySeriesId': 'tof', 'point': [0., 0., 1.]})
+        payload = call(session, 'prepareSurgicalEnvironment', {**binding, 'layers': {'brain': 'brain', 'vessels': 'vessels'},
+            'nativeWallCenter': [0., 0., 1.]})
+        geometry = check_surface(payload)
+        receipt = payload['metadata']['surgical_adapter']['nativeWall']
+        assert receipt['branchIdentityBasis'] == 'source study branch graph'
+        assert set(receipt['branches']) == {branch['branch_id'] for branch in source_graph['branches']}
+        case_args = {'caseHash': payload['caseHash']}
+        state = call(session, 'surgicalRehearsal', {**case_args, 'command': 'inspect'})
+        assert not state['planningAdmission']['available']
+        actions = [{'operation': 'exchange', 'instrument': 'dissector', 'duration': .08},
+                   {'operation': 'place', 'pose': {'position': [0., 0., 6.], 'quaternion': [1., 0., 0., 0.]}, 'duration': .08},
+                   {'operation': 'move', 'pose': {'position': [0., 0., 3.], 'quaternion': [1., 0., 0., 0.]}, 'duration': .4}]
+        for action in actions:
+            state = call(session, 'surgicalRehearsal', {**case_args, 'command': 'step', 'expectedStateId': state['view']['stateId'],
+                'action': {**action, 'slot': 'left'}})
+        motion = state['view']['vesselMechanics']
+        assert motion['contactedCells']['left']
+        assert motion['vertexDisplacementsByLabel']['2']['geometryBinding'] == geometry
+        assert motion['vertexDisplacementsByLabel']['2']['indices']
+        assert state['position'] == len(actions)
+        destination = tmp_path / 'saved.ressectionlab'
+        call(session, 'saveCase', {**case_args, 'path': str(destination), 'workspace': {}, 'overwrite': False})
+    finally:
+        session.close()
+    cold = BridgeSession(tmp_path / 'cold-transfers')
+    try:
+        reopened = call(cold, 'loadCase', {'path': str(destination)})
+        assert check_surface(reopened) == geometry
+        replay = call(cold, 'surgicalRehearsal', {**case_args, 'command': 'inspect', 'branchId': state['branchId']})
+        assert replay['view']['stateId'] == state['view']['stateId']
+        assert replay['view']['vesselMechanics'] == motion
+    finally:
+        cold.close()

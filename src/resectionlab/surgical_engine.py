@@ -1246,6 +1246,10 @@ class SurgicalEngine:
             if (rotation(q)*rotation(slot['quaternion']).inv()).magnitude() > 1e-8:
                 raise ValueError('BONE_FLAP_ROTATION_UNSUPPORTED: translate the source-bound fragment')
         axis = rotation(q).apply([0, 0, 1]); previous = finite(slot['position'], 3)
+        previous_vessel_tool_rotation = None
+        if (dt > 0 and op in ('move', 'apply', 'withdraw') and vessel_rods.mechanics(self) is not None
+                and vessel_rods.allows_tip_contact(self, key, 'move')):
+            previous_vessel_tool_rotation = rotation(slot['quaternion'])
         v2 = bool(self.scene.properties.get('tissuePhysicsV2'))
         if v2:
             from . import surgical_drilling_v2 as drill
@@ -1429,7 +1433,11 @@ class SurgicalEngine:
             if not shared_clock: vessel.contact(self, vessels, dt, params['forceN'] if active else 0.)
             if guarded_wall:
                 wall_topology = vessel_rods.check_wall_topology(self, wall_topology)
-            brain.tick(self, dt)
+            if previous_vessel_tool_rotation is None:
+                brain.tick(self, dt)
+            else:
+                angular = (rotation(q) * previous_vessel_tool_rotation.inv()).as_rotvec() / dt
+                brain.tick(self, dt, vessel_tool_motion={key: (p, (p - previous) / dt, angular)})
             if compliant:
                 vessel_rods.check_working_axis(self, key, op)
             self.occupancy()

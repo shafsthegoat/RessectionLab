@@ -1750,7 +1750,8 @@ export default function App() {
             approach={!operativeIssue&&nativeRoute?.targetLayerId?{approachId:nativeRoute.id,parameterHash:nativeRoute.parameterHash,measurementHash:nativeRoute.measurementHash,
               targetLayerId:nativeRoute.targetLayerId,snapshotId:nativeRoute.sourceSnapshotId}:undefined}
             routeName={nativeRoute?.name} measurements={nativeRoute?.measurements}
-            binding={native.binding} options={native.planning.rehearsalOptions} busy={busy} onAnatomy={()=>setWorkbenchTab('data')} onPrepare={async options=>{
+            binding={native.binding} options={native.planning.rehearsalOptions} busy={busy}
+            patientCursor={native.patientFrameReady?native.state.cursor:null} onAnatomy={()=>setWorkbenchTab('data')} onPrepare={async options=>{
             if(!api?.prepareSurgicalEnvironment)throw Error('Restart the app to load environment preparation.');
             const prepared=await api.prepareSurgicalEnvironment(options);
             if(prepared&&await installCase(prepared,api))setWorkbenchTab('rehearsal');

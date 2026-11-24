@@ -15,6 +15,7 @@ import type {SurgicalInteraction} from "../surgical-types";
 import {InteractionSession, InteractionBudget} from './interactionBudget';
 import {SliceFrameCache} from './sliceFrameCache';
 import {GpuFrameTimer} from './gpuFrameTimer';
+import {renderAnatomyPng} from './anatomyExport';
 import {geometryBufferBytes,renderTargetBytes} from './renderResourceEstimate';
 import {SurfaceInteractionRenderer} from './surfaceInteractionRenderer';
 import {LabelTextureUpdates} from './labelTextureUpdates';
@@ -31,7 +32,7 @@ import {applySourceContextMaterial} from './sourceContextMaterial';
 import {installNativeContextLighting,setNativeContextLighting} from './nativeContextLighting';
 import {advectScoreWallLighting,displaySurfaceNormals,scoreWallLighting} from './displaySurfaceNormals';
 import {applyVesselDepthMaterial,setVesselDepthAppearance,createVesselInspectionFocus,setVesselInspectionFocus,
-  vesselInspectionContains,type VesselInspectionFocus} from './anatomySurfaceMaterial';
+  vesselInspectionContains,vesselWallFinish,type VesselInspectionFocus} from './anatomySurfaceMaterial';
 import {microscopeFov} from './microscope';
 import {applyOperativeSurface} from './operativeMaterial';
 import {surfaceKind} from './surfacePolicy';
@@ -40,7 +41,7 @@ import {checkedPublicGoal,PUBLIC_GOAL_COLOR} from './publicGoal';
 import type {ViewerPublicGoal} from './publicGoal';
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-import { clippingForBounds, layerAppearance, usesPatientContext, validCameraState } from './workspaceSettings';
+import { clippingForBounds, layerAppearance, usesPatientCutaway, validCameraState } from './workspaceSettings';
 import type { ViewerCameraState, ViewerWorkspaceSettings } from './workspaceSettings';
 import { checkedFusionTransform } from './registeredFusion';
 import type { ViewerRegisteredFusion } from './registeredFusion';
@@ -79,7 +80,7 @@ import {AcceptedSurfaceMotion,acceptedVesselSurfaceMotion,applyAcceptedSurfaceMo
 import {deformOperativeVessel} from './operativeVesselSurface';
 import {installCorticalSignal,type CorticalSignal} from './cranialDepth';
 import { ScanVolumeRenderer } from './ScanVolumeRenderer';
-import type { VolumeRenderingSettings } from './volumeTransfer';
+import { intensityWindow, type VolumeRenderingSettings } from './volumeTransfer';
 import { paneViewport } from "./layout";
 import {OrientationGuide} from './orientationGuide';
 import {
@@ -163,18 +164,6 @@ function dataTexture(
   texture.needsUpdate = true;
   return texture;
 }
-function intensityWindow(values: Float32Array): [number, number] {
-  const sampled: number[] = [],
-    stride = Math.max(1, Math.floor(values.length / 16000));
-  for (let i = 0; i < values.length; i += stride)
-    if (Number.isFinite(values[i]) && values[i] !== 0) sampled.push(values[i]);
-  sampled.sort((a, b) => a - b);
-  if (!sampled.length) return [0, 1];
-  const low = sampled[Math.floor(sampled.length * 0.005)],
-    high =
-      sampled[Math.min(sampled.length - 1, Math.floor(sampled.length * 0.995))];
-  return [low, Math.max(low + 1e-6, high)];
-}
 
 /** One GPU context shares the source textures across the 3-D scene and all MPRs. */
 const sourceSignalSamples=new WeakMap<Float32Array,string>();
@@ -248,7 +237,6 @@ export class VolumeRenderer {
   private readonly surfaceGeometry = new Map<string, { source: THREE.BufferGeometry; smooth: THREE.BufferGeometry; smoothingPrepared?:boolean }>();
   private surfaceSmoothing = true;
   private patientBounds?:Bounds3;
-  private patientFramingPoints?:Float32Array;
   private scanFramingPoints:Float32Array=new Float32Array();
   private readonly corticalSignals=new Map<string,CorticalSignal>();
   private readonly mriTexture: THREE.Data3DTexture;
@@ -311,6 +299,7 @@ export class VolumeRenderer {
   private needsFrame=false;
   private renderSerial=0;
   private gpuTimer:GpuFrameTimer|null=null;
+  private anatomyExport:AbortController|null=null;
   private graphicsLost=false;
   private graphicsRecovery:WEBGL_lose_context|null=null;
   private readonly budget=new InteractionBudget();
@@ -336,6 +325,7 @@ export class VolumeRenderer {
   };
   private readonly onContextLost = (event: Event) => {
     event.preventDefault();
+    this.anatomyExport?.abort(new Error('The graphics context was lost during the 3D export.'));
     this.graphicsLost=true;cancelAnimationFrame(this.frame);this.frame=0;cancelAnimationFrame(this.gpuPoll);this.gpuPoll=0;
     this.gpuSync=null;this.needsFrame=false;this.lastSubmittedSurgicalView=null;
     const requested=this.modelStage?.interaction??this.initialSurgicalInteraction??this.pendingSurgicalPublication??this.surgicalInteraction;
@@ -378,12 +368,8 @@ export class VolumeRenderer {
     ) as Point3;
     this.defaultWindow = intensityWindow(volume.mri);
     this.scanFramingPoints=scanFitPoints(volume,this.defaultWindow);
-    const field=volume.patientContext?.field;
-    if(field){
-      this.patientBounds=volumeBounds(field.shape,field.affine);
-      this.patientClipBounds=volumeBounds(field.shape,field.affine,true);
-      this.patientFramingPoints=scanFitPoints({mri:field.signal,affine:field.affine,frame:'RAS+',shape:field.shape},[0,1]);
-    }
+    this.patientBounds=volume.patientContext?.boundsRasMm;
+    this.patientClipBounds=this.patientBounds;
     this.renderer = new THREE.WebGLRenderer({
       canvas,
       antialias: true,
@@ -420,7 +406,8 @@ export class VolumeRenderer {
     this.canvas.addEventListener("webglcontextlost", this.onContextLost);
     this.canvas.addEventListener('webglcontextrestored',this.onContextRestored);
     this.mriTexture = dataTexture(volume.mri, volume.shape);
-    this.scanVolume = new ScanVolumeRenderer(this.renderer, volume, this.defaultWindow,packedLabels.codes,this.mriTexture);
+    this.scanVolume = new ScanVolumeRenderer(this.renderer, volume, this.defaultWindow,packedLabels.codes,this.mriTexture,
+      ()=>{if(!this.anatomyExport)this.requestRender(false);});
     this.scanVolume.configure(undefined, this.volumeModality, null);
     this.fusionTexture = dataTexture(new Float32Array(1),[1,1,1]);
     volume.compartments.forEach(layer=>{this.visible[layer.name]=true;});
@@ -751,19 +738,19 @@ export class VolumeRenderer {
       if(score)smooth.userData.scoreWallLighting=score.supported;
     }
     const appearance = layerAppearance(layer.name,layer.color,this.workspaceSettings,layer.displayKind??layer.kind);
-    const mesh = new THREE.Mesh(
-      this.surfaceSmoothing ? smooth : geometry,
-      new THREE.MeshStandardMaterial({
-        color: appearance.color,
-        roughness: vessel ? .32 : layer.kind==='tumor' ? .48 : .52,
-        metalness: 0,
-        transparent: appearance.opacity < 1,
-        opacity: appearance.opacity,
-        clippingPlanes: [...this.extraClipPlanes, ...(this.clipPlane ? [this.clipPlane] : [])],
-        side: THREE.DoubleSide,
-        depthWrite: appearance.opacity >= 1,
-      }),
-    );
+    const materialOptions: THREE.MeshStandardMaterialParameters = {
+      color: appearance.color,
+      metalness: 0,
+      transparent: appearance.opacity < 1,
+      opacity: appearance.opacity,
+      clippingPlanes: [...this.extraClipPlanes, ...(this.clipPlane ? [this.clipPlane] : [])],
+      side: THREE.DoubleSide,
+      depthWrite: appearance.opacity >= 1,
+    };
+    const material = vessel && (this.volume.displayIdentity || operativeVessel)
+      ? new THREE.MeshPhysicalMaterial({...materialOptions,...vesselWallFinish})
+      : new THREE.MeshStandardMaterial(materialOptions);
+    const mesh = new THREE.Mesh(this.surfaceSmoothing ? smooth : geometry,material);
     placeInSourceFrame(mesh, this.affine);
     mesh.castShadow=true;mesh.receiveShadow=true;
     if(layer.generatedFinish)generatedTissueFinish(mesh.material,displayKind,false);
@@ -782,7 +769,7 @@ export class VolumeRenderer {
       setVesselDepthAppearance(mesh.material,this.workspaceSettings,layer,grid);
     }
     applySourceContextMaterial(mesh.material,this.workspaceSettings.contextStyle==='shell'&&CONTEXT_SURFACES.has(layer.displayKind??layer.kind??''),
-      this.workspaceSettings.presentation==='segmentation'&&['bone','skull'].includes(layer.kind??''));
+      ['bone','skull'].includes(layer.kind??''));
     mesh.visible = this.surfaceVisible(layer.name);
     mesh.userData.compartment = layer.name;
     mesh.userData.corticalContact = ['csf','ventricles','dura','skull','bone'].includes(displayKind);
@@ -821,8 +808,10 @@ export class VolumeRenderer {
   private installSurface(layer:ViewerVolume['compartments'][number],buffers:Omit<PreparedSurface,'indices'>&{indices?:Uint32Array}) {
     const pair=this.makeSurface(layer,buffers);if(!pair)return;
     if (this.volume.displayIdentity && layer.surface && surfaceKind(layer.kind)==='context') {
+      const displayKind=layer.displayKind??layer.kind??'';
+      const softTissue=['brain','gray-matter','cerebral-cortex','cerebellar-cortex','white-matter','soft_tissue','dura','scalp'].includes(displayKind);
       installNativeContextLighting(pair.mesh.material as THREE.MeshStandardMaterial, this.patientBounds??this.bounds,
-        this.surfaceSmoothing && this.workspaceSettings.operativeView !== 'surgeon');
+        this.surfaceSmoothing && this.workspaceSettings.operativeView !== 'surgeon',softTissue);
     }
     this.surfaceGeometry.set(layer.name,{source:pair.source,smooth:pair.smooth,smoothingPrepared:pair.smoothingPrepared});this.surfaces.set(layer.name,pair.mesh);this.anatomy.add(pair.mesh);
     this.applyVesselTraceAppearance();
@@ -1181,7 +1170,7 @@ export class VolumeRenderer {
     if(this.appearanceSignature!=null){this.beginInteraction();this.endInteraction();}
     this.appearanceSignature = signature;
     const operativeOcclusion=settings.operativeView==='surgeon'&&!settings.microscope?.inspectionCutaway;
-    const clipBounds=usesPatientContext(settings,!!this.patientClipBounds)?this.patientClipBounds!:this.sourceClipBounds??this.bounds;
+    const clipBounds=usesPatientCutaway(settings,!!this.patientClipBounds)?this.patientClipBounds!:this.sourceClipBounds??this.bounds;
     const clipping = clippingForBounds(operativeOcclusion?undefined:settings.clipping,clipBounds);
     const normal = new THREE.Vector3();
     normal.setComponent({x:0,y:1,z:2}[clipping.axis],clipping.flipped ? -1 : 1);
@@ -1216,7 +1205,7 @@ export class VolumeRenderer {
         if(layer.surface&&surfaceKind(layer.kind)==='vessel'&&!operativeVessel)
           setVesselDepthAppearance(material,settings,layer,this.vesselLabelGrid(index));
         applySourceContextMaterial(material,settings.contextStyle==='shell'&&CONTEXT_SURFACES.has(layer.displayKind??layer.kind??''),
-          settings.presentation==='segmentation'&&['bone','skull'].includes(layer.kind??''));
+        ['bone','skull'].includes(layer.kind??''));
         const transparent = appearance.opacity < 1;
         if (material.transparent !== transparent) {
           material.transparent = transparent;
@@ -1246,7 +1235,7 @@ export class VolumeRenderer {
       }
       shader.uniforms.uFusionOpacity.value=Number.isFinite(settings.fusion?.opacity) ? Math.max(0,Math.min(1,settings.fusion!.opacity)) : .5;
     });
-    this.scanVolume?.configure(settings.volumeRendering, this.volumeModality, this.clipPlane,settings.presentation!=='scan');
+    this.scanVolume?.configure(settings.volumeRendering, this.volumeModality, this.clipPlane);
     this.scanVolume.labels(this.labelTexture,this.visible,settings,this.extraClipPlanes);
     this.applyTractAppearance();
     this.applyVesselTraceAppearance();
@@ -1447,7 +1436,7 @@ export class VolumeRenderer {
 
   setVolumeRendering(settings: VolumeRenderingSettings | undefined, modality: string): void {
     this.volumeModality = modality;
-    this.scanVolume.configure(settings, modality, this.clipPlane,this.workspaceSettings.presentation!=='scan');
+    this.scanVolume.configure(settings, modality, this.clipPlane);
     this.requestRender();
   }
 
@@ -2400,7 +2389,7 @@ export class VolumeRenderer {
         new THREE.Vector3(...contextBounds[1]),
       );
     else box.expandByScalar(12);
-    const framingPoints=this.workspaceSettings?.presentation!=='scan'&&this.patientFramingPoints?this.patientFramingPoints:this.scanFramingPoints;
+    const framingPoints=this.scanFramingPoints;
     if(this.scanVolume?.active&&framingPoints.length){const support=new THREE.Box3().setFromArray(framingPoints);box.union(support.expandByScalar(3));}
     const visibleTools = this.recordedTools.visible ? this.recordedTools : this.instrumentDisplay.inspected ? this.inspectionTools : this.tools;
     if (mode === "instruments" && this.replayActive && this.replayBounds) {
@@ -2548,7 +2537,7 @@ export class VolumeRenderer {
     for(const entry of this.retiredSurfaces){geometries.add(entry.pair.source);geometries.add(entry.pair.smooth);}
     if(this.modelStage)for(const pair of this.modelStage.prepared.values())if(pair){geometries.add(pair.source);geometries.add(pair.smooth);}
     const corticalTextures=Array.from(this.corticalSignals.values(),signal=>signal.texture);
-    const textures=[...(this.fieldOptics?.texture?[this.fieldOptics.texture]:[]),...corticalTextures,...(this.scanVolume.supportTexture?[this.scanVolume.supportTexture]:[]),...(this.scanVolume.patientTexture?[this.scanVolume.patientTexture]:[]),this.mriTexture,this.labelTexture,this.fusionTexture,this.removedTexture,this.proposalTexture,
+    const textures=[...(this.fieldOptics?.texture?[this.fieldOptics.texture]:[]),...corticalTextures,...(this.scanVolume.supportTexture?[this.scanVolume.supportTexture]:[]),this.mriTexture,this.labelTexture,this.fusionTexture,this.removedTexture,this.proposalTexture,
       this.diagnosticStateTexture,this.diagnosticCoverageTexture,this.priorTexture,this.priorCoverageTexture];
     const geometryBytes=geometryBufferBytes(geometries),textureBytes=[...new Set(textures)].reduce((sum,texture)=>{
       const data=texture.image?.data as ArrayBufferView|undefined;return sum+(data?.byteLength??0);
@@ -2559,10 +2548,57 @@ export class VolumeRenderer {
       meaning:'Uncompressed buffers and known render attachments; excludes driver, programs, default-framebuffer and allocation overhead'};
   }
 
+  private hasTranslucentCranialSurfaces() {
+    return Array.from(this.surfaces.values()).some(mesh=>mesh.visible&&mesh.userData.cranialBoundary&&
+      !Array.isArray(mesh.material)&&mesh.material.opacity>0&&mesh.material.opacity<1);
+  }
+
+  async exportAnatomyPng(signal:AbortSignal):Promise<Blob> {
+    signal.throwIfAborted();
+    if(this.anatomyExport)throw new Error('A 3D export is already running.');
+    if(this.graphicsLost||this.disposed)throw new Error('The 3D view is unavailable for export.');
+    if(this.sourceRemaining||this.sourceFailed||this.modelStage||this.resultInspection)
+      throw new Error('Wait for the anatomy view to finish preparing before exporting it.');
+    if(this.interacting||this.pendingFit)throw new Error('Let the 3D view settle before exporting it.');
+    const viewport=paneViewport(this.container.getBoundingClientRect(),this.panes.anatomy.getBoundingClientRect());
+    if(!viewport)throw new Error('Open the 3D pane before exporting it.');
+
+    const job=new AbortController();
+    const stop=()=>job.abort(signal.reason);
+    signal.addEventListener('abort',stop,{once:true});
+    this.anatomyExport=job;
+    try {
+      // Let the on-screen GPU submission finish before running queued export samples.
+      while(this.gpuSync||this.rendering){
+        job.signal.throwIfAborted();
+        await new Promise(resolve=>setTimeout(resolve,8));
+      }
+      job.signal.throwIfAborted();
+      this.labelTextureUpdates.sync(this.renderer,this.labelTexture);
+      const camera=this.camera.clone();
+      camera.aspect=viewport.width/viewport.height;
+      const scan=!this.replayActive&&!this.passiveActive&&
+        (this.scanVolume.active||this.hasTranslucentCranialSurfaces())?this.scanVolume:null;
+      const {blob,metrics}=await renderAnatomyPng(this.renderer,this.scene,camera,scan,job.signal);
+      this.canvas.dispatchEvent(new CustomEvent('anatomy-export',{bubbles:true,detail:metrics}));
+      return blob;
+    } finally {
+      signal.removeEventListener('abort',stop);
+      this.anatomyExport=null;
+      this.needsFrame=false;
+      // Rebind the live peel textures before starting its usual refinement.
+      this.requestRender(false);
+    }
+  }
+
   private requestRender(slicesChanged=true): void {
     this.scanVolume?.invalidate?.();
     if(slicesChanged)this.sliceRevision++;
     if(this.disposed||this.graphicsLost)return;
+    if(this.anatomyExport){
+      this.anatomyExport.abort(new Error('The 3D view changed during export. Export again when it settles.'));
+      return;
+    }
     if(this.rendering){this.needsFrame=true;return;}
     if(this.gpuSync){this.needsFrame=true;return;}
     if(this.frame)return;
@@ -2574,7 +2610,7 @@ export class VolumeRenderer {
   }
 
   private render(): void {
-    if (this.disposed||this.graphicsLost) return;
+    if (this.disposed||this.graphicsLost||this.anatomyExport) return;
     const frameStarted=performance.now();
     if(!this.paneBounds)this.paneBounds={root:this.container.getBoundingClientRect(),panes:new Map(Object.values(this.panes).map(pane=>[pane,pane.getBoundingClientRect()]))};
     const root = this.paneBounds.root,
@@ -2619,17 +2655,17 @@ export class VolumeRenderer {
     const main = viewport(this.panes.anatomy);
     let orientationGuideVisible=false;
     let surfaceQuality:{adaptive:boolean;width:number;height:number}|null=null;
+    let scanQuality:{width:number;height:number;samples:number;opticsPending:boolean}|null=null;
     if(main&&this.resultInspection&&renderedView&&!this.surgicalInteraction?.preview&&modeledAnatomy(this.volume)?.surfaceReference){
       this.resultInspection.render(this.renderer,this.volume,renderedView,this.surfaces,main.w,main.h);
     } else if (main) {
       if (this.pendingFit) this.fitCamera(this.pendingFit);
       this.camera.aspect = main.w / main.h;
       this.camera.updateProjectionMatrix();
-      const cranialSurfaces=!this.scanVolume.active&&Array.from(this.surfaces.values()).some(mesh=>
-        mesh.visible&&mesh.userData.cranialBoundary&&!Array.isArray(mesh.material)&&mesh.material.opacity>0&&mesh.material.opacity<1);
+      const cranialSurfaces=!this.scanVolume.active&&this.hasTranslucentCranialSurfaces();
       if (this.replayActive || this.passiveActive||(!this.scanVolume.active&&!cranialSurfaces))
         surfaceQuality=this.surfaceInteraction.render(this.renderer,this.scene,this.camera,main.w,main.h,this.interacting,this.budget.longEdge,()=>{viewport(this.panes.anatomy);});
-      else this.scanVolume.render(this.scene,this.camera,main.w,main.h,this.interacting,()=>{viewport(this.panes.anatomy);},this.budget.longEdge,cranialSurfaces);
+      else scanQuality=this.scanVolume.render(this.scene,this.camera,main.w,main.h,this.interacting,()=>{viewport(this.panes.anatomy);},this.budget.longEdge,cranialSurfaces)??null;
       if(this.workspaceSettings.showOrientationGuide!==false){
         this.orientationGuide.setPosture(renderedView?.positionEffects);
         orientationGuideVisible=this.orientationGuide.render(this.renderer,this.camera,root,this.paneBounds!.panes.get(this.panes.orientationGuide)!);
@@ -2659,7 +2695,7 @@ export class VolumeRenderer {
     this.gpuTimer?.end();
     this.lastSubmittedSurgicalView=renderedView;
     const interactive=this.interacting,cpuMs=performance.now()-frameStarted,cameraState=this.getCameraState(),renderedTractIds=this.tractObjects?[...this.tractObjects].filter(([,object])=>object.visible&&(object.geometry.getAttribute('position')?.count??0)>0).map(([id])=>id):[];
-    this.canvas.dispatchEvent(new CustomEvent('anatomy-frame',{bubbles:true,detail:{serial,at:frameStarted,cpuMs,cpuMeasurement:'CPU-frame-submission',interactive,volume:this.scanVolume.active,sliceDraws,longEdge:interactive?this.budget.longEdge:1300,
+    this.canvas.dispatchEvent(new CustomEvent('anatomy-frame',{bubbles:true,detail:{serial,at:frameStarted,cpuMs,cpuMeasurement:'CPU-frame-submission',interactive,volume:this.scanVolume.active,sliceDraws,longEdge:scanQuality?Math.max(scanQuality.width,scanQuality.height):interactive?this.budget.longEdge:1300,scanQuality,
       resources:{...this.renderer.info.memory},drawCalls:this.renderer.info.render.calls,drawStatistics:{...this.renderer.info.render},gpuTimingSupported:this.gpuTimer?.supported??false,
       estimatedAllocation:this.estimateAllocation(),displayWork:{...this.displayWork},workers:{source:this.sourceWorkerActive?1:0,replay:this.replayWorker?1:0,modeled:this.modelWorker?1:0,picking:this.picking?.stats().workerLive??0},surfaceQuality,
       surfaceCache:{budgetBytes:RETIRED_SURFACE_BUDGET_BYTES,retiredBytes:this.retiredSurfaces.reduce((sum,entry)=>sum+entry.bytes,0),retiredEntries:this.retiredSurfaces.length},
@@ -2700,7 +2736,7 @@ export class VolumeRenderer {
       else this.failSurgicalFrame(publication,'The GPU did not complete the requested image frame. Reopen the source before continuing.');
       if(this.disposed||this.graphicsLost)return;
       if(!interactive&&!this.replayActive&&!this.passiveActive&&this.scanVolume.needsRefinement)this.needsFrame=true;
-      if(refinement&&this.refinementStarted===refinement&&!this.interacting&&!this.needsFrame){
+      if(refinement&&this.refinementStarted===refinement&&!this.interacting&&!this.needsFrame&&!this.scanVolume.opticsPending){
         this.refinementStarted=0;
         this.canvas.dispatchEvent(new CustomEvent('anatomy-refined',{bubbles:true,detail:{completed,milliseconds:performance.now()-refinement,volume:this.scanVolume.active}}));
       }
@@ -2718,6 +2754,7 @@ export class VolumeRenderer {
     this.vesselInspectionFocus?.path.dispose();
     this.updatePlanarPartition(undefined);
     this.disposed = true;
+    this.anatomyExport?.abort(new Error('The 3D view was closed during export.'));
     this.pendingSurgicalPublication=null;
     if(this.surgicalGizmo){this.scene.remove(this.surgicalGizmo.getHelper());this.surgicalGizmo.dispose();}
     this.gpuTimer?.dispose();

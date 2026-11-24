@@ -118,11 +118,11 @@ ipcMain.handle = (channel, handler) => handle(channel, async (...args) => {
       (report.anatomyViews ??= []).push({series:args[1].seriesId,sourceHash:result.mri.sha256,
         layers:result.compartments.map(l=>({id:l.name,kind:l.kind,volumeMm3:l.volumeMm3,sourceSupport:l.sourceSupport}))});
     }
-    if(channel==='research:anatomyView' && result.patientContext?.signal) {
+    if(channel==='research:anatomyView' && result.patientContext) {
+      assert.equal('signal' in result.patientContext,false);
       (report.patientViews ??= {})[args[1].seriesId] = {
-        contextHash:result.patientContext.signal.sha256,sourceHash:result.mri.sha256,
-        shape:result.patientContext.shape,affine:result.patientContext.affine,
-        scans:result.patientContext.sources.map(s=>({series:s.seriesId,alignment:s.alignment,contributes:!!s.displayWindow}))};
+        sourceHash:result.mri.sha256, sourceShape:result.shape, sourceAffine:result.affine,
+        boundsRasMm:result.patientContext.boundsRasMm, scans:result.patientContext.sources};
     }
     if(channel === 'research:anatomyPlan') {
       const action = args[1].action;
@@ -441,9 +441,8 @@ app.on('browser-window-created', (_, win) => {
         report.model.push(await readModel());
         assert.equal(report.model[1].source,secondary);
         if(report.model[1].frame==='patient') {
-          assert.equal(report.patientViews[reference].contextHash,report.patientViews[secondary].contextHash);
-          assert.deepEqual(report.patientViews[reference].shape,report.patientViews[secondary].shape);
-          assert.deepEqual(report.patientViews[reference].affine,report.patientViews[secondary].affine);
+          assert.deepEqual(report.patientViews[reference].boundsRasMm,report.patientViews[secondary].boundsRasMm);
+          assert.deepEqual(report.patientViews[reference].scans,report.patientViews[secondary].scans);
           if(document.series[0].original.sha256!==document.series[1].original.sha256)
             assert.notEqual(report.patientViews[reference].sourceHash,report.patientViews[secondary].sourceHash);
           assert.deepEqual([...report.model[0].layers].sort(),[...report.model[1].layers].sort());

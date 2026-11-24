@@ -43,6 +43,21 @@ transverse section area and vertex movement before and after fairing.
 The TOF lumen estimate, vessel type, and assumed simulator wall and support
 properties are independent evidence.
 
+New patient import workspaces start with **TOF exterior-air review**. The
+view uses a native TOF head envelope with a physical margin and hides a
+detached vesselFM component only when the entire finding is sufficiently
+dark and its measured 2 mm neighborhood contains no signal above the
+envelope threshold. Acquisition edges, attached findings and ambiguous
+components stay visible. **Full source estimate** restores the original
+prediction and score surface. Supplied layers and operative preparation use
+their existing source evidence.
+
+The available attached-wall trials found that dark-signal subtraction can
+create pits, split adjacent geometry or narrow sections with plausible source
+support. The full-volume COSTA, SPOCKMIP and Vessel-MAYON comparisons also
+missed bright native TOF paths. VesselFM remains the reconstruction estimate.
+The restricted local review tracks the source comparisons and failures.
+
 Run the component, branch and package steps from the primary checkout.
 Replace the repeated subject selection with `--cohort` to resume the first
 two steps for the whole restricted source inventory.
@@ -130,6 +145,45 @@ For a detached estimate inside the head, `--compartment source-disagreement`
 stages a final display split from an acquired TOF and bound structural review.
 The reviewed component remains available in a muted layer. The split uses the
 current native priority layer, including one produced by the skull screen.
+
+### Prepare a local native wall from a patient study
+
+In the desktop anatomy workbench, place the cursor on a vessel in the reviewed
+patient frame. Open **Rehearsal**, select the patient brain layer and the native
+angiography vessel layer with saved model scores, and choose **Prepare native
+wall at cursor** in the limited research environment. The local mode uses an
+approximately 24 mm box in the original angiography lattice. It keeps the
+source mask, scores, affine and branch cell identities, and samples the chosen
+patient tissue layers into that box. Acquired images and annotation revisions
+stay in the source study. The saved scene records the crop, input checksums,
+qualified local traces, and the exact conditioned vertices and source owners
+used by the viewer and by contact. When vascular inspection has built a source
+branch graph, the local scene keeps those branch IDs. Otherwise its traces
+have local IDs tied to original-grid cells. Save and reopen through the usual
+rehearsal workspace controls.
+
+Preparation requires reviewed or source-provided alignment for every selected
+acquisition, an unchanged native score layer, adequate source coverage around
+the cursor, a continuous local vascular trace, nearby patient-derived tissue
+samples, and a clear initial wall. The engine models motion around the retained
+traces. Other vessel surfaces in the box remain visible and participate in
+contact. Stiffness, tissue springs and caliber estimates are research
+assignments. The local scene declares zero pressure and no physiological flow
+boundaries. Field-edge faces indicate where coverage stops. A selected saved
+approach still opens in its separate inspection mode.
+
+The primary restricted native inventory has 30 studies and 29 acquired TOF
+score layers. Each TOF-to-patient alignment is marked `unreviewed`, so these
+head studies currently abstain from this local cross-acquisition mechanics
+path. Estimated alignment remains available through **Prepare standard
+environment** with its explicit research choice. The independent TOF view
+continues to support native reconstruction and source inspection.
+
+The inspected CTA candidates paired native scores with brain masks declared
+for display context. Those masks remain useful for anatomy review and are
+excluded from the local mechanical domain. A generated regression fixture
+exercises the full ordinary preparation, instrument contact, save and
+cold-replay path.
 
 The PTNT_4509 teaching rehearsal preserves the acquired TOF lattice and
 source-bound vessel triangles. The exposure banks, vessel attachments and

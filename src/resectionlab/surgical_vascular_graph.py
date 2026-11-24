@@ -239,6 +239,15 @@ def refresh_compression(engine):
     for row in s['edges'].values(): row['compressionFraction'] = 0.
     for row in s['ports'].values(): row['compressionFraction'] = 0.
     materials = engine.scene.properties.get('gliomaMaterialsV1')
+    from . import surgical_vessel_rods as rods
+    section_model = rods.mechanics(engine) is not None
+    if section_model and s['ports']:
+        vessel_rods = rods.definitions(engine)
+        _, radius = rods._current(engine, vessel_rods)
+        for port in s['ports'].values():
+            site = vessel_rods.index.get(port['cell'])
+            port['acceptedLumenOpeningFraction'] = (
+                float((radius[site] / vessel_rods.radius[site]) ** 2) if site is not None else 1.)
     closing_force = {}
     if materials:
         from .surgical_glioma_materials import biopsy_wound, scalp_wound, vessel_load
@@ -258,6 +267,8 @@ def refresh_compression(engine):
     for slot in engine.state['slots'].values():
         if slot['instrument'] != 'bipolar_forceps' or not slot.get('inserted'): continue
         params = engine.parameters(slot)
+        if section_model and not params['power']:
+            continue  # Passive compression already uses the accepted section.
         if params['jawOpeningMm'] > .5 or params['forceN'] == 0: continue
         cells = set()
         for a, b, radius, part in envelopes(getattr(engine, 'tools', TOOLS)[slot['instrument']], params, slot['position'], slot['quaternion']):
@@ -280,7 +291,9 @@ def _edge_conductance(edge, state):
     if state['cutFace'] is not None:
         return 0.
     conductance = edge['conductanceMm3PerPaS'] * (1-state['occlusionFraction']) * (1-state['compressionFraction'])
-    if 'stretchResistanceRatio' in state:
+    if 'acceptedLumenResistanceRatio' in state:
+        conductance /= state['acceptedLumenResistanceRatio']
+    elif 'stretchResistanceRatio' in state:
         conductance /= state['stretchResistanceRatio']
     elif 'axialStrain' in state:
         # Assigned cylindrical segment, constant lumen volume during axial
@@ -291,6 +304,7 @@ def _edge_conductance(edge, state):
 
 def _wound_flow(port, pressure, clot_rate, time):
     return (port['conductanceMm3PerPaS'] * (1-port['sealFraction']) * (1-port['compressionFraction'])
+            * port.get('acceptedLumenOpeningFraction', 1.)
             * math.exp(-clot_rate * (time-port['openedAtSeconds'])) * max(0., pressure))
 
 
@@ -464,7 +478,7 @@ def consequence_evidence(engine):
         }
         if engine.scene.properties.get('gliomaMaterialsV1', {}).get('vesselMotionModel'):
             for key in ('loadedFace', 'peakLoadedFace', 'axialStrain', 'peakAxialStrain', 'tractionN',
-                        'stretchResistanceRatio', 'contactedSourceCells'):
+                        'stretchResistanceRatio', 'acceptedLumenResistanceRatio', 'contactedSourceCells'):
                 if key in row:
                     segments[edge_id][key] = copy.deepcopy(row[key])
     for port_id, port in sorted(state['ports'].items()):
@@ -472,6 +486,8 @@ def consequence_evidence(engine):
             'id': port_id, 'node': port['node'], 'cell': port['cell'],
             'sealFraction': port['sealFraction'], 'compressionFraction': port['compressionFraction'],
             'generatedMm3': port['generatedMm3'],
+            **({'acceptedLumenOpeningFraction': port['acceptedLumenOpeningFraction']}
+               if 'acceptedLumenOpeningFraction' in port else {}),
             'modeledFlowMm3PerSecond': _wound_flow(port, pressure[port['node']], profile['clotRatePerSecond'], elapsed),
         })
 

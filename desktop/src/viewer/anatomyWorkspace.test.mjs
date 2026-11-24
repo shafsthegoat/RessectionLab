@@ -33,12 +33,13 @@ test('camera rejects collapsed or collinear views and out-of-bounds cutaways sta
   assert.deepEqual(clippingForBounds({axis:'x',value:999,enabled:true},[[-20,-30,-40],[80,90,100]]),{axis:'x',value:30,enabled:false,flipped:false});
 });
 
-let server,cache,VolumeRenderer,ScanVolumeRenderer;
+let server,cache,VolumeRenderer,ScanVolumeRenderer,ScanVolumeExportTargets,exportHelpers;
 before(async()=>{
   cache=await fs.mkdtemp(path.join(os.tmpdir(),'anatomy-workspace-'));
   server=await createServer({root:fileURLToPath(new URL('../../',import.meta.url)),cacheDir:cache,logLevel:'error',optimizeDeps:{noDiscovery:true,include:[]},server:{middlewareMode:true,hmr:false,ws:false},appType:'custom'});
   VolumeRenderer=(await server.ssrLoadModule('/src/viewer/VolumeRenderer.ts')).VolumeRenderer;
-  ScanVolumeRenderer=(await server.ssrLoadModule('/src/viewer/ScanVolumeRenderer.ts')).ScanVolumeRenderer;
+  ({ScanVolumeRenderer,ScanVolumeExportTargets}=await server.ssrLoadModule('/src/viewer/ScanVolumeRenderer.ts'));
+  exportHelpers=await server.ssrLoadModule('/src/viewer/anatomyExport.ts');
 });
 after(async()=>{await server?.close();if(cache)await fs.rm(cache,{recursive:true,force:true,maxRetries:3,retryDelay:50});});
 function renderer(){
@@ -71,6 +72,35 @@ test('shared cutaway reaches the field edge without being shifted onto the selec
   }
   r.setWorkspaceSettings({presentation:'scan',clipping:{axis:'x',value:9.5,enabled:true}});
   assert.deepEqual(uniforms.uClipPlane.value.toArray(),[1,0,0,-9.5]);
+});
+test('linked presentations share physical cuts and keep the selected CTA texture and transfer',()=>{
+  const {r}=renderer();
+  const affine=[[2,0,0,8],[0,3,0,1],[0,0,4,-2],[0,0,0,1]];
+  const mri=new Float32Array(60).fill(340);
+  const patientClipBounds=[[-20,-40,-50],[70,80,90]];
+  const volume={...source,affine,mri,headSupport:{data:new Uint8Array(60).fill(1),sha256:'support'},
+    patientContext:{sources:[],boundsRasMm:patientClipBounds}};
+  r.sourceClipBounds=volumeBounds(source.shape,affine,true);
+  r.patientClipBounds=patientClipBounds;
+  r.volumeModality='CTA';
+  const scan=new ScanVolumeRenderer({extensions:{has:()=>true}},volume,[0,1200]);
+  r.scanVolume=scan;
+  try{
+    const u=scan.material.uniforms;
+    const voxel=new THREE.Vector3(10,7,2).applyMatrix4(u.uWorldToVoxel.value);
+    assert.ok(voxel.distanceTo(new THREE.Vector3(1,2,1))<1e-10);
+    assert.equal(scan.spacing,2);
+    for(const presentation of ['scan','segmentation','vascular']){
+      r.setWorkspaceSettings({presentation,clipping:{axis:'x',value:40,enabled:true}});
+      assert.equal(u.uVolume.value.image.data,mri);
+      assert.deepEqual(u.uShape.value.toArray(),source.shape);
+      assert.deepEqual(u.uRange.value.toArray(),[-1000,3000]);
+      assert.equal(u.uCt.value,true);
+      assert.equal(u.uUseHeadSupport.value,true);
+      assert.equal(u.uClipEnabled.value,presentation!=='scan');
+      if(presentation!=='scan')assert.deepEqual(u.uClipPlane.value.toArray(),[1,0,0,-40]);
+    }
+  }finally{scan.dispose();}
 });
 test('real renderer drops old fusion before refusing a stale replacement',()=>{
   const {r,uniforms}=renderer();r.setRegisteredFusion(fusion());assert.equal(uniforms.uFusionActive.value,1);
@@ -180,6 +210,109 @@ test('acquired Scan bounds its settled GPU draw while retaining the source grid 
     assert.equal(scan.texture.image.data,source.mri);
     assert.deepEqual([scan.texture.image.depth,scan.texture.image.height,scan.texture.image.width],source.shape);
   }finally{scan.dispose();}
+});
+
+test('acquired Scan export uses independent targets and rebinds the regular quality after capture',()=>{
+  const renderer={extensions:{has:()=>true},getPixelRatio:()=>2,getClearColor:out=>out.set(0),getClearAlpha:()=>1,
+    setClearColor(){},setRenderTarget(){},clear(){},render(){}};
+  const scan=new ScanVolumeRenderer(renderer,source,[0,100]),targets=new ScanVolumeExportTargets();
+  try{
+    const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera();
+    scan.configure({enabled:true},'T1',null);
+    scan.labels(null,{}, {presentation:'scan'},[]);
+    scan.render(scene,camera,2000,1000,false,()=>{});
+    const live=scan.volumeTarget;
+    let resized=0;
+    live.addEventListener('dispose',()=>resized++);
+    scan.renderExportSample(scene,camera,targets,2048,640,0,384);
+    const last=scan.renderExportSample(scene,camera,targets,2048,640,31,384);
+    assert.equal(last,targets.accumulation[1]);
+    assert.equal(scan.accumulateMaterial.uniforms.uWeight.value,1/32);
+    assert.equal(scan.material.uniforms.uStep.value,.5);
+    assert.equal(scan.material.uniforms.uSampleIndex.value,31);
+    assert.equal(scan.material.uniforms.uSampleOrigin.value.y,384);
+    assert.equal(scan.material.uniforms.uExport.value,true);
+    assert.equal(live.width,1024);
+    assert.equal(scan.samples,1);
+    assert.equal(resized,0);
+    scan.invalidate();
+    scan.render(scene,camera,2000,1000,false,()=>{});
+    assert.equal(scan.material.uniforms.uStep.value,1);
+    assert.equal(scan.material.uniforms.uSampleOrigin.value.y,0);
+    assert.equal(scan.material.uniforms.uExport.value,false);
+    assert.equal(scan.material.uniforms.uScene.value,scan.sceneTarget.texture);
+    assert.equal(resized,0);
+  }finally{targets.dispose();scan.dispose();}
+});
+
+test('Scan publishes only the current optical cache and completes it before an early export',async()=>{
+  const renderer={extensions:{has:()=>true},getPixelRatio:()=>1,getClearColor:out=>out.set(0),getClearAlpha:()=>1,
+    setClearColor(){},setRenderTarget(){},clear(){},render(){}};
+  let publications=0;
+  let resolve;
+  const ready=new Promise(onReady=>{resolve=onReady;});
+  const scan=new ScanVolumeRenderer(renderer,source,[0,100],undefined,undefined,()=>{publications++;resolve();});
+  const targets=new ScanVolumeExportTargets();
+  const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera();
+  try{
+    scan.labels(null,{}, {presentation:'scan'},[]);
+    scan.configure({enabled:true},'T1',null);
+    const first=scan.render(scene,camera,640,480,false,()=>{});
+    assert.equal(first.opticsPending,true);
+    assert.equal(scan.transfer.image.height,1);
+    scan.configure({enabled:true},'CTA',null);
+    assert.equal(scan.opticsPending,false);
+    scan.render(scene,camera,640,480,false,()=>{});
+    await ready;
+    assert.equal(publications,1);
+    assert.equal(scan.opticsPending,false);
+    assert.ok(scan.transfer.image.height>1);
+    assert.deepEqual(scan.material.uniforms.uRange.value.toArray(),[-1000,3000]);
+
+    scan.configure({enabled:true},'T1',null);
+    scan.render(scene,camera,640,480,false,()=>{});
+    assert.equal(scan.opticsPending,true);
+    scan.renderExportSample(scene,camera,targets,640,480,0,0);
+    assert.equal(scan.opticsPending,false);
+    assert.equal(scan.material.uniforms.uOpticalCache.value,true);
+    assert.equal(publications,1);
+  }finally{targets.dispose();scan.dispose();}
+});
+
+test('PNG bands preserve the full projection and pack flipped WebGL rows without guard pixels',()=>{
+  const {width,height,bands}=exportHelpers.anatomyExportBands(1,2048);
+  assert.equal(width,2048);assert.equal(height,2048);assert.ok(bands.length>1);
+  assert.equal(bands.reduce((sum,band)=>sum+band.rows,0),height);
+  const camera=new THREE.PerspectiveCamera(34,width/height,.1,1000);
+  const tile=camera.clone(),x=width/3;
+  bands.forEach((band,i)=>{
+    assert.ok(width*band.height*128<=160*1024**2);
+    if(i>0)assert.equal(band.row,bands[i-1].row+bands[i-1].rows);
+    const y=band.row+.5;
+    tile.setViewOffset(width,height,0,band.top,width,band.height);
+    const expected=new THREE.Vector3(x/width*2-1,1-y/height*2,.5).unproject(camera);
+    const actual=new THREE.Vector3(x/width*2-1,1-(y-band.top)/band.height*2,.5).unproject(tile);
+    assert.ok(expected.distanceTo(actual)<1e-12);
+  });
+  const pixelRows=Uint8Array.from([51,41,31,21,11].flatMap(value=>[value,0,0,255]));
+  const img={width:1,data:new Uint8ClampedArray(20)};
+  exportHelpers.copyAnatomyExportBand(pixelRows,img,{row:1,rows:3,top:0,height:5});
+  assert.deepEqual([...img.data],[0,0,0,0,21,0,0,255,31,0,0,255,41,0,0,255,0,0,0,0]);
+});
+
+test('a requested frame cancels an export waiting for the live GPU and releases its renderer lock',async()=>{
+  const r=Object.create(VolumeRenderer.prototype);
+  const bounds={width:800,height:640,left:0,top:0};
+  let invalidations=0;
+  Object.assign(r,{container:{getBoundingClientRect:()=>bounds},panes:{anatomy:{getBoundingClientRect:()=>bounds}},
+    scanVolume:{invalidate(){invalidations++}},gpuSync:{},anatomyExport:null,needsFrame:false});
+  const exportPromise=r.exportAnatomyPng(new AbortController().signal);
+  assert.ok(r.anatomyExport);
+  r.requestRender(false);
+  await assert.rejects(exportPromise,/3D view changed during export/);
+  assert.equal(r.anatomyExport,null);
+  assert.equal(r.needsFrame,true,'the updated live frame is coalesced behind its existing GPU submission');
+  assert.equal(invalidations,2);
 });
 
 test('slice contour changes reach every image material and preserve source data and 3D appearance',()=>{

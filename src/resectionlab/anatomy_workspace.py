@@ -3,12 +3,13 @@ import hashlib
 import json
 import os
 import tempfile
+from itertools import product
 from types import SimpleNamespace
 import numpy as np
 from scipy import ndimage as ndi
 from .patient_anatomy import affine, world
 from .anatomy_planning import is_native_target
-from .anatomy_display import display_affine, patient_display_grid, source_display_grid, voxel_edge_corners
+from .anatomy_display import display_affine, patient_display_context, source_display_grid
 
 
 def checked_view(collection, state, *, retired_clipping=None):
@@ -16,10 +17,12 @@ def checked_view(collection, state, *, retired_clipping=None):
         raise ValueError('Unsupported patient view state')
     if state.get('patientId') != collection.document['patient_id'] or state.get('snapshotId') != collection.identity():
         raise ValueError('View state belongs to a different anatomy revision')
-    if state.get('vesselScope', 'all') not in {'brain', 'all', 'intracranial', 'excluded'}:
+    if state.get('vesselScope', 'all') not in {'brain', 'all', 'intracranial', 'excluded', 'exterior-air'}:
         raise ValueError('Invalid vessel display scope')
     if 'vesselDisplayVersion' in state and (type(state['vesselDisplayVersion']) is not int or state['vesselDisplayVersion'] != 2):
         raise ValueError('Unsupported vessel display version')
+    if 'scalarTransferBasis' in state and state['scalarTransferBasis'] != 'selected-acquisition-v1':
+        raise ValueError('Unsupported scalar transfer basis')
     series = {s['id'] for s in collection.document['series']}
     layers = {s['id'] for s in collection.document['layers']} | {s['id'] for s in collection.document.get('tractography', [])}
     for key in ('selectedApproachId', 'selectedStructure'):
@@ -49,14 +52,15 @@ def checked_view(collection, state, *, retired_clipping=None):
         if not isinstance(cutaway, dict) or set(cutaway) - {'clipping', 'clipBox', 'obliqueClip'}:
             raise ValueError('Invalid shared patient cutaway settings')
         if any(value is not None for value in cutaway.values()):
-            context, _ = patient_display_grid(collection, preview=True)
-            if len(series) < 2 or 'shape' not in context:
+            context = patient_display_context(collection, preview=True)
+            bounds = context.get('boundsRasMm')
+            if len(series) < 2 or bounds is None:
                 if retired_clipping is None:
-                    raise ValueError('Shared patient cutaway requires a patient display grid')
+                    raise ValueError('Shared patient cutaway requires registered patient bounds')
                 retired_clipping.append({'seriesId': None, 'cutaway': cutaway})
                 state['patientCutaway'] = {}
             else:
-                corners = voxel_edge_corners(context['shape'], context['affine'])
+                corners = np.asarray(list(product(*zip(*bounds))))
                 try:
                     _viewer_cutaway(cutaway, corners=corners, frame_name='shared patient context')
                 except ClippingBoundsError:
@@ -103,9 +107,32 @@ def checked_view(collection, state, *, retired_clipping=None):
 
 def read_view(collection):
     try:
-        return checked_view(collection, json.loads((collection.root / 'workspace-view.json').read_text()))
+        state = checked_view(collection, json.loads((collection.root / 'workspace-view.json').read_text()))
     except (OSError, ValueError, TypeError, RecursionError):
         return None
+    # Before selected-acquisition rendering, custom transfer controls in a
+    # shared Structures/Vessels view described the normalized composite.
+    # Per-source Scan/independent views already stored native controls.
+    if state.get('scalarTransferBasis') is None and len(collection.document['series']) > 1:
+        candidates = {sid: view['settings']['volumeRendering'] for sid, view in state['states'].items()
+                      if view['settings'].get('presentation') != 'scan' and view['settings'].get('volumeRendering')}
+        if candidates:
+            context = patient_display_context(collection, preview=True)
+            if 'boundsRasMm' in context:
+                for source in context['sources']:
+                    transfer = candidates.get(source['seriesId'])
+                    if not transfer or source['alignment'] == 'unavailable':
+                        continue
+                    previous = dict(transfer)
+                    transfer.pop('window', None)
+                    transfer.pop('points', None)
+                    if transfer.get('preset', 'auto') != 'auto':
+                        transfer['preset'] = 'auto'
+                    if transfer.pop('isolateLabels', False):
+                        transfer['enabled'] = False
+                    if transfer != previous:
+                        state['scalarTransferBasis'] = 'selected-acquisition-v1'
+    return state
 
 
 def save_view(collection, state, *, after_registration=False):

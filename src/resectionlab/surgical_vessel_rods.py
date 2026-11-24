@@ -14,12 +14,15 @@ from scipy.sparse.linalg import factorized
 
 from .surgical_glioma_materials import PROPERTY, oriented_source_cells
 from . import surgical_vessel_surface as surfaces
+from . import surgical_vessel_vertex_motion as vertex_motion
 from . import surgical_wall_sweep as wall_sweep
 
 
 MODEL = 'distributed-source-rods-v1'
 FIELD = 'vesselMechanics'
 GEOMETRY = 'vesselRodGeometry'
+SECTION_MECHANICS = 'vesselSectionMechanics'
+SECTION_MODEL = 'linear-annular-research-v1'
 STEP_SECONDS = 1 / 120
 SUPPORT_N_PER_MM = .035
 CONTACT_N_PER_MM = .18
@@ -28,8 +31,44 @@ DRAG_NS_PER_MM = .0025
 MASS_N_S2_PER_MM = .000035
 BENDING_RATIO = .24
 MAX_COMPRESSION = .25
+MIN_CENTERLINE_STRETCH = .7
 SOLVER_ITERATIONS = 4
 CONTACT_MARGIN_MM = 1e-7
+
+
+def section_profile():
+    """Assumed local tangent response and radial compliance for sensitivity studies."""
+    return {
+        'model': SECTION_MODEL,
+        'provenance': 'assumed-research',
+        'axialModulusMPa': {'artery': 1.8, 'vein': .7, 'uncertain': 1.},
+        'wallThicknessToLumenRadius': .15,
+        'radialRelaxationSeconds': .08,
+        'frictionCoefficient': .15,
+    }
+
+
+def mechanics(engine):
+    return engine.scene.properties.get(PROPERTY, {}).get(SECTION_MECHANICS)
+
+
+def validate_section_profile(profile, bounded):
+    if SECTION_MECHANICS not in profile:
+        return
+    section = profile[SECTION_MECHANICS]
+    limits = {'wallThicknessToLumenRadius': (.05, .5), 'radialRelaxationSeconds': (.02, .5),
+              'frictionCoefficient': (0., .5)}
+    if (profile.get('vesselMotionModel') != MODEL or GEOMETRY not in profile
+            or profile.get(wall_sweep.PROPERTY) != wall_sweep.POLICY
+            or profile.get(vertex_motion.PROPERTY) != vertex_motion.POLICY
+            or not isinstance(section, dict) or set(section) != set(section_profile())
+            or section['model'] != SECTION_MODEL
+            or section['provenance'] != 'assumed-research'
+            or not isinstance(section['axialModulusMPa'], dict)
+            or set(section['axialModulusMPa']) != set(section_profile()['axialModulusMPa'])
+            or any(not bounded(value, .2, 6.) for value in section['axialModulusMPa'].values())
+            or any(not bounded(section[key], *bounds) for key, bounds in limits.items())):
+        raise ValueError('VESSEL_SECTION_MECHANICS_REQUIRES_BOUNDED_SWEPT_SOURCE_GEOMETRY')
 
 
 def enabled(engine):
@@ -79,6 +118,13 @@ class Rods:
     radius: np.ndarray
     bonds: tuple
     supports: tuple
+    bending_rigidity: tuple | None
+
+
+def _section_rigidity(radius, thickness_ratio, modulus):
+    outer = radius * (1. + thickness_ratio)
+    return (modulus * np.pi * (outer ** 2 - radius ** 2),
+            modulus * np.pi / 4. * (outer ** 4 - radius ** 4))
 
 
 def definitions(engine):
@@ -107,9 +153,17 @@ def definitions(engine):
     else:
         sites = np.array([geometry['sites'][str(cell)] for cell in cells])
         rest, radius = sites[:, :3], sites[:, 3]
-    cached = Rods(cells, index, rest, radius,
-                  tuple((index[a], index[b], edge, k) for a, b, edge, k in bonds),
-                  tuple((index[a], b) for a, b in profile['vesselAttachments']))
+    indexed = tuple((index[a], index[b], edge, k) for a, b, edge, k in bonds)
+    bending_rigidity = None
+    section = mechanics(engine)
+    if section is not None:
+        kinds = {edge['id']: edge['kind'] for edge in scene.properties['vascularGraphV1']['edges']}
+        responses = [_section_rigidity((radius[a] + radius[b]) / 2., section['wallThicknessToLumenRadius'],
+                                      section['axialModulusMPa'][kinds[edge]]) for a, b, edge, _ in indexed]
+        bending_rigidity = tuple(ei for _, ei in responses)
+        indexed = tuple((a, b, edge, ea) for (a, b, edge, _), (ea, _) in zip(indexed, responses))
+    cached = Rods(cells, index, rest, radius, indexed,
+                  tuple((index[a], b) for a, b in profile['vesselAttachments']), bending_rigidity)
     engine._vessel_rod_definitions = cached
     return cached
 
@@ -328,12 +382,15 @@ def _springs(rods, bonds, support_diagonal):
         length = np.linalg.norm(rods.rest[j] - rods.rest[i])
         rows.append(((i, -1.), (j, 1.)))
         weights.append(ea / length)
-        graph[i].append((j, length, ea))
-        graph[j].append((i, length, ea))
+        rigidity = None if rods.bending_rigidity is None else rods.bending_rigidity[k]
+        graph[i].append((j, length, ea, rigidity))
+        graph[j].append((i, length, ea, rigidity))
     for i, neighbors in enumerate(graph):
-        for (j, a, ea), (k, b, eb) in combinations(neighbors, 2):
+        for (j, a, ea, ei), (k, b, eb, ej) in combinations(neighbors, 2):
             rows.append(((j, 1 / a), (i, -1 / a - 1 / b), (k, 1 / b)))
-            weights.append(BENDING_RATIO * min(ea, eb) * min(a, b) / max(1, len(neighbors) - 1))
+            # Each half segment contributes compliance in series at the bend.
+            weight = BENDING_RATIO * min(ea, eb) * min(a, b) if ei is None else 2. / (a / ei + b / ej)
+            weights.append(weight / (len(neighbors) - 1))
     indices = [(r, i, coefficient) for r, row in enumerate(rows) for i, coefficient in row]
     row, column, data = zip(*indices) if indices else ((), (), ())
     operators = sparse.csr_matrix((data, (row, column)), shape=(len(rows), len(rods.cells)))
@@ -399,6 +456,77 @@ def _native_tool_contact(engine, frames, rods, position, tools):
     return force, compression, touched
 
 
+def _patch_quadrature(triangles, points):
+    """Area and barycentric coordinates at the closest wall features."""
+    x, y, z = triangles.transpose(1, 0, 2)
+    u, v = y - x, z - x
+    normal = np.cross(u, v)
+    norm_squared = np.einsum('ij,ij->i', normal, normal)
+    denominator = np.maximum(norm_squared, 1e-30)
+    relative = points - x
+    s = np.einsum('ij,ij->i', np.cross(relative, v), normal) / denominator
+    t = np.einsum('ij,ij->i', np.cross(u, relative), normal) / denominator
+    weights = np.clip(np.column_stack((1. - s - t, s, t)), 0., 1.)
+    return np.sqrt(norm_squared) / 2., weights / weights.sum(axis=1)[:, None]
+
+
+def _native_patch_contact(engine, frames, rods, position, velocity, tools, tool_motion, friction, measure_compression):
+    """Resolve a finite wall patch using its accepted vertex displacement map."""
+    force = np.zeros_like(position)
+    radial_force = np.zeros(len(position))
+    touched = {}
+    for hand, a, b, calibre, limit in tools:
+        patches = []
+        for frame in frames:
+            _, distance, difference, vertices, points, triangles = surfaces.contact_features(
+                engine, frame, a, b, calibre, with_points=True)
+            if not len(vertices):
+                continue
+            field = frame[0].vertex_motion.binding
+            area, corners = _patch_quadrature(triangles, points)
+            rows = np.arange(len(vertices)).repeat(3)
+            quadrature = sparse.csr_matrix((corners.ravel(), (rows, vertices.ravel())),
+                                           shape=(len(vertices), field.translation.shape[0]))
+            weights = quadrature @ field.translation
+            area = np.where(np.asarray(weights.sum(axis=1)).ravel() > 1e-12, area, 0.)
+            if not area.any():
+                continue
+            center = (weights @ position) / np.maximum(np.asarray(weights.sum(axis=1)), 1e-30)
+            # A centerline-to-tool direction is defined even at an axis/wall
+            # crossing. The engine separately refuses final axis penetration.
+            fallback = center - surfaces._projection(center, a, b)[0]
+            direction = np.where((distance > 1e-10)[:, None], difference, fallback)
+            norm = np.linalg.norm(direction, axis=1)
+            area = np.where(norm > 1e-10, area, 0.)
+            overlap = np.maximum(0., calibre - distance)
+            patches.append((area, overlap, weights, quadrature, field, points,
+                            direction / np.maximum(norm[:, None], 1e-30)))
+        patch_load = sum(float(area @ overlap) for area, overlap, *_ in patches)
+        if patch_load <= 1e-30:
+            continue
+        peak_overlap = max(float(overlap[area > 0.].max(initial=0.)) for area, overlap, *_ in patches)
+        scale = min(limit, CONTACT_N_PER_MM * peak_overlap) / patch_load
+        selected = touched.setdefault(hand, set())
+        for area, overlap, weights, quadrature, field, points, normal in patches:
+            normal_load = area * overlap * scale
+            loads = normal_load[:, None] * normal
+            if friction:
+                relative = weights @ velocity
+                if hand in tool_motion:
+                    origin, linear, angular = tool_motion[hand]
+                    relative -= linear + np.cross(angular, points - origin)
+                slip = relative - np.einsum('ij,ij->i', relative, normal)[:, None] * normal
+                # Smooth Coulomb bound at zero slip, in mm/s.
+                loads -= (friction * normal_load / np.sqrt(1. + np.sum(slip ** 2, axis=1)))[:, None] * slip
+            force += weights.T @ loads
+            if measure_compression:
+                selected.update(weights[area > 0.].indices.tolist())
+                for k, radial in enumerate(field.radial):
+                    radial_force -= (quadrature @ radial).T @ loads[:, k] / rods.radius
+    compression = np.clip(radial_force / RADIAL_N_PER_MM, 0., rods.radius * MAX_COMPRESSION)
+    return force, compression, touched
+
+
 def _tool_contact(pairs, position, radius, rest_radius, tools):
     force = np.zeros_like(position)
     compression = np.zeros(len(position))
@@ -459,7 +587,7 @@ def _valid_motion(engine, rods, old, new, retained):
     return new
 
 
-def tick(engine, dt):
+def tick(engine, dt, *, tool_motion=None):
     rods = definitions(engine)
     retained, retired, bonds, supports = _topology(engine, rods)
     state = engine.state.setdefault(FIELD, {'remainderSeconds': 0., 'velocitiesMmPerSecond': {}, 'compressionMm': {},
@@ -501,17 +629,29 @@ def tick(engine, dt):
     norms = np.linalg.norm(rest_projection, axis=1)[:, None]
     pairs = _capsules(rods, retained, bonds)
     native = bool(getattr(engine.scene, '_vessel_source_walls', ()))
+    section = mechanics(engine)
+    radial_response = .35 if section is None else -np.expm1(-STEP_SECONDS / section['radialRelaxationSeconds'])
     if native:
         labels = engine.scene.labels.ravel()
         registered = {wall.label for wall in engine.scene._vessel_source_walls}
         capsule_pairs = np.array([labels[rods.cells[i]] not in registered for i in pairs[:, 0]], dtype=bool)
         pairs = pairs[capsule_pairs]
+    if section is not None:
+        first, second = np.asarray([rods.bonds[k][:2] for k in bonds], dtype=int).reshape(-1, 2).T
+        reference_length = np.linalg.norm(rods.rest[first] - rods.rest[second], axis=1)
+        site_length = (np.bincount(first, reference_length, minlength=len(position))
+                       + np.bincount(second, reference_length, minlength=len(position)))
 
-    def contact(positions, radii):
+    def contact(positions, radii, rate, *, measure_compression=False):
         force, compression, touched = _tool_contact(pairs, positions, radii, rods.radius, tools)
         if native and tools:
-            frames = surfaces.frames(engine, rods, positions, radii, bonds)
-            load, collapse, contacts = _native_tool_contact(engine, tuple(frames), rods, positions, tools)
+            frames = tuple(surfaces.frames(engine, rods, positions, radii, bonds))
+            if section is None:
+                load, collapse, contacts = _native_tool_contact(engine, frames, rods, positions, tools)
+            else:
+                load, collapse, contacts = _native_patch_contact(engine, frames, rods, positions, rate, tools,
+                                                                tool_motion or {}, section['frictionCoefficient'],
+                                                                measure_compression)
             force += load
             compression = np.maximum(compression, collapse)
             for hand, indices in contacts.items():
@@ -530,17 +670,49 @@ def tick(engine, dt):
             project = operators @ position
             scale = np.linalg.norm(project, axis=1)[:, None]
             target = np.where(scale > 1e-15, project * norms / np.maximum(scale, 1e-15), rest_projection)
-            force, _, _ = contact(position, radius)
+            force, _, _ = contact(position, radius, old_rate)
             position = solve(base + transpose @ target + force)
-        position = _valid_motion(engine, rods, previous, position, retained)
-        old_rate = (position - previous) / STEP_SECONDS
-        _, compression_target, touched = contact(position, radius)
-        compression = .65 * (rods.radius - radius) + .35 * compression_target
-        radius = rods.radius - compression
-        if swept:
-            next_wall = tuple(surfaces.frames(engine, rods, position, radius, bonds))
+        if section is None:
+            position = _valid_motion(engine, rods, previous, position, retained)
+        rate = (position - previous) / STEP_SECONDS
+        _, compression_target, touched = contact(position, radius, rate, measure_compression=True)
+        if section is not None:
+            lengths = np.linalg.norm(position[first] - position[second], axis=1)
+            # A positive axial strain draws down the effective lumen area in
+            # this local near-volume-preserving approximation.
+            extension = np.maximum(0., lengths - reference_length)
+            axial_extension = (np.bincount(first, extension, minlength=len(position))
+                               + np.bincount(second, extension, minlength=len(position)))
+            stretch = 1. + axial_extension / np.maximum(site_length, 1e-30)
+            compression_target += rods.radius * (1. - 1. / np.sqrt(stretch))
+            compression_target = np.minimum(compression_target, rods.radius * MAX_COMPRESSION)
+        compression = (1. - radial_response) * (rods.radius - radius) + radial_response * compression_target
+        proposed_radius = rods.radius - compression
+        if section is not None:
+            # Preserve the first obstacle- and sweep-certified fraction of
+            # the increment. An uncertifiable motion remains transactional.
+            delta, radial_delta = position - previous, proposed_radius - radius
+            for fraction in (1., .5, .25, .125, .0625, .03125, .015625):
+                trial = previous + fraction * delta
+                trial_radius = radius + fraction * radial_delta
+                if (np.any(np.linalg.norm(trial[first] - trial[second], axis=1) < MIN_CENTERLINE_STRETCH * reference_length)
+                        or _valid_motion(engine, rods, previous, trial, retained) is previous):
+                    continue
+                next_wall = tuple(surfaces.frames(engine, rods, trial, trial_radius, bonds))
+                if wall_sweep.is_clear(engine, prior_wall, next_wall):
+                    position, proposed_radius, prior_wall = trial, trial_radius, next_wall
+                    if fraction < 1.:
+                        _, _, touched = contact(position, proposed_radius, (position - previous) / STEP_SECONDS,
+                                                measure_compression=True)
+                    break
+            else:
+                raise ValueError('VESSEL_WALL_SWEEP_UNSAFE: no limited section response retained clearance')
+        elif swept:
+            next_wall = tuple(surfaces.frames(engine, rods, position, proposed_radius, bonds))
             wall_sweep.require_clear(engine, prior_wall, next_wall)
             prior_wall = next_wall
+        radius = proposed_radius
+        old_rate = (position - previous) / STEP_SECONDS
         for hand, indices in touched.items():
             state['contactedCells'][hand] = sorted(set(state['contactedCells'].get(hand, ())) |
                                                    {rods.cells[i] for i in indices})
@@ -565,6 +737,7 @@ def view(engine):
     frames = _accepted_frames(engine, rods, position, radius, bonds)
     return {
         'model': MODEL,
+        **({'sectionModel': SECTION_MODEL} if mechanics(engine) is not None else {}),
         'sites': [{'sourceCell': rods.cells[i], 'restPositionMm': rods.rest[i].tolist(),
                    'positionMm': position[i].tolist(), 'restRadiusMm': float(rods.radius[i]), 'radiusMm': float(radius[i]),
                    'activeSupportCells': support_by_site.get(i, [])} for i in retained],

@@ -18,7 +18,10 @@ from .anatomy_editor import AnatomyDraft
 from .anatomy_workspace import read_view, save_view, component_review
 from .anatomy_geometry import mesh, normals, appearance_kind, vascular_cleanup_source
 from .anatomy_qa import layer_quality
-from .anatomy_display import display_affine, brain_vessel_display, source_display_grid, source_lattice_annotation_preview
+from .anatomy_display import (
+    brain_vessel_display, display_affine, patient_display_context, source_display_grid,
+    source_lattice_annotation_preview,
+)
 
 
 VASCULAR_REVIEW_MANIFEST = "vascular-review.anatomy.json"
@@ -196,7 +199,7 @@ def dispatch(session, operation, args, request, progress):
         native = affine(reference["affine"])
         preview_alignment = args.get("previewAlignment") is True
         vessel_scope = args.get("vesselScope", "all")
-        if vessel_scope not in {"all", "brain", "intracranial", "excluded"}:
+        if vessel_scope not in {"all", "brain", "intracranial", "excluded", "exterior-air"}:
             raise ValueError("Unknown vessel display scope")
         native_vessel_review = c.document.get("vascular_review", {}).get("schema") == "eden2020-restricted-vascular-companion-v1"
         vessel_surface_mode = args.get("vesselSurfaceMode", "source" if native_vessel_review else "conditioned")
@@ -211,14 +214,10 @@ def dispatch(session, operation, args, request, progress):
             displayed, estimated, registered = native, False, False
         patient_context = None
         if args.get("patientModel") is True and registered:
-            from .anatomy_display import patient_display_context
-            context_key = (key, c.identity(), preview_alignment, bool(args.get("original")))
+            context_key = (key, c.identity(), preview_alignment)
             cached = getattr(session, "anatomy_context_cache", None)
-            if cached is None or cached[0] != context_key or (
-                    cached[1].get("signal") and not Path(cached[1]["signal"]["path"]).is_file()):
-                patient_context, signal = patient_display_context(c, preview=preview_alignment, check=request.check, original=bool(args.get("original")))
-                if signal is not None:
-                    patient_context["signal"] = session.transfers.array(signal, "float32")
+            if cached is None or cached[0] != context_key:
+                patient_context = patient_display_context(c, preview=preview_alignment, check=request.check)
                 session.anatomy_context_cache = (context_key, patient_context)
             else:
                 patient_context = cached[1]
@@ -226,7 +225,7 @@ def dispatch(session, operation, args, request, progress):
         alignment_previews = [reference["id"]] if estimated else []
         if patient_context:
             alignment_previews.extend(s["seriesId"] for s in patient_context["sources"]
-                                      if s["alignment"] == "estimated" and "displayWindow" in s)
+                                      if s["alignment"] == "estimated" and s["inPatientBounds"])
         # MRI acceleration is reversible and never feeds source measurements.
         # Native layer geometry is transformed into this displayed voxel frame.
         image_data, native, displayed, preview = source_display_grid(reference, displayed)
@@ -342,6 +341,11 @@ def dispatch(session, operation, args, request, progress):
             display_filter = None
             unfiltered = row
             # Correction review always shows the complete editable source.
+            if (vessel_scope == "exterior-air" and not native_vessel_review and not source_grid_preview
+                    and not draft and not args.get("original") and not args.get("highlightLayer")):
+                from .vascular_cleanup import supported_tof_layer
+
+                row, display_filter = supported_tof_layer(c, row, check=request.check)
             if (not raw_siam and not source_grid_preview and vessel_scope == "brain" and row["kind"] in {"vessels", "artery", "vein", "sinus"}
                     and not draft and not args.get("highlightLayer")):
                 row, display_filter = brain_vessel_display(c, row)
@@ -511,7 +515,9 @@ def dispatch(session, operation, args, request, progress):
                 frame, _ = display_affine(c, scan, preview=preview_alignment)
                 data, _, texture_frame, _ = source_display_grid(scan, frame)
                 scalar = transfer(c.array(data), "float32")
+            units = str(scan.get("intensity_units") or scan.get("metadata", {}).get("Units", "")).upper()
             appearance_sources.append({"seriesId": sid, "modality": scan["modality"],
+                    "intensityUnits": "HU" if units in {"HU", "HOUNSFIELD", "HOUNSFIELD UNITS"} else "source",
                     "sourceSha256": scan["original"]["sha256"], "affine": texture_frame.tolist(),
                     "signal": scalar, "nativeShape": scan["data"]["shape"], "nativeAffine": frame.tolist()})
         result = {

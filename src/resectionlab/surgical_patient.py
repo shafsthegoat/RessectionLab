@@ -116,6 +116,15 @@ def _check_layer_export(collection, role, row):
         raise ValueError('Selected anatomy layer is empty')
 
 
+def _wall_layer_issue(role, row):
+    provenance = row.get('provenance', {})
+    if provenance.get('kind') in {'synthetic', 'simulated', 'generated'} or provenance.get('evidence_use') == 'context_only':
+        return f"Local native-wall rehearsal cannot use {row['label']} as mechanical anatomy"
+    if role == 'vessels' and (not row.get('probability') or row.get('edits') or row.get('revision') != 0):
+        return 'Local native-wall rehearsal requires an intact native angiography score layer'
+    return None
+
+
 def _source_registration(collection, series):
     sid = series['id']
     if series.get('units_status') != 'mm':
@@ -165,6 +174,9 @@ def surgical_environment_options(collection, *, check=lambda: None):
                 continue
             check()
             option = {'role': role, 'layerId': row['id'], 'status': 'unavailable', 'reason': None}
+            native_issue = _wall_layer_issue(role, row)
+            if native_issue:
+                option['nativeWallIssue'] = native_issue
             try:
                 _check_layer_export(collection, role, row)
                 sid = row['source_series']
@@ -190,7 +202,8 @@ def surgical_environment_options(collection, *, check=lambda: None):
 
 def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
                              resolution_mm=1., allow_unreviewed_registration=False,
-                             tissue_physics=None, require_complete=True, approach=None):
+                             tissue_physics=None, require_complete=True, approach=None,
+                             native_wall_center=None, check=lambda: None):
     """Save patient.ressectionlab and report.json; return the auditable report.
 
     layer_ids maps exactly brain/tumor/bone/vessels to existing collection IDs.
@@ -206,6 +219,8 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
     if not layer_ids or not set(layer_ids) <= set(ORDER) or len(set(layer_ids.values())) != len(layer_ids):
         raise ValueError('Select distinct existing anatomy layers for the declared roles')
     selected_order = tuple(name for name in ORDER if name in layer_ids)
+    if native_wall_center is not None and (approach is not None or not {'brain', 'vessels'} <= layer_ids.keys()):
+        raise ValueError('Local native-wall rehearsal requires a brain layer and a vascular layer, with no selected procedure')
     if not np.isfinite(resolution_mm) or not .5 <= resolution_mm <= 2:
         raise ValueError('Research derivative resolution must be between 0.5 and 2 mm')
     root = Path(collection_path)
@@ -236,10 +251,17 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
     manifest_hash = _sha(manifest_path)
     manifest = copy.deepcopy(collection.document)
     reference = collection.series(manifest['reference_series'])
-    reference_affine, target_affine, shape = _research_grid(collection, reference, resolution_mm)
+    if native_wall_center is None:
+        reference_affine, target_affine, shape = _research_grid(collection, reference, resolution_mm)
+    else:
+        reference_affine = collection.patient_affine(reference)
     rows = {name: collection.layer(layer_ids[name]) for name in selected_order}
     for name, row in rows.items():
         _check_layer_export(collection, name, row)
+        if native_wall_center is not None:
+            native_issue = _wall_layer_issue(name, row)
+            if native_issue:
+                raise ValueError(native_issue)
     warnings = ['Research derivative of source annotations and segmentation estimates; provenance and review status are retained, not independently validated.',
                 'Bone/vessel any-hit coarse occupancy can enlarge boundaries and still miss structures smaller than 0.5 mm.',
                 'Wound aperture and flow parameters are explicit assumptions, not measured vessel diameter or patient physiology.']
@@ -247,11 +269,14 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
     source_refs = []
     used_series = {reference['id'], *(r['source_series'] for r in rows.values())}
     for sid in sorted(used_series):
+        check()
         series = collection.series(sid)
         # Validate source hashes, transform digest and parent graph regardless of status.
         matrix, unreviewed = _source_registration(collection, series)
         transform = manifest['transforms'][sid]
         if unreviewed:
+            if native_wall_center is not None:
+                raise ValueError('Local native-wall rehearsal requires reviewed source alignment: ' + ', '.join(unreviewed))
             if not allow_unreviewed_registration:
                 raise ValueError('Unreviewed registration requires explicit research opt-in: ' + ', '.join(unreviewed))
             warnings.append('Research opt-in uses unreviewed registration: ' + ', '.join(unreviewed) + '; source review status unchanged.')
@@ -267,14 +292,28 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
         source_refs.append(SourceRef(sid, uri, original['sha256'], native_frame='RAS+'))
     manifest_uri = 'patient-anatomy.json' if planned else manifest_path.resolve().as_uri()
     source_refs.append(SourceRef('source-manifest', manifest_uri, manifest_hash, native_frame='RAS+'))
+    local_wall = None
+    if native_wall_center is not None:
+        from .surgical_patient_wall import native_wall_grid
+
+        local_wall = native_wall_grid(collection, rows['vessels'], affines[rows['vessels']['source_series']], native_wall_center)
+        target_affine, shape = local_wall.affine, local_wall.mask.shape
+        warnings[1] = 'Vessel score fields and masks retain native samples. The local domain clips coverage; field edges and wall caps mark unassessed continuation.'
+        warnings[2] = 'Tissue attachments and vessel mechanics are assigned research assumptions. There is no measured patient wall material, attachment map, or circulation model.'
     mri = _resample(collection.array(reference['data']), reference_affine, target_affine, shape)
     masks, layer_report = {}, {}
     for name in selected_order:
+        check()
         row = rows[name]
         raw = collection.array(row['data'])
         registered = affines[row['source_series']] @ np.asarray(row['affine'])
-        sampled = _resample(raw, registered, target_affine, shape, label=row['label_value'], conservative=name in ('bone', 'vessels'))
+        source_wall = local_wall is not None and name == 'vessels'
+        sampled = local_wall.mask if source_wall else _resample(
+            raw, registered, target_affine, shape, label=row['label_value'], conservative=name in ('bone', 'vessels'))
         if not sampled.any():
+            if local_wall is not None and name not in ('brain', 'vessels'):
+                warnings.append(f'The selected {name} layer has no occupied samples in the local domain.')
+                continue
             raise ValueError('Selected layer has no occupied cells in the derivative: ' + name)
         masks[name] = sampled
         original_count = sum(int(np.count_nonzero(raw[:, :, z] == row['label_value'])) for z in range(raw.shape[2]))
@@ -286,13 +325,19 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
             'registeredAffine': registered.tolist(), 'provenance': copy.deepcopy(row.get('provenance', {})),
             'reviewStatus': row.get('review_status'),
             'uncertainty': copy.deepcopy(row.get('uncertainty')), 'scoreMeaning': row.get('score_meaning'),
-            'probability': copy.deepcopy(row.get('probability')), 'sampling': 'any-hit <=0.5mm samples' if name in ('bone', 'vessels') else 'nearest-neighbor center'}
+            'probability': copy.deepcopy(row.get('probability')),
+            'sampling': ('exact native crop' if source_wall else 'any-hit <=0.5mm samples'
+                         if name in ('bone', 'vessels') else 'nearest-neighbor center')}
+    selected_order = tuple(masks)
     overlaps = {a + ':' + b: int(np.count_nonzero(masks[a] & masks[b])) for a, b in itertools.combinations(selected_order, 2)}
     ownership = np.zeros(shape, np.uint8)
     for i, name in enumerate(selected_order, 1): ownership[masks[name]] = i
     ownership_counts = {name: int(np.count_nonzero(ownership == i)) for i, name in enumerate(selected_order, 1)}
     if not all(ownership_counts.values()):
         raise ValueError('Ownership precedence eliminated an entire requested material')
+    if local_wall is not None and tissue_physics is None:
+        from .surgical_physics_v2 import default_profile
+        tissue_physics = default_profile()
     physics = copy.deepcopy(DEFAULT_PHYSICS if tissue_physics is None else tissue_physics)
     adapter = {'type': 'native-patient-research-derivative', 'warnings': list(dict.fromkeys(warnings)),
         'representations': {'acquiredImages': 'immutable source original checksums and source reference array',
@@ -306,6 +351,21 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
         'ownershipCells': ownership_counts, 'allowUnreviewedRegistration': bool(allow_unreviewed_registration)}
     physics_key = 'tissuePhysicsV2' if physics.get('schema') == 'resectionlab.tissue-physics.v2' else 'tissuePhysics'
     properties = {physics_key: physics}
+    wall_metadata = {}
+    if local_wall is not None:
+        from .surgical_patient_wall import qualifying_properties
+        from .surgical_vessel_surface import GEOMETRY_PROPERTY
+
+        check()
+        wall_properties, binding = qualifying_properties(local_wall, masks, rows['vessels'], manifest['patient_id'])
+        adapter['nativeWall'] = binding
+        wall_metadata[GEOMETRY_PROPERTY] = binding['geometryPolicy']
+        adapter['resolutionMm'] = np.linalg.norm(target_affine[:3, :3], axis=0).tolist()
+        adapter['representations']['nativeVesselWall'] = 'bounded conditioning of 0.5 score crossings on the unchanged native crop; accepted vertices shared by contact and rendering'
+        properties.update(wall_properties)
+    anatomy_layers = {name: _anatomy_metadata(name, rows[name]) for name in selected_order}
+    if local_wall is not None:
+        anatomy_layers['vessels'].update(kind=rows['vessels']['kind'], color=rows['vessels']['color'])
     if planned:
         from .surgical_source_inspection import PROPERTY
         adapter['selectedApproach'] = planned
@@ -319,11 +379,22 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
              'message': 'The saved approach supplies proposed geometry. Executing it requires qualified source coverage, entry, compartments, operative stages and swept instrument workspace.'}]}
     case = CaseData(case_id=manifest['patient_id'] + '-surgical-research', mri=mri,
         compartments=masks, affine=target_affine, frame='RAS+', source_refs=tuple(source_refs),
-        metadata={'surgical_adapter': adapter, 'surgical_properties': properties,
+        vascular_probabilities={} if local_wall is None else {'vessels': local_wall.scores},
+        metadata={'surgical_adapter': adapter, 'surgical_properties': properties, **wall_metadata,
             **({'anatomy_workbench_only': True} if planned else {}),
-            'anatomy_layers': {name: _anatomy_metadata(name, rows[name]) for name in selected_order},
-            'missing_anatomy': [name for name in ORDER if name not in rows],
+            'anatomy_layers': anatomy_layers,
+            'missing_anatomy': [name for name in ORDER if name not in masks],
             'description': 'Acquired reference image with explicitly selected source annotations and research estimates; missing anatomy remains unknown.'})
+    if local_wall is not None:
+        from .surgical_engine import SurgicalEngine
+        from .surgical_rl_protection import GuardConfig
+        from .surgical_scene import from_case
+
+        # The native sweep certifies the intact wall before any report or case is written.
+        check()
+        SurgicalEngine(from_case(case), guard_config=GuardConfig(require_critical_coverage=False))
+        if _sha(manifest_path) != manifest_hash:
+            raise ValueError('Source manifest changed during export')
     output = Path(output_dir)
     output.mkdir(parents=True, exist_ok=True)
     path = save_case(case, output / 'patient.ressectionlab')
@@ -340,7 +411,8 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
 
 
 def prepare_surgical_environment(collection_path, output_dir, *, layer_ids,
-                                 resolution_mm=1., allow_unreviewed_registration=False, approach=None):
+                                 resolution_mm=1., allow_unreviewed_registration=False, approach=None,
+                                 native_wall_center=None, check=lambda: None):
     """One interoperable export path for desktop preparation, CLI, and RL.
 
     Missing roles are explicit. Source manifests are never rewritten. The saved
@@ -353,7 +425,8 @@ def prepare_surgical_environment(collection_path, output_dir, *, layer_ids,
     from .surgical_physics_v2 import default_profile
     report = prepare_surgical_patient(collection_path, output_dir, layer_ids=layer_ids,
         resolution_mm=resolution_mm, allow_unreviewed_registration=allow_unreviewed_registration,
-        tissue_physics=default_profile(), require_complete=False, approach=approach)
+        tissue_physics=default_profile(), require_complete=False, approach=approach,
+        native_wall_center=native_wall_center, check=check)
     case = load_case(report['casePath'])
     scene = standardize(from_case(case))
     from .surgical_rl_protection import GuardConfig

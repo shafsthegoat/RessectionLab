@@ -45,6 +45,60 @@ def test_physical_intersection_gate_detects_only_new_contacts():
     assert len(intersection_vertices(source, points, faces)) == 6
 
 
+def test_native_vascular_wall_reduces_caliber_error_and_keeps_source_owners():
+    pytest.importorskip("vtkmodules")
+    from resectionlab.anatomy_geometry import (
+        conditioned_vascular_probability_mesh, vascular_mesh_source_cells, vascular_probability_mesh,
+    )
+    from resectionlab.patient_anatomy import world
+
+    affine = np.diag([.55, .62, .8, 1.])
+    indices = np.indices((37, 35, 29)).transpose(1, 2, 3, 0)
+    grid = world(affine, indices)
+    origin = np.array([0., 7.5, 7.])
+    direction = np.array([1., .26, .19])
+    direction /= np.linalg.norm(direction)
+
+    def radial_geometry(positions):
+        delta = positions - origin
+        axial = delta @ direction
+        radius = np.linalg.norm(delta - axial[..., None] * direction, axis=-1)
+        return axial, radius
+
+    axial, radius = radial_geometry(grid)
+    # The acquired-grid score represents a known cylinder with periodic radius
+    # error. A second strand is one sample wide and ends at the same cut plane.
+    shaft = (1.4 - radius) / .9 + .13 * np.sin(2.4 * axial)
+    thin = (.36 - np.hypot(grid[..., 1] - 3.1, grid[..., 2] - 3.2)) / .9
+    scores = (.5 + np.clip(np.maximum(shaft, thin), -.47, .47)).astype(np.float32)
+    mask = scores >= .5
+    baseline_scores = scores.copy()
+    wall = conditioned_vascular_probability_mesh(scores, mask, affine)
+    raw, faces, _ = vascular_probability_mesh(scores, mask)
+    np.testing.assert_array_equal(wall.source, raw)
+    np.testing.assert_array_equal(wall.indices, faces)
+    np.testing.assert_array_equal(wall.source_cells, vascular_mesh_source_cells(raw, mask))
+    np.testing.assert_array_equal(scores, baseline_scores)
+    np.testing.assert_array_equal(mask, scores >= .5)
+    assert not wall.source.flags.writeable and not wall.positions.flags.writeable
+    boundary = ((raw <= 0) | (raw >= np.asarray(mask.shape) - 1)).any(axis=1)
+    np.testing.assert_array_equal(wall.positions[boundary], raw[boundary])
+    thin_vertices = raw[:, 1] < 8
+    shaft_interior = ~thin_vertices & (raw[:, 0] > 3) & (raw[:, 0] < 33)
+
+    def radius_error(positions):
+        _, distance = radial_geometry(world(affine, positions[shaft_interior]))
+        return np.sqrt(np.mean((distance - 1.4) ** 2))
+
+    assert radius_error(wall.positions) < .85 * radius_error(raw)
+    assert 0 < wall.diagnostics["maxDisplacementMm"] <= .7 * .55
+    assert wall.diagnostics["restoredComponents"] == 0
+    assert not len(intersection_vertices(world(affine, raw), world(affine, wall.positions), faces))
+    # Crossings owned by the thin strand survive on both sides of its axis.
+    assert ((wall.positions[thin_vertices, 1] < 5) & (raw[thin_vertices, 0] > 3)).any()
+    assert ((wall.positions[thin_vertices, 1] > 5) & (raw[thin_vertices, 0] > 3)).any()
+
+
 def test_packaged_policy_copy_matches_canonical_resource():
     desktop = Path(__file__).resolve().parents[1]/'desktop/src/viewer/surface_policy.json'
     assert json.loads(desktop.read_text()) == POLICY

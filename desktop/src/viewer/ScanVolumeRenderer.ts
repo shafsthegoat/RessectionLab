@@ -3,12 +3,42 @@ import * as THREE from 'three';
 import type { ViewerVolume } from './contracts';
 import { inverseAffine, rasAffine } from './coordinates.ts';
 import { isCtModality, volumeSettings, volumeTransfer } from './volumeTransfer.ts';
+import {finishOpticalPreparation, opticalAtlasSteps, volumeOpticalAtlas, type OpticalSource} from './volumeOpticalDensity.ts';
 import {layerAppearance} from './workspaceSettings';
 import type {ViewerWorkspaceSettings} from './workspaceSettings';
 import type { VolumeRenderingSettings } from './volumeTransfer';
 import { volumeVertexShader, volumeFragmentShader } from './volumeRaycastShaders';
 import {SurfaceVolumePass} from './SurfaceVolumePass';
 import {renderTargetBytes} from './renderResourceEstimate';
+
+type VolumeTargets = {
+  scene: THREE.WebGLRenderTarget;
+  volume: THREE.WebGLRenderTarget;
+  accumulation: THREE.WebGLRenderTarget[];
+  surfaces: SurfaceVolumePass;
+};
+
+function targetBytes(targets:VolumeTargets) {
+  return [targets.scene,targets.volume,...targets.accumulation,...targets.surfaces.targets,
+    ...targets.surfaces.cranial.targets.values(),targets.surfaces.tail].reduce((sum,target)=>sum+renderTargetBytes(target),0);
+}
+
+/** Export owns its targets so a tile cannot resize or invalidate live attachments. */
+export class ScanVolumeExportTargets implements VolumeTargets {
+  readonly scene = new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType});
+  readonly volume = new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,depthBuffer:false});
+  readonly accumulation = Array.from({length:2},()=>new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,depthBuffer:false}));
+  readonly surfaces = new SurfaceVolumePass();
+
+  constructor() { this.scene.depthTexture=new THREE.DepthTexture(1,1,THREE.UnsignedIntType); }
+  get estimatedBytes() { return targetBytes(this); }
+  dispose() {
+    this.scene.dispose();
+    this.volume.dispose();
+    this.accumulation.forEach(target=>target.dispose());
+    this.surfaces.dispose();
+  }
+}
 
 /** Continuous scalar-volume compositing, in the original RAS physical frame.
  * Offscreen targets bound ray workload; source data is never downsampled or
@@ -24,15 +54,17 @@ export class ScanVolumeRenderer {
   private readonly blitMaterial: THREE.MeshBasicMaterial;
   private readonly texture: THREE.Data3DTexture;
   private transfer: THREE.DataTexture | null = null;
+  private transferLut?: ReturnType<typeof volumeTransfer>;
+  private opticalAtlasReady = false;
+  private opticalPreparation: {steps:ReturnType<typeof opticalAtlasSteps>;timer:ReturnType<typeof setTimeout> | null} | null = null;
+  private opticalPreparationFailed = false;
+  private readonly sourceOptics: OpticalSource;
   private preset = '';
   private automaticMriTransfer=false;
   private shellContext=false;
   private enabled = true;
-  private spacing:number;
-  private readonly sourceGrid:{inverse:THREE.Matrix4;shape:THREE.Vector3;spacing:number};
-  private readonly patientGrid?:{inverse:THREE.Matrix4;shape:THREE.Vector3;spacing:number;texture:THREE.Data3DTexture};
+  private readonly spacing:number;
   readonly supportTexture?:THREE.Data3DTexture;
-  get patientTexture(){return this.patientGrid?.texture;}
   private layers: ViewerVolume["compartments"];
   private readonly ownsTexture: boolean;
   private readonly background = new THREE.Color();
@@ -40,19 +72,22 @@ export class ScanVolumeRenderer {
   private readonly accumulation=Array.from({length:2},()=>new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,depthBuffer:false}));
   private readonly accumulateScene=new THREE.Scene();
   private readonly accumulateMaterial=new THREE.ShaderMaterial({glslVersion:THREE.GLSL3,vertexShader:volumeVertexShader,
-    fragmentShader:'precision highp float; in vec2 vUv; out vec4 outColor; uniform sampler2D uCurrent; uniform sampler2D uPrevious; uniform float uWeight; void main(){outColor=mix(texture(uPrevious,vUv),texture(uCurrent,vUv),uWeight);}',
+    fragmentShader:'precision highp float; in vec2 vUv; out vec4 outColor; uniform sampler2D uCurrent; uniform sampler2D uPrevious; uniform float uWeight; void main(){vec4 current=texture(uCurrent,vUv);outColor=uWeight==1.0?current:mix(texture(uPrevious,vUv),current,uWeight);}',
     depthTest:false,depthWrite:false,toneMapped:false,uniforms:{uCurrent:{value:null},uPrevious:{value:null},uWeight:{value:1}}});
   private samples=0;
   invalidate(){this.samples=0;}
   get needsRefinement(){return this.enabled&&this.samples>0&&this.samples<4;}
+  get opticsPending(){return this.opticalPreparation!==null;}
 
   constructor(private readonly renderer: THREE.WebGLRenderer, volume: ViewerVolume,
-    private readonly window: [number,number], codes?:Array<[number,number]>, sourceTexture?:THREE.Data3DTexture) {
+    private readonly window: [number,number], codes?:Array<[number,number]>, sourceTexture?:THREE.Data3DTexture,
+    private readonly onOpticsReady?:()=>void) {
     this.layers=volume.compartments;
     const affine=rasAffine(volume.affine,volume.frame),inverse=inverseAffine(affine);
     this.spacing=1/Math.max(...inverse.slice(0,3).map(row=>Math.hypot(...row.slice(0,3))));
-    const matrix=(a:number[][])=>new THREE.Matrix4().set(...a.flat() as Parameters<THREE.Matrix4['set']>);
-    this.sourceGrid={inverse:matrix(inverse),shape:new THREE.Vector3(...volume.shape),spacing:this.spacing};
+    const worldToVoxel=new THREE.Matrix4().set(...inverse.flat() as Parameters<THREE.Matrix4['set']>);
+    const shape=new THREE.Vector3(...volume.shape);
+    this.sourceOptics={signal:volume.mri,shape:volume.shape,affine,inverse,support:volume.headSupport?.data};
     this.ownsTexture=!sourceTexture;
     this.texture=sourceTexture??new THREE.Data3DTexture(volume.mri,volume.shape[2],volume.shape[1],volume.shape[0]);
     this.texture.format=THREE.RedFormat;this.texture.type=THREE.FloatType;
@@ -65,13 +100,6 @@ export class ScanVolumeRenderer {
       this.supportTexture.minFilter=this.supportTexture.magFilter=THREE.NearestFilter;
       this.supportTexture.unpackAlignment=1;this.supportTexture.needsUpdate=true;
     }
-    const field=volume.patientContext?.field;
-    if(field){
-      const texture=new THREE.Data3DTexture(field.signal,field.shape[2],field.shape[1],field.shape[0]);
-      texture.format=THREE.RedFormat;texture.type=THREE.FloatType;
-      texture.minFilter=texture.magFilter=this.texture.minFilter;texture.unpackAlignment=1;texture.needsUpdate=true;
-      this.patientGrid={inverse:matrix(inverseAffine(field.affine)),shape:new THREE.Vector3(...field.shape),spacing:field.affine[0][0],texture};
-    }
     this.sceneTarget=new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,depthBuffer:true});
     this.sceneTarget.depthTexture=new THREE.DepthTexture(1,1,THREE.UnsignedIntType);
     this.volumeTarget=new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,depthBuffer:false});
@@ -79,10 +107,12 @@ export class ScanVolumeRenderer {
       fragmentShader:volumeFragmentShader,depthTest:false,depthWrite:false,toneMapped:false,uniforms:{
         uHeadSupport:{value:this.supportTexture??null},uUseHeadSupport:{value:!!this.supportTexture},
         uVolume:{value:this.texture},uTransfer:{value:null},uScene:{value:this.sceneTarget.texture},uDrawScalar:{value:true},
-        uLabelWorldToVoxel:{value:this.sourceGrid.inverse},uLabelShape:{value:this.sourceGrid.shape},
-        uDepth:{value:this.sceneTarget.depthTexture},uWorldToVoxel:{value:new THREE.Matrix4().set(...inverse.flat() as Parameters<THREE.Matrix4['set']>)},
+        uOpticalSize:{value:new THREE.Vector2()},uOpticalGrid:{value:new THREE.Vector3()},uOpticalColumns:{value:1},
+        uOpticalCache:{value:false},
+        uLabelWorldToVoxel:{value:worldToVoxel},uLabelShape:{value:shape},
+        uDepth:{value:this.sceneTarget.depthTexture},uWorldToVoxel:{value:worldToVoxel},
         uCameraWorld:{value:new THREE.Matrix4()},uInverseProjection:{value:new THREE.Matrix4()},
-        uShape:{value:new THREE.Vector3(...volume.shape)},uRange:{value:new THREE.Vector2()},
+        uShape:{value:shape},uRange:{value:new THREE.Vector2()},
         uSkullMode:{value:0},uCt:{value:false},uScanPresentation:{value:false},uGradientOpacity:{value:false},uDensity:{value:.45},uStep:{value:this.spacing*.7},uLinear:{value:linear},
         uClipEnabled:{value:false},uClipPlane:{value:new THREE.Vector4()},
         uBackground:{value:this.background},
@@ -93,6 +123,7 @@ export class ScanVolumeRenderer {
         uExtraClipCount:{value:0},uExtraClips:{value:Array.from({length:7},()=>new THREE.Vector4())},
         uShadows:{value:true},uIsolate:{value:false},uInteractive:{value:false},
         uSampleIndex:{value:0},uSurfaceCount:{value:0},
+        uExport:{value:false},uSampleOrigin:{value:new THREE.Vector2()},
         ...Object.fromEntries(Array.from({length:5},(_,i)=>[[`uSurfaceColor${i}`,{value:null}],[`uSurfaceDepth${i}`,{value:null}]]).flat()),
       }});
     this.rayScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2,2),this.material));
@@ -100,22 +131,15 @@ export class ScanVolumeRenderer {
     this.blitScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2,2),this.blitMaterial));
     this.accumulateScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2,2),this.accumulateMaterial));
   }
-  configure(input: VolumeRenderingSettings | undefined, modality: string, clip: THREE.Plane | null, patientModel=false) {
-    const fused=patientModel?this.patientGrid:undefined;
-    const grid=fused??this.sourceGrid;
-    this.material.uniforms.uWorldToVoxel.value=grid.inverse;
-    this.material.uniforms.uShape.value=grid.shape;
-    this.material.uniforms.uVolume.value=fused?.texture??this.texture;
-    this.material.uniforms.uUseHeadSupport.value=!fused&&!!this.supportTexture;
-    this.spacing=grid.spacing;
-    if(fused)modality='Normalized patient context';
-    const settings=volumeSettings(input,modality);this.enabled=settings.enabled&&settings.density>0&&!(fused&&input?.isolateLabels);
+  configure(input: VolumeRenderingSettings | undefined, modality: string, clip: THREE.Plane | null) {
+    const settings=volumeSettings(input,modality);this.enabled=settings.enabled&&settings.density>0;
     const signature=JSON.stringify([settings.preset,input?.window,input?.points,modality]);
     if(signature!==this.preset){
-      const lut=volumeTransfer(settings.preset,fused?[0,1]:this.window,input,modality);
-      this.transfer?.dispose();this.transfer=new THREE.DataTexture(lut.data,1024,1,THREE.RGBAFormat,THREE.FloatType);
-      this.transfer.minFilter=this.transfer.magFilter=this.material.uniforms.uLinear.value?THREE.LinearFilter:THREE.NearestFilter;this.transfer.needsUpdate=true;
-      this.material.uniforms.uTransfer.value=this.transfer;
+      this.cancelOpticalPreparation();
+      const lut=volumeTransfer(settings.preset,this.window,input,modality);
+      this.transferLut=lut;
+      this.installOpticalAtlas(volumeOpticalAtlas(lut));
+      this.opticalPreparationFailed=false;
       this.automaticMriTransfer=lut.gradientOpacity;
       this.material.uniforms.uRange.value.set(...lut.range);this.preset=signature;
     }
@@ -126,6 +150,66 @@ export class ScanVolumeRenderer {
     this.material.uniforms.uDensity.value=settings.density;
     this.material.uniforms.uClipEnabled.value=!!clip;
     if(clip)this.material.uniforms.uClipPlane.value.set(clip.normal.x,clip.normal.y,clip.normal.z,clip.constant);
+    if(!this.enabled||input?.shadows===false||input?.isolateLabels)this.cancelOpticalPreparation();
+  }
+
+  private installOpticalAtlas(atlas:ReturnType<typeof volumeOpticalAtlas>){
+    const u=this.material.uniforms;
+    this.transfer?.dispose();
+    this.transfer=new THREE.DataTexture(atlas.data,atlas.width,atlas.height,THREE.RGBAFormat,THREE.HalfFloatType);
+    this.transfer.minFilter=this.transfer.magFilter=THREE.LinearFilter;
+    this.transfer.needsUpdate=true;
+    u.uTransfer.value=this.transfer;
+    u.uOpticalSize.value.set(atlas.width,atlas.height);
+    u.uOpticalGrid.value.set(...atlas.grid);
+    u.uOpticalColumns.value=atlas.columns;
+    this.opticalAtlasReady=atlas.height>1;
+  }
+
+  private cancelOpticalPreparation(){
+    const task=this.opticalPreparation;
+    if(task?.timer!=null)clearTimeout(task.timer);
+    this.opticalPreparation=null;
+    return task?.steps;
+  }
+
+  private prepareOpticalAtlas(exporting:boolean){
+    const u=this.material.uniforms;
+    const overrides=u.uIsolate.value || (u.uCt.value &&
+      (u.uSkullMode.value===1 || (!u.uScanPresentation.value && (u.uContextLayerCount.value>0 || u.uSkullMode.value===2))));
+    const useCache=u.uShadows.value&&!overrides;
+    if(!useCache)this.cancelOpticalPreparation();
+    if(useCache&&!this.opticalAtlasReady&&!this.opticalPreparationFailed&&this.transferLut){
+      if(exporting||!this.onOpticsReady){
+        const steps=this.cancelOpticalPreparation()??opticalAtlasSteps(this.transferLut,this.sourceOptics);
+        this.installOpticalAtlas(finishOpticalPreparation(steps));
+      }else if(!this.opticalPreparation){
+        const task={steps:opticalAtlasSteps(this.transferLut,this.sourceOptics),timer:null as ReturnType<typeof setTimeout>|null};
+        this.opticalPreparation=task;
+        const advance=()=>{
+          if(this.opticalPreparation!==task)return;
+          const deadline=performance.now()+5;
+          try {
+            do {
+              const next=task.steps.next();
+              if(next.done){
+                this.installOpticalAtlas(next.value);
+                this.opticalPreparation=null;
+                break;
+              }
+            }while(performance.now()<deadline);
+          }catch(error){
+            this.opticalPreparationFailed=true;
+            this.opticalPreparation=null;
+            console.warn('Volume optical cache unavailable; using exact probes.',error);
+          }
+          if(this.opticalPreparation===task)task.timer=setTimeout(advance,0);
+          else this.onOpticsReady?.();
+        };
+        task.timer=setTimeout(advance,0);
+      }
+    }
+    u.uOpticalCache.value=useCache&&this.opticalAtlasReady;
   }
   labels(texture:THREE.Data3DTexture,visible:Record<string,boolean>,settings:ViewerWorkspaceSettings,planes:THREE.Plane[]){
     this.shellContext=settings.contextStyle==='shell';
@@ -152,14 +236,13 @@ export class ScanVolumeRenderer {
   }
   get active(){return this.enabled;}
   get estimatedTargetBytes(){
-    const targets=[this.sceneTarget,this.volumeTarget,...this.accumulation,...this.surfacePass.targets,...this.surfacePass.cranial.targets.values(),this.surfacePass.tail];
-    if(this.interactionTargets)targets.push(this.interactionTargets.scene,this.interactionTargets.volume);
-    return targets.reduce((sum,target)=>sum+renderTargetBytes(target),0)+(this.transfer?.image.data?.byteLength??0);
+    const live=targetBytes({scene:this.sceneTarget,volume:this.volumeTarget,accumulation:this.accumulation,surfaces:this.surfacePass});
+    const drag=this.interactionTargets?renderTargetBytes(this.interactionTargets.scene)+renderTargetBytes(this.interactionTargets.volume):0;
+    return live+drag+(this.transfer?.image.data?.byteLength??0);
   }
   render(scene: THREE.Scene, camera: THREE.PerspectiveCamera, width: number, height: number,
     interactive: boolean, restoreViewport: ()=>void, longEdge=360, cranialSurfaces=false) {
     if(!this.enabled&&!cranialSurfaces){this.renderer.render(scene,camera);return;}
-    this.material.uniforms.uDrawScalar.value=this.enabled;
     const pixelRatio=this.renderer.getPixelRatio();
     // The source texture stays at acquired resolution. Bound a single Scan
     // draw while transparent MRI traverses the complete field, rather than
@@ -176,49 +259,71 @@ export class ScanVolumeRenderer {
     }
     const sceneTarget=interactive?this.interactionTargets!.scene:this.sceneTarget;
     const volumeTarget=interactive?this.interactionTargets!.volume:this.volumeTarget;
+    try {
+      this.blitMaterial.map=this.renderSample(scene,camera,{scene:sceneTarget,volume:volumeTarget,accumulation:this.accumulation,surfaces:this.surfacePass},
+        w,h,interactive,this.samples).texture;
+      this.samples=interactive?0:this.samples+1;
+    } finally {
+      this.renderer.setRenderTarget(null);
+      restoreViewport();
+    }
+    this.renderer.render(this.blitScene,this.camera);
+    return {width:w,height:h,samples:interactive?1:this.samples,opticsPending:this.opticsPending};
+  }
+
+  renderExportSample(scene:THREE.Scene,camera:THREE.PerspectiveCamera,targets:ScanVolumeExportTargets,
+    width:number,height:number,sample:number,originY:number) {
+    return this.renderSample(scene,camera,targets,width,height,false,sample,originY);
+  }
+
+  private renderSample(scene:THREE.Scene,camera:THREE.PerspectiveCamera,targets:VolumeTargets,
+    w:number,h:number,interactive:boolean,sample:number,exportOriginY?:number) {
+    const {scene:sceneTarget,volume:volumeTarget,accumulation,surfaces:surfacePass}=targets;
     if(sceneTarget.width!==w||sceneTarget.height!==h){sceneTarget.setSize(w,h);volumeTarget.setSize(w,h);}
+    const isExport=exportOriginY!==undefined;
+    if(this.enabled)this.prepareOpticalAtlas(isExport);
     const uniforms=this.material.uniforms;
+    uniforms.uDrawScalar.value=this.enabled;
     uniforms.uScene.value=sceneTarget.texture;uniforms.uDepth.value=sceneTarget.depthTexture;
-    this.blitMaterial.map=volumeTarget.texture;
     camera.updateMatrixWorld();
     uniforms.uCameraWorld.value.copy(camera.matrixWorld);
     uniforms.uInverseProjection.value.copy(camera.projectionMatrixInverse);
-    uniforms.uStep.value=this.spacing*(interactive?3:scan?1:.6);
+    uniforms.uStep.value=this.spacing*(interactive ? 3 : isExport ? .5 : uniforms.uScanPresentation.value ? 1 : .6);
     uniforms.uInteractive.value=interactive;
-    uniforms.uSampleIndex.value=interactive?0:this.samples;
+    uniforms.uSampleIndex.value=interactive?0:sample;
+    uniforms.uExport.value=isExport;
+    uniforms.uSampleOrigin.value.set(0,exportOriginY??0);
     this.renderer.getClearColor(this.background);
     const clearAlpha=this.renderer.getClearAlpha();
     const hidden:THREE.Object3D[]=[];
-    scene.traverse(o=>{if(o instanceof THREE.Mesh && o.visible && o.userData.compartment && !Array.isArray(o.material) && o.material.opacity<1){hidden.push(o);o.visible=false;}});
     try {
       this.renderer.setClearColor(0,0);
-      if(interactive||this.samples===0){
+      if(interactive||sample===0){
+        scene.traverse(o=>{if(o instanceof THREE.Mesh && o.visible && o.userData.compartment && !Array.isArray(o.material) && o.material.opacity<1){hidden.push(o);o.visible=false;}});
         this.renderer.setRenderTarget(sceneTarget);this.renderer.clear();this.renderer.render(scene,camera);
         hidden.forEach(o=>o.visible=true);
-        const surfaces=this.surfacePass.render(this.renderer,scene,camera,sceneTarget.depthTexture!,w,h,interactive);
+        const surfaces=surfacePass.render(this.renderer,scene,camera,sceneTarget.depthTexture!,w,h,interactive);
         uniforms.uSurfaceCount.value=surfaces.count;
         for(let i=0;i<5;i++){
-          uniforms[`uSurfaceColor${i}`].value=i===surfaces.tailIndex?this.surfacePass.tail.texture:this.surfacePass.targets[i].texture;
-          uniforms[`uSurfaceDepth${i}`].value=this.surfacePass.targets[i].depthTexture;
+          uniforms[`uSurfaceColor${i}`].value=i===surfaces.tailIndex?surfacePass.tail.texture:surfacePass.targets[i].texture;
+          uniforms[`uSurfaceDepth${i}`].value=surfacePass.targets[i].depthTexture;
         }
       }
       this.renderer.setRenderTarget(volumeTarget);this.renderer.clear();this.renderer.render(this.rayScene,this.camera);
-      if(!interactive){
-        const current=this.accumulation[this.samples%2],previous=this.accumulation[(this.samples+1)%2];
-        if(current.width!==w||current.height!==h){current.setSize(w,h);previous.setSize(w,h);}
-        const u=this.accumulateMaterial.uniforms;u.uCurrent.value=volumeTarget.texture;u.uPrevious.value=previous.texture;u.uWeight.value=1/(this.samples+1);
-        this.renderer.setRenderTarget(current);this.renderer.clear();this.renderer.render(this.accumulateScene,this.camera);
-        this.blitMaterial.map=current.texture;this.samples++;
-      }else this.samples=0;
+      if(interactive||isExport&&!this.enabled)return volumeTarget;
+      const current=accumulation[sample%2],previous=accumulation[(sample+1)%2];
+      if(current.width!==w||current.height!==h){current.setSize(w,h);previous.setSize(w,h);}
+      const u=this.accumulateMaterial.uniforms;u.uCurrent.value=volumeTarget.texture;u.uPrevious.value=previous.texture;u.uWeight.value=1/(sample+1);
+      this.renderer.setRenderTarget(current);this.renderer.clear();this.renderer.render(this.accumulateScene,this.camera);
+      return current;
     } finally {
       hidden.forEach(o=>o.visible=true);
       this.renderer.setClearColor(this.background,clearAlpha);
-      this.renderer.setRenderTarget(null);restoreViewport();
     }
-    this.renderer.render(this.blitScene,this.camera);
   }
   dispose(){
-    this.sceneTarget.dispose();this.volumeTarget.dispose();if(this.ownsTexture)this.texture.dispose();this.patientGrid?.texture.dispose();this.supportTexture?.dispose();this.transfer?.dispose();
+    this.cancelOpticalPreparation();
+    this.sceneTarget.dispose();this.volumeTarget.dispose();if(this.ownsTexture)this.texture.dispose();this.supportTexture?.dispose();this.transfer?.dispose();
     this.interactionTargets?.scene.dispose();this.interactionTargets?.volume.dispose();
     this.surfacePass.dispose();this.accumulation.forEach(t=>t.dispose());this.accumulateMaterial.dispose();
     for(const scene of [this.rayScene,this.blitScene,this.accumulateScene])scene.traverse(child=>{if(child instanceof THREE.Mesh)child.geometry.dispose();});

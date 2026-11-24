@@ -18,5 +18,7 @@ export function renderTargetBytes(target:THREE.WebGLRenderTarget):number {
   const channels=(format:number)=>format===THREE.RedFormat?1:format===THREE.RGFormat?2:format===THREE.RGBFormat?3:4;
   const color=target.textures.reduce((sum,texture)=>sum+bytes(texture.type)*channels(texture.format),0);
   const depth=target.depthBuffer?(target.depthTexture?bytes(target.depthTexture.type):4):0;
-  return target.width*target.height*(color+depth)*Math.max(1,target.samples);
+  // Multisampled targets may keep both the resolved texture and per-sample
+  // attachments, depending on the driver's multisample-to-texture support.
+  return target.width*target.height*(color+depth)*(1+target.samples);
 }

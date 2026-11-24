@@ -22,6 +22,18 @@
     }
   },
   "maxContextTriangles": 2000000,
+  "nativeVascular": {
+    "version": "native-bounded-vessel-v1",
+    "iterations": 24,
+    "passBand": 0.31,
+    "categoricalPassBand": 0.56,
+    "voxelAltitudes": 0.7,
+    "radiusFraction": 0.58,
+    "balancePasses": 3,
+    "balanceStrength": 0.9,
+    "scoreCrossingFraction": 0.7,
+    "scoreCrossingPinnedAltitudes": 0.35
+  },
   "native": {
     "version": "native-bounded-display-v3",
     "maxContextTriangles": 4500000,

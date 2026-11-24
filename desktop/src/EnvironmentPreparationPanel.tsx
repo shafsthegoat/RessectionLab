@@ -1,15 +1,16 @@
 import {useState} from 'react';
 import type {Binding,EnvironmentOptions,EnvironmentRole} from './native-anatomy-data';
 import {rehearsalAvailability} from './NativeStudyEvidence';
+import type {Point3} from './viewer/coordinates';
 import './native-planning-presentation.css';
 
 const roles:EnvironmentRole[]=['brain','tumor','bone','vessels'];
 const roleNames:Record<EnvironmentRole,string>={brain:'Brain',tumor:'Tumor',bone:'Bone',vessels:'Vessels'};
 export interface EnvironmentApproach {approachId:string;measurementHash?:string;parameterHash:string;targetLayerId:string;snapshotId:string}
-export interface EnvironmentPreparation {approach?:EnvironmentApproach;collectionId:string;snapshotId:string;layers:Record<string,string>;allowUnreviewedRegistration:boolean}
-export function EnvironmentPreparationPanel({binding,approach,routeName,measurements,options,busy,onPrepare,onAnatomy}:{
+export interface EnvironmentPreparation {approach?:EnvironmentApproach;collectionId:string;snapshotId:string;layers:Record<string,string>;allowUnreviewedRegistration:boolean;nativeWallCenter?:Point3}
+export function EnvironmentPreparationPanel({binding,approach,routeName,measurements,options,busy,patientCursor,onPrepare,onAnatomy}:{
   routeName?:string;measurements?:import('./native-approaches').NativeApproach['measurements'];
-  binding:Binding;approach?:EnvironmentApproach;options?:EnvironmentOptions;busy:boolean;onPrepare:(options:EnvironmentPreparation)=>Promise<void>;onAnatomy:()=>void;
+  binding:Binding;approach?:EnvironmentApproach;options?:EnvironmentOptions;busy:boolean;patientCursor?:Point3|null;onPrepare:(options:EnvironmentPreparation)=>Promise<void>;onAnatomy:()=>void;
 }) {
   const [layers,setLayers]=useState<Record<string,string>>(()=>Object.fromEntries(roles.map(role=>[
     role,role==='tumor'&&approach?approach.targetLayerId:options?.layers.find(layer=>layer.role===role&&layer.status==='ready')?.layerId??'',
@@ -22,11 +23,22 @@ export function EnvironmentPreparationPanel({binding,approach,routeName,measurem
   const canPrepare=!!options&&!options.referenceIssue&&selected.length>0&&(!approach||selected.some(layer=>layer.role==='tumor'))&&
     selected.every(layer=>layer.status==='ready'||layer.status==='estimated_alignment'&&allow);
   const missing=roles.filter(role=>!selected.some(layer=>layer.role===role));
+  const wallIssue=selected.find(layer=>layer.nativeWallIssue)?.nativeWallIssue;
+  const canPrepareNative=canPrepare&&!!patientCursor&&!!layers.vessels&&!!layers.brain&&!unreviewed.length&&!wallIssue&&!approach;
   const forecast=approach?options?.selectedRouteForecast:undefined;
   const crossing=measurements?.normalTraversal?.supportedNonTargetVoxelCenterVolumeMm3;
   const alignmentRequired=unreviewed.length>0&&!allow;
   const readiness=canPrepare?'ready':options&&!options.referenceIssue&&alignmentRequired?'review':'unavailable';
   const status=canPrepare?'Ready to prepare':!options||options.referenceIssue?'Preparation unavailable':alignmentRequired?'Alignment choice required':'Select source anatomy';
+  async function prepare(nativeWallCenter?:Point3){
+    setPreparing(true);setError(null);
+    try{
+      await onPrepare({collectionId:binding.collectionId,snapshotId:binding.document.snapshot_id,
+        layers:Object.fromEntries(selected.map(layer=>[layer.role,layer.layerId])),allowUnreviewedRegistration:allow,
+        ...(approach?{approach}:{}),...(nativeWallCenter?{nativeWallCenter}:{})});
+    }catch(e){setError(e instanceof Error?e.message:String(e));}
+    finally{setPreparing(false);}
+  }
   return <section className="surgical-panel environment-preparation" aria-label="Prepare standard rehearsal environment" aria-busy={preparing}>
     <h2>{approach?'Inspect planned environment':'Limited research rehearsal'}</h2>
     <div className="environment-preparation-status" data-readiness={readiness} role="status">
@@ -62,20 +74,16 @@ export function EnvironmentPreparationPanel({binding,approach,routeName,measurem
           <p>Source revision <code>{approach.snapshotId}</code></p>
         </details>
       </section>}
-      <div className="environment-preparation-actions"><button className="primary-button" disabled={!canPrepare} onClick={async()=>{
-        setPreparing(true);setError(null);
-        try{
-          await onPrepare({collectionId:binding.collectionId,snapshotId:binding.document.snapshot_id,
-            layers:Object.fromEntries(selected.map(layer=>[layer.role,layer.layerId])),allowUnreviewedRegistration:allow,...(approach?{approach}:{})});
-        }catch(e){setError(e instanceof Error?e.message:String(e));}
-        finally{setPreparing(false);}
-      }}>{preparing?'Preparing environment…':approach?'Inspect approach in engine':'Prepare standard environment'}</button>
+      <div className="environment-preparation-actions"><button className="primary-button" disabled={!canPrepare} onClick={()=>void prepare()}>{preparing?'Preparing environment…':approach?'Inspect approach in engine':'Prepare standard environment'}</button>
+      {!approach&&<button disabled={!canPrepareNative} onClick={()=>patientCursor&&void prepare(patientCursor)}>Prepare native wall at cursor</button>}
       <button onClick={onAnatomy}>Review anatomy and alignment</button>
       </div>
+      {!approach&&wallIssue&&<p className="surgical-note">{wallIssue}</p>}
     </fieldset>
     {error&&<div role="alert" className="surgical-error environment-preparation-error"><strong>Preparation failed</strong><p>{error}</p></div>}
     <details className="environment-preparation-method"><summary>Preparation checks & limitations</summary>
-      <p className="surgical-note">The derivative uses a 1 mm research grid and V2 mechanics. Unavailable anatomy remains unassessed. Preparation checks occupied labels, source fixity and material overlap.</p>
+      <p className="surgical-note">The standard environment uses a 1 mm grid and V2 mechanics. Unavailable anatomy remains unassessed.</p>
+      {!approach&&<p className="surgical-note">For a local native wall, place the cursor on a vessel in the reviewed patient frame. Select the brain and native angiography score layers. The engine checks local source coverage, vessel continuity and wall clearance before opening a roughly 24 mm working region.</p>}
     </details>
   </section>;
 }

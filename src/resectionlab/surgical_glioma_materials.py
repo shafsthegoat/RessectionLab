@@ -58,7 +58,7 @@ def validate(scene):
     p = scene.properties.get(PROPERTY)
     if p is None:
         return
-    optional = {'scalpSeamCell', 'biopsyNeckFace', 'vesselMotionModel', rods.GEOMETRY, wall_sweep.PROPERTY,
+    optional = {'scalpSeamCell', 'biopsyNeckFace', 'vesselMotionModel', rods.GEOMETRY, rods.SECTION_MECHANICS, wall_sweep.PROPERTY,
                 vertex_motion.PROPERTY}
     if (
         not isinstance(p, dict)
@@ -80,6 +80,7 @@ def validate(scene):
     if (vertex_motion.PROPERTY in p and (p[vertex_motion.PROPERTY] != vertex_motion.POLICY
                                         or p.get(wall_sweep.PROPERTY) != wall_sweep.POLICY)):
         raise ValueError('VESSEL_VERTEX_TRANSPORT_REQUIRES_SWEPT_NATIVE_WALL')
+    rods.validate_section_profile(p, _bounded)
     if not all(isinstance(p[key], str) and p[key].strip() for key in ('assignment', 'boundary')) or not (
         isinstance(p['sources'], list)
         and p['sources']
@@ -614,6 +615,9 @@ def _source_segment_load(engine, edge, row):
     strain = 0.0
     loaded_face = None
     resistance = 1.0
+    section_resistance = 1.0
+    traction = 0.0
+    section = rods.mechanics(engine)
     if pairs:
         deformation = engine.state.get('deformation', {})
         sources = sorted({cell for pair in pairs for cell in pair})
@@ -623,13 +627,29 @@ def _source_segment_load(engine, edge, row):
                 if rods.enabled(engine) else engine.scene.points(sources))
         current = rest + np.asarray([deformation.get(str(cell), [0., 0., 0.]) for cell in sources])
         spans = np.linalg.norm(rest[b] - rest[a], axis=1)
-        extension = np.maximum(0., np.linalg.norm(current[b] - current[a], axis=1) / spans - 1)
+        lengths = np.linalg.norm(current[b] - current[a], axis=1)
+        extension = np.maximum(0., lengths / spans - 1)
         peak = int(extension.argmax())
         strain = float(extension[peak])
         loaded_face = list(pairs[peak]) if strain else None
         resistance = float(spans @ (1 + extension) ** 3 / spans.sum())
+        traction = p['axialStiffnessN'][edge['kind']] * strain
+        if section is not None:
+            definition = rods.definitions(engine)
+            _, accepted = rods._current(engine, definition)
+            sites = np.array([definition.index[cell] for cell in sources])
+            reference_radius = definition.radius[sites]
+            accepted_radius = accepted[sites]
+            reference = spans @ _tapered_resistance(reference_radius[a], reference_radius[b])
+            deformed = lengths @ _tapered_resistance(accepted_radius[a], accepted_radius[b])
+            section_resistance = float(deformed / reference)
+            area, _ = rods._section_rigidity((reference_radius[a] + reference_radius[b]) / 2.,
+                                             section['wallThicknessToLumenRadius'], section['axialModulusMPa'][edge['kind']])
+            traction = float((area * extension).max())
     row.update(axialStrain=strain, loadedFace=loaded_face, stretchResistanceRatio=resistance,
-               tractionN=p['axialStiffnessN'][edge['kind']] * strain if row['cutFace'] is None else 0.0)
+               tractionN=traction if row['cutFace'] is None else 0.0)
+    if section is not None:
+        row['acceptedLumenResistanceRatio'] = section_resistance
     if strain > row.get('peakAxialStrain', 0.) or 'peakAxialStrain' not in row:
         row['peakAxialStrain'] = strain
         row['peakLoadedFace'] = loaded_face
@@ -641,3 +661,8 @@ def _source_segment_load(engine, edge, row):
         _record_edges(engine, 'transectedEdges', [tuple(sorted(loaded_face))])
         row['tractionN'] = 0.0
         row['injuryCause'] = 'declared-tether-stretch'
+
+
+def _tapered_resistance(a, b):
+    """Integral of inverse fourth power along a linearly tapered lumen."""
+    return (a * a + a * b + b * b) / (3. * (a * b) ** 3)

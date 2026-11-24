@@ -1,5 +1,5 @@
 import {useNativeApproaches} from './use-native-approaches';
-import {nextScanState,migrateSkullView,vesselScopeForView,corticalLayers,cranialComposition,hasAngiographicArteries,initialNativeLayers,presentationLayers,anatomyPresentation,defaultAnatomyPresentation} from './native-study-state';
+import {nextScanState,migrateSkullView,vesselScopeForView,corticalLayers,cranialComposition,hasNativeAngiographicVessels,initialNativeLayers,presentationLayers,anatomyPresentation,defaultAnatomyPresentation} from './native-study-state';
 import type {AnatomyPresentation} from './native-study-state';
 import {drainLayerRequests} from './native-layer-queue';
 import {mergeResidentLayers,prepareNativeLabels} from './native-layer-residency';
@@ -10,7 +10,7 @@ import type {Binding,CranialView,Draft,NativeAnatomyApi,NativeScanState,NativeVi
 import type {ViewerVesselTrace,ViewerVolume} from './viewer/contracts';
 import type {Point3} from './viewer/coordinates';
 import {rasAffine,transformPoint,volumeBounds} from './viewer/coordinates';
-import {newClippingPosition,usesPatientContext,viewerCutaway} from './viewer/workspaceSettings';
+import {newClippingPosition,usesPatientCutaway,viewerCutaway} from './viewer/workspaceSettings';
 import type {ViewerWorkspaceSettings,ViewerCameraState,ViewerCutaway} from './viewer/workspaceSettings';
 export const nativeDefaults=():ViewerWorkspaceSettings=>({layout:'3d-focus',showPlane:false,sliceOverlay:'contour',layerOpacity:{brain:.06,tumor:1,vessels:1,bone:1,'scalp-envelope':.02,__fragment_review:1},volumeRendering:{enabled:true,density:.18}});
 const retiredClippingMessage='Alignment updated · A cutaway outside the new field was cleared.';
@@ -52,7 +52,6 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
   const [pendingLayers,setPendingLayers]=useState<string[]>([]),[layerErrors,setLayerErrors]=useState<Record<string,string>>({});
   const residentVolume=useRef<ViewerVolume|null>(null),layerTask=useRef<Promise<void>|null>(null);
   const packing=useRef<AbortController|null>(null),failedLayers=useRef<Record<string,string>>({}),unavailableRef=useRef<string[]>([]);
-  const contextCache=useRef<ViewerVolume['patientContext']>(undefined);
   const appearanceCache=useRef(new Map<string,Float32Array>());
   const sourceImage=useRef<{key:string;data:Float32Array}|null>(null);
   const generation=useRef(0),active=useRef(false),requestId=useRef<string|null>(null),stroke=useRef<Point3[]>([]);
@@ -76,14 +75,15 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
   const initial=(b:Binding,s:string,independent:boolean=!!s&&s!==b.document.reference_series&&!b.document.transforms?.[s]):NativeScanState=>{
     const modality=b.document.series.find(scan=>scan.id===s)?.modality??'MRI';
     const {available,cortex,visible}=initialNativeLayers(b.document,s,independent);
-    const structures=(!independent&&b.document.series.length>1)||cortex.length>0||hasAngiographicArteries(available,modality,s);
+    const angiography=hasNativeAngiographicVessels(available,modality,s);
+    const structures=(!independent&&b.document.series.length>1)||cortex.length>0||angiography;
     const review=b.document.vascular_review;
     const fieldEdgeReview=review?.field_edge_compartment_review?.disjoint_union_matches_selected===true;
     const focusedReview=review?.skull_exterior_compartment_review?.disjoint_union_matches_selected===true||
       review?.source_disagreement_compartment_review?.disjoint_union_matches_selected===true;
     const separatedReview=nativeVascularReview(b)&&b.readOnlyStudy&&s===b.document.reference_series&&
       (review?.posterior_compartment_review?.disjoint_union_matches_selected===true||fieldEdgeReview||focusedReview);
-    const mode=separatedReview?'vascular':structures?'segmentation':defaultAnatomyPresentation(modality);
+    const mode=separatedReview||(angiography&&!/^\s*CT/i.test(modality))?'vascular':structures?'segmentation':defaultAnatomyPresentation(modality);
     const appearanceLayers=separatedReview&&focusedReview?presentationLayers(b.document,s):available;
     const settings=anatomyPresentation(nativeDefaults(),appearanceLayers,mode,modality,s);
     if(separatedReview&&(fieldEdgeReview||focusedReview))settings.vesselShading='large';
@@ -100,8 +100,8 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
   }
   const composable=binding&&patientFrameReady?presentationLayers(binding.document,series).filter(layer=>!unavailable.includes(layer.id)):[];
   const hasCranialView=corticalLayers(composable).length>0;
-  const patientField=volume?.patientContext?.field;
-  const patientCutawayActive=usesPatientContext(scanState.settings,!!patientField);
+  const patientBounds=volume?.patientContext?.boundsRasMm;
+  const patientCutawayActive=usesPatientCutaway(scanState.settings,!!patientBounds);
   const state=patientCutawayActive
     ? {...scanState,settings:skullDisplay({...scanState.settings,...viewerCutaway(patientCutaway)})}
     : scanState;
@@ -162,13 +162,12 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
       const result=await api.anatomyView({...args(b),seriesId:s,layers:ids,original:raw,patientModel:b.document.series.length>1,previewAlignment:true,vesselScope:scopeRef.current,...vesselSurfaceOptions(b,view.settings),...extra});
       if(seq!==generation.current)return;
       const imageKey=b.collectionId+"/"+s+"/"+result.mri.sha256;
-      let hydrated=await hydrateAnatomy(result,api,sourceImage.current?.key===imageKey?sourceImage.current.data:undefined,{patientContext:contextCache.current},b.document.layers,appearanceCache.current);if(seq!==generation.current)return;
-      contextCache.current=hydrated.patientContext;
+      let hydrated=await hydrateAnatomy(result,api,sourceImage.current?.key===imageKey?sourceImage.current.data:undefined,undefined,b.document.layers,appearanceCache.current);if(seq!==generation.current)return;
       hydrated.displayIdentity=JSON.stringify([b.collectionId,s,result.mri.sha256,b.document.snapshot_id,raw,seq]);
       hydrated=await prepared(hydrated);if(seq!==generation.current)return;
       sourceImage.current={key:imageKey,data:hydrated.mri};
       const next={...view,cursor:view.cursor??transformPoint(hydrated.affine,hydrated.shape.map(n=>(n-1)/2) as Point3)};
-      if(legacyCutaway&&usesPatientContext(next.settings,!!hydrated.patientContext?.field)){
+      if(legacyCutaway&&usesPatientCutaway(next.settings,!!hydrated.patientContext?.boundsRasMm)){
         setPatientCutaway(viewerCutaway(next.settings));
         next.settings={...next.settings,...viewerCutaway({})};
       }
@@ -180,7 +179,8 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
     previousCranialView.current=null;generation.current++;resetLayers();installVolume(null);setBinding(b);setDraft(null);setOriginal(false);setReview(null);setComponents([]);setEditLayer(null);
     const saved=b.viewState?.snapshotId===b.document.snapshot_id?b.viewState:null;setSelectedStructure(saved?.selectedStructure??null);
     setPatientCutaway(saved?.patientCutaway??{});
-    scopeRef.current=vesselScopeForView(saved);setVesselScope(scopeRef.current);
+    scopeRef.current=vesselScopeForView(saved,!nativeVascularReview(b)&&b.document.preparation_workflow==='native-adaptive-v1');
+    setVesselScope(scopeRef.current);
     const s=saved?.seriesId??b.document.reference_series??'';setSeries(s);
     const views=saved?.states??{};const base=migrateSkullView(views[s]??initial(b,s),b.document.layers);
     const v=nativeVascularReview(b)&&base.settings.smoothSurfaces===undefined
@@ -192,7 +192,7 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
     else setMessage('Add a source scan to begin.');
   },[api]);
   async function create(patientId:string,timepoint='preoperative'):Promise<Binding|null>{let result:Binding|null=null;await run(async()=>{result=await api!.anatomyCreate({patientId,timepoint})});if(result)await install(result);return result;}
-  function clear(){appearanceCache.current.clear();contextCache.current=undefined;sourceImage.current=null;generation.current++;resetLayers();setBinding(null);installVolume(null);setPatientCutaway({});setDraft(null);setReview(null);setEditLayer(null);}
+  function clear(){appearanceCache.current.clear();sourceImage.current=null;generation.current++;resetLayers();setBinding(null);installVolume(null);setPatientCutaway({});setDraft(null);setReview(null);setEditLayer(null);}
   function selectScan(s:string,mode?:AnatomyPresentation,inspectLayer?:string){if(!binding||busy||draft||s===series)return;
     const targetSource=volume?.patientContext?.sources.find(source=>source.seriesId===s);
     const alignment=targetSource?.alignment??'unavailable';
@@ -203,7 +203,7 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
     const separate=independentTarget||registration==='independent source frame';
     let v=migrateSkullView(separate?destination:nextScanState(scanState,destination,linked),binding.document.layers);
     if(patientCutawayActive&&alignment!=='unavailable')v={...v,settings:{...v.settings,
-      presentation:scanState.settings.presentation,camera:readCamera.current?.()??scanState.settings.camera,volumeRendering:scanState.settings.volumeRendering}};
+      presentation:scanState.settings.presentation,camera:readCamera.current?.()??scanState.settings.camera}};
     if(mode){
       const modality=binding.document.series.find(scan=>scan.id===s)?.modality??'MRI';
       v={...v,settings:skullDisplay({...anatomyPresentation(v.settings,presentationLayers(binding.document,s,volume?.patientContext?.sources),mode,modality,s),...viewerCutaway(v.settings)})};
@@ -218,7 +218,7 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
     const available=presentationLayers(binding.document,series,volume?.patientContext?.sources);
     updateState({cranialView:undefined});
     const settings=anatomyPresentation(state.settings,available,mode,scan?.modality??'MRI',series);
-    if(usesPatientContext(settings,!!patientField)===patientCutawayActive)updateSettings(settings);
+    if(usesPatientCutaway(settings,!!patientBounds)===patientCutawayActive)updateSettings(settings);
     else updateState({settings:skullDisplay({...settings,...viewerCutaway(scanState.settings)})});
     if(mode==='segmentation'){
       const missing=corticalLayers(available).filter(layer=>!state.visible[layer.id]);
@@ -308,7 +308,7 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
     if(point){const prev=stroke.current.at(-1);if(prev){const distance=Math.hypot(...point.map((v,i)=>v-prev[i]));const steps=Math.min(200,Math.ceil(distance/Math.max(.2,radius*.4)));for(let i=1;i<=steps;i++)stroke.current.push(point.map((v,j)=>prev[j]+(v-prev[j])*i/steps) as Point3)}else stroke.current.push(point)}
     if(phase==='end'&&stroke.current.length)void edit(tool,stroke.current.splice(0,10000));
   }
-  const currentViewState=():NativeViewState|null=>binding?{schema:'patient-anatomy-view-v1',patientId:binding.document.patient_id,snapshotId:binding.document.snapshot_id,seriesId:series,states,patientCutaway,vesselScope:scopeRef.current,vesselDisplayVersion:2,selectedApproachId:planning.selectedId,selectedPlanningTargetId:planning.activeTargetLayerId,selectedApproachIds:planning.selectedApproachIds,selectedStructure}:null;
+  const currentViewState=():NativeViewState|null=>binding?{schema:'patient-anatomy-view-v1',patientId:binding.document.patient_id,snapshotId:binding.document.snapshot_id,seriesId:series,states,scalarTransferBasis:'selected-acquisition-v1',patientCutaway,vesselScope:scopeRef.current,vesselDisplayVersion:2,selectedApproachId:planning.selectedId,selectedPlanningTargetId:planning.activeTargetLayerId,selectedApproachIds:planning.selectedApproachIds,selectedStructure}:null;
   async function save(saveArchive=true){if(!binding||binding.readOnlyStudy||!api||draft)return;await run(async()=>{
     const viewState=currentViewState()!;
     if(series)await api.anatomySaveView({...args(),viewState,saveArchive});setMessage('Workspace saved · scans, layers and views preserved');
@@ -398,8 +398,8 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
   function changeSkullMode(mode:NonNullable<ViewerWorkspaceSettings['skullMode']>){
     if(!binding||!volume)return;
     const bone=Object.fromEntries(binding.document.layers.filter(l=>['bone','skull'].includes(l.kind)).map(l=>[l.id,mode==='transparent'?.08:1]));
-    const bounds=patientCutawayActive&&patientField
-      ? volumeBounds(patientField.shape,patientField.affine,true)
+    const bounds=patientCutawayActive&&patientBounds
+      ? patientBounds
       : volumeBounds(volume.shape,rasAffine(volume.affine,volume.frame),true);
     const value=newClippingPosition('z',bounds,state.cursor?.[2]);
     const prior=state.settings.clipping;

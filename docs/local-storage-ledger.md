@@ -79,6 +79,11 @@ The next native wall continuation is indexed at
 It links the matched native contact and transection captures, the graph-selected
 cohort workspaces, and the short-edge motion audit.
 
+The November 24 desktop reconstruction comparisons are indexed at
+`qc/integrated-anatomy-20261124-v1/README.md`. The index binds the app captures,
+physical geometry audits, TOF cohort inventory and mechanics controls to their
+source and build receipts. Restricted EDEN images and results stay on the HDD.
+
 Paths below are relative to the RessectionLab root. This compact ledger covers
 that area, not unrelated personal files elsewhere on the HDD. Presence does not
 establish scientific readiness or a completed build; consult each run's receipts.

@@ -2,10 +2,14 @@ import json
 from pathlib import Path
 from types import SimpleNamespace
 
+import nibabel as nib
 import numpy as np
 import pytest
 
 from resectionlab.anatomy_bridge import VASCULAR_REVIEW_MANIFEST, dispatch, open_anatomy_manifest
+from resectionlab.anatomy_package import open_package, save_package
+from resectionlab.anatomy_workspace import save_view
+from resectionlab.desktop_bridge import BridgeSession, _Request
 from resectionlab.patient_anatomy import PatientImagingCollection, digest, file_hash
 from resectionlab.vascular_cleanup import (
     HIDDEN, RETAINED, UNCERTAIN, classify_components, review_component_visibility,
@@ -56,6 +60,71 @@ def test_no_source_support_abstains_and_preserves_all_components():
     np.testing.assert_array_equal(partition > 0, mask)
     assert report["hidden_components"] == 0
     assert report["reference_signal_available"] is False
+
+
+def test_native_view_hides_only_detached_exterior_air_and_restores_complete_scores(tmp_path):
+    shape = (64, 64, 64)
+    distance2 = np.sum((np.indices(shape) - 32) ** 2, axis=0)
+    signal = ((distance2 < 15**2) & (distance2 > 10**2)).astype(np.float32) * 1000
+    signal[10:12, 51, 49] = 1000
+    base = np.zeros(shape, dtype=bool)
+    base[14:27, 32, 32] = True     # Attached route with a dark tip.
+    base[32:37, 32, 33] = True     # Dark interior thin route.
+    base[10:12, 50, 49] = True     # Near a separately measured source signal.
+    base[1:4, 20, 10] = True       # Close to an acquisition face.
+    base[9:13, 52, 20] = True      # Isolated exterior air with a complete native neighborhood.
+    image = nib.Nifti1Image(signal, np.eye(4))
+    image.header.set_xyzt_units("mm")
+    scan_path = tmp_path / "tof.nii"
+    nib.save(image, scan_path)
+    c = PatientImagingCollection.create(tmp_path / "study", "native-tof-fixture")
+    source = c.add_series(scan_path, series_id="tof", modality="TOF")
+    estimate = c.add_layer(
+        base.astype(np.uint8), np.eye(4), layer_id="estimate", kind="vessels", source_series="tof",
+        role="context", color="#b83946",
+        provenance={"model": "vesselfm", "source": source["original"]["sha256"]},
+        probability=np.where(base, .9, .1).astype(np.float32),
+    )
+    c.save()
+    original_snapshot = file_hash(c.root / "patient-anatomy.json")
+    expected = base.copy()
+    expected[9:13, 52, 20] = False
+
+    def check_workspace(root, saved_scope=None):
+        bridge = BridgeSession(tmp_path / "transfers")
+
+        def call(op, args):
+            return bridge.execute(op, args, _Request("tof-exterior"), lambda *_: None)
+
+        opened = call("anatomyOpen", {"path": str(root / "patient-anatomy.json")})
+        if saved_scope is not None:
+            assert opened["viewState"]["vesselScope"] == saved_scope
+        args = {"collectionId": opened["collectionId"], "snapshotId": c.identity(), "seriesId": "tof",
+                "layers": ["estimate"]}
+        for scope, raw, mask in (("exterior-air", False, expected), ("all", False, base), ("exterior-air", True, base)):
+            layer = call("anatomyView", {**args, "vesselScope": scope, "original": raw})["compartments"][0]
+            descriptor = layer["mask"]
+            actual = np.fromfile(descriptor["path"], dtype=descriptor["dtype"]).reshape(descriptor["shape"])
+            np.testing.assert_array_equal(actual, mask)
+            if scope == "exterior-air" and not raw:
+                assert layer["displayFilter"]["hiddenVoxels"] == 4
+                assert layer["displayFilter"]["excludedFragments"] == 1
+                assert layer["displayFilter"]["rawDataSha256"] == estimate["data"]["sha256"]
+                assert layer["displayFilter"]["sourceProbabilitySha256"] == estimate["probability"]["sha256"]
+                assert layer["surfaceDiagnostics"]["surfaceField"] == "filtered-native-probability"
+            else:
+                assert layer["displayFilter"] is None
+                assert layer["surfaceDiagnostics"]["surfaceField"] == "native-probability"
+
+    check_workspace(c.root)
+    save_view(c, {"schema": "patient-anatomy-view-v1", "patientId": c.document["patient_id"],
+                  "snapshotId": c.identity(), "seriesId": "tof", "states": {},
+                  "vesselDisplayVersion": 2, "vesselScope": "exterior-air"})
+    package = tmp_path / "study.rsworkspace"
+    save_package(c, package)
+    reopened = open_package(package, tmp_path / "restored").parent
+    assert file_hash(c.root / "patient-anatomy.json") == original_snapshot
+    check_workspace(reopened, saved_scope="exterior-air")
 
 
 def test_compartment_separation_preserves_whole_native_connected_components():

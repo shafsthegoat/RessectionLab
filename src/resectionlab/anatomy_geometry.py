@@ -4,13 +4,17 @@ from __future__ import annotations
 import os
 import json
 import tempfile
+from dataclasses import dataclass
 from time import perf_counter
 from itertools import product
 import numpy as np
 from scipy import ndimage as ndi
 from skimage.morphology import skeletonize
 from .patient_anatomy import digest, affine, world, file_hash
-from .surface_fairing import fair_surface, surface_kind, broad_context_surface, NATIVE_POLICY, POLICY
+from .core import immutable_array
+from .surface_fairing import (
+    fair_surface, surface_kind, broad_context_surface, NATIVE_POLICY, NATIVE_VASCULAR_POLICY,
+)
 
 
 def _save_cache(path, values):
@@ -86,8 +90,7 @@ def _suppress_vascular_scores(values, mask):
     return values
 
 
-def vascular_probability_mesh(scores, mask):
-    """Raw native isosurface for a score-bound case compartment."""
+def _vascular_score_contour(scores, mask):
     if np.any(scores[mask] < .5) or not mask.any():
         # A correction may introduce categorically supplied cells. The old
         # score field cannot describe that revision.
@@ -96,10 +99,51 @@ def vascular_probability_mesh(scores, mask):
     lo = np.maximum(0, np.array([axis[0] for axis in axes]) - 2)
     hi = np.minimum(mask.shape, np.array([axis[-1] for axis in axes]) + 3)
     crop = tuple(slice(a, b) for a, b in zip(lo, hi))
-    values = _suppress_vascular_scores(scores[crop].copy(order="C"), mask[crop])
+    cropped = mask[crop]
+    values = _suppress_vascular_scores(scores[crop].copy(order="C"), cropped)
     positions, indices, _ = _indexed_contour(np.pad(values, 1), probability=True)
-    positions = (positions + lo - 1).astype(np.float32)
+    origin = lo - 1
+    return (positions + origin).astype(np.float32), indices, cropped, origin
+
+
+def vascular_probability_mesh(scores, mask):
+    """Raw native isosurface for a score-bound case compartment."""
+    result = _vascular_score_contour(scores, mask)
+    if result is None:
+        return None
+    positions, indices, _, _ = result
     return positions, indices, normals(positions, indices)
+
+
+@dataclass(frozen=True)
+class ConditionedVascularWall:
+    """Source edges and a conditionable wall in the same native IJK frame."""
+
+    source: np.ndarray
+    positions: np.ndarray
+    indices: np.ndarray
+    normals: np.ndarray
+    source_cells: np.ndarray
+    diagnostics: dict
+
+
+def conditioned_vascular_probability_mesh(scores, mask, affine, *, cancelled=lambda: False):
+    """Build the versioned wall shared by research collision and rendering."""
+    if cancelled():
+        raise InterruptedError("Vascular wall preparation cancelled")
+    result = _vascular_score_contour(scores, mask)
+    if result is None:
+        return None
+    raw, faces, cropped, origin = result
+    owners = vascular_mesh_source_cells(raw, mask)
+    positions, diagnostics = fair_surface(
+        raw, faces, affine, "vessel", mask=np.pad(cropped, 1), mask_origin=origin,
+        source_shape=mask.shape, cancelled=cancelled,
+    )
+    return ConditionedVascularWall(
+        immutable_array(raw), immutable_array(positions), immutable_array(faces),
+        immutable_array(normals(positions, faces)), immutable_array(owners), diagnostics,
+    )
 
 
 def vascular_mesh_source_cells(positions, mask):
@@ -272,12 +316,14 @@ def mesh(collection, row, *, cancelled=lambda: False, display_source=None, condi
     display_kind = display_surface_kind(row)
     profile = surface_kind(display_kind)
     native = profile != "vessel"
-    version = NATIVE_POLICY["version"] if native else POLICY["version"]
+    version = NATIVE_POLICY["version"] if native else NATIVE_VASCULAR_POLICY["version"]
     if broad_context_surface(display_kind):
         version = NATIVE_POLICY["broadContext"]["version"]
     identity = {"algorithm": version, "data": row["data"], "probability": row.get("probability"),
                 "affine": row["affine"], "label": row["label_value"],
                 "revision": row["revision"], "kind": row["kind"]}
+    if profile == "vessel":
+        identity["fairing_parameters"] = NATIVE_VASCULAR_POLICY
     if profile == "vessel" and (display_source is not None or row.get("probability")):
         identity["field_policy"] = "native-vascular-filter-v2"
         identity["edited"] = bool(row.get("edits"))
@@ -333,7 +379,8 @@ def mesh(collection, row, *, cancelled=lambda: False, display_source=None, condi
     if conditioned:
         smoothed, diagnostics = fair_surface(
             raw, faces, a, display_kind, mask=np.pad(cropped, 1) if profile == "vessel" else None,
-            mask_origin=offset, native=native, cancelled=cancelled,
+            mask_origin=offset, native=native, source_shape=mask.shape,
+            categorical=field == "categorical", cancelled=cancelled,
         )
     else:
         smoothed, diagnostics = raw, {"restoredComponents": 0, "backedOffVertices": 0, "maxDisplacementMm": 0.}

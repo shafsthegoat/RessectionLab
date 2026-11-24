@@ -1,5 +1,38 @@
 # Acquired vascular source geometry and connectivity checks
 
+## Native vessel wall reconstruction
+
+Native anatomy review keeps the acquired grid, mask, score array and extracted
+source contour. Label layers use VTK Surface Nets. Mask-compatible score layers
+use VTK Flying Edges at the stored half-score crossing. The conditioned surface
+uses the same triangle indices. A physical-space fairing balances locally
+coherent normal motion to reduce caliber drift while smoothing the silhouette.
+Local foreground depth bounds the movement and protects one-sample strands.
+Weak, shallow score crossings on those strands keep their incident faces.
+Acquisition edges and nonmanifold mesh edges stay pinned. The physical audit
+checks for reversed or collapsed faces and newly intersecting nonincident
+triangles after final position quantization.
+
+The versioned `source-conditioned-v1` research wall keeps ownership from the
+original native crossings. Its conditioned positions and triangle indices
+provide the canonical wall for admitted collision and rendering. The source
+shape remains separately available for inspection. Measured section areas
+describe the mesh geometry derived from the available label or score field.
+
+Use `scripts/measure_vessel_surface_sections.py --compare-previous` with the
+native study and matching source-branch JSON. The receipt pairs sections on
+the same centerline stations and records displacement, geometric normal turns,
+surface area and newly introduced contacts. Its temporary mesh data stays
+beside the requested receipt. The HDD pilot in
+`qc/native-vessel-geometry-20261124-v1/` includes unlit, wireframe and flat
+shaded comparisons for the supplied TopCoW-014 artery and vein/sinus and two EDEN
+TOF crops. The same receipt directory holds a per-case table for all 29 acquired
+EDEN TOFs at the frozen native crop bounds. Across the crops, the median case
+95th-percentile absolute section area change fell from 18.5% to 2.6%. The
+physical audit found zero introduced nonincident contacts.
+
+## Source-owned branch geometry
+
 The existing TopBrain CTA001 now has reproducible, source-owned centerline
 geometry and a separately certified H₁ representative subgraph. Original voxel
 IDs, native physical coordinates and publisher artery/vein/sinus classes remain

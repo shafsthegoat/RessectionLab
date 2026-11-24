@@ -28,5 +28,6 @@ export function applyOperativeSurface(material:THREE.MeshStandardMaterial,kind:s
   if(active)active.value=settings.microscope?.tissueStyle!=='labels'&&(settings.operativeView==='surgeon'||settings.layerOpacity&&Object.values(settings.layerOpacity).every(o=>o===1));
   const style=operativeSurfaceStyle(kind,settings);
   if(style){material.color.set(style.color);material.roughness=style.roughness;material.metalness=0;}
+  else if(material instanceof THREE.MeshPhysicalMaterial)material.roughness=.43;
   else material.roughness=kind==='tumor'?.48:['vessel','vessels','artery','vein','sinus'].includes(kind??'')?.32:.52;
 }

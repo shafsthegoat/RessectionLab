@@ -6,6 +6,7 @@ import {rasAffine,sampleTrilinear,type Point3} from './coordinates.ts';
 import {corticalRetraction,corticalSourceWindow,type CortexWindow} from './operativeCortexWindow.ts';
 import {operativeColors} from './operativeMaterial.ts';
 import {placeInSourceFrame} from './sceneGeometry.ts';
+import {intensityWindow,isCtModality} from './volumeTransfer.ts';
 
 export function operativeFieldContext(volume:ViewerVolume|null,field:OperativeField,collectionId:string,patchRadius=field.radiusMm){
   const group=new THREE.Group();
@@ -36,13 +37,12 @@ export function operativeFieldContext(volume:ViewerVolume|null,field:OperativeFi
     // Geometry uses the inspected scan's lattice. Intensities belong to
     // this tissue's acquisition, which can have a different grid and pose.
     const source=resident.appearanceSource;
-    const shared=volume.patientContext?.sources.find(s=>s.seriesId===item.sourceSeries&&s.sourceSha256===source?.sourceSha256);
     const local=field.intensity;
-    const window=local&&local.sourceSeries===item.sourceSeries&&local.sourceSha256===source?.sourceSha256
-      ?local.window:shared?.displayWindow;
-    const appearance=source&&source.seriesId===item.sourceSeries&&window?{
+    const appearance=source&&source.seriesId===item.sourceSeries?{
       seriesId:source.seriesId,modality:source.modality,sourceSha256:source.sourceSha256,signalSha256:source.signalSha256,
-      sourceShape:source.nativeShape,sourceVoxelToPatientRasMm:source.nativeAffine,window
+      sourceShape:source.nativeShape,sourceVoxelToPatientRasMm:source.nativeAffine,
+      window:local&&local.sourceSeries===item.sourceSeries&&local.sourceSha256===source.sourceSha256
+        ?local.window:source.intensityUnits==='HU'&&isCtModality(source.modality)?[0,1000]:intensityWindow(source.data),
     }:undefined;
     if(source&&appearance){
       const toSource=new THREE.Matrix4().fromArray(source.affine.flat()).transpose().invert()

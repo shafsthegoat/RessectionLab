@@ -589,17 +589,16 @@ class BridgeSession:
         from .anatomy_qa import mask_quality
         vessel_surfaces = {}
         if case.vascular_probabilities:
-            from .anatomy_geometry import vascular_mesh_source_cells, vascular_probability_mesh
+            from .surgical_vessel_surface import case_wall_geometry
             from .vascular_surface_lighting import score_lighting_normals
             for name, scores in case.vascular_probabilities.items():
                 if name not in case.compartments:
                     continue
                 request.check()
                 mask = case.compartments[name]
-                mesh = vascular_probability_mesh(scores, mask)
+                mesh = case_wall_geometry(case, name, cancelled=request.cancelled.is_set)
                 if mesh is not None and len(mesh[1]):
-                    positions, indices, normals = mesh
-                    source_cells = vascular_mesh_source_cells(positions, mask)
+                    positions, indices, normals, source_cells = mesh
                     lighting = score_lighting_normals(scores, mask, positions, normals,
                                                       source_cells, case.affine, check=request.check)
                     request.check()

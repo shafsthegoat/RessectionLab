@@ -12,6 +12,10 @@ uniform sampler3D uVolume;
 uniform sampler3D uHeadSupport;
 uniform bool uUseHeadSupport;
 uniform sampler2D uTransfer;
+uniform vec2 uOpticalSize;
+uniform vec3 uOpticalGrid;
+uniform int uOpticalColumns;
+uniform bool uOpticalCache;
 uniform sampler2D uScene;
 uniform sampler2D uDepth;
 uniform mat4 uWorldToVoxel;
@@ -47,6 +51,8 @@ uniform bool uShadows;
 uniform bool uIsolate;
 uniform bool uInteractive;
 uniform float uSampleIndex;
+uniform bool uExport;
+uniform vec2 uSampleOrigin;
 uniform int uSurfaceCount;
 uniform sampler2D uSurfaceColor0;
 uniform sampler2D uSurfaceDepth0;
@@ -85,6 +91,117 @@ float scalar(vec3 p){
     result+=w.x*w.y*w.z*texelFetch(uVolume,index.zyx,0).r;
   }
   return result;
+}
+vec4 transferAt(float value){
+  float level=clamp((value-uRange.x)/(uRange.y-uRange.x),0.0,1.0);
+  return textureLod(uTransfer,vec2(level,0.5/uOpticalSize.y),0.0);
+}
+bool supported(vec3 p){
+  return !uUseHeadSupport || texture(uHeadSupport,((p+0.5)/uShape).zyx).r>0.0;
+}
+ivec4 labelsAt(vec3 labelPoint){
+  vec3 labelUv=(labelPoint+0.5)/uLabelShape;
+  if(all(greaterThanEqual(labelUv,vec3(0.0)))&&all(lessThan(labelUv,vec3(1.0))))
+    return ivec4(round(texture(uLabels,labelUv.zyx)*255.0));
+  return ivec4(0);
+}
+bool selectedLabel(ivec4 packed){
+  for(int slot=0;slot<128;slot++){
+    if(slot>=uActiveLayerCount)break;
+    if(hasLabel(packed,int(uActiveLayers[slot])))return true;
+  }
+  return false;
+}
+void applyContext(inout vec4 tissue,float value,ivec4 packed,bool selected){
+  tissue.a*=uDensity;
+  if(uIsolate&&!selected){tissue.a=0.0;return;}
+  if(!uCt || (uScanPresentation&&uSkullMode!=1))return;
+  // Contrast and mineralized tissue overlap in HU. A source context label,
+  // when present, alone receives the skull controls and its chosen color.
+  if(uContextLayerCount>0){
+    vec4 context=vec4(0.0,0.0,0.0,-1.0);
+    for(int slot=0;slot<128;slot++){
+      if(slot>=uContextLayerCount)break;
+      int layer=int(uContextLayers[slot]);
+      if(!hasLabel(packed,layer))continue;
+      if(uLayerEnabled[layer]>0.5)context=uLayerColor[layer].a>context.a?uLayerColor[layer]:context;
+      else context.a=max(context.a,0.0);
+    }
+    if(context.a>=0.0){
+      // Keep the configured hue while letting marrow, trabecular and compact
+      // regions receive distinct color from the underlying acquired value.
+      float mineral=smoothstep(180.0,1600.0,value);
+      vec3 tint=mix(vec3(0.68,0.53,0.40),vec3(1.13,1.11,1.06),mineral);
+      tissue.rgb=mix(context.rgb*tint,tissue.rgb,0.24);
+      if(context.a<=0.0)tissue.a=0.0;
+      else if(uSkullMode==1)tissue.a=10000.0;
+      else tissue.a*=context.a;
+    }
+  }else if(value>300.0){
+    if(uSkullMode==1)tissue.a=10000.0;
+    if(uSkullMode==2)tissue.a*=0.08;
+  }
+}
+vec3 scalarNormal(vec3 p){
+  vec3 gradient=vec3(scalar(p+vec3(1,0,0))-scalar(p-vec3(1,0,0)),
+    scalar(p+vec3(0,1,0))-scalar(p-vec3(0,1,0)),scalar(p+vec3(0,0,1))-scalar(p-vec3(0,0,1)));
+  return -0.5*transpose(mat3(uWorldToVoxel))*gradient;
+}
+float normalizedGradient(vec3 derivative){
+  return length(derivative)/max(uRange.y-uRange.x,0.000001);
+}
+float boundaryExtinction(float gradient){
+  return mix(0.06,1.0,smoothstep(0.01,0.075,gradient));
+}
+vec4 opticalSlice(int slice,vec2 yz){
+  vec2 tile=vec2(float(slice%uOpticalColumns)*uOpticalGrid.z,
+    1.0+float(slice/uOpticalColumns)*uOpticalGrid.y);
+  return textureLod(uTransfer,(tile+yz.yx+0.5)/uOpticalSize,0.0);
+}
+float cachedExtinction(vec3 p,float footprint){
+  vec3 cell=clamp((p+0.5)*uOpticalGrid/uShape-0.5,vec3(0.0),uOpticalGrid-1.0);
+  int lo=int(cell.x);
+  int hi=min(lo+1,int(uOpticalGrid.x)-1);
+  vec4 density=mix(opticalSlice(lo,cell.yz),opticalSlice(hi,cell.yz),fract(cell.x));
+  vec2 scale=uGradientOpacity?density.ba:density.rg;
+  return mix(scale.x,scale.y,footprint)*uDensity;
+}
+float opticalProbe(vec3 p,vec3 world,float footprint){
+  if(any(lessThan(p,vec3(-0.5)))||any(greaterThanEqual(p,uShape-0.5)))return 0.0;
+  // Test the same retained half-spaces as the eye ray. Ease the wider cache
+  // footprint as it approaches a cut so removed tissue cannot darken it.
+  float clearance=1e6;
+  if(uClipEnabled)clearance=dot(uClipPlane.xyz,world)+uClipPlane.w;
+  for(int i=0;i<7;i++){
+    if(i>=uExtraClipCount)break;
+    vec4 plane=uExtraClips[i];
+    clearance=min(clearance,dot(plane.xyz,world)+plane.w);
+  }
+  if(clearance<0.0)return 0.0;
+  if(uOpticalCache)return cachedExtinction(p,footprint)*smoothstep(0.0,mix(2.0,7.0,footprint),clearance);
+  // Label-isolated and explicit skull modes require per-probe membership.
+  // Do not use an unmasked density field to cast shadows from hidden anatomy.
+  if(!supported(p))return 0.0;
+  float value=scalar(p);
+  vec4 tissue=transferAt(value);
+  ivec4 packed=ivec4(0);
+  if(uIsolate||uContextLayerCount>0)packed=labelsAt((uLabelWorldToVoxel*vec4(world,1.0)).xyz);
+  applyContext(tissue,value,packed,!uIsolate||selectedLabel(packed));
+  if(uGradientOpacity&&tissue.a>0.0)tissue.a*=boundaryExtinction(normalizedGradient(scalarNormal(p)));
+  return min(tissue.a,1.5);
+}
+float opticalSegment(vec3 p,vec3 world,vec3 offset,float width,float footprint){
+  return width*opticalProbe(p+mat3(uWorldToVoxel)*offset,world+offset,footprint);
+}
+vec2 volumeIllumination(vec3 p,vec3 world,vec3 light,vec3 ambient){
+  float keyDepth=opticalSegment(p,world,light*4.0,5.0,0.0);
+  float ambientDepth=opticalSegment(p,world,ambient*4.5,4.0,0.16);
+  if(!uInteractive){
+    keyDepth+=opticalSegment(p,world,light*11.0,9.0,0.42);
+    keyDepth+=opticalSegment(p,world,light*24.0,16.0,1.0);
+    ambientDepth+=opticalSegment(p,world,ambient*12.0,8.0,1.0);
+  }
+  return exp(-vec2(keyDepth,ambientDepth));
 }
 vec3 unproject(vec3 ndc){
   vec4 p=uInverseProjection*vec4(ndc,1.0);p/=p.w;
@@ -142,8 +259,8 @@ void main(){
     surfaceT[j]=d<0.999999?dot(unproject(vec3(vUv*2.0-1.0,d*2.0-1.0))-origin,direction):1e10;
   }
   // Reserve loop slots for split steps and mesh boundaries, including large fields.
-  float stepMm=max(uStep,(exit-entry)/(uScanPresentation?639.0:1519.0));
-  float jitter=fract(52.9829189*fract(dot(gl_FragCoord.xy,vec2(0.06711056,0.00583715)))+uSampleIndex*0.61803398875);
+  float stepMm=max(uStep,(exit-entry)/(uScanPresentation&&!uExport?639.0:1519.0));
+  float jitter=fract(52.9829189*fract(dot(gl_FragCoord.xy+uSampleOrigin,vec2(0.06711056,0.00583715)))+uSampleIndex*0.61803398875);
   float t=entry;
   int boundary=0;
   vec4 accumulated=vec4(0.0);
@@ -153,6 +270,8 @@ void main(){
   // volume keeps its depth legible without changing its scalar or geometry.
   vec3 light=uScanPresentation?normalize(mat3(uCameraWorld)*vec3(-0.48,0.62,0.72)):
     normalize(vec3(-0.4,-0.5,0.75)-direction*0.7);
+  vec3 sky=normalize(light-0.65*direction);
+  bool useLabels=uIsolate||(uCt&&(!uScanPresentation||uSkullMode==1)&&uContextLayerCount>0);
   for(int i=0;i<1536;i++){
     if(accumulated.a>0.995)break;
     if(boundary<uSurfaceCount && surfaceT[boundary]<=t+0.000001){
@@ -164,110 +283,51 @@ void main(){
     if(t>=exit)break;
     float dt=min(stepMm,exit-t);
     if(boundary<uSurfaceCount)dt=min(dt,max(0.0,surfaceT[boundary]-t));
-    float sampleT=t+(0.25+0.5*jitter)*dt;
+    float sampleT=t+(uExport?jitter:0.25+0.5*jitter)*dt;
     vec3 p=voxelOrigin+voxelDirection*sampleT;
     // This mask lives on the selected scalar grid. The fused display grid
     // already applied each contributing source's own support during sampling.
-    if(uUseHeadSupport && texture(uHeadSupport,((p+0.5)/uShape).zyx).r<=0.0){
+    if(!supported(p)){
       t+=dt;continue;
     }
     float value=scalar(p);
-    vec4 tissue=texture(uTransfer,vec2(clamp((value-uRange.x)/(uRange.y-uRange.x),0.0,1.0),0.5));
+    vec4 tissue=transferAt(value);
     ivec4 packed=ivec4(0);
-    if(uActiveLayerCount>0||uContextLayerCount>0){
-      vec3 labelPoint=labelOrigin+labelDirection*sampleT;
-      vec3 labelUv=(labelPoint+0.5)/uLabelShape;
-      if(all(greaterThanEqual(labelUv,vec3(0.0)))&&all(lessThan(labelUv,vec3(1.0))))
-        packed=ivec4(round(texture(uLabels,labelUv.zyx)*255.0));
-    }
+    if(useLabels)packed=labelsAt(labelOrigin+labelDirection*sampleT);
     bool selected=previousSelected;
-    if(any(notEqual(packed,previousLabels))){
-      selected=false;
-      for(int slot=0;slot<128;slot++){if(slot>=uActiveLayerCount)break;
-        int j=int(uActiveLayers[slot]);if(hasLabel(packed,j)){selected=true;break;}
-      }
-    }
+    if(uIsolate&&any(notEqual(packed,previousLabels)))selected=selectedLabel(packed);
     previousSelected=selected;previousLabels=packed;
-    if(uIsolate && !selected)tissue.a=0.0;
-    tissue.a*=uDensity;
-    // CTA contrast and high-attenuation context overlap in intensity. When a
-    // source context label exists, only its exact packed membership receives
-    // skull presentation and its configured color. This includes categorical
-    // labels above index 31; it never relies on a 32-bit layer visibility mask.
-    // In Scan, the scalar transfer belongs to the acquired field. A low
-    // opacity on an overlaid skull label must not erase/recolor that CT signal.
-    // Structures/Vessels and an explicitly opaque/cutaway skull retain their
-    // source-membership display behavior.
-    if(uCt && (!uScanPresentation || uSkullMode==1)){
-      if(uContextLayerCount>0){
-        bool contextMember=false;
-        vec4 context=vec4(0.0);
-        for(int slot=0;slot<128;slot++){
-          if(slot>=uContextLayerCount)break;
-          int j=int(uContextLayers[slot]);
-          if(!hasLabel(packed,j))continue;
-          contextMember=true;
-          if(uLayerEnabled[j]>0.5&&uLayerColor[j].a>context.a)context=uLayerColor[j];
-        }
-        if(contextMember){
-          tissue.rgb=context.rgb;
-          if(context.a<=0.0)tissue.a=0.0;
-          else if(!uIsolate||selected){
-            if(uSkullMode==1)tissue.a=10000.0;
-            else tissue.a*=context.a;
-          }
-        }
-      }else if(value>300.0&&(!uIsolate||selected)){
-        // Legacy intensity-only CT has no supplied context separation. Retain
-        // its existing threshold behavior rather than inventing a label.
-        if(uSkullMode==1)tissue.a=10000.0;
-        if(uSkullMode==2)tissue.a*=0.08;
-      }
-    }
+    applyContext(tissue,value,packed,selected);
     if(tissue.a>0.0){
-      vec3 gradient=vec3(scalar(p+vec3(1,0,0))-scalar(p-vec3(1,0,0)),
-        scalar(p+vec3(0,1,0))-scalar(p-vec3(0,1,0)),scalar(p+vec3(0,0,1))-scalar(p-vec3(0,0,1)));
       // Central differences and the affine covector transform give signal/mm,
       // not signal/voxel. Automatic MRI context emphasizes acquired boundaries
       // instead of integrating uniform interior signal into a gray veil.
-      vec3 normal=-0.5*transpose(mat3(uWorldToVoxel))*gradient;
-      if(uGradientOpacity){
-        float boundary=smoothstep(0.01,0.075,length(normal)/max(uRange.y-uRange.x,0.000001));
-        tissue.a*=mix(0.06,1.0,boundary);
-      }
+      vec3 derivative=scalarNormal(p);
+      float gradient=normalizedGradient(derivative);
+      if(uGradientOpacity)tissue.a*=boundaryExtinction(gradient);
       float alpha=1.0-exp(-tissue.a*dt);
-      float lighting=0.8;
-      if(length(normal)>0.0001){
-        float gradientConfidence=smoothstep(0.01,0.12,length(normal)/max(uRange.y-uRange.x,0.000001));
-        normal=normalize(normal);
-        lighting=0.28+0.66*max(dot(normal,light),0.0)+0.15*max(dot(normal,-direction),0.0);
-        lighting+=0.12*pow(max(dot(reflect(-light,normal),-direction),0.0),24.0);
-        if(uScanPresentation){
-          // Back-facing internal boundaries still carry acquired contrast;
-          // a restrained fill avoids turning them into black cutout surfaces.
-          lighting=0.20+0.72*max(dot(normal,light),0.0)+0.18*abs(dot(normal,-direction));
-          lighting+=0.08*pow(max(dot(reflect(-light,normal),-direction),0.0),32.0);
-          // Near-uniform signal has no stable surface normal. Do not amplify
-          // tiny acquired fluctuations into fully shaded facets. This changes
-          // radiance only: sampling, transfer extinction and arrays stay exact.
-          lighting=mix(0.62,lighting,gradientConfidence);
-        }
-        // A short density probe supplies soft local occlusion in bone creases.
-        if(uShadows && alpha>0.0001){
-          vec3 ahead=p+mat3(uWorldToVoxel)*light*2.0;
-          float obstruction=0.0;
-          if(all(greaterThanEqual(ahead,vec3(-.5)))&&all(lessThan(ahead,uShape-.5)))obstruction=texture(uTransfer,vec2(clamp((scalar(ahead)-uRange.x)/(uRange.y-uRange.x),0.0,1.0),0.5)).a;
-          float shadow=obstruction*2.0;
-          if(!uInteractive)for(int j=1;j<5;j++){
-            if(uScanPresentation&&j>2)break;
-            float segment=uScanPresentation?5.0:3.0;
-            vec3 probe=p+mat3(uWorldToVoxel)*light*(2.0+float(j)*segment);
-            if(all(greaterThanEqual(probe,vec3(0)))&&all(lessThan(probe,uShape)))
-              shadow+=segment*texture(uTransfer,vec2(clamp((scalar(probe)-uRange.x)/(uRange.y-uRange.x),0.0,1.0),0.5)).a;
-          }
-          lighting*=0.3+0.7*exp(-shadow*uDensity);
-        }
+      float confidence=uCt?smoothstep(0.008,0.085,gradient):smoothstep(0.01,0.12,gradient);
+      vec3 normal=derivative/max(length(derivative),0.000001);
+      float facing=dot(normal,-direction);
+      float diffuse=max(dot(normal,light),0.0);
+      float glint=pow(max(dot(reflect(-light,normal),-direction),0.0),28.0);
+      float key=mix(0.33,0.68*diffuse+0.08*glint,confidence);
+      float fill=mix(0.30,0.24+0.12*abs(facing),confidence);
+      vec2 visibility=vec2(1.0);
+      if(uShadows&&alpha>0.0001){
+        // Weak gradients use coherent camera-relative lighting; reliable
+        // gradients steer the ambient probe out of the boundary.
+        vec3 ambient=normalize(sky+normal*confidence*0.80);
+        visibility=volumeIllumination(p,origin+direction*sampleT,light,ambient);
       }
+      // A bounded colored fill approximates light scattered within tissue.
+      // It modifies radiance only; Beer–Lambert visibility still uses the
+      // authored per-mm transfer extinction and exact world-space step.
+      float scatter=uCt?mix(0.19,0.09,smoothstep(200.0,1300.0,value)):0.18;
+      float scattered=scatter*(1.0-visibility.x)*(0.4+0.6*visibility.y);
+      float ambientFloor=uCt?0.46:0.60;
+      vec3 lighting=vec3(key*(0.15+0.85*visibility.x)+fill*mix(ambientFloor,1.0,visibility.y));
+      lighting+=scattered*vec3(1.0,0.89,0.76);
       accumulated.rgb+=(1.0-accumulated.a)*alpha*tissue.rgb*lighting;
       accumulated.a+=(1.0-accumulated.a)*alpha;
     }

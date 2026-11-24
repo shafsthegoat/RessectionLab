@@ -220,7 +220,7 @@ def _obstacle_collision(engine, vox, inside, removed, blocking_labels):
     return bool(np.any(blocked & ~np.isin(cells, removed)))
 
 
-def tick(engine, dt):
+def tick(engine, dt, *, vessel_tool_motion=None):
     initialize(engine)
     if not np.isfinite(dt) or dt < 0: raise ValueError('INVALID_DEFORMATION_TIME')
     p = _settings(engine); model = engine.state['deformationModel']; removed = set(engine.state['removed'])
@@ -269,7 +269,7 @@ def tick(engine, dt):
                          minVolumeRatio=1., maxVolumeRatio=1.)
     if not ids:
         if distributed:
-            rods.tick(engine, dt)
+            rods.tick(engine, dt, tool_motion=vessel_tool_motion)
         return
     blocked = _blocked(engine)
     anchors = sorted(set(model['anchors']) & retained)
@@ -397,6 +397,6 @@ def tick(engine, dt):
             from .surgical_glioma_materials import record_lattice
             record_lattice(engine, ids, stencil, u, memory, K, targets * force_scale[:, None], held, p)
     if distributed:
-        rods.tick(engine, dt)
+        rods.tick(engine, dt, tool_motion=vessel_tool_motion)
     elif material_profile:
         move_vessels(engine)

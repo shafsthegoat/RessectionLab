@@ -7,11 +7,16 @@ from scipy import ndimage as ndi
 from scipy.spatial import cKDTree
 
 from .anatomy_siam_display import _head_support
-from .patient_anatomy import affine, world
+from .patient_anatomy import affine, digest, world
 
 
 RETAINED, UNCERTAIN, HIDDEN = 1, 2, 3
 CONNECTIVITY = np.ones((3, 3, 3), dtype=bool)
+EXTERIOR_DISPLAY = "native-tof-exterior-display-v1"
+_AIR_CLEARANCE_MM = 2.0
+_MAX_LABEL_CELLS = 128_000_000
+_MAX_NEIGHBORHOOD_CELLS = 4_000_000
+_MAX_EXTERIOR_FOREGROUND = 4_000_000
 
 
 @dataclass(frozen=True)
@@ -62,6 +67,153 @@ def _source_contrast(points, signal, mask, spacing, policy):
         "ring_iqr": float(hi - lo),
         "peak_contrast_iqr": (peak - float(middle)) / scale,
     }
+
+
+def exterior_air_components(mask, signal, native_affine, *, check=lambda: None):
+    """Propose whole-component presentation exclusions in sampled exterior air.
+
+    The head envelope nominates a region for review. Both the component and
+    its native-resolution neighborhood must be dark. An attached candidate,
+    a candidate at an acquisition face, or nearby measured signal stays
+    visible. The original foreground and source field are never written.
+    """
+    mask = np.asarray(mask)
+    signal = np.asarray(signal)
+    if (mask.dtype != np.bool_ or mask.ndim != 3 or mask.shape != signal.shape
+            or signal.dtype.kind not in "fui"):
+        raise ValueError("Expected a binary prediction and matched native TOF signal")
+    frame = affine(native_affine)
+    spacing = np.linalg.norm(frame[:3, :3], axis=0)
+    axes = frame[:3, :3] / spacing
+    if not np.allclose(axes.T @ axes, np.eye(3), atol=1e-5):
+        return [], {"status": "unavailable", "reason": "Native TOF lattice is sheared"}
+    foreground = int(np.count_nonzero(mask))
+    if not foreground:
+        return [], {"status": "unchanged", "reason": "The source prediction is empty"}
+    if foreground > _MAX_EXTERIOR_FOREGROUND:
+        return [], {"status": "unavailable", "reason": "Native TOF foreground exceeds review workspace"}
+    points = np.column_stack(np.nonzero(mask))
+    start, slices = _bounds(points, spacing, mask.shape, 0)
+    if np.prod([axis.stop - axis.start for axis in slices]) > _MAX_LABEL_CELLS:
+        return [], {"status": "unavailable", "reason": "Native TOF prediction exceeds labeling workspace"}
+    check()
+    head, evidence = _head_support(signal, frame, check)
+    if head is None or not np.isfinite(evidence["percentileWindow"]).all():
+        return [], {"status": "unavailable", "reason": "No reliable native TOF head envelope"}
+    support, _, stride = head
+    sample = np.minimum((points + stride // 2) // stride, np.array(support.shape) - 1)
+    outside = ~support[tuple(sample.T)]
+    # Tie the low component ceiling to the observed signal floor. Use the
+    # more permissive head threshold solely to protect neighboring signal.
+    low, high = evidence["percentileWindow"]
+    ceiling = low + 0.02 * (high - low)
+    foreground_signal = signal[tuple(points.T)]
+    distance_to_face = np.minimum(points + .5, np.array(mask.shape) - .5 - points) * spacing
+    eligible = outside & np.isfinite(foreground_signal) & (foreground_signal <= ceiling)
+    eligible &= (distance_to_face > _AIR_CLEARANCE_MM).all(axis=1)
+    report = {
+        "status": "unchanged",
+        "sourceVoxels": foreground,
+        "foregroundSignalCeiling": float(ceiling),
+        **evidence,
+    }
+    if not eligible.any():
+        return [], report
+
+    check()
+    labels, count = ndi.label(mask[slices], structure=CONNECTIVITY)
+    memberships = labels[tuple((points - start).T)]
+    del labels
+    reject = np.zeros(count + 1, dtype=bool)
+    reject[memberships[~eligible]] = True
+    candidates = np.flatnonzero(~reject[memberships])
+    candidates = candidates[np.argsort(memberships[candidates], kind="stable")]
+    breaks = np.flatnonzero(np.diff(memberships[candidates])) + 1
+    excluded = []
+    for group in np.split(candidates, breaks):
+        if not len(group):
+            break
+        check()
+        cells = points[group]
+        origin, bounds = _bounds(cells, spacing, mask.shape, _AIR_CLEARANCE_MM)
+        neighborhood = signal[bounds]
+        if neighborhood.size > _MAX_NEIGHBORHOOD_CELLS:
+            continue
+        nearby_signal = ~np.isfinite(neighborhood) | (neighborhood > evidence["threshold"])
+        if np.any(nearby_signal):
+            distance = ndi.distance_transform_edt(~nearby_signal, sampling=spacing)
+            if np.any(distance[tuple((cells - origin).T)] <= _AIR_CLEARANCE_MM):
+                continue
+        excluded.append(np.ravel_multi_index(cells.T, mask.shape))
+    return excluded, report
+
+
+def supported_tof_layer(collection, row, *, check=lambda: None):
+    """Get an exterior-air display derivative bound to the original TOF layer."""
+    provenance = row.get("provenance", {})
+    if (row["kind"] != "vessels" or provenance.get("model") != "vesselfm"
+            or row.get("edits") or not row.get("probability")):
+        return row, None
+    from .anatomy_model_registry import source_volume
+
+    series = collection.series(row["source_series"])
+    if series["modality"] != "TOF" or not source_volume(series):
+        return row, None
+    if (row["affine"] != series["affine"] or row["data"]["shape"] != series["data"]["shape"]
+            or provenance.get("source") != series["original"]["sha256"]):
+        return row, {"scope": "exterior-air", "reason": "Source identity or native lattice could not be verified"}
+    try:
+        collection.require_native_geometry(series)
+        collection.require_native_geometry(row)
+    except ValueError:
+        return row, {"scope": "exterior-air", "reason": "The source lattice requires geometry review"}
+    identity = {
+        "version": EXTERIOR_DISPLAY,
+        "sourceSha256": series["original"]["sha256"],
+        "sourceSignalSha256": series["data"]["sha256"],
+        "rawDataSha256": row["data"]["sha256"],
+        "sourceProbabilitySha256": row["probability"]["sha256"],
+        "affine": series["affine"],
+        "label": row["label_value"],
+    }
+    key = digest(identity)
+    if not hasattr(collection, "_tof_display_cache"):
+        collection._tof_display_cache = {}
+    cache = collection._tof_display_cache
+    data, receipt = cache.get(key, (None, None))
+    if data is not None:
+        try:
+            collection.array(data)
+        except FileNotFoundError:
+            receipt = None
+    if receipt is None:
+        mask = np.ascontiguousarray(collection.mask(row))
+        groups, evidence = exterior_air_components(mask, collection.array(series["data"]), series["affine"], check=check)
+        hidden = sum(len(group) for group in groups)
+        if 0 < hidden < evidence["sourceVoxels"]:
+            for group in groups:
+                mask.ravel()[group] = False
+            check()
+            data = collection.put_array(mask.astype(np.uint8))
+            reason = (
+                f"Exterior-air view hides {len(groups):,} detached source-dark findings. "
+                "Use Full source estimate to inspect them."
+            )
+        else:
+            data = None
+            hidden = 0
+            reason = evidence.get("reason", "No detached finding passed the exterior-air screen")
+        receipt = {
+            **{k: v for k, v in identity.items() if k not in {"affine", "label"}},
+            "scope": "exterior-air",
+            "hiddenVoxels": hidden,
+            "excludedFragments": len(groups) if hidden else 0,
+            "sampledDataSha256": data["sha256"] if data else row["data"]["sha256"],
+            "evidence": evidence,
+            "reason": reason,
+        }
+        cache[key] = data, receipt
+    return ({**row, "data": data, "label_value": 1} if data else row), receipt
 
 
 def classify_components(mask, signal, scores, native_affine, *, policy=ComponentPolicy()):

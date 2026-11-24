@@ -17,7 +17,7 @@ from resectionlab import native_backend, surgical_wall_sweep, surgical_vessel_ve
 from resectionlab.surgical_wall_sweep_reference import WallSweepReference
 
 
-def _fixture(*, guarded=False, vertex_transport=False):
+def _fixture(*, guarded=False, vertex_transport=False, section_mechanics=False, conditioned=False, section_overrides=None):
     shape = (35, 35, 30)
     spacing = .4
     affine = np.diag([spacing, spacing, spacing, 1.])
@@ -44,9 +44,15 @@ def _fixture(*, guarded=False, vertex_transport=False):
         props[materials.PROPERTY][surgical_wall_sweep.PROPERTY] = surgical_wall_sweep.POLICY
     if vertex_transport:
         props[materials.PROPERTY][vertex_motion.PROPERTY] = vertex_motion.POLICY
+    if section_mechanics:
+        section = rods.section_profile()
+        if section_overrides:
+            section.update(section_overrides)
+        props[materials.PROPERTY][rods.SECTION_MECHANICS] = section
     case = CaseData('native-score-rod', scores, {'brain': brain, 'vessels': vessels}, affine,
                     (SourceRef('fixture', 'synthetic://native-score-rod', provenance='simulated'),),
                     metadata={'anatomy_layers': {'brain': {'kind': 'brain'}, 'vessels': {'kind': 'vessels'}},
+                              **({surfaces.GEOMETRY_PROPERTY: surfaces.CONDITIONED_GEOMETRY} if conditioned else {}),
                               'surgical_properties': {'tissuePhysicsV2': default_profile(), **props}},
                     vascular_probabilities={'vessels': scores})
     return SurgicalEngine(from_case(case))
@@ -60,9 +66,11 @@ def _action(operation, *, z=None, dt=.1, **fields):
     }
 
 
-@pytest.mark.parametrize(('guarded', 'vertex_transport'), [(False, False), (True, False), (True, True)])
-def test_native_wall_contact_tracks_passive_dissection_and_verified_replay(guarded, vertex_transport):
-    engine = _fixture(guarded=guarded, vertex_transport=vertex_transport)
+@pytest.mark.parametrize(('guarded', 'vertex_transport', 'section_mechanics'),
+                         [(False, False, False), (True, False, False), (True, True, False), (True, True, True)])
+def test_native_wall_contact_tracks_passive_dissection_and_verified_replay(guarded, vertex_transport, section_mechanics):
+    engine = _fixture(guarded=guarded, vertex_transport=vertex_transport, section_mechanics=section_mechanics,
+                      conditioned=section_mechanics)
     actions = [_action('exchange', instrument='dissector'), _action('place', z=4.),
                _action('move', z=5.05, dt=.4)]
     for action in actions:
@@ -142,6 +150,94 @@ def test_support_removal_changes_motion_and_cut_removes_the_bond():
     assert not engine.touched(cut_center, cut_center, 0.)
 
 
+def test_section_mechanics_responds_to_loaded_support_release_and_drives_lumen_flow():
+    from resectionlab import surgical_vascular_graph as graph
+
+    engine = _fixture(guarded=True, vertex_transport=True, section_mechanics=True, conditioned=True)
+    mid_site, support = engine.scene.properties[materials.PROPERTY]['vesselAttachments'][1]
+
+    def site(subject):
+        return next(row for row in subject.view()[rods.FIELD]['sites'] if row['sourceCell'] == mid_site)
+
+    def measure(subject):
+        row = site(subject)
+        delta = np.asarray(row['positionMm']) - row['restPositionMm']
+        return float(np.linalg.norm(delta)), row['radiusMm']
+
+    unloaded = engine.clone()
+    unloaded.state['removed'] = [support]
+    rods.tick(unloaded, .15)
+    assert site(unloaded)['activeSupportCells'] == []
+    assert measure(unloaded) == (0., site(unloaded)['restRadiusMm'])
+
+    for action in (_action('exchange', instrument='dissector'), _action('place', z=4.),
+                   _action('move', z=5.05, dt=.4)):
+        assert engine.step(action)['status'] == 'accepted'
+    assert engine.view()[rods.FIELD]['sectionModel'] == rods.SECTION_MODEL
+    loaded_delta, loaded_radius = measure(engine)
+    assert .1 < loaded_delta < .4
+    assert .9 * site(engine)['restRadiusMm'] < loaded_radius < site(engine)['restRadiusMm']
+    row = engine.state[graph.PROPERTY]['edges']['artery']
+    assert row['acceptedLumenResistanceRatio'] > row['stretchResistanceRatio'] >= 1.
+    edge = engine.scene.properties[graph.PROPERTY]['edges'][0]
+    assert graph._edge_conductance(edge, row) < edge['conductanceMm3PerPaS']
+
+    held, released = engine.clone(), engine.clone()
+    released.state['removed'] = [support]
+    for subject in (held, released):
+        rods.tick(subject, .15)
+    assert site(held)['activeSupportCells'] == [support]
+    assert site(released)['activeSupportCells'] == []
+    assert .02 < measure(released)[0] - measure(held)[0] < .12
+
+    restored = SurgicalEngine.restore(engine.scene, json.loads(json.dumps(engine.snapshot())))
+    assert restored.view()[rods.FIELD] == engine.view()[rods.FIELD]
+    withdraw = _action('withdraw', z=4., dt=.35)
+    assert restored.step(withdraw) == engine.step(withdraw)
+    recoil, recovered_radius = measure(restored)
+    assert recoil < loaded_delta
+    assert loaded_radius < recovered_radius < site(engine)['restRadiusMm']
+    assert restored.state[graph.PROPERTY]['edges']['artery']['acceptedLumenResistanceRatio'] < row['acceptedLumenResistanceRatio']
+
+
+def test_section_profile_requires_vertex_bound_swept_wall():
+    with pytest.raises(ValueError, match='VESSEL_SECTION_MECHANICS_REQUIRES_BOUNDED_SWEPT_SOURCE_GEOMETRY'):
+        _fixture(guarded=True, section_mechanics=True)
+
+
+def test_sliding_tool_moves_contact_tangentially_with_bounded_friction():
+    shifts = []
+    for friction in (0., .15):
+        engine = _fixture(guarded=True, vertex_transport=True, section_mechanics=True, conditioned=True,
+                          section_overrides={'frictionCoefficient': friction})
+        slide = _action('move', z=5.05, dt=.18)
+        slide['pose']['position'][0] += .6
+        for action in (_action('exchange', instrument='dissector'), _action('place', z=4.),
+                       _action('move', z=5.05, dt=.4), slide):
+            assert engine.step(action)['status'] == 'accepted'
+        source, _ = engine.scene.properties[materials.PROPERTY]['vesselAttachments'][1]
+        site = next(row for row in engine.view()[rods.FIELD]['sites'] if row['sourceCell'] == source)
+        shifts.append(np.asarray(site['positionMm']) - site['restPositionMm'])
+    assert .01 < shifts[1][0] - shifts[0][0] < .05
+    assert abs(shifts[1][2] - shifts[0][2]) < .03
+
+
+def test_section_stiffness_sensitivity_under_the_same_tool_path():
+    excursions = []
+    for modulus in (1.8, 3., 5.5):
+        moduli = {**rods.section_profile()['axialModulusMPa'], 'artery': modulus}
+        engine = _fixture(guarded=True, vertex_transport=True, section_mechanics=True, conditioned=True,
+                          section_overrides={'axialModulusMPa': moduli})
+        for action in (_action('exchange', instrument='dissector'), _action('place', z=4.),
+                       _action('move', z=5.05, dt=.4)):
+            assert engine.step(action)['status'] == 'accepted'
+        definition = rods.definitions(engine)
+        position, _ = rods._current(engine, definition)
+        excursions.append(np.linalg.norm(position - definition.rest, axis=1).max())
+    assert excursions[0] > excursions[1] > excursions[2]
+    assert excursions[2] < .92 * excursions[0]
+
+
 def test_removed_positive_reextracts_native_wall_without_erasing_untouched_triangles():
     engine = _fixture()
     wall = rods._accepted_frames(engine, rods.definitions(engine))[0][0]
@@ -157,9 +253,11 @@ def test_removed_positive_reextracts_native_wall_without_erasing_untouched_trian
     assert len(baseline.intersection(map(tuple, updated.round(7)))) > .95 * len(baseline)
 
 
-@pytest.mark.parametrize(('guarded', 'vertex_transport'), [(False, False), (True, False), (True, True)])
-def test_public_scissors_transect_score_wall_and_replay_the_same_cap(guarded, vertex_transport):
-    engine = _fixture(guarded=guarded, vertex_transport=vertex_transport)
+@pytest.mark.parametrize(('guarded', 'vertex_transport', 'section_mechanics'),
+                         [(False, False, False), (True, False, False), (True, True, False), (True, True, True)])
+def test_public_scissors_transect_score_wall_and_replay_the_same_cap(guarded, vertex_transport, section_mechanics):
+    engine = _fixture(guarded=guarded, vertex_transport=vertex_transport, section_mechanics=section_mechanics,
+                      conditioned=section_mechanics)
     q = Rotation.from_rotvec([0, 0, np.pi / 2]).as_quat().tolist()
     place = _action('place', z=4., parameters={'depthMm': 1.1, 'jawOpeningMm': .2})
     cut = _action('apply', z=5.2, dt=.5)
@@ -221,6 +319,44 @@ def test_wall_sweep_rejects_crossing_between_clear_endpoints_and_midpoint():
         assert not clear(start, crossing)
         assert not clear(start, delayed_crossing)
         assert clear(near_miss_start, crossing)
+
+
+def test_local_sweep_rejects_foldover_of_edge_neighbors_with_clear_endpoints():
+    # The faces use a common edge. Their opposite corners pass through the
+    # same side of the shared plane inside the step, at a noncollapsing pose.
+    vertices = np.array([[0., 0., 0.], [1., 0., 0.], [0., .5, 0.], [0., 1., .5]])
+    faces = np.array([[0, 1, 2], [1, 0, 3]])
+    clear = surgical_wall_sweep._local_face_guard(vertices[faces], faces, faces)
+    start = np.zeros_like(vertices)
+    end = start.copy()
+    end[3, 2] = -2.
+    assert clear(start, start, True)
+    assert clear(end, end, True)
+    assert not clear(start, end, False)
+    assert clear(start, .2 * end, False)
+
+
+def test_local_sweep_rejects_excessive_facet_compression():
+    vertices = np.array([[0., 0., 0.], [1., 0., 0.], [0., 1., 0.]])
+    faces = np.array([[0, 1, 2]])
+    clear = surgical_wall_sweep._local_face_guard(vertices[faces], faces, faces)
+    start = np.zeros_like(vertices)
+    end = start.copy()
+    end[2, 1] = -.85
+    assert not clear(start, end, False)
+    assert clear(start, .5 * end, False)
+
+
+def test_concave_cut_cap_retains_all_ring_edges_and_requires_the_vessel_axis_inside():
+    points = np.asarray([[-2., -2., 0.], [2., -2., 0.], [2., 2., 0.], [.4, 2., 0.],
+                         [.4, .5, 0.], [-.4, .5, 0.], [-.4, 2., 0.], [-2., 2., 0.]])
+    ring = list(range(len(points)))
+    axis = np.asarray([0., 0., 1.])
+    triangles = surfaces._concave_cap(points, ring, points, axis)
+    assert len(triangles) == len(ring) - 2
+    edges = {(a, b) for row in triangles for a, b in zip(row, (*row[1:], row[0]))}
+    assert all((b, a) in edges for a, b in zip(ring, ring[1:] + ring[:1]))
+    assert surfaces._concave_cap(points, ring, points - [0., 1., 0.], axis) is None
 
 
 def test_wall_sweep_rolls_back_the_whole_stroke_after_a_later_microstep(monkeypatch):

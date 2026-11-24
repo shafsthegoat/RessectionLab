@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import * as THREE from 'three';
 import {prepareSurface} from './prepareSurface.ts';
 import {displaySurfaceNormals} from './displaySurfaceNormals.ts';
-import {applyVesselDepthMaterial} from './anatomySurfaceMaterial.ts';
+import {applyVesselDepthMaterial,vesselWallFinish} from './anatomySurfaceMaterial.ts';
 import {applySourceContextMaterial} from './sourceContextMaterial.ts';
 import {SurfaceVolumePass} from './SurfaceVolumePass.ts';
 
@@ -49,16 +49,18 @@ test('normal fairing never crosses disconnected surfaces and works in physical s
 });
 
 test('vessel radiance depth cue survives volume peels without changing opacity or surface depth',()=>{
-  const material=new THREE.MeshStandardMaterial({opacity:.42,transparent:true}),pass=new SurfaceVolumePass();
-  applyVesselDepthMaterial(material,[[-10,-20,-30],[10,20,30]]);
+  const material=new THREE.MeshPhysicalMaterial({opacity:.42,transparent:true,...vesselWallFinish}),pass=new SurfaceVolumePass();
+  applyVesselDepthMaterial(material,[[-10,-20,-30],[10,20,30]],undefined,[20,40,60]);
   applySourceContextMaterial(material,false);
   const peel=pass.make(material,false),tail=pass.make(material,true);
   try{
     for(const m of [material,peel,tail]){
-      const shader={uniforms:{},fragmentShader:THREE.ShaderLib.standard.fragmentShader};m.onBeforeCompile(shader,{});
+      const shader={uniforms:{},vertexShader:THREE.ShaderLib.physical.vertexShader,fragmentShader:THREE.ShaderLib.physical.fragmentShader};m.onBeforeCompile(shader,{});
       assert.deepEqual(shader.uniforms.uAnatomyCenter.value.toArray(),[0,0,0]);
       assert.ok(shader.uniforms.uAnatomyRadius.value>0);
-      assert.match(shader.fragmentShader,/outgoingLight\*=mix\(1.08,0.56/);
+      assert.match(shader.fragmentShader,/vViewPosition.z\+\(viewMatrix\*vec4\(uAnatomyCenter,1.0\)\).z/);
+      assert.match(shader.fragmentShader,/material.clearcoat\*=1.0-sourceBoundary/);
+      assert.equal(m.clearcoat,vesselWallFinish.clearcoat);
       assert.match(shader.fragmentShader,/#include <opaque_fragment>/);
       assert.match(m.customProgramCacheKey(),/anatomy-vessel-depth/);
       assert.equal(m.opacity,.42);

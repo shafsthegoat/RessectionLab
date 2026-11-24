@@ -1,4 +1,4 @@
-import type { Affine, Point3, Shape3 } from "./coordinates";
+import type { Affine, Bounds3, Point3, Shape3 } from "./coordinates";
 
 export interface AlignmentQuality {status:string;warnings:string[];notes?:string[];metrics:Record<string,number|null>;selected?:string}
 export interface TissueDisplaySupport {
@@ -9,15 +9,16 @@ export interface TissueDisplaySupport {
 export interface VesselDisplayFilter {scope:string;hiddenVoxels?:number;reason?:string;excludedVolumeMm3?:number;excludedFragments?:number;outsideVoxels?:number;boneConflictVoxels?:number;uncertainVoxels?:number}
 export interface PatientContextSource {
   seriesId:string; modality:string; sourceSha256:string; alignment:string; reason?:string;
-  voxelToPatientRasMm?:Affine; displayWindow?:[number,number];windowUnits?:string;headSupport?:boolean;
+  inPatientBounds:boolean; voxelToPatientRasMm?:Affine; nativeShape?:Shape3;
 }
 export interface PatientContext {
   sources:PatientContextSource[];
-  field?:{affine:Affine;shape:Shape3;signal:Float32Array;sha256:string};
+  boundsRasMm?:Bounds3;
 }
 /** Immutable scalar samples and physical display frame of a surface's own acquisition. */
 export interface SurfaceAppearanceSource {
   seriesId:string; modality:string; sourceSha256:string; signalSha256:string;
+  intensityUnits?:'HU'|'source';
   affine:Affine; shape:Shape3; data:Float32Array; nativeAffine?:Affine; nativeShape?:Shape3;
 }
 export interface ViewerVolume {

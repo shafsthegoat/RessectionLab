@@ -25,6 +25,7 @@ export type Document={
     skull_exterior_compartment_review?:{disjoint_union_matches_selected?:boolean};
     source_disagreement_compartment_review?:{disjoint_union_matches_selected?:boolean}};
   source_assets?:unknown[];patient_id:string;study_timepoint?:string;snapshot_id:string;reference_series:string;
+  preparation_workflow?:string;
   tractography?:Array<{id:string;label:string;source_series:string}>;
   revision:number;layers:Layer[];missing:string[];series:Series[];
   transforms:Record<string,{status:string;parent_series?:string|null;uncertainty_mm?:number|null;method?:string;
@@ -47,7 +48,7 @@ export interface SelectedRouteForecast {
   elapsedSeconds:number;physicalCandidatesExamined:number;requiredEvidence:string[];
 }
 export type EnvironmentOptions={selectedRouteForecast?:SelectedRouteForecast;acquisitions?:AcquisitionContribution[];referenceIssue:string|null;layers:Array<{
-  role:EnvironmentRole;layerId:string;status:'ready'|'estimated_alignment'|'unavailable';reason?:string|null;
+  role:EnvironmentRole;layerId:string;status:'ready'|'estimated_alignment'|'unavailable';reason?:string|null;nativeWallIssue?:string;
 }>};
 export type Binding={collectionId:string;document:Document;viewState?:NativeViewState|null;readOnlyStudy?:boolean};
 export type Draft={layerId:string;undo:number;redo:number;changedVoxels:number}|null;
@@ -95,8 +96,8 @@ export interface NativeAnatomyApi {
   anatomySample(args:Args):Promise<unknown>;
 }
 export type Surface=NonNullable<ViewerVolume['compartments'][number]['surface']>;
-export type ViewPayload=Omit<ViewerVolume,'mri'|'compartments'|'tractography'|'labelSets'|'patientContext'|'headSupport'>&{appearanceSources?:Array<Pick<SurfaceAppearanceSource,'seriesId'|'modality'|'sourceSha256'|'affine'|'nativeAffine'|'nativeShape'>&{signal:ArrayDescriptor}>;headSupport?:ArrayDescriptor;patientContext?:{sources:PatientContext['sources'];affine?:ViewerVolume['affine'];shape?:ViewerVolume['shape'];signal?:ArrayDescriptor};labelSets?:Array<{id:string;data:ArrayDescriptor}>;tractography?:Array<{id:string;label:string;points:ArrayDescriptor;offsets:ArrayDescriptor}>;mri:ArrayDescriptor;modality:string;registrationStatus:string;patientFrameReady?:boolean;alignmentPreviews?:string[];unavailableLayers:string[];compartments:Array<{sourceSeries?:string;alignment?:string;kind?:string;displayKind?:string;sourceIdentity?:string;qa?:import('./viewer/contracts').AnatomyQuality;surfaceDiagnostics?:import('./viewer/surfacePolicy').SurfaceDiagnostics;name:string;color:string;volumeMm3?:number;displayFilter?:VesselDisplayFilter;sourceSupport?:import('./viewer/contracts').TissueDisplaySupport;mask?:ArrayDescriptor;labelSet?:string;labelValue?:number;surface?:{empty:true}|Record<keyof Surface,ArrayDescriptor>}>};
-export async function hydrateAnatomy(payload:ViewPayload,api:ResectionApi,cachedImage?:Float32Array,cached?:Pick<ViewerVolume,'labelSets'|'tractography'|'patientContext'|'headSupport'>,studyLayers?:Layer[],appearanceCache?:Map<string,Float32Array>):Promise<ViewerVolume>{
+export type ViewPayload=Omit<ViewerVolume,'mri'|'compartments'|'tractography'|'labelSets'|'patientContext'|'headSupport'>&{appearanceSources?:Array<Pick<SurfaceAppearanceSource,'seriesId'|'modality'|'sourceSha256'|'affine'|'nativeAffine'|'nativeShape'|'intensityUnits'>&{signal:ArrayDescriptor}>;headSupport?:ArrayDescriptor;patientContext?:PatientContext;labelSets?:Array<{id:string;data:ArrayDescriptor}>;tractography?:Array<{id:string;label:string;points:ArrayDescriptor;offsets:ArrayDescriptor}>;mri:ArrayDescriptor;modality:string;registrationStatus:string;patientFrameReady?:boolean;alignmentPreviews?:string[];unavailableLayers:string[];compartments:Array<{sourceSeries?:string;alignment?:string;kind?:string;displayKind?:string;sourceIdentity?:string;qa?:import('./viewer/contracts').AnatomyQuality;surfaceDiagnostics?:import('./viewer/surfacePolicy').SurfaceDiagnostics;name:string;color:string;volumeMm3?:number;displayFilter?:VesselDisplayFilter;sourceSupport?:import('./viewer/contracts').TissueDisplaySupport;mask?:ArrayDescriptor;labelSet?:string;labelValue?:number;surface?:{empty:true}|Record<keyof Surface,ArrayDescriptor>}>};
+export async function hydrateAnatomy(payload:ViewPayload,api:ResectionApi,cachedImage?:Float32Array,cached?:Pick<ViewerVolume,'labelSets'|'tractography'|'headSupport'>,studyLayers?:Layer[],appearanceCache?:Map<string,Float32Array>):Promise<ViewerVolume>{
   async function bytes(d:ArrayDescriptor){
     if(!d || d.byteLength>512*1024**2 || d.byteOrder!=='little' || d.order!=='C')throw Error('Unsupported anatomy transfer');
     const b=await api.readAsset(d.assetId);if(b.byteLength!==d.byteLength)throw Error('Incomplete anatomy transfer');
@@ -139,32 +140,23 @@ export async function hydrateAnatomy(payload:ViewPayload,api:ResectionApi,cached
   }
   const tractography=[];for(const t of payload.tractography??[]){const resident=cached?.tractography?.find(r=>r.id===t.id);if(resident){tractography.push(resident);continue;}tractography.push({...t,points:new Float32Array(await bytes(t.points)),offsets:new Uint32Array(await bytes(t.offsets))});}
   const labelSets=[];for(const set of payload.labelSets??[]){const resident=cached?.labelSets?.find(r=>r.id===set.id);if(resident){labelSets.push(resident);continue;}const data=new Uint16Array(await bytes(set.data));if(data.length!==mri.length)throw Error("Categorical grid mismatch");labelSets.push({id:set.id,data});}
-  let patientContext:PatientContext|undefined;
-  if(payload.patientContext){
-    const {sources,signal,shape,affine}=payload.patientContext;
-    patientContext={sources};
-    if(signal){
-      if(!shape||!affine||shape.some(n=>!Number.isInteger(n)||n<2||n>192))throw Error('Invalid patient context grid');
-      const known=cached?.patientContext?.field;
-      const data=known?.sha256===signal.sha256?known.signal:new Float32Array(await bytes(signal));
-      if(data.length!==shape.reduce((a,b)=>a*b,1))throw Error('Incomplete patient context');
-      patientContext.field={shape,affine,signal:data,sha256:signal.sha256};
-    }
-  }
+  const bounds=payload.patientContext?.boundsRasMm;
+  if(bounds&&(!Array.isArray(bounds)||bounds.length!==2||bounds.some(point=>!Array.isArray(point)||
+     point.length!==3||!point.every(Number.isFinite))||bounds[0].some((n,i)=>n>=bounds[1][i])))throw Error('Invalid patient bounds');
   let headSupport:ViewerVolume['headSupport'];
   if(payload.headSupport){
     const known=cached?.headSupport;
     headSupport=known?.sha256===payload.headSupport.sha256?known:{sha256:payload.headSupport.sha256,data:new Uint8Array(await bytes(payload.headSupport))};
     if(headSupport.data.length!==mri.length)throw Error('Head support differs from its source grid');
   }
-  return {...payload,mri,compartments,tractography,labelSets,patientContext,headSupport};
+  return {...payload,mri,compartments,tractography,labelSets,headSupport};
 }
 
 export type CranialView = 'planning'|'inspection';
 export interface NativeScanState {cranialView?:CranialView;cursor:Point3|null;visible:Record<string,boolean>;settings:ViewerWorkspaceSettings}
 export interface RetiredClipping {seriesId:string|null;cutaway:import('./viewer/workspaceSettings').ViewerCutaway}
-export interface NativeViewState {schema:'patient-anatomy-view-v1';patientId:string;snapshotId:string;seriesId:string;states:Record<string,NativeScanState>;patientCutaway?:import('./viewer/workspaceSettings').ViewerCutaway;vesselScope?:VesselScope;vesselDisplayVersion?:2;selectedApproachId?:string|null;selectedPlanningTargetId?:string|null;selectedApproachIds?:Record<string,string|null>;selectedStructure?:string|null}
+export interface NativeViewState {schema:'patient-anatomy-view-v1';patientId:string;snapshotId:string;seriesId:string;states:Record<string,NativeScanState>;scalarTransferBasis?:'selected-acquisition-v1';patientCutaway?:import('./viewer/workspaceSettings').ViewerCutaway;vesselScope?:VesselScope;vesselDisplayVersion?:2;selectedApproachId?:string|null;selectedPlanningTargetId?:string|null;selectedApproachIds?:Record<string,string|null>;selectedStructure?:string|null}
 export interface ComponentReview {reviewId:string;layerId:string;components:Array<{id:number;voxels:number;volumeMm3:number;center:Point3}>}
 export function isNativeBinding(value:unknown):value is Binding {return !!value&&typeof value==='object'&&'collectionId' in value&&'document' in value;}
 
-export type VesselScope='brain'|'all'|'intracranial'|'excluded';
+export type VesselScope='brain'|'all'|'intracranial'|'excluded'|'exterior-air';

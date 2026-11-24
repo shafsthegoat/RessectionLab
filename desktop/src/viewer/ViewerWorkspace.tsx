@@ -26,6 +26,7 @@ import {
   SlidersHorizontal,
   ScanLine,
   Focus,
+  Download,
   Layers3,
   Box,
   Maximize2,
@@ -36,7 +37,7 @@ import {
 } from "lucide-react";
 import type { KeyboardEvent, PointerEvent } from "react";
 import { VolumeRenderer } from "./VolumeRenderer";
-import { clippingForBounds, clippingPositionInBounds, newClippingPosition, usesPatientContext } from './workspaceSettings';
+import { clippingForBounds, clippingPositionInBounds, newClippingPosition, usesPatientCutaway } from './workspaceSettings';
 import type { ViewerWorkspaceSettings } from './workspaceSettings';
 import { volumeSettings, isCtModality } from './volumeTransfer';
 import type { VolumePreset } from './volumeTransfer';
@@ -119,9 +120,8 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   const signalName = props.segmentationOnly ? 'segmentation only' : props.generatedSignal ? "generated image signal" : (props.sourceLabel ?? "MRI");
   const [localSettings,setLocalSettings] = useState<ViewerWorkspaceSettings>({});
   const settings=props.workspaceSettings ?? localSettings;
-  const fusedContext=usesPatientContext(settings,!!caseData?.patientContext?.field);
-  const contextName=fusedContext?'Normalized patient context':signalName;
-  const scanVolume=volumeSettings(settings.volumeRendering,contextName);
+  const patientCutawayActive=usesPatientCutaway(settings,!!caseData?.patientContext?.boundsRasMm);
+  const scanVolume=volumeSettings(settings.volumeRendering,signalName);
   const latestSettings=useRef(settings);latestSettings.current=settings;
   const changeSettings=(next:ViewerWorkspaceSettings)=>{
     latestSettings.current=next;
@@ -138,6 +138,35 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   const engine = useRef<VolumeRenderer | null>(null),
     latestProps = useRef(props);
   latestProps.current = props;
+  const exportJob=useRef<AbortController|null>(null);
+  const [exportBusy,setExportBusy]=useState(false);
+  const [exportStatus,setExportStatus]=useState('');
+  const exportAnatomy=async()=>{
+    if(exportJob.current){
+      exportJob.current.abort(new Error('3D export cancelled.'));
+      return;
+    }
+    const renderer=engine.current;
+    if(!renderer)return;
+    const job=new AbortController();
+    exportJob.current=job;
+    setExportBusy(true);
+    setExportStatus('Rendering 3D PNG…');
+    try{
+      const blob=await renderer.exportAnatomyPng(job.signal);
+      if(engine.current!==renderer)return;
+      const url=URL.createObjectURL(blob);
+      const link=document.createElement('a');
+      link.href=url;
+      link.download='resectionlab-3d.png';
+      try{link.click();}finally{window.setTimeout(()=>URL.revokeObjectURL(url),1000);}
+      setExportStatus('3D PNG ready.');
+    }catch(cause){
+      if(engine.current===renderer)setExportStatus(cause instanceof Error?cause.message:String(cause));
+    }finally{
+      if(exportJob.current===job){exportJob.current=null;setExportBusy(false);}
+    }
+  };
   useImperativeHandle(props.readCamera,()=>()=>engine.current?.getCameraState()??null,[]);
   const inspectionSelection = useRef(new InspectionSelectionGate());
   const [displayedInspection, setDisplayedInspection] = useState<InspectionToolDisplay | null>(null);
@@ -211,14 +240,14 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   const toggleControls=(panel:NonNullable<typeof controlPanel>,trigger:HTMLButtonElement,forceOpen=false)=>{controlTrigger.current=trigger;setControlPanel(controlPanel===panel&&!forceOpen?null:panel);};
   const closeControls=()=>{setControlPanel(null);controlTrigger.current?.focus({preventScroll:true});};
   useEffect(()=>{if(controlPanel)controlPanelElement.current?.querySelector<HTMLButtonElement>('button')?.focus({preventScroll:true});},[controlPanel]);
-  const [sourceSection,setSourceSection]=useState<{identity:typeof rendererIdentity;fused:boolean;previous:SourceSectionSnapshot}|null>(null);
-  const sourceSectionActive=Boolean(sourceSection&&sourceSection.identity===rendererIdentity&&sourceSection.fused===fusedContext);
+  const [sourceSection,setSourceSection]=useState<{identity:typeof rendererIdentity;patientCutaway:boolean;previous:SourceSectionSnapshot}|null>(null);
+  const sourceSectionActive=Boolean(sourceSection&&sourceSection.identity===rendererIdentity&&sourceSection.patientCutaway===patientCutawayActive);
   const sourceSectionAllowed=!props.segmentationOnly&&settings.operativeView!=='surgeon';
-  const [depthSlab,setDepthSlab]=useState<{identity:typeof rendererIdentity;fused:boolean}|null>(null);
+  const [depthSlab,setDepthSlab]=useState<{identity:typeof rendererIdentity;patientCutaway:boolean}|null>(null);
   const [depthSlabThickness,setDepthSlabThickness]=useState(44);
   const depthSlabAllowed=sourceSectionAllowed&&settings.presentation==='vascular'&&!props.generatedSignal&&
     !displayedSurgical&&!replay&&!passiveRequested&&!rehearsalRequested;
-  const depthSlabActive=depthSlabAllowed&&depthSlab?.identity===rendererIdentity&&depthSlab?.fused===fusedContext;
+  const depthSlabActive=depthSlabAllowed&&depthSlab?.identity===rendererIdentity&&depthSlab?.patientCutaway===patientCutawayActive;
   useEffect(()=>{if(depthSlab&&!depthSlabActive)setDepthSlab(null);},[depthSlab,depthSlabActive]);
   const [obliqueAngle,setObliqueAngle]=useState(0);
   const smoothSurfaces=settings.smoothSurfaces!==false;
@@ -239,14 +268,14 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
         inverse: inverseAffine(affine),
         bounds: volumeBounds(geometrySource.shape, affine),
         sourceClipBounds:volumeBounds(geometrySource.shape,affine,true),
-        patientClipBounds:geometrySource.patientContext?.field?volumeBounds(geometrySource.patientContext.field.shape,geometrySource.patientContext.field.affine,true):undefined,
+        patientClipBounds:geometrySource.patientContext?.boundsRasMm,
         support: sourceSignalBounds(geometrySource.mri,geometrySource.shape,affine),
       };
     } catch {
       return null;
     }
   }, [geometrySource]);
-  const cutawayBounds=(fusedContext?geometry?.patientClipBounds:undefined)??geometry?.sourceClipBounds;
+  const cutawayBounds=(patientCutawayActive?geometry?.patientClipBounds:undefined)??geometry?.sourceClipBounds;
   const currentCursor =
     cursor ??
     (geometry
@@ -268,13 +297,13 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     const previous=sourceSectionSnapshot(latestSettings.current);
     const cameraPosition=engine.current?.getCameraState()?.position??settings.camera?.position;
     changeSettings(sourceSectionAtCursor(latestSettings.current,currentCursor,cutawayBounds,cameraPosition));
-    setSourceSection({identity:rendererIdentity,fused:fusedContext,previous});
+    setSourceSection({identity:rendererIdentity,patientCutaway:patientCutawayActive,previous});
   };
   const toggleDepthSlab=()=>{
     if(depthSlabActive){setDepthSlab(null);return;}
     if(!depthSlabAllowed||!cutawayBounds)return;
     if(sourceSectionActive)exitSourceSection();
-    setDepthSlab({identity:rendererIdentity,fused:fusedContext});
+    setDepthSlab({identity:rendererIdentity,patientCutaway:patientCutawayActive});
   };
   useEffect(()=>{
     if(!sourceSection)return;
@@ -370,6 +399,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
       engine.current = renderer;
       setGraphicsLost(false);
       setReady(true);
+      setExportStatus('');
       return () => {
         renderer.dispose();
         engine.current = null;
@@ -736,7 +766,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   const modeled = replay && !replayError;
   const passiveMode = passiveReplay && !passiveError;
   const rehearsalMode = rehearsalState && !rehearsalError && !replayError;
-  const volumeDisplayed = scanVolume.enabled && !(fusedContext&&settings.volumeRendering?.isolateLabels) && !modeled && !passiveMode && !rehearsalMode;
+  const volumeDisplayed = scanVolume.enabled && !modeled && !passiveMode && !rehearsalMode;
   const inspected = !diagnosticRequested && !rehearsalRequested && !replay && !passiveRequested && !structuralProposal && !priorLayer &&
     displayedInspection?.caseHash === caseData.caseHash ? displayedInspection : null;
   const membrane=surgicalView&&!displayedSurgical?.preview?membraneTransport(surgicalView):null;
@@ -812,6 +842,11 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
             );
           })}
           <button onClick={()=>engine.current?.cameraPreset('oblique')} aria-label="Fit 3D view" title="Fit 3D view"><Focus size={16}/><span className="rl-viewer-tool-label">Fit 3D</span></button>
+          {!resultParts&&<button onClick={()=>void exportAnatomy()} aria-label={exportBusy?'Cancel 3D export':'Export 3D PNG'}
+            title={exportBusy?'Cancel 3D export':'Export high-resolution 3D PNG'}
+            disabled={!exportBusy&&(!ready||!!error||remaining>0||modelDisplayPending)}>
+            <Download size={16}/><span className="rl-viewer-tool-label">PNG</span>
+          </button>}
           <span className="viewer-tool-divider"/>
           <button aria-label="Show structures only" title="Structures" aria-pressed={!scanVolume.enabled} onClick={()=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,enabled:false}})}><Layers3 size={16}/><span className="rl-viewer-tool-label">Structures</span></button>
           <button aria-label="Show scan volume with structures" title="Volume" aria-pressed={scanVolume.enabled} disabled={props.segmentationOnly||props.generatedSignal||Boolean(replay)||passiveRequested||rehearsalRequested} onClick={()=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,enabled:true}})}><Box size={16}/><span className="rl-viewer-tool-label">Volume</span></button>
@@ -841,7 +876,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
           </div>
           {controlPanel==='appearance'&&<>
             <label><input type="checkbox" aria-label="Scan volume" checked={scanVolume.enabled} disabled={props.segmentationOnly||props.generatedSignal||Boolean(replay)||passiveRequested||rehearsalRequested} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,enabled:e.target.checked}})}/>Scan volume</label>
-            <label>Preset<select aria-label="Volume rendering preset" value={settings.volumeRendering?.preset??'auto'} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,preset:e.target.value as VolumePreset}})}><option value="auto">Automatic · {contextName}</option><option value="ct-bone" disabled={!isCtModality(contextName)}>CT bone</option><option value="ct-tissue" disabled={!isCtModality(contextName)}>CT tissue</option><option value="ct-angiography" disabled={!isCtModality(contextName)}>CT angiography · contrast scan</option><option value="mri">{/MRA|TOF|angiogra/i.test(contextName)?'Bright-blood MR signal':fusedContext?'Normalized brightness':'MRI tissue'}</option></select></label>
+            <label>Preset<select aria-label="Volume rendering preset" value={settings.volumeRendering?.preset??'auto'} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,preset:e.target.value as VolumePreset}})}><option value="auto">Automatic · {signalName}</option><option value="ct-bone" disabled={!isCtModality(signalName)}>CT bone</option><option value="ct-tissue" disabled={!isCtModality(signalName)}>CT tissue</option><option value="ct-angiography" disabled={!isCtModality(signalName)}>CT angiography · contrast scan</option><option value="mri">{/MRA|TOF|angiogra/i.test(signalName)?'Bright-blood MR signal':'MRI tissue'}</option></select></label>
             <label>Scan density<input aria-label="Scan volume density" type="range" min="0" max="2" step=".01" value={scanVolume.density} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,density:+e.target.value}})}/></label>
             <label><input type="checkbox" aria-label="Smooth 3D surfaces" checked={smoothSurfaces} onChange={e=>setSmoothSurfaces(e.target.checked)}/>Smooth surfaces</label>
             <label><input type="checkbox" aria-label="Body orientation guide" checked={settings.showOrientationGuide!==false} onChange={e=>changeSettings({...settings,showOrientationGuide:e.target.checked})}/>Body orientation guide</label>
@@ -849,7 +884,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
             <label>Slice annotations<select aria-label="Slice annotation style" value={settings.sliceOverlay??'fill'} onChange={e=>changeSettings({...settings,sliceOverlay:e.target.value as 'contour'|'fill'})}><option value="contour">Contours · source detail</option><option value="fill">Filled labels</option></select></label>
             {tractDisplays.length>0&&<label><input type="checkbox" checked={showSliceTracts} onChange={e=>setShowSliceTracts(e.target.checked)}/>Supplied tracts in source slices</label>}
             <label><input type="checkbox" checked={settings.volumeRendering?.shadows!==false} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,shadows:e.target.checked}})}/>Volume shadows</label>
-            <label><input type="checkbox" checked={settings.volumeRendering?.isolateLabels===true} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,isolateLabels:e.target.checked}})}/>{fusedContext?'Show selected structures only':'Isolate selected tissue'}</label>
+            <label><input type="checkbox" checked={settings.volumeRendering?.isolateLabels===true} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,isolateLabels:e.target.checked}})}/>Isolate selected tissue</label>
             {diagnosticLayer&&<label><input type="checkbox" checked={diagnosticVisible} onChange={e=>setDiagnosticVisible(e.target.checked)}/>Diagnostic overlay</label>}
             <details aria-label="Anatomy display quality"><summary>Anatomy quality</summary><p>Source slices and masks remain the basis for review. Anatomical accuracy is unmeasured.</p>{caseData.compartments.map(layer=>{const d=surfaceReports[layer.name]?.diagnostics??layer.surfaceDiagnostics;return <div key={layer.name}><strong>{layer.name}</strong>{layer.qa?.issues.map(issue=><p key={issue}>{issue}</p>)}{d?.policy==='engine-shared-implicit-v1'&&<p>Shared material interfaces · maximum display displacement {d.maxDisplacementMm.toFixed(3)} mm{d.displacementLimitMm!=null&&<> of {d.displacementLimitMm.toFixed(3)} mm allowed</>}.</p>}{d&&<p>{d.fallbackReason?d.fallbackReason:d.restoredComponents?`${d.restoredComponents} components use their original surface after geometry checks.`:'Surface geometry checks passed.'}{d.backedOffVertices?` Smoothing reduced locally at ${d.backedOffVertices.toLocaleString()} vertices.`:''}{d.volumeRestoredComponents?` Lesion volume checks restored ${d.volumeRestoredComponents} source components.`:''}</p>}{surfaceReports[layer.name]?.empty&&<p>Empty segmentation: anatomy is unavailable.</p>}</div>})}</details>
             <TransferEditor value={settings.volumeRendering??{}} onChange={volumeRendering=>changeSettings({...settings,volumeRendering})}/>
@@ -932,7 +967,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
               else sourceLayer=name;
             });
             if (point && geometry){
-              onCursorChange(fusedContext?point:clampCursor(point, geometry.bounds));
+              onCursorChange(patientCutawayActive?point:clampCursor(point, geometry.bounds));
               if(sourceLayer)props.onPickStructure?.(sourceLayer,point);
             }
           }}
@@ -962,6 +997,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
               {operativeMeasurements}
             </div>)}
           <div className="rl-viewer-annotations">
+            {exportStatus&&<span className="rl-viewer-preparing" role="status" aria-label="3D PNG export status">{exportStatus}</span>}
             {settings.operativeView==='surgeon'&&<span>{settings.microscope?.tissueStyle==='labels'?'Operative field · source labels':'Operative field · illustrative material'}</span>}
             {(rehearsalMode||passiveMode||modeled)&&<span className="rl-viewer-dot" />}
             {rehearsalMode

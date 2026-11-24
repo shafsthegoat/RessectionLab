@@ -82,14 +82,15 @@ test('changing a populated study reveals new structures without restoring hidden
 });
 
 test('native workspace keeps the shared cutaway through source switches and preserves independent inspection',async()=>{
-  const mriShape=[10,10,10],patientShape=[30,10,10];
+  const mriShape=[10,10,10];
   const affine=x=>[[1,0,0,x],[0,1,0,0],[0,0,1,0],[0,0,0,1]];
   const scans=[{id:'mri',modality:'T1'},{id:'ct',modality:'CT'},{id:'scout',modality:'scout'}];
   const transforms={mri:{status:'reference'},ct:{status:'source-provided'}};
   const document={patient_id:'P',snapshot_id:'snapshot',reference_series:'mri',series:scans,layers:[],transforms};
-  const sources=scans.map(({id,modality})=>({seriesId:id,modality,alignment:transforms[id]?.status??'unavailable'}));
+  const sources=scans.map(({id,modality})=>({seriesId:id,modality,alignment:transforms[id]?.status??'unavailable',inPatientBounds:!!transforms[id]}));
   const asset=(assetId,byteLength)=>({assetId,byteLength,byteOrder:'little',order:'C',sha256:assetId});
-  const patientContext={sources,shape:patientShape,affine:affine(0),signal:asset('patient',12000)};
+  const patientContext={sources,boundsRasMm:[[-.5,-.5,-.5],[29.5,9.5,9.5]]};
+  const reads=[];
   let saved,packaged=false;
   const api={
     anatomyRegister:async()=>({document}),
@@ -99,9 +100,9 @@ test('native workspace keeps the shared cutaway through source switches and pres
       registrationStatus:seriesId==='scout'?'independent source frame':'patient frame',unavailableLayers:[],
       ...(seriesId==='scout'?{}:{patientContext}),
     }),
-    readAsset:async id=>new Uint8Array(id==='patient'?12000:4000),
+    readAsset:async id=>{reads.push(id);return new Uint8Array(4000);},
     anatomySaveView:async({viewState})=>{saved=JSON.parse(JSON.stringify(viewState));},
-    anatomySavePackage:async()=>{packaged=true;return {path:'/testcases/fused-cutaway.rsworkspace'};},
+    anatomySavePackage:async()=>{packaged=true;return {path:'/testcases/patient-cutaway.rsworkspace'};},
   };
   const internals=React.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
   const previous=internals.H,previousWorker=globalThis.Worker,slots=[];
@@ -133,8 +134,12 @@ test('native workspace keeps the shared cutaway through source switches and pres
     setCut(clipping(3));
     render().present('segmentation');
     assert.deepEqual(cut(),clipping(20));
+    let w=render();
+    w.setSettings({...w.state.settings,volumeRendering:{preset:'mri',window:[10,200],density:.3}});
     await select('ct');
     assert.deepEqual(cut(),clipping(20));
+    assert.equal(render().state.settings.volumeRendering.window,undefined);
+    assert.deepEqual(reads,['mri','ct']);
     setCut(clipping(20,false));
     await select('scout');
     assert.equal(cut(),undefined);
@@ -142,6 +147,7 @@ test('native workspace keeps the shared cutaway through source switches and pres
     await render().savePackage();
     assert.ok(packaged);
     assert.equal(saved.seriesId,'scout');
+    assert.equal(saved.scalarTransferBasis,'selected-acquisition-v1');
     assert.deepEqual(saved.patientCutaway.clipping,clipping(20,false));
     assert.deepEqual(saved.states.mri.settings.clipping,clipping(3));
     assert.deepEqual(saved.states.scout.settings.clipping,clipping(84));

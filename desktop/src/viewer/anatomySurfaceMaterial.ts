@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import type {Bounds3,Point3,Shape3} from './coordinates';
-import type {ViewerVesselTrace} from './contracts';
+import type {VesselDisplayFilter,ViewerVesselTrace} from './contracts';
 import type {ViewerWorkspaceSettings} from './workspaceSettings';
 
 interface VesselLabelGrid {
@@ -68,9 +68,14 @@ export function setVesselInspectionFocus(material:THREE.MeshStandardMaterial,foc
   }
 }
 
-const vesselColors:Record<string,string>={artery:'#b33e32',vein:'#3e688c',sinus:'#4b5a88'};
 const shadingValue={source:0,balanced:1,large:2,fine:3};
 export const vesselSourceBoundaryColor='#747c81';
+
+export const vesselWallFinish = {
+  specularIntensity:.46,
+  clearcoat:.22,
+  clearcoatRoughness:.36,
+};
 
 /** Distinguish the padded source closure while keeping it opaque and pickable. */
 function shadeVesselSourceBoundary(shader:Parameters<THREE.MeshStandardMaterial['onBeforeCompile']>[0],shape:Shape3){
@@ -91,6 +96,14 @@ function shadeVesselSourceBoundary(shader:Parameters<THREE.MeshStandardMaterial[
     diffuseColor.rgb=mix(diffuseColor.rgb,uVesselSourceBoundaryColor,sourceBoundary);
     #include <roughnessmap_fragment>
     roughnessFactor=mix(roughnessFactor,0.72,sourceBoundary);`);
+  shader.fragmentShader=shader.fragmentShader.replace('#include <lights_physical_fragment>',`
+    #include <lights_physical_fragment>
+    #ifdef USE_CLEARCOAT
+      material.clearcoat*=1.0-sourceBoundary;
+    #endif
+    #ifdef PHYSICAL
+      material.specularColor=mix(material.specularColor,vec3(0.018),sourceBoundary);
+    #endif`);
 }
 
 /** Only radiance changes. Depth, source triangles, masks and picks remain authoritative. */
@@ -111,8 +124,10 @@ export function applyVesselDepthMaterial(material:THREE.MeshStandardMaterial,bou
     shader.uniforms.uAnatomyCenter={value:center};shader.uniforms.uAnatomyRadius={value:radius};
     shader.fragmentShader='uniform vec3 uAnatomyCenter;\nuniform float uAnatomyRadius;\n'+shader.fragmentShader;
     shader.fragmentShader=shader.fragmentShader.replace('#include <opaque_fragment>',`
-      float anatomyDepth=(length(vViewPosition)-length((viewMatrix*vec4(uAnatomyCenter,1.0)).xyz))/uAnatomyRadius;
-      outgoingLight*=mix(1.08,0.56,smoothstep(-0.65,0.65,anatomyDepth));
+      float anatomyDepth=(vViewPosition.z+(viewMatrix*vec4(uAnatomyCenter,1.0)).z)/uAnatomyRadius;
+      float farCue=smoothstep(-0.55,0.56,anatomyDepth);
+      float grazing=1.0-max(0.0,dot(normal,normalize(vViewPosition)));
+      outgoingLight*=mix(1.09,0.49,farCue)*(1.0-0.18*grazing*grazing);
       #include <opaque_fragment>`);
     if(sourceShape)shadeVesselSourceBoundary(shader,sourceShape);
     if(!style)return;
@@ -186,40 +201,25 @@ export function applyVesselDepthMaterial(material:THREE.MeshStandardMaterial,bou
       #include <color_fragment>
       if(uVesselStyle>0.5){
         float broad=smoothstep(0.9,4.3,vVesselWidth);
-        float emphasis=uVesselStyle>2.5?mix(1.1,0.59,broad):uVesselStyle>1.5?mix(0.24,1.08,broad):mix(0.53,1.0,broad);
+        float emphasis=uVesselStyle>2.5?mix(1.1,0.59,broad):uVesselStyle>1.5?mix(0.24,1.08,broad):mix(0.68,1.0,broad);
         diffuseColor.rgb=uVesselColor*emphasis;
       }`);
-    shader.fragmentShader=shader.fragmentShader.replace(
-      'outgoingLight*=mix(1.08,0.56,smoothstep(-0.65,0.65,anatomyDepth));',`
-      if(uVesselStyle>0.5){
-        // Use camera-axis depth so equally deep branches do not darken just
-        // because they lie near an edge of the screen. Keep a soft shoulder
-        // at both ends so a close-up stays legible throughout an orbit.
-        float physicalDepth=(vViewPosition.z+(viewMatrix*vec4(uAnatomyCenter,1.0)).z)/uAnatomyRadius;
-        float farCue=smoothstep(-0.42,0.48,physicalDepth);
-        float grazing=1.0-max(0.0,dot(normal,normalize(vViewPosition)));
-        outgoingLight*=mix(vec3(1.13,1.08,1.01),vec3(0.47,0.49,0.59),farCue);
-        outgoingLight*=1.0-0.36*grazing*grazing;
-      }else outgoingLight*=mix(1.08,0.56,smoothstep(-0.65,0.65,anatomyDepth));
-    `);
   };
-  material.customProgramCacheKey=()=>`anatomy-vessel-depth-v3-${!!style}-${!!sourceShape}-${previousKey}`;
+  material.customProgramCacheKey=()=>`anatomy-vessel-depth-v4-${!!style}-${!!sourceShape}-${previousKey}`;
   material.needsUpdate=true;
 }
 
 export function setVesselDepthAppearance(material:THREE.MeshStandardMaterial,settings:ViewerWorkspaceSettings,
-  layer:{name:string;kind?:string;displayFilter?:unknown},grid?:VesselLabelGrid) {
+  layer:{displayFilter?:VesselDisplayFilter},grid?:VesselLabelGrid) {
   const style=material.userData.vesselStyle as VesselUniforms|undefined;
   if(!style||!grid)return;
-  const mode=settings.operativeView||layer.displayFilter?'source':settings.vesselShading??(settings.presentation==='vascular'?'balanced':'source');
+  const explicitScope=layer.displayFilter?.scope;
+  const mode=settings.operativeView||(explicitScope&&explicitScope!=='exterior-air')?'source':
+    settings.vesselShading??(settings.presentation==='vascular'?'balanced':'source');
   style.uVesselStyle.value=shadingValue[mode];
-  style.uVesselColor.value.set(settings.layerColor?.[layer.name]??vesselColors[layer.kind??'']??'#b64f43');
+  style.uVesselColor.value.copy(material.color);
   style.uVesselLabels.value=grid.texture;
   style.uVesselShape.value.set(...grid.shape);
   style.uVesselWorldToVoxel.value=grid.worldToVoxel;
   style.uVesselLabelCode.value.set(...grid.code);
-  if(mode!=='source'){
-    material.color.copy(style.uVesselColor.value);
-    material.roughness=.4;
-  }
 }

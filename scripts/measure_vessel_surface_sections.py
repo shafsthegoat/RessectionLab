@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
-"""Audit native probability surfaces at matched source-centerline sections."""
+"""Audit native vessel walls at matched source-centerline sections."""
 
 import argparse
 import json
 from pathlib import Path
+from tempfile import TemporaryDirectory
+from time import perf_counter
+from types import SimpleNamespace
 
 import numpy as np
 from vtkmodules.util.numpy_support import numpy_to_vtk, numpy_to_vtkIdTypeArray
@@ -14,6 +17,7 @@ from vtkmodules.vtkFiltersModeling import vtkSelectEnclosedPoints
 from resectionlab.anatomy_bridge import open_anatomy_manifest
 from resectionlab.anatomy_geometry import mesh, vascular_cleanup_source
 from resectionlab.patient_anatomy import file_hash, world
+from resectionlab.surface_fairing import fair_surface, intersection_vertices
 
 
 def locate_surface(points, faces):
@@ -79,17 +83,80 @@ def stations(branches, limit):
     return [candidates[i] for i in indices]
 
 
-def audit(collection, layer, samples, *, conditioned=True):
-    result = mesh(collection, layer, display_source=vascular_cleanup_source(collection, layer), conditioned=conditioned)
+def _surface_metrics(source, variants, faces):
+    """Measure indexed geometry in physical space without shader normals."""
+    edge_ids = np.sort(faces[:, [0, 1, 1, 2, 2, 0]].reshape(-1, 2), axis=1)
+    _, mapped, counts = np.unique(edge_ids, axis=0, return_inverse=True, return_counts=True)
+    sorted_faces = np.argsort(mapped) // 3
+    start = (np.cumsum(counts) - counts)[counts == 2]
+    first, second = sorted_faces[start], sorted_faces[start + 1]
+
+    def normals(points):
+        a, b, c = points[faces].transpose(1, 0, 2)
+        n = np.cross(b - a, c - a)
+        areas = np.linalg.norm(n, axis=1)
+        return n / np.maximum(areas, 1e-20)[:, None], areas
+
+    def angles(a, b):
+        return np.degrees(np.arccos(np.clip(np.einsum("ij,ij->i", a, b), -1, 1)))
+
+    baseline, _ = normals(source)
+    metrics = {}
+    for key, points in {"source": source, **variants}.items():
+        n, areas = normals(points)
+        metrics[key] = {
+            "surface_area_mm2": float(areas.sum() / 2),
+            "dihedral_degrees_p50_p90_p95": np.percentile(angles(n[first], n[second]), [50, 90, 95]).tolist()
+            if len(first) else None,
+            "normal_turn_from_source_degrees_p50_p95_p100": np.percentile(angles(n, baseline), [50, 95, 100]).tolist()
+            if len(n) else None,
+            "displacement_mm_p50_p95_p100": np.percentile(np.linalg.norm(points - source, axis=1), [50, 95, 100]).tolist()
+            if len(points) else None,
+            "introduced_nonincident_contact_vertices": len(intersection_vertices(source, points, faces)),
+        }
+    return {
+        "common_vertices": len(source), "common_faces": len(faces), "common_edges": len(counts),
+        "common_open_edges": int(np.count_nonzero(counts == 1)),
+        "common_non_manifold_edges": int(np.count_nonzero(counts > 2)),
+        "surfaces": metrics,
+    }
+
+
+def audit(collection, layer, samples, *, cache_root, conditioned=True, compare_previous=False):
+    # Isolate derived arrays from the opened study and allow the reproduction
+    # runner to clean up the cache without touching source or existing evidence.
+    cache = SimpleNamespace(root=cache_root, mask=collection.mask, array=collection.array,
+                            path=collection.path, series=collection.series)
+    result = mesh(cache, layer, display_source=vascular_cleanup_source(collection, layer), conditioned=conditioned)
     frame = np.asarray(layer["affine"])
-    raw = locate_surface(world(frame, result["source"]), result["indices"])
-    smooth = locate_surface(world(frame, result["positions"]), result["indices"]) if conditioned else None
+    vertices = result["source"]
+    faces = result["indices"]
+    if not len(faces):
+        raise ValueError(f"Layer {layer['id']} has no source surface")
+    ras_source = world(frame, vertices)
+    ras_display = world(frame, result["positions"])
+    variants = {"conditioned": ras_display} if conditioned else {}
+    previous_ms = None
+    if compare_previous:
+        start = perf_counter()
+        mask = collection.mask(layer)
+        lo = np.maximum(0, np.floor(vertices.min(axis=0)).astype(int) - 2)
+        hi = np.minimum(mask.shape, np.ceil(vertices.max(axis=0)).astype(int) + 3)
+        cropped = mask[tuple(slice(a, b) for a, b in zip(lo, hi))]
+        previous, _ = fair_surface(vertices, faces, frame, layer["kind"],
+                                   mask=np.pad(cropped, 1), mask_origin=lo - 1)
+        previous_ms = (perf_counter() - start) * 1000
+        variants["previous_fairing"] = world(frame, previous)
+    raw = locate_surface(ras_source, faces)
+    smooth = locate_surface(ras_display, faces) if conditioned else None
+    previous = locate_surface(variants["previous_fairing"], faces) if compare_previous else None
     rows = []
     try:
         for radius, branch, station, center, tangent in samples:
             span = max(1.5, 3 * radius)
             before = section_area(raw, center, tangent, span)
             after = section_area(smooth, center, tangent, span) if smooth is not None else before
+            prior = section_area(previous, center, tangent, span) if previous is not None else None
             rows.append({
                 "branch": branch,
                 "station": station,
@@ -97,12 +164,15 @@ def audit(collection, layer, samples, *, conditioned=True):
                 "annotation_radius_mm": radius,
                 "raw_area_mm2": before,
                 "display_area_mm2": after,
+                "previous_area_mm2": prior,
                 "fraction_change": (after / before - 1) if before and after else None,
             })
     finally:
         raw[1].Complete()
         if smooth is not None:
             smooth[1].Complete()
+        if previous is not None:
+            previous[1].Complete()
     changes = [row["fraction_change"] for row in rows if row["fraction_change"] is not None]
     thin = [row["fraction_change"] for row in rows
             if row["annotation_radius_mm"] <= 0.6 and row["fraction_change"] is not None]
@@ -116,6 +186,11 @@ def audit(collection, layer, samples, *, conditioned=True):
         "fraction_change_p0_p5_p50_p95_p100": np.percentile(changes, [0, 5, 50, 95, 100]).tolist() if changes else None,
         "thin_sections": len(thin),
         "thin_fraction_change_p0_p5_p50_p95_p100": np.percentile(thin, [0, 5, 50, 95, 100]).tolist() if thin else None,
+        "mesh_preparation_ms": result["preparation_ms"],
+        **({
+            "previous_fairing_preparation_ms": previous_ms,
+            "geometry": _surface_metrics(ras_source, variants, faces),
+        } if compare_previous else {}),
         "sections": rows,
     }
 
@@ -127,10 +202,14 @@ def main():
     parser.add_argument("--layer", action="append", required=True)
     parser.add_argument("--sections", type=int, default=128)
     parser.add_argument("--source-only", action="store_true", help="Compare native sections without running fairing")
+    parser.add_argument("--compare-previous", action="store_true",
+                        help="Compare the previous fairing and measure physical triangle geometry")
     parser.add_argument("--output", required=True, type=Path)
     args = parser.parse_args()
     if not 1 <= args.sections <= 512:
         parser.error("Use 1–512 section stations")
+    if args.source_only and args.compare_previous:
+        parser.error("Choose --source-only or --compare-previous")
     manifest = args.study.resolve()
     manifest_hash = file_hash(manifest)
     collection = open_anatomy_manifest(manifest)
@@ -142,11 +221,15 @@ def main():
     if not samples:
         raise ValueError("No eligible source-centerline sections")
     results = []
-    for name in args.layer:
-        layer = collection.layer(name)
-        if layer["source_series"] != source["id"] or layer["affine"] != source["affine"]:
-            raise ValueError("Compared layers must share the native source lattice")
-        results.append(audit(collection, layer, samples, conditioned=not args.source_only))
+    with TemporaryDirectory(prefix=".vessel-mesh-audit-", dir=args.output.parent) as temporary:
+        for name in args.layer:
+            layer = collection.layer(name)
+            if layer["source_series"] != source["id"] or layer["affine"] != source["affine"]:
+                raise ValueError("Compared layers must share the native source lattice")
+            if args.compare_previous and layer.get("publisher_surface"):
+                raise ValueError("Prior fairing comparison requires a reconstructed vessel layer")
+            results.append(audit(collection, layer, samples, cache_root=Path(temporary),
+                                 conditioned=not args.source_only, compare_previous=args.compare_previous))
     pairs = []
     for comparison in results[1:]:
         original = results[0]

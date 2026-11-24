@@ -121,13 +121,13 @@ def brain_vessel_display(collection, row):
     return row, {'scope': 'all', 'reason': 'No aligned brain mask; showing the full vessel estimate', 'sourcePreserved': True}
 
 
-def patient_display_grid(collection, *, preview, check=lambda: None):
-    """Resolve the same registered display lattice for rendering and view validation."""
-    sources, admitted, corners = [], [], []
+def patient_display_context(collection, *, preview, check=lambda: None):
+    """Resolve shared RAS bounds and acquisition provenance without reading voxel arrays."""
+    sources, corners = [], []
     for scan in collection.document["series"]:
         check()
         entry = {"seriesId": scan["id"], "modality": scan["modality"],
-                 "sourceSha256": scan["original"]["sha256"]}
+                 "sourceSha256": scan["original"]["sha256"], "inPatientBounds": False}
         sources.append(entry)
         try:
             frame, estimated = display_affine(collection, scan, preview=preview)
@@ -135,68 +135,21 @@ def patient_display_grid(collection, *, preview, check=lambda: None):
             entry.update(alignment="unavailable", reason=str(exc))
             continue
         entry.update(alignment="estimated" if estimated else collection.document["transforms"][scan["id"]]["status"],
-                     voxelToPatientRasMm=frame.tolist())
+                     voxelToPatientRasMm=frame.tolist(), nativeShape=scan["data"]["shape"])
         if scan.get("synthetic") or re.search(
                 r"diagnostic|segmentation only|analytic signal|generated image signal",
                 scan["modality"], re.I):
-            entry["reason"] = "Source excluded from the 3D intensity context"
+            entry["reason"] = "Acquisition excluded from shared cutaway bounds"
             continue
-        admitted.append((scan, frame, entry))
+        entry["inPatientBounds"] = True
         corners.extend(voxel_edge_corners(scan["data"]["shape"], frame))
     context = {"sources": sources}
-    if not admitted:
-        return context, admitted
+    if not corners:
+        return context
     low, high = np.min(corners, axis=0), np.max(corners, axis=0)
+    # Retain the former display envelope so previously saved RAS cutaways,
+    # including planes at its padded edges, stay valid on the same revision.
     spacing = max(1., float(np.max((high - low) / 192)))
-    shape = tuple(np.clip(np.ceil((high - low) / spacing).astype(int), 2, 192))
-    frame = np.diag([spacing, spacing, spacing, 1.])
-    frame[:3, 3] = low + spacing / 2
-    context.update(affine=frame.tolist(), shape=list(map(int, shape)))
-    return context, admitted
-
-
-def patient_display_context(collection, *, preview, check, original=False):
-    """Window the source signals into a bounded 3D display texture."""
-    context, admitted = patient_display_grid(collection, preview=preview, check=check)
-    if not admitted:
-        return context, None
-    frame, shape = np.asarray(context["affine"]), context["shape"]
-    from .anatomy_siam_display import source_head_support
-    signal = np.zeros(shape, dtype=np.float32)
-    for scan, source, entry in admitted:
-        check()
-        support = None if original else source_head_support(collection, scan, check=check)
-        entry["headSupport"] = support is not None
-        data = collection.array(scan["data"])
-        units = str(scan.get("intensity_units") or scan.get("metadata", {}).get("Units", "")).upper()
-        if re.match(r"^\s*CTA?(?:\b|[-_])", scan["modality"], re.I) and units in {"HU", "HOUNSFIELD", "HOUNSFIELD UNITS"}:
-            entry["windowUnits"] = "HU"
-            window = [0., 1000.]
-        else:
-            entry["windowUnits"] = "source intensity"
-            stride = max(1, data.size // 100000)
-            sample = data.ravel()[::stride]
-            if support is not None:
-                inside = sample[support.ravel()[::stride] != 0]
-                if inside.size:
-                    sample = inside
-            window = [float(min(0., np.percentile(sample, 1))), float(np.percentile(sample, 99))]
-            if window[1] <= window[0]:
-                window[1] = max(window[0] + 1., float(data.max()))
-        entry["displayWindow"] = window
-        transform = np.linalg.inv(source) @ frame
-        for start in range(0, shape[0], 16):
-            check()
-            block = signal[start:start+16]
-            sampled = ndi.affine_transform(data, transform[:3, :3],
-                        offset=transform[:3, 3] + start * transform[:3, 0],
-                        output_shape=block.shape, output=np.float32, order=1, prefilter=False,
-                        mode="constant", cval=window[0])
-            np.clip((sampled - window[0]) / (window[1] - window[0]), 0, 1, out=sampled)
-            if support is not None:
-                covered = ndi.affine_transform(support, transform[:3, :3],
-                            offset=transform[:3, 3] + start * transform[:3, 0],
-                            output_shape=block.shape, output=np.uint8, order=0, prefilter=False)
-                sampled[covered == 0] = 0
-            np.maximum(block, sampled, out=block)
-    return context, signal
+    cells = np.clip(np.ceil((high - low) / spacing), 2, 192)
+    context["boundsRasMm"] = [low.tolist(), (low + cells * spacing).tolist()]
+    return context

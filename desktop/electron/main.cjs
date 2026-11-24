@@ -293,7 +293,7 @@ function bindOperations() {
   });
   handle('prepareSurgicalEnvironment', async args=>{
     if(!await rehearsalUnsaved.allowNavigation())return null;
-    args=plainArgs(args,['collectionId','snapshotId','layers','allowUnreviewedRegistration','approach']);
+    args=plainArgs(args,['collectionId','snapshotId','layers','allowUnreviewedRegistration','approach','nativeWallCenter']);
     const result=await engine.request('prepareSurgicalEnvironment',args,300000);rememberReplayMode(result);currentCasePath=null;return result;
   });
   handle('importSurgicalScene', async args => {
