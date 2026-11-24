@@ -384,8 +384,12 @@ test('native CT Scan can omit the 3D bone overlay while slice membership and the
     assert.equal(u.uOpticalCache.value,true);
     assert.equal(u.uVolume.value,scan.texture);
     assert.equal(scan.opticalAtlasSelection.source.signal,volume.mri);
+    const acquiredAtlas=u.uTransfer.value;
     render({showCtBoneOverlay:true});
-    assert.equal(u.uOpticalCache.value,false,'opaque modeled bone bypasses the acquired CT atlas');
+    assert.equal(u.uTransfer.value,acquiredAtlas,'the mesh toggle shares the acquired CT atlas');
+    assert.equal(u.uOpticalCache.value,true);
+    render();
+    assert.equal(u.uOpticalCache.value,false,'legacy opaque modeled bone bypasses the acquired CT atlas');
     for(const [options,presentation,modality] of [
       [{}], [{showCtBoneOverlay:true}], [{...acquired,isolateLabels:true}],
       [{...acquired,enabled:false}], [{...acquired,density:0}],

@@ -2,7 +2,7 @@ import {packAnatomyLabels,MAX_ANATOMY_LAYERS} from './labelPacking';
 import * as THREE from 'three';
 import type { ViewerVolume } from './contracts';
 import { inverseAffine, rasAffine } from './coordinates.ts';
-import { canBalanceTofContext, isCtModality, usesAcquiredCtBone, volumeSettings, volumeTransfer, zeroExtinctionLevel } from './volumeTransfer.ts';
+import { canBalanceTofContext, isCtModality, volumeSettings, volumeTransfer, zeroExtinctionLevel } from './volumeTransfer.ts';
 import {balancedTofDensity, CT_EXTERIOR_AIR_HU, CT_EXTERIOR_TEXTURE_LIMIT_BYTES, ctExteriorDisplaySignal, ctOpticalCoverage, finishOpticalPreparation, opticalAtlasSteps, OPTICAL_KEY_LIGHTS, volumeOpticalAtlas, type OpticalContext, type OpticalSource} from './volumeOpticalDensity.ts';
 import {layerAppearance} from './workspaceSettings';
 import type {ViewerWorkspaceSettings} from './workspaceSettings';
@@ -167,7 +167,9 @@ export class ScanVolumeRenderer {
       this.preset=signature;
     }
     this.material.uniforms.uCt.value=isCtModality(modality);
-    this.material.uniforms.uAcquiredCtBone.value=this.nativeAcquisition&&usesAcquiredCtBone(input,modality);
+    // An explicit overlay preference keeps Scan's scalar field independent of
+    // hull visibility in both positions. Legacy and isolate modes retain their transfer.
+    this.material.uniforms.uAcquiredCtBone.value=this.nativeAcquisition&&input?.showCtBoneOverlay!==undefined&&!input.isolateLabels;
     this.standardCtAir=this.material.uniforms.uCt.value&&settings.preset!=='mri'&&input?.window===undefined&&input?.points===undefined&&
       !!this.transferLut&&this.transferLut.range[0]>=CT_EXTERIOR_AIR_HU&&this.transferLut.data[3]===0;
     this.material.uniforms.uGradientOpacity.value=this.automaticMriTransfer&&this.shellContext;
