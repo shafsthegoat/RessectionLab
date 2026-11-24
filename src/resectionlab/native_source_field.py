@@ -42,7 +42,11 @@ def source_field_view(collection, series, field, layer_ids, independent, transfe
         contour_field = 'limited-coverage'
         if coverage.all():
             if row['data']['shape'] == series['data']['shape'] and np.allclose(layer_affine, full_affine, rtol=0, atol=1e-5):
-                points, faces, contour_field = local_source_contour(collection, row, source_slices)
+                crop_affine = full_affine.copy()
+                crop_affine[:3, 3] = world(full_affine, [start])[0]
+                exact_grid = np.array_equal(layer_affine, full_affine) and np.array_equal(displayed, crop_affine)
+                points, faces, contour_field = local_source_contour(
+                    collection, row, source_slices, mask=mask if exact_grid else None, check=check)
                 transform = np.linalg.solve(displayed, layer_affine)
                 vertices = world(transform, points + start).astype(np.float32)
                 if len(faces) and row['kind'] in {'vessel', 'vessels', 'artery', 'vein', 'sinus'} and contour_field in {'native-probability', 'filtered-native-probability'}:

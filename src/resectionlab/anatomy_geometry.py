@@ -17,12 +17,13 @@ from .surface_fairing import (
 )
 
 
-def _save_cache(path, values):
+def _save_cache(path, values, *, compressed=True):
     """Interrupted writers cannot leave a partially readable geometry cache."""
     fd, temporary = tempfile.mkstemp(dir=path.parent, suffix=".npz")
     try:
         with os.fdopen(fd, "wb") as stream:
-            np.savez_compressed(stream, **values)
+            save = np.savez_compressed if compressed else np.savez
+            save(stream, **values)
         os.replace(temporary, path)
     finally:
         if os.path.exists(temporary):
@@ -35,7 +36,10 @@ def _poly(values, probability):
     from vtkmodules.util.numpy_support import numpy_to_vtk
     image = vtkImageData()
     image.SetDimensions(*values.shape)
-    image.GetPointData().SetScalars(numpy_to_vtk(np.asarray(values).ravel(order="F"), deep=True))
+    # VTK reads this contiguous buffer synchronously during Update.
+    storage = np.asarray(values).ravel(order="F")
+    scalars = numpy_to_vtk(storage, deep=False)
+    image.GetPointData().SetScalars(scalars)
     if probability:
         contour = vtkFlyingEdges3D()
         contour.SetValue(0, 0.5)
@@ -47,6 +51,14 @@ def _poly(values, probability):
     contour.SetInputData(image)
     contour.Update()
     return contour.GetOutput()
+
+
+def _padded_contour_field(values):
+    # Allocate the boundary samples in VTK's axis order so flattening to its
+    # image buffer does not also allocate a full copy of a padded acquisition.
+    padded = np.zeros(tuple(size + 2 for size in values.shape), dtype=values.dtype, order="F")
+    padded[1:-1, 1:-1, 1:-1] = values
+    return padded
 
 
 def _arrays(poly):
@@ -101,7 +113,7 @@ def _vascular_score_contour(scores, mask):
     crop = tuple(slice(a, b) for a, b in zip(lo, hi))
     cropped = mask[crop]
     values = _suppress_vascular_scores(scores[crop].copy(order="C"), cropped)
-    positions, indices, _ = _indexed_contour(np.pad(values, 1), probability=True)
+    positions, indices, _ = _indexed_contour(_padded_contour_field(values), probability=True)
     origin = lo - 1
     return (positions + origin).astype(np.float32), indices, cropped, origin
 
@@ -297,18 +309,18 @@ def _display_geometry(collection, row, result, cache_hit, started):
     return {**result, "cache_hit": cache_hit, "preparation_ms": (perf_counter() - started) * 1000}
 
 
-def _field_values(collection, row, cropped, slices, display_source):
+def _field_values(collection, row, cropped, slices, display_source, *, check=None):
     source = display_source if display_source is not None else row
     probability = source.get("probability")
     if probability is None or source.get("edits"):
         return cropped.astype(np.uint8), "categorical"
-    values = collection.array(probability)[slices]
+    values = collection.array(probability, check=check)[slices]
     vascular = surface_kind(row["kind"]) == "vessel"
     if vascular:
         # Materialize the small native crop in storage order once. Repeated
         # strided scans against an external-drive memmap delay cold extraction.
         values = np.array(values, dtype=np.result_type(values.dtype, np.float32), order="C", copy=True)
-    original = collection.array(source["data"])[slices] == source["label_value"] if display_source is not None else cropped
+    original = collection.array(source["data"], check=check)[slices] == source["label_value"] if display_source is not None else cropped
     if values.shape != cropped.shape or not np.isfinite(values).all():
         return cropped.astype(np.uint8), "categorical"
     if not vascular:
@@ -324,10 +336,11 @@ def _field_values(collection, row, cropped, slices, display_source):
     return _suppress_vascular_scores(values, cropped), "native-probability" if display_source is None else "filtered-native-probability"
 
 
-def local_source_contour(collection, row, slices):
+def local_source_contour(collection, row, slices, *, mask=None, check=None):
     """Read a native sublattice and leave any cut surface edges open."""
-    mask = collection.array(row['data'])[slices] == row['label_value']
-    values, field = _field_values(collection, row, mask, slices, vascular_cleanup_source(collection, row))
+    if mask is None:
+        mask = collection.array(row['data'], check=check)[slices] == row['label_value']
+    values, field = _field_values(collection, row, mask, slices, vascular_cleanup_source(collection, row), check=check)
     if not mask.any() or min(mask.shape) < 2:
         return (np.empty((0, 3), np.float32), np.empty((0, 3), np.uint32), field)
     positions, indices, _ = _indexed_contour(values, field != 'categorical')
@@ -412,7 +425,8 @@ def _brain_envelope_signal(collection, row):
     return scan["data"]
 
 
-def mesh(collection, row, *, cancelled=lambda: False, display_source=None, conditioned=True, cache_directory=None):
+def mesh(collection, row, *, cancelled=lambda: False, display_source=None, conditioned=True,
+         cache_directory=None, mask=None, check=None):
     """Separate source/display mesh; same connectivity, bounded local movement."""
     started = perf_counter()
     display_source = _attached_erase_source(display_source if display_source is not None else row) or display_source
@@ -422,7 +436,7 @@ def mesh(collection, row, *, cancelled=lambda: False, display_source=None, condi
             raise ValueError("Vascular display filtering requires the source lattice")
         if display_source["data"] == row["data"] and display_source["label_value"] == row["label_value"]:
             return mesh(collection, display_source, cancelled=cancelled, conditioned=conditioned,
-                        cache_directory=cache_directory)
+                        cache_directory=cache_directory, mask=mask, check=check)
     if display_source is None and row.get("publisher_surface") is not None:
         from .anatomy_publisher_surface import conditioned_publisher_cta, publisher_surface
 
@@ -460,11 +474,15 @@ def mesh(collection, row, *, cancelled=lambda: False, display_source=None, condi
         }
     directory = collection.root / "meshes" if cache_directory is None else cache_directory
     conditioned_cache = directory / f"{digest(identity)}.npz"
-    cache = conditioned_cache if conditioned else directory / f"{digest({**identity, 'source_only': True})}.npz"
+    legacy_source_cache = directory / f"{digest({**identity, 'source_only': True})}.npz"
+    cache = conditioned_cache if conditioned else directory / f"{digest({**identity, 'source_only': True, 'storage': 'single-source-v1'})}.npz"
     cache.parent.mkdir(exist_ok=True)
-    if cache.exists():
-        with np.load(cache, allow_pickle=False) as z:
+    readable_cache = cache if conditioned or cache.exists() else legacy_source_cache
+    if readable_cache.is_file():
+        with np.load(readable_cache, allow_pickle=False) as z:
             result = {k: z[k] for k in z.files}
+        if not conditioned:
+            result.setdefault("positions", result["source"])
         return _display_geometry(collection, row, result, True, started)
     if not conditioned and conditioned_cache.is_file():
         # The conditioned cache records the separately retained raw contour
@@ -476,7 +494,8 @@ def mesh(collection, row, *, cancelled=lambda: False, display_source=None, condi
                   "max_displacement_mm": np.array(0.), "policy_version": np.array("native-source-isosurface-v1"),
                   "surface_field": field}
         return _display_geometry(collection, row, result, True, started)
-    mask = collection.mask(row)
+    if mask is None:
+        mask = collection.mask(row, check=check)
     bounds = [np.flatnonzero(mask.any(axis=tuple(i for i in range(3) if i != axis))) for axis in range(3)]
     if not len(bounds[0]):
         return {
@@ -493,8 +512,8 @@ def mesh(collection, row, *, cancelled=lambda: False, display_source=None, condi
     hi = np.minimum(mask.shape, np.array([axis[-1] for axis in bounds]) + 3)
     slices = tuple(slice(a, b) for a, b in zip(lo, hi))
     cropped = mask[slices]
-    values, field = _field_values(collection, row, cropped, slices, display_source)
-    values = np.pad(values, 1)
+    values, field = _field_values(collection, row, cropped, slices, display_source, check=check)
+    values = _padded_contour_field(values)
     if cancelled():
         raise InterruptedError("Mesh preparation cancelled")
     raw, faces, degenerate = _indexed_contour(values, field != "categorical")
@@ -544,7 +563,13 @@ def mesh(collection, row, *, cancelled=lambda: False, display_source=None, condi
         result["volume_restored_components"] = np.array(diagnostics["volumeRestoredComponents"])
     if cancelled():
         raise InterruptedError("Mesh preparation cancelled before cache admission")
-    _save_cache(cache, result)
+    if conditioned:
+        _save_cache(cache, result)
+    else:
+        # The source and display positions are the same array in this mode.
+        # Larger raw meshes prioritize a quick lossless write and reopen.
+        records = {key: value for key, value in result.items() if key != "positions"}
+        _save_cache(cache, records, compressed=len(faces) < 200_000)
     return _display_geometry(collection, row, result, False, started)
 
 

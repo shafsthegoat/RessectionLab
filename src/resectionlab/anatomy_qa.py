@@ -45,13 +45,13 @@ def mask_quality(mask, source_identity, *, probability=None, review_status='unre
             'reviewStatus': review_status, 'issues': issues, 'accuracy': 'unmeasured'}
 
 
-def layer_quality(collection, row, *, verify_probability=True):
+def layer_quality(collection, row, *, verify_probability=True, mask=None, check=None):
     identity = digest({'snapshot': collection.identity(), 'data': row['data'], 'label': row['label_value'],
                        'affine': row['affine'], 'probability': row.get('probability'), 'edits': row.get('edits')})
     cache = getattr(collection, '_quality_cache', {})
     cache_key = (identity, verify_probability)
     if cache_key not in cache:
-        probability = collection.array(row['probability']) if verify_probability and row.get('probability') and not row.get('edits') else None
+        probability = collection.array(row['probability'], check=check) if verify_probability and row.get('probability') and not row.get('edits') else None
         transform = collection.document['transforms'].get(row['source_series'], {})
         reason = None
         if probability is not None and row["kind"] == "tumor":
@@ -59,7 +59,9 @@ def layer_quality(collection, row, *, verify_probability=True):
             record = provenance.get("native_rerun", provenance)
             if record.get("availability") == "empty_output" and record.get("maximum_score") == float(probability.max()):
                 reason = empty_tumor_reason(record, collection.series(row["source_series"])["modality"])
-        cache[cache_key] = mask_quality(collection.mask(row), identity, probability=probability,
+        if mask is None:
+            mask = collection.mask(row, check=check)
+        cache[cache_key] = mask_quality(mask, identity, probability=probability,
             review_status=row.get('review_status', 'unreviewed'), alignment_status=transform.get('status', 'unknown'),
             empty_reason=reason)
         # Keep only the latest few generations of findings in this process.

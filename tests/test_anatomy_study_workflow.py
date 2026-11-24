@@ -142,6 +142,22 @@ def test_vessel_display_filter_preserves_the_untouched_native_surface(patient, t
     assert vascular_cleanup_source(c, companion) is None
 
 
+def test_raw_native_mesh_reopens_with_one_copy_of_the_source_positions(patient, tmp_path):
+    from resectionlab.anatomy_geometry import mesh
+
+    layer = patient.layer('vessels')
+    cache_dir = tmp_path / 'raw-mesh-cache'
+    first = mesh(patient, layer, conditioned=False, cache_directory=cache_dir)
+    assert first['source'].size and not first['cache_hit']
+    [cache] = list(cache_dir.glob('*.npz'))
+    with np.load(cache, allow_pickle=False) as stored:
+        assert 'source' in stored and 'positions' not in stored
+    reopened = mesh(patient, layer, conditioned=False, cache_directory=cache_dir)
+    assert reopened['cache_hit'] and reopened['positions'] is reopened['source']
+    for key in ('positions', 'normals', 'indices'):
+        np.testing.assert_array_equal(reopened[key], first[key])
+
+
 def test_prepared_branch_query_preserves_source_ids_and_excludes_hidden_paths(patient):
     from resectionlab.anatomy_geometry import inspect_vessel_geometry, source_branch_cache_path
     from resectionlab.vascular_source_branches import build_source_branches

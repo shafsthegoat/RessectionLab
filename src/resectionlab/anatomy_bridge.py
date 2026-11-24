@@ -71,6 +71,41 @@ def _retain(session, result):
             _retain(session, x)
 
 
+def _surface_assets(geometry, transform, source_only, transfer):
+    raw = world(transform, geometry["source"]).astype(np.float32)
+    positions = raw if source_only else world(transform, geometry["positions"]).astype(np.float32)
+    if not positions.size:
+        return {"empty": True}
+    compatible_winding = np.linalg.det(transform[:3, :3]) >= 0
+    faces = geometry["indices"] if compatible_winding else geometry["indices"][:, ::-1]
+    shared_normals = geometry.get("shared_publisher_normals")
+    same_positions = positions is raw or np.array_equal(positions.view(np.uint32), raw.view(np.uint32))
+    normal_cache = geometry["normals"] if compatible_winding and not shared_normals else None
+    if normal_cache is not None and np.array_equal(raw, geometry["positions"]):
+        raw_normals = normal_cache
+    else:
+        raw_normals = normals(raw, faces)
+    raw_asset = transfer(raw, "float32")
+    raw_normal_asset = transfer(raw_normals, "float32")
+    if shared_normals and not source_only:
+        # Carry whole-surface normals into display IJK for continuous shading
+        # across named seams.
+        display_normals = geometry["normals"] @ np.linalg.inv(transform[:3, :3])
+        display_normals /= np.maximum(np.linalg.norm(display_normals, axis=1, keepdims=True), 1e-20)
+        normal_asset = transfer(display_normals, "float32")
+    elif same_positions:
+        normal_asset = raw_normal_asset
+    else:
+        display_normals = (normal_cache if normal_cache is not None
+                           and np.array_equal(positions, geometry["positions"]) else normals(positions, faces))
+        normal_asset = transfer(display_normals, "float32")
+    return {
+        "positions": raw_asset if same_positions else transfer(positions, "float32"),
+        "source": raw_asset, "normals": normal_asset, "sourceNormals": raw_normal_asset,
+        "indices": transfer(faces, "uint32"),
+    }
+
+
 def dispatch(session, operation, args, request, progress):
     # A source read does not change the cached view or its transfer descriptors.
     if operation not in {"anatomyView", "anatomySample", "anatomyAttachedVesselReview", "anatomyVesselGapReview",
@@ -445,9 +480,12 @@ def dispatch(session, operation, args, request, progress):
             source_surface_only = vessel_surface_mode == "source" and row["kind"] in {"vessel", "vessels", "artery", "vein", "sinus"}
             # The native extraction verifies contour signs before use. A raw
             # cached contour does not require a second full score-volume read.
-            quality = layer_quality(c, row, verify_probability=not source_surface_only)
+            mask_binding = (row["data"], row["label_value"])
+            native_mask = c.mask(row, check=request.check)
+            quality = layer_quality(c, row, verify_probability=not source_surface_only,
+                                    mask=native_mask, check=request.check)
             source_volume = None if source_grid_preview else float(
-                c.mask(row).sum() * abs(np.linalg.det(affine(row["affine"])[:3, :3]))
+                quality["voxelCount"] * abs(np.linalg.det(affine(row["affine"])[:3, :3]))
             )
             if source_grid_preview:
                 message = "Annotation header omits spatial units. Preview on its supplied source grid; physical measurements unavailable."
@@ -488,9 +526,12 @@ def dispatch(session, operation, args, request, progress):
             score_source = vascular_cleanup_source(c, unfiltered)
             if score_source is None and row is not unfiltered:
                 score_source = unfiltered
+            if (row["data"], row["label_value"]) != mask_binding:
+                native_mask = c.mask(row, check=request.check)
             geometry = mesh(c, row, cancelled=request.cancelled.is_set,
                             display_source=score_source, conditioned=not source_surface_only,
-                            cache_directory=inspection.workspace / 'meshes' if inspection else None)
+                            cache_directory=inspection.workspace / 'meshes' if inspection else None,
+                            mask=native_mask, check=request.check)
             request.check()
             shared = row.get("kind") == "brain-region" and not row.get("edits")
             # Identical categorical values may originate on different physical grids.
@@ -500,7 +541,7 @@ def dispatch(session, operation, args, request, progress):
                     values = resample(c.array(row["data"]), source, shape, displayed, order=0).astype(np.uint16)
                     cache["label_sets"][set_id] = {"id": set_id, "data": transfer(values, "uint16")}
                 label_sets[set_id] = cache["label_sets"][set_id]
-            mask = None if shared else resample(c.mask(row).astype(np.uint8), source, shape, displayed, order=0)
+            mask = None if shared else resample(native_mask, source, shape, displayed, order=0)
             record = {
                 "name": name,
                 "kind": row["kind"],
@@ -537,31 +578,7 @@ def dispatch(session, operation, args, request, progress):
                 **({"labelSet": set_id, "labelValue": row["label_value"]} if shared else {"mask": transfer(mask, "uint8")}),
                 **({"volumeMm3": source_volume} if source_volume is not None else {}),
             }
-            if True:  # Empty geometry is explicit; never rebuild it from a categorical placeholder.
-                transform = np.linalg.inv(displayed) @ source
-                raw = world(transform, geometry["source"]).astype(np.float32)
-                p = raw if source_surface_only else world(transform, geometry["positions"]).astype(np.float32)
-                faces = geometry["indices"]
-                if np.linalg.det(transform[:3, :3]) < 0:
-                    faces = faces[:, ::-1]
-                record["surface"] = {"empty": True}
-                if p.size:
-                    raw_transfer = transfer(raw, "float32")
-                    raw_normals = transfer(normals(raw, faces), "float32")
-                    if geometry.get("shared_publisher_normals") and not source_surface_only:
-                        # Preserve continuous shading across named seams by
-                        # carrying the whole surface normals into display IJK.
-                        conditioned_normals = geometry["normals"] @ np.linalg.inv(transform[:3, :3])
-                        conditioned_normals /= np.maximum(np.linalg.norm(conditioned_normals, axis=1, keepdims=True), 1e-20)
-                    else:
-                        conditioned_normals = None if source_surface_only else normals(p, faces)
-                    record["surface"] = {
-                        "positions": raw_transfer if source_surface_only else transfer(p, "float32"),
-                        "source": raw_transfer,
-                        "normals": raw_normals if source_surface_only else transfer(conditioned_normals, "float32"),
-                        "sourceNormals": raw_normals,
-                        "indices": transfer(faces, "uint32"),
-                    }
+            record["surface"] = _surface_assets(geometry, np.linalg.inv(displayed) @ source, source_surface_only, transfer)
             layers.append(record)
             if cacheable:
                 cache["layers"][name] = deepcopy(record)

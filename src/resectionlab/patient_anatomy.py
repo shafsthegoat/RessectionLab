@@ -440,8 +440,8 @@ class PatientImagingCollection:
         self.document["layers"].append(row)
         return row
 
-    def mask(self, row):
-        return self.array(row["data"]) == row["label_value"]
+    def mask(self, row, *, check=None):
+        return self.array(row["data"], check=check) == row["label_value"]
 
     def require_native_geometry(self, row, *, allow_header_conflict=False, allow_legacy_annotation_grid=False):
         """Separate native viewing from permission to interpret a grid in RAS mm."""
