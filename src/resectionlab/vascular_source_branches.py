@@ -367,7 +367,7 @@ def _component_branches(
     return branches
 
 
-def build_source_branches(mask, native_affine, *, source_scan_sha256, signal=None):
+def build_source_branches(mask, native_affine, *, source_scan_sha256, signal=None, check=lambda: None):
     """Derive JSON-ready source-cell paths, preserving the original prediction.
 
     The scan digest namespaces branch identity. Build from the unfiltered
@@ -411,6 +411,7 @@ def build_source_branches(mask, native_affine, *, source_scan_sha256, signal=Non
     remaining_nodes = _MAX_SKELETON_NODES
     unrepresented_foreground = 0
     for label in sorted(range(1, count + 1), key=lambda value: (-sizes[value], value)):
+        check()
         slices = bounds[label - 1]
         offset = origin + np.array([axis.start for axis in slices])
         region = labels[slices]
@@ -618,7 +619,7 @@ def _sample_gap(start, end, line, mask, signal, ras_to_ijk, spacing, policy):
     }
 
 
-def evaluate_source_gaps(graph, mask, signal, *, policy=GapPolicy()):
+def evaluate_source_gaps(graph, mask, signal, *, policy=GapPolicy(), check=lambda: None):
     """Test TOF support along endpoint-compatible straight paths for review."""
     mask, frame, spacing, signal = _native_grid(mask, graph["source_affine_ras_mm"], signal)
     if signal is None:
@@ -644,6 +645,7 @@ def evaluate_source_gaps(graph, mask, signal, *, policy=GapPolicy()):
     exhausted = False
     candidates = []
     for first, second in _endpoint_pairs(tree, points, crowded, policy.maximum_distance_mm):
+        check()
         if tested_pairs >= policy.maximum_pairs:
             exhausted = True
             break

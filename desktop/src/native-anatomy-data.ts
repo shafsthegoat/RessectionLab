@@ -90,6 +90,7 @@ export interface NativeAnatomyApi {
   anatomySaveView(args:Args):Promise<{saved:boolean}>;
   anatomyComponents(args:Args):Promise<ComponentReview>;
   anatomyAttachedVesselReview(args:Args):Promise<AttachedVesselReview>;
+  anatomyVesselGapReview(args:Args):Promise<VesselGapReview>;
   anatomyLocalAlignment(args:Args):Promise<LocalAlignmentEvidence>;
   anatomyDiffusionBaseline(args:Args):Promise<{document:Document;seriesId:string}>;
   anatomyGraph(args:Args):Promise<NativeVesselGraph>;
@@ -202,6 +203,14 @@ export interface AttachedVesselReview {
   snapshotId:string;reviewId?:string;status:'complete'|'partial'|'unavailable';reason?:string;
   sourceLayer?:string;sourceSeries?:string;findings?:AttachedVesselFinding[];
   preview?:{findingId:string;window:[number,number];sections:AttachedVesselSection[]};
+}
+export type VesselGapEvidence='uncertain-image-supported'|'weak-source-image-support'|'source-image-unassessed';
+export interface VesselGapReview {
+  snapshotId:string;reviewId?:string;status:'complete'|'partial'|'unavailable';reason?:string;
+  sourceLayer:string;sourceSeries:string;
+  findings?:Array<{id:string;evidence:VesselGapEvidence;distanceMm:number;stations:number;supportedStations:number}>;
+  preview?:{findingId:string;centerRasMm:Point3;window:[number,number];
+    sections:Array<Omit<AttachedVesselSection,'axis'|'index'>&{title:string}>};
 }
 export function isNativeBinding(value:unknown):value is Binding {return !!value&&typeof value==='object'&&'collectionId' in value&&'document' in value;}
 

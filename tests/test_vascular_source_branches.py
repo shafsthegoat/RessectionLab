@@ -1,9 +1,14 @@
 """Stable native branch identities and separate source-imaged gap proposals."""
 
+from base64 import b64decode
+
+import nibabel as nib
 import numpy as np
 import pytest
 
 from resectionlab import vascular_source_branches as source
+from resectionlab.desktop_bridge import BridgeSession, _Request
+from resectionlab.patient_anatomy import PatientImagingCollection, file_hash
 
 
 def test_source_loop_survives_and_ids_follow_source_coordinates():
@@ -84,6 +89,51 @@ def test_geometry_compatible_gap_requires_independent_tof_evidence():
     changed = np.ones_like(prediction)
     with pytest.raises(ValueError, match="source prediction"):
         source.evaluate_source_gaps(graph, changed, signal)
+
+
+def test_native_gap_inspector_pairs_acquired_planes_with_source_cells_without_an_edit(tmp_path):
+    shape = (32, 25, 25)
+    prediction = np.zeros(shape, np.uint8)
+    prediction[3:14, (6, 18), 12] = prediction[16:28, (6, 18), 12] = 1
+    acquired = prediction.astype(np.float32) * 10
+    acquired[14:16, 6, 12] = 10
+    frame = np.diag([.8, .8, .8, 1.]); frame[:3, 3] = [-9, 10, 4]
+    source_path = tmp_path / "tof.nii"
+    image = nib.Nifti1Image(acquired, frame)
+    image.header.set_xyzt_units("mm")
+    nib.save(image, source_path)
+    study = PatientImagingCollection.create(tmp_path / "study", "gap-review-test")
+    series = study.add_series(source_path, series_id="tof", modality="TOF")
+    row = study.add_layer(prediction, series["affine"], layer_id="vessels", source_series="tof", kind="vessels",
+                          role="critical", color="#ff5948")
+    study.save()
+    manifest = study.root / "patient-anatomy.json"
+    contents = {file: file_hash(file) for file in study.root.rglob("*") if file.is_file()}
+    session = BridgeSession(tmp_path / "transfers")
+
+    def call(operation, args):
+        return session.execute(operation, args, _Request(operation), lambda *_: None)
+
+    binding = call("anatomyOpen", {"path": str(manifest)})
+    args = {"collectionId": binding["collectionId"], "snapshotId": study.identity(),
+            "layerId": row["id"], "seriesId": series["id"]}
+    result = call("anatomyVesselGapReview", args)
+    positive, negative = result["findings"]
+    assert positive["evidence"] == "uncertain-image-supported"
+    assert negative["evidence"] == "weak-source-image-support"
+    assert result["preview"]["findingId"] == positive["id"]
+    np.testing.assert_allclose(result["preview"]["centerRasMm"], [2.6, 14.8, 13.6], atol=1e-6)
+    for plane in result["preview"]["sections"]:
+        assert len(b64decode(plane["image"])) == len(b64decode(plane["overlay"])) == np.prod(plane["shape"])
+        assert 2 in b64decode(plane["overlay"])
+    assert len(result["preview"]["sections"]) == 3
+    weak = call("anatomyVesselGapReview", {**args, "reviewId": result["reviewId"], "findingId": negative["id"]})
+    assert weak["preview"]["findingId"] == negative["id"]
+    assert weak["reviewId"] == result["reviewId"]
+    assert weak["predictedVoxelsAdded"] == 0
+    assert {file: file_hash(file) for file in study.root.rglob("*") if file.is_file()} == contents
+    with pytest.raises(ValueError, match="gap review changed"):
+        call("anatomyVesselGapReview", {**args, "reviewId": "stale", "findingId": positive["id"]})
 
 
 def test_workspace_abstention_records_unrepresented_source_cells(monkeypatch):

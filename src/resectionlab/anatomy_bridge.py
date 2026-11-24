@@ -29,7 +29,7 @@ VASCULAR_REVIEW_REVISION = re.compile(r"vascular-review\.[0-9a-f]{12}\.anatomy\.
 VASCULAR_REVIEW_READS = {
     "anatomyLocalAlignment",
     "anatomyView", "anatomySample", "anatomyGraph", "anatomySection", "anatomyComponents",
-    "anatomyAttachedVesselReview",
+    "anatomyAttachedVesselReview", "anatomyVesselGapReview",
 }
 
 
@@ -71,7 +71,8 @@ def _retain(session, result):
 
 def dispatch(session, operation, args, request, progress):
     # A source read does not change the cached view or its transfer descriptors.
-    if operation not in {"anatomyView", "anatomySample", "anatomyAttachedVesselReview", "anatomyLocalAlignment"}:
+    if operation not in {"anatomyView", "anatomySample", "anatomyAttachedVesselReview", "anatomyVesselGapReview",
+                         "anatomyLocalAlignment"}:
         session.anatomy_view_cache = None
     if not hasattr(session, "anatomy_collections"):
         session.anatomy_packages = {}
@@ -229,6 +230,17 @@ def dispatch(session, operation, args, request, progress):
         if json.loads(manifest.read_text()).get("snapshot_id") != current_id:
             raise ValueError("Anatomy changed; reload the patient")
         return report
+    if operation == "anatomyVesselGapReview":
+        from .anatomy_tof_gap_review import tof_gap_review
+
+        if key in session.anatomy_drafts:
+            raise ValueError("Resolve the current correction before reviewing TOF gaps")
+        report = tof_gap_review(c, args["layerId"], args["seriesId"], finding_id=args.get("findingId"),
+                                review_id=args.get("reviewId"), check=request.check, progress=progress)
+        request.check()
+        if json.loads(manifest.read_text()).get("snapshot_id") != current_id:
+            raise ValueError("Anatomy changed; reload the patient")
+        return {**report, "snapshotId": current_id}
     if operation == "anatomyView":
         reference = c.series(args.get("seriesId", c.document["reference_series"]))
         requested = args.get("layers", [])

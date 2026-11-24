@@ -43,6 +43,16 @@ transverse section area and vertex movement before and after fairing.
 The TOF lumen estimate, vessel type, and assumed simulator wall and support
 properties are independent evidence.
 
+In **Anatomy**, select a vessel layer on its acquired TOF and open **TOF gap
+review**. **Find nearby branch endpoints** checks short gaps between compatible
+source-bound paths. The same local signal window applies to two sections along
+the proposed path and one across its midpoint. The amber marks show the sampled
+path, while cyan shows the source estimate contour. Use **Show gap overlay** to
+inspect the acquired signal by itself or **Center linked slices** to check the
+original planes. Weak-signal candidates and partial graph coverage remain
+visible. The reconstruction and quantitative anatomy continue to use the
+source-bound mask. [Evidence location](local-storage-ledger.md)
+
 New patient import workspaces start with **TOF exterior-air review**. The
 view uses a native TOF head envelope with a physical margin and hides a
 detached vesselFM component only when the entire finding is sufficiently

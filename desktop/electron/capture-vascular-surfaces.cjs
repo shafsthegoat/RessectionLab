@@ -63,6 +63,10 @@ for(const recipe of recipes){
   assert(!recipe.compareLayerIds||recipe.compareLayerIds.length===2&&recipe.compareLayerIds.every(id=>recipe.layers.includes(id)));
   assert(recipe.depthSlab===undefined||typeof recipe.depthSlab==='boolean');
   assert(!recipe.branchLayerId||recipe.layers.includes(recipe.branchLayerId));
+  if(recipe.tofGapReview)assert(recipe.layers.includes(recipe.tofGapReview.layerId)&&
+    Array.isArray(recipe.tofGapReview.findingIds)&&recipe.tofGapReview.findingIds.length>0&&
+    recipe.tofGapReview.findingIds.length<=8&&recipe.tofGapReview.findingIds.every(id=>/^gap-[a-f0-9]{24}$/.test(id)),
+    'Supply source-bound TOF gap witnesses for the selected layer');
   assert(!recipe.branchPick||recipe.branchLayerId&&Array.isArray(recipe.branchPick)&&recipe.branchPick.length===2&&
     recipe.branchPick.every(value=>Number.isFinite(value)&&value>0&&value<1));
   assert(!recipe.isolateBranch||recipe.branchLayerId);
@@ -655,6 +659,49 @@ app.on('browser-window-created',(_event,window)=>{
               window.vascularFrame?.serial>${focused.serial}`,'restored context');
             record.branch.restored=await capture(`${recipe.name}-branch-restored`);
           }
+        }
+        if(recipe.tofGapReview){
+          await click('Anatomy');
+          const layerId=JSON.stringify(recipe.tofGapReview.layerId);
+          const control=`[...document.querySelectorAll('.study-inspector .native-structure-row')].find(row=>row.dataset.structureId===${layerId})?.querySelector('.native-structure-name')`;
+          await until(`!!(${control})&&!(${control}).disabled`,'TOF layer inspector');
+          await js(`(${control}).click()`);
+          const gapPanel=`[...document.querySelectorAll('.layer-inspector details')].find(panel=>panel.querySelector('summary')?.textContent==='TOF gap review')`;
+          await until(`!!(${gapPanel})`,'TOF gap review panel');
+          await js(`(${gapPanel}).open=true`);
+          const requested=performance.now();
+          await click('Find nearby branch endpoints');
+          const select=`document.querySelector('select[aria-label="TOF gap finding"]')`;
+          await until(`!!(${select})&&!(${select}).disabled`,'native TOF gap findings');
+          const options=await js(`Array.from((${select}).options,option=>({id:option.value,label:option.textContent}))`);
+          const mounted=performance.now()-requested;
+          const evidence=[];
+          for(const [index,id] of recipe.tofGapReview.findingIds.entries()){
+            assert(options.some(option=>option.id===id),`Missing TOF gap ${id}`);
+            await js(inputScript('TOF gap finding',id));
+            await until(`(${select}).value===${JSON.stringify(id)}&&!(${select}).disabled`,'selected TOF gap sections');
+            const panel=await js(`(()=>{const node=document.querySelector('[data-tof-gap-review]');
+              node.scrollIntoView({block:'start'});return {status:node.dataset.tofGapReview,text:node.innerText,
+                captions:Array.from(node.querySelectorAll('figcaption'),el=>el.textContent)};})()`);
+            assert.equal(panel.captions.length,3);
+            const captureId=`${recipe.name}-gap-${index+1}`;
+            const annotated=await capture(captureId);
+            await js(`Array.from(document.querySelectorAll('[data-tof-gap-review] label')).find(label=>label.textContent.trim()==='Show gap overlay').querySelector('input').click()`);
+            const raw=await capture(`${captureId}-source`);
+            assertSameGeometry(annotated);assertSameGeometry(raw);
+            await js(`Array.from(document.querySelectorAll('[data-tof-gap-review] label')).find(label=>label.textContent.trim()==='Show gap overlay').querySelector('input').click()`);
+            evidence.push({id,panel,annotated,raw});
+          }
+          const checked=(await nativeView()).states[view.seriesId];
+          assert.deepEqual(checked.visible,record.view.visible);
+          assert.deepEqual(checked.settings,record.view.settings);
+          const previous=await submittedFrame();
+          await click('Center linked slices');
+          const focused=await settledFrame(previous.serial);
+          assert.equal(focused.sourceSignalFingerprint,record.frame.sourceSignalFingerprint);
+          assert.deepEqual(focused.cameraState,record.frame.cameraState);
+          assert.notDeepEqual(focused.cursor,record.frame.cursor);
+          record.tofGapReview={mountedMs:mounted,options,evidence,focusedCursor:focused.cursor};
         }
         report.views.push(record);persist();console.log(`Captured ${record.filename}`);
       }

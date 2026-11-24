@@ -2,11 +2,10 @@ import {useEffect, useRef, useState} from 'react';
 import type {AttachedVesselReview, AttachedVesselSection} from './native-anatomy-data';
 import type {NativeWorkspace} from './use-native-workspace';
 
-function NativeReviewSection({plane, showOverlay}:{plane:AttachedVesselSection;showOverlay:boolean}) {
+export function NativeReviewSection({plane, label, showOverlay}:{plane:Omit<AttachedVesselSection,'axis'|'index'>;label:string;showOverlay:boolean}) {
   const canvas=useRef<HTMLCanvasElement>(null);
   const [height,width]=plane.shape;
   const [vertical,horizontal]=plane.spacingMm;
-  const label=`Native ${['I','J','K'][plane.axis]} slice ${plane.index}`;
   useEffect(()=>{
     const context=canvas.current?.getContext('2d');
     if(!context)return;
@@ -78,7 +77,8 @@ export function NativeAttachedVesselReview({workspace,layerId}:{workspace:Native
       <p>{selected.voxels.toLocaleString()} native voxels · median model score {selected.uncalibratedModelScoreMedian.toFixed(2)} (uncalibrated)</p>
       <label><input type="checkbox" checked={showOverlay} onChange={event=>setShowOverlay(event.target.checked)}/> Show review overlay</label>
       {showOverlay&&<p><span className="attached-source-label">Cyan estimate contour</span> · <span className="attached-finding-label">amber review region</span></p>}
-      <div className="native-attached-sections">{review.preview.sections.map(plane=><NativeReviewSection key={plane.axis} plane={plane} showOverlay={showOverlay}/>)}</div>
+      <div className="native-attached-sections">{review.preview.sections.map(plane=><NativeReviewSection key={plane.axis} plane={plane}
+        label={`Native ${['I','J','K'][plane.axis]} slice ${plane.index}`} showOverlay={showOverlay}/>)}</div>
     </>}
   </details>;
 }

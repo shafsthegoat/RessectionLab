@@ -15,6 +15,7 @@ import {NativeImportPanel} from './NativeImportPanel';
 import {NativePreparePanel} from './NativePreparePanel';
 import {NativeRegistrationReview} from './NativeRegistrationReview';
 import {NativeAttachedVesselReview} from './NativeAttachedVesselReview';
+import {NativeVesselGapReview} from './NativeVesselGapReview';
 import {AcquisitionContributions,NativeLayerEvidence,rehearsalAvailability} from './NativeStudyEvidence';
 import './unified-anatomy.css';
 
@@ -145,6 +146,9 @@ export function NativeSidebar({workspace:w,tab,onOpenAnatomy,onOpenPlan,onOpenSc
         {w.volume?.compartments.find(l=>l.name===layer.id)?.qa&&(()=>{const q=w.volume!.compartments.find(l=>l.name===layer.id)!.qa!;return <details className="unified-details" open={q.voxelCount===0}><summary>Anatomy quality · {q.voxelCount===0?'empty segmentation':q.issues.length?'review findings':'source checks complete'}</summary><p>{q.componentCount.toLocaleString()} source components · anatomical accuracy unmeasured</p>{q.issues.map(issue=><p key={issue}>{issue}</p>)}<p>Findings do not change the source. Inspect linked slices before accepting corrections.</p></details>})()}
         {!w.draft&&['all','exterior-air'].includes(w.vesselScope)&&layer.source_series===w.series&&['vessel','vessels','artery','vein','sinus'].includes(layer.kind)&&
           (layer.provenance as {model?:string}|null)?.model!=='siam-v2'&&<NativeVesselBranchPanel key={`${b.document.snapshot_id}/${layer.id}`} workspace={w} layerId={layer.id}/>}
+        {!w.draft&&source?.modality==='TOF'&&layer.source_series===w.series&&['vessel','vessels','artery','vein','sinus'].includes(layer.kind)&&
+          (layer.provenance as {model?:string}|null)?.model!=='siam-v2'&&
+          <NativeVesselGapReview key={`${b.collectionId}/${b.document.snapshot_id}/${layer.id}`} workspace={w} layerId={layer.id}/>}
         {!w.draft&&source?.modality==='TOF'&&layer.source_series===w.series&&layer.kind==='vessels'&&!!layer.probability&&
           (layer.provenance as {model?:string}|null)?.model==='vesselfm'&&
           <NativeAttachedVesselReview key={`${b.collectionId}/${b.document.snapshot_id}/${layer.id}`} workspace={w} layerId={layer.id}/>}

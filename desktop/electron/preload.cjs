@@ -65,6 +65,7 @@ contextBridge.exposeInMainWorld('resectionApi', Object.freeze({
   anatomySaveView: args => ipcRenderer.invoke('research:anatomySaveView',args),
   anatomyComponents: args => ipcRenderer.invoke('research:anatomyComponents',args),
   anatomyAttachedVesselReview: args => ipcRenderer.invoke('research:anatomyAttachedVesselReview',args),
+  anatomyVesselGapReview: args => ipcRenderer.invoke('research:anatomyVesselGapReview',args),
   anatomyGraph: args => ipcRenderer.invoke('research:anatomyGraph', args),
   anatomySavePackage: args => ipcRenderer.invoke('research:anatomySavePackage', args),
   anatomyCreate: args => ipcRenderer.invoke('research:anatomyCreate', args),
