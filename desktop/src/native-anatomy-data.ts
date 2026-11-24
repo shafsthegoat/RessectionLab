@@ -69,6 +69,14 @@ export type EnvironmentOptions={selectedRouteForecast?:SelectedRouteForecast;acq
   nativeWallAlignment?:{brainLayerId:string;centerRasMm:Point3};
 }>};
 export type Binding={collectionId:string;document:Document;viewState?:NativeViewState|null;readOnlyStudy?:boolean};
+export interface NativeWallSourceScan {
+  seriesId:string;modality:string;centerRasMm:Point3;independent:boolean;
+  layers:{id:string;kind:string;label:string}[];
+}
+export interface NativeWallSourceInspection {
+  collectionId:string;snapshotId:string;caseHash:string;centerRasMm:Point3;
+  cropStartIJK:Point3;cropShape:Point3;locallyReviewed:boolean;scans:NativeWallSourceScan[];
+}
 export type Draft={layerId:string;undo:number;redo:number;changedVoxels:number;mode?:'erase-attached-tof'}|null;
 export type Args=Record<string,unknown>;
 export type IntakeKind='nifti'|'dicom'|'labels';
@@ -93,6 +101,8 @@ export interface NativeAnatomyApi {
   openWorkspace?():Promise<Binding|CasePayload|null>;
   startupWorkspace?():Promise<Binding|CasePayload|null>;
   openListedWorkspace?(id:string):Promise<Binding|CasePayload>;
+  inspectNativeWallSource?(args:{caseHash:string;choose?:boolean}):Promise<NativeWallSourceInspection|null>;
+  closeNativeWallSource?(args:{collectionId:string}):Promise<boolean>;
   anatomySavePackage(args:Args):Promise<{path:string}|null>;
   anatomySaveView(args:Args):Promise<{saved:boolean}>;
   anatomyComponents(args:Args):Promise<ComponentReview>;
@@ -120,7 +130,7 @@ export interface NativeAnatomyApi {
 }
 export type Surface=NonNullable<ViewerVolume['compartments'][number]['surface']>;
 type CtExteriorPayload={schema:string;offset:Point3;mask:ArrayDescriptor;signalSha256:string};
-export type ViewPayload=Omit<ViewerVolume,'mri'|'compartments'|'tractography'|'labelSets'|'patientContext'|'headSupport'|'ctExterior'>&{appearanceSources?:Array<Pick<SurfaceAppearanceSource,'seriesId'|'modality'|'sourceSha256'|'affine'|'nativeAffine'|'nativeShape'|'intensityUnits'>&{signal:ArrayDescriptor}>;headSupport?:ArrayDescriptor;ctExterior?:CtExteriorPayload;patientContext?:PatientContext;labelSets?:Array<{id:string;data:ArrayDescriptor}>;tractography?:Array<{id:string;label:string;points:ArrayDescriptor;offsets:ArrayDescriptor}>;mri:ArrayDescriptor;modality:string;registrationStatus:string;patientFrameReady?:boolean;alignmentPreviews?:string[];unavailableLayers:string[];compartments:Array<{sourceSeries?:string;alignment?:string;kind?:string;displayKind?:string;sourceIdentity?:string;qa?:import('./viewer/contracts').AnatomyQuality;surfaceDiagnostics?:import('./viewer/surfacePolicy').SurfaceDiagnostics;name:string;color:string;volumeMm3?:number;displayFilter?:VesselDisplayFilter;sourceSupport?:import('./viewer/contracts').TissueDisplaySupport;mask?:ArrayDescriptor;labelSet?:string;labelValue?:number;surface?:{empty:true}|Record<keyof Surface,ArrayDescriptor>}>};
+export type ViewPayload=Omit<ViewerVolume,'mri'|'compartments'|'tractography'|'labelSets'|'patientContext'|'headSupport'|'ctExterior'>&{snapshotId:string;appearanceSources?:Array<Pick<SurfaceAppearanceSource,'seriesId'|'modality'|'sourceSha256'|'affine'|'nativeAffine'|'nativeShape'|'intensityUnits'>&{signal:ArrayDescriptor}>;headSupport?:ArrayDescriptor;ctExterior?:CtExteriorPayload;patientContext?:PatientContext;labelSets?:Array<{id:string;data:ArrayDescriptor}>;tractography?:Array<{id:string;label:string;points:ArrayDescriptor;offsets:ArrayDescriptor}>;mri:ArrayDescriptor;modality:string;registrationStatus:string;patientFrameReady?:boolean;alignmentPreviews?:string[];unavailableLayers:string[];compartments:Array<{sourceSeries?:string;alignment?:string;kind?:string;displayKind?:string;sourceIdentity?:string;qa?:import('./viewer/contracts').AnatomyQuality;surfaceDiagnostics?:import('./viewer/surfacePolicy').SurfaceDiagnostics;name:string;color:string;volumeMm3?:number;displayFilter?:VesselDisplayFilter;sourceSupport?:import('./viewer/contracts').TissueDisplaySupport;mask?:ArrayDescriptor;labelSet?:string;labelValue?:number;surface?:{empty:true}|Record<keyof Surface,ArrayDescriptor>}>};
 export async function hydrateAnatomy(payload:ViewPayload,api:ResectionApi,cachedImage?:Float32Array,cached?:Pick<ViewerVolume,'labelSets'|'tractography'|'headSupport'|'ctExterior'>,studyLayers?:Layer[],appearanceCache?:Map<string,Float32Array>):Promise<ViewerVolume>{
   async function bytes(d:ArrayDescriptor){
     if(!d || d.byteLength>512*1024**2 || d.byteOrder!=='little' || d.order!=='C')throw Error('Unsupported anatomy transfer');

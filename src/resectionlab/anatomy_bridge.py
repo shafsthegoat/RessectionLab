@@ -115,9 +115,25 @@ def dispatch(session, operation, args, request, progress):
         return {"collectionId": key, "document": c.document,
                 "viewState": None if linked else read_view(c), "readOnlyStudy": linked}
     key = args.get("collectionId")
-    if key not in session.anatomy_collections:
-        raise ValueError("Patient collection is not open")
-    c = session.anatomy_collections[key]
+    inspection = getattr(session, 'native_wall_source', None)
+    inspection = inspection if inspection and key == inspection.key else None
+    if inspection:
+        if operation != 'anatomyView':
+            raise ValueError('Native-wall source inspection is read-only')
+        scan = inspection.scans.get(args.get('seriesId'))
+        if scan is None:
+            raise ValueError('This scan is outside the saved rehearsal source binding')
+        from .surgical_native_wall_source import _manifest_hash
+
+        c = inspection.collection
+        if _manifest_hash(c.root / 'patient-anatomy.json') != inspection.manifest_sha:
+            raise ValueError('The native study changed; reopen the source inspection')
+        args = {'collectionId': key, 'snapshotId': args.get('snapshotId'), 'seriesId': scan['seriesId'],
+                'layers': [layer['id'] for layer in scan['layers']], 'original': True}
+    else:
+        if key not in session.anatomy_collections:
+            raise ValueError("Patient collection is not open")
+        c = session.anatomy_collections[key]
     manifest = c.root / "patient-anatomy.json"
     linked_review = getattr(session, "anatomy_linked_review", None)
     if linked_review and linked_review[0] == key:
@@ -306,7 +322,10 @@ def dispatch(session, operation, args, request, progress):
                                       if s["alignment"] == "estimated" and s["inPatientBounds"])
         # MRI acceleration is reversible and never feeds source measurements.
         # Native layer geometry is transformed into this displayed voxel frame.
-        image_data, native, displayed, preview = source_display_grid(reference, displayed)
+        if inspection:
+            image_data, preview = reference['data'], None
+        else:
+            image_data, native, displayed, preview = source_display_grid(reference, displayed)
         shape = tuple(image_data["shape"])
         source_cache_key = (key, c.identity(), reference["id"], image_data["sha256"],
                             displayed.tobytes(), bool(args.get("original")), preview_alignment, bool(patient_context))
@@ -411,7 +430,7 @@ def dispatch(session, operation, args, request, progress):
                 quality = {**quality, "issues": [message, *quality["issues"]]}
             from .anatomy_siam_display import supported_tissue_layer
             source_support = None
-            if not (draft and draft.layer_id == name) and args.get("highlightLayer") != name:
+            if not inspection and not (draft and draft.layer_id == name) and args.get("highlightLayer") != name:
                 row, source_support = supported_tissue_layer(c, row, check=request.check, raw_qc=bool(args.get("original")))
             bone_review = None
             if (registered and not row_previews and not source_grid_preview and not draft
@@ -446,7 +465,8 @@ def dispatch(session, operation, args, request, progress):
             if score_source is None and row is not unfiltered:
                 score_source = unfiltered
             geometry = mesh(c, row, cancelled=request.cancelled.is_set,
-                            display_source=score_source, conditioned=not source_surface_only)
+                            display_source=score_source, conditioned=not source_surface_only,
+                            cache_directory=inspection.workspace / 'meshes' if inspection else None)
             request.check()
             shared = row.get("kind") == "brain-region" and not row.get("edits")
             # Identical categorical values may originate on different physical grids.
@@ -547,7 +567,7 @@ def dispatch(session, operation, args, request, progress):
                 layers.append({"name": "__fragment_review", "color": "#ffb454", "mask": transfer(resample(highlight.astype(np.uint8), source, shape, displayed, order=0), "uint8"), "surface": {"positions": transfer(hp,"float32"), "source": transfer(hr,"float32"), "normals": transfer(normals(hp,hi),"float32"), "sourceNormals": transfer(normals(hr,hi),"float32"), "indices": transfer(hi,"uint32")}})
         tracts = []
         unavailable_tracts = []
-        for tract in ([] if cache["tracts"] is not None else c.document.get("tractography", [])):
+        for tract in ([] if inspection or cache["tracts"] is not None else c.document.get("tractography", [])):
             try:
                 sid = tract["source_series"]
                 t = c.document["transforms"].get(sid)
@@ -650,6 +670,8 @@ def dispatch(session, operation, args, request, progress):
             "snapshotId": c.identity(),
             "draft": bool(session.anatomy_drafts.get(key)),
         }
+        if inspection and _manifest_hash(manifest) != inspection.manifest_sha:
+            raise ValueError('The native study changed while loading its source slices')
         session.anatomy_transfer_paths = set()
         _retain(session, result)
         if cacheable:

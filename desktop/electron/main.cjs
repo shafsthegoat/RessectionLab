@@ -301,6 +301,20 @@ function bindOperations() {
     args=plainArgs(args,['collectionId','snapshotId','layers','allowUnreviewedRegistration','approach','nativeWallCenter']);
     const result=await engine.request('prepareSurgicalEnvironment',args,300000);rememberReplayMode(result);currentCasePath=null;return result;
   });
+  handle('inspectNativeWallSource', async args=>{
+    args=plainArgs(args,['caseHash','choose']);
+    if(!currentCaseHash||args.caseHash!==currentCaseHash)throw Error('Open the native-wall rehearsal first');
+    const filename=args.choose===true?await pick('Locate the original native study',['rsworkspace','json']):null;
+    if(args.choose===true&&!filename)return null;
+    if(args.caseHash!==currentCaseHash)return null;
+    const result=await engine.request('inspectNativeWallSource',{caseHash:args.caseHash,...(filename?{path:filename}:{})},300000);
+    if(result&&args.caseHash!==currentCaseHash){
+      await engine.request('closeNativeWallSource',{collectionId:result.collectionId});
+      return null;
+    }
+    return result;
+  });
+  handle('closeNativeWallSource', args=>engine.request('closeNativeWallSource',plainArgs(args,['collectionId'])));
   handle('importSurgicalScene', async args => {
     if (!await rehearsalUnsaved.allowNavigation()) return null;
     args=plainArgs(args,['frame','units','material','resolution','topology','thicknessMm']);

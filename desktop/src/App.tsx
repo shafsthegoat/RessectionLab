@@ -1,5 +1,6 @@
 import {RecordedStrategyComparison} from './RecordedStrategyComparison';
 import {NativeApproachPanel} from './NativeApproachPanel';
+import {NativeWallSourceDialog} from './NativeWallSourceDialog';
 import {useSurgical} from "./use-surgical";
 import {caseImageEvidence,caseLayerEvidence,conditionalRehearsalNotice} from './data-case-evidence';
 import {SurgicalPanel} from "./SurgicalPanel";
@@ -571,6 +572,7 @@ export default function App() {
   const [newPatient,setNewPatient]=useState('');
   const [newStudyTimepoint,setNewStudyTimepoint]=useState('preoperative');
   const [payload, setPayload] = useState<CasePayload | null>(null);
+  const [sourceInspectionOpen,setSourceInspectionOpen]=useState(false);
   const [caseData, setCaseData] = useState<ViewerCase | null>(null);
   const [visibleLayers, setVisibleLayers] = useState<Record<string, boolean>>(
     {},
@@ -804,7 +806,8 @@ export default function App() {
   const publicGoalMarker = useMemo(() => episodeVisible && activeContactView && activeContactView.source.caseHash === payload?.caseHash ? contactGoalMarker(activeContactView,activeContactStep) : null,
     [episodeVisible,activeContactView,activeContactStep,payload?.caseHash]);
   const actorReplayVisible = useRef(false);
-  const fileNavigationBlocked = openingStartupWorkspace || !!native.draft || !api || busy || comparison.pending || engineStopped || readonly;
+  const fileNavigationBlocked = openingStartupWorkspace || sourceInspectionOpen || !!native.draft || !api || busy || comparison.pending || engineStopped || readonly;
+  const nativeWallSource=(payload?.metadata.surgical_adapter as {nativeWall?:{schema?:string}}|undefined)?.nativeWall;
   const restoreSourceView = () => {
     resetDisplayToPrimary();
     setEpisodeVisible(false);
@@ -1459,14 +1462,14 @@ export default function App() {
   useEffect(() => {
     if (!api) return;
     return api.onEvent((event) => {
-      if (event.event !== "menuAction" || busy || comparison.pending || engineStopped || readonly) return;
+      if (event.event !== "menuAction" || busy || sourceInspectionOpen || comparison.pending || engineStopped || readonly) return;
       if (event.action === "openCase") void load("openCase");
       if (event.action === "saveCase" && (payload||native.binding)) void (native.binding?native.save():save());
     });
   }, [
     api,
     native.binding,native.series,native.state,native.draft,
-    busy,
+    busy,sourceInspectionOpen,
     engineStopped,
     readonly,
     payload,
@@ -1597,6 +1600,8 @@ export default function App() {
 
   return (
     <div data-native-series={native.binding?native.series:undefined} data-native-view-state={native.binding?JSON.stringify(native.viewState):undefined} className={`app-shell poc-workbench ${native.binding?"native-workspace":""} ${libraryOpen?"library-open":""} ${workbenchTab === "research" && !native.binding ? "research-open" : "anatomy-only"} ${casePanel ? "" : "case-panel-collapsed"}`}>
+      {sourceInspectionOpen&&payload&&nativeApi&&<NativeWallSourceDialog api={nativeApi} caseHash={payload.caseHash}
+        close={()=>setSourceInspectionOpen(false)}/>}
       <header className="app-header">
         <div className="brand">
           <Logo />
@@ -1633,7 +1638,7 @@ export default function App() {
           className="header-button save-button"
           onClick={native.binding?()=>native.save():save}
           title={showEngineRecording?'Save recorded procedure and playback position':native.binding?'Save native study and plan':undefined}
-          disabled={(!payload&&!native.binding) || busy || !!native.draft || engineStopped || readonly || native.binding?.readOnlyStudy}
+          disabled={(!payload&&!native.binding) || busy || sourceInspectionOpen || !!native.draft || engineStopped || readonly || native.binding?.readOnlyStudy}
         >
           <ArrowDownToLine size={15} />
           <span>Save</span>
@@ -1760,6 +1765,10 @@ export default function App() {
               compare={api.compareBoundSurgicalReplays} disabled={busy||!!native.draft||planningEditsPending||native.planning.pending}
               request={{collectionId:currentSelection.collectionId,snapshotId:currentSelection.snapshotId,targetLayerId:currentSelection.targetLayerId}}/>}
           </> : <>
+            {nativeApi?.inspectNativeWallSource&&nativeWallSource?.schema==='resectionlab.patient-native-wall.v1'&&
+              <button className="outline-button" disabled={fileNavigationBlocked||!surgical.view||surgical.displayPending} onClick={()=>{
+                surgical.pausePlayback();surgical.pauseFullCase();setSourceInspectionOpen(true);
+              }}>Inspect source study</button>}
             {showEngineRecording&&replayReceipt&&<section className="operative-inspector engine-recording-info" aria-label="Source-verified recorded episode">
               <h2>{viewingStudyRecording?'Study-linked recording':'Saved procedural recording'}</h2>
               <strong>{replayReceipt.recordedApproach?.name??'Recorded engine episode'}</strong>

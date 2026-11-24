@@ -14,7 +14,7 @@ from .surgical_engine import SurgicalEngine
 from . import surgical_practice as practice
 from .surgical_replay_cache import SurgicalReplayCache
 
-OPERATIONS = frozenset({'surgicalRehearsal', 'createSurgicalFixture', 'importSurgicalScene', 'prepareSurgicalEnvironment', 'compareSurgicalAnatomy', 'compareBoundSurgicalReplays', 'openBoundSurgicalReplay'})
+OPERATIONS = frozenset({'surgicalRehearsal', 'createSurgicalFixture', 'importSurgicalScene', 'prepareSurgicalEnvironment', 'compareSurgicalAnatomy', 'compareBoundSurgicalReplays', 'openBoundSurgicalReplay', 'inspectNativeWallSource', 'closeNativeWallSource'})
 ARTIFACT = 'surgical_toolbox'
 RESULT_BYTES = 32 * 1024**2 - 4096  # Reserve the bounded JSONL envelope.
 _NATIVE_PREVIEW = SurgicalEngine.preview
@@ -238,6 +238,19 @@ def dispatch(session, operation, args, request, progress):
         installed = session._install_case(case, artifacts, request, workspace=workspace or
             {'sources': [], 'imagingState': None, 'episode': None, 'selection': None, 'sessionHash': None})
         return {**installed, 'verifiedStudyReplay': receipt, 'verifiedTargetSampling': sampling}
+    if operation == 'inspectNativeWallSource':
+        from .surgical_native_wall_source import open_source_inspection
+
+        _keys(args, {'caseHash', 'path'})
+        entry = session._get_case(args['caseHash'])
+        progress(.1, 'Checking the native study and saved rehearsal field')
+        return open_source_inspection(session, entry.case, args.get('path'), request.check)
+    if operation == 'closeNativeWallSource':
+        from .surgical_native_wall_source import close_source_inspection
+
+        _keys(args, {'collectionId'})
+        close_source_inspection(session, args['collectionId'])
+        return True
     if operation == 'prepareSurgicalEnvironment':
         _keys(args, {'collectionId', 'snapshotId', 'layers', 'allowUnreviewedRegistration', 'approach', 'nativeWallCenter'})
         from .surgical_patient import prepare_surgical_environment

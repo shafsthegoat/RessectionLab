@@ -375,7 +375,7 @@ def _brain_envelope_signal(collection, row):
     return scan["data"]
 
 
-def mesh(collection, row, *, cancelled=lambda: False, display_source=None, conditioned=True):
+def mesh(collection, row, *, cancelled=lambda: False, display_source=None, conditioned=True, cache_directory=None):
     """Separate source/display mesh; same connectivity, bounded local movement."""
     started = perf_counter()
     display_source = _attached_erase_source(display_source if display_source is not None else row) or display_source
@@ -384,7 +384,8 @@ def mesh(collection, row, *, cancelled=lambda: False, display_source=None, condi
                 or display_source["data"]["shape"] != row["data"]["shape"]):
             raise ValueError("Vascular display filtering requires the source lattice")
         if display_source["data"] == row["data"] and display_source["label_value"] == row["label_value"]:
-            return mesh(collection, display_source, cancelled=cancelled, conditioned=conditioned)
+            return mesh(collection, display_source, cancelled=cancelled, conditioned=conditioned,
+                        cache_directory=cache_directory)
     if display_source is None and row.get("publisher_surface") is not None:
         from .anatomy_publisher_surface import conditioned_publisher_cta, publisher_surface
 
@@ -420,7 +421,7 @@ def mesh(collection, row, *, cancelled=lambda: False, display_source=None, condi
             "data": display_source["data"], "probability": display_source.get("probability"),
             "label": display_source["label_value"], "edited": bool(display_source.get("edits")),
         }
-    directory = collection.root / "meshes"
+    directory = collection.root / "meshes" if cache_directory is None else cache_directory
     conditioned_cache = directory / f"{digest(identity)}.npz"
     cache = conditioned_cache if conditioned else directory / f"{digest({**identity, 'source_only': True})}.npz"
     cache.parent.mkdir(exist_ok=True)

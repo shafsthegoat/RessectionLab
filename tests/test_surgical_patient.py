@@ -160,6 +160,84 @@ def test_native_wall_catalog_and_preparation_refuse_incompatible_score_lattice(t
                                      native_wall_center=[0., 0., 1.])
 
 
+def test_native_wall_source_inspection_keeps_live_state_and_checks_relocated_sources(tmp_path):
+    from resectionlab.anatomy_local_wall_review import review_native_wall_alignment
+    from resectionlab.anatomy_package import save_package
+    from resectionlab.desktop_bridge import BridgeSession, _Request
+
+    study, _, _ = native_wall_fixture(tmp_path, registration='unreviewed')
+    transform = np.eye(4)
+    transform[0, 3] = .5
+    study.set_registration('tof', transform, status='unreviewed', method='local review fixture')
+    center = [0., 0., 1.]
+    fixed = np.array([[-4., -4., 0.], [4., -3., 0.], [-1., 3., 0.], [1., 1., 4.]])
+    moving = fixed - [.5, 0., 0.]
+    review_native_wall_alignment(study, 'tof', moving.tolist(), fixed.tolist(), 'local reviewer',
+                                 {'brainLayerId': 'brain', 'vesselLayerId': 'vessels', 'center': center})
+    study.save()
+    prepared = prepare_surgical_environment(study.root, tmp_path / 'rehearsal', layer_ids={'brain': 'brain', 'vessels': 'vessels'},
+                                            native_wall_center=center)
+    archive = tmp_path / 'original.rsworkspace'
+    save_package(study, archive)
+    manifest = study.root.rename(tmp_path / 'relocated') / 'patient-anatomy.json'
+
+    def files():
+        return {str(p.relative_to(manifest.parent)): hashlib.sha256(p.read_bytes()).hexdigest()
+                for p in manifest.parent.rglob('*') if p.is_file()}
+
+    source_before = files()
+    session = BridgeSession(tmp_path / 'bridge')
+    try:
+        def call(op, args):
+            return session.execute(op, args, _Request(op), lambda *_: None)
+
+        case = call('loadCase', {'path': prepared['casePath']})
+        key = {'caseHash': case['caseHash']}
+        entry = session._get_case(case['caseHash'])
+        initial = call('surgicalRehearsal', {**key, 'command': 'inspect'})
+        before = call('surgicalRehearsal', {**key, 'command': 'step', 'expectedStateId': initial['view']['stateId'],
+                      'action': {'slot': 'left', 'operation': 'exchange', 'instrument': 'dissector', 'duration': .08}})
+        assert before['outcome']['status'] == 'accepted' and before['position'] == 1
+        assert call('inspectNativeWallSource', key) is None
+        original = manifest.read_bytes()
+        manifest.write_bytes(original + b'\n')
+        with pytest.raises(ValueError, match='exact study revision'):
+            call('inspectNativeWallSource', {**key, 'path': str(manifest)})
+        manifest.write_bytes(original)
+        acquisition = manifest.parent / study.series('tof')['original']['path']
+        original_scan = acquisition.read_bytes()
+        acquisition.write_bytes(original_scan + b'changed')
+        with pytest.raises(ValueError, match='acquired source file differs'):
+            call('inspectNativeWallSource', {**key, 'path': str(manifest)})
+        acquisition.write_bytes(original_scan)
+        for path in (manifest, archive):
+            opened = call('inspectNativeWallSource', {**key, 'path': str(path)})
+            assert opened['locallyReviewed'] and opened['centerRasMm'] == center
+            assert [(scan['seriesId'], scan['centerRasMm'], scan['independent']) for scan in opened['scans']] == [
+                ('t1', center, False), ('tof', [-.5, 0., 1.], True)]
+            binding = {name: opened[name] for name in ('collectionId', 'snapshotId')}
+            with pytest.raises(ValueError, match='read-only'):
+                call('anatomySaveView', binding)
+            with pytest.raises(ValueError, match='outside the saved rehearsal source'):
+                call('anatomyView', {**binding, 'seriesId': 'other'})
+            for scan, layer, status in [('t1', 'brain', 'patient frame'), ('tof', 'vessels', 'independent source frame')]:
+                # Study-wide preview and arbitrary overlays must remain outside the inspection.
+                view = call('anatomyView', {**binding, 'seriesId': scan, 'layers': ['other'], 'previewAlignment': True})
+                assert view['registrationStatus'] == status and not view['alignmentPreviews']
+                assert view['shape'] == [65, 65, 65] and view['displayPreview'] is None
+                assert [(comp['name'], comp['sourceSeries']) for comp in view['compartments']] == [(layer, scan)]
+            scratch = session.native_wall_source.workspace
+            call('closeNativeWallSource', {'collectionId': binding['collectionId']})
+            assert not scratch.exists()
+        assert files() == source_before
+        assert session._get_case(case['caseHash']) is entry
+        after = call('surgicalRehearsal', {**key, 'command': 'inspect'})
+        assert (after['branchId'], after['position'], after['view']['stateId'], after['view']['slots']) == (
+            before['branchId'], before['position'], before['view']['stateId'], before['view']['slots'])
+    finally:
+        session.close()
+
+
 def test_native_wall_catalog_offers_only_the_source_bound_reviewed_pair(tmp_path):
     from resectionlab.anatomy_local_wall_review import review_native_wall_alignment
 

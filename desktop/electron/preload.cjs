@@ -123,6 +123,8 @@ contextBridge.exposeInMainWorld('resectionApi', Object.freeze({
   compareBoundSurgicalReplays: args => ipcRenderer.invoke('research:compareBoundSurgicalReplays', args),
   openBoundSurgicalReplay: args => ipcRenderer.invoke('research:openBoundSurgicalReplay', args),
   prepareSurgicalEnvironment: args => ipcRenderer.invoke('research:prepareSurgicalEnvironment', args),
+  inspectNativeWallSource: args => ipcRenderer.invoke('research:inspectNativeWallSource', args),
+  closeNativeWallSource: args => ipcRenderer.invoke('research:closeNativeWallSource', args),
   generateRoutes: args => ipcRenderer.invoke('research:generateRoutes', args || {}),
   generateNativeRoutes: args => ipcRenderer.invoke('research:generateNativeRoutes', args || {}),
   inspectRefinement: args => ipcRenderer.invoke('research:inspectRefinement', args || {}),

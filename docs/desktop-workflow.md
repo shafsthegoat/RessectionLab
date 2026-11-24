@@ -83,6 +83,14 @@ that field. **Standard 1 mm environment** retains the separate role selections
 for wider research work. Save the prepared case and reopen it from **Cases**
 or **Open**. [Native-wall mechanics and assumptions](surgical-physics-v2.md)
 
+From a prepared or reopened rehearsal, use **Inspect source study** to see the
+acquired scans at the saved field. The app verifies the exact study revision,
+acquisitions and selected label and score arrays. If the source has moved,
+choose its original manifest or a portable copy with **Locate source study**.
+When preparation used a local alignment review, the angiogram opens in its own
+acquisition frame at the corresponding voxel. **Return to rehearsal** restores
+the open action boundary and instrument poses, including unsaved work.
+
 ### Practice from an accepted engine state
 
 On Shafrir’s HDD, `qc/operative-rehearsal-followup-20261121/Open complete cranial task.command` opens a fresh working copy of the generated post-scalp cranial case. You can also open `practice/cranial-exposure-99.ressectionlab` from the same collection in **Cases**. Inspect the original target and superior entry in **Plan**, then open **Rehearse**. Use **Verify replay for planning** if the archive opens in preview. At its saved boundary **99**, choose **Practice from this verified state**.
