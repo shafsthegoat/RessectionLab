@@ -1,6 +1,7 @@
 """Source identity, topology losses and image-boundary uncertainty of derived graphs."""
 import numpy as np
 import pytest
+from skimage import morphology
 
 from resectionlab import anatomy_geometry as geometry
 
@@ -23,7 +24,7 @@ def test_source_identity_exact_world_coordinates_and_mask_preservation():
 def test_diagonal_only_annotation_is_not_promoted_to_face_connectivity(monkeypatch):
     mask = np.zeros((5,5,5),bool); mask[1,1,2] = True; mask[2,2,2] = True
     # Freeze an admissible skeleton containing the actual two source voxels.
-    monkeypatch.setattr(geometry,'skeletonize',lambda value,**kwargs:value.copy())
+    monkeypatch.setattr(morphology,'skeletonize',lambda value,**kwargs:value.copy())
     result = geometry.vessel_graph(mask,np.eye(4))
     assert result['components'] == 1 and result['source_components6'] == 2
     assert result['edges'].shape == (1,2)
@@ -35,7 +36,7 @@ def test_diagonal_centerline_with_local_positive_face_path_is_distinguished(monk
     mask = np.zeros((5,5,5),bool); mask[1,1,2] = mask[2,1,2] = mask[2,2,2] = True
     def skeleton(value,**kwargs):
         result = value.copy(); indices=np.argwhere(result); result[tuple(indices[1])] = False; return result
-    monkeypatch.setattr(geometry,'skeletonize',skeleton)
+    monkeypatch.setattr(morphology,'skeletonize',skeleton)
     result = geometry.vessel_graph(mask,np.eye(4))
     assert result['edges'].shape == (1,2) and not result['edge_face_adjacent'].any()
     assert result['edge_local_face_supported'].all()
@@ -43,7 +44,7 @@ def test_diagonal_centerline_with_local_positive_face_path_is_distinguished(monk
 
 def test_omitted_component_is_retained_as_failure_instead_of_empty_anatomy(monkeypatch):
     mask = np.zeros((6,6,6),bool); mask[1,1,1] = mask[4,4,4] = True
-    monkeypatch.setattr(geometry,'skeletonize',lambda value,**kwargs:np.zeros_like(value))
+    monkeypatch.setattr(morphology,'skeletonize',lambda value,**kwargs:np.zeros_like(value))
     result = geometry.vessel_graph(mask,np.eye(4))
     assert result['components'] == 2 and result['skeleton_components26'] == 0
     assert result['unrepresented_source_components26'] == result['unrepresented_source26_voxels'] == 2
@@ -119,7 +120,7 @@ def test_source_and_foreground_caps_refuse_before_coordinate_allocation():
 
 def test_corner_clique_cycles_are_not_mistaken_for_voxel_holes(monkeypatch):
     mask=np.zeros((5,5,5),bool);mask[1,1,2]=mask[2,1,2]=mask[2,2,2]=True
-    monkeypatch.setattr(geometry,'skeletonize',lambda value,**kwargs:value.copy())
+    monkeypatch.setattr(morphology,'skeletonize',lambda value,**kwargs:value.copy())
     result=geometry.vessel_graph(mask,np.eye(4))
     assert result['voxel_skeleton_betti_preserved26']
     assert result['edge_graph_cycle_rank']==1 and result['voxel_skeleton_cycle_rank26']==0
@@ -130,7 +131,7 @@ def test_source6_island_omission_is_not_hidden_by_source26_preservation(monkeypa
     mask=np.zeros((5,5,5),bool);mask[1,1,2]=mask[2,2,2]=True
     def thin(value,**kwargs):
         result=value.copy();result[tuple(np.argwhere(result)[0])]=False;return result
-    monkeypatch.setattr(geometry,'skeletonize',thin)
+    monkeypatch.setattr(morphology,'skeletonize',thin)
     result=geometry.vessel_graph(mask,np.eye(4))
     assert result['voxel_skeleton_betti_preserved26']
     assert result['unrepresented_source26_voxels']==0 and result['unrepresented_source6_voxels']==1
@@ -162,7 +163,7 @@ def test_h1_cap_retains_raw_diagnostics_but_no_partial_representative(monkeypatc
 
 def test_hollow_annotation_cavity_cannot_be_certified_by_a_one_dimensional_graph(monkeypatch):
     mask=np.ones((3,3,3),bool);mask[1,1,1]=False
-    monkeypatch.setattr(geometry,'skeletonize',lambda value,**kwargs:value.copy())
+    monkeypatch.setattr(morphology,'skeletonize',lambda value,**kwargs:value.copy())
     result=geometry.vessel_graph(mask,np.eye(4))
     assert result['source_cavities6_background']==result['voxel_skeleton_cavities6_background']==1
     assert result['source_cycle_rank26']==result['h1_betti1']==0
