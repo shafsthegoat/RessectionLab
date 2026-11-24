@@ -231,6 +231,7 @@ source crop and wall binding and completed a checked approach, contact, and
 withdrawal. Peak modeled wall displacement was 0.00644 mm. Withdrawal cleared
 both contacted source cells and left 0.00566 mm of modeled wall displacement.
 The loaded and withdrawn states contained 1,549 and 1,807 active tissue cells.
+The largest sum of omitted reaction magnitudes was 8.33 × 10⁻⁹ N.
 Cold replay reproduced every boundary, including the archived v4 refusal.
 On the M2 Pro, the accepted 380 ms contact request and 500 ms withdrawal
 took 2.89 s and 7.18 s through the bridge. The nearby support survey found no

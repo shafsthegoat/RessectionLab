@@ -257,6 +257,54 @@ def test_whole_anatomy_exterior_reduces_staircase_without_relaxing_source_bounds
     assert display_surface_kind({'kind':'context','label_value':16}) == 'context'
 
 
+def test_brain_display_refinement_preserves_raw_geometry_and_crop_faces(tmp_path):
+    pytest.importorskip("vtkmodules")
+    import nibabel as nib
+    from resectionlab.anatomy_brain_surface import BRAIN_ENVELOPE_POLICY
+    from resectionlab.anatomy_geometry import mesh
+    from resectionlab.patient_anatomy import PatientImagingCollection
+
+    spacing = np.array([.65, .8, 1.05])
+    frame = np.diag([*spacing, 1.])
+    center = np.array([24.3, 25.2, 22.8])
+    radius = np.array([18., 18., 19.])
+    native = np.moveaxis(np.indices((58, 57, 49)), 0, -1)
+    distance = ((np.linalg.norm((native - center) * spacing / radius, axis=-1) - 1)
+                * radius.mean())
+    mask = distance <= 0
+    signal = (28 + 65 * np.tanh(-distance / .82)).astype(np.float32)
+    acquired = nib.Nifti1Image(signal, frame)
+    acquired.header.set_xyzt_units("mm")
+    path = tmp_path / "brain-fixture.nii"
+    nib.save(acquired, path)
+    collection = PatientImagingCollection.create(tmp_path / "native", "brain-display-fixture")
+    scan = collection.add_series(path, series_id="t1", modality="T1")
+    row = collection.add_layer(
+        mask.astype(np.uint8), scan["affine"], layer_id="brain", kind="brain", source_series="t1",
+        role="context", color="#91c4b6",
+        provenance={"kind": "image_derived_estimate", "source": scan["original"]["sha256"]},
+    )
+    fallback = mesh(collection, {**row, "provenance": {"kind": "unrelated_fixture"}})
+    refined = mesh(collection, row)
+    assert refined["policy_version"] == BRAIN_ENVELOPE_POLICY
+    np.testing.assert_array_equal(refined["source"], fallback["source"])
+    np.testing.assert_array_equal(refined["indices"], fallback["indices"])
+    np.testing.assert_array_equal(collection.mask(row), mask)
+    np.testing.assert_array_equal(collection.array(scan["data"]), signal)
+    distance_to_face = np.minimum(refined["source"], np.array(mask.shape) - 1 - refined["source"])
+    pinned = (distance_to_face <= 2).any(axis=1)
+    assert pinned.any() and not pinned.all()
+    np.testing.assert_array_equal(refined["positions"][pinned], fallback["positions"][pinned])
+    movement = np.linalg.norm((refined["positions"] - fallback["positions"]) * spacing, axis=1)
+    assert .02 < movement.max() <= .4
+    assert not len(intersection_vertices(
+        fallback["positions"] * spacing, refined["positions"] * spacing, refined["indices"],
+    ))
+    reopened = mesh(collection, row)
+    assert reopened["cache_hit"]
+    np.testing.assert_array_equal(reopened["positions"], refined["positions"])
+
+
 def test_conditioned_skull_surface_keeps_shape_binding_through_portable_reopen(tmp_path):
     import nibabel as nib
     from resectionlab.anatomy_geometry import CONDITIONED_SURFACE, mesh

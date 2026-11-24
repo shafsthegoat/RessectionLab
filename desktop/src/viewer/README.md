@@ -39,6 +39,13 @@ On the generated folded-tissue control, mean normal error was 25.12Â° raw, 7.11Â
 
 Normal and mesh preparation stays in the worker. Smooth display vertices are an approximation of the voxel boundary: original images, annotation buffers, affines, slice overlays and native-cell measurements remain unchanged. Cursor raycasting always uses the original isosurface, even in smooth mode. Modeled-removal replay also retains its exact surfaces. Fully opaque anatomy writes depth so rear triangles cannot paint over its front; translucent layers retain their opacity controls. Coarse acquisition/segmentation steps can remain under the subvoxel displacement limit; smoothing adds no anatomical detail.
 
+For an unedited Anatomy brain estimate on the same acquired CT or structural
+MR grid, display conditioning can make a second pass of up to 0.4 mm per
+vertex. It fixes crop-edge vertices, checks original signal contrast and label
+support, retains the triangle indices, and rejects new self-intersections and
+reversed faces. Prepared publisher surfaces and Rehearse ownership fields use
+their existing cues and geometry.
+
 An ordinary local CT rehearsal can use acquired CT signal to shade its brain
 estimate in the illustrative microscope. A same-acquisition crop uses its
 original physical frame. A separate vascular acquisition uses the CT sampled

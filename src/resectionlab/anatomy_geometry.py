@@ -296,6 +296,27 @@ def vascular_cleanup_source(collection, row):
     return source
 
 
+def _brain_envelope_signal(collection, row):
+    """Identify the actual same-grid acquisition of an ordinary brain estimate."""
+    if (row["kind"] != "brain" or row.get("role") != "context" or row.get("edits")
+            or row.get("conditioned_surface") or row.get("probability")
+            or row.get("provenance", {}).get("kind") != "image_derived_estimate"):
+        return None
+    from .anatomy_model_registry import source_volume
+
+    scan = collection.series(row["source_series"])
+    if (scan["modality"] not in {"CT", "CTA", "MRI", "T1", "T1CE", "T1C", "T2", "FLAIR"}
+            or not source_volume(scan) or scan["affine"] != row["affine"]
+            or scan["data"]["shape"] != row["data"]["shape"]):
+        return None
+    try:
+        collection.require_native_geometry(scan)
+        collection.require_native_geometry(row)
+    except ValueError:
+        return None
+    return scan["data"]
+
+
 def mesh(collection, row, *, cancelled=lambda: False, display_source=None, conditioned=True):
     """Separate source/display mesh; same connectivity, bounded local movement."""
     started = perf_counter()
@@ -318,11 +339,16 @@ def mesh(collection, row, *, cancelled=lambda: False, display_source=None, condi
     version = NATIVE_POLICY["version"] if native else NATIVE_VASCULAR_POLICY["version"]
     if broad_context_surface(display_kind):
         version = NATIVE_POLICY["broadContext"]["version"]
+    brain_signal = _brain_envelope_signal(collection, row) if conditioned and display_source is None else None
     identity = {"algorithm": version, "data": row["data"], "probability": row.get("probability"),
                 "affine": row["affine"], "label": row["label_value"],
                 "revision": row["revision"], "kind": row["kind"]}
     if profile == "vessel":
         identity["fairing_parameters"] = NATIVE_VASCULAR_POLICY
+    if brain_signal is not None:
+        from .anatomy_brain_surface import BRAIN_ENVELOPE_POLICY
+
+        identity["brain_envelope"] = {"policy": BRAIN_ENVELOPE_POLICY, "signal": brain_signal["sha256"]}
     if profile == "vessel" and (display_source is not None or row.get("probability")):
         identity["field_policy"] = "native-vascular-filter-v2"
         identity["edited"] = bool(row.get("edits"))
@@ -381,6 +407,20 @@ def mesh(collection, row, *, cancelled=lambda: False, display_source=None, condi
             mask_origin=offset, native=native, source_shape=mask.shape,
             categorical=field == "categorical", cancelled=cancelled,
         )
+        if brain_signal is not None and not diagnostics["restoredComponents"]:
+            from .anatomy_brain_surface import MAX_TRIANGLES, refine_brain_envelope
+
+            if len(faces) <= MAX_TRIANGLES:
+                refined = refine_brain_envelope(
+                    raw, smoothed, faces, a[:3, :3], mask, collection.array(brain_signal), cancelled=cancelled,
+                )
+                if refined is not None:
+                    smoothed, backed_off = refined
+                    version = BRAIN_ENVELOPE_POLICY
+                    diagnostics["backedOffVertices"] += backed_off
+                    diagnostics["maxDisplacementMm"] = np.linalg.norm(
+                        (smoothed - raw) @ a[:3, :3].T, axis=1,
+                    ).max(initial=0.)
     else:
         smoothed, diagnostics = raw, {"restoredComponents": 0, "backedOffVertices": 0, "maxDisplacementMm": 0.}
     rejected = diagnostics["restoredComponents"] > 0
