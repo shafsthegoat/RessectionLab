@@ -143,6 +143,7 @@ test('solid cortex and transparent peels sample the same originating MRI in phys
       assert.equal(shader.uniforms.uCorticalScan.value,texture);
       assert.equal(shader.uniforms.uCorticalWorldToVoxel.value,worldToVoxel);
       assert.deepEqual(shader.uniforms.uCorticalWindow.value.toArray(),[10,120]);
+      assert.equal(shader.uniforms.uCorticalContrast.value,1.15);
       assert.match(shader.fragmentShader,/diffuseColor.rgb\*=exp2/);
       assert.match(shader.vertexShader,/uCorticalWorldToVoxel\*modelMatrix\*vec4\(position/);
     }

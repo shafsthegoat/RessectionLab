@@ -19,6 +19,7 @@ export interface PatientContext {
 export interface SurfaceAppearanceSource {
   seriesId:string; modality:string; sourceSha256:string; signalSha256:string;
   intensityUnits?:'HU'|'source';
+  softTissueWindow?:[number,number];
   affine:Affine; shape:Shape3; data:Float32Array; nativeAffine?:Affine; nativeShape?:Shape3;
 }
 export interface ViewerVolume {

@@ -118,6 +118,49 @@ test("bound engine brain walls sample the matching acquired reference on the con
   input.sourceRefs[0].provenance = "simulated";
   assert.equal((await hydrateCase(input, api())).compartments[1].appearanceSource, undefined);
 });
+test("local operative brain signal follows the exact acquired CTA crop and vessel binding", async () => {
+  const input = fixture();
+  const shape = [5, 5, 4], count = 100;
+  const volume = (dtype, assetId) => ({...descriptor(dtype, assetId), shape, byteLength:count*(dtype==='float32'?4:1)});
+  const typed = (dtype, assetId, dims) => ({...descriptor(dtype, assetId), shape:dims, byteLength:dims.reduce((a,b)=>a*b)*4});
+  const bytes = array => new Uint8Array(array.buffer);
+  const vessels = {positions:typed('float32','positions',[3,3]), indices:typed('uint32','indices',[1,3]),
+    normals:typed('float32','normals',[3,3]), sourceCells:typed('uint32','owners',[3])};
+  Object.assign(input,{shape,mri:volume('float32','mri'),compartments:[{name:'brain',array:volume('uint8','brain'),volumeMm3:99*24},
+    {name:'vessels',array:volume('uint8','vessels'),vesselSurface:vessels,volumeMm3:24}],
+    sourceRefs:[{source_id:'ct',provenance:'observed',sha256:hash}]});
+  input.metadata.anatomy_layers={brain:{kind:'brain'},vessels:{kind:'vessels'}};
+  input.metadata.surgical_adapter={type:'native-patient-research-derivative',
+    nativeWall:{schema:'resectionlab.patient-native-wall.v1',sourceSeries:'ct',sourceShape:[8,8,8],sourceStartIJK:[1,2,3],
+      geometryBinding:[hash,hash,hash].join(':'),sourceImageSha256:hash},
+    sourceLayers:{brain:{layerId:'brain-source',sampledCoverageCells:count}},
+    sourceManifest:{reference_series:'ct',layers:[{id:'brain-source',kind:'brain',source_series:'ct'}],
+      series:[{id:'ct',modality:'CTA',affine:[[2,0,0,8],[0,3,0,-11],[0,0,4,-5],[0,0,0,1]],
+        data:{shape:[8,8,8]},original:{sha256:hash}}]}};
+  const mri=Float32Array.from({length:count},(_,i)=>i===99?850:i);
+  const brain=Uint8Array.from({length:count},(_,i)=>Number(i!==99));
+  const supplied=api({mri:bytes(mri),brain,vessels:Uint8Array.from(brain,bit=>1-bit),
+    positions:bytes(Float32Array.of(4,4,2.8,4,3.8,3,3.8,4,3)), indices:bytes(Uint32Array.of(0,1,2)),
+    normals:bytes(Float32Array.of(0,0,1,0,1,0,1,0,0)),owners:bytes(Uint32Array.of(99,99,99))});
+  const view=await hydrateCase(input,supplied);
+  const signal=view.compartments[0].appearanceSource;
+  assert.deepEqual(signal.softTissueWindow,[14,89]);
+  assert.equal(signal.data,view.mri);
+  assert.deepEqual(view.mri,mri);
+  assert.deepEqual(view.compartments[0].mask,brain);
+  assert.equal(view.compartments[1].appearanceSource,undefined);
+  for(const mismatch of [
+    draft=>{draft.sourceRefs[0].provenance='simulated';},
+    draft=>{draft.metadata.surgical_adapter.nativeWall.geometryBinding='different';},
+    draft=>{draft.metadata.surgical_adapter.nativeWall.sourceStartIJK=[1,2,2];},
+    draft=>{draft.metadata.surgical_adapter.sourceLayers.brain.sampledCoverageCells=99;},
+    draft=>{draft.metadata.surgical_adapter.sourceManifest.layers[0].source_series='different';},
+  ]){
+    const altered=structuredClone(input);
+    mismatch(altered);
+    assert.equal((await hydrateCase(altered,supplied)).compartments[0].appearanceSource,undefined);
+  }
+});
 test("annotation centering preserves the recorded source point and converts LPS exactly once", async () => {
   for (const frame of ["RAS+", "LPS+"]) {
     const input = fixture();

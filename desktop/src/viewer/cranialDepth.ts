@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 type Boundary = 'cortex' | 'head';
-export type CorticalSignal = {texture:THREE.Data3DTexture;window:[number,number];worldToVoxel:THREE.Matrix4};
+export type CorticalSignal = {texture:THREE.Data3DTexture;window:[number,number];worldToVoxel:THREE.Matrix4;contrast?:number};
 type Surface = {mesh:THREE.Mesh;material:THREE.Material};
 
 /** Sample the originating acquisition on both solid and translucent cortical
@@ -15,16 +15,17 @@ export function installCorticalSignal(material:THREE.MeshStandardMaterial,signal
     shader.uniforms.uCorticalTransport=active.transport;
     shader.uniforms.uCorticalScan={value:signal.texture};
     shader.uniforms.uCorticalWindow={value:new THREE.Vector2(...signal.window)};
+    shader.uniforms.uCorticalContrast={value:signal.contrast??1.15};
     shader.uniforms.uCorticalWorldToVoxel={value:signal.worldToVoxel};
     shader.vertexShader='uniform bool uCorticalTransport; uniform mat4 uCorticalWorldToVoxel; attribute vec3 corticalRestOffset; attribute float corticalUnknown; varying float vCorticalUnknown; varying vec3 vCorticalVoxel;\n'+shader.vertexShader.replace('#include <begin_vertex>',
       '#include <begin_vertex>\nvCorticalVoxel=(uCorticalWorldToVoxel*modelMatrix*vec4(position+(uCorticalTransport?corticalRestOffset:vec3(0.)),1.)).xyz; vCorticalUnknown=uCorticalTransport?corticalUnknown:0.;');
-    shader.fragmentShader='uniform bool uCorticalSignalEnabled; uniform highp sampler3D uCorticalScan; uniform vec2 uCorticalWindow; varying float vCorticalUnknown; varying vec3 vCorticalVoxel;\n'+
+    shader.fragmentShader='uniform bool uCorticalSignalEnabled; uniform highp sampler3D uCorticalScan; uniform vec2 uCorticalWindow; uniform float uCorticalContrast; varying float vCorticalUnknown; varying vec3 vCorticalVoxel;\n'+
       shader.fragmentShader.replace('#include <color_fragment>',`#include <color_fragment>
         vec3 uvw=(vCorticalVoxel.zyx+0.5)/vec3(textureSize(uCorticalScan,0));
         if(uCorticalSignalEnabled&&vCorticalUnknown<.0001&&all(greaterThanEqual(uvw,vec3(0.)))&&all(lessThanEqual(uvw,vec3(1.)))){
           float signalValue=texture(uCorticalScan,uvw).r;
           float brightness=clamp((signalValue-uCorticalWindow.x)/(uCorticalWindow.y-uCorticalWindow.x),0.,1.);
-          diffuseColor.rgb*=exp2((brightness-.45)*1.15);
+          diffuseColor.rgb*=exp2((brightness-.45)*uCorticalContrast);
         }`);
   };
   material.customProgramCacheKey=()=>key+'/transported-cortical-signal';

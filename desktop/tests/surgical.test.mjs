@@ -198,6 +198,8 @@ test('initial rehearsal presentation preserves saved appearance, camera, cutaway
   const saved={layerOpacity:{vessel:.1},layerColor:{target:'#abcdef'},showPlane:true,smoothSurfaces:false,layout:'mri-review',camera:{target:[0,0,0],position:[0,50,0],up:[0,0,1]},clipBox:{enabled:true,min:[-2,-2,-2],max:[2,2,2]}};
   const before=structuredClone(saved),settings=initialRehearsalPresentation(rows,saved);
   assert.equal(settings.layerOpacity.vessel,.1);assert.equal(settings.layerOpacity.target,1);assert.equal(settings.layerColor.target,'#abcdef');
+  assert.deepEqual(settings.layerColor,saved.layerColor);
+  assert.equal(initialRehearsalPresentation(rows).layerColor,undefined);
   for(const key of ['showPlane','smoothSurfaces','layout','camera','clipBox'])assert.deepEqual(settings[key],saved[key]);
   assert.deepEqual(saved,before);
 });

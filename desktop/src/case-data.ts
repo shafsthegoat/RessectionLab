@@ -230,6 +230,56 @@ export function displayBrainMask(payload:CasePayload):boolean {
 const objectRecord = (value: unknown): value is Record<string, unknown> =>
   !!value && typeof value === "object" && !Array.isArray(value);
 
+/** Bind a local CT crop only when its acquisition is both the recorded wall
+ * acquisition and the recorded reference image. The wall can instead be TOF
+ * and the reference MRI, so the wall receipt alone is insufficient. */
+function localCtBrainSignal(payload: CasePayload, mri: Float32Array, affine: ViewerCase["affine"],
+  mask: Uint8Array): SurfaceAppearanceSource | undefined {
+  const adapter = payload.metadata.surgical_adapter;
+  if (payload.frame !== "RAS+" || !objectRecord(adapter) || adapter.type !== "native-patient-research-derivative") return;
+  const {nativeWall: wall, sourceManifest: manifest, sourceLayers} = adapter;
+  if (!objectRecord(wall) || wall.schema !== "resectionlab.patient-native-wall.v1" ||
+      !objectRecord(manifest) || !Array.isArray(manifest.series) || !Array.isArray(manifest.layers) ||
+      !objectRecord(sourceLayers) || !objectRecord(sourceLayers.brain)) return;
+  const brain = sourceLayers.brain;
+  const {sourceSeries, sourceShape, sourceStartIJK, sourceImageSha256} = wall;
+  if (typeof sourceSeries !== "string" || sourceSeries !== manifest.reference_series ||
+      typeof sourceImageSha256 !== "string" || !/^[a-f0-9]{64}$/.test(sourceImageSha256) ||
+      !payload.sourceRefs?.some(ref => ref.source_id === sourceSeries && ref.provenance === "observed" && ref.sha256 === sourceImageSha256) ||
+      brain.sampledCoverageCells !== mri.length || !manifest.layers.some(row => objectRecord(row) &&
+        row.id === brain.layerId && row.kind === "brain" && row.source_series === sourceSeries)) return;
+  const series = manifest.series.find(row => objectRecord(row) && row.id === sourceSeries);
+  if (!objectRecord(series) || !objectRecord(series.original) || series.original.sha256 !== sourceImageSha256 ||
+      !objectRecord(series.data) || !Array.isArray(series.affine) || series.affine.length !== 4 ||
+      (series.modality !== "CT" && series.modality !== "CTA") ||
+      !Array.isArray(sourceShape) || sourceShape.length !== 3 || !Array.isArray(sourceStartIJK) || sourceStartIJK.length !== 3 ||
+      JSON.stringify(series.data.shape) !== JSON.stringify(sourceShape) || sourceShape.some((size, axis) =>
+        !Number.isSafeInteger(size) || !Number.isSafeInteger(sourceStartIJK[axis]) || sourceStartIJK[axis] < 0 ||
+        sourceStartIJK[axis] + payload.shape[axis] > size)) return;
+  const sourceAffine = series.affine;
+  if (affine.some((row, axis) => {
+    const native = sourceAffine[axis];
+    return !Array.isArray(native) || native.length !== 4 || native.some(value => !Number.isFinite(value)) ||
+      row.some((value, column) => Math.abs(value - (column < 3 ? native[column] :
+        native[3] + sourceStartIJK.reduce((delta, offset, index) => delta + offset * native[index], 0))) > 1e-6);
+  })) return;
+  const surface = payload.compartments.find(layer => layer.name === "vessels")?.vesselSurface;
+  if (!surface || [surface.positions.sha256, surface.indices.sha256, surface.sourceCells.sha256].join(":") !== wall.geometryBinding) return;
+
+  // Use the actual soft-tissue signal distribution rather than the full CTA
+  // extent, which includes air, bone and strongly enhanced blood. The range
+  // only controls the illustrative albedo of this checked surface.
+  const values: number[] = [];
+  const stride = Math.max(1, Math.ceil(mri.length / 16000));
+  for (let i = 0; i < mri.length; i += stride) if (mask[i]) values.push(mri[i]);
+  values.sort((a, b) => a - b);
+  if (values.length < 64) return;
+  const low = values[Math.floor(values.length * .15)], high = values[Math.floor(values.length * .9)];
+  if (!(high > low)) return;
+  return {seriesId: sourceSeries, modality: series.modality, sourceSha256: sourceImageSha256,
+    signalSha256: payload.mri.sha256, shape: payload.shape, affine, data: mri, softTissueWindow: [low, high]};
+}
+
 /** The bound engine archive carries reference pixels on its own physical grid.
  * A synthetic lesion can share an acquired background. Its contour is never
  * evidence of an acquired tumor signal. */
@@ -330,11 +380,12 @@ export async function hydrateCase(
         throw new Error(`${layer.name} volume disagrees with its source grid.`);
       const kind = (payload.metadata.anatomy_layers as Record<string,{kind?:string}>|undefined)?.[layer.name]?.kind;
       const vessel=vesselSurfaces[index];
+      const appearanceSource = kind === "brain" ? brainSignal ?? localCtBrainSignal(payload, mri, affine, mask) : undefined;
       if(vessel&&(surfaceKind(kind)!=='vessel'||vessel.vesselSourceCells.some(i=>!mask[i])))throw Error('Vessel surface differs from the declared native mask.');
       return {
         name: layer.name,
         kind,
-        ...(kind === "brain" && brainSignal ? {appearanceSource: brainSignal, displayKind: kind} : {}),
+        ...(appearanceSource ? {appearanceSource, displayKind: kind} : {}),
         sourceIdentity: `${payload.caseHash}:${layer.name}:${layer.array.sha256}`,
         qa: layer.qa,
         ...vessel,

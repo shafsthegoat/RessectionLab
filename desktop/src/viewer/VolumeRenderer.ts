@@ -781,7 +781,8 @@ export class VolumeRenderer {
       if(!signal){
         const active=source.data===this.volume.mri&&source.shape.every((n,i)=>n===this.volume.shape[i]);
         signal={texture:active?this.mriTexture:dataTexture(source.data,source.shape),
-          window:active?this.defaultWindow:intensityWindow(source.data),
+          window:source.softTissueWindow??(active?this.defaultWindow:intensityWindow(source.data)),
+          contrast:source.softTissueWindow ? .62 : undefined,
           worldToVoxel:matrix(inverseAffine(source.affine))};
         this.corticalSignals.set(source.seriesId,signal);
       }

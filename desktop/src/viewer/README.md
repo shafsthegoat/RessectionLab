@@ -39,6 +39,14 @@ On the generated folded-tissue control, mean normal error was 25.12Â° raw, 7.11Â
 
 Normal and mesh preparation stays in the worker. Smooth display vertices are an approximation of the voxel boundary: original images, annotation buffers, affines, slice overlays and native-cell measurements remain unchanged. Cursor raycasting always uses the original isosurface, even in smooth mode. Modeled-removal replay also retains its exact surfaces. Fully opaque anatomy writes depth so rear triangles cannot paint over its front; translucent layers retain their opacity controls. Coarse acquisition/segmentation steps can remain under the subvoxel displacement limit; smoothing adds no anatomical detail.
 
+An ordinary local CT rehearsal can use the acquired crop to shade its brain
+estimate in the illustrative microscope. This requires matching brain, wall
+and reference acquisitions, checked native crop geometry, full sampled brain
+coverage and the saved wall binding. The albedo window uses the 15th and 90th
+percentiles of the original brain-mask samples. The scene retains its source
+and accepted contact geometry. The source-colour mode retains the label
+palette, and saved vessel colour choices remain available.
+
 ## Estimated envelope inspection
 
 A selected structural proposal uses a separate texture and a lavender dashed contour on the three original MRI planes. It never enters the target compartment list, removed-tissue mask, working brain mask, 3D anatomy, or planning metrics. The display gate requires an estimated, view-only record bound to the exact case version, native dimensions, binary cells, and canonical RAS affine. LPS conversion preserves source voxel indexing. Review-required, accepted, and rejected estimates retain distinct status labels; a free-form description cannot change those labels or permit cortical access. Clearing/changing evidence disposes the previous texture before validation; replay suppresses the contour. Source-coordinate sampling determines the contour's physical alignment without resampling the stored mask.
