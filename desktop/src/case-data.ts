@@ -8,6 +8,7 @@ import type {
 import {registerSourceInspection} from './modeled-volume.ts';
 import type {SurfaceAppearanceSource} from './viewer/contracts';
 import {surfaceKind} from './viewer/surfacePolicy.ts';
+import {isStructuralMrModality} from './native-study-state.ts';
 
 function validateVesselSurface(surface:NonNullable<CasePayload['compartments'][number]['vesselSurface']>) {
   const {positions,normals,indices,sourceCells,scoreLighting}=surface;
@@ -272,7 +273,7 @@ function reviewedCropPatientAffine(adapter: Record<string, unknown>, manifest: R
 }
 
 /** Use the acquired reference signal already sampled into the accepted crop. */
-function localCtBrainSignal(payload: CasePayload, mri: Float32Array, affine: ViewerCase["affine"],
+function localWallBrainSignal(payload: CasePayload, mri: Float32Array, affine: ViewerCase["affine"],
   mask: Uint8Array): SurfaceAppearanceSource | undefined {
   const adapter = payload.metadata.surgical_adapter;
   if (payload.frame !== "RAS+" || !objectRecord(adapter) || adapter.type !== "native-patient-research-derivative") return;
@@ -291,7 +292,10 @@ function localCtBrainSignal(payload: CasePayload, mri: Float32Array, affine: Vie
   const reference = manifest.series.find(row => objectRecord(row) && row.id === referenceId);
   const vascular = manifest.series.find(row => objectRecord(row) && row.id === sourceSeries);
   if (!objectRecord(reference) || !objectRecord(reference.original) || !sourceHash(reference.original.sha256) ||
-      (reference.modality !== "CT" && reference.modality !== "CTA") || !observed(referenceId, reference.original.sha256) ||
+      typeof reference.modality !== 'string' ||
+      !(reference.modality === 'CT' || reference.modality === 'CTA' ||
+        (isStructuralMrModality(reference.modality) && !/\b(?:SWI|DWI|DTI|ADC|diffusion|susceptibility)\b/i.test(reference.modality))) ||
+      !observed(referenceId, reference.original.sha256) ||
       !objectRecord(vascular) || !objectRecord(vascular.original) || vascular.original.sha256 !== sourceImageSha256 ||
       !observed(sourceSeries, sourceImageSha256) || !objectRecord(vascular.data) || !affineMatrix(vascular.affine) ||
       !Array.isArray(sourceShape) || sourceShape.length !== 3 || !Array.isArray(sourceStartIJK) || sourceStartIJK.length !== 3 ||
@@ -308,9 +312,8 @@ function localCtBrainSignal(payload: CasePayload, mri: Float32Array, affine: Vie
   const surface = payload.compartments.find(layer => layer.name === "vessels")?.vesselSurface;
   if (!surface || [surface.positions.sha256, surface.indices.sha256, surface.sourceCells.sha256].join(":") !== wall.geometryBinding) return;
 
-  // Use the actual soft-tissue signal distribution rather than the full CTA
-  // extent, which includes air, bone and strongly enhanced blood. The range
-  // only controls the illustrative albedo of this checked surface.
+  // Window the acquired signal to the actual sampled brain distribution.
+  // The window only controls the albedo of this checked surface.
   const values: number[] = [];
   const stride = Math.max(1, Math.ceil(mri.length / 16000));
   for (let i = 0; i < mri.length; i += stride) if (mask[i]) values.push(mri[i]);
@@ -319,7 +322,8 @@ function localCtBrainSignal(payload: CasePayload, mri: Float32Array, affine: Vie
   const low = values[Math.floor(values.length * .15)], high = values[Math.floor(values.length * .9)];
   if (!(high > low)) return;
   return {seriesId: referenceId, modality: reference.modality, sourceSha256: reference.original.sha256,
-    signalSha256: payload.mri.sha256, shape: payload.shape, affine, data: mri, softTissueWindow: [low, high]};
+    signalSha256: payload.mri.sha256, shape: payload.shape, affine, data: mri,
+    softTissueWindow: [low, high], nativeWallCrop: true};
 }
 
 /** The bound engine archive carries reference pixels on its own physical grid.
@@ -422,7 +426,7 @@ export async function hydrateCase(
         throw new Error(`${layer.name} volume disagrees with its source grid.`);
       const kind = (payload.metadata.anatomy_layers as Record<string,{kind?:string}>|undefined)?.[layer.name]?.kind;
       const vessel=vesselSurfaces[index];
-      const appearanceSource = kind === "brain" ? brainSignal ?? localCtBrainSignal(payload, mri, affine, mask) : undefined;
+      const appearanceSource = kind === "brain" ? localWallBrainSignal(payload, mri, affine, mask) ?? brainSignal : undefined;
       if(vessel&&(surfaceKind(kind)!=='vessel'||vessel.vesselSourceCells.some(i=>!mask[i])))throw Error('Vessel surface differs from the declared native mask.');
       return {
         name: layer.name,

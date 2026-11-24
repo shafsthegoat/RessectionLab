@@ -5,6 +5,7 @@ import {prepareSurface} from './prepareSurface.ts';
 import {maskSurfaceRegion} from './surface.ts';
 import {IncrementalSurfaceEngine} from './incrementalSurface.ts';
 import {ENGINE_SURFACE_POLICY} from './engineImplicitSurface.ts';
+import {NATIVE_BRAIN_SURFACE_POLICY} from './operativeBrainFairing.ts';
 import {intersectionVertices} from './surfaceSafety.ts';
 
 const identity=[[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]];
@@ -181,4 +182,52 @@ test('generated skin exterior settles onto its multilayer source envelope while 
     }
   }
   assert(changed>120);assert(checkedInterfaces>100);
+});
+
+test('native brain fairing is layer-bound and leaves caps, adjacent vessels and accepted cuts fixed',()=>{
+  const shape=[29,23,20],affine=[[-.55,0,0,30],[0,.55,0,2],[0,0,.75,1],[0,0,0,1]];
+  const owner=grid(shape,(x,y,z)=>{
+    const roof=Math.floor(13-.027*(x-14)**2-.043*(y-11)**2);
+    if(x===18&&z===roof+1&&y>=7&&y<=15)return 2;
+    return z<=roof?1:0;
+  },Uint16Array);
+  const mask=Uint8Array.from(owner,v=>Number(v===1));
+  const index=(x,y,z)=>(x*shape[1]+y)*shape[2]+z;
+  const removed=index(13,10,12),before=[hash(owner),hash(mask)];
+  const reference={owner,protectedRegions:[2],nativeBrainRegion:1};
+  const plain=prepareSurface(mask,shape,affine,'brain',true,reference);
+  const wrong=prepareSurface(mask,shape,affine,'brain',true,{...reference,layerRegion:2});
+  assert.deepEqual(wrong.smoothPositions,plain.smoothPositions);
+  const intact=prepareSurface(mask,shape,affine,'brain',true,{...reference,layerRegion:1});
+  assert.equal(intact.diagnostics.policy,NATIVE_BRAIN_SURFACE_POLICY);
+  const cutMask=mask.slice();cutMask[removed]=0;
+  // A single accepted deletion has no separate cavity packet.
+  const cutBase=prepareSurface(cutMask,shape,affine,'brain',true,reference);
+  const engine=new IncrementalSurfaceEngine(),job={layerId:'brain',shape,affine,kind:'brain'};
+  engine.prepare({...job,jobId:1,identity:'rest',previousIdentity:'',mask:mask.slice(),partition:{key:'native',reference,layerRegion:1}});
+  const cut=engine.prepare({...job,jobId:2,identity:'cut',previousIdentity:'rest',indices:Uint32Array.of(removed),values:Uint8Array.of(0),
+    partition:{key:'native',layerRegion:1}});
+  assert.equal(cut.work.incremental,true);
+  assert.equal(cut.diagnostics.policy,NATIVE_BRAIN_SURFACE_POLICY);
+  for(const k of ['positions','indices','normals'])assert.deepEqual(cut[k],cutBase[k]);
+  assert(cut.diagnostics.maxDisplacementMm<=.4);
+  let changed=0,caps=0,nearCut=0,nearVessel=0;
+  for(let i=0;i<cut.positions.length;i+=3){
+    const [x,y,z]=cut.positions.subarray(i,i+3);
+    const isCap=[x,y,z].some((v,k)=>v===-.5||v===shape[k]-.5);
+    const isCut=Math.hypot((x-13)*.55,(y-10)*.55,(z-12)*.75)<1;
+    const isVessel=Math.abs(x-18)<1.25&&y>7&&y<15&&z>9;
+    const candidate=cut.smoothPositions.subarray(i,i+3),base=cutBase.smoothPositions.subarray(i,i+3);
+    if(isCap||isCut||isVessel)assert.deepEqual(candidate,base);
+    caps+=Number(isCap);nearCut+=Number(isCut);nearVessel+=Number(isVessel);
+    if(candidate.some((v,k)=>v!==base[k]))changed++;
+  }
+  assert(caps>100&&nearCut>10&&nearVessel>10&&changed>100);
+  const physical=points=>Float64Array.from(points,(v,i)=>v*affine[i%3][i%3]);
+  assert.equal(intersectionVertices(physical(cutBase.smoothPositions),physical(cut.smoothPositions),cut.indices).size,0);
+  const vessels=Uint8Array.from(owner,v=>Number(v===2));
+  const originalVessel=prepareSurface(vessels,shape,affine,'vessel',true,reference);
+  const scopedVessel=prepareSurface(vessels,shape,affine,'vessel',true,{...reference,layerRegion:2});
+  for(const k of ['positions','indices','normals','smoothPositions','smoothNormals'])assert.deepEqual(scopedVessel[k],originalVessel[k]);
+  assert.deepEqual([hash(owner),hash(mask)],before);
 });

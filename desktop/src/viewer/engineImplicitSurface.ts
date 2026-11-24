@@ -5,6 +5,7 @@ import {inverseAffine} from './coordinates.ts';
 import type {SurfaceDiagnostics} from './surfacePolicy';
 import {surfaceKind} from './surfacePolicy.ts';
 import {indexedSurfaceNormals} from './surfaceNormals.ts';
+import {fairNativeBrainSurface,NATIVE_BRAIN_SURFACE_POLICY} from './operativeBrainFairing.ts';
 
 /** The undeformed material partition is shared across every frame of an
  * accepted engine mapping. Fields derived from it are for drawing only. */
@@ -12,6 +13,8 @@ export interface EngineSurfaceReference {
   owner: Uint16Array;
   protectedRegions: number[];
   exteriorSkinRegion?:number;
+  nativeBrainRegion?:number;
+  layerRegion?:number;
   cavity?:AcceptedCavity;
 }
 export const ENGINE_SURFACE_POLICY = 'engine-shared-implicit-v1';
@@ -223,19 +226,28 @@ export function engineImplicitSurface(points:Float32Array,indices:Uint32Array,no
     smoothNormals[i]=cx*scale;smoothNormals[i+1]=cy*scale;smoothNormals[i+2]=cz*scale;
   }
   const joined=junctions.size?joinCavityWalls(points,positions,smoothNormals,indices,junctions,affine,cap):undefined;
-  diagnostics.preparationMs=performance.now()-started;
   if(joined){
     diagnostics.policy='engine-local-accepted-cavity-v2';
     diagnostics.cavityJunctionTriangles=joined.junctionTriangles;
     diagnostics.cavityCurvedEdges=joined.curvedEdges;
     diagnostics.maxDisplacementMm=Math.max(diagnostics.maxDisplacementMm,joined.maximum);
     if(diagnostics.maxDisplacementMm>cap)throw Error('Cavity reconstruction exceeded the physical source bound');
-    return {positions:joined.positions,smoothNormals:joined.smoothNormals,smoothIndices:joined.smoothIndices,diagnostics};
   }
-  return {positions,smoothNormals,diagnostics};
+  const display=joined??{positions,smoothNormals,smoothIndices:undefined};
+  const region=reference.nativeBrainRegion;
+  const refined=kind==='brain'&&region&&region===reference.layerRegion?fairNativeBrainSurface(points,display.positions,
+    positions,display.smoothNormals,display.smoothIndices??indices,owner,mask,region,shape,affine,diagnostics.maxDisplacementMm):undefined;
+  if(refined){
+    diagnostics.policy=NATIVE_BRAIN_SURFACE_POLICY;
+    diagnostics.maxDisplacementMm=refined.maximum;
+    diagnostics.displacementLimitMm=refined.limit;
+  }
+  diagnostics.preparationMs=performance.now()-started;
+  return {positions:refined?.positions??display.positions,smoothNormals:refined?.smoothNormals??display.smoothNormals,
+    smoothIndices:display.smoothIndices,diagnostics};
 }
 
-export interface EnginePartitionRequest {key:string;reference?:EngineSurfaceReference|null;cavity?:AcceptedCavity}
+export interface EnginePartitionRequest {key:string;reference?:EngineSurfaceReference|null;cavity?:AcceptedCavity;layerRegion?:number}
 export class WorkerSurfacePartition {
   private key?:string;
   private value?:EngineSurfaceReference|null;
@@ -247,7 +259,8 @@ export class WorkerSurfacePartition {
       this.value=request.reference&&request.reference.owner.byteLength>maxBytes?null:request.reference;
     }
     if(request.key!==this.key||this.value===undefined)throw Error('Missing shared engine display partition');
-    return this.value&&request.cavity?{...this.value,cavity:request.cavity}:this.value;
+    return this.value&&(request.cavity||request.layerRegion!==undefined)?
+      {...this.value,cavity:request.cavity,layerRegion:request.layerRegion}:this.value;
   }
   get retainedBytes(){return this.value?.owner.byteLength??0;}
 }

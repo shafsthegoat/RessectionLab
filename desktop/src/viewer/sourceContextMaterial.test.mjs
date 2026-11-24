@@ -5,6 +5,31 @@ import {applySourceContextMaterial,sourceContextOpacity} from './sourceContextMa
 import {SurfaceVolumePass} from './SurfaceVolumePass.ts';
 import {installCorticalSignal} from './cranialDepth.ts';
 
+test('a checked native wall crop interpolates its own windowed signal and shades only acquisition end faces',()=>{
+  const signal={texture:new THREE.Data3DTexture(new Float32Array(24),4,3,2),window:[9,107],worldToVoxel:new THREE.Matrix4()};
+  const exact=new THREE.MeshStandardMaterial(),source=new THREE.MeshStandardMaterial();
+  const active=installCorticalSignal(exact,{...signal,nativeWallCrop:true},true);
+  installCorticalSignal(source,signal,true);
+  const compile=material=>{
+    const shader={uniforms:{},vertexShader:THREE.ShaderLib.standard.vertexShader,fragmentShader:THREE.ShaderLib.standard.fragmentShader};
+    material.onBeforeCompile(shader,{});
+    return shader;
+  };
+  const crop=compile(exact),legacy=compile(source);
+  assert.equal(crop.uniforms.uCorticalScan.value,signal.texture);
+  assert.equal(signal.texture.magFilter,THREE.NearestFilter);
+  assert.equal(crop.vertexShader,legacy.vertexShader);
+  assert.notEqual(exact.customProgramCacheKey(),source.customProgramCacheKey());
+  assert.match(crop.fragmentShader,/texelFetch\(uCorticalScan,index\.zyx,0\)/);
+  assert.match(crop.fragmentShader,/clamp\(p,vec3\(0\.\),lastSample\)/);
+  assert.match(crop.fragmentShader,/max\(-vCorticalVoxel,vCorticalVoxel-lastSample\)/);
+  assert.match(crop.fragmentShader,/if\(uCorticalSignalEnabled&&vCorticalUnknown<\.0001\)/);
+  assert.doesNotMatch(legacy.fragmentShader,/operativeSoftTissueSignal/);
+  active.value=false;
+  assert.equal(crop.uniforms.uCorticalSignalEnabled.value,false);
+  source.dispose();exact.dispose();signal.texture.dispose();
+});
+
 test('head and cortex capture separate nearest depths with patient clipping during orbit and at rest',()=>{
   const pass=new SurfaceVolumePass(),scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera();
   const geometry=new THREE.PlaneGeometry(),opaque=new THREE.Texture();

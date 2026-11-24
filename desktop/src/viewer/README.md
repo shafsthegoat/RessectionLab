@@ -48,13 +48,25 @@ support, retains the triangle indices, and rejects new self-intersections and
 reversed faces. Prepared publisher surfaces and Rehearse ownership fields use
 their existing cues and geometry.
 
-An ordinary local CT rehearsal can use acquired CT signal to shade its brain
-estimate in the illustrative microscope. A same-acquisition crop uses its
-original physical frame. A separate vascular acquisition uses the CT sampled
-into the native wall lattice under the saved review for that exact crop. Both
-paths require full sampled brain coverage and the accepted wall binding. The
-albedo window uses the 15th and 90th percentiles of the brain-mask samples.
-Source-colour mode retains the label palette and saved vessel colours.
+An ordinary local native-wall rehearsal can use acquired CT or structural MR
+signal to shade its brain estimate in the illustrative microscope. A
+same-acquisition crop uses its original physical frame. A separate vascular
+acquisition uses the reference signal sampled into the native wall lattice
+under the saved review for that exact crop. Both paths require full sampled
+brain coverage and the accepted wall binding. The albedo window uses the 15th
+and 90th percentiles of the brain-mask samples. Trilinear sampling interpolates
+only the windowed acquired signal. Gray end faces use those same samples and
+identify where the model ends at the source volume boundary. Source-colour
+mode retains the label palette and saved vessel colours.
+
+Conditioned edges can round the free brain display surface on qualifying
+native-wall grids. The worker pins the crop, protected tissue interfaces and
+the vicinity of accepted edits. The candidate keeps the accepted triangle
+indices and uses a physical displacement bound of at most 0.4 mm from the raw
+source surface. Reversed faces or new intersections restore the existing
+surface. **Source edges** displays the original indexed extraction. Linked
+slices, physical tool contact, and the source-indexed vessel wall retain their
+existing geometry.
 
 An already-modeled vessel keeps its score-derived lighting and the gray source-volume boundary markers when the viewer starts or rebuilds. The local matched anatomy and microscope record checks the indexed position, triangle, and owner binding when the case supplies that binding.
 

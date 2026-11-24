@@ -145,6 +145,7 @@ test("local operative brain signal follows the acquired CTA and the exact native
   const view=await hydrateCase(input,supplied);
   const signal=view.compartments[0].appearanceSource;
   assert.deepEqual(signal.softTissueWindow,[14,89]);
+  assert.equal(signal.nativeWallCrop,true);
   assert.equal(signal.data,view.mri);
   assert.deepEqual(view.mri,mri);
   assert.deepEqual(view.compartments[0].mask,brain);
@@ -190,6 +191,18 @@ test("local operative brain signal follows the acquired CTA and the exact native
   assert.equal(alignedSignal.data,multimodal.mri);
   assert.deepEqual(alignedSignal.affine,paired.affine);
   assert.deepEqual(alignedSignal.softTissueWindow,signal.softTissueWindow);
+  for(const modality of ['T1CE','T2','FLAIR','TOF','SWI','MR DWI']){
+    const source=structuredClone(paired);
+    source.metadata.surgical_adapter.sourceManifest.series[0].modality=modality;
+    const field=await hydrateCase(source,supplied);
+    const structuralSignal=field.compartments[0].appearanceSource;
+    if(['T1CE','T2','FLAIR'].includes(modality)){
+      assert.equal(structuralSignal.nativeWallCrop,true);
+      assert.equal(structuralSignal.modality,modality);
+      assert.equal(structuralSignal.data,field.mri);
+      assert.equal(structuralSignal.sourceSha256,hash);
+    }else assert.equal(structuralSignal,undefined);
+  }
   for(const mismatch of [
     (a,p)=>{p.sourceRefs.pop();},
     (a)=>{delete a.nativeWallAlignmentReview;},

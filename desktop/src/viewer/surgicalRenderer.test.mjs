@@ -303,6 +303,24 @@ function modelWorkerMock(){
     }};
   return {workers,restore(){globalThis.Worker=previous;}};
 }
+test('only the checked native crop brain passes a conditioning region to the modeled surface worker',async()=>{
+  const {modeledVolume}=await server.ssrLoadModule('/src/modeled-volume.ts');
+  const mock=modelWorkerMock();try{
+    const {r,source}=modeledFixture();
+    const [brain]=source.compartments;
+    brain.appearanceSource={nativeWallCrop:true,seriesId:'cta',modality:'CTA',shape:source.shape,
+      data:source.mri,affine:source.affine,softTissueWindow:[9,107]};
+    const view={stateId:'native-local',scene:{shape:source.shape,affine:source.affine,regions:[
+      {id:13,name:'brain',material:'brain',color:brain.color},{id:21,name:'vessel',material:'vessel',color:'#bb3344'}]},
+      removed:[12],moved:[]};
+    assert.equal(r.installSurgicalState(modeledVolume(source,view),{view}),true);
+    const worker=r.modelWorker;
+    assert.equal(worker.messages[0].layerId,'brain');
+    assert.equal(worker.messages[0].partition.reference.nativeBrainRegion,13);
+    assert.equal(worker.messages[0].partition.layerRegion,13);
+    assert.equal(brain.mask[12],1);
+  }finally{mock.restore();}
+});
 test('exact unacted inspection source publishes actual tools/state at the frame fence without remeshing its overlapping annotations',async()=>{
   const {modeledVolume,registerSourceInspection}=await server.ssrLoadModule('/src/modeled-volume.ts');
   const mock=modelWorkerMock();try{

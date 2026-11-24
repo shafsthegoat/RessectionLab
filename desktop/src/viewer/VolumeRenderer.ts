@@ -666,7 +666,7 @@ export class VolumeRenderer {
       } else {
         const mask=layer.surfaceMask??materializeLayerMask(this.volume,layer);sourceRequests.set(layer.name,performance.now());
         this.displayWork.sourceRemeshedLayers++;this.displayWork.workerInputCloneBytes+=mask.byteLength;
-        this.worker.postMessage({name:layer.name,kind:layer.kind,mask,shape:volume.shape,affine:this.affine,displaySmoothing:true,partition:this.partitionRequest(this.worker,reference,true,layer.cavity)});
+        this.worker.postMessage({name:layer.name,kind:layer.kind,mask,shape:volume.shape,affine:this.affine,displaySmoothing:true,partition:this.partitionRequest(this.worker,reference,true,layer)});
       }
     });
     if(!remaining){this.worker.terminate();this.sourceWorkerActive=false;}
@@ -783,7 +783,8 @@ export class VolumeRenderer {
         const active=source.data===this.volume.mri&&source.shape.every((n,i)=>n===this.volume.shape[i]);
         signal={texture:active?this.mriTexture:dataTexture(source.data,source.shape),
           window:source.softTissueWindow??(active?this.defaultWindow:intensityWindow(source.data)),
-          contrast:source.softTissueWindow ? .62 : undefined,
+          contrast:source.nativeWallCrop ? 1.12 : source.softTissueWindow ? .62 : undefined,
+          nativeWallCrop:source.nativeWallCrop,
           worldToVoxel:matrix(inverseAffine(source.affine))};
         this.corticalSignals.set(source.seriesId,signal);
       }
@@ -880,14 +881,15 @@ export class VolumeRenderer {
     if(interaction.onDisplayError)interaction.onDisplayError(interaction.preview??interaction.view,message);
     else this.onError?.(message);
   }
-  private partitionRequest(worker:Worker,reference:EngineSurfaceReference|undefined,smooth:boolean,cavity?:EnginePartitionRequest['cavity']):EnginePartitionRequest|undefined {
+  private partitionRequest(worker:Worker,reference:EngineSurfaceReference|undefined,smooth:boolean,layer:ViewerVolume['compartments'][number]):EnginePartitionRequest|undefined {
     if(!reference)return undefined;
-    const key=this.modelIdentity(reference);
-    if(!smooth||workerPartitions.get(worker)===reference)return {key,cavity};
+    const request={key:this.modelIdentity(reference),cavity:layer.cavity,
+      layerRegion:layer.appearanceSource?.nativeWallCrop?reference.nativeBrainRegion:undefined};
+    if(!smooth||workerPartitions.get(worker)===reference)return request;
     workerPartitions.set(worker,reference);
     const value=reference.owner.byteLength<=MAX_ENGINE_REFERENCE_BYTES?reference:null;
     this.displayWork.workerInputCloneBytes+=value?.owner.byteLength??0;
-    return {key,reference:value,cavity};
+    return {...request,reference:value};
   }
   private modelIdentity(value:object){let key=this.modelIdentities.get(value);if(!key){key=`tissue-${++this.modelIdentityCounter}`;this.modelIdentities.set(value,key);}return key;}
   private disposeSurfacePair(pair:SurfacePair){
@@ -1024,7 +1026,7 @@ export class VolumeRenderer {
     };
     if(job){
       stage.waiting=job.layer;const oldLayer=this.volume.compartments.find(l=>l.name===job.layer.name),previousIdentity=oldLayer?this.modelIdentity(oldLayer.surfaceMask??oldLayer.mask):'',identity=this.modelIdentity(job.layer.surfaceMask??job.layer.mask),incremental=job.indices&&this.modelWorkerStates.get(job.layer.name)===previousIdentity;
-      const request:IncrementalSurfaceRequest={jobId:stage.generation,layerId:job.layer.name,previousIdentity,identity,shape:stage.next.shape,affine:this.affine,kind:job.layer.kind,retainChunks:!stage.initialMapping,smooth:stage.smoothing,partition:this.partitionRequest(worker,modeledAnatomy(stage.next)?.surfaceReference,stage.smoothing,job.layer.cavity)};
+      const request:IncrementalSurfaceRequest={jobId:stage.generation,layerId:job.layer.name,previousIdentity,identity,shape:stage.next.shape,affine:this.affine,kind:job.layer.kind,retainChunks:!stage.initialMapping,smooth:stage.smoothing,partition:this.partitionRequest(worker,modeledAnatomy(stage.next)?.surfaceReference,stage.smoothing,job.layer)};
       if(incremental){request.indices=job.indices;request.values=job.values;this.displayWork.workerInputTransferBytes+=job.indices!.byteLength+job.values!.byteLength;worker.postMessage(request,[job.indices!.buffer,job.values!.buffer]);}
       else {request.mask=job.layer.surfaceMask??materializeLayerMask(stage.next,job.layer);this.displayWork.workerInputCloneBytes+=request.mask.byteLength;worker.postMessage(request);}
     }else{
