@@ -124,7 +124,7 @@ New multi-scan studies, studies with an identified cortical label, and angiogram
 
 At an explicit cut, the displayed 3D source-image plane writes its actual depth so scalar tissue behind the section cannot veil the acquired image. Primary, box and oblique clips apply consistently to that plane and its picking. Uncut reference planes retain their translucent appearance; linked 2D image panes remain unclipped.
 
-In **Vessels**, choose **Clip → Vessel slab at cursor** to inspect a narrower depth along the selected anatomical plane. Its thickness is in millimeters and it follows the linked cursor while retaining the full transverse field. The native surface and source panes remain available. **Exit slab** restores the prior 3D cut.
+In **Vessels**, choose **Vessel slab at cursor** in the 3D toolbar to focus on the depth around the linked cursor. Use **Clip** to change the anatomical plane or thickness in millimeters. The slab retains the full transverse field and the linked slices keep their full coverage. Toggle the toolbar button or choose **Exit slab** to restore the prior 3D cut.
 
 On a native TOF or MRA with a source-bound vascular layer, **Vessels** balances
 the automatic full-depth backdrop using the acquired signal. It estimates

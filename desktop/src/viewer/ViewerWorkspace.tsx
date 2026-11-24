@@ -27,6 +27,7 @@ import {
   ScanLine,
   Focus,
   Download,
+  Layers2,
   Layers3,
   Box,
   Maximize2,
@@ -841,6 +842,11 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
               </button>
             );
           })}
+          {depthSlabAllowed&&<button aria-label="Vessel slab at cursor" aria-pressed={depthSlabActive}
+            title={depthSlabActive?'Restore prior 3D depth':'Inspect a vessel slab at the linked cursor'}
+            disabled={!cutawayBounds||!!corridorCrop} onClick={toggleDepthSlab}>
+            <Layers2 size={16}/><span className="rl-viewer-tool-label">Vessel slab</span>
+          </button>}
           <button onClick={()=>engine.current?.cameraPreset('oblique')} aria-label="Fit 3D view" title="Fit 3D view"><Focus size={16}/><span className="rl-viewer-tool-label">Fit 3D</span></button>
           {!resultParts&&<button onClick={()=>void exportAnatomy()} aria-label={exportBusy?'Cancel 3D export':'Export 3D PNG'}
             title={exportBusy?'Cancel 3D export':'Export high-resolution 3D PNG'}
@@ -912,7 +918,6 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
           {controlPanel==='clip'&&<>
             <button className="rl-section-action" aria-label={sourceSectionActive?'Exit section':'Section at cursor'} aria-pressed={sourceSectionActive} disabled={!sourceSectionAllowed} onClick={toggleSourceSection}><ScanLine size={16}/>{sourceSectionActive?'Exit section':'Section at cursor'}</button>
             <p className="rl-section-help">{props.segmentationOnly?'Segmentation only · no acquired image to section.':!sourceSectionAllowed?'Exit the operative view to inspect a source image section.':sourceSectionActive?`${props.generatedSignal?'Generated image signal':`Source ${signalName}`} · ${TITLES[activePlane]} section follows the linked cursor. Exit restores the previous cut.`:'Show the source image across the cut, at the linked cursor. Choose its plane below.'}</p>
-            {depthSlabAllowed&&<button aria-pressed={depthSlabActive} disabled={!cutawayBounds||!!corridorCrop} onClick={toggleDepthSlab}>{depthSlabActive?'Exit vessel slab':'Vessel slab at cursor'}</button>}
             {depthSlabActive?<>
               <label>Slab plane<select aria-label="Slab plane" value={activePlane} onChange={event=>setActivePlane(event.target.value as SlicePlane)}>{PLANES.map(plane=><option key={plane} value={plane}>{TITLES[plane]}</option>)}</select></label>
               <label>Slab thickness<select aria-label="Slab thickness" value={depthSlabThickness} onChange={event=>setDepthSlabThickness(Number(event.target.value))}>{[20,28,36,44,60,80].map(mm=><option key={mm} value={mm}>{mm} mm</option>)}</select></label>

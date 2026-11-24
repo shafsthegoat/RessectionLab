@@ -474,7 +474,11 @@ app.on('browser-window-created',(_event,window)=>{
             return result;
           };
           let before=await submittedFrame();
-          await click('Clip');await click('Vessel slab at cursor');await js(inputScript('Slab thickness',44));await click('Close view controls');
+          const slabButton=button('Vessel slab at cursor');
+          await until(`!!(${slabButton})?.closest('.rl-primary-tools')`,'vessel slab in the 3D toolbar');
+          await click('Vessel slab at cursor');
+          await until(`(${slabButton})?.getAttribute('aria-pressed')==='true'`,'active vessel slab');
+          await click('Clip');await js(inputScript('Slab thickness',44));await click('Close view controls');
           await settledFrame(before.serial);
           captures.push({millimeters:44,...await captureSlab('slab-44',before)});
           before=await submittedFrame();
@@ -483,6 +487,7 @@ app.on('browser-window-created',(_event,window)=>{
           captures.push({millimeters:28,...await captureSlab('slab-28',before)});
           before=await submittedFrame();
           await click('Exit vessel slab in 3D');await settledFrame(before.serial);
+          assert.equal(await js(`(${slabButton}).getAttribute('aria-pressed')`),'false');
           record.depthSlab={captures,restored:await captureSlab('slab-exit',before)};
           assert.deepEqual((await nativeView()).states[view.seriesId].settings,record.view.settings,'Depth slab changed the saved view');
         }
