@@ -32,6 +32,8 @@ export interface ViewerVolume {
   alignmentQuality?:Record<string,AlignmentQuality>;
   /** Native display identity; includes revision/preview generation, never just object identity. */
   displayIdentity?: string;
+  /** Modality of the selected acquisition in the native workspace. */
+  modality?: string;
   /** Prepared off-thread for native sources. Legacy callers retain synchronous preparation. */
   packedLabels?: {data:Uint8Array;codes:Array<[number,number]>};
   caseId: string;

@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import type {Bounds3,Point3,Shape3} from './coordinates';
 import type {VesselDisplayFilter,ViewerVesselTrace} from './contracts';
 import type {ViewerWorkspaceSettings} from './workspaceSettings';
+import {isCtAngiography} from './volumeTransfer.ts';
 
 interface VesselLabelGrid {
   texture:THREE.Data3DTexture;
@@ -68,7 +69,7 @@ export function setVesselInspectionFocus(material:THREE.MeshStandardMaterial,foc
   }
 }
 
-const shadingValue={source:0,balanced:1,large:2,fine:3};
+const shadingValue={source:0,balanced:1,large:2,fine:3,'cta-contrast':0};
 export const vesselSourceBoundaryColor='#747c81';
 
 export const vesselWallFinish = {
@@ -76,6 +77,43 @@ export const vesselWallFinish = {
   clearcoat:.22,
   clearcoatRoughness:.36,
 };
+
+const ctaVesselColors = {
+  artery:'#a32e22',
+  vein:'#325988',
+  sinus:'#434f7f',
+  vessel:'#865c7b',
+  vessels:'#865c7b',
+} as const;
+
+const ctaVesselFinish = {
+  specularIntensity:.24,
+  clearcoat:.11,
+  clearcoatRoughness:.44,
+};
+
+/** Use the declared layer kind only. The material remains a display choice
+ * and leaves linked slice colors and the acquired optical path intact. */
+export function ctaVesselColor(kind:string|undefined,settings:ViewerWorkspaceSettings,modality:string|undefined) {
+  if(settings.vesselShading!=='cta-contrast'||settings.operativeView||
+    !['segmentation','vascular'].includes(settings.presentation??'')||!isCtAngiography(modality??''))return undefined;
+  return Object.hasOwn(ctaVesselColors,kind??'')?ctaVesselColors[kind as keyof typeof ctaVesselColors]:undefined;
+}
+
+export function applyCtaVesselFinish(material:THREE.MeshStandardMaterial,kind:string|undefined,
+  settings:ViewerWorkspaceSettings,modality:string|undefined) {
+  if(!(material instanceof THREE.MeshPhysicalMaterial))return;
+  const color=ctaVesselColor(kind,settings,modality);
+  if(color){
+    material.color.set(color);
+    Object.assign(material,ctaVesselFinish);
+    material.roughness=.47;
+    material.userData.ctaVesselFinish=true;
+  }else if(material.userData.ctaVesselFinish){
+    Object.assign(material,vesselWallFinish);
+    delete material.userData.ctaVesselFinish;
+  }
+}
 
 /** Distinguish the padded source closure while keeping it opaque and pickable. */
 function shadeVesselSourceBoundary(shader:Parameters<THREE.MeshStandardMaterial['onBeforeCompile']>[0],shape:Shape3){

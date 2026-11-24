@@ -23,6 +23,8 @@ export function intensityWindow(values: Float32Array): [number, number] {
 }
 
 export const isCtModality=(modality:string)=>/^\s*(CT|CTA)(\b|[-_\s])/i.test(modality);
+export const isCtAngiography=(modality:string)=>/^\s*(?:CTA\b|CT[-_\s]+angiogra(?:phy|m)\b)/i.test(modality)&&
+  !/segmentation only|analytic signal|generated image signal|diagnostic/i.test(modality);
 export function usesAcquiredCtBone(input:VolumeRenderingSettings|undefined,modality:string) {
   if(!isCtModality(modality)||input?.showCtBoneOverlay!==false||input.isolateLabels)return false;
   const {enabled,density}=volumeSettings(input,modality);
@@ -43,8 +45,7 @@ export function volumeSettings(input: VolumeRenderingSettings = {}, modality = '
   // Stored presets stay readable, but HU thresholds must never be applied to
   // arbitrary MRI signal (including a saved CT preset opened on a T1CE scan).
   const safeExplicit=explicit?.startsWith('ct-')&&!ct?'mri':explicit;
-  const angiography=/^\s*(?:CTA\b|CT[-_\s]+angiogra(?:phy|m)\b)/i.test(modality);
-  const preset = safeExplicit??(ct?(angiography?'ct-angiography':'ct-bone'):'mri');
+  const preset = safeExplicit??(ct?(isCtAngiography(modality)?'ct-angiography':'ct-bone'):'mri');
   return { enabled: acquired && input.enabled !== false, preset: preset as Exclude<VolumePreset,'auto'>,
     density: Number.isFinite(input.density) ? Math.max(0,Math.min(2,input.density!)) : .45 };
 }

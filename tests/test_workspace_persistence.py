@@ -42,11 +42,12 @@ def test_volume_rendering_preferences_roundtrip_without_changing_source(tmp_path
         settings['showCtExteriorSignal'] = show_ct_exterior
         settings['showCtBoneOverlay'] = not show_ct_exterior
         settings['balanceTofContext'] = not show_ct_exterior
-    state['states']['primary']['viewer']={'volumeRendering':settings}
+    state['states']['primary']['viewer']={'volumeRendering':settings,'vesselShading':'cta-contrast'}
     path=tmp_path/'volume.ressectionlab'
     save_workspace(case,path,sources=[],imaging=state,episode=None,selection=None,artifacts={})
     reopened,_,saved=load_workspace(path)
     assert saved['imagingState']['states']['primary']['viewer']['volumeRendering']==settings
+    assert saved['imagingState']['states']['primary']['viewer']['vesselShading']=='cta-contrast'
     assert reopened.semantic_hash==identity
     np.testing.assert_array_equal(reopened.mri,before)
     for invalid in [None,[],{'density':float('nan')},{'density':-1},{'density':3},{'enabled':1},{'preset':'invented-vessels'},{'other':1}]:

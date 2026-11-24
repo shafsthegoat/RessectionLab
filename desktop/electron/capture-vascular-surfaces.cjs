@@ -9,6 +9,8 @@ const fs=require('node:fs');
 const os=require('node:os');
 const path=require('node:path');
 const {enabledControlScript,inputScript}=require('./verify-eden-planning-helpers.cjs');
+process.argv.push('--automation-hidden');
+if(process.platform==='darwin')app.setActivationPolicy('accessory');
 
 function argument(name){
   const index=process.argv.indexOf(name);
@@ -72,9 +74,9 @@ for(const recipe of recipes){
   assert(!recipe.branchPick||recipe.branchLayerId&&Array.isArray(recipe.branchPick)&&recipe.branchPick.length===2&&
     recipe.branchPick.every(value=>Number.isFinite(value)&&value>0&&value<1));
   assert(!recipe.isolateBranch||recipe.branchLayerId);
-  assert(!recipe.compareVesselShading||Array.isArray(recipe.compareVesselShading)&&recipe.compareVesselShading.length<=4&&
+  assert(!recipe.compareVesselShading||Array.isArray(recipe.compareVesselShading)&&recipe.compareVesselShading.length<=5&&
     new Set(recipe.compareVesselShading).size===recipe.compareVesselShading.length&&
-    recipe.compareVesselShading.every(mode=>['source','balanced','large','fine'].includes(mode)));
+    recipe.compareVesselShading.every(mode=>['source','balanced','large','fine','cta-contrast'].includes(mode)));
   assert(!recipe.preset||['superior','anterior','left','oblique'].includes(recipe.preset));
   assert(!recipe.scope||['all','brain','intracranial','excluded','exterior-air'].includes(recipe.scope));
   assert(!recipe.rotationFrames||Number.isInteger(recipe.rotationFrames)&&recipe.rotationFrames>=2&&recipe.rotationFrames<=120);
@@ -84,8 +86,6 @@ for(const recipe of recipes){
 const profile=fs.mkdtempSync(path.join(os.tmpdir(),'rslab-vessel-capture-'));
 app.setPath('userData',profile);
 app.commandLine.appendSwitch('force-device-scale-factor',String(deviceScale));
-process.argv.push('--automation-hidden');
-if(process.platform==='darwin')app.setActivationPolicy('accessory');
 dialog.showOpenDialog=async()=>({canceled:false,filePaths:[source]});
 const hash=file=>createHash('sha256').update(fs.readFileSync(file)).digest('hex');
 const report={source,snapshotId:document.snapshot_id,manifestSha256:hash(source),canonicalManifestSha256:hash(canonical),
@@ -549,24 +549,25 @@ app.on('browser-window-created',(_event,window)=>{
           assert.deepEqual((await nativeView()).states[view.seriesId].settings,record.view.settings,'Depth slab changed the saved view');
         }
         if(recipe.compareVesselShading?.length){
-          const startingMode=view.states[view.seriesId].settings.vesselShading??'balanced';
+          const startingMode=record.view.settings.vesselShading??(record.view.settings.presentation==='vascular'?'balanced':'source');
           const submitted=async mode=>{
             await until(enabledControlScript('Vessel shading'),'enabled vessel shading control');
             const prior=await js('window.vascularFrame.serial');
             await js(inputScript('Vessel shading',mode));
-            return settledFrame(prior);
+            await settledFrame(prior);
+            const state=(await nativeView()).states[view.seriesId];
+            assert.deepEqual(state.visible,record.view.visible);
+            assert.deepEqual(state.settings,{...record.view.settings,vesselShading:mode});
+            const image=await capture(`${recipe.name}-${mode}`);
+            assertSameGeometry(image);
+            return image;
           };
           record.shading=[];
           for(const mode of recipe.compareVesselShading){
             if(mode===startingMode)continue;
-            const shadedFrame=await submitted(mode);
-            for(const key of ['position','target','up'])
-              assert(shadedFrame.cameraState[key].every((n,i)=>Math.abs(n-frame.cameraState[key][i])<1e-9),'Vessel shading moved the camera');
-            assert.deepEqual(shadedFrame.cursor,frame.cursor,'Vessel shading moved the source cursor');
-            assert.equal(shadedFrame.displayIdentity,frame.displayIdentity,'Vessel shading changed resident source geometry');
-            record.shading.push({mode,...await capture(`${recipe.name}-${mode}`)});
+            record.shading.push({mode,...await submitted(mode)});
           }
-          if(record.shading.length)await submitted(startingMode);
+          if(record.shading.length)record.shadingRestored={mode:startingMode,...await submitted(startingMode)};
         }
         const captureSection=async()=>{
           const prior=(await submittedFrame()).serial;

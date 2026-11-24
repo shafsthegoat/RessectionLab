@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import * as THREE from 'three';
 import {prepareSurface} from './prepareSurface.ts';
 import {displaySurfaceNormals} from './displaySurfaceNormals.ts';
-import {applyVesselDepthMaterial,vesselWallFinish} from './anatomySurfaceMaterial.ts';
+import {applyCtaVesselFinish,applyVesselDepthMaterial,ctaVesselColor,vesselWallFinish} from './anatomySurfaceMaterial.ts';
 import {applySourceContextMaterial} from './sourceContextMaterial.ts';
 import {SurfaceVolumePass} from './SurfaceVolumePass.ts';
 
@@ -66,4 +66,29 @@ test('vessel radiance depth cue survives volume peels without changing opacity o
       assert.equal(m.opacity,.42);
     }
   }finally{material.dispose();peel.dispose();tail.dispose();pass.dispose();}
+});
+
+test('acquired CTA contrast uses declared vessel types and retains the original physical finish on exit',()=>{
+  const settings={presentation:'segmentation',vesselShading:'cta-contrast'};
+  const colors=['artery','vein','sinus','vessels'].map(kind=>ctaVesselColor(kind,settings,'CTA'));
+  assert.equal(new Set(colors).size,colors.length);
+  assert.ok(colors.every(color=>/^#[0-9a-f]{6}$/.test(color)));
+  assert.equal(ctaVesselColor('brain',settings,'CTA'),undefined);
+  assert.equal(ctaVesselColor('artery',settings,'MRA'),undefined);
+  assert.equal(ctaVesselColor('artery',settings,'CT'),undefined);
+  assert.equal(ctaVesselColor('artery',settings,'CTA segmentation only'),undefined);
+  assert.equal(ctaVesselColor('artery',{...settings,presentation:'scan'},'CTA'),undefined);
+  assert.equal(ctaVesselColor('artery',{...settings,operativeView:'surgeon'},'CTA'),undefined);
+
+  const material=new THREE.MeshPhysicalMaterial({opacity:.42,depthWrite:false,...vesselWallFinish});
+  try{
+    applyCtaVesselFinish(material,'artery',settings,'CTA');
+    assert.equal('#'+material.color.getHexString(),colors[0]);
+    assert.ok(material.clearcoat<vesselWallFinish.clearcoat);
+    assert.ok(material.specularIntensity<vesselWallFinish.specularIntensity);
+    assert.equal(material.opacity,.42);
+    assert.equal(material.depthWrite,false);
+    applyCtaVesselFinish(material,'artery',{...settings,vesselShading:'source'},'CTA');
+    for(const [name,value] of Object.entries(vesselWallFinish))assert.equal(material[name],value);
+  }finally{material.dispose();}
 });

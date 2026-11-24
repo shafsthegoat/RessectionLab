@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {studyLayerDisplayKind,nextScanState,scanLabel,studyTimepoint,migrateSkullView,anatomyPresentation,defaultAnatomyPresentation,sourceEvidenceLabel} from '../src/native-study-state.ts';
 import {checkedViewerSettings} from '../src/workspace-view-settings.ts';
 import {cranialComposition,initialNativeLayers,presentationLayers} from '../src/native-study-state.ts';
+import {withLayerColor} from '../src/viewer/workspaceSettings.ts';
 
 test('an independent or estimated scan cannot drive the reference scan presentation',()=>{
   const layers=['ct','registered','estimated','independent'].map(source_series=>({source_series}));
@@ -19,6 +20,7 @@ test('an acquired angiogram reveals its own artery inside the skull and brain co
   const layers=[{id:'cow',kind:'artery',source_series:'cta'},{id:'skull',kind:'skull'},{id:'brain',kind:'brain'}];
   const render=(modality,source)=>anatomyPresentation({},layers,'segmentation',modality,source);
   const view=render('CTA','cta');
+  assert.equal(view.vesselShading,'cta-contrast');
   assert.equal(view.skullMode,'transparent');
   assert.equal(view.layerOpacity.cow,1);
   assert.ok(view.layerOpacity.skull<.1&&view.layerOpacity.brain<.2);
@@ -28,7 +30,10 @@ test('an acquired angiogram reveals its own artery inside the skull and brain co
   assert.equal(anatomyPresentation({},[...sameSource,{id:'trabecular',kind:'bone',source_series:'cta'}],
     'vascular','CTA','cta').volumeRendering.shadows,false);
   assert.equal(anatomyPresentation({},layers,'scan','CTA','cta').volumeRendering.shadows,true);
+  assert.equal(anatomyPresentation({},layers,'scan','CTA','cta').vesselShading,undefined);
+  assert.equal(anatomyPresentation({vesselShading:'source'},layers,'vascular','CTA','cta').vesselShading,'source');
   assert.equal(render('CT','cta').skullMode,'exterior');
+  assert.equal(render('CT','cta').vesselShading,undefined);
   assert.equal(render('MRA','other-scan').skullMode,'exterior');
 });
 
@@ -53,6 +58,15 @@ test('scan and anatomy presets preserve the study colors of supplied arterial cl
     const result=anatomyPresentation({},layers,mode,'CTA','ct');
     assert.deepEqual(result.layerColor,{'left-ica':'#278c69',union:'#aa352b',mismatched:'#aa352b',estimate:'#aa352b'});
   }
+});
+
+test('editing a CTA vessel layer color explicitly selects label colors',()=>{
+  const settings={vesselShading:'cta-contrast',layerColor:{artery:'#278c69'}};
+  assert.deepEqual(withLayerColor(settings,'artery','artery','#d04438'),
+    {vesselShading:'source',layerColor:{artery:'#d04438'}});
+  assert.equal(withLayerColor(settings,'brain','brain','#a399ad').vesselShading,'cta-contrast');
+  assert.equal(settings.layerColor.artery,'#278c69');
+  assert.deepEqual(checkedViewerSettings({metadata:{},compartments:[]},{vesselShading:'cta-contrast'}),{vesselShading:'cta-contrast'});
 });
 
 test('an unclassified native TOF network gets foreground emphasis without an artery color or a CT bone profile',()=>{

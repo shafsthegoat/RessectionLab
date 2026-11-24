@@ -1,6 +1,7 @@
 import {NativeCranialView} from './NativeCranialView';
 import {NativeStructureControls} from './NativeStructureControls';
-import {layerAppearance} from './viewer/workspaceSettings';
+import {layerAppearance,withLayerColor} from './viewer/workspaceSettings';
+import {isCtAngiography} from './viewer/volumeTransfer';
 import type {VesselShading,ViewerWorkspaceSettings} from './viewer/workspaceSettings';
 import {useEffect,useRef,useState} from 'react';
 import {Check,ChevronRight,ScanLine} from 'lucide-react';
@@ -131,6 +132,8 @@ export function NativeSidebar({workspace:w,tab,onOpenAnatomy,onOpenPlan,onOpenSc
   const b=w.binding;if(!b||!w.api)return null;const api=w.api;
   const timepoint=studyTimepoint(b);
   const source=b.document.series.find(s=>s.id===w.series),layer=b.document.layers.find(l=>l.id===selected);
+  const cta=isCtAngiography(source?.modality??'');
+  const presentation=w.state.settings.presentation;
   const model=w.volume?.patientContext,independent=w.registration==='independent source frame';
   const excludedSources=new Set(model?.sources.filter(s=>s.alignment==='unavailable').map(s=>s.seriesId));
   const unavailable=[...new Set([...w.unavailable,...b.document.layers.filter(l=>excludedSources.has(l.source_series)).map(l=>l.id)])];
@@ -141,7 +144,7 @@ export function NativeSidebar({workspace:w,tab,onOpenAnatomy,onOpenPlan,onOpenSc
   const usableTargets=planning.targetOptions.filter(option=>option.target);
   const activeTarget=usableTargets.some(option=>option.layerId===planning.activeTargetLayerId)&&!planning.targetSelectionIssue;
   const layerInspector=layer&&<section className="layer-inspector"><div className="inspector-heading"><strong>{layer.label}</strong><button aria-label="Close layer details" disabled={!!w.draft} onClick={()=>choose(null)}>×</button></div>
-        <div className="tool-row"><input type="color" aria-label={`${layer.label} color`} value={w.state.settings.layerColor?.[layer.id]??layer.color} onChange={e=>w.setSettings({...w.state.settings,layerColor:{...w.state.settings.layerColor,[layer.id]:e.target.value}})}/><label>Opacity<input aria-label={`${layer.label} opacity`} type="range" min="0" max="1" step=".01" value={layerAppearance(layer.id,layer.color,w.state.settings,studyLayerDisplayKind(layer)).opacity} onChange={e=>w.setSettings({...w.state.settings,layerOpacity:{...w.state.settings.layerOpacity,[layer.id]:+e.target.value}})}/></label><button disabled={w.busy} onClick={()=>w.setVisible(Object.fromEntries(b.document.layers.map(l=>[l.id,l.id===layer.id])))}>Isolate</button></div>
+        <div className="tool-row"><input type="color" aria-label={`${layer.label} color`} value={w.state.settings.layerColor?.[layer.id]??layer.color} onChange={e=>w.setSettings(withLayerColor(w.state.settings,layer.id,layer.kind,e.target.value))}/><label>Opacity<input aria-label={`${layer.label} opacity`} type="range" min="0" max="1" step=".01" value={layerAppearance(layer.id,layer.color,w.state.settings,studyLayerDisplayKind(layer)).opacity} onChange={e=>w.setSettings({...w.state.settings,layerOpacity:{...w.state.settings.layerOpacity,[layer.id]:+e.target.value}})}/></label><button disabled={w.busy} onClick={()=>w.setVisible(Object.fromEntries(b.document.layers.map(l=>[l.id,l.id===layer.id])))}>Isolate</button></div>
         <p className="subtle layer-review-status">{layer.review_status.replaceAll('_',' ')}{w.volume?.compartments.find(l=>l.name===layer.id)?.volumeMm3!=null&&<> · source {(w.volume.compartments.find(l=>l.name===layer.id)!.volumeMm3!/1000).toFixed(2)} mL</>}</p>
         {w.volume?.compartments.find(l=>l.name===layer.id)?.qa&&(()=>{const q=w.volume!.compartments.find(l=>l.name===layer.id)!.qa!;return <details className="unified-details" open={q.voxelCount===0}><summary>Anatomy quality · {q.voxelCount===0?'empty segmentation':q.issues.length?'review findings':'source checks complete'}</summary><p>{q.componentCount.toLocaleString()} source components · anatomical accuracy unmeasured</p>{q.issues.map(issue=><p key={issue}>{issue}</p>)}<p>Findings do not change the source. Inspect linked slices before accepting corrections.</p></details>})()}
         {!w.draft&&['all','exterior-air'].includes(w.vesselScope)&&layer.source_series===w.series&&['vessel','vessels','artery','vein','sinus'].includes(layer.kind)&&
@@ -217,10 +220,11 @@ export function NativeSidebar({workspace:w,tab,onOpenAnatomy,onOpenPlan,onOpenSc
         </div>}
       <p className="presentation-source">{sourceEvidenceLabel(source,b.document.series)}</p>
       <NativeStructureControls volume={w.volume} layers={b.document.layers} tracts={b.document.tractography} visibleLayers={w.state.visible} onVisibilityChange={w.setVisible} settings={w.state.settings} onSettingsChange={w.setSettings} selectedStructure={w.selectedStructure} onSelectStructure={choose} onFocusStructure={w.focusStructure} unavailable={unavailable} pendingLayers={w.pendingLayers} layerErrors={w.layerErrors} onRetryLayer={w.retryLayer} selectionInspector={layerInspector} disabled={w.busy||!!w.draft} showSelectionControls={!!w.selectedStructure&&!layer}/>
-      {w.state.settings.presentation==='vascular'&&b.document.layers.some(l=>['vessel','vessels','artery','vein','sinus'].includes(l.kind))&&
-        <label className="vascular-shading">Vessel shading<select aria-label="Vessel shading" value={w.state.settings.vesselShading??'balanced'} disabled={blocked||!['all','exterior-air'].includes(w.vesselScope)} onChange={e=>w.setSettings({...w.state.settings,vesselShading:e.target.value as VesselShading})}>
+      {(presentation==='vascular'||cta&&presentation==='segmentation')&&b.document.layers.some(l=>['vessel','vessels','artery','vein','sinus'].includes(l.kind))&&
+        <label className="vascular-shading">Vessel shading<select aria-label="Vessel shading" value={w.state.settings.vesselShading??(presentation==='vascular'?'balanced':'source')} disabled={blocked||!['all','exterior-air'].includes(w.vesselScope)} onChange={e=>w.setSettings({...w.state.settings,vesselShading:e.target.value as VesselShading})}>
+          {cta&&<option value="cta-contrast">CTA contrast · by vessel type</option>}
           <option value="balanced">Depth and caliber</option><option value="large">Emphasize wider vessels</option><option value="fine">Emphasize finer vessels</option><option value="source">Source layer colors</option>
-        </select><span>Depth and local mask thickness guide shading. Source geometry and risk constraints are preserved.</span></label>}
+        </select><span>{w.state.settings.vesselShading==='cta-contrast'?'3D uses declared vessel types. Source slices retain layer colors.':'Depth and local mask thickness guide shading.'}</span></label>}
       <details className="anatomy-display-tools"><summary>Display & fragments</summary>
         {b.document.layers.some(l=>(l.provenance as {model?:string}|null)?.model==='siam-v2')&&<>
           <label><input type="checkbox" aria-label="Unfiltered SIAM estimates (QC)" checked={w.original} disabled={blocked} onChange={w.compare}/>Unfiltered SIAM estimates (QC)</label>

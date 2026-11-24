@@ -99,6 +99,11 @@ export class SurfaceVolumePass {
           material.clippingPlanes=source.clippingPlanes;
           material.roughness=source.roughness;
           material.metalness=source.metalness;
+          if(material instanceof THREE.MeshPhysicalMaterial&&source instanceof THREE.MeshPhysicalMaterial){
+            material.specularIntensity=source.specularIntensity;
+            material.clearcoat=source.clearcoat;
+            material.clearcoatRoughness=source.clearcoatRoughness;
+          }
         }
         s.mesh.material=pair.peel;
       }

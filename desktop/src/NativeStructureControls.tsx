@@ -5,7 +5,7 @@ import type {ViewerVolume} from './viewer/contracts';
 import type {Layer} from './native-anatomy-data';
 import {studyLayerDisplayKind} from './native-study-state';
 import {tractColor} from './viewer/tractDisplay';
-import {layerAppearance} from './viewer/workspaceSettings';
+import {layerAppearance,withLayerColor} from './viewer/workspaceSettings';
 import type {ViewerWorkspaceSettings} from './viewer/workspaceSettings';
 import './native-structure-controls.css';
 
@@ -88,7 +88,7 @@ export function NativeStructureControls({volume,layers,tracts,visibleLayers,onVi
     {selected&&showSelectionControls&&<div className="native-structure-selection">
       <div><strong>{selected.label}</strong><button aria-pressed={isolated===selected.id} onClick={()=>isolate(selected.id)}>{isolated===selected.id?'Restore others':'Isolate'}</button></div>
       <label>Opacity<input aria-label={`${selected.label} opacity`} type="range" min="0" max="1" step=".01" value={layerAppearance(selected.id,selected.color,settings,selected.displayKind).opacity} onChange={event=>onSettingsChange({...settings,layerOpacity:{...settings.layerOpacity,[selected.id]:+event.target.value}})}/><output>{Math.round(layerAppearance(selected.id,selected.color,settings,selected.displayKind).opacity*100)}%</output></label>
-      <label>Color<input aria-label={`${selected.label} color`} type="color" value={layerAppearance(selected.id,selected.color,settings,selected.displayKind).color} onChange={event=>onSettingsChange({...settings,layerColor:{...settings.layerColor,[selected.id]:event.target.value}})}/></label>
+      <label>Color<input aria-label={`${selected.label} color`} type="color" value={layerAppearance(selected.id,selected.color,settings,selected.displayKind).color} onChange={event=>onSettingsChange(withLayerColor(settings,selected.id,selected.kind,event.target.value))}/></label>
     </div>}
     {showSelectionControls&&<details className="native-structure-details"><summary>Source & display details</summary><p>Visibility and opacity change the display only. Measurements retain all available source labels.</p><p>Tracts keep supplied bundle names and registration. Streamline previews reduce display load; source data remains unchanged. Slice fibers lie within ±0.65 mm of each source plane.</p>{selected&&<p>{selected.kind==='tract'?'Supplied tractography · independent registration accuracy unmeasured.':`${selected.kind.replaceAll('-',' ')} · inspect source evidence for provenance`}{selected.qa?` · ${selected.qa.reviewStatus}`:''}</p>}{selected?.source&&<p className="native-structure-source">{selected.source}</p>}</details>}
   </section>;

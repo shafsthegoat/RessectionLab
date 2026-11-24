@@ -25,7 +25,7 @@ export function checkedViewerSettings(source:CasePayload,input:unknown):ViewerWo
   if(value.sliceOverlay!==undefined&&!['contour','fill'].includes(value.sliceOverlay))return fail();
   if(value.presentation!==undefined&&!['scan','segmentation','vascular'].includes(value.presentation))return fail();
   if(value.sourcedVesselContext!==undefined&&typeof value.sourcedVesselContext!=='boolean')return fail();
-  if(value.vesselShading!==undefined&&!['balanced','large','fine','source'].includes(value.vesselShading))return fail();
+  if(value.vesselShading!==undefined&&!['balanced','large','fine','source','cta-contrast'].includes(value.vesselShading))return fail();
   if(value.smoothSurfaces!==undefined&&typeof value.smoothSurfaces!=='boolean')return fail();
   if(value.skullMode!==undefined&&!['exterior','transparent','cutaway'].includes(value.skullMode))return fail();
   if(value.volumeRendering!==undefined){

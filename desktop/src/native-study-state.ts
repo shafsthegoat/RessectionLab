@@ -1,6 +1,6 @@
 import type {Binding, CranialView, Layer, NativeScanState, NativeViewState, VesselScope} from './native-anatomy-data';
 import type {ViewerWorkspaceSettings} from './viewer/workspaceSettings';
-import {isCtModality,isMrAngiography} from './viewer/volumeTransfer.ts';
+import {isCtAngiography,isCtModality,isMrAngiography} from './viewer/volumeTransfer.ts';
 
 export type AnatomyPresentation = 'scan'|'segmentation'|'vascular';
 type PresentationEvidence = {
@@ -76,6 +76,7 @@ export function anatomyPresentation(settings:ViewerWorkspaceSettings,layers:Laye
   const cranial=mode==='segmentation'&&corticalLayers(layers).length>0;
   const nativeVessels=!scan&&hasNativeAngiographicVessels(layers,modality,seriesId);
   const vesselFocus=vascular||nativeVessels;
+  const ctaVessels=nativeVessels&&isCtAngiography(modality);
   const nativeTofVessels=vascular&&nativeVessels&&isMrAngiography(modality);
   const sourceModality=new Map(evidence?.series.map(series=>[series.id,series.modality]));
   const visibleLayers=evidence?layers.filter(layer=>evidence.visible[layer.id]):[];
@@ -134,6 +135,7 @@ export function anatomyPresentation(settings:ViewerWorkspaceSettings,layers:Laye
     else if(['brain-region','cerebellar-white-matter','cerebellar-cortex','brainstem'].includes(layer.kind))layerOpacity[layer.id]=scan?.035:vascular?.055:.42;
   }
   return {...settings,presentation:mode,layout:'3d-focus',sliceOverlay:'contour',sliceFraming:{fit:'anatomy',zoom:1},contextStyle:scan?'uniform':'shell',smoothSurfaces:scan||sourcedVesselContext||nativeTofVessels?(settings.smoothSurfaces??true):true,showPlane:false,
+    ...(ctaVessels&&settings.vesselShading===undefined?{vesselShading:'cta-contrast' as const}:{}),
     skullMode:mode==='segmentation'&&!cranial&&!nativeVessels?'exterior':'transparent',sourcedVesselContext:sourcedVesselContext||undefined,layerColor,layerOpacity,
     // Explicit presentation action only. Saved contrast, opacity and transfer
     // choices are otherwise restored verbatim; source signal is never altered.

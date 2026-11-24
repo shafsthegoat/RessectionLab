@@ -25,7 +25,7 @@ export function validMicroscopeSettings(value:unknown):value is MicroscopeSettin
   return (s.tissueStyle===undefined||['operative','labels'].includes(s.tissueStyle))&&['inspectionTransparency','inspectionCutaway'].every(key=>s[key as 'inspectionTransparency']===undefined||typeof s[key as 'inspectionTransparency']==='boolean');
 }
 export interface ViewerClipping { axis: 'x'|'y'|'z'; value: number; enabled: boolean; flipped?: boolean }
-export type VesselShading = 'balanced'|'large'|'fine'|'source';
+export type VesselShading = 'balanced'|'large'|'fine'|'source'|'cta-contrast';
 /** Display choices only. No setting changes source arrays, masks or registration. */
 export interface ViewerWorkspaceSettings {
   showOrientationGuide?: boolean;
@@ -87,6 +87,10 @@ export function layerAppearance(name: string, color: string, settings: ViewerWor
     ['brain','tissue','soft_tissue','head-envelope'].includes(kind??'')?.08:['bone','skull'].includes(kind??'')?.12:.66;
   return { opacity: settings.operativeView==='surgeon'&&!settings.microscope?.inspectionTransparency?1:typeof opacity === 'number' && Number.isFinite(opacity) ? Math.min(1, Math.max(0, opacity)) : defaultOpacity,
     color: chosenColor && /^#[\da-f]{6}$/i.test(chosenColor) ? chosenColor : color };
+}
+export function withLayerColor(settings:ViewerWorkspaceSettings,name:string,kind:string|undefined,color:string):ViewerWorkspaceSettings {
+  const useLayerColors=settings.vesselShading==='cta-contrast'&&['artery','vein','sinus','vessel','vessels'].includes(kind??'');
+  return {...settings,...(useLayerColors?{vesselShading:'source' as const}:{}),layerColor:{...settings.layerColor,[name]:color}};
 }
 export function clippingForBounds(settings: ViewerClipping|undefined, bounds: Bounds3): ViewerClipping {
   const axis = settings && ['x','y','z'].includes(settings.axis) ? settings.axis : 'z';

@@ -33,7 +33,7 @@ import {isStructuralMrModality} from '../native-study-state';
 import {usesAcquiredCtBone} from './volumeTransfer';
 import {installNativeContextLighting,setNativeContextLighting} from './nativeContextLighting';
 import {advectScoreWallLighting,displaySurfaceNormals,scoreWallLighting} from './displaySurfaceNormals';
-import {applyVesselDepthMaterial,setVesselDepthAppearance,createVesselInspectionFocus,setVesselInspectionFocus,
+import {applyCtaVesselFinish,applyVesselDepthMaterial,setVesselDepthAppearance,createVesselInspectionFocus,setVesselInspectionFocus,
   vesselInspectionContains,vesselWallFinish,type VesselInspectionFocus} from './anatomySurfaceMaterial';
 import {microscopeFov} from './microscope';
 import {applyOperativeSurface} from './operativeMaterial';
@@ -768,6 +768,8 @@ export class VolumeRenderer {
     if(this.fieldOptics?.texture)this.surgicalWetting?.install(mesh.material);
     if(vessel){
       const grid=layer.surface&&!operativeVessel?this.vesselLabelGrid(this.volume.compartments.indexOf(layer)):undefined;
+      if(this.volume.displayIdentity&&!operativeVessel)
+        applyCtaVesselFinish(mesh.material,layer.kind,this.workspaceSettings,this.volume.modality);
       const sourceShape=buffers.sourceVolumeBoundary?this.volume.shape:undefined;
       if(sourceShape){
         const rest=new THREE.BufferAttribute(positions,3);
@@ -1227,8 +1229,10 @@ export class VolumeRenderer {
         applyOperativeSurface(material,layer.displayKind??layer.kind,settings);
         const operativeVessel=modeledAnatomy(this.volume)?.vesselSurfaces?.has(layer.name);
         if(operativeVessel&&settings.layerColor?.[layer.name])material.color.set(appearance.color);
-        if(layer.surface&&surfaceKind(layer.kind)==='vessel'&&!operativeVessel)
-          setVesselDepthAppearance(material,settings,layer,this.vesselLabelGrid(index));
+        if(surfaceKind(layer.kind)==='vessel'&&!operativeVessel){
+          if(this.volume.displayIdentity)applyCtaVesselFinish(material,layer.kind,settings,this.volume.modality);
+          if(layer.surface)setVesselDepthAppearance(material,settings,layer,this.vesselLabelGrid(index));
+        }
         applySourceContextMaterial(material,settings.contextStyle==='shell'&&CONTEXT_SURFACES.has(layer.displayKind??layer.kind??''),
         ['bone','skull'].includes(layer.kind??''));
         const transparent = appearance.opacity < 1;

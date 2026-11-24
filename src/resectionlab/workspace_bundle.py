@@ -261,7 +261,7 @@ def _viewer_state(case,viewer,cases):
         raise ValueError('Invalid anatomy presentation')
     if 'sourcedVesselContext' in viewer and type(viewer['sourcedVesselContext']) is not bool:
         raise ValueError('Invalid sourced vessel context flag')
-    if 'vesselShading' in viewer and viewer['vesselShading'] not in ('balanced','large','fine','source'):
+    if 'vesselShading' in viewer and viewer['vesselShading'] not in ('balanced','large','fine','source','cta-contrast'):
         raise ValueError('Invalid vessel shading')
     if 'skullMode' in viewer and viewer['skullMode'] not in {'exterior','transparent','cutaway'}:
         raise ValueError('Invalid skull display mode')
