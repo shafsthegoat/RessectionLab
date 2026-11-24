@@ -20,7 +20,7 @@ from resectionlab.surgical_wall_sweep_reference import WallSweepReference
 
 def _fixture(*, guarded=False, vertex_transport=False, section_mechanics=False, conditioned=False,
              section_overrides=None, vessel_contact=False, parallel=False, soft_contact=False, soft_bank=False,
-             tissue_friction=None):
+             tissue_friction=None, bounded_tissue=False):
     shape = (35, 35, 30)
     spacing = .4
     affine = np.diag([spacing, spacing, spacing, 1.])
@@ -52,7 +52,8 @@ def _fixture(*, guarded=False, vertex_transport=False, section_mechanics=False, 
     if vertex_transport:
         props[materials.PROPERTY][vertex_motion.PROPERTY] = vertex_motion.POLICY
     if section_mechanics:
-        section = rods.section_profile(vessel_contact=vessel_contact, soft_contact=soft_contact, tissue_friction=tissue_friction)
+        section = rods.section_profile(vessel_contact=vessel_contact, soft_contact=soft_contact,
+                                       tissue_friction=tissue_friction, bounded_tissue=bounded_tissue)
         if section_overrides:
             section.update(section_overrides)
         props[materials.PROPERTY][rods.SECTION_MECHANICS] = section
@@ -297,9 +298,11 @@ def test_native_inter_vessel_contact_transfers_load_and_replays_without_crossing
     assert 0. <= passive_excursion(resolved) < .25 * loaded
 
 
-def test_native_vessel_contact_pushes_and_releases_retained_soft_tissue():
+@pytest.mark.parametrize('bounded_tissue', [False, True])
+def test_native_vessel_contact_pushes_and_releases_retained_soft_tissue(bounded_tissue):
     baseline, coupled = (_fixture(guarded=True, vertex_transport=True, section_mechanics=True,
-                                  conditioned=True, vessel_contact=True, soft_contact=enabled, soft_bank=True)
+                                  conditioned=True, vessel_contact=True, soft_contact=enabled, soft_bank=True,
+                                  bounded_tissue=bounded_tissue and enabled)
                          for enabled in (False, True))
     assert np.array_equal(baseline.scene.labels, coupled.scene.labels)
     active_vessel = rods.definitions(coupled)
@@ -327,7 +330,8 @@ def test_native_vessel_contact_pushes_and_releases_retained_soft_tissue():
     assert first < loaded < .065
     frames = rods._accepted_frames(coupled, active_vessel)
     assert surgical_wall_sweep.is_clear(coupled, frames, frames, static=True)
-    assert coupled.view()[rods.FIELD]['sectionModel'] == rods.SECTION_TISSUE_CONTACT_MODEL
+    expected = rods.SECTION_TISSUE_CAPACITY_MODEL if bounded_tissue else rods.SECTION_TISSUE_CONTACT_MODEL
+    assert coupled.view()[rods.FIELD]['sectionModel'] == expected
 
     replay = SurgicalEngine.restore(coupled.scene, json.loads(json.dumps(coupled.snapshot())), force_verify=True)
     assert replay.state['deformation'] == coupled.state['deformation']
@@ -337,6 +341,39 @@ def test_native_vessel_contact_pushes_and_releases_retained_soft_tissue():
         assert replay.step(action) == result
     assert replay.state['deformation'] == coupled.state['deformation']
     assert 0. < tissue_motion(coupled) < .35 * loaded
+
+
+def test_wall_reaction_omission_is_bounded_per_receptor_and_in_aggregate():
+    active = {901}
+    reactions = {cell: np.array([9e-11, 0., 0.]) for cell in range(160)}
+    reactions[900] = np.array([0., 2e-9, 0.])
+    reactions[901] = np.array([0., 2e-15, 0.])
+    kept, omitted = tissue._bounded_contact_reactions(reactions, active)
+    repeats, again = tissue._bounded_contact_reactions(dict(reversed(list(reactions.items()))), active)
+    assert set(kept) == set(repeats)
+    assert kept[900] is reactions[900] and kept[901] is reactions[901]
+    assert set(reactions) - set(kept) == set(range(111))
+    assert omitted == again == pytest.approx(111 * 9e-11)
+    assert 0. < omitted <= tissue.CONTACT_OMITTED_FORCE_LIMIT_N
+    assert all(np.linalg.norm(reactions[cell]) < tissue.CONTACT_ACTIVATION_FORCE_FLOOR_N
+               for cell in set(reactions) - set(kept))
+
+
+def test_contact_neighborhood_reserves_nodes_for_real_loads_without_raising_the_cap():
+    engine = _fixture(soft_bank=True)
+    model = engine.state['deformationModel']
+    seed = int(np.ravel_multi_index((17, 15, 18), engine.scene.shape))
+    tissue._activate_contact_patch(engine, model, {seed}, set(), 12, reserve_nodes=4)
+    assert len(model['active']) == 8
+    available = set(np.flatnonzero(engine.scene.labels.ravel() == 1)) - set(model['active'])
+    new_receivers = set(sorted(available)[:4])
+    tissue._activate_contact_patch(engine, model, new_receivers, set(), 12, reserve_nodes=4)
+    assert len(model['active']) == 12
+    assert new_receivers <= set(model['active']) - set(model['anchors'])
+    before = model.copy()
+    with pytest.raises(ValueError, match='VESSEL_TISSUE_NODE_LIMIT'):
+        tissue._activate_contact_patch(engine, model, {min(available - new_receivers)}, set(), 12, reserve_nodes=4)
+    assert model == before
 
 
 def test_tissue_friction_is_dissipative_and_bounded_by_positive_pressure():

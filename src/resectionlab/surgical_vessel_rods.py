@@ -28,7 +28,9 @@ SECTION_MODEL = 'linear-annular-research-v1'
 SECTION_CONTACT_MODEL = 'linear-annular-research-contact-v2'
 SECTION_TISSUE_CONTACT_MODEL = 'linear-annular-research-contact-v3'
 SECTION_TISSUE_FRICTION_MODEL = 'linear-annular-research-contact-v4'
-TISSUE_CONTACT_MODELS = (SECTION_TISSUE_CONTACT_MODEL, SECTION_TISSUE_FRICTION_MODEL)
+SECTION_TISSUE_CAPACITY_MODEL = 'linear-annular-research-contact-v5'
+TISSUE_FRICTION_MODELS = (SECTION_TISSUE_FRICTION_MODEL, SECTION_TISSUE_CAPACITY_MODEL)
+TISSUE_CONTACT_MODELS = (SECTION_TISSUE_CONTACT_MODEL, *TISSUE_FRICTION_MODELS)
 STEP_SECONDS = 1 / 120
 SUPPORT_N_PER_MM = .035
 CONTACT_N_PER_MM = .18
@@ -42,10 +44,14 @@ SOLVER_ITERATIONS = 4
 CONTACT_MARGIN_MM = 1e-7
 
 
-def section_profile(*, vessel_contact=False, soft_contact=False, tissue_friction=None):
+def section_profile(*, vessel_contact=False, soft_contact=False, tissue_friction=None, bounded_tissue=False):
     """Assumed local tangent response and radial compliance for sensitivity studies."""
     model = SECTION_TISSUE_CONTACT_MODEL if soft_contact else SECTION_CONTACT_MODEL if vessel_contact else SECTION_MODEL
-    if tissue_friction is not None:
+    if bounded_tissue:
+        model = SECTION_TISSUE_CAPACITY_MODEL
+        if tissue_friction is None:
+            tissue_friction = .15
+    elif tissue_friction is not None:
         model = SECTION_TISSUE_FRICTION_MODEL
     return {
         'model': model,
@@ -66,13 +72,17 @@ def soft_contact_enabled(engine):
     return (mechanics(engine) or {}).get('model') in TISSUE_CONTACT_MODELS
 
 
+def bounded_tissue_capacity_enabled(engine):
+    return (mechanics(engine) or {}).get('model') == SECTION_TISSUE_CAPACITY_MODEL
+
+
 def validate_section_profile(profile, bounded):
     if SECTION_MECHANICS not in profile:
         return
     section = profile[SECTION_MECHANICS]
     limits = {'wallThicknessToLumenRadius': (.05, .5), 'radialRelaxationSeconds': (.02, .5),
               'frictionCoefficient': (0., .5)}
-    if isinstance(section, dict) and section.get('model') == SECTION_TISSUE_FRICTION_MODEL:
+    if isinstance(section, dict) and section.get('model') in TISSUE_FRICTION_MODELS:
         limits['tissueFrictionCoefficient'] = (0., .5)
     expected = {'model', 'provenance', 'axialModulusMPa', *limits}
     if (profile.get('vesselMotionModel') != MODEL or GEOMETRY not in profile

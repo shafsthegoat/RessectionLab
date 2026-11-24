@@ -176,6 +176,7 @@ def qualifying_properties(grid, masks, row, patient_id, *, cancelled=lambda: Fal
 
     assumptions = ('Native label-derived local vascular traces and assumed compliant rods. The closest occupied patient tissue '
                    'cells supply assumed springs. Nearby exposed soft-cell faces receive normal wall loads and assumed sliding friction. '
+                   'The solver reserves lattice capacity for loaded cells and bounds discarded numerical loads. '
                    'Source masks do not measure physical attachment, lumen radius or material properties.')
     profile = research_profile()
     profile.update(vesselMotionModel=MODEL, assignment=assumptions, vesselAttachments=attachments)
@@ -183,7 +184,7 @@ def qualifying_properties(grid, masks, row, patient_id, *, cancelled=lambda: Fal
                          'sites': rod_sites}
     profile[wall_sweep.PROPERTY] = wall_sweep.POLICY
     profile[vertex_motion.PROPERTY] = vertex_motion.POLICY
-    profile[SECTION_MECHANICS] = section_profile(tissue_friction=.15)
+    profile[SECTION_MECHANICS] = section_profile(bounded_tissue=True)
     profile['axialStiffnessN']['uncertain'] = .04
     profile['effectiveLumenAreaMm2']['uncertain'] = 1.
 

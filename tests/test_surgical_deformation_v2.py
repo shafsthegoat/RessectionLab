@@ -73,22 +73,21 @@ def test_cached_bonds_match_fresh_assembly_across_hold_cut_and_removal(monkeypat
     adjacent = cell(warm, (6, 7, 6))
     outside = [cell(warm, (0, 0, 0)), cell(warm, (0, 0, 1))]
     adjacent_cut = sorted((center, adjacent))
-    original_neighbors = brain._neighbors
+    original_neighbors = brain._neighbor_ids
     calls = []
 
-    def neighbors(e, c):
-        if e is warm:
-            calls.append(c)
-        return original_neighbors(e, c)
+    def neighbors(shape, c):
+        calls.append(c)
+        return original_neighbors(shape, c)
 
-    monkeypatch.setattr(brain, '_neighbors', neighbors)
+    monkeypatch.setattr(brain, '_neighbor_ids', neighbors)
 
     def compare(expect_assembly):
         calls.clear()
         cold.__dict__.pop('_deformation_system_v2', None)
         tick(warm, 1 / 120)
-        tick(cold, 1 / 120)
         assert bool(calls) == expect_assembly
+        tick(cold, 1 / 120)
         assert warm.state == cold.state
 
     compare(True)

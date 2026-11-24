@@ -201,8 +201,7 @@ loading and 0.054 mm on continued loading. The same 12-action TopCoW-014
 requests accepted and cold-replayed with both contact profiles. Peak tissue
 motion with the new profile was 0.177 µm. The paired controls and M2 Pro timings
 are indexed under the [private storage ledger](local-storage-ledger.md).
-New cursor-local patient preparations use `linear-annular-research-contact-v4`.
-It adds a translational slip force opposing the relative tangential velocity,
+The v4 profile added a translational slip force opposing relative tangential velocity,
 bounded by the normal force times an assigned friction coefficient of 0.15.
 The force uses the trial rod velocity and the preceding lattice velocity, with
 a 0.5 mm/s regularization scale. V3 and v4 with zero friction reproduce the
@@ -215,6 +214,27 @@ increased peak tissue displacement by less than 0.002 µm. The matched 240 ms
 slide took 302 ms with v3 and 316 ms with v4 on the M2 Pro. These are
 implementation controls with assigned parameters. The ordinary v4 preparation
 retained the original CTA wall binding and all 12 actions cold-replayed.
+
+New cursor-local patient preparations use `linear-annular-research-contact-v5`.
+The lattice holds up to 512 slots, or one third of its node budget for smaller
+domains, in reserve during optional contact-neighborhood expansion. Loaded
+cells can use the full declared budget. The solver may omit a reaction on a
+new receiver below 10⁻¹⁰ N, with the sum of omitted force magnitudes bounded
+to 10⁻⁸ N per coupling update. Existing receivers retain their reactions.
+The same checked action path enforces shaft clearance, working-axis clearance,
+wall sweep, and the hard node limit. Earlier profiles retain their recorded
+activation behavior.
+
+On the reviewed local TopCoW-012 CTA/MRA crop, v4 reached the 2,000-node limit
+before meaningful contact. The ordinary v5 preparation retained the exact
+source crop and wall binding and completed a checked approach, contact, and
+withdrawal. Peak modeled wall displacement was 0.00644 mm. Withdrawal cleared
+both contacted source cells and left 0.00566 mm of modeled wall displacement.
+The loaded and withdrawn states contained 1,549 and 1,807 active tissue cells.
+Cold replay reproduced every boundary, including the archived v4 refusal.
+On the M2 Pro, the accepted 380 ms contact request and 500 ms withdrawal
+took 2.89 s and 7.18 s through the bridge. The nearby support survey found no
+full-shaft clear placement for a soft-only release. [Evidence and receipts](local-storage-ledger.md)
 
 The parallel-vessel control uses two independently supported 13-site rods and a 784-triangle native score wall. The same 0.4 s dissector stroke rolls back under v1 and advances under v2. The passive vessel moves 0.133 mm, reaches 0.250 mm with continued loading, and recoils below one quarter of that displacement after withdrawal and relaxation. The accepted wall clears the guard and cold replay reproduces its pose and subsequent receipts. Run `.venv/bin/python -m pytest -q tests/test_surgical_vessel_rods.py -k inter_vessel_contact`.
 

@@ -20,6 +20,9 @@ from . import surgical_mechanical_exposure as mechanical
 
 
 _diagnostics = ContextVar('surgical_deformation_diagnostics', default=None)
+CONTACT_ACTIVATION_FORCE_FLOOR_N = 1e-10
+CONTACT_OMITTED_FORCE_LIMIT_N = 1e-8
+CONTACT_RECEPTOR_RESERVE_NODES = 512
 
 
 @contextmanager
@@ -33,7 +36,7 @@ def diagnostic_scope():
         ticks=0, substeps=0, targetCapNodeTicks=0, forceCapNodeTicks=0,
         displacementCapNodeSteps=0, strainProjectionSteps=0, collisionRejectedSteps=0,
         maxPreStrainProjectionNeighborRatio=0., maxFreeResidualN=0.,
-        maxAbsDiscreteEnergyBalanceNmm=0.)
+        maxAbsDiscreteEnergyBalanceNmm=0., maxOmittedWallReactionN=0., omittedWallReceptorTicks=0)
     token = _diagnostics.set(report)
     try:
         yield report
@@ -228,7 +231,30 @@ def _obstacle_collision(engine, vox, inside, removed, blocking_labels):
     return bool(np.any(blocked & ~np.isin(cells, removed)))
 
 
-def _activate_contact_patch(engine, model, cells, excluded, max_nodes):
+def _bounded_contact_reactions(reactions, active):
+    """Keep existing receivers and bound the sum of omitted new loads."""
+    new_cells = np.array([cell for cell in reactions if cell not in active], dtype=np.intp)
+    if not len(new_cells):
+        return reactions, 0.
+    magnitudes = np.linalg.norm([reactions[cell] for cell in new_cells], axis=1)
+    weak = magnitudes < CONTACT_ACTIVATION_FORCE_FLOOR_N
+    cells, loads = new_cells[weak], magnitudes[weak]
+    total = float(np.sum(loads))
+    if total > CONTACT_OMITTED_FORCE_LIMIT_N:
+        # Keep larger loads when the aggregate omission limit is reached.
+        # Source-cell order breaks ties independently of reaction assembly.
+        order = np.lexsort((cells, loads))
+        running = np.cumsum(loads[order])
+        count = np.searchsorted(running, CONTACT_OMITTED_FORCE_LIMIT_N, side='right')
+        cells = cells[order[:count]]
+        total = float(running[count - 1]) if count else 0.
+    if not len(cells):
+        return reactions, 0.
+    omitted = set(cells)
+    return {cell: force for cell, force in reactions.items() if cell not in omitted}, total
+
+
+def _activate_contact_patch(engine, model, cells, excluded, max_nodes, *, reserve_nodes=0):
     active = set(model['active']) - excluded
     anchors = set(model['anchors'])
     free = active - anchors
@@ -250,10 +276,13 @@ def _activate_contact_patch(engine, model, cells, excluded, max_nodes):
 
     # Bind the loaded cells to at most two local tissue shells. Existing holds
     # keep their active cells and the patch boundary anchors remain clamped.
+    # Optional neighbors only use the remaining expansion budget. Receptors
+    # already added above can use the full hard node limit.
+    neighborhood_limit = max(len(active), max_nodes - reserve_nodes)
     frontier = seeds
     for _ in range(2):
         new = set().union(*(neighbors(cell) for cell in frontier)) - active
-        frontier = set(sorted(new)[:max_nodes - len(active)])
+        frontier = set(sorted(new)[:neighborhood_limit - len(active)])
         active.update(frontier)
     held = {c for hold in _holds(engine) for c in hold['cells']}
     model['active'] = sorted(active)
@@ -290,7 +319,18 @@ def tick(engine, dt, *, vessel_tool_motion=None):
                 # accepted contact reaction over this lattice increment.
                 wall_reactions = rods.tick(engine, dt, tool_motion=vessel_tool_motion, excluded_tissue=rigid) or {}
                 if wall_reactions:
-                    _activate_contact_patch(engine, model, wall_reactions, removed | rigid, p['maxNodes'])
+                    excluded = removed | rigid
+                    reserve = 0
+                    if rods.bounded_tissue_capacity_enabled(engine):
+                        active = set(model['active']) - excluded
+                        supplied = len(wall_reactions)
+                        wall_reactions, omitted = _bounded_contact_reactions(wall_reactions, active)
+                        reserve = min(CONTACT_RECEPTOR_RESERVE_NODES, p['maxNodes'] // 3)
+                        if diagnostic is not None:
+                            diagnostic['maxOmittedWallReactionN'] = max(diagnostic['maxOmittedWallReactionN'], omitted)
+                            diagnostic['omittedWallReceptorTicks'] += supplied - len(wall_reactions)
+                    if wall_reactions:
+                        _activate_contact_patch(engine, model, wall_reactions, excluded, p['maxNodes'], reserve_nodes=reserve)
             vessel_displacements = {str(cell): value for cell, value in vessel_motion(engine).items()}
         elif retained_vessel_segments(engine):
             deformation = engine.state['deformation']
