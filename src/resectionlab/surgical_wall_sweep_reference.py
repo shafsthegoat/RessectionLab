@@ -1,5 +1,6 @@
 """Conservative reference check for continuously transported native wall faces."""
 
+from itertools import combinations
 import operator
 
 import numpy as np
@@ -94,6 +95,59 @@ def _interval_clear(a0, a1, b0, b1, budget):
     return True, budget
 
 
+def _signed_vertex_rays(a, b, corner_a, corner_b):
+    rows = np.arange(len(a))
+    offsets = np.arange(1, 3)
+    left = a[rows[:, None], (corner_a[:, None] + offsets) % 3] - a[rows, corner_a, None]
+    right = b[rows, corner_b, None] - b[rows[:, None], (corner_b[:, None] + offsets) % 3]
+    return np.concatenate((left, right), axis=1)
+
+
+def _vertex_axes(rays):
+    lengths = np.linalg.norm(rays, axis=2, keepdims=True)
+    unit = rays / np.maximum(lengths, _CLEARANCE)
+    # Vertices, edge midpoints and facet normals of the unit-ray convex hull
+    # cover the support feature nearest the origin.
+    edges = [unit[:, a] + unit[:, b] for a, b in combinations(range(4), 2)]
+    facets = [np.cross(unit[:, b] - unit[:, a], unit[:, c] - unit[:, a])
+              for a, b, c in combinations(range(4), 3)]
+    axes = np.stack((unit.sum(axis=1), *unit.transpose(1, 0, 2), *edges, *facets,
+                     *(-normal for normal in facets)), axis=1)
+    squared = np.einsum('nki,nki->nk', axes, axes)
+    usable = (squared >= _MIN_AXIS_SQUARED) & (lengths > _CLEARANCE).all(axis=1)
+    return axes, _CLEARANCE * np.sqrt(squared), usable
+
+
+def _positive_rays(rays, axes, margin, usable):
+    dots = np.einsum('nri,nki->nrk', rays, axes)
+    return (dots > margin[:, None]).all(axis=1) & usable
+
+
+def _vertex_interval_clear(before, after, budget):
+    pending = [(before, after, 0)]
+    while pending:
+        before, after, depth = pending.pop()
+        budget -= len(before)
+        if budget <= 0:
+            return False, budget
+        middle = .5 * before + .5 * after
+        axes = _vertex_axes(middle)
+        middle_clear = _positive_rays(middle, *axes)
+        if not middle_clear.any(axis=1).all():
+            return False, budget
+        # With a fixed plane through the common vertex, the signed ray
+        # projections interpolate linearly between the checked endpoints.
+        uncertain = ~(middle_clear & _positive_rays(before, *axes)
+                       & _positive_rays(after, *axes)).any(axis=1)
+        if not uncertain.any():
+            continue
+        if depth == _MAX_DEPTH:
+            return False, budget
+        pending.append((middle[uncertain], after[uncertain], depth + 1))
+        pending.append((before[uncertain], middle[uncertain], depth + 1))
+    return True, budget
+
+
 class WallSweepReference:
     """Check packed owner offsets against the same rest-face geometry each time.
 
@@ -101,7 +155,7 @@ class WallSweepReference:
     and corner owner indices are each ``(F, 3)``. Owner offsets are ``(N, 3)``.
     """
 
-    def __init__(self, rest, faces, owners, owner_count):
+    def __init__(self, rest, faces, owners, owner_count, *, shared_vertex=False):
         if isinstance(owner_count, (bool, np.bool_)):
             raise ValueError('Invalid wall sweep owner count')
         try:
@@ -119,6 +173,17 @@ class WallSweepReference:
         self._faces = _indices(faces, (size, 3), 3 * size)
         self._owners = _indices(owners, (size, 3), count)
         self._owner_count = count
+        self._shared_vertex = shared_vertex
+        if shared_vertex:
+            order = np.argsort(self._faces.ravel(), kind='stable')
+            repeated = np.diff(self._faces.ravel()[order]) == 0
+            previous, following = order[:-1][repeated], order[1:][repeated]
+            packed = self._rest.reshape(-1, 3)
+            bindings = self._owners.ravel()
+            if (np.any(previous // 3 == following // 3)
+                    or not np.array_equal(bindings[previous], bindings[following])
+                    or not np.array_equal(packed[previous], packed[following])):
+                raise ValueError('Wall sweep requires a single position and owner per shared vertex')
 
     def clear(self, prior, candidate, *, static=False):
         """Return whether the evaluated geometry is certified clear."""
@@ -167,15 +232,34 @@ class WallSweepReference:
             relevant = ((low[first] <= high[second] + _CLEARANCE)
                         & (low[second] <= high[first] + _CLEARANCE)).all(axis=1)
             first, second = first[relevant], second[relevant]
-            adjacent = (self._faces[first, :, None] == self._faces[second, None, :]).any(axis=(1, 2))
+            shared = self._faces[first, :, None] == self._faces[second, None, :]
+            adjacency = shared.sum(axis=(1, 2))
+            eligible = adjacency <= int(self._shared_vertex)
             if not static:
                 left, right = increment[self._owners[first]], increment[self._owners[second]]
                 common = (left == left[:, :1]).all(axis=(1, 2)) & (right == left[:, :1]).all(axis=(1, 2))
-                adjacent |= common
-            first, second = first[~adjacent], second[~adjacent]
-            pair_budget -= len(first)
+                eligible &= ~common
+            pair_budget -= int(eligible.sum())
             if pair_budget <= 0:
                 return False
+            pinned = eligible & (adjacency == 1)
+            first_pinned, second_pinned = first[pinned], second[pinned]
+            corners = np.nonzero(shared[pinned])
+            for lo in range(0, len(first_pinned), _BATCH_SIZE):
+                part = slice(lo, lo + _BATCH_SIZE)
+                a, b = first_pinned[part], second_pinned[part]
+                corner_a, corner_b = corners[1][part], corners[2][part]
+                final = _signed_vertex_rays(after[a], after[b], corner_a, corner_b)
+                if static:
+                    if not _positive_rays(final, *_vertex_axes(final)).any(axis=1).all():
+                        return False
+                    continue
+                initial = _signed_vertex_rays(before[a], before[b], corner_a, corner_b)
+                passed, interval_budget = _vertex_interval_clear(initial, final, interval_budget)
+                if not passed:
+                    return False
+            detached = eligible & (adjacency == 0)
+            first, second = first[detached], second[detached]
             for at in range(0, len(first), _BATCH_SIZE):
                 a = first[at:at + _BATCH_SIZE]
                 b = second[at:at + _BATCH_SIZE]

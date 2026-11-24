@@ -74,11 +74,11 @@ def validate(scene):
             raise ValueError('GLIOMA_VESSEL_MOTION_MODEL_REQUIRED')
         if 'vascularGraphV1' not in scene.properties:
             raise ValueError('GLIOMA_VESSEL_MOTION_REQUIRES_MAPPED_SOURCE_CHAINS')
-    if wall_sweep.PROPERTY in p and (p[wall_sweep.PROPERTY] != wall_sweep.POLICY
+    if wall_sweep.PROPERTY in p and (p[wall_sweep.PROPERTY] not in wall_sweep.POLICIES
                                      or p.get('vesselMotionModel') != rods.MODEL):
         raise ValueError('VESSEL_WALL_SWEEP_REQUIRES_NATIVE_DISTRIBUTED_RODS')
     if (vertex_motion.PROPERTY in p and (p[vertex_motion.PROPERTY] != vertex_motion.POLICY
-                                        or p.get(wall_sweep.PROPERTY) != wall_sweep.POLICY)):
+                                        or p.get(wall_sweep.PROPERTY) not in wall_sweep.POLICIES)):
         raise ValueError('VESSEL_VERTEX_TRANSPORT_REQUIRES_SWEPT_NATIVE_WALL')
     rods.validate_section_profile(p, _bounded)
     if p.get(rods.SECTION_MECHANICS, {}).get('model') in rods.TISSUE_CONTACT_MODELS:

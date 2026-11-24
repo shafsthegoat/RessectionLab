@@ -52,7 +52,7 @@ void finite_values(const std::vector<double>& values) {
 constexpr char wall_sweep_capsule[] = "resectionlab.wall-sweep.v1";
 
 py::capsule make_wall_sweep(const py::array& rest, const py::array& vertices,
-                            const py::array& owners, std::size_t owner_count) {
+                            const py::array& owners, std::size_t owner_count, bool shared_vertex) {
     namespace wall = resectionlab::wall_sweep;
     if (rest.ndim() != 3 || std::size_t(rest.shape(0)) > wall::max_items || owner_count > wall::max_items)
         throw py::value_error("Native wall sweep exceeds the source geometry limit");
@@ -62,7 +62,9 @@ py::capsule make_wall_sweep(const py::array& rest, const py::array& vertices,
     const auto bindings = checked_array<std::int64_t>(owners, {count, 3}, "wall owners");
     auto source = std::make_unique<wall::Wall>();
     source->owner_count = owner_count;
+    source->check_shared_vertex = shared_vertex;
     source->faces.resize(std::size_t(count));
+    std::vector<std::int64_t> first_corner(shared_vertex ? 3*count : 0, -1);
     for (std::int64_t i = 0; i < count; ++i) {
         auto& face = source->faces[i];
         for (int j = 0; j < 3; ++j) {
@@ -74,6 +76,17 @@ py::capsule make_wall_sweep(const py::array& rest, const py::array& vertices,
                 throw py::value_error("Native wall sweep requires finite bounded source coordinates");
             face.vertices[j] = vertex;
             face.owners[j] = owner;
+            if (shared_vertex) {
+                auto& first = first_corner[vertex];
+                if (first < 0) {
+                    first = 3*i+j;
+                } else {
+                    const auto& previous = source->faces[first/3];
+                    if (first/3 == i || previous.owners[first%3] != owner ||
+                        previous.rest[first%3] != face.rest[j])
+                        throw py::value_error("Native wall sweep requires a single position and owner per shared vertex");
+                }
+            }
         }
         face.box = wall::bounds(face.rest);
     }
@@ -380,9 +393,10 @@ PYBIND11_MODULE(_geometry_cpp, module) {
     module.attr("BUILD_IDENTITY") = RSL_BUILD_IDENTITY;
     module.attr("MAX_PRIMITIVES") = max_primitives;
     module.attr("MAX_BATCH_ITEMS") = max_items;
-    module.attr("WALL_SWEEP_VERSION") = 1;
+    module.attr("WALL_SWEEP_VERSION") = 2;
     module.def("make_wall_sweep", &make_wall_sweep, py::arg("rest").noconvert(),
-               py::arg("vertices").noconvert(), py::arg("owners").noconvert(), py::arg("owner_count"));
+               py::arg("vertices").noconvert(), py::arg("owners").noconvert(), py::arg("owner_count"),
+               py::arg("shared_vertex") = false);
     module.def("wall_sweep_clear", &wall_sweep_clear, py::arg("source").noconvert(),
                py::arg("prior").noconvert(), py::arg("candidate").noconvert(), py::arg("static_check"));
     module.def("capsule_chunk", &capsule_chunk, py::arg("queries").noconvert(),

@@ -126,6 +126,7 @@ def native_wall_fixture(tmp_path, *, registration='reviewed', isolated_pair=Fals
 
 
 def test_standard_environment_local_native_wall_preserves_source_and_reopens(tmp_path):
+    from resectionlab import surgical_wall_sweep as wall_sweep
     from resectionlab.surgical_environment import load_environment
     from resectionlab.surgical_engine import SurgicalEngine
     from resectionlab.surgical_motion import AXIAL_SWEEP_POLICY, AXIAL_SWEEP_PROPERTY
@@ -148,6 +149,7 @@ def test_standard_environment_local_native_wall_preserves_source_and_reopens(tmp
     scene = load_environment(report['casePath'])
     engine = SurgicalEngine(scene, guard_config=GuardConfig(require_critical_coverage=False))
     assert scene.properties[AXIAL_SWEEP_PROPERTY] == AXIAL_SWEEP_POLICY
+    assert scene.properties['gliomaMaterialsV1'][wall_sweep.PROPERTY] == wall[wall_sweep.PROPERTY] == wall_sweep.CURRENT_POLICY
     assert report['environment']['sceneId'] == scene.identity
     assert scene._vessel_source_walls[0].geometry_binding == wall['geometryBinding']
     assert {edge['edgeId'] for edge in view(engine)['segments']} == set(wall['branches'])

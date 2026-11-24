@@ -119,6 +119,62 @@ bool clear_interval(const Stroke& first, const Stroke& second, int depth, int64_
         && clear_interval({first_mid,first.next},{second_mid,second.next},depth+1,intervals);
 }
 
+using Rays = std::array<Vec, 4>;
+
+Rays vertex_rays(const Tri& a, const Tri& b, int corner_a, int corner_b) {
+    return {sub(a[(corner_a+1)%3], a[corner_a]), sub(a[(corner_a+2)%3], a[corner_a]),
+            sub(b[corner_b], b[(corner_b+1)%3]), sub(b[corner_b], b[(corner_b+2)%3])};
+}
+
+bool positive_rays(const Rays& rays, const Vec& axis, double margin) {
+    return std::all_of(rays.begin(), rays.end(), [&](const Vec& ray) { return dot(ray,axis)>margin; });
+}
+
+template <typename Predicate>
+bool vertex_axis(Rays rays, Predicate separates) {
+    auto test = [&](const Vec& axis) {
+        const double squared=dot(axis,axis);
+        return squared>=1e-30 && separates(axis,clearance*std::sqrt(squared));
+    };
+    Vec total{};
+    for (Vec& ray: rays) {
+        const double length=std::sqrt(dot(ray,ray));
+        if (length<=clearance) return false;
+        for (double& coordinate: ray) coordinate/=length;
+        total=add(total,ray);
+    }
+    if (test(total)) return true;
+    // A separating axis can be chosen as the closest point of the unit-ray
+    // convex hull to the origin. Its supporting feature is a vertex, edge,
+    // or triangle. Equal-length unit rays put edge projections at midpoints.
+    for (const Vec& ray: rays) if (test(ray)) return true;
+    for (int i=0; i<4; ++i) for (int j=i+1; j<4; ++j) {
+        if (test(add(rays[i],rays[j]))) return true;
+        for (int k=j+1; k<4; ++k) {
+            const Vec normal=cross(sub(rays[j],rays[i]), sub(rays[k],rays[i]));
+            if (test(normal) || test(sub(Vec{},normal))) return true;
+        }
+    }
+    return false;
+}
+
+bool vertex_interval(const Rays& before, const Rays& after, int depth, int64_t& intervals) {
+    if (++intervals>max_visits) return false;
+    Rays middle;
+    for (int i=0; i<4; ++i) middle[i]=mid(before[i],after[i]);
+    bool middle_clear=false;
+    if (vertex_axis(middle,[&](const Vec& axis, double margin) {
+        if (!positive_rays(middle,axis,margin)) return false;
+        middle_clear=true;
+        // The signed rays are linear in time. Strict endpoint half-spaces
+        // let the faces touch at their common vertex only for this interval.
+        return positive_rays(before,axis,margin) && positive_rays(after,axis,margin);
+    })) return true;
+    return middle_clear && depth<max_depth
+        && vertex_interval(before,middle,depth+1,intervals)
+        && vertex_interval(middle,after,depth+1,intervals);
+}
+
 struct Face { Tri rest; Ids vertices, owners; Box box; };
 struct Node {
     int begin, end, lhs=-1, rhs=-1;
@@ -129,6 +185,7 @@ struct Wall {
     std::vector<int> order;
     std::vector<Node> nodes;
     size_t owner_count;
+    bool check_shared_vertex=false;
 
     int build(int begin, int end) {
         const int index=int(nodes.size());
@@ -155,6 +212,15 @@ struct Wall {
 bool adjacent(const Face& a, const Face& b) {
     for (int64_t id: a.vertices) for (int64_t other: b.vertices) if (id==other) return true;
     return false;
+}
+
+int shared_corner(const Face& a, const Face& b) {
+    int corner=-1;
+    for (int i=0; i<3; ++i) for (int j=0; j<3; ++j) if (a.vertices[i]==b.vertices[j]) {
+        if (corner>=0) return -2;
+        corner=3*i+j;
+    }
+    return corner;
 }
 
 bool same_increment(const Face& a, const Face& b, const std::vector<Vec>& increments) {
@@ -212,11 +278,22 @@ struct Check {
         if ((!dirty[a] && !dirty[b]) || !overlaps(swept[a],swept[b])) return true;
         const auto& x=wall.faces[a];
         const auto& y=wall.faces[b];
-        // Incident faces share source vertices by design.
-        if (adjacent(x,y) || (!static_check && same_increment(x,y,increments))) return true;
+        if (!static_check && same_increment(x,y,increments)) return true;
+        if (!wall.check_shared_vertex && adjacent(x,y)) return true;
+        const int corner=wall.check_shared_vertex ? shared_corner(x,y) : -1;
+        // The local hinge guard checks faces sharing an edge.
+        if (corner==-2) return true;
         if (++pairs > max_visits) return false;
         const auto& first=positions[a];
         const auto& second=positions[b];
+        if (corner>=0) {
+            const auto after=vertex_rays(first.next,second.next,corner/3,corner%3);
+            if (static_check) return vertex_axis(after,[&](const Vec& axis, double margin) {
+                return positive_rays(after,axis,margin);
+            });
+            const auto before=vertex_rays(first.prior,second.prior,corner/3,corner%3);
+            return vertex_interval(before,after,0,intervals);
+        }
         if (static_check) return !instantaneous(first.next,second.next);
         return clear_interval(first,second,0,intervals);
     }

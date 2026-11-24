@@ -185,6 +185,8 @@ The v2 profile can resolve normal contact between disconnected native walls. If 
 
 The continuous guard checks local facet collapse, folds across shared edges, and crossing between nonincident triangles. It rechecks the projected increment and can try smaller increments if the correction fails. The prior pose stays in force if no trial passes. The working instrument axis also needs clearance from retained vessel anatomy. Same-component wall contact, inter-vessel friction, pressure-dependent narrowing from neighboring vessels, and pulsatile coupling remain unresolved. Vessel material and support values are assigned research parameters.
 
+New ordinary patient preparations record `continuous-source-triangles-v2` in the scene and native-wall receipt. Pairs of faces that share just one vertex must stay on opposite sides of a plane through that vertex, with both rays of each face strictly on its own side. The sweep checks the signed projections at both ends of a linear interval and subdivides when one plane cannot certify the whole interval. A crossing or an unresolved interval fails the clearance check. The reference implementation and native backend apply the same certificate. Previously saved scenes with `continuous-source-triangles-v1` use their original check during replay.
+
 #### Native wall contact with surrounding tissue
 
 The v3 contact model associates near-rest native wall triangle samples with exposed

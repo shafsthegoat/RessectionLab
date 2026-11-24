@@ -10,6 +10,8 @@ from . import surgical_vessel_surface as surfaces
 
 PROPERTY = 'vesselWallMotionGuard'
 POLICY = 'continuous-source-triangles-v1'
+CURRENT_POLICY = 'continuous-source-triangles-v2'
+POLICIES = (POLICY, CURRENT_POLICY)
 _MIN_AREA_RATIO = .2
 _LOCAL_SEARCH_DEPTH = 8
 
@@ -115,7 +117,7 @@ def _local_face_guard(rest, faces, owners):
     return clear
 
 
-def _build(frames, *, local_guard=False):
+def _build(frames, *, local_guard=False, shared_vertex=False):
     triangles, vertices, owners = [], [], []
     vertex_start = owner_start = 0
     for frame in frames:
@@ -134,8 +136,8 @@ def _build(frames, *, local_guard=False):
                 np.ascontiguousarray(np.concatenate(vertices), dtype=np.int64),
                 np.ascontiguousarray(np.concatenate(owners), dtype=np.int64), owner_start)
     check_local = _local_face_guard(*geometry[:3]) if local_guard and len(geometry[0]) else None
-    if native_backend.wall_sweep_available():
-        source = native_backend.make_wall_sweep(*geometry)
+    if native_backend.wall_sweep_available(shared_vertex=shared_vertex):
+        source = native_backend.make_wall_sweep(*geometry, shared_vertex=shared_vertex)
 
         def clear(prior, candidate, static):
             return (check_local is None or check_local(prior, candidate, static)) and (
@@ -144,7 +146,7 @@ def _build(frames, *, local_guard=False):
         return clear
     from .surgical_wall_sweep_reference import WallSweepReference
 
-    source = WallSweepReference(*geometry)
+    source = WallSweepReference(*geometry, shared_vertex=shared_vertex)
 
     def clear(prior, candidate, static):
         return (check_local is None or check_local(prior, candidate, static)) and (
@@ -164,9 +166,12 @@ def is_clear(engine, prior, candidate, *, static=False):
         transition_check()
     cached = getattr(engine, '_vessel_wall_sweep', None)
     if cached is None or cached[0] != key:
-        from .surgical_vessel_rods import mechanics
+        from .surgical_vessel_rods import PROPERTY as RODS_PROPERTY, mechanics
 
-        cached = key, _build(candidate, local_guard=mechanics(engine) is not None)
+        profile = engine.scene.properties.get(RODS_PROPERTY, {})
+        shared_vertex = profile.get(PROPERTY) == CURRENT_POLICY
+        cached = key, _build(candidate, local_guard=shared_vertex or mechanics(engine) is not None,
+                             shared_vertex=shared_vertex)
         engine._vessel_wall_sweep = cached
     end = np.concatenate([surfaces.sweep_offsets(frame) for frame in candidate])
     start = np.concatenate([surfaces.sweep_offsets(frame) for frame in prior]) if not static else end

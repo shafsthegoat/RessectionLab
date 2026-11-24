@@ -182,7 +182,7 @@ def qualifying_properties(grid, masks, row, patient_id, *, cancelled=lambda: Fal
     profile.update(vesselMotionModel=MODEL, assignment=assumptions, vesselAttachments=attachments)
     profile[GEOMETRY] = {'source': 'Native source-cell centers with physical-distance caliber estimates from the vascular annotation.',
                          'sites': rod_sites}
-    profile[wall_sweep.PROPERTY] = wall_sweep.POLICY
+    profile[wall_sweep.PROPERTY] = wall_sweep.CURRENT_POLICY
     profile[vertex_motion.PROPERTY] = vertex_motion.POLICY
     profile[SECTION_MECHANICS] = section_profile(bounded_tissue=True)
     profile['axialStiffnessN']['uncertain'] = .04
@@ -216,7 +216,7 @@ def qualifying_properties(grid, masks, row, patient_id, *, cancelled=lambda: Fal
         'centerRasMm': grid.center.tolist(), 'sourceImageSha256': grid.source_sha256,
         'sourceMaskSha256': row['data']['sha256'], 'sourceScoresSha256': row['probability']['sha256'],
         'localMaskHash': array_digest(mask), 'localScoreHash': array_digest(scores),
-        'geometryPolicy': ISOLATED_SOURCE_GEOMETRY,
+        'geometryPolicy': ISOLATED_SOURCE_GEOMETRY, wall_sweep.PROPERTY: wall_sweep.CURRENT_POLICY,
         'geometryBinding': vertex_motion.geometry_binding(geometry.positions, geometry.indices, geometry.source_cells),
         'sourceCrossingBinding': vertex_motion.geometry_binding(geometry.source, geometry.indices, geometry.source_cells),
         'sourceRetainedIsolatedComponents': geometry.diagnostics.get('sourceRetainedIsolatedComponents', 0),
@@ -239,7 +239,8 @@ def validate_saved_wall(scene, case, receipt):
             or receipt.get('geometryBinding') != walls[0].geometry_binding
             or receipt.get('localMaskHash') != array_digest(case.compartments['vessels'])
             or receipt.get('localScoreHash') != array_digest(walls[0].scores)
-            or profile.get(wall_sweep.PROPERTY) != wall_sweep.POLICY
+            or profile.get(wall_sweep.PROPERTY) not in wall_sweep.POLICIES
+            or receipt.get(wall_sweep.PROPERTY, wall_sweep.POLICY) != profile.get(wall_sweep.PROPERTY)
             or profile.get(vertex_motion.PROPERTY) != vertex_motion.POLICY):
         raise ValueError('Saved patient native wall differs from accepted source geometry')
     start, shape = receipt.get('sourceStartIJK'), receipt.get('sourceShape')

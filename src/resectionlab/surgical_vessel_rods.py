@@ -86,7 +86,7 @@ def validate_section_profile(profile, bounded):
         limits['tissueFrictionCoefficient'] = (0., .5)
     expected = {'model', 'provenance', 'axialModulusMPa', *limits}
     if (profile.get('vesselMotionModel') != MODEL or GEOMETRY not in profile
-            or profile.get(wall_sweep.PROPERTY) != wall_sweep.POLICY
+            or profile.get(wall_sweep.PROPERTY) not in wall_sweep.POLICIES
             or profile.get(vertex_motion.PROPERTY) != vertex_motion.POLICY
             or not isinstance(section, dict) or set(section) != expected
             or section['model'] not in (SECTION_MODEL, SECTION_CONTACT_MODEL, *TISSUE_CONTACT_MODELS)
@@ -103,7 +103,7 @@ def enabled(engine):
 
 
 def wall_sweep_enabled(engine):
-    return engine.scene.properties.get(PROPERTY, {}).get(wall_sweep.PROPERTY) == wall_sweep.POLICY
+    return engine.scene.properties.get(PROPERTY, {}).get(wall_sweep.PROPERTY) in wall_sweep.POLICIES
 
 
 def wall_topology(engine):

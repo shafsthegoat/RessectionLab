@@ -524,6 +524,53 @@ def test_wall_sweep_rejects_crossing_between_clear_endpoints_and_midpoint():
         assert clear(near_miss_start, crossing)
 
 
+def test_vertex_incident_wall_sweep_rejects_crossing_between_clear_poses():
+    vertices = np.array([[0., 0., 0.], [1., 0., 0.], [1., 1., 0.],
+                         [.8, .2, .15], [.7, .25, .15]])
+    faces = np.array([[0, 1, 2], [4, 0, 3]], dtype=np.int64)
+    rest = vertices[faces]
+    start = np.zeros_like(vertices)
+    finish = start.copy()
+    finish[3:, 2] = -.6
+    nearby = start.copy()
+    nearby[3:, 0] = -1.
+
+    legacy = WallSweepReference(rest, faces, faces, len(vertices))
+    assert legacy.clear(start, finish)
+    reference = WallSweepReference(rest, faces, faces, len(vertices), shared_vertex=True)
+    checkers = [reference.clear]
+    if native_backend.wall_sweep_available(shared_vertex=True):
+        source = native_backend.make_wall_sweep(rest, faces, faces, len(vertices), shared_vertex=True)
+
+        def native_clear(prior, candidate, *, static=False):
+            return native_backend.wall_sweep_clear(source, prior, candidate, static)
+
+        checkers.append(native_clear)
+    for clear in checkers:
+        for pose in (start, finish * .5, finish):
+            assert clear(pose, pose, static=True)
+        assert not clear(finish * .25, finish * .25, static=True)
+        assert not clear(start, finish)
+        assert not clear(start + 4., finish - 4.)
+        assert clear(nearby, nearby + finish)
+        assert clear(nearby, finish)
+
+
+def test_vertex_incident_wall_requires_consistent_shared_corner_binding():
+    faces = np.array([[0, 1, 2], [0, 3, 4]], dtype=np.int64)
+    vertices = np.array([[0., 0., 0.], [1., 0., 0.], [0., 1., 0.],
+                         [-1., 0., 0.], [0., -1., 0.]])
+    rest = vertices[faces]
+    owners = faces.copy()
+    owners[1, 0] = 4
+    constructors = [WallSweepReference]
+    if native_backend.wall_sweep_available(shared_vertex=True):
+        constructors.append(native_backend.make_wall_sweep)
+    for constructor in constructors:
+        with pytest.raises(ValueError, match='single position and owner'):
+            constructor(rest, faces, owners, len(vertices), shared_vertex=True)
+
+
 def test_local_sweep_rejects_foldover_of_edge_neighbors_with_clear_endpoints():
     # The faces use a common edge. Their opposite corners pass through the
     # same side of the shared plane inside the step, at a noncollapsing pose.

@@ -26,7 +26,7 @@ MAX_PRIMITIVES = 32768
 MAX_BATCH_ITEMS = 64
 MAX_ENGINE_COPY_ITEMS = 262144
 MAX_ENGINE_COPY_DEPTH = 64
-_WALL_SWEEP_VERSION = 1
+_WALL_SWEEP_VERSIONS = (1, 2)
 _WALL_SWEEP_ENTRY_POINTS = ('make_wall_sweep', 'wall_sweep_clear')
 
 
@@ -120,7 +120,7 @@ def _load():
         for path in (binary, manifest_path):
             _files[path] = (_stat(path), _digest(path))
         sweep_version = build.get('wallSweepVersion')
-        if (sweep_version is not None and (type(sweep_version) is not int or sweep_version != _WALL_SWEEP_VERSION)
+        if (sweep_version is not None and (type(sweep_version) is not int or sweep_version not in _WALL_SWEEP_VERSIONS)
                 or getattr(module, 'WALL_SWEEP_VERSION', None) != sweep_version
                 or ((sweep_version is None) != all(not hasattr(module, name) for name in _WALL_SWEEP_ENTRY_POINTS))):
             raise ValueError('wall sweep capability differs from build manifest')
@@ -252,16 +252,19 @@ def cpp_enabled():
     return _module is not None
 
 
-def wall_sweep_available():
+def wall_sweep_available(*, shared_vertex=False):
     _check_live()
-    supported = _module is not None and _identity['buildIdentity'].get('wallSweepVersion') == _WALL_SWEEP_VERSION
+    minimum = 2 if shared_vertex else 1
+    supported = _module is not None and _identity['buildIdentity'].get('wallSweepVersion', 0) >= minimum
     if not supported and _requested == 'cpp':
         raise NativeUnsupportedError('C++ wall sweep requires a wheel with the native wall sweep capability')
     return supported
 
 
-def make_wall_sweep(rest, vertices, owners, owner_count):
+def make_wall_sweep(rest, vertices, owners, owner_count, *, shared_vertex=False):
     _check_live()
+    if shared_vertex:
+        return _module.make_wall_sweep(rest, vertices, owners, owner_count, True)
     return _module.make_wall_sweep(rest, vertices, owners, owner_count)
 
 

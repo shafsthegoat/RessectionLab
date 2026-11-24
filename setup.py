@@ -46,7 +46,7 @@ class NativeBuild(build_ext):
             'compiler': {'path': compiler_path, 'version': subprocess.check_output(
                 [compiler_path, '--version'], text=True).splitlines()[0]},
             'flags': list(self.extensions[0].extra_compile_args), 'cppStandard': 17, 'pybind11': pybind11.__version__,
-            'wallSweepVersion': 1,
+            'wallSweepVersion': 2,
             'python': {'version': platform.python_version(), 'abi': sysconfig.get_config_var('SOABI')},
             'platform': {'system': platform.system(), 'machine': platform.machine()},
         }
