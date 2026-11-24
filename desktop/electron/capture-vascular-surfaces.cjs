@@ -503,6 +503,7 @@ app.on('browser-window-created',(_event,window)=>{
           const opening=view.patientCutaway?.clipping?.enabled?view.patientCutaway.clipping:record.view.settings.clipping;
           assert(opening?.enabled&&opening.axis==='z'&&opening.flipped,'Expected an ordinary source-linked CTA cut');
           let returned;
+          let beforeFull=record.view;
           if(view.patientCutaway?.clipping?.enabled){
             const preset=async name=>{
               const before=await submittedFrame();
@@ -519,6 +520,7 @@ app.on('browser-window-created',(_event,window)=>{
             const returnedView=await preset('Structures');
             assert.deepEqual(returnedView.patientCutaway.clipping,opening);
             assert.deepEqual(returnedView.states[view.seriesId].visible,record.view.visible);
+            beforeFull=returnedView.states[view.seriesId];
             returned=await capture(`${recipe.name}-structures-return`);
             assertSameGeometry(returned);
           }
@@ -528,7 +530,7 @@ app.on('browser-window-created',(_event,window)=>{
           const current=await nativeView(),state=current.states[view.seriesId];
           assert(!current.patientCutaway?.clipping?.enabled&&!state.settings.clipping?.enabled);
           assert.deepEqual(state.visible,record.view.visible);
-          assert.deepEqual(state.settings.volumeRendering,record.view.settings.volumeRendering);
+          assert.deepEqual(state.settings.volumeRendering,beforeFull.settings.volumeRendering);
           assert.deepEqual(state.cursor,record.view.cursor);
           const full=await capture(`${recipe.name}-full-head`);
           assert.equal(full.frame.displayIdentity,record.frame.displayIdentity);
