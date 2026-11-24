@@ -22,7 +22,8 @@ export type Document={
   display?:{initial_layers?:string[];cursor_ras_mm?:Point3;entry_ras_mm?:Point3};
   vascular_review?:{schema?:string;posterior_compartment_review?:{disjoint_union_matches_selected?:boolean};
     field_edge_compartment_review?:{disjoint_union_matches_selected?:boolean};
-    skull_exterior_compartment_review?:{disjoint_union_matches_selected?:boolean}};
+    skull_exterior_compartment_review?:{disjoint_union_matches_selected?:boolean};
+    source_disagreement_compartment_review?:{disjoint_union_matches_selected?:boolean}};
   source_assets?:unknown[];patient_id:string;study_timepoint?:string;snapshot_id:string;reference_series:string;
   tractography?:Array<{id:string;label:string;source_series:string}>;
   revision:number;layers:Layer[];missing:string[];series:Series[];

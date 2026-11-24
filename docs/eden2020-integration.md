@@ -122,6 +122,11 @@ components. The startup view focuses on the remaining network. Earlier review
 layers and the original union are selectable. Open or ambiguous skull sections
 retain their original vessel evidence.
 
+For a detached estimate inside the head, `--compartment source-disagreement`
+stages a final display split from an acquired TOF and bound structural review.
+The reviewed component remains available in a muted layer. The split uses the
+current native priority layer, including one produced by the skull screen.
+
 The PTNT_4509 teaching rehearsal preserves the acquired TOF lattice and
 source-bound vessel triangles. The exposure banks, vessel attachments and
 mechanical properties are modeled. The private continuity run index links the

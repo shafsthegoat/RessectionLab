@@ -83,8 +83,10 @@ def test_review_splits_extend_the_active_native_priority_layer(monkeypatch):
     posterior = "vesselfm-review-posterior-superficial"
     field = "vesselfm-review-field-edge"
     skull = "vesselfm-review-skull-priority"
+    source = "vesselfm-review-source-priority"
     review = {"vascular_review": {}, "display": {"initial_layers": [CANDIDATE]}}
     assert split_layers(review, "skull-exterior") == (CANDIDATE, skull, [skull])
+    assert split_layers(review, "source-disagreement") == (CANDIDATE, source, [source])
     assert split_layers(review, "posterior") == (CANDIDATE, MAIN, [MAIN, posterior])
     review["vascular_review"]["posterior_compartment_review"] = {"disjoint_union_matches_selected": True}
     review["display"]["initial_layers"] = [MAIN, posterior]
@@ -94,6 +96,42 @@ def test_review_splits_extend_the_active_native_priority_layer(monkeypatch):
     assert split_layers(review, "skull-exterior") == (FIELD_PRIORITY, skull, [skull])
     with pytest.raises(ValueError, match="already contains"):
         split_layers(review, "field-edge")
+    review["vascular_review"]["skull_exterior_compartment_review"] = {"disjoint_union_matches_selected": True}
+    review["display"]["initial_layers"] = [skull]
+    assert split_layers(review, "source-disagreement") == (skull, source, [source])
+    review["vascular_review"]["source_disagreement_compartment_review"] = {"disjoint_union_matches_selected": True}
+    review["display"]["initial_layers"] = [source]
+    with pytest.raises(ValueError, match="already contains"):
+        split_layers(review, "source-disagreement")
+
+
+def test_source_disagreement_checks_protected_paths_and_geometry_receipt(tmp_path, monkeypatch):
+    monkeypatch.syspath_prepend(str(Path(__file__).resolve().parents[1] / "scripts"))
+    from separate_eden2020_vascular_compartment import stage
+
+    canonical = tmp_path / "patient-anatomy.json"
+    selected = tmp_path / VASCULAR_REVIEW_MANIFEST
+    geometry = tmp_path / "geometry.json"
+    for path in (canonical, selected, geometry):
+        path.write_text("{}")
+    screen = tmp_path / "source-screen.json"
+    evidence = {
+        "version": "native-tof-mri-source-disagreement-v1",
+        "study_sha256": file_hash(selected),
+        "source_index_sha256": file_hash(canonical),
+        "structural_source_manifest": {"hdd_relative_path": canonical.name, "sha256": file_hash(canonical)},
+    }
+    screen.write_text(json.dumps(evidence))
+    with pytest.raises(ValueError, match="protected native path checks"):
+        stage(tmp_path, selected, screen, [1], compartment="source-disagreement")
+
+    binding = {"hdd_relative_path": geometry.name, "sha256": file_hash(geometry)}
+    evidence.update(zero_frozen_path_overlap=True, zero_frozen_junction_overlap=True,
+                    source_evidence=binding, exact_geometry_audit=binding)
+    screen.write_text(json.dumps(evidence))
+    geometry.write_text('{"changed":true}')
+    with pytest.raises(ValueError, match="source evidence is missing or has changed"):
+        stage(tmp_path, selected, screen, [1], compartment="source-disagreement")
 
 
 def test_alternate_review_manifest_binds_and_preserves_canonical_anatomy(tmp_path):

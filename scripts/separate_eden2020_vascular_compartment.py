@@ -47,6 +47,17 @@ COMPARTMENTS = {
         "scope": "Read-only research display using acquired TOF and estimated skull boundaries",
         "screen_version": "native-tof-mri-skull-exterior-v1",
     },
+    "source-disagreement": {
+        "name": "source disagreement review",
+        "main_id": "vesselfm-review-source-priority",
+        "main_label": "Main TOF network · source priority",
+        "id": "vesselfm-review-source-disagreement",
+        "label": "Source-disputed estimate · structure uncertain",
+        "receipt": "source_disagreement_compartment_review",
+        "screen": "structural_screen",
+        "scope": "Read-only research display using acquired TOF and structural source review",
+        "screen_version": "native-tof-mri-source-disagreement-v1",
+    },
 }
 
 
@@ -54,16 +65,20 @@ def split_layers(document, compartment):
     review = document["vascular_review"]
     initial = document["display"]["initial_layers"]
     group = COMPARTMENTS[compartment]
-    if group["receipt"] in review or "skull_exterior_compartment_review" in review:
+    skull = review.get("skull_exterior_compartment_review", {}).get("disjoint_union_matches_selected") is True
+    if (group["receipt"] in review or "source_disagreement_compartment_review" in review
+            or ("skull_exterior_compartment_review" in review and (not skull or compartment != "source-disagreement"))):
         raise ValueError("The selected review already contains this or a later split")
     posterior = review.get("posterior_compartment_review", {}).get("disjoint_union_matches_selected") is True
     field = review.get("field_edge_compartment_review", {}).get("disjoint_union_matches_selected") is True
     if compartment == "posterior" and field:
         raise ValueError("Stage a posterior split before field-edge review")
     source_id = (FIELD_PRIORITY if posterior and field else MAIN) if posterior or field else CANDIDATE
+    if skull:
+        source_id = COMPARTMENTS["skull-exterior"]["main_id"]
     if initial[0] != source_id:
         raise ValueError("The selected review does not start with its bound priority layer")
-    if compartment == "skull-exterior":
+    if compartment in {"skull-exterior", "source-disagreement"}:
         return source_id, group["main_id"], [group["main_id"]]
     main_id = FIELD_PRIORITY if posterior else MAIN
     return source_id, main_id, [main_id, group["id"], *initial[1:]]
@@ -83,6 +98,15 @@ def stage(root, selected_path, screen_path, anchors, *, compartment="posterior")
     if evidence["source_index_sha256"] != canonical_sha:
         raise ValueError("The structural screen belongs to another canonical anatomy snapshot")
     structural = evidence.get("structural_source_manifest")
+    if compartment == "source-disagreement":
+        if not structural or not all(evidence.get(key) is True for key in (
+            "zero_frozen_path_overlap", "zero_frozen_junction_overlap",
+        )):
+            raise ValueError("Source disagreement requires structural review and protected native path checks")
+        for key in ("source_evidence", "exact_geometry_audit"):
+            binding = evidence.get(key)
+            if not binding or sha256_file(safe_path(root, binding["hdd_relative_path"])) != binding["sha256"]:
+                raise ValueError(f"The bound {key.replace('_', ' ')} is missing or has changed")
     if structural:
         structural_path = safe_path(root, structural["hdd_relative_path"])
         if sha256_file(structural_path) != structural["sha256"]:

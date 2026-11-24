@@ -79,13 +79,14 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
     const structures=(!independent&&b.document.series.length>1)||cortex.length>0||hasAngiographicArteries(available,modality,s);
     const review=b.document.vascular_review;
     const fieldEdgeReview=review?.field_edge_compartment_review?.disjoint_union_matches_selected===true;
-    const skullExteriorReview=review?.skull_exterior_compartment_review?.disjoint_union_matches_selected===true;
+    const focusedReview=review?.skull_exterior_compartment_review?.disjoint_union_matches_selected===true||
+      review?.source_disagreement_compartment_review?.disjoint_union_matches_selected===true;
     const separatedReview=nativeVascularReview(b)&&b.readOnlyStudy&&s===b.document.reference_series&&
-      (review?.posterior_compartment_review?.disjoint_union_matches_selected===true||fieldEdgeReview||skullExteriorReview);
+      (review?.posterior_compartment_review?.disjoint_union_matches_selected===true||fieldEdgeReview||focusedReview);
     const mode=separatedReview?'vascular':structures?'segmentation':defaultAnatomyPresentation(modality);
-    const appearanceLayers=separatedReview&&skullExteriorReview?presentationLayers(b.document,s):available;
+    const appearanceLayers=separatedReview&&focusedReview?presentationLayers(b.document,s):available;
     const settings=anatomyPresentation(nativeDefaults(),appearanceLayers,mode,modality,s);
-    if(separatedReview&&(fieldEdgeReview||skullExteriorReview))settings.vesselShading='large';
+    if(separatedReview&&(fieldEdgeReview||focusedReview))settings.vesselShading='large';
     return {cursor:s===b.document.reference_series?b.document.display?.cursor_ras_mm??null:null,
       settings:nativeVascularReview(b)?{...settings,smoothSurfaces:false}:settings,visible};
   };

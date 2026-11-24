@@ -73,13 +73,13 @@ export function anatomyPresentation(settings:ViewerWorkspaceSettings,layers:Bind
       layerOpacity[layer.id]=displayKind==='brain'?.16:.08;
     }else if(['vessels','vessel','artery','vein','sinus'].includes(layer.kind)){
       const source=layer.provenance as {kind?:string;publisher_class_id?:number;method?:string;evidence_use?:string}|null;
-      const reviewedPeripheral=['vesselfm-review-posterior-superficial','vesselfm-review-field-edge','vesselfm-review-skull-exterior'].includes(layer.id)&&
+      const reviewedEvidence=['vesselfm-review-posterior-superficial','vesselfm-review-field-edge','vesselfm-review-skull-exterior','vesselfm-review-source-disagreement'].includes(layer.id)&&
         source?.evidence_use==='context_only'&&
         source.method==='Review display group of complete native TOF components';
       const namedArtery=layer.kind==='artery'&&source?.kind==='supplied_annotation'&&
         Number.isInteger(layer.label_value)&&(layer.label_value??0)>0&&source.publisher_class_id===layer.label_value;
-      layerColor[layer.id]=(namedArtery||reviewedPeripheral)&&/^#[0-9a-f]{6}$/i.test(layer.color)?layer.color:'#b75848';
-      layerOpacity[layer.id]=reviewedPeripheral?(scan?.08:.32):scan?.16:cranial&&layer.kind==='vessels'?.09:1;
+      layerColor[layer.id]=(namedArtery||reviewedEvidence)&&/^#[0-9a-f]{6}$/i.test(layer.color)?layer.color:'#b75848';
+      layerOpacity[layer.id]=reviewedEvidence?(scan?.08:.32):scan?.16:cranial&&layer.kind==='vessels'?.09:1;
       if(['vein','sinus'].includes(layer.kind)){layerColor[layer.id]='#7187bf';layerOpacity[layer.id]=scan?.08:1;}
     }else if(layer.kind==='tumor'){
       layerColor[layer.id]='#65bfd3';layerOpacity[layer.id]=scan?.32:1;
