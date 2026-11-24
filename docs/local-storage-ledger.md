@@ -153,6 +153,8 @@ The signed **Local native wall** selection, cold TopCoW reopens, and current
 restricted EDEN catalog are indexed at `qc/ordinary-native-wall-selection-20261124-v1/README.md`.
 The reciprocal tissue attachments, matched TopCoW mechanics and signed
 walkthrough are indexed at `qc/native-wall-reciprocal-attachment-20261124-v1/README.md`.
+The working-axis recoil constraint, matched instrument envelopes and signed
+native-wall rehearsals are indexed at `qc/native-wall-working-axis-20261124-v1/README.md`.
 The signed native TOF correction, matched score-surface preview and cohort
 picker checks are indexed at `qc/native-tof-local-correction-20261124-v1/README.md`.
 The signed faint vessel context comparisons, physical-cut and pick controls,
