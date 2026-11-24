@@ -81,11 +81,11 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
     const fieldEdgeReview=review?.field_edge_compartment_review?.disjoint_union_matches_selected===true;
     const skullExteriorReview=review?.skull_exterior_compartment_review?.disjoint_union_matches_selected===true;
     const separatedReview=nativeVascularReview(b)&&b.readOnlyStudy&&s===b.document.reference_series&&
-      (review?.posterior_compartment_review?.disjoint_union_matches_selected===true||fieldEdgeReview);
+      (review?.posterior_compartment_review?.disjoint_union_matches_selected===true||fieldEdgeReview||skullExteriorReview);
     const mode=separatedReview?'vascular':structures?'segmentation':defaultAnatomyPresentation(modality);
     const appearanceLayers=separatedReview&&skullExteriorReview?presentationLayers(b.document,s):available;
     const settings=anatomyPresentation(nativeDefaults(),appearanceLayers,mode,modality,s);
-    if(separatedReview&&fieldEdgeReview)settings.vesselShading='large';
+    if(separatedReview&&(fieldEdgeReview||skullExteriorReview))settings.vesselShading='large';
     return {cursor:s===b.document.reference_series?b.document.display?.cursor_ras_mm??null:null,
       settings:nativeVascularReview(b)?{...settings,smoothSurfaces:false}:settings,visible};
   };

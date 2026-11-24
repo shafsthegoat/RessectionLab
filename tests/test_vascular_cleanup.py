@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 from types import SimpleNamespace
 
 import numpy as np
@@ -73,6 +74,26 @@ def test_compartment_separation_preserves_whole_native_connected_components():
     inside = int(np.ravel_multi_index((2, 2, 2), mask.shape))
     with pytest.raises(ValueError, match="differs"):
         separate_reviewed_components(mask, {inside: 4})
+
+
+def test_review_splits_extend_the_active_native_priority_layer(monkeypatch):
+    monkeypatch.syspath_prepend(str(Path(__file__).resolve().parents[1] / "scripts"))
+    from separate_eden2020_vascular_compartment import CANDIDATE, FIELD_PRIORITY, MAIN, split_layers
+
+    posterior = "vesselfm-review-posterior-superficial"
+    field = "vesselfm-review-field-edge"
+    skull = "vesselfm-review-skull-priority"
+    review = {"vascular_review": {}, "display": {"initial_layers": [CANDIDATE]}}
+    assert split_layers(review, "skull-exterior") == (CANDIDATE, skull, [skull])
+    assert split_layers(review, "posterior") == (CANDIDATE, MAIN, [MAIN, posterior])
+    review["vascular_review"]["posterior_compartment_review"] = {"disjoint_union_matches_selected": True}
+    review["display"]["initial_layers"] = [MAIN, posterior]
+    assert split_layers(review, "field-edge") == (MAIN, FIELD_PRIORITY, [FIELD_PRIORITY, field, posterior])
+    review["vascular_review"]["field_edge_compartment_review"] = {"disjoint_union_matches_selected": True}
+    review["display"]["initial_layers"] = [FIELD_PRIORITY, field, posterior]
+    assert split_layers(review, "skull-exterior") == (FIELD_PRIORITY, skull, [skull])
+    with pytest.raises(ValueError, match="already contains"):
+        split_layers(review, "field-edge")
 
 
 def test_alternate_review_manifest_binds_and_preserves_canonical_anatomy(tmp_path):

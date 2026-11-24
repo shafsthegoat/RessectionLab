@@ -15,6 +15,7 @@ from resectionlab.patient_anatomy import PatientImagingCollection
 from resectionlab.vascular_cleanup import separate_reviewed_components
 
 MAIN = "vesselfm-review-intracranial-priority"
+FIELD_PRIORITY = "vesselfm-review-field-priority"
 COMPARTMENTS = {
     "posterior": {
         "name": "posterior compartment review",
@@ -39,7 +40,6 @@ COMPARTMENTS = {
         "name": "skull-exterior component review",
         "main_id": "vesselfm-review-skull-priority",
         "main_label": "Main TOF network · skull priority",
-        "source_id": MAIN,
         "id": "vesselfm-review-skull-exterior",
         "label": "Outside-skull estimate · structure uncertain",
         "receipt": "skull_exterior_compartment_review",
@@ -48,6 +48,25 @@ COMPARTMENTS = {
         "screen_version": "native-tof-mri-skull-exterior-v1",
     },
 }
+
+
+def split_layers(document, compartment):
+    review = document["vascular_review"]
+    initial = document["display"]["initial_layers"]
+    group = COMPARTMENTS[compartment]
+    if group["receipt"] in review or "skull_exterior_compartment_review" in review:
+        raise ValueError("The selected review already contains this or a later split")
+    posterior = review.get("posterior_compartment_review", {}).get("disjoint_union_matches_selected") is True
+    field = review.get("field_edge_compartment_review", {}).get("disjoint_union_matches_selected") is True
+    if compartment == "posterior" and field:
+        raise ValueError("Stage a posterior split before field-edge review")
+    source_id = (FIELD_PRIORITY if posterior and field else MAIN) if posterior or field else CANDIDATE
+    if initial[0] != source_id:
+        raise ValueError("The selected review does not start with its bound priority layer")
+    if compartment == "skull-exterior":
+        return source_id, group["main_id"], [group["main_id"]]
+    main_id = FIELD_PRIORITY if posterior else MAIN
+    return source_id, main_id, [main_id, group["id"], *initial[1:]]
 
 
 def stage(root, selected_path, screen_path, anchors, *, compartment="posterior"):
@@ -70,8 +89,7 @@ def stage(root, selected_path, screen_path, anchors, *, compartment="posterior")
             raise ValueError("The screened structural source manifest has changed")
     study = open_anatomy_manifest(selected_path)
     canonical = PatientImagingCollection(canonical_path.parent)
-    source_id = group.get("source_id", CANDIDATE)
-    main_id = group.get("main_id", MAIN)
+    source_id, main_id, initial = split_layers(study.document, compartment)
     layer = study.layer(source_id)
     scan = study.series(layer["source_series"])
     baseline = vascular_cleanup_source(study, layer)
@@ -80,9 +98,6 @@ def stage(root, selected_path, screen_path, anchors, *, compartment="posterior")
             or scan["original"]["sha256"] != evidence["scan_sha256"]
             or layer["data"] != evidence["selected_native_grid"] or baseline is None):
         raise ValueError("Review geometry or patient identity differs from structural evidence")
-    if compartment == "skull-exterior" and not study.document["vascular_review"].get(
-            "field_edge_compartment_review", {}).get("disjoint_union_matches_selected"):
-        raise ValueError("Skull-exterior review extends a source-bound field-edge case")
     candidates = {row["source_anchor_cell"]: row for row in evidence["major_components"]}
     if missing := set(anchors) - candidates.keys():
         raise ValueError(f"Reviewed anchors were not measured on the structural screen: {sorted(missing)}")
@@ -124,7 +139,7 @@ def stage(root, selected_path, screen_path, anchors, *, compartment="posterior")
         "disjoint_union_matches_selected": True,
         "simulation_admission": False,
     }
-    trial.document["display"]["initial_layers"] = [main_id] if compartment == "skull-exterior" else [main_id, group["id"]]
+    trial.document["display"]["initial_layers"] = initial
     trial.document["snapshot_id"] = trial.identity()
     path = selected_path.with_name(f"vascular-review.{trial.identity()[:12]}.anatomy.json")
     if (sha256_file(selected_path) != selected_sha or sha256_file(canonical_path) != canonical_sha
