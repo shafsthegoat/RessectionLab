@@ -971,6 +971,14 @@ h3 {
   color: #bac4c9;
   padding: 4px 6px;
 }
+.anatomy-preparation-action {
+  flex: none;
+  color: #a7d3ca;
+  font-size: 10px;
+  padding: 4px 6px;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
 .case-panel-collapsed {
   grid-template-columns: 54px 0 minmax(390px, 1fr) 334px;
 }
@@ -1055,23 +1063,6 @@ h3 {
   color: #a2c7c8;
   backdrop-filter: blur(4px);
 }
-.anatomy-preparation-notice {
-  position: absolute;
-  top: 49px;
-  left: 12px;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  max-width: min(35rem, calc(100% - 24px));
-  padding: 6px 9px 6px 12px;
-  border: 1px solid var(--border, #344341);
-  border-radius: 6px;
-  background: #101615ed;
-  color: #c8ded8;
-  font-size: 12px;
-}
-.anatomy-preparation-notice svg { flex: none; }
 .spin {
   animation: spin 1s linear infinite;
 }

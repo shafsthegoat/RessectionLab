@@ -2166,12 +2166,6 @@ export default function App() {
             <button className="outline-button" onClick={()=>setWorkbenchTab('cases')}>Browse cases</button>
           </div>}
           {native.binding&&!displayedCase&&!native.busy&&<div className="welcome-overlay"><h2>{native.binding.document.series.length?'Scan unavailable':'Add your first scan'}</h2><p>{native.message}</p>{native.binding.document.series.length?<button className="primary-button" onClick={()=>native.run(native.refresh)}>Retry</button>:<button className="primary-button" onClick={addData}>Add scans</button>}</div>}
-          {native.binding&&native.scanPreview&&displayedCase&&<div className="anatomy-preparation-notice">
-            {native.busy&&<LoaderCircle size={14} className="spin" aria-hidden="true"/>}
-            <span role="status">{native.message}</span>
-            {native.busy?<button className="header-button" onClick={native.cancel}>Cancel</button>
-              :<button className="header-button" onClick={native.resumeAnatomy}>Load anatomy</button>}
-          </div>}
           {(hydrating||(native.busy&&!native.scanPreview)) && (
             <div className="viewer-loading">
               <LoaderCircle size={22} className="spin" />
@@ -2418,9 +2412,13 @@ export default function App() {
             ? "Local engine stopped · Reopen the app to reconnect"
             : hydrating
               ? "Transferring source imaging to the local viewer…"
-              : (operation?.message ?? (native.binding?native.message:message))}
+              : native.scanPreview ? native.message : (operation?.message ?? (native.binding?native.message:message))}
         </span>
-        {operation && (
+        {native.scanPreview ? (
+          <button type="button" className="anatomy-preparation-action" onClick={native.busy?native.cancel:native.resumeAnatomy}>
+            {native.busy?'Cancel':'Load anatomy'}
+          </button>
+        ) : operation && (
           <>
             <div className="operation-track">
               <i
