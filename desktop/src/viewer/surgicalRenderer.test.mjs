@@ -280,6 +280,7 @@ function modeledFixture(){
     {name:'brain',kind:'brain',color:'#aabbcc',mask:new Uint8Array(count).fill(1)},
     {name:'vessel',kind:'vessel',color:'#bb3344',mask:Uint8Array.from({length:count},(_,i)=>Number(i%20===0))}]};
   const r=Object.create(VolumeRenderer.prototype),packed=packAnatomyLabels(source),work={};
+  r.vesselDepthSeparation={install(){}};
   const uniforms={uLabels:{value:null},uLayerCount:{value:2},uVisibleBits:{value:3},uLayerEnabled:{value:new Float32Array(128)},uLayerCodes:{value:Array.from({length:128},()=>new THREE.Vector2())}};
   for(const key of ['surgicalUpdates','toolBuilds','effectBuilds','pathBufferBuilds','sourceWorkerBuilds','replayWorkerBuilds','sourceRemeshedLayers','replayRemeshedLayers','workerInputCloneBytes','workerInputTransferBytes','workerResultTransferBytes','modelWorkerBuilds','modelRemeshedLayers','modelRemeshedChunks','modelCommits'])work[key]=0;
   Object.assign(r,{volume:source,affine,bounds:[[0,0,0],[5,4,3]],workspaceSettings:{},extraClipPlanes:[],clipPlane:null,surfaceSmoothing:true,visible:{},
