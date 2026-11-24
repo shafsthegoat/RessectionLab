@@ -49,6 +49,11 @@ The focused display and rehearsal follow-up at
 indexes field-edge and skull comparisons, wider-vessel views, and the
 source-to-operative walkthrough.
 
+The cohort continuation at
+`qc/eden2020-glioma-5714812/vascular-reconstruction-continuity-20261123-v5/README.md`
+links the native exterior screens, matched desktop views and the certified
+PTNT_4509 free-span contact and recoil rehearsal.
+
 Paths below are relative to the RessectionLab root. This compact ledger covers
 that area, not unrelated personal files elsewhere on the HDD. Presence does not
 establish scientific readiness or a completed build; consult each run's receipts.
