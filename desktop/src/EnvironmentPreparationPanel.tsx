@@ -10,9 +10,9 @@ export interface EnvironmentApproach {approachId:string;measurementHash?:string;
 export interface EnvironmentPreparation {approach?:EnvironmentApproach;collectionId:string;snapshotId:string;layers:Record<string,string>;allowUnreviewedRegistration:boolean;nativeWallCenter?:Point3}
 const pairId=(pair:NativeWallPair)=>JSON.stringify([pair.brainLayerId,pair.vesselLayerId]);
 
-export function EnvironmentPreparationPanel({binding,approach,routeName,measurements,options,busy,patientCursor,onPrepare,onAnatomy}:{
+export function EnvironmentPreparationPanel({binding,approach,routeName,measurements,options,busy,sourceEditing,patientCursor,onPrepare,onAnatomy}:{
   routeName?:string;measurements?:import('./native-approaches').NativeApproach['measurements'];
-  binding:Binding;approach?:EnvironmentApproach;options?:EnvironmentOptions;busy:boolean;patientCursor?:Point3|null;
+  binding:Binding;approach?:EnvironmentApproach;options?:EnvironmentOptions;busy:boolean;sourceEditing?:boolean;patientCursor?:Point3|null;
   onPrepare:(options:EnvironmentPreparation,isCurrent:()=>boolean)=>Promise<void>;onAnatomy:()=>void;
 }) {
   const [layers,setLayers]=useState<Record<string,string>>(()=>Object.fromEntries(roles.map(role=>[
@@ -22,8 +22,8 @@ export function EnvironmentPreparationPanel({binding,approach,routeName,measurem
   const [mode,setMode]=useState<'native-wall'|'standard'|null>(null);
   const [chosenPair,setChosenPair]=useState('');
   const active=useRef(true);
-  const blocked=useRef(busy);
-  blocked.current=busy;
+  const editing=useRef(sourceEditing);
+  editing.current=sourceEditing;
   useEffect(()=>{active.current=true;return ()=>{active.current=false;};},[]);
   const wall=options?.nativeWall;
   const pairs=wall?.pairs??[];
@@ -53,7 +53,7 @@ export function EnvironmentPreparationPanel({binding,approach,routeName,measurem
   async function prepare(choice:Pick<EnvironmentPreparation,'layers'|'allowUnreviewedRegistration'|'approach'|'nativeWallCenter'>){
     setPreparing(true);setError(null);
     try{
-      await onPrepare({collectionId:binding.collectionId,snapshotId:binding.document.snapshot_id,...choice},()=>active.current&&!blocked.current);
+      await onPrepare({collectionId:binding.collectionId,snapshotId:binding.document.snapshot_id,...choice},()=>active.current&&!editing.current);
     }catch(e){if(active.current)setError(e instanceof Error?e.message:String(e));}
     finally{if(active.current)setPreparing(false);}
   }

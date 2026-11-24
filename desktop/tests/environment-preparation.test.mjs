@@ -22,7 +22,7 @@ function harness(){
       if(!(slot in slots))slots[slot]=typeof initial==='function'?initial():initial;
       return [slots[slot],value=>{slots[slot]=value;}];
     },
-    useRef(value){const slot=index++;return slots[slot]??=( {current:value} );},
+    useRef(value){const slot=index++;return slots[slot]??={current:value};},
     useEffect(effect){const slot=index++;if(!(slot in slots)){slots[slot]=true;cleanups.push(effect());}},
   };
   return {
@@ -92,6 +92,8 @@ test('multiple pairs require selection and a cursor pair uses only a finite pati
   assert.deepEqual(calls[0].args.nativeWallCenter,[0,1,2]);
   assert.deepEqual(calls[0].args.layers,{brain:'brain',vessels:'cta-score'});
   ui.render({...props,busy:true});
+  assert.equal(calls[0].isCurrent(),true,'the same request may be hydrating its verified result');
+  ui.render({...props,busy:true,sourceEditing:true});
   assert.equal(calls[0].isCurrent(),false);
 });
 
