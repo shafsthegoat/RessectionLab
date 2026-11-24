@@ -170,7 +170,7 @@ Run the native-wall, passive contact, support-release, cut-topology and replay c
 
 #### Native annular section mechanics
 
-New cursor-local native wall scenes set `gliomaMaterialsV1.vesselSectionMechanics.model` to `linear-annular-research-contact-v2`. Saved scenes with `linear-annular-research-v1` replay with their original response. Both profiles require explicit source-bound sites, vertex transport, and continuous wall clearance. They interpret the estimated site radius `r` as a lumen-radius proxy and use an assumed wall thickness `t = 0.15r`. The rod uses `EA` for extension and `EI` for bending, with `A = π[(r+t)²−r²]` and `I = π[(r+t)⁴−r⁴]/4`. Half segments contribute compliance in series through a bend. Branch sites share positional degrees of freedom.
+The native annular section profiles require explicit source-bound sites, vertex transport, and continuous wall clearance. Saved scenes retain the response of their recorded profile. The model interprets the estimated site radius `r` as a lumen-radius proxy and uses an assumed wall thickness `t = 0.15r`. The rod uses `EA` for extension and `EI` for bending, with `A = π[(r+t)²−r²]` and `I = π[(r+t)⁴−r⁴]/4`. Half segments contribute compliance in series through a bend. Branch sites share positional degrees of freedom.
 
 | Assigned quantity | Default | Basis |
 | --- | --- | --- |
@@ -187,8 +187,7 @@ The continuous guard checks local facet collapse, folds across shared edges, and
 
 #### Native wall contact with surrounding tissue
 
-New cursor-local patient preparations choose `linear-annular-research-contact-v3`.
-The solver associates near-rest native wall triangle samples with exposed
+The v3 contact model associates near-rest native wall triangle samples with exposed
 soft-cell faces. A bounded, compressive normal force acts on the wall and an
 opposing average reaction advances the soft-cell lattice in the same 120 Hz
 increment. The normal stiffness uses an effective modulus of three times the
@@ -202,10 +201,20 @@ loading and 0.054 mm on continued loading. The same 12-action TopCoW-014
 requests accepted and cold-replayed with both contact profiles. Peak tissue
 motion with the new profile was 0.177 µm. The paired controls and M2 Pro timings
 are indexed under the [private storage ledger](local-storage-ledger.md).
-The soft-cell interface is sampled near its rest position and frictionless.
-Continuous collision checks still apply to the native vessel triangles. A
-continuous deforming tissue wall, calibrated patient material properties, and
-full sliding contact remain unverified.
+New cursor-local patient preparations use `linear-annular-research-contact-v4`.
+It adds a translational slip force opposing the relative tangential velocity,
+bounded by the normal force times an assigned friction coefficient of 0.15.
+The force uses the trial rod velocity and the preceding lattice velocity, with
+a 0.5 mm/s regularization scale. V3 and v4 with zero friction reproduce the
+same state. Static sticking, inter-vessel friction and continuous collision
+against a deforming tissue wall remain outside this approximation.
+
+In the paired synthetic control, v4 increased mean tissue displacement along
+the two prescribed slide directions by 0.37 and 0.47 µm. The TopCoW-014 slide
+increased peak tissue displacement by less than 0.002 µm. The matched 240 ms
+slide took 302 ms with v3 and 316 ms with v4 on the M2 Pro. These are
+implementation controls with assigned parameters. The ordinary v4 preparation
+retained the original CTA wall binding and all 12 actions cold-replayed.
 
 The parallel-vessel control uses two independently supported 13-site rods and a 784-triangle native score wall. The same 0.4 s dissector stroke rolls back under v1 and advances under v2. The passive vessel moves 0.133 mm, reaches 0.250 mm with continued loading, and recoils below one quarter of that displacement after withdrawal and relaxation. The accepted wall clears the guard and cold replay reproduces its pose and subsequent receipts. Run `.venv/bin/python -m pytest -q tests/test_surgical_vessel_rods.py -k inter_vessel_contact`.
 

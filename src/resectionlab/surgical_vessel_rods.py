@@ -27,6 +27,8 @@ SECTION_MECHANICS = 'vesselSectionMechanics'
 SECTION_MODEL = 'linear-annular-research-v1'
 SECTION_CONTACT_MODEL = 'linear-annular-research-contact-v2'
 SECTION_TISSUE_CONTACT_MODEL = 'linear-annular-research-contact-v3'
+SECTION_TISSUE_FRICTION_MODEL = 'linear-annular-research-contact-v4'
+TISSUE_CONTACT_MODELS = (SECTION_TISSUE_CONTACT_MODEL, SECTION_TISSUE_FRICTION_MODEL)
 STEP_SECONDS = 1 / 120
 SUPPORT_N_PER_MM = .035
 CONTACT_N_PER_MM = .18
@@ -40,15 +42,19 @@ SOLVER_ITERATIONS = 4
 CONTACT_MARGIN_MM = 1e-7
 
 
-def section_profile(*, vessel_contact=False, soft_contact=False):
+def section_profile(*, vessel_contact=False, soft_contact=False, tissue_friction=None):
     """Assumed local tangent response and radial compliance for sensitivity studies."""
+    model = SECTION_TISSUE_CONTACT_MODEL if soft_contact else SECTION_CONTACT_MODEL if vessel_contact else SECTION_MODEL
+    if tissue_friction is not None:
+        model = SECTION_TISSUE_FRICTION_MODEL
     return {
-        'model': SECTION_TISSUE_CONTACT_MODEL if soft_contact else SECTION_CONTACT_MODEL if vessel_contact else SECTION_MODEL,
+        'model': model,
         'provenance': 'assumed-research',
         'axialModulusMPa': {'artery': 1.8, 'vein': .7, 'uncertain': 1.},
         'wallThicknessToLumenRadius': .15,
         'radialRelaxationSeconds': .08,
         'frictionCoefficient': .15,
+        **({'tissueFrictionCoefficient': tissue_friction} if tissue_friction is not None else {}),
     }
 
 
@@ -57,7 +63,7 @@ def mechanics(engine):
 
 
 def soft_contact_enabled(engine):
-    return (mechanics(engine) or {}).get('model') == SECTION_TISSUE_CONTACT_MODEL
+    return (mechanics(engine) or {}).get('model') in TISSUE_CONTACT_MODELS
 
 
 def validate_section_profile(profile, bounded):
@@ -66,11 +72,14 @@ def validate_section_profile(profile, bounded):
     section = profile[SECTION_MECHANICS]
     limits = {'wallThicknessToLumenRadius': (.05, .5), 'radialRelaxationSeconds': (.02, .5),
               'frictionCoefficient': (0., .5)}
+    if isinstance(section, dict) and section.get('model') == SECTION_TISSUE_FRICTION_MODEL:
+        limits['tissueFrictionCoefficient'] = (0., .5)
+    expected = {'model', 'provenance', 'axialModulusMPa', *limits}
     if (profile.get('vesselMotionModel') != MODEL or GEOMETRY not in profile
             or profile.get(wall_sweep.PROPERTY) != wall_sweep.POLICY
             or profile.get(vertex_motion.PROPERTY) != vertex_motion.POLICY
-            or not isinstance(section, dict) or set(section) != set(section_profile())
-            or section['model'] not in (SECTION_MODEL, SECTION_CONTACT_MODEL, SECTION_TISSUE_CONTACT_MODEL)
+            or not isinstance(section, dict) or set(section) != expected
+            or section['model'] not in (SECTION_MODEL, SECTION_CONTACT_MODEL, *TISSUE_CONTACT_MODELS)
             or section['provenance'] != 'assumed-research'
             or not isinstance(section['axialModulusMPa'], dict)
             or set(section['axialModulusMPa']) != set(section_profile()['axialModulusMPa'])
@@ -661,12 +670,14 @@ def tick(engine, dt, *, tool_motion=None, excluded_tissue=()):
     swept = wall_sweep_enabled(engine)
     if swept:
         prior_wall = tuple(surfaces.frames(engine, rods, position, radius, bonds))
+    soft_friction = section.get('tissueFrictionCoefficient', 0.) if soft_contact else 0.
     soft_contacts = tissue_contact.contacts(
-        engine, prior_wall, bonds, tuple(set(engine.state['removed']).union(excluded_tissue))) if soft_contact else ()
+        engine, prior_wall, bonds, tuple(set(engine.state['removed']).union(excluded_tissue)),
+        friction=soft_friction) if soft_contact else ()
     reactions = [np.zeros((len(contact.patch.cells), 3)) for contact in soft_contacts]
     inverse = engine.scene.inverse[:3, :3]
 
-    def contact(positions, radii, rate, *, measure_compression=False):
+    def contact(positions, radii, rate, *, measure_compression=False, tissue_wall_rate=None):
         force, compression, touched = _tool_contact(pairs, positions, radii, rods.radius, tools)
         if native and tools:
             frames = tuple(surfaces.frames(engine, rods, positions, radii, bonds))
@@ -682,7 +693,7 @@ def tick(engine, dt, *, tool_motion=None, excluded_tissue=()):
                 touched.setdefault(hand, set()).update(indices)
         radial_force = np.zeros(len(position)) if soft_contacts and measure_compression else None
         for interface in soft_contacts:
-            loads = interface.loads(positions - rods.rest, 1. - radii / rods.radius, inverse)
+            loads = interface.loads(positions - rods.rest, 1. - radii / rods.radius, inverse, wall_rate=tissue_wall_rate)
             force += interface.patch.translation.T @ loads
             if radial_force is not None:
                 for axis, weights in enumerate(interface.patch.radial):
@@ -700,7 +711,8 @@ def tick(engine, dt, *, tool_motion=None, excluded_tissue=()):
             project = operators @ position
             scale = np.linalg.norm(project, axis=1)[:, None]
             target = np.where(scale > 1e-15, project * norms / np.maximum(scale, 1e-15), rest_projection)
-            force, _, _ = contact(position, radius, old_rate)
+            slip_rate = (position - previous) / STEP_SECONDS if soft_friction else None
+            force, _, _ = contact(position, radius, old_rate, tissue_wall_rate=slip_rate)
             position = solve(base + transpose @ target + force)
         if section is None:
             position = _valid_motion(engine, rods, previous, position, retained)
@@ -754,7 +766,7 @@ def tick(engine, dt, *, tool_motion=None, excluded_tissue=()):
         radius = proposed_radius
         old_rate = (position - previous) / STEP_SECONDS
         for interface, reaction in zip(soft_contacts, reactions):
-            loads = interface.loads(position - rods.rest, 1. - radius / rods.radius, inverse)
+            loads = interface.loads(position - rods.rest, 1. - radius / rods.radius, inverse, wall_rate=old_rate)
             np.add.at(reaction, interface.patch.indices, -loads)
         for hand, indices in touched.items():
             state['contactedCells'][hand] = sorted(set(state['contactedCells'].get(hand, ())) |

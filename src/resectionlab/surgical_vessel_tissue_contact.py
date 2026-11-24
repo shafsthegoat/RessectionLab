@@ -1,4 +1,4 @@
-"""Local, frictionless exchange between native vessel walls and soft lattice cells."""
+"""Local contact between native vessel walls and soft lattice cells."""
 
 from dataclasses import dataclass
 
@@ -8,6 +8,9 @@ from scipy import sparse
 from . import surgical_vessel_surface as surfaces
 from . import surgical_wall_sweep as wall_sweep
 from .surgical_glioma_materials import SOFT, material_values
+
+
+SLIP_REGULARIZATION_MM_PER_SECOND = .5
 
 
 @dataclass(frozen=True)
@@ -112,8 +115,10 @@ class Contact:
     patch: Patch
     tissue_shifts: np.ndarray
     retained: np.ndarray
+    friction: float
+    tissue_rate: np.ndarray | None
 
-    def loads(self, displacement, shrink, inverse):
+    def loads(self, displacement, shrink, inverse, *, wall_rate=None):
         shifts = self.patch.translation @ displacement - np.column_stack([radial @ shrink for radial in self.patch.radial])
         relative = shifts - self.tissue_shifts[self.patch.indices]
         gap = np.einsum('ij,ij->i', relative, self.patch.normal)
@@ -127,12 +132,22 @@ class Contact:
         # Taper the load at the edge of a sampled voxel face.
         weight = np.clip((.5 - edge) / .1, 0., 1.)
         force = weight * self.patch.stiffness[active] * np.minimum(depth[active], self.patch.depth_limit[active])
-        loads[active] = force[:, None] * self.patch.normal[active]
+        normal = self.patch.normal[active]
+        loads[active] = force[:, None] * normal
+        if self.friction and wall_rate is not None:
+            relative_rate = (self.patch.translation @ wall_rate)[active] - self.tissue_rate[self.patch.indices[active]]
+            slip = relative_rate - np.einsum('ij,ij->i', relative_rate, normal)[:, None] * normal
+            speed = np.sqrt(SLIP_REGULARIZATION_MM_PER_SECOND ** 2 + np.einsum('ij,ij->i', slip, slip))
+            # Regularized Coulomb bound. The shear load does nonpositive
+            # work against the relative tangential velocity at each sample.
+            loads[active] -= (self.friction * force / speed)[:, None] * slip
         return loads
 
 
-def contacts(engine, frames, bonds, excluded):
+def contacts(engine, frames, bonds, excluded, *, friction=0.):
     deformation = engine.state['deformation']
+    velocities = engine.state['deformationModel']['velocities'] if friction else {}
     return tuple(Contact(patch, np.array([deformation.get(str(c), (0., 0., 0.)) for c in patch.cells]),
-                         ~np.isin(patch.cells, excluded))
+                         ~np.isin(patch.cells, excluded), friction,
+                         np.array([velocities.get(str(c), (0., 0., 0.)) for c in patch.cells]) if friction else None)
                  for patch in patches(engine, frames, bonds))

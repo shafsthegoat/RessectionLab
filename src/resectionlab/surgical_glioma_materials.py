@@ -81,7 +81,7 @@ def validate(scene):
                                         or p.get(wall_sweep.PROPERTY) != wall_sweep.POLICY)):
         raise ValueError('VESSEL_VERTEX_TRANSPORT_REQUIRES_SWEPT_NATIVE_WALL')
     rods.validate_section_profile(p, _bounded)
-    if p.get(rods.SECTION_MECHANICS, {}).get('model') == rods.SECTION_TISSUE_CONTACT_MODEL:
+    if p.get(rods.SECTION_MECHANICS, {}).get('model') in rods.TISSUE_CONTACT_MODELS:
         physics = scene.properties['tissuePhysicsV2']
         brain = physics.get('brain') if isinstance(physics, dict) else None
         if not isinstance(brain, dict) or brain.get('fixedStepSeconds') != rods.STEP_SECONDS:

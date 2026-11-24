@@ -237,7 +237,7 @@ def test_local_native_wall_desktop_contact_and_replay_keep_the_installed_geometr
             state = call(session, 'surgicalRehearsal', {**case_args, 'command': 'step', 'expectedStateId': state['view']['stateId'],
                 'action': {**action, 'slot': 'left'}})
         motion = state['view']['vesselMechanics']
-        assert motion['sectionModel'] == 'linear-annular-research-contact-v3'
+        assert motion['sectionModel'] == 'linear-annular-research-contact-v4'
         assert motion['contactedCells']['left']
         assert motion['vertexDisplacementsByLabel']['2']['geometryBinding'] == geometry
         assert motion['vertexDisplacementsByLabel']['2']['indices']

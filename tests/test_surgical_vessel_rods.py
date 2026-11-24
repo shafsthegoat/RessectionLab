@@ -10,6 +10,7 @@ from resectionlab import surgical_deformation_v2 as tissue
 from resectionlab import surgical_glioma_materials as materials
 from resectionlab import surgical_vessel_rods as rods
 from resectionlab import surgical_vessel_surface as surfaces
+from resectionlab import surgical_vessel_tissue_contact as tissue_contact
 from resectionlab.surgical_engine import SurgicalEngine
 from resectionlab.surgical_physics_v2 import default_profile
 from resectionlab.surgical_scene import from_case
@@ -18,7 +19,8 @@ from resectionlab.surgical_wall_sweep_reference import WallSweepReference
 
 
 def _fixture(*, guarded=False, vertex_transport=False, section_mechanics=False, conditioned=False,
-             section_overrides=None, vessel_contact=False, parallel=False, soft_contact=False, soft_bank=False):
+             section_overrides=None, vessel_contact=False, parallel=False, soft_contact=False, soft_bank=False,
+             tissue_friction=None):
     shape = (35, 35, 30)
     spacing = .4
     affine = np.diag([spacing, spacing, spacing, 1.])
@@ -50,7 +52,7 @@ def _fixture(*, guarded=False, vertex_transport=False, section_mechanics=False, 
     if vertex_transport:
         props[materials.PROPERTY][vertex_motion.PROPERTY] = vertex_motion.POLICY
     if section_mechanics:
-        section = rods.section_profile(vessel_contact=vessel_contact, soft_contact=soft_contact)
+        section = rods.section_profile(vessel_contact=vessel_contact, soft_contact=soft_contact, tissue_friction=tissue_friction)
         if section_overrides:
             section.update(section_overrides)
         props[materials.PROPERTY][rods.SECTION_MECHANICS] = section
@@ -335,6 +337,71 @@ def test_native_vessel_contact_pushes_and_releases_retained_soft_tissue():
         assert replay.step(action) == result
     assert replay.state['deformation'] == coupled.state['deformation']
     assert 0. < tissue_motion(coupled) < .35 * loaded
+
+
+def test_tissue_friction_is_dissipative_and_bounded_by_positive_pressure():
+    count = 5
+    patch = tissue_contact.Patch(csr_matrix(np.eye(count)), (csr_matrix((count, count)),) * 3,
+                                 np.arange(count), np.arange(count), np.tile((0., 0., 1.), (count, 1)),
+                                 np.tile((True, True, False), (count, 1)), np.zeros((count, 3)), np.zeros(count),
+                                 np.ones(count), np.full(count, .2))
+    displacement = np.zeros((count, 3))
+    displacement[:, 2] = [-.1, -.1, -.1, .05, -.1]
+    tissue_rate = np.tile((1., 2., 3.), (count, 1))
+    relative_rate = np.array([[100., 0., 9.], [-1., 2., -7.], [0., 0., 2.], [3., 0., 0.], [5., 0., 0.]])
+    interface = tissue_contact.Contact(patch, np.zeros_like(displacement), np.array([True] * 4 + [False]),
+                                        .3, tissue_rate)
+    normal = interface.loads(displacement, np.zeros(count), np.eye(3))
+    total = interface.loads(displacement, np.zeros(count), np.eye(3), wall_rate=relative_rate + tissue_rate)
+    shear = total - normal
+    assert np.all(shear[:, 2] == 0.)
+    assert np.all(np.linalg.norm(shear, axis=1) <= .3 * np.linalg.norm(normal, axis=1))
+    assert .029 < np.linalg.norm(shear[0]) < .03
+    assert np.all(np.einsum('ij,ij->i', relative_rate[:2], shear[:2]) < 0.)
+    np.testing.assert_array_equal(shear[2:], np.zeros((3, 3)))
+
+
+def test_tissue_friction_coefficient_requires_its_version_and_research_bounds():
+    with pytest.raises(ValueError, match='VESSEL_SECTION_MECHANICS_REQUIRES_BOUNDED_SWEPT_SOURCE_GEOMETRY'):
+        _fixture(guarded=True, vertex_transport=True, section_mechanics=True, tissue_friction=.6)
+    with pytest.raises(ValueError, match='VESSEL_SECTION_MECHANICS_REQUIRES_BOUNDED_SWEPT_SOURCE_GEOMETRY'):
+        _fixture(guarded=True, vertex_transport=True, section_mechanics=True, soft_contact=True,
+                 section_overrides={'tissueFrictionCoefficient': .15})
+
+
+@pytest.mark.parametrize('direction', [-1, 1])
+def test_vessel_sliding_transfers_tangential_motion_to_tissue(direction):
+    tissue_shifts = {}
+    old = None
+    advance = _action('move', z=5.08, dt=.4)
+    slide = _action('move', z=5.08, dt=.23)
+    slide['pose']['position'][0] += .7 * direction
+    for friction in (None, 0., .15, .4):
+        engine = _fixture(guarded=True, vertex_transport=True, section_mechanics=True, conditioned=True,
+                          soft_contact=True, soft_bank=True, tissue_friction=friction)
+        for action in (_action('exchange', instrument='dissector'), _action('place', z=4.), advance):
+            assert engine.step(action)['status'] == 'accepted'
+        before = engine.state['deformation']
+        assert engine.step(slide)['status'] == 'accepted'
+        after = engine.state['deformation']
+        if friction is None:
+            old = engine.state
+        if friction == 0.:
+            assert engine.state == old
+        receivers = [cell for cell in engine.state['deformationModel']['active']
+                     if str(cell) in after and 5.2 <= engine.scene.points([cell])[0, 0] <= 8.4]
+        changes = np.asarray([np.subtract(after[str(cell)], before.get(str(cell), (0., 0., 0.)))
+                              for cell in receivers])
+        tissue_shifts[friction] = direction * changes[:, 0].mean()
+        frames = rods._accepted_frames(engine, rods.definitions(engine))
+        assert surgical_wall_sweep.is_clear(engine, frames, frames, static=True)
+        if friction == .15 and direction == 1:
+            restored = SurgicalEngine.restore(engine.scene, json.loads(json.dumps(engine.snapshot())), force_verify=True)
+            assert restored.state == engine.state
+            withdraw = _action('withdraw', z=4., dt=.35)
+            assert restored.step(withdraw) == engine.step(withdraw)
+    assert .00025 < tissue_shifts[.15] - tissue_shifts[0.] < .0007
+    assert .0007 < tissue_shifts[.4] - tissue_shifts[0.] < .0015
 
 
 def test_removed_positive_reextracts_native_wall_without_erasing_untouched_triangles():
