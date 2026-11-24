@@ -10,6 +10,9 @@ export const volumeFragmentShader = `
 #ifndef DIRECTIONAL_OPTICS
 #define DIRECTIONAL_OPTICS 0
 #endif
+#ifndef SCALAR_ONLY
+#define SCALAR_ONLY 0
+#endif
 precision highp float;
 precision highp sampler3D;
 in vec2 vUv;
@@ -37,6 +40,7 @@ uniform mat4 uCameraWorld;
 uniform mat4 uInverseProjection;
 uniform vec3 uShape;
 uniform vec2 uRange;
+uniform float uZeroExtinctionLevel;
 uniform float uDensity;
 uniform bool uDrawScalar;
 uniform int uSkullMode;
@@ -104,8 +108,10 @@ float scalar(vec3 p){
   }
   return result;
 }
-vec4 transferAt(float value){
-  float level=clamp((value-uRange.x)/(uRange.y-uRange.x),0.0,1.0);
+float transferLevel(float value){
+  return clamp((value-uRange.x)/(uRange.y-uRange.x),0.0,1.0);
+}
+vec4 transferAtLevel(float level){
   return textureLod(uTransfer,vec2(level,0.5/uOpticalSize.y),0.0);
 }
 bool supported(vec3 p){
@@ -231,7 +237,8 @@ float keyVisibility(vec3 p){
 }
 float opticalProbe(vec3 p,vec3 world,float footprint){
   if(any(lessThan(p,vec3(-0.5)))||any(greaterThanEqual(p,uShape-0.5)))return 0.0;
-#if CONTEXT_SHADOWS == 1
+#if CONTEXT_SHADOWS == 1 || DIRECTIONAL_OPTICS == 1
+  // Both variants have a ready atlas and no active clipping half-spaces.
   return cachedExtinction(p,footprint);
 #else
   // Test the same retained half-spaces as the eye ray. Ease the wider cache
@@ -268,10 +275,17 @@ float opticalProbe(vec3 p,vec3 world,float footprint){
   // Do not use an unmasked density field to cast shadows from hidden anatomy.
   if(!supported(p))return 0.0;
   float value=scalar(p);
-  vec4 tissue=transferAt(value);
+  float level=transferLevel(value);
+#if SCALAR_ONLY == 1
+  if(level<uZeroExtinctionLevel)return 0.0;
+  vec4 tissue=transferAtLevel(level);
+  tissue.a*=uDensity;
+#else
+  vec4 tissue=transferAtLevel(level);
   ivec4 packed=ivec4(0);
   if(requiresLabels())packed=labelsAt((uLabelWorldToVoxel*vec4(world,1.0)).xyz);
   applyContext(tissue,value,packed,!uIsolate||selectedLabel(packed),p);
+#endif
   if(uGradientOpacity&&tissue.a>0.0)tissue.a*=boundaryExtinction(normalizedGradient(scalarNormal(p)));
   return min(tissue.a,1.5);
 #endif
@@ -384,8 +398,11 @@ void main(){
   float t=entry;
   int boundary=0;
   vec4 accumulated=vec4(0.0);
+#if SCALAR_ONLY == 0
   ivec4 previousLabels=ivec4(0);
   bool previousSelected=false;
+  bool useLabels=requiresLabels();
+#endif
 #if DIRECTIONAL_OPTICS == 1
   vec3 light=uOpticalLight;
 #else
@@ -395,7 +412,6 @@ void main(){
     normalize(vec3(-0.4,-0.5,0.75)-direction*0.7);
 #endif
   vec3 sky=normalize(light-0.65*direction);
-  bool useLabels=requiresLabels();
   for(int i=0;i<1536;i++){
     if(accumulated.a>0.995)break;
     if(boundary<uSurfaceCount && surfaceT[boundary]<=t+0.000001){
@@ -414,13 +430,23 @@ void main(){
       t+=dt;continue;
     }
     float value=scalar(p);
-    vec4 tissue=transferAt(value);
+    float level=transferLevel(value);
+#if SCALAR_ONLY == 1
+    // No label can add extinction on an ordinary non-CT scalar ray.
+    if(level<uZeroExtinctionLevel){
+      t+=dt;continue;
+    }
+    vec4 tissue=transferAtLevel(level);
+    tissue.a*=uDensity;
+#else
+    vec4 tissue=transferAtLevel(level);
     ivec4 packed=ivec4(0);
     if(useLabels)packed=labelsAt(labelOrigin+labelDirection*sampleT);
     bool selected=previousSelected;
     if(uIsolate&&any(notEqual(packed,previousLabels)))selected=selectedLabel(packed);
     previousSelected=selected;previousLabels=packed;
     applyContext(tissue,value,packed,selected,p);
+#endif
     if(tissue.a>0.0){
       // Central differences and the affine covector transform give signal/mm,
       // not signal/voxel. Automatic MRI context emphasizes acquired boundaries

@@ -153,6 +153,13 @@ still follows bone opacity or the MR boundary weighting. A single atlas
 lookup supplies both directions. Cut and isolated views use the local probes
 and clip-aware paths so removed signal cannot cast a shadow into the cut.
 
+When that atlas is ready and the view is uncut, the secondary probes read
+it directly. For non-CT scalar views without label isolation, the ray skips
+transfer lookups only inside the exact zero-extinction prefix of the active
+transfer. It still samples the acquired signal on the original ray schedule.
+The shortcut respects the authored transfer and source support, including at
+physical cuts. CT and label-isolated views retain their context evaluation.
+
 An acquired CT or CTA can qualify a detached posterior sheet for exclusion
 from the scalar context in the full-depth Structures and Vessels views. The
 component must separate from the main foreground at −500 HU, have a broad

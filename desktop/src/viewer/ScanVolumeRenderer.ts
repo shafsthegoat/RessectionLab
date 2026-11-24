@@ -2,7 +2,7 @@ import {packAnatomyLabels,MAX_ANATOMY_LAYERS} from './labelPacking';
 import * as THREE from 'three';
 import type { ViewerVolume } from './contracts';
 import { inverseAffine, rasAffine } from './coordinates.ts';
-import { canBalanceTofContext, isCtModality, volumeSettings, volumeTransfer } from './volumeTransfer.ts';
+import { canBalanceTofContext, isCtModality, volumeSettings, volumeTransfer, zeroExtinctionLevel } from './volumeTransfer.ts';
 import {balancedTofDensity, CT_EXTERIOR_AIR_HU, CT_EXTERIOR_TEXTURE_LIMIT_BYTES, ctExteriorDisplaySignal, finishOpticalPreparation, opticalAtlasSteps, OPTICAL_KEY_LIGHTS, volumeOpticalAtlas, type OpticalContext, type OpticalSource} from './volumeOpticalDensity.ts';
 import {layerAppearance} from './workspaceSettings';
 import type {ViewerWorkspaceSettings} from './workspaceSettings';
@@ -132,6 +132,7 @@ export class ScanVolumeRenderer {
         uDepth:{value:this.sceneTarget.depthTexture},uWorldToVoxel:{value:worldToVoxel},
         uCameraWorld:{value:new THREE.Matrix4()},uInverseProjection:{value:new THREE.Matrix4()},
         uShape:{value:shape},uRange:{value:new THREE.Vector2()},
+        uZeroExtinctionLevel:{value:0},
         uSkullMode:{value:0},uCt:{value:false},uScanPresentation:{value:false},uGradientOpacity:{value:false},uDensity:{value:.45},uStep:{value:this.spacing*.7},uLinear:{value:linear},
         uClipEnabled:{value:false},uClipPlane:{value:new THREE.Vector4()},
         uBackground:{value:this.background},
@@ -162,7 +163,9 @@ export class ScanVolumeRenderer {
       this.failedOpticalSelection=undefined;
       this.calibratedTofDensity=undefined;
       this.automaticMriTransfer=lut.gradientOpacity;
-      this.material.uniforms.uRange.value.set(...lut.range);this.preset=signature;
+      this.material.uniforms.uRange.value.set(...lut.range);
+      this.material.uniforms.uZeroExtinctionLevel.value=zeroExtinctionLevel(lut.data);
+      this.preset=signature;
     }
     this.material.uniforms.uCt.value=isCtModality(modality);
     this.standardCtAir=this.material.uniforms.uCt.value&&settings.preset!=='mri'&&input?.window===undefined&&input?.points===undefined&&
@@ -170,6 +173,11 @@ export class ScanVolumeRenderer {
     this.material.uniforms.uGradientOpacity.value=this.automaticMriTransfer&&this.shellContext;
     this.material.uniforms.uShadows.value=input?.shadows!==false;
     this.material.uniforms.uIsolate.value=input?.isolateLabels===true;
+    const scalarOnly=!this.material.uniforms.uCt.value&&!this.material.uniforms.uIsolate.value?1:0;
+    if((this.material.defines.SCALAR_ONLY??0)!==scalarOnly){
+      this.material.defines.SCALAR_ONLY=scalarOnly;
+      this.material.needsUpdate=true;
+    }
     this.activeTofContextDensity=undefined;
     if(this.enabled&&balanceTof&&!clip&&input?.balanceTofContext&&canBalanceTofContext(input,modality)&&this.transferLut){
       if(this.calibratedTofDensity===undefined)this.calibratedTofDensity=balancedTofDensity(this.sourceOptics,this.transferLut)??null;

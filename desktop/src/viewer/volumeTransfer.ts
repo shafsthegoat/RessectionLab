@@ -4,6 +4,12 @@ import { inverseAffine, rasAffine } from './coordinates.ts';
 export type VolumePreset = 'auto' | 'ct-bone' | 'ct-tissue' | 'ct-angiography' | 'mri';
 export interface VolumeRenderingSettings { enabled?: boolean; preset?: VolumePreset; density?: number; window?: [number,number]; shadows?: boolean; isolateLabels?: boolean; showCtExteriorSignal?: boolean; balanceTofContext?: boolean; points?: Array<[number,number,number,number,number]> }
 export const VOLUME_TRANSFER_WIDTH = 1024;
+/** One texel inside the zero-extinction prefix of the linearly filtered LUT. */
+export function zeroExtinctionLevel(data:Float32Array) {
+  let first=0;
+  while(first<VOLUME_TRANSFER_WIDTH&&data[4*first+3]===0)first++;
+  return Math.max(0,(first-1.5)/VOLUME_TRANSFER_WIDTH);
+}
 export function intensityWindow(values: Float32Array): [number, number] {
   const sampled:number[]=[];
   const stride=Math.max(1,Math.floor(values.length/16000));

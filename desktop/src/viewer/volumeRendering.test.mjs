@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {DataUtils} from 'three';
-import {canBalanceTofContext,isCtModality,volumeSettings,volumeTransfer,volumeRayInterval,opticalAlpha,mriBoundaryExtinction} from './volumeTransfer.ts';
+import {canBalanceTofContext,isCtModality,volumeSettings,volumeTransfer,volumeRayInterval,opticalAlpha,mriBoundaryExtinction,VOLUME_TRANSFER_WIDTH,zeroExtinctionLevel} from './volumeTransfer.ts';
 import {balancedTofDensity,buildDirectionalOpticalDepth,buildOpticalDensity,CT_EXTERIOR_AIR_HU,CT_EXTERIOR_TEXTURE_LIMIT_BYTES,ctExteriorDisplaySignal,OPTICAL_KEY_LIGHTS,volumeOpticalAtlas} from './volumeOpticalDensity.ts';
 import {inverseAffine,transformPoint} from './coordinates.ts';
 import {checkedViewerSettings} from '../workspace-view-settings.ts';
@@ -55,6 +55,20 @@ test('opacity is invariant to ray sample spacing and presets retain transparent 
   assert.equal(volumeSettings({},'CT').preset,'ct-bone');
   assert.equal(volumeSettings({},'T1CE').preset,'mri');
   assert.equal(volumeSettings({density:99}).density,2);
+});
+test('the fast scalar path skips only interpolated zero extinction before the first visible transfer sample',()=>{
+  const acquired=volumeTransfer('mri',[0,900],undefined,'TOF').data;
+  const width=VOLUME_TRANSFER_WIDTH;
+  const limit=zeroExtinctionLevel(acquired);
+  assert.ok(limit>.2&&limit<.25);
+  for(let i=0;i<width&&i/width<limit;i++){
+    assert.equal(acquired[4*i+3],0);
+    assert.equal(acquired[4*(i+1)+3],0);
+  }
+  const faint=volumeTransfer('mri',[0,900],{points:[
+    [0,1,1,1,.00001], [.2,1,1,1,0], [.6,1,1,1,0], [1,1,1,1,.4],
+  ]},'TOF').data;
+  assert.equal(zeroExtinctionLevel(faint),0);
 });
 test('saved volume choices round-trip detached from source arrays and reject malformed settings',()=>{
   const source={compartments:[],brainMask:null,metadata:{}},input={volumeRendering:{enabled:true,preset:'ct-bone',density:.45}};
