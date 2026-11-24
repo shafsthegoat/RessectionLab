@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import type { ViewerVolume } from './contracts';
 import { inverseAffine, rasAffine } from './coordinates.ts';
 import { isCtModality, volumeSettings, volumeTransfer } from './volumeTransfer.ts';
-import {finishOpticalPreparation, opticalAtlasSteps, OPTICAL_KEY_LIGHTS, volumeOpticalAtlas, type OpticalContext, type OpticalSource} from './volumeOpticalDensity.ts';
+import {CT_EXTERIOR_AIR_HU, CT_EXTERIOR_TEXTURE_LIMIT_BYTES, ctExteriorDisplaySignal, finishOpticalPreparation, opticalAtlasSteps, OPTICAL_KEY_LIGHTS, volumeOpticalAtlas, type OpticalContext, type OpticalSource} from './volumeOpticalDensity.ts';
 import {layerAppearance} from './workspaceSettings';
 import type {ViewerWorkspaceSettings} from './workspaceSettings';
 import type { VolumeRenderingSettings } from './volumeTransfer';
@@ -17,6 +17,8 @@ type VolumeTargets = {
   accumulation: THREE.WebGLRenderTarget[];
   surfaces: SurfaceVolumePass;
 };
+type OpticalSelection = {source:OpticalSource; context:OpticalContext|null};
+const sameOptics=(a:OpticalSelection|undefined,b:OpticalSelection)=>a?.source===b.source&&a.context===b.context;
 
 function targetBytes(targets:VolumeTargets) {
   return [targets.scene,targets.volume,...targets.accumulation,...targets.surfaces.targets,
@@ -55,11 +57,16 @@ export class ScanVolumeRenderer {
   private readonly texture: THREE.Data3DTexture;
   private transfer: THREE.DataTexture | null = null;
   private transferLut?: ReturnType<typeof volumeTransfer>;
-  private opticalAtlasContext?: OpticalContext | null;
-  private opticalPreparation: {context:OpticalContext|null;steps:ReturnType<typeof opticalAtlasSteps>;timer:ReturnType<typeof setTimeout> | null} | null = null;
-  private failedOpticalContext?: OpticalContext | null;
+  private opticalAtlasSelection?: OpticalSelection;
+  private opticalPreparation: {selection:OpticalSelection;steps:ReturnType<typeof opticalAtlasSteps>;timer:ReturnType<typeof setTimeout> | null} | null = null;
+  private failedOpticalSelection?: OpticalSelection;
   private opticalCellAxes: THREE.Vector3[]=[];
   private readonly sourceOptics: OpticalSource;
+  private readonly ctExterior?: ViewerVolume['ctExterior'];
+  private exteriorVolume?: {source:OpticalSource; texture:THREE.Data3DTexture} | null;
+  private standardCtAir=false;
+  private exteriorPresentation=false;
+  private showCtExteriorSignal=false;
   private preset = '';
   private automaticMriTransfer=false;
   private shellContext=false;
@@ -92,6 +99,7 @@ export class ScanVolumeRenderer {
     const footprintRadius=(axis:number)=>Math.min(.68,.6/Math.hypot(affine[0][axis],affine[1][axis],affine[2][axis]));
     const contextRadius=new THREE.Vector3(footprintRadius(0),footprintRadius(1),footprintRadius(2));
     this.sourceOptics={signal:volume.mri,shape:volume.shape,affine,inverse,support:volume.headSupport?.data};
+    if(volume.mri.byteLength<=CT_EXTERIOR_TEXTURE_LIMIT_BYTES)this.ctExterior=volume.ctExterior;
     const keyLight=new THREE.Vector3();
     for(const direction of OPTICAL_KEY_LIGHTS)keyLight.add(new THREE.Vector3(...direction).normalize());
     keyLight.normalize();
@@ -142,17 +150,20 @@ export class ScanVolumeRenderer {
   }
   configure(input: VolumeRenderingSettings | undefined, modality: string, clip: THREE.Plane | null) {
     const settings=volumeSettings(input,modality);this.enabled=settings.enabled&&settings.density>0;
+    this.showCtExteriorSignal=input?.showCtExteriorSignal===true;
     const signature=JSON.stringify([settings.preset,input?.window,input?.points,modality]);
     if(signature!==this.preset){
       this.cancelOpticalPreparation();
       const lut=volumeTransfer(settings.preset,this.window,input,modality);
       this.transferLut=lut;
       this.installOpticalAtlas(volumeOpticalAtlas(lut));
-      this.failedOpticalContext=undefined;
+      this.failedOpticalSelection=undefined;
       this.automaticMriTransfer=lut.gradientOpacity;
       this.material.uniforms.uRange.value.set(...lut.range);this.preset=signature;
     }
     this.material.uniforms.uCt.value=isCtModality(modality);
+    this.standardCtAir=this.material.uniforms.uCt.value&&settings.preset!=='mri'&&input?.window===undefined&&input?.points===undefined&&
+      !!this.transferLut&&this.transferLut.range[0]>=CT_EXTERIOR_AIR_HU&&this.transferLut.data[3]===0;
     this.material.uniforms.uGradientOpacity.value=this.automaticMriTransfer&&this.shellContext;
     this.material.uniforms.uShadows.value=input?.shadows!==false;
     this.material.uniforms.uIsolate.value=input?.isolateLabels===true;
@@ -160,9 +171,10 @@ export class ScanVolumeRenderer {
     this.material.uniforms.uClipEnabled.value=!!clip;
     if(clip)this.material.uniforms.uClipPlane.value.set(clip.normal.x,clip.normal.y,clip.normal.z,clip.constant);
     if(!this.enabled||input?.shadows===false||input?.isolateLabels)this.cancelOpticalPreparation();
+    else this.cancelStaleOpticalSource();
   }
 
-  private installOpticalAtlas(atlas:ReturnType<typeof volumeOpticalAtlas>,context:OpticalContext|null=null){
+  private installOpticalAtlas(atlas:ReturnType<typeof volumeOpticalAtlas>,selection?:OpticalSelection){
     const u=this.material.uniforms;
     this.transfer?.dispose();
     this.transfer=new THREE.DataTexture(atlas.data,atlas.width,atlas.height,THREE.RGBAFormat,THREE.HalfFloatType);
@@ -173,8 +185,8 @@ export class ScanVolumeRenderer {
     u.uOpticalGrid.value.set(...atlas.grid);
     u.uOpticalColumns.value=atlas.columns;
     u.uOpticalDepthRow.value=atlas.depthRow;
-    this.opticalAtlasContext=atlas.height>1?context:undefined;
-    if(context){
+    this.opticalAtlasSelection=atlas.height>1?selection:undefined;
+    if(selection?.context){
       // Rounded-up source bin widths bound nonuniform final bins as well.
       const {affine,shape}=this.sourceOptics;
       this.opticalCellAxes=shape.map((size,axis)=>new THREE.Vector3(affine[0][axis],affine[1][axis],affine[2][axis])
@@ -189,19 +201,60 @@ export class ScanVolumeRenderer {
     return task?.steps;
   }
 
+  private get showCleanExterior(){
+    const u=this.material.uniforms;
+    return !!this.ctExterior&&this.enabled&&this.exteriorPresentation&&this.standardCtAir&&!this.showCtExteriorSignal&&
+      !u.uClipEnabled.value&&u.uExtraClipCount.value===0&&!u.uIsolate.value;
+  }
+
+  private get displayOpticalSource(){
+    return this.showCleanExterior&&this.exteriorVolume?this.exteriorVolume.source:this.sourceOptics;
+  }
+
+  private selectScalarTexture(){
+    const clean=this.showCleanExterior;
+    if(clean&&this.ctExterior&&this.exteriorVolume===undefined){
+      const signal=ctExteriorDisplaySignal(this.sourceOptics.signal,this.sourceOptics.shape,this.ctExterior);
+      this.exteriorVolume=null;
+      if(signal){
+        const [x,y,z]=this.sourceOptics.shape;
+        const texture=new THREE.Data3DTexture(signal,z,y,x);
+        texture.format=this.texture.format;
+        texture.type=this.texture.type;
+        texture.minFilter=this.texture.minFilter;
+        texture.magFilter=this.texture.magFilter;
+        texture.unpackAlignment=this.texture.unpackAlignment;
+        texture.needsUpdate=true;
+        this.exteriorVolume={source:{...this.sourceOptics,signal},texture};
+      }
+    }
+    const texture=clean&&this.exteriorVolume?this.exteriorVolume.texture:this.texture;
+    const uniform=this.material.uniforms.uVolume;
+    const changed=texture!==uniform.value;
+    uniform.value=texture;
+    return changed;
+  }
+
+  private cancelStaleOpticalSource(){
+    if(this.opticalPreparation&&this.opticalPreparation.selection.source!==this.displayOpticalSource)
+      this.cancelOpticalPreparation();
+  }
+
   private prepareOpticalAtlas(exporting:boolean){
     const u=this.material.uniforms;
     const context=u.uContextCoverageLayer.value>=0?this.contextCoverage??null:null;
+    const source=this.displayOpticalSource;
+    const selection={source,context};
     const overrides=u.uIsolate.value || (u.uCt.value && !context &&
       (u.uSkullMode.value===1 || (!u.uScanPresentation.value && (u.uContextLayerCount.value>0 || u.uSkullMode.value===2))));
     const useCache=u.uShadows.value&&!overrides;
-    if(!useCache||(this.opticalPreparation&&this.opticalPreparation.context!==context))this.cancelOpticalPreparation();
-    if(useCache&&this.opticalAtlasContext!==context&&this.failedOpticalContext!==context&&this.transferLut){
+    if(!useCache||(this.opticalPreparation&&!sameOptics(this.opticalPreparation.selection,selection)))this.cancelOpticalPreparation();
+    if(useCache&&!sameOptics(this.opticalAtlasSelection,selection)&&!sameOptics(this.failedOpticalSelection,selection)&&this.transferLut){
       if(exporting||!this.onOpticsReady){
-        const steps=this.cancelOpticalPreparation()??opticalAtlasSteps(this.transferLut,this.sourceOptics,context??undefined);
-        this.installOpticalAtlas(finishOpticalPreparation(steps),context);
+        const steps=this.cancelOpticalPreparation()??opticalAtlasSteps(this.transferLut,source,context??undefined);
+        this.installOpticalAtlas(finishOpticalPreparation(steps),selection);
       }else if(!this.opticalPreparation){
-        const task={context,steps:opticalAtlasSteps(this.transferLut,this.sourceOptics,context??undefined),timer:null as ReturnType<typeof setTimeout>|null};
+        const task={selection,steps:opticalAtlasSteps(this.transferLut,source,context??undefined),timer:null as ReturnType<typeof setTimeout>|null};
         this.opticalPreparation=task;
         const advance=()=>{
           if(this.opticalPreparation!==task)return;
@@ -210,13 +263,13 @@ export class ScanVolumeRenderer {
             do {
               const next=task.steps.next();
               if(next.done){
-                this.installOpticalAtlas(next.value,task.context);
+                this.installOpticalAtlas(next.value,task.selection);
                 this.opticalPreparation=null;
                 break;
               }
             }while(performance.now()<deadline);
           }catch(error){
-            this.failedOpticalContext=task.context;
+            this.failedOpticalSelection=task.selection;
             this.opticalPreparation=null;
             console.warn('Volume optical cache unavailable; using exact probes.',error);
           }
@@ -226,7 +279,7 @@ export class ScanVolumeRenderer {
         task.timer=setTimeout(advance,0);
       }
     }
-    const ready=useCache&&this.opticalAtlasContext===context;
+    const ready=useCache&&sameOptics(this.opticalAtlasSelection,selection);
     u.uOpticalCache.value=ready;
     const clipped=u.uClipEnabled.value||u.uExtraClipCount.value>0;
     const mode=ready&&context?(clipped?2:1):0;
@@ -247,6 +300,7 @@ export class ScanVolumeRenderer {
   }
   labels(texture:THREE.Data3DTexture,visible:Record<string,boolean>,settings:ViewerWorkspaceSettings,planes:THREE.Plane[]){
     this.shellContext=settings.contextStyle==='shell';
+    this.exteriorPresentation=settings.presentation==='segmentation'||settings.presentation==='vascular';
     this.material.uniforms.uScanPresentation.value=settings.presentation==='scan'&&settings.operativeView!=='surgeon';
     this.material.uniforms.uGradientOpacity.value=this.automaticMriTransfer&&this.shellContext;
     const u=this.material.uniforms;u.uLabels.value=texture;u.uSkullMode.value=settings.skullMode==='transparent'?2:settings.skullMode?1:0;let bits=0,all=0,active=0,context=0;
@@ -263,16 +317,22 @@ export class ScanVolumeRenderer {
     u.uContextLayerCount.value=context;
     u.uLabelBits.value=bits;u.uVisibleBits.value=all;u.uExtraClipCount.value=Math.min(7,planes.length);
     planes.slice(0,7).forEach((p,i)=>u.uExtraClips.value[i].set(p.normal.x,p.normal.y,p.normal.z,p.constant));
+    this.cancelStaleOpticalSource();
   }
   setLayers(layers:ViewerVolume["compartments"],codes:Array<[number,number]>) {
     this.layers=layers;this.material.uniforms.uLayerCount.value=layers.length;
     codes.forEach((code,i)=>this.material.uniforms.uLayerCodes.value[i].set(...code));
   }
   get active(){return this.enabled;}
+  get estimatedCtExteriorBytes(){
+    const bytes=this.exteriorVolume?.source.signal.byteLength??0;
+    return {cpuBytes:bytes,gpuTextureBytes:bytes};
+  }
   get estimatedTargetBytes(){
     const live=targetBytes({scene:this.sceneTarget,volume:this.volumeTarget,accumulation:this.accumulation,surfaces:this.surfacePass});
     const drag=this.interactionTargets?renderTargetBytes(this.interactionTargets.scene)+renderTargetBytes(this.interactionTargets.volume):0;
-    return live+drag+(this.transfer?.image.data?.byteLength??0)+(this.contextCoverage?.texture.image.data?.byteLength??0);
+    return live+drag+(this.transfer?.image.data?.byteLength??0)+(this.contextCoverage?.texture.image.data?.byteLength??0)
+      +this.estimatedCtExteriorBytes.gpuTextureBytes;
   }
 
   /** In transparent CT context, interpolate the optical coverage of one
@@ -338,7 +398,9 @@ export class ScanVolumeRenderer {
     const u=this.material.uniforms;
     const shadowSampling=!this.enabled||!u.uShadows.value?'off':!u.uOpticalCache.value?'source-probes':
       this.material.defines.DIRECTIONAL_OPTICS===1?'directional-atlas':u.uContextCoverageLayer.value>=0?'skull-atlas':'source-atlas';
-    return {width:w,height:h,samples:interactive?1:this.samples,opticsPending:this.opticsPending,shadowSampling};
+    const ctExteriorDisplay=!!this.exteriorVolume&&u.uVolume.value===this.exteriorVolume.texture;
+    return {width:w,height:h,samples:interactive?1:this.samples,opticsPending:this.opticsPending,shadowSampling,
+      ctExteriorDisplay,ctExteriorBytes:this.estimatedCtExteriorBytes};
   }
 
   renderExportSample(scene:THREE.Scene,camera:THREE.PerspectiveCamera,targets:ScanVolumeExportTargets,
@@ -351,6 +413,7 @@ export class ScanVolumeRenderer {
     const {scene:sceneTarget,volume:volumeTarget,accumulation,surfaces:surfacePass}=targets;
     if(sceneTarget.width!==w||sceneTarget.height!==h){sceneTarget.setSize(w,h);volumeTarget.setSize(w,h);}
     const isExport=exportOriginY!==undefined;
+    if(this.selectScalarTexture()&&!isExport){this.invalidate();sample=0;}
     this.configureContextCoverage();
     if(this.enabled)this.prepareOpticalAtlas(isExport);
     const uniforms=this.material.uniforms;
@@ -394,7 +457,7 @@ export class ScanVolumeRenderer {
   }
   dispose(){
     this.cancelOpticalPreparation();
-    this.sceneTarget.dispose();this.volumeTarget.dispose();if(this.ownsTexture)this.texture.dispose();this.supportTexture?.dispose();this.contextCoverage?.texture.dispose();this.transfer?.dispose();
+    this.sceneTarget.dispose();this.volumeTarget.dispose();if(this.ownsTexture)this.texture.dispose();this.supportTexture?.dispose();this.contextCoverage?.texture.dispose();this.exteriorVolume?.texture.dispose();this.transfer?.dispose();
     this.interactionTargets?.scene.dispose();this.interactionTargets?.volume.dispose();
     this.surfacePass.dispose();this.accumulation.forEach(t=>t.dispose());this.accumulateMaterial.dispose();
     for(const scene of [this.rayScene,this.blitScene,this.accumulateScene])scene.traverse(child=>{if(child instanceof THREE.Mesh)child.geometry.dispose();});

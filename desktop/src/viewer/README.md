@@ -130,6 +130,18 @@ still follows bone opacity or the MR boundary weighting. A single atlas
 lookup supplies both directions. Cut and isolated views use the local probes
 and clip-aware paths so removed signal cannot cast a shadow into the cut.
 
+An acquired CT or CTA can qualify a detached posterior sheet for exclusion
+from the scalar context in the full-depth Structures and Vessels views. The
+component must separate from the main foreground at −500 HU, have a broad
+boundary-spanning shape and clear the same-grid anatomical labels. The
+detector leaves connected, dense or ambiguous components visible. Use
+**Appearance → Show detached CT signal** to restore the full CT signal in
+the same view. Scan, linked slices, cuts, isolated labels and custom transfer
+curves use the full acquisition. The eye ray and optical cache share the
+same display-only air-filled derivative. The native values and structure
+surfaces remain available through their original paths. The derivative is
+allocated when first used and capped at 128 MiB in each of CPU and GPU memory.
+
 With shadows enabled, eligible transparent CT views reuse the same optical
 atlas for total extinction and the fraction associated with the bone mask.
 The renderer applies the visible opacity after interpolation, so changing it

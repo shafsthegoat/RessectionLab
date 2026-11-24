@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {DataUtils} from 'three';
 import {isCtModality,volumeSettings,volumeTransfer,volumeRayInterval,opticalAlpha,mriBoundaryExtinction} from './volumeTransfer.ts';
-import {buildDirectionalOpticalDepth,buildOpticalDensity,OPTICAL_KEY_LIGHTS,volumeOpticalAtlas} from './volumeOpticalDensity.ts';
+import {buildDirectionalOpticalDepth,buildOpticalDensity,CT_EXTERIOR_AIR_HU,CT_EXTERIOR_TEXTURE_LIMIT_BYTES,ctExteriorDisplaySignal,OPTICAL_KEY_LIGHTS,volumeOpticalAtlas} from './volumeOpticalDensity.ts';
 import {inverseAffine,transformPoint} from './coordinates.ts';
 import {checkedViewerSettings} from '../workspace-view-settings.ts';
 const identity=[[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]];
@@ -192,6 +192,49 @@ test('CT shadow cache includes the filtered skull fraction without changing prim
   assert.ok(Math.abs(edge.fine[1]/edge.fine[0]-.75)<1e-6,'coverage clamps at the acquisition face');
   assert.deepEqual(mask,Uint8Array.of(0,1,0));
   assert.deepEqual(signal,Float32Array.of(1000,1000,1000));
+});
+
+test('CT exterior replaces only the exact excluded footprint in a bounded display copy',()=>{
+  const shape=[6,2,2], signal=Float32Array.from({length:24},(_,i)=>400+i);
+  const exterior={offset:[2,1,0],shape:[2,1,2],data:Uint8Array.of(1,0,0,1)};
+  const expected=signal.slice();
+  expected[10]=expected[15]=CT_EXTERIOR_AIR_HU;
+  const derived=ctExteriorDisplaySignal(signal,shape,exterior);
+  assert.notEqual(derived,signal);
+  assert.deepEqual(derived,expected);
+  assert.equal(signal[10],410);
+  assert.equal(signal[15],415);
+  assert.deepEqual(exterior.data,Uint8Array.of(1,0,0,1));
+  const tooLarge={byteLength:CT_EXTERIOR_TEXTURE_LIMIT_BYTES+4,slice(){assert.fail('must not allocate an over-budget copy');}};
+  assert.equal(ctExteriorDisplaySignal(tooLarge,shape,exterior),undefined);
+  assert.equal(ctExteriorDisplaySignal(signal,shape,{...exterior,offset:[5,1,0]}),undefined);
+});
+
+test('all exterior shadow scales use the same air-filled values as the visible CTA',()=>{
+  const affine=[[4,0,0,0],[0,4,0,0],[0,0,4,0],[0,0,0,1]];
+  const shape=[6,2,2], signal=new Float32Array(24).fill(440);
+  const exterior={offset:[2,1,0],shape:[2,1,2],data:Uint8Array.of(1,0,0,1)};
+  const native={signal,shape,affine,inverse:inverseAffine(affine)};
+  const source={...native,signal:ctExteriorDisplaySignal(signal,shape,exterior)};
+  const brighter=signal.slice();
+  brighter[10]=brighter[15]=1800;
+  const alternative={...native,signal:ctExteriorDisplaySignal(brighter,shape,exterior)};
+  const mask=Uint8Array.from(signal,(_,i)=>Number(i%3===0));
+  const context={mask,radius:[.5,.5,.5]};
+  for(const preset of ['ct-angiography','ct-bone','ct-tissue']){
+    const transfer=volumeTransfer(preset,[-1000,3000],undefined,'CTA');
+    assert.equal(transfer.data[3],0);
+    assert.ok(transfer.range[0]>=CT_EXTERIOR_AIR_HU);
+    const density=buildOpticalDensity(source,transfer,context);
+    assert.deepEqual(buildOpticalDensity(alternative,transfer,context),density);
+    assert.notDeepEqual(buildOpticalDensity(native,transfer,context),density);
+    for(const i of [10,15])assert.equal(density.fine[i*2],0);
+    assert.ok(density.fine[11*2]>0,'zero within the footprint leaves the source value unchanged');
+    for(const direction of OPTICAL_KEY_LIGHTS){
+      assert.deepEqual(buildDirectionalOpticalDepth(source,shape,density.fine,direction),
+        buildDirectionalOpticalDepth(alternative,shape,buildOpticalDensity(alternative,transfer,context).fine,direction));
+    }
+  }
 });
 
 test('directional extinction integrates physical length on a mirrored, anisotropic and sheared cache grid',()=>{

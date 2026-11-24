@@ -46,6 +46,7 @@ for(const recipe of recipes){
   assert(recipe.layers.length&&recipe.layers.every(id=>layers.has(id)),`Unknown layer in ${recipe.name}`);
   if(recipe.useDefaultState)assert(recipes.length===1&&!recipe.settings&&!recipe.cursor&&!recipe.scope&&!recipe.compareLayerIds,
     'A default-state capture cannot supply view overrides');
+  if(recipe.inspectCtExteriorToggle)assert(recipe.useDefaultState,'Check the detached CT signal control from the ordinary default');
   assert(!recipe.compareLayerIds||recipe.compareLayerIds.length===2&&recipe.compareLayerIds.every(id=>recipe.layers.includes(id)));
   assert(recipe.depthSlab===undefined||typeof recipe.depthSlab==='boolean');
   assert(!recipe.branchLayerId||recipe.layers.includes(recipe.branchLayerId));
@@ -340,6 +341,11 @@ app.on('browser-window-created',(_event,window)=>{
         const surfaces=lastPayload.compartments.map(({name,sourceSeries,alignment,surfaceDiagnostics,surface,displayFilter})=>({name,sourceSeries,alignment,surfaceDiagnostics,sourceSurfaceSha256:surface?.source?.sha256,empty:surface?.empty??false,displayFilter}));
         const record={name:recipe.name,seriesId:view.seriesId,sourceSha256:lastPayload.mri.sha256,scope:view.vesselScope,view:view.states[view.seriesId],surfaces,
           readyMs:performance.now()-openStarted,...await capture(recipe.name)};
+        if(lastPayload.ctExterior){
+          const {schema,offset,mask,signalSha256}=lastPayload.ctExterior;
+          assert.equal(signalSha256,record.sourceSha256);
+          record.ctExterior={schema,offset,shape:mask.shape,maskSha256:mask.sha256};
+        }
         if(expected){
           const reference=expected.views.find(view=>view.name===recipe.name);
           assert(reference,`Missing matched view ${recipe.name}`);
@@ -358,6 +364,25 @@ app.on('browser-window-created',(_event,window)=>{
             assert(record.export.frame.cameraState[key].every((n,i)=>Math.abs(n-record.frame.cameraState[key][i])<1e-9),
               `3D export changed live camera ${key}`);
           assert.deepEqual(record.export.frame.sourceSignalFingerprint,record.frame.sourceSignalFingerprint,'3D export changed acquired signal');
+        }
+        if(recipe.inspectCtExteriorToggle){
+          assert(record.ctExterior,'Missing source-bound detached CT support');
+          const toggle=`[...document.querySelectorAll('label')].find(label=>label.textContent.trim()==='Show detached CT signal')?.querySelector('input[type=checkbox]')`;
+          const inspect=async(show)=>{
+            const before=await submittedFrame();
+            await click('Appearance');
+            await until(`!!(${toggle})&&!(${toggle}).disabled`,'detached CT signal control');
+            await js(`(${toggle}).click()`);
+            await click('Close view controls');
+            await settledFrame(before.serial);
+            const checkedView=(await nativeView()).states[view.seriesId];
+            assert.equal(checkedView.settings.volumeRendering.showCtExteriorSignal,show);
+            const shown=await capture(`${recipe.name}-${show?'show-detached':'restore-default'}`);
+            for(const key of ['cameraState','cursor','displayIdentity','sourceSignalFingerprint'])
+              assert.deepEqual(shown.frame[key],record.frame[key],`Detached CT control changed ${key}`);
+            return shown;
+          };
+          record.ctExteriorToggle={show:await inspect(true),restore:await inspect(false)};
         }
         if(recipe.depthSlab){
           const captures=[];

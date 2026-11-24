@@ -163,7 +163,8 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
       if(seq!==generation.current)return;
       const imageKey=b.collectionId+"/"+s+"/"+result.mri.sha256;
       let hydrated=await hydrateAnatomy(result,api,sourceImage.current?.key===imageKey?sourceImage.current.data:undefined,undefined,b.document.layers,appearanceCache.current);if(seq!==generation.current)return;
-      hydrated.displayIdentity=JSON.stringify([b.collectionId,s,result.mri.sha256,b.document.snapshot_id,raw,seq]);
+      hydrated.displayIdentity=JSON.stringify([b.collectionId,s,result.mri.sha256,b.document.snapshot_id,raw,seq,
+        hydrated.ctExterior&&[hydrated.ctExterior.sha256,hydrated.ctExterior.offset,hydrated.ctExterior.shape]]);
       hydrated=await prepared(hydrated);if(seq!==generation.current)return;
       sourceImage.current={key:imageKey,data:hydrated.mri};
       const next={...view,cursor:view.cursor??transformPoint(hydrated.affine,hydrated.shape.map(n=>(n-1)/2) as Point3)};

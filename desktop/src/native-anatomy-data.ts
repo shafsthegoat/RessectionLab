@@ -1,7 +1,8 @@
 import {studyLayerDisplayKind} from './native-study-state.ts';
 import type {ViewerVolume,VesselDisplayFilter,PatientContext,SurfaceAppearanceSource} from './viewer/contracts';
 import {inverseAffine,rasAffine} from './viewer/coordinates.ts';
-import type {Point3} from './viewer/coordinates';
+import type {Point3,Shape3} from './viewer/coordinates';
+import {CT_EXTERIOR_TEXTURE_LIMIT_BYTES} from './viewer/volumeOpticalDensity.ts';
 import type {ViewerWorkspaceSettings} from './viewer/workspaceSettings';
 import type {ArrayDescriptor,ResectionApi,CasePayload} from './types';
 export type Layer={
@@ -109,8 +110,9 @@ export interface NativeAnatomyApi {
   anatomySample(args:Args):Promise<unknown>;
 }
 export type Surface=NonNullable<ViewerVolume['compartments'][number]['surface']>;
-export type ViewPayload=Omit<ViewerVolume,'mri'|'compartments'|'tractography'|'labelSets'|'patientContext'|'headSupport'>&{appearanceSources?:Array<Pick<SurfaceAppearanceSource,'seriesId'|'modality'|'sourceSha256'|'affine'|'nativeAffine'|'nativeShape'|'intensityUnits'>&{signal:ArrayDescriptor}>;headSupport?:ArrayDescriptor;patientContext?:PatientContext;labelSets?:Array<{id:string;data:ArrayDescriptor}>;tractography?:Array<{id:string;label:string;points:ArrayDescriptor;offsets:ArrayDescriptor}>;mri:ArrayDescriptor;modality:string;registrationStatus:string;patientFrameReady?:boolean;alignmentPreviews?:string[];unavailableLayers:string[];compartments:Array<{sourceSeries?:string;alignment?:string;kind?:string;displayKind?:string;sourceIdentity?:string;qa?:import('./viewer/contracts').AnatomyQuality;surfaceDiagnostics?:import('./viewer/surfacePolicy').SurfaceDiagnostics;name:string;color:string;volumeMm3?:number;displayFilter?:VesselDisplayFilter;sourceSupport?:import('./viewer/contracts').TissueDisplaySupport;mask?:ArrayDescriptor;labelSet?:string;labelValue?:number;surface?:{empty:true}|Record<keyof Surface,ArrayDescriptor>}>};
-export async function hydrateAnatomy(payload:ViewPayload,api:ResectionApi,cachedImage?:Float32Array,cached?:Pick<ViewerVolume,'labelSets'|'tractography'|'headSupport'>,studyLayers?:Layer[],appearanceCache?:Map<string,Float32Array>):Promise<ViewerVolume>{
+type CtExteriorPayload={schema:string;offset:Point3;mask:ArrayDescriptor;signalSha256:string};
+export type ViewPayload=Omit<ViewerVolume,'mri'|'compartments'|'tractography'|'labelSets'|'patientContext'|'headSupport'|'ctExterior'>&{appearanceSources?:Array<Pick<SurfaceAppearanceSource,'seriesId'|'modality'|'sourceSha256'|'affine'|'nativeAffine'|'nativeShape'|'intensityUnits'>&{signal:ArrayDescriptor}>;headSupport?:ArrayDescriptor;ctExterior?:CtExteriorPayload;patientContext?:PatientContext;labelSets?:Array<{id:string;data:ArrayDescriptor}>;tractography?:Array<{id:string;label:string;points:ArrayDescriptor;offsets:ArrayDescriptor}>;mri:ArrayDescriptor;modality:string;registrationStatus:string;patientFrameReady?:boolean;alignmentPreviews?:string[];unavailableLayers:string[];compartments:Array<{sourceSeries?:string;alignment?:string;kind?:string;displayKind?:string;sourceIdentity?:string;qa?:import('./viewer/contracts').AnatomyQuality;surfaceDiagnostics?:import('./viewer/surfacePolicy').SurfaceDiagnostics;name:string;color:string;volumeMm3?:number;displayFilter?:VesselDisplayFilter;sourceSupport?:import('./viewer/contracts').TissueDisplaySupport;mask?:ArrayDescriptor;labelSet?:string;labelValue?:number;surface?:{empty:true}|Record<keyof Surface,ArrayDescriptor>}>};
+export async function hydrateAnatomy(payload:ViewPayload,api:ResectionApi,cachedImage?:Float32Array,cached?:Pick<ViewerVolume,'labelSets'|'tractography'|'headSupport'|'ctExterior'>,studyLayers?:Layer[],appearanceCache?:Map<string,Float32Array>):Promise<ViewerVolume>{
   async function bytes(d:ArrayDescriptor){
     if(!d || d.byteLength>512*1024**2 || d.byteOrder!=='little' || d.order!=='C')throw Error('Unsupported anatomy transfer');
     const b=await api.readAsset(d.assetId);if(b.byteLength!==d.byteLength)throw Error('Incomplete anatomy transfer');
@@ -162,7 +164,26 @@ export async function hydrateAnatomy(payload:ViewPayload,api:ResectionApi,cached
     headSupport=known?.sha256===payload.headSupport.sha256?known:{sha256:payload.headSupport.sha256,data:new Uint8Array(await bytes(payload.headSupport))};
     if(headSupport.data.length!==mri.length)throw Error('Head support differs from its source grid');
   }
-  return {...payload,mri,compartments,tractography,labelSets,headSupport};
+  let ctExterior:ViewerVolume['ctExterior'];
+  if(payload.ctExterior&&mri.byteLength<=CT_EXTERIOR_TEXTURE_LIMIT_BYTES){
+    const {schema,offset,mask,signalSha256}=payload.ctExterior;
+    const shape=mask?.shape as Shape3;
+    if(schema!=='native-ct-exterior-sheet-v1'||!['CT','CTA'].includes(payload.modality)||payload.displayPreview||
+      signalSha256!==payload.mri.sha256||mask?.dtype!=='uint8'||!/^[a-f0-9]{64}$/.test(mask.sha256)||
+      !Array.isArray(offset)||!Array.isArray(shape)||offset.length!==3||shape.length!==3||
+      shape.some((size,i)=>!Number.isSafeInteger(size)||size<1||!Number.isSafeInteger(offset[i])||
+        offset[i]<0||offset[i]+size>payload.shape[i])||mask.byteLength!==shape.reduce((a,b)=>a*b,1))
+      throw Error('Detached CT support differs from its acquired source grid');
+    const previous=cached?.ctExterior;
+    if(previous?.sha256===mask.sha256&&offset.every((x,i)=>x===previous.offset[i]&&shape[i]===previous.shape[i])){
+      ctExterior=previous;
+    }else{
+      const data=new Uint8Array(await bytes(mask));
+      if(data.some(value=>value!==0&&value!==1)||!data.includes(1))throw Error('Invalid detached CT support mask');
+      ctExterior={offset,shape,data,sha256:mask.sha256};
+    }
+  }
+  return {...payload,mri,compartments,tractography,labelSets,headSupport,ctExterior};
 }
 
 export type CranialView = 'planning'|'inspection';

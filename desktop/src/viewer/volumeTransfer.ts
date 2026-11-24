@@ -2,7 +2,7 @@ import type { Affine, Point3 } from './coordinates';
 import { inverseAffine, rasAffine } from './coordinates.ts';
 
 export type VolumePreset = 'auto' | 'ct-bone' | 'ct-tissue' | 'ct-angiography' | 'mri';
-export interface VolumeRenderingSettings { enabled?: boolean; preset?: VolumePreset; density?: number; window?: [number,number]; shadows?: boolean; isolateLabels?: boolean; points?: Array<[number,number,number,number,number]> }
+export interface VolumeRenderingSettings { enabled?: boolean; preset?: VolumePreset; density?: number; window?: [number,number]; shadows?: boolean; isolateLabels?: boolean; showCtExteriorSignal?: boolean; points?: Array<[number,number,number,number,number]> }
 export const VOLUME_TRANSFER_WIDTH = 1024;
 export function intensityWindow(values: Float32Array): [number, number] {
   const sampled:number[]=[];

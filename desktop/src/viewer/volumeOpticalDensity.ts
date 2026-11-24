@@ -3,6 +3,9 @@ import type {Affine, Point3} from './coordinates';
 import {mriBoundaryExtinction,VOLUME_TRANSFER_WIDTH} from './volumeTransfer.ts';
 
 type OpticalTransfer = {data: Float32Array; range: [number, number]; gradientOpacity: boolean};
+export type OpticalExterior = {offset: Point3; shape: Point3; data: Uint8Array};
+export const CT_EXTERIOR_AIR_HU = -1024;
+export const CT_EXTERIOR_TEXTURE_LIMIT_BYTES = 128*1024*1024;
 export type OpticalSource = {
   signal: Float32Array;
   shape: Point3;
@@ -11,6 +14,26 @@ export type OpticalSource = {
   support?: Uint8Array;
 };
 export type OpticalContext = {mask: Uint8Array; radius: Point3};
+
+/** A separate display texture preserves the raw acquisition and provides the
+ * exact same air-filled values to primary sampling and both shadow scales. */
+export function ctExteriorDisplaySignal(signal:Float32Array, shape:Point3, exterior:OpticalExterior) {
+  if(signal.byteLength>CT_EXTERIOR_TEXTURE_LIMIT_BYTES)return;
+  const {offset,shape:crop,data}=exterior;
+  if(signal.length!==shape[0]*shape[1]*shape[2]||data.length!==crop[0]*crop[1]*crop[2]||
+    crop.some((size,axis)=>!Number.isInteger(size)||size<1||!Number.isInteger(offset[axis])||
+      offset[axis]<0||offset[axis]+size>shape[axis]))return;
+
+  const display=signal.slice();
+  const [nx,ny,nz]=crop;
+  const [,,z]=shape,stride=shape[1]*z;
+  for(let x=0;x<nx;x++)for(let y=0;y<ny;y++){
+    const native=(x+offset[0])*stride+(y+offset[1])*z+offset[2];
+    const cropped=(x*ny+y)*nz;
+    for(let k=0;k<nz;k++)if(data[cropped+k])display[native+k]=CT_EXTERIOR_AIR_HU;
+  }
+  return display;
+}
 
 const CACHE_CELL_MM = 4;
 const MAX_CELLS_PER_AXIS = 56;

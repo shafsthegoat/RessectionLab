@@ -288,6 +288,97 @@ test('CTA uses only the atlas matching its active optical mask and shares it acr
   }finally{scan.dispose();}
 });
 
+test('CTA exterior uses one lazy scalar derivative while raw views and bone coverage keep their textures',()=>{
+  const renderer={extensions:{has:()=>true},getPixelRatio:()=>1,getClearColor:out=>out.set(0),getClearAlpha:()=>1,
+    setClearColor(){},setRenderTarget(){},clear(){},render(){}};
+  const bone={name:'bone',kind:'bone',color:'#ded0b6',mask:Uint8Array.from({length:60},(_,i)=>Number(i===30))};
+  const ctExterior={offset:[1,2,1],shape:[2,1,2],data:Uint8Array.of(1,0,0,1),sha256:'native-crop'};
+  const signal=new Float32Array(60).fill(700);
+  const scan=new ScanVolumeRenderer(renderer,{...source,mri:signal,compartments:[bone],ctExterior},[0,1000]);
+  const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(),plane=new THREE.Plane(new THREE.Vector3(0,0,1),0);
+  const settings={presentation:'vascular',skullMode:'transparent',layerOpacity:{bone:.12}};
+  const render=(options={},view=settings,clip=null,extra=[],modality='CTA')=>{
+    scan.configure(options,modality,clip);
+    scan.labels(null,{},view,extra);
+    return scan.render(scene,camera,640,480,false,()=>{});
+  };
+  try{
+    const u=scan.material.uniforms;
+    assert.equal(render({}, {...settings,presentation:'scan'}).ctExteriorDisplay,false);
+    assert.deepEqual(scan.estimatedCtExteriorBytes,{cpuBytes:0,gpuTextureBytes:0});
+    assert.equal(render({window:[-1000,3000]}).ctExteriorDisplay,false);
+    assert.equal(u.uVolume.value,scan.texture);
+    assert.equal(scan.exteriorVolume,undefined);
+
+    const qualified=render(),derivative=u.uVolume.value,filteredAtlas=u.uTransfer.value,coverage=u.uAuxiliary.value;
+    assert.equal(qualified.ctExteriorDisplay,true);
+    assert.equal(scan.material.defines.CONTEXT_SHADOWS,1);
+    assert.equal(scan.material.defines.DIRECTIONAL_OPTICS,1);
+    assert.notEqual(derivative,scan.texture);
+    const expected=signal.slice();
+    expected[31]=expected[52]=-1024;
+    assert.deepEqual(derivative.image.data,expected);
+    assert.equal(scan.opticalAtlasSelection.source.signal,derivative.image.data);
+    assert.equal(scan.texture.image.data,signal);
+    assert.equal(coverage.format,THREE.RedFormat);
+    assert.equal(coverage.image.data.length,60);
+    assert.equal(coverage.image.data[30],255,'bone retains its independent R8 channel');
+    assert.deepEqual(qualified.ctExteriorBytes,{cpuBytes:240,gpuTextureBytes:240});
+
+    const rawFrame=render({showCtExteriorSignal:true});
+    const rawAtlas=u.uTransfer.value;
+    assert.equal(rawFrame.ctExteriorDisplay,false);
+    assert.equal(rawFrame.samples,1,'a mode change cannot accumulate with a filtered frame');
+    assert.equal(u.uVolume.value,scan.texture);
+    assert.equal(u.uAuxiliary.value,coverage);
+    assert.equal(scan.opticalAtlasSelection.source.signal,signal);
+    assert.notDeepEqual(rawAtlas.image.data,filteredAtlas.image.data);
+    for(const [options,view,clip,extra,modality] of [
+      [{},settings,plane,[]], [{},settings,null,[plane]], [{},{...settings,presentation:'scan'},null,[]],
+      [{isolateLabels:true},settings,null,[]], [{preset:'mri'},settings,null,[]],
+      [{points:[[0,1,1,1,.2],[1,1,1,1,1]]},settings,null,[]], [{},settings,null,[],'T1'],
+    ]){
+      assert.equal(render(options,view,clip,extra,modality).ctExteriorDisplay,false);
+      assert.equal(u.uVolume.value,scan.texture);
+    }
+    assert.equal(render({}, {...settings,presentation:'segmentation'}).ctExteriorDisplay,true);
+    assert.equal(u.uVolume.value,derivative);
+    assert.deepEqual(u.uTransfer.value.image.data,filteredAtlas.image.data);
+    assert.deepEqual(ctExterior.data,Uint8Array.of(1,0,0,1));
+    assert.equal(signal.every(value=>value===700),true);
+  }finally{scan.dispose();}
+});
+
+test('an early raw export cancels a CTA atlas prepared from the exterior display derivative',()=>{
+  const renderer={extensions:{has:()=>true},getPixelRatio:()=>1,getClearColor:out=>out.set(0),getClearAlpha:()=>1,
+    setClearColor(){},setRenderTarget(){},clear(){},render(){}};
+  let publications=0;
+  const ctExterior={offset:[2,0,1],shape:[1,2,3],data:Uint8Array.of(1,0,1,0,0,1),sha256:'other-crop'};
+  const scan=new ScanVolumeRenderer(renderer,{...source,ctExterior},[0,1000],undefined,undefined,()=>{publications++;});
+  const targets=new ScanVolumeExportTargets();
+  const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera();
+  try{
+    scan.configure({},'CTA',null);
+    scan.labels(null,{}, {presentation:'segmentation'},[]);
+    const live=scan.render(scene,camera,640,480,false,()=>{});
+    assert.equal(live.opticsPending,true);
+    assert.equal(live.ctExteriorDisplay,true);
+    const filtered=scan.opticalPreparation;
+    const u=scan.material.uniforms;
+    assert.equal(u.uAuxiliary.value,null,'the derivative uses the existing scalar slot');
+
+    scan.configure({showCtExteriorSignal:true},'CTA',null);
+    assert.equal(scan.opticsPending,false,'the superseded filtered generation is canceled before export');
+    scan.renderExportSample(scene,camera,targets,640,480,0,0);
+    assert.equal(scan.opticsPending,false);
+    assert.equal(u.uVolume.value,scan.texture);
+    assert.equal(u.uAuxiliary.value,null);
+    assert.equal(u.uOpticalCache.value,true);
+    assert.notEqual(scan.opticalAtlasSelection.source,filtered.selection.source);
+    assert.equal(publications,0);
+  }finally{targets.dispose();scan.dispose();}
+});
+
 test('acquired Scan export uses independent targets and rebinds the regular quality after capture',()=>{
   const renderer={extensions:{has:()=>true},getPixelRatio:()=>2,getClearColor:out=>out.set(0),getClearAlpha:()=>1,
     setClearColor(){},setRenderTarget(){},clear(){},render(){}};

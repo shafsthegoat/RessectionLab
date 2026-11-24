@@ -2,6 +2,7 @@ import type {ViewerVolume} from './viewer/contracts';
 
 export function mergeResidentLayers(current:ViewerVolume, incoming:ViewerVolume, order:readonly string[]):ViewerVolume {
   if(!current.displayIdentity||current.displayIdentity!==incoming.displayIdentity||current.mri!==incoming.mri||
+    current.ctExterior!==incoming.ctExterior||
     current.caseHash!==incoming.caseHash||current.frame!==incoming.frame||JSON.stringify([current.shape,current.affine])!==JSON.stringify([incoming.shape,incoming.affine]))
     throw Error('Incremental anatomy belongs to a different displayed source');
   const layers=new Map(current.compartments.map(layer=>[layer.name,layer]));

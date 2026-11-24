@@ -20,6 +20,23 @@ test('hydration reuses admitted image and shared label grid without asset reads'
   assert.equal(hydrated.mri,base.mri);assert.equal(hydrated.labelSets[0],base.labelSets[0]);
 });
 
+test('detached CT support reuses only the exact source-bound native crop',async()=>{
+  const base=source(),signalSha256='a'.repeat(64),sha256='b'.repeat(64);
+  const mask={assetId:'sheet',dtype:'uint8',shape:[2,1,1],byteLength:2,byteOrder:'little',order:'C',sha256};
+  const receipt={schema:'native-ct-exterior-sheet-v1',signalSha256,offset:[0,1,0],mask};
+  const payload={...base,modality:'CTA',mri:{sha256:signalSha256},compartments:[],labelSets:[],ctExterior:receipt};
+  const api={readAsset:async()=>new Uint8Array([1,0])};
+  const view=await hydrateAnatomy(payload,api,base.mri);
+  assert.equal(view.mri,base.mri);
+  assert.deepEqual(view.ctExterior,{offset:[0,1,0],shape:[2,1,1],data:new Uint8Array([1,0]),sha256});
+  const resident=await hydrateAnatomy(payload,{readAsset(){throw Error('Should reuse the checked crop');}},view.mri,view);
+  assert.equal(resident.ctExterior,view.ctExterior);
+  for(const bad of [{...receipt,signalSha256:'c'.repeat(64)},{...receipt,offset:[1,1,0]}]){
+    await assert.rejects(hydrateAnatomy({...payload,ctExterior:bad},api,view.mri),/differs from its acquired source/);
+  }
+  assert.throws(()=>mergeResidentLayers(view,{...view,ctExterior:undefined},[]),/different displayed source/);
+});
+
 test('cortex from a different scan reuses its verified samples with the new physical transform',async()=>{
   const base=source(),mr=new Float32Array(12).fill(55);
   const mrFrame=affine.map(row=>[...row]);mrFrame[0][3]=17;

@@ -25,6 +25,8 @@ export interface SurfaceAppearanceSource {
 export interface ViewerVolume {
   patientContext?:PatientContext;
   headSupport?:{data:Uint8Array;sha256:string};
+  /** Display-only exclusion of a detached CT sheet on the exact native grid, in C order. */
+  ctExterior?:{offset:Point3;shape:Shape3;data:Uint8Array;sha256:string};
   sourceFrameIssue?:string|null;
   displayPreview?:{factor:number;meaning:string}|null;
   alignmentQuality?:Record<string,AlignmentQuality>;
