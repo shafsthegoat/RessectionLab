@@ -11,6 +11,7 @@ export interface OperativeVesselSurface {
   normals:Float32Array;
   indices:Uint32Array;
   sourceCells:Uint32Array;
+  scoreLighting?:Float32Array;
   cuboidCount?:number;
   geometryIdentity?:string;
 }
@@ -60,7 +61,9 @@ export function bindNativeVesselSurfaces(source:ViewerVolume,owner:Uint16Array,r
       if(Boolean(layer.mask[i])!==(owner[i]===id)){bound=false;break;}
       if(owner[i]===id)sites.push(i);
     }
-    if(bound)result.set(name,{mode:'native-probability',region:id,positions,normals,indices,sourceCells,sites});
+    const scoreLighting=field==='native-probability'&&layer.vesselScoreLighting?.length===sourceCells.length*4
+      ?layer.vesselScoreLighting:undefined;
+    if(bound)result.set(name,{mode:'native-probability',region:id,positions,normals,indices,sourceCells,sites,scoreLighting});
   }
   return result;
 }

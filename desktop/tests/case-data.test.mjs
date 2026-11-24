@@ -67,6 +67,24 @@ test("valid anisotropic affine preserves C-order arrays and physical cursor", as
   assert.deepEqual(initialCursor(data), [12, -2, 11]);
   assert.deepEqual(data.affine, fixture().affine);
 });
+test("native vessel score lighting is optional and must match the declared vertices", async () => {
+  const input=fixture(), layer=input.compartments[0];
+  input.metadata.anatomy_layers={enhancing_target:{kind:'vessel'}};
+  const typed=(dtype,assetId,shape)=>({...descriptor(dtype,assetId),shape,byteLength:shape.reduce((a,b)=>a*b)*4});
+  layer.vesselSurface={positions:typed('float32','positions',[3,3]),indices:typed('uint32','indices',[1,3]),
+    normals:typed('float32','normals',[3,3]),sourceCells:typed('uint32','owners',[3])};
+  const score=Float32Array.of(0,0,1,.7,0,1,0,0,1,0,0,.4);
+  const bytes=array=>new Uint8Array(array.buffer);
+  const supplied=api({positions:bytes(Float32Array.of(1,.8,1,1,1,.8,.8,1,1)),indices:bytes(Uint32Array.of(0,1,2)),
+    normals:bytes(Float32Array.of(0,0,1,0,1,0,1,0,0)),owners:bytes(Uint32Array.of(7,7,7)),lighting:bytes(score)});
+  assert.equal((await hydrateCase(input,supplied)).compartments[0].vesselScoreLighting,undefined);
+  layer.vesselSurface.scoreLighting=typed('float32','lighting',[3,4]);
+  assert.deepEqual((await hydrateCase(input,supplied)).compartments[0].vesselScoreLighting,score);
+  score[3]=1.1;
+  await assert.rejects(hydrateCase(input,supplied),/Invalid vessel score lighting values/);
+  layer.vesselSurface.scoreLighting=typed('float32','lighting',[2,4]);
+  assert.throws(()=>validateCaseDescriptor(input),/score lighting disagrees/);
+});
 test("LPS is converted once without resampling voxel data", async () => {
   const input = fixture();
   input.frame = "LPS+";

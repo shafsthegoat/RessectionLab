@@ -29,7 +29,7 @@ import {scanFitPoints} from './scanCameraFit';
 import {mprView,sourceSignalBounds} from './mprFraming';
 import {applySourceContextMaterial} from './sourceContextMaterial';
 import {installNativeContextLighting,setNativeContextLighting} from './nativeContextLighting';
-import {displaySurfaceNormals} from './displaySurfaceNormals';
+import {advectScoreWallLighting,displaySurfaceNormals,scoreWallLighting} from './displaySurfaceNormals';
 import {applyVesselDepthMaterial,setVesselDepthAppearance,createVesselInspectionFocus,setVesselInspectionFocus,
   vesselInspectionContains,type VesselInspectionFocus} from './anatomySurfaceMaterial';
 import {microscopeFov} from './microscope';
@@ -742,10 +742,13 @@ export class VolumeRenderer {
     const fairNormals=vessel||layer.generatedFinish||CONTEXT_SURFACES.has(displayKind)||Boolean(layer.surface&&['brain-region','gray-matter','white-matter','cerebellar-cortex','dura','csf','ventricles'].includes(displayKind));
     if(hasSmooth)smooth.setAttribute("normal", new THREE.BufferAttribute(fairNormals&&buffers.indices ? displaySurfaceNormals(smoothNormals!,buffers.smoothIndices??buffers.indices,this.affine) : smoothNormals!, 3));
     if(onlyNormals&&indices){
-      const lighting=displaySurfaceNormals(normals,indices,this.affine);
+      const baseline=displaySurfaceNormals(normals,indices,this.affine);
+      const score=buffers.scoreLighting&&scoreWallLighting(normals,baseline,buffers.scoreLighting,this.affine);
+      const lighting=score?.normals??baseline;
       smooth.setAttribute('position',sourcePositions);
       smooth.setAttribute('normal',new THREE.BufferAttribute(lighting.slice(),3).setUsage(THREE.DynamicDrawUsage));
       smooth.userData.restOperativeLightingNormals=lighting;
+      if(score)smooth.userData.scoreWallLighting=score.supported;
     }
     const appearance = layerAppearance(layer.name,layer.color,this.workspaceSettings,layer.displayKind??layer.kind);
     const mesh = new THREE.Mesh(
@@ -1544,7 +1547,11 @@ export class VolumeRenderer {
           }
           if(lighting){
             const normals=pair.smooth.getAttribute('normal');
-            normals.array.set(display.movedVertices?displaySurfaceNormals(display.normals,vessel.indices,this.affine):lighting);
+            let current=display.movedVertices?displaySurfaceNormals(display.normals,vessel.indices,this.affine):lighting;
+            const support=pair.smooth.userData.scoreWallLighting as Uint8Array|undefined;
+            if(display.movedVertices&&support)
+              current=advectScoreWallLighting(vessel.normals,lighting,display.normals,current,support,this.affine);
+            normals.array.set(current);
             normals.needsUpdate=true;
           }
           geometry.computeBoundingBox();geometry.computeBoundingSphere();
@@ -1555,7 +1562,8 @@ export class VolumeRenderer {
           geometryIdentity:vessel.geometryIdentity,
           ...((vessel.cuboidCount??0)>0?{cuboidCount:vessel.cuboidCount}:{})};
         geometry.userData.operativeVessel={...receipt,normalStyle:'physical-indexed'};
-        if(lighting)pair.smooth.userData.operativeVessel={...receipt,normalStyle:'bounded-lighting'};
+        if(lighting)pair.smooth.userData.operativeVessel={...receipt,
+          normalStyle:pair.smooth.userData.scoreWallLighting?'source-score-gradient-0.30mm':'bounded-lighting'};
         continue;
       }
       const generatedTissue=layer.generatedFinish&&['grayMatter','whiteMatter','tumor','artery','vein'].includes(layer.displayKind??'');

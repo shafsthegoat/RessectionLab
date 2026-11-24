@@ -334,13 +334,14 @@ test('modeled tissue stages labels/surfaces/tools atomically, reuses unchanged M
     const requests=worker.messages.length;r.installSurgicalState(a,interactionA);submitPreparedState(r);assert.equal(r.volume,a);assert.equal(r.surfaces.get('brain'),brainA);assert.equal(worker.messages.length,requests);assert.deepEqual(source.compartments[0].mask,sourceCopy);
   }finally{mock.restore();}
 });
-test('modeled native vessels share live positions and indices across lighting modes',async()=>{
+for(const withScore of [false,true])test(`modeled native vessels share live positions and indices with ${withScore?'score-bound':'legacy'} lighting`,async()=>{
   const {modeledVolume}=await server.ssrLoadModule('/src/modeled-volume.ts');
   const mock=modelWorkerMock();try{
     const {r,source}=modeledFixture(),layer=source.compartments[1];
     const rest=Float32Array.of(2,0,.2,3,0,.2,2,.3,0,3,.3,0),normals=Float32Array.of(0,0,1,0,0,1,0,1,0,0,1,0);
     layer.surface={source:rest,positions:rest,sourceNormals:normals,normals,indices:Uint32Array.of(0,1,2,2,1,3)};
     layer.surfaceDiagnostics={surfaceField:'native-probability'};
+    if(withScore)layer.vesselScoreLighting=Float32Array.of(.1,0,1,1,.1,0,1,1,0,1,.1,1,0,1,.1,1);
     r.workspaceSettings={operativeView:'surgeon',layerColor:{vessel:'#a64c45'}};
     const view={stateId:'native',scene:{shape:source.shape,affine:source.affine,regions:[
       {id:1,name:'brain',material:'brain',color:'#aabbcc'},{id:2,name:'vessel',material:'vessel',color:'#bb3344'}]},
@@ -353,17 +354,20 @@ test('modeled native vessels share live positions and indices across lighting mo
     assert.equal(pair.smooth.getAttribute('position'),position);
     assert.equal(pair.smooth.getIndex(),pair.source.getIndex());
     assert.notEqual(pair.smooth.getAttribute('normal'),pair.source.getAttribute('normal'));
+    const restLighting=pair.smooth.getAttribute('normal').array.slice();
     r.updateAcceptedSurfaces({...view,vesselMechanics:{...view.vesselMechanics,surfaceDisplacements:{40:[0,0,.2]}}});
     assert.equal(pair.source.getAttribute('position'),position);
     assert.equal(pair.smooth.getAttribute('position'),position);
     assert.equal(position.getZ(0),Math.fround(rest[2]+.2));
     assert.equal(rest[2],Math.fround(.2));
     r.setSurfaceSmoothing(true);
-    assert.equal(mesh.geometry,pair.smooth);assert.equal(mesh.geometry.userData.operativeVessel.normalStyle,'bounded-lighting');
+    assert.equal(mesh.geometry,pair.smooth);
+    assert.equal(mesh.geometry.userData.operativeVessel.normalStyle,withScore?'source-score-gradient-0.30mm':'bounded-lighting');
     r.setSurfaceSmoothing(false);
     assert.equal(mesh.geometry,pair.source);assert.equal(mesh.geometry.userData.operativeVessel.normalStyle,'physical-indexed');
     r.updateAcceptedSurfaces(view);
     assert.deepEqual(position.array,rest);
+    assert.deepEqual(pair.smooth.getAttribute('normal').array,restLighting);
   }finally{mock.restore();}
 });
 test('new read-only tissue surfaces defer picking acceleration while editable boundaries keep eager admission',()=>{

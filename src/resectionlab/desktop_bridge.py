@@ -590,17 +590,25 @@ class BridgeSession:
         vessel_surfaces = {}
         if case.vascular_probabilities:
             from .anatomy_geometry import vascular_mesh_source_cells, vascular_probability_mesh
+            from .vascular_surface_lighting import score_lighting_normals
             for name, scores in case.vascular_probabilities.items():
                 if name not in case.compartments:
                     continue
                 request.check()
-                mesh = vascular_probability_mesh(scores, case.compartments[name])
+                mask = case.compartments[name]
+                mesh = vascular_probability_mesh(scores, mask)
                 if mesh is not None and len(mesh[1]):
                     positions, indices, normals = mesh
+                    source_cells = vascular_mesh_source_cells(positions, mask)
+                    lighting = score_lighting_normals(scores, mask, positions, normals,
+                                                      source_cells, case.affine, check=request.check)
+                    request.check()
                     vessel_surfaces[name] = {"positions": self.transfers.array(positions, "float32"),
                         "indices": self.transfers.array(indices, "uint32"),
                         "normals": self.transfers.array(normals, "float32"),
-                        "sourceCells": self.transfers.array(vascular_mesh_source_cells(positions, case.compartments[name]), "uint32")}
+                        "sourceCells": self.transfers.array(source_cells, "uint32")}
+                    if lighting is not None:
+                        vessel_surfaces[name]["scoreLighting"] = self.transfers.array(lighting, "float32")
         descriptor = {
             "caseId": case.case_id, "caseHash": case.semantic_hash, "planningHash": case.planning_hash,
             "revision": case.revision, "frame": case.frame, "physicalUnits": "mm",

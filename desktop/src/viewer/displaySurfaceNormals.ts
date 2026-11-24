@@ -1,5 +1,6 @@
 import {inverseAffine} from './coordinates.ts';
 import type {Affine} from './coordinates';
+import {MathUtils,Vector3} from 'three';
 
 /** Lighting normals only: bounded diffusion over existing triangle edges.
  * Work in physical space so anisotropic or mirrored acquisitions receive the
@@ -48,6 +49,77 @@ export function displaySurfaceNormals(normals:Float32Array,indices:Uint32Array,a
     for(let a=0;a<3;a++)output[i+a]=affine[0][a]*current[i]+affine[1][a]*current[i+1]+affine[2][a]*current[i+2];
     const length=Math.hypot(output[i],output[i+1],output[i+2]);
     if(length)for(let a=0;a<3;a++)output[i+a]/=length;
+  }
+  return output;
+}
+
+function transformNormal(target:Vector3,values:Float32Array,i:number,affine:Affine){
+  const x=values[i],y=values[i+1],z=values[i+2];
+  return target.set(affine[0][0]*x+affine[1][0]*y+affine[2][0]*z,
+    affine[0][1]*x+affine[1][1]*y+affine[2][1]*z,
+    affine[0][2]*x+affine[1][2]*y+affine[2][2]*z).normalize();
+}
+
+function writeNativeNormal(normal:Vector3,physical:Vector3,tangent:Vector3,out:Float32Array,i:number,affine:Affine){
+  const cosine=normal.dot(physical),minimum=Math.sqrt(3)/2;
+  if(cosine<minimum){
+    tangent.copy(normal).addScaledVector(physical,-cosine).normalize();
+    normal.copy(physical).multiplyScalar(minimum).addScaledVector(tangent,.5);
+  }
+  const {x,y,z}=normal;
+  tangent.set(affine[0][0]*x+affine[1][0]*y+affine[2][0]*z,
+    affine[0][1]*x+affine[1][1]*y+affine[2][1]*z,
+    affine[0][2]*x+affine[1][2]*y+affine[2][2]*z).normalize();
+  out[i]=tangent.x;out[i+1]=tangent.y;out[i+2]=tangent.z;
+}
+
+/** Blend the original score derivative into the unchanged indexed wall normals. */
+export function scoreWallLighting(physical:Float32Array,lighting:Float32Array,scores:Float32Array,affine:Affine){
+  const inverse=inverseAffine(affine),output=lighting.slice();
+  const source=new Vector3(),baseline=new Vector3(),score=new Vector3(),tangent=new Vector3();
+  const supported=new Uint8Array(physical.length/3);
+  let changed=false;
+  for(let i=0,j=0,v=0;i<physical.length;i+=3,j+=4,v++){
+    if(!scores[j+3])continue;
+    transformNormal(source,physical,i,inverse);
+    if(!source.lengthSq())continue;
+    transformNormal(baseline,lighting,i,inverse);
+    transformNormal(score,scores,j,inverse);
+    const confidence=scores[j+3]*MathUtils.smoothstep(score.dot(baseline),.55,.85);
+    if(!confidence)continue;
+    score.lerp(baseline,1-confidence).normalize();
+    writeNativeNormal(score,source,tangent,output,i,affine);
+    supported[v]=1;
+    changed=true;
+  }
+  return changed?{normals:output,supported}:undefined;
+}
+
+/** Transport the accepted lighting field in the moved physical normal frame.
+ * Large local turns use the ordinary lighting of the accepted surface. */
+export function advectScoreWallLighting(restPhysical:Float32Array,restLighting:Float32Array,
+  currentPhysical:Float32Array,currentLighting:Float32Array,supported:Uint8Array,affine:Affine){
+  const inverse=inverseAffine(affine),output=currentLighting.slice();
+  const before=new Vector3(),after=new Vector3(),lighting=new Vector3(),baseline=new Vector3(),
+    cross=new Vector3(),sideways=new Vector3(),tangent=new Vector3();
+  for(let i=0,v=0;i<output.length;i+=3,v++){
+    if(!supported[v])continue;
+    if(restPhysical[i]===currentPhysical[i]&&restPhysical[i+1]===currentPhysical[i+1]&&restPhysical[i+2]===currentPhysical[i+2]){
+      output[i]=restLighting[i];output[i+1]=restLighting[i+1];output[i+2]=restLighting[i+2];
+      continue;
+    }
+    transformNormal(before,restPhysical,i,inverse);
+    transformNormal(after,currentPhysical,i,inverse);
+    const agreement=before.dot(after);
+    if(agreement<=.65)continue;
+    transformNormal(lighting,restLighting,i,inverse);
+    cross.crossVectors(before,after);
+    sideways.crossVectors(cross,lighting);
+    tangent.crossVectors(cross,sideways);
+    lighting.add(sideways).addScaledVector(tangent,1/(1+agreement));
+    transformNormal(baseline,currentLighting,i,inverse);
+    lighting.lerp(baseline,1-MathUtils.smoothstep(agreement,.65,.92)).normalize();
+    writeNativeNormal(lighting,after,tangent,output,i,affine);
   }
   return output;
 }

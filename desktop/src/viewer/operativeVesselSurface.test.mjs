@@ -56,19 +56,23 @@ test('an authoritative vessel transection renders closed per-cell faces even wit
 });
 
 test('an edited source score wall preserves its native triangles and limits cuboids to their declared owners',()=>{
+  const scoreLighting=new Float32Array(16).fill(.5);
+  const lit={...source,compartments:[source.compartments[0],{...source.compartments[1],vesselScoreLighting:scoreLighting}]};
+  assert.equal(wall(view,lit).scoreLighting,scoreLighting);
   const edited={identity:'qualified-cut',positionsIJK:[[2,1.8,2],[2,2,2.3],[2,2.37,2]],triangles:[[0,1,2]],
     sourceCells:[a,a,a],cuboidSourceCells:[b]};
   const cut={...view,transectedEdges:[[a,b]],vesselMechanics:{geometryModeByLabel:{2:'edited-native-wall'},
     editedWallsByLabel:{2:edited},surfaceDisplacements:{[b]:[0,.15,0]}}};
-  const mesh=wall(cut),display=deformOperativeVessel(mesh,cut,affine);
+  const mesh=wall(cut,lit),display=deformOperativeVessel(mesh,cut,affine);
   assert.equal(mesh.mode,'edited-native-wall');
+  assert.equal(mesh.scoreLighting,undefined);
   assert.equal(mesh.cuboidCount,1);
   assert.equal(mesh.indices.length/3,13);
   assert.deepEqual([...mesh.sourceCells.slice(0,3)],[a,a,a]);
   assert.ok(mesh.sourceCells.slice(3).every(cell=>cell===b));
   assert.deepEqual(mesh.positions.slice(0,9),positions.slice(0,9));
   assert.deepEqual(display.positions.slice(0,9),positions.slice(0,9));
-  assert.equal(wall({...cut,vesselMechanics:{...cut.vesselMechanics,surfaceDisplacements:{}}}),mesh);
+  assert.equal(wall({...cut,vesselMechanics:{...cut.vesselMechanics,surfaceDisplacements:{}}},lit),mesh);
   const bad={...edited,identity:'wrong-owner',cuboidSourceCells:[support]};
   assert.throws(()=>wall({...cut,vesselMechanics:{...cut.vesselMechanics,editedWallsByLabel:{2:bad}}}),/accepted wall/);
 });
