@@ -3,6 +3,7 @@
 import numpy as np
 
 from . import native_backend
+from . import surgical_vessel_surface as surfaces
 
 
 PROPERTY = 'vesselWallMotionGuard'
@@ -17,17 +18,16 @@ def topology(frames):
 def _build(frames):
     triangles, vertices, owners = [], [], []
     vertex_start = owner_start = 0
-    for wall, offsets, _, _, _, edited in frames:
+    for frame in frames:
+        edited = frame[5]
         if edited is not None and len(edited.cuboids):
             raise ValueError('VESSEL_WALL_SWEEP_UNSUPPORTED: cut has no closed score-wall cap')
-        faces = edited.triangles if edited is not None else wall.source.triangles
-        bindings = edited.owners if edited is not None else wall.source.owners
-        rest = edited.world_triangles if edited is not None else wall.triangles
+        rest, faces, bindings, offsets = surfaces.sweep_mesh(frame)
         triangles.append(rest)
         # Drop unused indices so multiple source layers have disjoint adjacency.
         unique, inverse = np.unique(faces, return_inverse=True)
         vertices.append(inverse.reshape(faces.shape) + vertex_start)
-        owners.append(bindings[faces] + owner_start)
+        owners.append(bindings + owner_start)
         vertex_start += len(unique)
         owner_start += len(offsets)
     geometry = (np.ascontiguousarray(np.concatenate(triangles), dtype=np.float64),
@@ -63,8 +63,8 @@ def require_clear(engine, prior, candidate, *, static=False):
     if cached is None or cached[0] != key:
         cached = key, _build(candidate)
         engine._vessel_wall_sweep = cached
-    end = np.concatenate([frame[1] for frame in candidate])
-    start = np.concatenate([frame[1] for frame in prior]) if not static else end
+    end = np.concatenate([surfaces.sweep_offsets(frame) for frame in candidate])
+    start = np.concatenate([surfaces.sweep_offsets(frame) for frame in prior]) if not static else end
     if not cached[1](start, end, static):
         raise ValueError('VESSEL_WALL_SWEEP_UNSAFE: cannot certify native vessel wall clearance')
     if transition_check is not None:

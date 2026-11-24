@@ -48,7 +48,8 @@ _MODULES = ('core', 'geometry', 'surgical_scene', 'surgical_engine', 'surgical_t
             'surgical_procedure_policy', 'surgical_planning_admission', 'surgical_sequence_outcomes', 'surgical_modeled_outcomes',
             'surgical_vascular_graph', 'surgical_bipolar_thermal',
             'surgical_occupancy', 'surgical_rl_protection', 'surgical_geometry_cache',
-            'surgical_vessel_rods', 'surgical_vessel_surface', 'surgical_wall_sweep', 'surgical_wall_sweep_reference',
+            'surgical_vessel_rods', 'surgical_vessel_surface', 'surgical_vessel_vertex_motion',
+            'surgical_wall_sweep', 'surgical_wall_sweep_reference',
             'surgical_verified_cache', 'surgical_cusa_v3', 'surgical_clock', 'surgical_idle_native',
             'build_surgical_idle_native', 'surgical_cranial_stages', 'surgical_membrane_transport',
             'native_backend', 'surgical_native_engine', 'surgical_native_control')

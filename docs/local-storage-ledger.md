@@ -74,6 +74,11 @@ The next native wall continuation at
 indexes the 29-case motion screen, matched operative boundary views and film,
 and the separate native surface and recoil experiments.
 
+The next native wall continuation is indexed at
+`qc/eden2020-glioma-5714812/vascular-reconstruction-continuity-20261123-v10/README.md`.
+It links the matched native contact and transection captures, the graph-selected
+cohort workspaces, and the short-edge motion audit.
+
 Paths below are relative to the RessectionLab root. This compact ledger covers
 that area, not unrelated personal files elsewhere on the HDD. Presence does not
 establish scientific readiness or a completed build; consult each run's receipts.

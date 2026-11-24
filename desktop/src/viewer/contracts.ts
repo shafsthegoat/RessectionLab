@@ -68,6 +68,7 @@ export interface ViewerVolume {
     surface?: {positions: Float32Array; source: Float32Array; normals: Float32Array; sourceNormals: Float32Array; indices: Uint32Array};
     /** For a score-derived mesh on the exact engine grid, one native source cell per vertex. */
     vesselSourceCells?: Uint32Array;
+    vesselGeometryBinding?:string;
     /** Optional source-score display covector and weight (xyzw) per original wall vertex. */
     vesselScoreLighting?:Float32Array;
   }>;

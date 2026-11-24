@@ -34,7 +34,8 @@ async function hydrateVesselSurface(raw:NonNullable<CasePayload['compartments'][
   const vesselScoreLighting=l&&new Float32Array(l);
   if(vesselScoreLighting&&!vesselScoreLighting.every((value,index)=>Number.isFinite(value)&&(index%4!==3||value>=0&&value<=1)))
     throw Error('Invalid vessel score lighting values.');
-  return {surface:{source:positions,positions,sourceNormals:normals,normals,indices},vesselSourceCells,vesselScoreLighting,
+  const vesselGeometryBinding=[raw.positions.sha256,raw.indices.sha256,raw.sourceCells.sha256].join(':');
+  return {surface:{source:positions,positions,sourceNormals:normals,normals,indices},vesselSourceCells,vesselScoreLighting,vesselGeometryBinding,
     surfaceDiagnostics:{policy:'native-source-isosurface-v1',kind:'vessel',maxDisplacementMm:0,restoredComponents:0,
       intersectionCheck:'passed',surfaceField:'native-probability',triangles:indices.length/3,sourceSurfaceOnly:true} as const};
 }

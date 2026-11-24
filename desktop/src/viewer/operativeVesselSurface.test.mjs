@@ -14,6 +14,7 @@ const normals=new Float32Array([0,-1,0, 0,0,1, 0,1,0, 0,0,1]);
 const source={caseId:'operative vessel',caseHash:'vessel-test',mri:new Float32Array(125),affine,frame:'RAS+',shape,compartments:[
   {name:'tissue',kind:'brain',color:'#777',mask:mask([a,support])},
   {name:'lumen',kind:'vessel',color:'#733',mask:mask([a,b]),surfaceDiagnostics:{surfaceField:'native-probability'},
+    vesselGeometryBinding:'native-test-binding',
     surface:{source:positions,positions,sourceNormals:normals,normals,indices:new Uint32Array([0,1,2, 1,3,2])}},
 ]};
 const view={scene:{shape,affine,regions},removed:[],moved:[],deformation:{}};
@@ -55,6 +56,24 @@ test('an authoritative vessel transection renders closed per-cell faces even wit
   assert.equal(wall(view),intact);
 });
 
+test('accepted vertex offsets preserve distinct motion for vertices with the same source owner',()=>{
+  const packet={geometryBinding:'native-test-binding',vertexCount:4,indices:[0,1],offsetsMm:[[-.04,.03,0],[.08,-.06,0]]};
+  const state={...view,vesselMechanics:{geometryModeByLabel:{2:'native-probability-wall'},surfaceDisplacements:{[a]:[1,1,1]},
+    vertexDisplacementsByLabel:{2:packet}}};
+  const mesh=wall(state),display=deformOperativeVessel(mesh,state,affine);
+  assert.deepEqual([...mesh.sourceCells],[a,a,a,b]);
+  const shifts=[.1,.1,0,-.2,-.2,0,0,0,0,0,0,0];
+  for(const [i,shift] of shifts.entries())close(display.positions[i],positions[i]+shift);
+  assert.equal(display.movedVertices,2);
+  assert.equal(display.maxMotionWitness.vertex,1);
+  const unbound={...state,vesselMechanics:{...state.vesselMechanics,
+    vertexDisplacementsByLabel:{2:{...packet,geometryBinding:'different-vertex-order'}}}};
+  assert.throws(()=>wall(unbound),/bound source surface/);
+  const duplicate={...state,vesselMechanics:{...state.vesselMechanics,
+    vertexDisplacementsByLabel:{2:{...packet,indices:[0,0]}}}};
+  assert.throws(()=>deformOperativeVessel(mesh,duplicate,affine),/indexed geometry/);
+});
+
 test('an edited source score wall preserves its native triangles and limits cuboids to their declared owners',()=>{
   const scoreLighting=new Float32Array(16).fill(.5);
   const lit={...source,compartments:[source.compartments[0],{...source.compartments[1],vesselScoreLighting:scoreLighting}]};
@@ -65,7 +84,8 @@ test('an edited source score wall preserves its native triangles and limits cubo
     editedWallsByLabel:{2:edited},surfaceDisplacements:{[b]:[0,.15,0]}}};
   const mesh=wall(cut,lit),display=deformOperativeVessel(mesh,cut,affine);
   assert.equal(mesh.mode,'edited-native-wall');
-  assert.equal(mesh.scoreLighting,undefined);
+  assert.deepEqual(mesh.scoreLighting.slice(0,12),scoreLighting.slice(0,12));
+  assert.ok(mesh.scoreLighting.slice(12).every(value=>value===0));
   assert.equal(mesh.cuboidCount,1);
   assert.equal(mesh.indices.length/3,13);
   assert.deepEqual([...mesh.sourceCells.slice(0,3)],[a,a,a]);
@@ -75,6 +95,8 @@ test('an edited source score wall preserves its native triangles and limits cubo
   assert.equal(wall({...cut,vesselMechanics:{...cut.vesselMechanics,surfaceDisplacements:{}}},lit),mesh);
   const bad={...edited,identity:'wrong-owner',cuboidSourceCells:[support]};
   assert.throws(()=>wall({...cut,vesselMechanics:{...cut.vesselMechanics,editedWallsByLabel:{2:bad}}}),/accepted wall/);
+  const newCap={...edited,identity:'new-cut-face',triangles:[[0,2,1]]};
+  assert.equal(wall({...cut,vesselMechanics:{...cut.vesselMechanics,editedWallsByLabel:{2:newCap}}},lit).scoreLighting,undefined);
 });
 
 test('score contours with mismatched source ownership or incompatible grid use the engine fallback',()=>{

@@ -199,6 +199,7 @@ export interface ViewerCase {
     surface?:import('./viewer/contracts').ViewerVolume['compartments'][number]['surface'];
     surfaceDiagnostics?:import('./viewer/surfacePolicy').SurfaceDiagnostics;
     vesselSourceCells?:Uint32Array;
+    vesselGeometryBinding?:string;
     vesselScoreLighting?:Float32Array;
     color: string;
     mesh?: {

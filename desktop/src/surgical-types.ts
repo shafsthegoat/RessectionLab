@@ -27,6 +27,7 @@ export interface SurgicalVesselMechanics {
   segments:Array<{sourceCells:[number,number];edgeId:string}>;
   contactedCells:Record<string,number[]>;
   surfaceDisplacements?:Record<string,Point3>;
+  vertexDisplacementsByLabel?:Record<string,{geometryBinding:string;vertexCount:number;indices:number[];offsetsMm:Point3[]}>;
   geometryModeByLabel?:Record<string,'native-probability-wall'|'edited-native-wall'|'accepted-source-cuboids'>;
   editedWallsByLabel?:Record<string,{identity:string;positionsIJK:Point3[];triangles:[number,number,number][];sourceCells:number[];cuboidSourceCells?:number[]}>;
 }

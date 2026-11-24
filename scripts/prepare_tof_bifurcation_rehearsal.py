@@ -20,6 +20,8 @@ from resectionlab.surgical_glioma_materials import research_profile, RETAINED_VE
 from resectionlab.surgical_physics_v2 import default_profile
 from resectionlab.surgical_scene import from_case
 from resectionlab.surgical_wall_sweep import POLICY as WALL_SWEEP_POLICY, PROPERTY as WALL_SWEEP_PROPERTY
+from resectionlab.surgical_vessel_vertex_motion import POLICY as VERTEX_MOTION_POLICY, PROPERTY as VERTEX_MOTION_PROPERTY
+from resectionlab.workspace_bundle import save_workspace
 
 HDD = Path('/Volumes/shafrir/old coding projects/RessectionLabData')
 UUID = '9CC3623C-E38B-3EEE-B6BB-B9A06C193700'
@@ -30,6 +32,9 @@ VESSEL = 'Native TOF vascular estimate'
 BRAIN = 'Modeled brain exposure'
 ROD_MODEL = 'distributed-source-rods-v1'
 CROP_MARGIN = np.array([45, 48, 27])
+GRAPH_CROP_HALF_MM = 7.5
+GRAPH_LEG_MIN_MM = 3.8
+GRAPH_LEG_TARGET_MM = 5.5
 ASSUMPTIONS = (
     'Native TOF score geometry and original source branch identities. The exposed brain '
     'banks are a generated research geometry on the native TOF grid with low-frequency '
@@ -51,13 +56,13 @@ def write(path, data):
     path.write_text(json.dumps(data, indent=2, allow_nan=False) + '\n')
 
 
-def load_source(root, subject, junction):
+def load_source(root, subject, junction, *, source_graph_fork=False):
     prior = root / PRIOR
     source = root / 'prepared/Eden 2020 ResectionLab Projects (restricted)' / subject
     manifest_file = source / 'patient-anatomy.json'
     manifest = read(manifest_file)
     review_path = prior / 'source-review' / subject / 'rois.json'
-    mark = next(row for row in read(review_path) if row['id'] == 'bifurcation')
+    mark = None if source_graph_fork else next(row for row in read(review_path) if row['id'] == 'bifurcation')
     case_files = prior / 'cases' / subject
     report = read(case_files / 'report.json')
     graph_receipt = read(case_files / 'graph-receipt.json')
@@ -76,13 +81,21 @@ def load_source(root, subject, junction):
     if (graph_receipt['partition_sha256'] != report['partition_sha256']
             or graph_receipt['source_manifest_sha256'] != report['source_manifest_sha256']):
         raise ValueError('The saved branch graph differs from the reviewed partition')
-    crop_center = np.asarray(mark['voxel_ijk'])
-    if np.linalg.norm(native_affine[:3, :3] @ (junction - crop_center)) > mark['radius_mm']:
-        raise ValueError('The selected junction lies outside the reviewed native source region')
-    start = crop_center - CROP_MARGIN
-    stop = crop_center + CROP_MARGIN + 1
-    if np.any(start < 0) or np.any(stop > full_shape):
-        raise ValueError('The reviewed fork crop exceeds acquired coverage')
+    if np.any(junction < 0) or np.any(junction >= full_shape):
+        raise ValueError('The selected junction lies outside acquired TOF coverage')
+    if source_graph_fork:
+        spacing = np.linalg.norm(native_affine[:3, :3], axis=0)
+        margin = np.ceil(GRAPH_CROP_HALF_MM / spacing).astype(int) + 1
+        start = np.maximum(0, junction - margin)
+        stop = np.minimum(full_shape, junction + margin + 1)
+    else:
+        crop_center = np.asarray(mark['voxel_ijk'])
+        if np.linalg.norm(native_affine[:3, :3] @ (junction - crop_center)) > mark['radius_mm']:
+            raise ValueError('The selected junction lies outside the reviewed native source region')
+        start = crop_center - CROP_MARGIN
+        stop = crop_center + CROP_MARGIN + 1
+        if np.any(start < 0) or np.any(stop > full_shape):
+            raise ValueError('The reviewed fork crop exceeds acquired coverage')
     slab = tuple(slice(a, b) for a, b in zip(start, stop))
     paths = {
         'sourceManifest': (manifest_file, report['source_manifest_sha256']),
@@ -90,8 +103,9 @@ def load_source(root, subject, junction):
         'nativeScores': (source / vessels['probability']['path'], vessels['probability']['sha256']),
         'visibilityPartition': (case_files / 'partition.npy', report['partition_sha256']),
         'sourceGraph': (graph_file, graph_receipt['graph_sha256']),
-        'sourceReviewMarks': (review_path, sha256(review_path)),
     }
+    if mark is not None:
+        paths['sourceReviewMarks'] = (review_path, sha256(review_path))
     for file, expected in paths.values():
         if sha256(file) != expected:
             raise ValueError(f'Source bytes differ from signed references: {file}')
@@ -114,7 +128,6 @@ def load_source(root, subject, junction):
         'nativeSourceSha256': original_sha,
         'sourceSnapshotId': manifest['snapshot_id'],
         'readOnlyInputSha256': {key: digest for key, (_, digest) in paths.items()},
-        'sourceReviewMark': mark,
         'nativeBranchJunctionIJK': junction.tolist(),
         'nativeCropStartIJK': start.tolist(),
         'nativeCropStopIJKExclusive': stop.tolist(),
@@ -125,13 +138,19 @@ def load_source(root, subject, junction):
         'registeredStructuralTissueUsed': False,
         'patientSpecificSimulationAdmitted': False,
     }
+    if source_graph_fork:
+        receipt['siteSelection'] = 'frozen-native-source-graph'
+    else:
+        receipt['sourceReviewMark'] = mark
     return image, score, vessel, graph, affine, start, receipt
 
 
-def bridge_steps(points, vessel, clearance, forbidden):
+def bridge_steps(points, vessel, clearance, forbidden, *, preserve_anchors=False):
     """Realize local diagonal skeleton links using only face-connected source lumen."""
     path = [tuple(points[0])]
+    remaining = set(map(tuple, points[1:])) if preserve_anchors else set()
     for target in points[1:]:
+        remaining.discard(tuple(target))
         origin = np.asarray(path[-1])
         delta = target - origin
         axes = np.flatnonzero(delta)
@@ -144,7 +163,7 @@ def bridge_steps(points, vessel, clearance, forbidden):
             for axis in ordered:
                 current[axis] += delta[axis]
                 cells.append(tuple(current))
-            if all(vessel[p] and p not in path and p not in forbidden for p in cells):
+            if all(vessel[p] and p not in path and p not in forbidden and p not in remaining for p in cells):
                 candidates.append(cells)
         if not candidates:
             raise ValueError(f'A reviewed skeleton link has no exclusive in-lumen face path: {origin}, {target}')
@@ -153,23 +172,77 @@ def bridge_steps(points, vessel, clearance, forbidden):
     return np.asarray(path, dtype=np.int64)
 
 
-def source_routes(graph, vessel, start, spacing, junction_native):
+def graph_leg_prefix(points, supported, vessel, spacing):
+    inside = ((points >= 1) & (points < np.asarray(vessel.shape) - 1)).all(axis=1)
+    in_source = np.zeros(len(points), dtype=bool)
+    in_source[inside] = vessel[tuple(points[inside].T)]
+    valid_edges = supported & in_source[:-1] & in_source[1:]
+    unusable = np.flatnonzero(~valid_edges)
+    length = int(unusable[0]) + 1 if len(unusable) else len(points)
+    points = points[:length]
+    distances = np.linalg.norm(np.diff(points, axis=0) * spacing, axis=1).cumsum()
+    samples = min(len(points), int(np.searchsorted(distances, GRAPH_LEG_TARGET_MM)) + 2)
+    if samples < 3 or distances[samples - 2] < GRAPH_LEG_MIN_MM:
+        raise ValueError('A native graph leg lacks a continuous source-supported prefix')
+    return points[:samples]
+
+
+def graph_fork_routes(branches, vessel, start, spacing, native_shape, fork):
+    anchors = {}
+    for row in branches:
+        ids = row['source_cell_ids']
+        supported = np.asarray(row['edge_local_face_supported'], dtype=bool)
+        if row['closed'] or row['endpoint_degrees'][0 if ids[0] == fork else 1] != 3:
+            raise ValueError('The selected source anchor is not a native degree-three junction')
+        if ids[0] != fork:
+            ids, supported = ids[::-1], supported[::-1]
+        points = np.column_stack(np.unravel_index(ids, native_shape)) - start
+        anchors[row['id']] = graph_leg_prefix(points, supported, vessel, spacing)
+    clearance = distance_transform_edt(vessel, sampling=spacing)
+    reserved = {key: set(map(tuple, points[1:])) for key, points in anchors.items()}
+    if sum(map(len, reserved.values())) != len(set().union(*reserved.values())):
+        raise ValueError('Native graph legs share source cells outside the junction')
+    for order in permutations(anchors):
+        paths = {}
+        occupied = set()
+        try:
+            for key in order:
+                forbidden = occupied.union(*(cells for other, cells in reserved.items() if other != key))
+                path = bridge_steps(anchors[key], vessel, clearance, forbidden, preserve_anchors=True)
+                occupied.update(map(tuple, path[1:]))
+                paths[key] = path
+        except ValueError:
+            continue
+        return {key: paths[key] for key in anchors}
+    raise ValueError('The native graph fork has no exclusive in-lumen face paths for all three legs')
+
+
+def source_routes(graph, vessel, start, spacing, junction_native, *, source_graph_fork=False):
     native_shape = tuple(graph['source_shape'])
     fork = int(np.ravel_multi_index(junction_native, native_shape))
-    branches = [row for row in graph['branches']
-                if len(row['source_cell_ids']) > 1 and fork in (row['source_cell_ids'][0], row['source_cell_ids'][-1])]
+    branches = sorted((row for row in graph['branches']
+                       if len(row['source_cell_ids']) > 1
+                       and fork in (row['source_cell_ids'][0], row['source_cell_ids'][-1])),
+                      key=lambda branch: branch['id'])
+    if source_graph_fork:
+        if len(branches) != 3:
+            raise ValueError('The selected source anchor needs exactly three native graph legs')
+        return graph_fork_routes(branches, vessel, start, spacing, native_shape, fork)
     if len(branches) != 3 or not all(all(row['edge_local_face_supported']) for row in branches):
         raise ValueError('The reviewed native junction needs three source-supported legs')
     paths = {}
     radii = distance_transform_edt(vessel, sampling=spacing)
     occupied = set()
     junction = tuple(junction_native - start)
-    for row in sorted(branches, key=lambda branch: branch['id']):
+    for row in branches:
         ids = row['source_cell_ids']
         original = np.column_stack(np.unravel_index(ids, native_shape))
         if ids[0] != fork:
             original = original[::-1]
-        path = bridge_steps(original - start, vessel, radii, occupied - {junction})
+        local = original - start
+        if np.any(local < 0) or np.any(local >= vessel.shape):
+            raise ValueError('A reviewed source link exceeds the native fork crop')
+        path = bridge_steps(local, vessel, radii, occupied - {junction})
         occupied.update(map(tuple, path))
         paths[row['id']] = path
     return paths
@@ -294,17 +367,38 @@ def spatial_properties(paths, geometry, brain, vessel, affine, motion, subject):
     return {'gliomaMaterialsV1': profile, 'tissuePhysicsV2': physics, 'vascularGraphV1': graph}
 
 
-def stage(root, output, motion, subject, junction, *, guard_native_wall=False):
+def graph_fork_view(junction, affine):
+    basis = affine[:3, :3]
+    target = (basis @ junction + affine[:3, 3]).tolist()
+    # The modeled banks fill the low-K side of the native crop. Orient the
+    # microscope toward the exposed side even on oblique or reflected grids.
+    outward = np.cross(basis[:, 0], basis[:, 1])
+    outward *= np.sign(outward @ basis[:, 2]) / np.linalg.norm(outward)
+    return {'selectedSeriesId': None, 'states': {'primary': {
+        'cursor': target, 'visibleLayers': {BRAIN: True, VESSEL: True},
+        'viewer': {'microscope': {'target': target, 'outward': outward.tolist(), 'angleDeg': 18,
+                                 'azimuthDeg': 0, 'workingDistanceMm': 160, 'fieldMm': 14,
+                                 'focusOffsetMm': 0, 'light': 2.35}},
+    }}}
+
+
+def stage(root, output, motion, subject, junction, *, guard_native_wall=False, vertex_wall_transport=False,
+          source_graph_fork=False):
+    guard_native_wall = guard_native_wall or vertex_wall_transport
     if guard_native_wall and motion != 'rods':
         raise ValueError('A native wall sweep requires the score-bound rod model')
-    image, score, vessel, graph, affine, start, receipt = load_source(root, subject, junction)
+    image, score, vessel, graph, affine, start, receipt = load_source(
+        root, subject, junction, source_graph_fork=source_graph_fork)
     spacing = np.linalg.norm(affine[:3, :3], axis=0)
-    paths = source_routes(graph, vessel, start, spacing, junction)
+    paths = source_routes(graph, vessel, start, spacing, junction, source_graph_fork=source_graph_fork)
     geometry = site_geometry(paths, vessel, score, affine)
     brain = modeled_exposure(image, vessel, paths, spacing)
     properties = spatial_properties(paths, geometry, brain, vessel, affine, motion, subject)
     if guard_native_wall:
         properties['gliomaMaterialsV1'][WALL_SWEEP_PROPERTY] = WALL_SWEEP_POLICY
+    if vertex_wall_transport:
+        properties['gliomaMaterialsV1'][VERTEX_MOTION_PROPERTY] = VERTEX_MOTION_POLICY
+        receipt[VERTEX_MOTION_PROPERTY] = VERTEX_MOTION_POLICY
     receipt.update(
         sourceBranches={key: (route + start).tolist() for key, route in paths.items()},
         vesselSourceCells=int(vessel.sum()), modeledBrainCells=int(brain.sum()),
@@ -341,7 +435,12 @@ def stage(root, output, motion, subject, junction, *, guard_native_wall=False):
 
         SurgicalEngine(scene)
     output.mkdir(exist_ok=False)
-    path = save_case(case, output / 'native-tof-bifurcation.ressectionlab')
+    path = output / 'native-tof-bifurcation.ressectionlab'
+    if source_graph_fork:
+        save_workspace(case, path, sources=[], imaging=graph_fork_view(junction - start, affine),
+                       episode=None, selection=None, artifacts={})
+    else:
+        save_case(case, path)
     np.savez_compressed(output / 'research-layout.npz', brain=brain, vessel=vessel, affine=affine,
                         native_crop_start=start, **{key: route for key, route in paths.items()})
     write(output / 'scene-source.json', {**receipt, 'caseHash': case.semantic_hash, 'sceneId': scene.identity,
@@ -355,6 +454,10 @@ def main():
     parser.add_argument('--root', type=Path, default=HDD)
     parser.add_argument('--motion', choices=['baseline', 'rods'], default='rods')
     parser.add_argument('--guard-native-wall', action='store_true', help='Certify score-wall clearance during rod motion')
+    parser.add_argument('--vertex-wall-transport', action='store_true',
+                        help='Transport the guarded score wall at individual vertices')
+    parser.add_argument('--source-graph-fork', action='store_true',
+                        help='Stage a research fork from the verified native graph without a reviewed region')
     parser.add_argument('--subject', required=True)
     parser.add_argument('--junction-native', type=int, nargs=3, metavar=('I', 'J', 'K'), required=True)
     args = parser.parse_args()
@@ -365,7 +468,8 @@ def main():
     if not output.is_relative_to(root / CURRENT / 'operative-scene'):
         parser.error('Write restricted derivatives below the verified campaign operative-scene folder')
     print(stage(root, output, args.motion, args.subject, np.asarray(args.junction_native),
-                guard_native_wall=args.guard_native_wall), flush=True)
+                guard_native_wall=args.guard_native_wall, vertex_wall_transport=args.vertex_wall_transport,
+                source_graph_fork=args.source_graph_fork), flush=True)
 
 
 if __name__ == '__main__':

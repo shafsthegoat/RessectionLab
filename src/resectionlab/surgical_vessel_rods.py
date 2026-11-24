@@ -146,11 +146,17 @@ def source_points(engine, cells, *, rest=False):
               for cell in cells if cell in rods.index}
     if not rest and getattr(engine.scene, '_vessel_source_walls', ()):
         frames = _accepted_frames(engine, rods)
-        for wall, offsets, *_ in frames:
+        for wall, offsets, _, _, _, edited in frames:
+            vertex_owners = edited.owners if edited is not None else wall.source.owners
             for cell in cells:
                 i = np.searchsorted(wall.source.cells, cell)
                 if cell not in points and i < len(wall.source.cells) and wall.source.cells[i] == cell:
-                    points[cell] = wall.positions[i] + offsets[i]
+                    motion = offsets[i]
+                    if wall.vertex_motion is not None:
+                        samples = wall.vertex_motion.offsets[vertex_owners == i]
+                        if len(samples):
+                            motion = samples.mean(axis=0)
+                    points[cell] = wall.positions[i] + motion
     return points
 
 
@@ -230,6 +236,7 @@ def contacts(engine, a, b, radius, raster):
     for frame in frames:
         wall = frame[0]
         owners, _, _ = surfaces.query(engine, frame, np.asarray(a), np.asarray(b), radius)
+        # Keep source attribution distinct from the wider force stencil.
         linked, weights = surfaces.sites_for_owners(frame, owners)
         result.update(map(int, wall.source.cells[owners.ravel()]))
         result.update(rods.cells[i] for i in linked[weights > 1e-12] if i in retained)
@@ -357,10 +364,10 @@ def _native_tool_contact(engine, frames, rods, position, tools):
     for hand, a, b, calibre, max_force in tools:
         best = None
         for frame in frames:
-            owners, distance, difference = surfaces.query(engine, frame, a, b, calibre)
+            owners, distance, difference, vertices = surfaces.contact_features(engine, frame, a, b, calibre)
             if not len(owners):
                 continue
-            links, weights = surfaces.sites_for_owners(frame, owners)
+            links, weights = surfaces.contact_sites(frame, owners, vertices)
             usable = np.flatnonzero(np.any(weights > 1e-12, axis=(1, 2)))
             if not len(usable):
                 continue

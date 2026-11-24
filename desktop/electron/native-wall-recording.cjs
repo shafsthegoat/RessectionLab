@@ -23,12 +23,18 @@ function nativeWallMotionReceipt(pane, view, scene) {
       const wall = nativeVessels.find(surface => surface.layer === region.name);
       assert(rendererModes[mode] && wall?.mode === rendererModes[mode],
         'The GPU wall mode differs from accepted collision geometry');
+      const vertexMotion = mechanics?.vertexDisplacementsByLabel?.[region.id];
+      if (vertexMotion) assert(wall.vertexGeometryBinding === vertexMotion.geometryBinding && wall.vertices === vertexMotion.vertexCount,
+        'The GPU vertices differ from the accepted source wall binding');
     }
   }
   for (const {layer, maxMotionWitness} of nativeVessels) {
     if (!maxMotionWitness) continue;
-    const {sourceCell, restNativeIJK, displayedNativeIJK} = maxMotionWitness;
-    const expected = mechanics?.surfaceDisplacements?.[sourceCell];
+    const {sourceCell, vertex, restNativeIJK, displayedNativeIJK} = maxMotionWitness;
+    const label = scene.regions.find(region => region.name === layer)?.id;
+    const vertexMotion = mechanics?.vertexDisplacementsByLabel?.[label];
+    const expected = vertexMotion ? vertexMotion.offsetsMm[vertexMotion.indices.indexOf(vertex)] :
+      mechanics?.surfaceDisplacements?.[sourceCell];
     assert(expected, 'The moved GPU wall vertex has no accepted source displacement');
     const displacement = displayedNativeIJK.map((value, i) => value-restNativeIJK[i]);
     const ras = scene.affine.slice(0, 3).map(row => displacement.reduce((sum, value, i) => sum+value*row[i], 0));

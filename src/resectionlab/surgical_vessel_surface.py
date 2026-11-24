@@ -1,6 +1,6 @@
 """Native TOF wall contact and transport for the distributed rod model."""
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from itertools import product
 
 import numpy as np
@@ -9,6 +9,7 @@ from scipy.spatial import cKDTree
 
 from .core import immutable_array, semantic_digest
 from .geometry import _segment_cell_distances
+from . import surgical_vessel_vertex_motion as vertex_kinematics
 
 
 @dataclass(frozen=True)
@@ -20,6 +21,8 @@ class SourceWall:
     triangles: np.ndarray
     owners: np.ndarray
     scores: np.ndarray
+    geometry_binding: str | None = None
+    positions_ijk: np.ndarray | None = None
 
 
 def source_cell_radius(scene):
@@ -49,7 +52,8 @@ def bind_case(scene, case):
         walls.append(SourceWall(region['id'], immutable_array(cells), immutable_array(components),
                                 immutable_array(ijk @ scene.affine[:3, :3].T + scene.affine[:3, 3]),
                                 immutable_array(triangles), immutable_array(np.searchsorted(cells, owners)),
-                                case.vascular_probabilities[name]))
+                                case.vascular_probabilities[name],
+                                vertex_kinematics.geometry_binding(ijk, triangles, owners), immutable_array(ijk)))
     scene._vessel_source_walls = tuple(walls)
     scene._vessel_source_wall_proof = (scene.identity, scene._vessel_source_walls)
 
@@ -94,6 +98,7 @@ class Wall:
     fractions: np.ndarray
     weights: np.ndarray
     radial_offsets: np.ndarray
+    vertex_motion: vertex_kinematics.VertexMotion | None = None
 
 
 @dataclass(frozen=True)
@@ -394,19 +399,62 @@ def _edit_wall(engine, rods, wall, removed, cuts):
     return edited
 
 
+def _vertex_field(engine, wall, rods, edited, live_bonds):
+    label = wall.source.label
+    key = (edited.identity if edited is not None else None, live_bonds)
+    cache = getattr(engine, '_vessel_vertex_fields', {})
+    current = cache.get(label)
+    if current is None or current[0] != key:
+        if edited is None:
+            points, faces, owners = wall.source.vertices, wall.source.triangles, wall.source.owners
+            ijk = wall.source.positions_ijk
+            identity = wall.source.geometry_binding
+        else:
+            ijk = edited.positions_ijk
+            points = ijk @ engine.scene.affine[:3, :3].T + engine.scene.affine[:3, 3]
+            faces, owners, identity = edited.triangles, edited.owners, edited.identity
+        if not identity or ijk is None:
+            raise ValueError('VESSEL_VERTEX_TRANSPORT_REQUIRES_BOUND_SOURCE_GEOMETRY')
+        # The applied transport at acquisition boundaries and newly clipped
+        # cut vertices keeps its own stencil rather than borrowing nearby loads.
+        protected = np.any((ijk < 1.) | (ijk > np.asarray(wall.shape) - 2.), axis=1)
+        if edited is not None:
+            if wall.source.positions_ijk is None:
+                raise ValueError('VESSEL_VERTEX_TRANSPORT_REQUIRES_BOUND_SOURCE_GEOMETRY')
+            row_bytes = np.dtype('V12')
+            intact = np.ascontiguousarray(wall.source.positions_ijk, dtype='<f4').view(row_bytes).ravel()
+            edited_rows = np.ascontiguousarray(ijk, dtype='<f4').view(row_bytes).ravel()
+            protected |= ~np.isin(edited_rows, intact)
+        field = vertex_kinematics.bind(wall, rods, points, faces, owners, live_bonds,
+                                      identity, float(min(engine.scene.spacing)), protected)
+        current = key, field
+        engine._vessel_vertex_fields = {**cache, label: current}
+    return current[1]
+
+
 def frames(engine, rods, position, radius, live_bonds):
     removed = set(engine.state['removed'])
     blocked = [pair for name in ('cutEdges', 'transectedEdges') for pair in engine.state.get(name, ())]
     blocked.extend(row['cutFace'] for row in engine.state.get('vascularGraphV1', {}).get('edges', {}).values()
                    if row['cutFace'])
+    vertex_transport = engine.scene.properties.get('gliomaMaterialsV1', {}).get(vertex_kinematics.PROPERTY) == vertex_kinematics.POLICY
     for wall in definitions(engine, rods):
         offsets, links, fraction = _offsets(wall, rods, position, radius, live_bonds)
         extent = float(np.linalg.norm(offsets, axis=1).max())
         edited = _edit_wall(engine, rods, wall, removed, blocked) if removed or blocked else None
+        if vertex_transport:
+            field = _vertex_field(engine, wall, rods, edited, live_bonds)
+            shifts = field.offsets(position - rods.rest, 1. - radius / rods.radius)
+            wall = replace(wall, vertex_motion=vertex_kinematics.VertexMotion(field, shifts))
+            extent = max(extent, float(np.linalg.norm(shifts, axis=1).max(initial=0.)))
         yield wall, offsets, links, fraction, extent, edited
 
 
 def query(engine, frame, a, b, radius):
+    return contact_features(engine, frame, a, b, radius)[:3]
+
+
+def contact_features(engine, frame, a, b, radius):
     wall, offsets, _, _, extent, edited = frame
     box_owners = np.empty((0, 3), dtype=int)
     box_distances = np.empty(0)
@@ -428,28 +476,34 @@ def query(engine, frame, a, b, radius):
     elements = edited.triangles if edited is not None else wall.source.triangles
     bindings = edited.owners if edited is not None else wall.source.owners
     source_triangles = edited.world_triangles if edited is not None else wall.triangles
+    motion_bindings = None if wall.vertex_motion is not None else bindings
+    motion = wall.vertex_motion.offsets if wall.vertex_motion is not None else offsets
     hits = _candidates(tree, a, b, radius, tri_extent + extent)
-    owners = bindings[elements[hits]]
-    triangles = source_triangles[hits] + offsets[owners]
+    corners = elements[hits]
+    triangles = source_triangles[hits] + motion[corners if motion_bindings is None else motion_bindings[corners]]
     distances, difference = _triangle_distances(a, b, triangles)
     accepted = distances <= radius + 1e-7
+    box_corners = np.full(box_owners.shape, -1, dtype=int)
     if not np.any(accepted) and wall.cell_tree.query(a)[0] <= wall.cell_extent + extent + 1e-7:
-        hit = _interior_contact(tree, tri_extent, elements, bindings, source_triangles, offsets, extent, a)
+        hit = _interior_contact(tree, tri_extent, elements, source_triangles, motion_bindings, motion, extent, a)
         if hit is not None:
-            cells, delta = hit
-            return np.vstack((cells, box_owners)), np.r_[0., box_distances], np.vstack((delta, box_differences))
-    return (np.vstack((owners[accepted], box_owners)), np.r_[distances[accepted], box_distances],
-            np.vstack((difference[accepted], box_differences)))
+            vertices, delta = hit
+            return (np.vstack((bindings[vertices], box_owners)), np.r_[0., box_distances],
+                    np.vstack((delta, box_differences)), np.vstack((vertices, box_corners)))
+    vertices = corners[accepted]
+    return (np.vstack((bindings[vertices], box_owners)), np.r_[distances[accepted], box_distances],
+            np.vstack((difference[accepted], box_differences)), np.vstack((vertices, box_corners)))
 
 
-def _interior_contact(tree, triangle_extent, elements, bindings, source_triangles, offsets, extent, point):
+def _interior_contact(tree, triangle_extent, elements, source_triangles, motion_bindings, offsets, extent, point):
     # A capsule completely inside a closed native component crosses no wall.
     # A non-axis-aligned ray tests that case and retains the nearest exit owner.
     axis = np.array([1., .072934, .039701])
     reach = max(0., tree.maxes[0] - point[0]) + triangle_extent + extent + 1.
     hits = _candidates(tree, point, point + reach * axis, 0., triangle_extent + extent)
-    owners = bindings[elements[hits]]
-    first, second, third = (source_triangles[hits] + offsets[owners]).transpose(1, 0, 2)
+    corners = elements[hits]
+    motion_indices = corners if motion_bindings is None else motion_bindings[corners]
+    first, second, third = (source_triangles[hits] + offsets[motion_indices]).transpose(1, 0, 2)
     u, v = second - first, third - first
     pvec = np.cross(axis, v)
     determinant = np.sum(u * pvec, axis=1)
@@ -465,7 +519,7 @@ def _interior_contact(tree, triangle_extent, elements, bindings, source_triangle
     if len(np.unique(np.round(distance[intersected], 8))) % 2 == 0:
         return None
     nearest = intersected[np.argmin(distance[intersected])]
-    return owners[nearest], -axis * distance[nearest]
+    return elements[hits[nearest]], -axis * distance[nearest]
 
 
 def sites_for_owners(frame, owners):
@@ -482,6 +536,40 @@ def sites_for_owners(frame, owners):
     return links_for_owners.reshape((*owners.shape, 2)), weights.reshape((*owners.shape, 2))
 
 
+def contact_sites(frame, owners, vertices):
+    if frame[0].vertex_motion is None:
+        return sites_for_owners(frame, owners)
+    flat = vertices.ravel()
+    native = np.flatnonzero(flat >= 0)
+    boxes = np.flatnonzero(flat < 0)
+    matrix = frame[0].vertex_motion.binding.translation[flat[native]]
+    counts = np.diff(matrix.indptr)
+    width = max(int(counts.max(initial=0)), 2 if len(boxes) else 0, 1)
+    links = np.full((len(flat), width), -1, dtype=int)
+    weight = np.zeros((len(flat), width))
+    rows = np.repeat(native, counts)
+    columns = np.arange(matrix.nnz) - np.repeat(matrix.indptr[:-1], counts)
+    links[rows, columns], weight[rows, columns] = matrix.indices, matrix.data
+    if len(boxes):
+        links[boxes, :2], weight[boxes, :2] = sites_for_owners(frame, owners.ravel()[boxes])
+    return links.reshape((*owners.shape, width)), weight.reshape((*owners.shape, width))
+
+
+def sweep_mesh(frame):
+    wall, offsets, _, _, _, edited = frame
+    faces = edited.triangles if edited is not None else wall.source.triangles
+    rest = edited.world_triangles if edited is not None else wall.triangles
+    if wall.vertex_motion is not None:
+        return rest, faces, faces, wall.vertex_motion.offsets
+    bindings = edited.owners if edited is not None else wall.source.owners
+    return rest, faces, bindings[faces], offsets
+
+
+def sweep_offsets(frame):
+    motion = frame[0].vertex_motion
+    return frame[1] if motion is None else motion.offsets
+
+
 def displacements(frames):
     result = {}
     for wall, offsets, _, _, _, _ in frames:
@@ -493,6 +581,7 @@ def displacements(frames):
 def geometry_metadata(frames):
     modes = {}
     edits = {}
+    motions = {}
     for wall, _, _, _, _, edited in frames:
         label = str(wall.source.label)
         if edited is not None:
@@ -503,4 +592,10 @@ def geometry_metadata(frames):
                             **({'cuboidSourceCells': wall.source.cells[edited.cuboids].tolist()} if len(edited.cuboids) else {})}
         else:
             modes[label] = 'native-probability-wall'
-    return {'geometryModeByLabel': modes, **({'editedWallsByLabel': edits} if edits else {})}
+        if wall.vertex_motion is not None:
+            motion = wall.vertex_motion
+            indices = np.flatnonzero(np.any(motion.offsets != 0., axis=1))
+            motions[label] = {'geometryBinding': motion.binding.identity, 'vertexCount': len(motion.offsets),
+                              'indices': indices.tolist(), 'offsetsMm': motion.offsets[indices].tolist()}
+    return {'geometryModeByLabel': modes, **({'editedWallsByLabel': edits} if edits else {}),
+            **({'vertexDisplacementsByLabel': motions} if motions else {})}

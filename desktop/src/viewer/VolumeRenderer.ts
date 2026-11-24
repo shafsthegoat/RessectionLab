@@ -1566,6 +1566,8 @@ export class VolumeRenderer {
         const receipt={mode:vessel.mode,triangles:vessel.indices.length/3,
           movedVertices:display.movedVertices,maxVertexOffsetMm:display.maxVertexOffsetMm,maxMotionWitness:display.maxMotionWitness,
           geometryIdentity:vessel.geometryIdentity,
+          ...(view?.vesselMechanics?.vertexDisplacementsByLabel?.[vessel.region]?{
+            vertexGeometryBinding:vessel.geometryBinding,vertices:vessel.sourceCells.length}:{}),
           ...((vessel.cuboidCount??0)>0?{cuboidCount:vessel.cuboidCount}:{})};
         geometry.userData.operativeVessel={...receipt,normalStyle:'physical-indexed'};
         if(lighting)pair.smooth.userData.operativeVessel={...receipt,

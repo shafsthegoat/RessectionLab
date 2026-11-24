@@ -156,6 +156,23 @@ across source labels. Closely spaced adjacent faces can still fold under load.
 The preparation flag records the policy in the scene identity so earlier
 recordings remain reproducible with their original materials declaration.
 
+Pass `--vertex-wall-transport` to use the guarded native wall with per-vertex
+motion. Native contact uses the transported triangles, and the renderer binds
+the same offsets to the native score mesh or to the delivered, capped cut
+mesh. Very short native mesh edges share their displacement weights to reduce
+local folds. That step preserves the original vertex positions and source
+owners. An edit that requires a cuboid fallback is rejected by this profile.
+
+Research staging can use `--source-graph-fork --vertex-wall-transport` with
+`--subject` and `--junction-native I J K`. Use a degree-three junction in
+the subject's saved native source graph. The procedure checks input hashes
+and the native grid, then builds a physical-size crop with three contiguous,
+face-connected source legs. The saved workspace centers the microscope at
+the junction and faces it toward the exposed side of the modeled banks. The
+scene receipt identifies the graph selection and its research-only simulation
+status. Omit `--source-graph-fork` to use the manually reviewed source-region
+workflow.
+
 ## Prospective intake receipt
 
 `resectionlab.eden2020.inspect_local_case` produces a versioned evidence

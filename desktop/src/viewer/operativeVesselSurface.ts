@@ -14,13 +14,18 @@ export interface OperativeVesselSurface {
   scoreLighting?:Float32Array;
   cuboidCount?:number;
   geometryIdentity?:string;
+  geometryBinding?:string;
   sourceVolumeBoundary?:boolean;
 }
 type RestVessel=OperativeVesselSurface&{sites:number[]};
 type EditedWall=NonNullable<NonNullable<SurgicalView['vesselMechanics']>['editedWallsByLabel']>[string];
 export function vesselGeometryToken(view:SurgicalView){
   const geometry=view.vesselMechanics?.geometryModeByLabel;
-  if(geometry)return [geometry,Object.entries(view.vesselMechanics?.editedWallsByLabel??{}).map(([label,wall])=>[label,wall.identity])];
+  if(geometry){
+    const edited=Object.entries(view.vesselMechanics?.editedWallsByLabel??{}).map(([label,wall])=>[label,wall.identity]);
+    const vertex=view.vesselMechanics?.vertexDisplacementsByLabel;
+    return vertex?[geometry,edited,Object.entries(vertex).map(([label,packet])=>[label,packet.geometryBinding,packet.vertexCount])]:[geometry,edited];
+  }
 }
 const sitePoint=(id:number,[,ny,nz]:Shape3):Point3=>[Math.floor(id/(ny*nz)),Math.floor(id/nz)%ny,id%nz];
 const edgeKey=(a:number,b:number)=>a<b?`${a},${b}`:`${b},${a}`;
@@ -70,6 +75,7 @@ export function bindNativeVesselSurfaces(source:ViewerVolume,owner:Uint16Array,r
     const scoreLighting=field==='native-probability'&&layer.vesselScoreLighting?.length===sourceCells.length*4
       ?layer.vesselScoreLighting:undefined;
     if(bound)result.set(name,{mode:'native-probability',region:id,positions,normals,indices,sourceCells,sites,scoreLighting,
+      geometryBinding:layer.vesselGeometryBinding,
       sourceVolumeBoundary:crossesSourceVolumeBoundary(positions,source.shape)});
   }
   return result;
@@ -103,7 +109,39 @@ function sourceCellBoundary(region:number,sites:number[],shape:Shape3):Operative
   return {mode:'source-cell-boundary',region,positions,normals,indices,sourceCells,cuboidCount:sites.length};
 }
 
-function editedNativeWall(wall:EditedWall,region:number,owner:Uint16Array,removed:Set<number>,shape:Shape3,affine:Affine):OperativeVesselSurface {
+function retainedScoreLighting(rest:RestVessel,positions:Float32Array,owners:Uint32Array,triangles:EditedWall['triangles'],nativeCount:number){
+  const score=rest.scoreLighting;
+  if(!score?.length)return;
+  const key=(points:Float32Array,cells:Uint32Array,i:number)=>{
+    const start=3*i;
+    return `${cells[i]},${points[start]},${points[start+1]},${points[start+2]}`;
+  };
+  const original=new Map<string,number>();
+  for(let i=0;i<rest.sourceCells.length;i++){
+    const vertex=key(rest.positions,rest.sourceCells,i);
+    original.set(vertex,original.has(vertex)?-1:i);
+  }
+  const match=Int32Array.from({length:nativeCount},(_,i)=>original.get(key(positions,owners,i))??-1);
+  const faceKey=(a:number,b:number,c:number)=>a<b&&a<c?`${a},${b},${c}`:b<c?`${b},${c},${a}`:`${c},${a},${b}`;
+  const unchanged=new Set<string>();
+  for(let i=0;i<rest.indices.length;i+=3)unchanged.add(faceKey(rest.indices[i],rest.indices[i+1],rest.indices[i+2]));
+  const changed=new Uint8Array(nativeCount);
+  for(const [a,b,c] of triangles){
+    const x=match[a],y=match[b],z=match[c];
+    if(Math.min(x,y,z)<0||!unchanged.has(faceKey(x,y,z))){changed[a]=1;changed[b]=1;changed[c]=1;}
+  }
+  // New cap faces and their rim use the accepted geometric normals.
+  const lights=new Float32Array(owners.length*4);
+  let supported=false;
+  for(let i=0;i<nativeCount;i++){
+    const j=4*match[i];
+    if(j>=0&&!changed[i]&&score[j+3]){lights.set(score.subarray(j,j+4),4*i);supported=true;}
+  }
+  return supported?lights:undefined;
+}
+
+function editedNativeWall(wall:EditedWall,rest:RestVessel,owner:Uint16Array,removed:Set<number>,shape:Shape3,affine:Affine):OperativeVesselSurface {
+  const {region}=rest;
   const {positionsIJK,sourceCells,triangles,cuboidSourceCells=[]}=wall;
   if(positionsIJK.length!==sourceCells.length||positionsIJK.length+24*cuboidSourceCells.length>10_000_000||triangles.length+12*cuboidSourceCells.length>10_000_000)
     throw Error('Edited vessel wall has inconsistent geometry sizes');
@@ -128,8 +166,9 @@ function editedNativeWall(wall:EditedWall,region:number,owner:Uint16Array,remove
   positions.set(cubes.positions,positionsIJK.length*3);cells.set(cubes.sourceCells,sourceCells.length);
   for(let i=0;i<cubes.indices.length;i++)indices[triangles.length*3+i]=sourceCells.length+cubes.indices[i];
   return {mode:'edited-native-wall',region,positions,indices,sourceCells:cells,
-    normals:indexedSurfaceNormals(positions,indices,affine),cuboidCount:cuboidSourceCells.length,geometryIdentity:wall.identity,
-    sourceVolumeBoundary:crossesSourceVolumeBoundary(positions,shape)};
+    normals:indexedSurfaceNormals(positions,indices,affine),cuboidCount:cuboidSourceCells.length,geometryIdentity:wall.identity,geometryBinding:wall.identity,
+    sourceVolumeBoundary:crossesSourceVolumeBoundary(positions,shape),
+    scoreLighting:retainedScoreLighting(rest,positions,cells,triangles,sourceCells.length)};
 }
 
 export function acceptedVesselSurfaces(rests:Map<string,RestVessel>,owner:Uint16Array,overrides:Map<number,number>,view:SurgicalView,
@@ -145,7 +184,7 @@ export function acceptedVesselSurfaces(rests:Map<string,RestVessel>,owner:Uint16
       const edited=view.vesselMechanics?.editedWallsByLabel?.[rest.region],cached=prior.get(name);
       if(!edited?.identity)throw Error('Accepted edited vessel wall geometry is missing');
       const topology=`edited:${edited.identity}`;
-      const surface=cached?.topology===topology?cached.surface:editedNativeWall(edited,rest.region,owner,excluded,view.scene.shape,view.scene.affine);
+      const surface=cached?.topology===topology?cached.surface:editedNativeWall(edited,rest,owner,excluded,view.scene.shape,view.scene.affine);
       prior.set(name,{topology,surface});result.set(name,surface);
       continue;
     }
@@ -166,6 +205,15 @@ export function acceptedVesselSurfaces(rests:Map<string,RestVessel>,owner:Uint16
     const labels=new Set([...result.values()].map(surface=>String(surface.region)));
     if(Object.keys(modes).some(label=>!labels.has(label)))throw Error('Accepted vessel collision geometry has no matching native display source');
   }
+  const vertexMotion=view.vesselMechanics?.vertexDisplacementsByLabel;
+  if(vertexMotion){
+    const byLabel=new Map([...result.values()].map(surface=>[String(surface.region),surface]));
+    for(const [label,packet] of Object.entries(vertexMotion)){
+      const surface=byLabel.get(label);
+      if(!surface||!surface.geometryBinding||packet.geometryBinding!==surface.geometryBinding||packet.vertexCount!==surface.sourceCells.length)
+        throw Error('Accepted vessel vertex motion differs from its bound source surface');
+    }
+  }
   return result;
 }
 
@@ -174,16 +222,30 @@ export function acceptedVesselSurfaces(rests:Map<string,RestVessel>,owner:Uint16
  * attached source sites, including the zero-shift sites at a supported seam. */
 export function deformOperativeVessel(surface:OperativeVesselSurface,view:SurgicalView,affine:Affine){
   const motion=view.vesselMechanics?.surfaceDisplacements;
+  const vertexMotion=view.vesselMechanics?.vertexDisplacementsByLabel?.[surface.region];
+  if(vertexMotion){
+    const {geometryBinding,vertexCount,indices,offsetsMm}=vertexMotion;
+    if(!surface.geometryBinding||geometryBinding!==surface.geometryBinding||vertexCount!==surface.sourceCells.length||
+       !Array.isArray(indices)||!Array.isArray(offsetsMm)||indices.length!==offsetsMm.length||
+       indices.some((id,i)=>!Number.isSafeInteger(id)||id<0||id>=vertexCount||(i>0&&id<=indices[i-1]))||
+       offsetsMm.some(row=>!Array.isArray(row)||row.length!==3||!row.every(Number.isFinite)))
+      throw Error('Accepted vessel vertex offsets do not match their indexed geometry');
+  }
   const legacy=view.physics?.brain?.assignment;
   const attached=new Set(legacy?.vesselMotionModel==='retained-source-segments-v1'?legacy.vesselAttachments?.map(([site])=>site):[]);
   const moved=new Map(view.moved),inverse=inverseAffine(affine),shifts=new Map<number,Point3>();
+  const toNative=(delta:Point3)=>inverse.slice(0,3).map(row=>row[0]*delta[0]+row[1]*delta[1]+row[2]*delta[2]) as Point3;
   let positions:Float32Array|undefined,movedVertices=0,maxVertexOffsetMm=0,maxVertex=-1;
+  let next=0;
   for(let i=0;i<surface.sourceCells.length;i++){
     const id=surface.sourceCells[i];
-    let shift=shifts.get(id);
-    if(!shift){
+    let shift:Point3|undefined;
+    if(vertexMotion){
+      if(i!==vertexMotion.indices[next])continue;
+      shift=toNative(vertexMotion.offsetsMm[next++]);
+    }else if(!(shift=shifts.get(id))){
       const delta=motion?motion[id]:attached.has(id)?view.deformation?.[id]:undefined;
-      if(delta)shift=inverse.slice(0,3).map(row=>row[0]*delta[0]+row[1]*delta[1]+row[2]*delta[2]) as Point3;
+      if(delta)shift=toNative(delta);
       else if(!motion&&moved.has(id)){
         const origin=sitePoint(id,view.scene.shape),target=sitePoint(moved.get(id)!,view.scene.shape);
         shift=[target[0]-origin[0],target[1]-origin[1],target[2]-origin[2]];

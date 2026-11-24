@@ -3,6 +3,7 @@ import json
 import numpy as np
 import pytest
 from scipy.spatial.transform import Rotation
+from scipy.sparse import csr_matrix
 
 from resectionlab.core import CaseData, SourceRef
 from resectionlab import surgical_deformation_v2 as tissue
@@ -12,11 +13,11 @@ from resectionlab import surgical_vessel_surface as surfaces
 from resectionlab.surgical_engine import SurgicalEngine
 from resectionlab.surgical_physics_v2 import default_profile
 from resectionlab.surgical_scene import from_case
-from resectionlab import native_backend, surgical_wall_sweep
+from resectionlab import native_backend, surgical_wall_sweep, surgical_vessel_vertex_motion as vertex_motion
 from resectionlab.surgical_wall_sweep_reference import WallSweepReference
 
 
-def _fixture(*, guarded=False):
+def _fixture(*, guarded=False, vertex_transport=False):
     shape = (35, 35, 30)
     spacing = .4
     affine = np.diag([spacing, spacing, spacing, 1.])
@@ -41,6 +42,8 @@ def _fixture(*, guarded=False):
     }
     if guarded:
         props[materials.PROPERTY][surgical_wall_sweep.PROPERTY] = surgical_wall_sweep.POLICY
+    if vertex_transport:
+        props[materials.PROPERTY][vertex_motion.PROPERTY] = vertex_motion.POLICY
     case = CaseData('native-score-rod', scores, {'brain': brain, 'vessels': vessels}, affine,
                     (SourceRef('fixture', 'synthetic://native-score-rod', provenance='simulated'),),
                     metadata={'anatomy_layers': {'brain': {'kind': 'brain'}, 'vessels': {'kind': 'vessels'}},
@@ -57,9 +60,9 @@ def _action(operation, *, z=None, dt=.1, **fields):
     }
 
 
-@pytest.mark.parametrize('guarded', [False, True])
-def test_native_wall_contact_tracks_passive_dissection_and_verified_replay(guarded):
-    engine = _fixture(guarded=guarded)
+@pytest.mark.parametrize(('guarded', 'vertex_transport'), [(False, False), (True, False), (True, True)])
+def test_native_wall_contact_tracks_passive_dissection_and_verified_replay(guarded, vertex_transport):
+    engine = _fixture(guarded=guarded, vertex_transport=vertex_transport)
     actions = [_action('exchange', instrument='dissector'), _action('place', z=4.),
                _action('move', z=5.05, dt=.4)]
     for action in actions:
@@ -76,13 +79,21 @@ def test_native_wall_contact_tracks_passive_dissection_and_verified_replay(guard
     # Engine contact uses the exact displayed native-wall vertex positions.
     frame = rods._accepted_frames(engine, rods.definitions(engine))[0]
     wall, offsets, *_ = frame
-    vertices = wall.source.vertices + offsets[wall.source.owners]
+    shifts = wall.vertex_motion.offsets if vertex_transport else offsets[wall.source.owners]
+    vertices = wall.source.vertices + shifts
     close = np.flatnonzero((np.abs(vertices[:, 0] - 6.8) < .3) & (vertices[:, 2] < 6.))
     assert len(close)
     clip = close[np.argmin(vertices[close, 2])]
     vertex = vertices[clip]
     owner = int(wall.source.cells[wall.source.owners[clip]])
-    assert view['surfaceDisplacements'][str(owner)] == offsets[wall.source.owners[clip]].tolist()
+    if vertex_transport:
+        packet = view['vertexDisplacementsByLabel']['2']
+        assert packet['geometryBinding'] == wall.source.geometry_binding
+        assert packet['offsetsMm'][packet['indices'].index(clip)] == shifts[clip].tolist()
+        assert packet['vertexCount'] == len(wall.source.vertices)
+        assert not np.array_equal(shifts, offsets[wall.source.owners])
+    else:
+        assert view['surfaceDisplacements'][str(owner)] == offsets[wall.source.owners[clip]].tolist()
     assert owner in engine.touched(vertex, vertex, 0.)
     assert owner not in engine.touched(vertex - [0., 0., .12], vertex - [0., 0., .12], 0.)
     clone = SurgicalEngine.restore(engine.scene, json.loads(json.dumps(engine.snapshot())))
@@ -146,9 +157,9 @@ def test_removed_positive_reextracts_native_wall_without_erasing_untouched_trian
     assert len(baseline.intersection(map(tuple, updated.round(7)))) > .95 * len(baseline)
 
 
-@pytest.mark.parametrize('guarded', [False, True])
-def test_public_scissors_transect_score_wall_and_replay_the_same_cap(guarded):
-    engine = _fixture(guarded=guarded)
+@pytest.mark.parametrize(('guarded', 'vertex_transport'), [(False, False), (True, False), (True, True)])
+def test_public_scissors_transect_score_wall_and_replay_the_same_cap(guarded, vertex_transport):
+    engine = _fixture(guarded=guarded, vertex_transport=vertex_transport)
     q = Rotation.from_rotvec([0, 0, np.pi / 2]).as_quat().tolist()
     place = _action('place', z=4., parameters={'depthMm': 1.1, 'jawOpeningMm': .2})
     cut = _action('apply', z=5.2, dt=.5)
@@ -161,8 +172,27 @@ def test_public_scissors_transect_score_wall_and_replay_the_same_cap(guarded):
     assert any(event['kind'] == 'strand_transection' for event in receipt['events'])
     wall = engine.view()[rods.FIELD]['editedWallsByLabel']['2']
     assert not wall.get('cuboidSourceCells')
+    if vertex_transport:
+        packet = engine.view()[rods.FIELD]['vertexDisplacementsByLabel']['2']
+        assert packet['geometryBinding'] == wall['identity']
+        assert packet['vertexCount'] == len(wall['positionsIJK'])
     restored = SurgicalEngine.restore(engine.scene, json.loads(json.dumps(engine.snapshot())))
     assert restored.view()[rods.FIELD]['editedWallsByLabel']['2'] == wall
+
+
+def test_vertex_transport_requires_the_transactional_wall_sweep():
+    with pytest.raises(ValueError, match='VESSEL_VERTEX_TRANSPORT_REQUIRES_SWEPT_NATIVE_WALL'):
+        _fixture(vertex_transport=True)
+
+
+def test_short_edge_transport_pools_motion_and_leaves_protected_components_separate():
+    matrix = csr_matrix([[1., 0.], [0., 1.], [.5, .5], [1., 0.], [0., 1.]])
+    edges = np.array([[0, 1], [1, 2], [3, 4]])
+    protected = np.array([False, False, False, True, False])
+    translation, radial = vertex_motion._pool_subresolution_edges((matrix, 2. * matrix), edges, protected, 5)
+    expected = [[.5, .5], [.5, .5], [.5, .5], [1., 0.], [0., 1.]]
+    np.testing.assert_array_equal(translation.toarray(), expected)
+    np.testing.assert_array_equal(radial.toarray(), 2. * np.asarray(expected))
 
 
 def test_wall_sweep_rejects_crossing_between_clear_endpoints_and_midpoint():
