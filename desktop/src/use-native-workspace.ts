@@ -165,7 +165,8 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
     const ids=Object.keys(view.visible).filter(id=>view.visible[id]);
     const coverage=freshOpening?ctaCoverageOptions(b.document,s):undefined;
     if(coverage&&view.visible[coverage.combinedId]){
-      for(const id of coverage.focusIds)if(!ids.includes(id))ids.push(id);
+      const anchors=coverage.focusIds.filter(id=>!view.visible[id]);
+      if(ids.length+anchors.length<=128)ids.push(...anchors);
     }
     try{
       const result=await api.anatomyView({...args(b),seriesId:s,layers:ids,original:raw,patientModel:b.document.series.length>1,previewAlignment:true,vesselScope:scopeRef.current,...vesselSurfaceOptions(b,view.settings),...extra});
