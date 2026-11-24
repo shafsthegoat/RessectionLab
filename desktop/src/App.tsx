@@ -848,16 +848,17 @@ export default function App() {
   }, []);
 
   const installCase = useCallback(
-    async (sourceInput: CasePayload, runtime: ResectionApi, requestedGeneration?: number, keepStudySelection?:string) => {
+    async (sourceInput: CasePayload, runtime: ResectionApi, requestedGeneration?: number, keepStudySelection?:string,
+      sourceIsCurrent:()=>boolean=()=>true) => {
       const generation = requestedGeneration ?? ++caseGeneration.current;
-      if (generation !== caseGeneration.current) return false;
+      const isCurrent=()=>mounted.current&&generation===caseGeneration.current&&sourceIsCurrent();
+      if (!isCurrent()) return false;
       setHydrating(true);
       setError(null);
       try {
-        const reopened = await hydrateWorkspace(sourceInput, runtime,
-          () => mounted.current && generation === caseGeneration.current);
+        const reopened = await hydrateWorkspace(sourceInput, runtime,isCurrent);
         const { source, volume: loaded } = reopened;
-        if (!mounted.current || generation !== caseGeneration.current || (keepStudySelection && latestSelectionKey.current!==keepStudySelection))
+        if (!isCurrent() || (keepStudySelection && latestSelectionKey.current!==keepStudySelection))
           return false;
         // Commit only after the complete replacement has hydrated successfully.
         if(!keepStudySelection)native.clear();
@@ -985,7 +986,7 @@ export default function App() {
         );
         return true;
       } catch (failure) {
-        if (generation === caseGeneration.current)
+        if (isCurrent())
           setError(
             failure instanceof Error ? failure.message : String(failure),
           );
@@ -1750,11 +1751,12 @@ export default function App() {
             approach={!operativeIssue&&nativeRoute?.targetLayerId?{approachId:nativeRoute.id,parameterHash:nativeRoute.parameterHash,measurementHash:nativeRoute.measurementHash,
               targetLayerId:nativeRoute.targetLayerId,snapshotId:nativeRoute.sourceSnapshotId}:undefined}
             routeName={nativeRoute?.name} measurements={nativeRoute?.measurements}
-            binding={native.binding} options={native.planning.rehearsalOptions} busy={busy}
-            patientCursor={native.patientFrameReady?native.state.cursor:null} onAnatomy={()=>setWorkbenchTab('data')} onPrepare={async options=>{
+            binding={native.binding} options={native.planning.rehearsalOptions} busy={busy||!!native.draft||planningEditsPending}
+            patientCursor={native.patientFrameReady?native.state.cursor:null} onAnatomy={()=>setWorkbenchTab('data')} onPrepare={async (options,sourceIsCurrent)=>{
             if(!api?.prepareSurgicalEnvironment)throw Error('Restart the app to load environment preparation.');
+            const generation=++caseGeneration.current;
             const prepared=await api.prepareSurgicalEnvironment(options);
-            if(prepared&&await installCase(prepared,api))setWorkbenchTab('rehearsal');
+            if(prepared&&await installCase(prepared,api,generation,undefined,sourceIsCurrent))setWorkbenchTab('rehearsal');
           }}/>}</> : <>
             {showEngineRecording&&replayReceipt&&<section className="operative-inspector engine-recording-info" aria-label="Source-verified recorded episode">
               <h2>{viewingStudyRecording?'Study-linked recording':'Saved procedural recording'}</h2>

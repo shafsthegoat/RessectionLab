@@ -61,7 +61,10 @@ export interface SelectedRouteForecast {
   preparationActions:number;withdrawalActions:number;targetRemovedMm3:number;nonTargetRemovedMm3:number;
   elapsedSeconds:number;physicalCandidatesExamined:number;requiredEvidence:string[];
 }
-export type EnvironmentOptions={selectedRouteForecast?:SelectedRouteForecast;acquisitions?:AcquisitionContribution[];referenceIssue:string|null;layers:Array<{
+export type NativeWallPair={brainLayerId:string;vesselLayerId:string;scope:'reviewed-crop';centerRasMm:Point3}|
+  {brainLayerId:string;vesselLayerId:string;scope:'cursor'};
+export type EnvironmentOptions={selectedRouteForecast?:SelectedRouteForecast;acquisitions?:AcquisitionContribution[];referenceIssue:string|null;
+  nativeWall?:{referenceIssue:string|null;pairs:NativeWallPair[]};layers:Array<{
   role:EnvironmentRole;layerId:string;status:'ready'|'estimated_alignment'|'unavailable';reason?:string|null;nativeWallIssue?:string;
   nativeWallAlignment?:{brainLayerId:string;centerRasMm:Point3};
 }>};

@@ -162,16 +162,26 @@ def _research_grid(collection, reference, resolution_mm):
 def surgical_environment_options(collection, *, check=lambda: None):
     """Source and role preflight for the separate limited rehearsal derivative."""
     from .anatomy_local_wall_review import PROPERTY, native_wall_alignment_review
+    from .surgical_patient_wall import native_wall_lattice
     from .surgical_selected_decision import selected_route_forecast
-    result = {'referenceIssue': None, 'layers': [], 'selectedRouteForecast': selected_route_forecast()}
+    native_wall = {'referenceIssue': None, 'pairs': []}
+    result = {'referenceIssue': None, 'layers': [], 'selectedRouteForecast': selected_route_forecast(),
+              'nativeWall': native_wall}
     try:
         reference = collection.series(collection.document['reference_series'])
-        _source_registration(collection, reference)
-        _research_grid(collection, reference, 1.)
+        reference_registration = _source_registration(collection, reference)
     except (ValueError, StopIteration) as error:
-        result['referenceIssue'] = str(error) or 'An acquired reference scan is required'
+        issue = str(error) or 'An acquired reference scan is required'
+        result['referenceIssue'] = native_wall['referenceIssue'] = issue
         return result
-    registration = {}
+    if reference_registration[1]:
+        native_wall['referenceIssue'] = 'Local native-wall rehearsal requires reviewed source alignment: ' + ', '.join(reference_registration[1])
+    try:
+        _research_grid(collection, reference, 1.)
+    except ValueError as error:
+        result['referenceIssue'] = str(error)
+    registration = {reference['id']: reference_registration}
+    native_brains, native_vessels = {}, []
     for role, kinds in ENVIRONMENT_KINDS.items():
         for row in collection.document['layers']:
             if row['kind'] not in kinds:
@@ -185,8 +195,8 @@ def surgical_environment_options(collection, *, check=lambda: None):
                 _check_layer_export(collection, role, row)
                 sid = row['source_series']
                 if sid not in registration:
-                    registration[sid] = _source_registration(collection, collection.series(sid))[1]
-                unreviewed = registration[sid]
+                    registration[sid] = _source_registration(collection, collection.series(sid))
+                matrix, unreviewed = registration[sid]
                 data = collection.array(row['data'])
                 slab = max(1, 262_144 // max(1, np.prod(data.shape[1:])))
                 for offset in range(0, len(data), slab):
@@ -198,17 +208,36 @@ def surgical_environment_options(collection, *, check=lambda: None):
                 option.update(status='estimated_alignment' if unreviewed else 'ready')
                 if unreviewed:
                     option['reason'] = 'Estimated source alignment requires an explicit research choice'
-                    transform = collection.document['transforms'][sid]
-                    local = transform.get(PROPERTY)
-                    binding = local.get('binding') if isinstance(local, dict) else None
-                    if role == 'vessels' and isinstance(binding, dict):
-                        brain_id = binding.get('brainLayerId')
-                        brain = next((layer for layer in collection.document['layers'] if layer['id'] == brain_id), None)
-                        if brain is not None and (review := native_wall_alignment_review(collection, brain, row)):
-                            option['nativeWallAlignment'] = {'brainLayerId': brain_id, 'centerRasMm': review['centerRasMm']}
+                if not native_issue and role == 'brain' and not unreviewed:
+                    native_brains[row['id']] = row
+                if not native_issue and role == 'vessels':
+                    try:
+                        native_wall_lattice(collection.series(sid), row, matrix)
+                    except ValueError as error:
+                        option['nativeWallIssue'] = str(error)
+                    else:
+                        native_vessels.append((row, option, unreviewed))
             except (ValueError, OSError, StopIteration) as error:
                 option['reason'] = str(error) or 'Source series unavailable'
             result['layers'].append(option)
+
+    if native_wall['referenceIssue']:
+        return result
+    for vessel, option, unreviewed in native_vessels:
+        check()
+        if not unreviewed:
+            native_wall['pairs'].extend({'brainLayerId': brain_id, 'vesselLayerId': vessel['id'], 'scope': 'cursor'}
+                                        for brain_id in native_brains)
+            continue
+        transform = collection.document['transforms'][vessel['source_series']]
+        local = transform.get(PROPERTY)
+        binding = local.get('binding') if isinstance(local, dict) else None
+        brain_id = binding.get('brainLayerId') if isinstance(binding, dict) else None
+        brain = native_brains.get(brain_id) if isinstance(brain_id, str) else None
+        if brain is not None and (review := native_wall_alignment_review(collection, brain, vessel)):
+            alignment = {'brainLayerId': brain['id'], 'centerRasMm': review['centerRasMm']}
+            option['nativeWallAlignment'] = alignment
+            native_wall['pairs'].append({**alignment, 'vesselLayerId': vessel['id'], 'scope': 'reviewed-crop'})
     return result
 
 

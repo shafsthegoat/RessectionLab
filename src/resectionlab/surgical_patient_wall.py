@@ -34,12 +34,8 @@ class NativeWallGrid:
     source_branches: list | None
 
 
-def native_wall_grid(collection, row, registration, center):
-    if (not isinstance(center, (list, tuple)) or len(center) != 3
-            or any(type(value) not in (float, int) or not np.isfinite(value) for value in center)):
-        raise ValueError('Select a finite patient RAS cursor position for local native-wall rehearsal')
-    center = np.asarray(center, dtype=float)
-    scan = collection.series(row['source_series'])
+def native_wall_lattice(scan, row, registration):
+    """Validate the score geometry independently of a proposed local crop."""
     native_affine = np.asarray(row['affine'])
     shape = tuple(scan['data']['shape'])
     if (scan['modality'] not in ANGIOGRAPHY or not source_volume(scan) or not row.get('probability')
@@ -52,6 +48,16 @@ def native_wall_grid(collection, row, registration, center):
     axes = patient_affine[:3, :3] / spacing
     if not np.allclose(axes.T @ axes, np.eye(3), atol=1e-5, rtol=0):
         raise ValueError('Local native-wall rehearsal requires an orthogonal angiography lattice')
+    return patient_affine, spacing, shape
+
+
+def native_wall_grid(collection, row, registration, center):
+    if (not isinstance(center, (list, tuple)) or len(center) != 3
+            or any(type(value) not in (float, int) or not np.isfinite(value) for value in center)):
+        raise ValueError('Select a finite patient RAS cursor position for local native-wall rehearsal')
+    center = np.asarray(center, dtype=float)
+    scan = collection.series(row['source_series'])
+    patient_affine, spacing, shape = native_wall_lattice(scan, row, registration)
     native_center = np.linalg.solve(patient_affine[:3, :3], center - patient_affine[:3, 3])
     if np.any(native_center < 0) or np.any(native_center >= shape):
         raise ValueError('The patient cursor is outside the native angiography grid')

@@ -125,6 +125,62 @@ def native_wall_fixture(tmp_path, *, registration='reviewed', isolated_pair=Fals
     return study, scores, brain
 
 
+def test_native_wall_catalog_keeps_cursor_pairs_when_standard_grid_is_too_large(tmp_path, monkeypatch):
+    from resectionlab import surgical_patient
+
+    study, _, brain = native_wall_fixture(tmp_path)
+    study.add_layer(brain, study.series('tof')['affine'], layer_id='tof-brain', source_series='tof',
+                    kind='brain', role='context', color='#aaaaaa')
+    study.save()
+    standard_reference_issue = 'Requested derivative exceeds 80 million cells'
+
+    def oversized_grid(*_):
+        raise ValueError(standard_reference_issue)
+
+    monkeypatch.setattr(surgical_patient, '_research_grid', oversized_grid)
+    options = surgical_environment_options(study)
+    assert options['referenceIssue'] == standard_reference_issue
+    assert options['nativeWall'] == {'referenceIssue': None, 'pairs': [
+        {'brainLayerId': 'brain', 'vesselLayerId': 'vessels', 'scope': 'cursor'},
+        {'brainLayerId': 'tof-brain', 'vesselLayerId': 'vessels', 'scope': 'cursor'},
+    ]}
+
+
+def test_native_wall_catalog_and_preparation_refuse_incompatible_score_lattice(tmp_path):
+    study, scores, _ = native_wall_fixture(tmp_path)
+    study.layer('vessels')['probability'] = study.put_array(scores[:-1])
+    study.save()
+    options = surgical_environment_options(study)
+    vessel = next(row for row in options['layers'] if row['role'] == 'vessels')
+    assert options['nativeWall'] == {'referenceIssue': None, 'pairs': []}
+    assert vessel['status'] == 'ready'
+    assert vessel['nativeWallIssue'].endswith('an intact native angiography score layer')
+    with pytest.raises(ValueError, match=vessel['nativeWallIssue']):
+        prepare_surgical_environment(study.root, tmp_path / 'result', layer_ids={'brain': 'brain', 'vessels': 'vessels'},
+                                     native_wall_center=[0., 0., 1.])
+
+
+def test_native_wall_catalog_offers_only_the_source_bound_reviewed_pair(tmp_path):
+    from resectionlab.anatomy_local_wall_review import review_native_wall_alignment
+
+    study, _, brain = native_wall_fixture(tmp_path, registration='unreviewed')
+    study.add_layer(brain, study.series('t1')['affine'], layer_id='other-brain', source_series='t1',
+                    kind='brain', role='context', color='#aaaaaa')
+    center = [0., 0., 1.]
+    landmarks = [[-4., -4., 0.], [4., -3., 0.], [-1., 3., 0.], [1., 1., 4.]]
+    review_native_wall_alignment(study, 'tof', landmarks, landmarks, 'engineering scope control',
+                                 {'brainLayerId': 'brain', 'vesselLayerId': 'vessels', 'center': center})
+    study.save()
+    options = surgical_environment_options(study)
+    assert options['nativeWall'] == {'referenceIssue': None, 'pairs': [
+        {'brainLayerId': 'brain', 'vesselLayerId': 'vessels', 'scope': 'reviewed-crop', 'centerRasMm': center},
+    ]}
+    assert study.document['transforms']['tof']['status'] == 'unreviewed'
+    study.layer('brain')['revision'] += 1
+    study.save()
+    assert surgical_environment_options(study)['nativeWall'] == {'referenceIssue': None, 'pairs': []}
+
+
 def test_standard_environment_local_native_wall_preserves_source_and_reopens(tmp_path):
     from resectionlab import surgical_wall_sweep as wall_sweep
     from resectionlab.surgical_environment import load_environment
@@ -216,6 +272,7 @@ def test_target_free_native_wall_saves_keep_their_declared_sweep_policy(tmp_path
 
 def test_native_wall_requires_reviewed_alignment_even_when_estimated_is_allowed(tmp_path):
     study, _, _ = native_wall_fixture(tmp_path, registration='unreviewed')
+    assert surgical_environment_options(study)['nativeWall'] == {'referenceIssue': None, 'pairs': []}
     with pytest.raises(ValueError, match='reviewed source alignment: tof'):
         prepare_surgical_environment(study.root, tmp_path / 'result', layer_ids={'brain': 'brain', 'vessels': 'vessels'},
                                      native_wall_center=[0., 0., 1.], allow_unreviewed_registration=True)
@@ -227,6 +284,7 @@ def test_local_native_wall_refuses_inspection_only_brain(tmp_path, evidence_use)
     study, _, _ = native_wall_fixture(tmp_path)
     study.layer('brain')['provenance']['evidence_use'] = evidence_use
     study.save()
+    assert surgical_environment_options(study)['nativeWall'] == {'referenceIssue': None, 'pairs': []}
     with pytest.raises(ValueError, match='cannot use brain as mechanical anatomy'):
         prepare_surgical_environment(study.root, tmp_path / 'result', layer_ids={'brain': 'brain', 'vessels': 'vessels'},
                                      native_wall_center=[0., 0., 1.])
