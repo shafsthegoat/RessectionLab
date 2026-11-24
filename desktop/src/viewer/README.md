@@ -123,6 +123,13 @@ Settled Scan uses ray steps of one source spacing and at most 640 intervals. Lig
 
 Transparent CT context uses a filtered optical footprint when a single visible, independent bone mask shares the selected acquisition's display grid. The ray interpolates sub-voxel coverage and blends source and bone extinction with matching color weights. The footprint is bounded to 0.68 cells and 0.6 mm along each source axis. Scan, exterior bone, isolated labels, multiple bone contexts and scans with native support keep their existing sampling. The mask and acquired samples used by the source panes, geometry and measurements keep exact values. The additional texture needs one byte per displayed voxel on the GPU and reuses the spare auxiliary sampler. The default CT vascular composition uses a lower volume density to keep the overlaid vessels readable.
 
+With a ready source-bound atlas and no cut, two fixed RAS light directions
+integrate acquired optical depth to the edge of the field of view. The atlas
+stores the total and separable context contributions so the scalar light
+still follows bone opacity or the MR boundary weighting. A single atlas
+lookup supplies both directions. Cut and isolated views use the local probes
+and clip-aware paths so removed signal cannot cast a shadow into the cut.
+
 With shadows enabled, eligible transparent CT views reuse the same optical
 atlas for total extinction and the fraction associated with the bone mask.
 The renderer applies the visible opacity after interpolation, so changing it

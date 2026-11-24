@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import type { ViewerVolume } from './contracts';
 import { inverseAffine, rasAffine } from './coordinates.ts';
 import { isCtModality, volumeSettings, volumeTransfer } from './volumeTransfer.ts';
-import {finishOpticalPreparation, opticalAtlasSteps, volumeOpticalAtlas, type OpticalContext, type OpticalSource} from './volumeOpticalDensity.ts';
+import {finishOpticalPreparation, opticalAtlasSteps, OPTICAL_KEY_LIGHTS, volumeOpticalAtlas, type OpticalContext, type OpticalSource} from './volumeOpticalDensity.ts';
 import {layerAppearance} from './workspaceSettings';
 import type {ViewerWorkspaceSettings} from './workspaceSettings';
 import type { VolumeRenderingSettings } from './volumeTransfer';
@@ -92,6 +92,9 @@ export class ScanVolumeRenderer {
     const footprintRadius=(axis:number)=>Math.min(.68,.6/Math.hypot(affine[0][axis],affine[1][axis],affine[2][axis]));
     const contextRadius=new THREE.Vector3(footprintRadius(0),footprintRadius(1),footprintRadius(2));
     this.sourceOptics={signal:volume.mri,shape:volume.shape,affine,inverse,support:volume.headSupport?.data};
+    const keyLight=new THREE.Vector3();
+    for(const direction of OPTICAL_KEY_LIGHTS)keyLight.add(new THREE.Vector3(...direction).normalize());
+    keyLight.normalize();
     this.ownsTexture=!sourceTexture;
     this.texture=sourceTexture??new THREE.Data3DTexture(volume.mri,volume.shape[2],volume.shape[1],volume.shape[0]);
     this.texture.format=THREE.RedFormat;this.texture.type=THREE.FloatType;
@@ -113,6 +116,7 @@ export class ScanVolumeRenderer {
         uContextRadius:{value:contextRadius},
         uVolume:{value:this.texture},uTransfer:{value:null},uScene:{value:this.sceneTarget.texture},uDrawScalar:{value:true},
         uOpticalSize:{value:new THREE.Vector2()},uOpticalGrid:{value:new THREE.Vector3()},uOpticalColumns:{value:1},
+        uOpticalDepthRow:{value:0},uOpticalLight:{value:keyLight},
         uOpticalCache:{value:false},uClipOpticalWidth:{value:0},uExtraOpticalWidths:{value:new Float32Array(7)},
         uLabelWorldToVoxel:{value:worldToVoxel},uLabelShape:{value:shape},
         uDepth:{value:this.sceneTarget.depthTexture},uWorldToVoxel:{value:worldToVoxel},
@@ -168,10 +172,11 @@ export class ScanVolumeRenderer {
     u.uOpticalSize.value.set(atlas.width,atlas.height);
     u.uOpticalGrid.value.set(...atlas.grid);
     u.uOpticalColumns.value=atlas.columns;
+    u.uOpticalDepthRow.value=atlas.depthRow;
     this.opticalAtlasContext=atlas.height>1?context:undefined;
     if(context){
-      const {affine,shape}=this.sourceOptics;
       // Rounded-up source bin widths bound nonuniform final bins as well.
+      const {affine,shape}=this.sourceOptics;
       this.opticalCellAxes=shape.map((size,axis)=>new THREE.Vector3(affine[0][axis],affine[1][axis],affine[2][axis])
         .multiplyScalar(Math.ceil(size/atlas.grid[axis])));
     }
@@ -225,8 +230,12 @@ export class ScanVolumeRenderer {
     u.uOpticalCache.value=ready;
     const clipped=u.uClipEnabled.value||u.uExtraClipCount.value>0;
     const mode=ready&&context?(clipped?2:1):0;
-    if((this.material.defines.CONTEXT_SHADOWS??0)!==mode){
+    // A prefix sweep is admission-specific. A cut or an unready/isolated
+    // atlas goes through the existing shader paths for those conditions.
+    const directional=ready&&!clipped&&u.uOpticalDepthRow.value>0?1:0;
+    if((this.material.defines.CONTEXT_SHADOWS??0)!==mode||(this.material.defines.DIRECTIONAL_OPTICS??0)!==directional){
       this.material.defines.CONTEXT_SHADOWS=mode;
+      this.material.defines.DIRECTIONAL_OPTICS=directional;
       this.material.needsUpdate=true;
     }
     if(mode===2){
@@ -328,7 +337,7 @@ export class ScanVolumeRenderer {
     this.renderer.render(this.blitScene,this.camera);
     const u=this.material.uniforms;
     const shadowSampling=!this.enabled||!u.uShadows.value?'off':!u.uOpticalCache.value?'source-probes':
-      u.uContextCoverageLayer.value>=0?'skull-atlas':'source-atlas';
+      this.material.defines.DIRECTIONAL_OPTICS===1?'directional-atlas':u.uContextCoverageLayer.value>=0?'skull-atlas':'source-atlas';
     return {width:w,height:h,samples:interactive?1:this.samples,opticsPending:this.opticsPending,shadowSampling};
   }
 

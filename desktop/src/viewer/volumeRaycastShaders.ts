@@ -7,6 +7,9 @@ export const volumeFragmentShader = `
 #ifndef CONTEXT_SHADOWS
 #define CONTEXT_SHADOWS 0
 #endif
+#ifndef DIRECTIONAL_OPTICS
+#define DIRECTIONAL_OPTICS 0
+#endif
 precision highp float;
 precision highp sampler3D;
 in vec2 vUv;
@@ -20,6 +23,8 @@ uniform sampler2D uTransfer;
 uniform vec2 uOpticalSize;
 uniform vec3 uOpticalGrid;
 uniform int uOpticalColumns;
+uniform int uOpticalDepthRow;
+uniform vec3 uOpticalLight;
 uniform bool uOpticalCache;
 uniform float uClipOpticalWidth;
 uniform float uExtraOpticalWidths[7];
@@ -188,30 +193,41 @@ float normalizedGradient(vec3 derivative){
 float boundaryExtinction(float gradient){
   return mix(0.06,1.0,smoothstep(0.01,0.075,gradient));
 }
-vec4 opticalSlice(int slice,vec2 yz){
+vec4 opticalSlice(int slice,vec2 yz,int row){
   vec2 tile=vec2(float(slice%uOpticalColumns)*uOpticalGrid.z,
-    1.0+float(slice/uOpticalColumns)*uOpticalGrid.y);
+    float(row)+float(slice/uOpticalColumns)*uOpticalGrid.y);
   return textureLod(uTransfer,(tile+yz.yx+0.5)/uOpticalSize,0.0);
 }
-float cachedExtinction(vec3 p,float footprint){
+vec4 opticalField(vec3 p,int row){
   vec3 cell=clamp((p+0.5)*uOpticalGrid/uShape-0.5,vec3(0.0),uOpticalGrid-1.0);
   int lo=int(cell.x);
   int hi=min(lo+1,int(uOpticalGrid.x)-1);
-  vec4 density=mix(opticalSlice(lo,cell.yz),opticalSlice(hi,cell.yz),fract(cell.x));
+  return mix(opticalSlice(lo,cell.yz,row),opticalSlice(hi,cell.yz,row),fract(cell.x));
+}
+vec2 activeOpticalChannel(vec4 density){
 #if CONTEXT_SHADOWS > 0
   // Average total and bone-associated extinction independently. The
   // transparent-layer opacity can then change without rebuilding the atlas.
   float opacity=uLayerColor[uContextCoverageLayer].a;
-  vec2 scale=max(vec2(0.0),density.rg-(1.0-opacity)*density.ba);
+  return max(vec2(0.0),density.rg-(1.0-opacity)*density.ba);
 #else
-  vec2 scale=uGradientOpacity?density.ba:density.rg;
+  return uGradientOpacity?density.ba:density.rg;
 #endif
+}
+float cachedExtinction(vec3 p,float footprint){
+  vec2 scale=activeOpticalChannel(opticalField(p,1));
   float extinction=mix(scale.x,scale.y,footprint)*uDensity;
 #if CONTEXT_SHADOWS > 0
   return min(extinction,1.5);
 #else
   return extinction;
 #endif
+}
+float keyVisibility(vec3 p){
+  vec2 depth=activeOpticalChannel(opticalField(p,uOpticalDepthRow))*uDensity;
+  // Average the visibility of the two emitter directions. Averaging depth
+  // before exponentiation would make penumbras systematically too dark.
+  return dot(exp(-depth),vec2(0.5));
 }
 float opticalProbe(vec3 p,vec3 world,float footprint){
   if(any(lessThan(p,vec3(-0.5)))||any(greaterThanEqual(p,uShape-0.5)))return 0.0;
@@ -264,6 +280,23 @@ float opticalSegment(vec3 p,vec3 world,vec3 offset,float width,float footprint){
   return width*opticalProbe(p+mat3(uWorldToVoxel)*offset,world+offset,footprint);
 }
 vec2 volumeIllumination(vec3 p,vec3 world,vec3 light,vec3 ambient){
+#if DIRECTIONAL_OPTICS == 1
+  float key=keyVisibility(p);
+  if(uInteractive){
+    float ambientDepth=opticalSegment(p,world,ambient*4.5,4.0,0.0);
+    return vec2(key,exp(-ambientDepth));
+  }
+  vec3 right=uCameraWorld[0].xyz;
+  vec3 tangent=normalize(cross(ambient,abs(dot(right,ambient))<0.9?right:uCameraWorld[1].xyz));
+  vec3 left=normalize(ambient-tangent*0.52);
+  right=normalize(ambient+tangent*0.52);
+  float leftDepth=opticalSegment(p,world,left*4.8,4.5,0.0);
+  float rightDepth=opticalSegment(p,world,right*4.8,4.5,0.0);
+  // Near rays sample distinct parts of the hemisphere. The shared wide
+  // cone bounds the number of lookups for longer-range ambient shading.
+  float broadDepth=opticalSegment(p,world,ambient*12.0,8.0,0.8);
+  return vec2(key,0.5*(exp(-leftDepth)+exp(-rightDepth))*exp(-broadDepth));
+#else
 #if CONTEXT_SHADOWS > 0
   if(!uInteractive){
     float keyDepth=opticalSegment(p,world,light*4.75,6.5,0.0);
@@ -288,6 +321,7 @@ vec2 volumeIllumination(vec3 p,vec3 world,vec3 light,vec3 ambient){
     ambientDepth+=opticalSegment(p,world,ambient*12.0,8.0,1.0);
   }
   return exp(-vec2(keyDepth,ambientDepth));
+#endif
 }
 vec3 unproject(vec3 ndc){
   vec4 p=uInverseProjection*vec4(ndc,1.0);p/=p.w;
@@ -352,10 +386,14 @@ void main(){
   vec4 accumulated=vec4(0.0);
   ivec4 previousLabels=ivec4(0);
   bool previousSelected=false;
-  // Scan inspection uses a broad camera-relative key. Rotating the physical
-  // volume keeps its depth legible without changing its scalar or geometry.
+#if DIRECTIONAL_OPTICS == 1
+  vec3 light=uOpticalLight;
+#else
+  // The eye-relative fill keeps the clipped and unsupported paths legible
+  // without using shadows prefiltered across a cut or hidden context.
   vec3 light=uScanPresentation?normalize(mat3(uCameraWorld)*vec3(-0.48,0.62,0.72)):
     normalize(vec3(-0.4,-0.5,0.75)-direction*0.7);
+#endif
   vec3 sky=normalize(light-0.65*direction);
   bool useLabels=requiresLabels();
   for(int i=0;i<1536;i++){

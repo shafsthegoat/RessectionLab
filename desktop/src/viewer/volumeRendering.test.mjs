@@ -2,8 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {DataUtils} from 'three';
 import {isCtModality,volumeSettings,volumeTransfer,volumeRayInterval,opticalAlpha,mriBoundaryExtinction} from './volumeTransfer.ts';
-import {buildOpticalDensity,volumeOpticalAtlas} from './volumeOpticalDensity.ts';
-import {inverseAffine} from './coordinates.ts';
+import {buildDirectionalOpticalDepth,buildOpticalDensity,OPTICAL_KEY_LIGHTS,volumeOpticalAtlas} from './volumeOpticalDensity.ts';
+import {inverseAffine,transformPoint} from './coordinates.ts';
 import {checkedViewerSettings} from '../workspace-view-settings.ts';
 const identity=[[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]];
 test('volume rays use millimetres on mirrored, anisotropic and oblique grids, including camera inside',()=>{
@@ -194,6 +194,36 @@ test('CT shadow cache includes the filtered skull fraction without changing prim
   assert.deepEqual(signal,Float32Array.of(1000,1000,1000));
 });
 
+test('directional extinction integrates physical length on a mirrored, anisotropic and sheared cache grid',()=>{
+  const affine=[[0,-3,0,10],[-2,.2,0,20],[0,.1,4,30],[0,0,0,1]];
+  const shape=[24,22,20], grid=[12,11,10], cell=[5,5,5];
+  const direction=[.18,.94,-.27];
+  const unit=direction.map(v=>v/Math.hypot(...direction));
+  const density=Float32Array.from({length:2*grid.reduce((n,v)=>n*v,1)},(_,index)=>index%2?.05:.18);
+  const source={shape,inverse:inverseAffine(affine)};
+  const depths=buildDirectionalOpticalDepth(source,grid,density,direction);
+  const voxel=cell.map((value,axis)=>(value+.5)*shape[axis]/grid[axis]-.5);
+  const point=transformPoint(affine,voxel);
+  const [,distance]=volumeRayInterval(point,unit,shape,affine);
+  const offset=2*((cell[0]*grid[1]+cell[1])*grid[2]+cell[2]);
+  assert.ok(Math.abs(depths[offset]-.18*distance)<1e-5);
+  assert.ok(Math.abs(depths[offset+1]-.05*distance)<1e-5);
+  const reverse=buildDirectionalOpticalDepth(source,grid,density,unit.map(v=>-v));
+  assert.notEqual(reverse[offset],depths[offset]);
+});
+
+test('directional depth leaves empty paths clear and preserves skull-opacity weighting',()=>{
+  const grid=[6,1,1], extinction=new Float32Array(2*grid[0]);
+  extinction.set([.32,.32],2*3);
+  const plus=buildDirectionalOpticalDepth({shape:grid,inverse:identity},grid,extinction,[1,0,0]);
+  const minus=buildDirectionalOpticalDepth({shape:grid,inverse:identity},grid,extinction,[-1,0,0]);
+  assert.ok(Math.abs(plus[0]-.32)<1e-7,'the intervening cell shadows the positive ray');
+  assert.equal(minus[0],0);
+  assert.equal(plus[8],0,'the same cell behind the ray casts no shadow');
+  assert.equal(plus[0]-plus[1],0,'zero skull opacity cancels the entire skull contribution');
+  assert.ok(Math.abs(plus[0]-.75*plus[1]-.08)<1e-7);
+});
+
 test('transfer row and both optical scales survive atlas packing in source XYZ order',()=>{
   const lut=volumeTransfer('mri',[0,1],undefined,'TOF');
   const affine=[[4,0,0,0],[0,4,0,0],[0,0,4,0],[0,0,0,1]];
@@ -211,6 +241,15 @@ test('transfer row and both optical scales survive atlas packing in source XYZ o
   assert.ok(Math.abs(read(col,row,1)-lut.data.at(-1)/8)<.0001);
   assert.equal(read(col+1,row,0),0);
   assert.ok(read(col+1,row,1)>0);
+  assert.ok(atlas.depthRow>row);
+  const fine=buildOpticalDensity(source,lut).fine;
+  for(const [channel,direction] of OPTICAL_KEY_LIGHTS.entries()){
+    const integrated=buildDirectionalOpticalDepth(source,shape,fine,direction);
+    const index=2*((x*shape[1]+y)*shape[2]+z);
+    const depthAtlasRow=row+atlas.depthRow-1;
+    assert.ok(Math.abs(read(col,depthAtlasRow,channel)-integrated[index])<.003);
+    assert.ok(Math.abs(read(col,depthAtlasRow,channel+2)-integrated[index+1])<.003);
+  }
   // Preserve an extinction value below the old 8-bit quantization threshold.
   const faint=lut.data.findIndex((v,i)=>i%4===3&&v>.0007&&v<.001);
   assert.ok(Math.abs(read((faint-3)/4,0,3)-lut.data[faint])<.000001);
