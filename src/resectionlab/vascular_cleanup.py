@@ -19,6 +19,8 @@ _MAX_LABEL_CELLS = 128_000_000
 _MAX_NEIGHBORHOOD_CELLS = 4_000_000
 _MAX_EXTERIOR_FOREGROUND = 4_000_000
 ATTACHED_REVIEW = "native-tof-attached-uncertainty-v1"
+ATTACHED_ERASE = "erase-attached-tof"
+ATTACHED_SCORE_SURFACE = "subtractive-native-tof-scores-v1"
 _ATTACHED_DARK_PERCENTILE = 10.0
 _ATTACHED_CORE_RADIUS_MM = 1.0
 _ATTACHED_MINIMUM_VOLUME_MM3 = 2.5
@@ -453,13 +455,21 @@ def review_attached_tof_layer(collection, row, *, check=lambda: None):
     return footprints, receipt
 
 
-def attached_tof_sections(collection, row, cells, finding, *, check=lambda: None):
+def _attached_review_point(point, shape, cells):
+    if (not isinstance(point, list) or len(point) != 3
+            or any(type(value) is not int or not 0 <= value < extent for value, extent in zip(point, shape))
+            or np.ravel_multi_index(point, shape) not in cells):
+        raise ValueError("Select an amber voxel inside the reviewed region")
+    return np.asarray(point)
+
+
+def attached_tof_sections(collection, row, cells, finding, *, center_ijk=None, check=lambda: None):
     """Return small, paired source and review overlays through the native core."""
     series = collection.series(row["source_series"])
     signal = collection.array(series["data"])
     labels = collection.array(row["data"])
     spacing = np.linalg.norm(affine(series["affine"])[:3, :3], axis=0)
-    center = np.asarray(finding["centerIjk"], dtype=int)
+    center = _attached_review_point(finding["centerIjk"] if center_ijk is None else center_ijk, signal.shape, cells)
     lower, upper = np.asarray(finding["boundsIjk"])
     half_extent = np.clip(np.maximum(center - lower, upper - 1 - center) + np.ceil(2 / spacing), 1, 48).astype(int)
     lo = np.maximum(0, center - half_extent)
@@ -491,10 +501,36 @@ def attached_tof_sections(collection, row, cells, finding, *, check=lambda: None
         pixels = np.clip(normalized * 255, 0, 255).astype(np.uint8)
         sections.append({
             "axis": axis, "index": int(index), "shape": list(gray.shape), "spacingMm": pixel_spacing,
+            "startIjk": [int(index) if d == axis else int(lo[d]) for d in range(3)],
             "image": b64encode(pixels.tobytes()).decode("ascii"),
             "overlay": b64encode(overlay.tobytes()).decode("ascii"),
         })
     return {"window": [low, high], "sections": sections}
+
+
+def erase_attached_tof(collection, row, mask, *, review_id, finding_id, points, radius_mm, check):
+    """Apply one explicit native section pick within its source-bound footprint."""
+    if (not np.isfinite(radius_mm) or not .25 <= radius_mm <= 4
+            or not isinstance(points, list) or len(points) != 1):
+        raise ValueError("Select one native review voxel and a radius from 0.25 to 4 mm")
+    footprints, receipt = review_attached_tof_layer(collection, row, check=check)
+    if type(finding_id) is not str or finding_id not in footprints or review_id != receipt["reviewId"]:
+        raise ValueError("Attached vessel review changed; refresh the findings")
+    cells = footprints[finding_id]
+    center = _attached_review_point(points[0], mask.shape, cells)
+    positions = np.column_stack(np.unravel_index(cells, mask.shape))
+    delta = (positions - center) @ affine(row["affine"])[:3, :3].T
+    erase = cells[np.einsum("ij,ij->i", delta, delta) <= radius_mm ** 2]
+    erase = erase[mask.ravel()[erase]]
+    if not len(erase):
+        raise ValueError("The selected region is already erased in this preview")
+    check()
+    after = mask.copy()
+    after.ravel()[erase] = False
+    return after, {"operation": ATTACHED_ERASE, "reviewId": review_id, "findingId": finding_id,
+                   "centerIjk": center.tolist(), "radiusMm": radius_mm, "voxels": len(erase),
+                   "sourceDataSha256": receipt["sourceDataSha256"], "sourceScoreSha256": receipt["sourceScoreSha256"],
+                   "sourceSignalSha256": receipt["sourceSignalSha256"]}
 
 
 def classify_components(mask, signal, scores, native_affine, *, policy=ComponentPolicy()):

@@ -162,6 +162,104 @@ def test_attached_review_uses_bound_native_sections_without_writes(tmp_path):
         call(op, args)
 
 
+def test_native_attached_edit_is_local_and_preserves_other_score_crossings(tmp_path):
+    from resectionlab.vascular_cleanup import ATTACHED_ERASE, ATTACHED_SCORE_SURFACE
+
+    mask, signal, scores, frame, bright = _attached_fixture()
+    scan = nib.Nifti1Image(signal, frame)
+    scan.header.set_xyzt_units("mm")
+    path = tmp_path / "signal.nii"
+    nib.save(scan, path)
+    collection = PatientImagingCollection.create(tmp_path / "study", "attached-erase")
+    collection.add_series(path, series_id="reference", modality="T1")
+    source = collection.add_series(path, series_id="tof", modality="TOF")
+    source_layer = collection.add_layer(mask.astype(np.uint8), source["affine"], layer_id="estimate", kind="vessels",
+        source_series="tof", role="context", color="#b83946", probability=scores,
+        provenance={"model": "vesselfm", "source": source["original"]["sha256"]})
+    collection.save()
+    manifest = collection.root / "patient-anatomy.json"
+    initial_hash = file_hash(manifest)
+    bridge = BridgeSession(tmp_path / "transfers")
+
+    def call(op, args):
+        return bridge.execute(op, args, _Request("native-attached-edit"), lambda *_: None)
+
+    def view(**extra):
+        return call("anatomyView", {**args, "layers": ["estimate"], "vesselSurfaceMode": "source", **extra})["compartments"][0]
+
+    def array(descriptor):
+        return np.fromfile(descriptor["path"], dtype=descriptor["dtype"]).reshape(descriptor["shape"])
+
+    opened = call("anatomyOpen", {"path": str(manifest)})
+    args = {"collectionId": opened["collectionId"], "snapshotId": collection.identity(), "seriesId": "tof"}
+    selection = {**args, "layerId": "estimate"}
+    report = call("anatomyAttachedVesselReview", selection)
+    finding, = report["findings"]
+    cells, _ = attached_vessel_uncertainty(mask, signal, scores, frame)
+    positions = np.column_stack(np.unravel_index(cells[finding["id"]], mask.shape))
+    center = finding["centerIjk"]
+    radius = 1.31
+    delta = (positions - center) @ frame[:3, :3].T
+    expected = mask.copy()
+    expected[tuple(positions[np.linalg.norm(delta, axis=1) <= radius].T)] = False
+    assert 0 < np.count_nonzero(mask & ~expected) < len(positions)
+    assert np.all(expected[bright])
+
+    pick = {**selection, "reviewId": report["reviewId"], "findingId": finding["id"]}
+    recentered = call("anatomyAttachedVesselReview", {**pick, "centerIjk": positions[-1].tolist()})["preview"]
+    assert [section["index"] for section in recentered["sections"]] == positions[-1].tolist()
+    for section in recentered["sections"]:
+        axis = section["axis"]
+        u, v = [d for d in range(3) if d != axis]
+        offset = positions[-1] - section["startIjk"]
+        assert base64.b64decode(section["overlay"])[offset[v] * section["shape"][1] + offset[u]] == 2
+    original = view()
+    raw_positions = array(original["surface"]["positions"])
+    edit = {**pick, "action": ATTACHED_ERASE, "points": [center], "radiusMm": radius}
+    with pytest.raises(ValueError, match="refresh the findings"):
+        call("anatomyEdit", {**edit, "reviewId": "stale"})
+    with pytest.raises(ValueError, match="amber voxel"):
+        call("anatomyEdit", {**edit, "points": [[22, 41, 22]]})
+    with pytest.raises(ValueError, match="native TOF acquisition"):
+        call("anatomyEdit", {**edit, "seriesId": "reference"})
+    assert bridge.anatomy_drafts == {}
+    preview = call("anatomyEdit", edit)
+    assert preview["draft"]["mode"] == ATTACHED_ERASE
+    assert preview["draft"]["changedVoxels"] == np.count_nonzero(mask & ~expected)
+    with pytest.raises(ValueError, match="changing editing tools"):
+        call("anatomyEdit", {**selection, "action": "threshold"})
+    changed = view()
+    assert changed["surfaceDiagnostics"]["surfaceField"] == "filtered-native-probability"
+    np.testing.assert_array_equal(array(changed["mask"]), expected)
+    changed_positions = array(changed["surface"]["positions"])
+    assert not np.array_equal(changed_positions, raw_positions)
+    np.testing.assert_array_equal(changed_positions[changed_positions[:, 0] < 26], raw_positions[raw_positions[:, 0] < 26])
+    assert view(original=True)["surface"]["positions"]["sha256"] == original["surface"]["positions"]["sha256"]
+    assert call("anatomyEdit", {**selection, "action": "undo"})["draft"]["changedVoxels"] == 0
+    assert call("anatomyEdit", {**selection, "action": "redo"})["draft"]["changedVoxels"] == preview["draft"]["changedVoxels"]
+    call("anatomyEdit", {**selection, "action": "reject"})
+    assert file_hash(manifest) == initial_hash
+    call("anatomyEdit", edit)
+    committed = call("anatomyEdit", {**selection, "action": "commit", "author": "source reviewer"})
+    assert committed["document"]["transforms"] == opened["document"]["transforms"]
+    bridge.close()
+
+    saved = PatientImagingCollection(collection.root)
+    layer = saved.layer("estimate")
+    assert layer["edits"][-1]["surface_policy"] == ATTACHED_SCORE_SURFACE
+    assert layer["edits"][-1]["operations"][0]["reviewId"] == report["reviewId"]
+    assert layer["probability"] == source_layer["probability"]
+    assert layer["original_data"] == source_layer["data"]
+    np.testing.assert_array_equal(saved.mask(layer), expected)
+    bridge = BridgeSession(tmp_path / "cold")
+    opened = call("anatomyOpen", {"path": str(manifest)})
+    args = {**args, "collectionId": opened["collectionId"], "snapshotId": saved.identity()}
+    cold = view()
+    assert cold["surface"]["positions"]["sha256"] == changed["surface"]["positions"]["sha256"]
+    assert cold["surfaceDiagnostics"]["surfaceField"] == "filtered-native-probability"
+    bridge.close()
+
+
 def test_native_view_hides_only_detached_exterior_air_and_restores_complete_scores(tmp_path):
     shape = (64, 64, 64)
     distance2 = np.sum((np.indices(shape) - 32) ** 2, axis=0)

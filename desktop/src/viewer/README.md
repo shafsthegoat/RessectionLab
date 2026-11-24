@@ -227,6 +227,13 @@ New native studies choose Pre-op or Post-op. Import rejects a different timepoin
 
 **Vessel display → Within brain** intersects the displayed vessel estimate with a filled, aligned brain mask. It does not delete the source, join components, certify vessel identity or change planning masks/volumes. Without an aligned brain mask the UI reports that it is showing the full estimate. Fragment inspection restores the full source, highlights chosen components and retains preview/undo/reject/accept correction behavior. Native context meshes use the existing categorical Surface Nets or validated continuous probability isosurfaces. Windowed-sinc movement is bounded to 0.7 source-cell units and 1 mm of physical displacement. The cell-relative bound accommodates coarser axes without increasing acquired resolution. Native lesion meshes retain the 1.5 minimum-altitude or 1 mm cap and restore any closed component whose final displayed mesh volume differs from its source mesh by more than 1%. Vessel smoothing keeps its radius-dependent cap. The source shape and triangle connectivity are retained separately. The contact and face checks reject newly intersecting nonincident triangles and locally reverse changes that flip or collapse a face. A native context mesh above 4.5 million triangles retains its source shape and reports the audit budget fallback. Mask volumes, intersections and planning clearances use the original analysis geometry. Smoothed native brain and skull use an oblique key and bounded physical depth falloff to make surface shape easier to see. Original surface mode retains its original lighting.
 
+**Attached vessel uncertainty** supports a reviewer-selected local erasure
+in editable native TOF studies. The draft and its accepted revision reuse
+the original score field, with excluded source positives reflected below the
+0.5 contour. Edges without an edited endpoint keep the same native crossing.
+The viewer compares both states at the same camera. Conditioned display can
+still move nearby vertices within its usual bounds.
+
 Retina slice-cache targets use physical texture dimensions and logical viewport dimensions; multiplying the pixel ratio twice would crop the original slices. The regression test checks this at 2× scale.
 
 

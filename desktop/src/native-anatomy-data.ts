@@ -69,7 +69,7 @@ export type EnvironmentOptions={selectedRouteForecast?:SelectedRouteForecast;acq
   nativeWallAlignment?:{brainLayerId:string;centerRasMm:Point3};
 }>};
 export type Binding={collectionId:string;document:Document;viewState?:NativeViewState|null;readOnlyStudy?:boolean};
-export type Draft={layerId:string;undo:number;redo:number;changedVoxels:number}|null;
+export type Draft={layerId:string;undo:number;redo:number;changedVoxels:number;mode?:'erase-attached-tof'}|null;
 export type Args=Record<string,unknown>;
 export type IntakeKind='nifti'|'dicom'|'labels';
 export type IntakeSelection={
@@ -205,7 +205,7 @@ export interface AttachedVesselFinding {
   signalP90:number;attachmentSignalP75:number;uncalibratedModelScoreMedian:number;
 }
 export interface AttachedVesselSection {
-  axis:number;index:number;shape:[number,number];spacingMm:[number,number];image:string;overlay:string;
+  axis:number;index:number;startIjk?:Point3;shape:[number,number];spacingMm:[number,number];image:string;overlay:string;
 }
 export interface AttachedVesselReview {
   snapshotId:string;reviewId?:string;status:'complete'|'partial'|'unavailable';reason?:string;

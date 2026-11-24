@@ -4,9 +4,10 @@ import numpy as np
 
 
 class AnatomyDraft:
-    def __init__(self, collection, layer_id):
+    def __init__(self, collection, layer_id, *, mode=None):
         self.snapshot_id = collection.identity()
         self.layer_id = layer_id
+        self.mode = mode
         self.original = collection.mask(collection.layer(layer_id))
         self.mask = self.original.copy()
         self.undo = []

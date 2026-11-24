@@ -154,7 +154,7 @@ export function NativeSidebar({workspace:w,tab,onOpenAnatomy,onOpenPlan,onOpenSc
         {!w.draft&&source?.modality==='TOF'&&layer.source_series===w.series&&['vessel','vessels','artery','vein','sinus'].includes(layer.kind)&&
           (layer.provenance as {model?:string}|null)?.model!=='siam-v2'&&
           <NativeVesselGapReview key={`${b.collectionId}/${b.document.snapshot_id}/${layer.id}`} workspace={w} layerId={layer.id}/>}
-        {!w.draft&&source?.modality==='TOF'&&layer.source_series===w.series&&layer.kind==='vessels'&&!!layer.probability&&
+        {(!w.draft||(w.draft.mode==='erase-attached-tof'&&w.draft.layerId===layer.id))&&source?.modality==='TOF'&&layer.source_series===w.series&&layer.kind==='vessels'&&!!layer.probability&&
           (layer.provenance as {model?:string}|null)?.model==='vesselfm'&&
           <NativeAttachedVesselReview key={`${b.collectionId}/${b.document.snapshot_id}/${layer.id}`} workspace={w} layerId={layer.id}/>}
         {!combinedLayer&&!b.readOnlyStudy&&<button className="edit-segmentation" disabled={w.busy||!w.canEditLayer(layer.id)} onClick={()=>{setEditing(!editing);w.setTool('navigate');w.setEditLayer(layer.id)}}>{editing?'Close tools':'Edit segmentation'}</button>}
@@ -269,7 +269,17 @@ export function NativeSidebar({workspace:w,tab,onOpenAnatomy,onOpenPlan,onOpenSc
   </div>;
 }
 export function NativeCorrectionBar({workspace:w}:{workspace:NativeWorkspace}){
-  if(!w.draft)return null;return <div className="unified-correction" role="toolbar" aria-label="Segmentation correction"><span>Preview · {w.draft.changedVoxels.toLocaleString()} changed voxels</span><button disabled={w.busy||!w.draft.undo} onClick={()=>w.edit('undo')}>Undo</button><button disabled={w.busy||!w.draft.redo} onClick={()=>w.edit('redo')}>Redo</button><button disabled={w.busy} onClick={w.compare}>{w.original?'Show preview':'Show original'}</button><div className="spacer"/><button disabled={w.busy} onClick={()=>w.edit('reject')}>Reject</button><button disabled={w.busy||!w.author.trim()} onClick={()=>w.edit('commit')}>Accept correction</button></div>;
+  if(!w.draft)return null;
+  return <div className="unified-correction" role="toolbar" aria-label="Segmentation correction">
+    <span>Preview · {w.draft.changedVoxels.toLocaleString()} changed voxels</span>
+    <button disabled={w.busy||!w.draft.undo} onClick={()=>w.edit('undo')}>Undo</button>
+    <button disabled={w.busy||!w.draft.redo} onClick={()=>w.edit('redo')}>Redo</button>
+    <button disabled={w.busy} onClick={w.compare}>{w.original?'Show preview':'Show original'}</button>
+    <div className="spacer"/>
+    {w.draft.mode==='erase-attached-tof'&&<label>Reviewer <input aria-label="Native TOF correction reviewer" value={w.author} onChange={e=>w.setAuthor(e.target.value)}/></label>}
+    <button disabled={w.busy} onClick={()=>w.edit('reject')}>Reject</button>
+    <button disabled={w.busy||!w.author.trim()||(w.draft.mode==='erase-attached-tof'&&!w.draft.changedVoxels)} onClick={()=>w.edit('commit')}>Accept correction</button>
+  </div>;
 }
 export function NativeResearch({workspace:w}:{workspace:NativeWorkspace}){
   const [sample,setSample]=useState('');if(!w.binding||!w.api)return null;

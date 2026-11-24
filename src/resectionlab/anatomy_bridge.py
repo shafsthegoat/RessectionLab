@@ -18,6 +18,7 @@ from .anatomy_editor import AnatomyDraft
 from .anatomy_workspace import read_view, save_view, component_review
 from .anatomy_geometry import mesh, normals, appearance_kind, vascular_cleanup_source
 from .anatomy_qa import layer_quality
+from .vascular_cleanup import ATTACHED_ERASE, ATTACHED_SCORE_SURFACE
 from .anatomy_display import (
     add_cta_arterial_coverage, brain_vessel_display, cta_coverage_is_current, display_affine, is_cta_coverage,
     patient_display_context, source_display_grid,
@@ -240,7 +241,7 @@ def dispatch(session, operation, args, request, progress):
             finding = next(item for item in findings if item["id"] == finding_id)
         if finding is not None:
             report["preview"] = {"findingId": finding["id"], **attached_tof_sections(
-                c, row, footprints[finding["id"]], finding, check=request.check,
+                c, row, footprints[finding["id"]], finding, center_ijk=args.get("centerIjk"), check=request.check,
             )}
         request.check()
         if json.loads(manifest.read_text()).get("snapshot_id") != current_id:
@@ -346,9 +347,13 @@ def dispatch(session, operation, args, request, progress):
                 continue
             draft = session.anatomy_drafts.get(key)
             if draft and draft.layer_id == name and not args.get("original"):
+                if draft.mode == ATTACHED_ERASE:
+                    row.setdefault("original_data", row["data"])
+                    row.setdefault("original_label_value", row["label_value"])
                 row["data"] = c.put_array(draft.mask.astype(np.uint8))
                 row["label_value"] = 1
-                row["edits"] = [{"draft": True}]
+                row["edits"] = [{"draft": True, **({"surface_policy": ATTACHED_SCORE_SURFACE}
+                                                    if draft.mode == ATTACHED_ERASE else {})}]
                 row["revision"] += 1
             row_previews = [reference["id"]] if estimated and row["source_series"] == reference["id"] else []
             source_grid_preview = False
@@ -675,10 +680,23 @@ def dispatch(session, operation, args, request, progress):
             session.anatomy_collections[key] = c
             session.anatomy_drafts.pop(key)
         else:
-            draft = session.anatomy_drafts.get(key) or AnatomyDraft(c, name)
+            mode = ATTACHED_ERASE if action == ATTACHED_ERASE else None
+            draft = session.anatomy_drafts.get(key) or AnatomyDraft(c, name, mode=mode)
             if draft.layer_id != name:
                 raise ValueError("Commit or reject the current layer correction first")
-            if action == "remove-components":
+            if action not in {"undo", "redo"} and draft.mode != mode:
+                raise ValueError("Finish the current correction before changing editing tools")
+            if action == ATTACHED_ERASE:
+                from .vascular_cleanup import erase_attached_tof
+
+                row = c.layer(name)
+                if row["source_series"] != args.get("seriesId"):
+                    raise ValueError("Open the vessel estimate's native TOF acquisition")
+                after, receipt = erase_attached_tof(c, row, draft.mask, review_id=args.get("reviewId"),
+                    finding_id=args.get("findingId"), points=args.get("points"),
+                    radius_mm=float(args.get("radiusMm", 1)), check=request.check)
+                draft.replace(after, receipt)
+            elif action == "remove-components":
                 report, labels = component_review(c, name, draft.original)
                 if args.get("reviewId") != report["reviewId"]:
                     raise ValueError("Fragment review changed; refresh before previewing")
@@ -710,6 +728,7 @@ def dispatch(session, operation, args, request, progress):
                 "undo": len(draft.undo),
                 "redo": len(draft.redo),
                 "changedVoxels": int(np.count_nonzero(draft.mask != draft.original)),
+                **({"mode": draft.mode} if draft.mode else {}),
             },
         }
     if operation == "anatomyGraph":

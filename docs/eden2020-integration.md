@@ -88,6 +88,16 @@ back to acquired signal alone. A weak-signal region can contain a genuine
 vessel. This inspection preserves reconstruction geometry, source labels,
 saved views, correction drafts and rehearsal inputs.
 
+In an editable workspace, pick an amber voxel on an acquired section and
+use **Center sections at selection** to inspect all three planes at the
+same native location. **Preview local erasure** subtracts only selected
+footprint cells within the chosen physical radius. The 3D comparison keeps
+the native model scores and their crossings outside the edited cells. Use
+**Show original**, **Undo**, or **Reject** to inspect or discard the draft.
+Accepting a correction records the reviewer, exact native pick, radius and
+source checksums in a new revision. The operation uses the native TOF grid
+and leaves cross-acquisition registration status in force.
+
 The screen samples the low decile of foreground TOF signal, uses a 1 mm
 distance-to-background core and requires at least 2.5 mm³ after a physical
 opening. It measures nearby signal against the foreground interquartile

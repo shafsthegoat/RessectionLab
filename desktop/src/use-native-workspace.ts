@@ -340,15 +340,17 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
     const next={...failedLayers.current};delete next[id];failedLayers.current=next;setLayerErrors(next);queueLayers();
   }
   const refresh=()=>binding?loadView(binding,series,scanState,original):Promise.resolve();
-  async function edit(action:string,points:Point3[]=[],extra:Args={}){if(!binding||binding.readOnlyStudy||!api||!editLayer)return;await run(async()=>{
-    const result=await api.anatomyEdit({...args(),action,layerId:editLayer,points,radiusMm:radius,threshold,author,...extra});
+  async function edit(action:string,points:Point3[]=[],extra:Args={},layerId=editLayer){if(!binding||binding.readOnlyStudy||!api||!layerId)return;await run(async()=>{
+    const nativeErase=action==='erase-attached-tof'||draft?.mode==='erase-attached-tof';
+    const view=nativeErase?{...scanState,settings:{...scanState.settings,camera:readCamera.current?.()??scanState.settings.camera}}:scanState;
+    const result=await api.anatomyEdit({...args(),action,layerId,points,radiusMm:radius,threshold,author,...extra});
     let b={...binding,document:result.document};
     let retired:RetiredClipping[]|undefined;
-    setBinding(b);setDraft(result.draft);setOriginal(false);
-    if(action==='commit'){setMessage('Checking alignment after correction…');const aligned=await api.anatomyRegister({...args(b),action:'ensure'});b={...b,document:aligned.document};retired=aligned.retiredClipping;}
+    setEditLayer(layerId);
+    if(action==='commit'&&!nativeErase){setBinding(b);setDraft(result.draft);setOriginal(false);setMessage('Checking alignment after correction…');const aligned=await api.anatomyRegister({...args(b),action:'ensure'});b={...b,document:aligned.document};retired=aligned.retiredClipping;}
     setBinding(b);setDraft(result.draft);setOriginal(false);
     if(['commit','reject'].includes(action)){setReview(null);setComponents([]);}
-    await loadView(b,series,retireClipping(retired,series,scanState),false,action==='remove-components'?{highlightLayer:editLayer,highlightComponents:components,reviewId:review?.reviewId}:{});
+    await loadView(b,series,retireClipping(retired,series,view),false,action==='remove-components'?{highlightLayer:layerId,highlightComponents:components,reviewId:review?.reviewId}:{});
     const retiredCoverage=action==='commit'&&binding.document.layers.some(layer=>isCtaCoverageLayer(layer)&&!b.document.layers.some(current=>current.id===layer.id));
     setMessage(retired?.length?retiredClippingMessage:retiredCoverage?'Correction accepted. Combined arteries retired.':
       action==='commit'?'Correction accepted as a new revision.':action==='reject'?'Correction rejected. Original preserved.':'Correction preview');

@@ -309,7 +309,7 @@ def _field_values(collection, row, mask, slices, display_source):
         # Materialize the small native crop in storage order once. Repeated
         # strided scans against an external-drive memmap delay cold extraction.
         values = np.array(values, dtype=np.result_type(values.dtype, np.float32), order="C", copy=True)
-    original = collection.mask(source)[slices] if display_source is not None else cropped
+    original = collection.array(source["data"])[slices] == source["label_value"] if display_source is not None else cropped
     if values.shape != cropped.shape or not np.isfinite(values).all():
         return cropped.astype(np.uint8), "categorical"
     if not vascular:
@@ -344,6 +344,16 @@ def vascular_cleanup_source(collection, row):
     return source
 
 
+def _attached_erase_source(row):
+    from .vascular_cleanup import ATTACHED_SCORE_SURFACE
+
+    edits = row.get("edits")
+    if (row["kind"] != "vessels" or not row.get("probability") or not row.get("original_data")
+            or not edits or edits[-1].get("surface_policy") != ATTACHED_SCORE_SURFACE):
+        return None
+    return {**row, "data": row["original_data"], "label_value": row["original_label_value"], "edits": []}
+
+
 def _brain_envelope_signal(collection, row):
     """Identify the actual same-grid acquisition of an ordinary brain estimate."""
     if (row["kind"] != "brain" or row.get("role") != "context" or row.get("edits")
@@ -368,6 +378,7 @@ def _brain_envelope_signal(collection, row):
 def mesh(collection, row, *, cancelled=lambda: False, display_source=None, conditioned=True):
     """Separate source/display mesh; same connectivity, bounded local movement."""
     started = perf_counter()
+    display_source = _attached_erase_source(display_source if display_source is not None else row) or display_source
     if display_source is not None:
         if (display_source["kind"] != row["kind"] or display_source["affine"] != row["affine"]
                 or display_source["data"]["shape"] != row["data"]["shape"]):

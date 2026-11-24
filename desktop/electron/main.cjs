@@ -180,7 +180,7 @@ function bindOperations() {
   const anatomyKeys = {
     anatomySaveView: ['viewState','saveArchive'],
     anatomyComponents: ['layerId'],
-    anatomyAttachedVesselReview: ['layerId','seriesId','findingId','reviewId'],
+    anatomyAttachedVesselReview: ['layerId','seriesId','findingId','reviewId','centerIjk'],
     anatomyVesselGapReview: ['layerId','seriesId','findingId','reviewId'],
     anatomyGraph: ['layerId','point','displaySeriesId'],
     anatomyReconstruct: ['seriesId','model','synthsegVersion','brainLayerId'],
@@ -190,7 +190,7 @@ function bindOperations() {
     anatomyDiffusionBaseline: ['assetId'],
     anatomyCtaArterialCoverage: ['seriesId','focusLayerIds','widerLayerIds'],
     anatomyView: ['seriesId','layers','original','highlightLayer','highlightComponents','reviewId','previewAlignment','vesselScope','patientModel','vesselSurfaceMode'],
-    anatomyEdit: ['action','layerId','author','points','radiusMm','threshold','reviewId','componentIds'],
+    anatomyEdit: ['action','layerId','author','points','radiusMm','threshold','reviewId','componentIds','findingId','seriesId'],
     anatomySample: ['point','layerId','independentSeries'],
     anatomyRegister: ['action','seriesId','movingPoints','referencePoints','reviewer','nativeWallScope'],
   };

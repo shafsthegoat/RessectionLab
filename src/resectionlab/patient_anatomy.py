@@ -666,6 +666,8 @@ class PatientImagingCollection:
         return data
 
     def commit_edit(self, layer_id, mask, *, author, expected, operations):
+        from .vascular_cleanup import ATTACHED_ERASE, ATTACHED_SCORE_SURFACE
+
         if not author.strip():
             raise ValueError("Correction author is required")
         current = json.loads((self.root / "patient-anatomy.json").read_text())
@@ -682,10 +684,11 @@ class PatientImagingCollection:
         row["label_value"] = 1
         row["revision"] += 1
         row["review_status"] = "edited; anatomical review pending"
-        row["edits"] = [
-            *row.get("edits", []),
-            {"author": author, "operations": operations},
-        ]
+        edit = {"author": author, "operations": operations}
+        if (operations and operations[0]["operation"] == ATTACHED_ERASE
+                and all(op["operation"] in {ATTACHED_ERASE, "undo", "redo"} for op in operations)):
+            edit["surface_policy"] = ATTACHED_SCORE_SURFACE
+        row["edits"] = [*row.get("edits", []), edit]
         row.pop("mesh", None)
         return self.save(
             "commit correction: " + layer_id, author=author, expected=expected
