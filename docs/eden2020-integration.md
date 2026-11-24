@@ -107,6 +107,12 @@ estimate and the selected union available beside the two disjoint groups. Each
 group uses the original native score field. The structural alignment and
 superficial tissue labels remain research estimates.
 
+For reviewed field-edge signal, pass `--compartment field-edge` and a native
+field-edge screen that binds the acquired TOF, selected mask and candidate
+component anchors. Inspect the native planes before approving anchors. The
+field-edge estimate opens muted and selectable, with the intact union
+available for comparison.
+
 The PTNT_4509 teaching rehearsal preserves the acquired TOF lattice and
 source-bound vessel triangles. The exposure banks, vessel attachments and
 mechanical properties are modeled. The private continuity run index links the

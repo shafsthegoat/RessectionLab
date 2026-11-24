@@ -49,14 +49,17 @@ test('scan and anatomy presets preserve the study colors of supplied arterial cl
   }
 });
 
-test('vascular presentation keeps the reviewed superficial layer visible with muted color',()=>{
+test('vascular presentation mutes the reviewed peripheral layers and keeps the main network opaque',()=>{
   const group={id:'vesselfm-review-posterior-superficial',kind:'vessels',source_series:'tof',color:'#8d877a',
     provenance:{method:'Review display group of complete native TOF components',evidence_use:'context_only'}};
+  const fieldEdge={...group,id:'vesselfm-review-field-edge'};
   const network={...group,id:'vesselfm-review-intracranial-priority',color:'#b75848'};
   const estimate={...group,provenance:{kind:'model'}};
-  const settings=anatomyPresentation({},[group,network],'vascular','TOF','tof');
-  assert.equal(settings.layerColor[group.id],group.color);
-  assert.equal(settings.layerOpacity[group.id],.32);
+  const settings=anatomyPresentation({},[group,fieldEdge,network],'vascular','TOF','tof');
+  for(const peripheral of [group,fieldEdge]){
+    assert.equal(settings.layerColor[peripheral.id],peripheral.color);
+    assert.equal(settings.layerOpacity[peripheral.id],.32);
+  }
   assert.equal(settings.layerOpacity[network.id],1);
   assert.equal(anatomyPresentation({},[estimate],'vascular','TOF','tof').layerOpacity[group.id],1);
 });

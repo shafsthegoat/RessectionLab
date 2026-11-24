@@ -15,12 +15,34 @@ from resectionlab.patient_anatomy import PatientImagingCollection
 from resectionlab.vascular_cleanup import separate_reviewed_components
 
 MAIN = "vesselfm-review-intracranial-priority"
-SUPERFICIAL = "vesselfm-review-posterior-superficial"
+COMPARTMENTS = {
+    "posterior": {
+        "name": "posterior compartment review",
+        "main_label": "Main TOF network · posterior estimate separated",
+        "id": "vesselfm-review-posterior-superficial",
+        "label": "Posterior superficial estimate · structure uncertain",
+        "receipt": "posterior_compartment_review",
+        "screen": "structural_screen",
+        "scope": "Read-only research display using structural alignment estimates",
+    },
+    "field-edge": {
+        "name": "field-edge component review",
+        "main_label": "Main TOF network · field-edge signal separated",
+        "id": "vesselfm-review-field-edge",
+        "label": "Field-edge estimate · structure uncertain",
+        "receipt": "field_edge_compartment_review",
+        "screen": "native_screen",
+        "scope": "Read-only research display using acquired TOF field-edge evidence",
+    },
+}
 
 
-def stage(root, selected_path, screen_path, anchors):
+def stage(root, selected_path, screen_path, anchors, *, compartment="posterior"):
+    group = COMPARTMENTS[compartment]
     screen_sha = sha256_file(screen_path)
     evidence = json.loads(screen_path.read_text())
+    if compartment == "field-edge" and evidence.get("version") != "native-tof-field-edge-v1":
+        raise ValueError("The field-edge group requires a source-reviewed native screen")
     selected_sha = sha256_file(selected_path)
     if evidence["study_sha256"] != selected_sha:
         raise ValueError("The structural screen belongs to another TOF review")
@@ -51,12 +73,12 @@ def stage(root, selected_path, screen_path, anchors):
 
     document = deepcopy(study.document)
     document.pop("snapshot_id", None)
-    document["label"] += " · posterior compartment review"
+    document["label"] += f' · {group["name"]}'
     document.update(clinical_validation=False, training_admitted=False, simulation_admission=False)
     trial = PatientImagingCollection(selected_path.parent, document)
     for name, title, color, mask in (
-        (MAIN, "Main TOF network · posterior estimate separated", layer["color"], main_mask),
-        (SUPERFICIAL, "Posterior superficial estimate · structure uncertain", "#8d877a", compartment_mask),
+        (MAIN, group["main_label"], layer["color"], main_mask),
+        (group["id"], group["label"], "#8d877a", compartment_mask),
     ):
         result = deepcopy(layer)
         result.update(id=name, label=title, color=color, revision=0, data=trial.put_array(mask.astype("uint8")))
@@ -76,15 +98,15 @@ def stage(root, selected_path, screen_path, anchors):
         "sha256": canonical_sha,
         "snapshot_id": canonical.identity(),
     })
-    review["posterior_compartment_review"] = {
+    review[group["receipt"]] = {
         "selected_manifest_sha256": selected_sha,
-        "structural_screen": {"hdd_relative_path": str(screen_path.relative_to(root)), "sha256": screen_sha},
+        group["screen"]: {"hdd_relative_path": str(screen_path.relative_to(root)), "sha256": screen_sha},
         "components": [{"source_anchor_cell": anchor, "voxels": size} for anchor, size in sorted(choices.items())],
-        "view_scope": "Read-only research display using structural alignment estimates",
+        "view_scope": group["scope"],
         "disjoint_union_matches_selected": True,
         "simulation_admission": False,
     }
-    trial.document["display"]["initial_layers"] = [MAIN, SUPERFICIAL]
+    trial.document["display"]["initial_layers"] = [MAIN, group["id"]]
     trial.document["snapshot_id"] = trial.identity()
     path = selected_path.with_name(f"vascular-review.{trial.identity()[:12]}.anatomy.json")
     if (sha256_file(selected_path) != selected_sha or sha256_file(canonical_path) != canonical_sha
@@ -103,11 +125,13 @@ def stage(root, selected_path, screen_path, anchors):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--selected", type=Path, required=True, help="Selected review path relative to the verified HDD")
-    parser.add_argument("--screen", type=Path, required=True, help="Structural screen JSON relative to the verified HDD")
+    parser.add_argument("--screen", type=Path, required=True, help="Reviewed screen JSON relative to the verified HDD")
     parser.add_argument("--anchor", type=int, action="append", required=True, help="Reviewed flat native component anchor")
+    parser.add_argument("--compartment", choices=COMPARTMENTS, default="posterior")
     args = parser.parse_args()
     root = checked_root(HDD_ROOT, expected_uuid=HDD_UUID)
-    manifest, snapshot = stage(root, safe_path(root, args.selected), safe_path(root, args.screen), args.anchor)
+    manifest, snapshot = stage(root, safe_path(root, args.selected), safe_path(root, args.screen), args.anchor,
+                               compartment=args.compartment)
     print(json.dumps({"path": str(manifest.relative_to(root)), "sha256": sha256_file(manifest),
                       "snapshot_id": snapshot}, indent=2))
 
