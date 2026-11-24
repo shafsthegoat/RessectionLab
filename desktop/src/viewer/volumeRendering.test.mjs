@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {DataUtils} from 'three';
 import {canBalanceTofContext,isCtModality,volumeSettings,volumeTransfer,volumeRayInterval,opticalAlpha,mriBoundaryExtinction,VOLUME_TRANSFER_WIDTH,zeroExtinctionLevel} from './volumeTransfer.ts';
-import {balancedTofDensity,buildDirectionalOpticalDepth,buildOpticalDensity,CT_EXTERIOR_AIR_HU,CT_EXTERIOR_TEXTURE_LIMIT_BYTES,ctExteriorDisplaySignal,OPTICAL_KEY_LIGHTS,volumeOpticalAtlas} from './volumeOpticalDensity.ts';
+import {balancedTofDensity,buildDirectionalOpticalDepth,buildOpticalDensity,CT_EXTERIOR_AIR_HU,CT_EXTERIOR_TEXTURE_LIMIT_BYTES,ctExteriorDisplaySignal,ctOpticalCoverage,OPTICAL_KEY_LIGHTS,volumeOpticalAtlas} from './volumeOpticalDensity.ts';
 import {inverseAffine,transformPoint} from './coordinates.ts';
 import {checkedViewerSettings} from '../workspace-view-settings.ts';
 const identity=[[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]];
@@ -215,19 +215,36 @@ test('CT shadow cache includes the filtered skull fraction without changing prim
   const affine=[[4,0,0,0],[0,4,0,0],[0,0,4,0],[0,0,0,1]];
   const signal=Float32Array.of(1000,1000,1000);
   const source={signal,shape:[3,1,1],affine,inverse:inverseAffine(affine)};
-  const mask=Uint8Array.of(0,1,0),weights=[.25,.5,.25];
+  const mask=Uint8Array.of(0,1,0),coverage=ctOpticalCoverage(mask,source.shape,affine);
+  assert.deepEqual(coverage,Uint8Array.of(8,239,8));
   const plain=buildOpticalDensity(source,lut);
-  const masked=buildOpticalDensity(source,lut,{mask,radius:[.5,.5,.5]});
+  const masked=buildOpticalDensity(source,lut,{coverage});
   for(let cell=0;cell<3;cell++){
     const index=2*cell;
     assert.equal(plain.fine[index],masked.fine[index]);
     assert.equal(plain.coarse[index],masked.coarse[index]);
-    assert.ok(Math.abs(masked.fine[index+1]/masked.fine[index]-weights[cell])<1e-6);
+    assert.ok(Math.abs(masked.fine[index+1]/masked.fine[index]-coverage[cell]/255)<1e-6);
   }
-  const edge=buildOpticalDensity(source,lut,{mask:Uint8Array.of(1,0,0),radius:[.5,.5,.5]});
-  assert.ok(Math.abs(edge.fine[1]/edge.fine[0]-.75)<1e-6,'coverage clamps at the acquisition face');
+  const edge=ctOpticalCoverage(Uint8Array.of(1,0,0),source.shape,affine);
+  assert.deepEqual(edge,Uint8Array.of(247,8,0),'coverage clamps at the acquisition face');
   assert.deepEqual(mask,Uint8Array.of(0,1,0));
   assert.deepEqual(signal,Float32Array.of(1000,1000,1000));
+});
+
+test('symmetric CT coverage has a bounded anisotropic footprint and preserves constant fields',()=>{
+  const affine=[[-.35,0,0,0],[0,.75,0,0],[0,0,1.6,0],[0,0,0,1]];
+  const shape=[7,7,7],mask=new Uint8Array(343);
+  const at=(x,y,z)=>(x*7+y)*7+z;
+  mask[at(3,3,3)]=1;
+  const coverage=ctOpticalCoverage(mask,shape,affine);
+  for(const [dx,dy,dz] of [[1,0,0],[0,1,0],[0,0,1],[2,0,0],[0,2,0]]){
+    assert.ok(coverage[at(3+dx,3+dy,3+dz)]>0);
+    assert.equal(coverage[at(3+dx,3+dy,3+dz)],coverage[at(3-dx,3-dy,3-dz)]);
+  }
+  assert.equal(coverage[at(3,3,5)],0);
+  assert.equal(coverage[at(0,3,3)],0);
+  assert.equal(coverage[at(4,4,3)],0);
+  assert.ok(ctOpticalCoverage(mask.fill(1),shape,affine).every(value=>value===255));
 });
 
 test('CT exterior replaces only the exact excluded footprint in a bounded display copy',()=>{
@@ -256,7 +273,7 @@ test('all exterior shadow scales use the same air-filled values as the visible C
   brighter[10]=brighter[15]=1800;
   const alternative={...native,signal:ctExteriorDisplaySignal(brighter,shape,exterior)};
   const mask=Uint8Array.from(signal,(_,i)=>Number(i%3===0));
-  const context={mask,radius:[.5,.5,.5]};
+  const context={coverage:ctOpticalCoverage(mask,shape,affine)};
   for(const preset of ['ct-angiography','ct-bone','ct-tissue']){
     const transfer=volumeTransfer(preset,[-1000,3000],undefined,'CTA');
     assert.equal(transfer.data[3],0);

@@ -21,7 +21,6 @@ uniform sampler3D uVolume;
 uniform sampler3D uAuxiliary;
 uniform bool uUseHeadSupport;
 uniform int uContextCoverageLayer;
-uniform vec3 uContextRadius;
 uniform sampler2D uTransfer;
 uniform vec2 uOpticalSize;
 uniform vec3 uOpticalGrid;
@@ -44,6 +43,7 @@ uniform float uZeroExtinctionLevel;
 uniform float uDensity;
 uniform bool uDrawScalar;
 uniform int uSkullMode;
+uniform bool uAcquiredBoneCut;
 uniform bool uCt;
 uniform bool uScanPresentation;
 uniform bool uGradientOpacity;
@@ -139,14 +139,7 @@ vec3 contextTint(vec3 acquired,vec3 color,float value){
   return mix(color*tint,acquired,0.24);
 }
 float contextCoverage(vec3 p){
-  vec3 uv=((p+0.5)/uShape).zyx;
-  vec3 delta=uContextRadius.zyx/uShape.zyx;
-  // A sub-voxel tetrahedral footprint filters optical mask coverage over
-  // a boundary without averaging the acquired intensity or label IDs.
-  return 0.25*(texture(uAuxiliary,uv+delta).r+
-    texture(uAuxiliary,uv+delta*vec3(1.0,-1.0,-1.0)).r+
-    texture(uAuxiliary,uv+delta*vec3(-1.0,1.0,-1.0)).r+
-    texture(uAuxiliary,uv+delta*vec3(-1.0,-1.0,1.0)).r);
+  return texture(uAuxiliary,((p+0.5)/uShape).zyx).r;
 }
 void applyContext(inout vec4 tissue,float value,ivec4 packed,bool selected,vec3 p){
   tissue.a*=uDensity;
@@ -180,7 +173,11 @@ void applyContext(inout vec4 tissue,float value,ivec4 packed,bool selected,vec3 
       // regions receive distinct color from the underlying acquired value.
       tissue.rgb=contextTint(tissue.rgb,context.rgb,value);
       if(context.a<=0.0)tissue.a=0.0;
-      else if(uSkullMode==1)tissue.a=10000.0;
+      else if(uSkullMode==1){
+        // In a physical CT section, let mineral signal supply the wall.
+        // A categorical context label can include marrow or background.
+        tissue.a=uAcquiredBoneCut?max(tissue.a,2.2*smoothstep(160.0,430.0,value)):10000.0;
+      }
       else tissue.a*=context.a;
     }
   }else if(value>300.0){

@@ -13,7 +13,38 @@ export type OpticalSource = {
   inverse: Affine;
   support?: Uint8Array;
 };
-export type OpticalContext = {mask: Uint8Array; radius: Point3};
+export type OpticalContext = {coverage: Uint8Array};
+
+/** A centered physical footprint for the transparent bone channel only. The
+ * one-quarter center weight and six one-eighth face weights cancel odd
+ * mixed moments. Store one coverage grid for the eye ray and shadow atlas. */
+export function ctOpticalCoverage(mask:Uint8Array, shape:Point3, frame:Affine) {
+  const [nx,ny,nz]=shape;
+  const coverage=new Uint8Array(mask.length);
+  const axis=(n:number,stride:number,i:number)=>{
+    const radius=Math.min(1.45,1/Math.hypot(frame[0][i],frame[1][i],frame[2][i]));
+    const near=Math.floor(radius),far=near+1,outer=radius-near;
+    const offsets=(step:number)=>Int32Array.from({length:n},(_,j)=>Math.max(0,Math.min(n-1,j+step))*stride);
+    return {inner:1-outer,outer,nearLow:offsets(-near),nearHigh:offsets(near),farLow:offsets(-far),farHigh:offsets(far)};
+  };
+  const x=axis(nx,ny*nz,0),y=axis(ny,nz,1),z=axis(nz,1,2);
+  const inside=(p:number)=>Number(mask[p]!==0);
+  for(let i=0;i<nx;i++)for(let j=0;j<ny;j++){
+    const row=(i*ny+j)*nz;
+    const xNearLow=x.nearLow[i]+j*nz,xNearHigh=x.nearHigh[i]+j*nz;
+    const xFarLow=x.farLow[i]+j*nz,xFarHigh=x.farHigh[i]+j*nz;
+    const yNearLow=i*ny*nz+y.nearLow[j],yNearHigh=i*ny*nz+y.nearHigh[j];
+    const yFarLow=i*ny*nz+y.farLow[j],yFarHigh=i*ny*nz+y.farHigh[j];
+    for(let k=0;k<nz;k++){
+      const xFaces=x.inner*(inside(xNearLow+k)+inside(xNearHigh+k))+x.outer*(inside(xFarLow+k)+inside(xFarHigh+k));
+      const yFaces=y.inner*(inside(yNearLow+k)+inside(yNearHigh+k))+y.outer*(inside(yFarLow+k)+inside(yFarHigh+k));
+      const zFaces=z.inner*(inside(row+z.nearLow[k])+inside(row+z.nearHigh[k]))+
+        z.outer*(inside(row+z.farLow[k])+inside(row+z.farHigh[k]));
+      coverage[row+k]=Math.round((2*inside(row+k)+xFaces+yFaces+zFaces)*255/8);
+    }
+  }
+  return coverage;
+}
 
 /** Estimate typical TOF backdrop brightness from short, fixed native-grid
  * quadratures. Physical ray lengths and gradients account for anisotropy
@@ -99,40 +130,9 @@ function cellSamples(length: number, cells: number) {
   });
 }
 
-/** At native voxel centres the four trilinear coverage taps reduce to a
- * fixed stencil. Combine shared offsets once and clamp as on the GPU. */
-function coverageSampler({mask,radius}: OpticalContext, shape: Point3) {
-  const weights = new Float64Array(27);
-  for (const [a,b,c] of [[1,1,1],[1,-1,-1],[-1,1,-1],[-1,-1,1]]) {
-    for (let x=0;x<2;x++) for (let y=0;y<2;y++) for (let z=0;z<2;z++) {
-      weights[(a*x+1)*9+(b*y+1)*3+c*z+1] += .25 * (x?radius[0]:1-radius[0])
-        * (y?radius[1]:1-radius[1]) * (z?radius[2]:1-radius[2]);
-    }
-  }
-  const [sx,sy,sz]=shape;
-  const taps=Array.from(weights,(weight,i)=>({weight,x:Math.floor(i/9)-1,y:Math.floor(i/3)%3-1,z:i%3-1}))
-    .filter(tap=>tap.weight>0);
-  const stride=sy*sz;
-  const interior=taps.map(({weight,x,y,z})=>({weight,offset:x*stride+y*sz+z}));
-  return (x:number,y:number,z:number,index:number)=>{
-    let coverage=0;
-    if(x>0&&y>0&&z>0&&x<sx-1&&y<sy-1&&z<sz-1){
-      for(const {weight,offset} of interior) if(mask[index+offset])coverage+=weight;
-    }else{
-      for(const tap of taps){
-        const i=Math.max(0,Math.min(sx-1,x+tap.x));
-        const j=Math.max(0,Math.min(sy-1,y+tap.y));
-        const k=Math.max(0,Math.min(sz-1,z+tap.z));
-        if(mask[i*stride+j*sz+k])coverage+=tap.weight;
-      }
-    }
-    return coverage;
-  };
-}
-
 function* opticalDensitySteps(source: OpticalSource, transfer: OpticalTransfer, context?: OpticalContext) {
   const {signal, shape, affine, inverse, support} = source;
-  const coverage = context && coverageSampler(context,shape);
+  const coverage = context?.coverage;
   const grid = shape.map((size, axis) => Math.min(size, MAX_CELLS_PER_AXIS,
     Math.max(1, Math.ceil(size * Math.hypot(affine[0][axis], affine[1][axis], affine[2][axis]) / CACHE_CELL_MM)))) as Point3;
   const [nx, ny, nz] = grid;
@@ -162,7 +162,7 @@ function* opticalDensitySteps(source: OpticalSource, transfer: OpticalTransfer, 
         extinction += density;
         if (!density) continue;
         if (coverage){
-          secondaryExtinction += density * coverage(x,y,z,q);
+          secondaryExtinction += density * coverage[q] / 255;
           continue;
         }
         if (!transfer.gradientOpacity) continue;

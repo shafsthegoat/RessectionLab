@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import type { ViewerVolume } from './contracts';
 import { inverseAffine, rasAffine } from './coordinates.ts';
 import { canBalanceTofContext, isCtModality, volumeSettings, volumeTransfer, zeroExtinctionLevel } from './volumeTransfer.ts';
-import {balancedTofDensity, CT_EXTERIOR_AIR_HU, CT_EXTERIOR_TEXTURE_LIMIT_BYTES, ctExteriorDisplaySignal, finishOpticalPreparation, opticalAtlasSteps, OPTICAL_KEY_LIGHTS, volumeOpticalAtlas, type OpticalContext, type OpticalSource} from './volumeOpticalDensity.ts';
+import {balancedTofDensity, CT_EXTERIOR_AIR_HU, CT_EXTERIOR_TEXTURE_LIMIT_BYTES, ctExteriorDisplaySignal, ctOpticalCoverage, finishOpticalPreparation, opticalAtlasSteps, OPTICAL_KEY_LIGHTS, volumeOpticalAtlas, type OpticalContext, type OpticalSource} from './volumeOpticalDensity.ts';
 import {layerAppearance} from './workspaceSettings';
 import type {ViewerWorkspaceSettings} from './workspaceSettings';
 import type { VolumeRenderingSettings } from './volumeTransfer';
@@ -75,7 +75,7 @@ export class ScanVolumeRenderer {
   private enabled = true;
   private readonly spacing:number;
   readonly supportTexture?:THREE.Data3DTexture;
-  private contextCoverage?: OpticalContext & {texture:THREE.Data3DTexture};
+  private contextCoverage?: OpticalContext & {mask:Uint8Array;texture:THREE.Data3DTexture};
   private layers: ViewerVolume["compartments"];
   private readonly ownsTexture: boolean;
   private readonly background = new THREE.Color();
@@ -98,8 +98,6 @@ export class ScanVolumeRenderer {
     this.spacing=1/Math.max(...inverse.slice(0,3).map(row=>Math.hypot(...row.slice(0,3))));
     const worldToVoxel=new THREE.Matrix4().set(...inverse.flat() as Parameters<THREE.Matrix4['set']>);
     const shape=new THREE.Vector3(...volume.shape);
-    const footprintRadius=(axis:number)=>Math.min(.68,.6/Math.hypot(affine[0][axis],affine[1][axis],affine[2][axis]));
-    const contextRadius=new THREE.Vector3(footprintRadius(0),footprintRadius(1),footprintRadius(2));
     this.sourceOptics={signal:volume.mri,shape:volume.shape,affine,inverse,support:volume.headSupport?.data};
     if(volume.mri.byteLength<=CT_EXTERIOR_TEXTURE_LIMIT_BYTES)this.ctExterior=volume.ctExterior;
     const keyLight=new THREE.Vector3();
@@ -123,7 +121,6 @@ export class ScanVolumeRenderer {
     this.material=new THREE.ShaderMaterial({glslVersion:THREE.GLSL3,vertexShader:volumeVertexShader,
       fragmentShader:volumeFragmentShader,depthTest:false,depthWrite:false,toneMapped:false,uniforms:{
         uAuxiliary:{value:this.supportTexture??null},uUseHeadSupport:{value:!!this.supportTexture},uContextCoverageLayer:{value:-1},
-        uContextRadius:{value:contextRadius},
         uVolume:{value:this.texture},uTransfer:{value:null},uScene:{value:this.sceneTarget.texture},uDrawScalar:{value:true},
         uOpticalSize:{value:new THREE.Vector2()},uOpticalGrid:{value:new THREE.Vector3()},uOpticalColumns:{value:1},
         uOpticalDepthRow:{value:0},uOpticalLight:{value:keyLight},
@@ -133,7 +130,7 @@ export class ScanVolumeRenderer {
         uCameraWorld:{value:new THREE.Matrix4()},uInverseProjection:{value:new THREE.Matrix4()},
         uShape:{value:shape},uRange:{value:new THREE.Vector2()},
         uZeroExtinctionLevel:{value:0},
-        uSkullMode:{value:0},uCt:{value:false},uScanPresentation:{value:false},uGradientOpacity:{value:false},uDensity:{value:.45},uStep:{value:this.spacing*.7},uLinear:{value:linear},
+        uSkullMode:{value:0},uAcquiredBoneCut:{value:false},uCt:{value:false},uScanPresentation:{value:false},uGradientOpacity:{value:false},uDensity:{value:.45},uStep:{value:this.spacing*.7},uLinear:{value:linear},
         uClipEnabled:{value:false},uClipPlane:{value:new THREE.Vector4()},
         uBackground:{value:this.background},
         uLayerCount:{value:volume.compartments.length},uLayerCodes:{value:(codes??packAnatomyLabels(volume).codes).map(c=>new THREE.Vector2(...c))},uLayerEnabled:{value:new Float32Array(MAX_ANATOMY_LAYERS).fill(1)},
@@ -319,7 +316,10 @@ export class ScanVolumeRenderer {
     this.exteriorPresentation=settings.presentation==='segmentation'||settings.presentation==='vascular';
     this.material.uniforms.uScanPresentation.value=settings.presentation==='scan'&&settings.operativeView!=='surgeon';
     this.material.uniforms.uGradientOpacity.value=this.automaticMriTransfer&&this.shellContext;
-    const u=this.material.uniforms;u.uLabels.value=texture;u.uSkullMode.value=settings.skullMode==='transparent'?2:settings.skullMode?1:0;let bits=0,all=0,active=0,context=0;
+    const u=this.material.uniforms;u.uLabels.value=texture;let bits=0,all=0,active=0,context=0;
+    u.uSkullMode.value=settings.skullMode==='transparent'?2:settings.skullMode?1:0;
+    u.uAcquiredBoneCut.value=this.exteriorPresentation&&!settings.operativeView&&settings.skullMode==='cutaway'&&
+      (u.uClipEnabled.value||planes.length>0);
     this.layers.forEach((layer,i)=>{const a=layerAppearance(layer.name,layer.color,settings,layer.displayKind??layer.kind);
       // Keep declared context even when hidden: the scalar threshold fallback
       // must not resurrect a hidden source label or classify contrast as bone.
@@ -372,15 +372,14 @@ export class ScanVolumeRenderer {
     if(this.contextCoverage?.mask!==mask){
       this.contextCoverage?.texture.dispose();
       const [x,y,z]=this.sourceOptics.shape;
-      const coverage=new Uint8Array(mask.length);
-      for(let offset=0;offset<mask.length;offset++)coverage[offset]=mask[offset]?255:0;
+      const coverage=ctOpticalCoverage(mask,this.sourceOptics.shape,this.sourceOptics.affine);
       const texture=new THREE.Data3DTexture(coverage,z,y,x);
       texture.format=THREE.RedFormat;
       texture.type=THREE.UnsignedByteType;
       texture.minFilter=texture.magFilter=THREE.LinearFilter;
       texture.unpackAlignment=1;
       texture.needsUpdate=true;
-      this.contextCoverage={mask,texture,radius:u.uContextRadius.value.toArray()};
+      this.contextCoverage={mask,texture,coverage};
     }
     u.uAuxiliary.value=this.contextCoverage.texture;
     u.uContextCoverageLayer.value=index;

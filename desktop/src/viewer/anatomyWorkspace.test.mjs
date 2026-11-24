@@ -227,16 +227,23 @@ test('transparent CTA feathers only optical coverage while exact masks and scan 
     scan.labels(null,{},settings,[]);render(scan);
     const uniforms=scan.material.uniforms,aux=uniforms.uAuxiliary.value;
     assert.equal(uniforms.uContextCoverageLayer.value,0);
-    assert.ok(uniforms.uContextRadius.value.distanceTo(new THREE.Vector3(.68,.68,.2))<1e-9);
     assert.equal(aux.magFilter,THREE.LinearFilter);
-    assert.equal(aux.image.data[31],255);
-    assert.equal(aux.image.data[30],0);
+    assert.ok(aux.image.data[31]>0&&aux.image.data[31]<255);
+    assert.equal(aux.image.data[30],aux.image.data[32]);
+    assert.ok(aux.image.data[30]>0);
     assert.deepEqual(mask,original);
     assert.equal(scan.texture.image.data,source.mri);
-    for(const [visible,view] of [ [{bone:false},settings], [{},{...settings,presentation:'scan'}], [{},{...settings,skullMode:'exterior'}] ]){
+    scan.configure({shadows:false},'CTA',new THREE.Plane(new THREE.Vector3(0,0,1),0));
+    scan.labels(null,{}, {...settings,skullMode:'cutaway'},[]);render(scan);
+    assert.equal(uniforms.uSkullMode.value,1);
+    assert.equal(uniforms.uAcquiredBoneCut.value,true);
+    assert.equal(uniforms.uAuxiliary.value,null);
+    for(const [visible,view] of [ [{bone:false},settings], [{},{...settings,presentation:'scan'}], [{},{...settings,skullMode:'exterior'}],
+      [{},{...settings,skullMode:'cutaway',presentation:'scan'}] ]){
       scan.labels(null,visible,view,[]);render(scan);
       assert.equal(uniforms.uContextCoverageLayer.value,-1);
       assert.equal(uniforms.uAuxiliary.value,null);
+      assert.equal(uniforms.uAcquiredBoneCut.value,false);
     }
     scan.labels(null,{},settings,[]);render(scan);assert.equal(uniforms.uAuxiliary.value,aux);
     scan.configure({shadows:false,isolateLabels:true},'CTA',null);render(scan);
@@ -322,7 +329,7 @@ test('CTA exterior uses one lazy scalar derivative while raw views and bone cove
     assert.equal(scan.texture.image.data,signal);
     assert.equal(coverage.format,THREE.RedFormat);
     assert.equal(coverage.image.data.length,60);
-    assert.equal(coverage.image.data[30],255,'bone retains its independent R8 channel');
+    assert.equal(coverage.image.data,scan.opticalAtlasSelection.context.coverage,'bone has one R8 grid for the eye and shadow atlas');
     assert.deepEqual(qualified.ctExteriorBytes,{cpuBytes:240,gpuTextureBytes:240});
 
     const rawFrame=render({showCtExteriorSignal:true});
