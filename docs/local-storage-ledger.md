@@ -59,6 +59,11 @@ The next vascular continuation at
 links the cursor-centered vessel depth views, native TOF challenger runs and the
 same-branch support-release and contact walkthrough.
 
+The internal source-review continuation at
+`qc/eden2020-glioma-5714812/vascular-reconstruction-continuity-20261123-v7/README.md`
+links the matched native ventricle views, selected studies, and the private
+fixed-step tests for newly intersecting operative vessel surfaces.
+
 Paths below are relative to the RessectionLab root. This compact ledger covers
 that area, not unrelated personal files elsewhere on the HDD. Presence does not
 establish scientific readiness or a completed build; consult each run's receipts.
