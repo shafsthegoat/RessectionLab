@@ -147,6 +147,8 @@ TopCoW paired replay, support and recoil measurements, EDEN rest and shear
 controls, and signed app verification.
 The ordinary TopCoW lateral slide and tilt, signed graphics recovery, and
 continuous rehearsal are indexed at `qc/native-wall-rigid-contact-20261124-v1/README.md`.
+The acquired microscope sections, bounded brain-surface checks, and matched
+signed CTA and TOF views are at `qc/acquired-operative-section-20261124-v1/README.md`.
 The ordinary EDEN diffusion checks and source-role audit are at
 `qc/ordinary-diffusion-baseline-20261124-v1/README.md`.
 
