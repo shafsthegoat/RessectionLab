@@ -73,7 +73,7 @@ def test_open_native_vessel_fairing_preserves_the_rim_collar_and_tiny_source_cro
     np.testing.assert_array_equal(display[tiny], source[tiny])
     np.testing.assert_array_equal(scores, original_scores)
     np.testing.assert_array_equal(mask, original_scores >= .5)
-    assert diagnostic['policy'] == 'native-bounded-open-vessel-v2'
+    assert diagnostic['policy'] == 'native-bounded-open-vessel-v3'
     assert 0 < diagnostic['maxDisplacementMm'] <= .4 * .7 * .55
     assert not len(intersection_vertices(world(affine, source), world(affine, display), faces))
 
@@ -85,7 +85,21 @@ def test_section_containment_requires_the_entire_void_ring():
                        [1, .4], [3, .4], [3, 1], [1, 1],
                        [-1.5, .4], [-.5, .4], [-.5, 1], [-1.5, 1]])
     rings = [list(range(i, i + 4)) for i in (0, 4, 8)]
-    assert _section_roles(rings, points).tolist() == [1] * 4 + [0] * 4 + [2] * 4
+    roles, hole_count = _section_roles(rings, points)
+    assert roles.tolist() == [1] * 4 + [0] * 4 + [2] * 4
+    assert hole_count == 1
+
+
+def test_section_records_when_all_edges_of_an_enclosed_void_disappear():
+    from resectionlab.vessel_section_stability import Section, _changed_section
+
+    keys = np.arange(8)
+    edges = np.column_stack((keys, keys + 8))
+    source = Section(edges, keys, np.array([1] * 4 + [2] * 4), 1)
+    closed = Section(edges[:4], keys[:4], np.ones(4, dtype=int), 0)
+
+    assert _changed_section(source, closed)
+    assert _changed_section(closed, source)
 
 
 def test_open_section_guard_restores_a_merged_junction_without_reverting_other_moves(monkeypatch):

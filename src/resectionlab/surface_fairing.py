@@ -13,7 +13,7 @@ POLICY = json.loads(resources.files('resectionlab').joinpath('surface_policy.jso
 NATIVE_POLICY = POLICY['native']
 NATIVE_VASCULAR_POLICY = POLICY['nativeVascular']
 PUBLISHER_CTA_POLICY = 'source-bound-publisher-cta-fairing-v1'
-OPEN_VASCULAR_POLICY = 'native-bounded-open-vessel-v2'
+OPEN_VASCULAR_POLICY = 'native-bounded-open-vessel-v3'
 
 
 def surface_kind(kind):

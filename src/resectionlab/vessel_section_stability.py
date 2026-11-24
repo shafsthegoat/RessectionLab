@@ -13,6 +13,7 @@ class Section:
     edges: np.ndarray
     keys: np.ndarray
     roles: np.ndarray
+    hole_count: int
 
 
 def _source_stations(mask, linear):
@@ -75,7 +76,7 @@ def _section_roles(rings, points):
     areas = [abs(x @ np.roll(y, -1) - y @ np.roll(x, -1)) for x, y in (xy.T for xy in polygons)]
     containing = [i for i, xy in enumerate(polygons) if _inside(xy, (0, 0))]
     if len(containing) % 2 == 0:
-        return roles
+        return roles, 0
     outer = min(containing, key=areas.__getitem__)
     roles[rings[outer]] = 1
     interior = sorted((i for i, xy in enumerate(polygons) if areas[i] < areas[outer]
@@ -85,7 +86,7 @@ def _section_roles(rings, points):
         if not any(_encloses(polygons[hole], polygons[i]) for hole in holes):
             roles[rings[i]] = 2
             holes.append(i)
-    return roles
+    return roles, len(holes)
 
 
 def _closed_rings(connections, count):
@@ -129,10 +130,13 @@ def _cut(points, faces, center, normal):
     axis = np.cross(normal, np.eye(3)[np.argmin(np.abs(normal))])
     axis /= np.linalg.norm(axis)
     plane_points = intersections @ np.stack((axis, np.cross(normal, axis)), axis=1)
-    return Section(edges, keys, _section_roles(rings, plane_points)), positive
+    roles, hole_count = _section_roles(rings, plane_points)
+    return Section(edges, keys, roles, hole_count), positive
 
 
 def _changed_section(before, after):
+    if before.hole_count != after.hole_count:
+        return True
     if not (before.roles == 1).any() and not (after.roles == 1).any():
         return False
     _, old, new = np.intersect1d(before.keys, after.keys, assume_unique=True, return_indices=True)

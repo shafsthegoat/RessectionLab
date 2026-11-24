@@ -247,7 +247,7 @@ def test_native_wall_source_inspection_keeps_live_state_and_checks_relocated_sou
                     faces = np.fromfile(comp['surface']['indices']['path'], '<u4').reshape(-1, 3)
                     raw = np.fromfile(comp['surface']['source']['path'], '<f4').reshape(-1, 3)
                     points = np.fromfile(comp['surface']['positions']['path'], '<f4').reshape(-1, 3)
-                    assert comp['surfaceDiagnostics']['policy'] == 'native-bounded-open-vessel-v2'
+                    assert comp['surfaceDiagnostics']['policy'] == 'native-bounded-open-vessel-v3'
                     assert not comp['surfaceDiagnostics']['sourceSurfaceOnly']
                     assert not np.array_equal(raw, points)
                     edges = np.sort(faces[:, [[0, 1], [1, 2], [2, 0]]].reshape(-1, 2), axis=1)
@@ -312,7 +312,7 @@ def test_anatomy_vessel_field_keeps_the_full_view_cache_and_native_preview_coord
         assert Path(field['mri']['path']).read_bytes() == study.array(study.series('tof')['data'])[crop].astype('<f4').tobytes()
         assert session.anatomy_view_cache is cache and session.anatomy_transfer_paths == transfers
         layer, = field['compartments']
-        assert layer['surfaceDiagnostics']['policy'] == 'native-bounded-open-vessel-v2'
+        assert layer['surfaceDiagnostics']['policy'] == 'native-bounded-open-vessel-v3'
         assert layer['surfaceDiagnostics']['sectionStations'] > 0
         with pytest.raises(ValueError, match='on its active acquisition'):
             call('anatomyView', {**selection, 'seriesId': 't1', 'localVesselField': request})
