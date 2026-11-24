@@ -12,12 +12,14 @@ const path=require('node:path');
 const {app,dialog,ipcMain}=require('electron');
 const {observeStudyFrame}=require('./study-engine-recording.cjs');
 const {inputScript}=require('./verify-eden-planning-helpers.cjs');
+const {nativeWallMotionReceipt,matchedNativeWallReceipt,nativeWallReviewReceipt}=require('./native-wall-recording.cjs');
 const cameraMath=import('./walkthrough-camera.mjs');
 const repo=path.resolve(__dirname,'../..');
 const caseFile=fs.realpathSync(process.argv[2]);
 const output=path.resolve(process.argv[3]);
 const planFile=fs.realpathSync(process.argv[4]);
 const plan=JSON.parse(fs.readFileSync(planFile,'utf8'));
+const recordNativeWalls=!!(plan.matchedAnatomy||plan.reviewNativeWalls);
 if(!Array.isArray(plan.chapters)||!plan.chapters.length||!plan.caseHash)throw Error('A source-bound shot plan is required');
 const parent=fs.realpathSync(path.dirname(output));
 const localEvidence=fs.realpathSync(path.join(repo,'testcases/outputs'));
@@ -45,6 +47,7 @@ dialog.showMessageBox=async(...args)=>{throw Error('Unexpected app dialog '+args
 const save=()=>fs.writeFileSync(path.join(output,'capture.json'),JSON.stringify(report,null,2)+'\n');
 const delay=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 let lastNativeRequest,backendFailure,latest,authority,windowRef,ui,sinkDone=false,overview,position=-1,activeChapter=-1,previous=null;
+let nativeWallScene;
 const spool=fs.openSync(path.join(output,'frames.mjpg'),'wx');
 let bytes=0;
 function append(image,info){
@@ -166,7 +169,8 @@ ipcMain.handle=(name,handler)=>originalHandle(name,async(...args)=>{
       exposure:exposure?{bodies:Object.fromEntries(Object.entries(exposure.bodies).map(([name,b])=>[name,
           {angleRad:b.angleRad,heldBy:b.heldBy,status:b.status,cutCount:b.cutCount}])),
           objects:exposure.objects.map(o=>({id:o.id,kind:o.kind,status:o.status})),accessOpen:exposure.accessOpen,complete:exposure.complete}:null,
-      camera:pane.camera,gpuSerial:pane.gpuSerial,fieldMm:pane.fieldMm,field:pane.field,exteriorSkin:pane.exposure?.exteriorSkin??null});
+      camera:pane.camera,gpuSerial:pane.gpuSerial,fieldMm:pane.fieldMm,field:pane.field,exteriorSkin:pane.exposure?.exteriorSkin??null,
+      ...(recordNativeWalls?nativeWallMotionReceipt(pane,latest.view,nativeWallScene):{})});
     if(position!==receipt.position){
       position=receipt.position;
       console.log('Exporting action',position+1,'of',authority.steps);
@@ -264,6 +268,7 @@ app.on('browser-window-created',(_,win)=>{
           id:p.dataset.surgicalStateId,camera:optical,gpuSerial:w.serial,tools:JSON.parse(p.dataset.acceptedTools),
           fieldMm:Number(document.querySelector('[aria-label="Field / magnification"]')?.value),view:p.dataset.operativeView,
           inspection:!!document.querySelector('.surgeon-view strong[role=status]')?.textContent?.includes('INSPECTION ONLY'),
+          ...(${recordNativeWalls}?{nativeVessels:w.frame?.operativeVesselSurfaces??[]}:{}),
           field:w.frame?.fieldOptics??null,exposure:JSON.parse(p.dataset.exposureGeometry||'null')};
       })()`);
       let found;await wait(async()=>!!(found=await capture()),'source-bound completed GPU frame '+stateId,120000);
@@ -304,6 +309,8 @@ app.on('browser-window-created',(_,win)=>{
       report.appVersion=app.getVersion();report.electronVersion=process.versions.electron;
       report.gpu=app.getGPUFeatureStatus();
       assert(report.gpu.webgl==='enabled'||report.gpu.webgl2==='enabled');
+      if(recordNativeWalls)
+        await wait(()=>js("document.querySelector('.rl-viewer')?.dataset.rendererReady==='true'"),'loaded native TOF case');
       await click('Rehearse');
       const coldLimit=Math.max(300000,(plan.actions?.length??0)*2500);
       await wait(()=>js("!!document.querySelector('[aria-label=\"Surgical timeline\"]')"),'rehearsal',coldLimit);
@@ -317,6 +324,7 @@ app.on('browser-window-created',(_,win)=>{
         await wait(()=>latest.branchId===plan.branchId,'selected branch');
       }
       report.branchId=latest.branchId;report.sceneId=latest.view.scene.sceneId;
+      if(recordNativeWalls)nativeWallScene=latest.view.scene;
       report.instruments=Object.fromEntries(latest.view.catalog.map(tool=>[tool.id,tool.name]));
       report.sourceCaseHash=latest.caseHash;report.steps=latest.branches.find(b=>b.id===latest.branchId).steps;
       assert(plan.chapters[0].first===0 && plan.chapters.at(-1).last<report.steps);
@@ -333,6 +341,8 @@ app.on('browser-window-created',(_,win)=>{
         await wait(()=>js("document.querySelector('.field-presentation-readout')?.innerText.includes('External scalp overview')"),'opaque external scalp presentation');
       }
       overview=await pane(origin);
+      if(plan.matchedAnatomy)report.anatomyWallProof={
+        nativeVessels:overview.nativeVessels,collisionGeometryByLabel:latest.view.vesselMechanics?.geometryModeByLabel??{}};
       const img=await wc.capturePage(overview.rect,{stayHidden:true,stayAwake:true});
       append(img,{chapter:-1,stateId:origin,time:0,overview:true,camera:overview.camera,gpuSerial:overview.gpuSerial,tools:overview.tools});
       fs.writeFileSync(path.join(output,'overview.png'),img.toPNG());
@@ -340,6 +350,17 @@ app.on('browser-window-created',(_,win)=>{
       await wait(()=>js("document.querySelector('[data-accepted-tools]')?.dataset.operativeView==='surgeon'"),'microscope');
       if(plan.chapters[0].focus==='opening')await click('Frame operative opening');
       report.initialCamera=(await pane(origin)).camera;
+      if(plan.matchedAnatomy){
+        await applyShot(0,origin);
+        const matched=await pane(origin);
+        const photo=await wc.capturePage(matched.rect,{stayHidden:true,stayAwake:true});
+        const anatomyPixels=img.toPNG(),operativePixels=photo.toPNG();
+        report.matchedBifurcation=matchedNativeWallReceipt(plan,origin,overview,matched,anatomyPixels,operativePixels);
+        fs.writeFileSync(path.join(output,'anatomy-close-up.png'),anatomyPixels);
+        fs.writeFileSync(path.join(output,'operative-close-up.png'),operativePixels);
+        report.initialCamera=matched.camera;
+        activeChapter=-1;
+      }
       if(plan.reviewBoundaries){
         report.review=[];
         for(const boundary of plan.reviewBoundaries){
@@ -354,9 +375,15 @@ app.on('browser-window-created',(_,win)=>{
             {instrument:t.instrument,position:t.position,quaternion:t.quaternion,inserted:t.inserted}]));
           assert.deepEqual(drawn.tools,tools);
           assert.equal(drawn.view,'surgeon');assert(!drawn.inspection);
+          if(plan.reviewNativeWalls?.[boundary]){
+            await ui.paint();
+            await delay(120);
+            Object.assign(drawn,await pane(stateId));
+          }
           const fieldImage=await wc.capturePage(drawn.rect,{stayHidden:true,stayAwake:true});
           fs.writeFileSync(path.join(output,'action-'+String(boundary).padStart(3,'0')+'.png'),fieldImage.toPNG());
-          report.review.push({boundary,stateId,tools,camera:drawn.camera,gpuSerial:drawn.gpuSerial,fieldMm:drawn.fieldMm,exposure:drawn.exposure});
+          report.review.push({boundary,stateId,tools,camera:drawn.camera,gpuSerial:drawn.gpuSerial,fieldMm:drawn.fieldMm,exposure:drawn.exposure,
+            ...(recordNativeWalls?nativeWallReviewReceipt(plan,boundary,drawn,report.review[0]?.camera,latest.view,nativeWallScene,fieldImage.toPNG()):{})});
           console.log('Reviewed accepted boundary',boundary);
         }
         assert(!win.isVisible()&&!report.windowEverVisible);

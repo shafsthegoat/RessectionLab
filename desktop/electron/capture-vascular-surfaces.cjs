@@ -56,7 +56,13 @@ const report={source,snapshotId:document.snapshot_id,manifestSha256:hash(source)
 const wait=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 const persist=()=>fs.writeFileSync(path.join(output,'report.json'),JSON.stringify(report,null,2));
 let activeRecipe=recipes[0],openCount=0,lastPayload;
-let finished=false,exitCode=1;
+let finished=false,exitCode=1,quitDeadline;
+function exitCapture(event){
+  event?.preventDefault();
+  clearTimeout(quitDeadline);
+  fs.rmSync(profile,{recursive:true,force:true});
+  app.exit(exitCode);
+}
 function finish(error){
   if(finished)return;
   finished=true;
@@ -67,14 +73,16 @@ function finish(error){
   persist();
   exitCode=report.passed?0:1;
   // The app's before-quit handler stops the local engine and clears transfer
-  // files before Electron publishes will-quit.
+  // files before Electron publishes will-quit. Keep this disposable hidden
+  // instance from blocking a batch if Chromium never completes its quit.
+  quitDeadline=setTimeout(()=>{
+    report.shutdown='hidden capture exit deadline';
+    persist();
+    exitCapture();
+  },20000);
   app.quit();
 }
-app.once('will-quit',event=>{
-  event.preventDefault();
-  fs.rmSync(profile,{recursive:true,force:true});
-  app.exit(exitCode);
-});
+app.once('will-quit',exitCapture);
 dialog.showErrorBox=(title,message)=>finish(Error(`${title} ${message}`));
 process.on('uncaughtException',finish);
 process.on('unhandledRejection',finish);
