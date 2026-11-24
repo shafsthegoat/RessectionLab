@@ -149,11 +149,11 @@ app.on('browser-window-created',(_event,window)=>{
       await ready();if(changed)await settledFrame(previous);
     };
     const nativeView=()=>js(`JSON.parse(document.querySelector('.native-workspace').dataset.nativeViewState)`);
-    const neutralSectionComparison=async(baseline,candidate)=>{
+    const neutralSectionComparison=async(baseline,candidate=baseline)=>{
       const box=await js(`(()=>{const r=document.querySelector('.rl-viewer-anatomy-image').getBoundingClientRect();
         return {x:Math.ceil(r.x),y:Math.ceil(r.y),width:Math.floor(r.width)-1,height:Math.floor(r.height)-1};})()`);
       const a=nativeImage.createFromPath(baseline).crop(box).toBitmap();
-      const b=nativeImage.createFromPath(candidate).crop(box).toBitmap();
+      const b=candidate===baseline?a:nativeImage.createFromPath(candidate).crop(box).toBitmap();
       assert(a.length>0&&a.length===b.length);
       let neutral=0,matched=0,totalDelta=0;
       for(let i=0;i<a.length;i+=4){
@@ -164,7 +164,12 @@ app.on('browser-window-created',(_event,window)=>{
         const delta=Math.abs(ra-rb);
         neutral++;totalDelta+=delta;if(delta<=2)matched++;
       }
-      assert(neutral>0&&matched/neutral>=.95,
+      // A slice outside the acquired slab can leave a neutral pixel in a
+      // crosshair or label. Require actual source signal in the image pane.
+      const minimumSignalPixels=Math.ceil(box.width*box.height*.005);
+      assert(neutral>=minimumSignalPixels,
+        `Source section has insufficient visible signal (${neutral}/${minimumSignalPixels} neutral pixels)`);
+      assert(matched/neutral>=.95,
         `Matched source sections differ outside colored overlays (${matched}/${neutral} neutral pixels within two sRGB levels)`);
       return {neutralPixels:neutral,matchedWithinTwoLevels:matched,meanAbsoluteDifference:totalDelta/neutral};
     };
@@ -238,7 +243,9 @@ app.on('browser-window-created',(_event,window)=>{
           const sectionWorkspace=await nativeView();
           const sectionView=sectionWorkspace.states[recipe.seriesId];
           assert(sectionView.settings.clipping?.enabled||sectionWorkspace.patientCutaway?.clipping?.enabled,'Source section did not apply a display clip');
-          return {view:sectionView,patientCutaway:sectionWorkspace.patientCutaway,...await capture(`${recipe.name}-source-section`)};
+          const image=await capture(`${recipe.name}-source-section`);
+          const signal=await neutralSectionComparison(image.filename);
+          return {view:sectionView,patientCutaway:sectionWorkspace.patientCutaway,...image,sourceSignalNeutralPixels:signal.neutralPixels};
         };
         if(recipe.sourceSection&&!recipe.compareLayerIds)record.section=await captureSection();
         if(recipe.contextVolume){

@@ -6,7 +6,10 @@ import pytest
 
 from resectionlab.anatomy_bridge import VASCULAR_REVIEW_MANIFEST, dispatch, open_anatomy_manifest
 from resectionlab.patient_anatomy import PatientImagingCollection, digest, file_hash
-from resectionlab.vascular_cleanup import HIDDEN, RETAINED, UNCERTAIN, classify_components, review_component_visibility
+from resectionlab.vascular_cleanup import (
+    HIDDEN, RETAINED, UNCERTAIN, classify_components, review_component_visibility,
+    separate_reviewed_components,
+)
 
 
 def test_native_review_preserves_pial_and_bright_extracranial_candidates():
@@ -52,6 +55,24 @@ def test_no_source_support_abstains_and_preserves_all_components():
     np.testing.assert_array_equal(partition > 0, mask)
     assert report["hidden_components"] == 0
     assert report["reference_signal_available"] is False
+
+
+def test_compartment_separation_preserves_whole_native_connected_components():
+    mask = np.zeros((8, 8, 8), dtype=bool)
+    mask[1:4, 2, 2] = True
+    mask[4, 3, 3] = True
+    mask[5:7, 6, 1] = True
+    anchor = int(np.ravel_multi_index((1, 2, 2), mask.shape))
+    main, compartment = separate_reviewed_components(mask, {anchor: 4})
+
+    np.testing.assert_array_equal(main | compartment, mask)
+    assert not np.any(main & compartment)
+    assert compartment[4, 3, 3] and main[5, 6, 1]
+    with pytest.raises(ValueError, match="differs"):
+        separate_reviewed_components(mask, {anchor: 3})
+    inside = int(np.ravel_multi_index((2, 2, 2), mask.shape))
+    with pytest.raises(ValueError, match="differs"):
+        separate_reviewed_components(mask, {inside: 4})
 
 
 def test_alternate_review_manifest_binds_and_preserves_canonical_anatomy(tmp_path):

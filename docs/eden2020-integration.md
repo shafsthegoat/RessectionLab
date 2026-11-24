@@ -93,6 +93,20 @@ Use `scripts/measure_vessel_surface_sections.py` with the exact linked manifest
 and compatible native branch JSON for physical section comparisons. Its receipt
 records the manifest SHA-256 and snapshot it opened.
 
+Source review can separate a complete posterior component into a dedicated
+display layer. Use the component anchor from a structural screen tied to the
+selected TOF review.
+
+```sh
+.venv/bin/python scripts/separate_eden2020_vascular_compartment.py \
+  --selected REVIEW --screen SCREEN --anchor CELL
+```
+
+Use paths relative to the verified HDD. The linked companion keeps the original
+estimate and the selected union available beside the two disjoint groups. Each
+group uses the original native score field. The structural alignment and
+superficial tissue labels remain research estimates.
+
 The PTNT_4509 teaching rehearsal preserves the acquired TOF lattice and
 source-bound vessel triangles. The exposure banks, vessel attachments and
 mechanical properties are modeled. The private continuity run index links the

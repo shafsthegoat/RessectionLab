@@ -233,3 +233,29 @@ def review_component_visibility(partition, report, *, restore=(), exclude=()):
         analysis["uncertain_voxels"] -= direction * row["voxels"]
         analysis["hidden_components"] += direction
     return result, analysis
+
+
+def separate_reviewed_components(mask, components):
+    """Return two disjoint, exhaustive groups of whole native components."""
+    foreground = np.asarray(mask)
+    if foreground.ndim != 3 or foreground.dtype != np.bool_ or not components:
+        raise ValueError("A native binary foreground and reviewed components are required")
+    cells = np.flatnonzero(foreground)
+    labels, count = ndi.label(foreground, structure=CONNECTIVITY)
+    groups = labels.ravel()[cells]
+    sizes = np.bincount(groups, minlength=count + 1)
+    anchors = np.full(count + 1, foreground.size, dtype=np.int64)
+    np.minimum.at(anchors, groups, cells)
+    selected = np.zeros(count + 1, dtype=bool)
+    for anchor, size in components.items():
+        if type(anchor) is not int or type(size) is not int or not 0 <= anchor < foreground.size:
+            raise ValueError("Invalid reviewed component anchor or voxel count")
+        label = labels.ravel()[anchor]
+        if label == 0 or anchors[label] != anchor or sizes[label] != size:
+            raise ValueError(f"Whole native component differs from the reviewed selection: {anchor}")
+        selected[label] = True
+    compartment = selected[labels]
+    main = foreground & ~compartment
+    if not np.any(main):
+        raise ValueError("The separation leaves no main network")
+    return main, compartment
