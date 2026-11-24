@@ -151,6 +151,8 @@ The acquired microscope sections, bounded brain-surface checks, and matched
 signed CTA and TOF views are at `qc/acquired-operative-section-20261124-v1/README.md`.
 The signed **Local native wall** selection, cold TopCoW reopens, and current
 restricted EDEN catalog are indexed at `qc/ordinary-native-wall-selection-20261124-v1/README.md`.
+The reciprocal tissue attachments, matched TopCoW mechanics and signed
+walkthrough are indexed at `qc/native-wall-reciprocal-attachment-20261124-v1/README.md`.
 The ordinary EDEN diffusion checks and source-role audit are at
 `qc/ordinary-diffusion-baseline-20261124-v1/README.md`.
 
