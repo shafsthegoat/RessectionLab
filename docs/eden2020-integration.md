@@ -52,6 +52,15 @@ components stay visible. **Full source estimate** restores the original
 prediction and score surface. Supplied layers and operative preparation use
 their existing source evidence.
 
+Applying this same screen to the selected review layers for all 29 acquired
+TOFs proposed no additional exclusions. In three matched full-head views,
+the remaining peripheral specks follow the selected native score surfaces.
+Source-plane checks found weak signal in some remote groups and coherent
+signal along nearby vessels. The tested scans showed no consistent offset
+along the phase-encoding direction to support a shared ghosting explanation.
+In **Vessels**, the 3D toolbar's **Vessel slab at cursor** control reduces
+through-depth overlap for local inspection. Exit restores the prior 3D cut.
+
 The available attached-wall trials found that dark-signal subtraction can
 create pits, split adjacent geometry or narrow sections with plausible source
 support. The full-volume COSTA, SPOCKMIP and Vessel-MAYON comparisons also

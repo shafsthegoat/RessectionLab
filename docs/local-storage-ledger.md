@@ -135,6 +135,8 @@ The native TOF context and untouched source controls are at
 `qc/eden2020-glioma-5714812/tof-context-response-20261124/README.md`.
 The matched TOF ray timings and pixel checks are at
 `qc/eden2020-glioma-5714812/tof-ray-performance-20261124/README.md`.
+The residual peripheral TOF source screen and signed slab comparisons are at
+`qc/eden2020-glioma-5714812/residual-peripheral-source-review-20261124-v1/README.md`.
 The local structural tissue and held-out fiducial checks are at
 `qc/eden2020-glioma-5714812/mechanical-tissue-evidence-20261124-v1/README.md`.
 The independent native CSF correspondence, alternative stock wall field and
