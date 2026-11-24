@@ -353,6 +353,11 @@ mechanical properties are modeled. The private continuity run index links the
 portable workspace, recorded actions, source and collision checks, and hidden
 replay commands. See the [private storage ledger](local-storage-ledger.md).
 
+The open-field display contour audit uses all 29 available stored native TOF
+fields. It compares exact closed section polygons, fixed open rims, and new
+contacts between triangles without shared vertices. The per-case results and
+plane-sensitive junction measurements are indexed in the [private storage ledger](local-storage-ledger.md).
+
 Gray faces in a score-bound operative view mark where the source volume ends.
 The marker follows the rest coordinates of the wall through deformation and
 distinguishes the source boundary from interior transection caps. These faces
