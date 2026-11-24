@@ -162,6 +162,9 @@ The bounded native source field, paired full acquisitions, signed return checks,
 and measured load times are indexed at `qc/native-wall-local-field-20261124-v1/README.md`.
 The open vessel contour comparison, exact section and rim measurements, and
 29-crop EDEN audit are indexed at `qc/native-wall-open-contours-20261124-v1/README.md`.
+The ordinary Anatomy source field, matched signed workflow checks and
+section-preserving contour audit are indexed at
+`qc/native-wall-section-stability-20261124-v1/README.md`.
 The signed native TOF correction, matched score-surface preview and cohort
 picker checks are indexed at `qc/native-tof-local-correction-20261124-v1/README.md`.
 The signed faint vessel context comparisons, physical-cut and pick controls,

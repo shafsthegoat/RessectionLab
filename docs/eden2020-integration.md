@@ -358,6 +358,14 @@ fields. It compares exact closed section polygons, fixed open rims, and new
 contacts between triangles without shared vertices. The per-case results and
 plane-sensitive junction measurements are indexed in the [private storage ledger](local-storage-ledger.md).
 
+Anatomy and Rehearsal now use the same native source field and a conditioned
+contour that preserves sampled section topology. Across 3,378 closed EDEN
+sections, the center-containing outline stayed measurable. The conditioner
+restored four vertices each in PTNT_4503 and PTNT_4509. Whole-ring containment
+also corrected an earlier PTNT_8238 measurement that had counted a partly
+overlapping outline as an enclosed void. PTNT_8532 remains unavailable for
+this TOF check. The audit covers fixed native crops and sampled planes.
+
 Gray faces in a score-bound operative view mark where the source volume ends.
 The marker follows the rest coordinates of the wall through deformation and
 distinguishes the source boundary from interior transection caps. These faces
