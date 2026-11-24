@@ -118,7 +118,7 @@ test("bound engine brain walls sample the matching acquired reference on the con
   input.sourceRefs[0].provenance = "simulated";
   assert.equal((await hydrateCase(input, api())).compartments[1].appearanceSource, undefined);
 });
-test("local operative brain signal follows the exact acquired CTA crop and vessel binding", async () => {
+test("local operative brain signal follows the acquired CTA and the exact native wall binding", async () => {
   const input = fixture();
   const shape = [5, 5, 4], count = 100;
   const volume = (dtype, assetId) => ({...descriptor(dtype, assetId), shape, byteLength:count*(dtype==='float32'?4:1)});
@@ -158,6 +158,48 @@ test("local operative brain signal follows the exact acquired CTA crop and vesse
   ]){
     const altered=structuredClone(input);
     mismatch(altered);
+    assert.equal((await hydrateCase(altered,supplied)).compartments[0].appearanceSource,undefined);
+  }
+
+  const paired = structuredClone(input);
+  const adapter = paired.metadata.surgical_adapter;
+  const manifest = adapter.sourceManifest;
+  const cta = manifest.series[0];
+  const vascularHash = 'b'.repeat(64);
+  const tof = {...structuredClone(cta), id:'mra', modality:'MRA', timepoint:'baseline', original:{sha256:vascularHash},
+    affine:[[0,3,0,4],[-2,0,0,6],[0,0,4,-12],[0,0,0,1]]};
+  cta.timepoint = 'baseline';
+  manifest.patient_id = 'paired-patient';
+  manifest.series.push(tof);
+  paired.sourceRefs.push({source_id:'mra',provenance:'observed',sha256:vascularHash});
+  Object.assign(adapter.nativeWall,{sourceSeries:'mra',sourceImageSha256:vascularHash,layerId:'loaded-wall',centerRasMm:[10,-5,7]});
+  const matrix = [[0,-1,0,14],[1,0,0,-15],[0,0,1,7],[0,0,0,1]];
+  const sources = Object.fromEntries([cta,tof].map(series=>[series.id,{originalSha256:series.original.sha256,
+    nativeAffine:series.affine,nativeArray:series.data,timepoint:series.timepoint}]));
+  const review = {schema:'resectionlab.native-wall-alignment-review.v1',digest:'c'.repeat(64),
+    binding:{sources,matrix,sourcePatient:manifest.patient_id,referenceSeries:'ct',vascularSeries:'mra',
+      brainLayerId:'brain-source',vesselLayerId:'loaded-wall'},
+    centerRasMm:[10,-5,7],cropStartIJK:[1,2,3],cropShape:shape};
+  manifest.transforms = {ct:{status:'reference'},mra:{status:'unreviewed',matrix:structuredClone(matrix),
+    source_sha256:vascularHash,reference_sha256:hash,native_wall_alignment_review:structuredClone(review)}};
+  adapter.nativeWallAlignmentReview = review;
+  const multimodal = await hydrateCase(paired,supplied);
+  const alignedSignal = multimodal.compartments[0].appearanceSource;
+  assert.equal(alignedSignal.seriesId,'ct');
+  assert.equal(alignedSignal.sourceSha256,hash);
+  assert.equal(alignedSignal.data,multimodal.mri);
+  assert.deepEqual(alignedSignal.affine,paired.affine);
+  assert.deepEqual(alignedSignal.softTissueWindow,signal.softTissueWindow);
+  for(const mismatch of [
+    (a,p)=>{p.sourceRefs.pop();},
+    (a)=>{delete a.nativeWallAlignmentReview;},
+    (a)=>{a.sourceManifest.transforms.mra.matrix[0][3]+=2;},
+    (a)=>{a.nativeWallAlignmentReview.cropStartIJK[0]+=1;},
+    (a)=>{a.sourceManifest.series[0].original.sha256=vascularHash;},
+    (a,p)=>{p.affine[1][3]+=2;},
+  ]){
+    const altered=structuredClone(paired);
+    mismatch(altered.metadata.surgical_adapter,altered);
     assert.equal((await hydrateCase(altered,supplied)).compartments[0].appearanceSource,undefined);
   }
 });

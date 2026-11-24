@@ -28,6 +28,27 @@ function fixture(width=650,height=650){
 }
 const saved={position:[550,-750,480],target:[10,-12,3],up:[0,0,1]};
 function corners(box){return [0,1].flatMap(x=>[0,1].flatMap(y=>[0,1].map(z=>new THREE.Vector3([box.min.x,box.max.x][x],[box.min.y,box.max.y][y],[box.min.z,box.max.z][z]))));}
+test('the first native CTA modality update fits the full anterior-oblique anatomy',()=>{
+  const r=fixture();
+  r.volume.displayIdentity='native-cta';
+  r.volume.compartments.push({name:'arteries',kind:'artery'});
+  r.visible.arteries=true;
+  r.scanVolume.configure=()=>{};
+  r.workspaceSettings={presentation:'segmentation'};
+  r.volumeModality='MRI';
+  r.fitCamera();
+  assert.equal(JSON.parse(r.panes.anatomy.dataset.cameraFit).orientation,'oblique');
+  r.setVolumeRendering(undefined,'CTA');
+  assert.equal(JSON.parse(r.panes.anatomy.dataset.cameraFit).orientation,'cta-anterior-oblique');
+  const view=r.camera.position.clone().sub(r.controls.target).normalize();
+  assert(view.distanceTo(new THREE.Vector3(.12,.88,.46).normalize())<1e-9);
+  r.fitCamera('anatomy','oblique');
+  assert.equal(JSON.parse(r.panes.anatomy.dataset.cameraFit).orientation,'oblique');
+  r.restoreCamera(saved);
+  r.setVolumeRendering(undefined,'MRI');
+  r.setVolumeRendering(undefined,'CTA');
+  assert.deepEqual(r.getCameraState(),saved);
+});
 test('actual restore-before-update ordering preserves wide camera through implicit Rehearse modes and route refreshes',()=>{
   const r=fixture();let fits=0;const original=r.fitCamera.bind(r);r.fitCamera=(...args)=>{fits++;return original(...args);};
   // This is the actual ViewerWorkspace effect order: restore first, update later.

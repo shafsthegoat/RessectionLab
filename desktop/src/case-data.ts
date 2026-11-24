@@ -229,10 +229,49 @@ export function displayBrainMask(payload:CasePayload):boolean {
 
 const objectRecord = (value: unknown): value is Record<string, unknown> =>
   !!value && typeof value === "object" && !Array.isArray(value);
+const sourceHash = (value: unknown): value is string =>
+  typeof value === "string" && /^[a-f0-9]{64}$/.test(value);
+const affineMatrix = (value: unknown): value is number[][] =>
+  Array.isArray(value) && value.length === 4 && value.every(row =>
+    Array.isArray(row) && row.length === 4 && row.every(Number.isFinite));
+const sameSourceValue = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b);
 
-/** Bind a local CT crop only when its acquisition is both the recorded wall
- * acquisition and the recorded reference image. The wall can instead be TOF
- * and the reference MRI, so the wall receipt alone is insufficient. */
+/** Match the engine's local alignment receipt to the selected source grids.
+ * The composed transform positions the native wall crop in reference RAS. */
+function reviewedCropPatientAffine(adapter: Record<string, unknown>, manifest: Record<string, unknown>,
+  reference: Record<string, unknown>, vascular: Record<string, unknown>, wall: Record<string, unknown>,
+  brainLayerId: unknown, shape: number[]): number[][] | undefined {
+  const review = adapter.nativeWallAlignmentReview;
+  if (!objectRecord(review) || review.schema !== "resectionlab.native-wall-alignment-review.v1" ||
+      !sourceHash(review.digest) || !sameSourceValue(review.cropStartIJK, wall.sourceStartIJK) ||
+      !sameSourceValue(review.cropShape, shape) || !sameSourceValue(review.centerRasMm, wall.centerRasMm) ||
+      !objectRecord(review.binding) || !objectRecord(manifest.transforms) ||
+      typeof reference.id !== "string" || typeof vascular.id !== "string") return;
+  const {binding} = review;
+  const transform = manifest.transforms[vascular.id];
+  const referenceTransform = manifest.transforms[reference.id];
+  if (!objectRecord(transform) || transform.status !== "unreviewed" ||
+      !sameSourceValue(transform.native_wall_alignment_review, review) ||
+      !objectRecord(referenceTransform) || referenceTransform.status !== "reference" ||
+      binding.sourcePatient !== manifest.patient_id || binding.referenceSeries !== reference.id ||
+      binding.vascularSeries !== vascular.id || binding.brainLayerId !== brainLayerId ||
+      binding.vesselLayerId !== wall.layerId || !objectRecord(binding.sources) ||
+      !affineMatrix(binding.matrix) || !sameSourceValue(binding.matrix, transform.matrix) ||
+      !affineMatrix(vascular.affine)) return;
+  const sources = binding.sources;
+  const selected = [[reference.id, reference, transform.reference_sha256], [vascular.id, vascular, transform.source_sha256]] as const;
+  if (selected.some(([id, series, sha]) => {
+    const bound = sources[id];
+    return !objectRecord(bound) || !objectRecord(series.original) || sha !== series.original.sha256 ||
+      bound.originalSha256 !== sha || bound.timepoint !== series.timepoint ||
+      !sameSourceValue(bound.nativeAffine, series.affine) || !sameSourceValue(bound.nativeArray, series.data);
+  })) return;
+  const nativeAffine = vascular.affine;
+  return binding.matrix.map(row => nativeAffine.map((_, column) =>
+    row.reduce((value, coefficient, index) => value + coefficient * nativeAffine[index][column], 0)));
+}
+
+/** Use the acquired reference signal already sampled into the accepted crop. */
 function localCtBrainSignal(payload: CasePayload, mri: Float32Array, affine: ViewerCase["affine"],
   mask: Uint8Array): SurfaceAppearanceSource | undefined {
   const adapter = payload.metadata.surgical_adapter;
@@ -243,24 +282,27 @@ function localCtBrainSignal(payload: CasePayload, mri: Float32Array, affine: Vie
       !objectRecord(sourceLayers) || !objectRecord(sourceLayers.brain)) return;
   const brain = sourceLayers.brain;
   const {sourceSeries, sourceShape, sourceStartIJK, sourceImageSha256} = wall;
-  if (typeof sourceSeries !== "string" || sourceSeries !== manifest.reference_series ||
-      typeof sourceImageSha256 !== "string" || !/^[a-f0-9]{64}$/.test(sourceImageSha256) ||
-      !payload.sourceRefs?.some(ref => ref.source_id === sourceSeries && ref.provenance === "observed" && ref.sha256 === sourceImageSha256) ||
+  const referenceId = manifest.reference_series;
+  if (typeof sourceSeries !== "string" || typeof referenceId !== "string" || !sourceHash(sourceImageSha256) ||
       brain.sampledCoverageCells !== mri.length || !manifest.layers.some(row => objectRecord(row) &&
-        row.id === brain.layerId && row.kind === "brain" && row.source_series === sourceSeries)) return;
-  const series = manifest.series.find(row => objectRecord(row) && row.id === sourceSeries);
-  if (!objectRecord(series) || !objectRecord(series.original) || series.original.sha256 !== sourceImageSha256 ||
-      !objectRecord(series.data) || !Array.isArray(series.affine) || series.affine.length !== 4 ||
-      (series.modality !== "CT" && series.modality !== "CTA") ||
+        row.id === brain.layerId && row.kind === "brain" && row.source_series === referenceId)) return;
+  const observed = (id: string, sha: string) => payload.sourceRefs?.some(ref =>
+    ref.source_id === id && ref.provenance === "observed" && ref.sha256 === sha);
+  const reference = manifest.series.find(row => objectRecord(row) && row.id === referenceId);
+  const vascular = manifest.series.find(row => objectRecord(row) && row.id === sourceSeries);
+  if (!objectRecord(reference) || !objectRecord(reference.original) || !sourceHash(reference.original.sha256) ||
+      (reference.modality !== "CT" && reference.modality !== "CTA") || !observed(referenceId, reference.original.sha256) ||
+      !objectRecord(vascular) || !objectRecord(vascular.original) || vascular.original.sha256 !== sourceImageSha256 ||
+      !observed(sourceSeries, sourceImageSha256) || !objectRecord(vascular.data) || !affineMatrix(vascular.affine) ||
       !Array.isArray(sourceShape) || sourceShape.length !== 3 || !Array.isArray(sourceStartIJK) || sourceStartIJK.length !== 3 ||
-      JSON.stringify(series.data.shape) !== JSON.stringify(sourceShape) || sourceShape.some((size, axis) =>
+      !sameSourceValue(vascular.data.shape, sourceShape) || sourceShape.some((size, axis) =>
         !Number.isSafeInteger(size) || !Number.isSafeInteger(sourceStartIJK[axis]) || sourceStartIJK[axis] < 0 ||
         sourceStartIJK[axis] + payload.shape[axis] > size)) return;
-  const sourceAffine = series.affine;
-  if (affine.some((row, axis) => {
+  const sourceAffine = sourceSeries === referenceId ? vascular.affine :
+    reviewedCropPatientAffine(adapter, manifest, reference, vascular, wall, brain.layerId, payload.shape);
+  if (!sourceAffine || affine.some((row, axis) => {
     const native = sourceAffine[axis];
-    return !Array.isArray(native) || native.length !== 4 || native.some(value => !Number.isFinite(value)) ||
-      row.some((value, column) => Math.abs(value - (column < 3 ? native[column] :
+    return row.some((value, column) => Math.abs(value - (column < 3 ? native[column] :
         native[3] + sourceStartIJK.reduce((delta, offset, index) => delta + offset * native[index], 0))) > 1e-6);
   })) return;
   const surface = payload.compartments.find(layer => layer.name === "vessels")?.vesselSurface;
@@ -276,7 +318,7 @@ function localCtBrainSignal(payload: CasePayload, mri: Float32Array, affine: Vie
   if (values.length < 64) return;
   const low = values[Math.floor(values.length * .15)], high = values[Math.floor(values.length * .9)];
   if (!(high > low)) return;
-  return {seriesId: sourceSeries, modality: series.modality, sourceSha256: sourceImageSha256,
+  return {seriesId: referenceId, modality: reference.modality, sourceSha256: reference.original.sha256,
     signalSha256: payload.mri.sha256, shape: payload.shape, affine, data: mri, softTissueWindow: [low, high]};
 }
 

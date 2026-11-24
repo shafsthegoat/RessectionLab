@@ -1436,8 +1436,11 @@ export class VolumeRenderer {
   }
 
   setVolumeRendering(settings: VolumeRenderingSettings | undefined, modality: string): void {
+    const wasAngiographic = this.ctAngiogramFrame();
     this.volumeModality = modality;
     this.scanVolume.configure(settings, modality, this.clipPlane);
+    if (this.mode === 'anatomy' && !this.cameraRestored && wasAngiographic !== this.ctAngiogramFrame())
+      this.fitCamera('anatomy');
     this.requestRender();
   }
 
@@ -2375,7 +2378,13 @@ export class VolumeRenderer {
     });
   }
 
-  fitCamera(mode: "anatomy" | "instruments" = this.mode, preset: 'oblique'|'anterior'|'left'|'superior' = 'oblique'): void {
+  private ctAngiogramFrame(): boolean {
+    return !!this.volume.displayIdentity && /\bCTA\b|\bCT[- _]+angiogra/i.test(this.volumeModality) &&
+      (this.workspaceSettings?.presentation === 'segmentation' || this.workspaceSettings?.presentation === 'vascular') &&
+      this.volume.compartments.some(layer => surfaceKind(layer.kind) === 'vessel' && this.visible[layer.name] !== false);
+  }
+
+  fitCamera(mode: "anatomy" | "instruments" = this.mode, preset?: 'oblique'|'anterior'|'left'|'superior'): void {
     const pane = this.panes.anatomy.getBoundingClientRect();
     if (pane.width < 1 || pane.height < 1) {
       this.pendingFit = mode;
@@ -2413,8 +2422,13 @@ export class VolumeRenderer {
     const aspect = Math.max(0.2, pane.width / Math.max(pane.height, 1));
     const vertical = THREE.MathUtils.degToRad(this.camera.fov),
       horizontal = 2 * Math.atan(Math.tan(vertical / 2) * aspect);
-    const directions = {oblique:[.88,-1.65,.8],anterior:[0,1,0],left:[-1,0,0],superior:[0,0,1]};
-    const direction = new THREE.Vector3(...directions[preset] as [number,number,number]).normalize();
+    // An anterior approach usually places the posterior dural sinuses behind
+    // the arteries. Keep full anatomy in the frame and leave named views and
+    // restored cameras at their requested physical poses.
+    const orientation = preset ?? (mode === 'anatomy' && this.ctAngiogramFrame() ? 'cta-anterior-oblique' : 'oblique');
+    const directions = {oblique:[.88,-1.65,.8],anterior:[0,1,0],left:[-1,0,0],superior:[0,0,1],
+      'cta-anterior-oblique':[.12,.88,.46]};
+    const direction = new THREE.Vector3(...directions[orientation] as [number,number,number]).normalize();
     this.camera.up.set(...(preset==='superior' ? [0,1,0] : [0,0,1]) as [number,number,number]);
     const right = new THREE.Vector3()
       .crossVectors(this.camera.up, direction)
@@ -2447,6 +2461,7 @@ export class VolumeRenderer {
     this.camera.position.copy(centre).addScaledVector(direction, distance);
     this.panes.anatomy.dataset.cameraFit = JSON.stringify({
       mode,
+      orientation,
       centre: centre.toArray(),
       size: size.toArray(),
       distanceMm: distance,

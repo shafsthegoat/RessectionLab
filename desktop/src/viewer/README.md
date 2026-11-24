@@ -39,13 +39,13 @@ On the generated folded-tissue control, mean normal error was 25.12Â° raw, 7.11Â
 
 Normal and mesh preparation stays in the worker. Smooth display vertices are an approximation of the voxel boundary: original images, annotation buffers, affines, slice overlays and native-cell measurements remain unchanged. Cursor raycasting always uses the original isosurface, even in smooth mode. Modeled-removal replay also retains its exact surfaces. Fully opaque anatomy writes depth so rear triangles cannot paint over its front; translucent layers retain their opacity controls. Coarse acquisition/segmentation steps can remain under the subvoxel displacement limit; smoothing adds no anatomical detail.
 
-An ordinary local CT rehearsal can use the acquired crop to shade its brain
-estimate in the illustrative microscope. This requires matching brain, wall
-and reference acquisitions, checked native crop geometry, full sampled brain
-coverage and the saved wall binding. The albedo window uses the 15th and 90th
-percentiles of the original brain-mask samples. The scene retains its source
-and accepted contact geometry. The source-colour mode retains the label
-palette, and saved vessel colour choices remain available.
+An ordinary local CT rehearsal can use acquired CT signal to shade its brain
+estimate in the illustrative microscope. A same-acquisition crop uses its
+original physical frame. A separate vascular acquisition uses the CT sampled
+into the native wall lattice under the saved review for that exact crop. Both
+paths require full sampled brain coverage and the accepted wall binding. The
+albedo window uses the 15th and 90th percentiles of the brain-mask samples.
+Source-colour mode retains the label palette and saved vessel colours.
 
 ## Estimated envelope inspection
 
