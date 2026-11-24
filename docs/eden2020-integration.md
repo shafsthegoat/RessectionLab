@@ -243,7 +243,11 @@ structural MRI. A second pass using the renderer in the signed build matched
 all 30 selected Anatomy panes pixel-for-pixel while reducing known label
 texture storage. The completion table also records the six native section
 checks and three cold research-workspace opens. The current preflight found
-zero qualified ordinary EDEN native-wall layer pairs.
+zero qualified ordinary EDEN native-wall layer pairs. The same source catalog
+now drives **Rehearse → Local native wall**. A read-only run on all 30 prepared
+study manifests found 29 acquired TOF volumes and no selectable local pair.
+The catalog records the tissue and alignment reasons by case. Signed cold
+verification of the desktop refusal used PTNT_7195.
 [Local evidence index](local-storage-ledger.md)
 
 In **Scans → Alignment & registration**, choose the moving scan and a **Review
@@ -281,8 +285,9 @@ The Scans review panel also supports a review for one native-wall field. Select
 the reference brain estimate, moving angiography scores, and review position.
 Pair at least four spatially distributed landmarks. The review checks nearby
 correspondence in the proposed field and the structural and score coverage.
-Choose the reviewed layers in **Rehearsal** and open **Prepare reviewed local
-wall**. The receipt binds the exact native crop, candidate transform, original
+Open **Rehearse → Local native wall** and choose **Prepare reviewed local wall**.
+Choose the source pair first when more than one is offered. The receipt binds
+the exact native crop, candidate transform, original
 scans, and selected label and score revisions. General planning and display
 retain the scan's existing alignment status.
 

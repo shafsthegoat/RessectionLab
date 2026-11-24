@@ -63,6 +63,26 @@ can be inspected. Raw DWI, MRV and SWI alone do not produce named tracts,
 veins or sinuses in this build. [MONAI bundle](https://huggingface.co/MONAI/brats_mri_segmentation/blob/main/docs/README.md)
 · [mmFormer subset evaluation](https://arxiv.org/abs/2206.02425).
 
+### Prepare a local native wall
+
+For a study without a selected approach, **Rehearse** opens **Local native wall**
+first when a compatible source pair is available. The panel names the brain
+layer and angiography score layer with their acquisitions. Choose a pair if
+the study has more than one.
+
+- **Prepare reviewed local wall** uses the saved RAS center for that exact pair
+  and its local alignment review. The general registration status still applies
+  elsewhere in the study.
+- **Prepare native wall at cursor** uses the linked patient cursor. In
+  **Anatomy**, place it near the vessel on the registered source slices, then
+  return to **Rehearse**. Preparation checks the approximately 24 mm field for
+  acquired coverage, a continuous vessel trace, and surrounding tissue support.
+
+The local field uses the two selected layers. Tumor and bone are unassessed in
+that field. **Standard 1 mm environment** retains the separate role selections
+for wider research work. Save the prepared case and reopen it from **Cases**
+or **Open**. [Native-wall mechanics and assumptions](surgical-physics-v2.md)
+
 ### Practice from an accepted engine state
 
 On Shafrir’s HDD, `qc/operative-rehearsal-followup-20261121/Open complete cranial task.command` opens a fresh working copy of the generated post-scalp cranial case. You can also open `practice/cranial-exposure-99.ressectionlab` from the same collection in **Cases**. Inspect the original target and superior entry in **Plan**, then open **Rehearse**. Use **Verify replay for planning** if the archive opens in preview. At its saved boundary **99**, choose **Practice from this verified state**.
