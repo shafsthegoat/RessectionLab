@@ -11,6 +11,7 @@ import shutil
 import signal
 import subprocess
 import tempfile
+import time
 
 import numpy as np
 
@@ -56,9 +57,11 @@ def capture_case(electron, desktop, manifest, collection, selected, output, subj
     # Prime assets outside the bounded interactive request. A slow native score
     # read can finish once here and all subsequent views reuse its contour.
     surface = mesh(collection, selected, display_source=vascular_cleanup_source(collection, selected), conditioned=False)
-    if not len(surface['indices']):
-        raise ValueError('Selected vessel mask did not yield a native contour')
-    print(f'{subject} source contour prepared ({len(surface["indices"]):,} triangles)', flush=True)
+    triangles, surface_field = len(surface['indices']), str(surface.get('surface_field', ''))
+    del surface
+    if not triangles or surface_field not in {'native-probability', 'filtered-native-probability'}:
+        raise ValueError('Selected vessel mask did not yield a validated native score contour')
+    print(f'{subject} source contour prepared ({triangles:,} triangles)', flush=True)
     points = world(frame, positive)
     cursor = np.median(points, axis=0)
     cursor[2] = np.percentile(points[:, 2], 30)
@@ -94,7 +97,10 @@ def capture_case(electron, desktop, manifest, collection, selected, output, subj
     receipt = json.loads(report.read_text()) if report.is_file() else {}
     if exit_code or not receipt.get('passed') or not receipt['views'][0].get('section'):
         raise ValueError(f'Hidden application capture failed. See {log}')
-    return {'report': str(report), 'snapshot_id': receipt['snapshotId'], 'surface_field': str(surface['surface_field']),
+    surface_receipt = next((item['surfaceDiagnostics'] for item in receipt['views'][0]['surfaces'] if item['name']==selected['id']), {})
+    if not surface_receipt.get('sourceSurfaceOnly') or surface_receipt.get('surfaceField') != surface_field:
+        raise ValueError('Hidden application submitted a different vessel representation')
+    return {'report': str(report), 'snapshot_id': receipt['snapshotId'], 'surface_field': surface_field,
             'layer': selected['id'], 'images': [receipt['views'][0]['filename'], receipt['views'][0]['section']['filename']]}
 
 
@@ -102,7 +108,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--subject', action='append', help='Repeat to restrict to specific staged subjects')
     parser.add_argument('--graphs-only', action='store_true')
+    parser.add_argument('--follow-minutes', type=int, default=0, help='Wait for publication of pending studies within this window')
     args = parser.parse_args()
+    if not 0<=args.follow_minutes<=720:
+        parser.error('Follow minutes must be between 0 and 720')
     data_root = checked_root(HDD_ROOT, expected_uuid=HDD_UUID)
     root = data_root/RUN
     studies = root/'studies'
@@ -112,53 +121,76 @@ def main():
     status_path = output/('graph-status.json' if args.graphs_only else 'status.json')
     status = json.loads(status_path.read_text()) if status_path.exists() else {}
     packaging_path = root/'cohort-packaging.json'
-    packaged = json.loads(packaging_path.read_text()).get('cases', {}) if packaging_path.is_file() else {}
-    staged = {path.name for path in studies.iterdir() if re.fullmatch(r'PTNT_\d{4}', path.name)}
-    linked = {path.parent.name for path in source_studies.glob('PTNT_*/vascular-review.anatomy.json')}
-    subjects = args.subject or sorted(staged|linked|set(packaged))
     desktop = Path(__file__).resolve().parents[1]/'desktop'
     runtime = desktop/'node_modules'/'electron'
     electron = runtime/'dist'/(runtime/'path.txt').read_text().strip()
-    for subject in subjects:
-        if not re.fullmatch(r'PTNT_\d{4}', subject):
-            parser.error(f'Invalid EDEN subject {subject!r}')
-        record = status.setdefault(subject, {})
-        try:
-            packaging = packaged.get(subject, {})
-            published = packaging.get('manifest')
-            manifest = safe_path(data_root, published['path']) if published else studies/subject/'patient-anatomy.json'
-            if not manifest.is_file() and not published:
-                manifest = source_studies/subject/'vascular-review.anatomy.json'
-            if not manifest.is_file():
-                record.update(state='awaiting native study', packaging_status=packaging.get('status'))
-                continue
-            if manifest.parent.name != subject or not re.fullmatch(r'patient-anatomy\.json|vascular-review(?:\.[a-f0-9]{12})?\.anatomy\.json', manifest.name):
-                raise ValueError('Packaging receipt names an unexpected study path')
-            if published and sha256_file(manifest) != published['sha256']:
-                raise ValueError('Published vascular study manifest checksum differs')
-            collection = PatientImagingCollection(manifest.parent, json.loads(manifest.read_text()))
-            candidate = collection.layer(CANDIDATE)
-            record['partition_status'] = collection.document['vascular_review']['status']
+    deadline = time.monotonic()+60*args.follow_minutes
+    attempted = set()
+    while True:
+        packaged = json.loads(packaging_path.read_text()).get('cases', {}) if packaging_path.is_file() else {}
+        staged = {path.name for path in studies.iterdir() if re.fullmatch(r'PTNT_\d{4}', path.name)}
+        linked = {path.parent.name for path in source_studies.glob('PTNT_*/vascular-review.anatomy.json')}
+        subjects = args.subject or sorted(staged|linked|set(packaged))
+        for subject in subjects:
+            if not re.fullmatch(r'PTNT_\d{4}', subject):
+                parser.error(f'Invalid EDEN subject {subject!r}')
+            record = status.setdefault(subject, {})
             try:
-                record['graph'] = install_graph(collection, candidate, root/'cases'/subject/'source-branches.json')
-                record.pop('graph_error', None)
-            except (OSError, ValueError) as error:
-                record['graph_error'] = str(error)
-                if args.graphs_only:
-                    raise
-            previous = record.get('capture', {})
-            evidence = [previous.get('report'), *previous.get('images', [])]
-            complete = previous.get('snapshot_id') == collection.identity() and all(p and Path(p).is_file() for p in evidence)
-            if not args.graphs_only and not complete:
-                selected = collection.layer(collection.document['display']['initial_layers'][0])
-                record['capture'] = capture_case(electron, desktop, manifest, collection, selected, output, subject)
-            record['state'] = 'captured' if record.get('capture') else 'graph prepared' if record['graph'] else 'graph unavailable'
-            record.pop('error', None)
-        except (OSError, ValueError, subprocess.TimeoutExpired) as error:
-            record.update(state='failed', error=str(error))
+                packaging = packaged.get(subject, {})
+                published = packaging.get('manifest')
+                manifest = safe_path(data_root, published['path']) if published else studies/subject/'patient-anatomy.json'
+                if not manifest.is_file() and not published:
+                    manifest = source_studies/subject/'vascular-review.anatomy.json'
+                if not manifest.is_file():
+                    publication = packaging.get('status')
+                    state = publication if publication in {'missing_input','failed','review_required'} else 'awaiting native study'
+                    record.update(state=state, packaging_status=publication, reason=packaging.get('reason'))
+                    continue
+                direct_study = manifest.name == 'patient-anatomy.json' and manifest.parent.parent == studies
+                standalone = direct_study and (
+                    manifest.parent.name == subject
+                    or re.fullmatch(rf'{subject}-reviewed-[a-f0-9]{{12}}', manifest.parent.name)
+                )
+                linked_study = (
+                    manifest.parent == source_studies/subject
+                    and re.fullmatch(r'vascular-review(?:\.[a-f0-9]{12})?\.anatomy\.json', manifest.name)
+                )
+                if not (standalone or linked_study):
+                    raise ValueError('Packaging receipt names an unexpected study path')
+                attempt = (manifest, published['sha256'] if published else manifest.stat().st_mtime_ns)
+                if attempt in attempted:
+                    continue
+                attempted.add(attempt)
+                if published and sha256_file(manifest) != published['sha256']:
+                    raise ValueError('Published vascular study manifest checksum differs')
+                collection = PatientImagingCollection(manifest.parent, json.loads(manifest.read_text()))
+                candidate = collection.layer(CANDIDATE)
+                record['partition_status'] = collection.document['vascular_review']['status']
+                try:
+                    record['graph'] = install_graph(collection, candidate, root/'cases'/subject/'source-branches.json')
+                    record.pop('graph_error', None)
+                except (OSError, ValueError) as error:
+                    record['graph_error'] = str(error)
+                    if args.graphs_only:
+                        raise
+                previous = record.get('capture', {})
+                evidence = [previous.get('report'), *previous.get('images', [])]
+                complete = previous.get('snapshot_id') == collection.identity() and all(p and Path(p).is_file() for p in evidence)
+                if not args.graphs_only and not complete:
+                    selected = collection.layer(collection.document['display']['initial_layers'][0])
+                    record['capture'] = capture_case(electron, desktop, manifest, collection, selected, output, subject)
+                record['state'] = 'captured' if record.get('capture') else 'graph prepared' if record['graph'] else 'graph unavailable'
+                record.pop('error', None)
+            except (OSError, ValueError, KeyError, StopIteration, subprocess.TimeoutExpired) as error:
+                record.update(state='failed', error=str(error))
+            atomic_json(status_path, status)
+            print(f"{subject} {record['state']}", flush=True)
         atomic_json(status_path, status)
-        print(f"{subject} {record['state']}", flush=True)
-    atomic_json(status_path, status)
+        waiting = not subjects or any(status[subject]['state']=='awaiting native study' for subject in subjects)
+        remaining = deadline-time.monotonic()
+        if not waiting or remaining<=0:
+            break
+        time.sleep(min(30, remaining))
     return int(any(status[subject]['state']=='failed' for subject in subjects))
 
 

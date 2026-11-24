@@ -658,6 +658,8 @@ nearby endpoints do not establish that two vessels should connect.
 The private EDEN2020 companions use the separate hidden capture command below.
 It records the native superior view and a linked source section in one load.
 The command resumes from its per-subject receipt and skips captured snapshots.
+Source-linked study files open for read-only inspection. Use `--follow-minutes`
+to pick up pending companions as they are published.
 
 ```sh
 .venv/bin/python scripts/capture_eden2020_vascular_cohort.py --subject PTNT_4509

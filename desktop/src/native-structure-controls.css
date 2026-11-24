@@ -26,4 +26,4 @@
 .native-structure-details p{margin:6px 0}
 .native-structure-source{overflow-wrap:anywhere;font-family:monospace;font-size:9px}
 .native-surface-choice{display:flex;align-items:center;justify-content:space-between;gap:8px;color:#aab5ae;font-size:11px;margin:6px 0}
-.native-surface-choice select{max-width:65%;min-height:24px}
+.native-surface-choice select{max-width:65%;min-width:128px;min-height:24px}

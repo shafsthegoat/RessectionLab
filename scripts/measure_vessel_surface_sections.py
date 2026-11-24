@@ -78,17 +78,17 @@ def stations(branches, limit):
     return [candidates[i] for i in indices]
 
 
-def audit(collection, layer, samples):
-    result = mesh(collection, layer, display_source=vascular_cleanup_source(collection, layer))
+def audit(collection, layer, samples, *, conditioned=True):
+    result = mesh(collection, layer, display_source=vascular_cleanup_source(collection, layer), conditioned=conditioned)
     frame = np.asarray(layer["affine"])
     raw = locate_surface(world(frame, result["source"]), result["indices"])
-    smooth = locate_surface(world(frame, result["positions"]), result["indices"])
+    smooth = locate_surface(world(frame, result["positions"]), result["indices"]) if conditioned else None
     rows = []
     try:
         for radius, branch, station, center, tangent in samples:
             span = max(1.5, 3 * radius)
             before = section_area(raw, center, tangent, span)
-            after = section_area(smooth, center, tangent, span)
+            after = section_area(smooth, center, tangent, span) if smooth is not None else before
             rows.append({
                 "branch": branch,
                 "station": station,
@@ -100,7 +100,8 @@ def audit(collection, layer, samples):
             })
     finally:
         raw[1].Complete()
-        smooth[1].Complete()
+        if smooth is not None:
+            smooth[1].Complete()
     changes = [row["fraction_change"] for row in rows if row["fraction_change"] is not None]
     thin = [row["fraction_change"] for row in rows
             if row["annotation_radius_mm"] <= 0.6 and row["fraction_change"] is not None]
@@ -124,6 +125,7 @@ def main():
     parser.add_argument("branches", type=Path, help="Source-owned native graph JSON")
     parser.add_argument("--layer", action="append", required=True)
     parser.add_argument("--sections", type=int, default=128)
+    parser.add_argument("--source-only", action="store_true", help="Compare native sections without running fairing")
     parser.add_argument("--output", required=True, type=Path)
     args = parser.parse_args()
     if not 1 <= args.sections <= 512:
@@ -141,7 +143,7 @@ def main():
         layer = collection.layer(name)
         if layer["source_series"] != source["id"] or layer["affine"] != source["affine"]:
             raise ValueError("Compared layers must share the native source lattice")
-        results.append(audit(collection, layer, samples))
+        results.append(audit(collection, layer, samples, conditioned=not args.source_only))
     pairs = []
     for comparison in results[1:]:
         original = results[0]
@@ -164,6 +166,7 @@ def main():
         "meaning": "Approximate local display section area. Sections with an exterior center or missing rays are unmeasured.",
         "source_scan_sha256": graph["source_scan_sha256"],
         "requested_sections": args.sections,
+        "display_surface": "native" if args.source_only else "conditioned",
         "results": results,
         "matched_layer_comparisons": pairs,
     }, indent=2, allow_nan=False) + "\n")

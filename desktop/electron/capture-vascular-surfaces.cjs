@@ -139,6 +139,9 @@ app.on('browser-window-created',(_event,window)=>{
         await ready();
         assert.equal(openCount,index+1);
         if(linked)assert(await js(`document.querySelector('.save-button')?.disabled`),'Linked review must be read-only');
+        if(recipe.settings?.operativeView==='surgeon'){
+          await until(`document.querySelector('.rl-viewer-anatomy-image')?.dataset.operativeView==='surgeon'`,'surgeon presentation');
+        }
         if(recipe.preset){
           await click('Layout');
           await js(inputScript('Camera preset',recipe.preset));
