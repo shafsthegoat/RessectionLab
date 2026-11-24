@@ -30,6 +30,8 @@ selected approach.
 
 In **Anatomy** or **Plan**, choose **Cranial view → Cortex and target · planning** to see the selected tumor and approach against the cortex and head outline. **Internal boundaries · inspection** brings a selected internal structure and the head silhouette forward. The visible structures also have contours on the native slices. The controls for individual layers remain available. The source details distinguish supplied annotations from model estimates.
 
+For complementary arterial labels on the same CTA, assign their arterial meanings in **Scans**. Then open **Anatomy → Combine supplied arteries**, mark each input **Focused** or **Wider**, and choose **Build combined arteries**. The display keeps the exact positive cells from both groups. **Focused branches** returns to the selected originals at the current camera and cut. Accepting a correction to an input retires the combination, and the focused layers become available again. Save the study to retain the current view.
+
 **Operative microscope** approaches the saved entry on the registered exterior and keeps the opening in view during deeper work. Choose **External anatomy** to locate it on the surrounding surface or **Inspection cutaway** to see a longitudinal section at the same timeline position. The linked source slice marks the original target in cyan. The residual target in the 3D field has a plum surface and a pale rim. **Field voxel faces** shows the sampled display-grid cells.
 
 To try the geometric workflow on one study, use the reviewed **BITE-09**

@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {studyLayerDisplayKind,nextScanState,scanLabel,studyTimepoint,migrateSkullView,anatomyPresentation,defaultAnatomyPresentation,sourceEvidenceLabel} from '../src/native-study-state.ts';
 import {checkedViewerSettings} from '../src/workspace-view-settings.ts';
-import {cranialComposition,ctaCoverageOptions,initialNativeLayers,presentationLayers} from '../src/native-study-state.ts';
+import {cranialComposition,ctaCoverageOptions,initialNativeLayers,presentationLayers,resolveCtaCoverageVisibility} from '../src/native-study-state.ts';
 import {withLayerColor} from '../src/viewer/workspaceSettings.ts';
 
 test('an independent or estimated scan cannot drive the reference scan presentation',()=>{
@@ -56,13 +56,31 @@ test('CTA coverage controls require the original CTA and every exact annotation 
     input_layers:rows.map(row=>({id:row.id,data_sha256:row.data.sha256,revision:row.revision,label_value:row.label_value}))}};
   const study={series:[{id:'cta',modality:'CTA',original:{sha256:'scan'}}],layers:[...rows,combined],
     display:{cta_arterial_coverage:{series_id:'cta',layer_id:'combined',focus_layers:['focused']}}};
-  assert.deepEqual(ctaCoverageOptions(study,'cta'),{combinedId:'combined',focusIds:['focused'],memberIds:['combined','focused','wider']});
+  assert.deepEqual(ctaCoverageOptions(study,'cta'),{combinedId:'combined',focusIds:['focused'],widerIds:['wider'],memberIds:['combined','focused','wider']});
   assert.equal(ctaCoverageOptions(study,'mra'),undefined);
   rows[0].revision++;
   assert.equal(ctaCoverageOptions(study,'cta'),undefined);
   rows[0].revision--;
   study.series[0].original.sha256='different';
   assert.equal(ctaCoverageOptions(study,'cta'),undefined);
+});
+
+test('ordinary CTA defaults replace all imported coverage members and retire edited derivatives',()=>{
+  const artery=id=>({id,kind:'artery',source_series:'cta',revision:0,label_value:1,data:{sha256:id}});
+  const focused=artery('focus'),wider=artery('field'),peripheral=artery('distal');
+  const parts=[focused,wider,peripheral];
+  const combined={...artery('combined'),provenance:{kind:'derived_annotation_union',source_scan_sha256:'scan',
+    input_layers:parts.map(row=>({id:row.id,data_sha256:row.data.sha256,revision:0,label_value:1}))}};
+  const option={series_id:'cta',layer_id:'combined',focus_layers:['focus'],wider_layers:['field','distal']};
+  const study={reference_series:'cta',transforms:{},series:[{id:'cta',modality:'CTA',original:{sha256:'scan'}}],
+    layers:[...parts,combined,{id:'skull',kind:'skull',source_series:'cta'}],display:{cta_arterial_coverage:[option]}};
+  assert.deepEqual(initialNativeLayers(study,'cta',false).visible,{focus:false,field:false,distal:false,combined:true,skull:true});
+  focused.revision=1;
+  assert.deepEqual(resolveCtaCoverageVisibility(study,{combined:true,focus:false,field:false,distal:false,skull:true}),
+    {focus:true,field:false,distal:false,skull:true});
+  option.retired=true;
+  study.layers=study.layers.filter(layer=>layer!==combined);
+  assert.deepEqual(initialNativeLayers(study,'cta',false).visible,{focus:true,field:false,distal:false,skull:true});
 });
 
 test('scan and anatomy presets preserve the study colors of supplied arterial classes',()=>{

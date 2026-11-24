@@ -139,3 +139,74 @@ def test_cta_coverage_retains_both_sources_and_refuses_unsupplied_positives(tmp_
     assert counts['focus_only_voxels'] == 3 and counts['wider_only_voxels'] == 8
     assert study.document['display']['initial_layers'] == [union['id']]
     assert not vascular_evidence_supported(study, union)
+
+
+def test_workbench_coverage_commit_repeat_correction_and_cold_reopen(tmp_path):
+    from resectionlab.desktop_bridge import BridgeSession, _Request
+
+    frame = np.diag([.5, .5, .75, 1.])
+    shape = (16, 14, 12)
+
+    def image(name, data):
+        path = tmp_path / f'{name}.nii.gz'
+        nifti = nib.Nifti1Image(data, frame)
+        nifti.header.set_xyzt_units('mm')
+        nib.save(nifti, path)
+        return path
+
+    study = PatientImagingCollection.create(tmp_path / 'study', 'fixture')
+    study.add_series(image('scan', np.zeros(shape, dtype=np.int16)), series_id='cta', modality='CTA')
+    masks = {}
+    for key, start, stop in [('focused', 3, 8), ('outer', 6, 11), ('distal', 10, 14)]:
+        mask = np.zeros(shape, dtype=np.uint8)
+        mask[start:stop, 4, 4] = 1
+        study.add_layer(mask, frame, layer_id=key, source_series='cta', kind='artery', role='context', color='#af352b',
+                        provenance={'kind': 'observed_source_annotation', 'source': study.original(image(key, mask))})
+        masks[key] = mask
+    original_identity = study.save('ordinary intake')
+    manifest = study.root / 'patient-anatomy.json'
+    session = BridgeSession(tmp_path / 'worker')
+
+    def call(operation, args):
+        return session.execute(operation, args, _Request(operation), lambda *_: None)
+
+    try:
+        bound = call('anatomyOpen', {'path': str(manifest)})
+        identity = {'collectionId': bound['collectionId'], 'snapshotId': original_identity}
+        options = {'seriesId': 'cta', 'focusLayerIds': ['focused'], 'widerLayerIds': ['outer', 'distal']}
+        result = call('anatomyCtaArterialCoverage', {**identity, **options})
+        assert result['counts']['wider_only_voxels'] == 6
+        assert result['document']['snapshot_id'] != original_identity
+        assert 'initial_layers' not in result['document']['display']
+        combined = result['layerId']
+        cold = PatientImagingCollection(study.root)
+        np.testing.assert_array_equal(cold.mask(cold.layer(combined)), np.logical_or.reduce(list(masks.values())))
+        with pytest.raises(ValueError, match='reload'):
+            call('anatomyCtaArterialCoverage', {**identity, **options})
+        current = {**identity, 'snapshotId': cold.identity()}
+        repeated = call('anatomyCtaArterialCoverage', {**current, **options})
+        assert repeated['document'] == result['document']
+        with pytest.raises(ValueError, match='input annotation'):
+            call('anatomyEdit', {**current, 'layerId': combined, 'action': 'undo'})
+        with pytest.raises(ValueError, match='input annotation'):
+            call('anatomyGraph', {**current, 'layerId': combined})
+        point = [6, 2, 3]
+        edit = {**current, 'layerId': 'distal', 'points': [point], 'radiusMm': .3}
+        call('anatomyEdit', {**edit, 'action': 'erase'})
+        with pytest.raises(ValueError, match='active correction'):
+            call('anatomyCtaArterialCoverage', {**current, **options})
+        call('anatomyEdit', {**edit, 'action': 'reject'})
+        assert PatientImagingCollection(study.root).identity() == current['snapshotId']
+        call('anatomyEdit', {**edit, 'action': 'erase'})
+        call('anatomyEdit', {**edit, 'action': 'commit', 'author': 'fixture'})
+        reopened = call('anatomyOpen', {'path': str(manifest)})
+        assert all(row['id'] != combined for row in reopened['document']['layers'])
+        option, = reopened['document']['display']['cta_arterial_coverage']
+        assert option['retired'] and option['focus_layers'] == ['focused']
+        historical = json.loads((study.root / 'revisions' / f'{cold.identity()}.json').read_text())
+        assert historical == cold.document
+        latest = PatientImagingCollection(study.root)
+        assert not latest.mask(latest.layer('distal'))[12, 4, 4]
+        np.testing.assert_array_equal(cold.mask(cold.layer('distal')), masks['distal'])
+    finally:
+        session.close()

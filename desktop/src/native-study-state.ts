@@ -54,19 +54,52 @@ export function initialNativeLayers(study:Binding['document'],seriesId:string,in
   const declared=study.display?.initial_layers;
   // The reference frame's list can omit every native layer of a separately acquired scan.
   const initial=independent&&declared?.length&&!owned.some(layer=>declared.includes(layer.id))?undefined:declared;
-  const available=(independent?owned:presentationLayers(study,seriesId)).filter(layer=>!initial||initial.includes(layer.id));
+  const admitted=independent?owned:presentationLayers(study,seriesId);
+  const available=admitted.filter(layer=>!initial||initial.includes(layer.id));
   const cortex=corticalLayers(available);
   const visible=Object.fromEntries(study.layers.map(layer=>{
     const selected=initial?initial.includes(layer.id):cortex.includes(layer)||!['brain-region','review-region','head-envelope'].includes(layer.kind);
     return [layer.id,selected&&(!independent||layer.source_series===seriesId)];
   }));
-  return {available,cortex,visible};
+  const option=ctaCoverageDeclarations(study).find(option=>option.series_id===seriesId);
+  const combined=ctaCoverageOptions(study,seriesId);
+  if(option&&!initial){
+    if(combined)applyCtaCoverageVisibility(visible,combined,true);
+    else if(option.retired){
+      for(const id of option.wider_layers??[])visible[id]=false;
+      for(const id of option.focus_layers)if(owned.some(layer=>layer.id===id))visible[id]=true;
+    }
+  }
+  const resolved=resolveCtaCoverageVisibility(study,visible);
+  return {available:option?admitted.filter(layer=>resolved[layer.id]):available,cortex,visible:resolved};
+}
+
+function ctaCoverageDeclarations(study:Binding['document']){
+  const stored=study.display?.cta_arterial_coverage;
+  return Array.isArray(stored)?stored.filter(option=>option&&Array.isArray(option.focus_layers)):
+    stored&&Array.isArray(stored.focus_layers)?[stored]:[];
+}
+
+export function isCtaCoverageLayer(layer:Layer|undefined){
+  return (layer?.provenance as {kind?:string}|null)?.kind==='derived_annotation_union';
+}
+
+export function ctaCoverageInputs(study:Binding['document'],seriesId:string){
+  const series=study.series.find(item=>item.id===seriesId);
+  if(!series?.data?.shape||!series.affine||!isCtAngiography(series.modality))return [];
+  return study.layers.filter(layer=>{
+    const evidence=layer.provenance as {kind?:string;source?:{name?:string;path?:string}}|null;
+    return layer.source_series===seriesId&&layer.kind==='artery'&&layer.availability!=='empty_output'&&!layer.edits?.length&&
+      ['supplied_annotation','observed_source_annotation'].includes(evidence?.kind??'')&&typeof evidence?.source?.path==='string'&&
+      JSON.stringify(layer.data?.shape)===JSON.stringify(series.data?.shape)&&JSON.stringify(layer.affine)===JSON.stringify(series.affine);
+  });
 }
 
 export function ctaCoverageOptions(study:Binding['document'],seriesId:string){
-  const option=study.display?.cta_arterial_coverage;
+  const option=ctaCoverageDeclarations(study).find(row=>row.series_id===seriesId&&!row.retired);
+  if(!option)return;
   const series=study.series.find(row=>row.id===seriesId);
-  if(!series?.original?.sha256||!isCtAngiography(series.modality)||option?.series_id!==seriesId||
+  if(!series?.original?.sha256||!isCtAngiography(series.modality)||
     !Array.isArray(option.focus_layers)||!option.focus_layers.length||new Set(option.focus_layers).size!==option.focus_layers.length)return;
   const layers=new Map(study.layers.filter(row=>row.source_series===seriesId&&row.kind==='artery').map(layer=>[layer.id,layer]));
   const combined=layers.get(option.layer_id);
@@ -77,11 +110,31 @@ export function ctaCoverageOptions(study:Binding['document'],seriesId:string){
   const inputs=record.input_layers;
   const unchanged=inputs.every(input=>{
     const layer=input&&layers.get(input.id);
-    return layer?.data?.sha256===input.data_sha256&&layer?.revision===input.revision&&layer?.label_value===input.label_value;
+    return !!layer&&!layer.edits?.length&&layer.data?.sha256===input.data_sha256&&layer.revision===input.revision&&layer.label_value===input.label_value;
   });
-  if(!unchanged||inputs.length!==option.focus_layers.length+1||new Set(inputs.map(input=>input.id)).size!==inputs.length||
-    !option.focus_layers.every(id=>inputs.some(input=>input.id===id))||inputs.some(input=>input.id===option.layer_id))return;
-  return {combinedId:option.layer_id,focusIds:option.focus_layers,memberIds:[option.layer_id,...inputs.map(input=>input.id)]};
+  if(!unchanged)return;
+  const ids=inputs.map(input=>input.id);
+  const wider=ids.filter(id=>!option.focus_layers.includes(id));
+  if(!wider.length||new Set(ids).size!==ids.length||ids.includes(option.layer_id)||!option.focus_layers.every(id=>ids.includes(id))||
+    (option.wider_layers&&JSON.stringify(wider)!==JSON.stringify(option.wider_layers)))return;
+  return {combinedId:option.layer_id,focusIds:option.focus_layers,widerIds:wider,memberIds:[option.layer_id,...ids]};
+}
+
+export function applyCtaCoverageVisibility(visible:Record<string,boolean>, coverage:NonNullable<ReturnType<typeof ctaCoverageOptions>>,combined:boolean){
+  for(const id of coverage.memberIds)visible[id]=combined?id===coverage.combinedId:coverage.focusIds.includes(id);
+  return visible;
+}
+
+export function resolveCtaCoverageVisibility(study:Binding['document'],visible:Record<string,boolean>){
+  const known=new Set([...study.layers,...(study.tractography??[])].map(layer=>layer.id));
+  const proposed={...visible};
+  for(const option of ctaCoverageDeclarations(study)){
+    if(!proposed[option.layer_id]||ctaCoverageOptions(study,option.series_id))continue;
+    delete proposed[option.layer_id];
+    for(const id of option.wider_layers??[])if(known.has(id))proposed[id]=false;
+    for(const id of option.focus_layers)if(known.has(id))proposed[id]=true;
+  }
+  return Object.fromEntries(Object.entries(proposed).filter(([id])=>known.has(id)));
 }
 
 function peripheralReviewVessels(layer:Layer):boolean {

@@ -188,6 +188,7 @@ function bindOperations() {
     anatomySection: ['seriesId','center','normal','spacingMm','movingId','checkerboard','layers','original','registrationReview'],
     anatomyLocalAlignment: ['seriesId','center'],
     anatomyDiffusionBaseline: ['assetId'],
+    anatomyCtaArterialCoverage: ['seriesId','focusLayerIds','widerLayerIds'],
     anatomyView: ['seriesId','layers','original','highlightLayer','highlightComponents','reviewId','previewAlignment','vesselScope','patientModel','vesselSurfaceMode'],
     anatomyEdit: ['action','layerId','author','points','radiusMm','threshold','reviewId','componentIds'],
     anatomySample: ['point','layerId','independentSeries'],

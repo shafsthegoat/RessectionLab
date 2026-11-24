@@ -1,5 +1,5 @@
 import {useNativeApproaches} from './use-native-approaches';
-import {nextScanState,migrateSkullView,vesselScopeForView,corticalLayers,cranialComposition,hasNativeAngiographicVessels,initialNativeLayers,presentationLayers,anatomyPresentation,defaultAnatomyPresentation,ctaCoverageOptions} from './native-study-state';
+import {nextScanState,migrateSkullView,vesselScopeForView,corticalLayers,cranialComposition,hasNativeAngiographicVessels,initialNativeLayers,presentationLayers,anatomyPresentation,defaultAnatomyPresentation,ctaCoverageOptions,applyCtaCoverageVisibility,resolveCtaCoverageVisibility,isCtaCoverageLayer} from './native-study-state';
 import type {AnatomyPresentation} from './native-study-state';
 import {drainLayerRequests} from './native-layer-queue';
 import {mergeResidentLayers,prepareNativeLabels} from './native-layer-residency';
@@ -162,6 +162,7 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
   async function loadView(b:Binding,s:string,view:NativeScanState,raw=false,extra:Args={},legacyCutaway=false,freshOpening=false){
     if(!api)return;setOriginal(raw);const seq=++generation.current;
     resetLayers();installVolume(null);setUnavailable([]);setMessage('Preparing anatomy…');
+    view={...view,visible:resolveCtaCoverageVisibility(b.document,view.visible)};
     const ids=Object.keys(view.visible).filter(id=>view.visible[id]);
     const coverage=freshOpening?ctaCoverageOptions(b.document,s):undefined;
     if(coverage&&view.visible[coverage.combinedId]){
@@ -191,7 +192,9 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
           }else next.settings=opening;
         }
       }
-      setStates(all=>({...all,[s]:next}));installVolume(hydrated);setRegistration(result.registrationStatus);setScanFrameReviewed(result.patientFrameReady??result.registrationStatus==='patient frame');setUnavailable(result.unavailableLayers);unavailableRef.current=result.unavailableLayers;
+      setStates(all=>({...Object.fromEntries(Object.entries(all).map(([id,state])=>[id,{...state,visible:resolveCtaCoverageVisibility(b.document,state.visible)}])),[s]:next}));
+      setSelectedStructure(current=>current&&(b.document.layers.some(layer=>layer.id===current)||b.document.tractography?.some(layer=>layer.id===current))?current:null);
+      installVolume(hydrated);setRegistration(result.registrationStatus);setScanFrameReviewed(result.patientFrameReady??result.registrationStatus==='patient frame');setUnavailable(result.unavailableLayers);unavailableRef.current=result.unavailableLayers;
       setMessage(result.unavailableLayers.length?'Some structures need scan alignment.':result.registrationStatus==='alignment preview'?'Alignment preview · review in Scans':'Anatomy ready');
     }catch(e){if(seq===generation.current){installVolume(null);throw e;}}
   }
@@ -311,10 +314,27 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
   }
   function changeCtaCoverage(combined:boolean){
     if(!ctaCoverage||busy||draft)return;
-    const visible={...scanState.visible};
-    for(const id of ctaCoverage.memberIds)visible[id]=combined?id===ctaCoverage.combinedId:ctaCoverage.focusIds.includes(id);
+    const visible=applyCtaCoverageVisibility({...scanState.visible},ctaCoverage,combined);
     if(selectedStructure&&!visible[selectedStructure])setSelectedStructure(null);
     setVisible(visible);
+  }
+  async function combineCtaCoverage(focusLayerIds:string[],widerLayerIds:string[]){
+    if(!binding||binding.readOnlyStudy||!api||draft||busy)return;
+    await run(async()=>{
+      const result=await api.anatomyCtaArterialCoverage({...args(binding),seriesId:series,focusLayerIds,widerLayerIds});
+      const current=live.current;
+      if(current.binding?.collectionId!==binding.collectionId||current.binding.document.snapshot_id!==binding.document.snapshot_id||current.series!==series)return;
+      const next={...binding,document:result.document};
+      const coverage=ctaCoverageOptions(next.document,series);
+      if(!coverage||coverage.combinedId!==result.layerId)throw Error('Combined arterial input identities could not be verified');
+      const view=current.states[series]??scanState;
+      const visible=applyCtaCoverageVisibility({...view.visible},coverage,true);
+      const camera=readCamera.current?.()??view.settings.camera;
+      if(selectedStructure&&!visible[selectedStructure])setSelectedStructure(null);
+      setBinding(next);
+      await loadView(next,series,{...view,visible,settings:{...view.settings,camera}},original);
+      setMessage(`Combined arteries · ${result.counts.wider_only_voxels.toLocaleString()} additional supplied voxels`);
+    });
   }
   function retryLayer(id:string){
     const next={...failedLayers.current};delete next[id];failedLayers.current=next;setLayerErrors(next);queueLayers();
@@ -329,9 +349,15 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
     setBinding(b);setDraft(result.draft);setOriginal(false);
     if(['commit','reject'].includes(action)){setReview(null);setComponents([]);}
     await loadView(b,series,retireClipping(retired,series,scanState),false,action==='remove-components'?{highlightLayer:editLayer,highlightComponents:components,reviewId:review?.reviewId}:{});
-    setMessage(retired?.length?retiredClippingMessage:action==='commit'?'Correction accepted as a new revision.':action==='reject'?'Correction rejected. Original preserved.':'Correction preview');
+    const retiredCoverage=action==='commit'&&binding.document.layers.some(layer=>isCtaCoverageLayer(layer)&&!b.document.layers.some(current=>current.id===layer.id));
+    setMessage(retired?.length?retiredClippingMessage:retiredCoverage?'Correction accepted. Combined arteries retired.':
+      action==='commit'?'Correction accepted as a new revision.':action==='reject'?'Correction rejected. Original preserved.':'Correction preview');
   });}
-  const canEditLayer=(id:string)=>!!binding&&!binding.readOnlyStudy&&[series,binding.document.layers.find(l=>l.id===id)?.source_series].every(s=>!!s&&['reference','reviewed','source-provided'].includes(binding.document.transforms[s]?.status));
+  const canEditLayer=(id:string)=>{
+    const layer=binding?.document.layers.find(row=>row.id===id);
+    return !!binding&&!binding.readOnlyStudy&&!!layer&&!isCtaCoverageLayer(layer)&&
+      [series,layer.source_series].every(s=>!!s&&['reference','reviewed','source-provided'].includes(binding.document.transforms[s]?.status));
+  };
   function onStroke(point:Point3|null,phase:'start'|'move'|'end'){
     if(busy||!['paint','erase'].includes(tool)||!editLayer||!canEditLayer(editLayer))return;
     if(phase==='start')stroke.current=[];
@@ -440,7 +466,7 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
   }
   const displayRoutes=state.cranialView==='inspection'?[]:state.cranialView==='planning'
     ?planning.routes.filter(route=>route.selected):planning.routes;
-  return {displayRoutes,composeCranialView,hasCranialView,ctaCoverage,ctaCoverageMode,changeCtaCoverage,canRestoreCranialView:previousCranialView.current?.key===compositionKey,
+  return {displayRoutes,composeCranialView,hasCranialView,ctaCoverage,ctaCoverageMode,changeCtaCoverage,combineCtaCoverage,canRestoreCranialView:previousCranialView.current?.key===compositionKey,
     vesselTrace,setVesselTrace,vesselPick:vesselPick?.key===compositionKey&&vesselPick.layerId===selectedStructure?vesselPick:null,pickStructureWithPoint,
     readCamera,viewState:currentViewState(),patientFrameReady,planning,selectedStructure,setSelectedStructure,structureFocusRequest,structureFocusPoint,focusStructure:(id:string,point?:Point3)=>{setStructureFocusPoint(point??null);setSelectedStructure(id);setStructureFocusRequest(n=>n+1);},present,changeSkullMode,canEditLayer,vesselScope,changeVesselScope,savePackage,api,binding,volume,series,state,busy,progress,pendingLayers,layerErrors,retryLayer,message,registration,unavailable,draft,original,editLayer,setEditLayer,tool,setTool,radius,setRadius,threshold,setThreshold,author,setAuthor,review,components,args,run,install,create,clear,selectScan,setVisible,refresh,edit,onStroke,save,reviewFragments,highlight,compare,change,runPreparation,setMessage,setCursor:(cursor:Point3)=>updateState({cursor}),setSettings:(settings:ViewerWorkspaceSettings)=>updateSettings(skullDisplay(settings)),cancel};
 }

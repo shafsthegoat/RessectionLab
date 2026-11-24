@@ -10,7 +10,7 @@ export type Layer={
   probability?:unknown;provenance:unknown;coverage:string;data?:{shape:number[];sha256:string};label_value?:number;
   affine?:number[][];acquisition_grid_spacing_mm?:number[];output_spacing_mm?:number[];
   acquisition_resolution?:string|number[];transform_dependencies?:string[];
-  revision?:number;
+  revision?:number;edits?:unknown[];
   coverage_fields?:{inference_bounds_voxel_inclusive?:number[][];supported_axial_indices?:number[];outside?:string;zero_meaning?:string};
   availability?:string;uncertainty?:unknown;label_ontology?:unknown;ontology?:unknown;score_meaning?:string;
 };
@@ -20,11 +20,12 @@ export type Series={
   acquisition_resolution?:string|number[];coverage?:{status?:string;limitations?:Array<{kind:string;basis?:string}>};
   diffusion_baseline?:{source_asset_id:string;volume_index:number;b_value_s_per_mm2:number};
 };
+export type CtaCoverageDeclaration={series_id:string;layer_id:string;focus_layers:string[];wider_layers?:string[];retired?:boolean};
 export type Document={
   before_acquisition?:{snapshotId:string;revision:number;sources:Array<{id:string;label:string;modality:string;originalSha256:string}>;
     layers:Array<{id:string;label:string;sourceSeries:string;arraySha256:string;labelValue:number;review:string}>};
   display?:{initial_layers?:string[];cursor_ras_mm?:Point3;entry_ras_mm?:Point3;
-    cta_arterial_coverage?:{series_id:string;layer_id:string;focus_layers:string[]}};
+    cta_arterial_coverage?:CtaCoverageDeclaration|CtaCoverageDeclaration[]};
   vascular_review?:{schema?:string;posterior_compartment_review?:{disjoint_union_matches_selected?:boolean};
     field_edge_compartment_review?:{disjoint_union_matches_selected?:boolean};
     skull_exterior_compartment_review?:{disjoint_union_matches_selected?:boolean};
@@ -96,6 +97,7 @@ export interface NativeAnatomyApi {
   anatomyVesselGapReview(args:Args):Promise<VesselGapReview>;
   anatomyLocalAlignment(args:Args):Promise<LocalAlignmentEvidence>;
   anatomyDiffusionBaseline(args:Args):Promise<{document:Document;seriesId:string}>;
+  anatomyCtaArterialCoverage(args:Args):Promise<{document:Document;layerId:string;counts:{wider_only_voxels:number}}>;
   anatomyGraph(args:Args):Promise<NativeVesselGraph>;
   anatomyCreate(args:Args):Promise<Binding|null>;
   anatomyReconstruct(args:Args):Promise<{document:Document;result:unknown}>;

@@ -554,6 +554,9 @@ class PatientImagingCollection:
         }
 
     def save(self, event="save", *, author="local researcher", expected=None):
+        from .anatomy_display import retire_stale_cta_coverage
+
+        retire_stale_cta_coverage(self)
         # Validate proposed edits/imports before replacing the current manifest.
         PatientImagingCollection(
             self.root, {k: v for k, v in self.document.items() if k != "snapshot_id"}
@@ -669,6 +672,8 @@ class PatientImagingCollection:
         if current["snapshot_id"] != expected:
             raise ValueError("Patient changed; reload before committing")
         row = self.layer(layer_id)
+        if row.get('provenance', {}).get('kind') == 'derived_annotation_union':
+            raise ValueError('Select an input annotation to make a correction')
         if tuple(mask.shape) != tuple(row["data"]["shape"]):
             raise ValueError("Correction grid changed")
         row.setdefault("original_data", deepcopy(row["data"]))

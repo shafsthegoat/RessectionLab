@@ -16,6 +16,8 @@ from resectionlab.patient_anatomy import PatientImagingCollection
 
 
 def prepare(manifest, destination, series_id, focus, wider):
+    if isinstance(wider, str):
+        wider = [wider]
     manifest = manifest.resolve(strict=True)
     if manifest.name != 'patient-anatomy.json':
         raise ValueError('Select the native patient-anatomy.json')
@@ -44,8 +46,8 @@ def prepare(manifest, destination, series_id, focus, wider):
         combined, counts = add_cta_arterial_coverage(collection, series_id, focus, wider)
         collection.save('Combine supplied arterial positives on the native CTA grid')
         cold = PatientImagingCollection(stage)
-        expected = source.mask(source.layer(wider))
-        for name in focus:
+        expected = source.mask(source.layer(wider[0]))
+        for name in [*wider[1:], *focus]:
             expected |= source.mask(source.layer(name))
         if sha256_file(manifest) != source_sha or not np.array_equal(cold.mask(cold.layer(combined['id'])), expected):
             raise ValueError('Prepared study or immutable source no longer matches its inputs')
@@ -64,7 +66,7 @@ def main():
     parser.add_argument('destination', type=Path)
     parser.add_argument('--series', required=True)
     parser.add_argument('--focus', required=True, nargs='+')
-    parser.add_argument('--wider', required=True)
+    parser.add_argument('--wider', required=True, nargs='+')
     args = parser.parse_args()
     print(json.dumps(prepare(args.manifest, args.destination, args.series, args.focus, args.wider), indent=2))
 

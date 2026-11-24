@@ -750,7 +750,7 @@ SURFACE_VERIFY_VASCULAR_COMPARISON=1 \
 
 ### Combined supplied CTA arterial coverage
 
-When a CTA workspace includes a compact arterial view and a complementary wider supplied annotation on the same acquisition, prepare a separate workspace for both views. Pass the native layer IDs from the manifest. The focus list follows the authored opening, and each selected layer must match its supplied positive labels on the exact CTA grid. Either source alone can omit positives contained in the other. The combined display retains all native positive cells from both and leaves the input workspace intact.
+Use **Anatomy → Combine supplied arteries** after importing both groups on the same CTA. For command-line preparation of a separate workspace, pass one or more native layer IDs from the manifest for each group. Each selected layer must match its supplied positive labels on the exact CTA grid. Either group alone can omit positives contained in the other. The combined display retains all native positive cells from both, and the command leaves the input workspace intact.
 
 ```sh
 PYTHONPATH=src .venv/bin/python scripts/prepare_cta_arterial_coverage.py \

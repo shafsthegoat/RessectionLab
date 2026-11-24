@@ -19,7 +19,8 @@ from .anatomy_workspace import read_view, save_view, component_review
 from .anatomy_geometry import mesh, normals, appearance_kind, vascular_cleanup_source
 from .anatomy_qa import layer_quality
 from .anatomy_display import (
-    brain_vessel_display, display_affine, patient_display_context, source_display_grid,
+    add_cta_arterial_coverage, brain_vessel_display, cta_coverage_is_current, display_affine, is_cta_coverage,
+    patient_display_context, source_display_grid,
     source_lattice_annotation_preview,
 )
 
@@ -149,6 +150,19 @@ def dispatch(session, operation, args, request, progress):
     if operation == "anatomyInspectIntake":
         from .anatomy_intake import inspect_intake
         return inspect_intake(args["kind"], args["paths"], check=request.check)
+    if operation == "anatomyCtaArterialCoverage":
+        if key in session.anatomy_drafts:
+            raise ValueError("Accept or reject the active correction first")
+        candidate = PatientImagingCollection(c.root, c.document)
+        progress(.15, "Verifying supplied arteries on the acquired CTA grid")
+        layer, counts = add_cta_arterial_coverage(candidate, args.get("seriesId"), args.get("focusLayerIds"),
+                                                  args.get("widerLayerIds"), check=request.check)
+        request.check()
+        if candidate.identity() != current_id:
+            request.begin_commit()
+            candidate.save("combine supplied arterial coverage for display", expected=current_id)
+            session.anatomy_collections[key] = candidate
+        return {"document": candidate.document, "layerId": layer["id"], "counts": counts}
     if operation == "anatomyDiffusionBaseline":
         if key in session.anatomy_drafts:
             raise ValueError("Accept or reject the active correction first")
@@ -201,6 +215,8 @@ def dispatch(session, operation, args, request, progress):
             save_package(c, archive, check=request.check, progress=progress)
         return {"saved": True, "portable": bool(archive)}
     if operation == "anatomyComponents":
+        if is_cta_coverage(c.layer(args["layerId"])):
+            raise ValueError("Select an input annotation to inspect vessel components")
         draft = session.anatomy_drafts.get(key)
         if draft and draft.layer_id != args["layerId"]:
             raise ValueError("Finish the current layer correction first")
@@ -325,6 +341,9 @@ def dispatch(session, operation, args, request, progress):
                     label_sets[set_id] = cache["label_sets"][set_id]
                 continue
             row = deepcopy(c.layer(name))
+            if is_cta_coverage(row) and not cta_coverage_is_current(c, row):
+                unavailable.append(name)
+                continue
             draft = session.anatomy_drafts.get(key)
             if draft and draft.layer_id == name and not args.get("original"):
                 row["data"] = c.put_array(draft.mask.astype(np.uint8))
@@ -637,6 +656,8 @@ def dispatch(session, operation, args, request, progress):
     if operation == "anatomyEdit":
         action = args.get("action")
         name = args.get("layerId")
+        if action != 'reject' and name and is_cta_coverage(c.layer(name)):
+            raise ValueError("Select an input annotation to make a correction")
         session.anatomy_removal.pop(key, None)
         if action == "reject":
             session.anatomy_drafts.pop(key, None)
@@ -694,9 +715,10 @@ def dispatch(session, operation, args, request, progress):
     if operation == "anatomyGraph":
         from .anatomy_geometry import inspect_vessel_geometry
 
-        return inspect_vessel_geometry(
-            c, args.get("layerId", "vessels"), args.get("point"), args.get("displaySeriesId")
-        )
+        name = args.get("layerId", "vessels")
+        if is_cta_coverage(c.layer(name)):
+            raise ValueError("Select an input annotation to inspect vessel branches")
+        return inspect_vessel_geometry(c, name, args.get("point"), args.get("displaySeriesId"))
     if operation == "anatomyPlan":
         if key in session.anatomy_drafts:
             raise ValueError("Commit or reject the correction before planning")

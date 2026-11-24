@@ -501,7 +501,8 @@ app.on('browser-window-created',(_event,window)=>{
           record.publisherSmoothing={source:await inspect(false),restored:await inspect(true)};
         }
         if(recipe.inspectCtaCoverage){
-          const coverage=document.display.cta_arterial_coverage;
+          const declared=document.display.cta_arterial_coverage;
+          const coverage=Array.isArray(declared)?declared.find(row=>row.series_id===view.seriesId&&!row.retired):declared;
           const initial=record.view.visible;
           assert(initial[coverage.layer_id]&&coverage.focus_layers.every(id=>!initial[id]));
           const inspect=async combined=>{

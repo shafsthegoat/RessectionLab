@@ -14,7 +14,7 @@ def vascular_evidence_supported(collection, layer):
         return True
     provenance = layer.get("provenance", {})
     if (layer.get("availability") == "empty_output" or layer.get("evidence_status") == "empty-output"
-            or provenance.get("evidence_use") == "context_only"):
+            or provenance.get("evidence_use") == "context_only" or provenance.get("kind") == "derived_annotation_union"):
         return False
     inferred = provenance.get("kind") in {"model_estimate", "image_derived_estimate", "geometric_estimate"}
     inferred = inferred or bool(provenance.get("model") or provenance.get("inference"))

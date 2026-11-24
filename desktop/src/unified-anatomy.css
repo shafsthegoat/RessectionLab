@@ -32,6 +32,8 @@
 .anatomy-display-tools summary>span{float:right;color:#8cb9ac;font-size:10px}
 .anatomy-display-tools[open]{display:grid;gap:9px}
 .anatomy-display-tools>span{line-height:1.5}
+.cta-coverage-inputs{max-height:260px;overflow:auto;padding-right:4px}
+.cta-coverage-panel .cta-coverage-inputs label{display:grid;grid-template-columns:minmax(0,1fr) 88px;align-items:center;gap:8px;margin:4px 0;overflow-wrap:anywhere}
 .vascular-shading{margin:14px 0 4px;color:#a9bbbc}
 .vascular-shading span{font-size:10px;line-height:1.5;color:#879c9e}
 .anatomy-search{margin:6px 0 6px}
