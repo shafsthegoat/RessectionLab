@@ -11,6 +11,12 @@ With no study open, the app shows **Cases**. Search by case, source or anatomy, 
 
 In a native study, **Scans** shows the active acquisition and its source thumbnail. **Anatomy** lists structures by group. Select a row to inspect the layer or change its appearance, and use its eye control to toggle visibility. **Scan** shows the acquired scalar signal with subdued overlays. **Structures** and **Vessels** emphasize the corresponding anatomy. Reopening a saved study restores its recorded view.
 
+For source scans with at least 32 million voxels and selected anatomy layers,
+**Anatomy** opens the linked scan slices while it prepares the 3D surfaces.
+You can move the cursor and adjust contrast during preparation. **Cancel**
+keeps the scan open, and **Load anatomy** resumes preparation from the same
+scan. **Plan** and **Rehearse** become available once the surfaces are ready.
+
 Use the right-hand slice controls to move the linked cursor. In the 3D pane, **Clip → Section at cursor** exposes the source image at the chosen plane. **Exit section** restores the prior cut and plane settings. **Plan** and **Rehearse** show the operations and evidence available for the current study.
 
 ### From patient scans to operative steps
