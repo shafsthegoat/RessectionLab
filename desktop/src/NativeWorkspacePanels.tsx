@@ -196,7 +196,7 @@ export function NativeSidebar({workspace:w,tab,onOpenAnatomy,onOpenPlan,onOpenSc
       <div className="anatomy-presets" role="group" aria-label="Anatomy presentation"><button aria-pressed={w.state.settings.presentation==='scan'} disabled={blocked||!source||defaultAnatomyPresentation(source.modality)!=='scan'} onClick={()=>w.present('scan')}><ScanLine size={13}/>Scan</button><button aria-pressed={w.state.settings.presentation==='segmentation'} disabled={blocked} onClick={()=>w.present('segmentation')}>Structures</button><button aria-pressed={w.state.settings.presentation==='vascular'} disabled={blocked} onClick={()=>w.present('vascular')}>Vessels</button></div>
     <NativeCranialView workspace={w}/>
       {model&&<details className="unified-details patient-model-summary" data-frame="patient">
-        <summary>Patient reconstruction · {model.sources.filter(s=>s.inPatientBounds).length} aligned acquisitions</summary>
+        <summary>Patient reconstruction · {model.sources.filter(s=>s.inPatientBounds).length} scans in shared view</summary>
         <p>3D scan signal and slices use the selected acquisition. Structures retain their source extent in the shared patient frame.</p>
         {model.sources.map(s=><p key={s.seriesId}><strong>{scanLabel(b.document.series.find(scan=>scan.id===s.seriesId)!)}</strong> · {s.modality} · {s.alignment}{s.reason?' · '+s.reason:''}</p>)}
       </details>}

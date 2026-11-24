@@ -162,7 +162,7 @@ test('volume framebuffer restores viewport/clear state, bounds workload and reta
   const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera();
   r.render(scene,camera,2000,1000,false,()=>restored++);
   assert.equal(r.texture.image.data,source.mri);assert.deepEqual(source.mri,original);
-  assert.equal(renders[0].target.width,1300);assert.equal(renders[0].target.height,650);
+  assert.equal(renders[0].target.width,1024);assert.equal(renders[0].target.height,512);
   assert.equal(renders.at(-1).target,null);assert.equal(restored,1);assert.equal(alpha,1);
   assert.equal(color.getHexString(),'05080d');
   const finalScene=r.sceneTarget,finalVolume=r.volumeTarget;

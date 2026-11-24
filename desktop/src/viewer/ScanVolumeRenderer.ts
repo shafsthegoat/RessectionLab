@@ -244,11 +244,9 @@ export class ScanVolumeRenderer {
     interactive: boolean, restoreViewport: ()=>void, longEdge=360, cranialSurfaces=false) {
     if(!this.enabled&&!cranialSurfaces){this.renderer.render(scene,camera);return;}
     const pixelRatio=this.renderer.getPixelRatio();
-    // The source texture stays at acquired resolution. Bound a single Scan
-    // draw while transparent MRI traverses the complete field, rather than
-    // oversampling the acquired grid; linked MPR targets remain full size.
-    const scan=this.material.uniforms.uScanPresentation.value===true;
-    const scale=Math.min(pixelRatio,(interactive?longEdge:scan?1024:1300)/Math.max(width,height));
+    // Both scalar and translucent-surface compositing reuse the same live
+    // targets. Linked slices and the high-resolution export have separate budgets.
+    const scale=Math.min(pixelRatio,(interactive?longEdge:1024)/Math.max(width,height));
     const w=Math.max(1,Math.round(width*scale)),h=Math.max(1,Math.round(height*scale));
     // Keep the small drag buffers separate so pointer release does not discard
     // the full-quality attachments on every gesture. Sizes/steps are unchanged.

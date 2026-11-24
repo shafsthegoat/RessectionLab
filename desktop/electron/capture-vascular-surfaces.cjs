@@ -269,12 +269,15 @@ app.on('browser-window-created',(_event,window)=>{
         window.vascularTimes.set(e.detail.serial,e.detail);
         if(window.vascularTimes.size>12)window.vascularTimes.delete(window.vascularTimes.keys().next().value);
       });document.addEventListener('anatomy-frame',e=>{
-        const {serial,interactive,surfaceQuality,scanQuality,cameraState,cursor,displayIdentity,sourceSignalFingerprint,
+        const {serial,at,interactive,surfaceQuality,scanQuality,cameraState,cursor,displayIdentity,sourceSignalFingerprint,
           cpuMs,gpuTimingSupported,estimatedAllocation}=e.detail;
-        window.vascularFrame={serial,interactive,surfaceQuality,scanQuality,cameraState,cursor,displayIdentity,sourceSignalFingerprint,
+        window.vascularFrame={serial,at,interactive,surfaceQuality,scanQuality,cameraState,cursor,displayIdentity,sourceSignalFingerprint,
           cpuMs,gpuTimingSupported,estimatedAllocation};
+        if(window.vascularGesture&&at>=window.vascularGesture.start&&!window.vascularGesture.frame)
+          window.vascularGesture.frame=window.vascularFrame;
       });document.addEventListener('anatomy-gpu',e=>{
         window.vascularGpu=e.detail;
+        if(window.vascularGesture?.frame?.serial===e.detail.serial)window.vascularGesture.fence=e.detail;
       });`);
       if(expected){
         assert(expected.passed&&!expected.windowEverVisible,'Reference capture did not pass in a hidden window');
@@ -404,21 +407,26 @@ app.on('browser-window-created',(_event,window)=>{
           // cannot obtain. Contain the override to the hidden gesture target.
           const {x,y}=await js(`(()=>{const e=document.querySelector('.rl-viewer-anatomy-image'),r=e.getBoundingClientRect();e.setPointerCapture=()=>{};e.releasePointerCapture=()=>{};return {x:Math.round(r.x+r.width*.42),y:Math.round(r.y+r.height*.48)}})()`);
           const pointer=(type,x,y)=>js(`document.querySelector('.rl-viewer-anatomy-image').dispatchEvent(new PointerEvent(${JSON.stringify(type)},{bubbles:true,clientX:${x},clientY:${y},button:0,buttons:${type==='pointerup'?0:1},pointerId:91,pointerType:'mouse',isPrimary:true}))`);
-          const angles=[];
+          const angles=[],response=[];
           for(let i=0;i<recipe.rotationFrames;i++){
-            const previous=await js('window.vascularFrame.serial');
             await pointer('pointerdown',x,y);
+            await js('window.vascularGesture={start:performance.now()};');
             await pointer('pointermove',x+5,y-2);
             await pointer('pointerup',x+5,y-2);
-            await until(`window.vascularFrame?.serial>${previous}`,'rendered orbit movement');
+            await until('window.vascularGesture?.fence?.completed===true','GPU-completed orbit response');
+            const gesture=await js('window.vascularGesture');
+            const toFrameStart=gesture.frame.at-gesture.start;
+            response.push({interactive:gesture.frame.interactive,toSubmissionMs:toFrameStart+gesture.frame.cpuMs,
+              toFencePollMs:toFrameStart+gesture.fence.completionPollMs});
             await wait(130);
             await capture(path.join(`${recipe.name}-rotation`,String(i).padStart(4,'0')),true);
             angles.push(await js('window.vascularFrame.cameraState.position'));
           }
-          await js(`(()=>{const e=document.querySelector('.rl-viewer-anatomy-image');delete e.setPointerCapture;delete e.releasePointerCapture;})()`);
+          await js(`(()=>{const e=document.querySelector('.rl-viewer-anatomy-image');delete e.setPointerCapture;delete e.releasePointerCapture;delete window.vascularGesture;})()`);
           assert(Math.hypot(...angles.at(-1).map((n,i)=>n-angles[0][i]))>1,'Orbit did not change the submitted camera path');
           record.rotationFrames=recipe.rotationFrames;
           record.rotationPositions=angles;
+          record.rotationResponse={measurement:'Synthetic orbit input to matching GPU fence poll',samples:response};
         }
         if(recipe.compareLayerIds){
           await setLayer(recipe.compareLayerIds[0],false);

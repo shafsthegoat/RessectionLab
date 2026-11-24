@@ -22,6 +22,8 @@ test('an acquired angiogram reveals its own artery inside the skull and brain co
   assert.equal(view.skullMode,'transparent');
   assert.equal(view.layerOpacity.cow,1);
   assert.ok(view.layerOpacity.skull<.1&&view.layerOpacity.brain<.2);
+  assert.equal(view.volumeRendering.shadows,false);
+  assert.equal(anatomyPresentation({},layers,'scan','CTA','cta').volumeRendering.shadows,true);
   assert.equal(render('CT','cta').skullMode,'exterior');
   assert.equal(render('MRA','other-scan').skullMode,'exterior');
 });

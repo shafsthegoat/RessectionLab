@@ -285,8 +285,7 @@ void main(){
     if(boundary<uSurfaceCount)dt=min(dt,max(0.0,surfaceT[boundary]-t));
     float sampleT=t+(uExport?jitter:0.25+0.5*jitter)*dt;
     vec3 p=voxelOrigin+voxelDirection*sampleT;
-    // This mask lives on the selected scalar grid. The fused display grid
-    // already applied each contributing source's own support during sampling.
+    // Source support lives on the selected scalar acquisition's grid.
     if(!supported(p)){
       t+=dt;continue;
     }

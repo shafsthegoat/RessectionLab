@@ -4,13 +4,12 @@ Native meshes add adaptive context bounds, closed-lesion volume checks and
 vascular caliber controls. Browser replay shares the base Chebyshev recurrence.
 """
 import json
-from importlib.resources import files
+from importlib import resources
 import numpy as np
 from scipy import ndimage as ndi, sparse
-from scipy.sparse.csgraph import connected_components
 from scipy.spatial import cKDTree
 
-POLICY = json.loads(files('resectionlab').joinpath('surface_policy.json').read_text())
+POLICY = json.loads(resources.files('resectionlab').joinpath('surface_policy.json').read_text())
 NATIVE_POLICY = POLICY['native']
 NATIVE_VASCULAR_POLICY = POLICY['nativeVascular']
 
@@ -248,7 +247,7 @@ def fair_surface(points, faces, affine, kind, *, mask=None, mask_origin=None, na
         fragile = np.broadcast_to(limit == 0, (n,))
         pinned[faces[fragile[faces].any(axis=1)].ravel()] = True
     del a, b, uses
-    _, components = connected_components(adjacency, directed=False)
+    _, components = sparse.csgraph.connected_components(adjacency, directed=False)
     operator = sparse.diags(1/np.maximum(degree, 1)) @ adjacency
     del adjacency
     c = coefficients(profile_kind, native_context=native_context, broad_context=broad_context,

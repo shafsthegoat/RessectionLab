@@ -4,8 +4,8 @@ from dataclasses import dataclass
 from hashlib import sha256
 
 import numpy as np
-from scipy.sparse import coo_matrix, csr_matrix, diags
-from scipy.sparse.csgraph import connected_components
+from scipy import sparse
+from scipy.sparse import coo_matrix, csr_matrix
 
 
 PROPERTY = 'vesselWallTransport'
@@ -26,7 +26,7 @@ def _owner_interpolation(points, faces, owners, owner_count, minimum_spacing):
     count = len(points)
     graph = coo_matrix((np.tile(edge_weights, 2), (np.r_[i, j], np.r_[j, i])), shape=(count, count)).tocsr()
     row_mass = np.asarray(graph.sum(axis=1)).ravel()
-    diffusion = diags(np.where(row_mass == 0., 1., .4)) + diags(.6 / np.maximum(row_mass, 1e-30)) @ graph
+    diffusion = sparse.diags(np.where(row_mass == 0., 1., .4)) + sparse.diags(.6 / np.maximum(row_mass, 1e-30)) @ graph
     initial = coo_matrix((np.ones(count), (np.arange(count), owners)), shape=(count, owner_count)).tocsr()
     return (diffusion @ (diffusion @ initial)).tocoo(), edges[length < .015 * minimum_spacing]
 
@@ -38,7 +38,7 @@ def _pool_subresolution_edges(matrices, short_edges, protected, vertex_count):
     # mesh edges from acquiring large relative motion under one rod increment.
     a, b = short_edges.T
     graph = coo_matrix((np.ones(len(a)), (a, b)), shape=(vertex_count, vertex_count)).tocsr()
-    _, component = connected_components(graph, directed=False)
+    _, component = sparse.csgraph.connected_components(graph, directed=False)
     if protected.any():
         fixed = np.isin(component, component[protected])
         component[fixed] = vertex_count + np.flatnonzero(fixed)
@@ -46,7 +46,7 @@ def _pool_subresolution_edges(matrices, short_edges, protected, vertex_count):
     counts = np.bincount(component)
     accumulator = coo_matrix((np.ones(vertex_count), (component, np.arange(vertex_count))),
                              shape=(len(counts), vertex_count)).tocsr()
-    average = diags(1. / counts) @ accumulator
+    average = sparse.diags(1. / counts) @ accumulator
     return tuple((accumulator.T @ (average @ matrix)).tocsr() for matrix in matrices)
 
 

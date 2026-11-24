@@ -6,7 +6,6 @@ limbs obstruct motion, while only the exposed blades/tips produce contacts.
 """
 from __future__ import annotations
 
-from functools import lru_cache
 from hashlib import sha256
 import json
 
@@ -21,7 +20,6 @@ PROFILE_IDS = (
 PROFILE_INDEX = {name: index for index, name in enumerate(PROFILE_IDS, 1)}
 
 
-@lru_cache(maxsize=256)
 def profile_segments(index, aperture_mm):
     """Return (local A, local B, radius, contact role, render form) capsules.
 
@@ -106,7 +104,6 @@ def profile_segments(index, aperture_mm):
     return tuple(parts)
 
 
-@lru_cache(maxsize=len(PROFILE_IDS))
 def profile_geometry_hash(index):
     """Bind the complete piecewise rigid geometry and its linear aperture law."""
     endpoints = [profile_segments(index, jaw) for jaw in (0.,12.)]
@@ -141,7 +138,6 @@ ASSEMBLIES = {
 }
 
 
-@lru_cache(maxsize=32)
 def proximal_segments(index):
     name = PROFILE_IDS[index-1]
     length, neck, radius, style = ASSEMBLIES[name]
@@ -186,7 +182,6 @@ def assembly_segments(index, aperture_mm, revision):
     return distal+proximal_segments(index)
 
 
-@lru_cache(maxsize=32)
 def assembly_geometry_hash(index):
     endpoints=[assembly_segments(index,jaw,2) for jaw in (0.,12.)]
     contract=['operative-full-device-segments-mm-v2',PROFILE_IDS[index-1],[0.,12.],endpoints]

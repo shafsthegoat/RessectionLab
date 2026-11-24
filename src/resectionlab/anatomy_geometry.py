@@ -9,7 +9,6 @@ from time import perf_counter
 from itertools import product
 import numpy as np
 from scipy import ndimage as ndi
-from skimage.morphology import skeletonize
 from .patient_anatomy import digest, affine, world, file_hash
 from .core import immutable_array
 from .surface_fairing import (
@@ -440,6 +439,7 @@ def vessel_graph(mask, native_affine):
     # Padding represents unassessed exterior for thinning/EDT only, never a
     # negative anatomical finding. Boundary-limited distances are flagged.
     work = np.pad(mask[crop].astype(bool), 1)
+    from skimage.morphology import skeletonize
     skeleton = skeletonize(work, method='lee')
     local_indices = np.argwhere(skeleton)
     if len(local_indices) > 100_000:
