@@ -172,7 +172,19 @@ app.on('browser-window-created',(_event,window)=>{
       fs.writeFileSync(filename,image.toPNG());
       const size=image.getSize(),captureScale=size.width/window.getContentSize()[0];
       const telemetry=await js(`({fence:window.vascularGpu?.serial===${frame?.serial??0}?window.vascularGpu:null,
-        gpu:window.vascularTimes.get(${frame?.serial??0})??null,pane:(()=>{const box=document.querySelector('.rl-viewer-anatomy-image').getBoundingClientRect();
+        gpu:window.vascularTimes.get(${frame?.serial??0})??null,
+        settledSamples:(()=>{
+          const last=window.vascularSubmitted.get(${frame?.serial??0});
+          if(!last?.scanQuality||last.interactive||last.scanQuality.opticsPending)return [];
+          const found=[];
+          for(let sample=last.scanQuality.samples,serial=last.serial;sample>0;sample--,serial--){
+            const row=window.vascularSubmitted.get(serial);
+            if(!row||row.interactive||row.scanQuality?.opticsPending||row.scanQuality?.samples!==sample||
+              row.scanQuality?.shadowSampling!==last.scanQuality.shadowSampling||row.displayIdentity!==last.displayIdentity)break;
+            found.unshift({sample,serial,cpuMs:row.cpuMs,gpu:window.vascularTimes.get(serial)??null});
+          }
+          return found;
+        })(),pane:(()=>{const box=document.querySelector('.rl-viewer-anatomy-image').getBoundingClientRect();
           return {x:Math.ceil(box.x),y:Math.ceil(box.y),width:Math.floor(box.width)-1,height:Math.floor(box.height)-1};})()})`);
       const pane=Object.fromEntries(Object.entries(telemetry.pane).map(([key,value])=>[key,Math.round(value*captureScale)]));
       return {filename,size,backingSize,captureScale,frame,...telemetry,pane};
@@ -269,7 +281,7 @@ app.on('browser-window-created',(_event,window)=>{
         const bytes=app.getAppMetrics().reduce((sum,process)=>sum+process.memory.workingSetSize*1024,0);
         report.memory.peakSampledElectronWorkingSetBytes=Math.max(report.memory.peakSampledElectronWorkingSetBytes,bytes);
       },report.memory.pollMs);
-      await js(`window.vascularTimes=new Map();document.addEventListener('anatomy-gpu-time',e=>{
+      await js(`window.vascularTimes=new Map();window.vascularSubmitted=new Map();document.addEventListener('anatomy-gpu-time',e=>{
         window.vascularTimes.set(e.detail.serial,e.detail);
         if(window.vascularTimes.size>12)window.vascularTimes.delete(window.vascularTimes.keys().next().value);
       });document.addEventListener('anatomy-frame',e=>{
@@ -277,6 +289,8 @@ app.on('browser-window-created',(_event,window)=>{
           cpuMs,gpuTimingSupported,estimatedAllocation}=e.detail;
         window.vascularFrame={serial,at,interactive,surfaceQuality,scanQuality,cameraState,cursor,displayIdentity,sourceSignalFingerprint,
           cpuMs,gpuTimingSupported,estimatedAllocation};
+        window.vascularSubmitted.set(serial,window.vascularFrame);
+        if(window.vascularSubmitted.size>12)window.vascularSubmitted.delete(window.vascularSubmitted.keys().next().value);
         if(window.vascularGesture&&at>=window.vascularGesture.start&&!window.vascularGesture.frame)
           window.vascularGesture.frame=window.vascularFrame;
       });document.addEventListener('anatomy-gpu',e=>{

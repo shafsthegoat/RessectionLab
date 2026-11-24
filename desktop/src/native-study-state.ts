@@ -60,6 +60,8 @@ export function anatomyPresentation(settings:ViewerWorkspaceSettings,layers:Bind
   const cranial=mode==='segmentation'&&corticalLayers(layers).length>0;
   const nativeVessels=!scan&&hasNativeAngiographicVessels(layers,modality,seriesId);
   const vesselFocus=vascular||nativeVessels;
+  const boneLayers=ct&&vesselFocus?layers.filter(layer=>layer.kind==='bone'||layer.kind==='skull'):[];
+  const sameSourceBone=boneLayers.length===1&&seriesId!==undefined&&boneLayers[0].source_series===seriesId;
   const layerOpacity={...settings.layerOpacity},layerColor={...settings.layerColor};
   for(const layer of layers){
     const displayKind=studyLayerDisplayKind(layer);
@@ -109,7 +111,7 @@ export function anatomyPresentation(settings:ViewerWorkspaceSettings,layers:Bind
     // Explicit presentation action only. Saved contrast, opacity and transfer
     // choices are otherwise restored verbatim; source signal is never altered.
     volumeRendering:{enabled:true,preset:'auto',density:scan?(ct?.26:.28):ct?(vesselFocus?.12:.075):(nativeVessels?.018:vascular?.035:.025),
-      shadows:scan||!ct},
+      shadows:scan||!ct||sameSourceBone},
     clipping:settings.clipping?{...settings.clipping,enabled:false}:undefined,
     clipBox:settings.clipBox?{...settings.clipBox,enabled:false}:undefined,
     obliqueClip:settings.obliqueClip?{...settings.obliqueClip,enabled:false}:undefined};

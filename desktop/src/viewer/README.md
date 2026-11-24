@@ -116,11 +116,21 @@ Settled Scan uses ray steps of one source spacing and at most 640 intervals. Lig
 
 Transparent CT context uses a filtered optical footprint when a single visible, independent bone mask shares the selected acquisition's display grid. The ray interpolates sub-voxel coverage and blends source and bone extinction with matching color weights. The footprint is bounded to 0.68 cells and 0.6 mm along each source axis. Scan, exterior bone, isolated labels, multiple bone contexts and scans with native support keep their existing sampling. The mask and acquired samples used by the source panes, geometry and measurements keep exact values. The additional texture needs one byte per displayed voxel on the GPU and reuses the spare auxiliary sampler. The default CT vascular composition uses a lower volume density to keep the overlaid vessels readable.
 
+With shadows enabled, eligible transparent CT views reuse the same optical
+atlas for total extinction and the fraction associated with the bone mask.
+The renderer applies the visible opacity after interpolation, so changing it
+does not rebuild the atlas. The settled view integrates a directional key
+over physical distances and averages two short ambient directions. A probe
+whose cache footprint crosses a cut uses the acquired signal and exact
+context treatment at that retained location. The uncut shader specializes
+its secondary probes to the atlas. The visible ray still uses native samples.
+Opaque, isolated and multi-mask overrides keep the exact shadow path.
+
 **Export 3D PNG** in the 3D toolbar captures the current anatomy camera, clipping, and layers at a 2048-pixel long edge, bounded by the GPU's attachment limits. Scalar-volume exports average 32 jittered samples per pixel using finer physical ray steps. Surface-only exports use the same full resolution. Guarded image bands keep the additional render attachments below 160 MiB. The displayed 3D pane, source slices and their interactive settings stay at their usual resolution. The export can be cancelled from the same toolbar button, and editing the view cancels a capture in progress.
 
 The viewer emits `anatomy-export` upon completion with image dimensions, sample count, CPU submission time, GPU query results where available, fence-poll wall time, readback, PNG encoding and estimated peak export attachment bytes. The attachment estimate covers color, depth and multisample buffers owned by the export. Browser image storage, existing anatomy resources and driver overhead are outside that estimate. `anatomy-frame` reports the live volume dimensions and sample count in `scanQuality`.
 
-**Structures** and **Vessels** leave the active acquisition as the scalar volume and display the selected registered anatomy alongside it. When viewing CTA, the acquired volume supplies fine bone and contrast detail while opaque vascular meshes remain selectable. Live scalar draws settle at a 1024-pixel long edge. CT Structures and Vessels start with volume shadows off. The full-depth label-aware probe path adds GPU cost with little benefit in the matched CTA test, and the control remains available. In native TOF, subdued context lets unclassified vessel candidates use a separate palette from supplied arteries, veins and sinuses. Conditioned vessel walls have wider, weaker highlights and a camera-depth cue. Acquisition edge closures keep their neutral material and geometry.
+**Structures** and **Vessels** leave the active acquisition as the scalar volume and display the selected registered anatomy alongside it. When viewing CTA, the acquired volume supplies fine bone and contrast detail while opaque vascular meshes remain selectable. Live scalar draws settle at a 1024-pixel long edge. New vessel-focused CT views with one bone layer from the same acquisition start with volume shadows enabled. They retain the existing shadow control and saved view settings. In native TOF, subdued context lets unclassified vessel candidates use a separate palette from supplied arteries, veins and sinuses. Conditioned vessel walls have wider, weaker highlights and a camera-depth cue. Acquisition edge closures keep their neutral material and geometry.
 
 To reproduce a matched capture, pass one native `.json` study and the same view recipe to both desktop builds:
 

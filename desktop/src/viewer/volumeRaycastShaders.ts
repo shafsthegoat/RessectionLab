@@ -4,6 +4,9 @@ out vec2 vUv;
 void main(){vUv=uv;gl_Position=vec4(position.xy,0.0,1.0);}
 `;
 export const volumeFragmentShader = `
+#ifndef CONTEXT_SHADOWS
+#define CONTEXT_SHADOWS 0
+#endif
 precision highp float;
 precision highp sampler3D;
 in vec2 vUv;
@@ -18,6 +21,8 @@ uniform vec2 uOpticalSize;
 uniform vec3 uOpticalGrid;
 uniform int uOpticalColumns;
 uniform bool uOpticalCache;
+uniform float uClipOpticalWidth;
+uniform float uExtraOpticalWidths[7];
 uniform sampler2D uScene;
 uniform sampler2D uDepth;
 uniform mat4 uWorldToVoxel;
@@ -193,22 +198,56 @@ float cachedExtinction(vec3 p,float footprint){
   int lo=int(cell.x);
   int hi=min(lo+1,int(uOpticalGrid.x)-1);
   vec4 density=mix(opticalSlice(lo,cell.yz),opticalSlice(hi,cell.yz),fract(cell.x));
+#if CONTEXT_SHADOWS > 0
+  // Average total and bone-associated extinction independently. The
+  // transparent-layer opacity can then change without rebuilding the atlas.
+  float opacity=uLayerColor[uContextCoverageLayer].a;
+  vec2 scale=max(vec2(0.0),density.rg-(1.0-opacity)*density.ba);
+#else
   vec2 scale=uGradientOpacity?density.ba:density.rg;
-  return mix(scale.x,scale.y,footprint)*uDensity;
+#endif
+  float extinction=mix(scale.x,scale.y,footprint)*uDensity;
+#if CONTEXT_SHADOWS > 0
+  return min(extinction,1.5);
+#else
+  return extinction;
+#endif
 }
 float opticalProbe(vec3 p,vec3 world,float footprint){
   if(any(lessThan(p,vec3(-0.5)))||any(greaterThanEqual(p,uShape-0.5)))return 0.0;
+#if CONTEXT_SHADOWS == 1
+  return cachedExtinction(p,footprint);
+#else
   // Test the same retained half-spaces as the eye ray. Ease the wider cache
   // footprint as it approaches a cut so removed tissue cannot darken it.
   float clearance=1e6;
-  if(uClipEnabled)clearance=dot(uClipPlane.xyz,world)+uClipPlane.w;
+#if CONTEXT_SHADOWS == 2
+  float cellClearance=1e6;
+#endif
+  if(uClipEnabled){
+    clearance=dot(uClipPlane.xyz,world)+uClipPlane.w;
+#if CONTEXT_SHADOWS == 2
+    cellClearance=clearance/max(uClipOpticalWidth,1e-6);
+#endif
+  }
   for(int i=0;i<7;i++){
     if(i>=uExtraClipCount)break;
     vec4 plane=uExtraClips[i];
-    clearance=min(clearance,dot(plane.xyz,world)+plane.w);
+    float distance=dot(plane.xyz,world)+plane.w;
+    clearance=min(clearance,distance);
+#if CONTEXT_SHADOWS == 2
+    cellClearance=min(cellClearance,distance/max(uExtraOpticalWidths[i],1e-6));
+#endif
   }
   if(clearance<0.0)return 0.0;
+#if CONTEXT_SHADOWS == 2
+  // Trilinear interpolation can reach 1.5 cells from the probe. A nonzero
+  // coarse contribution adds one blur cell. Compare with the conservative
+  // projection onto each clipping normal before using the prefiltered field.
+  if(cellClearance>=(footprint>0.0?2.5:1.5))return cachedExtinction(p,footprint);
+#else
   if(uOpticalCache)return cachedExtinction(p,footprint)*smoothstep(0.0,mix(2.0,7.0,footprint),clearance);
+#endif
   // Label-isolated and explicit skull modes require per-probe membership.
   // Do not use an unmasked density field to cast shadows from hidden anatomy.
   if(!supported(p))return 0.0;
@@ -219,11 +258,28 @@ float opticalProbe(vec3 p,vec3 world,float footprint){
   applyContext(tissue,value,packed,!uIsolate||selectedLabel(packed),p);
   if(uGradientOpacity&&tissue.a>0.0)tissue.a*=boundaryExtinction(normalizedGradient(scalarNormal(p)));
   return min(tissue.a,1.5);
+#endif
 }
 float opticalSegment(vec3 p,vec3 world,vec3 offset,float width,float footprint){
   return width*opticalProbe(p+mat3(uWorldToVoxel)*offset,world+offset,footprint);
 }
 vec2 volumeIllumination(vec3 p,vec3 world,vec3 light,vec3 ambient){
+#if CONTEXT_SHADOWS > 0
+  if(!uInteractive){
+    float keyDepth=opticalSegment(p,world,light*4.75,6.5,0.0);
+    keyDepth+=opticalSegment(p,world,light*14.0,12.0,0.38);
+    keyDepth+=opticalSegment(p,world,light*29.5,19.0,1.0);
+    vec3 right=uCameraWorld[0].xyz;
+    vec3 lateral=(right-ambient*dot(right,ambient))*2.8;
+    float leftDepth=opticalSegment(p,world,ambient*4.8-lateral,4.0,0.0);
+    float rightDepth=opticalSegment(p,world,ambient*4.8+lateral,4.0,0.0);
+    float broadDepth=opticalSegment(p,world,ambient*12.0,8.0,1.0);
+    // Average the visibility of two near-field directions. A longer shared
+    // cone gives macroscopic depth without averaging the visible scalar ray.
+    float ambientVisibility=0.5*(exp(-leftDepth)+exp(-rightDepth))*exp(-broadDepth);
+    return vec2(exp(-keyDepth),ambientVisibility);
+  }
+#endif
   float keyDepth=opticalSegment(p,world,light*4.0,5.0,0.0);
   float ambientDepth=opticalSegment(p,world,ambient*4.5,4.0,0.16);
   if(!uInteractive){

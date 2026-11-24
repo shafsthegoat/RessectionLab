@@ -174,6 +174,26 @@ test('secondary MRI shell density uses the physical derivative from the acquisit
   assert.ok(Math.abs(a.fine[3]-b.fine[3])<1e-7);
 });
 
+test('CT shadow cache includes the filtered skull fraction without changing primary extinction',()=>{
+  const lut=volumeTransfer('ct-angiography',[-1000,3000],undefined,'CTA');
+  const affine=[[4,0,0,0],[0,4,0,0],[0,0,4,0],[0,0,0,1]];
+  const signal=Float32Array.of(1000,1000,1000);
+  const source={signal,shape:[3,1,1],affine,inverse:inverseAffine(affine)};
+  const mask=Uint8Array.of(0,1,0),weights=[.25,.5,.25];
+  const plain=buildOpticalDensity(source,lut);
+  const masked=buildOpticalDensity(source,lut,{mask,radius:[.5,.5,.5]});
+  for(let cell=0;cell<3;cell++){
+    const index=2*cell;
+    assert.equal(plain.fine[index],masked.fine[index]);
+    assert.equal(plain.coarse[index],masked.coarse[index]);
+    assert.ok(Math.abs(masked.fine[index+1]/masked.fine[index]-weights[cell])<1e-6);
+  }
+  const edge=buildOpticalDensity(source,lut,{mask:Uint8Array.of(1,0,0),radius:[.5,.5,.5]});
+  assert.ok(Math.abs(edge.fine[1]/edge.fine[0]-.75)<1e-6,'coverage clamps at the acquisition face');
+  assert.deepEqual(mask,Uint8Array.of(0,1,0));
+  assert.deepEqual(signal,Float32Array.of(1000,1000,1000));
+});
+
 test('transfer row and both optical scales survive atlas packing in source XYZ order',()=>{
   const lut=volumeTransfer('mri',[0,1],undefined,'TOF');
   const affine=[[4,0,0,0],[0,4,0,0],[0,0,4,0],[0,0,0,1]];

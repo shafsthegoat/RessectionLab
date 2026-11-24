@@ -2656,7 +2656,7 @@ export class VolumeRenderer {
     const main = viewport(this.panes.anatomy);
     let orientationGuideVisible=false;
     let surfaceQuality:{adaptive:boolean;width:number;height:number}|null=null;
-    let scanQuality:{width:number;height:number;samples:number;opticsPending:boolean}|null=null;
+    let scanQuality:ReturnType<ScanVolumeRenderer['render']>|null=null;
     if(main&&this.resultInspection&&renderedView&&!this.surgicalInteraction?.preview&&modeledAnatomy(this.volume)?.surfaceReference){
       this.resultInspection.render(this.renderer,this.volume,renderedView,this.surfaces,main.w,main.h);
     } else if (main) {

@@ -248,6 +248,42 @@ test('transparent CTA feathers only optical coverage while exact masks and scan 
   }finally{scan.dispose();supported.dispose();}
 });
 
+test('CTA uses only the atlas matching its active optical mask and shares it across opacity changes',()=>{
+  const renderer={extensions:{has:()=>true},getPixelRatio:()=>1,getClearColor:out=>out.set(0),getClearAlpha:()=>1,
+    setClearColor(){},setRenderTarget(){},clear(){},render(){}};
+  const makeBone=index=>({name:'bone',kind:'bone',color:'#ded0b6',mask:Uint8Array.from({length:60},(_,i)=>Number(i===index))});
+  const scan=new ScanVolumeRenderer(renderer,{...source,compartments:[makeBone(30)]},[0,1000]);
+  const render=()=>scan.render(new THREE.Scene(),new THREE.PerspectiveCamera(),640,480,false,()=>{});
+  const settings={presentation:'vascular',skullMode:'transparent',layerOpacity:{bone:.12}};
+  try{
+    scan.configure({shadows:true},'CTA',null);
+    scan.labels(null,{},settings,[]);render();
+    const u=scan.material.uniforms,context=u.uTransfer.value;
+    assert.ok(u.uOpticalCache.value&&context.image.height>1);
+    assert.equal(scan.material.defines.CONTEXT_SHADOWS,1);
+    scan.labels(null,{}, {...settings,layerOpacity:{bone:.25}},[]);render();
+    assert.equal(u.uTransfer.value,context);
+    scan.labels(null,{},settings,[new THREE.Plane(new THREE.Vector3(0,0,1),0)]);render();
+    assert.equal(scan.material.defines.CONTEXT_SHADOWS,2);
+    assert.ok(u.uExtraOpticalWidths.value[0]>0);
+    assert.equal(u.uTransfer.value,context);
+    scan.labels(null,{bone:false},settings,[]);render();
+    assert.equal(u.uOpticalCache.value,false);
+    assert.equal(scan.material.defines.CONTEXT_SHADOWS,0);
+    assert.equal(u.uTransfer.value,context);
+    scan.labels(null,{}, {...settings,presentation:'scan'},[]);render();
+    assert.equal(u.uOpticalCache.value,true);
+    assert.notEqual(u.uTransfer.value,context);
+    scan.labels(null,{},settings,[]);render();
+    const current=u.uTransfer.value;
+    scan.setLayers([makeBone(31)],[[0,1]]);scan.labels(null,{},settings,[]);render();
+    assert.equal(u.uOpticalCache.value,true);
+    assert.notEqual(u.uTransfer.value,current);
+    scan.configure({shadows:true,isolateLabels:true},'CTA',null);render();
+    assert.equal(u.uOpticalCache.value,false);
+  }finally{scan.dispose();}
+});
+
 test('acquired Scan export uses independent targets and rebinds the regular quality after capture',()=>{
   const renderer={extensions:{has:()=>true},getPixelRatio:()=>2,getClearColor:out=>out.set(0),getClearAlpha:()=>1,
     setClearColor(){},setRenderTarget(){},clear(){},render(){}};
