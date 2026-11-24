@@ -29,6 +29,8 @@ SECTION_CONTACT_MODEL = 'linear-annular-research-contact-v2'
 SECTION_TISSUE_CONTACT_MODEL = 'linear-annular-research-contact-v3'
 SECTION_TISSUE_FRICTION_MODEL = 'linear-annular-research-contact-v4'
 SECTION_TISSUE_CAPACITY_MODEL = 'linear-annular-research-contact-v5'
+TOOL_CONTACT_CLOCK_PROPERTY = 'vesselToolContactClockPolicy'
+TOOL_CONTACT_CLOCK_POLICY = 'passive-dissector-fixed-tick-v1'
 TISSUE_FRICTION_MODELS = (SECTION_TISSUE_FRICTION_MODEL, SECTION_TISSUE_CAPACITY_MODEL)
 TISSUE_CONTACT_MODELS = (SECTION_TISSUE_CONTACT_MODEL, *TISSUE_FRICTION_MODELS)
 STEP_SECONDS = 1 / 120
@@ -441,6 +443,16 @@ def _work_capsules(engine):
                 yield hand, a, b, radius, params['forceN']
 
 
+def _swept_work_capsules(engine, lo, hi, hand, shift):
+    """Select capsules with a possible contact anywhere in the translation."""
+    for tool in _work_capsules(engine):
+        start_shift = shift if tool[0] == hand else 0.
+        minimum = np.minimum(tool[1], tool[2]) + np.minimum(0., start_shift)
+        maximum = np.maximum(tool[1], tool[2]) + np.maximum(0., start_shift)
+        if np.all(minimum - tool[3] <= hi) and np.all(maximum + tool[3] >= lo):
+            yield tool
+
+
 def _native_tool_contact(engine, frames, rods, position, tools):
     force = np.zeros_like(position)
     compression = np.zeros(len(position))
@@ -619,7 +631,7 @@ def _valid_section_motion(engine, rods, previous, trial, retained, first, second
             and _valid_motion(engine, rods, previous, trial, retained) is trial)
 
 
-def tick(engine, dt, *, tool_motion=None, excluded_tissue=()):
+def tick(engine, dt, *, tool_motion=None, excluded_tissue=(), tool_clock_hand=None):
     rods = definitions(engine)
     retained, retired, bonds, supports = _topology(engine, rods)
     state = engine.state.setdefault(FIELD, {'remainderSeconds': 0., 'velocitiesMmPerSecond': {}, 'compressionMm': {},
@@ -640,9 +652,14 @@ def tick(engine, dt, *, tool_motion=None, excluded_tissue=()):
     old_rate = np.array([velocities.get(str(c), (0., 0., 0.)) for c in rods.cells])
     extent = (np.max(rods.radius) + 2 * np.linalg.norm(engine.scene.spacing))
     lo, hi = np.min(position, axis=0) - extent, np.max(position, axis=0) + extent
-    tools = tuple(tool for tool in _work_capsules(engine)
-                  if np.all(np.minimum(tool[1], tool[2]) - tool[3] <= hi)
-                  and np.all(np.maximum(tool[1], tool[2]) + tool[3] >= lo))
+    if tool_clock_hand is None:
+        tools = tuple(tool for tool in _work_capsules(engine)
+                      if np.all(np.minimum(tool[1], tool[2]) - tool[3] <= hi)
+                      and np.all(np.maximum(tool[1], tool[2]) + tool[3] >= lo))
+    else:
+        tool_velocity = tool_motion[tool_clock_hand][1]
+        endpoint_tools = tuple(_swept_work_capsules(engine, lo, hi, tool_clock_hand, -dt * tool_velocity))
+        tools = endpoint_tools
     soft_contact = soft_contact_enabled(engine)
     tissue_moving = soft_contact and any(any(delta) for delta in deformation.values())
     if not tools and not velocities and not compressed and not any(str(c) in deformation for c in rods.cells) and not any(
@@ -714,7 +731,14 @@ def tick(engine, dt, *, tool_motion=None, excluded_tissue=()):
 
     inertial = MASS_N_S2_PER_MM / STEP_SECONDS ** 2
     damping = DRAG_NS_PER_MM / STEP_SECONDS
-    for _ in range(steps):
+    for step in range(steps):
+        if tool_clock_hand is not None:
+            # total includes the prior fractional tick. The first sample is
+            # STEP_SECONDS minus that remainder into this engine interval.
+            age = min(dt, max(0., total - (step + 1) * STEP_SECONDS))
+            shift = age * tool_velocity
+            tools = tuple((hand, a - shift, b - shift, width, force) if hand == tool_clock_hand
+                          else (hand, a, b, width, force) for hand, a, b, width, force in endpoint_tools)
         previous = position.copy()
         base = inertial * (previous + STEP_SECONDS * old_rate) + damping * previous + support_force
         for _ in range(SOLVER_ITERATIONS):

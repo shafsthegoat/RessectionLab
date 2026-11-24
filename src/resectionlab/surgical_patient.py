@@ -396,6 +396,7 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
     if local_wall is not None:
         from .surgical_motion import AXIAL_SWEEP_PROPERTY, AXIAL_SWEEP_POLICY
         from .surgical_patient_wall import qualifying_properties
+        from .surgical_vessel_rods import TOOL_CONTACT_CLOCK_PROPERTY, TOOL_CONTACT_CLOCK_POLICY
         from .surgical_vessel_surface import GEOMETRY_PROPERTY
 
         check()
@@ -409,6 +410,7 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
         properties.update(wall_properties)
         if not planned:
             properties[AXIAL_SWEEP_PROPERTY] = AXIAL_SWEEP_POLICY
+            properties[TOOL_CONTACT_CLOCK_PROPERTY] = binding[TOOL_CONTACT_CLOCK_PROPERTY] = TOOL_CONTACT_CLOCK_POLICY
     anatomy_layers = {name: _anatomy_metadata(name, rows[name]) for name in selected_order}
     if local_wall is not None:
         anatomy_layers['vessels'].update(kind=rows['vessels']['kind'], color=rows['vessels']['color'])

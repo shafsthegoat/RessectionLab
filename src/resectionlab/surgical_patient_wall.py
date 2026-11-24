@@ -229,6 +229,8 @@ def qualifying_properties(grid, masks, row, patient_id, *, cancelled=lambda: Fal
 
 def validate_saved_wall(scene, case, receipt):
     """Recheck the accepted wall and owner mapping reconstructed on reopen."""
+    from .surgical_vessel_rods import TOOL_CONTACT_CLOCK_PROPERTY
+
     walls = getattr(scene, '_vessel_source_walls', ())
     profile = scene.properties.get('gliomaMaterialsV1', {})
     if (not isinstance(receipt, dict) or receipt.get('schema') != SCHEMA or len(walls) != 1
@@ -241,6 +243,7 @@ def validate_saved_wall(scene, case, receipt):
             or receipt.get('localScoreHash') != array_digest(walls[0].scores)
             or profile.get(wall_sweep.PROPERTY) not in wall_sweep.POLICIES
             or receipt.get(wall_sweep.PROPERTY, wall_sweep.POLICY) != profile.get(wall_sweep.PROPERTY)
+            or receipt.get(TOOL_CONTACT_CLOCK_PROPERTY) != scene.properties.get(TOOL_CONTACT_CLOCK_PROPERTY)
             or profile.get(vertex_motion.PROPERTY) != vertex_motion.POLICY):
         raise ValueError('Saved patient native wall differs from accepted source geometry')
     start, shape = receipt.get('sourceStartIJK'), receipt.get('sourceShape')

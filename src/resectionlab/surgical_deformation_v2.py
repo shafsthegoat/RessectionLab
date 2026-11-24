@@ -298,7 +298,7 @@ def _activate_contact_patch(engine, model, cells, excluded, max_nodes, *, reserv
     model['anchors'] = sorted(cell for cell in active - held - seeds - free if neighbors(cell) - active)
 
 
-def tick(engine, dt, *, vessel_tool_motion=None):
+def tick(engine, dt, *, vessel_tool_motion=None, vessel_tool_clock_hand=None):
     initialize(engine)
     if not np.isfinite(dt) or dt < 0: raise ValueError('INVALID_DEFORMATION_TIME')
     p = _settings(engine); model = engine.state['deformationModel']; removed = set(engine.state['removed'])
@@ -326,7 +326,11 @@ def tick(engine, dt, *, vessel_tool_motion=None):
             if coupled_vessels:
                 # Advance rods against the current lattice and hold their mean
                 # accepted contact reaction over this lattice increment.
-                wall_reactions = rods.tick(engine, dt, tool_motion=vessel_tool_motion, excluded_tissue=rigid) or {}
+                if vessel_tool_clock_hand is None:
+                    wall_reactions = rods.tick(engine, dt, tool_motion=vessel_tool_motion, excluded_tissue=rigid) or {}
+                else:
+                    wall_reactions = rods.tick(engine, dt, tool_motion=vessel_tool_motion, excluded_tissue=rigid,
+                                               tool_clock_hand=vessel_tool_clock_hand) or {}
                 if wall_reactions:
                     excluded = removed | rigid
                     reserve = 0

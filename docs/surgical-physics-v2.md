@@ -187,6 +187,8 @@ The continuous guard checks local facet collapse, folds across shared edges, and
 
 New ordinary patient preparations record `continuous-source-triangles-v2` in the scene and native-wall receipt. Pairs of faces that share just one vertex must stay on opposite sides of a plane through that vertex, with both rays of each face strictly on its own side. The sweep checks the signed projections at both ends of a linear interval and subdivides when one plane cannot certify the whole interval. A crossing or an unresolved interval fails the clearance check. The reference implementation and native backend apply the same certificate. Previously saved scenes with `continuous-source-triangles-v1` use their original check during replay.
 
+Ordinary native-wall preparations also declare `passive-dissector-fixed-tick-v1` for contact timing. During passive axial move and withdrawal with fixed tool dimensions, each completed 120 Hz rod tick uses the working capsule at its actual time on the checked path. The saved fractional remainder carries the phase across movement increments and pauses. The contact search uses bounds over the whole translation. Existing scenes and other tool motions use the prior endpoint sampling. Tissue reactions are still averaged over each engine increment, so small differences with waypoint density can remain in the coupled response.
+
 #### Native wall contact with surrounding tissue
 
 The v3 contact model associates near-rest native wall triangle samples with exposed

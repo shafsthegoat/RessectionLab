@@ -421,6 +421,14 @@ class SurgicalEngine:
                 or not vessel_rods.wall_sweep_enabled(self)
                 or not vessel_rods.bounded_tissue_capacity_enabled(self)):
             raise ValueError('TOOL_SWEEP_POLICY_REQUIRES_SUPPORTED_NATIVE_WALL')
+        self._vessel_tool_clock = vessel_rods.TOOL_CONTACT_CLOCK_PROPERTY in scene.properties
+        if self._vessel_tool_clock and (
+                scene.properties[vessel_rods.TOOL_CONTACT_CLOCK_PROPERTY] != vessel_rods.TOOL_CONTACT_CLOCK_POLICY
+                or self._operative or self._source_inspection_only
+                or not getattr(scene, '_vessel_source_walls', ())
+                or not vessel_rods.wall_sweep_enabled(self)
+                or not vessel_rods.bounded_tissue_capacity_enabled(self)):
+            raise ValueError('VESSEL_TOOL_CONTACT_CLOCK_REQUIRES_SUPPORTED_NATIVE_WALL')
         self.tools = TOOLS
         self._operative_tool_revision = 0
         if self._operative:
@@ -879,7 +887,7 @@ class SurgicalEngine:
                 if refusal is not None:
                     return None, refusal
             duration, points = candidate._validate(action)
-            if candidate._axial_tool_sweep and action['operation'] in ('move', 'withdraw'):
+            if (candidate._axial_tool_sweep or candidate._vessel_tool_clock) and action['operation'] in ('move', 'withdraw'):
                 candidate._fixed_dissector_extent = not {'radiusMm', 'depthMm'}.intersection(action.get('parameters', {}))
             result = candidate._execute(copy.deepcopy(action), duration, points, check=check)
         except _OperationCheckFailed as interrupted:
@@ -1280,7 +1288,9 @@ class SurgicalEngine:
         tip_cells = [] if self._operative else self.touched(previous, p, params['radiusMm'])
         end_pose = {'position': p, 'quaternion': q}
         sweep = swept_envelopes
-        if not active and slot['instrument'] == 'dissector' and getattr(self, '_fixed_dissector_extent', False):
+        fixed_passive_dissector = (not active and slot['instrument'] == 'dissector'
+                                   and getattr(self, '_fixed_dissector_extent', False))
+        if self._axial_tool_sweep and fixed_passive_dissector:
             sweep = axial_dissector_sweep
         swept = sweep(tool, self._sweep_parameters(key, slot) if self._operative else params, slot, end_pose)
         if self._operative:
@@ -1452,8 +1462,16 @@ class SurgicalEngine:
             if previous_vessel_tool_rotation is None:
                 brain.tick(self, dt)
             else:
-                angular = (rotation(q) * previous_vessel_tool_rotation.inv()).as_rotvec() / dt
-                brain.tick(self, dt, vessel_tool_motion={key: (p, (p - previous) / dt, angular)})
+                turn = (rotation(q) * previous_vessel_tool_rotation.inv()).as_rotvec()
+                travel = p - previous
+                tool_motion = {key: (p, travel / dt, turn / dt)}
+                if (self._vessel_tool_clock and fixed_passive_dissector
+                        and self.state.get('toolMechanicsRevision') != 2
+                        and np.linalg.norm(turn) <= 1e-12
+                        and np.linalg.norm(travel - np.dot(travel, axis) * axis) <= 1e-6):
+                    brain.tick(self, dt, vessel_tool_motion=tool_motion, vessel_tool_clock_hand=key)
+                else:
+                    brain.tick(self, dt, vessel_tool_motion=tool_motion)
             if compliant:
                 vessel_rods.check_working_axis(self, key, op)
             self.occupancy()
