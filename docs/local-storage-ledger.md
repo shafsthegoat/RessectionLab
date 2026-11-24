@@ -128,6 +128,9 @@ The isolated native vessel wall section comparison and archived replay checks
 are at `qc/native-vessel-section-tail-20261124-v1/README.md`.
 The jointly conditioned publisher CTA meshes, matched desktop captures and
 whole-mesh source audits are at `qc/native-publisher-wall-20261124-v1/README.md`.
+The signed CTA vessel-to-bone contrast comparison and export are at
+`qc/cta-vessel-contrast-20261124-v1/README.md`. The index includes both
+TopCoW CTA cases, acquisition controls, and source-linked cutaways.
 The ordinary native-wall sweep and fixed-tick contact checks are at
 `qc/native-wall-vertex-sweep-20261124-v1/README.md`. The index links the
 TopCoW paired replay, support and recoil measurements, EDEN rest and shear
