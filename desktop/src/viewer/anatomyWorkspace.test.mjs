@@ -611,6 +611,10 @@ test('incremental layer install retains source texture, existing surfaces and ca
   r.affine=identity;r.extraClipPlanes=[];r.visible={brain:false,tumor:true};r.anatomy=new THREE.Group();r.anatomy.add(mesh);
   r.surfaceGeometry=new Map();r.camera=new THREE.PerspectiveCamera();const camera=r.camera;
   let disposed=0,layerUpdates=0;
+  r.preparedSourceLayers=new Set(['brain']);
+  r.canvas=new EventTarget();
+  const prepared=[];
+  r.canvas.addEventListener('anatomy-surface',event=>prepared.push(event.detail.name));
   r.mriTexture={unchanged:true};const image=r.mriTexture;
   r.scanVolume.setLayers=()=>layerUpdates++;
   Object.assign(uniforms,{uLabels:{value:null},uLayerCount:{value:1},uLayerCodes:{value:Array.from({length:128},()=>new THREE.Vector2())},uLayerEnabled:{value:new Float32Array(128)}});
@@ -626,6 +630,8 @@ test('incremental layer install retains source texture, existing surfaces and ca
   assert.equal(r.labelTexture,labelTexture);
   r.setAnatomyLayers(next);assert.equal(r.volume,next);assert.equal(r.camera,camera);assert.equal(r.mriTexture,image);
   assert.equal(r.surfaces.get('brain'),mesh);assert(r.surfaces.has('tumor'));assert.equal(disposed,1);assert.equal(layerUpdates,1);
+  assert.deepEqual(prepared,['tumor']);
+  assert.deepEqual([...r.preparedSourceLayers],['brain','tumor']);
   assert.equal(r.labelTexture.format,THREE.RGFormat);assert.equal(uniforms.uLabels.value,r.labelTexture);
   assert.equal(uniforms.uLayerEnabled.value[0],1);assert.equal(uniforms.uLayerEnabled.value[1],0);
   r.setAnatomyLayers(next);assert.equal(layerUpdates,1);
