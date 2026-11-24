@@ -14,6 +14,7 @@ from scipy.sparse.linalg import factorized
 
 from .surgical_glioma_materials import PROPERTY, oriented_source_cells
 from . import surgical_vessel_surface as surfaces
+from . import surgical_wall_sweep as wall_sweep
 
 
 MODEL = 'distributed-source-rods-v1'
@@ -33,6 +34,22 @@ CONTACT_MARGIN_MM = 1e-7
 
 def enabled(engine):
     return engine.scene.properties.get(PROPERTY, {}).get('vesselMotionModel') == MODEL
+
+
+def wall_sweep_enabled(engine):
+    return engine.scene.properties.get(PROPERTY, {}).get(wall_sweep.PROPERTY) == wall_sweep.POLICY
+
+
+def wall_topology(engine):
+    return wall_sweep.topology(_accepted_frames(engine, definitions(engine)))
+
+
+def check_wall_topology(engine, previous=None):
+    frames = _accepted_frames(engine, definitions(engine))
+    current = wall_sweep.topology(frames)
+    if current != previous:
+        wall_sweep.require_clear(engine, frames, frames, static=True)
+    return current
 
 
 def validate_geometry(scene, profile, cells):
@@ -407,7 +424,7 @@ def _valid_motion(engine, rods, old, new, retained):
     if not retained:
         return new
     # Sample the increment so a free site cannot tunnel across a hard source
-    # cell or leave the declared patch. Vessel self-contact is outside this model.
+    # cell or leave the declared patch. The score-wall sweep is a separate check.
     points = np.asarray(retained)
     step = new[points] - old[points]
     if np.max(np.abs(step), initial=0.) < 1e-10:
@@ -496,6 +513,9 @@ def tick(engine, dt):
 
     inertial = MASS_N_S2_PER_MM / STEP_SECONDS ** 2
     damping = DRAG_NS_PER_MM / STEP_SECONDS
+    swept = wall_sweep_enabled(engine)
+    if swept:
+        prior_wall = tuple(surfaces.frames(engine, rods, position, radius, bonds))
     for _ in range(steps):
         previous = position.copy()
         base = inertial * (previous + STEP_SECONDS * old_rate) + damping * previous + support_force
@@ -510,6 +530,10 @@ def tick(engine, dt):
         _, compression_target, touched = contact(position, radius)
         compression = .65 * (rods.radius - radius) + .35 * compression_target
         radius = rods.radius - compression
+        if swept:
+            next_wall = tuple(surfaces.frames(engine, rods, position, radius, bonds))
+            wall_sweep.require_clear(engine, prior_wall, next_wall)
+            prior_wall = next_wall
         for hand, indices in touched.items():
             state['contactedCells'][hand] = sorted(set(state['contactedCells'].get(hand, ())) |
                                                    {rods.cells[i] for i in indices})

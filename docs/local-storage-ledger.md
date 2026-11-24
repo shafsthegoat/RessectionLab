@@ -64,6 +64,11 @@ The internal source-review continuation at
 links the matched native ventricle views, selected studies, and the private
 fixed-step tests for newly intersecting operative vessel surfaces.
 
+The next continuation at
+`qc/eden2020-glioma-5714812/vascular-reconstruction-continuity-20261123-v8/README.md`
+links the TOF-only Vessel-MAYON comparison and the guarded native-wall
+workspace, replay receipts, and matched app views.
+
 Paths below are relative to the RessectionLab root. This compact ledger covers
 that area, not unrelated personal files elsewhere on the HDD. Presence does not
 establish scientific readiness or a completed build; consult each run's receipts.

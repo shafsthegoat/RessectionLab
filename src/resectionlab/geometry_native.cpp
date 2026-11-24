@@ -7,6 +7,8 @@
 #include <cstdint>
 #include <cstring>
 #include <limits>
+#include <memory>
+#include <numeric>
 #include <vector>
 #include <stdexcept>
 #include <tuple>
@@ -17,6 +19,7 @@
 #include "validation_native.hpp"
 #include "simulation_bindings_native.hpp"
 #include "file_identity_native.hpp"
+#include "wall_sweep_native.hpp"
 
 namespace py = pybind11;
 namespace {
@@ -44,6 +47,62 @@ std::vector<T> checked_array(const py::array& value, const std::vector<py::ssize
 void finite_values(const std::vector<double>& values) {
     for (double value : values)
         if (!std::isfinite(value)) throw py::value_error("native geometry metadata must be finite");
+}
+
+constexpr char wall_sweep_capsule[] = "resectionlab.wall-sweep.v1";
+
+py::capsule make_wall_sweep(const py::array& rest, const py::array& vertices,
+                            const py::array& owners, std::size_t owner_count) {
+    namespace wall = resectionlab::wall_sweep;
+    if (rest.ndim() != 3 || std::size_t(rest.shape(0)) > wall::max_items || owner_count > wall::max_items)
+        throw py::value_error("Native wall sweep exceeds the source geometry limit");
+    const auto count = rest.shape(0);
+    const auto coordinates = checked_array<double>(rest, {count, 3, 3}, "wall triangles");
+    const auto indices = checked_array<std::int64_t>(vertices, {count, 3}, "wall vertices");
+    const auto bindings = checked_array<std::int64_t>(owners, {count, 3}, "wall owners");
+    auto source = std::make_unique<wall::Wall>();
+    source->owner_count = owner_count;
+    source->faces.resize(std::size_t(count));
+    for (std::int64_t i = 0; i < count; ++i) {
+        auto& face = source->faces[i];
+        for (int j = 0; j < 3; ++j) {
+            const auto owner = bindings[3*i+j], vertex = indices[3*i+j];
+            if (owner < 0 || std::size_t(owner) >= owner_count || vertex < 0 || vertex >= 3*count)
+                throw py::value_error("Native wall sweep requires valid vertex and owner indices");
+            face.rest[j] = wall::load(coordinates.data()+9*i+3*j);
+            if (!wall::bounded(face.rest[j]))
+                throw py::value_error("Native wall sweep requires finite bounded source coordinates");
+            face.vertices[j] = vertex;
+            face.owners[j] = owner;
+        }
+        face.box = wall::bounds(face.rest);
+    }
+    source->order.resize(std::size_t(count));
+    std::iota(source->order.begin(), source->order.end(), 0);
+    if (count) source->build(0, int(count));
+    py::capsule result(source.get(), wall_sweep_capsule, [](void* pointer) {
+        delete static_cast<wall::Wall*>(pointer);
+    });
+    source.release();
+    return result;
+}
+
+bool wall_sweep_clear(const py::capsule& source, const py::array& prior,
+                      const py::array& candidate, bool static_check) {
+    namespace wall = resectionlab::wall_sweep;
+    if (!PyCapsule_IsValid(source.ptr(), wall_sweep_capsule))
+        throw py::value_error("Native wall sweep source binding is invalid");
+    const auto& topology = *source.get_pointer<const wall::Wall>();
+    const auto size = static_cast<py::ssize_t>(topology.owner_count);
+    const auto before = checked_array<double>(prior, {size, 3}, "prior wall offsets");
+    const auto after = checked_array<double>(candidate, {size, 3}, "candidate wall offsets");
+    for (py::ssize_t i = 0; i < size; ++i) {
+        if (!wall::bounded(wall::load(before.data()+3*i)) || !wall::bounded(wall::load(after.data()+3*i)))
+            throw py::value_error("Native wall sweep requires finite bounded offsets");
+    }
+    if (!static_check && before == after) return true;
+    py::gil_scoped_release release;
+    return wall::Check(topology, before.data(), after.data(), static_check).run();
 }
 
 double squared_norm(const Triple& value) {
@@ -321,6 +380,11 @@ PYBIND11_MODULE(_geometry_cpp, module) {
     module.attr("BUILD_IDENTITY") = RSL_BUILD_IDENTITY;
     module.attr("MAX_PRIMITIVES") = max_primitives;
     module.attr("MAX_BATCH_ITEMS") = max_items;
+    module.attr("WALL_SWEEP_VERSION") = 1;
+    module.def("make_wall_sweep", &make_wall_sweep, py::arg("rest").noconvert(),
+               py::arg("vertices").noconvert(), py::arg("owners").noconvert(), py::arg("owner_count"));
+    module.def("wall_sweep_clear", &wall_sweep_clear, py::arg("source").noconvert(),
+               py::arg("prior").noconvert(), py::arg("candidate").noconvert(), py::arg("static_check"));
     module.def("capsule_chunk", &capsule_chunk, py::arg("queries").noconvert(),
         py::arg("spans").noconvert(), py::arg("affine").noconvert(), py::arg("spacing").noconvert(),
         py::arg("cell_radius"), py::arg("eps"));

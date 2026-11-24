@@ -52,11 +52,12 @@ def _bounded(value, low, high):
 
 def validate(scene):
     from . import surgical_vessel_rods as rods
+    from . import surgical_wall_sweep as wall_sweep
 
     p = scene.properties.get(PROPERTY)
     if p is None:
         return
-    optional = {'scalpSeamCell', 'biopsyNeckFace', 'vesselMotionModel', rods.GEOMETRY}
+    optional = {'scalpSeamCell', 'biopsyNeckFace', 'vesselMotionModel', rods.GEOMETRY, wall_sweep.PROPERTY}
     if (
         not isinstance(p, dict)
         or set(p) | optional != set(research_profile()) | optional
@@ -71,6 +72,9 @@ def validate(scene):
             raise ValueError('GLIOMA_VESSEL_MOTION_MODEL_REQUIRED')
         if 'vascularGraphV1' not in scene.properties:
             raise ValueError('GLIOMA_VESSEL_MOTION_REQUIRES_MAPPED_SOURCE_CHAINS')
+    if wall_sweep.PROPERTY in p and (p[wall_sweep.PROPERTY] != wall_sweep.POLICY
+                                     or p.get('vesselMotionModel') != rods.MODEL):
+        raise ValueError('VESSEL_WALL_SWEEP_REQUIRES_NATIVE_DISTRIBUTED_RODS')
     if not all(isinstance(p[key], str) and p[key].strip() for key in ('assignment', 'boundary')) or not (
         isinstance(p['sources'], list)
         and p['sources']

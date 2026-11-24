@@ -12,9 +12,11 @@ from resectionlab import surgical_vessel_surface as surfaces
 from resectionlab.surgical_engine import SurgicalEngine
 from resectionlab.surgical_physics_v2 import default_profile
 from resectionlab.surgical_scene import from_case
+from resectionlab import native_backend, surgical_wall_sweep
+from resectionlab.surgical_wall_sweep_reference import WallSweepReference
 
 
-def _fixture():
+def _fixture(*, guarded=False):
     shape = (35, 35, 30)
     spacing = .4
     affine = np.diag([spacing, spacing, spacing, 1.])
@@ -37,6 +39,8 @@ def _fixture():
         'sites': {str(np.ravel_multi_index(cell, shape)): [*(np.asarray(cell) * spacing), radius]
                   for cell in sites + other},
     }
+    if guarded:
+        props[materials.PROPERTY][surgical_wall_sweep.PROPERTY] = surgical_wall_sweep.POLICY
     case = CaseData('native-score-rod', scores, {'brain': brain, 'vessels': vessels}, affine,
                     (SourceRef('fixture', 'synthetic://native-score-rod', provenance='simulated'),),
                     metadata={'anatomy_layers': {'brain': {'kind': 'brain'}, 'vessels': {'kind': 'vessels'}},
@@ -53,8 +57,9 @@ def _action(operation, *, z=None, dt=.1, **fields):
     }
 
 
-def test_native_wall_contact_tracks_passive_dissection_and_verified_replay():
-    engine = _fixture()
+@pytest.mark.parametrize('guarded', [False, True])
+def test_native_wall_contact_tracks_passive_dissection_and_verified_replay(guarded):
+    engine = _fixture(guarded=guarded)
     actions = [_action('exchange', instrument='dissector'), _action('place', z=4.),
                _action('move', z=5.05, dt=.4)]
     for action in actions:
@@ -141,8 +146,9 @@ def test_removed_positive_reextracts_native_wall_without_erasing_untouched_trian
     assert len(baseline.intersection(map(tuple, updated.round(7)))) > .95 * len(baseline)
 
 
-def test_public_scissors_transect_score_wall_and_replay_the_same_cap():
-    engine = _fixture()
+@pytest.mark.parametrize('guarded', [False, True])
+def test_public_scissors_transect_score_wall_and_replay_the_same_cap(guarded):
+    engine = _fixture(guarded=guarded)
     q = Rotation.from_rotvec([0, 0, np.pi / 2]).as_quat().tolist()
     place = _action('place', z=4., parameters={'depthMm': 1.1, 'jawOpeningMm': .2})
     cut = _action('apply', z=5.2, dt=.5)
@@ -157,6 +163,57 @@ def test_public_scissors_transect_score_wall_and_replay_the_same_cap():
     assert not wall.get('cuboidSourceCells')
     restored = SurgicalEngine.restore(engine.scene, json.loads(json.dumps(engine.snapshot())))
     assert restored.view()[rods.FIELD]['editedWallsByLabel']['2'] == wall
+
+
+def test_wall_sweep_rejects_crossing_between_clear_endpoints_and_midpoint():
+    vertices = np.array([[-.10, -.10, 0.], [.10, -.10, 0.], [0., .10, 0.],
+                         [-.025, -.025, .004], [.025, -.025, .004], [0., .025, .004]])
+    faces = np.arange(6, dtype=np.int64).reshape(2, 3)
+    rest = vertices[faces]
+    start = np.zeros((6, 3))
+    crossing = start.copy()
+    crossing[3:, 2] = -.016
+    near_miss_start = start.copy()
+    near_miss_start[3:, 0] = .3
+    delayed_crossing = crossing * .75
+    reference = WallSweepReference(rest, faces, faces, 6)
+    checkers = [reference.clear]
+    if native_backend.wall_sweep_available():
+        source = native_backend.make_wall_sweep(rest, faces, faces, 6)
+
+        def native_clear(prior, candidate, *, static=False):
+            return native_backend.wall_sweep_clear(source, prior, candidate, static)
+
+        checkers.append(native_clear)
+    for clear in checkers:
+        for pose in (start, crossing * .5, crossing):
+            assert clear(pose, pose, static=True)
+        assert not clear(start, crossing)
+        assert not clear(start, delayed_crossing)
+        assert clear(near_miss_start, crossing)
+
+
+def test_wall_sweep_rolls_back_the_whole_stroke_after_a_later_microstep(monkeypatch):
+    engine = _fixture(guarded=True)
+    for action in (_action('exchange', instrument='dissector'), _action('place', z=4.)):
+        assert engine.step(action)['status'] == 'accepted'
+    previous = engine.snapshot()
+    require_clear = surgical_wall_sweep.require_clear
+    attempted_times = set()
+
+    def simulate_late_crossing(candidate, prior, proposed, *, static=False):
+        if not static:
+            attempted_times.add(candidate.state['elapsedSeconds'])
+            if len(attempted_times) == 3:
+                raise ValueError('VESSEL_WALL_SWEEP_UNSAFE: synthetic crossing')
+        require_clear(candidate, prior, proposed, static=static)
+
+    monkeypatch.setattr(surgical_wall_sweep, 'require_clear', simulate_late_crossing)
+    receipt = engine.step(_action('move', z=5.05, dt=.4))
+    assert len(attempted_times) == 3
+    assert receipt['status'] == 'rejected'
+    assert receipt['reasonCode'] == 'VESSEL_WALL_SWEEP_UNSAFE'
+    assert engine.snapshot() == previous
 
 
 def test_unresolved_cut_falls_back_only_in_its_source_component():

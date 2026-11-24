@@ -504,6 +504,8 @@ class SurgicalEngine:
                 cell: name for name, body in scene.properties['operativeExposureV1']['bodies'].items()
                 for cell in body['cells']}
             self.state['operativeInstrumentCatalogHash'] = semantic_digest(catalog(operative=self._operative_tool_revision))
+        if vessel_rods.wall_sweep_enabled(self):
+            vessel_rods.check_wall_topology(self)
         self._native_initial_state_id = self.state_id
 
     @property
@@ -1070,7 +1072,7 @@ class SurgicalEngine:
                         code = str(error).split(':', 1)[0]
                         if ((code == 'PROTECTED_STRUCTURE' and not getattr(self, '_restoring_legacy_guard_partial', False))
                                 or self._cranial_access is not None
-                                or code.startswith(('CRANIAL_ACCESS_', 'CRANIOTOMY_', 'BONE_FLAP_'))):
+                                or code.startswith(('CRANIAL_ACCESS_', 'CRANIOTOMY_', 'BONE_FLAP_', 'VESSEL_WALL_SWEEP_'))):
                             # Discard the complete proposed transaction, including
                             # safe treatment earlier in this same drawn stroke.
                             raise
@@ -1233,6 +1235,9 @@ class SurgicalEngine:
             from .surgical_planar_maneuver import advance
             return advance(self, key, p, q, dt)
         from .surgical_motion import envelopes, swept_envelopes, pair_conflict
+        guarded_wall = vessel_rods.wall_sweep_enabled(self)
+        if guarded_wall:
+            wall_topology = vessel_rods.wall_topology(self)
         slot = self.state['slots'][key]; tool = self.tools[slot['instrument']]; params = self.parameters(slot)
         if self.state['holds'].get(key, {}).get('kind') == 'membrane-patch-v1':
             if (rotation(q)*rotation(slot['quaternion']).inv()).magnitude() > 1e-8:
@@ -1422,6 +1427,8 @@ class SurgicalEngine:
             from . import surgical_vessels_v2 as vessel
             # Force is an explicit proxy, never inferred from a segmentation.
             if not shared_clock: vessel.contact(self, vessels, dt, params['forceN'] if active else 0.)
+            if guarded_wall:
+                wall_topology = vessel_rods.check_wall_topology(self, wall_topology)
             brain.tick(self, dt)
             if compliant:
                 vessel_rods.check_working_axis(self, key, op)
@@ -1441,6 +1448,8 @@ class SurgicalEngine:
             drill.end_step(self, dt)
             bipolar_heat.end_step(self, dt)
             vessel.tick(self, dt)
+            if guarded_wall:
+                vessel_rods.check_wall_topology(self, wall_topology)
         # A coupled field or the other hand can approach a parked flap too.
         for hold_key, hold in self.state['holds'].items():
             if hold.get('kind') == 'bone-flap-v1':

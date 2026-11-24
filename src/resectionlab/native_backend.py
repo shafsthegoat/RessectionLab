@@ -26,6 +26,8 @@ MAX_PRIMITIVES = 32768
 MAX_BATCH_ITEMS = 64
 MAX_ENGINE_COPY_ITEMS = 262144
 MAX_ENGINE_COPY_DEPTH = 64
+_WALL_SWEEP_VERSION = 1
+_WALL_SWEEP_ENTRY_POINTS = ('make_wall_sweep', 'wall_sweep_clear')
 
 
 class NativeUnavailableError(RuntimeError):
@@ -117,15 +119,21 @@ def _load():
             _files[path] = (_stat(path), expected)
         for path in (binary, manifest_path):
             _files[path] = (_stat(path), _digest(path))
-        _entry_points = tuple((name, getattr(module, name)) for name in
-                              ('capsule_chunk', 'copy_builtin_json', 'segment_predicate', 'copy_engine_graph',
+        sweep_version = build.get('wallSweepVersion')
+        if (sweep_version is not None and (type(sweep_version) is not int or sweep_version != _WALL_SWEEP_VERSION)
+                or getattr(module, 'WALL_SWEEP_VERSION', None) != sweep_version
+                or ((sweep_version is None) != all(not hasattr(module, name) for name in _WALL_SWEEP_ENTRY_POINTS))):
+            raise ValueError('wall sweep capability differs from build manifest')
+        base_entry_points = ('capsule_chunk', 'copy_builtin_json', 'segment_predicate', 'copy_engine_graph',
                                'segment_predicate_batch', 'run_trajectory', 'physical_substep', 'owned_digest',
                                'function_identities', 'occupancy_values', 'canonical_json_digest',
                                'motion_envelopes', 'cranial_cells_partition',
                                'simulation_create', 'simulation_identity', 'simulation_clone',
                                'simulation_data', 'simulation_import', 'simulation_step',
                                'simulation_prepare', 'simulation_query', 'simulation_json', 'simulation_stats',
-                               'simulation_json_guard', 'bindings_unchanged'))
+                               'simulation_json_guard', 'bindings_unchanged')
+        capabilities = _WALL_SWEEP_ENTRY_POINTS if sweep_version is not None else ()
+        _entry_points = tuple((name, getattr(module, name)) for name in base_entry_points + capabilities)
         if (sys.modules.get(_MODULE_NAME) is not module
                 or Path(module.__spec__.origin).resolve() != binary
                 or any(type(function) is not BuiltinFunctionType
@@ -242,6 +250,24 @@ def backend_identity():
 def cpp_enabled():
     _check_live()
     return _module is not None
+
+
+def wall_sweep_available():
+    _check_live()
+    supported = _module is not None and _identity['buildIdentity'].get('wallSweepVersion') == _WALL_SWEEP_VERSION
+    if not supported and _requested == 'cpp':
+        raise NativeUnsupportedError('C++ wall sweep requires a wheel with the native wall sweep capability')
+    return supported
+
+
+def make_wall_sweep(rest, vertices, owners, owner_count):
+    _check_live()
+    return _module.make_wall_sweep(rest, vertices, owners, owner_count)
+
+
+def wall_sweep_clear(source, prior, candidate, static_check):
+    _check_live()
+    return _module.wall_sweep_clear(source, prior, candidate, static_check)
 
 
 def reference_call(count=1, *, unsupported=False):

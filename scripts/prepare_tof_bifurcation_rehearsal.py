@@ -19,6 +19,7 @@ from resectionlab.imaging import save_case
 from resectionlab.surgical_glioma_materials import research_profile, RETAINED_VESSEL_SEGMENTS
 from resectionlab.surgical_physics_v2 import default_profile
 from resectionlab.surgical_scene import from_case
+from resectionlab.surgical_wall_sweep import POLICY as WALL_SWEEP_POLICY, PROPERTY as WALL_SWEEP_PROPERTY
 
 HDD = Path('/Volumes/shafrir/old coding projects/RessectionLabData')
 UUID = '9CC3623C-E38B-3EEE-B6BB-B9A06C193700'
@@ -293,13 +294,17 @@ def spatial_properties(paths, geometry, brain, vessel, affine, motion, subject):
     return {'gliomaMaterialsV1': profile, 'tissuePhysicsV2': physics, 'vascularGraphV1': graph}
 
 
-def stage(root, output, motion, subject, junction):
+def stage(root, output, motion, subject, junction, *, guard_native_wall=False):
+    if guard_native_wall and motion != 'rods':
+        raise ValueError('A native wall sweep requires the score-bound rod model')
     image, score, vessel, graph, affine, start, receipt = load_source(root, subject, junction)
     spacing = np.linalg.norm(affine[:3, :3], axis=0)
     paths = source_routes(graph, vessel, start, spacing, junction)
     geometry = site_geometry(paths, vessel, score, affine)
     brain = modeled_exposure(image, vessel, paths, spacing)
     properties = spatial_properties(paths, geometry, brain, vessel, affine, motion, subject)
+    if guard_native_wall:
+        properties['gliomaMaterialsV1'][WALL_SWEEP_PROPERTY] = WALL_SWEEP_POLICY
     receipt.update(
         sourceBranches={key: (route + start).tolist() for key, route in paths.items()},
         vesselSourceCells=int(vessel.sum()), modeledBrainCells=int(brain.sum()),
@@ -331,6 +336,10 @@ def stage(root, output, motion, subject, junction):
                                            receipt['nativeSourceSha256'], native_frame='RAS+'),),
                     unknowns=(ASSUMPTIONS,), metadata=metadata, **probability)
     scene = from_case(case)
+    if guard_native_wall:
+        from resectionlab.surgical_engine import SurgicalEngine
+
+        SurgicalEngine(scene)
     output.mkdir(exist_ok=False)
     path = save_case(case, output / 'native-tof-bifurcation.ressectionlab')
     np.savez_compressed(output / 'research-layout.npz', brain=brain, vessel=vessel, affine=affine,
@@ -345,6 +354,7 @@ def main():
     parser.add_argument('output', type=Path)
     parser.add_argument('--root', type=Path, default=HDD)
     parser.add_argument('--motion', choices=['baseline', 'rods'], default='rods')
+    parser.add_argument('--guard-native-wall', action='store_true', help='Certify score-wall clearance during rod motion')
     parser.add_argument('--subject', required=True)
     parser.add_argument('--junction-native', type=int, nargs=3, metavar=('I', 'J', 'K'), required=True)
     args = parser.parse_args()
@@ -354,7 +364,8 @@ def main():
     output = args.output.resolve()
     if not output.is_relative_to(root / CURRENT / 'operative-scene'):
         parser.error('Write restricted derivatives below the verified campaign operative-scene folder')
-    print(stage(root, output, args.motion, args.subject, np.asarray(args.junction_native)), flush=True)
+    print(stage(root, output, args.motion, args.subject, np.asarray(args.junction_native),
+                guard_native_wall=args.guard_native_wall), flush=True)
 
 
 if __name__ == '__main__':

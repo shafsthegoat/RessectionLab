@@ -122,6 +122,10 @@ components. The startup view focuses on the remaining network. Earlier review
 layers and the original union are selectable. Open or ambiguous skull sections
 retain their original vessel evidence.
 
+Use the acquired TOF to judge vessel continuity. Structural MRI provides
+context for reviewing detached groups, and native TOF-supported paths stay in
+the selected reconstruction.
+
 For a detached estimate inside the head, `--compartment source-disagreement`
 stages a final display split from an acquired TOF and bound structural review.
 The reviewed component remains available in a muted layer. The split uses the
@@ -132,6 +136,20 @@ source-bound vessel triangles. The exposure banks, vessel attachments and
 mechanical properties are modeled. The private continuity run index links the
 portable workspace, recorded actions, source and collision checks, and hidden
 replay commands. See the [private storage ledger](local-storage-ledger.md).
+
+For a new score-bound rod rehearsal, pass `--guard-native-wall` to
+`scripts/prepare_tof_bifurcation_rehearsal.py`. The saved materials policy
+checks the continuous motion of nonadjacent score triangles at each rod step.
+The engine checks new caps at a topology edit, including steps with no rod
+motion. A rejected stroke leaves the tool and vessel at the pre-stroke state.
+The verified native wheel accelerates the same check available through the
+Python reference implementation.
+
+This policy uses the native contact and display owner map. It protects against
+intersections between nonadjacent faces along a linear wall interval, including
+across source labels. Closely spaced adjacent faces can still fold under load.
+The preparation flag records the policy in the scene identity so earlier
+recordings remain reproducible with their original materials declaration.
 
 ## Prospective intake receipt
 

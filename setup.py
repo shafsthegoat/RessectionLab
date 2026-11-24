@@ -27,7 +27,7 @@ SOURCES = ('geometry_native.cpp', 'state_native.hpp', 'executor_native.hpp',
            'simulation_engine_native.hpp', 'simulation_bindings_native.hpp',
            'simulation_stats_native.hpp', 'simulation_intset_native.hpp',
            'simulation_admission_native.hpp', 'simulation_deformation_native.hpp',
-           'file_identity_native.hpp')
+           'file_identity_native.hpp', 'wall_sweep_native.hpp')
 FLAGS = ['-O3', '-fno-fast-math', '-ffp-contract=off']
 
 
@@ -46,6 +46,7 @@ class NativeBuild(build_ext):
             'compiler': {'path': compiler_path, 'version': subprocess.check_output(
                 [compiler_path, '--version'], text=True).splitlines()[0]},
             'flags': list(self.extensions[0].extra_compile_args), 'cppStandard': 17, 'pybind11': pybind11.__version__,
+            'wallSweepVersion': 1,
             'python': {'version': platform.python_version(), 'abi': sysconfig.get_config_var('SOABI')},
             'platform': {'system': platform.system(), 'machine': platform.machine()},
         }
