@@ -97,6 +97,12 @@ support-release replay, cold checks and captured walkthrough. The EDEN2020
 attached-region cohort table and source-pane checks are indexed in
 `qc/eden2020-glioma-5714812/vascular-reconstruction-20261123-v1/README.md`.
 
+The next operative and alignment checks are indexed in
+`qc/operative-source-appearance-20261124-v1/README.md` and
+`qc/eden2020-glioma-5714812/local-alignment-evidence-20261124-v1/README.md`.
+The PTNT_0952 exact attached-exterior correction trial is indexed in
+`qc/eden2020-glioma-5714812/attached-exterior-20261124.5pgejhvx/README.md`.
+
 Paths below are relative to the RessectionLab root. This compact ledger covers
 that area, not unrelated personal files elsewhere on the HDD. Presence does not
 establish scientific readiness or a completed build; consult each run's receipts.

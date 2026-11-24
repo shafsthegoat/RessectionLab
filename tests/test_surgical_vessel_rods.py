@@ -18,7 +18,7 @@ from resectionlab.surgical_wall_sweep_reference import WallSweepReference
 
 
 def _fixture(*, guarded=False, vertex_transport=False, section_mechanics=False, conditioned=False,
-             section_overrides=None, vessel_contact=False, parallel=False):
+             section_overrides=None, vessel_contact=False, parallel=False, soft_contact=False, soft_bank=False):
     shape = (35, 35, 30)
     spacing = .4
     affine = np.diag([spacing, spacing, spacing, 1.])
@@ -36,6 +36,8 @@ def _fixture(*, guarded=False, vertex_transport=False, section_mechanics=False, 
     brain = np.zeros(shape, dtype=bool)
     for cell in support.values():
         brain[cell] = True
+    if soft_bank:
+        brain[11:24, 13:18, 17:21] = True
     props = materials.generated_vascular_properties(shape, sites, other, support, 'native-score-rod',
                                                     vessel_motion_model=rods.MODEL)
     props[materials.PROPERTY][rods.GEOMETRY] = {
@@ -48,7 +50,7 @@ def _fixture(*, guarded=False, vertex_transport=False, section_mechanics=False, 
     if vertex_transport:
         props[materials.PROPERTY][vertex_motion.PROPERTY] = vertex_motion.POLICY
     if section_mechanics:
-        section = rods.section_profile(vessel_contact=vessel_contact)
+        section = rods.section_profile(vessel_contact=vessel_contact, soft_contact=soft_contact)
         if section_overrides:
             section.update(section_overrides)
         props[materials.PROPERTY][rods.SECTION_MECHANICS] = section
@@ -291,6 +293,48 @@ def test_native_inter_vessel_contact_transfers_load_and_replays_without_crossing
         assert replay.step(action) == receipt
     assert replay.view()[rods.FIELD] == resolved.view()[rods.FIELD]
     assert 0. <= passive_excursion(resolved) < .25 * loaded
+
+
+def test_native_vessel_contact_pushes_and_releases_retained_soft_tissue():
+    baseline, coupled = (_fixture(guarded=True, vertex_transport=True, section_mechanics=True,
+                                  conditioned=True, vessel_contact=True, soft_contact=enabled, soft_bank=True)
+                         for enabled in (False, True))
+    assert np.array_equal(baseline.scene.labels, coupled.scene.labels)
+    active_vessel = rods.definitions(coupled)
+    held_supports = {cell for _, cell in active_vessel.supports}
+
+    def tissue_motion(engine):
+        view = engine.view()
+        support = np.asarray([view['deformation'][str(cell)] for cell in view['deformationModel']['active']
+                              if cell not in held_supports and str(cell) in view['deformation']]).reshape(-1, 3)
+        return np.max(support[:, 2], initial=0.)
+
+    for engine in (baseline, coupled):
+        for action in (_action('exchange', instrument='dissector'), _action('place', z=4.)):
+            assert engine.step(action)['status'] == 'accepted'
+        assert tissue_motion(engine) == 0.
+        assert engine.step(_action('move', z=5.05, dt=.4))['status'] == 'accepted'
+    first = tissue_motion(coupled)
+    assert tissue_motion(baseline) == 0.
+    assert .015 < first < .035
+    center_cell = coupled.scene.properties[materials.PROPERTY]['vesselAttachments'][1][0]
+    center = active_vessel.index[center_cell]
+    assert rods._current(coupled, active_vessel)[0][center, 2] < rods._current(baseline, active_vessel)[0][center, 2]
+    assert coupled.step(_action('move', z=5.15, dt=.25))['status'] == 'accepted'
+    loaded = tissue_motion(coupled)
+    assert first < loaded < .065
+    frames = rods._accepted_frames(coupled, active_vessel)
+    assert surgical_wall_sweep.is_clear(coupled, frames, frames, static=True)
+    assert coupled.view()[rods.FIELD]['sectionModel'] == rods.SECTION_TISSUE_CONTACT_MODEL
+
+    replay = SurgicalEngine.restore(coupled.scene, json.loads(json.dumps(coupled.snapshot())), force_verify=True)
+    assert replay.state['deformation'] == coupled.state['deformation']
+    for action in (_action('withdraw', z=4., dt=.35), _action('inspect', dt=.8)):
+        result = coupled.step(action)
+        assert result['status'] == 'accepted'
+        assert replay.step(action) == result
+    assert replay.state['deformation'] == coupled.state['deformation']
+    assert 0. < tissue_motion(coupled) < .35 * loaded
 
 
 def test_removed_positive_reextracts_native_wall_without_erasing_untouched_triangles():

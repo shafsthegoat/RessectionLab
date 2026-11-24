@@ -164,7 +164,7 @@ Set `gliomaMaterialsV1.vesselMotionModel` to `distributed-source-rods-v1` for an
 
 The fixed integration step is 1/120 s. The assigned per-site mass and drag are 0.000035 N·s²/mm and 0.0025 N·s/mm. The support stiffness is 0.035 N/mm, the tip contact stiffness is 0.18 N/mm and the radial contact stiffness is 0.25 N/mm. Local radius reduction is bounded to 25% of rest radius. The declared axial stiffness and traction limit remain engineering parameters. These values support reproducible research controls. Patient wall stiffness, tissue attachment strength, and flow are unresolved.
 
-An optional `vesselRodGeometry` supplies a source description and a `sites` map of mapped source cell IDs to RAS-mm center and radius. A case with retained native scores uses the same owned 0.5-isosurface triangles for display and instrument contact. The engine supplies accepted wall-owner displacements through `view().vesselMechanics`. Removing a vessel cell re-extracts the score wall with that positive excluded. A transection whose local wall forms two closed contours creates capped stumps by clipping the native triangles. An unresolved cut uses displaced source cuboids for the affected connected ownership group and retains the native score wall for other groups. The graph preserves severed source bonds. Vessel self-contact and coupled contact pressure on neighboring tissue remain outside the rod model.
+An optional `vesselRodGeometry` supplies a source description and a `sites` map of mapped source cell IDs to RAS-mm center and radius. A case with retained native scores uses the same owned 0.5-isosurface triangles for display and instrument contact. The engine supplies accepted wall-owner displacements through `view().vesselMechanics`. Removing a vessel cell re-extracts the score wall with that positive excluded. A transection whose local wall forms two closed contours creates capped stumps by clipping the native triangles. An unresolved cut uses displaced source cuboids for the affected connected ownership group and retains the native score wall for other groups. The graph preserves severed source bonds. The coupled contact profile below handles local soft-tissue loads.
 
 Run the native-wall, passive contact, support-release, cut-topology and replay controls with `.venv/bin/python -m pytest -q tests/test_surgical_vessel_rods.py`.
 
@@ -183,7 +183,29 @@ Closest points on the current indexed wall define a force patch per working-tool
 
 The v2 profile can resolve normal contact between disconnected native walls. If the original step fails the continuous wall check, the solver finds nearby triangle pairs on distinct connected components. A separating direction from the last accepted pose defines a unilateral constraint. The solver transfers opposing normal loads through each triangle corner's vertex-to-rod weights and the factorized damped rod stiffness. An assigned separation of 0.0002 mm provides numerical clearance for the projected constraint. The same translation field moves the visible wall and its collision triangles. This uses the rod's projection-based integration with a bounded contact solve. [Projective dynamics](https://doi.org/10.1145/2601097.2601116)
 
-The continuous guard checks local facet collapse, folds across shared edges, and crossing between nonincident triangles. It rechecks the projected increment and can try smaller increments if the correction fails. The prior pose stays in force if no trial passes. The working instrument axis also needs clearance from retained vessel anatomy. General wall-to-tissue contact, same-component wall contact, inter-vessel friction, pressure-dependent narrowing from neighboring vessels, and pulsatile coupling remain unresolved. Vessel material and support values are assigned research parameters.
+The continuous guard checks local facet collapse, folds across shared edges, and crossing between nonincident triangles. It rechecks the projected increment and can try smaller increments if the correction fails. The prior pose stays in force if no trial passes. The working instrument axis also needs clearance from retained vessel anatomy. Same-component wall contact, inter-vessel friction, pressure-dependent narrowing from neighboring vessels, and pulsatile coupling remain unresolved. Vessel material and support values are assigned research parameters.
+
+#### Native wall contact with surrounding tissue
+
+New cursor-local patient preparations choose `linear-annular-research-contact-v3`.
+The solver associates near-rest native wall triangle samples with exposed
+soft-cell faces. A bounded, compressive normal force acts on the wall and an
+opposing average reaction advances the soft-cell lattice in the same 120 Hz
+increment. The normal stiffness uses an effective modulus of three times the
+assigned equilibrium shear modulus, weighted by projected contact area and
+cell width. The existing assigned shear range remains a research input.
+Vacated support cells cease to carry force. Existing saves keep the model
+stored in their physics profile.
+
+In the generated paired control, peak tissue motion was 0.022 mm on initial
+loading and 0.054 mm on continued loading. The same 12-action TopCoW-014
+requests accepted and cold-replayed with both contact profiles. Peak tissue
+motion with the new profile was 0.177 µm. The paired controls and M2 Pro timings
+are indexed under the [private storage ledger](local-storage-ledger.md).
+The soft-cell interface is sampled near its rest position and frictionless.
+Continuous collision checks still apply to the native vessel triangles. A
+continuous deforming tissue wall, calibrated patient material properties, and
+full sliding contact remain unverified.
 
 The parallel-vessel control uses two independently supported 13-site rods and a 784-triangle native score wall. The same 0.4 s dissector stroke rolls back under v1 and advances under v2. The passive vessel moves 0.133 mm, reaches 0.250 mm with continued loading, and recoils below one quarter of that displacement after withdrawal and relaxation. The accepted wall clears the guard and cold replay reproduces its pose and subsequent receipts. Run `.venv/bin/python -m pytest -q tests/test_surgical_vessel_rods.py -k inter_vessel_contact`.
 

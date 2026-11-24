@@ -92,13 +92,21 @@ def _blocked(engine):
             for e in engine.state.get(name, []) if isinstance(e, (list, tuple)) and len(e) == 2}
 
 
+def _neighbor_ids(shape, cell):
+    cell = int(cell)
+    wide = shape[1] * shape[2]
+    i, tail = divmod(cell, wide)
+    j, k = divmod(tail, shape[2])
+    for axis, (coordinate, extent, stride) in enumerate(zip((i, j, k), shape, (wide, shape[2], 1))):
+        if coordinate > 0:
+            yield cell - stride, axis
+        if coordinate + 1 < extent:
+            yield cell + stride, axis
+
+
 def _neighbors(engine, cell):
-    ijk = list(np.unravel_index(cell, engine.scene.shape))
-    for axis in range(3):
-        for sign in (-1, 1):
-            other = ijk.copy(); other[axis] += sign
-            if 0 <= other[axis] < engine.scene.shape[axis]:
-                yield int(np.ravel_multi_index(tuple(other), engine.scene.shape)), float(np.linalg.norm(engine.scene.affine[:3, axis]))
+    for neighbor, axis in _neighbor_ids(engine.scene.shape, cell):
+        yield neighbor, float(np.linalg.norm(engine.scene.affine[:3, axis]))
 
 
 def begin_hold(engine, key, cells, position):
@@ -170,7 +178,7 @@ def _system(engine, p, ids, anchors, retained, blocked):
                  local_cuts, held, tuple((k, p[k]) for k in sorted(profile())))
     cached = getattr(engine, '_deformation_system_v2', None)
     if cached and cached[0] == signature: return cached[1:]
-    bonds = sorted((c, n) for c in ids for n, _ in _neighbors(engine, c)
+    bonds = sorted((c, n) for c in ids for n, _ in _neighbor_ids(shape, c)
                    if c < n and n in retained and (c, n) not in local_cuts)
     n = len(ids); index = {c: i for i, c in enumerate(ids)}
     stiffness = np.array([p['tumorStiffnessNPerMm'] if _material(engine, c) == 'tumor' else p['brainStiffnessNPerMm'] for c in ids])
@@ -220,6 +228,38 @@ def _obstacle_collision(engine, vox, inside, removed, blocking_labels):
     return bool(np.any(blocked & ~np.isin(cells, removed)))
 
 
+def _activate_contact_patch(engine, model, cells, excluded, max_nodes):
+    active = set(model['active']) - excluded
+    anchors = set(model['anchors'])
+    free = active - anchors
+    seeds = set(cells) - excluded
+    if seeds <= free:
+        return
+    active.update(seeds)
+    if len(active) > max_nodes:
+        raise ValueError('VESSEL_TISSUE_NODE_LIMIT: insufficient local lattice nodes for contact')
+    blocked = _blocked(engine)
+    cache = {}
+
+    def neighbors(cell):
+        if cell not in cache:
+            cache[cell] = {n for n, _ in _neighbor_ids(engine.scene.shape, cell) if n not in excluded
+                           and tuple(sorted((cell, n))) not in blocked
+                           and _material(engine, n) in ('soft_tissue', 'brain', 'tumor')}
+        return cache[cell]
+
+    # Bind the loaded cells to at most two local tissue shells. Existing holds
+    # keep their active cells and the patch boundary anchors remain clamped.
+    frontier = seeds
+    for _ in range(2):
+        new = set().union(*(neighbors(cell) for cell in frontier)) - active
+        frontier = set(sorted(new)[:max_nodes - len(active)])
+        active.update(frontier)
+    held = {c for hold in _holds(engine) for c in hold['cells']}
+    model['active'] = sorted(active)
+    model['anchors'] = sorted(cell for cell in active - held - seeds - free if neighbors(cell) - active)
+
+
 def tick(engine, dt, *, vessel_tool_motion=None):
     initialize(engine)
     if not np.isfinite(dt) or dt < 0: raise ValueError('INVALID_DEFORMATION_TIME')
@@ -233,24 +273,33 @@ def tick(engine, dt, *, vessel_tool_motion=None):
         from .surgical_position import activate_exposed_patch
         activate_exposed_patch(engine, radius_mm=p['radiusMm'], max_nodes=p['maxNodes'])
     rigid = rigid_cells(engine)
-    ids = [c for c in model['active'] if c not in removed and c not in rigid]
-    model['active'] = ids
     for h in engine.state['holds'].values(): h['cells'] = [c for c in h['cells'] if c not in removed]
     material_profile = engine.scene.properties.get('gliomaMaterialsV1')
-    retained = set(ids)
     vessel_displacements = {}
     distributed = False
+    coupled_vessels = False
+    wall_reactions = {}
     if material_profile:
         from .surgical_glioma_materials import move_vessels, retained_vessel_segments, vessel_displacements as vessel_motion
         from . import surgical_vessel_rods as rods
         distributed = rods.enabled(engine)
         if distributed:
+            coupled_vessels = rods.soft_contact_enabled(engine)
+            if coupled_vessels:
+                # Advance rods against the current lattice and hold their mean
+                # accepted contact reaction over this lattice increment.
+                wall_reactions = rods.tick(engine, dt, tool_motion=vessel_tool_motion, excluded_tissue=rigid) or {}
+                if wall_reactions:
+                    _activate_contact_patch(engine, model, wall_reactions, removed | rigid, p['maxNodes'])
             vessel_displacements = {str(cell): value for cell, value in vessel_motion(engine).items()}
         elif retained_vessel_segments(engine):
             deformation = engine.state['deformation']
             vessel_displacements = {str(vessel): deformation[str(vessel)]
                                     for vessel, _ in material_profile['vesselAttachments']
                                     if vessel not in removed and str(vessel) in deformation}
+    ids = [c for c in model['active'] if c not in removed and c not in rigid]
+    model['active'] = ids
+    retained = set(ids)
     for c in list(engine.state['deformation']):
         if int(c) not in retained and c not in vessel_displacements:
             engine.state['deformation'].pop(c)
@@ -268,8 +317,10 @@ def tick(engine, dt, *, vessel_tool_motion=None):
                          activeReferenceVolumeMm3=0., activeDeformedVolumeMm3=0.,
                          minVolumeRatio=1., maxVolumeRatio=1.)
     if not ids:
-        if distributed:
+        if distributed and not coupled_vessels:
             rods.tick(engine, dt, tool_motion=vessel_tool_motion)
+        if coupled_vessels:
+            model['remainderSeconds'] = engine.state[rods.FIELD]['remainderSeconds']
         return
     blocked = _blocked(engine)
     anchors = sorted(set(model['anchors']) & retained)
@@ -301,15 +352,18 @@ def tick(engine, dt, *, vessel_tool_motion=None):
     if 'patientPosition' in engine.state:
         from .surgical_position import gravity_forces_n
         forcing += gravity_forces_n(engine, ids)
+    for cell, force in wall_reactions.items():
+        forcing[index[cell]] += force
     if diagnostic is not None:
         diagnostic['forceCapNodeTicks'] += int(np.count_nonzero(np.linalg.norm(forcing, axis=1) > p['maxForceN']))
     force_scale = np.minimum(1., p['maxForceN'] / np.maximum(np.linalg.norm(forcing, axis=1), 1e-15))
     forcing *= force_scale[:, None]
     track_mechanics = steps and mechanical.enabled(engine)
-    if track_mechanics:
-        labels = engine.scene.labels.ravel()[ids]
+    if track_mechanics or coupled_vessels:
         edge_nodes = np.asarray([(i, j) for i, j, _ in edges], dtype=int).reshape(-1, 2)
         edge_lengths = np.asarray([length for _, _, length in edges])
+    if track_mechanics:
+        labels = engine.scene.labels.ravel()[ids]
         retractor_cells = sorted({c for key, hold in engine.state['holds'].items()
                                   if 'target' in hold and engine.state['slots'][key]['instrument'] == 'brain_retractor'
                                   for c in hold['cells'] if c in index})
@@ -326,6 +380,12 @@ def tick(engine, dt, *, vessel_tool_motion=None):
     # the limit, outside ordinary magnitudes, or when collecting diagnostics.
     strain_limit = p['maxEdgeStrain'] * min((length for _, _, length in edges), default=0.)
     safe_component = strain_limit / 8 if 2e-15 < strain_limit < 1e150 and diagnostic is None else 0.
+    inverse = engine.scene.inverse[:3, :3]
+    # Each index-space gradient entry is bounded by twice the maximum
+    # displacement component. The smaller determinant bound is sufficient
+    # both for the deformation gradient cap and for its volume bounds.
+    gradient_safe = (1.18 ** (1 / 3) - 1) / (7. * np.linalg.norm(inverse)) if coupled_vessels else 0.
+    same_voxel_safe = .49 / np.abs(inverse).sum(axis=1).max() if coupled_vessels else 0.
     velocity = np.zeros_like(u)
     for _ in range(steps):
         old = u.copy(); rhs = (p['dragNsPerMm'] / h * u + forcing).ravel()
@@ -339,23 +399,28 @@ def tick(engine, dt, *, vessel_tool_motion=None):
         # Global rescaling preserves continuity while bounding every bond strain.
         scale = 1.
         if not (safe_component and np.max(np.abs(u)) < safe_component):
-            scale = min((p['maxEdgeStrain'] * length / max(np.linalg.norm(u[j] - u[i]), 1e-15) for i, j, length in edges), default=1.)
+            if coupled_vessels:
+                stretch = np.linalg.norm(u[edge_nodes[:, 1]] - u[edge_nodes[:, 0]], axis=1)
+                scale = np.min(p['maxEdgeStrain'] * edge_lengths / np.maximum(stretch, 1e-15), initial=1.)
+            else:
+                scale = min((p['maxEdgeStrain'] * length / max(np.linalg.norm(u[j] - u[i]), 1e-15) for i, j, length in edges), default=1.)
         if diagnostic is not None:
             diagnostic['strainProjectionSteps'] += int(scale < 1)
             ratio = max((float(np.linalg.norm(u[j] - u[i]) / length) for i, j, length in edges), default=0.)
             diagnostic['maxPreStrainProjectionNeighborRatio'] = max(diagnostic['maxPreStrainProjectionNeighborRatio'], ratio)
         if scale < 1: u *= scale
-        if material_profile:
+        if material_profile and not (gradient_safe and np.max(np.abs(u)) < gradient_safe):
             from .surgical_glioma_materials import limit_gradient
             u = limit_gradient(stencil, u)
         # Conservative swept point-in-source-cell obstacle constraint; collision
         # integration additionally accounts for the displaced voxel's extent.
         collision = False
-        for alpha in (.25, .5, .75, 1.):
-            world = rest + old + alpha * (u - old)
-            vox = np.rint(world @ engine.scene.inverse[:3, :3].T + engine.scene.inverse[:3, 3]).astype(int)
-            inside = np.all((vox >= 0) & (vox < np.array(engine.scene.shape)), axis=1)
-            collision |= _obstacle_collision(engine, vox, inside, removed_array, blocking_labels)
+        if not (same_voxel_safe and max(np.max(np.abs(old)), np.max(np.abs(u))) < same_voxel_safe):
+            for alpha in (.25, .5, .75, 1.):
+                world = rest + old + alpha * (u - old)
+                vox = np.rint(world @ inverse.T + engine.scene.inverse[:3, 3]).astype(int)
+                inside = np.all((vox >= 0) & (vox < np.array(engine.scene.shape)), axis=1)
+                collision |= _obstacle_collision(engine, vox, inside, removed_array, blocking_labels)
         # Reject the coupled increment as a whole: clamping single nodes would
         # introduce fresh strain discontinuities after the strain projection.
         if collision: u = old
@@ -390,13 +455,18 @@ def tick(engine, dt, *, vessel_tool_motion=None):
         engine.state['deformation'] = {**vessel_displacements, **{str(c): u[i].tolist() for i, c in enumerate(ids)}}
         model['velocities'] = {str(c): velocity[i].tolist() for i, c in enumerate(ids)}
         model['elasticEnergyNmm'] = float(.5 * u.ravel() @ (K @ u.ravel()))
-        model['maxNeighborDisplacementRatio'] = max((float(np.linalg.norm(u[j] - u[i]) / length) for i, j, length in edges), default=0.)
+        if coupled_vessels:
+            stretch = np.linalg.norm(u[edge_nodes[:, 1]] - u[edge_nodes[:, 0]], axis=1)
+            model['maxNeighborDisplacementRatio'] = float(np.max(stretch / edge_lengths, initial=0.))
+        else:
+            model['maxNeighborDisplacementRatio'] = max((float(np.linalg.norm(u[j] - u[i]) / length) for i, j, length in edges), default=0.)
         model['activeNodes'] = len(ids)
         model['model'] = p['model']
         if material_profile:
             from .surgical_glioma_materials import record_lattice
             record_lattice(engine, ids, stencil, u, memory, K, targets * force_scale[:, None], held, p)
     if distributed:
-        rods.tick(engine, dt, tool_motion=vessel_tool_motion)
+        if not coupled_vessels:
+            rods.tick(engine, dt, tool_motion=vessel_tool_motion)
     elif material_profile:
         move_vessels(engine)

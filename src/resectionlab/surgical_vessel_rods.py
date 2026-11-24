@@ -14,6 +14,7 @@ from scipy.sparse.linalg import factorized
 
 from .surgical_glioma_materials import PROPERTY, oriented_source_cells
 from . import surgical_vessel_surface as surfaces
+from . import surgical_vessel_tissue_contact as tissue_contact
 from . import surgical_vessel_vertex_motion as vertex_motion
 from . import surgical_wall_contact as wall_contact
 from . import surgical_wall_sweep as wall_sweep
@@ -25,6 +26,7 @@ GEOMETRY = 'vesselRodGeometry'
 SECTION_MECHANICS = 'vesselSectionMechanics'
 SECTION_MODEL = 'linear-annular-research-v1'
 SECTION_CONTACT_MODEL = 'linear-annular-research-contact-v2'
+SECTION_TISSUE_CONTACT_MODEL = 'linear-annular-research-contact-v3'
 STEP_SECONDS = 1 / 120
 SUPPORT_N_PER_MM = .035
 CONTACT_N_PER_MM = .18
@@ -38,10 +40,10 @@ SOLVER_ITERATIONS = 4
 CONTACT_MARGIN_MM = 1e-7
 
 
-def section_profile(*, vessel_contact=False):
+def section_profile(*, vessel_contact=False, soft_contact=False):
     """Assumed local tangent response and radial compliance for sensitivity studies."""
     return {
-        'model': SECTION_CONTACT_MODEL if vessel_contact else SECTION_MODEL,
+        'model': SECTION_TISSUE_CONTACT_MODEL if soft_contact else SECTION_CONTACT_MODEL if vessel_contact else SECTION_MODEL,
         'provenance': 'assumed-research',
         'axialModulusMPa': {'artery': 1.8, 'vein': .7, 'uncertain': 1.},
         'wallThicknessToLumenRadius': .15,
@@ -54,6 +56,10 @@ def mechanics(engine):
     return engine.scene.properties.get(PROPERTY, {}).get(SECTION_MECHANICS)
 
 
+def soft_contact_enabled(engine):
+    return (mechanics(engine) or {}).get('model') == SECTION_TISSUE_CONTACT_MODEL
+
+
 def validate_section_profile(profile, bounded):
     if SECTION_MECHANICS not in profile:
         return
@@ -64,7 +70,7 @@ def validate_section_profile(profile, bounded):
             or profile.get(wall_sweep.PROPERTY) != wall_sweep.POLICY
             or profile.get(vertex_motion.PROPERTY) != vertex_motion.POLICY
             or not isinstance(section, dict) or set(section) != set(section_profile())
-            or section['model'] not in (SECTION_MODEL, SECTION_CONTACT_MODEL)
+            or section['model'] not in (SECTION_MODEL, SECTION_CONTACT_MODEL, SECTION_TISSUE_CONTACT_MODEL)
             or section['provenance'] != 'assumed-research'
             or not isinstance(section['axialModulusMPa'], dict)
             or set(section['axialModulusMPa']) != set(section_profile()['axialModulusMPa'])
@@ -594,7 +600,7 @@ def _valid_section_motion(engine, rods, previous, trial, retained, first, second
             and _valid_motion(engine, rods, previous, trial, retained) is trial)
 
 
-def tick(engine, dt, *, tool_motion=None):
+def tick(engine, dt, *, tool_motion=None, excluded_tissue=()):
     rods = definitions(engine)
     retained, retired, bonds, supports = _topology(engine, rods)
     state = engine.state.setdefault(FIELD, {'remainderSeconds': 0., 'velocitiesMmPerSecond': {}, 'compressionMm': {},
@@ -618,8 +624,10 @@ def tick(engine, dt, *, tool_motion=None):
     tools = tuple(tool for tool in _work_capsules(engine)
                   if np.all(np.minimum(tool[1], tool[2]) - tool[3] <= hi)
                   and np.all(np.maximum(tool[1], tool[2]) + tool[3] >= lo))
+    soft_contact = soft_contact_enabled(engine)
+    tissue_moving = soft_contact and any(any(delta) for delta in deformation.values())
     if not tools and not velocities and not compressed and not any(str(c) in deformation for c in rods.cells) and not any(
-            np.any(deformation.get(str(cell), (0., 0., 0.))) for _, cell in supports):
+            np.any(deformation.get(str(cell), (0., 0., 0.))) for _, cell in supports) and not tissue_moving:
         return
     support_force = np.zeros_like(position)
     support_count = np.zeros(len(position))
@@ -637,7 +645,7 @@ def tick(engine, dt, *, tool_motion=None):
     pairs = _capsules(rods, retained, bonds)
     native = bool(getattr(engine.scene, '_vessel_source_walls', ()))
     section = mechanics(engine)
-    vessel_contact = section is not None and section['model'] == SECTION_CONTACT_MODEL
+    vessel_contact = section is not None and section['model'] != SECTION_MODEL
     radial_response = .35 if section is None else -np.expm1(-STEP_SECONDS / section['radialRelaxationSeconds'])
     if native:
         labels = engine.scene.labels.ravel()
@@ -649,6 +657,14 @@ def tick(engine, dt, *, tool_motion=None):
         reference_length = np.linalg.norm(rods.rest[first] - rods.rest[second], axis=1)
         site_length = (np.bincount(first, reference_length, minlength=len(position))
                        + np.bincount(second, reference_length, minlength=len(position)))
+
+    swept = wall_sweep_enabled(engine)
+    if swept:
+        prior_wall = tuple(surfaces.frames(engine, rods, position, radius, bonds))
+    soft_contacts = tissue_contact.contacts(
+        engine, prior_wall, bonds, tuple(set(engine.state['removed']).union(excluded_tissue))) if soft_contact else ()
+    reactions = [np.zeros((len(contact.patch.cells), 3)) for contact in soft_contacts]
+    inverse = engine.scene.inverse[:3, :3]
 
     def contact(positions, radii, rate, *, measure_compression=False):
         force, compression, touched = _tool_contact(pairs, positions, radii, rods.radius, tools)
@@ -664,13 +680,19 @@ def tick(engine, dt, *, tool_motion=None):
             compression = np.maximum(compression, collapse)
             for hand, indices in contacts.items():
                 touched.setdefault(hand, set()).update(indices)
+        radial_force = np.zeros(len(position)) if soft_contacts and measure_compression else None
+        for interface in soft_contacts:
+            loads = interface.loads(positions - rods.rest, 1. - radii / rods.radius, inverse)
+            force += interface.patch.translation.T @ loads
+            if radial_force is not None:
+                for axis, weights in enumerate(interface.patch.radial):
+                    radial_force -= (weights.T @ loads[:, axis]) / rods.radius
+        if radial_force is not None:
+            compression += np.maximum(0., radial_force / RADIAL_N_PER_MM)
         return force, compression, touched
 
     inertial = MASS_N_S2_PER_MM / STEP_SECONDS ** 2
     damping = DRAG_NS_PER_MM / STEP_SECONDS
-    swept = wall_sweep_enabled(engine)
-    if swept:
-        prior_wall = tuple(surfaces.frames(engine, rods, position, radius, bonds))
     for _ in range(steps):
         previous = position.copy()
         base = inertial * (previous + STEP_SECONDS * old_rate) + damping * previous + support_force
@@ -731,6 +753,9 @@ def tick(engine, dt, *, tool_motion=None):
             prior_wall = next_wall
         radius = proposed_radius
         old_rate = (position - previous) / STEP_SECONDS
+        for interface, reaction in zip(soft_contacts, reactions):
+            loads = interface.loads(position - rods.rest, 1. - radius / rods.radius, inverse)
+            np.add.at(reaction, interface.patch.indices, -loads)
         for hand, indices in touched.items():
             state['contactedCells'][hand] = sorted(set(state['contactedCells'].get(hand, ())) |
                                                    {rods.cells[i] for i in indices})
@@ -742,6 +767,13 @@ def tick(engine, dt, *, tool_motion=None):
                 field[key] = np.asarray(value).tolist()
             else:
                 field.pop(key, None)
+    if soft_contacts:
+        result = {}
+        for interface, reaction in zip(soft_contacts, reactions):
+            for cell, load in zip(interface.patch.cells, reaction / steps):
+                if np.any(load):
+                    result[int(cell)] = result.get(int(cell), 0.) + load
+        return result
 
 
 def view(engine):
