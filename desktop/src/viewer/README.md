@@ -146,7 +146,7 @@ Settled Scan uses ray steps of one source spacing and at most 640 intervals. Lig
 
 Transparent CT context uses a centered optical footprint when a single visible, independent bone mask shares the selected acquisition's display grid. A symmetric six-face filter centered on each voxel reduces bands from the discrete mask. Face offsets are bounded to 1.45 cells and 1 mm along each source axis. The ray interpolates the resulting byte coverage grid and the shadow atlas uses the same grid. Geometry, measurements and linked source panes retain the original mask and acquired samples. Scan, exterior bone, isolated labels, multiple bone contexts and scans with native support keep their existing path. The optical texture needs one byte per displayed voxel and reuses the auxiliary sampler.
 
-In a physical CT cutaway in **Structures** or **Vessels**, the declared skull mask still controls where to style bone. Opacity builds over physical distance from the acquired mineral signal. This keeps bright cortex visible and lets lower-density tissue inside the mask show its acquired variation. Linked slices and the source-image section keep the selected acquired image.
+In a physical CT cutaway in **Structures** or **Vessels**, the declared skull mask still controls where to style bone. Opacity builds over physical distance from the acquired mineral signal. For a single same-grid skull mask, the cutaway also uses the centered coverage grid to avoid abrupt opacity steps. Its shadow probes sample the retained side directly. Linked slices and the source-image section keep the selected acquired image.
 
 With a ready source-bound atlas and no cut, two fixed RAS light directions
 integrate acquired optical depth to the edge of the field of view. The atlas

@@ -237,7 +237,8 @@ test('transparent CTA feathers only optical coverage while exact masks and scan 
     scan.labels(null,{}, {...settings,skullMode:'cutaway'},[]);render(scan);
     assert.equal(uniforms.uSkullMode.value,1);
     assert.equal(uniforms.uAcquiredBoneCut.value,true);
-    assert.equal(uniforms.uAuxiliary.value,null);
+    assert.equal(uniforms.uAuxiliary.value,aux,'a same-grid solid cut reuses the continuous coverage texture');
+    assert.equal(uniforms.uOpticalCache.value,false,'solid extinction still uses the direct clip-aware shadow probes');
     for(const [visible,view] of [ [{bone:false},settings], [{},{...settings,presentation:'scan'}], [{},{...settings,skullMode:'exterior'}],
       [{},{...settings,skullMode:'cutaway',presentation:'scan'}] ]){
       scan.labels(null,visible,view,[]);render(scan);

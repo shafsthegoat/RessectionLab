@@ -141,6 +141,9 @@ vec3 contextTint(vec3 acquired,vec3 color,float value){
 float contextCoverage(vec3 p){
   return texture(uAuxiliary,((p+0.5)/uShape).zyx).r;
 }
+float acquiredBoneExtinction(float current,float value){
+  return max(current,2.2*smoothstep(160.0,430.0,value));
+}
 void applyContext(inout vec4 tissue,float value,ivec4 packed,bool selected,vec3 p){
   tissue.a*=uDensity;
   if(uIsolate&&!selected){tissue.a=0.0;return;}
@@ -149,6 +152,13 @@ void applyContext(inout vec4 tissue,float value,ivec4 packed,bool selected,vec3 
     int layer=uContextCoverageLayer;
     float coverage=contextCoverage(p);
     vec4 context=uLayerColor[layer];
+    if(uAcquiredBoneCut){
+      float clear=tissue.a*(1.0-coverage);
+      float bone=acquiredBoneExtinction(tissue.a,value)*coverage;
+      tissue.rgb=(clear*tissue.rgb+bone*contextTint(tissue.rgb,context.rgb,value))/max(clear+bone,0.000001);
+      tissue.a=clear+bone;
+      return;
+    }
     float clearWeight=1.0-coverage;
     float skullWeight=coverage*context.a*uLayerEnabled[layer];
     float weight=clearWeight+skullWeight;
@@ -176,7 +186,7 @@ void applyContext(inout vec4 tissue,float value,ivec4 packed,bool selected,vec3 
       else if(uSkullMode==1){
         // In a physical CT section, let mineral signal supply the wall.
         // A categorical context label can include marrow or background.
-        tissue.a=uAcquiredBoneCut?max(tissue.a,2.2*smoothstep(160.0,430.0,value)):10000.0;
+        tissue.a=uAcquiredBoneCut?acquiredBoneExtinction(tissue.a,value):10000.0;
       }
       else tissue.a*=context.a;
     }

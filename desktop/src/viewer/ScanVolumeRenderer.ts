@@ -258,8 +258,8 @@ export class ScanVolumeRenderer {
     const context=u.uContextCoverageLayer.value>=0?this.contextCoverage??null:null;
     const source=this.displayOpticalSource;
     const selection={source,context};
-    const overrides=u.uIsolate.value || (u.uCt.value && !context &&
-      (u.uSkullMode.value===1 || (!u.uScanPresentation.value && (u.uContextLayerCount.value>0 || u.uSkullMode.value===2))));
+    const overrides=u.uIsolate.value || (u.uCt.value && (u.uAcquiredBoneCut.value || !context &&
+      (u.uSkullMode.value===1 || (!u.uScanPresentation.value && (u.uContextLayerCount.value>0 || u.uSkullMode.value===2)))));
     const useCache=u.uShadows.value&&!overrides;
     if(!useCache||(this.opticalPreparation&&!sameOptics(this.opticalPreparation.selection,selection)))this.cancelOpticalPreparation();
     if(useCache&&!sameOptics(this.opticalAtlasSelection,selection)&&!sameOptics(this.failedOpticalSelection,selection)&&this.transferLut){
@@ -351,7 +351,7 @@ export class ScanVolumeRenderer {
       +this.estimatedCtExteriorBytes.gpuTextureBytes;
   }
 
-  /** In transparent CT context, interpolate the optical coverage of one
+  /** In CT context, interpolate the optical coverage of one
    * independent skull mask. Packed labels stay nearest-filtered for all
    * membership queries. Reuse the auxiliary sampler on scans without a
    * source support field to fit the WebGL2 fragment sampler budget. */
@@ -360,9 +360,10 @@ export class ScanVolumeRenderer {
     const index=u.uContextLayers.value[0];
     const layer=this.layers[index];
     const opacity=u.uLayerColor.value[index]?.w;
-    const mask=this.enabled&&u.uCt.value&&u.uSkullMode.value===2&&!u.uScanPresentation.value&&
+    const transparent=u.uSkullMode.value===2&&opacity<1;
+    const mask=this.enabled&&u.uCt.value&&(transparent||u.uAcquiredBoneCut.value)&&!u.uScanPresentation.value&&
       !u.uIsolate.value&&!this.supportTexture&&u.uContextLayerCount.value===1&&layer&&!layer.labelSet&&
-      u.uLayerEnabled.value[index]===1&&opacity>0&&opacity<1
+      u.uLayerEnabled.value[index]===1&&opacity>0
       ? layer.mask : undefined;
     if(!mask||mask.length!==this.sourceOptics.signal.length){
       u.uAuxiliary.value=this.supportTexture??null;
