@@ -439,6 +439,13 @@ class SurgicalEngine:
                     or not vessel_rods.bounded_tissue_capacity_enabled(self)
                     or _settings(self)['fixedStepSeconds'] != vessel_rods.STEP_SECONDS):
                 raise ValueError('VESSEL_ATTACHMENT_COUPLING_REQUIRES_SUPPORTED_NATIVE_WALL')
+        if vessel_rods.WORKING_AXIS_PROPERTY in scene.properties and (
+                not vessel_rods.working_axis_constraint_enabled(self)
+                or self._operative or self._source_inspection_only
+                or not getattr(scene, '_vessel_source_walls', ())
+                or not vessel_rods.wall_sweep_enabled(self)
+                or not vessel_rods.bounded_tissue_capacity_enabled(self)):
+            raise ValueError('VESSEL_WORKING_AXIS_POLICY_REQUIRES_SUPPORTED_NATIVE_WALL')
         self.tools = TOOLS
         self._operative_tool_revision = 0
         if self._operative:
@@ -1484,7 +1491,9 @@ class SurgicalEngine:
                     brain.tick(self, dt, vessel_tool_motion=tool_motion, vessel_tool_clock_hand=key)
                 else:
                     brain.tick(self, dt, vessel_tool_motion=tool_motion)
-            if compliant:
+            if vessel_rods.working_axis_constraint_enabled(self):
+                vessel_rods.require_working_axes_clear(self)
+            elif compliant:
                 vessel_rods.check_working_axis(self, key, op)
             self.occupancy()
             # Coupled tissue moves after the ordinary swept-tool check.

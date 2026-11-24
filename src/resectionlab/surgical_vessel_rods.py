@@ -36,6 +36,8 @@ TOOL_CONTACT_CLOCK_POLICY = 'passive-dissector-rigid-tick-v2'
 TOOL_CONTACT_CLOCK_POLICIES = (AXIAL_TOOL_CONTACT_CLOCK_POLICY, TOOL_CONTACT_CLOCK_POLICY)
 ATTACHMENT_COUPLING_PROPERTY = 'vesselAttachmentCouplingPolicy'
 ATTACHMENT_COUPLING_POLICY = 'reciprocal-source-springs-v1'
+WORKING_AXIS_PROPERTY = 'vesselWorkingAxisPolicy'
+WORKING_AXIS_POLICY = 'native-passive-working-axis-v1'
 TISSUE_FRICTION_MODELS = (SECTION_TISSUE_FRICTION_MODEL, SECTION_TISSUE_CAPACITY_MODEL)
 TISSUE_CONTACT_MODELS = (SECTION_TISSUE_CONTACT_MODEL, *TISSUE_FRICTION_MODELS)
 STEP_SECONDS = 1 / 120
@@ -85,6 +87,10 @@ def bounded_tissue_capacity_enabled(engine):
 
 def reciprocal_attachments_enabled(engine):
     return engine.scene.properties.get(ATTACHMENT_COUPLING_PROPERTY) == ATTACHMENT_COUPLING_POLICY
+
+
+def working_axis_constraint_enabled(engine):
+    return engine.scene.properties.get(WORKING_AXIS_PROPERTY) == WORKING_AXIS_POLICY
 
 
 def validate_section_profile(profile, bounded):
@@ -400,6 +406,23 @@ def check_working_axis(engine, key, operation):
     for hand, a, b, _, _ in _work_capsules(engine):
         if hand == key and compliant_cells(engine, engine.touched(a, b, 0.)):
             raise ValueError('VESSEL_COMPLIANT_CONTACT_LIMIT: working axis entered the retained vessel')
+
+
+def _blocked_working_axis(engine, frames, tools):
+    for hand, a, b, _, _ in tools:
+        if any(len(surfaces.query(engine, frame, a, b, 0.)[0]) for frame in frames):
+            return hand
+    return None
+
+
+def _working_axis_error(hand):
+    return ValueError(f'VESSEL_COMPLIANT_CONTACT_LIMIT: {hand} working axis entered the retained vessel')
+
+
+def require_working_axes_clear(engine):
+    tools = tuple(_work_capsules(engine))
+    if tools and (hand := _blocked_working_axis(engine, _accepted_frames(engine, definitions(engine)), tools)) is not None:
+        raise _working_axis_error(hand)
 
 
 def cut_candidates(engine, cells, position, normal, depth):
@@ -758,6 +781,7 @@ def tick(engine, dt, *, tool_motion=None, excluded_tissue=(), tool_clock_hand=No
                        + np.bincount(second, reference_length, minlength=len(position)))
 
     swept = wall_sweep_enabled(engine)
+    constrain_axes = working_axis_constraint_enabled(engine)
     if swept:
         prior_wall = tuple(surfaces.frames(engine, rods, position, radius, bonds))
     soft_friction = section.get('tissueFrictionCoefficient', 0.) if soft_contact else 0.
@@ -835,6 +859,7 @@ def tick(engine, dt, *, tool_motion=None, excluded_tissue=(), tool_clock_hand=No
             # Preserve the first obstacle- and sweep-certified fraction of
             # the increment. An uncertifiable motion remains transactional.
             delta, radial_delta = position - previous, proposed_radius - radius
+            limited_axis = None
             for fraction in (1., .5, .25, .125, .0625, .03125, .015625):
                 trial = previous + fraction * delta
                 trial_radius = radius + fraction * radial_delta
@@ -853,13 +878,27 @@ def tick(engine, dt, *, tool_motion=None, excluded_tissue=(), tool_clock_hand=No
                     if not wall_sweep.is_clear(engine, prior_wall, next_wall):
                         continue
                     corrected = True
+                if constrain_axes and (hand := _blocked_working_axis(engine, next_wall, tools)) is not None:
+                    limited_axis = hand
+                    continue
                 position, proposed_radius, prior_wall = trial, trial_radius, next_wall
                 if corrected or fraction < 1.:
                     _, _, touched = contact(position, proposed_radius, (position - previous) / STEP_SECONDS,
                                             measure_compression=True)
                 break
             else:
-                raise ValueError('VESSEL_WALL_SWEEP_UNSAFE: no limited section response retained clearance')
+                if limited_axis is None:
+                    raise ValueError('VESSEL_WALL_SWEEP_UNSAFE: no limited section response retained clearance')
+                if (hand := _blocked_working_axis(engine, prior_wall, tools)) is not None:
+                    raise _working_axis_error(hand)
+                # A parked instrument can obstruct recoil. Retain the last
+                # clear pose with zero normal advance at this tick.
+                position, proposed_radius = previous, radius
+                _, _, touched = contact(position, proposed_radius, (position - previous) / STEP_SECONDS,
+                                        measure_compression=True)
+            if limited_axis is not None:
+                counts = state.setdefault('workingAxisLimitedTicks', {})
+                counts[limited_axis] = counts.get(limited_axis, 0) + 1
         elif swept:
             next_wall = tuple(surfaces.frames(engine, rods, position, proposed_radius, bonds))
             wall_sweep.require_clear(engine, prior_wall, next_wall)
@@ -905,6 +944,8 @@ def view(engine):
         'model': MODEL,
         **({'sectionModel': mechanics(engine)['model']} if mechanics(engine) is not None else {}),
         **({'attachmentCouplingPolicy': ATTACHMENT_COUPLING_POLICY} if reciprocal_attachments_enabled(engine) else {}),
+        **({'workingAxisPolicy': WORKING_AXIS_POLICY, 'workingAxisLimitedTicks': dict(state.get('workingAxisLimitedTicks', {}))}
+           if working_axis_constraint_enabled(engine) else {}),
         'sites': [{'sourceCell': rods.cells[i], 'restPositionMm': rods.rest[i].tolist(),
                    'positionMm': position[i].tolist(), 'restRadiusMm': float(rods.radius[i]), 'radiusMm': float(radius[i]),
                    'activeSupportCells': support_by_site.get(i, [])} for i in retained],

@@ -433,7 +433,8 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
         reciprocal = physics_key == 'tissuePhysicsV2' and (
             brain_profile is None or isinstance(brain_profile, dict) and brain_profile.get('fixedStepSeconds') == STEP_SECONDS)
         wall_properties, binding = qualifying_properties(local_wall, masks, rows['vessels'], manifest['patient_id'],
-                                                         reciprocal_attachments=reciprocal)
+                                                         reciprocal_attachments=reciprocal,
+                                                         working_axis_constraint=not planned and physics_key == 'tissuePhysicsV2')
         adapter['nativeWall'] = binding
         if native_alignment is not None:
             adapter['nativeWallAlignmentReview'] = copy.deepcopy(native_alignment)

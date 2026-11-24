@@ -12,7 +12,8 @@ from .anatomy_model_registry import ANGIOGRAPHY, source_volume
 from .core import array_digest, semantic_digest
 from .surgical_glioma_materials import research_profile
 from .surgical_vessel_rods import (ATTACHMENT_COUPLING_POLICY, ATTACHMENT_COUPLING_PROPERTY, GEOMETRY,
-                                  MODEL, SECTION_MECHANICS, TOOL_CONTACT_CLOCK_PROPERTY, section_profile)
+                                  MODEL, SECTION_MECHANICS, TOOL_CONTACT_CLOCK_PROPERTY,
+                                  WORKING_AXIS_POLICY, WORKING_AXIS_PROPERTY, section_profile)
 from .surgical_vessel_surface import CONDITIONED_GEOMETRIES, GEOMETRY_PROPERTY, ISOLATED_SOURCE_GEOMETRY
 from . import surgical_vessel_vertex_motion as vertex_motion, surgical_wall_sweep as wall_sweep
 from .vascular_source_branches import build_source_branches
@@ -154,7 +155,8 @@ def _local_chains(grid, radius):
     return chains
 
 
-def qualifying_properties(grid, masks, row, patient_id, *, reciprocal_attachments=False, cancelled=lambda: False):
+def qualifying_properties(grid, masks, row, patient_id, *, reciprocal_attachments=False, working_axis_constraint=False,
+                          cancelled=lambda: False):
     mask, affine, scores = grid.mask, grid.affine, grid.scores
     spacing = np.linalg.norm(affine[:3, :3], axis=0)
     radius = ndimage.distance_transform_edt(np.pad(mask, 1), sampling=spacing)[1:-1, 1:-1, 1:-1]
@@ -188,6 +190,9 @@ def qualifying_properties(grid, masks, row, patient_id, *, reciprocal_attachment
     if reciprocal_attachments:
         assumptions += (' Intact springs also transmit rod displacement back to their assigned tissue cells through '
                         'an implicit tissue solve. Rod and tissue updates use lagged coupling.')
+    if working_axis_constraint:
+        assumptions += (' Passive working axes constrain both moving and parked instrument contact at sampled rod ticks. '
+                        'Compliant shell loads can act while the axis stays clear.')
     profile = research_profile()
     profile.update(vesselMotionModel=MODEL, assignment=assumptions, vesselAttachments=attachments)
     profile[GEOMETRY] = {'source': 'Native source-cell centers with physical-distance caliber estimates from the vascular annotation.',
@@ -237,6 +242,8 @@ def qualifying_properties(grid, masks, row, patient_id, *, reciprocal_attachment
     properties = {'gliomaMaterialsV1': profile, 'vascularGraphV1': vascular}
     if reciprocal_attachments:
         properties[ATTACHMENT_COUPLING_PROPERTY] = receipt[ATTACHMENT_COUPLING_PROPERTY] = ATTACHMENT_COUPLING_POLICY
+    if working_axis_constraint:
+        properties[WORKING_AXIS_PROPERTY] = receipt[WORKING_AXIS_PROPERTY] = WORKING_AXIS_POLICY
     return properties, receipt
 
 
@@ -256,6 +263,7 @@ def validate_saved_wall(scene, case, receipt):
             or receipt.get(wall_sweep.PROPERTY, wall_sweep.POLICY) != profile.get(wall_sweep.PROPERTY)
             or receipt.get(TOOL_CONTACT_CLOCK_PROPERTY) != scene.properties.get(TOOL_CONTACT_CLOCK_PROPERTY)
             or receipt.get(ATTACHMENT_COUPLING_PROPERTY) != scene.properties.get(ATTACHMENT_COUPLING_PROPERTY)
+            or receipt.get(WORKING_AXIS_PROPERTY) != scene.properties.get(WORKING_AXIS_PROPERTY)
             or profile.get(vertex_motion.PROPERTY) != vertex_motion.POLICY):
         raise ValueError('Saved patient native wall differs from accepted source geometry')
     start, shape = receipt.get('sourceStartIJK'), receipt.get('sourceShape')

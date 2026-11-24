@@ -23,6 +23,8 @@ export interface SurgicalVesselsV2 {faces:Record<string,Record<string,unknown>>;
 export interface SurgicalEnvironment {schema:string;standardized:boolean;physicsSchema:string|null;anatomy:Record<string,string>;target:{regionIds:number[];initialVolumeMm3:number};coverageMeaning:string}
 export interface SurgicalVesselMechanics {
   attachmentCouplingPolicy?:'reciprocal-source-springs-v1';
+  workingAxisPolicy?:'native-passive-working-axis-v1';
+  workingAxisLimitedTicks?:Record<string,number>;
   model:'distributed-source-rods-v1';
   sites:Array<{sourceCell:number;restPositionMm:Point3;positionMm:Point3;restRadiusMm:number;radiusMm:number;activeSupportCells:number[]}>;
   segments:Array<{sourceCells:[number,number];edgeId:string}>;

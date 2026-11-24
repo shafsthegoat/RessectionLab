@@ -401,6 +401,42 @@ def test_reciprocal_attachments_pull_a_shared_tissue_cell_and_release_on_cut(mon
     assert abs(intact_shift - released_shift) > .005
 
 
+def test_parked_dissector_limits_wall_recoil_during_other_hand_inspection():
+    source = _fixture(guarded=True, vertex_transport=True, section_mechanics=True, conditioned=True,
+                      soft_contact=True, bounded_tissue=True).scene
+    properties = {**source.properties, rods.ATTACHMENT_COUPLING_PROPERTY: rods.ATTACHMENT_COUPLING_POLICY}
+
+    def parked_tip(z, *, constrained):
+        scene = SurgicalScene(source.labels, source.affine, source.regions, source.source, {
+            **properties, **({rods.WORKING_AXIS_PROPERTY: rods.WORKING_AXIS_POLICY} if constrained else {})})
+        engine = SurgicalEngine(propagate_original_target_memberships(source, scene))
+        definition = rods.definitions(engine)
+        engine.state['deformation'] = {str(cell): [0., 0., .12] for cell in definition.cells}
+        engine.state[rods.FIELD] = {'remainderSeconds': 0., 'compressionMm': {}, 'contactedCells': {},
+                                   'velocitiesMmPerSecond': {str(cell): [0., 0., -4.] for cell in definition.cells}}
+        engine.state['slots']['left'].update(instrument='dissector', inserted=True, position=[6.8, 6., z],
+                                             quaternion=[0., 0., 0., 1.],
+                                             parameters={'radiusMm': .16, 'depthMm': .10, 'forceN': .06})
+        _, a, b, *_ = next(rods._work_capsules(engine))
+        assert not rods.compliant_cells(engine, engine.touched(a, b, 0.))
+        action = _action('inspect', slot='right', dt=rods.STEP_SECONDS)
+        assert engine.step(action)['status'] == 'accepted'
+        frames = rods._accepted_frames(engine, definition)
+        assert surgical_wall_sweep.is_clear(engine, frames, frames, static=True)
+        return engine, rods.compliant_cells(engine, engine.touched(a, b, 0.)), definition
+
+    legacy, penetrated, _ = parked_tip(5.45, constrained=False)
+    constrained, hits, definition = parked_tip(5.45, constrained=True)
+    distant, distant_hits, _ = parked_tip(5.40, constrained=True)
+    assert penetrated and not hits and not distant_hits
+    assert constrained.state[rods.FIELD]['workingAxisLimitedTicks'] == {'left': 1}
+    assert not distant.state[rods.FIELD].get('workingAxisLimitedTicks')
+    displacement = [np.array([run.state['deformation'].get(str(c), [0., 0., 0.]) for c in definition.cells])
+                    for run in (legacy, constrained)]
+    # The constrained tick commits a genuine partial recoil inside its domain.
+    assert displacement[0][:, 2].min() < displacement[1][:, 2].min() < .12
+
+
 def test_wall_reaction_omission_is_bounded_per_receptor_and_in_aggregate():
     active = {901}
     reactions = {cell: np.array([9e-11, 0., 0.]) for cell in range(160)}

@@ -188,7 +188,8 @@ def test_standard_environment_local_native_wall_preserves_source_and_reopens(tmp
     from resectionlab.surgical_motion import AXIAL_SWEEP_POLICY, AXIAL_SWEEP_PROPERTY
     from resectionlab.surgical_rl_protection import GuardConfig
     from resectionlab.surgical_vessel_rods import (ATTACHMENT_COUPLING_POLICY, ATTACHMENT_COUPLING_PROPERTY,
-                                                 TOOL_CONTACT_CLOCK_POLICY, TOOL_CONTACT_CLOCK_PROPERTY, view)
+                                                 TOOL_CONTACT_CLOCK_POLICY, TOOL_CONTACT_CLOCK_PROPERTY,
+                                                 WORKING_AXIS_POLICY, WORKING_AXIS_PROPERTY, view)
 
     study, scores, brain = native_wall_fixture(tmp_path)
     report = prepare_surgical_environment(study.root, tmp_path / 'result', layer_ids={'brain': 'brain', 'vessels': 'vessels'},
@@ -209,6 +210,8 @@ def test_standard_environment_local_native_wall_preserves_source_and_reopens(tmp
     assert scene.properties[TOOL_CONTACT_CLOCK_PROPERTY] == wall[TOOL_CONTACT_CLOCK_PROPERTY] == TOOL_CONTACT_CLOCK_POLICY
     assert scene.properties[ATTACHMENT_COUPLING_PROPERTY] == wall[ATTACHMENT_COUPLING_PROPERTY] == ATTACHMENT_COUPLING_POLICY
     assert view(engine)['attachmentCouplingPolicy'] == ATTACHMENT_COUPLING_POLICY
+    assert scene.properties[WORKING_AXIS_PROPERTY] == wall[WORKING_AXIS_PROPERTY] == WORKING_AXIS_POLICY
+    assert view(engine)['workingAxisLimitedTicks'] == {}
     assert scene.properties['gliomaMaterialsV1'][wall_sweep.PROPERTY] == wall[wall_sweep.PROPERTY] == wall_sweep.CURRENT_POLICY
     assert report['environment']['sceneId'] == scene.identity
     assert scene._vessel_source_walls[0].geometry_binding == wall['geometryBinding']
@@ -225,13 +228,17 @@ def test_target_free_native_wall_saves_keep_their_declared_sweep_policy(tmp_path
     from resectionlab.imaging import save_case
     from resectionlab.surgical_engine import SurgicalEngine
     from resectionlab.surgical_rl_protection import GuardConfig
-    from resectionlab.surgical_vessel_rods import ATTACHMENT_COUPLING_PROPERTY, TOOL_CONTACT_CLOCK_PROPERTY
+    from resectionlab.surgical_vessel_rods import ATTACHMENT_COUPLING_PROPERTY, TOOL_CONTACT_CLOCK_PROPERTY, WORKING_AXIS_PROPERTY
 
     study, _, _ = native_wall_fixture(tmp_path)
     prepared = prepare_surgical_environment(study.root, tmp_path / 'prepared', layer_ids={'brain': 'brain', 'vessels': 'vessels'},
                                             native_wall_center=[0., 0., 1.])
     fresh = load_case(prepared['casePath'])
     metadata = thaw_json(fresh.metadata)
+    del metadata['surgical_adapter']['nativeWall'][WORKING_AXIS_PROPERTY]
+    with pytest.raises(ValueError, match='Saved patient native wall differs'):
+        from_case(replace(fresh, metadata=metadata))
+    del metadata['surgical_properties'][WORKING_AXIS_PROPERTY]
     del metadata['surgical_adapter']['nativeWall'][ATTACHMENT_COUPLING_PROPERTY]
     with pytest.raises(ValueError, match='Saved patient native wall differs'):
         from_case(replace(fresh, metadata=metadata))

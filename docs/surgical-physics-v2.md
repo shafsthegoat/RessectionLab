@@ -246,6 +246,15 @@ loads. The tissue budget and wall clearance still apply. These stiffnesses
 and attachments are model assignments. Older saves keep their original
 one-way support behavior.
 
+New native-wall rehearsals also declare `native-passive-working-axis-v1`.
+Each sampled rod tick checks the working axes of inserted dissectors and
+unpowered bipolar tips against the same moved vessel triangles used for
+rendering. The working shell can apply a load outside the axis. If recoil
+would cross an axis, the solver tries successively smaller displacement and
+caliber increments and retains a clear pose. Axes are checked for both hands
+again at the accepted action boundary. The state records limited ticks by
+hand. Earlier saves replay with their declared policy.
+
 On the reviewed local TopCoW-012 CTA/MRA crop, v4 reached the 2,000-node limit
 before meaningful contact. The ordinary v5 preparation retained the exact
 source crop and wall binding and completed a checked approach, contact, and
