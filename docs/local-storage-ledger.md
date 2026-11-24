@@ -139,6 +139,8 @@ The three native CTA arterial coverage workspaces are in
 `prepared/cta-supplied-arterial-coverage-v1/`. Their signed same-camera
 comparison, exact source union, saved branch view and previous bundle restore
 are indexed at `qc/cta-arterial-coverage-20261124-v1/README.md`.
+The ordinary CTA workbench import, coverage creation, portable reopen and
+source-correction checks are at `qc/cta-workbench-coverage-20261124-v1/README.md`.
 The ordinary native-wall sweep and fixed-tick contact checks are at
 `qc/native-wall-vertex-sweep-20261124-v1/README.md`. The index links the
 TopCoW paired replay, support and recoil measurements, EDEN rest and shear
