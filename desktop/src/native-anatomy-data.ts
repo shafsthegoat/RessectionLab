@@ -29,6 +29,7 @@ export type Document={
   tractography?:Array<{id:string;label:string;source_series:string}>;
   revision:number;layers:Layer[];missing:string[];series:Series[];
   transforms:Record<string,{status:string;parent_series?:string|null;uncertainty_mm?:number|null;method?:string;
+    native_wall_alignment_review?:{centerRasMm:Point3;binding:{brainLayerId:string;vesselLayerId:string}};
     landmarks?:unknown[]|{reviewer:string;moving:Point3[];reference:Point3[];errors_mm:number[]}}>;
 };
 export type EnvironmentRole='brain'|'tumor'|'bone'|'vessels';
@@ -56,6 +57,7 @@ export interface SelectedRouteForecast {
 }
 export type EnvironmentOptions={selectedRouteForecast?:SelectedRouteForecast;acquisitions?:AcquisitionContribution[];referenceIssue:string|null;layers:Array<{
   role:EnvironmentRole;layerId:string;status:'ready'|'estimated_alignment'|'unavailable';reason?:string|null;nativeWallIssue?:string;
+  nativeWallAlignment?:{brainLayerId:string;centerRasMm:Point3};
 }>};
 export type Binding={collectionId:string;document:Document;viewState?:NativeViewState|null;readOnlyStudy?:boolean};
 export type Draft={layerId:string;undo:number;redo:number;changedVoxels:number}|null;

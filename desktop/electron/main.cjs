@@ -189,7 +189,7 @@ function bindOperations() {
     anatomyView: ['seriesId','layers','original','highlightLayer','highlightComponents','reviewId','previewAlignment','vesselScope','patientModel','vesselSurfaceMode'],
     anatomyEdit: ['action','layerId','author','points','radiusMm','threshold','reviewId','componentIds'],
     anatomySample: ['point','layerId','independentSeries'],
-    anatomyRegister: ['action','seriesId','movingPoints','referencePoints','reviewer'],
+    anatomyRegister: ['action','seriesId','movingPoints','referencePoints','reviewer','nativeWallScope'],
   };
   for (const [operation, keys] of Object.entries(anatomyKeys))
     handle(operation, args => engine.request(operation, plainArgs(args, ['collectionId','snapshotId',...keys]), operation==='anatomyReconstruct'?1800000:300000));

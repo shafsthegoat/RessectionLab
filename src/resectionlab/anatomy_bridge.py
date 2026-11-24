@@ -776,7 +776,15 @@ def dispatch(session, operation, args, request, progress):
         previous_view = read_view(c)
         from .anatomy_import import review_registration
 
-        if args.get("action") == "review":
+        if args.get("action") == "reviewNativeWall":
+            from .anatomy_local_wall_review import PROPERTY, review_native_wall_alignment
+
+            previous = c.document["transforms"].get(args["seriesId"], {}).get(PROPERTY)
+            result = review_native_wall_alignment(c, args["seriesId"], args["movingPoints"],
+                args["referencePoints"], args["reviewer"], args.get("nativeWallScope"))
+            if result == previous:
+                return {"document": c.document, "result": result}
+        elif args.get("action") == "review":
             result = review_registration(
                 c,
                 args["seriesId"],

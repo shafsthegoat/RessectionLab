@@ -24,12 +24,16 @@ export function EnvironmentPreparationPanel({binding,approach,routeName,measurem
     selected.every(layer=>layer.status==='ready'||layer.status==='estimated_alignment'&&allow);
   const missing=roles.filter(role=>!selected.some(layer=>layer.role===role));
   const wallIssue=selected.find(layer=>layer.nativeWallIssue)?.nativeWallIssue;
-  const canPrepareNative=canPrepare&&!!patientCursor&&!!layers.vessels&&!!layers.brain&&!unreviewed.length&&!wallIssue&&!approach;
+  const review=unreviewed.length===1&&unreviewed[0].role==='vessels'?unreviewed[0].nativeWallAlignment:undefined;
+  const localReview=review?.brainLayerId===layers.brain?review:undefined;
+  const wallCenter=localReview?.centerRasMm??patientCursor;
+  const canPrepareNative=!!options&&!options.referenceIssue&&!!wallCenter&&!!layers.vessels&&!!layers.brain&&
+    (unreviewed.length===0||!!localReview)&&!wallIssue&&!approach;
   const forecast=approach?options?.selectedRouteForecast:undefined;
   const crossing=measurements?.normalTraversal?.supportedNonTargetVoxelCenterVolumeMm3;
   const alignmentRequired=unreviewed.length>0&&!allow;
-  const readiness=canPrepare?'ready':options&&!options.referenceIssue&&alignmentRequired?'review':'unavailable';
-  const status=canPrepare?'Ready to prepare':!options||options.referenceIssue?'Preparation unavailable':alignmentRequired?'Alignment choice required':'Select source anatomy';
+  const readiness=canPrepare||canPrepareNative?'ready':options&&!options.referenceIssue&&alignmentRequired?'review':'unavailable';
+  const status=canPrepare?'Ready to prepare':canPrepareNative?'Local wall ready to prepare':!options||options.referenceIssue?'Preparation unavailable':alignmentRequired?'Alignment choice required':'Select source anatomy';
   async function prepare(nativeWallCenter?:Point3){
     setPreparing(true);setError(null);
     try{
@@ -53,7 +57,7 @@ export function EnvironmentPreparationPanel({binding,approach,routeName,measurem
           <span className="environment-layer-role">{roleNames[role]}<small>{source?.status==='ready'?'Ready':source?'Estimated':'Unknown'}</small></span>
           <select disabled={role==='tumor'&&!!approach} aria-label={'Environment '+role+' layer'} value={layers[role]} onChange={e=>setLayers({...layers,[role]:e.target.value})}>
             <option value="">Unknown / not supplied</option>{options?.layers.filter(layer=>layer.role===role&&layer.status!=='unavailable').map(layer=>
-              <option key={layer.layerId} value={layer.layerId}>{label(layer.layerId)}{layer.status==='estimated_alignment'?' · estimated alignment':''}</option>)}
+              <option key={layer.layerId} value={layer.layerId}>{label(layer.layerId)}{layer.nativeWallAlignment?' · local wall review':layer.status==='estimated_alignment'?' · estimated alignment':''}</option>)}
           </select>
         </label>;
       })}</div>
@@ -75,10 +79,11 @@ export function EnvironmentPreparationPanel({binding,approach,routeName,measurem
         </details>
       </section>}
       <div className="environment-preparation-actions"><button className="primary-button" disabled={!canPrepare} onClick={()=>void prepare()}>{preparing?'Preparing environment…':approach?'Inspect approach in engine':'Prepare standard environment'}</button>
-      {!approach&&<button disabled={!canPrepareNative} onClick={()=>patientCursor&&void prepare(patientCursor)}>Prepare native wall at cursor</button>}
+      {!approach&&<button disabled={!canPrepareNative} onClick={()=>wallCenter&&void prepare(wallCenter)}>{localReview?'Prepare reviewed local wall':'Prepare native wall at cursor'}</button>}
       <button onClick={onAnatomy}>Review anatomy and alignment</button>
       </div>
       {!approach&&wallIssue&&<p className="surgical-note">{wallIssue}</p>}
+      {!approach&&localReview&&<p className="surgical-note">Reviewed field centre [{localReview.centerRasMm.map(n=>n.toFixed(1)).join(', ')}] RAS mm.</p>}
     </fieldset>
     {error&&<div role="alert" className="surgical-error environment-preparation-error"><strong>Preparation failed</strong><p>{error}</p></div>}
     <details className="environment-preparation-method"><summary>Preparation checks & limitations</summary>

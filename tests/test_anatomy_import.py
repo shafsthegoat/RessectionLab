@@ -72,6 +72,62 @@ def test_local_alignment_evidence_is_source_bound_and_keeps_review_pending(tmp_p
         session.close()
 
 
+def test_local_wall_alignment_review_admits_only_its_bound_crop_and_layers(tmp_path):
+    from test_surgical_patient import native_wall_fixture
+    from resectionlab.anatomy_local_wall_review import PROPERTY
+    from resectionlab.surgical_patient import surgical_environment_options
+
+    source, _, _ = native_wall_fixture(tmp_path, registration='unreviewed')
+    manifest = source.root / 'patient-anatomy.json'
+    layers = {'brain': 'brain', 'vessels': 'vessels'}
+    center = [0., 0., 1.]
+    landmarks = [[-4., -4., 0.], [4., -3., 0.], [-1., 3., 0.], [1., 1., 4.]]
+    scope = {'brainLayerId': layers['brain'], 'vesselLayerId': layers['vessels'], 'center': center}
+    session = BridgeSession(tmp_path / 'transfers')
+
+    def call(operation, args):
+        return session.execute(operation, args, _Request(operation), lambda *_: None)
+
+    try:
+        opened = call('anatomyOpen', {'path': str(manifest)})
+        args = {'collectionId': opened['collectionId'], 'snapshotId': source.identity(), 'seriesId': 'tof',
+                'action': 'reviewNativeWall', 'reviewer': 'generated scope control', 'nativeWallScope': scope}
+        with pytest.raises(ValueError, match='four non-coplanar'):
+            call('anatomyRegister', {**args, 'movingPoints': landmarks[:3], 'referencePoints': landmarks[:3]})
+        completed = call('anatomyRegister', {**args, 'movingPoints': landmarks, 'referencePoints': landmarks})
+        assert completed['document']['transforms']['tof']['status'] == 'unreviewed'
+        assert completed['document']['transforms']['tof'][PROPERTY] == completed['result']
+        binding = {'collectionId': opened['collectionId'], 'snapshotId': completed['document']['snapshot_id'], 'layers': layers}
+        saved_manifest = manifest.read_bytes()
+        confirmed = call('anatomyRegister', {**args, 'snapshotId': binding['snapshotId'],
+            'movingPoints': landmarks, 'referencePoints': landmarks})
+        assert confirmed['document']['snapshot_id'] == binding['snapshotId']
+        assert manifest.read_bytes() == saved_manifest
+        with pytest.raises(ValueError, match='Unreviewed registration requires explicit research opt-in'):
+            call('prepareSurgicalEnvironment', binding)
+        with pytest.raises(ValueError, match='outside the reviewed local native-wall crop'):
+            call('prepareSurgicalEnvironment', {**binding, 'nativeWallCenter': [1., 0., 1.]})
+        prepared = call('prepareSurgicalEnvironment', {**binding, 'nativeWallCenter': center})
+        adapter = prepared['metadata']['surgical_adapter']
+        assert adapter['nativeWallAlignmentReview'] == completed['result']
+        assert adapter['sourceManifest']['transforms']['tof']['status'] == 'unreviewed'
+    finally:
+        session.close()
+
+    source = PatientImagingCollection(source.root)
+    options = surgical_environment_options(source)
+    vascular = next(row for row in options['layers'] if row['layerId'] == layers['vessels'])
+    assert vascular['status'] == 'estimated_alignment'
+    assert vascular['nativeWallAlignment'] == {'brainLayerId': layers['brain'], 'centerRasMm': center}
+    source.layer('brain')['revision'] += 1
+    source.save('Generated stale tissue revision control')
+    options = surgical_environment_options(source)
+    vascular = next(row for row in options['layers'] if row['layerId'] == layers['vessels'])
+    assert vascular['status'] == 'estimated_alignment' and 'nativeWallAlignment' not in vascular
+    with pytest.raises(ValueError, match='requires reviewed source alignment: tof'):
+        prepare_surgical_environment(source.root, tmp_path / 'stale', layer_ids=layers, native_wall_center=center)
+
+
 def test_semantic_sequence_required_for_nifti_and_dicom_family():
     for raw in (None, "MRI", "MR", "PET", ""):
         with pytest.raises(ValueError, match="Unsupported imaging sequence"):

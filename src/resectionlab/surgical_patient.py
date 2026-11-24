@@ -161,6 +161,7 @@ def _research_grid(collection, reference, resolution_mm):
 
 def surgical_environment_options(collection, *, check=lambda: None):
     """Source and role preflight for the separate limited rehearsal derivative."""
+    from .anatomy_local_wall_review import PROPERTY, native_wall_alignment_review
     from .surgical_selected_decision import selected_route_forecast
     result = {'referenceIssue': None, 'layers': [], 'selectedRouteForecast': selected_route_forecast()}
     try:
@@ -197,6 +198,14 @@ def surgical_environment_options(collection, *, check=lambda: None):
                 option.update(status='estimated_alignment' if unreviewed else 'ready')
                 if unreviewed:
                     option['reason'] = 'Estimated source alignment requires an explicit research choice'
+                    transform = collection.document['transforms'][sid]
+                    local = transform.get(PROPERTY)
+                    binding = local.get('binding') if isinstance(local, dict) else None
+                    if role == 'vessels' and isinstance(binding, dict):
+                        brain_id = binding.get('brainLayerId')
+                        brain = next((layer for layer in collection.document['layers'] if layer['id'] == brain_id), None)
+                        if brain is not None and (review := native_wall_alignment_review(collection, brain, row)):
+                            option['nativeWallAlignment'] = {'brainLayerId': brain_id, 'centerRasMm': review['centerRasMm']}
             except (ValueError, OSError, StopIteration) as error:
                 option['reason'] = str(error) or 'Source series unavailable'
             result['layers'].append(option)
@@ -270,6 +279,7 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
                 'Wound aperture and flow parameters are explicit assumptions, not measured vessel diameter or patient physiology.']
     affines = {}
     source_refs = []
+    native_alignment = None
     used_series = {reference['id'], *(r['source_series'] for r in rows.values())}
     for sid in sorted(used_series):
         check()
@@ -279,10 +289,18 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
         transform = manifest['transforms'][sid]
         if unreviewed:
             if native_wall_center is not None:
-                raise ValueError('Local native-wall rehearsal requires reviewed source alignment: ' + ', '.join(unreviewed))
-            if not allow_unreviewed_registration:
-                raise ValueError('Unreviewed registration requires explicit research opt-in: ' + ', '.join(unreviewed))
-            warnings.append('Research opt-in uses unreviewed registration: ' + ', '.join(unreviewed) + '; source review status unchanged.')
+                from .anatomy_local_wall_review import native_wall_alignment_review
+
+                if sid == rows['vessels']['source_series']:
+                    native_alignment = native_wall_alignment_review(collection, rows['brain'], rows['vessels'])
+                if sid != rows['vessels']['source_series'] or native_alignment is None:
+                    raise ValueError('Local native-wall rehearsal requires reviewed source alignment: ' + ', '.join(unreviewed))
+                warnings.append('The vascular alignment has a landmark review for this local native-wall crop. '
+                                'The source transform retains its general review status.')
+            else:
+                if not allow_unreviewed_registration:
+                    raise ValueError('Unreviewed registration requires explicit research opt-in: ' + ', '.join(unreviewed))
+                warnings.append('Research opt-in uses unreviewed registration: ' + ', '.join(unreviewed) + '; source review status unchanged.')
         warnings.extend(transform.get('quality', {}).get('warnings', []))
         affines[sid] = matrix
         original = series['original']
@@ -301,6 +319,8 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
         from .surgical_patient_wall import native_wall_grid
 
         local_wall = native_wall_grid(collection, rows['vessels'], affines[rows['vessels']['source_series']], native_wall_center)
+        if native_alignment is not None:
+            native_wall_alignment_review(collection, rows['brain'], rows['vessels'], local_wall)
         target_affine, shape = local_wall.affine, local_wall.mask.shape
         warnings[1] = 'Vessel score fields and masks retain native samples. The local domain clips coverage; field edges and wall caps mark unassessed continuation.'
         warnings[2] = 'Tissue attachments and vessel mechanics are assigned research assumptions. There is no measured patient wall material, attachment map, or circulation model.'
@@ -380,6 +400,8 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
         check()
         wall_properties, binding = qualifying_properties(local_wall, masks, rows['vessels'], manifest['patient_id'])
         adapter['nativeWall'] = binding
+        if native_alignment is not None:
+            adapter['nativeWallAlignmentReview'] = copy.deepcopy(native_alignment)
         wall_metadata[GEOMETRY_PROPERTY] = binding['geometryPolicy']
         adapter['resolutionMm'] = np.linalg.norm(target_affine[:3, :3], axis=0).tolist()
         adapter['representations']['nativeVesselWall'] = 'bounded conditioning of 0.5 score crossings on the unchanged native crop; accepted vertices shared by contact and rendering'

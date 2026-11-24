@@ -226,6 +226,23 @@ shifts describe image-texture correspondence under the current transform.
 Landmark residuals throughout the intended domain and positive mechanical
 tissue evidence remain unestablished. See the [private storage ledger](local-storage-ledger.md).
 
+The Scans review panel also supports a review for one native-wall field. Select
+the reference brain estimate, moving angiography scores, and review position.
+Pair at least four spatially distributed landmarks. The review checks nearby
+correspondence in the proposed field and the structural and score coverage.
+Choose the reviewed layers in **Rehearsal** and open **Prepare reviewed local
+wall**. The receipt binds the exact native crop, candidate transform, original
+scans, and selected label and score revisions. General planning and display
+retain the scan's existing alignment status.
+
+TopCoW-012 exercised this route with same-person CTA brain estimates and native
+MRA vessel scores. Four arterial junctions withheld from fitting had 0.34–1.00
+mm landmark residuals. The three retained native MRA traces were within 0.34 mm
+at the 95th percentile of the independent CTA model positives. The left
+PCom–ICA crop had complete sampled coverage in both acquisitions. A shifted
+crop was refused. Acquisition timing is unreported, and anatomical boundaries
+and tissue mechanics carry the limitations of the acquired images and models.
+
 The TopCoW-014 CTA study qualified in limited research mode using its existing
 CTA-derived brain estimate and the stock vesselFM mask and scores on the same
 acquired lattice. The model scores came from the frozen annotated CTA

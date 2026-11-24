@@ -103,6 +103,14 @@ The next operative and alignment checks are indexed in
 The PTNT_0952 exact attached-exterior correction trial is indexed in
 `qc/eden2020-glioma-5714812/attached-exterior-20261124.5pgejhvx/README.md`.
 
+The CT shadow cache, timed matched views and export are indexed in
+`qc/volume-depth-20261124-v1/README.md`. The ordinary TopCoW-012 paired-source
+preparation is indexed in `qc/topcow-paired-landmark-evidence-20261124-v1/README.md`.
+The paired sliding benchmark and TopCoW-014 replay are indexed in
+`qc/vessel-tissue-sliding-20261124-v1/README.md`. The TopCoW-014 and held-out
+018 contour comparisons are indexed in
+`qc/categorical-vessel-geometry-20261124.1far659v/README.md`.
+
 Paths below are relative to the RessectionLab root. This compact ledger covers
 that area, not unrelated personal files elsewhere on the HDD. Presence does not
 establish scientific readiness or a completed build; consult each run's receipts.

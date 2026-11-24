@@ -67,6 +67,7 @@ export function NativeRegistrationReview({workspace:w,blocked}:{workspace:Native
   const [pairs,setPairs]=useState<Pair[]>([]),[pending,setPending]=useState<Partial<Pair>>({});
   const [manual,setManual]=useState(''),[error,setError]=useState('');
   const [local,setLocal]=useState<LocalAlignmentEvidence|null>(null);
+  const [brainChoice,setBrainChoice]=useState(''),[vesselChoice,setVesselChoice]=useState('');
   if(!moving||!reference||moving.id===reference.id)return null;
   const saved=doc.transforms[moving.id]?.landmarks;
   const route=w.planning.selected;
@@ -109,8 +110,19 @@ export function NativeRegistrationReview({workspace:w,blocked}:{workspace:Native
   }
   const visibleLocal=local&&center&&local.snapshotId===doc.snapshot_id&&local.centerRasMm.every((v,i)=>v===center[i])?local:null;
   const disabled=blocked||w.binding!.readOnlyStudy||!w.author.trim();
+  const localWallReview=doc.transforms[moving.id]?.native_wall_alignment_review;
+  const tissueChoices=doc.layers.filter(layer=>layer.kind==='brain'&&layer.source_series===reference.id&&
+    [undefined,null,'positive_labels_only'].includes((layer.provenance as {evidence_use?:string}|null)?.evidence_use));
+  const scoreChoices=doc.layers.filter(layer=>layer.source_series===moving.id&&
+    !!layer.probability&&['vessels','artery','vein','vessel'].includes(layer.kind));
+  const brainLayerId=brainChoice||tissueChoices[0]?.id,vesselLayerId=vesselChoice||scoreChoices[0]?.id;
   function accept(movingPoints:Point3[],referencePoints:Point3[]){
     return w.change(()=>w.api!.anatomyRegister({...w.args(),seriesId:w.series,action:'review',movingPoints,referencePoints,reviewer:w.author}));
+  }
+  function acceptLocalWall(movingPoints:Point3[],referencePoints:Point3[]){
+    const nativeWallScope={center,brainLayerId,vesselLayerId};
+    return w.change(()=>w.api!.anatomyRegister({...w.args(),seriesId:w.series,action:'reviewNativeWall',
+      movingPoints,referencePoints,reviewer:w.author,nativeWallScope}),{align:false});
   }
   return <div className="registration-review">
     {saved&&!Array.isArray(saved)&&Array.isArray(saved.errors_mm)&&<details><summary>Saved landmark review · {saved.errors_mm.length} pairs</summary>
@@ -139,5 +151,17 @@ export function NativeRegistrationReview({workspace:w,blocked}:{workspace:Native
     <p>Review requires at least three non-collinear pairs. Residuals measure these landmarks only.</p>
     <details><summary>Enter paired RAS coordinates</summary><textarea aria-label="Paired RAS coordinates" value={manual} onChange={e=>setManual(e.target.value)} placeholder={'{"moving":[],"reference":[]}'}/>
       <button disabled={disabled||!manual.trim()} onClick={()=>{try{const p=JSON.parse(manual);void accept(p.moving,p.reference)}catch{setError('Enter valid JSON with moving and reference coordinate lists.')}}}>Review entered coordinates</button></details>
+    {doc.transforms[moving.id]?.status==='unreviewed'&&brainLayerId&&vesselLayerId&&<details>
+      <summary>Review a local native wall field</summary>
+      <p>Use four non-coplanar landmark pairs near the intended field. The selected source layers and field centre bind the local review.</p>
+      {localWallReview&&<p>Saved local centre [{localWallReview.centerRasMm.map(n=>n.toFixed(1)).join(', ')}] RAS mm.</p>}
+      <label>Brain tissue<select value={brainLayerId} onChange={e=>setBrainChoice(e.target.value)}>{tissueChoices.map(l=><option key={l.id} value={l.id}>{l.label}</option>)}</select></label>
+      <label>Native vascular scores<select value={vesselLayerId} onChange={e=>setVesselChoice(e.target.value)}>{scoreChoices.map(l=><option key={l.id} value={l.id}>{l.label}</option>)}</select></label>
+      <button disabled={disabled||!center||pairs.length<4||!!pending.reference||!!pending.moving}
+        onClick={()=>acceptLocalWall(pairs.map(p=>p.moving.source),pairs.map(p=>p.reference.source))}>Save local wall review</button>
+      <button disabled={disabled||!center||!manual.trim()} onClick={()=>{
+        try{const p=JSON.parse(manual);void acceptLocalWall(p.moving,p.reference)}catch{setError('Enter valid JSON with moving and reference coordinate lists.');}
+      }}>Save local wall review from entered points</button>
+    </details>}
   </div>;
 }
