@@ -186,6 +186,7 @@ function bindOperations() {
     anatomyPlan: ['action','approach','approachId','parameterHash','reviewApproachId','assess','start','end','radiusMm','patchRadiusMm','entryPatch','constraints','targetLayerId','candidateBinding','sensitivityConfig'], anatomyRemoval: ['point','radiusMm','reset'],
     anatomySection: ['seriesId','center','normal','spacingMm','movingId','checkerboard','layers','original','registrationReview'],
     anatomyLocalAlignment: ['seriesId','center'],
+    anatomyDiffusionBaseline: ['assetId'],
     anatomyView: ['seriesId','layers','original','highlightLayer','highlightComponents','reviewId','previewAlignment','vesselScope','patientModel','vesselSurfaceMode'],
     anatomyEdit: ['action','layerId','author','points','radiusMm','threshold','reviewId','componentIds'],
     anatomySample: ['point','layerId','independentSeries'],

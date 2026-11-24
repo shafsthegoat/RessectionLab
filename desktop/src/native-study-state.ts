@@ -155,6 +155,7 @@ export function scanLabel(series:{id:string;modality:string;label?:string}):stri
 /** Describe selected contrast without denying angiography in another study scan. */
 export function sourceEvidenceLabel(source:{modality:string}|undefined,series:ReadonlyArray<{modality:string}>):string {
   const modality=source?.modality??'Source';
+  if (modality==='DWI_B0') return 'Acquired diffusion baseline · native slice inspection';
   if (/^CTA\b|CT.*angiogra/i.test(modality)) return 'CTA signal + sourced structures';
   if (/MRA|TOF|angiogra/i.test(modality)) return 'MR angiography · bright signal, no CT bone';
   if (/diagnostic/i.test(modality)) return `${modality} · derived map; planning use excluded`;

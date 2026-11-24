@@ -329,6 +329,24 @@ not an alternative to existing planning admission or a claim of anatomical QC.
 It cannot authenticate a human permission or quality-review assertion; its
 caller must verify those records and retain their original evidence.
 
+### Inspecting a native diffusion baseline in Scans
+
+Import a 4D NIfTI diffusion acquisition with its matching same-name `.bval`
+file and any `.bvec` file. Under **Import into this study**, select **Extract
+diffusion baseline** and open the result in Scans. The study retains the raw
+acquisition and companion identities. The inspection scan takes the first
+measured volume at the minimum b-value (at most 50 s/mm²), preserving its
+native samples and coded millimeter grid. A structural reference takes
+precedence when available. The separate baseline opens in its native frame
+until the usual registration workflow estimates and reviews a transform.
+
+The baseline adds no motion or susceptibility correction, gradient-frame
+declaration, tract reconstruction, functional localization, or segmentation.
+Those uses require their own evidence. The private verification exercised
+ordinary intake, baseline extraction and native views for both the DTI and
+NODDI acquisitions of two archived EDEN controls. The private storage catalog
+indexes those verification studies.
+
 ## Declaration interface
 
 Call `inspect_local_case(local_root, declaration, permission=permission)`.

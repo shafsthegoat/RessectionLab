@@ -15,6 +15,7 @@ export type Layer={
 export type Series={
   id:string;label?:string;modality:string;grid_spacing_mm:number[];timepoint:string;affine?:number[][];data?:{shape:number[]};
   acquisition_resolution?:string|number[];coverage?:{status?:string;limitations?:Array<{kind:string;basis?:string}>};
+  diffusion_baseline?:{source_asset_id:string;volume_index:number;b_value_s_per_mm2:number};
 };
 export type Document={
   before_acquisition?:{snapshotId:string;revision:number;sources:Array<{id:string;label:string;modality:string;originalSha256:string}>;
@@ -89,6 +90,7 @@ export interface NativeAnatomyApi {
   anatomyComponents(args:Args):Promise<ComponentReview>;
   anatomyAttachedVesselReview(args:Args):Promise<AttachedVesselReview>;
   anatomyLocalAlignment(args:Args):Promise<LocalAlignmentEvidence>;
+  anatomyDiffusionBaseline(args:Args):Promise<{document:Document;seriesId:string}>;
   anatomyGraph(args:Args):Promise<NativeVesselGraph>;
   anatomyCreate(args:Args):Promise<Binding|null>;
   anatomyReconstruct(args:Args):Promise<{document:Document;result:unknown}>;

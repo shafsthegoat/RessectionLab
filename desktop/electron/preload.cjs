@@ -73,6 +73,7 @@ contextBridge.exposeInMainWorld('resectionApi', Object.freeze({
   anatomyRemoval: args => ipcRenderer.invoke('research:anatomyRemoval', args),
   anatomySection: args => ipcRenderer.invoke('research:anatomySection', args),
   anatomyLocalAlignment: args => ipcRenderer.invoke('research:anatomyLocalAlignment', args),
+  anatomyDiffusionBaseline: args => ipcRenderer.invoke('research:anatomyDiffusionBaseline', args),
   anatomyOpen: args => ipcRenderer.invoke('research:anatomyOpen', args),
   anatomyView: args => ipcRenderer.invoke('research:anatomyView', args),
   anatomyEdit: args => ipcRenderer.invoke('research:anatomyEdit', args),

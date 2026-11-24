@@ -286,7 +286,7 @@ def alignment_pairs(collection):
     if reference_id is None:
         return []
     reference = collection.series(reference_id)
-    if projection_or_localizer(reference):
+    if reference.get('diffusion_baseline') or projection_or_localizer(reference):
         return []
     rows = [s for s in collection.document['series'] if s['id'] != reference['id'] and not projection_or_localizer(s)]
     cts = [s for s in rows if s['modality'].upper() == 'CT']
@@ -302,7 +302,7 @@ def ensure_alignment(c, *, force=False, cancelled=lambda: False, progress=lambda
         return False
     reference = c.series(reference_id)
     changed = False
-    if projection_or_localizer(reference):
+    if reference.get('diffusion_baseline') or projection_or_localizer(reference):
         from .anatomy_import import select_intake_reference
 
         # Older studies could already have committed a scout alongside an

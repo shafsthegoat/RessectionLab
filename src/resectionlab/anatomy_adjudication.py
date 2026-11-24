@@ -229,6 +229,7 @@ def acquisition_contributions(collection, target_options, environment_options):
     doc = collection.document
     rows = []
     stale = {r["id"]: channel_issues(r, doc) for r in doc["layers"]}
+    baseline_assets = {r["diffusion_baseline"]["source_asset_id"] for r in doc["series"] if r.get("diffusion_baseline")}
     for source in collection.source_records():
         sid = source["id"]
         modality = source.get("modality", "unknown")
@@ -238,7 +239,8 @@ def acquisition_contributions(collection, target_options, environment_options):
         reason = ""
         try:
             if asset:
-                raise ValueError("Archived source; no registered scalar derivative")
+                raise ValueError("Acquisition archived; native diffusion baseline available in Scans"
+                                 if sid in baseline_assets else "Archived source; no registered scalar derivative")
             collection.patient_affine(source)
         except (ValueError, StopIteration) as error:
             reason = str(error) or "Source registration unavailable"
@@ -270,7 +272,8 @@ def acquisition_contributions(collection, target_options, environment_options):
             "seriesId": sid, "label": source.get("label") or sid, "modality": modality,
             "anatomicalRoles": sorted({r["kind"] for r in layers}),
             "registration": status, "qc": quality.get("status"), "warnings": quality.get("warnings", []),
-            "disposition": ("unsupported" if asset else "quantitative geometry" if uses else
+            "disposition": ("inspection context" if sid in baseline_assets else
+                            "unsupported" if asset else "quantitative geometry" if uses else
                             "multimodal model input" if model_inputs else "inspection context"),
             "reason": reason, "layerCount": len(layers), "emptyLayers": unavailable,
             "structures": [{"layerId": layer["id"], "anchor": layer["source_series"] == sid, "channel": layer["id"] in linked_ids,

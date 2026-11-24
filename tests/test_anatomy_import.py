@@ -280,6 +280,82 @@ def test_raw_diffusion_companions_and_projection_stay_out_of_scalar_series(tmp_p
     assert reopened.document["reference_series"] == "t1"
 
 
+def test_native_diffusion_baseline_uses_measured_volume_and_keeps_structural_reference(tmp_path):
+    c = collection(tmp_path)
+    grid = np.diag([1.2, 1.1, 2.5, 1.])
+    grid[:3, 3] = [-5, 6, -8]
+    values = np.arange(8**3, dtype=np.float32).reshape((8, 8, 8))
+    dwi = volume(tmp_path / "diffusion.nii.gz", np.stack([values, values + 3, values + 5, values + 7], axis=-1), grid)
+    (tmp_path / "diffusion.bval").write_text("1000 0 0 500\n")
+    asset = import_nifti_series(c, dwi, series_id="dwi")
+    c.save("retain raw directional source")
+    path = c.root / "patient-anatomy.json"
+    session = BridgeSession(tmp_path / "diffusion-transfers")
+
+    def call(operation, args):
+        return session.execute(operation, args, _Request(operation), lambda *_: None)
+
+    try:
+        opened = call("anatomyOpen", {"path": str(path)})
+        binding = {"collectionId": opened["collectionId"], "snapshotId": c.identity()}
+        result = call("anatomyDiffusionBaseline", {**binding, "assetId": asset["id"]})
+        binding["snapshotId"] = result["document"]["snapshot_id"]
+        reopened = PatientImagingCollection(c.root)
+        baseline = reopened.series(result["seriesId"])
+        assert baseline["modality"] == "DWI_B0"
+        assert baseline["diffusion_baseline"]["volume_index"] == 1
+        assert baseline["diffusion_baseline"]["low_b_volume_count"] == 2
+        assert baseline["diffusion_baseline"]["source_sha256"] == asset["original"]["sha256"]
+        assert baseline["diffusion_baseline"]["bvals_sha256"] == asset["companions"]["bval"]["sha256"]
+        np.testing.assert_array_equal(reopened.array(baseline["data"]), values + 3)
+        np.testing.assert_array_equal(baseline["affine"], asset["affine"])
+        assert reopened.document["reference_series"] == "t1"
+        assert baseline["id"] not in reopened.document["transforms"]
+        assert reopened.document["source_assets"] == [asset]
+
+        expected = path.read_bytes()
+        repeated = call("anatomyDiffusionBaseline", {**binding, "assetId": "dwi"})
+        assert repeated == result
+        assert path.read_bytes() == expected
+        derivative = reopened.path(baseline["original"]["path"])
+        captured = derivative.read_bytes()
+        derivative.write_bytes(captured + b"modified")
+        with pytest.raises(ValueError, match="baseline identity changed"):
+            call("anatomyDiffusionBaseline", {**binding, "assetId": "dwi"})
+        derivative.write_bytes(captured)
+        reopened.path(asset["companions"]["bval"]["path"]).write_text("0 1000 0 500\n")
+        with pytest.raises(ValueError, match="b-values changed"):
+            call("anatomyDiffusionBaseline", {**binding, "assetId": "dwi"})
+        assert path.read_bytes() == expected
+    finally:
+        session.close()
+
+
+def test_diffusion_only_reference_yields_to_verified_structural_acquisition(tmp_path):
+    from resectionlab.anatomy_diffusion import add_native_diffusion_baseline
+    from resectionlab.anatomy_alignment import alignment_pairs
+
+    c = PatientImagingCollection.create(tmp_path / "study", "patient-a")
+    dwi = volume(tmp_path / "first_dwi.nii.gz", np.ones((8, 8, 8, 2), np.float32))
+    (tmp_path / "first_dwi.bval").write_text("1000 700\n")
+    import_nifti_series(c, dwi, series_id="without-baseline")
+    with pytest.raises(ValueError, match="at most 50 s/mm²"):
+        add_native_diffusion_baseline(c, "without-baseline")
+    assert c.document["series"] == []
+    (tmp_path / "first_dwi.bval").write_text("1000 0\n")
+    import_nifti_series(c, dwi, series_id="complete")
+    baseline = add_native_diffusion_baseline(c, "complete")
+    assert c.document["reference_series"] == baseline["id"]
+    c.save("diffusion baseline only")
+
+    c = PatientImagingCollection(c.root)
+    assert alignment_pairs(c) == []
+    t1 = volume(tmp_path / "T1w.nii.gz", np.ones((8, 8, 8), np.float32))
+    import_nifti_series(c, t1, series_id="t1")
+    assert select_intake_reference(c) == "t1"
+    assert [(source["id"], parent["id"]) for source, parent in alignment_pairs(c)] == [(baseline["id"], "t1")]
+
+
 def test_sidecar_preserves_processed_swi_and_reports_declared_coverage(tmp_path):
     c = collection(tmp_path)
     path = volume(tmp_path / "scan.nii.gz", np.zeros((8, 8, 8), np.float32))

@@ -365,7 +365,9 @@ def select_intake_reference(collection):
     current = document.get("reference_series")
     if current is None:
         return None
-    provisional = projection_or_localizer(collection.series(current))
+    reference_source = collection.series(current)
+    baseline_reference = reference_source.get("diffusion_baseline") is not None
+    provisional = baseline_reference or projection_or_localizer(reference_source)
     if not provisional and (collection.published_reference or len(document["transforms"]) != 1):
         return current
     order = ("T1", "T1CE", "T2", "FLAIR", "CT", "CTA", "TOF", "MRA", "MRV",
@@ -388,7 +390,8 @@ def select_intake_reference(collection):
                             or transforms[current]["status"] != "reference"):
             document.setdefault("registration_history", []).extend(
                 {"series_id": series_id, "reference_series": current, "transform": transform,
-                 "invalidation_reason": "Previous reference was a projection or localizer"}
+                 "invalidation_reason": ("Previous reference was a diffusion baseline for inspection"
+                                         if baseline_reference else "Previous reference was a projection or localizer")}
                 for series_id, transform in transforms.items()
             )
         document["transforms"] = {

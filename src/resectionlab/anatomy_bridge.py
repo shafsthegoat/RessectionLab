@@ -148,6 +148,19 @@ def dispatch(session, operation, args, request, progress):
     if operation == "anatomyInspectIntake":
         from .anatomy_intake import inspect_intake
         return inspect_intake(args["kind"], args["paths"], check=request.check)
+    if operation == "anatomyDiffusionBaseline":
+        if key in session.anatomy_drafts:
+            raise ValueError("Accept or reject the active correction first")
+        from .anatomy_diffusion import add_native_diffusion_baseline
+
+        candidate = PatientImagingCollection(c.root, c.document)
+        progress(.15, "Reading the native diffusion baseline")
+        series = add_native_diffusion_baseline(candidate, args.get("assetId"), check=request.check)
+        if candidate.identity() != current_id:
+            request.begin_commit()
+            candidate.save("retain native diffusion baseline for inspection", expected=current_id)
+            session.anatomy_collections[key] = candidate
+        return {"document": candidate.document, "seriesId": series["id"]}
     if operation in {"anatomyImportBatch", "anatomyPrepare"}:
         if key in session.anatomy_drafts:
             raise ValueError("Accept or reject the active correction first")
