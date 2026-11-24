@@ -97,6 +97,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     inspectionTool,
     diagnosticLayer,
     diagnosticSourceSha256,
+    ctaCoverage,
   } = props;
   const rendererIdentity=caseData?modeledSourceIdentity(caseData):caseData;
   const geometrySource=caseData?(modeledAnatomy(caseData)?.source??caseData):null;
@@ -1122,6 +1123,10 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
           {depthSlabBox&&!corridorCrop&&<div className="rl-source-section-readout" role="status">
             <span>{TITLES[activePlane]} {depthSlabThickness} mm slab · linked slices stay full</span>
             <button aria-label="Exit vessel slab in 3D" onClick={()=>setDepthSlab(null)}>Exit slab</button>
+          </div>}
+          {ctaCoverage&&!surgicalView&&<div className="rl-cta-coverage" role="group" aria-label="CTA arterial layers">
+            <button aria-pressed={ctaCoverage.mode==='combined'} onClick={()=>ctaCoverage.onChange(true)}>Combined arteries</button>
+            <button aria-pressed={ctaCoverage.mode==='focused'} onClick={()=>ctaCoverage.onChange(false)}>Focused branches</button>
           </div>}
           {ctaCutaway&&!surgicalView&&!sourceSectionActive&&!depthSlabBox&&!corridorCrop&&!settings.clipBox?.enabled&&
             !settings.obliqueClip?.enabled&&!props.vesselTrace?.isolationRadiusMm&&<div className="rl-source-section-readout" role="status">

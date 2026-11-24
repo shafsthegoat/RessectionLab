@@ -1,5 +1,5 @@
 import {useNativeApproaches} from './use-native-approaches';
-import {nextScanState,migrateSkullView,vesselScopeForView,corticalLayers,cranialComposition,hasNativeAngiographicVessels,initialNativeLayers,presentationLayers,anatomyPresentation,defaultAnatomyPresentation} from './native-study-state';
+import {nextScanState,migrateSkullView,vesselScopeForView,corticalLayers,cranialComposition,hasNativeAngiographicVessels,initialNativeLayers,presentationLayers,anatomyPresentation,defaultAnatomyPresentation,ctaCoverageOptions} from './native-study-state';
 import type {AnatomyPresentation} from './native-study-state';
 import {drainLayerRequests} from './native-layer-queue';
 import {mergeResidentLayers,prepareNativeLabels} from './native-layer-residency';
@@ -92,6 +92,10 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
       settings:nativeVascularReview(b)?{...settings,smoothSurfaces:false}:settings,visible};
   };
   const scanState=states[series]??{cursor:null,visible:{},settings:nativeDefaults()};
+  const ctaCoverage=binding?ctaCoverageOptions(binding.document,series):undefined;
+  const ctaMembers=ctaCoverage?.memberIds.filter(id=>scanState.visible[id])??[];
+  const ctaCoverageMode:'combined'|'focused'|null=ctaCoverage&&ctaMembers.length===1&&ctaMembers[0]===ctaCoverage.combinedId?'combined':
+    ctaCoverage&&ctaMembers.length===ctaCoverage.focusIds.length&&ctaMembers.every(id=>ctaCoverage.focusIds.includes(id))?'focused':null;
   const previousCranialView=useRef<{key:string;view:NativeScanState;structure:string|null}|null>(null);
   const compositionKey=JSON.stringify([binding?.collectionId,binding?.document.snapshot_id,series]);
   useEffect(()=>setVesselTrace(null),[compositionKey,selectedStructure,vesselScope,draft]);
@@ -159,6 +163,10 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
     if(!api)return;setOriginal(raw);const seq=++generation.current;
     resetLayers();installVolume(null);setUnavailable([]);setMessage('Preparing anatomy…');
     const ids=Object.keys(view.visible).filter(id=>view.visible[id]);
+    const coverage=freshOpening?ctaCoverageOptions(b.document,s):undefined;
+    if(coverage&&view.visible[coverage.combinedId]){
+      for(const id of coverage.focusIds)if(!ids.includes(id))ids.push(id);
+    }
     try{
       const result=await api.anatomyView({...args(b),seriesId:s,layers:ids,original:raw,patientModel:b.document.series.length>1,previewAlignment:true,vesselScope:scopeRef.current,...vesselSurfaceOptions(b,view.settings),...extra});
       if(seq!==generation.current)return;
@@ -174,7 +182,7 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
         next.settings={...next.settings,...viewerCutaway({})};
       }
       if(freshOpening&&!result.unavailableLayers.some(id=>view.visible[id])){
-        const opening=ctaArterialCutaway(hydrated,s,view.visible,next.settings,b.document.layers);
+        const opening=ctaArterialCutaway(hydrated,s,view.visible,next.settings,b.document.layers,coverage);
         if(opening){
           if(usesPatientCutaway(opening,!!hydrated.patientContext?.boundsRasMm)){
             setPatientCutaway(viewerCutaway(opening));
@@ -300,6 +308,13 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
     const changed=current.cranialView&&Object.keys({...current.visible,...visible}).some(id=>visible[id]!==current.visible[id]);
     updateState({visible,...(changed?{cranialView:undefined}:{})});queueLayers();
   }
+  function changeCtaCoverage(combined:boolean){
+    if(!ctaCoverage||busy||draft)return;
+    const visible={...scanState.visible};
+    for(const id of ctaCoverage.memberIds)visible[id]=combined?id===ctaCoverage.combinedId:ctaCoverage.focusIds.includes(id);
+    if(selectedStructure&&!visible[selectedStructure])setSelectedStructure(null);
+    setVisible(visible);
+  }
   function retryLayer(id:string){
     const next={...failedLayers.current};delete next[id];failedLayers.current=next;setLayerErrors(next);queueLayers();
   }
@@ -424,7 +439,7 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
   }
   const displayRoutes=state.cranialView==='inspection'?[]:state.cranialView==='planning'
     ?planning.routes.filter(route=>route.selected):planning.routes;
-  return {displayRoutes,composeCranialView,hasCranialView,canRestoreCranialView:previousCranialView.current?.key===compositionKey,
+  return {displayRoutes,composeCranialView,hasCranialView,ctaCoverage,ctaCoverageMode,changeCtaCoverage,canRestoreCranialView:previousCranialView.current?.key===compositionKey,
     vesselTrace,setVesselTrace,vesselPick:vesselPick?.key===compositionKey&&vesselPick.layerId===selectedStructure?vesselPick:null,pickStructureWithPoint,
     readCamera,viewState:currentViewState(),patientFrameReady,planning,selectedStructure,setSelectedStructure,structureFocusRequest,structureFocusPoint,focusStructure:(id:string,point?:Point3)=>{setStructureFocusPoint(point??null);setSelectedStructure(id);setStructureFocusRequest(n=>n+1);},present,changeSkullMode,canEditLayer,vesselScope,changeVesselScope,savePackage,api,binding,volume,series,state,busy,progress,pendingLayers,layerErrors,retryLayer,message,registration,unavailable,draft,original,editLayer,setEditLayer,tool,setTool,radius,setRadius,threshold,setThreshold,author,setAuthor,review,components,args,run,install,create,clear,selectScan,setVisible,refresh,edit,onStroke,save,reviewFragments,highlight,compare,change,runPreparation,setMessage,setCursor:(cursor:Point3)=>updateState({cursor}),setSettings:(settings:ViewerWorkspaceSettings)=>updateSettings(skullDisplay(settings)),cancel};
 }

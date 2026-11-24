@@ -196,6 +196,8 @@ The viewer emits `anatomy-export` upon completion with image dimensions, sample 
 
 **Structures** and **Vessels** leave the active acquisition as the scalar volume and display the selected registered anatomy alongside it. When viewing CTA, the acquired volume supplies fine bone and contrast detail while opaque vascular meshes remain selectable. Live scalar draws settle at a 1024-pixel long edge. New vessel-focused CT views with one bone layer from the same acquisition start with volume shadows enabled. They retain the existing shadow control and saved view settings. In native TOF, subdued context lets unclassified vessel candidates use a separate palette from supplied arteries, veins and sinuses. Conditioned vessel walls have wider, weaker highlights and a camera-depth cue. Acquisition edge closures keep their neutral material and geometry.
 
+Native CTA workspaces prepared with complementary supplied annotations start in **Combined arteries**. **Focused branches** displays the original selected layers at the same camera, slice cursor and cut. The opening still follows the focused branches when at least 90% of both combined mesh vertex sets fit below the physical plane. **Full head** exposes the full field. The combination is a display layer formed from both exact masks on their shared native lattice. Its source layers retain their original labels and separate geometry for inspection and planning. [Prepare the display from supplied annotations](../../../docs/data-rebuild.md#combined-supplied-cta-arterial-coverage).
+
 To reproduce a matched capture, pass one native `.json` study and the same view recipe to both desktop builds:
 
 ```sh

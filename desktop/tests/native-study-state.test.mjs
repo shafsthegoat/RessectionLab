@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {studyLayerDisplayKind,nextScanState,scanLabel,studyTimepoint,migrateSkullView,anatomyPresentation,defaultAnatomyPresentation,sourceEvidenceLabel} from '../src/native-study-state.ts';
 import {checkedViewerSettings} from '../src/workspace-view-settings.ts';
-import {cranialComposition,initialNativeLayers,presentationLayers} from '../src/native-study-state.ts';
+import {cranialComposition,ctaCoverageOptions,initialNativeLayers,presentationLayers} from '../src/native-study-state.ts';
 import {withLayerColor} from '../src/viewer/workspaceSettings.ts';
 
 test('an independent or estimated scan cannot drive the reference scan presentation',()=>{
@@ -47,6 +47,22 @@ test('a separate angiogram opens its own layers when initial layers describe the
   assert.deepEqual(initialNativeLayers(study,'mra',true).visible,{skull:false,artery:true,vein:false});
   study.display.initial_layers=[];
   assert.deepEqual(initialNativeLayers(study,'mra',true).visible,{skull:false,artery:false,vein:false});
+});
+
+test('CTA coverage controls require the original CTA and every exact annotation revision',()=>{
+  const annotation=(id)=>({id,kind:'artery',source_series:'cta',revision:0,label_value:1,data:{sha256:id}});
+  const rows=['focused','wider'].map(annotation);
+  const combined={...annotation('combined'),provenance:{kind:'derived_annotation_union',source_scan_sha256:'scan',
+    input_layers:rows.map(row=>({id:row.id,data_sha256:row.data.sha256,revision:row.revision,label_value:row.label_value}))}};
+  const study={series:[{id:'cta',modality:'CTA',original:{sha256:'scan'}}],layers:[...rows,combined],
+    display:{cta_arterial_coverage:{series_id:'cta',layer_id:'combined',focus_layers:['focused']}}};
+  assert.deepEqual(ctaCoverageOptions(study,'cta'),{combinedId:'combined',focusIds:['focused'],memberIds:['combined','focused','wider']});
+  assert.equal(ctaCoverageOptions(study,'mra'),undefined);
+  rows[0].revision++;
+  assert.equal(ctaCoverageOptions(study,'cta'),undefined);
+  rows[0].revision--;
+  study.series[0].original.sha256='different';
+  assert.equal(ctaCoverageOptions(study,'cta'),undefined);
 });
 
 test('scan and anatomy presets preserve the study colors of supplied arterial classes',()=>{

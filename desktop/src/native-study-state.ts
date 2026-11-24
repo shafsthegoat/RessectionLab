@@ -63,6 +63,27 @@ export function initialNativeLayers(study:Binding['document'],seriesId:string,in
   return {available,cortex,visible};
 }
 
+export function ctaCoverageOptions(study:Binding['document'],seriesId:string){
+  const option=study.display?.cta_arterial_coverage;
+  const series=study.series.find(row=>row.id===seriesId);
+  if(!series?.original?.sha256||!isCtAngiography(series.modality)||option?.series_id!==seriesId||
+    !Array.isArray(option.focus_layers)||!option.focus_layers.length||new Set(option.focus_layers).size!==option.focus_layers.length)return;
+  const layers=new Map(study.layers.filter(row=>row.source_series===seriesId&&row.kind==='artery').map(layer=>[layer.id,layer]));
+  const combined=layers.get(option.layer_id);
+  const record=combined?.provenance as {kind?:string;source_scan_sha256?:string;
+    input_layers?:Array<{id:string;data_sha256:string;revision:number;label_value:number}>}|undefined;
+  if(record?.kind!=='derived_annotation_union'||record.source_scan_sha256!==series.original.sha256||
+    combined?.revision!==0||!Array.isArray(record.input_layers))return;
+  const inputs=record.input_layers;
+  const unchanged=inputs.every(input=>{
+    const layer=input&&layers.get(input.id);
+    return layer?.data?.sha256===input.data_sha256&&layer?.revision===input.revision&&layer?.label_value===input.label_value;
+  });
+  if(!unchanged||inputs.length!==option.focus_layers.length+1||new Set(inputs.map(input=>input.id)).size!==inputs.length||
+    !option.focus_layers.every(id=>inputs.some(input=>input.id===id))||inputs.some(input=>input.id===option.layer_id))return;
+  return {combinedId:option.layer_id,focusIds:option.focus_layers,memberIds:[option.layer_id,...inputs.map(input=>input.id)]};
+}
+
 function peripheralReviewVessels(layer:Layer):boolean {
   const source=layer.provenance as {method?:string;evidence_use?:string}|null;
   return ['vesselfm-review-posterior-superficial','vesselfm-review-field-edge','vesselfm-review-skull-exterior','vesselfm-review-source-disagreement'].includes(layer.id)&&

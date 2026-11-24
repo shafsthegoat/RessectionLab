@@ -50,6 +50,14 @@ test('fresh CTA cutaway clears all source and display artery vertices and preser
   wide.source[8]=-30;
   assert.equal(ctaArterialCutaway({...volume,compartments:[{...artery,surface:wide},volume.compartments[1]]},
     'cta',visible,settings),undefined);
+  const points=Float32Array.from(Array.from({length:36},(_,i)=>i%3===2?(i===35?65:35):45));
+  const combined={...artery,name:'combined',surface:{source:points,positions:points.slice(),indices:wide.indices}};
+  const wideView={...volume,compartments:[...volume.compartments,combined]};
+  const options={combinedId:'combined',focusIds:['artery']};
+  assert.deepEqual(ctaArterialCutaway(wideView,'cta',{combined:true,bone:true},settings,[],options),cut);
+  assert.equal(ctaArterialCutaway(wideView,'cta',{combined:true,bone:true},settings,[],{...options,focusIds:['missing']}),undefined);
+  combined.surface.positions[32]=65;
+  assert.equal(ctaArterialCutaway(wideView,'cta',{combined:true,bone:true},settings,[],options),undefined);
 });
 
 test('section follows the linked cursor and chosen axis without changing source window or extra cuts', () => {

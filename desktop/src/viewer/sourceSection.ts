@@ -55,7 +55,8 @@ export function sourceDepthSlabAtCursor(cursor: Point3, bounds: Bounds3, plane: 
  * both the source and conditioned meshes so the opening plane clears every
  * visible arterial vertex. The CTA acquisition and linked cursor stay intact. */
 export function ctaArterialCutaway(volume:ViewerVolume,seriesId:string,visible:Readonly<Record<string,boolean>>,
-  settings:ViewerWorkspaceSettings,declarations:ReadonlyArray<Pick<Layer,'id'|'role'|'provenance'>>=[]):ViewerWorkspaceSettings|undefined {
+  settings:ViewerWorkspaceSettings,declarations:ReadonlyArray<Pick<Layer,'id'|'role'|'provenance'>>=[],
+  coverage?:{combinedId:string;focusIds:ReadonlyArray<string>}):ViewerWorkspaceSettings|undefined {
   if(!volume.displayIdentity||!isCtAngiography(volume.modality??'')||
     !['segmentation','vascular'].includes(settings.presentation??'')||settings.operativeView||
     settings.volumeRendering?.enabled===false||settings.volumeRendering?.density===0||settings.volumeRendering?.isolateLabels)return;
@@ -64,6 +65,10 @@ export function ctaArterialCutaway(volume:ViewerVolume,seriesId:string,visible:R
   const bone=layers.filter(layer=>['bone','skull'].includes(layer.kind??'')&&layer.sourceSeries===seriesId);
   if(!arterial.length||arterial.some(layer=>layer.sourceSeries!==seriesId||!layer.surface?.indices.length)||
     !bone.some(layer=>layer.surface?.indices.length))return;
+  const useCoverage=coverage&&arterial.length===1&&arterial[0].name===coverage.combinedId?coverage:undefined;
+  const focused=useCoverage?volume.compartments.filter(layer=>useCoverage.focusIds.includes(layer.name)&&
+    layer.kind==='artery'&&layer.sourceSeries===seriesId&&layer.surface?.indices.length):arterial;
+  if(useCoverage&&focused.length!==useCoverage.focusIds.length)return;
   const affine=rasAffine(volume.affine,volume.frame);
   const measure=(members:typeof layers,superior=Infinity):Bounds3|undefined=>{
     const lower:Point3=[Infinity,Infinity,Infinity],upper:Point3=[-Infinity,-Infinity,-Infinity];
@@ -83,11 +88,23 @@ export function ctaArterialCutaway(volume:ViewerVolume,seriesId:string,visible:R
     }
     return lower.every(Number.isFinite)&&upper.every(Number.isFinite)?[lower,upper]:undefined;
   };
-  const vessels=measure(arterial);
+  const vessels=measure(focused);
   if(!vessels||vessels[1][2]-vessels[0][2]>75)return;
   const source=volumeBounds(volume.shape,affine,true);
   const plane=Math.ceil(vessels[1][2]+8);
   if(source[1][2]-plane<12||plane-source[0][2]<25)return;
+  const coverageSurface=useCoverage?arterial[0].surface:undefined;
+  if(coverageSurface){
+    // The declared focus can coexist with a wide field when the opening still
+    // displays the large majority of its source and conditioned contour.
+    for(const points of [coverageSurface.source,coverageSurface.positions]){
+      let retained=0;
+      for(let i=0;i<points.length;i+=3){
+        if(affine[2][0]*points[i]+affine[2][1]*points[i+1]+affine[2][2]*points[i+2]+affine[2][3]<=plane)retained++;
+      }
+      if(retained<points.length/3*.9)return;
+    }
+  }
   const byId=new Map(declarations.map(layer=>[layer.id,layer]));
   const lesions=layers.filter(layer=>{
     const declared=byId.get(layer.name);

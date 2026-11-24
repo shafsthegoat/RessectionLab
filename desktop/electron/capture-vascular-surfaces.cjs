@@ -50,6 +50,7 @@ for(const recipe of recipes){
     'A default-state capture cannot supply view overrides');
   if(recipe.inspectCtExteriorToggle)assert(recipe.useDefaultState,'Check the detached CT signal control from the ordinary default');
   if(recipe.inspectCtaFullHead)assert(recipe.useDefaultState,'Compare the ordinary CTA opening with the Full head control');
+  if(recipe.inspectCtaCoverage)assert(recipe.useDefaultState,'Compare arterial coverage from the ordinary CTA opening');
   assert(recipe.applyVesselsPreset===undefined||typeof recipe.applyVesselsPreset==='boolean');
   assert(recipe.applyScanPreset===undefined||typeof recipe.applyScanPreset==='boolean');
   assert(!recipe.applyScanPreset||!recipe.applyVesselsPreset,'Apply one ordinary preset per capture');
@@ -498,6 +499,29 @@ app.on('browser-window-created',(_event,window)=>{
             return image;
           };
           record.publisherSmoothing={source:await inspect(false),restored:await inspect(true)};
+        }
+        if(recipe.inspectCtaCoverage){
+          const coverage=document.display.cta_arterial_coverage;
+          const initial=record.view.visible;
+          assert(initial[coverage.layer_id]&&coverage.focus_layers.every(id=>!initial[id]));
+          const inspect=async combined=>{
+            const name=combined?'Combined arteries':'Focused branches';
+            const before=await submittedFrame();
+            await click(name);
+            await until(`(${button(name)})?.getAttribute('aria-pressed')==='true'`,name);
+            await ready();
+            await settledFrame(before.serial);
+            const state=await nativeView(),activeView=state.states[view.seriesId];
+            const visible=combined?initial:{...initial,[coverage.layer_id]:false,
+              ...Object.fromEntries(coverage.focus_layers.map(id=>[id,true]))};
+            assert.deepEqual(activeView.visible,visible);
+            assert.deepEqual(activeView.settings,record.view.settings);
+            assert.deepEqual(state.patientCutaway,view.patientCutaway);
+            const image=await capture(`${recipe.name}-${combined?'combined-restored':'focused'}`);
+            assertSameGeometry(image);
+            return image;
+          };
+          record.ctaCoverage={focused:await inspect(false),combined:await inspect(true)};
         }
         if(recipe.inspectCtaFullHead){
           const opening=view.patientCutaway?.clipping?.enabled?view.patientCutaway.clipping:record.view.settings.clipping;

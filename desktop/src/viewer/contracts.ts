@@ -148,6 +148,7 @@ export interface ViewerWorkspaceProps {
   vesselTrace?: ViewerVesselTrace | null;
   /** A double-click on a registered native label selects its source evidence. */
   onPickStructure?: (name: string, point:Point3) => void;
+  ctaCoverage?: {mode:'combined'|'focused'|null;onChange:(combined:boolean)=>void};
   /** Explicit focus command; selecting a row alone does not move a restored camera. */
   structureFocusRequest?: number;
   /** An assessed source-RAS concern location, when focusing a local intersection. */

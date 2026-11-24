@@ -2122,6 +2122,8 @@ export default function App() {
               selectedStructure={native.binding?native.selectedStructure:null}
               vesselTrace={native.binding&&workbenchTab==='anatomy'?native.vesselTrace:null}
               onPickStructure={native.binding?native.pickStructureWithPoint:undefined}
+              ctaCoverage={native.ctaCoverage&&!surgical.view?{
+                mode:native.ctaCoverageMode,onChange:native.changeCtaCoverage}:undefined}
               structureFocusRequest={native.structureFocusRequest}
               structureFocusPoint={native.structureFocusPoint}
               cameraMode={cameraMode}

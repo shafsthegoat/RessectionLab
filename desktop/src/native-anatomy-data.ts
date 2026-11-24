@@ -10,18 +10,21 @@ export type Layer={
   probability?:unknown;provenance:unknown;coverage:string;data?:{shape:number[];sha256:string};label_value?:number;
   affine?:number[][];acquisition_grid_spacing_mm?:number[];output_spacing_mm?:number[];
   acquisition_resolution?:string|number[];transform_dependencies?:string[];
+  revision?:number;
   coverage_fields?:{inference_bounds_voxel_inclusive?:number[][];supported_axial_indices?:number[];outside?:string;zero_meaning?:string};
   availability?:string;uncertainty?:unknown;label_ontology?:unknown;ontology?:unknown;score_meaning?:string;
 };
 export type Series={
   id:string;label?:string;modality:string;grid_spacing_mm:number[];timepoint:string;affine?:number[][];data?:{shape:number[]};
+  original?:{sha256:string};
   acquisition_resolution?:string|number[];coverage?:{status?:string;limitations?:Array<{kind:string;basis?:string}>};
   diffusion_baseline?:{source_asset_id:string;volume_index:number;b_value_s_per_mm2:number};
 };
 export type Document={
   before_acquisition?:{snapshotId:string;revision:number;sources:Array<{id:string;label:string;modality:string;originalSha256:string}>;
     layers:Array<{id:string;label:string;sourceSeries:string;arraySha256:string;labelValue:number;review:string}>};
-  display?:{initial_layers?:string[];cursor_ras_mm?:Point3;entry_ras_mm?:Point3};
+  display?:{initial_layers?:string[];cursor_ras_mm?:Point3;entry_ras_mm?:Point3;
+    cta_arterial_coverage?:{series_id:string;layer_id:string;focus_layers:string[]}};
   vascular_review?:{schema?:string;posterior_compartment_review?:{disjoint_union_matches_selected?:boolean};
     field_edge_compartment_review?:{disjoint_union_matches_selected?:boolean};
     skull_exterior_compartment_review?:{disjoint_union_matches_selected?:boolean};

@@ -7,6 +7,8 @@ import sys
 import nibabel as nib
 import numpy as np
 import pytest
+from resectionlab.anatomy_display import add_cta_arterial_coverage
+from resectionlab.anatomy_evidence import vascular_evidence_supported
 from resectionlab.patient_anatomy import PatientImagingCollection
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
@@ -92,3 +94,48 @@ def test_subject_regression_prevents_promotion_despite_mean_gain():
     assert decision['mean_f1_gain'] > .02
     assert decision['eligible'] is False
     assert json.loads(json.dumps(decision)) == decision
+
+
+def test_cta_coverage_retains_both_sources_and_refuses_unsupplied_positives(tmp_path):
+    frame = np.diag([-.5, -.5, .75, 1.])
+    shape = (16, 14, 12)
+    focused = np.zeros(shape, dtype=np.uint8)
+    focused[3:8, 4, 4] = 5
+    wider = np.zeros_like(focused)
+    wider[6:11, 4, 4] = 17
+    wider[6:11, 7, 4] = 19
+    wider[6:11, 8, 4] = 35
+    scan_file = tmp_path / 'cta.nii.gz'
+    image = nib.Nifti1Image(np.zeros(shape, dtype=np.int16), frame)
+    image.header.set_xyzt_units('mm')
+    nib.save(image, scan_file)
+    study = PatientImagingCollection.create(tmp_path / 'study', 'fixture')
+    study.add_series(scan_file, series_id='cta', modality='CTA')
+
+    def observed(name, source, stored, label, **provenance):
+        path = tmp_path / f'{name}.nii.gz'
+        nib.save(nib.Nifti1Image(source, frame), path)
+        row = study.add_layer(stored, frame, layer_id=name, source_series='cta', kind='artery', role='context',
+                              color='#65e9ba', label_value=label,
+                              provenance={'kind': 'supplied_annotation', 'source': study.original(path), **provenance})
+        row['units_status'] = 'unknown'
+        return row
+
+    core = observed('core', focused, focused, 5)
+    wide_mask = np.isin(wider, [17, 19]).astype(np.uint8)
+    wide = observed('wider', wider, wide_mask, 1, source_label_values=[17, 19])
+    study.document['display'] = {'initial_layers': ['core']}
+    original = wide['data']
+    wrong = wide_mask.copy()
+    wrong[10, 9, 4] = 1
+    wide['data'] = study.put_array(wrong)
+    with pytest.raises(ValueError, match='differs from its supplied arterial positive labels'):
+        add_cta_arterial_coverage(study, 'cta', ['core'], 'wider')
+    wide['data'] = original
+    union, counts = add_cta_arterial_coverage(study, 'cta', ['core'], 'wider')
+    assert np.array_equal(study.mask(union), (focused == 5) | (wide_mask == 1))
+    assert np.array_equal(study.mask(core), focused == 5)
+    assert np.array_equal(study.mask(wide), wide_mask == 1)
+    assert counts['focus_only_voxels'] == 3 and counts['wider_only_voxels'] == 8
+    assert study.document['display']['initial_layers'] == [union['id']]
+    assert not vascular_evidence_supported(study, union)

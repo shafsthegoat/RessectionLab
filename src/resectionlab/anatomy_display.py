@@ -86,6 +86,77 @@ def source_lattice_annotation_preview(collection, row, selected):
         return False
 
 
+def add_cta_arterial_coverage(collection, series_id, focus_ids, wider_id):
+    """Prepare an exact display union of complementary native CTA annotations."""
+    from .anatomy_model_registry import source_volume
+
+    scan = collection.series(series_id)
+    if scan['modality'] != 'CTA' or not source_volume(scan):
+        raise ValueError('Arterial coverage requires an acquired volumetric CTA')
+    collection.require_native_geometry(scan)
+    if not focus_ids or len(set([*focus_ids, wider_id])) != len(focus_ids) + 1:
+        raise ValueError('Select distinct focused and wider annotation layers')
+    rows = [collection.layer(layer_id) for layer_id in [*focus_ids, wider_id]]
+    focused = np.zeros(scan['data']['shape'], dtype=bool)
+    previous_path = None
+    for row in rows:
+        provenance = row.get('provenance', {})
+        original = provenance.get('source')
+        if (row['kind'] != 'artery' or row['source_series'] != series_id or row.get('edits')
+                or provenance.get('kind') not in {'supplied_annotation', 'observed_source_annotation'}
+                or row['data']['shape'] != scan['data']['shape'] or row['affine'] != scan['affine']
+                or not isinstance(original, dict) or not isinstance(original.get('path'), str)):
+            raise ValueError(f'{row["id"]} must be a supplied artery on the selected CTA lattice')
+        if not source_lattice_annotation_preview(collection, row, scan):
+            collection.require_native_geometry(row)
+            if file_hash(collection.path(original['path'])) != original.get('sha256'):
+                raise ValueError(f'{row["id"]} no longer matches its supplied annotation')
+        mask = collection.mask(row)
+        if not mask.any():
+            raise ValueError(f'{row["id"]} has no supplied arterial positives')
+        if original['path'] != previous_path:
+            source_values = np.asanyarray(nib.load(collection.path(original['path'])).dataobj)
+            previous_path = original['path']
+        grouping = provenance.get('source_label_values')
+        if grouping is None:
+            if row.get('publisher_surface') and 'publisher_class_id' not in provenance:
+                source_mask = source_values > 0
+            else:
+                source_mask = source_values == row['label_value']
+        else:
+            if (not isinstance(grouping, list) or not grouping
+                    or any(type(value) is not int or value <= 0 for value in grouping)):
+                raise ValueError(f'{row["id"]} has an invalid source label grouping')
+            source_mask = np.isin(source_values, grouping)
+        if not np.array_equal(mask, source_mask):
+            raise ValueError(f'{row["id"]} differs from its supplied arterial positive labels')
+        if row['id'] == wider_id:
+            wider = mask
+        else:
+            focused |= mask
+    if not np.any(focused & wider) or not np.any(wider & ~focused):
+        raise ValueError('The wider annotation must overlap and extend the focused arterial field')
+    display = collection.document.setdefault('display', {})
+    initial = display.get('initial_layers', [])
+    if not all(layer_id in initial for layer_id in focus_ids) or wider_id in initial:
+        raise ValueError('The initial display must select the focus layers as its arterial view')
+    inputs = [{'id': row['id'], 'data_sha256': row['data']['sha256'], 'revision': row['revision'],
+               'label_value': row['label_value']} for row in rows]
+    union = collection.add_layer(
+        (focused | wider).astype(np.uint8), scan['affine'], layer_id=f'{series_id}-supplied-arterial-coverage',
+        source_series=series_id, kind='artery', role='context', color='#aa352b', label='Combined supplied arterial coverage',
+        provenance={'kind': 'derived_annotation_union', 'method': 'Boolean union on the acquired CTA grid',
+                    'source_scan_sha256': scan['original']['sha256'], 'input_layers': inputs, 'evidence_use': 'context_only'},
+    )
+    union['coverage'] = 'Union of supplied arterial annotations; unlabeled vessels remain unassessed.'
+    display['cta_arterial_coverage'] = {'series_id': series_id, 'layer_id': union['id'], 'focus_layers': list(focus_ids)}
+    focus_set = set(focus_ids)
+    display['initial_layers'] = [name for name in initial if name not in focus_set] + [union['id']]
+    return union, {'focus_voxels': int(focused.sum()), 'wider_voxels': int(wider.sum()),
+                   'focus_only_voxels': int(np.count_nonzero(focused & ~wider)),
+                   'wider_only_voxels': int(np.count_nonzero(wider & ~focused))}
+
+
 def brain_vessel_display(collection, row):
     """Intersect a vessel estimate with a source-bound brain envelope for display.
 
