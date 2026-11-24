@@ -71,6 +71,34 @@ and application captures provide the private comparison evidence. The
 companions are for research display. Patient-specific surgical admission
 requires its own source registration and mechanics evidence.
 
+### Matched app review and source-linked rehearsal
+
+The continuity run reuses the published native TOF companions and branch
+graphs. Build the desktop renderer from the current checkout before recording
+evidence so its submitted geometry matches the backend. Capture the full cohort
+with `--match-baseline` to keep the camera, source cursor and lighting fixed
+between the original and selected layers. Use `--subject PTNT_4509` to retry a
+single case. The capture status records the workspace snapshot and image paths.
+
+```sh
+cd desktop && pnpm build && cd ..
+campaign=qc/eden2020-glioma-5714812/vascular-reconstruction-continuity-20261123-v2
+data='/Volumes/shafrir/old coding projects/RessectionLabData'
+.venv/bin/python scripts/capture_eden2020_vascular_cohort.py --match-baseline \
+  --output "$campaign/app/cohort" --display-settings "$data/$campaign/app/cohort-display-settings.json" \
+  --reviewed-manifests "$campaign/reviewed-manifests.json"
+```
+
+Use `scripts/measure_vessel_surface_sections.py` with the exact linked manifest
+and compatible native branch JSON for physical section comparisons. Its receipt
+records the manifest SHA-256 and snapshot it opened.
+
+The PTNT_4509 teaching rehearsal preserves the acquired TOF lattice and
+source-bound vessel triangles. The exposure banks, vessel attachments and
+mechanical properties are modeled. The private continuity run index links the
+portable workspace, recorded actions, source and collision checks, and hidden
+replay commands. See the [private storage ledger](local-storage-ledger.md).
+
 ## Prospective intake receipt
 
 `resectionlab.eden2020.inspect_local_case` produces a versioned evidence

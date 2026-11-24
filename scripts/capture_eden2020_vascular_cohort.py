@@ -16,7 +16,7 @@ import time
 import numpy as np
 
 from build_eden2020_vascular_companion import CANDIDATE, HDD_ROOT, HDD_UUID, RUN, SOURCE
-from resectionlab.anatomy_bridge import open_anatomy_manifest
+from resectionlab.anatomy_bridge import VASCULAR_REVIEW_REVISION, open_anatomy_manifest
 from resectionlab.anatomy_geometry import mesh, read_source_branch_graph, source_branch_cache_path, vascular_cleanup_source
 from resectionlab.data_root import atomic_json, checked_root, safe_path, sha256_file
 from resectionlab.patient_anatomy import PatientImagingCollection, world
@@ -56,6 +56,29 @@ def prepare_contour(collection, layer, subject):
         raise ValueError(f'{layer["id"]} did not yield a validated native score contour')
     print(f'{subject} {layer["id"]}: {triangles:,} native triangles', flush=True)
     return field
+
+
+def reviewed_manifest(data_root, published_path, packaging, override):
+    """Select a checked revision beside the published companion for that subject."""
+    if (packaging.get('status') != 'published' or not isinstance(override, dict)
+            or set(override) != {'path', 'sha256'} or not isinstance(override['path'], str)
+            or not isinstance(override['sha256'], str) or not re.fullmatch(r'[a-f0-9]{64}', override['sha256'])):
+        raise ValueError('A reviewed override requires an existing publication and a path and checksum')
+    path = safe_path(data_root, override['path'])
+    if path.parent != published_path.parent or not VASCULAR_REVIEW_REVISION.fullmatch(path.name):
+        raise ValueError('Reviewed override must be a linked revision beside the published companion')
+    if sha256_file(path) != override['sha256']:
+        raise ValueError('Reviewed vascular study manifest checksum differs')
+    published = open_anatomy_manifest(published_path)
+    original = published.layer(packaging['baseline_layer'])
+    collection = open_anatomy_manifest(path)
+    baseline = vascular_cleanup_source(collection, collection.layer(CANDIDATE))
+    if (collection.document['patient_id'] != published.document['patient_id'] or baseline is None
+            or baseline['id'] != original['id'] or baseline['affine'] != original['affine']
+            or baseline['data'] != original['data'] or baseline['probability'] != original['probability']
+            or collection.series(baseline['source_series'])['original'] != published.series(original['source_series'])['original']):
+        raise ValueError('Reviewed override does not reuse the published subject, acquisition and score layer')
+    return path, collection
 
 
 def capture_case(electron, desktop, manifest, collection, selected, output, subject,
@@ -143,6 +166,7 @@ def main():
     parser.add_argument('--match-baseline', action='store_true', help='Capture the original and selected vessel layers at the same camera')
     parser.add_argument('--output', type=Path, help='Capture directory relative to the verified HDD root')
     parser.add_argument('--display-settings', type=Path, help='Shared viewer settings JSON for the matched comparison')
+    parser.add_argument('--reviewed-manifests', type=Path, help='Per-subject reviewed manifest references, relative to the verified HDD root')
     args = parser.parse_args()
     if not 0<=args.follow_minutes<=720:
         parser.error('Follow minutes must be between 0 and 720')
@@ -155,6 +179,9 @@ def main():
     display_settings = json.loads(args.display_settings.read_text()) if args.display_settings else {}
     if not isinstance(display_settings, dict):
         parser.error('Display settings must be a JSON object')
+    reviewed = json.loads(safe_path(data_root, args.reviewed_manifests).read_text()) if args.reviewed_manifests else {}
+    if not isinstance(reviewed, dict) or any(not re.fullmatch(r'PTNT_\d{4}', subject) for subject in reviewed):
+        parser.error('Reviewed manifests must be a JSON object keyed by restricted subject')
     status_path = output/('graph-status.json' if args.graphs_only else 'status.json')
     status = json.loads(status_path.read_text()) if status_path.exists() else {}
     packaging_path = root/'cohort-packaging.json'
@@ -200,7 +227,12 @@ def main():
                 attempted.add(attempt)
                 if published and sha256_file(manifest) != published['sha256']:
                     raise ValueError('Published vascular study manifest checksum differs')
-                collection = open_anatomy_manifest(manifest)
+                if subject in reviewed:
+                    if not published:
+                        raise ValueError('Reviewed override requires a published vascular companion')
+                    manifest, collection = reviewed_manifest(data_root, manifest, packaging, reviewed[subject])
+                else:
+                    collection = open_anatomy_manifest(manifest)
                 candidate = collection.layer(CANDIDATE)
                 record['partition_status'] = collection.document['vascular_review']['status']
                 try:

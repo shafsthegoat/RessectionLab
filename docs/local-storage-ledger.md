@@ -34,6 +34,11 @@ The restricted EDEN2020 vessel review uses
 case status, native TOF companions, source overlays and app recordings.
 [Reproduce the native workflow](eden2020-integration.md#native-tof-vessel-review).
 
+The native-wall rehearsal and matched TOF comparisons are indexed in
+`qc/eden2020-glioma-5714812/vascular-reconstruction-continuity-20261123-v2/README.md`.
+The index links the model receipts, source-local measurements, portable rehearsal
+and inspected app evidence. The published source scans and v1 companions are reused.
+
 Paths below are relative to the RessectionLab root. This compact ledger covers
 that area, not unrelated personal files elsewhere on the HDD. Presence does not
 establish scientific readiness or a completed build; consult each run's receipts.
