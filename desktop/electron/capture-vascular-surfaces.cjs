@@ -92,7 +92,7 @@ const processStarted=performance.now();
 let memoryPoll;
 const wait=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 const persist=()=>fs.writeFileSync(path.join(output,'report.json'),JSON.stringify(report,null,2));
-let activeRecipe=recipes[0],openCount=0,lastPayload;
+let activeRecipe=recipes[0],openCount=0,lastPayload,lastGapReport;
 let finished=false,exitCode=1,quitDeadline;
 function exitCapture(event){
   event?.preventDefault();
@@ -131,6 +131,7 @@ const handle=ipcMain.handle.bind(ipcMain);
 ipcMain.handle=(name,handler)=>handle(name,async(event,...args)=>{
   const result=await handler(event,...args);
   if(name==='research:anatomyView')lastPayload=result;
+  if(name==='research:anatomyVesselGapReview')lastGapReport=result;
   if(!['research:startupWorkspace','research:openWorkspace'].includes(name)||!result?.document)return result;
   assert.equal(result.document.snapshot_id,document.snapshot_id);
   if(linked)assert.equal(result.readOnlyStudy,true);
@@ -676,6 +677,10 @@ app.on('browser-window-created',(_event,window)=>{
           const options=await js(`Array.from((${select}).options,option=>({id:option.value,label:option.textContent}))`);
           const mounted=performance.now()-requested;
           const evidence=[];
+          const canvasBoxes=()=>js(`Array.from(document.querySelectorAll('[data-tof-gap-review] canvas'),canvas=>{
+            const box=canvas.getBoundingClientRect();return [box.x,box.y,box.width,box.height];})`);
+          const referenceWindow=lastGapReport?.preview?.window;
+          assert(Array.isArray(referenceWindow)&&referenceWindow.length===2);
           for(const [index,id] of recipe.tofGapReview.findingIds.entries()){
             assert(options.some(option=>option.id===id),`Missing TOF gap ${id}`);
             await js(inputScript('TOF gap finding',id));
@@ -684,13 +689,19 @@ app.on('browser-window-created',(_event,window)=>{
               node.scrollIntoView({block:'start'});return {status:node.dataset.tofGapReview,text:node.innerText,
                 captions:Array.from(node.querySelectorAll('figcaption'),el=>el.textContent)};})()`);
             assert.equal(panel.captions.length,3);
+            assert.equal(lastGapReport.predictedVoxelsAdded,0);
+            assert.equal(lastGapReport.signalSha256,scans.get(recipe.seriesId).data.sha256);
+            assert.equal(lastGapReport.preview.findingId,id);
+            assert.deepEqual(lastGapReport.preview.window,referenceWindow,'Findings must share a single TOF window');
+            const boxes=await canvasBoxes();
             const captureId=`${recipe.name}-gap-${index+1}`;
             const annotated=await capture(captureId);
             await js(`Array.from(document.querySelectorAll('[data-tof-gap-review] label')).find(label=>label.textContent.trim()==='Show gap overlay').querySelector('input').click()`);
             const raw=await capture(`${captureId}-source`);
+            assert.deepEqual(await canvasBoxes(),boxes,'The overlay toggle moved the TOF sections');
             assertSameGeometry(annotated);assertSameGeometry(raw);
             await js(`Array.from(document.querySelectorAll('[data-tof-gap-review] label')).find(label=>label.textContent.trim()==='Show gap overlay').querySelector('input').click()`);
-            evidence.push({id,panel,annotated,raw});
+            evidence.push({id,panel,boxes,annotated,raw});
           }
           const checked=(await nativeView()).states[view.seriesId];
           assert.deepEqual(checked.visible,record.view.visible);
@@ -702,7 +713,7 @@ app.on('browser-window-created',(_event,window)=>{
           for(const key of ['position','target','up'])assert(focused.cameraState[key].every((value,i)=>
             Math.abs(value-record.frame.cameraState[key][i])<1e-9),`Centering TOF slices moved the camera ${key}`);
           assert.notDeepEqual(focused.cursor,record.frame.cursor);
-          record.tofGapReview={mountedMs:mounted,options,evidence,focusedCursor:focused.cursor};
+          record.tofGapReview={mountedMs:mounted,options,evidence,window:referenceWindow,focusedCursor:focused.cursor};
         }
         report.views.push(record);persist();console.log(`Captured ${record.filename}`);
       }
