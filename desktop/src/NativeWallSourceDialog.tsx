@@ -21,6 +21,7 @@ function fieldSettings({centerRasMm:target, layers}:NativeWallSourceScan):Viewer
 export function NativeWallSourceDialog({api,caseHash,close}:{api:ResectionApi&NativeAnatomyApi;caseHash:string;close:()=>void}) {
   const lease=useRef<NativeWallSourceInspection|null>(null);
   const generation=useRef(0);
+  const activeRequest=useRef<string|null>(null);
   const [source,setSource]=useState<NativeWallSourceInspection|null>(null);
   const [scan,setScan]=useState<NativeWallSourceScan|null>(null);
   const [volume,setVolume]=useState<ViewerVolume|null>(null);
@@ -32,11 +33,13 @@ export function NativeWallSourceDialog({api,caseHash,close}:{api:ResectionApi&Na
 
   async function loadScan(bound:NativeWallSourceInspection, next:NativeWallSourceScan) {
     const current=++generation.current;
+    const requestId=`wall-source-view-${crypto.randomUUID()}`;
+    activeRequest.current=requestId;
     setLoading(true);setError('');setVolume(null);setScan(next);
     setCursor(next.centerRasMm);setSettings(fieldSettings(next));
     setVisible(Object.fromEntries(next.layers.map(layer=>[layer.id,true])));
     try{
-      const payload=await api.anatomyView({collectionId:bound.collectionId,snapshotId:bound.snapshotId,seriesId:next.seriesId});
+      const payload=await api.anatomyView({collectionId:bound.collectionId,snapshotId:bound.snapshotId,seriesId:next.seriesId,requestId});
       if(current!==generation.current)return;
       if(payload.snapshotId!==bound.snapshotId||payload.unavailableLayers.length||payload.compartments.length!==next.layers.length||
           payload.compartments.some(l=>l.sourceSeries!==next.seriesId||!next.layers.some(expected=>expected.id===l.name))||
@@ -45,14 +48,19 @@ export function NativeWallSourceDialog({api,caseHash,close}:{api:ResectionApi&Na
       const loaded=await hydrateAnatomy(payload,api);
       if(current===generation.current)setVolume(loaded);
     }catch(failure){if(current===generation.current)setError(operationMessage(failure));}
-    finally{if(current===generation.current)setLoading(false);}
+    finally{
+      if(activeRequest.current===requestId)activeRequest.current=null;
+      if(current===generation.current)setLoading(false);
+    }
   }
 
   async function openSource(choose=false) {
     const current=++generation.current;
+    const requestId=`wall-source-${crypto.randomUUID()}`;
+    activeRequest.current=requestId;
     setLoading(true);setError('');
     try{
-      const bound=await api.inspectNativeWallSource!({caseHash,choose});
+      const bound=await api.inspectNativeWallSource!({caseHash,choose,requestId});
       if(!bound)return;
       if(current!==generation.current||bound.caseHash!==caseHash){
         await api.closeNativeWallSource?.({collectionId:bound.collectionId});
@@ -61,13 +69,19 @@ export function NativeWallSourceDialog({api,caseHash,close}:{api:ResectionApi&Na
       lease.current=bound;setSource(bound);
       await loadScan(bound,bound.scans[0]);
     }catch(failure){if(current===generation.current)setError(operationMessage(failure));}
-    finally{if(current===generation.current)setLoading(false);}
+    finally{
+      if(activeRequest.current===requestId)activeRequest.current=null;
+      if(current===generation.current)setLoading(false);
+    }
   }
 
   useEffect(()=>{
-    void openSource();
+    const current=generation.current;
+    queueMicrotask(()=>{if(current===generation.current)void openSource();});
     return ()=>{
       generation.current++;
+      const request=activeRequest.current;activeRequest.current=null;
+      if(request)void api.cancel(request).catch(()=>{});
       const active=lease.current;lease.current=null;
       if(active)void api.closeNativeWallSource?.({collectionId:active.collectionId}).catch(()=>{});
     };

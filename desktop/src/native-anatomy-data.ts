@@ -101,7 +101,7 @@ export interface NativeAnatomyApi {
   openWorkspace?():Promise<Binding|CasePayload|null>;
   startupWorkspace?():Promise<Binding|CasePayload|null>;
   openListedWorkspace?(id:string):Promise<Binding|CasePayload>;
-  inspectNativeWallSource?(args:{caseHash:string;choose?:boolean}):Promise<NativeWallSourceInspection|null>;
+  inspectNativeWallSource?(args:{caseHash:string;choose?:boolean;requestId?:string}):Promise<NativeWallSourceInspection|null>;
   closeNativeWallSource?(args:{collectionId:string}):Promise<boolean>;
   anatomySavePackage(args:Args):Promise<{path:string}|null>;
   anatomySaveView(args:Args):Promise<{saved:boolean}>;

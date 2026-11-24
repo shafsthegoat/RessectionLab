@@ -189,7 +189,7 @@ function bindOperations() {
     anatomyLocalAlignment: ['seriesId','center'],
     anatomyDiffusionBaseline: ['assetId'],
     anatomyCtaArterialCoverage: ['seriesId','focusLayerIds','widerLayerIds'],
-    anatomyView: ['seriesId','layers','original','highlightLayer','highlightComponents','reviewId','previewAlignment','vesselScope','patientModel','vesselSurfaceMode'],
+    anatomyView: ['seriesId','layers','original','highlightLayer','highlightComponents','reviewId','previewAlignment','vesselScope','patientModel','vesselSurfaceMode','requestId'],
     anatomyEdit: ['action','layerId','author','points','radiusMm','threshold','reviewId','componentIds','findingId','seriesId'],
     anatomySample: ['point','layerId','independentSeries'],
     anatomyRegister: ['action','seriesId','movingPoints','referencePoints','reviewer','nativeWallScope'],
@@ -302,12 +302,15 @@ function bindOperations() {
     const result=await engine.request('prepareSurgicalEnvironment',args,300000);rememberReplayMode(result);currentCasePath=null;return result;
   });
   handle('inspectNativeWallSource', async args=>{
-    args=plainArgs(args,['caseHash','choose']);
+    args=plainArgs(args,['caseHash','choose','requestId']);
     if(!currentCaseHash||args.caseHash!==currentCaseHash)throw Error('Open the native-wall rehearsal first');
     const filename=args.choose===true?await pick('Locate the original native study',['rsworkspace','json']):null;
     if(args.choose===true&&!filename)return null;
     if(args.caseHash!==currentCaseHash)return null;
-    const result=await engine.request('inspectNativeWallSource',{caseHash:args.caseHash,...(filename?{path:filename}:{})},300000);
+    const result=await engine.request('inspectNativeWallSource',{
+      caseHash:args.caseHash,...(filename?{path:filename}:{}),
+      ...(Object.hasOwn(args,'requestId')?{requestId:args.requestId}:{}),
+    },300000);
     if(result&&args.caseHash!==currentCaseHash){
       await engine.request('closeNativeWallSource',{collectionId:result.collectionId});
       return null;

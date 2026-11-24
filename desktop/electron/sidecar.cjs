@@ -18,7 +18,7 @@ const {surgicalTransportLimitMs}=require('./surgical-timeout.cjs');
 
 const {validateDiagnosticResult,diagnosticRequest}=require('./diagnostic-contract.cjs');
 const MAX_RESPONSE_LINE_BYTES=32*1024*1024;
-const OPERATIONS = new Set(['compareSurgicalAnatomy','prepareSurgicalEnvironment','openBoundSurgicalReplay','compareBoundSurgicalReplays','importSurgicalScene','surgicalRehearsal','createSurgicalFixture','createRehearsal','inspectRehearsal','stepRehearsal','compareRehearsal','anatomySavePackage','anatomySaveView','anatomyComponents','anatomyAttachedVesselReview','anatomyVesselGapReview','anatomyGraph','anatomyCreate','anatomyReconstruct','anatomyPlan','anatomyRemoval','anatomySection','anatomyLocalAlignment','anatomyCtaArterialCoverage','anatomyOpen','anatomyView','anatomyEdit','anatomySample','anatomyRegister','anatomyImport','anatomyInspectIntake','anatomyImportBatch','anatomyPrepare','anatomyExport','ping', 'publicContactFamilyAvailability', 'executePublicContactFamilyEpisode', 'executePublicSurfaceContactEpisode', 'inspectDevelopmentEpisodeComparison', 'executeDevelopmentEpisode', 'executePersistentPassiveEpisode', 'evaluateDevelopmentEpisodeVascular', 'createSyntheticCase', 'loadCase', 'importNifti', 'importDisplaySeries', 'importDiagnosticLayer', 'importStructuralEvidence', 'saveCase', 'generateRoutes', 'generateNativeRoutes', 'inspectRefinement', 'inspectAxisPlanning', 'inspectObservedLandmarkUpdate', 'cancel', 'inspectEvidence', 'trainPatient', 'nativeTraining', 'listRuns', 'replayTraining', 'exportCandidate', 'shutdown']);
+const OPERATIONS = new Set(['compareSurgicalAnatomy','prepareSurgicalEnvironment','openBoundSurgicalReplay','compareBoundSurgicalReplays','inspectNativeWallSource','closeNativeWallSource','importSurgicalScene','surgicalRehearsal','createSurgicalFixture','createRehearsal','inspectRehearsal','stepRehearsal','compareRehearsal','anatomySavePackage','anatomySaveView','anatomyComponents','anatomyAttachedVesselReview','anatomyVesselGapReview','anatomyGraph','anatomyCreate','anatomyReconstruct','anatomyPlan','anatomyRemoval','anatomySection','anatomyLocalAlignment','anatomyCtaArterialCoverage','anatomyOpen','anatomyView','anatomyEdit','anatomySample','anatomyRegister','anatomyImport','anatomyInspectIntake','anatomyImportBatch','anatomyPrepare','anatomyExport','ping', 'publicContactFamilyAvailability', 'executePublicContactFamilyEpisode', 'executePublicSurfaceContactEpisode', 'inspectDevelopmentEpisodeComparison', 'executeDevelopmentEpisode', 'executePersistentPassiveEpisode', 'evaluateDevelopmentEpisodeVascular', 'createSyntheticCase', 'loadCase', 'importNifti', 'importDisplaySeries', 'importDiagnosticLayer', 'importStructuralEvidence', 'saveCase', 'generateRoutes', 'generateNativeRoutes', 'inspectRefinement', 'inspectAxisPlanning', 'inspectObservedLandmarkUpdate', 'cancel', 'inspectEvidence', 'trainPatient', 'nativeTraining', 'listRuns', 'replayTraining', 'exportCandidate', 'shutdown']);
 
 class Sidecar extends EventEmitter {
   constructor({ python, cwd, sourcePath, transferDir, executable, runDir, observedSourceRoot, prefixWorker, preparedPrefixCacheDirectory }) {
@@ -94,7 +94,9 @@ class Sidecar extends EventEmitter {
     // Owned identities let the renderer cancel a specific run before its first
     // event. Transport metadata must not enter the Python operation arguments.
     const requestPrefix = op === 'surgicalRehearsal' ? 'surgical' :
-      op === 'anatomyPrepare' && args.action === 'run' ? 'prepare' : null;
+      op === 'anatomyPrepare' && args.action === 'run' ? 'prepare' :
+      op === 'inspectNativeWallSource' ? 'wall-source' :
+      op === 'anatomyView' ? 'wall-source-view' : null;
     let id = randomUUID();
     if (requestPrefix && Object.hasOwn(args, 'requestId')) {
       const {requestId, ...payload} = args;
