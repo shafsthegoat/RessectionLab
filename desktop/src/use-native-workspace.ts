@@ -77,7 +77,9 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
     const modality=b.document.series.find(scan=>scan.id===s)?.modality??'MRI';
     const {available,cortex,visible}=initialNativeLayers(b.document,s,independent);
     const structures=(!independent&&b.document.series.length>1)||cortex.length>0||hasAngiographicArteries(available,modality,s);
-    const mode=structures?'segmentation':defaultAnatomyPresentation(modality);
+    const separatedReview=nativeVascularReview(b)&&b.readOnlyStudy&&s===b.document.reference_series&&
+      b.document.vascular_review?.posterior_compartment_review?.disjoint_union_matches_selected===true;
+    const mode=separatedReview?'vascular':structures?'segmentation':defaultAnatomyPresentation(modality);
     const settings=anatomyPresentation(nativeDefaults(),available,mode,modality,s);
     return {cursor:s===b.document.reference_series?b.document.display?.cursor_ras_mm??null:null,
       settings:nativeVascularReview(b)?{...settings,smoothSurfaces:false}:settings,visible};

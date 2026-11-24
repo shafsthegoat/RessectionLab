@@ -31,6 +31,8 @@ for(const recipe of recipes){
   assert(/^[A-Za-z0-9_-]{1,72}$/.test(recipe.name));
   assert(scans.has(recipe.seriesId),`Unknown scan ${recipe.seriesId}`);
   assert(recipe.layers.length&&recipe.layers.every(id=>layers.has(id)),`Unknown layer in ${recipe.name}`);
+  if(recipe.useDefaultState)assert(recipes.length===1&&!recipe.settings&&!recipe.cursor&&!recipe.scope&&!recipe.compareLayerIds,
+    'A default-state capture cannot supply view overrides');
   assert(!recipe.compareLayerIds||recipe.compareLayerIds.length===2&&recipe.compareLayerIds.every(id=>recipe.layers.includes(id)));
   assert(!recipe.branchLayerId||recipe.layers.includes(recipe.branchLayerId));
   assert(!recipe.branchPick||recipe.branchLayerId&&Array.isArray(recipe.branchPick)&&recipe.branchPick.length===2&&
@@ -97,6 +99,7 @@ ipcMain.handle=(name,handler)=>handle(name,async(event,...args)=>{
   if(linked)assert.equal(result.readOnlyStudy,true);
   const {seriesId,scope='all',cursor=null,settings={},layers:visibleLayers}=activeRecipe;
   openCount++;
+  if(activeRecipe.useDefaultState)return result;
   return {...result,viewState:{schema:'patient-anatomy-view-v1',patientId:document.patient_id,snapshotId:document.snapshot_id,
     seriesId,vesselDisplayVersion:2,vesselScope:scope,patientCutaway:activeRecipe.patientCutaway??{},states:{[seriesId]:{
       cursor,visible:Object.fromEntries([...layers].map(id=>[id,visibleLayers.includes(id)])),settings:{presentation:'vascular',layout:'3d-focus',
@@ -206,6 +209,9 @@ app.on('browser-window-created',(_event,window)=>{
         const frame=await settledFrame();
         assert.equal(view.seriesId,recipe.seriesId);
         assert.equal(view.vesselScope,recipe.scope??'all');
+        if(recipe.useDefaultState)assert.deepEqual(
+          Object.keys(view.states[recipe.seriesId].visible).filter(id=>view.states[recipe.seriesId].visible[id]).sort(),
+          [...recipe.layers].sort(),'Default visible anatomy differs from the study declaration');
         assert(frame?.cameraState,'Missing submitted anatomy camera');
         if(recipe.settings?.camera&&!recipe.preset){
           for(const key of ['position','target','up'])assert(frame.cameraState[key].every((n,i)=>Math.abs(n-recipe.settings.camera[key][i])<1e-3),`Camera ${key} drifted`);

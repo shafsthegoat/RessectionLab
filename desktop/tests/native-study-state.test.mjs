@@ -49,6 +49,18 @@ test('scan and anatomy presets preserve the study colors of supplied arterial cl
   }
 });
 
+test('vascular presentation keeps the reviewed superficial layer visible with muted color',()=>{
+  const group={id:'vesselfm-review-posterior-superficial',kind:'vessels',source_series:'tof',color:'#8d877a',
+    provenance:{method:'Review display group of complete native TOF components',evidence_use:'context_only'}};
+  const network={...group,id:'vesselfm-review-intracranial-priority',color:'#b75848'};
+  const estimate={...group,provenance:{kind:'model'}};
+  const settings=anatomyPresentation({},[group,network],'vascular','TOF','tof');
+  assert.equal(settings.layerColor[group.id],group.color);
+  assert.equal(settings.layerOpacity[group.id],.32);
+  assert.equal(settings.layerOpacity[network.id],1);
+  assert.equal(anatomyPresentation({},[estimate],'vascular','TOF','tof').layerOpacity[group.id],1);
+});
+
 test('cortical presentation requires an identified cortical label and preserves target and source data',()=>{
   const siam=value=>({kind:'brain-region',label_ontology:{value},provenance:{model:'siam-v2'}});
   const cortex={id:'cortex',...siam(1)},deep={id:'deep',...siam(6)};
