@@ -44,6 +44,7 @@ uniform float uDensity;
 uniform bool uDrawScalar;
 uniform int uSkullMode;
 uniform bool uAcquiredBoneCut;
+uniform bool uAcquiredCtBone;
 uniform bool uCt;
 uniform bool uScanPresentation;
 uniform bool uGradientOpacity;
@@ -131,7 +132,7 @@ bool selectedLabel(ivec4 packed){
   return false;
 }
 bool requiresLabels(){
-  return uIsolate||(uCt&&(!uScanPresentation||uSkullMode==1)&&uContextLayerCount>0&&uContextCoverageLayer<0);
+  return uIsolate||(uCt&&(!uScanPresentation||(uSkullMode==1&&!uAcquiredCtBone))&&uContextLayerCount>0&&uContextCoverageLayer<0);
 }
 vec3 contextTint(vec3 acquired,vec3 color,float value){
   float mineral=smoothstep(180.0,1600.0,value);
@@ -147,7 +148,7 @@ float acquiredBoneExtinction(float current,float value){
 void applyContext(inout vec4 tissue,float value,ivec4 packed,bool selected,vec3 p){
   tissue.a*=uDensity;
   if(uIsolate&&!selected){tissue.a=0.0;return;}
-  if(!uCt || (uScanPresentation&&uSkullMode!=1))return;
+  if(!uCt || (uScanPresentation&&(uSkullMode!=1||uAcquiredCtBone)))return;
   if(uContextCoverageLayer>=0){
     int layer=uContextCoverageLayer;
     float coverage=contextCoverage(p);

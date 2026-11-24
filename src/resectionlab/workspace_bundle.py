@@ -268,14 +268,14 @@ def _viewer_state(case,viewer,cases):
     if 'smoothSurfaces' in viewer and type(viewer['smoothSurfaces']) is not bool:raise ValueError('Invalid surface display flag')
     volume=viewer.get('volumeRendering')
     if 'volumeRendering' in viewer:
-        if (not isinstance(volume,dict) or set(volume)-{'enabled','preset','density','window','points','shadows','isolateLabels','showCtExteriorSignal','balanceTofContext'} or
+        if (not isinstance(volume,dict) or set(volume)-{'enabled','preset','density','window','points','shadows','isolateLabels','showCtExteriorSignal','showCtBoneOverlay','balanceTofContext'} or
                 ('enabled' in volume and type(volume['enabled']) is not bool) or
                 ('preset' in volume and volume['preset'] not in {'auto','ct-bone','ct-tissue','ct-angiography','mri'}) or
                 ('density' in volume and (type(volume['density']) not in (int,float) or
                     not math.isfinite(volume['density']) or not 0<=volume['density']<=2))):
             raise ValueError('Invalid scan volume rendering settings')
     if volume:
-        for flag in ('shadows','isolateLabels','showCtExteriorSignal','balanceTofContext'):
+        for flag in ('shadows','isolateLabels','showCtExteriorSignal','showCtBoneOverlay','balanceTofContext'):
             if flag in volume and type(volume[flag]) is not bool:raise ValueError('Invalid volume display flag')
         window=volume.get('window')
         if window is not None and (not isinstance(window,list) or len(window)!=2 or not all(type(v) in (int,float) and math.isfinite(v) for v in window) or window[1]<=window[0]):raise ValueError('Invalid intensity window')

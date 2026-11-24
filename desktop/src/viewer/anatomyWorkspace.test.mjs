@@ -357,6 +357,46 @@ test('CTA exterior uses one lazy scalar derivative while raw views and bone cove
   }finally{scan.dispose();}
 });
 
+test('native CT Scan can omit the 3D bone overlay while slice membership and the acquired texture remain available',()=>{
+  const renderer={extensions:{has:()=>true},getPixelRatio:()=>1,getClearColor:out=>out.set(0),getClearAlpha:()=>1,
+    setClearColor(){},setRenderTarget(){},clear(){},render(){}};
+  const bone={name:'bone',kind:'bone',color:'#ded0b6',mask:new Uint8Array(60).fill(1)};
+  const other={...bone,name:'landmark',kind:'context'};
+  const volume={...source,displayIdentity:'native-ct',compartments:[bone,other]};
+  const scan=new ScanVolumeRenderer(renderer,volume,[0,1000]);
+  const r=Object.assign(Object.create(VolumeRenderer.prototype),{volume,volumeModality:'CTA',visible:{bone:true,landmark:true}});
+  const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera();
+  const render=(options={},presentation='scan',modality='CTA')=>{
+    const settings={presentation,skullMode:'exterior',volumeRendering:options};
+    r.workspaceSettings=settings;r.volumeModality=modality;
+    scan.configure(options,modality,null);
+    scan.labels(null,r.visible,settings,[]);
+    scan.render(scene,camera,640,480,false,()=>{});
+  };
+  const u=scan.material.uniforms;
+  const acquired={showCtBoneOverlay:false};
+  try{
+    render(acquired);
+    assert.equal(r.surfaceVisible('bone'),false);
+    assert.equal(r.surfaceVisible('landmark'),true);
+    assert.equal(u.uLayerEnabled.value[0],1);
+    assert.equal(u.uAcquiredCtBone.value,true);
+    assert.equal(u.uOpticalCache.value,true);
+    assert.equal(u.uVolume.value,scan.texture);
+    assert.equal(scan.opticalAtlasSelection.source.signal,volume.mri);
+    render({showCtBoneOverlay:true});
+    assert.equal(u.uOpticalCache.value,false,'opaque modeled bone bypasses the acquired CT atlas');
+    for(const [options,presentation,modality] of [
+      [{}], [{showCtBoneOverlay:true}], [{...acquired,isolateLabels:true}],
+      [{...acquired,enabled:false}], [{...acquired,density:0}],
+      [acquired,'segmentation'], [acquired,'scan','T1'],
+    ]){
+      render(options,presentation,modality);
+      assert.equal(r.surfaceVisible('bone'),true);
+    }
+  }finally{scan.dispose();}
+});
+
 test('an early raw export cancels a CTA atlas prepared from the exterior display derivative',()=>{
   const renderer={extensions:{has:()=>true},getPixelRatio:()=>1,getClearColor:out=>out.set(0),getClearAlpha:()=>1,
     setClearColor(){},setRenderTarget(){},clear(){},render(){}};

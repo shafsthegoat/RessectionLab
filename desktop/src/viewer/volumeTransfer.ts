@@ -2,7 +2,7 @@ import type { Affine, Point3 } from './coordinates';
 import { inverseAffine, rasAffine } from './coordinates.ts';
 
 export type VolumePreset = 'auto' | 'ct-bone' | 'ct-tissue' | 'ct-angiography' | 'mri';
-export interface VolumeRenderingSettings { enabled?: boolean; preset?: VolumePreset; density?: number; window?: [number,number]; shadows?: boolean; isolateLabels?: boolean; showCtExteriorSignal?: boolean; balanceTofContext?: boolean; points?: Array<[number,number,number,number,number]> }
+export interface VolumeRenderingSettings { enabled?: boolean; preset?: VolumePreset; density?: number; window?: [number,number]; shadows?: boolean; isolateLabels?: boolean; showCtExteriorSignal?: boolean; showCtBoneOverlay?: boolean; balanceTofContext?: boolean; points?: Array<[number,number,number,number,number]> }
 export const VOLUME_TRANSFER_WIDTH = 1024;
 /** One texel inside the zero-extinction prefix of the linearly filtered LUT. */
 export function zeroExtinctionLevel(data:Float32Array) {
@@ -23,6 +23,11 @@ export function intensityWindow(values: Float32Array): [number, number] {
 }
 
 export const isCtModality=(modality:string)=>/^\s*(CT|CTA)(\b|[-_\s])/i.test(modality);
+export function usesAcquiredCtBone(input:VolumeRenderingSettings|undefined,modality:string) {
+  if(!isCtModality(modality)||input?.showCtBoneOverlay!==false||input.isolateLabels)return false;
+  const {enabled,density}=volumeSettings(input,modality);
+  return enabled&&density>0;
+}
 const MR_ANGIOGRAPHY=/\b(?:MRA|TOF)\b|\bMR(?:I)?[-_\s]+angiogra(?:phy|m)\b/i;
 export const isMrAngiography=(modality:string)=>MR_ANGIOGRAPHY.test(modality.replaceAll('_',' '))&&
   !isCtModality(modality)&&!/segmentation only|analytic signal|generated image signal|diagnostic/i.test(modality);

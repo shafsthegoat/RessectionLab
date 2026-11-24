@@ -882,6 +882,14 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
           </div>
           {controlPanel==='appearance'&&<>
             <label><input type="checkbox" aria-label="Scan volume" checked={scanVolume.enabled} disabled={props.segmentationOnly||props.generatedSignal||Boolean(replay)||passiveRequested||rehearsalRequested} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,enabled:e.target.checked}})}/>Scan volume</label>
+            {caseData?.displayIdentity&&settings.presentation==='scan'&&!settings.operativeView&&volumeDisplayed&&isCtModality(signalName)&&
+              caseData.compartments.some(layer=>layer.kind==='bone'||layer.kind==='skull')&&
+              <label title="Show skull and bone estimates over the acquired CT. Linked slice contours stay available.">
+                <input type="checkbox" checked={settings.volumeRendering?.showCtBoneOverlay!==false||settings.volumeRendering?.isolateLabels===true}
+                  disabled={settings.volumeRendering?.isolateLabels===true}
+                  onChange={event=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,showCtBoneOverlay:event.target.checked}})}/>
+                Show 3D bone overlay
+              </label>}
             <label>Preset<select aria-label="Volume rendering preset" value={settings.volumeRendering?.preset??'auto'} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,preset:e.target.value as VolumePreset}})}><option value="auto">Automatic · {signalName}</option><option value="ct-bone" disabled={!isCtModality(signalName)}>CT bone</option><option value="ct-tissue" disabled={!isCtModality(signalName)}>CT tissue</option><option value="ct-angiography" disabled={!isCtModality(signalName)}>CT angiography · contrast scan</option><option value="mri">{/MRA|TOF|angiogra/i.test(signalName)?'Bright-blood MR signal':'MRI tissue'}</option></select></label>
             <label>Scan density<input aria-label="Scan volume density" type="range" min="0" max="2" step=".01" value={scanVolume.density}
               onChange={e=>{

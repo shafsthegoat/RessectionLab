@@ -30,6 +30,7 @@ import {scanFitPoints} from './scanCameraFit';
 import {mprView,sourceSignalBounds} from './mprFraming';
 import {applySourceContextMaterial} from './sourceContextMaterial';
 import {isStructuralMrModality} from '../native-study-state';
+import {usesAcquiredCtBone} from './volumeTransfer';
 import {installNativeContextLighting,setNativeContextLighting} from './nativeContextLighting';
 import {advectScoreWallLighting,displaySurfaceNormals,scoreWallLighting} from './displaySurfaceNormals';
 import {applyVesselDepthMaterial,setVesselDepthAppearance,createVesselInspectionFocus,setVesselInspectionFocus,
@@ -1428,10 +1429,21 @@ export class VolumeRenderer {
   }
 
   private surfaceVisible(name:string):boolean {
-    const visible=this.workspaceSettings?.operativeView==='surgeon'&&!this.workspaceSettings.microscope?.inspectionTransparency||this.visible?.[name]!==false;
+    let visible=this.workspaceSettings?.operativeView==='surgeon'&&!this.workspaceSettings.microscope?.inspectionTransparency||this.visible?.[name]!==false;
+    if(visible&&this.acquiredCtBoneMode()){
+      const kind=this.volume.compartments.find(layer=>layer.name===name)?.kind;
+      visible=kind!=='bone'&&kind!=='skull';
+    }
     const rest=this.planarRemainder?.get(name);
     if(rest)rest.visible=visible;
     return visible&&!this.planarBladeSurfaceLayers?.has(name);
+  }
+
+  private acquiredCtBoneMode():boolean {
+    const settings=this.workspaceSettings;
+    return !!this.volume?.displayIdentity&&settings?.presentation==='scan'&&!settings.operativeView&&
+      !this.replayActive&&!this.passiveActive&&!modeledAnatomy(this.volume)&&
+      usesAcquiredCtBone(settings.volumeRendering,this.volumeModality);
   }
 
   /** Display-only styling for derived anatomy/effects. Instrument groups never
@@ -1461,8 +1473,11 @@ export class VolumeRenderer {
 
   setVolumeRendering(settings: VolumeRenderingSettings | undefined, modality: string): void {
     const wasAngiographic = this.ctAngiogramFrame();
+    const wasAcquiredBone=this.acquiredCtBoneMode();
     this.volumeModality = modality;
     this.scanVolume.configure(settings,modality,this.clipPlane,this.balanceTofContext(this.workspaceSettings));
+    if(wasAcquiredBone!==this.acquiredCtBoneMode())
+      for(const [name,mesh] of this.surfaces)mesh.visible=this.surfaceVisible(name);
     if (this.mode === 'anatomy' && !this.cameraRestored && wasAngiographic !== this.ctAngiogramFrame())
       this.fitCamera('anatomy');
     this.requestRender();

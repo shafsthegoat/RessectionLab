@@ -242,6 +242,7 @@ test('Scan explicitly restores acquired signal and restrained overlays without o
     assert.equal(view.presentation,'scan');
     assert.equal(view.volumeRendering.enabled,true);
     assert.ok(view.volumeRendering.density>.2);
+    assert.equal(view.volumeRendering.showCtBoneOverlay,/^CT/.test(modality)?false:undefined);
     assert.equal(view.volumeRendering.points,undefined);
     assert.equal(view.contextStyle,'uniform');
     assert.equal(view.smoothSurfaces,false);
@@ -252,6 +253,9 @@ test('Scan explicitly restores acquired signal and restrained overlays without o
     assert.ok(view.layerOpacity.tumor<.5);
     assert.equal(view.sliceOverlay,'contour');
   }
+  const hybrid={...saved,volumeRendering:{...saved.volumeRendering,showCtBoneOverlay:true}};
+  const structures=anatomyPresentation(hybrid,layers,'segmentation','CT');
+  assert.equal(anatomyPresentation(structures,layers,'scan','CT').volumeRendering.showCtBoneOverlay,true);
   for(const modality of ['segmentation only','analytic signal','generated image signal','DTI FA diagnostic']){
     assert.equal(defaultAnatomyPresentation(modality),'segmentation');
     assert.equal(anatomyPresentation(saved,layers,'scan',modality).presentation,'segmentation');
@@ -265,13 +269,14 @@ test('saved context and physical slice framing reopen detached and reject malfor
   assert.deepEqual(checkedViewerSettings(source,savedVessels),savedVessels);
   assert.throws(()=>checkedViewerSettings(source,{...savedVessels,sourcedVesselContext:'true'}));
   for(const show of [true,false]){
-    const savedCt={volumeRendering:{preset:'ct-angiography',showCtExteriorSignal:show}};
+    const savedCt={volumeRendering:{preset:'ct-angiography',showCtExteriorSignal:show,showCtBoneOverlay:!show}};
     assert.deepEqual(checkedViewerSettings(source,savedCt),savedCt);
     const savedTof={presentation:'vascular',volumeRendering:{preset:'auto',balanceTofContext:show}};
     assert.deepEqual(checkedViewerSettings(source,savedTof),savedTof);
   }
   for(const invalid of ['false',0,null]){
     assert.throws(()=>checkedViewerSettings(source,{volumeRendering:{showCtExteriorSignal:invalid}}));
+    assert.throws(()=>checkedViewerSettings(source,{volumeRendering:{showCtBoneOverlay:invalid}}));
     assert.throws(()=>checkedViewerSettings(source,{volumeRendering:{balanceTofContext:invalid}}));
   }
   for(const fit of ['image','anatomy'])for(const zoom of [.5,1,4])for(const contextStyle of ['shell','uniform']){

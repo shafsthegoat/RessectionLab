@@ -160,6 +160,9 @@ source-terrace and crop-face audit is at
 `qc/operative-tissue-staircase-20261124-v1/README.md`.
 Its edited TopCoW-014 witness records guard coverage and the retained source
 shelves during the signed held contact.
+The CADS-465 acquired CT and 3D bone overlay comparison, independent source
+checks and rejected mesh fairing are indexed at
+`qc/cads-native-skull-geometry-20261124-v1/README.md`.
 
 Paths below are relative to the RessectionLab root. This compact ledger covers
 that area, not unrelated personal files elsewhere on the HDD. Presence does not

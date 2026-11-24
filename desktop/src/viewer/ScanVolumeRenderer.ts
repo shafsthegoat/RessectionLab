@@ -2,7 +2,7 @@ import {packAnatomyLabels,MAX_ANATOMY_LAYERS} from './labelPacking';
 import * as THREE from 'three';
 import type { ViewerVolume } from './contracts';
 import { inverseAffine, rasAffine } from './coordinates.ts';
-import { canBalanceTofContext, isCtModality, volumeSettings, volumeTransfer, zeroExtinctionLevel } from './volumeTransfer.ts';
+import { canBalanceTofContext, isCtModality, usesAcquiredCtBone, volumeSettings, volumeTransfer, zeroExtinctionLevel } from './volumeTransfer.ts';
 import {balancedTofDensity, CT_EXTERIOR_AIR_HU, CT_EXTERIOR_TEXTURE_LIMIT_BYTES, ctExteriorDisplaySignal, ctOpticalCoverage, finishOpticalPreparation, opticalAtlasSteps, OPTICAL_KEY_LIGHTS, volumeOpticalAtlas, type OpticalContext, type OpticalSource} from './volumeOpticalDensity.ts';
 import {layerAppearance} from './workspaceSettings';
 import type {ViewerWorkspaceSettings} from './workspaceSettings';
@@ -62,6 +62,7 @@ export class ScanVolumeRenderer {
   private failedOpticalSelection?: OpticalSelection;
   private opticalCellAxes: THREE.Vector3[]=[];
   private readonly sourceOptics: OpticalSource;
+  private readonly nativeAcquisition:boolean;
   private readonly ctExterior?: ViewerVolume['ctExterior'];
   private exteriorVolume?: {source:OpticalSource; texture:THREE.Data3DTexture} | null;
   private standardCtAir=false;
@@ -94,6 +95,7 @@ export class ScanVolumeRenderer {
     private readonly window: [number,number], codes?:Array<[number,number]>, sourceTexture?:THREE.Data3DTexture,
     private readonly onOpticsReady?:()=>void) {
     this.layers=volume.compartments;
+    this.nativeAcquisition=!!volume.displayIdentity;
     const affine=rasAffine(volume.affine,volume.frame),inverse=inverseAffine(affine);
     this.spacing=1/Math.max(...inverse.slice(0,3).map(row=>Math.hypot(...row.slice(0,3))));
     const worldToVoxel=new THREE.Matrix4().set(...inverse.flat() as Parameters<THREE.Matrix4['set']>);
@@ -130,7 +132,7 @@ export class ScanVolumeRenderer {
         uCameraWorld:{value:new THREE.Matrix4()},uInverseProjection:{value:new THREE.Matrix4()},
         uShape:{value:shape},uRange:{value:new THREE.Vector2()},
         uZeroExtinctionLevel:{value:0},
-        uSkullMode:{value:0},uAcquiredBoneCut:{value:false},uCt:{value:false},uScanPresentation:{value:false},uGradientOpacity:{value:false},uDensity:{value:.45},uStep:{value:this.spacing*.7},uLinear:{value:linear},
+        uSkullMode:{value:0},uAcquiredBoneCut:{value:false},uAcquiredCtBone:{value:false},uCt:{value:false},uScanPresentation:{value:false},uGradientOpacity:{value:false},uDensity:{value:.45},uStep:{value:this.spacing*.7},uLinear:{value:linear},
         uClipEnabled:{value:false},uClipPlane:{value:new THREE.Vector4()},
         uBackground:{value:this.background},
         uLayerCount:{value:volume.compartments.length},uLayerCodes:{value:(codes??packAnatomyLabels(volume).codes).map(c=>new THREE.Vector2(...c))},uLayerEnabled:{value:new Float32Array(MAX_ANATOMY_LAYERS).fill(1)},
@@ -165,6 +167,7 @@ export class ScanVolumeRenderer {
       this.preset=signature;
     }
     this.material.uniforms.uCt.value=isCtModality(modality);
+    this.material.uniforms.uAcquiredCtBone.value=this.nativeAcquisition&&usesAcquiredCtBone(input,modality);
     this.standardCtAir=this.material.uniforms.uCt.value&&settings.preset!=='mri'&&input?.window===undefined&&input?.points===undefined&&
       !!this.transferLut&&this.transferLut.range[0]>=CT_EXTERIOR_AIR_HU&&this.transferLut.data[3]===0;
     this.material.uniforms.uGradientOpacity.value=this.automaticMriTransfer&&this.shellContext;
@@ -258,8 +261,10 @@ export class ScanVolumeRenderer {
     const context=u.uContextCoverageLayer.value>=0?this.contextCoverage??null:null;
     const source=this.displayOpticalSource;
     const selection={source,context};
+    const scan=u.uScanPresentation.value;
+    const opaqueLabels=u.uSkullMode.value===1&&(!scan||!u.uAcquiredCtBone.value);
     const overrides=u.uIsolate.value || (u.uCt.value && (u.uAcquiredBoneCut.value || !context &&
-      (u.uSkullMode.value===1 || (!u.uScanPresentation.value && (u.uContextLayerCount.value>0 || u.uSkullMode.value===2)))));
+      (opaqueLabels || (!scan && (u.uContextLayerCount.value>0 || u.uSkullMode.value===2)))));
     const useCache=u.uShadows.value&&!overrides;
     if(!useCache||(this.opticalPreparation&&!sameOptics(this.opticalPreparation.selection,selection)))this.cancelOpticalPreparation();
     if(useCache&&!sameOptics(this.opticalAtlasSelection,selection)&&!sameOptics(this.failedOpticalSelection,selection)&&this.transferLut){

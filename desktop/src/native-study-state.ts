@@ -1,6 +1,6 @@
 import type {Binding, CranialView, Layer, NativeScanState, NativeViewState, VesselScope} from './native-anatomy-data';
 import type {ViewerWorkspaceSettings} from './viewer/workspaceSettings';
-import {isMrAngiography} from './viewer/volumeTransfer.ts';
+import {isCtModality,isMrAngiography} from './viewer/volumeTransfer.ts';
 
 export type AnatomyPresentation = 'scan'|'segmentation'|'vascular';
 type PresentationEvidence = {
@@ -72,7 +72,7 @@ function peripheralReviewVessels(layer:Layer):boolean {
 /** Presentation derivatives only; all selected structures and source masks stay intact. */
 export function anatomyPresentation(settings:ViewerWorkspaceSettings,layers:Layer[],mode:AnatomyPresentation,modality:string,seriesId?:string,evidence?:PresentationEvidence):ViewerWorkspaceSettings {
   if(mode==='scan'&&defaultAnatomyPresentation(modality)!=='scan')mode='segmentation';
-  const scan=mode==='scan',vascular=mode==='vascular',ct=/^\s*CT(?:A)?(?:\b|[-_])/i.test(modality);
+  const scan=mode==='scan',vascular=mode==='vascular',ct=isCtModality(modality);
   const cranial=mode==='segmentation'&&corticalLayers(layers).length>0;
   const nativeVessels=!scan&&hasNativeAngiographicVessels(layers,modality,seriesId);
   const vesselFocus=vascular||nativeVessels;
@@ -140,7 +140,9 @@ export function anatomyPresentation(settings:ViewerWorkspaceSettings,layers:Laye
     volumeRendering:{enabled:!sourcedVesselContext,preset:'auto',density:scan?(ct?.26:.28):ct?(vesselFocus?.12:.075):(nativeVessels?.018:vascular?.035:.025),
       ...(nativeTofVessels?{balanceTofContext:true}:{}),
       shadows:scan||!ct||sameSourceBone,
-      ...(settings.volumeRendering?.showCtExteriorSignal!==undefined?{showCtExteriorSignal:settings.volumeRendering.showCtExteriorSignal}:{})},
+      ...(settings.volumeRendering?.showCtExteriorSignal!==undefined?{showCtExteriorSignal:settings.volumeRendering.showCtExteriorSignal}:{}),
+      ...(settings.volumeRendering?.showCtBoneOverlay!==undefined||scan&&ct
+        ?{showCtBoneOverlay:settings.volumeRendering?.showCtBoneOverlay??false}:{})},
     clipping:settings.clipping?{...settings.clipping,enabled:false}:undefined,
     clipBox:settings.clipBox?{...settings.clipBox,enabled:false}:undefined,
     obliqueClip:settings.obliqueClip?{...settings.obliqueClip,enabled:false}:undefined};

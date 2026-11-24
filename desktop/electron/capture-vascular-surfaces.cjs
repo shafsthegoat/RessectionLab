@@ -48,6 +48,10 @@ for(const recipe of recipes){
     'A default-state capture cannot supply view overrides');
   if(recipe.inspectCtExteriorToggle)assert(recipe.useDefaultState,'Check the detached CT signal control from the ordinary default');
   assert(recipe.applyVesselsPreset===undefined||typeof recipe.applyVesselsPreset==='boolean');
+  assert(recipe.applyScanPreset===undefined||typeof recipe.applyScanPreset==='boolean');
+  assert(!recipe.applyScanPreset||!recipe.applyVesselsPreset,'Apply one ordinary preset per capture');
+  if(recipe.inspectCtBoneOverlay)assert(recipe.applyScanPreset||recipe.settings?.volumeRendering?.showCtBoneOverlay===false,
+    'Start with the acquired CT bone view before comparing the overlay');
   if(recipe.inspectSourceVolumeToggle)assert(recipe.applyVesselsPreset,'Check the volume control after applying the ordinary Vessels preset');
   if(recipe.inspectBalancedTof)assert(recipe.applyVesselsPreset||recipe.settings?.volumeRendering?.balanceTofContext===true,
     'Enable balanced TOF context before comparing the control');
@@ -333,15 +337,16 @@ app.on('browser-window-created',(_event,window)=>{
         }
         if(recipe.compareLayerIds)await setLayer(recipe.compareLayerIds[1],false);
         await wait(450);
-        let beforeVesselsPreset;
-        if(recipe.applyVesselsPreset){
+        let beforePreset;
+        const presentation=recipe.applyVesselsPreset?'Vessels':recipe.applyScanPreset?'Scan':null;
+        if(presentation){
           const previous=(await nativeView()).states[recipe.seriesId];
-          beforeVesselsPreset={view:previous,...await capture(`${recipe.name}-before-vessels`)};
-          const preset=`[...document.querySelectorAll('[aria-label="Anatomy presentation"] button')].find(e=>e.textContent.trim()==='Vessels')`;
-          await until(`!!(${preset})&&!(${preset}).disabled`,'enabled ordinary Vessels presentation');
+          beforePreset={view:previous,...await capture(`${recipe.name}-before-${presentation.toLowerCase()}`)};
+          const preset=`[...document.querySelectorAll('[aria-label="Anatomy presentation"] button')].find(e=>e.textContent.trim()===${JSON.stringify(presentation)})`;
+          await until(`!!(${preset})&&!(${preset}).disabled`,`enabled ordinary ${presentation} presentation`);
           await js(`(${preset}).click()`);
-          await until(`(${preset}).getAttribute('aria-pressed')==='true'`,'ordinary Vessels presentation');
-          await settledFrame(beforeVesselsPreset.frame.serial);
+          await until(`(${preset}).getAttribute('aria-pressed')==='true'`,`ordinary ${presentation} presentation`);
+          await settledFrame(beforePreset.frame.serial);
           await wait(450);
         }
         const view=await nativeView();
@@ -367,10 +372,10 @@ app.on('browser-window-created',(_event,window)=>{
           for(const key of ['cursor','displayIdentity','sourceSignalFingerprint'])
             assert.deepEqual(record.frame[key],previous.frame[key],`Presentation changed ${key}`);
         };
-        if(beforeVesselsPreset){
-          assertSameGeometry(beforeVesselsPreset);
-          assert.deepEqual(record.view.visible,beforeVesselsPreset.view.visible,'Vessels preset changed visible anatomy');
-          record.beforeVesselsPreset=beforeVesselsPreset;
+        if(beforePreset){
+          assertSameGeometry(beforePreset);
+          assert.deepEqual(record.view.visible,beforePreset.view.visible,`${presentation} preset changed visible anatomy`);
+          record[presentation==='Vessels'?'beforeVesselsPreset':'beforeScanPreset']=beforePreset;
         }
         if(recipe.expectLabelTextureBytesPerVoxel!==undefined){
           const voxels=lastPayload.shape.reduce((a,b)=>a*b,1);
@@ -440,6 +445,29 @@ app.on('browser-window-created',(_event,window)=>{
             return shown;
           };
           record.ctExteriorToggle={show:await inspect(true),restore:await inspect(false)};
+        }
+        if(recipe.inspectCtBoneOverlay){
+          assert.equal(record.view.settings.presentation,'scan');
+          assert.equal(record.view.settings.volumeRendering.showCtBoneOverlay,false);
+          const toggle=`[...document.querySelectorAll('label')].find(label=>label.textContent.trim()==='Show 3D bone overlay')?.querySelector('input[type=checkbox]')`;
+          const inspect=async show=>{
+            const before=await submittedFrame();
+            await click('Appearance');
+            await until(`!!(${toggle})&&!(${toggle}).disabled`,'available 3D bone overlay control');
+            assert.equal(await js(`(${toggle}).checked`),!show);
+            await js(`(${toggle}).click()`);
+            await click('Close view controls');
+            await settledFrame(before.serial);
+            const state=(await nativeView()).states[view.seriesId];
+            assert.deepEqual(state.visible,record.view.visible,'Bone overlay changed linked slice layer visibility');
+            assert.deepEqual(state.settings,{...record.view.settings,
+              volumeRendering:{...record.view.settings.volumeRendering,showCtBoneOverlay:show}});
+            const image=await capture(`${recipe.name}-${show?'show-bone-overlay':'restore-acquired-bone'}`);
+            assertSameGeometry(image);
+            assert.equal(image.frame.volume,true);
+            return image;
+          };
+          record.ctBoneOverlay={enabled:await inspect(true),restored:await inspect(false)};
         }
         if(recipe.inspectBalancedTof){
           const calibrated=record.frame.scanQuality?.tofContextDensity;

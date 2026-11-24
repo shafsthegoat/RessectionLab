@@ -40,6 +40,7 @@ def test_volume_rendering_preferences_roundtrip_without_changing_source(tmp_path
     settings={'enabled':True,'preset':'ct-bone','density':.32}
     if show_ct_exterior is not None:
         settings['showCtExteriorSignal'] = show_ct_exterior
+        settings['showCtBoneOverlay'] = not show_ct_exterior
         settings['balanceTofContext'] = not show_ct_exterior
     state['states']['primary']['viewer']={'volumeRendering':settings}
     path=tmp_path/'volume.ressectionlab'
@@ -51,7 +52,7 @@ def test_volume_rendering_preferences_roundtrip_without_changing_source(tmp_path
     for invalid in [None,[],{'density':float('nan')},{'density':-1},{'density':3},{'enabled':1},{'preset':'invented-vessels'},{'other':1}]:
         state['states']['primary']['viewer']={'volumeRendering':invalid}
         with pytest.raises(ValueError,match='volume rendering'):view_state(case,[],state)
-    for flag in ('showCtExteriorSignal', 'balanceTofContext'):
+    for flag in ('showCtExteriorSignal', 'showCtBoneOverlay', 'balanceTofContext'):
         for invalid in [None, 0, 'false']:
             state['states']['primary']['viewer']={'volumeRendering': {**settings, flag: invalid}}
             with pytest.raises(ValueError, match='volume display flag'):
