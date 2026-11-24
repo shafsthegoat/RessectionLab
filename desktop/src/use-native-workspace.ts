@@ -63,7 +63,7 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
   const viewRequest=useRef<string|null>(null);
   const waitingAnatomy=useRef<{finish:()=>Promise<void>;interrupt:()=>void}|null>(null);
   const preparationRequest=useRef<string|null>(null);
-  const live=useRef({binding,series,states});live.current={binding,series,states};
+  const live=useRef({binding,series,states,selectedStructure});live.current={binding,series,states,selectedStructure};
   useEffect(()=>()=>{generation.current++;packing.current?.abort();abortViewRequest()},[api]);
   useEffect(()=>api?.onEvent(e=>{
     if(!e.op?.startsWith('anatomy')||(preparationRequest.current&&e.id!==preparationRequest.current))return;
@@ -448,6 +448,24 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
       const r=await api.anatomyComponents({...args(),layerId});setReview(r);setComponents([]);
     });
   }
+  async function inspectFragmentAtCursor(layerId:string){
+    const point=scanState.cursor;
+    if(!binding||!api||!point||draft||waitingAnatomy.current||registration!=='patient frame')return;
+    const snapshotId=binding.document.snapshot_id, seq=generation.current;
+    const current=()=>{
+      const view=live.current;
+      return seq===generation.current&&view.binding?.collectionId===binding.collectionId&&
+        view.binding.document.snapshot_id===snapshotId&&view.series===series&&
+        view.selectedStructure===layerId&&view.states[series]?.cursor?.every((value,index)=>value===point[index]);
+    };
+    await run(async()=>{
+      if(!current())return;
+      const result=await api.anatomyComponents({...args(binding),layerId,focus:{seriesId:series,point}});
+      if(!current()||result.snapshotId!==snapshotId||result.layerId!==layerId||result.focus?.seriesId!==series)return;
+      setEditLayer(layerId);setTool('navigate');setReview(result);
+      setComponents(result.focus.componentId===null?[]:[result.focus.componentId]);
+    });
+  }
   function highlight(ids:number[]){if(!binding||!review||busy)return;setComponents(ids);const next={...scanState,cursor:ids.length===1?review.components.find(c=>c.id===ids[0])?.center??scanState.cursor:scanState.cursor};void run(()=>loadView(binding,series,next,original,{highlightLayer:editLayer,highlightComponents:ids,reviewId:review.reviewId}));}
   function compare(){
     if(!binding)return;
@@ -547,6 +565,6 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
     ?planning.routes.filter(route=>route.selected):planning.routes;
   return {displayRoutes,composeCranialView,hasCranialView,ctaCoverage,ctaCoverageMode,changeCtaCoverage,combineCtaCoverage,canRestoreCranialView:previousCranialView.current?.key===compositionKey,
     vesselTrace,setVesselTrace,vesselPick:vesselPick?.key===compositionKey&&vesselPick.layerId===selectedStructure?vesselPick:null,pickStructureWithPoint,
-    readCamera,viewState:currentViewState(),patientFrameReady,planning,selectedStructure,setSelectedStructure,structureFocusRequest,structureFocusPoint,focusStructure:(id:string,point?:Point3)=>{setStructureFocusPoint(point??null);setSelectedStructure(id);setStructureFocusRequest(n=>n+1);},present,changeSkullMode,canEditLayer,vesselScope,changeVesselScope,savePackage,api,binding,volume,series,state,busy,scanPreview,resumeAnatomy,progress,pendingLayers,layerErrors,retryLayer,message,registration,unavailable,draft,original,editLayer,setEditLayer,tool,setTool,radius,setRadius,threshold,setThreshold,author,setAuthor,review,components,args,run,install,create,clear,selectScan,setVisible,refresh,edit,onStroke,save,reviewFragments,highlight,compare,change,runPreparation,setMessage,setCursor:(cursor:Point3)=>updateState({cursor}),setSettings:(settings:ViewerWorkspaceSettings)=>updateSettings(skullDisplay(settings)),cancel};
+    readCamera,viewState:currentViewState(),patientFrameReady,planning,selectedStructure,setSelectedStructure,structureFocusRequest,structureFocusPoint,focusStructure:(id:string,point?:Point3)=>{setStructureFocusPoint(point??null);setSelectedStructure(id);setStructureFocusRequest(n=>n+1);},present,changeSkullMode,canEditLayer,vesselScope,changeVesselScope,savePackage,api,binding,volume,series,state,busy,scanPreview,resumeAnatomy,progress,pendingLayers,layerErrors,retryLayer,message,registration,unavailable,draft,original,editLayer,setEditLayer,tool,setTool,radius,setRadius,threshold,setThreshold,author,setAuthor,review,components,args,run,install,create,clear,selectScan,setVisible,refresh,edit,onStroke,save,reviewFragments,inspectFragmentAtCursor,highlight,compare,change,runPreparation,setMessage,setCursor:(cursor:Point3)=>updateState({cursor}),setSettings:(settings:ViewerWorkspaceSettings)=>updateSettings(skullDisplay(settings)),cancel};
 }
 export type NativeWorkspace=ReturnType<typeof useNativeWorkspace>;

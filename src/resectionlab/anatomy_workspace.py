@@ -146,12 +146,35 @@ def save_view(collection, state, *, after_registration=False):
     return retired
 
 
-def component_review(collection, layer_id, mask=None):
+def component_review(collection, layer_id, mask=None, *, focus=None, check=lambda: None):
     row = collection.layer(layer_id)
-    data = collection.mask(row) if mask is None else np.asarray(mask, dtype=bool)
+    a = collection.patient_affine(row)
+    source = None
+    if focus is not None:
+        from .anatomy_model_registry import source_volume
+
+        if (mask is not None or not isinstance(focus, dict) or set(focus) != {'seriesId', 'point'}
+                or focus['seriesId'] != row['source_series']
+                or row['kind'] not in {'vessels', 'vessel', 'artery', 'vein', 'sinus'}):
+            raise ValueError('Select a vessel fragment on its native TOF scan')
+        source = collection.series(row['source_series'])
+        if (source['modality'] != 'TOF' or not source_volume(source) or source['affine'] != row['affine']
+                or source['data']['shape'] != row['data']['shape']):
+            raise ValueError('Fragment inspection requires the exact native TOF grid')
+        point = focus['point']
+        if (not isinstance(point, list) or len(point) != 3
+                or any(type(value) not in (int, float) or not np.isfinite(value) for value in point)):
+            raise ValueError('Select a finite linked source cursor')
+        position = world(np.linalg.inv(a), point)
+        if np.any(position < -.5) or np.any(position >= np.asarray(row['data']['shape']) - .5):
+            raise ValueError('The linked cursor is outside the native TOF scan')
+        index = np.floor(position + .5).astype(int)
+    check()
+    data = (collection.array(row['data'], check=check) == row['label_value']
+            if mask is None else np.asarray(mask, dtype=bool))
     labels, count = ndi.label(data, structure=np.ones((3, 3, 3)))
     sizes = np.bincount(labels.ravel(), minlength=count + 1)
-    a = collection.patient_affine(row)
+    check()
     # Accumulate sparse foreground coordinates, avoiding three full float64 grids.
     coordinates=np.nonzero(data)
     ids=labels[coordinates]
@@ -164,4 +187,24 @@ def component_review(collection, layer_id, mask=None):
     scale = abs(np.linalg.det(affine(row['affine'])[:3, :3]))
     rows = [{'id': i, 'voxels': int(sizes[i]), 'volumeMm3': float(sizes[i] * scale), 'center': world(a, centers[i-1]).tolist()} for i in range(1, count + 1)]
     rows.sort(key=lambda r: (r['volumeMm3'], r['id']))
-    return {'reviewId': identity, 'layerId': layer_id, 'components': rows}, labels
+    report = {'reviewId': identity, 'layerId': layer_id, 'components': rows}
+    if source is not None:
+        component_id = int(labels[tuple(index)])
+        report['focus'] = {'seriesId': source['id'], 'nativeIjk': index.tolist(), 'componentId': component_id or None}
+        if component_id:
+            from .vascular_cleanup import attached_tof_sections, verify_native_tof_review_source
+
+            verify_native_tof_review_source(collection, source, check)
+            spacing = np.linalg.norm(a[:3, :3], axis=0)
+            half = np.minimum(np.ceil(12. / spacing).astype(int), 48)
+            lo = np.maximum(0, index - half)
+            hi = np.minimum(data.shape, index + half + 1)
+            crop = tuple(slice(i, j) for i, j in zip(lo, hi))
+            centers = np.argwhere(labels[crop] == component_id) + lo
+            cells = np.ravel_multi_index(centers.T, data.shape)
+            finding = {'centerIjk': index.tolist(), 'boundsIjk': [lo, hi]}
+            report['focus']['preview'] = attached_tof_sections(
+                collection, row, cells, finding, padding_mm=0., check=check,
+            )
+    check()
+    return report, labels

@@ -217,7 +217,12 @@ export type CranialView = 'planning'|'inspection';
 export interface NativeScanState {cranialView?:CranialView;cursor:Point3|null;visible:Record<string,boolean>;settings:ViewerWorkspaceSettings}
 export interface RetiredClipping {seriesId:string|null;cutaway:import('./viewer/workspaceSettings').ViewerCutaway}
 export interface NativeViewState {schema:'patient-anatomy-view-v1';patientId:string;snapshotId:string;seriesId:string;states:Record<string,NativeScanState>;scalarTransferBasis?:'selected-acquisition-v1';patientCutaway?:import('./viewer/workspaceSettings').ViewerCutaway;vesselScope?:VesselScope;vesselDisplayVersion?:2;selectedApproachId?:string|null;selectedPlanningTargetId?:string|null;selectedApproachIds?:Record<string,string|null>;selectedStructure?:string|null}
-export interface ComponentReview {reviewId:string;layerId:string;components:Array<{id:number;voxels:number;volumeMm3:number;center:Point3}>}
+export interface ComponentReview {
+  reviewId:string;layerId:string;snapshotId?:string;
+  components:Array<{id:number;voxels:number;volumeMm3:number;center:Point3}>;
+  focus?:{seriesId:string;nativeIjk:Point3;componentId:number|null;
+    preview?:{window:[number,number];sections:AttachedVesselSection[]}};
+}
 export interface AttachedVesselFinding {
   id:string;centerIjk:Point3;voxels:number;volumeMm3:number;peakCoreRadiusMm:number;
   signalP90:number;attachmentSignalP75:number;uncalibratedModelScoreMedian:number;

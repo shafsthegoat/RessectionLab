@@ -400,6 +400,17 @@ def attached_vessel_uncertainty(mask, signal, scores, native_affine, *, check=la
     return footprints, result
 
 
+def verify_native_tof_review_source(collection, series, check):
+    original = collection.path(series["original"]["path"])
+    status = original.stat()
+    identity = (str(original), status.st_dev, status.st_ino, status.st_size,
+                status.st_mtime_ns, status.st_ctime_ns, series["original"]["sha256"])
+    if identity not in collection._verified:
+        if file_hash(original, check=check) != series["original"]["sha256"]:
+            raise ValueError("Original native TOF checksum differs")
+        collection._verified.add(identity)
+
+
 def review_attached_tof_layer(collection, row, *, check=lambda: None):
     """Bind read-only attachment findings to the native acquisition and scores."""
     from .anatomy_model_registry import source_volume
@@ -420,12 +431,7 @@ def review_attached_tof_layer(collection, row, *, check=lambda: None):
     except ValueError:
         return {}, {"status": "unavailable", "reason": "The source lattice requires geometry review"}
     check()
-    original = collection.path(series["original"]["path"])
-    original_key = (str(original), original.stat().st_mtime_ns, series["original"]["sha256"])
-    if original_key not in collection._verified:
-        if file_hash(original) != series["original"]["sha256"]:
-            raise ValueError("Original native TOF checksum differs")
-        collection._verified.add(original_key)
+    verify_native_tof_review_source(collection, series, check)
     identity = {
         "algorithm": ATTACHED_REVIEW,
         "sourceSeries": series["id"],
@@ -463,15 +469,16 @@ def _attached_review_point(point, shape, cells):
     return np.asarray(point)
 
 
-def attached_tof_sections(collection, row, cells, finding, *, center_ijk=None, check=lambda: None):
+def attached_tof_sections(collection, row, cells, finding, *, center_ijk=None, padding_mm=2., check=lambda: None):
     """Return small, paired source and review overlays through the native core."""
     series = collection.series(row["source_series"])
-    signal = collection.array(series["data"])
-    labels = collection.array(row["data"])
+    signal = collection.array(series["data"], check=check)
+    labels = collection.array(row["data"], check=check)
     spacing = np.linalg.norm(affine(series["affine"])[:3, :3], axis=0)
     center = _attached_review_point(finding["centerIjk"] if center_ijk is None else center_ijk, signal.shape, cells)
     lower, upper = np.asarray(finding["boundsIjk"])
-    half_extent = np.clip(np.maximum(center - lower, upper - 1 - center) + np.ceil(2 / spacing), 1, 48).astype(int)
+    half_extent = np.clip(np.maximum(center - lower, upper - 1 - center)
+                          + np.ceil(padding_mm / spacing), 1, 48).astype(int)
     lo = np.maximum(0, center - half_extent)
     hi = np.minimum(np.shape(signal), center + half_extent + 1)
 

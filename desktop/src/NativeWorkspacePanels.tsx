@@ -10,13 +10,13 @@ import {inverseAffine,rasAffine,sampleTrilinear,transformPoint,volumeBounds} fro
 import type {ViewerVolume} from './viewer/contracts';
 import type {Point3} from './viewer/coordinates';
 import {scanLabel,studyTimepoint,studyLabel,sourceEvidenceLabel,defaultAnatomyPresentation,studyLayerDisplayKind,isCtaCoverageLayer} from './native-study-state';
-import type {NativeVesselFieldRequest,NativeVesselGraph,VesselScope} from './native-anatomy-data';
+import type {ComponentReview,NativeVesselFieldRequest,NativeVesselGraph,VesselScope} from './native-anatomy-data';
 import type {NativeWorkspace} from './use-native-workspace';
 import {AnatomyInspection} from './AnatomyInspection';
 import {NativeImportPanel} from './NativeImportPanel';
 import {NativePreparePanel} from './NativePreparePanel';
 import {NativeRegistrationReview} from './NativeRegistrationReview';
-import {NativeAttachedVesselReview} from './NativeAttachedVesselReview';
+import {NativeAttachedVesselReview,NativeReviewSection} from './NativeAttachedVesselReview';
 import {NativeVesselGapReview} from './NativeVesselGapReview';
 import {AcquisitionContributions,NativeLayerEvidence,rehearsalAvailability} from './NativeStudyEvidence';
 import './unified-anatomy.css';
@@ -121,6 +121,22 @@ function NativeScanPreview({volume,label,modality}:{volume:ViewerVolume|null;lab
   return <span className="study-scan-preview">{volume&&sourceSignal?<><canvas ref={canvas} width="240" height="148" role="img" aria-label={`${label} · central sagittal section of the source scan`}/><span>Sagittal · source scan</span></>:<span className="study-scan-preview-empty">{sourceSignal?'Loading source preview…':'Source preview unavailable for this layer'}</span>}</span>;
 }
 
+function NativeFragmentEvidence({report}:{report:ComponentReview}){
+  const [showOverlay,setShowOverlay]=useState(true);
+  const focus=report.focus;
+  const component=report.components.find(item=>item.id===focus?.componentId);
+  if(!focus)return null;
+  if(!component||!focus.preview)return <p role="status">No vessel estimate at native IJK {focus.nativeIjk.join(', ')}.</p>;
+  return <section className="native-attached-review" aria-label="Native fragment evidence">
+    <p>Fragment #{component.id} · {component.voxels.toLocaleString()} native voxels · {component.volumeMm3.toFixed(2)} mm³</p>
+    <label><input type="checkbox" checked={showOverlay} onChange={event=>setShowOverlay(event.target.checked)}/> Show fragment overlay</label>
+    {showOverlay&&<p><span className="attached-finding-label">Amber selected fragment</span> · <span className="attached-source-label">cyan estimate</span></p>}
+    <div className="native-attached-sections">{focus.preview.sections.map(plane=><NativeReviewSection key={plane.axis} plane={plane}
+      label={`Native ${['I','J','K'][plane.axis]} slice ${plane.index}`} showOverlay={showOverlay}/>)}</div>
+    <p>Compare all three acquired sections. Weak TOF signal alone leaves the fragment’s identity uncertain.</p>
+  </section>;
+}
+
 export function NativeSidebar({workspace:w,tab,onOpenAnatomy,onOpenPlan,onOpenScans,onInspectVessel}:{
   workspace:NativeWorkspace;tab:'data'|'anatomy';onOpenAnatomy:()=>void;onOpenPlan:()=>void;onOpenScans:()=>void;
   onInspectVessel?:(request:NativeVesselFieldRequest)=>void;
@@ -164,6 +180,11 @@ export function NativeSidebar({workspace:w,tab,onOpenAnatomy,onOpenPlan,onOpenSc
         {!w.scanPreview&&(!w.draft||(w.draft.mode==='erase-attached-tof'&&w.draft.layerId===layer.id))&&source?.modality==='TOF'&&layer.source_series===w.series&&layer.kind==='vessels'&&!!layer.probability&&
           (layer.provenance as {model?:string}|null)?.model==='vesselfm'&&
           <NativeAttachedVesselReview key={`${b.collectionId}/${b.document.snapshot_id}/${layer.id}`} workspace={w} layerId={layer.id}/>}
+        {tab==='anatomy'&&source?.modality==='TOF'&&layer.source_series===w.series&&
+          ['vessel','vessels','artery','vein','sinus'].includes(layer.kind)&&w.registration==='patient frame'&&
+          <button disabled={blocked||!w.state.cursor} onClick={()=>void w.inspectFragmentAtCursor(layer.id)}>Review fragment at cursor</button>}
+        {!w.draft&&w.review?.focus?.seriesId===w.series&&w.review.snapshotId===b.document.snapshot_id&&w.review.layerId===layer.id&&
+          <NativeFragmentEvidence key={`${w.review.reviewId}/${w.review.focus.nativeIjk.join(',')}`} report={w.review}/>}
         {!combinedLayer&&!b.readOnlyStudy&&<button className="edit-segmentation" disabled={w.busy||!w.canEditLayer(layer.id)} onClick={()=>{setEditing(!editing);w.setTool('navigate');w.setEditLayer(layer.id)}}>{editing?'Close tools':'Edit segmentation'}</button>}
         {editing&&['vessels','artery','vein','sinus'].includes(layer.kind)&&<div className="vessel-review-note"><p>Disconnected pieces are model estimates. Inspect them on the source slices before keeping or removing them.</p><button disabled={w.busy||!!w.draft||!w.canEditLayer(layer.id)} onClick={()=>{setEditing(true);w.setEditLayer(layer.id);void w.reviewFragments(layer.id)}}>Inspect vessel fragments</button></div>}
         {editing&&<div className="correction-tools"><label>Tool<select aria-label="Correction tool" value={w.tool} onChange={e=>w.setTool(e.target.value)}><option value="navigate">Navigate</option><option value="paint">Paint</option><option value="erase">Erase</option></select></label><label>Brush radius · mm<input type="number" min=".25" max="50" step=".25" value={w.radius} onChange={e=>w.setRadius(+e.target.value)}/></label>

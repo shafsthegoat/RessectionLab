@@ -10,8 +10,8 @@ import pytest
 from resectionlab.anatomy_bridge import VASCULAR_REVIEW_MANIFEST, dispatch, open_anatomy_manifest
 from resectionlab.anatomy_package import open_package, save_package
 from resectionlab.anatomy_workspace import save_view
-from resectionlab.desktop_bridge import BridgeSession, _Request
-from resectionlab.patient_anatomy import PatientImagingCollection, digest, file_hash
+from resectionlab.desktop_bridge import BridgeError, BridgeSession, _Request
+from resectionlab.patient_anatomy import PatientImagingCollection, digest, file_hash, world
 from resectionlab.vascular_cleanup import (
     HIDDEN, RETAINED, UNCERTAIN, attached_vessel_uncertainty, classify_components, review_component_visibility,
     separate_reviewed_components,
@@ -153,6 +153,27 @@ def test_attached_review_uses_bound_native_sections_without_writes(tmp_path):
         assert plane["index"] == finding["centerIjk"][plane["axis"]]
         assert len(base64.b64decode(plane["image"])) == np.prod(plane["shape"])
         assert 2 in base64.b64decode(plane["overlay"])
+    point = [10, 57, 20]
+    source_affine = np.asarray(source["affine"])
+    focus_args = {**args, "focus": {"seriesId": "tof", "point": world(source_affine, point).tolist()}}
+    fragments = call("anatomyComponents", focus_args)
+    selected = fragments["focus"]
+    assert fragments["snapshotId"] == collection.identity()
+    assert selected["nativeIjk"] == point
+    assert selected["seriesId"] == "tof"
+    assert next(item for item in fragments["components"] if item["id"] == selected["componentId"])["voxels"] == 343
+    assert fragments["reviewId"] == call("anatomyComponents", args)["reviewId"]
+    for plane in selected["preview"]["sections"]:
+        assert plane["index"] == point[plane["axis"]]
+        assert 2 in base64.b64decode(plane["overlay"])
+    off_mask = {**focus_args, "focus": {"seriesId": "tof", "point": world(source_affine, [10, 50, 20]).tolist()}}
+    assert call("anatomyComponents", off_mask)["focus"]["componentId"] is None
+    with pytest.raises(ValueError, match="native TOF"):
+        call("anatomyComponents", {**focus_args, "focus": {**focus_args["focus"], "seriesId": "other"}})
+    cancelled = _Request("cancel-fragment-review")
+    cancelled.cancelled.set()
+    with pytest.raises(BridgeError, match="Operation was cancelled"):
+        bridge.execute("anatomyComponents", focus_args, cancelled, lambda *_: None)
     assert bridge.anatomy_drafts == {}
     assert initial == {file: file_hash(file) for file in collection.root.rglob("*") if file.is_file()}
     assert not list(bridge.transfers.root.iterdir())
@@ -160,6 +181,8 @@ def test_attached_review_uses_bound_native_sections_without_writes(tmp_path):
         stream.write(b"source changed")
     with pytest.raises(ValueError, match="TOF checksum differs"):
         call(op, args)
+    with pytest.raises(ValueError, match="TOF checksum differs"):
+        call("anatomyComponents", focus_args)
 
 
 def test_native_attached_edit_is_local_and_preserves_other_score_crossings(tmp_path):

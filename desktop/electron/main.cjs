@@ -179,7 +179,7 @@ function bindOperations() {
   });
   const anatomyKeys = {
     anatomySaveView: ['viewState','saveArchive'],
-    anatomyComponents: ['layerId'],
+    anatomyComponents: ['layerId','focus'],
     anatomyAttachedVesselReview: ['layerId','seriesId','findingId','reviewId','centerIjk'],
     anatomyVesselGapReview: ['layerId','seriesId','findingId','reviewId'],
     anatomyGraph: ['layerId','point','displaySeriesId'],

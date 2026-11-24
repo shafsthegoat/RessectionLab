@@ -108,7 +108,7 @@ def _surface_assets(geometry, transform, source_only, transfer):
 
 def dispatch(session, operation, args, request, progress):
     # A source read does not change the cached view or its transfer descriptors.
-    if operation not in {"anatomyView", "anatomySample", "anatomyAttachedVesselReview", "anatomyVesselGapReview",
+    if operation not in {"anatomyView", "anatomySample", "anatomyComponents", "anatomyAttachedVesselReview", "anatomyVesselGapReview",
                          "anatomyLocalAlignment"}:
         session.anatomy_view_cache = None
     if not hasattr(session, "anatomy_collections"):
@@ -296,7 +296,14 @@ def dispatch(session, operation, args, request, progress):
         draft = session.anatomy_drafts.get(key)
         if draft and draft.layer_id != args["layerId"]:
             raise ValueError("Finish the current layer correction first")
-        report, _ = component_review(c, args["layerId"], draft.mask if draft else None)
+        focus = args.get("focus")
+        report, _ = component_review(c, args["layerId"], draft.mask if draft else None,
+                                     focus=focus, check=request.check)
+        if focus is not None:
+            if json.loads(manifest.read_text()).get("snapshot_id") != current_id:
+                raise ValueError("Anatomy changed; reload the patient")
+            report["snapshotId"] = current_id
+        request.check()
         return report
     if operation == "anatomyAttachedVesselReview":
         from .vascular_cleanup import attached_tof_sections, review_attached_tof_layer
