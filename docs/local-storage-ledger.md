@@ -165,6 +165,9 @@ The open vessel contour comparison, exact section and rim measurements, and
 The ordinary Anatomy source field, matched signed workflow checks and
 section-preserving contour audit are indexed at
 `qc/native-wall-section-stability-20261124-v1/README.md`.
+The ordinary Anatomy load benchmarks, matching signed viewports and
+previous-build restore receipt are indexed at
+`qc/ordinary-vessel-load-20261124-v1/README.md`.
 The signed native TOF correction, matched score-surface preview and cohort
 picker checks are indexed at `qc/native-tof-local-correction-20261124-v1/README.md`.
 The signed faint vessel context comparisons, physical-cut and pick controls,

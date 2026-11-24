@@ -369,6 +369,14 @@ containment also corrected an earlier PTNT_8238 measurement that had counted
 a separate outline as an enclosed void when a test ray aligned with a vertex.
 PTNT_8532 remains unavailable for this TOF check.
 
+Preparing the PTNT_0869 source contour with a fresh mesh cache took 23.7 s
+before the load changes and 14.5 s after them in a paired run with both sets
+of input files pre-read. The acquired array, masks and indexed contours
+matched byte for byte. Large source-only mesh caches store the contour once
+and trade extra cache space for a faster lossless write. Source checksum
+verification and the signed viewer checks are recorded in the
+[private storage ledger](local-storage-ledger.md).
+
 Gray faces in a score-bound operative view mark where the source volume ends.
 The marker follows the rest coordinates of the wall through deformation and
 distinguishes the source boundary from interior transection caps. These faces
