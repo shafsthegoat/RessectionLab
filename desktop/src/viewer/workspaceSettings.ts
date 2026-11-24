@@ -43,6 +43,7 @@ export interface ViewerWorkspaceSettings {
   /** Use the nearest source-bound cortical surface as context in Vessels. */
   sourcedVesselContext?: boolean;
   vesselShading?: VesselShading;
+  vesselDepthSeparation?: boolean;
   layerOpacity?: Record<string, number>;
   layerColor?: Record<string, string>;
   camera?: ViewerCameraState | null;

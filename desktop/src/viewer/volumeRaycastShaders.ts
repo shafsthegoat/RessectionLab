@@ -37,6 +37,7 @@ uniform mat4 uLabelWorldToVoxel;
 uniform vec3 uLabelShape;
 uniform mat4 uCameraWorld;
 uniform mat4 uInverseProjection;
+uniform bool uRakingBoneCut;
 uniform vec3 uShape;
 uniform vec2 uRange;
 uniform float uZeroExtinctionLevel;
@@ -419,6 +420,10 @@ void main(){
   vec3 light=uScanPresentation?normalize(mat3(uCameraWorld)*vec3(-0.48,0.62,0.72)):
     normalize(vec3(-0.4,-0.5,0.75)-direction*0.7);
 #endif
+  // A wide oblique key reveals acquired skull ridges and recesses in the
+  // cut. As it follows the camera, it continues to light the actual new plane.
+  if(uRakingBoneCut && uAcquiredBoneCut && uCt && uShadows && !uIsolate)
+    light=normalize(mat3(uCameraWorld)*vec3(-0.61,0.48,0.63));
   vec3 sky=normalize(light-0.65*direction);
   for(int i=0;i<1536;i++){
     if(accumulated.a>0.995)break;

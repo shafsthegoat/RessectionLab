@@ -6,6 +6,7 @@ import {displaySurfaceNormals} from './displaySurfaceNormals.ts';
 import {applyCtaVesselFinish,applyVesselDepthMaterial,ctaVesselColor,vesselWallFinish} from './anatomySurfaceMaterial.ts';
 import {applySourceContextMaterial} from './sourceContextMaterial.ts';
 import {SurfaceVolumePass} from './SurfaceVolumePass.ts';
+import {VesselDepthSeparation} from './vesselDepthSeparation.ts';
 
 const identity=[[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]];
 test('vessel lighting becomes smoother without moving or connecting source anatomy',()=>{
@@ -50,7 +51,9 @@ test('normal fairing never crosses disconnected surfaces and works in physical s
 
 test('vessel radiance depth cue survives volume peels without changing opacity or surface depth',()=>{
   const material=new THREE.MeshPhysicalMaterial({opacity:.42,transparent:true,...vesselWallFinish}),pass=new SurfaceVolumePass();
+  const separation=new VesselDepthSeparation();
   applyVesselDepthMaterial(material,[[-10,-20,-30],[10,20,30]],undefined,[20,40,60]);
+  separation.install(material);
   applySourceContextMaterial(material,false);
   const peel=pass.make(material,false),tail=pass.make(material,true);
   try{
@@ -58,6 +61,8 @@ test('vessel radiance depth cue survives volume peels without changing opacity o
       const shader={uniforms:{},vertexShader:THREE.ShaderLib.physical.vertexShader,fragmentShader:THREE.ShaderLib.physical.fragmentShader};m.onBeforeCompile(shader,{});
       assert.deepEqual(shader.uniforms.uAnatomyCenter.value.toArray(),[0,0,0]);
       assert.ok(shader.uniforms.uAnatomyRadius.value>0);
+      assert.equal(shader.uniforms.uLocalVesselEnabled.value,false);
+      assert.match(shader.fragmentShader,/outgoingLight \*= 1.0 - 0.72 \* contact/);
       assert.match(shader.fragmentShader,/vViewPosition.z\+\(viewMatrix\*vec4\(uAnatomyCenter,1.0\)\).z/);
       assert.match(shader.fragmentShader,/material.clearcoat\*=1.0-sourceBoundary/);
       assert.equal(m.clearcoat,vesselWallFinish.clearcoat);
@@ -65,7 +70,45 @@ test('vessel radiance depth cue survives volume peels without changing opacity o
       assert.match(m.customProgramCacheKey(),/anatomy-vessel-depth/);
       assert.equal(m.opacity,.42);
     }
-  }finally{material.dispose();peel.dispose();tail.dispose();pass.dispose();}
+  }finally{material.dispose();peel.dispose();tail.dispose();pass.dispose();separation.dispose();}
+});
+
+test('vessel depth capture shares physical clipping and reuses the prior view across rendering passes',()=>{
+  const separation=new VesselDepthSeparation(),geometry=new THREE.BoxGeometry();
+  const plane=new THREE.Plane(new THREE.Vector3(0,0,1),-2);
+  const material=new THREE.MeshPhysicalMaterial({clippingPlanes:[plane]});
+  const mesh=new THREE.Mesh(geometry,material),camera=new THREE.PerspectiveCamera(34,1.5,0.2,1000);
+  const viewport=new THREE.Vector4(20,50,300,200),scissor=viewport.clone();
+  let target=null,draws=0;
+  const renderer={
+    getRenderTarget:()=>target, setRenderTarget:value=>{target=value;},
+    getViewport:value=>value.copy(viewport), getScissor:value=>value.copy(scissor),
+    getScissorTest:()=>true, setViewport:value=>assert.deepEqual(value,viewport),
+    setScissor:value=>assert.deepEqual(value,scissor), setScissorTest:value=>assert.equal(value,true),
+    clear:(color,depth)=>assert.deepEqual([color,depth],[false,true]),
+    render:scene=>{
+      const [copy]=scene.children;
+      assert.equal(copy.geometry,geometry);
+      assert.deepEqual(copy.material.clippingPlanes,[plane]);
+      assert.equal(copy.material.colorWrite,false);
+      assert.equal(target.height,200);
+      draws++;
+    },
+  };
+  try{
+    camera.position.z=50;mesh.updateWorldMatrix(true,false);
+    separation.capture(renderer,camera,[mesh],600,400,300);
+    separation.capture(renderer,camera,[mesh],600,400,300);
+    assert.equal(draws,1);
+    assert.equal(separation.active,true);
+    assert.equal(target,null);
+    plane.constant=-4;
+    separation.capture(renderer,camera,[mesh],600,400,300);
+    assert.equal(draws,2);
+    separation.capture(renderer,camera,[],600,400,300);
+    assert.equal(draws,2);
+    assert.equal(separation.active,false);
+  }finally{separation.dispose();material.dispose();geometry.dispose();}
 });
 
 test('acquired CTA contrast uses declared vessel types and retains the original physical finish on exit',()=>{

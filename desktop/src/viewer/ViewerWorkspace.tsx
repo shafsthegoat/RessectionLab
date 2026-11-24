@@ -927,6 +927,13 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
               <label><input type="checkbox" checked={settings.volumeRendering?.showCtExteriorSignal===true}
                 onChange={event=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,showCtExteriorSignal:event.target.checked}})}/>
                 Show detached CT signal</label>}
+            {caseData.displayIdentity&&!settings.operativeView&&(settings.presentation==='vascular'||settings.presentation==='segmentation')&&
+              caseData.compartments.some(layer=>['artery','vein','sinus','vessel','vessels'].includes(layer.kind??''))&&
+              <label title="Separate overlapping courses and light acquired CT cuts from an angle.">
+                <input type="checkbox" checked={settings.vesselDepthSeparation!==false}
+                  onChange={event=>changeSettings({...settings,vesselDepthSeparation:event.target.checked})}/>
+                Vessel depth lighting
+              </label>}
             <label><input type="checkbox" aria-label="Smooth 3D surfaces" disabled={props.sourcePreview} checked={smoothSurfaces} onChange={e=>setSmoothSurfaces(e.target.checked)}/>Smooth surfaces</label>
             <label><input type="checkbox" aria-label="Body orientation guide" checked={settings.showOrientationGuide!==false} onChange={e=>changeSettings({...settings,showOrientationGuide:e.target.checked})}/>Body orientation guide</label>
             <label>Context appearance<select aria-label="Context appearance" value={settings.contextStyle??'uniform'} onChange={e=>changeSettings({...settings,contextStyle:e.target.value as 'shell'|'uniform'})}><option value="shell">Edge shell · structures visible</option><option value="uniform">Uniform transparency</option></select></label>

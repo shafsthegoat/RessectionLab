@@ -19,6 +19,7 @@ import {renderAnatomyPng} from './anatomyExport';
 import {geometryBufferBytes,renderTargetBytes} from './renderResourceEstimate';
 import {SurfaceInteractionRenderer} from './surfaceInteractionRenderer';
 import {VesselSlabContext} from './vesselSlabContext';
+import {VesselDepthSeparation} from './vesselDepthSeparation';
 import {LabelTextureUpdates} from './labelTextureUpdates';
 import {MAX_ENGINE_REFERENCE_BYTES} from './engineImplicitSurface';
 import type {EnginePartitionRequest,EngineSurfaceReference} from './engineImplicitSurface';
@@ -254,6 +255,7 @@ export class VolumeRenderer {
   private priorCoverageTexture: THREE.Data3DTexture;
   private readonly surfaces = new Map<string, THREE.Mesh>();
   private vesselSlabContext?:VesselSlabContext;
+  private readonly vesselDepthSeparation = new VesselDepthSeparation();
   private readonly tractObjects = new Map<string, THREE.LineSegments<THREE.BufferGeometry,THREE.LineBasicMaterial>>();
   private selectedStructure:string|null=null;
   private vesselTrace?:THREE.Line<THREE.BufferGeometry,THREE.LineBasicMaterial>;
@@ -784,6 +786,7 @@ export class VolumeRenderer {
       }
       applyVesselDepthMaterial(mesh.material,this.patientBounds??this.bounds,grid,sourceShape);
       setVesselDepthAppearance(mesh.material,this.workspaceSettings,layer,grid);
+      if(this.volume.displayIdentity&&!operativeVessel)this.vesselDepthSeparation.install(mesh.material);
     }
     applySourceContextMaterial(mesh.material,this.workspaceSettings.contextStyle==='shell'&&CONTEXT_SURFACES.has(layer.displayKind??layer.kind??''),
       ['bone','skull'].includes(layer.kind??''));
@@ -2645,7 +2648,8 @@ export class VolumeRenderer {
     const geometryBytes=geometryBufferBytes(geometries),textureBytes=[...new Set(textures)].reduce((sum,texture)=>{
       const data=texture.image?.data as ArrayBufferView|undefined;return sum+(data?.byteLength??0);
     },0);
-    const targetBytes=this.scanVolume.estimatedTargetBytes+this.surfaceInteraction.estimatedTargetBytes+renderTargetBytes(this.environmentTarget)+[...this.sliceCaches.values()].reduce((sum,cache)=>sum+cache.estimatedTargetBytes,0);
+    const targetBytes=this.scanVolume.estimatedTargetBytes+this.surfaceInteraction.estimatedTargetBytes+this.vesselDepthSeparation.bytes+
+      renderTargetBytes(this.environmentTarget)+[...this.sliceCaches.values()].reduce((sum,cache)=>sum+cache.estimatedTargetBytes,0);
     const instanceBytes=[...instances].reduce((sum,attribute)=>sum+attribute.array.byteLength,0);
     return {geometryBytes,instanceBytes,textureBytes,labelTextureBytes:this.labelTexture.image.data?.byteLength??0,
       targetBytes,totalKnownBytes:geometryBytes+instanceBytes+textureBytes+targetBytes,
@@ -2655,6 +2659,23 @@ export class VolumeRenderer {
   private hasTranslucentCranialSurfaces() {
     return Array.from(this.surfaces.values()).some(mesh=>mesh.visible&&mesh.userData.cranialBoundary&&
       !Array.isArray(mesh.material)&&mesh.material.opacity>0&&mesh.material.opacity<1);
+  }
+
+  private prepareVesselDepth(camera: THREE.PerspectiveCamera, width: number, height: number, longEdge: number) {
+    const settings = this.workspaceSettings;
+    const enabled = this.anatomy.visible && this.volume.displayIdentity && !settings.operativeView &&
+      !this.replayActive && !this.passiveActive && !this.vesselInspectionFocus &&
+      settings.vesselDepthSeparation !== false &&
+      (settings.presentation === 'vascular' || settings.presentation === 'segmentation');
+    const meshes = enabled ? this.volume.compartments.flatMap(layer => {
+      const mesh = this.surfaces.get(layer.name);
+      if (surfaceKind(layer.kind) !== 'vessel' || !mesh?.visible ||
+          !(mesh.material instanceof THREE.MeshStandardMaterial) || mesh.material.opacity !== 1) return [];
+      mesh.updateWorldMatrix(true, false);
+      return [mesh as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>];
+    }) : [];
+    this.vesselDepthSeparation.capture(this.renderer, camera, meshes, width, height, longEdge);
+    this.scanVolume.setVesselDepthSeparation(this.vesselDepthSeparation.active);
   }
 
   async exportAnatomyPng(signal:AbortSignal):Promise<Blob> {
@@ -2681,6 +2702,8 @@ export class VolumeRenderer {
       this.labelTextureUpdates.sync(this.renderer,this.labelTexture);
       const camera=this.camera.clone();
       camera.aspect=viewport.width/viewport.height;
+      camera.updateProjectionMatrix();
+      this.prepareVesselDepth(camera, viewport.width * 2, viewport.height * 2, 960);
       const scan=!this.replayActive&&!this.passiveActive&&
         (this.scanVolume.active||this.hasTranslucentCranialSurfaces())?this.scanVolume:null;
       const {blob,metrics}=await renderAnatomyPng(this.renderer,this.scene,camera,scan,job.signal,this.visibleVesselSlabContext());
@@ -2767,6 +2790,8 @@ export class VolumeRenderer {
       if (this.pendingFit) this.fitCamera(this.pendingFit);
       this.camera.aspect = main.w / main.h;
       this.camera.updateProjectionMatrix();
+      this.prepareVesselDepth(this.camera, main.w * pixelRatio, main.h * pixelRatio,
+        this.interacting ? Math.min(320, this.budget.longEdge) : 640);
       const cranialSurfaces=!this.scanVolume.active&&this.hasTranslucentCranialSurfaces();
       slabContext=this.visibleVesselSlabContext();
       if (this.replayActive || this.passiveActive||(!this.scanVolume.active&&!cranialSurfaces))
@@ -2801,7 +2826,7 @@ export class VolumeRenderer {
     this.gpuTimer?.end();
     this.lastSubmittedSurgicalView=renderedView;
     const interactive=this.interacting,cpuMs=performance.now()-frameStarted,cameraState=this.getCameraState(),renderedTractIds=this.tractObjects?[...this.tractObjects].filter(([,object])=>object.visible&&(object.geometry.getAttribute('position')?.count??0)>0).map(([id])=>id):[];
-    this.canvas.dispatchEvent(new CustomEvent('anatomy-frame',{bubbles:true,detail:{serial,at:frameStarted,cpuMs,cpuMeasurement:'CPU-frame-submission',interactive,volume:this.scanVolume.active,sliceDraws,vesselSlabContext:!!slabContext,longEdge:scanQuality?Math.max(scanQuality.width,scanQuality.height):interactive?this.budget.longEdge:1300,scanQuality,
+    this.canvas.dispatchEvent(new CustomEvent('anatomy-frame',{bubbles:true,detail:{serial,at:frameStarted,cpuMs,cpuMeasurement:'CPU-frame-submission',interactive,volume:this.scanVolume.active,sliceDraws,vesselSlabContext:!!slabContext,vesselDepthSeparation:this.vesselDepthSeparation.active,longEdge:scanQuality?Math.max(scanQuality.width,scanQuality.height):interactive?this.budget.longEdge:1300,scanQuality,
       resources:{...this.renderer.info.memory},drawCalls:this.renderer.info.render.calls,drawStatistics:{...this.renderer.info.render},gpuTimingSupported:this.gpuTimer?.supported??false,
       estimatedAllocation:this.estimateAllocation(),displayWork:{...this.displayWork},workers:{source:this.sourceWorkerActive?1:0,replay:this.replayWorker?1:0,modeled:this.modelWorker?1:0,picking:this.picking?.stats().workerLive??0},surfaceQuality,
       surfaceCache:{budgetBytes:RETIRED_SURFACE_BUDGET_BYTES,retiredBytes:this.retiredSurfaces.reduce((sum,entry)=>sum+entry.bytes,0),retiredEntries:this.retiredSurfaces.length},
@@ -2859,6 +2884,7 @@ export class VolumeRenderer {
     this.fieldOptics?.texture?.dispose();
     this.vesselInspectionFocus?.path.dispose();
     this.vesselSlabContext?.dispose();
+    this.vesselDepthSeparation.dispose();
     this.updatePlanarPartition(undefined);
     this.disposed = true;
     this.anatomyExport?.abort(new Error('The 3D view was closed during export.'));

@@ -131,6 +131,7 @@ export class ScanVolumeRenderer {
         uLabelWorldToVoxel:{value:worldToVoxel},uLabelShape:{value:shape},
         uDepth:{value:this.sceneTarget.depthTexture},uWorldToVoxel:{value:worldToVoxel},
         uCameraWorld:{value:new THREE.Matrix4()},uInverseProjection:{value:new THREE.Matrix4()},
+        uRakingBoneCut:{value:false},
         uShape:{value:shape},uRange:{value:new THREE.Vector2()},
         uZeroExtinctionLevel:{value:0},
         uSkullMode:{value:0},uAcquiredBoneCut:{value:false},uAcquiredCtBone:{value:false},uCt:{value:false},uScanPresentation:{value:false},uGradientOpacity:{value:false},uDensity:{value:.45},uStep:{value:this.spacing*.7},uLinear:{value:linear},
@@ -348,6 +349,9 @@ export class ScanVolumeRenderer {
     codes.forEach((code,i)=>this.material.uniforms.uLayerCodes.value[i].set(...code));
   }
   get active(){return this.enabled;}
+  setVesselDepthSeparation(enabled: boolean) {
+    this.material.uniforms.uRakingBoneCut.value = enabled;
+  }
   get estimatedCtExteriorBytes(){
     const bytes=this.exteriorVolume?.source.signal.byteLength??0;
     return {cpuBytes:bytes,gpuTextureBytes:bytes};
