@@ -380,7 +380,10 @@ export class VolumeRenderer {
       volume.mri.length !== count
     )
       throw new Error("MRI array dimensions do not match the source grid.");
-    const packedLabels=volume.packedLabels??packAnatomyLabels(volume);
+    const scanWithoutLayers=!!volume.displayIdentity&&!volume.compartments.length&&!modeledAnatomy(volume);
+    const packedLabels=scanWithoutLayers
+      ? {data:new Uint8Array(1),codes:Array.from({length:MAX_ANATOMY_LAYERS},()=>[0,0] as [number,number])}
+      : volume.packedLabels??packAnatomyLabels(volume);
     this.labelCodes=packedLabels.codes;
     this.affine = rasAffine(volume.affine, volume.frame);
     const inverse = inverseAffine(this.affine);
@@ -435,7 +438,7 @@ export class VolumeRenderer {
     this.scanVolume.configure(undefined, this.volumeModality, null);
     this.fusionTexture = dataTexture(new Float32Array(1),[1,1,1]);
     volume.compartments.forEach(layer=>{this.visible[layer.name]=true;});
-    this.labelTexture=anatomyLabelTexture(packedLabels.data,volume.shape);
+    this.labelTexture=anatomyLabelTexture(packedLabels.data,scanWithoutLayers?[1,1,1]:volume.shape);
     this.scanVolume.labels(this.labelTexture,this.visible,this.workspaceSettings,[]);
     this.removedTexture = dataTexture(new Uint8Array(1), [1, 1, 1]);
     this.proposalTexture = dataTexture(new Uint8Array(1), [1, 1, 1]);
@@ -843,18 +846,26 @@ export class VolumeRenderer {
     if(modeledAnatomy(this.volume))return; // source restoration is staged atomically below
     if(!next.displayIdentity||next.displayIdentity!==this.volume.displayIdentity||next.mri!==this.volume.mri||next.caseHash!==this.volume.caseHash||
       JSON.stringify([next.shape,next.affine,next.frame])!==JSON.stringify([this.volume.shape,this.volume.affine,this.volume.frame]))throw Error('Displayed source changed during layer installation');
+    for(const old of this.volume.compartments)if(next.compartments.find(layer=>layer.name===old.name)!==old)throw Error('Resident anatomy replacement requires a new source generation');
+    const firstLayers=this.volume.compartments.length===0;
+    if(!next.compartments.length){this.volume=next;this.requestRender();return;}
     const packed=next.packedLabels;
     if(!packed||packed.codes.length!==MAX_ANATOMY_LAYERS)throw Error('Missing prepared anatomy labels');
     const channels=packed.data.length/next.mri.length;
     if(packed.codes.some(([channel])=>!Number.isInteger(channel)||channel<0||channel>=channels))throw Error('Invalid anatomy label channel');
-    for(const old of this.volume.compartments)if(next.compartments.find(layer=>layer.name===old.name)!==old)throw Error('Resident anatomy replacement requires a new source generation');
     const added=next.compartments.filter(layer=>!this.volume.compartments.some(old=>old.name===layer.name));
     for(const layer of added){const s=layer.surface;if(!s||s.source.length!==s.positions.length||s.normals.length!==s.positions.length||s.sourceNormals.length!==s.positions.length)throw Error('Incremental anatomy requires valid prepared surfaces');}
     const texture=anatomyLabelTexture(packed.data,next.shape);
     this.beginInteraction();this.endInteraction();
     const previous=this.labelTexture;
     this.labelTexture=texture;this.volume=next;this.labelCodes=packed.codes;
-    for(const layer of added){const s=layer.surface!;if(s.source.length)this.installSurface(layer,{positions:s.source,normals:s.sourceNormals,smoothPositions:s.positions,smoothNormals:s.normals,indices:s.indices});}
+    for(const layer of added){
+      const s=layer.surface!;
+      this.preparedSourceLayers.add(layer.name);
+      if(s.source.length)this.installSurface(layer,{positions:s.source,normals:s.sourceNormals,smoothPositions:s.positions,smoothNormals:s.normals,indices:s.indices});
+      this.canvas.dispatchEvent(new CustomEvent('anatomy-surface',{bubbles:true,
+        detail:{name:layer.name,diagnostics:layer.surfaceDiagnostics,qa:layer.qa,empty:!s.source.length}}));
+    }
     this.materials().forEach(shader=>{
       shader.uniforms.uLabels.value=texture;shader.uniforms.uLayerCount.value=next.compartments.length;
       packed.codes.forEach((code,i)=>shader.uniforms.uLayerCodes.value[i].set(...code));
@@ -863,6 +874,8 @@ export class VolumeRenderer {
     this.scanVolume.setLayers(next.compartments,packed.codes);
     this.appearanceSignature=null;this.visibilitySignature=null;
     this.setWorkspaceSettings(this.workspaceSettings);
+    if(firstLayers&&this.mode==='anatomy'&&!this.cameraRestored&&added.some(layer=>layer.surface!.source.length))
+      this.fitCamera('anatomy');
     previous.dispose();this.requestRender();
   }
 

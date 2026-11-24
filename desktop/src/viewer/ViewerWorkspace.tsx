@@ -252,7 +252,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   const sourceSectionAllowed=!props.segmentationOnly&&settings.operativeView!=='surgeon';
   const [depthSlab,setDepthSlab]=useState<{identity:typeof rendererIdentity;patientCutaway:boolean;context:boolean}|null>(null);
   const [depthSlabThickness,setDepthSlabThickness]=useState(44);
-  const depthSlabAllowed=sourceSectionAllowed&&settings.presentation==='vascular'&&!props.generatedSignal&&
+  const depthSlabAllowed=!props.sourcePreview&&sourceSectionAllowed&&settings.presentation==='vascular'&&!props.generatedSignal&&
     !displayedSurgical&&!replay&&!passiveRequested&&!rehearsalRequested;
   const depthSlabActive=depthSlabAllowed&&depthSlab?.identity===rendererIdentity&&depthSlab?.patientCutaway===patientCutawayActive;
   useEffect(()=>{if(depthSlab&&!depthSlabActive)setDepthSlab(null);},[depthSlab,depthSlabActive]);
@@ -819,7 +819,8 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
       data-visible-layer-ids={JSON.stringify(Object.keys(visibleLayers).filter(id=>visibleLayers[id]))}
       data-approach-view-mode={approachViewMode??''}
       data-approach-routes={JSON.stringify(routes)}
-      data-renderer-ready={ready&&!error&&!modelDisplayPending&&remaining===0?'true':'false'}
+      data-source-preview={props.sourcePreview||undefined}
+      data-renderer-ready={!props.sourcePreview&&ready&&!error&&!modelDisplayPending&&remaining===0?'true':'false'}
       data-surfaces-pending={remaining}
       data-expanded={expanded ?? undefined}
       aria-label={props.approachOverview?"Selected approach on intact anatomy":"Linked patient imaging workspace"}
@@ -864,7 +865,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
           <button onClick={()=>engine.current?.cameraPreset('oblique')} aria-label="Fit 3D view" title="Fit 3D view"><Focus size={16}/><span className="rl-viewer-tool-label">Fit 3D</span></button>
           {!resultParts&&<button onClick={()=>void exportAnatomy()} aria-label={exportBusy?'Cancel 3D export':'Export 3D PNG'}
             title={exportBusy?'Cancel 3D export':'Export high-resolution 3D PNG'}
-            disabled={!exportBusy&&(!ready||!!error||remaining>0||modelDisplayPending)}>
+            disabled={!exportBusy&&(props.sourcePreview||!ready||!!error||remaining>0||modelDisplayPending)}>
             <Download size={16}/><span className="rl-viewer-tool-label">PNG</span>
           </button>}
           <span className="viewer-tool-divider"/>
@@ -926,7 +927,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
               <label><input type="checkbox" checked={settings.volumeRendering?.showCtExteriorSignal===true}
                 onChange={event=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,showCtExteriorSignal:event.target.checked}})}/>
                 Show detached CT signal</label>}
-            <label><input type="checkbox" aria-label="Smooth 3D surfaces" checked={smoothSurfaces} onChange={e=>setSmoothSurfaces(e.target.checked)}/>Smooth surfaces</label>
+            <label><input type="checkbox" aria-label="Smooth 3D surfaces" disabled={props.sourcePreview} checked={smoothSurfaces} onChange={e=>setSmoothSurfaces(e.target.checked)}/>Smooth surfaces</label>
             <label><input type="checkbox" aria-label="Body orientation guide" checked={settings.showOrientationGuide!==false} onChange={e=>changeSettings({...settings,showOrientationGuide:e.target.checked})}/>Body orientation guide</label>
             <label>Context appearance<select aria-label="Context appearance" value={settings.contextStyle??'uniform'} onChange={e=>changeSettings({...settings,contextStyle:e.target.value as 'shell'|'uniform'})}><option value="shell">Edge shell · structures visible</option><option value="uniform">Uniform transparency</option></select></label>
             <label>Slice annotations<select aria-label="Slice annotation style" value={settings.sliceOverlay??'fill'} onChange={e=>changeSettings({...settings,sliceOverlay:e.target.value as 'contour'|'fill'})}><option value="contour">Contours · source detail</option><option value="fill">Filled labels</option></select></label>

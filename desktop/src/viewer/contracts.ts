@@ -126,6 +126,8 @@ export interface ViewerWorkspaceProps {
   onWorkspaceSettingsChange?: (settings: import('./workspaceSettings').ViewerWorkspaceSettings) => void;
   /** Acquired modality label; synthetic signals retain their separate label. */
   sourceLabel?: string;
+  /** The acquired scan is interactive while its exact anatomy is prepared. */
+  sourcePreview?: boolean;
   registeredFusion?: import('./registeredFusion').ViewerRegisteredFusion | null;
   /** Separate, unreviewed scan diagnostic; never becomes a CaseData compartment. */
   diagnosticLayer?: import("./diagnosticLayer").LoadedDiagnosticLayer | null;

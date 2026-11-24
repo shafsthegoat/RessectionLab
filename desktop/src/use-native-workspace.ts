@@ -18,6 +18,9 @@ const retiredClippingMessage='Alignment updated · A cutaway outside the new fie
 const nativeVascularReview=(binding:Binding)=>binding.document.vascular_review?.schema==='eden2020-restricted-vascular-companion-v1';
 const vesselSurfaceOptions=(binding:Binding,settings?:ViewerWorkspaceSettings)=>nativeVascularReview(binding)
   ? {vesselSurfaceMode:settings?.smoothSurfaces===true?'conditioned':'source'} : {};
+// Preparing large indexed layers can take longer than installing the acquired
+// texture. Leave small views on the single request path.
+const STAGED_SCAN_VOXELS=32_000_000;
 
 function withoutRetiredClipping<T extends ViewerCutaway>(settings:T,cutaway:ViewerCutaway):T {
   let next=settings;
@@ -38,9 +41,10 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
   const [series,setSeries]=useState(''),[states,setStates]=useState<Record<string,NativeScanState>>({});
   const [patientCutaway,setPatientCutaway]=useState<ViewerCutaway>({});
   const [busy,setBusy]=useState(false),[message,setMessage]=useState(''),[registration,setRegistration]=useState('');
+  const [scanPreview,setScanPreview]=useState(false);
   const [scanFrameReviewed,setScanFrameReviewed]=useState(false);
-  const patientFrameReady=!!volume&&scanFrameReviewed;
-  const planning=useNativeApproaches(binding?.readOnlyStudy?null:binding,api,!!volume&&!busy);
+  const patientFrameReady=!!volume&&scanFrameReviewed&&!scanPreview;
+  const planning=useNativeApproaches(binding?.readOnlyStudy?null:binding,api,!!volume&&!busy&&!scanPreview);
   const [progress,setProgress]=useState<BridgeEvent['progress']>();
   const [structureFocusPoint,setStructureFocusPoint]=useState<Point3|null>(null);
   const [vesselTrace,setVesselTrace]=useState<ViewerVesselTrace|null>(null);
@@ -56,9 +60,11 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
   const appearanceCache=useRef(new Map<string,Float32Array>());
   const sourceImage=useRef<{key:string;data:Float32Array}|null>(null);
   const generation=useRef(0),active=useRef(false),requestId=useRef<string|null>(null),stroke=useRef<Point3[]>([]);
+  const viewRequest=useRef<string|null>(null);
+  const waitingAnatomy=useRef<{finish:()=>Promise<void>;interrupt:()=>void}|null>(null);
   const preparationRequest=useRef<string|null>(null);
   const live=useRef({binding,series,states});live.current={binding,series,states};
-  useEffect(()=>()=>{generation.current++;packing.current?.abort()},[]);
+  useEffect(()=>()=>{generation.current++;packing.current?.abort();abortViewRequest()},[api]);
   useEffect(()=>api?.onEvent(e=>{
     if(!e.op?.startsWith('anatomy')||(preparationRequest.current&&e.id!==preparationRequest.current))return;
     if(e.event==='started'){
@@ -157,11 +163,19 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
     if(next)appearanceCache.current=new Map(next.compartments.flatMap(({appearanceSource:s})=>s?[[s.signalSha256,s.data] as const]:[]));
     setVolume(next);}
   function resetLayers(){packing.current?.abort();packing.current=null;failedLayers.current={};setLayerErrors({});setPendingLayers([]);unavailableRef.current=[];}
+  function abortViewRequest(){const id=viewRequest.current;if(id)void api?.cancel(id).catch(()=>{});}
+  function resetOpening(){waitingAnatomy.current=null;setScanPreview(false);}
+  async function requestView(options:Args){
+    const id='wall-source-view-'+crypto.randomUUID();
+    viewRequest.current=id;
+    try{return await api!.anatomyView({...options,requestId:id});}
+    finally{if(viewRequest.current===id)viewRequest.current=null;}
+  }
   async function prepared(next:ViewerVolume){const controller=new AbortController();packing.current=controller;try{return await prepareNativeLabels(next,controller.signal)}finally{if(packing.current===controller)packing.current=null;}}
   const run=async(job:()=>Promise<void>)=>{if(active.current)return;active.current=true;setBusy(true);try{await layerTask.current;await job()}catch(e){setMessage(e instanceof Error?e.message:String(e))}finally{active.current=false;setBusy(false)}};
-  async function loadView(b:Binding,s:string,view:NativeScanState,raw=false,extra:Args={},legacyCutaway=false,freshOpening=false){
+  async function loadView(b:Binding,s:string,view:NativeScanState,raw=false,extra:Args={},legacyCutaway=false,freshOpening=false,allowStaging=false){
     if(!api)return;setOriginal(raw);const seq=++generation.current;
-    resetLayers();installVolume(null);setUnavailable([]);setMessage('Preparing anatomy…');
+    resetOpening();resetLayers();installVolume(null);setUnavailable([]);setMessage('Preparing anatomy…');
     view={...view,visible:resolveCtaCoverageVisibility(b.document,view.visible)};
     const ids=Object.keys(view.visible).filter(id=>view.visible[id]);
     const coverage=freshOpening?ctaCoverageOptions(b.document,s):undefined;
@@ -169,37 +183,88 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
       const anchors=coverage.focusIds.filter(id=>!view.visible[id]);
       if(ids.length+anchors.length<=128)ids.push(...anchors);
     }
-    try{
-      const result=await api.anatomyView({...args(b),seriesId:s,layers:ids,original:raw,patientModel:b.document.series.length>1,previewAlignment:true,vesselScope:scopeRef.current,...vesselSurfaceOptions(b,view.settings),...extra});
-      if(seq!==generation.current)return;
-      const imageKey=b.collectionId+"/"+s+"/"+result.mri.sha256;
-      let hydrated=await hydrateAnatomy(result,api,sourceImage.current?.key===imageKey?sourceImage.current.data:undefined,undefined,b.document.layers,appearanceCache.current);if(seq!==generation.current)return;
-      hydrated.displayIdentity=JSON.stringify([b.collectionId,s,result.mri.sha256,b.document.snapshot_id,raw,seq,
-        hydrated.ctExterior&&[hydrated.ctExterior.sha256,hydrated.ctExterior.offset,hydrated.ctExterior.shape]]);
-      hydrated=await prepared(hydrated);if(seq!==generation.current)return;
-      sourceImage.current={key:imageKey,data:hydrated.mri};
+    const options={...args(b),seriesId:s,original:raw,patientModel:b.document.series.length>1,previewAlignment:true,vesselScope:scopeRef.current,...vesselSurfaceOptions(b,view.settings),...extra};
+    const current=()=>seq===generation.current;
+    const shape=b.document.series.find(scan=>scan.id===s)?.data?.shape;
+    const stage=allowStaging&&ids.some(id=>b.document.layers.some(layer=>layer.id===id))&&
+      shape?.length===3&&shape.reduce((product,size)=>product*size,1)>=STAGED_SCAN_VOXELS;
+    let preview:ViewerVolume|undefined,previewState:NativeScanState|undefined,attempt=0;
+    function stateAtSource(hydrated:ViewerVolume){
       const next={...view,cursor:view.cursor??transformPoint(hydrated.affine,hydrated.shape.map(n=>(n-1)/2) as Point3)};
       if(legacyCutaway&&usesPatientCutaway(next.settings,!!hydrated.patientContext?.boundsRasMm)){
         setPatientCutaway(viewerCutaway(next.settings));
         next.settings={...next.settings,...viewerCutaway({})};
       }
-      if(freshOpening&&!result.unavailableLayers.some(id=>view.visible[id])){
-        const opening=ctaArterialCutaway(hydrated,s,view.visible,next.settings,b.document.layers,coverage);
-        if(opening){
-          if(usesPatientCutaway(opening,!!hydrated.patientContext?.boundsRasMm)){
-            setPatientCutaway(viewerCutaway(opening));
-            next.settings={...opening,...viewerCutaway({})};
-          }else next.settings=opening;
-        }
-      }
+      return next;
+    }
+    function installState(next:NativeScanState){
+      live.current={...live.current,states:{...live.current.states,[s]:next}};
       setStates(all=>({...Object.fromEntries(Object.entries(all).map(([id,state])=>[id,{...state,visible:resolveCtaCoverageVisibility(b.document,state.visible)}])),[s]:next}));
-      setSelectedStructure(current=>current&&(b.document.layers.some(layer=>layer.id===current)||b.document.tractography?.some(layer=>layer.id===current))?current:null);
-      installVolume(hydrated);setRegistration(result.registrationStatus);setScanFrameReviewed(result.patientFrameReady??result.registrationStatus==='patient frame');setUnavailable(result.unavailableLayers);unavailableRef.current=result.unavailableLayers;
-      setMessage(result.unavailableLayers.length?'Some structures need scan alignment.':result.registrationStatus==='alignment preview'?'Alignment preview · review in Scans':'Anatomy ready');
-    }catch(e){if(seq===generation.current){installVolume(null);throw e;}}
+    }
+    async function hydrate(result:Awaited<ReturnType<NativeAnatomyApi['anatomyView']>>){
+      if(result.snapshotId!==b.document.snapshot_id)throw Error('Anatomy changed while opening this scan');
+      const key=b.collectionId+"/"+s+"/"+result.mri.sha256;
+      if(preview&&sourceImage.current?.key!==key)throw Error('The acquired scan changed while preparing anatomy');
+      const image=sourceImage.current?.key===key?sourceImage.current.data:undefined;
+      const volume=await hydrateAnatomy(result,api!,image,preview,b.document.layers,appearanceCache.current);
+      if(preview&&(volume.mri!==preview.mri||volume.caseHash!==preview.caseHash||
+          volume.headSupport!==preview.headSupport||volume.ctExterior!==preview.ctExterior||
+          JSON.stringify([volume.shape,volume.affine,volume.frame])!==JSON.stringify([preview.shape,preview.affine,preview.frame])))
+        throw Error('Prepared structures belong to a different acquired scan');
+      volume.displayIdentity=preview?.displayIdentity??JSON.stringify([b.collectionId,s,result.mri.sha256,b.document.snapshot_id,raw,seq,
+        volume.ctExterior&&[volume.ctExterior.sha256,volume.ctExterior.offset,volume.ctExterior.shape]]);
+      return {volume,key};
+    }
+    async function finish(){
+      const ordinal=++attempt;
+      const valid=()=>current()&&ordinal===attempt;
+      try{
+        if(preview){setPendingLayers(ids);setMessage('Preparing 3D anatomy…');}
+        const result=await requestView({...options,layers:ids});
+        if(!valid())return;
+        const {volume,key}=await hydrate(result);
+        if(!valid())return;
+        const hydrated=volume.compartments.length?await prepared(volume):volume;
+        if(!valid())return;
+        sourceImage.current={key,data:hydrated.mri};
+        const next=preview?{...live.current.states[s]}:stateAtSource(hydrated);
+        const untouched=!preview||live.current.states[s]===previewState;
+        if(freshOpening&&untouched&&!result.unavailableLayers.some(id=>view.visible[id])){
+          const opening=ctaArterialCutaway(hydrated,s,next.visible,next.settings,b.document.layers,coverage);
+          if(opening){
+            if(usesPatientCutaway(opening,!!hydrated.patientContext?.boundsRasMm)){
+              setPatientCutaway(viewerCutaway(opening));
+              next.settings={...opening,...viewerCutaway({})};
+            }else next.settings=opening;
+          }
+        }
+        installState(next);
+        setSelectedStructure(current=>current&&(b.document.layers.some(layer=>layer.id===current)||b.document.tractography?.some(layer=>layer.id===current))?current:null);
+        installVolume(hydrated);setRegistration(result.registrationStatus);setScanFrameReviewed(result.patientFrameReady??result.registrationStatus==='patient frame');setUnavailable(result.unavailableLayers);unavailableRef.current=result.unavailableLayers;
+        resetOpening();
+        setMessage(result.unavailableLayers.length?'Some structures need scan alignment.':result.registrationStatus==='alignment preview'?'Alignment preview · review in Scans':'Anatomy ready');
+      }catch(e){if(valid())throw e;}
+      finally{if(valid())setPendingLayers([]);}
+    }
+    try{
+      if(stage){
+        const result=await requestView({...options,layers:[]});
+        if(!current())return;
+        const {volume,key}=await hydrate(result);
+        if(!current())return;
+        if(volume.compartments.length)throw Error('Expected an acquired scan before preparing structures');
+        preview=volume;
+        previewState=stateAtSource(volume);
+        sourceImage.current={key,data:volume.mri};
+        waitingAnatomy.current={finish,interrupt:()=>{attempt++;}};
+        installState(previewState);
+        installVolume(volume);setRegistration(result.registrationStatus);setScanFrameReviewed(false);setScanPreview(true);
+      }
+      await finish();
+    }catch(e){if(current()){if(!preview)installVolume(null);throw e;}}
   }
   const install=useCallback(async(b:Binding)=>{
-    previousCranialView.current=null;generation.current++;resetLayers();installVolume(null);setBinding(b);setDraft(null);setOriginal(false);setReview(null);setComponents([]);setEditLayer(null);
+    previousCranialView.current=null;generation.current++;abortViewRequest();resetOpening();resetLayers();installVolume(null);setBinding(b);setDraft(null);setOriginal(false);setReview(null);setComponents([]);setEditLayer(null);
     const saved=b.viewState?.snapshotId===b.document.snapshot_id?b.viewState:null;setSelectedStructure(saved?.selectedStructure??null);
     setPatientCutaway(saved?.patientCutaway??{});
     scopeRef.current=vesselScopeForView(saved,!nativeVascularReview(b)&&b.document.preparation_workflow==='native-adaptive-v1');
@@ -211,11 +276,12 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
     setStates(s?{...views,[s]:v}:{});
     // Recorded episodes and saved approaches belong to this exact source revision.
     // Registration changes are made through intake, preparation or explicit review.
-    if(s)await run(()=>loadView(b,s,v,false,{},!!saved&&saved.patientCutaway===undefined,!saved));
+    if(s)await run(()=>loadView(b,s,v,false,{},!!saved&&saved.patientCutaway===undefined,!saved,true));
     else setMessage('Add a source scan to begin.');
+    return live.current.binding?.collectionId===b.collectionId&&(!s||!!residentVolume.current);
   },[api]);
   async function create(patientId:string,timepoint='preoperative'):Promise<Binding|null>{let result:Binding|null=null;await run(async()=>{result=await api!.anatomyCreate({patientId,timepoint})});if(result)await install(result);return result;}
-  function clear(){appearanceCache.current.clear();sourceImage.current=null;generation.current++;resetLayers();setBinding(null);installVolume(null);setPatientCutaway({});setDraft(null);setReview(null);setEditLayer(null);}
+  function clear(){appearanceCache.current.clear();sourceImage.current=null;generation.current++;abortViewRequest();resetOpening();resetLayers();setBinding(null);installVolume(null);setPatientCutaway({});setDraft(null);setReview(null);setEditLayer(null);}
   function selectScan(s:string,mode?:AnatomyPresentation,inspectLayer?:string){if(!binding||busy||draft||s===series)return;
     const targetSource=volume?.patientContext?.sources.find(source=>source.seriesId===s);
     const alignment=targetSource?.alignment??'unavailable';
@@ -235,7 +301,7 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
       v={...v,settings:skullDisplay({...preset,...viewerCutaway(v.settings)})};
     }
     generation.current++;resetLayers();installVolume(null);setSeries(s);setStates(all=>({...all,[s]:v}));setReview(null);setComponents([]);setEditLayer(null);
-    void run(()=>loadView(binding,s,v));
+    void run(()=>loadView(binding,s,v,false,{},false,false,true));
   }
   function present(mode:AnatomyPresentation){
     if(!binding||busy||draft)return;
@@ -279,7 +345,7 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
     queueLayers();
   }
   function queueLayers(){
-    if(layerTask.current||active.current||!api)return;
+    if(layerTask.current||active.current||waitingAnatomy.current||!api)return;
     const b=live.current.binding,s=live.current.series,seq=generation.current;
     if(!b||!residentVolume.current)return;
     const task=Promise.resolve().then(()=>drainLayerRequests({
@@ -307,7 +373,7 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
     layerTask.current=task;
   }
   function setVisible(visible:Record<string,boolean>){
-    if(!binding||active.current)return;
+    if(!binding||active.current||waitingAnatomy.current)return;
     const current=live.current.states[series]??scanState;
     const changed=current.cranialView&&Object.keys({...current.visible,...visible}).some(id=>visible[id]!==current.visible[id]);
     updateState({visible,...(changed?{cranialView:undefined}:{})});queueLayers();
@@ -340,7 +406,7 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
     const next={...failedLayers.current};delete next[id];failedLayers.current=next;setLayerErrors(next);queueLayers();
   }
   const refresh=()=>binding?loadView(binding,series,scanState,original):Promise.resolve();
-  async function edit(action:string,points:Point3[]=[],extra:Args={},layerId=editLayer){if(!binding||binding.readOnlyStudy||!api||!layerId)return;await run(async()=>{
+  async function edit(action:string,points:Point3[]=[],extra:Args={},layerId=editLayer){if(!binding||binding.readOnlyStudy||!api||!layerId||waitingAnatomy.current)return;await run(async()=>{
     const nativeErase=action==='erase-attached-tof'||draft?.mode==='erase-attached-tof';
     const view=nativeErase?{...scanState,visible:{...scanState.visible,[layerId]:true},
       settings:{...scanState.settings,camera:readCamera.current?.()??scanState.settings.camera}}:scanState;
@@ -358,7 +424,7 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
   });}
   const canEditLayer=(id:string)=>{
     const layer=binding?.document.layers.find(row=>row.id===id);
-    return !!binding&&!binding.readOnlyStudy&&!!layer&&!isCtaCoverageLayer(layer)&&
+    return !!binding&&!scanPreview&&!binding.readOnlyStudy&&!!layer&&!isCtaCoverageLayer(layer)&&
       [series,layer.source_series].every(s=>!!s&&['reference','reviewed','source-provided'].includes(binding.document.transforms[s]?.status));
   };
   function onStroke(point:Point3|null,phase:'start'|'move'|'end'){
@@ -438,9 +504,19 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
       void api?.cancel(preparationId).catch(error=>setMessage(error instanceof Error?error.message:String(error)));
       return;
     }
+    if(waitingAnatomy.current){
+      waitingAnatomy.current.interrupt();
+      abortViewRequest();
+      packing.current?.abort();
+      setPendingLayers([]);setMessage('Anatomy preparation cancelled.');
+      return;
+    }
+    const activeView=viewRequest.current;
     generation.current++;resetLayers();setMessage('Operation cancelled');
-    if(requestId.current)void api?.cancel(requestId.current);
+    if(activeView)abortViewRequest();
+    else if(requestId.current)void api?.cancel(requestId.current);
   }
+  function resumeAnatomy(){const pending=waitingAnatomy.current;if(pending)void run(pending.finish);}
   function changeVesselScope(scope:VesselScope){
     if(active.current||busy||draft||!binding||scope===scopeRef.current)return;
     // Invalidate incremental requests before waiting for them; old filtered layers
@@ -471,6 +547,6 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
     ?planning.routes.filter(route=>route.selected):planning.routes;
   return {displayRoutes,composeCranialView,hasCranialView,ctaCoverage,ctaCoverageMode,changeCtaCoverage,combineCtaCoverage,canRestoreCranialView:previousCranialView.current?.key===compositionKey,
     vesselTrace,setVesselTrace,vesselPick:vesselPick?.key===compositionKey&&vesselPick.layerId===selectedStructure?vesselPick:null,pickStructureWithPoint,
-    readCamera,viewState:currentViewState(),patientFrameReady,planning,selectedStructure,setSelectedStructure,structureFocusRequest,structureFocusPoint,focusStructure:(id:string,point?:Point3)=>{setStructureFocusPoint(point??null);setSelectedStructure(id);setStructureFocusRequest(n=>n+1);},present,changeSkullMode,canEditLayer,vesselScope,changeVesselScope,savePackage,api,binding,volume,series,state,busy,progress,pendingLayers,layerErrors,retryLayer,message,registration,unavailable,draft,original,editLayer,setEditLayer,tool,setTool,radius,setRadius,threshold,setThreshold,author,setAuthor,review,components,args,run,install,create,clear,selectScan,setVisible,refresh,edit,onStroke,save,reviewFragments,highlight,compare,change,runPreparation,setMessage,setCursor:(cursor:Point3)=>updateState({cursor}),setSettings:(settings:ViewerWorkspaceSettings)=>updateSettings(skullDisplay(settings)),cancel};
+    readCamera,viewState:currentViewState(),patientFrameReady,planning,selectedStructure,setSelectedStructure,structureFocusRequest,structureFocusPoint,focusStructure:(id:string,point?:Point3)=>{setStructureFocusPoint(point??null);setSelectedStructure(id);setStructureFocusRequest(n=>n+1);},present,changeSkullMode,canEditLayer,vesselScope,changeVesselScope,savePackage,api,binding,volume,series,state,busy,scanPreview,resumeAnatomy,progress,pendingLayers,layerErrors,retryLayer,message,registration,unavailable,draft,original,editLayer,setEditLayer,tool,setTool,radius,setRadius,threshold,setThreshold,author,setAuthor,review,components,args,run,install,create,clear,selectScan,setVisible,refresh,edit,onStroke,save,reviewFragments,highlight,compare,change,runPreparation,setMessage,setCursor:(cursor:Point3)=>updateState({cursor}),setSettings:(settings:ViewerWorkspaceSettings)=>updateSettings(skullDisplay(settings)),cancel};
 }
 export type NativeWorkspace=ReturnType<typeof useNativeWorkspace>;

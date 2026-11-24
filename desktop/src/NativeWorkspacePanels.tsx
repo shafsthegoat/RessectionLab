@@ -140,7 +140,8 @@ export function NativeSidebar({workspace:w,tab,onOpenAnatomy,onOpenPlan,onOpenSc
   const excludedSources=new Set(model?.sources.filter(s=>s.alignment==='unavailable').map(s=>s.seriesId));
   const unavailable=[...new Set([...w.unavailable,...b.document.layers.filter(l=>excludedSources.has(l.source_series)).map(l=>l.id)])];
   const selectedDisplay=w.volume?.compartments.find(l=>l.name===selected);
-  const blocked=w.busy||!!w.draft||w.planning.pending;
+  const changingScanBlocked=w.busy||!!w.draft||w.planning.pending;
+  const blocked=changingScanBlocked||w.scanPreview;
   const choose=(id:string|null)=>{if(w.draft&&id!==w.editLayer)return;w.setSelectedStructure(id);setSelected(id);setEditing(false);w.setTool('navigate');w.setEditLayer(id)};
   const planning=w.planning;
   const usableTargets=planning.targetOptions.filter(option=>option.target);
@@ -151,16 +152,16 @@ export function NativeSidebar({workspace:w,tab,onOpenAnatomy,onOpenPlan,onOpenSc
         <p className="subtle layer-review-status">{combinedLayer?'Display layer · combined supplied annotations':layer.review_status.replaceAll('_',' ')}{!combinedLayer&&w.volume?.compartments.find(l=>l.name===layer.id)?.volumeMm3!=null&&<> · source {(w.volume.compartments.find(l=>l.name===layer.id)!.volumeMm3!/1000).toFixed(2)} mL</>}</p>
         {onInspectVessel&&tab==='anatomy'&&!combinedLayer&&!w.draft&&layer.source_series===w.series&&source&&['CTA','TOF','MRA'].includes(source.modality)&&
           ['vessel','vessels','artery','vein','sinus'].includes(layer.kind)&&(layer.probability||(layer.provenance as {vascular_cleanup?:unknown}|null)?.vascular_cleanup)?
-          <button className="outline-button" disabled={blocked||!w.state.cursor||!w.volume} onClick={()=>{
+          <button className="outline-button" disabled={changingScanBlocked||!w.state.cursor||!w.volume} onClick={()=>{
             if(w.state.cursor)onInspectVessel({...w.args(),seriesId:w.series,localVesselField:{layerId:layer.id,center:w.state.cursor,frame:w.registration}});
           }}>Inspect local vessel field</button>:null}
         {w.volume?.compartments.find(l=>l.name===layer.id)?.qa&&(()=>{const q=w.volume!.compartments.find(l=>l.name===layer.id)!.qa!;return <details className="unified-details" open={q.voxelCount===0}><summary>Anatomy quality · {q.voxelCount===0?'empty segmentation':q.issues.length?'review findings':'source checks complete'}</summary><p>{q.componentCount.toLocaleString()} source components · anatomical accuracy unmeasured</p>{q.issues.map(issue=><p key={issue}>{issue}</p>)}<p>Findings do not change the source. Inspect linked slices before accepting corrections.</p></details>})()}
-        {!combinedLayer&&!w.draft&&['all','exterior-air'].includes(w.vesselScope)&&layer.source_series===w.series&&['vessel','vessels','artery','vein','sinus'].includes(layer.kind)&&
+        {!w.scanPreview&&!combinedLayer&&!w.draft&&['all','exterior-air'].includes(w.vesselScope)&&layer.source_series===w.series&&['vessel','vessels','artery','vein','sinus'].includes(layer.kind)&&
           (layer.provenance as {model?:string}|null)?.model!=='siam-v2'&&<NativeVesselBranchPanel key={`${b.document.snapshot_id}/${layer.id}`} workspace={w} layerId={layer.id}/>}
-        {!w.draft&&source?.modality==='TOF'&&layer.source_series===w.series&&['vessel','vessels','artery','vein','sinus'].includes(layer.kind)&&
+        {!w.scanPreview&&!w.draft&&source?.modality==='TOF'&&layer.source_series===w.series&&['vessel','vessels','artery','vein','sinus'].includes(layer.kind)&&
           (layer.provenance as {model?:string}|null)?.model!=='siam-v2'&&
           <NativeVesselGapReview key={`${b.collectionId}/${b.document.snapshot_id}/${layer.id}`} workspace={w} layerId={layer.id}/>}
-        {(!w.draft||(w.draft.mode==='erase-attached-tof'&&w.draft.layerId===layer.id))&&source?.modality==='TOF'&&layer.source_series===w.series&&layer.kind==='vessels'&&!!layer.probability&&
+        {!w.scanPreview&&(!w.draft||(w.draft.mode==='erase-attached-tof'&&w.draft.layerId===layer.id))&&source?.modality==='TOF'&&layer.source_series===w.series&&layer.kind==='vessels'&&!!layer.probability&&
           (layer.provenance as {model?:string}|null)?.model==='vesselfm'&&
           <NativeAttachedVesselReview key={`${b.collectionId}/${b.document.snapshot_id}/${layer.id}`} workspace={w} layerId={layer.id}/>}
         {!combinedLayer&&!b.readOnlyStudy&&<button className="edit-segmentation" disabled={w.busy||!w.canEditLayer(layer.id)} onClick={()=>{setEditing(!editing);w.setTool('navigate');w.setEditLayer(layer.id)}}>{editing?'Close tools':'Edit segmentation'}</button>}
@@ -180,10 +181,10 @@ export function NativeSidebar({workspace:w,tab,onOpenAnatomy,onOpenPlan,onOpenSc
     <div className="study-badge">{studyLabel(timepoint)} study <span>{b.document.series.length} {b.document.series.length===1?'scan':'scans'}</span></div>
     <h1 title={b.document.patient_id}>{b.document.patient_id.replace(/^ZENODO-17486320-/,'')}</h1>
     {b.readOnlyStudy&&<p className="subtle" role="status">Read-only vascular review</p>}
-    {tab==='anatomy'&&!!b.document.series.length&&<label className="unified-source">{independent?'Independent scan':'Linked source slices'}<select aria-label="Source scan" value={w.series} disabled={blocked} onChange={e=>w.selectScan(e.target.value)}>{b.document.series.map(s=><option key={s.id} value={s.id}>{scanLabel(s)}</option>)}</select></label>}
+    {tab==='anatomy'&&!!b.document.series.length&&<label className="unified-source">{independent?'Independent scan':'Linked source slices'}<select aria-label="Source scan" value={w.series} disabled={changingScanBlocked} onChange={e=>w.selectScan(e.target.value)}>{b.document.series.map(s=><option key={s.id} value={s.id}>{scanLabel(s)}</option>)}</select></label>}
     {tab==='data'?<>
       <div className="study-section-heading"><strong>Study scans</strong><span>{b.document.series.length}</span></div>
-      <div className="study-scan-list" aria-label="Study scans">{b.document.series.map(s=><button key={s.id} data-scan-id={s.id} className={`study-scan-row${w.series===s.id?' is-selected':''}`} aria-pressed={w.series===s.id} disabled={blocked} onClick={()=>w.selectScan(s.id)}>
+      <div className="study-scan-list" aria-label="Study scans">{b.document.series.map(s=><button key={s.id} data-scan-id={s.id} className={`study-scan-row${w.series===s.id?' is-selected':''}`} aria-pressed={w.series===s.id} disabled={changingScanBlocked} onClick={()=>w.selectScan(s.id)}>
         <span className="study-scan-row-heading"><span className="study-modality">{s.modality}</span><strong>{scanLabel(s)}</strong>{w.series===s.id?<Check size={14}/>:<ChevronRight size={14}/>}</span>
         <span className="study-scan-row-meta">{s.grid_spacing_mm.join(' × ')} mm grid{s.id===b.document.reference_series?' · Reference':''}</span>
         {w.series===s.id&&<NativeScanPreview volume={w.volume} label={scanLabel(s)} modality={s.modality}/>}
@@ -227,7 +228,7 @@ export function NativeSidebar({workspace:w,tab,onOpenAnatomy,onOpenPlan,onOpenSc
           <button disabled={blocked} onClick={()=>w.selectScan(b.document.reference_series)}>View plan on reference scan</button>
         </div>}
       <p className="presentation-source">{sourceEvidenceLabel(source,b.document.series)}</p>
-      <NativeStructureControls volume={w.volume} layers={b.document.layers} tracts={b.document.tractography} visibleLayers={w.state.visible} onVisibilityChange={w.setVisible} settings={w.state.settings} onSettingsChange={w.setSettings} selectedStructure={w.selectedStructure} onSelectStructure={choose} onFocusStructure={w.focusStructure} unavailable={unavailable} pendingLayers={w.pendingLayers} layerErrors={w.layerErrors} onRetryLayer={w.retryLayer} selectionInspector={layerInspector} disabled={w.busy||!!w.draft} showSelectionControls={!!w.selectedStructure&&!layer}/>
+      <NativeStructureControls volume={w.volume} layers={b.document.layers} tracts={b.document.tractography} visibleLayers={w.state.visible} onVisibilityChange={w.setVisible} settings={w.state.settings} onSettingsChange={w.setSettings} selectedStructure={w.selectedStructure} onSelectStructure={choose} onFocusStructure={w.focusStructure} unavailable={unavailable} pendingLayers={w.pendingLayers} layerErrors={w.layerErrors} onRetryLayer={w.retryLayer} selectionInspector={layerInspector} disabled={blocked} showSelectionControls={!!w.selectedStructure&&!layer}/>
       {cta&&<NativeCtaCoverage key={JSON.stringify([b.collectionId,b.document.snapshot_id,w.series])} workspace={w} disabled={blocked}/>}
       {(presentation==='vascular'||cta&&presentation==='segmentation')&&b.document.layers.some(l=>['vessel','vessels','artery','vein','sinus'].includes(l.kind))&&
         <label className="vascular-shading">Vessel shading<select aria-label="Vessel shading" value={w.state.settings.vesselShading??(presentation==='vascular'?'balanced':'source')} disabled={blocked||!['all','exterior-air'].includes(w.vesselScope)} onChange={e=>w.setSettings({...w.state.settings,vesselShading:e.target.value as VesselShading})}>

@@ -608,12 +608,12 @@ export default function App() {
     : null;
   const operativeIssue=native.binding && (native.planning.targetSelectionIssue ||
     operativeRouteIssue(nativeRoute,native.planning.activeTargetLayerId,native.binding.document.snapshot_id));
-  const showOperative=workbenchTab==='rehearsal' && !!routeKey && operativeKey===routeKey && !operativeIssue && !native.draft;
+  const showOperative=workbenchTab==='rehearsal' && !!routeKey && operativeKey===routeKey && !operativeIssue && !native.draft && !native.scanPreview;
   const linkedOperative=showOperative&&native.patientFrameReady&&!!native.volume&&!native.original;
   const nativeRoutes=linkedOperative&&native.state.cranialView==='inspection'
     ?native.planning.routes.filter(route=>route.selected):native.displayRoutes;
   function openOperative(){
-    if(!routeKey||operativeIssue||native.draft||planningEditsPending)return;
+    if(!routeKey||operativeIssue||native.draft||native.scanPreview||planningEditsPending)return;
     setRecordingSelection(null);setOperativeKey(routeKey);setWorkbenchTab('rehearsal');setCasePanel(true);
   }
   const [rehearsalModel,setRehearsalModel]=useState<'standard'|'legacy'>('standard');
@@ -1122,8 +1122,8 @@ export default function App() {
           if(source&&!disposed){
             if(isNativeBinding(source)){
               setPayload(null);setCaseData(null);
-              await native.install(source);
-              await runtime.workspaceInstalled?.({caseHash:source.collectionId,caseId:source.document.patient_id});
+              const installed=await native.install(source);
+              if(installed&&!disposed)await runtime.workspaceInstalled?.({caseHash:source.collectionId,caseId:source.document.patient_id});
             }else await installCase(source,runtime);
           }
         })
@@ -1265,15 +1265,17 @@ export default function App() {
       if (!source || !mounted.current || generation !== caseGeneration.current) return;
       imaging.invalidate();
       if (isNativeBinding(source)) {
-        await native.install(source);
         setPayload(null);
         setCaseData(null);
         setEpisodeVisible(false);
         setCertifiedReplay(null);
         clearProposal();
         clearPrior();
-        await api.workspaceInstalled?.({caseHash: source.collectionId, caseId: source.document.patient_id});
         setWorkbenchTab('anatomy');
+        setCasePanel(true);
+        const installed=await native.install(source);
+        if (!installed||!mounted.current||generation!==caseGeneration.current) return;
+        await api.workspaceInstalled?.({caseHash: source.collectionId, caseId: source.document.patient_id});
       } else {
         await installCase(source, api, generation);
       }
@@ -1660,6 +1662,7 @@ export default function App() {
           aria-label={item.name} aria-current={activeTab === item.id ? 'page' : undefined}
           title={planningEditsPending && workbenchTab==='research' && item.id!=='research' ? 'Save or discard the approach edits first' : item.name}
           disabled={(!hasStudy && (item.id === 'data' || item.id === 'anatomy')) ||
+            (native.scanPreview && (item.id==='research'||item.id==='rehearsal')) ||
             (planningEditsPending && workbenchTab==='research' && item.id!=='research')}
           onClick={() => {
             if (item.id === 'rehearsal') {
@@ -1726,7 +1729,7 @@ export default function App() {
               approach={!operativeIssue&&nativeRoute?.targetLayerId?{approachId:nativeRoute.id,parameterHash:nativeRoute.parameterHash,measurementHash:nativeRoute.measurementHash,
                 targetLayerId:nativeRoute.targetLayerId,snapshotId:nativeRoute.sourceSnapshotId}:undefined}
               routeName={nativeRoute?.name} measurements={nativeRoute?.measurements}
-              binding={native.binding} options={native.planning.rehearsalOptions} busy={busy||!!native.draft||planningEditsPending}
+              binding={native.binding} options={native.planning.rehearsalOptions} busy={busy||native.scanPreview||!!native.draft||planningEditsPending}
               sourceEditing={!!native.draft||planningEditsPending}
               patientCursor={native.patientFrameReady?native.state.cursor:null} onAnatomy={()=>setWorkbenchTab('data')} onPrepare={async (options,sourceIsCurrent)=>{
                 if(!api?.prepareSurgicalEnvironment)throw Error('Restart the app to load environment preparation.');
@@ -2123,6 +2126,7 @@ export default function App() {
               readCamera={native.binding?native.readCamera:undefined}
               onWorkspaceSettingsChange={setViewerSettings}
               sourceLabel={native.binding?native.binding.document.series.find(s=>s.id===native.series)?.modality:String(displayedSource?.metadata.selected_modality??'Image')}
+              sourcePreview={!!native.binding&&native.scanPreview}
               onSliceStroke={native.binding?native.onStroke:undefined}
               registeredFusion={native.binding?null:registeredFusion}
               diagnosticLayer={native.binding?null:diagnostic.view?.layer ?? null}
@@ -2162,7 +2166,13 @@ export default function App() {
             <button className="outline-button" onClick={()=>setWorkbenchTab('cases')}>Browse cases</button>
           </div>}
           {native.binding&&!displayedCase&&!native.busy&&<div className="welcome-overlay"><h2>{native.binding.document.series.length?'Scan unavailable':'Add your first scan'}</h2><p>{native.message}</p>{native.binding.document.series.length?<button className="primary-button" onClick={()=>native.run(native.refresh)}>Retry</button>:<button className="primary-button" onClick={addData}>Add scans</button>}</div>}
-          {(hydrating||native.busy) && (
+          {native.binding&&native.scanPreview&&displayedCase&&<div className="anatomy-preparation-notice">
+            {native.busy&&<LoaderCircle size={14} className="spin" aria-hidden="true"/>}
+            <span role="status">{native.message}</span>
+            {native.busy?<button className="header-button" onClick={native.cancel}>Cancel</button>
+              :<button className="header-button" onClick={native.resumeAnatomy}>Load anatomy</button>}
+          </div>}
+          {(hydrating||(native.busy&&!native.scanPreview)) && (
             <div className="viewer-loading">
               <LoaderCircle size={22} className="spin" />
               <span>{native.binding?native.message:"Preparing source images…"}</span>{native.busy&&<button className="header-button" onClick={native.cancel}>Cancel</button>}

@@ -1055,6 +1055,23 @@ h3 {
   color: #a2c7c8;
   backdrop-filter: blur(4px);
 }
+.anatomy-preparation-notice {
+  position: absolute;
+  top: 49px;
+  left: 12px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: min(35rem, calc(100% - 24px));
+  padding: 6px 9px 6px 12px;
+  border: 1px solid var(--border, #344341);
+  border-radius: 6px;
+  background: #101615ed;
+  color: #c8ded8;
+  font-size: 12px;
+}
+.anatomy-preparation-notice svg { flex: none; }
 .spin {
   animation: spin 1s linear infinite;
 }

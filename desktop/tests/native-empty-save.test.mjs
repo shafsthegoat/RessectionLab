@@ -54,7 +54,7 @@ test('changing a populated study reveals new structures without restoring hidden
   const requests=[];
   const api={
     anatomyRegister:async args=>({document:args.snapshotId==='snapshot'&&requests.length>0?changed:document}),
-    anatomyView:async args=>{requests.push(args);return {mri:{assetId:'image',byteLength:4,byteOrder:'little',order:'C',sha256:'image'},
+    anatomyView:async args=>{requests.push(args);return {snapshotId:args.snapshotId,mri:{assetId:'image',byteLength:4,byteOrder:'little',order:'C',sha256:'image'},
       shape:[1,1,1],affine:[[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]],compartments:[],
       registrationStatus:'patient frame',unavailableLayers:[]};},
     readAsset:async()=>new Uint8Array(new Float32Array([0]).buffer),
@@ -94,7 +94,8 @@ test('native workspace keeps the shared cutaway through source switches and pres
   let saved,packaged=false;
   const api={
     anatomyRegister:async()=>({document}),
-    anatomyView:async({seriesId})=>({
+    anatomyView:async({seriesId,snapshotId})=>({
+      snapshotId,
       mri:asset(seriesId,4000),shape:mriShape,affine:affine({mri:0,ct:20,scout:80}[seriesId]),frame:'RAS+',compartments:[],
       modality:scans.find(scan=>scan.id===seriesId).modality,
       registrationStatus:seriesId==='scout'?'independent source frame':'patient frame',unavailableLayers:[],
@@ -175,5 +176,66 @@ test('native workspace keeps the shared cutaway through source switches and pres
     assert.deepEqual(cut(),clipping(7));
     assert.deepEqual(render().viewState.patientCutaway.clipping,clipping(7));
     assert.equal(render().viewState.states.mri.settings.clipping,undefined);
+  }finally{internals.H=previous;globalThis.Worker=previousWorker;}
+});
+
+test('a large study retains interactive source state when exact anatomy is cancelled and retried',async()=>{
+  const layer={id:'vessels',kind:'vessels',label:'Vessels',source_series:'tof',role:'context',color:'#cc8899'};
+  const document={patient_id:'P',snapshot_id:'snapshot',reference_series:'tof',
+    series:[{id:'tof',modality:'TOF',grid_spacing_mm:[1,1,1],data:{shape:[672,672,210]}}],
+    layers:[layer],transforms:{tof:{status:'reference'}}};
+  const asset=(id,byteLength)=>({assetId:id,byteLength,byteOrder:'little',order:'C',sha256:id});
+  const source={snapshotId:'snapshot',caseHash:'case',mri:asset('signal',32),shape:[2,2,2],
+    affine:[[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]],frame:'RAS+',compartments:[],
+    registrationStatus:'patient frame',unavailableLayers:[]};
+  const full={...source,compartments:[{name:'vessels',kind:'vessels',color:'#cc8899',mask:asset('mask',8),surface:{empty:true}}]};
+  const requests=[],cancelled=[],reads=[],answers=[];
+  const api={
+    anatomyView(args){requests.push(args);return args.layers.length?new Promise(resolve=>answers.push(resolve)):Promise.resolve(source);},
+    cancel(id){cancelled.push(id);return Promise.resolve();},
+    async readAsset(id){reads.push(id);return new Uint8Array(id==='signal'?32:8);},
+  };
+  const internals=React.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
+  const previous=internals.H,previousWorker=globalThis.Worker,slots=[];
+  let cursor=0;
+  internals.H={
+    useState(initial){const index=cursor++;if(!(index in slots))slots[index]=typeof initial==='function'?initial():initial;
+      return [slots[index],value=>{slots[index]=typeof value==='function'?value(slots[index]):value;}];},
+    useRef(initial){const index=cursor++;if(!(index in slots))slots[index]={current:initial};return slots[index];},
+    useEffect(){},
+    useCallback(fn){return fn;},
+  };
+  globalThis.Worker=class {postMessage(){queueMicrotask(()=>this.onmessage({data:{}}));}terminate(){}};
+  const render=()=>{cursor=0;return useNativeWorkspace(api);};
+  try{
+    const opening=render().install({collectionId:'study',document,
+      viewState:{snapshotId:'snapshot',seriesId:'tof',states:{tof:{cursor:null,visible:{vessels:true},settings:{layout:'3d-focus'}}}}});
+    await new Promise(setImmediate);
+    const preview=render().volume;
+    assert.equal(render().scanPreview,true);
+    assert.equal(render().patientFrameReady,false);
+    assert.deepEqual(requests.map(request=>request.layers),[[],['vessels']]);
+    render().setCursor([0.2,0.3,0.4]);
+    const interim=render();
+    interim.setSettings({...interim.state.settings,contrast:1.3});
+    render().cancel();
+    assert.deepEqual(cancelled,[requests[1].requestId]);
+    answers[0](full);
+    await opening;
+    assert.equal(render().volume,preview);
+    assert.equal(render().busy,false);
+    render().resumeAnatomy();
+    await new Promise(setImmediate);
+    assert.notEqual(requests[1].requestId,requests[2].requestId);
+    answers[1](full);
+    await new Promise(setImmediate);
+    const exact=render();
+    assert.equal(exact.scanPreview,false);
+    assert.equal(exact.patientFrameReady,true);
+    assert.equal(exact.volume.displayIdentity,preview.displayIdentity);
+    assert.equal(exact.volume.mri,preview.mri);
+    assert.deepEqual(exact.state.cursor,[0.2,0.3,0.4]);
+    assert.equal(exact.state.settings.contrast,1.3);
+    assert.deepEqual(reads,['signal','mask']);
   }finally{internals.H=previous;globalThis.Worker=previousWorker;}
 });
