@@ -37,3 +37,12 @@ export function restoreSourceSection(settings: ViewerWorkspaceSettings, snapshot
   const {activePlane:_activePlane,showPlane:_showPlane,clipping:_clipping,...unchanged} = settings;
   return {...unchanged,...sourceSectionSnapshot(snapshot)};
 }
+
+/** Restrict only the depth of the 3D presentation in patient-frame millimeters. */
+export function sourceDepthSlabAtCursor(cursor: Point3, bounds: Bounds3, plane: SlicePlane, thicknessMm: number): NonNullable<ViewerWorkspaceSettings['clipBox']> {
+  const axis = {sagittal:0,coronal:1,axial:2}[plane];
+  const min: Point3 = [...bounds[0]], max: Point3 = [...bounds[1]];
+  min[axis] = cursor[axis] - thicknessMm/2;
+  max[axis] = cursor[axis] + thicknessMm/2;
+  return {enabled:true,min,max};
+}

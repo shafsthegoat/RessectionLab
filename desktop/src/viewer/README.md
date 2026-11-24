@@ -100,6 +100,8 @@ New multi-scan studies, studies with an identified cortical label, and angiogram
 
 At an explicit cut, the displayed 3D source-image plane writes its actual depth so scalar tissue behind the section cannot veil the acquired image. Primary, box and oblique clips apply consistently to that plane and its picking. Uncut reference planes retain their translucent appearance; linked 2D image panes remain unclipped.
 
+In **Vessels**, choose **Clip → Vessel slab at cursor** to inspect a narrower depth along the selected anatomical plane. Its thickness is in millimeters and it follows the linked cursor while retaining the full transverse field. The native surface and source panes remain available. **Exit slab** restores the prior 3D cut.
+
 Scan bounds a settled 3D draw to a 1024-pixel long edge, ray steps of one source spacing and at most 640 intervals, with three local shadow probes. Optical extinction stays per physical millimetre. This limits a transparent full-field draw without resampling its source texture or reducing linked MPR resolution; other saved presentations retain their existing rendering quality.
 
 New native studies choose Pre-op or Post-op. Import rejects a different timepoint before adding source files; the same patient can have separate study files. The portable `.rsworkspace` archive includes the native manifest, referenced original imaging and annotation arrays, and saved view. It omits model runtimes and mesh caches. Open verifies source checksums and unpacks into an editable local working copy; Save updates the opened portable file. Native collection folders remain supported.

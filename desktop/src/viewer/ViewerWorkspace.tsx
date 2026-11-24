@@ -13,7 +13,7 @@ import {approachCamera,approachClipBox} from './approachView';
 import type {SurgicalInteraction} from '../surgical-types';
 import {SliceScrollAccumulator} from './interactionBudget';
 import {patientSliceCursor,patientSliceNavigation} from './sliceNavigation';
-import {followSourceSection,restoreSourceSection,sourceSectionAtCursor,sourceSectionSnapshot} from './sourceSection';
+import {followSourceSection,restoreSourceSection,sourceDepthSlabAtCursor,sourceSectionAtCursor,sourceSectionSnapshot} from './sourceSection';
 import type {SourceSectionSnapshot} from './sourceSection';
 import {TransferEditor} from './TransferEditor';
 import {sampleDiagnosticLayer} from "./diagnosticLayer";
@@ -211,6 +211,12 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   const [sourceSection,setSourceSection]=useState<{identity:typeof rendererIdentity;fused:boolean;previous:SourceSectionSnapshot}|null>(null);
   const sourceSectionActive=Boolean(sourceSection&&sourceSection.identity===rendererIdentity&&sourceSection.fused===fusedContext);
   const sourceSectionAllowed=!props.segmentationOnly&&settings.operativeView!=='surgeon';
+  const [depthSlab,setDepthSlab]=useState<{identity:typeof rendererIdentity;fused:boolean}|null>(null);
+  const [depthSlabThickness,setDepthSlabThickness]=useState(44);
+  const depthSlabAllowed=sourceSectionAllowed&&settings.presentation==='vascular'&&!props.generatedSignal&&
+    !displayedSurgical&&!replay&&!passiveRequested&&!rehearsalRequested;
+  const depthSlabActive=depthSlabAllowed&&depthSlab?.identity===rendererIdentity&&depthSlab?.fused===fusedContext;
+  useEffect(()=>{if(depthSlab&&!depthSlabActive)setDepthSlab(null);},[depthSlab,depthSlabActive]);
   const [obliqueAngle,setObliqueAngle]=useState(0);
   const smoothSurfaces=settings.smoothSurfaces!==false;
   const setSmoothSurfaces=(smoothSurfaces:boolean)=>changeSettings({...latestSettings.current,smoothSurfaces});
@@ -245,6 +251,9 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
           (v, i) => (v + geometry.bounds[1][i]) / 2,
         ) as Point3)
       : [0, 0, 0]);
+  const depthSlabBox=useMemo(()=>depthSlabActive&&cutawayBounds
+    ?sourceDepthSlabAtCursor(currentCursor,cutawayBounds,activePlane,depthSlabThickness):undefined,
+  [depthSlabActive,cutawayBounds,activePlane,depthSlabThickness,currentCursor[0],currentCursor[1],currentCursor[2]]);
   const exitSourceSection=()=>{
     if(sourceSectionActive&&sourceSection)changeSettings(restoreSourceSection(latestSettings.current,sourceSection.previous));
     setSourceSection(null);
@@ -252,10 +261,17 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   const toggleSourceSection=()=>{
     if(sourceSectionActive){exitSourceSection();return;}
     if(!sourceSectionAllowed||!cutawayBounds)return;
+    setDepthSlab(null);
     const previous=sourceSectionSnapshot(latestSettings.current);
     const cameraPosition=engine.current?.getCameraState()?.position??settings.camera?.position;
     changeSettings(sourceSectionAtCursor(latestSettings.current,currentCursor,cutawayBounds,cameraPosition));
     setSourceSection({identity:rendererIdentity,fused:fusedContext,previous});
+  };
+  const toggleDepthSlab=()=>{
+    if(depthSlabActive){setDepthSlab(null);return;}
+    if(!depthSlabAllowed||!cutawayBounds)return;
+    if(sourceSectionActive)exitSourceSection();
+    setDepthSlab({identity:rendererIdentity,fused:fusedContext});
   };
   useEffect(()=>{
     if(!sourceSection)return;
@@ -366,7 +382,11 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     }
   },[caseData,ready,graphicsGeneration]);
 
-  useEffect(()=>{engine.current?.setWorkspaceSettings(corridorCrop?{...settings,clipBox:corridorCrop}:settings);},[ready,graphicsGeneration,caseData,settings,corridorCrop]);
+  useEffect(()=>{
+    const presentation=corridorCrop?{...settings,clipBox:corridorCrop}:depthSlabBox
+      ?{...settings,clipping:undefined,obliqueClip:undefined,clipBox:depthSlabBox}:settings;
+    engine.current?.setWorkspaceSettings(presentation);
+  },[ready,graphicsGeneration,caseData,settings,corridorCrop,depthSlabBox]);
   useEffect(()=>{engine.current?.restoreCamera(settings.camera);},[ready,graphicsGeneration,caseData,settings.camera]);
   useEffect(()=>{engine.current?.setSelectedStructure(props.selectedStructure??null);},[ready,graphicsGeneration,caseData,props.selectedStructure]);
   useEffect(()=>{engine.current?.setVesselTrace(props.vesselTrace??null);},[ready,graphicsGeneration,caseData,props.vesselTrace]);
@@ -834,6 +854,11 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
           {controlPanel==='clip'&&<>
             <button className="rl-section-action" aria-label={sourceSectionActive?'Exit section':'Section at cursor'} aria-pressed={sourceSectionActive} disabled={!sourceSectionAllowed} onClick={toggleSourceSection}><ScanLine size={16}/>{sourceSectionActive?'Exit section':'Section at cursor'}</button>
             <p className="rl-section-help">{props.segmentationOnly?'Segmentation only · no acquired image to section.':!sourceSectionAllowed?'Exit the operative view to inspect a source image section.':sourceSectionActive?`${props.generatedSignal?'Generated image signal':`Source ${signalName}`} · ${TITLES[activePlane]} section follows the linked cursor. Exit restores the previous cut.`:'Show the source image across the cut, at the linked cursor. Choose its plane below.'}</p>
+            {depthSlabAllowed&&<button aria-pressed={depthSlabActive} disabled={!cutawayBounds||!!corridorCrop} onClick={toggleDepthSlab}>{depthSlabActive?'Exit vessel slab':'Vessel slab at cursor'}</button>}
+            {depthSlabActive?<>
+              <label>Slab plane<select aria-label="Slab plane" value={activePlane} onChange={event=>setActivePlane(event.target.value as SlicePlane)}>{PLANES.map(plane=><option key={plane} value={plane}>{TITLES[plane]}</option>)}</select></label>
+              <label>Slab thickness<select aria-label="Slab thickness" value={depthSlabThickness} onChange={event=>setDepthSlabThickness(Number(event.target.value))}>{[20,28,36,44,60,80].map(mm=><option key={mm} value={mm}>{mm} mm</option>)}</select></label>
+            </>:<>
             <label><input type="checkbox" checked={clipping.enabled} onChange={e=>changeSettings({...settings,clipping:{...clipping,enabled:e.target.checked}})}/>Cutaway</label>
             <label>Plane<select aria-label="Cutaway axis" value={clipping.axis} onChange={e=>{
               const axis=e.target.value as 'x'|'y'|'z',i={x:0,y:1,z:2}[axis];
@@ -844,6 +869,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
             <button disabled={!clipping.enabled} onClick={()=>changeSettings({...settings,clipping:{...clipping,flipped:!clipping.flipped}})}>Flip side</button>
             <label><input type="checkbox" checked={showPlane} disabled={props.segmentationOnly} onChange={e=>setShowPlane(e.target.checked)}/>Source plane in 3D</label><select aria-label="Source plane orientation" value={activePlane} disabled={sourceSectionActive||props.segmentationOnly} onChange={e=>setActivePlane(e.target.value as SlicePlane)}>{PLANES.map(p=><option key={p} value={p}>{TITLES[p]}</option>)}</select>
             <details><summary>Oblique & box cuts</summary><label>Angle · degrees<input aria-label="Oblique angle" type="number" min="-180" max="180" value={obliqueAngle} onChange={e=>setObliqueAngle(+e.target.value)}/></label><button onClick={()=>{const normal:Point3=[Math.sin(obliqueAngle*Math.PI/180),0,Math.cos(obliqueAngle*Math.PI/180)];changeSettings({...settings,obliqueClip:{enabled:true,normal,offset:-normal.reduce((sum,n,i)=>sum+n*currentCursor[i],0)}})}}>Cut at cursor</button><button onClick={()=>changeSettings({...settings,clipBox:{enabled:true,min:currentCursor.map(n=>n-50) as Point3,max:currentCursor.map(n=>n+50) as Point3}})}>100 mm box at cursor</button><button onClick={()=>changeSettings({...settings,clipBox:undefined,obliqueClip:undefined})}>Clear extra cuts</button></details>
+            </>}
           </>}
           <section className="rl-viewer-information" hidden={controlPanel!=='info'} aria-label="Linked view information">
             <p className="rl-info-source"><strong>{signalName}</strong> · {settings.operativeView==='surgeon' ? (settings.microscope?.tissueStyle==='labels'?'operative field · source labels':'operative field · illustrative material') : volumeDisplayed?'source volume + structures':'segmentation surfaces'}</p>
@@ -1017,7 +1043,11 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
             <span>{props.generatedSignal?'Generated image section':`Source ${signalName} section`} · {TITLES[activePlane]} · {'XYZ'[PLANE_AXES[activePlane][2]]} {currentCursor[PLANE_AXES[activePlane][2]].toFixed(1)} mm</span>
             <button aria-label="Exit source section" onClick={exitSourceSection}>Exit section</button>
           </div>}
-          {!sourceSectionActive&&!surgicalView&&(corridorCrop||settings.clipBox?.enabled||props.vesselTrace?.isolationRadiusMm)&&
+          {depthSlabBox&&!corridorCrop&&<div className="rl-source-section-readout" role="status">
+            <span>{TITLES[activePlane]} {depthSlabThickness} mm slab · linked slices stay full</span>
+            <button aria-label="Exit vessel slab in 3D" onClick={()=>setDepthSlab(null)}>Exit slab</button>
+          </div>}
+          {!sourceSectionActive&&(!depthSlabBox||corridorCrop)&&!surgicalView&&(corridorCrop||settings.clipBox?.enabled||props.vesselTrace?.isolationRadiusMm)&&
             <div className="rl-source-section-readout" role="status">
               <span>{props.vesselTrace?.isolationRadiusMm?'3D branch crop · linked slices retain full anatomy':corridorCrop?'3D corridor crop':'3D box crop'}</span>
               {corridorCrop?<button onClick={()=>setCropApproach(false)}>Exit corridor crop</button>:

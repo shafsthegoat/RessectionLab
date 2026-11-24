@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { followSourceSection, restoreSourceSection, sourceSectionAtCursor, sourceSectionSnapshot } from './sourceSection.ts';
+import { followSourceSection, restoreSourceSection, sourceDepthSlabAtCursor, sourceSectionAtCursor, sourceSectionSnapshot } from './sourceSection.ts';
 import { inverseAffine, rasAffine, transformPoint, volumeBounds } from './coordinates.ts';
 
 test('section uses linked RAS millimeters on an oblique LPS source and exposes its camera-facing cut', () => {
@@ -35,4 +35,15 @@ test('exit restores exact previous source-plane and cut state while retaining la
   assert.deepEqual(restoreSourceSection(sourceSectionAtCursor(empty,[1,2,3],[[-10,-10,-10],[10,10,10]]),emptySnapshot),empty);
   settings.clipping.value = 9;
   assert.equal(snapshot.clipping.value,7);
+});
+
+test('a depth slab follows the cursor in physical RAS along one axis and retains the full transverse field', () => {
+  const bounds = [[-85,-70,-8],[89,90,80]];
+  assert.deepEqual(sourceDepthSlabAtCursor([0,12,8],bounds,'axial',44),
+    {enabled:true,min:[-85,-70,-14],max:[89,90,30]});
+  assert.deepEqual(sourceDepthSlabAtCursor([0,12,8],bounds,'coronal',28),
+    {enabled:true,min:[-85,-2,-8],max:[89,26,80]});
+  assert.deepEqual(sourceDepthSlabAtCursor([1,12,9],bounds,'sagittal',20),
+    {enabled:true,min:[-9,-70,-8],max:[11,90,80]});
+  assert.deepEqual(bounds,[[-85,-70,-8],[89,90,80]]);
 });

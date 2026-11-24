@@ -34,6 +34,7 @@ for(const recipe of recipes){
   if(recipe.useDefaultState)assert(recipes.length===1&&!recipe.settings&&!recipe.cursor&&!recipe.scope&&!recipe.compareLayerIds,
     'A default-state capture cannot supply view overrides');
   assert(!recipe.compareLayerIds||recipe.compareLayerIds.length===2&&recipe.compareLayerIds.every(id=>recipe.layers.includes(id)));
+  assert(recipe.depthSlab===undefined||typeof recipe.depthSlab==='boolean');
   assert(!recipe.branchLayerId||recipe.layers.includes(recipe.branchLayerId));
   assert(!recipe.branchPick||recipe.branchLayerId&&Array.isArray(recipe.branchPick)&&recipe.branchPick.length===2&&
     recipe.branchPick.every(value=>Number.isFinite(value)&&value>0&&value<1));
@@ -222,6 +223,30 @@ app.on('browser-window-created',(_event,window)=>{
         const surfaces=lastPayload.compartments.map(({name,sourceSeries,alignment,surfaceDiagnostics,surface,displayFilter})=>({name,sourceSeries,alignment,surfaceDiagnostics,sourceSurfaceSha256:surface?.source?.sha256,empty:surface?.empty??false,displayFilter}));
         const record={name:recipe.name,seriesId:view.seriesId,sourceSha256:lastPayload.mri.sha256,scope:view.vesselScope,view:view.states[view.seriesId],surfaces,
           ...await capture(recipe.name)};
+        if(recipe.depthSlab){
+          const captures=[];
+          const captureSlab=async(suffix,previous)=>{
+            const result=await capture(`${recipe.name}-${suffix}`);
+            assert(result.frame.serial>previous.serial,'Depth slab frame did not advance');
+            for(const key of ['position','target','up'])
+              assert(result.frame.cameraState[key].every((n,i)=>Math.abs(n-frame.cameraState[key][i])<1e-9),'Depth slab moved the camera');
+            for(const key of ['cursor','displayIdentity','sourceSignalFingerprint'])
+              assert.deepEqual(result.frame[key],frame[key],`Depth slab changed ${key}`);
+            return result;
+          };
+          let before=await submittedFrame();
+          await click('Clip');await click('Vessel slab at cursor');await js(inputScript('Slab thickness',44));await click('Close view controls');
+          await settledFrame(before.serial);
+          captures.push({millimeters:44,...await captureSlab('slab-44',before)});
+          before=await submittedFrame();
+          await click('Clip');await js(inputScript('Slab thickness',28));await click('Close view controls');
+          await settledFrame(before.serial);
+          captures.push({millimeters:28,...await captureSlab('slab-28',before)});
+          before=await submittedFrame();
+          await click('Exit vessel slab in 3D');await settledFrame(before.serial);
+          record.depthSlab={captures,restored:await captureSlab('slab-exit',before)};
+          assert.deepEqual((await nativeView()).states[view.seriesId].settings,record.view.settings,'Depth slab changed the saved view');
+        }
         if(recipe.compareVesselShading?.length){
           const startingMode=view.states[view.seriesId].settings.vesselShading??'balanced';
           const submitted=async mode=>{
