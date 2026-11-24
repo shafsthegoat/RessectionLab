@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 import os
+import json
 import tempfile
 from time import perf_counter
 import numpy as np
 from scipy import ndimage as ndi
 from skimage.morphology import skeletonize
-from .patient_anatomy import digest, affine, world
+from .patient_anatomy import digest, affine, world, file_hash
 from .surface_fairing import fair_surface, surface_kind, broad_context_surface, NATIVE_POLICY, POLICY
 
 
@@ -144,10 +145,67 @@ def _display_geometry(collection, row, result, cache_hit, started):
     return {**result, "cache_hit": cache_hit, "preparation_ms": (perf_counter() - started) * 1000}
 
 
-def mesh(collection, row, *, cancelled=lambda: False):
+def _field_values(collection, row, mask, slices, display_source):
+    source = display_source if display_source is not None else row
+    cropped = mask[slices]
+    probability = source.get("probability")
+    if probability is None or source.get("edits"):
+        return cropped.astype(np.uint8), "categorical"
+    values = collection.array(probability)[slices]
+    vascular = surface_kind(row["kind"]) == "vessel"
+    if vascular:
+        # Materialize the small native crop in storage order once. Repeated
+        # strided scans against an external-drive memmap delay cold extraction.
+        values = np.array(values, dtype=np.result_type(values.dtype, np.float32), order="C", copy=True)
+    original = collection.mask(source)[slices] if display_source is not None else cropped
+    if values.shape != cropped.shape or not np.isfinite(values).all():
+        return cropped.astype(np.uint8), "categorical"
+    if not vascular:
+        if np.array_equal(values >= .5, cropped):
+            return values, "native-probability"
+        return cropped.astype(np.uint8), "categorical"
+    if (np.any((values > .5) & ~original) or np.any((values < .5) & original)
+            or np.any(cropped & ~original)):
+        return cropped.astype(np.uint8), "categorical"
+    # Match explicit source membership for scores exactly at the isovalue.
+    # Only removed positives and excluded ties cross below the contour.
+    # Uncut interfaces retain their source field.
+    suppressed = ~cropped & (original | (values == .5))
+    if suppressed.any():
+        below = np.nextafter(values.dtype.type(.5), values.dtype.type(0))
+        values[suppressed] = np.minimum(1 - values[suppressed], below)
+    return values, "native-probability" if display_source is None else "filtered-native-probability"
+
+
+def vascular_cleanup_source(collection, row):
+    """Admit an exact, display-only score binding to an unchanged native layer."""
+    if surface_kind(row["kind"]) != "vessel" or row.get("edits"):
+        return None
+    binding = row.get("provenance", {}).get("vascular_cleanup")
+    if not isinstance(binding, dict) or binding.get("result_mask_sha256") != row["data"]["sha256"]:
+        return None
+    source = next((layer for layer in collection.document["layers"]
+                   if layer["id"] == binding.get("source_layer_id")), None)
+    if (source is None or source["id"] == row["id"] or source["kind"] != row["kind"]
+            or source["source_series"] != row["source_series"] or source["affine"] != row["affine"]
+            or source["data"]["shape"] != row["data"]["shape"]
+            or source["data"]["sha256"] != binding.get("source_mask_sha256")
+            or source.get("edits") or not source.get("probability")
+            or source["probability"]["sha256"] != binding.get("source_probability_sha256")):
+        return None
+    return source
+
+
+def mesh(collection, row, *, cancelled=lambda: False, display_source=None, conditioned=True):
     """Separate source/display mesh; same connectivity, bounded local movement."""
     started = perf_counter()
-    if row.get("publisher_surface") is not None:
+    if display_source is not None:
+        if (display_source["kind"] != row["kind"] or display_source["affine"] != row["affine"]
+                or display_source["data"]["shape"] != row["data"]["shape"]):
+            raise ValueError("Vascular display filtering requires the source lattice")
+        if display_source["data"] == row["data"] and display_source["label_value"] == row["label_value"]:
+            return mesh(collection, display_source, cancelled=cancelled, conditioned=conditioned)
+    if display_source is None and row.get("publisher_surface") is not None:
         from .anatomy_publisher_surface import publisher_surface
 
         supplied = publisher_surface(collection, row, cancelled=cancelled)
@@ -160,22 +218,34 @@ def mesh(collection, row, *, cancelled=lambda: False):
     version = NATIVE_POLICY["version"] if native else POLICY["version"]
     if broad_context_surface(display_kind):
         version = NATIVE_POLICY["broadContext"]["version"]
-    key = digest(
-        {
-            "algorithm": version,
-            "data": row["data"],
-            "probability": row.get("probability"),
-            "affine": row["affine"],
-            "label": row["label_value"],
-            "revision": row["revision"],
-            "kind": row["kind"],
+    identity = {"algorithm": version, "data": row["data"], "probability": row.get("probability"),
+                "affine": row["affine"], "label": row["label_value"],
+                "revision": row["revision"], "kind": row["kind"]}
+    if profile == "vessel" and (display_source is not None or row.get("probability")):
+        identity["field_policy"] = "native-vascular-filter-v2"
+        identity["edited"] = bool(row.get("edits"))
+    if display_source is not None:
+        identity["display_source"] = {
+            "data": display_source["data"], "probability": display_source.get("probability"),
+            "label": display_source["label_value"], "edited": bool(display_source.get("edits")),
         }
-    )
-    cache = collection.root / "meshes" / f"{key}.npz"
+    directory = collection.root / "meshes"
+    conditioned_cache = directory / f"{digest(identity)}.npz"
+    cache = conditioned_cache if conditioned else directory / f"{digest({**identity, 'source_only': True})}.npz"
     cache.parent.mkdir(exist_ok=True)
     if cache.exists():
         with np.load(cache, allow_pickle=False) as z:
             result = {k: z[k] for k in z.files}
+        return _display_geometry(collection, row, result, True, started)
+    if not conditioned and conditioned_cache.is_file():
+        # The conditioned cache records the separately retained raw contour
+        # with the same source, mask, affine and field policy. Reuse it verbatim.
+        with np.load(conditioned_cache, allow_pickle=False) as archive:
+            raw, faces = archive["source"], archive["indices"]
+            field = archive["surface_field"] if "surface_field" in archive else np.array("categorical")
+        result = {"source": raw, "positions": raw, "indices": faces, "normals": normals(raw, faces),
+                  "max_displacement_mm": np.array(0.), "policy_version": np.array("native-source-isosurface-v1"),
+                  "surface_field": field}
         return _display_geometry(collection, row, result, True, started)
     mask = collection.mask(row)
     bounds = [np.flatnonzero(mask.any(axis=tuple(i for i in range(3) if i != axis))) for axis in range(3)]
@@ -194,19 +264,11 @@ def mesh(collection, row, *, cancelled=lambda: False):
     hi = np.minimum(mask.shape, np.array([axis[-1] for axis in bounds]) + 3)
     slices = tuple(slice(a, b) for a, b in zip(lo, hi))
     cropped = mask[slices]
-    probability = "probability" in row and not row.get("edits")
-    values = (
-        collection.array(row["probability"])[slices]
-        if probability
-        else cropped.astype(np.uint8)
-    )
-    if probability and (not np.isfinite(values).all() or not np.array_equal(values >= .5, cropped)):
-        probability = False
-        values = cropped.astype(np.uint8)
+    values, field = _field_values(collection, row, mask, slices, display_source)
     values = np.pad(values, 1)
     if cancelled():
         raise InterruptedError("Mesh preparation cancelled")
-    raw, faces = _arrays(_poly(values, probability))
+    raw, faces = _arrays(_poly(values, field != "categorical"))
     triangles = raw[faces]
     areas = np.linalg.norm(
         np.cross(triangles[:, 1] - triangles[:, 0], triangles[:, 2] - triangles[:, 0]),
@@ -220,10 +282,13 @@ def mesh(collection, row, *, cancelled=lambda: False):
     # Quantize in final source coordinates before all geometry safety checks.
     offset = lo - 1
     raw = (raw + offset).astype(np.float32)
-    smoothed, diagnostics = fair_surface(
-        raw, faces, a, display_kind, mask=np.pad(cropped, 1) if profile == "vessel" else None,
-        mask_origin=offset, native=native, cancelled=cancelled,
-    )
+    if conditioned:
+        smoothed, diagnostics = fair_surface(
+            raw, faces, a, display_kind, mask=np.pad(cropped, 1) if profile == "vessel" else None,
+            mask_origin=offset, native=native, cancelled=cancelled,
+        )
+    else:
+        smoothed, diagnostics = raw, {"restoredComponents": 0, "backedOffVertices": 0, "maxDisplacementMm": 0.}
     rejected = diagnostics["restoredComponents"] > 0
     result = {
         "source": raw,
@@ -233,10 +298,11 @@ def mesh(collection, row, *, cancelled=lambda: False):
         "smoothing_rejected": np.array(rejected),
         "restored_components": np.array(diagnostics["restoredComponents"]),
         "backed_off_vertices": np.array(diagnostics["backedOffVertices"]),
-        "policy_version": np.array(version),
+        "policy_version": np.array(version if conditioned else "native-source-isosurface-v1"),
         "fallback_reason": np.array(diagnostics.get("fallbackReason", "")),
         "source_degenerate_faces_removed": np.array(degenerate),
         "max_displacement_mm": np.array(diagnostics["maxDisplacementMm"]),
+        "surface_field": np.array(field),
     }
     if "maxComponentVolumeChangeFraction" in diagnostics:
         result["max_component_volume_change_fraction"] = np.array(diagnostics["maxComponentVolumeChangeFraction"])
@@ -381,7 +447,101 @@ def vessel_graph(mask, native_affine):
     }
 
 
-def inspect_vessel_geometry(collection, layer_id, point=None):
+def source_branch_cache_path(collection, source):
+    return collection.path(f'graphs/{source["data"]["sha256"]}.native-tof-source-branches-v1.json')
+
+
+def read_source_branch_graph(collection, source, path):
+    """Validate prepared branch evidence against the original acquisition and mask."""
+    from .vascular_source_branches import _mask_digest
+    if path.stat().st_size > 64*1024**2:
+        raise ValueError("Source branch attachment exceeds the inspection budget")
+    graph = json.loads(path.read_text())
+    scan = collection.series(source["source_series"])
+    if (graph.get("algorithm") != "native-tof-source-branches-v1"
+            or graph.get("source_scan_sha256") != scan["original"]["sha256"]
+            or graph.get("source_shape") != source["data"]["shape"]
+            or not np.array_equal(graph.get("source_affine_ras_mm"), source["affine"])
+            or graph.get("source_prediction_sha256") != _mask_digest(collection.mask(source))):
+        raise ValueError("Source branch attachment belongs to different anatomy")
+    return graph
+
+
+def _source_branch_query(collection, row, point, displayed_affine):
+    """Reuse the native branch extraction and query paths admitted by this layer."""
+    from scipy.spatial import cKDTree
+
+    source = vascular_cleanup_source(collection, row) or row
+    path = source_branch_cache_path(collection, source)
+    if not path.is_file():
+        from .data_root import atomic_json
+        from .vascular_source_branches import build_source_branches
+
+        source_scan = collection.series(source['source_series'])
+        graph = build_source_branches(collection.mask(source), source['affine'],
+                                      source_scan_sha256=source_scan['original']['sha256'])
+        path.parent.mkdir(exist_ok=True)
+        atomic_json(path, graph)
+    stat = path.stat()
+    cache_key = (row["data"]["sha256"], str(path), stat.st_mtime_ns, displayed_affine.tobytes())
+    cache = getattr(collection, "_attached_vessel_branch_cache", None)
+    if not cache or cache[0] != cache_key:
+        attachment_sha = file_hash(path)
+        graph = read_source_branch_graph(collection, source, path)
+        mask = collection.mask(row).ravel()
+        branches = []
+        points = []
+        cells = []
+        present = {}
+        for branch in graph["branches"]:
+            ids = np.asarray(branch["source_cell_ids"])
+            if not ids.size or ids.dtype.kind not in "ui" or ids.min() < 0 or ids.max() >= mask.size:
+                raise ValueError("Invalid source branch cell binding")
+            if not mask[ids].all():
+                continue
+            indices = np.column_stack(np.unravel_index(ids, tuple(graph["source_shape"])))
+            native_positions = world(affine(row["affine"]), indices)
+            if not np.allclose(native_positions, branch["points_ras_mm"], atol=1e-5, rtol=0):
+                raise ValueError("Source branch coordinates differ from their cells")
+            positions = world(displayed_affine, indices)
+            points.extend(positions)
+            cells.extend(ids.tolist())
+            for offset, cell in enumerate(ids.tolist()):
+                present.setdefault(cell, []).append((len(branches), offset))
+            branches.append((branch, positions))
+        tree = cKDTree(np.asarray(points).reshape(-1, 3))
+        cache = (cache_key, tree, cells, present, branches, attachment_sha)
+        collection._attached_vessel_branch_cache = cache
+    _, tree, cells, present, branch_paths, attachment_sha = cache
+    result = {"source_graph_sha256": attachment_sha, "branches": []}
+    if not cells:
+        return result
+    cursor_distance, index = tree.query(point)
+    cell = cells[index]
+    for branch_index, offset in present[cell]:
+        branch, positions = branch_paths[branch_index]
+        if "nearest" not in result:
+            radius = branch["annotation_radii_mm"][offset]
+            result["nearest"] = {"point_ras_mm": positions[offset].tolist(), "distance_mm": float(cursor_distance),
+                                 "radius_mm": radius, "source_cell_id": cell,
+                                 "radius_limited_by_image_extent": branch["radius_limited_by_image_extent"][offset],
+                                 "radius_limited_by_workspace": branch["radius_limited_by_workspace"][offset]}
+        lengths = np.linalg.norm(np.diff(positions, axis=0), axis=1)
+        midpoint = int(np.searchsorted(np.r_[0., np.cumsum(lengths)], lengths.sum()/2))
+        preview = np.linspace(0, len(positions)-1, min(len(positions), 2048), dtype=int)
+        if any(entry["branch_id"] == branch["id"] for entry in result["branches"]):
+            continue
+        result["branches"].append({"branch_id": branch["id"], "closed": branch["closed"],
+                                   "length_mm": branch["length_mm"], "source_cells": branch["source_cell_ids"],
+                                   "start_ras_mm": positions[0].tolist(), "end_ras_mm": positions[-1].tolist(),
+                                   "midpoint_ras_mm": positions[midpoint].tolist(),
+                                   "preview_ras_mm": positions[preview].tolist(),
+                                   "unsupported_diagonal_edges": branch["edge_local_face_supported"].count(False),
+                                   "connectivity": branch["topology_status"]})
+    return result
+
+
+def inspect_vessel_geometry(collection, layer_id, point=None, display_series=None):
     """Revision-keyed derived graph with source identity and unknown connectivity."""
     from scipy.spatial import cKDTree
     import skimage
@@ -392,7 +552,26 @@ def inspect_vessel_geometry(collection, layer_id, point=None):
     from .anatomy_evidence import is_siam_context
     if is_siam_context(row):
         raise ValueError("SIAM vascular tissue supplies image context only")
-    a = collection.patient_affine(row)
+    if display_series is None:
+        a = collection.patient_affine(row)
+        coordinate_frame = "patient"
+    else:
+        if display_series != row["source_series"]:
+            raise ValueError("Inspect vascular branches on the layer's source acquisition")
+        from .anatomy_display import display_affine
+        try:
+            a, estimated = display_affine(collection, row, preview=True)
+            coordinate_frame = "alignment-preview" if estimated else "patient"
+        except ValueError:
+            collection.require_native_geometry(row)
+            a = affine(row["affine"])
+            coordinate_frame = "independent-source"
+    if point is not None and (np.asarray(point).shape != (3,) or not np.isfinite(point).all()):
+        raise ValueError("Invalid physical query")
+    if point is not None and display_series is not None:
+        branch_query = _source_branch_query(collection, row, point, a)
+        return {"snapshot_id": collection.identity(), "layer_id": layer_id,
+                "coordinate_frame": coordinate_frame, **branch_query}
     key = digest(
         {
             "algorithm": "source-owned-skeleton-26-v4",
@@ -418,6 +597,7 @@ def inspect_vessel_geometry(collection, layer_id, point=None):
         "snapshot_id": collection.identity(),
         "graph_id": key,
         "layer_id": layer_id,
+        "coordinate_frame": coordinate_frame,
         "nodes": len(points),
         "edges": len(edges),
         "components": int(graph["components"]),
@@ -447,8 +627,6 @@ def inspect_vessel_geometry(collection, layer_id, point=None):
         "meaning": "Source-owned derived skeleton; annotation distance is not lumen radius. Diagonal-only contacts, lost components and unassessed branches remain unknown; no flow inference.",
     }
     if point is not None and len(points):
-        if np.asarray(point).shape != (3,) or not np.isfinite(point).all():
-            raise ValueError("Invalid physical query")
         distance, index = cKDTree(points).query(point)
         result["nearest"] = {
             "point_ras_mm": points[index].tolist(),

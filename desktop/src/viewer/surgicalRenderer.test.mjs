@@ -612,6 +612,37 @@ test('a local accepted movement preserves registered microscope contrast on the 
   r.workspaceSettings={presentation:'segmentation'};assert.equal(r.showCorticalSignal(mesh),false);
   mesh.userData.nativeCortex=true;assert.equal(r.showCorticalSignal(mesh),true);
 });
+test('the submitted conditioned vessel surface keeps accepted displacement after support removal',()=>{
+  const r=renderer(),input=interaction(),shape=[3,3,3],name='TOF candidate vessel';
+  const owner=new Uint16Array(27),mask=new Uint8Array(27),site=13,support=14;
+  owner[site]=2;owner[support]=1;mask[site]=1;
+  const source=new THREE.BufferGeometry();
+  source.setAttribute('position',new THREE.Float32BufferAttribute([1,1,1.5,.8,1,1.5,1,.8,1.5],3));
+  const smooth=source.clone(),mesh=new THREE.Mesh(smooth);
+  r.volume={shape,mri:new Float32Array(27),compartments:[{name,kind:'vessel',mask}]};
+  r.surfaces=new Map([[name,mesh]]);r.surfaceGeometry=new Map([[name,{source,smooth}]]);
+  registerModeledAnatomy({shape,mri:r.volume.mri},r.volume,'mapped',[],{owner,protectedRegions:[2]});
+  const schema='resectionlab.generated-glioma-materials.v1',view={...input.view,stateId:'supported',
+    scene:{...input.view.scene,source:{procedurePolicySourceClass:'acquired-or-unknown'},
+      regions:[{id:1,name:'Pad',material:'soft_tissue'},{id:2,name,material:'vessel'}]},
+    physics:{brain:{model:schema,assignment:{schema,kind:'assigned-generated-research',
+      vesselMotionModel:'retained-source-segments-v1',vesselAttachments:[[site,support]]}}},
+    moved:[[site,site],[support,support]],deformation:{[site]:[0,0,.16],[support]:[0,0,.16]}};
+  r.setSurgical({...input,view});
+  assert(Math.abs(mesh.geometry.getAttribute('position').getZ(0)-1.66)<1e-6);
+  const report=r.displayedVesselMotion(view);
+  assert.equal(report[0].layer,name);
+  assert.equal(report[0].movedVertices,3);
+  assert(Math.abs(report[0].maxSubvoxelVertexOffsetMm-.16)<1e-6);
+  const after={...view,stateId:'support-removed',removed:[support],moved:[[site,site]],deformation:{[site]:[0,0,.16]}};
+  r.setSurgical({...input,view:after});
+  assert.deepEqual(r.displayedVesselMotion(after),report);
+  assert.equal(source.getAttribute('position').getZ(0),1.5);
+  const stationary={...after,stateId:'resting',moved:[],deformation:{}};
+  r.setSurgical({...input,view:stationary});
+  assert.deepEqual(r.displayedVesselMotion(stationary),[]);
+  assert.equal(mesh.geometry.getAttribute('position').getZ(0),1.5);
+});
 test('Q1 displacement picks the accepted physical face, preserves an unmodeled island in the same layer and restores on exit',()=>{
   const r=renderer(),input=interaction(),shape=[5,5,5],mask=new Uint8Array(125);
   mask[31]=1;mask[93]=1;

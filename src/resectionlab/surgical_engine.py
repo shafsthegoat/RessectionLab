@@ -681,11 +681,16 @@ class SurgicalEngine:
 
     def touched(self, a, b, radius):
         cells = self.cells(a, b, radius)
-        return self.occupancy().material_ids(cells)
+        contacts = self.occupancy().material_ids(cells)
+        if self.scene.properties.get('gliomaMaterialsV1', {}).get('vesselMotionModel'):
+            from .surgical_glioma_materials import continuous_vessel_contacts
+            return continuous_vessel_contacts(self, a, b, radius, contacts)
+        return contacts
 
     def touched_many(self, queries):
         from .surgical_drilling_v2 import _stock_contact_queries, _stock_contact_owner
-        if (not _stock_contact_queries(self) or self._occupancy_cache is None or
+        if (self.scene.properties.get('gliomaMaterialsV1', {}).get('vesselMotionModel') or
+                not _stock_contact_queries(self) or self._occupancy_cache is None or
                 not _stock_contact_owner(self._occupancy_cache[1], _DRILL_CONTACT_QUERY_ORIGINALS[3][2])):
             return tuple(self.touched(*query) for query in queries)
         covers = self._cell_cover_cache.query_many(self.grid, queries, kernel=capsule_voxel_indices,
@@ -1135,8 +1140,19 @@ class SurgicalEngine:
         if self._operative:
             from .surgical_operative_exposure import moved
             mapping.update((cell, target) for cell, target in moved(self) if cell in self._protected_ids)
-        if not any(cell != destination for cell, destination in mapping.items()): return None
-        return self.scene.points([mapping.get(int(cell), int(cell)) for cell in self.protection.cells])
+        motion = {}
+        if self.scene.properties.get('gliomaMaterialsV1', {}).get('vesselMotionModel'):
+            from .surgical_glioma_materials import vessel_displacements
+            motion = {cell: delta for cell, delta in vessel_displacements(self).items() if cell in self._protected_ids}
+        if not motion:
+            if not any(cell != destination for cell, destination in mapping.items()): return None
+            return self.scene.points([mapping.get(int(cell), int(cell)) for cell in self.protection.cells])
+        points = self.scene.points([int(cell) if cell in motion else mapping.get(int(cell), int(cell))
+                                    for cell in self.protection.cells])
+        for index, cell in enumerate(self.protection.cells):
+            if cell in motion:
+                points[index] += motion[cell]
+        return points
 
     def _sweep_parameters(self, key, slot):
         params = self.parameters(slot)

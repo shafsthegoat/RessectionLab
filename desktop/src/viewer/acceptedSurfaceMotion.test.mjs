@@ -87,6 +87,28 @@ test('generated vessel motion follows only its declared, intact source attachmen
   }
 });
 
+test('the retained vessel profile renders the same accepted source position after its attachment is lost',()=>{
+  const site=id(4,4,4),support=id(4,4,3),to=id(5,4,4),unmapped=id(8,4,4);
+  const owner=storage(Uint16Array),mask=storage(Uint8Array);
+  owner[site]=owner[unmapped]=2;owner[support]=1;mask[to]=mask[unmapped]=1;
+  const delta=new THREE.Vector3(.76,0,0).applyMatrix3(linear).toArray();
+  const native=view({[site]:delta,[support]:delta,[unmapped]:delta},[[site,to]]);
+  const schema='resectionlab.generated-glioma-materials.v1';
+  native.scene.source={procedurePolicySourceClass:'generated-engineering'};
+  native.physics={brain:{model:schema,assignment:{schema,kind:'assigned-generated-research',
+    vesselAttachments:[[site,support]],vesselMotionModel:'retained-source-segments-v1'}}};
+  const geo=geometry([[5,4,4],[8,4,4]]),expected=new THREE.Vector3(4.76,4,4);
+  for(const sample of [native,{...native,deformation:{[site]:delta,[unmapped]:delta},removed:[support]},{
+    ...native,deformation:{[site]:delta},transectedEdges:[[site,support]]
+  }]){
+    const field=new AcceptedSurfaceMotion(sample,owner);
+    applyAcceptedSurfaceMotion(geo,field,mask,true,true,2);
+    close(vec(geo.getAttribute('position'),0),expected);
+    close(vec(geo.getAttribute('position'),1),new THREE.Vector3(8,4,4));
+    close(vec(geo.getAttribute('position'),0).add(vec(geo.getAttribute('corticalRestOffset'),0)),new THREE.Vector3(4,4,4));
+  }
+});
+
 test('conditioned surface and lighting follow the local accepted gradient and raw/generated sources stay untouched',()=>{
   const pos=[4.25,4.33,4],cell=id(4,4,4),owner=storage(Uint16Array),mask=storage(Uint8Array);
   owner[cell]=mask[cell]=1;

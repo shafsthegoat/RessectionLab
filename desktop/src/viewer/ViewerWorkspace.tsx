@@ -9,7 +9,7 @@ import {planningSliceSegments,planningSphereSliceRadius,planningSliceMemberships
 import {surgicalEffectMarkers,clipSurgicalMarkersToSlab,surgicalMarkerRadiusPx} from './surgicalGeometry';
 import {modeledSourceIdentity,modeledAnatomy} from './modeledAnatomy';
 import {tractColor,tractPreview,TractSliceIndex} from './tractDisplay';
-import {approachCamera} from './approachView';
+import {approachCamera,approachClipBox} from './approachView';
 import type {SurgicalInteraction} from '../surgical-types';
 import {SliceScrollAccumulator} from './interactionBudget';
 import {patientSliceCursor,patientSliceNavigation} from './sliceNavigation';
@@ -154,6 +154,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   const lastStructureFocusRequest=useRef(props.structureFocusRequest??0);
   const previousApproachCamera=useRef<import('./workspaceSettings').ViewerCameraState|null>(null);
   const [approachViewMode,setApproachViewMode]=useState<'along'|'oblique'|null>(null);
+  const [cropApproach,setCropApproach]=useState(false);
   const [showSliceTracts,setShowSliceTracts]=useState(true);
   const tractClipId=useId();
   const activePlane=settings.activePlane??'axial',contrast=settings.contrast??1,showPlane=settings.showPlane??false;
@@ -276,9 +277,10 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     changeSettings({...latestSettings.current,camera});setApproachViewMode(mode);
     onCursorChange(selectedApproach.target_mm.map((v,i)=>v*(caseData.frame.startsWith('LPS')&&i<2?-1:1)) as Point3);
   };
-  const restoreApproachView=()=>{if(previousApproachCamera.current)changeSettings({...latestSettings.current,camera:previousApproachCamera.current});previousApproachCamera.current=null;setApproachViewMode(null);};
-  const approachViewSignature=selectedApproach?JSON.stringify([selectedApproach.route_id,selectedApproach.entry_mm,selectedApproach.target_mm,selectedApproach.tool]):null;
-  useEffect(()=>{previousApproachCamera.current=null;setApproachViewMode(null);},[rendererIdentity]);
+  const restoreApproachView=()=>{if(previousApproachCamera.current)changeSettings({...latestSettings.current,camera:previousApproachCamera.current});previousApproachCamera.current=null;setApproachViewMode(null);setCropApproach(false);};
+  const approachViewSignature=selectedApproach?JSON.stringify([selectedApproach.route_id,selectedApproach.entry_mm,selectedApproach.target_mm,selectedApproach.tool,selectedApproach.window?.radius_mm]):null;
+  const corridorCrop=useMemo(()=>cropApproach&&selectedApproach&&caseData?approachClipBox(selectedApproach,caseData.frame):undefined,[cropApproach,approachViewSignature,caseData?.frame]);
+  useEffect(()=>{previousApproachCamera.current=null;setApproachViewMode(null);setCropApproach(false);},[rendererIdentity]);
   useEffect(()=>{
     if(!approachViewMode||!selectedApproach||!caseData)return;
     const rect=anatomy.current?.getBoundingClientRect();
@@ -364,9 +366,10 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     }
   },[caseData,ready,graphicsGeneration]);
 
-  useEffect(()=>{engine.current?.setWorkspaceSettings(settings);},[ready,graphicsGeneration,caseData,settings]);
+  useEffect(()=>{engine.current?.setWorkspaceSettings(corridorCrop?{...settings,clipBox:corridorCrop}:settings);},[ready,graphicsGeneration,caseData,settings,corridorCrop]);
   useEffect(()=>{engine.current?.restoreCamera(settings.camera);},[ready,graphicsGeneration,caseData,settings.camera]);
   useEffect(()=>{engine.current?.setSelectedStructure(props.selectedStructure??null);},[ready,graphicsGeneration,caseData,props.selectedStructure]);
+  useEffect(()=>{engine.current?.setVesselTrace(props.vesselTrace??null);},[ready,graphicsGeneration,caseData,props.vesselTrace]);
   useEffect(()=>{
     const request=props.structureFocusRequest??0;
     if(!engine.current||request===lastStructureFocusRequest.current)return;
@@ -809,6 +812,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
               <p>Selected corridor</p>
               <div className="viewer-field-row"><button aria-label="Look along selected corridor" aria-pressed={approachViewMode==='along'} onClick={()=>setApproachView('along')}>Along corridor</button>
               <button aria-label="Oblique view of selected corridor" aria-pressed={approachViewMode==='oblique'} onClick={()=>setApproachView('oblique')}>Corridor oblique</button></div>
+              <button aria-pressed={!!corridorCrop} onClick={()=>setCropApproach(value=>!value)}>Crop around corridor</button>
               {approachViewMode&&<button onClick={restoreApproachView}>Restore view</button>}
             </div>}
           </div>

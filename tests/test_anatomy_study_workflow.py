@@ -90,6 +90,96 @@ def test_brain_filter_removes_extracranial_display_only(patient):
     assert label(c.mask(result), structure=np.ones((3,3,3)))[1] == 2
 
 
+def test_vessel_display_filter_preserves_the_untouched_native_surface(patient, tmp_path):
+    from resectionlab.anatomy_geometry import mesh, vascular_cleanup_source
+
+    c = patient
+    brain, vessel = c.layer('brain'), c.layer('vessels')
+    shape = tuple(vessel['data']['shape'])
+    probability = np.full(shape, .28, dtype=np.float32)
+    probability[5:8, 5:8, 4:11] = .83
+    probability[14:17, 13:16, 12:17] = .61
+    vessel.update(data=c.put_array((probability >= .5).astype(np.uint8)), label_value=1,
+                  probability=c.put_array(probability), edits=[])
+    support = np.zeros(shape, np.uint8)
+    support[2:11, 2:11, 2:14] = 1
+    brain.update(data=c.put_array(support), label_value=1)
+    filtered, report = brain_vessel_display(c, vessel)
+    assert report['hiddenVoxels'] == 45
+    full = mesh(c, vessel)
+    result = mesh(c, filtered, display_source=vessel)
+    assert str(full['surface_field']) == 'native-probability'
+    assert str(result['surface_field']) == 'filtered-native-probability'
+    retained_vertices = full['source'][:, 0] < 11
+    assert np.array_equal(result['source'], full['source'][retained_vertices])
+    assert np.allclose(result['positions'], full['positions'][retained_vertices], atol=1e-5)
+    assert not np.array_equal(result['source'], mesh(c, filtered)['source'])
+
+    companion = deepcopy(filtered)
+    companion.update(id='cleanup', edits=[], provenance={'vascular_cleanup': {
+        'source_layer_id': vessel['id'], 'source_mask_sha256': vessel['data']['sha256'],
+        'source_probability_sha256': vessel['probability']['sha256'],
+        'result_mask_sha256': filtered['data']['sha256'],
+    }})
+    assert vascular_cleanup_source(c, companion) is vessel
+    c.document['layers'].append(companion)
+    c.save('test native vessel display')
+    bridge = BridgeSession(tmp_path/'vascular-display-transfer')
+    opened = bridge.execute('anatomyOpen', {'path': str(c.root/'patient-anatomy.json')}, _Request('open'), lambda *a: None)
+    record = bridge.execute('anatomyView', {'collectionId': opened['collectionId'], 'snapshotId': c.identity(),
+                            'seriesId': vessel['source_series'], 'layers': ['cleanup']}, _Request('view'), lambda *a: None)['compartments'][0]
+    assert record['surfaceDiagnostics']['surfaceField'] == 'filtered-native-probability'
+    assert record['displayFilter'] is None
+    raw_record = bridge.execute('anatomyView', {'collectionId': opened['collectionId'], 'snapshotId': c.identity(),
+                                'seriesId': vessel['source_series'], 'layers': ['cleanup'], 'vesselSurfaceMode': 'source'}, _Request('raw-view'), lambda *a: None)['compartments'][0]
+    assert raw_record['surfaceDiagnostics']['sourceSurfaceOnly']
+    assert raw_record['surfaceDiagnostics']['maxDisplacementMm'] == 0
+    assert raw_record['surface']['positions'] == raw_record['surface']['source']
+    assert raw_record['surface']['normals'] == raw_record['surface']['sourceNormals']
+    assert raw_record['surface']['source']['sha256'] == record['surface']['source']['sha256']
+    assert np.array_equal(c.array(vessel['probability']), probability)
+    companion['provenance']['vascular_cleanup']['source_probability_sha256'] = '0'*64
+    assert vascular_cleanup_source(c, companion) is None
+
+
+def test_prepared_branch_query_preserves_source_ids_and_excludes_hidden_paths(patient):
+    from resectionlab.anatomy_geometry import inspect_vessel_geometry, source_branch_cache_path
+    from resectionlab.vascular_source_branches import build_source_branches
+
+    c = patient
+    source = c.layer('vessels')
+    mask = np.zeros(source['data']['shape'], bool)
+    mask[3:9, 4, 5] = True
+    mask[14:20, 16, 17] = True
+    source.update(data=c.put_array(mask.astype(np.uint8)), label_value=1,
+                  probability=c.put_array(mask.astype(np.float32)), edits=[])
+    candidate_mask = mask.copy()
+    candidate_mask[12:] = False
+    candidate = deepcopy(source)
+    candidate.pop('probability')
+    candidate.update(id='cleanup', data=c.put_array(candidate_mask.astype(np.uint8)))
+    candidate['provenance']['vascular_cleanup'] = {
+        'source_layer_id': source['id'], 'source_mask_sha256': source['data']['sha256'],
+        'source_probability_sha256': source['probability']['sha256'],
+        'result_mask_sha256': candidate['data']['sha256'],
+    }
+    c.document['layers'].append(candidate)
+    scan = c.series(source['source_series'])
+    graph = build_source_branches(mask, source['affine'], source_scan_sha256=scan['original']['sha256'])
+    path = source_branch_cache_path(c, source)
+    path.parent.mkdir()
+    path.write_text(json.dumps(graph))
+    first, last = [world(np.asarray(source['affine']), voxel) for voxel in ([6, 4, 5], [17, 16, 17])]
+    raw_first = inspect_vessel_geometry(c, source['id'], first, scan['id'])
+    raw_last = inspect_vessel_geometry(c, source['id'], last, scan['id'])
+    cleaned = inspect_vessel_geometry(c, candidate['id'], last, scan['id'])
+    assert cleaned['source_graph_sha256'] == raw_first['source_graph_sha256']
+    assert cleaned['branches'][0]['branch_id'] == raw_first['branches'][0]['branch_id']
+    assert cleaned['branches'][0]['branch_id'] != raw_last['branches'][0]['branch_id']
+    assert cleaned['nearest']['distance_mm'] > raw_last['nearest']['distance_mm']
+    assert candidate_mask.ravel()[cleaned['branches'][0]['source_cells']].all()
+
+
 def test_pre_and_postoperative_studies_are_separate(patient, tmp_path):
     before = patient.identity()
     with pytest.raises(ValueError, match='separate patient study files'):

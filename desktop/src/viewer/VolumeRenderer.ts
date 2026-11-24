@@ -60,6 +60,7 @@ import type {
   ViewerRoute,
   ViewerStructuralProposal,
   ViewerVolume,
+  ViewerVesselTrace,
   ViewerInspectionTool,
 } from "./contracts";
 import { InstrumentDisplayState } from "./inspectionTool";
@@ -73,7 +74,7 @@ import { validateDiagnosticLayer } from "./diagnosticLayer";
 import type { CheckedDiagnosticLayer, LoadedDiagnosticLayer } from "./diagnosticLayer";
 import { physicalBounds, placeInSourceFrame } from "./sceneGeometry";
 import { surfaceCameraDistance } from './surfaceCameraFit';
-import {AcceptedSurfaceMotion,applyAcceptedSurfaceMotion} from './acceptedSurfaceMotion';
+import {AcceptedSurfaceMotion,acceptedVesselSurfaceMotion,applyAcceptedSurfaceMotion} from './acceptedSurfaceMotion';
 import {installCorticalSignal,type CorticalSignal} from './cranialDepth';
 import { ScanVolumeRenderer } from './ScanVolumeRenderer';
 import type { VolumeRenderingSettings } from './volumeTransfer';
@@ -240,6 +241,7 @@ export class VolumeRenderer {
   private readonly surfaces = new Map<string, THREE.Mesh>();
   private readonly tractObjects = new Map<string, THREE.LineSegments<THREE.BufferGeometry,THREE.LineBasicMaterial>>();
   private selectedStructure:string|null=null;
+  private vesselTrace?:THREE.Line<THREE.BufferGeometry,THREE.LineBasicMaterial>;
   private readonly surfaceGeometry = new Map<string, { source: THREE.BufferGeometry; smooth: THREE.BufferGeometry; smoothingPrepared?:boolean }>();
   private surfaceSmoothing = true;
   private patientBounds?:Bounds3;
@@ -699,7 +701,7 @@ export class VolumeRenderer {
     );
     geometry.setAttribute("normal", new THREE.BufferAttribute(normals, 3));
     const { smoothPositions, smoothNormals } = buffers;
-    const smoothingPrepared=buffers.smoothingPrepared!==false;
+    const smoothingPrepared=buffers.smoothingPrepared!==false&&!layer.surfaceDiagnostics?.sourceSurfaceOnly;
     if (smoothingPrepared&&(!smoothPositions || !smoothNormals || (!buffers.smoothIndices && smoothPositions.length !== positions.length) || smoothNormals.length !== smoothPositions.length)) {
       geometry.dispose();
       onError("Display surface buffers do not match the source triangles.");
@@ -1047,6 +1049,7 @@ export class VolumeRenderer {
         this.volume.compartments.forEach((layer,i) => { shader.uniforms.uLayerEnabled.value[i] = visible[layer.name] !== false ? 1 : 0; });
       });
       this.applyTractAppearance();
+      this.applyVesselTraceAppearance();
     }
     if (cursorChanged) {
       this.cursor = [...cursor];
@@ -1196,6 +1199,7 @@ export class VolumeRenderer {
     this.scanVolume?.configure(settings.volumeRendering, this.volumeModality, this.clipPlane,settings.presentation!=='scan');
     this.scanVolume.labels(this.labelTexture,this.visible,settings,this.extraClipPlanes);
     this.applyTractAppearance();
+    this.applyVesselTraceAppearance();
     this.applyStructureHighlight();
     this.requestRender();
   }
@@ -1212,6 +1216,31 @@ export class VolumeRenderer {
       lines.material.needsUpdate=true;
       lines.renderOrder=this.selectedStructure===tract.id?3:0;
     });
+  }
+
+  private applyVesselTraceAppearance():void {
+    const line=this.vesselTrace;
+    if(!line)return;
+    line.visible=this.visible[line.name]!==false;
+    const planes=[...this.extraClipPlanes,...(this.clipPlane?[this.clipPlane]:[])];
+    if(line.material.clippingPlanes?.length!==planes.length)line.material.needsUpdate=true;
+    line.material.clippingPlanes=planes;
+  }
+
+  setVesselTrace(trace:ViewerVesselTrace|null):void {
+    if(this.vesselTrace){
+      this.vesselTrace.removeFromParent();disposeObject(this.vesselTrace);this.vesselTrace=undefined;
+    }
+    if(trace&&trace.points.length>=2&&trace.points.length<=2048&&
+        this.volume.compartments.some(layer=>layer.name===trace.layerId)&&
+        trace.points.every(p=>p.length===3&&p.every(Number.isFinite))){
+      const geometry=new THREE.BufferGeometry().setFromPoints(trace.points.map(p=>new THREE.Vector3(...p)));
+      const material=new THREE.LineBasicMaterial({color:'#83f8ff',depthTest:false,depthWrite:false,toneMapped:false});
+      this.vesselTrace=new THREE.Line(geometry,material);
+      this.vesselTrace.name=trace.layerId;this.vesselTrace.renderOrder=6;
+      this.scene.add(this.vesselTrace);this.applyVesselTraceAppearance();
+    }
+    this.requestRender();
   }
 
   private applyStructureHighlight():void {
@@ -1474,6 +1503,13 @@ export class VolumeRenderer {
       }
       if(signal?.transport)signal.transport.value=mesh!.geometry.hasAttribute('corticalRestOffset');
     }
+  }
+  private displayedVesselMotion(view:SurgicalView|null){
+    if(view?.physics?.brain?.assignment?.vesselMotionModel!=='retained-source-segments-v1')return null;
+    return [...this.surfaces].flatMap(([name,mesh])=>{
+      const motion=mesh.visible?acceptedVesselSurfaceMotion(mesh.geometry):undefined;
+      return motion?[{layer:name,...motion}]:[];
+    });
   }
   private fieldOptics:ReturnType<typeof retainedFieldOptics>=null;
   private surgicalWetting?:SurgicalWetting;
@@ -2541,6 +2577,7 @@ export class VolumeRenderer {
         glyphInstances:this.surgicalFlow?.children.reduce((sum,object)=>sum+(object instanceof THREE.InstancedMesh&&object.name!=='flow:ledger-droplets'?object.count:0),0)??0,
         dropletInstances:(this.surgicalFlow?.getObjectByName('flow:ledger-droplets') as THREE.InstancedMesh|undefined)?.count??0}:null,
       fieldOptics:this.fieldOptics?.group.visible?this.fieldOptics.group.userData.fieldSummary:null,
+      displacedVesselSurfaces:this.displayedVesselMotion(renderedView),
       picking:this.picking?.stats()??null}}));
     if(surgicalAnimationActive)this.needsFrame=true;
     const gl=this.renderer.getContext() as WebGL2RenderingContext;

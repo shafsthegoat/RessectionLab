@@ -144,17 +144,21 @@ def test_contact_costs_and_remaining_material_through_public_cusa_cold_replay():
     assert copy.state_id == engine.state_id
 
 
-def vascular_patch():
+def vascular_patch(*, vessel_motion_model=None):
     shape = (9, 9, 9)
     labels = np.zeros(shape, np.uint16)
     artery = [(3, 4, 4), (4, 4, 4)]
     vein = [(3, 6, 4), (4, 6, 4)]
     tethers = {(3, 4, 4): (3, 4, 5), (4, 4, 4): (4, 4, 5)}
+    if vessel_motion_model:
+        artery += [(5, 4, 4), (6, 4, 4)]
+        tethers[(6, 4, 4)] = (6, 4, 5)
     for point in artery + vein:
         labels[point] = 2
     for point in tethers.values():
         labels[point] = 1
-    p = materials.generated_vascular_properties(shape, artery, vein, tethers, 'generated-traction-coupon')
+    p = materials.generated_vascular_properties(shape, artery, vein, tethers, 'generated-traction-coupon',
+                                               vessel_motion_model=vessel_motion_model)
     return SurgicalEngine(
         SurgicalScene(
             labels,
@@ -164,6 +168,58 @@ def vascular_patch():
             {'tissuePhysicsV2': default_profile(), **p},
         )
     )
+
+
+@pytest.mark.parametrize('support_loss', ['removed', 'transectedEdges'])
+def test_surviving_bond_retains_subvoxel_contact_after_support_loss(support_loss):
+    engine = vascular_patch(vessel_motion_model=materials.RETAINED_VESSEL_SEGMENTS)
+    vessel, support = engine.scene.properties[materials.PROPERTY]['vesselAttachments'][-1]
+    engine.state['deformation'][str(support)] = [0.15, 0.0, 0.0]
+    materials.move_vessels(engine)
+    first = engine.view()
+    assert first['deformation'][str(vessel)] == [0.15, 0.0, 0.0]
+    assert [vessel, vessel] in first['moved']
+    hit = [6.6, 4.0, 4.0]
+    miss = [5.6, 4.0, 4.0]
+    assert vessel in engine.touched(hit, hit, 0.0)
+    assert vessel not in engine.touched(miss, miss, 0.0)
+    engine.state[support_loss] = [support] if support_loss == 'removed' else [sorted([vessel, support])]
+    tissue.tick(engine, 0.2)
+    assert engine.state['deformation'] == {str(vessel): [0.15, 0.0, 0.0]}
+    assert engine.touched_many(((hit, hit, 0.0), (miss, miss, 0.0))) == ([vessel], [])
+    graph.contact(engine, engine.touched(hit, hit, 0.), 0.1, 0.02)
+    graph.refresh_compression(engine)
+    artery = graph.consequence_evidence(engine)['segments']['artery']
+    assert artery['loadedFace'] == artery['sourceCells'][-2:]
+    assert artery['loadedFace'] != artery['sourceFace']
+    assert artery['axialStrain'] == pytest.approx(0.15)
+    assert artery['tractionN'] == pytest.approx(0.009)
+    assert artery['stretchResistanceRatio'] == pytest.approx((2 + 1.15**3) / 3)
+    assert artery['contactedSourceCells'] == [vessel]
+    assert artery['continuity'] == 'intact'
+    engine.state['removed'] = sorted(set(engine.state['removed']) | {vessel})
+    tissue.tick(engine, 0.2)
+    assert not engine.state['deformation']
+    assert not engine.touched(hit, hit, 0.0)
+
+
+def test_distal_stretch_opens_its_own_oriented_wound_face():
+    engine = vascular_patch(vessel_motion_model=materials.RETAINED_VESSEL_SEGMENTS)
+    _, support = engine.scene.properties[materials.PROPERTY]['vesselAttachments'][-1]
+    engine.state['deformation'][str(support)] = [0.23, 0.0, 0.0]
+    materials.move_vessels(engine)
+    graph.refresh_compression(engine)
+    state = engine.state[graph.PROPERTY]
+    branch = engine.scene.properties[graph.PROPERTY]['edges'][0]
+    failed = branch['sourceCells'][-2:]
+    assert state['edges']['artery']['cutFace'] == failed != branch['sourceFace']
+    assert engine.state['transectedEdges'] == [failed]
+    assert [state['ports'][f'vascular:artery:{i}']['cell'] for i in range(2)] == failed
+    assert state['edges']['vein']['cutFace'] is None
+    graph.tick(engine, 0.35)
+    tick_fields(engine, 0.35)
+    assert graph.metrics(engine)['generatedMm3'] > 0
+    assert abs(graph.metrics(engine)['conservationResidualMm3']) < 1e-9
 
 
 def test_tether_geometry_traction_pressure_wound_and_source_specific_hemostasis():

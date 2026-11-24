@@ -48,6 +48,7 @@ let currentCaseHash;
 let currentCaseName = 'research-case';
 const secondaryDisplayOnly=process.argv.includes('--secondary-display');
 const automationHidden=process.argv.includes('--automation-hidden');
+const nativeManifest=filename=>/^(?:patient-anatomy\.json|vascular-review(?:\.[0-9a-f]{12})?\.anatomy\.json)$/.test(path.basename(filename));
 if((secondaryDisplayOnly||automationHidden)&&process.platform==='darwin')app.setActivationPolicy('accessory');
 let secondaryDisplayId;
 let secondaryDisplayUnavailable=false;
@@ -133,7 +134,7 @@ function bindOperations() {
     const filename=await fs.realpath(selected);
     if (!await rehearsalUnsaved.allowNavigation()) return null;
     const portable=filename.endsWith('.rsworkspace');
-    const native=path.basename(filename)==='patient-anatomy.json'||portable;
+    const native=nativeManifest(filename)||portable;
     const readOnlyPackage=caseLibrary.isManagedNativePath(selected)||caseLibrary.isManagedNativePath(filename);
     const result=await engine.request(native?'anatomyOpen':'loadCase',{path:filename,...(portable?{
       workingRoot:path.join(app.getPath('userData'),'patient-studies'),...(readOnlyPackage?{readOnlyPackage:true}:{})
@@ -179,11 +180,11 @@ function bindOperations() {
   const anatomyKeys = {
     anatomySaveView: ['viewState','saveArchive'],
     anatomyComponents: ['layerId'],
-    anatomyGraph: ['layerId','point'],
+    anatomyGraph: ['layerId','point','displaySeriesId'],
     anatomyReconstruct: ['seriesId','model','synthsegVersion','brainLayerId'],
     anatomyPlan: ['action','approach','approachId','parameterHash','reviewApproachId','assess','start','end','radiusMm','patchRadiusMm','entryPatch','constraints','targetLayerId','candidateBinding','sensitivityConfig'], anatomyRemoval: ['point','radiusMm','reset'],
     anatomySection: ['seriesId','center','normal','spacingMm','movingId','checkerboard','layers','original','registrationReview'],
-    anatomyView: ['seriesId','layers','original','highlightLayer','highlightComponents','reviewId','previewAlignment','vesselScope','patientModel'],
+    anatomyView: ['seriesId','layers','original','highlightLayer','highlightComponents','reviewId','previewAlignment','vesselScope','patientModel','vesselSurfaceMode'],
     anatomyEdit: ['action','layerId','author','points','radiusMm','threshold','reviewId','componentIds'],
     anatomySample: ['point','layerId','independentSeries'],
     anatomyRegister: ['action','seriesId','movingPoints','referencePoints','reviewer'],
@@ -515,7 +516,7 @@ app.on('second-instance', (_event,argv) => {
   if(argv.includes('--secondary-display')&&!secondaryDisplayOnly){log('Refused secondary-display request for an existing unrestricted window. Close the existing app and relaunch with --secondary-display.');return;}
   if(secondaryDisplayOnly&&(secondaryDisplayUnavailable||!isSecondaryDisplayConnected(screen.getAllDisplays(),screen.getPrimaryDisplay().id,secondaryDisplayId))){window?.hide();log('Secondary display unavailable; ignored second-instance request.');return;}
   const index=argv.findIndex(a=>a==='--case'||a==='--anatomy');
-  const filename=index>=0?argv[index+1]:argv.find(a=>/\.(ressectionlab|rslab)$/.test(a)||a.endsWith('patient-anatomy.json')||a.endsWith('.rsworkspace'));
+  const filename=index>=0?argv[index+1]:argv.find(a=>/\.(ressectionlab|rslab)$/.test(a)||nativeManifest(a)||a.endsWith('.rsworkspace'));
   if(filename){pendingOpenPath=path.resolve(filename);if(window&&!window.isDestroyed())window.webContents.send('research:event',{event:'menuAction',action:'openCase'});}
 
   if (window && !window.isDestroyed()) { if(secondaryDisplayOnly){window.showInactive();}else{if (window.isMinimized()) window.restore(); window.show(); window.focus();} }

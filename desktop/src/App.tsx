@@ -1622,7 +1622,7 @@ export default function App() {
         <button
           className="header-button"
           onClick={addData}
-          disabled={fileNavigationBlocked}
+          disabled={fileNavigationBlocked||native.binding?.readOnlyStudy}
         >
           <ArrowUpFromLine size={15} />
           <span>Add data</span>
@@ -1632,7 +1632,7 @@ export default function App() {
           className="header-button save-button"
           onClick={native.binding?()=>native.save():save}
           title={showEngineRecording?'Save recorded procedure and playback position':native.binding?'Save native study and plan':undefined}
-          disabled={(!payload&&!native.binding) || busy || !!native.draft || engineStopped || readonly}
+          disabled={(!payload&&!native.binding) || busy || !!native.draft || engineStopped || readonly || native.binding?.readOnlyStudy}
         >
           <ArrowDownToLine size={15} />
           <span>Save</span>
@@ -1644,8 +1644,8 @@ export default function App() {
           {id: 'cases', label: 'Cases', name: 'Cases', icon: Files},
           {id: 'data', label: 'Scans', name: 'Scans', icon: Scan},
           {id: 'anatomy', label: 'Anatomy', name: '3D workspace', icon: Layers3},
-          ...(study.binding ? [{id: 'research' as const, label: 'Plan', name: 'Plan & compare', icon: Waypoints}] : []),
-          {id: 'rehearsal', label: 'Rehearse', name: 'Rehearse', icon: Orbit},
+          ...(study.binding&&!native.binding?.readOnlyStudy ? [{id: 'research' as const, label: 'Plan', name: 'Plan & compare', icon: Waypoints}] : []),
+          ...(!native.binding?.readOnlyStudy ? [{id: 'rehearsal' as const, label: 'Rehearse', name: 'Rehearse', icon: Orbit}] : []),
         ] as const).map(item => <button key={item.id}
           className={`rail-button ${activeTab === item.id ? 'selected' : ''}`}
           aria-label={item.name} aria-current={activeTab === item.id ? 'page' : undefined}
@@ -2119,6 +2119,7 @@ export default function App() {
               onCursorChange={native.binding ? native.setCursor : imaging.selected ? imaging.setCursor : setCursor}
               routes={native.binding?(native.patientFrameReady?nativeRoutes:[]):display.primaryOverlaysPermitted?viewerRoutes:[]}
               selectedStructure={native.binding?native.selectedStructure:null}
+              vesselTrace={native.binding&&workbenchTab==='anatomy'?native.vesselTrace:null}
               onPickStructure={native.binding?native.setSelectedStructure:undefined}
               structureFocusRequest={native.structureFocusRequest}
               structureFocusPoint={native.structureFocusPoint}

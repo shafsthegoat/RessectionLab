@@ -236,15 +236,26 @@ def tick(engine, dt):
     ids = [c for c in model['active'] if c not in removed and c not in rigid]
     model['active'] = ids
     for h in engine.state['holds'].values(): h['cells'] = [c for c in h['cells'] if c not in removed]
-    for field in (engine.state['deformation'], model['velocities']):
-        for c in list(field):
-            if int(c) not in ids: field.pop(c)
     material_profile = engine.scene.properties.get('gliomaMaterialsV1')
+    retained = set(ids)
+    vessel_displacements = {}
     if material_profile:
-        retained_ids = set(ids)
+        from .surgical_glioma_materials import move_vessels, retained_vessel_segments
+        if retained_vessel_segments(engine):
+            deformation = engine.state['deformation']
+            vessel_displacements = {str(vessel): deformation[str(vessel)]
+                                    for vessel, _ in material_profile['vesselAttachments']
+                                    if vessel not in removed and str(vessel) in deformation}
+    for c in list(engine.state['deformation']):
+        if int(c) not in retained and c not in vessel_displacements:
+            engine.state['deformation'].pop(c)
+    for c in list(model['velocities']):
+        if int(c) not in retained:
+            model['velocities'].pop(c)
+    if material_profile:
         memory_field = model.setdefault('maxwellMemoryMm', {})
         for c in list(memory_field):
-            if int(c) not in retained_ids:
+            if int(c) not in retained:
                 memory_field.pop(c)
         if not ids and 'activeReferenceVolumeMm3' in model:
             model.update(activeNodes=0, elasticEnergyNmm=0., summedHandleLoadN=0.,
@@ -252,7 +263,7 @@ def tick(engine, dt):
                          activeReferenceVolumeMm3=0., activeDeformedVolumeMm3=0.,
                          minVolumeRatio=1., maxVolumeRatio=1.)
     if not ids: return
-    blocked = _blocked(engine); retained = set(ids)
+    blocked = _blocked(engine)
     anchors = sorted(set(model['anchors']) & retained)
     solve, free, index, edges, K = _system(engine, p, ids, anchors, retained, blocked)
     h = p['fixedStepSeconds']; total = model['remainderSeconds'] + dt
@@ -368,7 +379,7 @@ def tick(engine, dt):
             diagnostic['maxAbsDiscreteEnergyBalanceNmm'] = max(diagnostic['maxAbsDiscreteEnergyBalanceNmm'], abs(float(balance)))
         velocity = (u - old) / h
     if steps:
-        engine.state['deformation'] = {str(c): u[i].tolist() for i, c in enumerate(ids)}
+        engine.state['deformation'] = {**vessel_displacements, **{str(c): u[i].tolist() for i, c in enumerate(ids)}}
         model['velocities'] = {str(c): velocity[i].tolist() for i, c in enumerate(ids)}
         model['elasticEnergyNmm'] = float(.5 * u.ravel() @ (K @ u.ravel()))
         model['maxNeighborDisplacementRatio'] = max((float(np.linalg.norm(u[j] - u[i]) / length) for i, j, length in edges), default=0.)
@@ -378,5 +389,4 @@ def tick(engine, dt):
             from .surgical_glioma_materials import record_lattice
             record_lattice(engine, ids, stencil, u, memory, K, targets * force_scale[:, None], held, p)
     if material_profile:
-        from .surgical_glioma_materials import move_vessels
         move_vessels(engine)

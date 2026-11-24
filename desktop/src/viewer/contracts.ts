@@ -96,6 +96,11 @@ export interface ViewerRoute {
   geometry?: { failures?: Array<{ position_mm: number[]; reason: string }> };
 }
 
+export interface ViewerVesselTrace {
+  layerId:string;
+  points:Point3[];
+}
+
 export interface ViewerWorkspaceProps {
   approachOverview?:boolean;
   /** Inspect the modeled grid committed with the displayed instrument state. */
@@ -127,6 +132,7 @@ export interface ViewerWorkspaceProps {
   cameraFitRequest?:number;
   /** A compartment name or supplied tract id. Display selection never changes assessment. */
   selectedStructure?: string | null;
+  vesselTrace?: ViewerVesselTrace | null;
   /** A double-click on a registered native label selects its source evidence. */
   onPickStructure?: (name: string) => void;
   /** Explicit focus command; selecting a row alone does not move a restored camera. */

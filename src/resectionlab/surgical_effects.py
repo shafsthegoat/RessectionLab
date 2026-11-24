@@ -548,6 +548,12 @@ def _current_points(engine, cells):
         from .surgical_physics_v2 import raster
         positions = dict(raster(engine))
         points = engine.scene.points([positions.get(i, i) for i in ids])
+        if engine.scene.properties.get('gliomaMaterialsV1', {}).get('vesselMotionModel'):
+            from .surgical_glioma_materials import vessel_displacements
+            motion = vessel_displacements(engine)
+            for index, cell in enumerate(ids):
+                if cell in motion:
+                    points[index] = engine.scene.points([cell])[0] + motion[cell]
         if engine.state.get('toolMechanicsRevision') not in (1, 2): return points
     else: points = engine.scene.points(ids)
     locations = {int(cell): index for index, cell in enumerate(ids)}

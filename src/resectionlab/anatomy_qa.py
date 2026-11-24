@@ -22,14 +22,12 @@ def mask_quality(mask, source_identity, *, probability=None, review_status='unre
                  empty_reason=None):
     mask = np.asarray(mask, bool)
     labels, count = ndi.label(mask, np.ones((3, 3, 3)))
-    sizes = np.bincount(labels.ravel())
+    sizes = np.bincount(labels[mask], minlength=count + 1)
     voxels = int(mask.sum())
-    boundary = mask.copy()
-    boundary[1:-1, 1:-1, 1:-1] = False
     issues = []
     if not voxels: issues.append(empty_reason or 'The segmentation contains no labeled voxels. The anatomy remains unassessed.')
     if count > 1: issues.append(f'{count:,} disconnected source components; inspect before correcting.')
-    touching = int(boundary.sum())
+    touching = voxels - int(mask[1:-1, 1:-1, 1:-1].sum())
     if touching: issues.append(f'{touching:,} foreground cells touch the acquisition boundary; coverage may be truncated.')
     mismatch = None
     if probability is not None:
@@ -47,12 +45,13 @@ def mask_quality(mask, source_identity, *, probability=None, review_status='unre
             'reviewStatus': review_status, 'issues': issues, 'accuracy': 'unmeasured'}
 
 
-def layer_quality(collection, row):
+def layer_quality(collection, row, *, verify_probability=True):
     identity = digest({'snapshot': collection.identity(), 'data': row['data'], 'label': row['label_value'],
                        'affine': row['affine'], 'probability': row.get('probability'), 'edits': row.get('edits')})
     cache = getattr(collection, '_quality_cache', {})
-    if identity not in cache:
-        probability = collection.array(row['probability']) if row.get('probability') and not row.get('edits') else None
+    cache_key = (identity, verify_probability)
+    if cache_key not in cache:
+        probability = collection.array(row['probability']) if verify_probability and row.get('probability') and not row.get('edits') else None
         transform = collection.document['transforms'].get(row['source_series'], {})
         reason = None
         if probability is not None and row["kind"] == "tumor":
@@ -60,10 +59,10 @@ def layer_quality(collection, row):
             record = provenance.get("native_rerun", provenance)
             if record.get("availability") == "empty_output" and record.get("maximum_score") == float(probability.max()):
                 reason = empty_tumor_reason(record, collection.series(row["source_series"])["modality"])
-        cache[identity] = mask_quality(collection.mask(row), identity, probability=probability,
+        cache[cache_key] = mask_quality(collection.mask(row), identity, probability=probability,
             review_status=row.get('review_status', 'unreviewed'), alignment_status=transform.get('status', 'unknown'),
             empty_reason=reason)
         # Keep only the latest few generations of findings in this process.
         if len(cache) > 512: cache.pop(next(iter(cache)))
         collection._quality_cache = cache
-    return cache[identity]
+    return cache[cache_key]

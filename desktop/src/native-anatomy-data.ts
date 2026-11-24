@@ -20,6 +20,7 @@ export type Document={
   before_acquisition?:{snapshotId:string;revision:number;sources:Array<{id:string;label:string;modality:string;originalSha256:string}>;
     layers:Array<{id:string;label:string;sourceSeries:string;arraySha256:string;labelValue:number;review:string}>};
   display?:{initial_layers?:string[];cursor_ras_mm?:Point3;entry_ras_mm?:Point3};
+  vascular_review?:{schema?:string};
   source_assets?:unknown[];patient_id:string;study_timepoint?:string;snapshot_id:string;reference_series:string;
   tractography?:Array<{id:string;label:string;source_series:string}>;
   revision:number;layers:Layer[];missing:string[];series:Series[];
@@ -32,6 +33,11 @@ export type AcquisitionContribution={seriesId:string;label:string;modality:strin
   qc:string|null;warnings:string[];disposition:string;reason:string;layerCount:number;emptyLayers:string[];uses:string[];modelInputs:string[];suppliedTracts:string[];asset:boolean};
 export type RegistrationSection={pixels:ArrayDescriptor;size:number;frame:string;movingStatus:string|null;
   center:Point3;u:Point3;v:Point3;spacingMm:number;sourceFromSection?:number[][];voxelFromSection?:number[][];sourceShape?:number[]};
+export type NativeVesselBranch={branch_id:string;closed:boolean;length_mm:number;source_cells:number[];
+  start_ras_mm:Point3;end_ras_mm:Point3;midpoint_ras_mm:Point3;preview_ras_mm:Point3[];
+  unsupported_diagonal_edges:number;connectivity:string};
+export type NativeVesselGraph={branches?:NativeVesselBranch[];
+  nearest?:{source_cell_id:number;distance_mm:number;radius_mm:number|null;point_ras_mm:Point3;radius_limited_by_image_extent:boolean;radius_limited_by_workspace?:boolean}};
 export interface SelectedRouteForecast {
   schema:'resectionlab.native-route-forecast.v1';decision:'STOP';stage:'before-access';reason:string;
   preparationActions:number;withdrawalActions:number;targetRemovedMm3:number;nonTargetRemovedMm3:number;
@@ -40,7 +46,7 @@ export interface SelectedRouteForecast {
 export type EnvironmentOptions={selectedRouteForecast?:SelectedRouteForecast;acquisitions?:AcquisitionContribution[];referenceIssue:string|null;layers:Array<{
   role:EnvironmentRole;layerId:string;status:'ready'|'estimated_alignment'|'unavailable';reason?:string|null;
 }>};
-export type Binding={collectionId:string;document:Document;viewState?:NativeViewState|null};
+export type Binding={collectionId:string;document:Document;viewState?:NativeViewState|null;readOnlyStudy?:boolean};
 export type Draft={layerId:string;undo:number;redo:number;changedVoxels:number}|null;
 export type Args=Record<string,unknown>;
 export type IntakeKind='nifti'|'dicom'|'labels';
@@ -68,7 +74,7 @@ export interface NativeAnatomyApi {
   anatomySavePackage(args:Args):Promise<{path:string}|null>;
   anatomySaveView(args:Args):Promise<{saved:boolean}>;
   anatomyComponents(args:Args):Promise<ComponentReview>;
-  anatomyGraph(args:Args):Promise<unknown>;
+  anatomyGraph(args:Args):Promise<NativeVesselGraph>;
   anatomyCreate(args:Args):Promise<Binding|null>;
   anatomyReconstruct(args:Args):Promise<{document:Document;result:unknown}>;
   anatomyPlan(args:Args):Promise<unknown>;
@@ -114,8 +120,11 @@ export async function hydrateAnatomy(payload:ViewPayload,api:ResectionApi,cached
       if(layer.surface.empty!==true||Object.keys(layer.surface).length!==1)throw Error('Invalid empty anatomy surface');
       surface={positions:new Float32Array(),source:new Float32Array(),normals:new Float32Array(),sourceNormals:new Float32Array(),indices:new Uint32Array()};
     }else if(layer.surface){
-      const s=layer.surface;surface={positions:new Float32Array(await bytes(s.positions)),source:new Float32Array(await bytes(s.source)),
-        normals:new Float32Array(await bytes(s.normals)),sourceNormals:new Float32Array(await bytes(s.sourceNormals)),indices:new Uint32Array(await bytes(s.indices))};
+      const s=layer.surface;
+      const source=new Float32Array(await bytes(s.source)),sourceNormals=new Float32Array(await bytes(s.sourceNormals));
+      surface={positions:s.positions.sha256===s.source.sha256?source:new Float32Array(await bytes(s.positions)),source,
+        normals:s.normals.sha256===s.sourceNormals.sha256?sourceNormals:new Float32Array(await bytes(s.normals)),sourceNormals,
+        indices:new Uint32Array(await bytes(s.indices))};
       if(surface.positions.length%3 || surface.indices.length%3 || surface.source.length!==surface.positions.length || surface.normals.length!==surface.positions.length || surface.sourceNormals.length!==surface.positions.length || surface.indices.some(i=>i>=surface!.positions.length/3))throw Error('Invalid indexed anatomy mesh');
     }
     const declaration=studyLayers?.find(row=>row.id===layer.name);

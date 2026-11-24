@@ -13,16 +13,19 @@ type Cell={shift:Point3;residual:Point3;ambiguous:boolean;vesselRegion?:number};
 function attachedVesselSites(view:SurgicalView,owner:Uint16Array,soft:Set<number>){
   const brain=view.physics?.brain, assignment=brain?.assignment, schema='resectionlab.generated-glioma-materials.v1';
   const supported=new Set<number>();
-  if(view.scene.source?.procedurePolicySourceClass!=='generated-engineering'||brain?.model!==schema||
-    assignment?.schema!==schema||assignment.kind!=='assigned-generated-research'||!Array.isArray(assignment.vesselAttachments))return supported;
+  if(brain?.model!==schema||assignment?.schema!==schema||assignment.kind!=='assigned-generated-research'||
+    !Array.isArray(assignment.vesselAttachments))return supported;
+  const retained=assignment.vesselMotionModel==='retained-source-segments-v1';
+  if(!retained&&view.scene.source?.procedurePolicySourceClass!=='generated-engineering')return supported;
   const vessels=new Set(view.scene.regions.filter(r=>r.material==='vessel').map(r=>r.id));
   const removed=new Set(view.removed);
   const broken=new Set([...view.cutEdges??[],...view.transectedEdges??[]].map(([a,b])=>Math.min(a,b)+','+Math.max(a,b)));
   for(const [site,support] of assignment.vesselAttachments){
     const delta=view.deformation?.[site],donor=view.deformation?.[support];
-    if(vessels.has(owner[site])&&soft.has(owner[support])&&!removed.has(site)&&!removed.has(support)&&
-      !broken.has(Math.min(site,support)+','+Math.max(site,support))&&delta?.length===3&&donor?.length===3&&
-      delta.some(Boolean)&&delta.every((v,i)=>Number.isFinite(v)&&v===donor[i]))supported.add(site);
+    if(!vessels.has(owner[site])||!soft.has(owner[support])||removed.has(site)||
+      delta?.length!==3||!delta.some(Boolean)||!delta.every(Number.isFinite))continue;
+    if(retained||(!removed.has(support)&&!broken.has(Math.min(site,support)+','+Math.max(site,support))&&
+      donor?.length===3&&delta.every((v,i)=>v===donor[i])))supported.add(site);
   }
   return supported;
 }
@@ -36,9 +39,12 @@ export class AcceptedSurfaceMotion {
   readonly buckets=new Set<number>();
   readonly bounds=new THREE.Box3();
   readonly shape:Shape3;
+  readonly voxelToWorldLinear:THREE.Matrix3;
+  readonly reportVesselMotion:boolean;
   private hasRasterTransport=false;
   constructor(view:SurgicalView,owner:Uint16Array){
     this.shape=view.scene.shape;
+    this.reportVesselMotion=view.physics?.brain?.assignment?.vesselMotionModel==='retained-source-segments-v1';
     const shape=view.scene.shape, destinations=new Map(view.moved), cleared=new Set([...view.removed,...destinations.keys()]);
     const incoming=new Map<number,number[]>();
     for(const [source,to] of destinations){
@@ -47,7 +53,8 @@ export class AcceptedSurfaceMotion {
     const soft=new Set(view.scene.regions.filter(r=>['brain','soft_tissue','tumor'].includes(r.material)).map(r=>r.id));
     const attached=attachedVesselSites(view,owner,soft);
     const voxelToWorld=new THREE.Matrix4().fromArray(view.scene.affine.flat()).transpose();
-    const inverse=new THREE.Matrix3().setFromMatrix4(voxelToWorld).invert();
+    this.voxelToWorldLinear=new THREE.Matrix3().setFromMatrix4(voxelToWorld);
+    const inverse=this.voxelToWorldLinear.clone().invert();
     const vector=new THREE.Vector3();
     const targets=new Set([...incoming.keys(),...Object.keys(view.deformation??{}).map(id=>destinations.get(+id)??+id)]);
     const fixed=(source:number,vesselRegion?:number)=>!soft.has(owner[source])&&!attached.has(source)&&owner[source]!==vesselRegion;
@@ -97,6 +104,9 @@ export class AcceptedSurfaceMotion {
     const shape=this.shape,base=position.map(Math.floor);
     const t=position.map((v,j)=>v-base[j]),h=t.map(v=>v*v*(3-2*v)),dh=t.map(v=>6*v*(1-v));
     const shift:Point3=[0,0,0],gradient=new Float64Array(9);
+    const normalizeVessel=this.reportVesselMotion&&vesselRegion!==undefined;
+    let vesselWeight=0;
+    const vesselWeightGradient:Point3=[0,0,0];
     let mapped:Point3|undefined,ambiguous=false,affected=false;
     for(let dx=0;dx<2;dx++)for(let dy=0;dy<2;dy++)for(let dz=0;dz<2;dz++){
       const x=base[0]+dx,y=base[1]+dy,z=base[2]+dz;
@@ -108,6 +118,12 @@ export class AcceptedSurfaceMotion {
         const gridShift=cell?.shift??zero;
         if(cell?.ambiguous||mapped?.some((v,j)=>v!==gridShift[j]))ambiguous=true;
         mapped=gridShift;
+        if(normalizeVessel){
+          vesselWeight+=weight;
+          vesselWeightGradient[0]+=(dx?dh[0]:-dh[0])*wy*wz;
+          vesselWeightGradient[1]+=wx*(dy?dh[1]:-dh[1])*wz;
+          vesselWeightGradient[2]+=wx*wy*(dz?dh[2]:-dh[2]);
+        }
       }
       // At a vessel boundary the donor tissue and other branches cannot
       // extend the vessel. Only its own attached sites contribute movement.
@@ -118,6 +134,15 @@ export class AcceptedSurfaceMotion {
         gradient[3*j]+=d*(dx?dh[0]:-dh[0])*wy*wz;
         gradient[3*j+1]+=d*wx*(dy?dh[1]:-dh[1])*wz;
         gradient[3*j+2]+=d*wx*wy*(dz?dh[2]:-dh[2]);
+      }
+    }
+    // Air provides no positional constraint on a moved vessel wall. Keep
+    // stationary vessel samples in the normalization across adjacent cells.
+    if(normalizeVessel&&vesselWeight>1e-12)for(let j=0;j<3;j++){
+      shift[j]/=vesselWeight;
+      for(let axis=0;axis<3;axis++){
+        const k=3*j+axis;
+        gradient[k]=(gradient[k]-shift[j]*vesselWeightGradient[axis])/vesselWeight;
       }
     }
     // An edge on a tetrahedron can join two otherwise individually valid
@@ -138,10 +163,15 @@ export class AcceptedSurfaceMotion {
 }
 
 type Attribute=THREE.BufferAttribute;
+type SurfaceMotionEvidence={movedVertices:number;maxSubvoxelVertexOffsetMm:number};
 type DisplayState={base:Attribute;normal?:Attribute;positions?:Attribute;normals?:Attribute;offset?:Attribute;unknown?:Attribute;
-  bounds:THREE.Box3;sphere:THREE.Sphere;buckets:Map<number,number[]>;changed:number[];field:AcceptedSurfaceMotion|null};
+  bounds:THREE.Box3;sphere:THREE.Sphere;buckets:Map<number,number[]>;changed:number[];field:AcceptedSurfaceMotion|null;vesselMotion?:SurfaceMotionEvidence};
 const states=new WeakMap<THREE.BufferGeometry,DisplayState>();
 const attr=(geometry:THREE.BufferGeometry,name:string)=>geometry.getAttribute(name) as Attribute|undefined;
+
+export function acceptedVesselSurfaceMotion(geometry:THREE.BufferGeometry){
+  return states.get(geometry)?.vesselMotion;
+}
 
 /** Private display attributes. Registered mask, raw geometry and worker/cache
  * arrays remain immutable. Per-frame work visits the changed 8-cell buckets. */
@@ -169,8 +199,10 @@ export function applyAcceptedSurfaceMotion(geometry:THREE.BufferGeometry,field:A
     state.offset?.setXYZ(i,0,0,0);state.unknown?.setX(i,0);
   }
   const old=state.changed;state.changed=[];state.field=field;
+  state.vesselMotion=undefined;
   if(field){
-    const n=new THREE.Vector3(),matrix=new THREE.Matrix3();
+    const n=new THREE.Vector3(),matrix=new THREE.Matrix3(),offset=new THREE.Vector3();
+    let movedVertices=0,maxSubvoxelVertexOffsetMm=0;
     for(const key of field.buckets)for(const i of state.buckets.get(key)??[]){
       const p:Point3=[base.getX(i),base.getY(i),base.getZ(i)];
       const {shift,gradient:g,sourceShift,ambiguous}=field.sample(p,mask,registered,vesselRegion);
@@ -179,6 +211,11 @@ export function applyAcceptedSurfaceMotion(geometry:THREE.BufferGeometry,field:A
       if(deform){
         if(!state.positions){state.positions=base.clone();geometry.setAttribute('position',state.positions);}
         state.positions.setXYZ(i,p[0]+shift[0],p[1]+shift[1],p[2]+shift[2]);
+        if(field.reportVesselMotion&&vesselRegion!==undefined&&shift.some(Boolean)){
+          const length=offset.set(state.positions.getX(i)-p[0],state.positions.getY(i)-p[1],state.positions.getZ(i)-p[2])
+            .applyMatrix3(field.voxelToWorldLinear).length();
+          if(length>0){movedVertices++;maxSubvoxelVertexOffsetMm=Math.max(maxSubvoxelVertexOffsetMm,length);}
+        }
         if(normal){
           if(!state.normals){state.normals=normal.clone();geometry.setAttribute('normal',state.normals);}
           // Cofactors transform the cross product of tangents, including
@@ -200,6 +237,7 @@ export function applyAcceptedSurfaceMotion(geometry:THREE.BufferGeometry,field:A
       }
       state.changed.push(i);
     }
+    if(movedVertices)state.vesselMotion={movedVertices,maxSubvoxelVertexOffsetMm};
   }
   if(old.length||state.changed.length){
     let first=base.count,last=-1;

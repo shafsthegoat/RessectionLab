@@ -20,6 +20,8 @@ export interface SurfaceDiagnostics {
   preparationMs?: number;
   cacheHit?: boolean;
   triangles?: number;
+  surfaceField?: 'native-probability' | 'filtered-native-probability' | 'categorical';
+  sourceSurfaceOnly?: boolean;
   maxComponentVolumeChangeFraction?: number;
   volumeRestoredComponents?: number;
 }

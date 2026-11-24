@@ -1,14 +1,27 @@
 import type {Point3} from './coordinates.ts';
 import type {ViewerRoute} from './contracts.ts';
-import type {ViewerCameraState} from './workspaceSettings.ts';
+import type {ViewerCameraState,ViewerWorkspaceSettings} from './workspaceSettings.ts';
 
 function unit(p:Point3):Point3 {const n=Math.hypot(...p);return p.map(v=>v/n) as Point3;}
 function cross(a:Point3,b:Point3):Point3{return [a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];}
-/** Optical framing for an illustrative corridor; source geometry stays unchanged. */
-export function approachCamera(route:ViewerRoute,frame:string,mode:'along'|'oblique',aspect=1):ViewerCameraState|null {
+function approachEndpoints(route:ViewerRoute,frame:string):[Point3,Point3] {
   const sign=frame.startsWith('LPS')?-1:1;
   const point=(p:number[]):Point3=>[p[0]*sign,p[1]*sign,p[2]];
-  const entry=point(route.entry_mm),target=point(route.target_mm),delta=entry.map((n,i)=>n-target[i]) as Point3,length=Math.hypot(...delta);
+  return [point(route.entry_mm),point(route.target_mm)];
+}
+
+/** Temporary visual boundary around the recorded corridor and nearby tissue. */
+export function approachClipBox(route:ViewerRoute,frame:string):ViewerWorkspaceSettings['clipBox'] {
+  const [entry,target]=approachEndpoints(route,frame);
+  const margin=Math.max(10,route.tool.shaft_radius_mm+6,route.tool.tip_radius_mm+6,(route.window?.radius_mm??0)+4);
+  if(![...entry,...target,margin].every(Number.isFinite))return undefined;
+  return {enabled:true,min:entry.map((n,i)=>Math.min(n,target[i])-margin) as Point3,
+    max:entry.map((n,i)=>Math.max(n,target[i])+margin) as Point3};
+}
+
+/** Optical framing for an illustrative corridor; source geometry stays unchanged. */
+export function approachCamera(route:ViewerRoute,frame:string,mode:'along'|'oblique',aspect=1):ViewerCameraState|null {
+  const [entry,target]=approachEndpoints(route,frame),delta=entry.map((n,i)=>n-target[i]) as Point3,length=Math.hypot(...delta);
   if(![...entry,...target,length].every(Number.isFinite)||length<.01)return null;
   const outward=unit(delta),reference:Point3=Math.abs(outward[2])>.9?[0,1,0]:[0,0,1],right=unit(cross(reference,outward)),up=unit(cross(outward,right));
   const direction=mode==='along'?outward:unit(outward.map((n,i)=>n*.55+right[i]*.8+up[i]*.32) as Point3);

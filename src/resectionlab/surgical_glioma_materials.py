@@ -11,6 +11,7 @@ import numpy as np
 
 PROPERTY = 'gliomaMaterialsV1'
 SCHEMA = 'resectionlab.generated-glioma-materials.v1'
+RETAINED_VESSEL_SEGMENTS = 'retained-source-segments-v1'
 SOFT = ('soft_tissue', 'tumor')
 
 
@@ -53,16 +54,21 @@ def validate(scene):
     p = scene.properties.get(PROPERTY)
     if p is None:
         return
-    optional_source_bindings = {'scalpSeamCell', 'biopsyNeckFace'}
+    optional = {'scalpSeamCell', 'biopsyNeckFace', 'vesselMotionModel'}
     if (
         not isinstance(p, dict)
-        or set(p) | optional_source_bindings != set(research_profile())
+        or set(p) | optional != set(research_profile()) | optional
         or p['schema'] != SCHEMA
         or p['kind'] != 'assigned-generated-research'
         or 'tissuePhysicsV2' not in scene.properties
         or 'brainContinuumV1' in scene.properties
     ):
         raise ValueError('GLIOMA_MATERIALS_REQUIRE_VERSIONED_LOCAL_LATTICE')
+    if 'vesselMotionModel' in p:
+        if p['vesselMotionModel'] != RETAINED_VESSEL_SEGMENTS:
+            raise ValueError('GLIOMA_VESSEL_MOTION_MODEL_REQUIRED')
+        if 'vascularGraphV1' not in scene.properties:
+            raise ValueError('GLIOMA_VESSEL_MOTION_REQUIRES_MAPPED_SOURCE_CHAINS')
     if not all(isinstance(p[key], str) and p[key].strip() for key in ('assignment', 'boundary')) or not (
         isinstance(p['sources'], list)
         and p['sources']
@@ -92,10 +98,13 @@ def validate(scene):
     ):
         if not _bounded(p[name], low, high):
             raise ValueError('GLIOMA_MATERIAL_PARAMETER_OUTSIDE_DOMAIN:' + name)
+    kinds = {'artery', 'vein'}
+    if 'vesselMotionModel' in p and isinstance(p['axialStiffnessN'], dict) and 'uncertain' in p['axialStiffnessN']:
+        kinds.add('uncertain')
     for name in ('axialStiffnessN', 'effectiveLumenAreaMm2'):
         if not (
             isinstance(p[name], dict)
-            and set(p[name]) == {'artery', 'vein'}
+            and set(p[name]) == kinds
             and all(_bounded(x, 0.0001, 10.0) for x in p[name].values())
         ):
             raise ValueError('GLIOMA_VESSEL_IDENTITY_PROFILE_REQUIRED')
@@ -103,7 +112,7 @@ def validate(scene):
     edges = {
         c
         for e in scene.properties.get('vascularGraphV1', {}).get('edges', [])
-        if e['kind'] in ('artery', 'vein')
+        if e['kind'] in kinds
         for c in e['sourceCells']
     }
     materials = {r['id']: r['material'] for r in scene.regions}
@@ -167,6 +176,57 @@ def validate(scene):
         raise ValueError('GLIOMA_BIOPSY_BED_REQUIRES_BOUND_TISSUE_FACE')
 
 
+def retained_vessel_segments(engine):
+    return engine.scene.properties.get(PROPERTY, {}).get('vesselMotionModel') == RETAINED_VESSEL_SEGMENTS
+
+
+def vessel_displacements(engine):
+    deformation = engine.state.get('deformation', {})
+    if not deformation or not retained_vessel_segments(engine):
+        return {}
+    removed = set(engine.state['removed'])
+    return {vessel: deformation[str(vessel)] for vessel, _ in engine.scene.properties[PROPERTY]['vesselAttachments']
+            if vessel not in removed and str(vessel) in deformation and any(deformation[str(vessel)])}
+
+
+def continuous_vessel_contacts(engine, a, b, radius, raster_contacts):
+    """Test owned vessel voxels at their accepted subvoxel centers."""
+    displacement = vessel_displacements(engine)
+    if not displacement:
+        return raster_contacts
+    from .geometry import _EPS, _segment_cell_distances
+
+    sites = list(displacement)
+    indices = np.column_stack(np.unravel_index(sites, engine.scene.shape))
+    moved = indices + np.asarray(list(displacement.values())) @ engine.scene.inverse[:3, :3].T
+    distances = _segment_cell_distances(engine.grid, moved, np.asarray(a), np.asarray(b))
+    accepted = {site for site, distance in zip(sites, distances) if distance <= radius + _EPS}
+    return sorted((set(raster_contacts) - displacement.keys()) | accepted)
+
+
+def validate_vessel_chains(scene):
+    edges = scene.properties['vascularGraphV1']['edges']
+    kinds = scene.properties[PROPERTY]['axialStiffnessN']
+    chains = [edge for edge in edges if edge['kind'] in kinds]
+    if not chains:
+        raise ValueError('GLIOMA_VESSEL_MOTION_REQUIRES_MAPPED_SOURCE_CHAINS')
+    claimed = {tuple(sorted(edge['sourceFace'])) for edge in edges if edge['kind'] not in kinds}
+    for edge in chains:
+        cells = edge['sourceCells']
+        pairs = {tuple(sorted(pair)) for pair in zip(cells, cells[1:])}
+        if (tuple(sorted(edge['sourceFace'])) not in pairs or pairs & claimed
+                or any(sum(abs(i - j) for i, j in np.unravel_index(pair, scene.shape)) != 1
+                       for pair in pairs)):
+            raise ValueError('GLIOMA_VESSEL_MOTION_REQUIRES_UNIQUE_ORDERED_SOURCE_FACES')
+        claimed.update(pairs)
+
+
+def oriented_source_cells(edge):
+    cells = edge['sourceCells']
+    start, end = edge['sourceFace']
+    return cells if cells.index(start) < cells.index(end) else cells[::-1]
+
+
 def material_values(engine, cells, field):
     """A source-bound physical wavelength, independent of action history or targets."""
     p = engine.scene.properties[PROPERTY]
@@ -191,10 +251,16 @@ def generated_vascular_properties(
     scalp_ijk=None,
     scalp_seam_ijk=None,
     biopsy_neck_ijk=None,
+    vessel_motion_model=None,
 ):
     """An explicit two-branch, three-node assumed RC circuit on generated centerlines."""
     line = lambda p: int(np.ravel_multi_index(tuple(p), shape))
     p = research_profile()
+    if vessel_motion_model is not None:
+        p['vesselMotionModel'] = vessel_motion_model
+        p['assignment'] += (' Source-bound vessel sites follow their assigned soft support and retain their last '
+                            'accepted position if that support disappears. Neighbor strain and wound behavior are '
+                            'assigned engineering estimates. Free-vessel dynamics are unresolved.')
     p['vesselAttachments'] = sorted([line(v), line(t)] for v, t in support_by_ijk.items())
     source = 'Assigned small generated contact circuit; no subject pressure, flow or failure measurements.'
     nodes = [
@@ -383,11 +449,18 @@ def move_vessels(engine):
         return
     removed = set(engine.state['removed'])
     cut = {tuple(sorted(face)) for k in ('cutEdges', 'transectedEdges') for face in engine.state.get(k, [])}
+    retain = retained_vessel_segments(engine)
     for vessel, tissue in p['vesselAttachments']:
-        if tissue in removed or vessel in removed or tuple(sorted((tissue, vessel))) in cut:
+        if vessel in removed:
             deformation.pop(str(vessel), None)
             continue
+        if tissue in removed or tuple(sorted((tissue, vessel))) in cut:
+            if not retain:
+                deformation.pop(str(vessel), None)
+            continue
         displacement = deformation.get(str(tissue))
+        if displacement is None and retain:
+            continue
         if displacement is not None and any(displacement):
             deformation[str(vessel)] = displacement.copy()
         else:
@@ -461,6 +534,8 @@ def biopsy_wound(engine, graph_state):
 
 def vessel_load(engine, edge, row):
     """Engineering tether traction at a mapped face; transection uses normal port accounting."""
+    if retained_vessel_segments(engine):
+        return _source_segment_load(engine, edge, row)
     p = engine.scene.properties[PROPERTY]
     a, b = edge['sourceFace']
     deformation = engine.state.get('deformation', {})
@@ -477,5 +552,44 @@ def vessel_load(engine, edge, row):
         from .surgical_vascular_graph import damage
 
         damage(engine, [edge['sourceFace']])
+        row['tractionN'] = 0.0
+        row['injuryCause'] = 'declared-tether-stretch'
+
+
+def _source_segment_load(engine, edge, row):
+    """Evaluate each surviving oriented bond of the declared source chain."""
+    p = engine.scene.properties[PROPERTY]
+    cells = oriented_source_cells(edge)
+    removed = set(engine.state['removed'])
+    cut_face = set(row['cutFace'] or ())
+    pairs = [(a, b) for a, b in zip(cells, cells[1:])
+             if a not in removed and b not in removed and {a, b} != cut_face]
+    strain = 0.0
+    loaded_face = None
+    resistance = 1.0
+    if pairs:
+        deformation = engine.state.get('deformation', {})
+        sources = sorted({cell for pair in pairs for cell in pair})
+        indices = {cell: i for i, cell in enumerate(sources)}
+        a, b = np.asarray([[indices[cell] for cell in pair] for pair in pairs]).T
+        rest = engine.scene.points(sources)
+        current = rest + np.asarray([deformation.get(str(cell), [0., 0., 0.]) for cell in sources])
+        spans = np.linalg.norm(rest[b] - rest[a], axis=1)
+        extension = np.maximum(0., np.linalg.norm(current[b] - current[a], axis=1) / spans - 1)
+        peak = int(extension.argmax())
+        strain = float(extension[peak])
+        loaded_face = list(pairs[peak]) if strain else None
+        resistance = float(spans @ (1 + extension) ** 3 / spans.sum())
+    row.update(axialStrain=strain, loadedFace=loaded_face, stretchResistanceRatio=resistance,
+               tractionN=p['axialStiffnessN'][edge['kind']] * strain if row['cutFace'] is None else 0.0)
+    if strain > row.get('peakAxialStrain', 0.) or 'peakAxialStrain' not in row:
+        row['peakAxialStrain'] = strain
+        row['peakLoadedFace'] = loaded_face
+    if strain >= p['tractionFailureStrain'] and row['cutFace'] is None:
+        from .surgical_vascular_graph import damage
+        from .surgical_effects import _record_edges
+
+        damage(engine, [loaded_face])
+        _record_edges(engine, 'transectedEdges', [tuple(sorted(loaded_face))])
         row['tractionN'] = 0.0
         row['injuryCause'] = 'declared-tether-stretch'

@@ -16,6 +16,62 @@ DTI-derived AD/RD/MD/FA, advanced diffusion/NODDI (60 directions at b=3000,
 with dcm2niiX v1.0.20200331. Availability and naming must be checked per patient;
 the description does not establish that every patient has every sequence.
 
+## Native TOF vessel review
+
+The restricted local collection is indexed by the publisher acquisition
+receipt and the prepared native study manifests on the verified personal
+volume. It contains 30 unique subjects and 29 acquired TOF volumes. The TOF
+volumes have corresponding native vesselFM masks and uncalibrated scores. The
+TOF-to-T1CE transforms are unreviewed, so vascular review uses each original
+TOF lattice. The [storage ledger](local-storage-ledger.md) describes who can
+access this volume.
+
+The vessel review preserves the original model layer. It proposes visibility
+exclusions for separate findings with weak TOF evidence, records uncertain
+components, and keeps uncertain components visible. The source head
+envelope is estimated from the TOF acquisition with a physical margin.
+Pial vessels, basal cisterns, bright extracranial structures and cropped
+vessels remain eligible for review. The companion extracts the filtered
+surface from the original score field while retaining the whole prediction
+as a selectable layer. The component decision changes display evidence only.
+
+Source branch IDs bind to the original acquisition and source cells. Branch
+paths retain supported junctions and cycles and report incomplete graph
+coverage. Gap proposals record geometric and source-signal evidence for
+review, and add zero voxels. The physical surface audit compares local
+transverse section area and vertex movement before and after fairing.
+The TOF lumen estimate, vessel type, and assumed simulator wall and support
+properties are independent evidence.
+
+Run the component, branch and package steps from the primary checkout.
+Replace the repeated subject selection with `--cohort` to resume the first
+two steps for the whole restricted source inventory.
+
+```sh
+.venv/bin/python scripts/run_eden2020_vascular_review.py --subject PTNT_4509
+.venv/bin/python scripts/run_eden2020_vascular_review.py --graph --subject PTNT_4509
+.venv/bin/python scripts/build_eden2020_vascular_companion.py --subject PTNT_4509 --linked-source
+```
+
+The private run is under
+`qc/eden2020-glioma-5714812/vascular-reconstruction-20261123-v1/` on the data
+volume. Read `workflow.json` for the frozen model and cleanup policy,
+`processing.json` for per-subject processing, and `graphs.json` for branch
+coverage. Open the source-linked `vascular-review.anatomy.json` or a standalone
+companion's `patient-anatomy.json` in Cases, then select the original or cleanup
+under **Vessels**. Linked views reuse the canonical source study's checked
+members and open read-only. The native score surface is the vascular review
+default. Conditioned surfaces are available as a separate presentation choice.
+
+A scoped source review can restore a proposed exclusion to the uncertain set
+with `--restore COMPONENT --reason REASON`. The reviewed partition is saved
+beside the initial partition and keeps its source binding. The source review
+and application captures provide the private comparison evidence. The
+companions are for research display. Patient-specific surgical admission
+requires its own source registration and mechanics evidence.
+
+## Prospective intake receipt
+
 `resectionlab.eden2020.inspect_local_case` produces a versioned evidence
 manifest from already permitted local NIfTI and gradient files. It performs no
 network access, inference, conversion, registration, resampling, acquisition,

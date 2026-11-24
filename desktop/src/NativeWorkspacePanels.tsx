@@ -6,7 +6,7 @@ import {Check,ChevronRight,ScanLine} from 'lucide-react';
 import {inverseAffine,rasAffine,sampleTrilinear,transformPoint,volumeBounds} from './viewer/coordinates';
 import type {ViewerVolume} from './viewer/contracts';
 import {scanLabel,studyTimepoint,studyLabel,sourceEvidenceLabel,defaultAnatomyPresentation,studyLayerDisplayKind} from './native-study-state';
-import type {VesselScope} from './native-anatomy-data';
+import type {NativeVesselGraph,VesselScope} from './native-anatomy-data';
 import type {NativeWorkspace} from './use-native-workspace';
 import {AnatomyInspection} from './AnatomyInspection';
 import {NativeImportPanel} from './NativeImportPanel';
@@ -14,6 +14,31 @@ import {NativePreparePanel} from './NativePreparePanel';
 import {NativeRegistrationReview} from './NativeRegistrationReview';
 import {AcquisitionContributions,NativeLayerEvidence,rehearsalAvailability} from './NativeStudyEvidence';
 import './unified-anatomy.css';
+
+function NativeVesselBranchPanel({workspace:w,layerId}:{workspace:NativeWorkspace;layerId:string}){
+  const [result,setResult]=useState<NativeVesselGraph|null>(null);
+  const [branchId,setBranchId]=useState<string|null>(null);
+  const branches=result?.branches??[],branch=branches.find(item=>item.branch_id===branchId)??branches[0];
+  const inspect=()=>w.run(async()=>{
+    const graph=await w.api!.anatomyGraph({...w.args(),layerId,displaySeriesId:w.series,point:w.state.cursor});
+    setResult(graph);setBranchId(null);w.setVesselTrace(null);
+  });
+  return <details className="unified-details" data-vessel-branches={branches.length}>
+    <summary>Vessel branch inspection</summary>
+    <button disabled={w.busy||!w.state.cursor} onClick={()=>void inspect()}>Inspect branches at cursor</button>
+    {result&&!result.nearest&&<p role="status">No source centerline is available for this layer.</p>}
+    {result?.nearest&&<p className="subtle">Nearest source cell {result.nearest.source_cell_id} · {result.nearest.distance_mm.toFixed(2)} mm from the query.{result.nearest.radius_mm!=null&&<> Distance to background cell centers {result.nearest.radius_mm.toFixed(2)} mm.</>}{result.nearest.radius_limited_by_image_extent&&<> Distance estimate limited by scan extent.</>}{result.nearest.radius_limited_by_workspace&&<> Distance estimate limited by sampling bounds.</>}</p>}
+    {branch&&<>
+      {branches.length>1&&<label>Branch<select aria-label="Vessel branch" value={branch.branch_id} onChange={event=>{setBranchId(event.target.value);w.setVesselTrace(null);}}>{branches.map(item=><option key={item.branch_id} value={item.branch_id}>{item.branch_id.slice(0,10)} · {item.length_mm.toFixed(1)} mm</option>)}</select></label>}
+      <p className="subtle">Branch <code title={branch.branch_id}>{branch.branch_id.slice(0,12)}</code> · {branch.length_mm.toFixed(1)} mm · {branch.source_cells.length.toLocaleString()} source skeleton cells{branch.closed?' · closed path':''}.</p>
+      {branch.connectivity==='source-h0-h1-matched-cavities-unrepresented'&&<p className="subtle">Source cavities are absent from the path graph.</p>}
+      {!branch.connectivity.startsWith('source-h0-h1-matched')&&<p className="subtle">Source topology for this path is unverified.</p>}
+      {branch.unsupported_diagonal_edges>0&&<p className="subtle">{branch.unsupported_diagonal_edges} diagonal steps lack support by adjoining source faces.</p>}
+      <div className="tool-row"><button onClick={()=>w.focusStructure(layerId,branch.midpoint_ras_mm)}>Frame branch midpoint</button><button onClick={()=>w.setCursor(branch.start_ras_mm)}>Start slice</button><button onClick={()=>w.setCursor(branch.end_ras_mm)}>End slice</button></div>
+      {branch.preview_ras_mm.length>1&&<button aria-pressed={!!w.vesselTrace} onClick={()=>w.setVesselTrace(w.vesselTrace?null:{layerId,points:branch.preview_ras_mm})}>{w.vesselTrace?'Hide branch trace':'Show branch trace'}</button>}
+    </>}
+  </details>;
+}
 
 /** A display-only, physical sagittal section sampled from the current source.
  * No source fetch, segmentation, or image substitution is involved. */
@@ -68,7 +93,9 @@ export function NativeSidebar({workspace:w,tab,onOpenAnatomy,onOpenPlan,onOpenSc
         <div className="tool-row"><input type="color" aria-label={`${layer.label} color`} value={w.state.settings.layerColor?.[layer.id]??layer.color} onChange={e=>w.setSettings({...w.state.settings,layerColor:{...w.state.settings.layerColor,[layer.id]:e.target.value}})}/><label>Opacity<input aria-label={`${layer.label} opacity`} type="range" min="0" max="1" step=".01" value={layerAppearance(layer.id,layer.color,w.state.settings,studyLayerDisplayKind(layer)).opacity} onChange={e=>w.setSettings({...w.state.settings,layerOpacity:{...w.state.settings.layerOpacity,[layer.id]:+e.target.value}})}/></label><button disabled={w.busy} onClick={()=>w.setVisible(Object.fromEntries(b.document.layers.map(l=>[l.id,l.id===layer.id])))}>Isolate</button></div>
         <p className="subtle layer-review-status">{layer.review_status.replaceAll('_',' ')}{w.volume?.compartments.find(l=>l.name===layer.id)?.volumeMm3!=null&&<> · source {(w.volume.compartments.find(l=>l.name===layer.id)!.volumeMm3!/1000).toFixed(2)} mL</>}</p>
         {w.volume?.compartments.find(l=>l.name===layer.id)?.qa&&(()=>{const q=w.volume!.compartments.find(l=>l.name===layer.id)!.qa!;return <details className="unified-details" open={q.voxelCount===0}><summary>Anatomy quality · {q.voxelCount===0?'empty segmentation':q.issues.length?'review findings':'source checks complete'}</summary><p>{q.componentCount.toLocaleString()} source components · anatomical accuracy unmeasured</p>{q.issues.map(issue=><p key={issue}>{issue}</p>)}<p>Findings do not change the source. Inspect linked slices before accepting corrections.</p></details>})()}
-        <button className="edit-segmentation" disabled={w.busy||!w.canEditLayer(layer.id)} onClick={()=>{setEditing(!editing);w.setTool('navigate');w.setEditLayer(layer.id)}}>{editing?'Close tools':'Edit segmentation'}</button>
+        {!w.draft&&w.vesselScope==='all'&&layer.source_series===w.series&&['vessel','vessels','artery','vein','sinus'].includes(layer.kind)&&
+          (layer.provenance as {model?:string}|null)?.model!=='siam-v2'&&<NativeVesselBranchPanel key={`${b.document.snapshot_id}/${layer.id}`} workspace={w} layerId={layer.id}/>}
+        {!b.readOnlyStudy&&<button className="edit-segmentation" disabled={w.busy||!w.canEditLayer(layer.id)} onClick={()=>{setEditing(!editing);w.setTool('navigate');w.setEditLayer(layer.id)}}>{editing?'Close tools':'Edit segmentation'}</button>}
         {editing&&['vessels','artery','vein','sinus'].includes(layer.kind)&&<div className="vessel-review-note"><p>Disconnected pieces are model estimates. Inspect them on the source slices before keeping or removing them.</p><button disabled={w.busy||!!w.draft||!w.canEditLayer(layer.id)} onClick={()=>{setEditing(true);w.setEditLayer(layer.id);void w.reviewFragments(layer.id)}}>Inspect vessel fragments</button></div>}
         {editing&&<div className="correction-tools"><label>Tool<select aria-label="Correction tool" value={w.tool} onChange={e=>w.setTool(e.target.value)}><option value="navigate">Navigate</option><option value="paint">Paint</option><option value="erase">Erase</option></select></label><label>Brush radius · mm<input type="number" min=".25" max="50" step=".25" value={w.radius} onChange={e=>w.setRadius(+e.target.value)}/></label>
           {layer.probability!=null&&<details><summary>Probability threshold</summary><input aria-label="Probability threshold" type="number" min=".01" max=".99" step=".01" value={w.threshold} onChange={e=>w.setThreshold(+e.target.value)}/><div className="tool-row"><button disabled={w.busy} onClick={()=>w.edit('threshold')}>Preview threshold</button><button disabled={w.busy||!w.state.cursor} onClick={()=>w.edit('seed',[w.state.cursor!])}>Grow from cursor</button></div></details>}
@@ -84,6 +111,7 @@ export function NativeSidebar({workspace:w,tab,onOpenAnatomy,onOpenPlan,onOpenSc
   return <div className={`unified-sidebar study-inspector study-inspector-${tab}`}>
     <div className="study-badge">{studyLabel(timepoint)} study <span>{b.document.series.length} {b.document.series.length===1?'scan':'scans'}</span></div>
     <h1 title={b.document.patient_id}>{b.document.patient_id.replace(/^ZENODO-17486320-/,'')}</h1>
+    {b.readOnlyStudy&&<p className="subtle" role="status">Read-only vascular review</p>}
     {tab==='anatomy'&&!!b.document.series.length&&<label className="unified-source">{independent?'Independent scan':'Linked source slices'}<select aria-label="Source scan" value={w.series} disabled={blocked} onChange={e=>w.selectScan(e.target.value)}>{b.document.series.map(s=><option key={s.id} value={s.id}>{scanLabel(s)}</option>)}</select></label>}
     {tab==='data'?<>
       <div className="study-section-heading"><strong>Study scans</strong><span>{b.document.series.length}</span></div>
@@ -109,10 +137,12 @@ export function NativeSidebar({workspace:w,tab,onOpenAnatomy,onOpenPlan,onOpenSc
         else if(!w.state.visible[layer.id])w.setVisible({...w.state.visible,[layer.id]:true});
         onOpenAnatomy();
       }}/>
-      <NativeImportPanel workspace={w} timepoint={timepoint}/>
-      <NativePreparePanel workspace={w} onReviewAnatomy={onOpenAnatomy}/>
-      <button className="wide-button" disabled={blocked} onClick={w.savePackage}>Save patient study file…</button>
-      {!!source&&<details className="unified-details"><summary>Alignment & registration</summary><p>{w.registration==='patient frame'?'Source or reviewed alignment.':w.registration==='alignment preview'?'An estimated transform is being used for display. Review landmarks before quantitative planning.':'Align this scan to show shared structures.'}</p>{Object.entries(w.volume?.alignmentQuality??{}).map(([sid,q])=><div key={sid} className="alignment-notice"><strong>{sid} · {q.status}</strong>{[...q.warnings,...(q.notes??[])].map((warning,i)=><span key={i}>{warning}</span>)}<details><summary>Measurements</summary><pre>{JSON.stringify(q.metrics,null,2)}</pre></details></div>)}<button disabled={blocked||w.series===b.document.reference_series} onClick={()=>w.change(()=>api.anatomyRegister({...w.args(),seriesId:w.series,action:'estimate'}))}>Recalculate alignment</button><NativeRegistrationReview key={JSON.stringify([b.collectionId,b.document.snapshot_id,w.series])} workspace={w} blocked={blocked}/></details>}
+      {!b.readOnlyStudy&&<>
+        <NativeImportPanel workspace={w} timepoint={timepoint}/>
+        <NativePreparePanel workspace={w} onReviewAnatomy={onOpenAnatomy}/>
+        <button className="wide-button" disabled={blocked} onClick={w.savePackage}>Save patient study file…</button>
+      </>}
+      {!!source&&<details className="unified-details"><summary>Alignment & registration</summary><p>{w.registration==='patient frame'?'Source or reviewed alignment.':w.registration==='alignment preview'?'An estimated transform is being used for display. Review landmarks before quantitative planning.':'Align this scan to show shared structures.'}</p>{Object.entries(w.volume?.alignmentQuality??{}).map(([sid,q])=><div key={sid} className="alignment-notice"><strong>{sid} · {q.status}</strong>{[...q.warnings,...(q.notes??[])].map((warning,i)=><span key={i}>{warning}</span>)}<details><summary>Measurements</summary><pre>{JSON.stringify(q.metrics,null,2)}</pre></details></div>)}<button disabled={blocked||!!b.readOnlyStudy||w.series===b.document.reference_series} onClick={()=>w.change(()=>api.anatomyRegister({...w.args(),seriesId:w.series,action:'estimate'}))}>Recalculate alignment</button><NativeRegistrationReview key={JSON.stringify([b.collectionId,b.document.snapshot_id,w.series])} workspace={w} blocked={blocked||!!b.readOnlyStudy}/></details>}
     </>:<>
       <div className="anatomy-presets" role="group" aria-label="Anatomy presentation"><button aria-pressed={w.state.settings.presentation==='scan'} disabled={blocked||!source||defaultAnatomyPresentation(source.modality)!=='scan'} onClick={()=>w.present('scan')}><ScanLine size={13}/>Scan</button><button aria-pressed={w.state.settings.presentation==='segmentation'} disabled={blocked} onClick={()=>w.present('segmentation')}>Structures</button><button aria-pressed={w.state.settings.presentation==='vascular'} disabled={blocked} onClick={()=>w.present('vascular')}>Vessels</button></div>
     <NativeCranialView workspace={w}/>

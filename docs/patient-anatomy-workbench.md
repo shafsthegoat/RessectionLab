@@ -617,6 +617,24 @@ Migration preserves other view preferences and writes the version marker only
 through the existing Save flow. Incremental requests are invalidated before a
 scope replacement, preventing stale filtered layers from entering the new view.
 
+When a validated native score field is available, vascular display filters
+preserve its values around retained anatomy and suppress only excluded
+foreground cells. The mesh remains on the vascular source grid. A cut through
+a branch ends the displayed surface at that boundary. The full-source estimate
+and planning geometry are preserved.
+
+EDEN2020 restricted vascular review companions open with **Source isosurface**.
+The **Conditioned contours** option prepares the bounded fairing on demand.
+The raw contour is the default because the pilot cross-section audit found
+local narrowing in conditioned thin branches. The linked TOF slices remain
+available while reviewing the source contours.
+
+Select a vascular layer on its source acquisition and open **Vessel branch
+inspection** to inspect the path nearest the linked cursor. The panel shows
+the persistent source branch ID and locates its start, midpoint and end.
+The branch trace and **Crop around corridor** are display controls. Collision
+and approach geometry continue to use their existing source membership.
+
 Reproduce the data and actual Electron checks on disposable patient copies:
 
 ```sh
@@ -636,6 +654,18 @@ compare the transmitted full-source mask with native-source resampling and
 verify source-array hashes. Residual source-gap candidates, their physical
 coordinates and original-image/probability crops are recorded separately;
 nearby endpoints do not establish that two vessels should connect.
+
+The private EDEN2020 companions use the separate hidden capture command below.
+It records the native superior view and a linked source section in one load.
+The command resumes from its per-subject receipt and skips captured snapshots.
+
+```sh
+.venv/bin/python scripts/capture_eden2020_vascular_cohort.py --subject PTNT_4509
+```
+
+Use `--graphs-only` to install an available source graph into its checked cache
+without starting Electron. Graph and screen capture receipts are written under
+the private run's `app/cohort/` directory.
 
 
 Gap-repair verification passed **49 focused Python tests**, **601 desktop tests**

@@ -29,6 +29,11 @@ The private corrected EDEN CTRL_0866 study and its review receipt are in
 and the refreshed T1-based comparison.
 Its migration row links the acquired source snapshot to this reviewed version.
 
+The restricted EDEN2020 vessel review uses
+`qc/eden2020-glioma-5714812/vascular-reconstruction-20261123-v1/` for private
+case status, native TOF companions, source overlays and app recordings.
+[Reproduce the native workflow](eden2020-integration.md#native-tof-vessel-review).
+
 Paths below are relative to the RessectionLab root. This compact ledger covers
 that area, not unrelated personal files elsewhere on the HDD. Presence does not
 establish scientific readiness or a completed build; consult each run's receipts.

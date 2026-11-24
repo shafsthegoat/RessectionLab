@@ -5,6 +5,7 @@ from pathlib import Path
 import uuid
 import hashlib
 import json
+import re
 import numpy as np
 from .patient_anatomy import (
     PatientImagingCollection,
@@ -15,9 +16,29 @@ from .patient_anatomy import (
 )
 from .anatomy_editor import AnatomyDraft
 from .anatomy_workspace import read_view, save_view, component_review
-from .anatomy_geometry import mesh, normals, appearance_kind
+from .anatomy_geometry import mesh, normals, appearance_kind, vascular_cleanup_source
 from .anatomy_qa import layer_quality
 from .anatomy_display import display_affine, brain_vessel_display, source_display_grid, source_lattice_annotation_preview
+
+
+VASCULAR_REVIEW_MANIFEST = "vascular-review.anatomy.json"
+VASCULAR_REVIEW_REVISION = re.compile(r"vascular-review\.[0-9a-f]{12}\.anatomy\.json")
+VASCULAR_REVIEW_READS = {"anatomyView", "anatomySample", "anatomyGraph", "anatomySection", "anatomyComponents"}
+
+
+def _linked_vascular_review(path):
+    document = json.loads(path.read_text())
+    data = document.get("vascular_review", {})
+    if data.get("schema") != "eden2020-restricted-vascular-companion-v1" or data.get("linked_source") is not True:
+        raise ValueError("Invalid source-linked vascular review")
+    source = path.parent / "patient-anatomy.json"
+    if hashlib.sha256(source.read_bytes()).hexdigest() != data.get("source_manifest", {}).get("sha256"):
+        raise ValueError("The vascular review's pinned source manifest has changed")
+    baseline = PatientImagingCollection(path.parent)
+    if (document.get("patient_id") != baseline.document["patient_id"]
+            or data["source_manifest"].get("snapshot_id") != baseline.identity()):
+        raise ValueError("The vascular review belongs to different source anatomy")
+    return PatientImagingCollection(path.parent, document)
 
 
 def _retain(session, result):
@@ -62,21 +83,30 @@ def dispatch(session, operation, args, request, progress):
         if path.suffix == ".rsworkspace":
             from .anatomy_package import open_package
             path = open_package(path, args["workingRoot"], check=request.check)
-        if path.name != "patient-anatomy.json":
-            raise ValueError("Select patient-anatomy.json")
-        c = PatientImagingCollection(path.parent)
+        linked = path.name == VASCULAR_REVIEW_MANIFEST or VASCULAR_REVIEW_REVISION.fullmatch(path.name) is not None
+        if path.name != "patient-anatomy.json" and not linked:
+            raise ValueError("Select a native study or vascular review manifest")
+        c = _linked_vascular_review(path) if linked else PatientImagingCollection(path.parent)
         key = str(uuid.uuid4())
         session.anatomy_collections = {key: c}
+        session.anatomy_linked_review = (key, path) if linked else None
         session.anatomy_drafts = {}
         session.anatomy_removal = {}
         session.anatomy_transfer_paths = set()
         session.anatomy_packages = {key: package_path} if package_path and not args.get("readOnlyPackage") else {}
-        return {"collectionId": key, "document": c.document, "viewState": read_view(c)}
+        return {"collectionId": key, "document": c.document,
+                "viewState": None if linked else read_view(c), "readOnlyStudy": linked}
     key = args.get("collectionId")
     if key not in session.anatomy_collections:
         raise ValueError("Patient collection is not open")
     c = session.anatomy_collections[key]
-    current_id = json.loads((c.root / "patient-anatomy.json").read_text()).get(
+    manifest = c.root / "patient-anatomy.json"
+    linked_review = getattr(session, "anatomy_linked_review", None)
+    if linked_review and linked_review[0] == key:
+        manifest = linked_review[1]
+        if operation not in VASCULAR_REVIEW_READS:
+            raise ValueError("This source-linked vascular review is read-only")
+    current_id = json.loads(manifest.read_text()).get(
         "snapshot_id"
     )
     if operation == "anatomyPrepare" and args.get("action") == "plan" and args.get("snapshotId") is None:
@@ -160,6 +190,10 @@ def dispatch(session, operation, args, request, progress):
         vessel_scope = args.get("vesselScope", "all")
         if vessel_scope not in {"all", "brain", "intracranial", "excluded"}:
             raise ValueError("Unknown vessel display scope")
+        native_vessel_review = c.document.get("vascular_review", {}).get("schema") == "eden2020-restricted-vascular-companion-v1"
+        vessel_surface_mode = args.get("vesselSurfaceMode", "source" if native_vessel_review else "conditioned")
+        if vessel_surface_mode not in {"source", "conditioned"}:
+            raise ValueError("Unknown vessel surface representation")
         source_frame_issue = None
         try:
             displayed, estimated = display_affine(c, reference, preview=preview_alignment)
@@ -189,13 +223,18 @@ def dispatch(session, operation, args, request, progress):
         # Native layer geometry is transformed into this displayed voxel frame.
         image_data, native, displayed, preview = source_display_grid(reference, displayed)
         shape = tuple(image_data["shape"])
-        cache_key = (key, c.identity(), reference["id"], image_data["sha256"],
-                     displayed.tobytes(), bool(args.get("original")), preview_alignment, vessel_scope, bool(patient_context))
+        source_cache_key = (key, c.identity(), reference["id"], image_data["sha256"],
+                            displayed.tobytes(), bool(args.get("original")), preview_alignment, bool(patient_context))
+        cache_key = (source_cache_key, vessel_scope, vessel_surface_mode)
         cacheable = not (session.anatomy_drafts.get(key) or key in session.anatomy_removal
                          or args.get("highlightComponents"))
         cache = getattr(session, "anatomy_view_cache", None)
         if not cacheable or not cache or cache["key"] != cache_key:
-            cache = {"key": cache_key, "layers": {}, "label_sets": {}, "mri": None, "tracts": None}
+            previous_mri = cache.get("mri") if cache and cache["key"][0] == source_cache_key else None
+            if previous_mri and not Path(previous_mri["path"]).is_file():
+                previous_mri = None
+            support = {"headSupport": cache["headSupport"]} if previous_mri and "headSupport" in cache else {}
+            cache = {"key": cache_key, "layers": {}, "label_sets": {}, "mri": previous_mri, "tracts": None, **support}
         # Publish only a complete response. A cancelled/failed preparation may
         # have temporary transfer files pruned and must not cache those paths.
         cache = {**cache, "layers": dict(cache["layers"]), "label_sets": dict(cache["label_sets"])}
@@ -264,7 +303,10 @@ def dispatch(session, operation, args, request, progress):
                 row["data"] = c.put_array((c.mask(row) & ~cut).astype(np.uint8))
                 row["label_value"] = 1
                 row["edits"] = [{"removal_preview": True}]
-            quality = layer_quality(c, row)
+            source_surface_only = vessel_surface_mode == "source" and row["kind"] in {"vessel", "vessels", "artery", "vein", "sinus"}
+            # The native extraction verifies contour signs before use. A raw
+            # cached contour does not require a second full score-volume read.
+            quality = layer_quality(c, row, verify_probability=not source_surface_only)
             source_volume = None if source_grid_preview else float(
                 c.mask(row).sum() * abs(np.linalg.det(affine(row["affine"])[:3, :3]))
             )
@@ -290,6 +332,7 @@ def dispatch(session, operation, args, request, progress):
                                f"{disagreement} are unlabelled on CT. Raw source QC retains the MRI alternative."]}
             raw_siam = bool(source_support and source_support["status"] == "unfiltered")
             display_filter = None
+            unfiltered = row
             # Correction review always shows the complete editable source.
             if (not raw_siam and not source_grid_preview and vessel_scope == "brain" and row["kind"] in {"vessels", "artery", "vein", "sinus"}
                     and not draft and not args.get("highlightLayer")):
@@ -298,7 +341,11 @@ def dispatch(session, operation, args, request, progress):
                     and not draft and not args.get("highlightLayer")):
                 from .anatomy_intracranial import intracranial_vessels
                 row, display_filter = intracranial_vessels(c, row, excluded=vessel_scope == "excluded", cancelled=request.cancelled.is_set)
-            geometry = mesh(c, row, cancelled=request.cancelled.is_set)
+            score_source = vascular_cleanup_source(c, unfiltered)
+            if score_source is None and row is not unfiltered:
+                score_source = unfiltered
+            geometry = mesh(c, row, cancelled=request.cancelled.is_set,
+                            display_source=score_source, conditioned=not source_surface_only)
             request.check()
             shared = row.get("kind") == "brain-region" and not row.get("edits")
             # Identical categorical values may originate on different physical grids.
@@ -327,6 +374,8 @@ def dispatch(session, operation, args, request, progress):
                     "cacheHit": bool(geometry["cache_hit"]),
                     "preparationMs": float(geometry["preparation_ms"]),
                     "triangles": int(len(geometry["indices"])),
+                    **({"sourceSurfaceOnly": True} if source_surface_only else {}),
+                    **({"surfaceField": str(geometry["surface_field"])} if "surface_field" in geometry else {}),
                     **({"publisherSourceSha256": geometry["publisher_source_sha256"]}
                        if "publisher_source_sha256" in geometry else {}),
                     **({
@@ -345,18 +394,22 @@ def dispatch(session, operation, args, request, progress):
             }
             if True:  # Empty geometry is explicit; never rebuild it from a categorical placeholder.
                 transform = np.linalg.inv(displayed) @ source
-                p = world(transform, geometry["positions"]).astype(np.float32)
                 raw = world(transform, geometry["source"]).astype(np.float32)
+                p = raw if source_surface_only else world(transform, geometry["positions"]).astype(np.float32)
                 faces = geometry["indices"]
                 if np.linalg.det(transform[:3, :3]) < 0:
                     faces = faces[:, ::-1]
-                record["surface"] = {"empty": True} if not p.size else {
-                    "positions": transfer(p, "float32"),
-                    "source": transfer(raw, "float32"),
-                    "normals": transfer(normals(p, faces), "float32"),
-                    "sourceNormals": transfer(normals(raw, faces), "float32"),
-                    "indices": transfer(faces, "uint32"),
-                }
+                record["surface"] = {"empty": True}
+                if p.size:
+                    raw_transfer = transfer(raw, "float32")
+                    raw_normals = transfer(normals(raw, faces), "float32")
+                    record["surface"] = {
+                        "positions": raw_transfer if source_surface_only else transfer(p, "float32"),
+                        "source": raw_transfer,
+                        "normals": raw_normals if source_surface_only else transfer(normals(p, faces), "float32"),
+                        "sourceNormals": raw_normals,
+                        "indices": transfer(faces, "uint32"),
+                    }
             layers.append(record)
             if cacheable:
                 cache["layers"][name] = deepcopy(record)
@@ -547,7 +600,7 @@ def dispatch(session, operation, args, request, progress):
         from .anatomy_geometry import inspect_vessel_geometry
 
         return inspect_vessel_geometry(
-            c, args.get("layerId", "vessels"), args.get("point")
+            c, args.get("layerId", "vessels"), args.get("point"), args.get("displaySeriesId")
         )
     if operation == "anatomyPlan":
         if key in session.anatomy_drafts:
