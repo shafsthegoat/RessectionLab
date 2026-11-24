@@ -131,6 +131,10 @@ whole-mesh source audits are at `qc/native-publisher-wall-20261124-v1/README.md`
 The signed CTA vessel-to-bone contrast comparison and export are at
 `qc/cta-vessel-contrast-20261124-v1/README.md`. The index includes both
 TopCoW CTA cases, acquisition controls, and source-linked cutaways.
+The ordinary signed CTA opening, fixed-camera and saved Full head checks are at
+`qc/cta-arterial-opening-20261124-v1/README.md`. The index binds the cut to all
+loaded arterial surfaces in three TopCoW CTAs and records the broader control,
+linked slices, 2048-pixel export, and the superseded app restore receipt.
 The ordinary native-wall sweep and fixed-tick contact checks are at
 `qc/native-wall-vertex-sweep-20261124-v1/README.md`. The index links the
 TopCoW paired replay, support and recoil measurements, EDEN rest and shear
