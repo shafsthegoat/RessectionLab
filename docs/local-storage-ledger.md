@@ -111,6 +111,17 @@ The paired sliding benchmark and TopCoW-014 replay are indexed in
 018 contour comparisons are indexed in
 `qc/categorical-vessel-geometry-20261124.1far659v/README.md`.
 
+The paired CTA and MRA index also holds the cold-verified TopCoW-012 v5
+contact and withdrawal, collision screen, source-colour check and operative
+film. The matched CTA framing checks are at
+`qc/cta-anterior-frame-20261124.GrMFTrO0/README.md`. The directional optical
+cache and preserved cut controls are at
+`qc/directional-optical-depth-20261124-v1/README.md`.
+The native brain contour comparison is at
+`qc/brain-envelope-geometry-20261124.5di2hjsv/README.md`.
+The ordinary EDEN diffusion checks and source-role audit are at
+`qc/ordinary-diffusion-baseline-20261124-v1/README.md`.
+
 Paths below are relative to the RessectionLab root. This compact ledger covers
 that area, not unrelated personal files elsewhere on the HDD. Presence does not
 establish scientific readiness or a completed build; consult each run's receipts.
