@@ -13,10 +13,11 @@ import type {ViewerWorkspaceSettings} from './viewer/workspaceSettings';
 function fieldSettings({centerRasMm:target, layers}:NativeWallSourceScan):ViewerWorkspaceSettings {
   const showsVessels=layers.some(layer=>['vessel','vessels','artery','vein','sinus'].includes(layer.kind));
   return {
-    layout:showsVessels?'3d-focus':'mri-review', showPlane:false, sliceOverlay:'contour',
+    layout:showsVessels?'3d-focus':'mri-review', showPlane:!showsVessels, sliceOverlay:'contour',
+    clipping:showsVessels?undefined:{axis:'z',value:target[2],enabled:true,flipped:true},
     camera:{target, position:[target[0]+24,target[1]-98,target[2]+59], up:[0,0,1]},
     vesselShading:'balanced',
-    volumeRendering:showsVessels?{enabled:false,density:.22}:undefined,
+    volumeRendering:showsVessels?{enabled:false,density:.22}:{density:.34},
     layerOpacity:Object.fromEntries(layers.filter(layer=>layer.kind==='brain').map(layer=>[layer.id,showsVessels?.055:.14])),
   };
 }
