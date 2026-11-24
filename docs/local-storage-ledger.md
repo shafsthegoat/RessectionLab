@@ -122,6 +122,16 @@ The native brain contour comparison is at
 The ordinary EDEN diffusion checks and source-role audit are at
 `qc/ordinary-diffusion-baseline-20261124-v1/README.md`.
 
+The 30-study EDEN completion table is at
+`qc/eden2020-glioma-5714812/cohort-reconciliation-20261124-v1/README.md`.
+The matched CTA posterior sheet checks are at
+`qc/ct-exterior-display-20261124.C0XzMdHW/README.md` and the original planes
+at `qc/cta-detached-band-source-review-20261124-v1/source-band-witness.png`.
+The TopCoW-014 paired v5 loading and recoil replay is in the existing
+`qc/topcow014-ordinary-native-wall-20261124-v1/README.md` index. The operative
+source-terrace and crop-face audit is at
+`qc/operative-tissue-staircase-20261124-v1/README.md`.
+
 Paths below are relative to the RessectionLab root. This compact ledger covers
 that area, not unrelated personal files elsewhere on the HDD. Presence does not
 establish scientific readiness or a completed build; consult each run's receipts.

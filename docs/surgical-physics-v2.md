@@ -237,6 +237,16 @@ On the M2 Pro, the accepted 380 ms contact request and 500 ms withdrawal
 took 2.89 s and 7.18 s through the bridge. The nearby support survey found no
 full-shaft clear placement for a soft-only release. [Evidence and receipts](local-storage-ledger.md)
 
+The ordinary TopCoW-014 v5 case retains the same native wall in two
+18-action runs. Aspiration removed three estimated brain cells and released
+two assigned supports. The intact arm waited an equal interval at the checked
+pose because retained tissue blocked the inactive approach. Both arms then
+used identical contact, hold, withdrawal and settling requests. At the same
+native wall vertex, motion after the 0.60 s hold was 0.05222 mm with the
+supports intact and 0.05570 mm after release. After 1.20 s of recovery, the
+modeled residuals were 0.000177 and 0.000275 mm. Cold replay reproduced every
+accepted boundary. [Paired experiment and film](local-storage-ledger.md)
+
 The parallel-vessel control uses two independently supported 13-site rods and a 784-triangle native score wall. The same 0.4 s dissector stroke rolls back under v1 and advances under v2. The passive vessel moves 0.133 mm, reaches 0.250 mm with continued loading, and recoils below one quarter of that displacement after withdrawal and relaxation. The accepted wall clears the guard and cold replay reproduces its pose and subsequent receipts. Run `.venv/bin/python -m pytest -q tests/test_surgical_vessel_rods.py -k inter_vessel_contact`.
 
 On an Apple M2 Pro with the native sweep guard, the accepted contact stroke took 470 ms at the median of five trials. The projection accounted for 67 ms across 26 correction calls. A well-separated vessel control took 293 ms with v1 and 292 ms with v2 and required no projection. These timings cover the engine action, including collision checks and state publication.
