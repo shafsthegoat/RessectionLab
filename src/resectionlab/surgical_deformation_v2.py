@@ -189,8 +189,27 @@ def _ordered_bond_indices(ids, retained, local_cuts, shape, coordinates, index):
     return np.asarray([(index[a], index[b]) for a, b in bonds], dtype=int).reshape(-1, 2).T
 
 
+def _bond_lengths(vectors):
+    representatives = vectors
+    byte_groups = None
+    if (len(vectors) >= 128 and vectors.dtype == np.float64
+            and vectors.flags.c_contiguous and np.isfinite(vectors).all()):
+        # Each 24-byte record contains the three Float64 components of a bond.
+        # Remove identical records before the numerical sort of the remainder.
+        _, indices, groups = np.unique(vectors.view('V24').ravel(),
+                                       return_index=True, return_inverse=True)
+        if len(indices) * 4 <= len(vectors):
+            representatives = vectors[indices]
+            byte_groups = groups.reshape(-1)
+    # Keep numerical grouping (including signed zeros) and the original
+    # scalar norm. A batched norm can round differently.
+    distinct, groups = np.unique(representatives, axis=0, return_inverse=True)
+    lengths = np.asarray([np.linalg.norm(vector) for vector in distinct])[groups.reshape(-1)]
+    return lengths if byte_groups is None else lengths[byte_groups]
+
+
 def _system(engine, p, ids, anchors, retained, blocked, attachment_stiffness=None):
-    held = tuple(sorted({c for h in _holds(engine) for c in h['cells']} & set(ids)))
+    held = {c for h in _holds(engine) for c in h['cells']} & set(ids)
     shape = engine.scene.shape
     strides = {1, shape[2], shape[1] * shape[2]}
     # Only cuts between potential axial neighbors can alter this system. At
@@ -202,7 +221,7 @@ def _system(engine, p, ids, anchors, retained, blocked, attachment_stiffness=Non
     material_profile = engine.scene.properties.get('gliomaMaterialsV1')
     signature = (grid, engine.scene.identity if material_profile else None,
                  tuple(ids), tuple(_material(engine, c) for c in ids), tuple(anchors),
-                 local_cuts, held, tuple((k, p[k]) for k in sorted(profile())))
+                 local_cuts, tuple(sorted(held)), tuple((k, p[k]) for k in sorted(profile())))
     if attachment_stiffness:
         signature += (tuple(attachment_stiffness.items()),)
     cached = getattr(engine, '_deformation_system_v2', None)
@@ -218,10 +237,7 @@ def _system(engine, p, ids, anchors, retained, blocked, attachment_stiffness=Non
     rest = coordinates @ engine.scene.affine[:3, :3].T
     first, second = _ordered_bond_indices(ids, retained, local_cuts, shape, coordinates, index)
     vectors = rest[second] - rest[first]
-    # Keep the scalar norm for each bond. A batched reduction can round
-    # differently. Identical oriented vectors reuse the same scalar result.
-    distinct, groups = np.unique(vectors, axis=0, return_inverse=True)
-    lengths = np.asarray([np.linalg.norm(vector) for vector in distinct])[groups.reshape(-1)]
+    lengths = _bond_lengths(vectors)
     edges = [(int(a), int(b), length) for a, b, length in zip(first, second, lengths)]
     axes = np.arange(3)
     a_dof, b_dof = 3 * first[:, None] + axes, 3 * second[:, None] + axes
@@ -246,7 +262,10 @@ def _system(engine, p, ids, anchors, retained, blocked, attachment_stiffness=Non
     # rigid modes in detached fragments; it is a disclosed surrogate assumption.
     K += sparse.diags(np.repeat(stiffness * .05, 3))
     hold_diag = np.repeat([p['holdStiffnessNPerMm'] if c in held else 0 for c in ids], 3)
-    free = np.repeat([c not in anchors for c in ids], 3)
+    # Keep the original active-cell order while avoiding a boundary scan for
+    # every degree of freedom in a growing contact patch.
+    anchor_cells = set(anchors)
+    free = np.repeat([c not in anchor_cells for c in ids], 3)
     effective_K = K
     if material_profile:
         tau = material_profile['relaxationSeconds']

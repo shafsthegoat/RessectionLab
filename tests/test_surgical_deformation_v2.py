@@ -73,6 +73,49 @@ def test_batched_lattice_retains_scalar_sparse_entry_order(monkeypatch):
         np.testing.assert_array_equal(values.view(np.uint64), np.asarray(value).view(np.uint64))
 
 
+@pytest.mark.parametrize('reverse', [False, True])
+def test_lattice_repeated_bonds_keep_exact_matrices_and_solve_on_irregular_masks(monkeypatch, reverse):
+    from resectionlab import surgical_deformation_v2 as brain
+
+    e = engine()
+    e.scene.affine[:3, :3] = [[.65, -.21, .04], [.3, 1.1, 0.], [0., .13, 1.37]]
+    coords = [(i, j, k) for i in range(2, 10) for j in range(3, 10) for k in range(1, 7)
+              if (i + 2*j + k) % 11 and not (i == 4 and j >= 6)]
+    ids = [cell(e, point) for point in coords] + [cell(e, (12, 12, 12))]
+    if reverse:
+        ids.reverse()
+    anchors = [*ids[::4], ids[0], cell(e, (0, 0, 0))]
+    cuts = {(cell(e, (2, 3, 1)), cell(e, (2, 3, 2)))}
+    e.scene.labels.ravel()[ids[1::3]] = 2
+    e.state['holds'] = {'left': {'cells': [ids[5], ids[-2]], 'target': [0., 0., 0.]}}
+    factorized = brain.factorized
+    matrices = []
+
+    def capture(matrix):
+        matrices.append(matrix.copy())
+        return factorized(matrix)
+
+    def reference_lengths(vectors):
+        distinct, groups = np.unique(vectors, axis=0, return_inverse=True)
+        return np.asarray([np.linalg.norm(vector) for vector in distinct])[groups.reshape(-1)]
+
+    monkeypatch.setattr(brain, 'factorized', capture)
+    arguments = (e, profile(), ids, anchors, set(ids), cuts, {ids[1]: .003, ids[2]: .007})
+    solve, free, index, edges, stiffness = brain._system(*arguments)
+    del e._deformation_system_v2
+    monkeypatch.setattr(brain, '_bond_lengths', reference_lengths)
+    reference_solve, reference_free, reference_index, reference_edges, reference_stiffness = brain._system(*arguments)
+
+    assert index == reference_index and edges == reference_edges
+    np.testing.assert_array_equal(free, np.repeat([c not in anchors for c in ids], 3))
+    np.testing.assert_array_equal(free, reference_free)
+    for actual, reference in ((stiffness, reference_stiffness), matrices):
+        for field in ('indptr', 'indices', 'data'):
+            assert getattr(actual, field).tobytes() == getattr(reference, field).tobytes()
+    rhs = np.linspace(-.01, .01, np.count_nonzero(free))
+    assert solve(rhs).tobytes() == reference_solve(rhs).tobytes()
+
+
 def test_neighbors_deform_smoothly_and_recover_over_time():
     e, c = held(); tick(e, .25)
     near = cell(e, (6, 7, 6)); far = cell(e, (6, 8, 6))
