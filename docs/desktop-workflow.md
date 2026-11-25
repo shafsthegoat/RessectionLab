@@ -76,6 +76,14 @@ first when a compatible source pair is available. The panel names the brain
 layer and angiography score layer with their acquisitions. Choose a pair if
 the study has more than one.
 
+New local preparation requires a positive brain-tissue annotation with
+verified original label membership on its acquired grid. This check is
+separate from local registration review and from ordinary layer roles. The
+**Local wall evidence by source** panel shows exclusions. The recorded
+TopCoW-012 and TopCoW-014 local rehearsals retain their historical tissue
+assumptions and can still open and replay. Their brain envelopes require
+additional tissue evidence for a new local preparation.
+
 - **Prepare reviewed local wall** uses the saved RAS center for that exact pair
   and its local alignment review. The general registration status still applies
   elsewhere in the study.

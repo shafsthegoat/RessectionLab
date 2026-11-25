@@ -27,6 +27,12 @@ export function EnvironmentPreparationPanel({binding,approach,routeName,measurem
   useEffect(()=>{active.current=true;return ()=>{active.current=false;};},[]);
   const wall=options?.nativeWall;
   const pairs=wall?.pairs??[];
+  const wallLayers=options?.layers.filter(layer=>layer.role==='brain'||layer.role==='vessels')??[];
+  const wallExclusions=wallLayers.filter(layer=>layer.nativeWallIssue);
+  const brainLayers=wallLayers.filter(layer=>layer.role==='brain');
+  const brainIssue=brainLayers.length&&brainLayers.every(layer=>layer.nativeWallIssue)?brainLayers[0].nativeWallIssue:undefined;
+  const wallIssue=wall?.referenceIssue??brainIssue??
+    'A local wall requires compatible brain tissue and intact angiography scores with reviewed alignment.';
   const local=!approach&&(mode??(pairs.length?'native-wall':'standard'))==='native-wall';
   const pair=pairs.length===1?pairs[0]:pairs.find(candidate=>pairId(candidate)===chosenPair);
   const reviewed=pair?.scope==='reviewed-crop';
@@ -54,7 +60,7 @@ export function EnvironmentPreparationPanel({binding,approach,routeName,measurem
     canPrepare?'Ready to prepare':!options||options.referenceIssue?'Preparation unavailable':alignmentRequired?'Alignment choice required':'Select source anatomy';
   const explanation=local?(wall?.referenceIssue??(pairs.length?
     'Preparation checks local source coverage, vessel continuity, and nearby patient tissue.':
-    'A local wall requires a compatible brain layer and an intact angiography score layer with reviewed alignment.')):rehearsalAvailability(options);
+    wallIssue)):rehearsalAvailability(options);
   async function prepare(choice:Pick<EnvironmentPreparation,'layers'|'allowUnreviewedRegistration'|'approach'|'nativeWallCenter'>){
     setPreparing(true);setError(null);
     try{
@@ -75,8 +81,13 @@ export function EnvironmentPreparationPanel({binding,approach,routeName,measurem
         <option value="native-wall">Local native wall</option><option value="standard">Standard 1 mm environment</option>
       </select>
     </label>}
+    {!approach&&!local&&wall&&!pairs.length&&<p className="surgical-note">Local native wall unavailable. {wallIssue}</p>}
     {local?<fieldset className="surgical-controls environment-preparation-controls" disabled={busy||preparing}>
       <legend>Local wall sources</legend>
+      {!pairs.length&&wallExclusions.length>0&&<details className="environment-excluded">
+        <summary>Local wall evidence by source</summary>
+        {wallExclusions.map(layer=><p key={layer.layerId}>{sourceLabel(layer.layerId)} · {layer.nativeWallIssue}</p>)}
+      </details>}
       {pairs.length>1&&<label className="environment-layer-row">
         <span className="environment-layer-role">Source pair</span>
         <select aria-label="Native wall source pair" value={pair?pairId(pair):''} onChange={e=>{setChosenPair(e.target.value);setError(null);}}>

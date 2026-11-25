@@ -11,11 +11,12 @@ import itertools
 import json
 from pathlib import Path
 from urllib.parse import quote
+import nibabel as nib
 import numpy as np
 from scipy.ndimage import affine_transform
 from .core import CaseData, SourceRef, array_digest
 from .imaging import save_case
-from .patient_anatomy import PatientImagingCollection
+from .patient_anatomy import PatientImagingCollection, file_hash
 
 ORDER = ('brain', 'tumor', 'bone', 'vessels')
 MATERIAL = {'brain': 'soft_tissue', 'tumor': 'tumor', 'bone': 'bone', 'vessels': 'vessel'}
@@ -128,6 +129,46 @@ def _wall_layer_issue(role, row):
     return None
 
 
+def _new_wall_layer_issue(collection, role, row, *, check):
+    """Check new mechanical tissue inputs without changing saved source receipts."""
+    issue = _wall_layer_issue(role, row)
+    if issue or role != 'brain':
+        return issue
+
+    provenance = row.get('provenance', {})
+    original = provenance.get('source')
+    source = collection.series(row['source_series'])
+    label = row['label_value']
+    if (provenance.get('kind') not in {'observed_source_annotation', 'supplied_annotation'}
+            or provenance.get('evidence_use') != 'positive_labels_only'
+            or provenance.get('source_scan_sha256') != source['original']['sha256']
+            or type(label) is not int or not 0 < label <= 65535 or provenance.get('source_label_value') != label
+            or provenance.get('model') or provenance.get('inference')
+            or row.get('edits') or row.get('revision') != 0
+            or not isinstance(original, dict) or not isinstance(original.get('path'), str)):
+        return 'Local native-wall rehearsal requires a source-bound positive brain tissue annotation'
+    if (row['data']['shape'] != source['data']['shape']
+            or not np.allclose(row['affine'], source['affine'], rtol=0, atol=1e-5)):
+        return 'Local native-wall brain tissue annotation must use the acquired source grid'
+
+    try:
+        collection.require_native_geometry(row)
+        annotation = collection.path(original['path'])
+        if file_hash(annotation, check=check) != original.get('sha256'):
+            return 'The source brain tissue annotation checksum differs'
+        supplied = np.asanyarray(nib.load(annotation).dataobj)
+        retained = collection.array(row['data'], check=check)
+    except (OSError, ValueError, nib.filebasedimages.ImageFileError) as error:
+        return f'Cannot verify the source brain tissue annotation: {error}'
+    slab = max(1, 262_144 // max(1, np.prod(retained.shape[1:])))
+    for offset in range(0, len(retained), slab):
+        check()
+        block = slice(offset, offset + slab)
+        if not np.array_equal(supplied[block] == label, retained[block] == label):
+            return 'The selected brain tissue labels differ from their source annotation'
+    return None
+
+
 def _source_registration(collection, series):
     sid = series['id']
     if series.get('units_status') != 'mm':
@@ -188,10 +229,10 @@ def surgical_environment_options(collection, *, check=lambda: None):
                 continue
             check()
             option = {'role': role, 'layerId': row['id'], 'status': 'unavailable', 'reason': None}
-            native_issue = _wall_layer_issue(role, row)
-            if native_issue:
-                option['nativeWallIssue'] = native_issue
             try:
+                native_issue = _new_wall_layer_issue(collection, role, row, check=check)
+                if native_issue:
+                    option['nativeWallIssue'] = native_issue
                 _check_layer_export(collection, role, row)
                 sid = row['source_series']
                 if sid not in registration:
@@ -300,7 +341,7 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
     for name, row in rows.items():
         _check_layer_export(collection, name, row)
         if native_wall_center is not None:
-            native_issue = _wall_layer_issue(name, row)
+            native_issue = _new_wall_layer_issue(collection, name, row, check=check)
             if native_issue:
                 raise ValueError(native_issue)
     warnings = ['Research derivative of source annotations and segmentation estimates; provenance and review status are retained, not independently validated.',

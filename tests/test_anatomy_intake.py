@@ -58,6 +58,27 @@ def test_grouped_intake_attaches_annotation_to_selected_scan_and_retries_once(tm
     assert commits == [True]
 
 
+def test_grouped_brain_role_does_not_qualify_a_native_wall_tissue_input(tmp_path):
+    from test_surgical_patient import native_wall_fixture
+    from resectionlab.surgical_patient import prepare_surgical_environment, surgical_environment_options
+
+    study, _, brain = native_wall_fixture(tmp_path)
+    supplied = _image(tmp_path / 'selected-brain.nii.gz', brain, study.series('t1')['affine'])
+    item = _item(supplied, 'labels', seriesId='t1',
+                 roleMap={'1': {'kind': 'brain', 'label': 'Selected structural brain'}})
+    revised = reviewed_intake(study, _request(study, [item]))
+    imported = next(row for row in revised.document['layers'] if row['label'] == 'Selected structural brain')
+    options = surgical_environment_options(revised)
+    assert imported['provenance']['kind'] == 'observed_source_annotation'
+    assert 'evidence_use' not in imported['provenance']
+    assert options['nativeWall']['pairs'] == [{'brainLayerId': 'brain', 'vesselLayerId': 'vessels', 'scope': 'cursor'}]
+    option = next(row for row in options['layers'] if row['layerId'] == imported['id'])
+    assert option['status'] == 'ready' and 'source-bound positive brain tissue annotation' in option['nativeWallIssue']
+    with pytest.raises(ValueError, match='requires a source-bound positive brain tissue annotation'):
+        prepare_surgical_environment(revised.root, tmp_path / 'result',
+                                     layer_ids={'brain': imported['id'], 'vessels': 'vessels'}, native_wall_center=[0., 0., 1.])
+
+
 def test_changed_input_or_mismatched_annotation_cannot_publish_partial_group(tmp_path):
     c = _study(tmp_path)
     scan = _image(tmp_path / "t1.nii.gz", np.ones((8, 8, 8), np.float32))

@@ -310,7 +310,7 @@ capsule radius encloses every interpolated capsule throughout the substep.
 The material guards still use swept cell coverage. The continuous wall
 intersection, local fold and facet compression tests are independent.
 
-On the reviewed TopCoW-012 field, a single 380 ms endpoint request completed
+On the historical TopCoW-012 field with reviewed local registration, a single 380 ms endpoint request completed
 contact and a single 500 ms endpoint request withdrew the tool. The prepared
 case retained the native score, mask, source crossings and wall triangles.
 Contact moved the modeled wall up to 0.00765 mm and loaded the same two
@@ -320,3 +320,8 @@ remained attached. The two requests took 2.11 s and 3.93 s through the bridge
 on the M2 Pro. The original direct request still replays its earlier partial
 stop at step 8 of 11. Both old histories and all four new action boundaries
 cold-replayed exactly. [Evidence and receipts](local-storage-ledger.md)
+
+New local native-wall preparation requires verified positive brain-tissue
+labels on their exact acquired grid. The historical TopCoW-012 and TopCoW-014
+records remain available under their stored tissue assumptions. Their archived
+brain envelopes need additional tissue evidence for new local preparation.

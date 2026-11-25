@@ -101,6 +101,20 @@ def test_anatomy_model_attribution_comes_from_native_provenance(name, provenance
     assert layer['provenance'] == 'estimated'
 
 
+def add_source_brain(study, tmp_path, brain, *, series='t1', layer_id='brain'):
+    scan = study.series(series)
+    path = tmp_path / f'{layer_id}.nii.gz'
+    annotation = nib.Nifti1Image(brain, scan['affine'])
+    annotation.header.set_xyzt_units('mm')
+    nib.save(annotation, path)
+    return study.add_layer(brain, scan['affine'], layer_id=layer_id, source_series=series,
+                           kind='brain', role='context', color='#aaaaaa', provenance={
+                               'kind': 'supplied_annotation', 'evidence_use': 'positive_labels_only',
+                               'source': study.original(path), 'source_scan_sha256': scan['original']['sha256'],
+                               'source_label_value': 1,
+                           })
+
+
 def native_wall_fixture(tmp_path, *, registration='reviewed', isolated_pair=False):
     shape = (65, 65, 65)
     affine = np.diag([-.5, .5, .5, 1.])
@@ -119,7 +133,7 @@ def native_wall_fixture(tmp_path, *, registration='reviewed', isolated_pair=Fals
         nib.save(image, path)
         study.add_series(path, series_id=series, modality=modality, timepoint='preoperative')
     study.set_registration('tof', np.eye(4), status=registration, method='explicit test registration')
-    study.add_layer(brain, affine, layer_id='brain', source_series='t1', kind='brain', role='context', color='#aaaaaa')
+    add_source_brain(study, tmp_path, brain)
     study.add_layer((scores >= .5).astype(np.uint8), affine, layer_id='vessels', source_series='tof', kind='vessels',
                     role='context', color='#aa2222', probability=scores)
     study.save()
@@ -130,8 +144,7 @@ def test_native_wall_catalog_keeps_cursor_pairs_when_standard_grid_is_too_large(
     from resectionlab import surgical_patient
 
     study, _, brain = native_wall_fixture(tmp_path)
-    study.add_layer(brain, study.series('tof')['affine'], layer_id='tof-brain', source_series='tof',
-                    kind='brain', role='context', color='#aaaaaa')
+    add_source_brain(study, tmp_path, brain, series='tof', layer_id='tof-brain')
     study.save()
     standard_reference_issue = 'Requested derivative exceeds 80 million cells'
 
@@ -161,12 +174,15 @@ def test_native_wall_catalog_and_preparation_refuse_incompatible_score_lattice(t
                                      native_wall_center=[0., 0., 1.])
 
 
-def test_native_wall_source_inspection_keeps_live_state_and_checks_relocated_sources(tmp_path):
+def test_native_wall_source_inspection_keeps_live_state_and_checks_relocated_sources(tmp_path, monkeypatch):
     from resectionlab.anatomy_local_wall_review import review_native_wall_alignment
     from resectionlab.anatomy_package import save_package
     from resectionlab.desktop_bridge import BridgeSession, _Request
+    from resectionlab import surgical_patient
 
     study, _, _ = native_wall_fixture(tmp_path, registration='unreviewed')
+    annotation = study.layer('brain')['provenance']['source']
+    study.layer('brain')['provenance'] = {'kind': 'image_derived_estimate', 'source': annotation}
     transform = np.eye(4)
     transform[0, 3] = .5
     study.set_registration('tof', transform, status='unreviewed', method='local review fixture')
@@ -176,8 +192,14 @@ def test_native_wall_source_inspection_keeps_live_state_and_checks_relocated_sou
     review_native_wall_alignment(study, 'tof', moving.tolist(), fixed.tolist(), 'local reviewer',
                                  {'brainLayerId': 'brain', 'vesselLayerId': 'vessels', 'center': center})
     study.save()
-    prepared = prepare_surgical_environment(study.root, tmp_path / 'rehearsal', layer_ids={'brain': 'brain', 'vessels': 'vessels'},
-                                            native_wall_center=center)
+    layers = {'brain': 'brain', 'vessels': 'vessels'}
+    assert surgical_environment_options(study)['nativeWall']['pairs'] == []
+    with pytest.raises(ValueError, match='requires a source-bound positive brain tissue annotation'):
+        prepare_surgical_environment(study.root, tmp_path / 'new', layer_ids=layers, native_wall_center=center)
+    with monkeypatch.context() as historical:
+        historical.setattr(surgical_patient, '_new_wall_layer_issue',
+                           lambda _study, role, row, **_: surgical_patient._wall_layer_issue(role, row))
+        prepared = prepare_surgical_environment(study.root, tmp_path / 'rehearsal', layer_ids=layers, native_wall_center=center)
     archive = tmp_path / 'original.rsworkspace'
     save_package(study, archive)
     manifest = study.root.rename(tmp_path / 'relocated') / 'patient-anatomy.json'
@@ -329,8 +351,7 @@ def test_native_wall_catalog_offers_only_the_source_bound_reviewed_pair(tmp_path
     from resectionlab.anatomy_local_wall_review import review_native_wall_alignment
 
     study, _, brain = native_wall_fixture(tmp_path, registration='unreviewed')
-    study.add_layer(brain, study.series('t1')['affine'], layer_id='other-brain', source_series='t1',
-                    kind='brain', role='context', color='#aaaaaa')
+    add_source_brain(study, tmp_path, brain, layer_id='other-brain')
     center = [0., 0., 1.]
     landmarks = [[-4., -4., 0.], [4., -3., 0.], [-1., 3., 0.], [1., 1., 4.]]
     review_native_wall_alignment(study, 'tof', landmarks, landmarks, 'engineering scope control',
@@ -465,6 +486,49 @@ def test_local_native_wall_refuses_inspection_only_brain(tmp_path, evidence_use)
     study.save()
     assert surgical_environment_options(study)['nativeWall'] == {'referenceIssue': None, 'pairs': []}
     with pytest.raises(ValueError, match='cannot use brain as mechanical anatomy'):
+        prepare_surgical_environment(study.root, tmp_path / 'result', layer_ids={'brain': 'brain', 'vessels': 'vessels'},
+                                     native_wall_center=[0., 0., 1.])
+    assert not (tmp_path / 'result').exists()
+
+
+@pytest.mark.parametrize('problem, message', [
+    ('model estimate', 'requires a source-bound positive brain tissue annotation'),
+    ('scan binding', 'requires a source-bound positive brain tissue annotation'),
+    ('annotation bytes', 'source brain tissue annotation checksum differs'),
+    ('label membership', 'selected brain tissue labels differ from their source annotation'),
+    ('shifted original', 'Original native geometry differs from imported grid'),
+    ('shifted annotation grid', 'must use the acquired source grid'),
+])
+def test_new_native_wall_brain_annotation_keeps_immutable_source_lineage(tmp_path, problem, message):
+    study, _, brain = native_wall_fixture(tmp_path)
+    row = study.layer('brain')
+    provenance = row['provenance']
+    if problem == 'model estimate':
+        provenance['kind'] = 'image_derived_estimate'
+    elif problem == 'scan binding':
+        provenance['source_scan_sha256'] = study.series('tof')['original']['sha256']
+    elif problem == 'annotation bytes':
+        path = study.path(provenance['source']['path'])
+        path.write_bytes(path.read_bytes() + b'extra')
+    elif problem == 'label membership':
+        brain[32, 32, 32] = 0
+        row['data'] = study.put_array(brain)
+    else:
+        shifted = np.array(row['affine'])
+        shifted[0, 3] += 1.
+        annotation = nib.Nifti1Image(brain, shifted)
+        annotation.header.set_xyzt_units('mm')
+        path = tmp_path / 'shifted-brain.nii.gz'
+        nib.save(annotation, path)
+        provenance['source'] = study.original(path)
+        if problem == 'shifted annotation grid':
+            row['affine'] = shifted.tolist()
+    study.save()
+    options = surgical_environment_options(study)
+    assert options['nativeWall']['pairs'] == []
+    option = next(row for row in options['layers'] if row['layerId'] == 'brain')
+    assert message in option['nativeWallIssue']
+    with pytest.raises(ValueError, match=message):
         prepare_surgical_environment(study.root, tmp_path / 'result', layer_ids={'brain': 'brain', 'vessels': 'vessels'},
                                      native_wall_center=[0., 0., 1.])
     assert not (tmp_path / 'result').exists()

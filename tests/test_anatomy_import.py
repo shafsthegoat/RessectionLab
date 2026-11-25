@@ -119,8 +119,8 @@ def test_local_wall_alignment_review_admits_only_its_bound_crop_and_layers(tmp_p
     vascular = next(row for row in options['layers'] if row['layerId'] == layers['vessels'])
     assert vascular['status'] == 'estimated_alignment'
     assert vascular['nativeWallAlignment'] == {'brainLayerId': layers['brain'], 'centerRasMm': center}
-    source.layer('brain')['revision'] += 1
-    source.save('Generated stale tissue revision control')
+    source.layer('brain')['coverage'] = 'Updated positive tissue support declaration after review'
+    source.save('Generated stale alignment receipt control')
     options = surgical_environment_options(source)
     vascular = next(row for row in options['layers'] if row['layerId'] == layers['vessels'])
     assert vascular['status'] == 'estimated_alignment' and 'nativeWallAlignment' not in vascular
