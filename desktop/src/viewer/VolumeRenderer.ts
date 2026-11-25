@@ -1205,6 +1205,8 @@ export class VolumeRenderer {
 
   setWorkspaceSettings(settings: ViewerWorkspaceSettings): void {
     if(this.workspaceSettings?.showOrientationGuide!==settings.showOrientationGuide)this.requestRender(false);
+    const depthWasEnabled = this.workspaceSettings?.vesselDepthSeparation !== false;
+    if (depthWasEnabled !== (settings.vesselDepthSeparation !== false)) this.requestRender(false);
     this.workspaceSettings = settings;
     this.updateFieldAppearance();
     if(this.surgicalGhost){

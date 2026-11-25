@@ -550,6 +550,16 @@ test('slice contour changes reach every image material and preserve source data 
   assert.deepEqual(r.volume.mri,scalar);assert.deepEqual(r.volume.compartments[0].mask,mask);
 });
 
+test('vessel depth lighting toggles redraw the 3D view without resubmitting its source slices',()=>{
+  const {r}=renderer(),draws=[];
+  r.setWorkspaceSettings({});
+  r.requestRender=slices=>draws.push(slices);
+  r.setWorkspaceSettings({vesselDepthSeparation:false});
+  r.setWorkspaceSettings({vesselDepthSeparation:true});
+  r.setWorkspaceSettings({});
+  assert.deepEqual(draws,[false,false]);
+});
+
 test('unchanged cursor/layers/routes avoid redraw, and in-place visibility changes reach all views',()=>{
   const {r,mesh}=renderer();let labels=0,planeUpdates=0,rendered=0;
   const uniforms={uCursor:{value:new THREE.Vector3()},uVisibleBits:{value:0},uLayerEnabled:{value:new Float32Array(8)},uOverlay:{value:0}};
