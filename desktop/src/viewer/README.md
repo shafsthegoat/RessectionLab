@@ -180,6 +180,13 @@ its own structural acquisition. The 3D volume starts disabled. **Show scan
 volume with structures** enables the active acquisition at the same camera and
 source cursor. Saved views restore their recorded volume and appearance choices.
 
+With one translucent source-bound lesion in mixed MR **Vessels**, **Appearance →
+Show vessels through lesion** displays its closest surface with a visible rim.
+This reveals more of the vessels in projection while retaining the lesion
+geometry, contours and estimated-alignment status. The inspection resets on
+leaving the source view. The warning banner keeps a failed forward/reverse
+check visible when multiple acquisitions report warnings.
+
 Settled Scan uses ray steps of one source spacing and at most 640 intervals. Lighting uses two scales of cached optical density for softer key-light shadows and ambient occlusion. The cache maps source values to extinction before averaging at roughly 4 mm spacing, capped at 56 cells per axis. It includes source support and the physical gradient weighting used for automatic MRI shells. Preparation runs in short tasks after the first draw, then restarts accumulation for the current acquisition and transfer. Export completes any pending cache before its first sample. Shadow probes honor active clipping planes. Label isolation and explicit CT skull overrides use exact source membership for each probe. The largest cache occupies 1.76 MiB, including the transfer row. Primary ray samples and linked source slices keep their existing resolution. The colored fill approximates scattered light.
 
 Transparent CT context uses a centered optical footprint when a single visible, independent bone mask shares the selected acquisition's display grid. A symmetric six-face filter centered on each voxel reduces bands from the discrete mask. Face offsets are bounded to 1.45 cells and 1 mm along each source axis. The ray interpolates the resulting byte coverage grid and the shadow atlas uses the same grid. Geometry, measurements and linked source panes retain the original mask and acquired samples. Scan, exterior bone, isolated labels, multiple bone contexts and scans with native support keep their existing path. The optical texture needs one byte per displayed voxel and reuses the auxiliary sampler.

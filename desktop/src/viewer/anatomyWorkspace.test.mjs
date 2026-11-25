@@ -585,6 +585,26 @@ test('vessel depth lighting toggles redraw the 3D view without resubmitting its 
   assert.deepEqual(draws,[false,false]);
 });
 
+test('single-surface lesion context is limited to mixed structural MRI Vessels',()=>{
+  const {r}=renderer();
+  const lesion={name:'brain',color:'#778899',kind:'tumor',sourceSeries:'flair',alignment:'estimated'};
+  const settings={presentation:'vascular',sourcedVesselContext:true,contextStyle:'shell'};
+  r.volume={...r.volume,displayIdentity:'native/revision',modality:'T1CE',sourceSeriesId:'t1ce',compartments:[lesion]};
+  const apply=(patch,enabled=true)=>{
+    r.setWorkspaceSettings({...settings,...patch},enabled);
+    return r.surfaces.get(lesion.name).userData.cranialBoundary;
+  };
+  assert.equal(apply({},false),undefined);
+  assert.equal(apply({}),'lesion');
+  assert.equal(apply({presentation:'segmentation'}),undefined);
+  assert.equal(apply({operativeView:'external'}),undefined);
+  lesion.alignment='source-grid preview';
+  assert.equal(apply({}),undefined);
+  lesion.alignment='estimated';
+  r.volume.compartments.push({...lesion,name:'second lesion'});
+  assert.equal(apply({}),undefined);
+});
+
 test('unchanged cursor/layers/routes avoid redraw, and in-place visibility changes reach all views',()=>{
   const {r,mesh}=renderer();let labels=0,planeUpdates=0,rendered=0;
   const uniforms={uCursor:{value:new THREE.Vector3()},uVisibleBits:{value:0},uLayerEnabled:{value:new Float32Array(8)},uOverlay:{value:0}};

@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {CranialDepth} from './cranialDepth.ts';
+import {CranialDepth, type CranialBoundary} from './cranialDepth.ts';
 
 export const SURFACE_PEELS=4;
 /** Front-to-back mesh boundary layers for the scan ray marcher. This uses the
@@ -15,7 +15,7 @@ export class SurfaceVolumePass {
     t.depthTexture=new THREE.DepthTexture(1,1,THREE.UnsignedIntType);return t;
   });
   readonly tail=new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,depthBuffer:false});
-  private readonly materials=new Map<THREE.Material,{peel:THREE.Material;tail:THREE.Material;sourceProgramKey:string;boundary?:'head'|'cortex'}>();
+  private readonly materials=new Map<THREE.Material,{peel:THREE.Material;tail:THREE.Material;sourceProgramKey:string;boundary?:CranialBoundary}>();
   private readonly uniforms={uPreviousSurface:{value:null as THREE.Texture|null},uOpaqueSurface:{value:null as THREE.Texture|null},uSurfaceSize:{value:new THREE.Vector2()},uFirstSurface:{value:true}};
   private readonly corticalContact={
     uHasCorticalBoundary:{value:false},

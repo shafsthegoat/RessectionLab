@@ -31,7 +31,7 @@ import type {IncrementalSurfaceRequest} from './incrementalSurface';
 import {scanFitPoints} from './scanCameraFit';
 import {mprView,sourceSignalBounds} from './mprFraming';
 import {applySourceContextMaterial} from './sourceContextMaterial';
-import {isStructuralMrModality} from '../native-study-state';
+import {isStructuralMrModality,mixedVesselLesion} from '../native-study-state';
 import {isCtAngiography,usesAcquiredCtBone} from './volumeTransfer';
 import {installNativeContextLighting,setNativeContextLighting} from './nativeContextLighting';
 import {advectScoreWallLighting,displaySurfaceNormals,scoreWallLighting} from './displaySurfaceNormals';
@@ -256,6 +256,7 @@ export class VolumeRenderer {
   private readonly surfaces = new Map<string, THREE.Mesh>();
   private vesselSlabContext?:VesselSlabContext;
   private readonly vesselDepthSeparation = new VesselDepthSeparation();
+  private overlapLesion?:string;
   private readonly tractObjects = new Map<string, THREE.LineSegments<THREE.BufferGeometry,THREE.LineBasicMaterial>>();
   private selectedStructure:string|null=null;
   private vesselTrace?:THREE.Line<THREE.BufferGeometry,THREE.LineBasicMaterial>;
@@ -805,7 +806,7 @@ export class VolumeRenderer {
     mesh.userData.corticalContact = ['csf','ventricles','dura','skull','bone'].includes(displayKind);
     const source=layer.appearanceSource;
     mesh.userData.vesselCortexSource=!!source&&isStructuralMrModality(source.modality);
-    mesh.userData.cranialBoundary=this.cranialBoundary(displayKind,this.workspaceSettings,mesh.userData.vesselCortexSource);
+    mesh.userData.cranialBoundary=this.cranialBoundary(layer,this.workspaceSettings,mesh.userData.vesselCortexSource);
     const nativeCortex=['gray-matter','cerebral-cortex','cerebellar-cortex'].includes(displayKind);
     if(source&&(nativeCortex||['brain','soft_tissue'].includes(displayKind))){
       let signal=this.corticalSignals.get(source.seriesId);
@@ -829,8 +830,10 @@ export class VolumeRenderer {
     const code=this.labelCodes[index];
     return this.volume.displayIdentity&&code?.[1]?{texture:this.labelTexture,shape:this.volume.shape,worldToVoxel:matrix(inverseAffine(this.affine)),code}:undefined;
   }
-  private cranialBoundary(kind:string|undefined,settings:ViewerWorkspaceSettings,vesselCortexSource:boolean) {
+  private cranialBoundary(layer:ViewerVolume['compartments'][number],settings:ViewerWorkspaceSettings,vesselCortexSource:boolean) {
     if(!this.volume.displayIdentity||settings.contextStyle!=='shell'||settings.operativeView==='surgeon')return undefined;
+    const kind=layer.displayKind??layer.kind;
+    if(layer.name===this.overlapLesion)return 'lesion';
     const structures=settings.presentation==='segmentation';
     const sourcedVessels=settings.presentation==='vascular'&&settings.sourcedVesselContext&&vesselCortexSource;
     if(!structures&&!sourcedVessels)return undefined;
@@ -1213,11 +1216,12 @@ export class VolumeRenderer {
     return context.update(surfaces)?context:undefined;
   }
 
-  setWorkspaceSettings(settings: ViewerWorkspaceSettings): void {
+  setWorkspaceSettings(settings: ViewerWorkspaceSettings,inspectLesionOverlap=false): void {
     if(this.workspaceSettings?.showOrientationGuide!==settings.showOrientationGuide)this.requestRender(false);
     const depthWasEnabled = this.workspaceSettings?.vesselDepthSeparation !== false;
     if (depthWasEnabled !== (settings.vesselDepthSeparation !== false)) this.requestRender(false);
     this.workspaceSettings = settings;
+    this.overlapLesion=inspectLesionOverlap?mixedVesselLesion(this.volume,settings)?.name:undefined;
     this.updateFieldAppearance();
     if(this.surgicalGhost){
       const interaction=this.surgicalInteraction;
@@ -1255,7 +1259,7 @@ export class VolumeRenderer {
     // materials. Compare values so cloned or in-place edited settings work too.
     const signature = JSON.stringify([settings.layerOpacity, settings.layerColor,
       settings.clipping, settings.clipBox, settings.obliqueClip,
-      settings.fusion?.opacity, settings.volumeRendering,settings.skullMode,settings.sliceOverlay,settings.contextStyle,settings.presentation,settings.sourcedVesselContext,settings.operativeView,settings.microscope?.inspectionTransparency,settings.microscope?.inspectionCutaway,settings.microscope?.tissueStyle,settings.vesselShading]);
+      settings.fusion?.opacity, settings.volumeRendering,settings.skullMode,settings.sliceOverlay,settings.contextStyle,settings.presentation,settings.sourcedVesselContext,settings.operativeView,settings.microscope?.inspectionTransparency,settings.microscope?.inspectionCutaway,settings.microscope?.tissueStyle,settings.vesselShading,this.overlapLesion]);
     if (signature === this.appearanceSignature) return;
     if(this.appearanceSignature!=null){this.beginInteraction();this.endInteraction();}
     this.appearanceSignature = signature;
@@ -1274,7 +1278,7 @@ export class VolumeRenderer {
       const appearance=layerAppearance(layer.name,layer.color,settings,layer.displayKind??layer.kind);
       const mesh=this.surfaces.get(layer.name);
       if(mesh){
-        mesh.userData.cranialBoundary=this.cranialBoundary(layer.displayKind??layer.kind,settings,mesh.userData.vesselCortexSource);
+        mesh.userData.cranialBoundary=this.cranialBoundary(layer,settings,mesh.userData.vesselCortexSource);
         if(mesh.userData.corticalSignalEnabled)mesh.userData.corticalSignalEnabled.value=this.showCorticalSignal(mesh);
         mesh.visible=this.surfaceVisible(layer.name);
         const material=mesh.material as THREE.MeshStandardMaterial;

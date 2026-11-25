@@ -1,9 +1,18 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {studyLayerDisplayKind,nextScanState,scanLabel,studyTimepoint,migrateSkullView,anatomyPresentation,defaultAnatomyPresentation,sourceEvidenceLabel} from '../src/native-study-state.ts';
+import {alignmentBannerWarning,studyLayerDisplayKind,nextScanState,scanLabel,studyTimepoint,migrateSkullView,anatomyPresentation,defaultAnatomyPresentation,sourceEvidenceLabel} from '../src/native-study-state.ts';
 import {checkedViewerSettings} from '../src/workspace-view-settings.ts';
 import {cranialComposition,ctaCoverageOptions,initialNativeLayers,presentationLayers,resolveCtaCoverageVisibility} from '../src/native-study-state.ts';
 import {withLayerColor} from '../src/viewer/workspaceSettings.ts';
+
+test('estimated alignment keeps a failed inverse check visible when coverage warnings arrive first',()=>{
+  const coverage={warnings:['Limited anatomical coverage: 78.6%'],metrics:{coverage:.786}};
+  const mild={warnings:['Forward/reverse disagreement 2.12 mm exceeds 2 mm'],metrics:{inverse_p95_mm:2.12}};
+  const severe={warnings:['Forward/reverse disagreement 9.92 mm exceeds 2 mm'],metrics:{inverse_p95_mm:9.92}};
+  assert.equal(alignmentBannerWarning({coverage,mild,severe}),severe.warnings[0]);
+  assert.equal(alignmentBannerWarning({coverage}),coverage.warnings[0]);
+  assert.equal(alignmentBannerWarning(undefined),undefined);
+});
 
 test('an independent or estimated scan cannot drive the reference scan presentation',()=>{
   const layers=['ct','registered','estimated','independent'].map(source_series=>({source_series}));

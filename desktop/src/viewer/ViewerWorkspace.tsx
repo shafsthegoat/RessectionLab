@@ -38,6 +38,7 @@ import {
 } from "lucide-react";
 import type { KeyboardEvent, PointerEvent } from "react";
 import { VolumeRenderer } from "./VolumeRenderer";
+import {mixedVesselLesion} from '../native-study-state';
 import { clippingForBounds, clippingPositionInBounds, newClippingPosition, usesPatientCutaway, viewerCutaway } from './workspaceSettings';
 import type { ViewerWorkspaceSettings } from './workspaceSettings';
 import { canBalanceTofContext, volumeSettings, isCtAngiography, isCtModality } from './volumeTransfer';
@@ -122,6 +123,12 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   const signalName = props.segmentationOnly ? 'segmentation only' : props.generatedSignal ? "generated image signal" : (props.sourceLabel ?? "MRI");
   const [localSettings,setLocalSettings] = useState<ViewerWorkspaceSettings>({});
   const settings=props.workspaceSettings ?? localSettings;
+  const [overlapInspection,setOverlapInspection]=useState(false);
+  const overlapLesion=mixedVesselLesion(caseData,settings);
+  const overlapAvailable=overlapLesion&&visibleLayers[overlapLesion.name]&&
+    (settings.layerOpacity?.[overlapLesion.name]??1)>0&&(settings.layerOpacity?.[overlapLesion.name]??1)<1;
+  const inspectLesionOverlap=!!overlapAvailable&&overlapInspection;
+  useEffect(()=>setOverlapInspection(false),[caseData?.displayIdentity,overlapAvailable]);
   const ctaCutaway=Boolean(caseData?.displayIdentity&&isCtAngiography(signalName)&&
     settings.presentation!=='scan'&&!settings.operativeView&&settings.clipping?.enabled&&
     settings.clipping.axis==='z'&&settings.clipping.flipped);
@@ -428,8 +435,8 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   useEffect(()=>{
     const presentation=corridorCrop?{...settings,clipBox:corridorCrop}:depthSlabBox
       ?{...settings,clipping:undefined,obliqueClip:undefined,clipBox:depthSlabBox}:settings;
-    engine.current?.setWorkspaceSettings(presentation);
-  },[ready,graphicsGeneration,caseData,settings,corridorCrop,depthSlabBox]);
+    engine.current?.setWorkspaceSettings(presentation,inspectLesionOverlap);
+  },[ready,graphicsGeneration,caseData,settings,corridorCrop,depthSlabBox,inspectLesionOverlap]);
   useEffect(()=>{
     const axis=PLANE_AXES[activePlane][2];
     engine.current?.setVesselSlabContext(slabContextActive&&depthSlabBox
@@ -934,6 +941,10 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
                   onChange={event=>changeSettings({...settings,vesselDepthSeparation:event.target.checked})}/>
                 Vessel depth lighting
               </label>}
+            {overlapAvailable&&<label title="Inspect projected overlap using the displayed scan alignment.">
+              <input type="checkbox" checked={inspectLesionOverlap} onChange={event=>setOverlapInspection(event.target.checked)}/>
+              Show vessels through lesion
+            </label>}
             <label><input type="checkbox" aria-label="Smooth 3D surfaces" disabled={props.sourcePreview} checked={smoothSurfaces} onChange={e=>setSmoothSurfaces(e.target.checked)}/>Smooth surfaces</label>
             <label><input type="checkbox" aria-label="Body orientation guide" checked={settings.showOrientationGuide!==false} onChange={e=>changeSettings({...settings,showOrientationGuide:e.target.checked})}/>Body orientation guide</label>
             <label>Context appearance<select aria-label="Context appearance" value={settings.contextStyle??'uniform'} onChange={e=>changeSettings({...settings,contextStyle:e.target.value as 'shell'|'uniform'})}><option value="shell">Edge shell · structures visible</option><option value="uniform">Uniform transparency</option></select></label>

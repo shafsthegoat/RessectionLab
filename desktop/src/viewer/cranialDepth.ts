@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 
-type Boundary = 'cortex' | 'head';
+const cranialBoundaries = ['head', 'cortex', 'lesion'] as const;
+export type CranialBoundary = typeof cranialBoundaries[number];
 export type CorticalSignal = {texture:THREE.Data3DTexture;window:[number,number];worldToVoxel:THREE.Matrix4;contrast?:number;nativeWallCrop?:true};
 type Surface = {mesh:THREE.Mesh;material:THREE.Material};
 
@@ -66,9 +67,9 @@ export function installCorticalSignal(material:THREE.MeshStandardMaterial,signal
 
 /** The outer intersection of a folded tissue remains a translucent surface.
  * Interior walls of that same tissue would otherwise accumulate until opaque.
- * Each group gets its own depth so the scalp cannot erase the cortex. */
+ * The head, cortex and single lesion each keep an independent depth. */
 export class CranialDepth {
-  readonly targets=new Map<Boundary,THREE.WebGLRenderTarget>();
+  readonly targets=new Map<CranialBoundary,THREE.WebGLRenderTarget>();
   private readonly depth=new THREE.MeshDepthMaterial({side:THREE.DoubleSide,colorWrite:false});
   private readonly cameraRange={value:new THREE.Vector2()};
   private readonly projectionScale={value:1};
@@ -77,7 +78,7 @@ export class CranialDepth {
     surfaces:Surface[],width:number,height:number):void {
     this.cameraRange.value.set(camera.near,camera.far);
     this.projectionScale.value=height*camera.projectionMatrix.elements[5]/2;
-    for(const group of ['head','cortex'] as const){
+    for(const group of cranialBoundaries){
       const members=surfaces.filter(({mesh})=>mesh.userData.cranialBoundary===group);
       if(!members.length)continue;
       let target=this.targets.get(group);
@@ -102,7 +103,7 @@ export class CranialDepth {
     }
   }
 
-  install(material:THREE.Material,group:Boundary):void {
+  install(material:THREE.Material,group:CranialBoundary):void {
     const previous=material.onBeforeCompile;
     const key=material.customProgramCacheKey;
     material.onBeforeCompile=(shader,renderer)=>{
@@ -126,7 +127,21 @@ export class CranialDepth {
         vec2 boundaryUv=gl_FragCoord.xy/uSurfaceSize;
         float nearestDepth=texture2D(uBoundaryDepth,boundaryUv).r;
         if(gl_FragCoord.z>nearestDepth+0.00000012)discard;
-      `).replace('#include <opaque_fragment>',group==='cortex'?`
+      `);
+      if(group==='lesion'){
+        shader.fragmentShader=shader.fragmentShader.replace('#include <opaque_fragment>',`
+          // Keep the outline of the estimate as its facing surface recedes.
+          float center=eyeDistance(nearestDepth);
+          vec2 offset=clamp(.55*uProjectionScale/center,1.,2.5)/uSurfaceSize;
+          vec2 dx=vec2(offset.x,0.),dy=vec2(0.,offset.y);
+          float edge=max(max(texture2D(uBoundaryDepth,boundaryUv-dx).r,texture2D(uBoundaryDepth,boundaryUv+dx).r),
+                         max(texture2D(uBoundaryDepth,boundaryUv-dy).r,texture2D(uBoundaryDepth,boundaryUv+dy).r));
+          float rim=max(step(1.,edge),pow(1.-abs(dot(normal,normalize(vViewPosition))),2.));
+          diffuseColor.a*=mix(.48,1.,rim);
+          #include <opaque_fragment>`);
+        return;
+      }
+      shader.fragmentShader=shader.fragmentShader.replace('#include <opaque_fragment>',group==='cortex'?`
         // A symmetric depth difference is zero on an inclined plane.
         // Shade recessed folds over a 2 mm projected neighborhood.
         float center=eyeDistance(nearestDepth);

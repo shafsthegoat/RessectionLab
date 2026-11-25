@@ -30,11 +30,11 @@ test('a checked native wall crop interpolates its own windowed signal and shades
   source.dispose();exact.dispose();signal.texture.dispose();
 });
 
-test('head and cortex capture separate nearest depths with patient clipping during orbit and at rest',()=>{
+test('head, cortex and lesion capture separate nearest depths with patient clipping during orbit and at rest',()=>{
   const pass=new SurfaceVolumePass(),scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera();
   const geometry=new THREE.PlaneGeometry(),opaque=new THREE.Texture();
   const clip=[new THREE.Plane(new THREE.Vector3(1,0,0),2)];
-  const groups=['head','cortex','cortex',undefined];
+  const groups=['head','cortex','cortex','lesion',undefined];
   const meshes=groups.map((boundary,i)=>{
     const material=new THREE.MeshStandardMaterial({transparent:true,opacity:.5,clippingPlanes:clip});
     const mesh=new THREE.Mesh(geometry,material);
@@ -53,17 +53,22 @@ test('head and cortex capture separate nearest depths with patient clipping duri
         mesh.material.onBeforeCompile(shader,renderer);
         assert.equal(shader.uniforms.uBoundaryDepth?.value,pass.cranial.targets.get(groups[i])?.depthTexture);
         if(groups[i]==='head')assert.match(shader.fragmentShader,/outgoingLight=diffuseColor\.rgb\*\([^;]+\)\+totalEmissiveRadiance;/);
+        if(groups[i]==='lesion'){
+          assert.match(shader.fragmentShader,/if\(gl_FragCoord\.z>nearestDepth\+0\.00000012\)discard;/);
+          assert.match(shader.fragmentShader,/diffuseColor\.a\*=mix\(\.48,1\.,rim\);/);
+          assert.equal(mesh.material.opacity,source[i].opacity);
+        }
       }
     }
   }};
   try{
     for(const interactive of [true,false]){
       pass.render(renderer,scene,camera,opaque,32,24,interactive);
-      assert.deepEqual(capture.splice(0),[[true,false,false,false],[false,true,true,false]]);
+      assert.deepEqual(capture.splice(0),[[true,false,false,false,false],[false,true,true,false,false],[false,false,false,true,false]]);
       assert.deepEqual(meshes.map(m=>m.material),source);
       assert(meshes.every(m=>m.visible));
     }
-    assert.notEqual(pass.cranial.targets.get('head'),pass.cranial.targets.get('cortex'));
+    assert.equal(new Set(pass.cranial.targets.values()).size,3);
   }finally{pass.dispose();source.forEach(m=>m.dispose());geometry.dispose();opaque.dispose();}
 });
 import {installNativeContextLighting,setNativeContextLighting} from './nativeContextLighting.ts';

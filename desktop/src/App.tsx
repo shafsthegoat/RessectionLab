@@ -20,7 +20,7 @@ import {hasSavedFullCaseBranch} from './full-case-workspace';
 import {useRehearsal} from "./use-rehearsal";
 import {RehearsalPanel} from "./RehearsalPanel";
 import type {RehearsalApi} from "./rehearsal-types";
-import {scanLabel} from './native-study-state';
+import {alignmentBannerWarning,scanLabel} from './native-study-state';
 import {useNativeWorkspace} from './use-native-workspace';
 import {NativeSidebar,NativeCorrectionBar,NativeResearch} from './NativeWorkspacePanels';
 import {isNativeBinding} from './native-anatomy-data';
@@ -2111,7 +2111,7 @@ export default function App() {
         {episodeVisible&&episodeWorkflow==='passive'&&passiveView&&caseData&&passiveView.source.caseHash===caseData.caseHash&&
           <div className="modeled-replay-notice" role="status"><span>GENERATED · two persistent tool poses · state {passiveStep}/5 · declared {passiveView.frames[passiveStep].elapsedGeneratedSeconds.toFixed(1)} s · no patient admission</span>
             <button className="text-button" onClick={restoreSourceView}>Source view <X size={12}/></button></div>}
-        {native.binding&&!showOperative&&native.registration==='alignment preview'&&<div className="workspace-alignment-banner" role="status">Estimated scan alignment <span>{Object.values(native.volume?.alignmentQuality??{}).flatMap(q=>q.warnings)[0]??'Shared structures · verify in Scans before planning'}</span></div>}
+        {native.binding&&!showOperative&&native.registration==='alignment preview'&&<div className="workspace-alignment-banner" role="status">Estimated scan alignment <span>{alignmentBannerWarning(native.volume?.alignmentQuality)??'Shared structures · verify in Scans before planning'}</span></div>}
         <NativeCorrectionBar workspace={native}/>
         <div className={linkedOperative?"viewer-shell has-operative-reference":showEngineRecording?"viewer-shell has-engine-reference":"viewer-shell"}
           data-engine-replay-layout={showEngineRecording?'source-bound':undefined}>

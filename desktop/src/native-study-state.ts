@@ -1,5 +1,6 @@
 import type {Binding, CranialView, Layer, NativeScanState, NativeViewState, VesselScope} from './native-anatomy-data';
 import type {ViewerWorkspaceSettings} from './viewer/workspaceSettings';
+import type {ViewerVolume} from './viewer/contracts';
 import {isCtAngiography,isCtModality,isMrAngiography} from './viewer/volumeTransfer.ts';
 
 export type AnatomyPresentation = 'scan'|'segmentation'|'vascular';
@@ -12,6 +13,24 @@ const mrModality=(modality:string)=>defaultAnatomyPresentation(modality)==='scan
   /\b(?:MR|MRI|MRA|TOF|T1(?:CE|W)?|T2W?|FLAIR|SWI|MPRAGE|SPGR)\b/i.test(modality.replaceAll('_',' '));
 const angiographicModality=(modality:string)=>/\b(?:CTA|MRA|TOF)\b|\b(?:CT|MR|MRI)[- _]+angiogra/i.test(modality);
 export const isStructuralMrModality=(modality:string)=>mrModality(modality)&&!angiographicModality(modality.replaceAll('_',' '));
+
+/** Only a single source-bound lesion can use the mixed Vessels overlap view. */
+export function mixedVesselLesion(volume:ViewerVolume|null|undefined,settings:ViewerWorkspaceSettings) {
+  if(!volume?.displayIdentity||settings.presentation!=='vascular'||!settings.sourcedVesselContext||
+    settings.contextStyle!=='shell'||settings.operativeView||!isStructuralMrModality(volume.modality??''))return;
+  const lesions=volume.compartments.filter(layer=>(layer.displayKind??layer.kind)==='tumor');
+  if(lesions.length!==1)return;
+  const [lesion]=lesions;
+  if(lesion.sourceSeries&&['reference','estimated','reviewed','source-provided'].includes(lesion.alignment??''))return lesion;
+}
+
+export function alignmentBannerWarning(quality:ViewerVolume['alignmentQuality']):string|undefined {
+  const entries=Object.values(quality??{});
+  const inverseWarning=[...entries].sort((a,b)=>(b.metrics?.inverse_p95_mm??0)-(a.metrics?.inverse_p95_mm??0))
+    .flatMap(entry=>entry.warnings??[]).find(warning=>warning.startsWith('Forward/reverse disagreement'));
+  return inverseWarning??entries.find(entry=>entry.warnings?.length)?.warnings[0];
+}
+
 /** Only an acquired scalar source can be the initial Scan presentation. */
 export function defaultAnatomyPresentation(modality:string):AnatomyPresentation {
   return /segmentation only|analytic signal|generated image signal|diagnostic/i.test(modality)?'segmentation':'scan';
