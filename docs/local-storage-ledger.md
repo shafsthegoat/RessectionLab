@@ -134,6 +134,8 @@ views, geometry checks and the rejected broader and source-edge trials.
 The acquired CTA cut material and mixed structural MR volume comparisons are
 indexed at `qc/acquired-cta-cut-materials-20261124-v1/README.md`. The matched
 CTA cuts include the wider supplied artery labels and the signed workbench.
+The shared CTA directional light, exact clear-sample controls and signed
+render timings are indexed at `qc/cta-vessel-optical-light-20261124-v1/README.md`.
 The signed CTA vessel-to-bone contrast comparison and export are at
 `qc/cta-vessel-contrast-20261124-v1/README.md`. The index includes both
 TopCoW CTA cases, acquisition controls, and source-linked cutaways.
@@ -197,12 +199,20 @@ The follow-up contact timing, lattice parity and cold replay receipts are at
 `qc/native-wall-lattice-snapshot-20261124-v1/README.md`.
 The overlapping wall clearance checks, paired request timings and replay
 receipts are at `qc/native-wall-overlapping-certification-20261124-v1/README.md`.
+Compiled hinge clearance timing, stress checks and cold replay are at
+`qc/native-wall-compiled-hinge-certificate-20261124-v1/README.md`.
 The independently reviewed PTNT_1288 native tissue and stock branch proximity
 checks are indexed at
 `qc/eden2020-glioma-5714812/eden-dense-native-tissue-survey-20261124.4e5uy7_7/README.md`.
 The acquired profiles through the three persistent PTNT_5387 midfield
 fragments are indexed at
 `qc/eden2020-glioma-5714812/ptnt5387-signed-midfield-source-20261124.BJTrzZ5Z/README.md`.
+The phase-axis control for those islands and the source comparison for the
+PTNT_7195 bar are at
+`qc/eden2020-glioma-5714812/ptnt5387-shared-phase-donor-20261124.xYaTDjpZ/README.md`
+and `qc/eden2020-glioma-5714812/ptnt7195-signed-bar-source-20261124.kLNylPgJ/README.md`.
+The relocated PTNT_9937 field and held-out registration checks are at
+`qc/eden2020-glioma-5714812/ptnt9937-local-review-prospect-20261124.l_xbilva/README.md`.
 The signed native TOF correction, matched score-surface preview and cohort
 picker checks are indexed at `qc/native-tof-local-correction-20261124-v1/README.md`.
 The signed faint vessel context comparisons, physical-cut and pick controls,

@@ -321,6 +321,14 @@ limit at that site was 1.309 mm. A separate check of all 14 continuous
 stock branches in the covered field also lacked near-wall support. The case
 remains withheld from ordinary preparation. [Private source evidence index](local-storage-ledger.md)
 
+PTNT_9937 has a fully covered alternative native TOF field with a continuous
+scored wall. It brings two frozen T1CE–TOF proposals within 6 mm of the center,
+and 66 of 70 trace sites lie near positive contextual T1CE tissue estimates.
+An independent three-contrast search reproduced one previous proposal and
+found no additional T1CE–TOF pair within 2 mm. Deliberate offsets scored
+better on held data. Registration and source tissue review remain unresolved
+for ordinary preparation. [Private source evidence index](local-storage-ledger.md)
+
 The Scans review panel also supports a review for one native-wall field. Select
 the reference brain estimate, moving angiography scores, and review position.
 Pair at least four spatially distributed landmarks. The review checks nearby
