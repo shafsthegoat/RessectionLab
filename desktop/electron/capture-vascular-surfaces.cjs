@@ -9,6 +9,7 @@ const fs=require('node:fs');
 const os=require('node:os');
 const path=require('node:path');
 const {enabledControlScript,inputScript}=require('./verify-eden-planning-helpers.cjs');
+const {checkedInteraction,interactionScript,summarizeInteraction}=require('./vascular-interaction.cjs');
 process.argv.push('--automation-hidden');
 if(process.platform==='darwin')app.setActivationPolicy('accessory');
 
@@ -84,6 +85,10 @@ for(const recipe of recipes){
   assert(!recipe.scope||['all','brain','intracranial','excluded','exterior-air'].includes(recipe.scope));
   assert(!recipe.rotationFrames||Number.isInteger(recipe.rotationFrames)&&recipe.rotationFrames>=2&&recipe.rotationFrames<=120);
   assert(!recipe.rotationFrames||!recipe.compareLayerIds,'Use separate recipes for simultaneous camera comparisons and rotation');
+  if(recipe.interaction){
+    checkedInteraction(recipe.interaction);
+    assert(!recipe.rotationFrames&&!recipe.compareLayerIds,'Measure continuous interaction in its own recipe');
+  }
 }
 
 const profile=fs.mkdtempSync(path.join(os.tmpdir(),'rslab-vessel-capture-'));
@@ -330,10 +335,21 @@ app.on('browser-window-created',(_event,window)=>{
         const openStarted=performance.now();
         activeRecipe=recipe;
         if(index){
+          lastPayload=undefined;
           const previous=await js(`document.querySelector('.rl-viewer')?.dataset.sourceDisplayIdentity`);
           await click('Open');
           await until(`!!document.querySelector('.rl-viewer')?.dataset.sourceDisplayIdentity&&document.querySelector('.rl-viewer').dataset.sourceDisplayIdentity!==${JSON.stringify(previous)}`,'reopened native study');
         }
+        await ready();
+        // The viewer can look idle before its first anatomy request resolves,
+        // and it cancels requests that a newer one supersedes.
+        const loaded=()=>{
+          const names=new Set(lastPayload?.compartments?.map(layer=>layer.name)),missing=new Set(lastPayload?.unavailableLayers);
+          return names.size>0&&recipe.layers.every(id=>names.has(id)||missing.has(id));
+        };
+        for(const deadline=Date.now()+300000;!loaded()&&Date.now()<deadline;)await wait(150);
+        // The renderer still has to install a payload the main process has answered.
+        await until(`document.querySelector('.rl-viewer')?.dataset.rendererReady==='true'`,'installed native anatomy');
         await ready();
         assert.equal(openCount,index+1);
         if(linked)assert(await js(`document.querySelector('.save-button')?.disabled`),'Linked review must be read-only');
@@ -700,6 +716,11 @@ app.on('browser-window-created',(_event,window)=>{
           record.rotationFrames=recipe.rotationFrames;
           record.rotationPositions=angles;
           record.rotationResponse={measurement:'Synthetic orbit input to matching GPU fence poll',samples:response};
+        }
+        if(recipe.interaction){
+          const samples=await js(interactionScript(recipe.interaction));
+          record.interaction={...summarizeInteraction(samples),samples};
+          record.afterInteraction=await capture(`${recipe.name}-after-interaction`);
         }
         if(recipe.compareLayerIds){
           await setLayer(recipe.compareLayerIds[0],false);
