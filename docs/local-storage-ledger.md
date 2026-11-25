@@ -141,6 +141,9 @@ retained registration warning are at `qc/eden-structural-lesion-optics-20261124-
 The continuous TopCoW-014 film from acquired CTA intake through supplied-mask
 assembly, the prepared same-CTA cut, and live native-wall instrument actions is
 indexed at `qc/topcow014-continuous-source-rehearsal-20261124-v1/README.md`.
+Its historical tissue qualification is documented in `historical-scope.md`
+beside the film. The signed CTA shadow comparisons, render timings and current
+tissue admission checks are at `qc/cta-reciprocal-light-20261125-v1/README.md`.
 The signed CTA vessel-to-bone contrast comparison and export are at
 `qc/cta-vessel-contrast-20261124-v1/README.md`. The index includes both
 TopCoW CTA cases, acquisition controls, and source-linked cutaways.
@@ -208,6 +211,8 @@ Compiled hinge clearance timing, stress checks and cold replay are at
 `qc/native-wall-compiled-hinge-certificate-20261124-v1/README.md`.
 The ordinary step reply timings, byte-exact committed artifacts and
 cancellation checks are at `qc/ordinary-step-reply-budget-20261124-v1/README.md`.
+The tissue lattice assembly timings, exact matrix comparisons and cold replay
+checks are at `qc/native-wall-tissue-lattice-assembly-20261124-v1/README.md`.
 The independently reviewed PTNT_1288 native tissue and stock branch proximity
 checks are indexed at
 `qc/eden2020-glioma-5714812/eden-dense-native-tissue-survey-20261124.4e5uy7_7/README.md`.
@@ -218,6 +223,8 @@ The phase-axis control for those islands and the source comparison for the
 PTNT_7195 bar are at
 `qc/eden2020-glioma-5714812/ptnt5387-shared-phase-donor-20261124.xYaTDjpZ/README.md`
 and `qc/eden2020-glioma-5714812/ptnt7195-signed-bar-source-20261124.kLNylPgJ/README.md`.
+The competing structural projections of the PTNT_7195 bar and held distal
+control are at `qc/eden2020-glioma-5714812/ptnt7195-bar-structural-planes-20261124.a0kCzMqa/README.md`.
 The relocated PTNT_9937 field and held-out registration checks are at
 `qc/eden2020-glioma-5714812/ptnt9937-local-review-prospect-20261124.l_xbilva/README.md`.
 The signed native TOF correction, matched score-surface preview and cohort
