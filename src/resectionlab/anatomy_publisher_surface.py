@@ -82,6 +82,7 @@ def _partition_ids(collection, supplied, whole, attachment):
 def conditioned_publisher_cta(collection, row, supplied, *, cancelled):
     """Fair the complete indexed VTP once so named class seams remain coincident."""
     from .anatomy_geometry import normals
+    from .publisher_vessel_fairing import POLICY as GUIDED_POLICY, refine_publisher_vessel
     from .surface_fairing import fair_surface
 
     scan = collection.series(row['source_series'])
@@ -106,8 +107,15 @@ def conditioned_publisher_cta(collection, row, supplied, *, cancelled):
             return supplied
         full, = parents
     full_attachment = full['publisher_surface']
+    nearby_veins = ()
+    if full['kind'] == 'artery':
+        nearby_veins = tuple(layer for layer in getattr(collection, 'document', {}).get('layers', [])
+                             if layer.get('kind') in {'vein', 'sinus'} and layer.get('source_series') == full['source_series']
+                             and layer.get('affine') == full['affine']
+                             and (layer.get('data') or {}).get('shape') == full['data']['shape'])
     key = (full['id'], full['revision'], full['data']['sha256'], full['label_value'],
-           full_attachment['vertices_ras_mm']['sha256'], full_attachment['triangles']['sha256'])
+           full_attachment['vertices_ras_mm']['sha256'], full_attachment['triangles']['sha256'],
+           tuple((layer['id'], layer['revision'], layer['data']['sha256'], layer['label_value']) for layer in nearby_veins))
     cached = getattr(collection, '_publisher_cta_fairing', None)
     cache_hit = cached is not None and cached[0] == key
     if cache_hit and partitioned:
@@ -134,11 +142,47 @@ def conditioned_publisher_cta(collection, row, supplied, *, cancelled):
         if np.prod(upper - lower, dtype=np.int64) > 12_000_000:
             return supplied
         region = tuple(slice(a, b) for a, b in zip(lower, upper))
-        positions, audit = fair_surface(raw, triangles, affine(full['affine']), full['kind'],
-                                        mask=np.pad(mask[region], 1), mask_origin=lower - 1,
+        padded = np.pad(mask[region], 1)
+        frame = affine(full['affine'])
+        positions, audit = fair_surface(raw, triangles, frame, full['kind'],
+                                        mask=padded, mask_origin=lower - 1,
                                         source_shape=mask.shape, categorical=True, publisher_cta=True,
                                         cancelled=cancelled)
-        cached = collection._publisher_cta_fairing = (key, whole, positions, normals(positions, triangles), audit)
+        cacheable = True
+        if nearby_veins and audit['intersectionCheck'] == 'passed':
+            # Limit the label queries to a halo wider than the proximity guard.
+            spacing = np.linalg.norm(frame[:3, :3], axis=0)
+            halo = np.ceil(2 / spacing).astype(int) + 1
+            near_lower, near_upper = np.maximum(0, lower - halo), np.minimum(mask.shape, upper + halo)
+            near_region = tuple(slice(a, b) for a, b in zip(near_lower, near_upper))
+
+            def check():
+                if cancelled():
+                    raise InterruptedError('Publisher vessel refinement cancelled')
+
+            positive = []
+            for layer in nearby_veins:
+                check()
+                try:
+                    adjacent = collection.array(layer['data'], check=check)[near_region]
+                except InterruptedError:
+                    raise
+                except (OSError, ValueError):
+                    # Previous arterial conditioning is independent of this optional label.
+                    cacheable = False
+                    break
+                cells = np.argwhere(adjacent == layer['label_value'])
+                if len(cells):
+                    positive.append(cells + near_lower)
+            if cacheable and positive:
+                refined = refine_publisher_vessel(raw, positions, triangles, frame, padded, lower - 1,
+                                                  mask.shape, np.concatenate(positive), cancelled=cancelled)
+                if not np.array_equal(refined, positions):
+                    positions = refined
+                    audit['policy'] = GUIDED_POLICY
+        cached = (key, whole, positions, normals(positions, triangles), audit)
+        if cacheable:
+            collection._publisher_cta_fairing = cached
     _, whole, positions, vertex_normals, audit = cached
     if audit['maxDisplacementMm'] == 0.:
         return supplied

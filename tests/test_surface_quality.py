@@ -280,6 +280,7 @@ def test_publisher_cta_fairing_uses_one_exact_full_mesh_for_named_partitions(tmp
     from resectionlab.anatomy_geometry import _indexed_contour, mesh
     from resectionlab.anatomy_publisher_surface import POLICY
     from resectionlab.patient_anatomy import PatientImagingCollection, world
+    from resectionlab.publisher_vessel_fairing import POLICY as GUIDED_POLICY
     from resectionlab.surface_fairing import PUBLISHER_CTA_POLICY
 
     frame = np.diag([-.5, .5, .625, 1.])
@@ -339,6 +340,30 @@ def test_publisher_cta_fairing_uses_one_exact_full_mesh_for_named_partitions(tmp
     bogus = {**member, 'publisher_surface': {**member['publisher_surface'],
                                            'publisher_face_ids': collection.put_array(np.roll(faces, 1))}}
     assert mesh(collection, bogus)['policy_version'] == POLICY
+
+    neighboring = np.zeros(shape, np.uint8)
+    neighboring[16, 13, 6:19] = 1
+    vein = collection.add_layer(neighboring, scan['affine'], layer_id='nearby-vein', source_series='cta',
+                                kind='vein', role='context', color='#609fdb')
+    path = collection.path(vein['data']['path'])
+    moved_path = path.with_suffix('.temporarily-unavailable')
+    path.rename(moved_path)
+    fallback = mesh(collection, whole)
+    np.testing.assert_array_equal(fallback['positions'], actual['positions'])
+    assert fallback['policy_version'] == PUBLISHER_CTA_POLICY
+    moved_path.rename(path)
+
+    refined = mesh(collection, whole)
+    assert refined['policy_version'] == GUIDED_POLICY
+    assert not np.array_equal(refined['positions'], actual['positions'])
+    np.testing.assert_array_equal(refined['source'], source_only['positions'])
+    np.testing.assert_array_equal(refined['indices'], actual['indices'])
+    for member, vertices, faces in children:
+        displayed = mesh(collection, member)
+        assert displayed['cache_hit'] and displayed['policy_version'] == GUIDED_POLICY
+        np.testing.assert_array_equal(displayed['positions'], refined['positions'][vertices])
+        np.testing.assert_array_equal(displayed['normals'], refined['normals'][vertices])
+        np.testing.assert_array_equal(vertices[displayed['indices']], refined['indices'][faces])
 
 
 def test_empty_native_mesh_has_explicit_descriptor_without_zero_length_transfer(tmp_path):
