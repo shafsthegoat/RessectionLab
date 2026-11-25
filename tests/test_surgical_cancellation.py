@@ -122,6 +122,46 @@ def test_cancelled_bridge_action_publishes_no_artifact_or_committed_engine(tmp_p
         session.close()
 
 
+@pytest.mark.parametrize('error_code', ['SURGICAL_RESULT_LIMIT', 'CANCELLED'])
+def test_ordinary_step_reply_proof_precedes_commit(tmp_path, monkeypatch, error_code):
+    from resectionlab import json_budget, surgical_bridge
+
+    session = BridgeSession(tmp_path / 'transfers')
+    try:
+        def call(operation, body, request=None):
+            return session.execute(operation, body, request or _Request(operation), lambda *_: None)
+
+        key = call('createSurgicalFixture', {})['caseHash']
+        initial = call('surgicalRehearsal', dict(caseHash=key, command='create'))
+        current = session.surgical_sessions[key][1]
+        artifacts = session.cases[key].artifacts
+        before = encoded(current)
+        request = _Request('check-ordinary-step-reply-budget')
+        original = json_budget.builtin_json_fits
+        proofs = []
+
+        def prove(value, limit):
+            fits = original(value, limit)
+            proofs.append(fits)
+            if error_code == 'CANCELLED':
+                request.cancel()
+            return fits
+
+        monkeypatch.setattr(json_budget, 'builtin_json_fits', prove)
+        if error_code == 'SURGICAL_RESULT_LIMIT':
+            monkeypatch.setattr(surgical_bridge, 'RESULT_BYTES', 32)
+
+        with pytest.raises(BridgeError) as exc:
+            call('surgicalRehearsal', dict(caseHash=key, command='step',
+                expectedStateId=initial['view']['stateId'], action=action()), request)
+        assert exc.value.code == error_code and not request.committing
+        assert proofs == [error_code == 'CANCELLED']
+        assert session.cases[key].artifacts is artifacts
+        assert session.surgical_sessions[key][1] is current and encoded(current) == before
+    finally:
+        session.close()
+
+
 def test_runtime_cancel_is_acknowledged_and_never_emits_a_later_action_result(tmp_path, monkeypatch):
     events = []; runtime = BridgeRuntime(tmp_path / 'transfers', events.append)
     def prepare(operation, body):

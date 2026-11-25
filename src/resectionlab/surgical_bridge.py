@@ -1402,7 +1402,8 @@ def dispatch(session, operation, args, request, progress):
         result['cranialPlanning'] = cranial_summary(cranial_report)
     if record.get('researchSetup'):
         result['researchSetup'] = copy.deepcopy(record['researchSetup'])
-    _require_json_budget(result, RESULT_BYTES, 'SURGICAL_RESULT_LIMIT', 'Save this sequence before continuing')
+    _require_json_budget(result, RESULT_BYTES, 'SURGICAL_RESULT_LIMIT', 'Save this sequence before continuing',
+                         _builtin_fast=command == 'step' and not full_case)
     if command in {'previewApproach', 'previewStrategy','previewPreparation','suggestPreparation'}:
         request.check()
         return result
