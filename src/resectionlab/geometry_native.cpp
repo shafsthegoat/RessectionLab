@@ -160,6 +160,79 @@ bool wall_sweep_clear(const py::capsule& source, const py::array& prior,
     return wall::Check(topology, before.data(), after.data(), static_check).run();
 }
 
+namespace wall = resectionlab::wall_sweep;
+using Hinge = std::array<wall::Vec, 4>;
+using HingeNormals = std::array<wall::Vec, 2>;
+
+HingeNormals hinge_normals(const Hinge& points) {
+    const auto edge = wall::sub(points[1], points[0]);
+    return {wall::cross(edge, wall::sub(points[2], points[0])),
+            wall::cross(edge, wall::sub(points[3], points[0]))};
+}
+
+bool hinge_bernstein_clear(const Hinge& before, const Hinge& after) {
+    Hinge midpoint;
+    for (std::size_t i = 0; i < midpoint.size(); ++i) {
+        // Match the local certificate's rounded midpoint before taking differences.
+        for (int axis = 0; axis < 3; ++axis)
+            midpoint[i][axis] = (before[i][axis] + after[i][axis]) / 2.;
+    }
+    const auto first = hinge_normals(before), middle = hinge_normals(midpoint), last = hinge_normals(after);
+    HingeNormals unit = middle;
+    for (auto& normal : unit) {
+        const double length = std::max(1e-30, std::sqrt(wall::dot(normal, normal)));
+        for (double& component : normal) component /= length;
+    }
+    const auto axis = wall::sub(unit[0], unit[1]);
+    for (int face = 0; face < 2; ++face) {
+        const double start = wall::dot(first[face], axis);
+        const double center = wall::dot(middle[face], axis);
+        const double end = wall::dot(last[face], axis);
+        const double control = 2. * center - .5 * (start + end);
+        double scale = 1e-30;
+        for (int component = 0; component < 3; ++component) {
+            scale = std::max({scale, std::abs(first[face][component]),
+                              std::abs(middle[face][component]), std::abs(last[face][component])});
+        }
+        // Coordinates are bounded and norm denominators are floored. The
+        // three-term sums, sqrt and division change a unit component by only
+        // a few ulps under alternate reduction order. Allow ample absolute
+        // error on the projections and Bernstein coefficient, scaled by the
+        // original normals so cancellation cannot understate the margin.
+        const double margin = 4096. * std::numeric_limits<double>::epsilon() * scale;
+        const double sign = face == 0 ? 1. : -1.;
+        if (!(sign * start > margin && sign * center > margin && sign * end > margin &&
+              sign * control > margin)) return false;
+    }
+    return true;
+}
+
+bool wall_hinges_separated(const py::array& before, const py::array& after, const py::array& quads) {
+    if (before.ndim() != 2 || quads.ndim() != 2 ||
+        std::size_t(before.shape(0)) > wall::max_items || std::size_t(quads.shape(0)) > wall::max_items)
+        return false;
+    const auto size = before.shape(0), count = quads.shape(0);
+    const auto first = checked_array<double>(before, {size, 3}, "prior hinge vertices");
+    const auto last = checked_array<double>(after, {size, 3}, "candidate hinge vertices");
+    const auto indices = checked_array<int64_t>(quads, {count, 4}, "wall hinges");
+    py::gil_scoped_release release;
+    for (py::ssize_t row = 0; row < count; ++row) {
+        Hinge start, end;
+        for (int corner = 0; corner < 4; ++corner) {
+            const auto vertex = indices[4 * row + corner];
+            if (vertex < 0 || vertex >= size) return false;
+            start[corner] = wall::load(first.data() + 3 * vertex);
+            end[corner] = wall::load(last.data() + 3 * vertex);
+            for (int axis = 0; axis < 3; ++axis) {
+                if (!(std::abs(start[corner][axis]) <= 2. * wall::max_coordinate &&
+                      std::abs(end[corner][axis]) <= 2. * wall::max_coordinate)) return false;
+            }
+        }
+        if (!hinge_bernstein_clear(start, end)) return false;
+    }
+    return true;
+}
+
 double squared_norm(const Triple& value) {
     return (value[0] * value[0] + value[1] * value[1]) + value[2] * value[2];
 }
@@ -442,6 +515,8 @@ PYBIND11_MODULE(_geometry_cpp, module) {
                py::arg("shared_vertex") = false);
     module.def("wall_sweep_clear", &wall_sweep_clear, py::arg("source").noconvert(),
                py::arg("prior").noconvert(), py::arg("candidate").noconvert(), py::arg("static_check"));
+    module.def("wall_hinges_separated", &wall_hinges_separated, py::arg("before").noconvert(),
+               py::arg("after").noconvert(), py::arg("quads").noconvert());
     module.def("capsule_chunk", &capsule_chunk, py::arg("queries").noconvert(),
         py::arg("spans").noconvert(), py::arg("affine").noconvert(), py::arg("spacing").noconvert(),
         py::arg("cell_radius"), py::arg("eps"));

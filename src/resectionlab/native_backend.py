@@ -62,6 +62,7 @@ if _requested not in ('reference', 'cpp', 'auto'):
 _module = None
 _entry_points = ()
 _displacement_snapshot_index = None
+_hinge_separation_index = None
 _embedded_identity = None
 _binary_path = None
 _files = {}
@@ -79,7 +80,7 @@ _identity = {'schema': 'resectionlab-numerical-backend-v1', 'requested': _reques
 
 def _load():
     global _module, _entry_points, _embedded_identity, _binary_path, _file_helpers, _file_methods
-    global _displacement_snapshot_index
+    global _displacement_snapshot_index, _hinge_separation_index
     if _requested == 'reference':
         return
     if importlib.util.find_spec(_MODULE_NAME) is None:
@@ -135,6 +136,8 @@ def _load():
                                'simulation_prepare', 'simulation_query', 'simulation_json', 'simulation_stats',
                                'simulation_json_guard', 'bindings_unchanged')
         capabilities = _WALL_SWEEP_ENTRY_POINTS if sweep_version is not None else ()
+        if hasattr(module, 'wall_hinges_separated'):
+            capabilities += ('wall_hinges_separated',)
         snapshot_entry = getattr(module, 'displacement_snapshot', None)
         if snapshot_entry is not None:
             capabilities += ('displacement_snapshot',)
@@ -148,6 +151,8 @@ def _load():
         _embedded_identity = module.BUILD_IDENTITY
         _binary_path = str(binary)
         _displacement_snapshot_index = len(_entry_points) - 1 if snapshot_entry is not None else None
+        _hinge_separation_index = next((i for i, (name, _) in enumerate(_entry_points)
+                                        if name == 'wall_hinges_separated'), None)
         _module = module
         _identity.update(selected='cpp', buildIdentity=build, binaryPath=str(binary),
                          binarySha256=binary_digest, manifestPath=str(manifest_path))
@@ -282,6 +287,17 @@ def wall_sweep_clear(source, prior, candidate, static_check):
 def verified_wall_sweep_kernel():
     _check_live()
     return _module.wall_sweep_clear
+
+
+def wall_hinges_separated(before, after, quads):
+    index = _hinge_separation_index
+    if index is None:
+        return False
+    _check_live()
+    if (type(index) is not int or not 0 <= index < len(_entry_points)
+            or _entry_points[index][0] != 'wall_hinges_separated'):
+        raise NativeIntegrityError('Native hinge certificate entrypoint changed')
+    return _entry_points[index][1](before, after, quads)
 
 
 def displacement_snapshot(field):

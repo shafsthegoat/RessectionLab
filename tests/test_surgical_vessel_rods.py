@@ -653,6 +653,24 @@ def test_parallel_wall_certificate_uses_serial_checks_when_worker_busy(monkeypat
     assert calls == ['local', 'native']
 
 
+def test_compiled_hinge_certificate_bounds_only_clear_batches():
+    if native_backend._hinge_separation_index is None:
+        pytest.skip('Compiled hinge certificate unavailable')
+    quads = np.arange(4, dtype=np.int64)[None, :]
+    before = np.array([[0., 0., 0.], [1., 0., 0.], [0., 1., 0.], [0., -1., 0.]])
+    after = before + [[0., 0., 0.], [.01, .01, 0.], [0., .01, .02], [.01, 0., .02]]
+    assert native_backend.wall_hinges_separated(before, after, quads)
+    assert surgical_wall_sweep._hinges_clear(before[quads], after[quads])
+    crossing = after.copy()
+    crossing[3] = after[2]
+    assert not native_backend.wall_hinges_separated(before, crossing, quads)
+    assert not surgical_wall_sweep._hinges_clear(before[quads], crossing[quads])
+
+    near = before.copy()
+    near[3] = [0., 1., 1e-8]
+    assert not native_backend.wall_hinges_separated(near, near, quads)
+
+
 def test_wall_sweep_rejects_crossing_between_clear_endpoints_and_midpoint():
     vertices = np.array([[-.10, -.10, 0.], [.10, -.10, 0.], [0., .10, 0.],
                          [-.025, -.025, .004], [.025, -.025, .004], [0., .025, .004]])

@@ -17,6 +17,7 @@ POLICIES = (POLICY, CURRENT_POLICY)
 _MIN_AREA_RATIO = .2
 _LOCAL_SEARCH_DEPTH = 8
 _PARALLEL_MIN_FACES = 16_384
+_HINGE_FILTER_MIN_FACES = 16_384
 _STOCK_NATIVE_CLEAR = native_backend.wall_sweep_clear
 _STOCK_NATIVE_CLEAR_CODE = _STOCK_NATIVE_CLEAR.__code__
 _native_slot = threading.Lock()
@@ -86,7 +87,7 @@ def _hinges_clear(before, after, depth=0):
                                    and _hinges_clear(midpoint[uncertain], after[uncertain], depth + 1))
 
 
-def _local_face_guard(rest, faces, owners):
+def _local_face_guard(rest, faces, owners, *, hinge_filter=False):
     reference = np.linalg.norm(_face_normals(rest)[:, 0], axis=1)
     points = np.zeros((int(faces.max()) + 1, 3))
     point_owners = np.zeros(len(points), dtype=int)
@@ -133,7 +134,8 @@ def _local_face_guard(rest, faces, owners):
                 return False
         if len(hinges):
             corners = adjacent[hinges]
-            if not _hinges_clear(before[corners], after[corners]):
+            separated = hinge_filter and not static and native_backend.wall_hinges_separated(before, after, corners)
+            if not separated and not _hinges_clear(before[corners], after[corners]):
                 return False
         return True
 
@@ -203,7 +205,9 @@ def _build(frames, *, local_guard=False, shared_vertex=False):
     geometry = (np.ascontiguousarray(np.concatenate(triangles), dtype=np.float64),
                 np.ascontiguousarray(np.concatenate(vertices), dtype=np.int64),
                 np.ascontiguousarray(np.concatenate(owners), dtype=np.int64), owner_start)
-    check_local = _local_face_guard(*geometry[:3]) if local_guard and len(geometry[0]) else None
+    hinge_filter = shared_vertex and len(geometry[0]) >= _HINGE_FILTER_MIN_FACES
+    check_local = (_local_face_guard(*geometry[:3], hinge_filter=hinge_filter)
+                   if local_guard and len(geometry[0]) else None)
     if native_backend.wall_sweep_available(shared_vertex=shared_vertex):
         source = native_backend.make_wall_sweep(*geometry, shared_vertex=shared_vertex)
         parallel = shared_vertex and check_local is not None and len(geometry[0]) >= _PARALLEL_MIN_FACES
