@@ -136,6 +136,8 @@ indexed at `qc/acquired-cta-cut-materials-20261124-v1/README.md`. The matched
 CTA cuts include the wider supplied artery labels and the signed workbench.
 The shared CTA directional light, exact clear-sample controls and signed
 render timings are indexed at `qc/cta-vessel-optical-light-20261124-v1/README.md`.
+The signed mixed MR lesion overlap control, unchanged source views and
+retained registration warning are at `qc/eden-structural-lesion-optics-20261124-v1/README.md`.
 The signed CTA vessel-to-bone contrast comparison and export are at
 `qc/cta-vessel-contrast-20261124-v1/README.md`. The index includes both
 TopCoW CTA cases, acquisition controls, and source-linked cutaways.
@@ -201,6 +203,8 @@ The overlapping wall clearance checks, paired request timings and replay
 receipts are at `qc/native-wall-overlapping-certification-20261124-v1/README.md`.
 Compiled hinge clearance timing, stress checks and cold replay are at
 `qc/native-wall-compiled-hinge-certificate-20261124-v1/README.md`.
+The ordinary step reply timings, byte-exact committed artifacts and
+cancellation checks are at `qc/ordinary-step-reply-budget-20261124-v1/README.md`.
 The independently reviewed PTNT_1288 native tissue and stock branch proximity
 checks are indexed at
 `qc/eden2020-glioma-5714812/eden-dense-native-tissue-survey-20261124.4e5uy7_7/README.md`.
