@@ -171,6 +171,14 @@ previous-build restore receipt are indexed at
 The signed scan-first Anatomy checks, linked-slice timing, cancellation and
 retry, and previous-build restore receipt are indexed at
 `qc/staged-anatomy-opening-20261124-v1/README.md`.
+The matched native CTA and EDEN depth lighting comparisons are indexed at
+`qc/vessel-contact-depth-20261124-v1/README.md`. The cursor-based native TOF
+fragment review and exact source controls are indexed at
+`qc/native-tof-fragment-focus-20261124-v1/README.md`.
+The contact solver timing and exact native-wall replay checks are indexed at
+`qc/native-wall-engine-performance-20261124-v1/README.md`. The PTNT_4509
+DICOM geometry and withheld local registration are indexed at
+`qc/eden2020-glioma-5714812/ptnt4509-dicom-native-field-20261124.4vlfst3a/README.md`.
 The signed native TOF correction, matched score-surface preview and cohort
 picker checks are indexed at `qc/native-tof-local-correction-20261124-v1/README.md`.
 The signed faint vessel context comparisons, physical-cut and pick controls,

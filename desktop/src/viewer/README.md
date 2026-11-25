@@ -134,6 +134,13 @@ Older saved Structures and Vessels views with shared patient context used a norm
 
 On a native CTA with vessel layers, new Structures and Vessels views start with **Vessel shading → CTA contrast · by vessel type**. Declared arteries use red, veins and sinuses use blue, and unclassified vessels use muted violet. Lower clearcoat and specular intensity reduce pale highlights in both direct surface and volume-composited views. **Source layer colors** restores the branch palette. Editing a vessel’s label color selects that palette. Linked slices use the layer palette in either mode, and the acquired Scan view keeps its own appearance.
 
+**Appearance → Vessel depth lighting** shades a vessel where a nearby course
+passes in front of it. The viewer caches the nearest opaque vessel depth at
+the current physical camera and uses it in both the live view and the PNG
+export. An acquired CT cut uses an angled key to bring out ridges in the
+source signal. The lighting leaves source slices, contours, vessel type,
+opacity, picking and geometry intact. The control can be turned off per scan.
+
 On first open, a native CTA with a compact visible arterial field and bone from the same scan can start at a superior axial cut. The plane clears the measured extent of the original and conditioned arterial meshes. The linked slice cursor remains at the selected source location. **Full head** clears the cut and frames the complete acquisition. A broad or incomplete arterial field, missing bone support, or a real visible lesion above the plane leaves the full field on first open. Saved camera and cutaway settings take precedence.
 
 Source-bound unreviewed rigid transforms are labeled as alignment previews. Missing, stale or incompatible transforms exclude a scan from the patient reconstruction. The scan remains available in its independent frame. Corrections, planning and measurements use their own geometry checks.

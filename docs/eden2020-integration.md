@@ -108,6 +108,14 @@ range. VesselFM score summaries are uncalibrated. Thin joins can fall
 outside this screen, and sections near the acquisition faces have limited
 context. The operation runs only on a source-bound, unedited TOF estimate.
 
+To examine a detached finding, position the linked cursor on the native TOF
+estimate and choose **Review fragment at cursor** in the layer inspector.
+The app selects the complete connected component and shows the acquired
+signal in three native planes. Amber marks the selected cells and cyan
+outlines nearby cells from the estimate. Toggle the overlays to review the
+same acquired signal. In an editable study, **Edit segmentation** opens the
+controls to preview removal and accept a new revision after review.
+
 A separate connected exterior-air trial yielded one small candidate for
 exact geometry comparison. The strictest local deletion preserved the
 audited voxel topology and the measurable nearby source section, while
