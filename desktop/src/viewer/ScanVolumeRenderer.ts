@@ -13,6 +13,9 @@ import {renderTargetBytes} from './renderResourceEstimate';
 import {ctaCutKey,installCtaVesselLight} from './ctaVesselLight';
 import {CtaVesselShadow} from './ctaVesselShadow';
 import {renderAnatomyScene,type VesselSlabContext} from './vesselSlabContext';
+import {CinematicVolumePass} from './CinematicVolumePass';
+import {cinematicTagClass,type CinematicTagLayer} from './cinematicTags.ts';
+import {ctaVesselColors} from './anatomySurfaceMaterial';
 
 type VolumeTargets = {
   scene: THREE.WebGLRenderTarget;
@@ -26,6 +29,15 @@ const sameOptics=(a:OpticalSelection|undefined,b:OpticalSelection)=>a?.source===
 function targetBytes(targets:VolumeTargets) {
   return [targets.scene,targets.volume,...targets.accumulation,...targets.surfaces.targets,
     ...targets.surfaces.cranial.targets.values(),targets.surfaces.tail].reduce((sum,target)=>sum+renderTargetBytes(target),0);
+}
+
+const sourceIds=new WeakMap<object,number>();
+let nextSourceId=0;
+function sourceIdentity(source:CinematicTagLayer['source']){
+  const array=source.kind==='mask'?source.mask:source.kind==='labels'?source.labels:source.probability;
+  let id=sourceIds.get(array);
+  if(id===undefined){id=++nextSourceId;sourceIds.set(array,id);}
+  return source.kind==='labels'?`${id}:${source.value}`:id;
 }
 
 /** Export owns its targets so a tile cannot resize or invalidate live attachments. */
@@ -99,14 +111,27 @@ export class ScanVolumeRenderer {
     fragmentShader:'precision highp float; in vec2 vUv; out vec4 outColor; uniform sampler2D uCurrent; uniform sampler2D uPrevious; uniform float uWeight; void main(){vec4 current=texture(uCurrent,vUv);outColor=uWeight==1.0?current:mix(texture(uPrevious,vUv),current,uWeight);}',
     depthTest:false,depthWrite:false,toneMapped:false,uniforms:{uCurrent:{value:null},uPrevious:{value:null},uWeight:{value:1}}});
   private samples=0;
-  invalidate(){this.samples=0;}
-  get needsRefinement(){return this.enabled&&this.samples>0&&this.samples<4;}
-  get opticsPending(){return this.opticalPreparation!==null;}
+  private cinematicMode=false;
+  private cinematic?:CinematicVolumePass;
+  private labelState:{visible:Record<string,boolean>;settings:ViewerWorkspaceSettings}={visible:{},settings:{}};
+  private labelSets?:ViewerVolume['labelSets'];
+  private cinematicHidden=new Set<string>();
+  private cinematicSurfaces={count:0,tailIndex:0};
+  invalidate(){this.samples=0;this.cinematic?.invalidate();}
+  /** Set when cinematic mode shows the standard image instead (MR without a visible vessel layer). */
+  private cinematicFallback:string|null=null;
+  /** The path-traced volume draws vessels itself; mesh-only vessel passes can be skipped. */
+  get cinematicActive(){return this.enabled&&this.cinematicMode&&!!this.cinematic?.ready&&!this.cinematicFallback;}
+  /** Path-traced refinement runs back to back until the view has settled, then paced. */
+  get cinematicPace(){return this.cinematicActive?this.cinematic!.settled?'paced' as const:'fast' as const:null;}
+  get needsRefinement(){return this.cinematicActive?this.cinematic!.needsRefinement:this.enabled&&this.samples>0&&this.samples<4;}
+  get opticsPending(){return this.opticalPreparation!==null||(this.enabled&&this.cinematicMode&&!!this.cinematic?.pending);}
 
   constructor(private readonly renderer: THREE.WebGLRenderer, volume: ViewerVolume,
     private readonly window: [number,number], codes?:Array<[number,number]>, sourceTexture?:THREE.Data3DTexture,
     private readonly onOpticsReady?:()=>void) {
     this.layers=volume.compartments;
+    this.labelSets=volume.labelSets;
     this.nativeAcquisition=!!volume.displayIdentity;
     this.sourceSeriesId=volume.displayPreview?undefined:volume.sourceSeriesId;
     const affine=rasAffine(volume.affine,volume.frame),inverse=inverseAffine(affine);
@@ -169,6 +194,10 @@ export class ScanVolumeRenderer {
   }
   configure(input: VolumeRenderingSettings | undefined, modality: string, clip: THREE.Plane | null, balanceTof=false) {
     const settings=volumeSettings(input,modality);this.enabled=settings.enabled&&settings.density>0;
+    const cinematic=input?.mode==='cinematic';
+    if(cinematic!==this.cinematicMode)this.invalidate();
+    this.cinematicMode=cinematic;
+    if(!this.enabled||!cinematic)this.releaseCinematic();
     this.ctaVesselLight.value=false;
     this.showCtExteriorSignal=input?.showCtExteriorSignal===true;
     const signature=JSON.stringify([settings.preset,input?.window,input?.points,modality]);
@@ -230,6 +259,15 @@ export class ScanVolumeRenderer {
       this.opticalCellAxes=shape.map((size,axis)=>new THREE.Vector3(affine[0][axis],affine[1][axis],affine[2][axis])
         .multiplyScalar(Math.ceil(size/atlas.grid[axis])));
     }
+  }
+
+  /** Leaving cinematic mode stops its preparation and frees its tags, field and attachments. */
+  private releaseCinematic(){
+    this.cinematic?.dispose();
+    this.cinematic=undefined;
+    this.cinematicFallback=null;
+    this.cinematicHidden.clear();
+    this.cinematicSurfaces={count:0,tailIndex:0};
   }
 
   private cancelOpticalPreparation(){
@@ -339,6 +377,7 @@ export class ScanVolumeRenderer {
     }
   }
   labels(texture:THREE.Data3DTexture,visible:Record<string,boolean>,settings:ViewerWorkspaceSettings,planes:THREE.Plane[]){
+    this.labelState={visible,settings};
     this.shellContext=settings.contextStyle==='shell';
     this.exteriorPresentation=settings.presentation==='segmentation'||settings.presentation==='vascular';
     this.material.uniforms.uScanPresentation.value=settings.presentation==='scan'&&settings.operativeView!=='surgeon';
@@ -362,8 +401,8 @@ export class ScanVolumeRenderer {
     planes.slice(0,7).forEach((p,i)=>u.uExtraClips.value[i].set(p.normal.x,p.normal.y,p.normal.z,p.constant));
     this.cancelStaleOpticalSource();
   }
-  setLayers(layers:ViewerVolume["compartments"],codes:Array<[number,number]>) {
-    this.layers=layers;this.material.uniforms.uLayerCount.value=layers.length;
+  setLayers(layers:ViewerVolume["compartments"],codes:Array<[number,number]>,labelSets=this.labelSets) {
+    this.layers=layers;this.labelSets=labelSets;this.material.uniforms.uLayerCount.value=layers.length;
     codes.forEach((code,i)=>this.material.uniforms.uLayerCodes.value[i].set(...code));
   }
   get active(){return this.enabled;}
@@ -392,7 +431,7 @@ export class ScanVolumeRenderer {
     const live=targetBytes({scene:this.sceneTarget,volume:this.volumeTarget,accumulation:this.accumulation,surfaces:this.surfacePass});
     const drag=this.interactionTargets?renderTargetBytes(this.interactionTargets.scene)+renderTargetBytes(this.interactionTargets.volume):0;
     return live+drag+(this.transfer?.image.data?.byteLength??0)+(this.contextCoverage?.texture.image.data?.byteLength??0)
-      +this.estimatedCtExteriorBytes.gpuTextureBytes+(this.ctaVesselShadow?.bytes??0);
+      +this.estimatedCtExteriorBytes.gpuTextureBytes+(this.ctaVesselShadow?.bytes??0)+(this.cinematic?.bytes??0);
   }
 
   /** In CT context, interpolate the optical coverage of one
@@ -446,15 +485,26 @@ export class ScanVolumeRenderer {
     }
     const sceneTarget=interactive?this.interactionTargets!.scene:this.sceneTarget;
     const volumeTarget=interactive?this.interactionTargets!.volume:this.volumeTarget;
+    const cinematic=this.enabled&&this.cinematicMode?this.prepareCinematic():null;
     try {
-      this.blitMaterial.map=this.renderSample(scene,camera,{scene:sceneTarget,volume:volumeTarget,accumulation:this.accumulation,surfaces:this.surfacePass},
-        w,h,interactive,this.samples,undefined,context).texture;
-      this.samples=interactive?0:this.samples+1;
+      if(cinematic)this.blitMaterial.map=this.renderCinematic(cinematic,scene,camera,sceneTarget,w,h,interactive);
+      else {
+        this.blitMaterial.map=this.renderSample(scene,camera,{scene:sceneTarget,volume:volumeTarget,accumulation:this.accumulation,surfaces:this.surfacePass},
+          w,h,interactive,this.samples,undefined,context).texture;
+        this.samples=interactive?0:this.samples+1;
+      }
     } finally {
       this.renderer.setRenderTarget(null);
       restoreViewport();
     }
     this.renderer.render(this.blitScene,this.camera);
+    if(cinematic){
+      const classes=cinematic.tagStats?.classes;
+      return {width:w,height:h,samples:interactive?1:cinematic.samples,opticsPending:this.opticsPending,shadowSampling:'path-traced',
+        mode:'cinematic' as const,settled:!interactive&&cinematic.settled,filterWeight:interactive?1:cinematic.filterWeight,
+        sampleLimit:cinematic.sampleLimit,exportMode:this.exportMode,translucentLayers:this.cinematicSurfaces.count,
+        vesselRamps:classes?.map(c=>c.present?{core:c.coreMedian,shell:c.shellMedian,ramp:c.ramp,tagBounded:c.tagBounded}:null)??null};
+    }
     const u=this.material.uniforms;
     const shadowSampling=!this.enabled||!u.uShadows.value?'off':!u.uOpticalCache.value?'source-probes':
       this.material.defines.DIRECTIONAL_OPTICS===1?'directional-atlas':u.uContextCoverageLayer.value>=0?'skull-atlas':'source-atlas';
@@ -463,18 +513,113 @@ export class ScanVolumeRenderer {
       ...(this.ctaVesselLight.value?{ctaVesselKeyLight:true}:{}),
       ...(this.material.defines.CTA_VESSEL_SHADOW===1?{ctaVesselCastShadow:true}:{}),
       ...(u.uCtaCutMaterial.value?{ctaCutMaterial:true}:{}),
-      ctExteriorDisplay,ctExteriorBytes:this.estimatedCtExteriorBytes,tofContextDensity:this.activeTofContextDensity};
+      ctExteriorDisplay,ctExteriorBytes:this.estimatedCtExteriorBytes,tofContextDensity:this.activeTofContextDensity,
+      // While cinematic tags are prepared the standard image is shown. If they
+      // cannot be prepared, the standard image settles as usual.
+      ...(this.enabled&&this.cinematicMode?{mode:'cinematic' as const,
+        settled:(!!this.cinematic?.error||!!this.cinematicFallback)&&!interactive&&this.samples>=4,
+        ...(this.cinematic?.error?{cinematicUnavailable:this.cinematic.error}:{}),
+        ...(this.cinematicFallback?{cinematicFallback:this.cinematicFallback}:{})}:{})};
   }
+
+  /** Visible vessel layers become soft material tags; their meshes are drawn by the volume. */
+  private cinematicLayers(){
+    const {visible,settings}=this.labelState;
+    const layers:CinematicTagLayer[]=[],names:string[]=[];
+    for(const layer of this.layers){
+      const cls=cinematicTagClass(layer.kind);
+      if(cls===null||visible[layer.name]===false||layerAppearance(layer.name,layer.color,settings,layer.displayKind??layer.kind).opacity<=0)continue;
+      const labels=layer.labelSet?this.labelSets?.find(set=>set.id===layer.labelSet)?.data:undefined;
+      if(layer.labelSet&&(!labels||layer.labelValue===undefined))continue;
+      layers.push({cls,source:labels?{kind:'labels',labels,value:layer.labelValue!}:{kind:'mask',mask:layer.mask}});
+      names.push(layer.name);
+    }
+    const key=JSON.stringify(names.map((name,i)=>[name,layers[i].cls,sourceIdentity(layers[i].source)]));
+    return {key,layers};
+  }
+
+  private prepareCinematic(){
+    const u=this.material.uniforms,ct=!!u.uCt.value;
+    const pass=this.cinematic??=new CinematicVolumePass({signal:this.sourceOptics.signal,shape:this.sourceOptics.shape,texture:this.texture,
+      worldToVoxel:u.uWorldToVoxel.value,voxelMm:this.spacing,ct,floatLinear:!!u.uLinear.value},
+      {uClipEnabled:u.uClipEnabled,uClipPlane:u.uClipPlane,uExtraClipCount:u.uExtraClipCount,uExtraClips:u.uExtraClips,uBackground:u.uBackground},
+      this.onOpticsReady?()=>this.onOpticsReady!():undefined);
+    const {visible,settings}=this.labelState;
+    const appearance=(layer:ViewerVolume['compartments'][number])=>layerAppearance(layer.name,layer.color,settings,layer.displayKind??layer.kind);
+    const skull=this.layers.filter(layer=>layer.kind==='bone'||layer.kind==='skull');
+    const shownSkull=skull.filter(layer=>visible[layer.name]!==false);
+    // A see-through skull without a cut scales bone extinction by half its
+    // layer opacity. Any cut shows solid bone so the cut face reads.
+    const cut=u.uClipEnabled.value||u.uExtraClipCount.value>0;
+    const boneWeight=!ct?0:skull.length&&!shownSkull.length?0:settings.skullMode!=='transparent'||cut?1:
+      .5*(shownSkull.length?Math.max(...shownSkull.map(layer=>appearance(layer).opacity)):.08);
+    const {key,layers}=this.cinematicLayers();
+    pass.prepare(key,layers,{ct,boneWeight,window:this.window},!this.onOpticsReady);
+    this.cinematicFallback=null;
+    if(pass.error||!pass.ready)return null;
+    // MR context alone is a dim fog; without a vessel layer the standard image says more.
+    if(!ct&&!pass.tagStats?.channels){this.cinematicFallback='no-vessel-layer';return null;}
+    // Meshes and colours follow the installed tags, which stay an earlier
+    // layer set until a newly requested one has been prepared.
+    const names=(JSON.parse(pass.key!) as Array<[string]>).map(([name])=>name);
+    const tagged=this.layers.filter(layer=>names.includes(layer.name));
+    const unclassified=tagged.find(layer=>layer.kind==='vessel'||layer.kind==='vessels');
+    const arterial=tagged.some(layer=>layer.kind==='artery');
+    pass.setLighting({
+      vesselColors:[new THREE.Color(arterial||!unclassified?ctaVesselColors.artery:appearance(unclassified).color),new THREE.Color(ctaVesselColors.vein)],
+      boneColor:new THREE.Color(shownSkull.length?appearance(shownSkull[0]).color:'#e3d6bf')});
+    this.cinematicHidden=new Set([...names,...(ct?skull.map(layer=>layer.name):[])]);
+    return pass;
+  }
+
+  /** Opaque meshes not represented by the volume stop primary rays at their
+   * depth. Tagged vessels and CT bone are drawn by the volume; translucent
+   * meshes are peeled as in the standard path and composited over the traced
+   * image wherever they lie in front of it. */
+  private renderCinematic(pass:CinematicVolumePass,scene:THREE.Scene,camera:THREE.PerspectiveCamera,
+    sceneTarget:THREE.WebGLRenderTarget,w:number,h:number,interactive:boolean) {
+    if(sceneTarget.width!==w||sceneTarget.height!==h)sceneTarget.setSize(w,h);
+    this.renderer.getClearColor(this.background);
+    const clearAlpha=this.renderer.getClearAlpha();
+    const hidden:THREE.Object3D[]=[],translucent:THREE.Object3D[]=[];
+    try {
+      this.renderer.setClearColor(0,0);
+      if(interactive||pass.samples===0){
+        scene.traverse(o=>{if(!(o instanceof THREE.Mesh)||!o.visible||!o.userData.compartment||Array.isArray(o.material))return;
+          if(this.cinematicHidden.has(o.userData.compartment)){hidden.push(o);o.visible=false;}
+          else if(o.material.opacity<1){translucent.push(o);o.visible=false;}});
+        this.renderer.setRenderTarget(sceneTarget);this.renderer.clear();
+        this.renderer.render(scene,camera);
+        translucent.forEach(o=>o.visible=true);
+        this.cinematicSurfaces=this.surfacePass.render(this.renderer,scene,camera,sceneTarget.depthTexture!,w,h,interactive);
+      }
+      const image=pass.render(this.renderer,camera,sceneTarget,w,h,interactive);
+      const {count,tailIndex}=this.cinematicSurfaces,surfaces=this.surfacePass;
+      if(!count)return image;
+      return pass.overlay(this.renderer,image,{count,colors:Array.from({length:count},(_,i)=>i===tailIndex?surfaces.tail.texture:surfaces.targets[i].texture),
+        depths:Array.from({length:count},(_,i)=>surfaces.targets[i].depthTexture)},w,h);
+    } finally {
+      for(const o of [...hidden,...translucent])o.visible=true;
+      this.renderer.setClearColor(this.background,clearAlpha);
+    }
+  }
+
+  /** The 3D PNG is always the standard ray-cast image: in cinematic mode the
+   * path-traced still is not exported. */
+  get exportMode(){return this.enabled&&this.cinematicMode?'standard' as const:undefined;}
 
   renderExportSample(scene:THREE.Scene,camera:THREE.PerspectiveCamera,targets:ScanVolumeExportTargets,
     width:number,height:number,sample:number,originY:number,context?:VesselSlabContext) {
+    // Deliberately the standard image in either mode; see exportMode.
     return this.renderSample(scene,camera,targets,width,height,false,sample,originY,context);
   }
 
   private renderSample(scene:THREE.Scene,camera:THREE.PerspectiveCamera,targets:VolumeTargets,
     w:number,h:number,interactive:boolean,sample:number,exportOriginY?:number,context?:VesselSlabContext) {
     const {scene:sceneTarget,volume:volumeTarget,accumulation,surfaces:surfacePass}=targets;
-    if(sceneTarget.width!==w||sceneTarget.height!==h){sceneTarget.setSize(w,h);volumeTarget.setSize(w,h);}
+    // Cinematic frames resize the shared scene target alone.
+    if(sceneTarget.width!==w||sceneTarget.height!==h)sceneTarget.setSize(w,h);
+    if(volumeTarget.width!==w||volumeTarget.height!==h)volumeTarget.setSize(w,h);
     const isExport=exportOriginY!==undefined;
     if(this.selectScalarTexture()&&!isExport){this.invalidate();sample=0;}
     this.configureContextCoverage();
@@ -557,6 +702,7 @@ export class ScanVolumeRenderer {
   }
   dispose(){
     this.cancelOpticalPreparation();
+    this.cinematic?.dispose();
     this.ctaVesselShadow?.dispose();
     this.sceneTarget.dispose();this.volumeTarget.dispose();if(this.ownsTexture)this.texture.dispose();this.supportTexture?.dispose();this.contextCoverage?.texture.dispose();this.exteriorVolume?.texture.dispose();this.transfer?.dispose();
     this.interactionTargets?.scene.dispose();this.interactionTargets?.volume.dispose();

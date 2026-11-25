@@ -114,10 +114,13 @@ def displayed_surface(collection, layer_id):
     return layer, mesh(collection, layer, display_source=vascular_cleanup_source(collection, layer), conditioned=not companion)
 
 
-def recipes(collection, case, default_view, default_layers):
+def recipes(collection, case, default_view, default_layers, volume_mode=None):
     scan, _, extent = scan_geometry(collection, case)
     target = anchor(case)
     settings = {key: value for key, value in default_view['settings'].items() if key not in {'camera', 'clipping'}}
+    if volume_mode:
+        # The path-traced mode draws vessels from the acquired volume on every case.
+        settings['volumeRendering'] = {**settings.get('volumeRendering', {}), 'enabled': True, 'mode': volume_mode}
     rows = []
     for name, preset in PRESETS.items():
         direction = np.asarray(preset['from'], float)
@@ -143,7 +146,9 @@ def run_capture(desktop, manifest, views, output, log, *, width, height):
     runtime = desktop / 'node_modules' / 'electron'
     electron = runtime / 'dist' / (runtime / 'path.txt').read_text().strip()
     command = [str(electron), 'electron/capture-vascular-surfaces.cjs', '--anatomy', str(manifest), '--views', str(views),
-               '--output', str(output), '--width', str(width), '--height', str(height)]
+               '--output', str(output), '--width', str(width), '--height', str(height),
+               # Every phase is measured on the built-in Retina panel, whichever display is primary.
+               '--display-scale', '2']
     with log.open('w') as stream, subprocess.Popen(
             command, cwd=desktop, stdout=stream, stderr=subprocess.STDOUT, start_new_session=True) as process:
         try:
@@ -174,7 +179,7 @@ def pane_image(view):
     return image
 
 
-def capture(root, name, case, label, *, width, height):
+def capture(root, name, case, label, *, width, height, volume_mode=None):
     """Capture today's default appearance at every fixed preset and time one continuous orbit."""
     desktop = Path(__file__).resolve().parents[1] / 'desktop'
     manifest = safe_path(root, case['manifest'])
@@ -197,13 +202,13 @@ def capture(root, name, case, label, *, width, height):
         default = run_capture(desktop, manifest, output / 'default-view.json', output / 'default', output / 'default.log',
                               width=width, height=height)
         default_view = default['views'][0]['view']
-    rows = recipes(collection, case, default_view, initial)
+    rows = recipes(collection, case, default_view, initial, volume_mode)
     atomic_json(output / 'views.json', rows)
     report = run_capture(desktop, manifest, output / 'views.json', output / 'presets', output / 'presets.log',
                          width=width, height=height)
-    metrics = {'case': name, 'title': case['title'], 'held_out': case['held_out'], 'label': label,
+    metrics = {'case': name, 'title': case['title'], 'held_out': case['held_out'], 'label': label, 'volume_mode': volume_mode or 'default',
                'manifest_sha256': sha256_file(manifest), 'snapshot_id': report['snapshotId'],
-               'window': report['windowSize'], 'device_scale': report['deviceScale'], 'presets': {}}
+               'window': report['windowSize'], 'device_scale': report['deviceScale'], 'display': report.get('display'), 'presets': {}}
     for view in report['views']:
         if view['name'] in PRESETS:
             image = pane_image(view)
@@ -212,7 +217,7 @@ def capture(root, name, case, label, *, width, height):
             settled = [row['gpu']['milliseconds'] for row in view['settledSamples'] if row.get('gpu', {}).get('completed')]
             metrics['presets'][view['name']] = {
                 'image': f"{view['name']}.png", 'pane': [image.width, image.height], 'camera': view['frame']['cameraState'],
-                'volume': view['frame'].get('volume'), 'settled_samples': quality.get('samples'),
+                'volume': view['frame'].get('volume'), 'mode': quality.get('mode', 'standard'), 'settled_samples': quality.get('samples'),
                 'settled_resolution': [quality.get('width'), quality.get('height')],
                 'settled_sample_gpu_ms': settled,
                 # The app labels an active cut along the bottom of the pane.
@@ -369,6 +374,7 @@ def main():
     parser.add_argument('--case', action='append', choices=list(HERO))
     parser.add_argument('--compare', action='append', help='Earlier labels to place before this one on a sheet')
     parser.add_argument('--references', type=Path, help='Folder of reference frames named after each preset')
+    parser.add_argument('--volume-mode', choices=['cinematic'], help='Capture with this volume render mode instead of the default view')
     parser.add_argument('--width', type=int, default=1440)
     parser.add_argument('--height', type=int, default=960)
     args = parser.parse_args()
@@ -380,9 +386,9 @@ def main():
         return 0
     for name in cases:
         if args.command == 'capture':
-            metrics = capture(root, name, HERO[name], args.label, width=args.width, height=args.height)
+            metrics = capture(root, name, HERO[name], args.label, width=args.width, height=args.height, volume_mode=args.volume_mode)
             timing = metrics.get('interaction', {})
-            print(name, 'frame cost p95', timing.get('frameCostMs', {}).get('p95'), 'ms; settle',
+            print(name, 'frame interval p95', timing.get('frameIntervalMs', {}).get('p95'), 'ms; settle',
                   (timing.get('settle') or {}).get('milliseconds'), 'ms', flush=True)
         else:
             result = geometry(root, name, HERO[name], args.label)

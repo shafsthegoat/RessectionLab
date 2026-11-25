@@ -78,7 +78,7 @@ export const vesselWallFinish = {
   clearcoatRoughness:.36,
 };
 
-const ctaVesselColors = {
+export const ctaVesselColors = {
   artery:'#a32e22',
   vein:'#325988',
   sinus:'#434f7f',

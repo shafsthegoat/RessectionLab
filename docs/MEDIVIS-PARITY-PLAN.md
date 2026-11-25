@@ -61,10 +61,11 @@ drives the hidden desktop harness and `resectionlab.vascular_parity`.
    Proposed: score the labelled TopCoW-018 MRA as the held-out angiography
    reference, and judge PTNT_9937 on floating components, Betti counts and
    blind review. Needs Shafrir's agreement before Phase 2 closes.
-2. **The TopBrain dockers need a container runtime.** None is installed, the
-   five images total 36.7 GB compressed, and the internal disk has 21 GB free.
-   Runtime storage must sit on the HDD. Installing a runtime needs Shafrir's
-   approval. The record is CC BY 4.0 with a citation request.
+2. **The TopBrain dockers target linux/amd64 with an NVIDIA GPU.** No
+   container runtime is installed, and one would run emulated on CPU here.
+   The five images (36.7 GB, CC BY 4.0, citation requested) are kept on the
+   HDD; the plan is to unpack them and run the weights natively. Whether the
+   archives allow that is not yet confirmed.
 3. **The annotation itself has unrooted named vessels.** TopCoW-014 has six
    and TopCoW-018 four components (M2, M3, choroidal and ophthalmic segments)
    that do not touch a root label. "Zero floating components" and "no named
@@ -88,7 +89,7 @@ drives the hidden desktop harness and `resectionlab.vascular_parity`.
 | Phase | Scope | Acceptance | Status |
 | --- | --- | --- | --- |
 | 0 Baseline | Headless harness reproduces presets and metrics for today's app | Evidence saved for all four cases | done 2026-11-25 |
-| 1 Cinematic renderer | Soft-label tagging, tricubic intensity, progressive path tracing, hybrid shading, HDR environment; WebGPU versus WebGL2 recorded | Interaction p95 at most 16.7 ms; settle at most 1.5 s on CTA-A; blind crispness and depth at least 4 | not started |
+| 1 Cinematic renderer | Soft-label tagging, tricubic intensity, progressive path tracing, hybrid shading, HDR environment; WebGPU versus WebGL2 recorded | Interaction p95 at most 16.7 ms; settle at most 1.5 s on CTA-A; blind crispness and depth at least 4 | gates not met 2026-11-25; kept behind the Volume lighting setting |
 | 2 Segmentation | TopBrain 2025 top-three models, ensembled with vesselFM where connected to the named tree; soft probabilities kept; CTA labels never applied to MRA | Better Dice, clDice and Betti than vesselFM alone on the held-out cases | not started |
 | 3 Cleanup | Root-reachable components by default, the rest behind a review toggle; signal-supported bridging; caliber LOD; arteries red, veins blue | Zero floating components by default; no named major vessel lost | not started |
 | 4 Sim geometry | Centerline and radius implicit tubes shared by drawing, collision, rods and tags | Deviation at most 0.5 voxel; no self-intersection; tools displace vessels | not started |
@@ -130,3 +131,75 @@ across the two cached blends. No annotated held-out MR angiography run exists ye
 
 Today's CTA view keeps its frame interval near 16.7 ms only by dropping the
 interactive image to a 360 px long edge and drawing every second refresh.
+
+## Phase 1 backend choice
+
+The same one-sample path-tracing kernel (delta tracking through a majorant
+grid, gradient shading, one shadow ray and one ambient ray, float
+accumulation) was timed in WebGL2, WebGPU fragment and WebGPU compute on
+TopCoW-014 in a hidden Electron 44 window on the M2 Pro. GPU time p50 per
+sample with bone, shadow and ambient rays:
+
+| Size | Filter | WebGL2 | WebGPU fragment | WebGPU compute |
+| --- | --- | --- | --- | --- |
+| 905 x 1024 | trilinear | 9.3 ms | 13.8 ms | 13.1 ms |
+| 905 x 1024 | tricubic | 19.7 ms | 30.4 ms | 26.2 ms |
+| 540 x 611 | trilinear | 4.8 ms | 7.9 ms | 5.6 ms |
+| 540 x 611 | tricubic | 10.7 ms | 16.4 ms | 11.1 ms |
+| 360 x 407 | tricubic | 7.1 ms | 10.2 ms | 5.9 ms |
+
+Converged 256-sample images from the three backends differ by at most one
+8-bit level. **Choice: WebGL2.** It is fastest on the settled pane, and it
+shares the existing three.js context, scan texture and mesh depth. WebGPU
+compute wins only at small sizes and on vessel-only scenes, by a few
+milliseconds, and would need a second device, canvas and volume upload.
+Source, logs and images: `qc/medivis-parity-20261125/phase1-cinematic/prototype/README.md`.
+
+## Phase 1 results
+
+`volumeRendering.mode: 'cinematic'` ("Volume lighting" in the 3D view) path
+traces the acquired scan: delta tracking over a brick majorant grid, cubic
+B-spline intensity at rest, soft tags from the label masks choosing vessel
+material, a glass-shell see-through skull, a shadowed key light with a short
+obscurance bounce, and float accumulation to 1,024 samples with a
+variance-guided filter that fades out. Moving frames trace one filtered sample
+at a budgeted resolution. Standard remains the default.
+
+Measured 2026-11-25 on the M2 Pro with 16 GB, hidden, on the built-in Retina
+panel at 120 Hz with an external 100 Hz monitor attached as the main display.
+Evidence: `qc/medivis-parity-20261125/phase1-cinematic/README.md`.
+
+| Gate | Target | CTA-A result |
+| --- | --- | --- |
+| Interaction frame interval p95 | at most 16.7 ms | 10.6 to 11.4 ms over five runs: met |
+| Settle after release | at most 1.5 s | 1.95 to 1.97 s over five runs, 1.42 s in the full capture run: not met |
+| Blind crispness and depth | at least 4 | 3.25 and 3.5: not met |
+
+Settle failed on both attempts, so by the rule above the mode stays behind
+its setting and Shafrir chose to move on. "Settled" is the first sample count
+whose displayed 3D pane is within 40 dB, and 1 percent of pixels beyond 8
+levels, of the 1,024-sample image on the anterior, skull-base and axial-clip
+views: 72 samples, limited by the cut skull base (64 samples leave 1.02
+percent). A rest sample costs 18 to 21 ms of GPU and is delivered about every
+25 ms, after the app's 150 ms interaction hold.
+
+| | CTA-A | CTA-B | TOF-A | TOF-B |
+| --- | --- | --- | --- | --- |
+| Frame interval p50 / p95 (ms) | 8.6 / 11.2 | 8.7 / 10.4 | 8.5 / 11.0 | 9.6 / 11.2 |
+| Frames per input | 0.93 | 0.94 | 0.95 | 0.88 |
+| Interactive long edge (px) | 240 to 360 | 320 to 360 | 200 to 360 | 360 |
+| Settle (ms) at 72 samples | 1,424 | 1,783 | 2,532 | 2,615 |
+| Sharpness, rise p50 (px), six views | 2.0 to 3.2 | 2.3 to 3.7 | 1.8 to 2.1 | 1.9 to 2.2 |
+| Blind crispness / depth, before to after | 2.75 to 3.25 / 3.0 to 3.5 | 3.0 to 3.0 / 3.0 to 3.5 | 2.5 to 2.5 / 2.25 to 2.25 | 2.5 to 2.5 / 2.25 to 2.25 |
+| Blind clutter / connectivity, before to after | 2.25 to 2.75 / 2.75 to 2.75 | 2.5 to 3.0 / 2.5 to 2.75 | 1.25 to 1.25 / 1.75 to 1.75 | 1.0 to 1.0 / 1.75 to 1.75 |
+| Blind realism / usefulness, before to after | 2.5 to 3.25 / 2.75 to 3.25 | 2.0 to 3.25 / 2.75 to 2.75 | 1.5 to 1.5 / 1.5 to 1.5 | 1.5 to 1.5 / 1.25 to 1.25 |
+
+The blind reviewer scored sixteen Phase 0 and sixteen Phase 1 frames shuffled
+together. Its Phase 0 scores differ from the Phase 0 reviewer's, so the
+before-to-after change within this set is the comparison. Cut CTA views
+gained the most (crispness and depth 3 to 4); uncut views keep bone haze, and
+TOF views did not move because fragments and tangles dominate them.
+
+Rendered lumen connectivity on CTA-A matches the label mask (arteries 8 of 8
+components, veins 3 of 3). Thin vessels are beaded where their opacity follows
+the binary mask. PNG export in this mode writes the standard image.

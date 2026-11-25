@@ -33,13 +33,14 @@ test('camera rejects collapsed or collinear views and out-of-bounds cutaways sta
   assert.deepEqual(clippingForBounds({axis:'x',value:999,enabled:true},[[-20,-30,-40],[80,90,100]]),{axis:'x',value:30,enabled:false,flipped:false});
 });
 
-let server,cache,VolumeRenderer,ScanVolumeRenderer,ScanVolumeExportTargets,exportHelpers;
+let server,cache,VolumeRenderer,ScanVolumeRenderer,ScanVolumeExportTargets,exportHelpers,cinematicPass;
 before(async()=>{
   cache=await fs.mkdtemp(path.join(os.tmpdir(),'anatomy-workspace-'));
   server=await createServer({root:fileURLToPath(new URL('../../',import.meta.url)),cacheDir:cache,logLevel:'error',optimizeDeps:{noDiscovery:true,include:[]},server:{middlewareMode:true,hmr:false,ws:false},appType:'custom'});
   VolumeRenderer=(await server.ssrLoadModule('/src/viewer/VolumeRenderer.ts')).VolumeRenderer;
   ({ScanVolumeRenderer,ScanVolumeExportTargets}=await server.ssrLoadModule('/src/viewer/ScanVolumeRenderer.ts'));
   exportHelpers=await server.ssrLoadModule('/src/viewer/anatomyExport.ts');
+  cinematicPass=await server.ssrLoadModule('/src/viewer/CinematicVolumePass.ts');
 });
 after(async()=>{await server?.close();if(cache)await fs.rm(cache,{recursive:true,force:true,maxRetries:3,retryDelay:50});});
 function renderer(){
@@ -723,6 +724,7 @@ function fencedFrame(run){
   const previous={window:globalThis.window,raf:globalThis.requestAnimationFrame,cancel:globalThis.cancelAnimationFrame};
   const callbacks=new Map(),live=new Set(),status=new Map(),events=[],ready=[],errors=[];let id=0,syncId=0;
   globalThis.window={devicePixelRatio:1};globalThis.requestAnimationFrame=fn=>{callbacks.set(++id,fn);return id};globalThis.cancelAnimationFrame=key=>callbacks.delete(key);
+  let restore=()=>{globalThis.window=previous.window;globalThis.requestAnimationFrame=previous.raf;globalThis.cancelAnimationFrame=previous.cancel;};
   try{
     const {r}=renderer(),empty={getBoundingClientRect:()=>({left:0,top:0,width:0,height:0})};
     const gl={SYNC_GPU_COMMANDS_COMPLETE:1,TIMEOUT_EXPIRED:2,WAIT_FAILED:3,ALREADY_SIGNALED:4,CONDITION_SATISFIED:5,
@@ -731,13 +733,59 @@ function fencedFrame(run){
     Object.assign(r,{requestRender:VolumeRenderer.prototype.requestRender,disposed:false,graphicsLost:false,frame:0,renderSerial:0,width:100,height:100,sliceRevision:0,interacting:false,refinementStarted:0,budget:{longEdge:360},gpuSync:null,estimateAllocation:()=>({}),retiredSurfaces:[],
       container:{getBoundingClientRect:()=>({left:0,top:0,width:100,height:100})},panes:{anatomy:empty,axial:empty,coronal:empty,sagittal:empty},canvas:{dispatchEvent(event){events.push(event);f.onEvent?.(event)}},scanVolume:{active:false},controls:{target:new THREE.Vector3(),update(){}},
       renderer:{info:{reset(){},memory:{},render:{calls:0}},getContext:()=>gl,getPixelRatio:()=>1,setScissorTest(){},clear(){}}});
-    const f={r,gl,callbacks,events,ready,errors,live,onEvent:null,
+    const f={r,gl,callbacks,events,ready,errors,live,status,onEvent:null,
       request(name,onReady){const interaction={view:{stateId:name},onDisplayReady:view=>{ready.push(view.stateId);events.push({type:'accepted',detail:{stateId:view.stateId}});onReady?.()},onDisplayError:(view,message)=>errors.push({stateId:view.stateId,message})};r.surgicalInteraction=interaction;r.queueSurgicalPublication(interaction);return interaction},
       tick(){const first=callbacks.entries().next().value;assert(first,'a frame or fence poll must be queued');callbacks.delete(first[0]);first[1]()},
       complete(value=gl.CONDITION_SATISFIED){assert(r.gpuSync);status.set(r.gpuSync,value);f.tick()}};
-    run(f);
-  }finally{globalThis.window=previous.window;globalThis.requestAnimationFrame=previous.raf;globalThis.cancelAnimationFrame=previous.cancel;}
+    const result=run(f);
+    // An asynchronous run keeps the stubs until it finishes.
+    if(result?.then){const pending=result.finally(restore);restore=null;return pending;}
+  }finally{restore?.();}
 }
+/** Route the fenced frame through a path-traced scan volume with an anatomy pane. */
+function pathTracedFrames(f,{interacting=false}={}){
+  const {r}=f,rect={left:0,top:0,width:100,height:100},scans=[];
+  Object.assign(r,{interacting,panes:{...r.panes,anatomy:{getBoundingClientRect:()=>rect}},workspaceSettings:{showOrientationGuide:false},
+    prepareVesselDepth(){},hasTranslucentCranialSurfaces:()=>false,visibleVesselSlabContext:()=>undefined,
+    motionBudget:{longEdge:280,frame(){},sample(){},gpuTime(){}},motionSerials:new Set(),restFence:{eager:()=>false,completed(){},reset(){}},
+    scanVolume:{active:true,cinematicActive:true,cinematicPace:'fast',needsRefinement:!interacting,opticsPending:false,invalidate(){},
+      render(...args){scans.push(args);return {mode:'cinematic',shadowSampling:'path-traced',width:100,height:100,samples:scans.length,opticsPending:false};}}});
+  Object.assign(r.renderer,{setViewport(){},setScissor(){}});
+  return scans;
+}
+// Timer-driven polls are awaited by condition, and the renderer is stopped
+// afterwards so a failed assertion cannot leave a poll loop running.
+const until=async(done,ms=3000)=>{const end=Date.now()+ms;while(!done()&&Date.now()<end)await tick(2);return done();};
+const polled=run=>fencedFrame(async f=>{try{await run(f);}finally{f.r.disposed=true;}});
+test('path-traced refinement polls its pending fence on a millisecond timer and draws the next sample when it signals',()=>polled(async f=>{
+  const scans=pathTracedFrames(f);let waits=0;
+  const wait=f.gl.clientWaitSync;f.gl.clientWaitSync=sync=>{waits++;return wait(sync);};
+  f.r.requestRender();f.tick();
+  assert.equal(scans.length,1);assert.equal(f.callbacks.size,0,'no display refresh is spent on the fence');
+  const started=Date.now();
+  assert.ok(await until(()=>waits>=3),'the pending fence is polled repeatedly');
+  // One poll per millisecond timer, never back-to-back tasks.
+  assert.ok(waits<=2*(Date.now()-started)+4,`${waits} fence polls in ${Date.now()-started} ms`);
+  assert.equal(f.r.renderSerial,1);
+  f.status.set(f.r.gpuSync,f.gl.CONDITION_SATISFIED);
+  assert.ok(await until(()=>f.r.renderSerial===2),'the next sample is drawn without waiting for a display refresh');
+  assert.equal(scans.length,2);assert.equal(f.callbacks.size,0);
+  // Stop refining and let the last fence settle.
+  f.r.scanVolume.needsRefinement=false;f.status.set(f.r.gpuSync,f.gl.CONDITION_SATISFIED);
+  assert.ok(await until(()=>f.r.gpuSync===null));assert.equal(f.r.renderSerial,2);
+}));
+test('a path-traced motion frame is checked at the next refresh, then followed up on a millisecond timer',()=>polled(async f=>{
+  pathTracedFrames(f,{interacting:true});let waits=0;
+  const wait=f.gl.clientWaitSync;f.gl.clientWaitSync=sync=>{waits++;return wait(sync);};
+  f.r.requestRender();f.tick();
+  assert.equal(f.callbacks.size,1,'the first check waits for the next refresh');
+  f.tick();assert.equal(waits,1);assert.equal(f.callbacks.size,0);
+  const started=Date.now();
+  assert.ok(await until(()=>waits>=3),'a late frame is followed up without another refresh');
+  assert.ok(waits<=2*(Date.now()-started)+4,`${waits} fence polls in ${Date.now()-started} ms`);
+  f.status.set(f.r.gpuSync,f.gl.CONDITION_SATISFIED);
+  assert.ok(await until(()=>f.r.gpuSync===null));
+}));
 test('native display publication waits for an explicitly successful GPU fence, after its event',()=>fencedFrame(f=>{
   f.request('A');f.tick();assert.deepEqual(f.ready,[]);assert.equal(f.r.renderSerial,1);
   for(let i=0;i<3;i++){f.tick();assert.deepEqual(f.ready,[]);assert.equal(f.r.renderSerial,1)}
@@ -796,3 +844,438 @@ test('completed frame telemetry retains the actual submitted source identity acr
   assert(completed.completed);assert.equal(completed.serial,submitted.serial);
   assert.equal(completed.displayIdentity,'source-a');assert.equal(completed.sourceSignalFingerprint,submitted.sourceSignalFingerprint);
 }));
+
+function recordingRenderer(){
+  const draws=[];let target=null;
+  const renderer={extensions:{has:()=>true},getPixelRatio:()=>2,getClearColor:out=>out.set('#05080d'),getClearAlpha:()=>1,setClearColor(){},
+    setRenderTarget(value){target=value;},clear(){},
+    render(scene){
+      const meshes=[];scene.traverse(o=>{if(o instanceof THREE.Mesh)meshes.push(o);});
+      draws.push({scene,target,material:scene.children[0]?.material,visible:new Map(meshes.map(m=>[m,m.visible]))});
+    }};
+  return {renderer,draws};
+}
+function cinematicPhantom(){
+  const shape=[14,12,10],count=14*12*10;
+  const mri=new Float32Array(count).fill(40),artery=new Uint8Array(count),tumor=new Uint8Array(count),brain=new Uint8Array(count).fill(1);
+  for(let x=0;x<14;x++)for(let y=0;y<12;y++)for(let z=0;z<10;z++){
+    const i=(x*12+y)*10+z;
+    if((y-4)**2+(z-4)**2<=4){mri[i]=420;artery[i]=1;}
+    if(x>9&&y>8&&z>6)tumor[i]=1;
+  }
+  const affine=[[.5,0,0,0],[0,.6,0,0],[0,0,.9,0],[0,0,0,1]];
+  const compartments=[{name:'artery',kind:'artery',color:'#aa352b',mask:artery},{name:'tumor',kind:'tumor',color:'#65bfd3',mask:tumor},
+    {name:'brain',kind:'brain',color:'#a399ad',mask:brain}];
+  return {...source,shape,affine,mri,compartments,displayIdentity:'native-cta',sourceSeriesId:'ct'};
+}
+/** Render until a frame satisfies done; fail instead of hanging. */
+function renderUntil(render,done,limit=2000){
+  for(let i=0;i<limit;i++){const frame=render();if(done(frame))return frame;}
+  assert.fail(`no frame satisfied the condition within ${limit} renders`);
+}
+const tick=(ms=0)=>new Promise(resolve=>setTimeout(resolve,ms));
+function phantomScene(){
+  const scene=new THREE.Scene(),make=(name,opacity)=>{
+    const mesh=new THREE.Mesh(new THREE.BoxGeometry(),new THREE.MeshStandardMaterial({opacity,transparent:opacity<1}));
+    mesh.userData.compartment=name;scene.add(mesh);return mesh;
+  };
+  return {scene,artery:make('artery',1),tumor:make('tumor',1),brain:make('brain',.07)};
+}
+
+test('standard volume rendering keeps its defines, uniforms and frame report when the mode is explicit',()=>{
+  const reports=[];
+  for(const mode of [undefined,'standard']){
+    const {renderer}=recordingRenderer();
+    const scan=new ScanVolumeRenderer(renderer,cinematicPhantom(),[0,1000]);
+    try{
+      scan.configure({enabled:true,shadows:false,...(mode?{mode}:{})},'CTA',null);
+      scan.labels(null,{},{presentation:'segmentation',skullMode:'transparent'},[]);
+      const quality=scan.render(phantomScene().scene,new THREE.PerspectiveCamera(),640,480,false,()=>{});
+      reports.push({quality,defines:{...scan.material.defines},uniforms:Object.keys(scan.material.uniforms).sort(),cinematic:scan.cinematic});
+    }finally{scan.dispose();}
+  }
+  assert.deepEqual(reports[1],reports[0]);
+  assert.equal(reports[0].cinematic,undefined,'no cinematic resources are allocated');
+  assert.deepEqual(Object.keys(reports[0].quality).sort(),['ctExteriorBytes','ctExteriorDisplay','height','opticsPending','samples','shadowSampling','tofContextDensity','width']);
+  assert.equal(reports[0].uniforms.length,74);
+  assert.deepEqual(reports[0].defines,{});
+});
+
+test('cinematic mode path traces tagged vessels, keeps opaque meshes and refines past four samples',()=>{
+  const {renderer,draws}=recordingRenderer();
+  const volume=cinematicPhantom(),originals=[volume.mri.slice(),...volume.compartments.map(layer=>layer.mask.slice())];
+  const scan=new ScanVolumeRenderer(renderer,volume,[0,1000]);
+  const {scene,artery,tumor,brain}=phantomScene(),camera=new THREE.PerspectiveCamera();
+  const render=(interactive=false)=>scan.render(scene,camera,2000,1000,interactive,()=>{},360);
+  try{
+    scan.configure({enabled:true,mode:'cinematic'},'CTA',null);
+    scan.labels(null,{},{presentation:'segmentation',skullMode:'transparent',layerOpacity:{brain:.07}},[]);
+    const first=render();
+    const pass=scan.cinematic;
+    assert.ok(pass?.ready,'tags are prepared before the first cinematic frame');
+    assert.deepEqual({mode:first.mode,samples:first.samples,settled:first.settled,width:first.width,height:first.height,shadowSampling:first.shadowSampling},
+      {mode:'cinematic',samples:1,settled:false,width:1024,height:512,shadowSampling:'path-traced'});
+    assert.ok(first.vesselRamps[0].core>400&&first.vesselRamps[0].shell<60);
+    assert.equal(first.vesselRamps[1],null);
+    // The opaque tumour stops rays at its depth; tagged vessels and translucent shells are left to the volume.
+    const sceneDraw=draws.find(draw=>draw.scene===scene);
+    assert.deepEqual([sceneDraw.visible.get(artery),sceneDraw.visible.get(tumor),sceneDraw.visible.get(brain)],[false,true,false]);
+    assert.ok([artery,tumor,brain].every(mesh=>mesh.visible),'meshes stay visible for picking');
+    const kernels=draws.filter(draw=>draw.material?.fragmentShader?.includes('CINEMATIC_REST'));
+    assert.equal(kernels.at(-1).material.defines.CINEMATIC_REST,1);
+    assert.equal(kernels.at(-1).material.uniforms.uTags.value.format,THREE.RedFormat,'one class uses one channel');
+    assert.equal(kernels.at(-1).target.textures[0].type,THREE.FloatType,'the running mean is kept in float');
+    assert.ok(!draws.some(draw=>draw.material===scan.material),'the standard ray caster is not drawn');
+    // The translucent brain is peeled as in the standard path and composited over the traced image.
+    const peels=draws.filter(draw=>draw.scene===scene).slice(1);
+    assert.ok(peels.length>0&&peels.every(draw=>draw.visible.get(brain)&&!draw.visible.get(artery)&&draw.visible.get(tumor)===false));
+    const overlay=draws.filter(draw=>draw.material?.fragmentShader?.includes('uSurfaceCount')).at(-1);
+    // The last peel only bounds the tail, which replaces its colour.
+    assert.ok(overlay&&overlay.material.uniforms.uSurfaceCount.value===peels.length-1,'every peel and the tail are composited');
+    assert.equal(scan.blitMaterial.map,overlay.target.texture);
+    assert.equal(first.translucentLayers,peels.length-1);
+    const perAccumulation=draws.filter(draw=>draw.scene===scene).length;
+    let scenes=perAccumulation;
+    for(let i=0;i<5;i++)render();
+    assert.equal(draws.filter(draw=>draw.scene===scene).length,scenes,'the opaque scene is drawn once per accumulation');
+    assert.equal(scan.needsRefinement,true);assert.equal(pass.samples,6);
+    renderUntil(render,()=>pass.samples>=cinematicPass.CINEMATIC_SETTLED_SAMPLES-1);
+    assert.equal(render().settled,true);
+    assert.equal(scan.needsRefinement,true,'refinement continues after the settled frame');
+    pass.samples=cinematicPass.CINEMATIC_SAMPLE_CAP;
+    assert.equal(scan.needsRefinement,false);
+    scan.invalidate();
+    assert.equal(pass.samples,0);assert.equal(scan.needsRefinement,false);
+    scenes=draws.filter(draw=>draw.scene===scene).length;
+    assert.equal(render().samples,1);
+    assert.equal(draws.filter(draw=>draw.scene===scene).length,scenes+perAccumulation);
+    // Motion: drag resolution, one sample, the cheap kernel and an edge-aware filter.
+    const before=draws.length,moving=render(true);
+    const motion=draws.slice(before);
+    assert.deepEqual([moving.width,moving.height,moving.samples,moving.settled],[360,180,1,false]);
+    assert.equal(motion.find(draw=>draw.material?.defines?.CINEMATIC_REST!==undefined).material.defines.CINEMATIC_REST,0);
+    assert.equal(motion.filter(draw=>draw.material?.fragmentShader?.includes('uBlend')).length,3);
+    assert.deepEqual(motion.filter(draw=>draw.material?.defines?.CINEMATIC_PASS!==undefined).map(draw=>draw.material.defines.CINEMATIC_PASS),[0,1],
+      'trace, then shade');
+    assert.equal(pass.samples,0);
+    assert.equal(scan.blitMaterial.map.image.width,360);
+    assert.deepEqual([volume.mri,...volume.compartments.map(layer=>layer.mask)],originals);
+    // Hiding the vessel layer retags without it and draws nothing from it.
+    scan.labels(null,{artery:false},{presentation:'segmentation'},[]);
+    render();
+    assert.equal(scan.cinematic.tagStats.channels,0);
+    const hidden=[];let disposed=0;
+    scan.labels(null,{},{presentation:'segmentation'},[]);render();
+    for(const texture of [pass.uniforms.uTags.value,pass.uniforms.uMajorant.value,pass.uniforms.uField.value])texture.addEventListener('dispose',()=>disposed++);
+    for(const target of [...pass.accumulation,pass.trace,pass.motionTarget,pass.motionTrace,...pass.motionFiltered,pass.surfaceTarget])target.addEventListener('dispose',()=>disposed++);
+    hidden.push(...pass.restFiltered);hidden.forEach(target=>target.addEventListener('dispose',()=>disposed++));
+    scan.dispose();
+    assert.equal(disposed,11+hidden.length,'tags, glass field, majorants and every attachment are released');
+  }catch(error){scan.dispose();throw error;}
+});
+
+test('cinematic mode clips with the shared planes and reports the standard image while tags are prepared',async()=>{
+  const {renderer}=recordingRenderer();
+  let ready;const published=new Promise(resolve=>{ready=resolve;});
+  const scan=new ScanVolumeRenderer(renderer,cinematicPhantom(),[0,1000],undefined,undefined,()=>ready());
+  const camera=new THREE.PerspectiveCamera();
+  try{
+    const plane=new THREE.Plane(new THREE.Vector3(0,0,-1),2);
+    scan.configure({enabled:true,mode:'cinematic'},'CTA',plane);
+    scan.labels(null,{},{presentation:'segmentation',skullMode:'cutaway'},[new THREE.Plane(new THREE.Vector3(1,0,0),0)]);
+    const pending=scan.render(phantomScene().scene,camera,640,480,false,()=>{});
+    assert.deepEqual([pending.mode,pending.settled,pending.opticsPending],['cinematic',false,true]);
+    assert.equal(scan.needsRefinement,true,'the standard image refines while tags are prepared');
+    await published;
+    const frame=scan.render(phantomScene().scene,camera,640,480,false,()=>{});
+    assert.deepEqual([frame.opticsPending,frame.samples],[false,1]);
+    const u=scan.cinematic.uniforms;
+    assert.equal(u.uClipEnabled,scan.material.uniforms.uClipEnabled);
+    assert.equal(u.uClipEnabled.value,true);assert.deepEqual(u.uClipPlane.value.toArray(),[0,0,-1,2]);
+    assert.equal(u.uExtraClipCount.value,1);
+    assert.ok(u.uBoneRamp.value.z>0,'a cutaway skull is opaque bone');assert.equal(u.uFaint.value.y,0,'and not glass');
+    assert.equal(u.uWorldToVoxel.value,scan.material.uniforms.uWorldToVoxel.value);
+    scan.configure({enabled:true,mode:'standard'},'CTA',plane);
+    assert.equal(scan.render(phantomScene().scene,camera,640,480,false,()=>{}).mode,undefined);
+  }finally{scan.dispose();}
+});
+
+test('cinematic refinement runs back to back until settled, then paced, and stops at a named still sample count',()=>{
+  const {renderer}=recordingRenderer();
+  const scan=new ScanVolumeRenderer(renderer,cinematicPhantom(),[0,1000]);
+  const {scene}=phantomScene(),camera=new THREE.PerspectiveCamera();
+  const render=()=>scan.render(scene,camera,640,480,false,()=>{});
+  try{
+    assert.equal(scan.cinematicPace,null,'no pace before cinematic mode');
+    scan.configure({enabled:true,mode:'cinematic'},'CTA',null);
+    scan.labels(null,{},{presentation:'segmentation',skullMode:'transparent'},[]);
+    render();
+    assert.equal(scan.cinematicPace,'fast');
+    renderUntil(render,frame=>frame.settled);
+    assert.equal(scan.cinematic.samples,cinematicPass.CINEMATIC_SETTLED_SAMPLES,'settled is declared at the settled count');
+    assert.equal(scan.cinematicPace,'paced');
+    assert.equal(scan.needsRefinement,true,'refinement continues past the settled count');
+    const {cinematicSampleLimit,CINEMATIC_SAMPLE_CAP}=cinematicPass;
+    for(const value of [undefined,0,2000,2.5,'8',Number.NaN])assert.equal(cinematicSampleLimit(value),CINEMATIC_SAMPLE_CAP);
+    assert.equal(cinematicSampleLimit(256),256);
+    globalThis.resectionCinematicStillSamples=96;
+    try{
+      // Named after refinement passed it: the running accumulation keeps its
+      // limit, and the next one stops at the named count.
+      assert.equal(render().sampleLimit,CINEMATIC_SAMPLE_CAP);
+      assert.equal(scan.needsRefinement,true);
+      scan.invalidate();
+      renderUntil(render,()=>!scan.needsRefinement);
+      assert.equal(scan.cinematic.samples,96,'a hidden capture stops at its fixed sample count');
+      assert.equal(render().sampleLimit,96);
+    }finally{delete globalThis.resectionCinematicStillSamples;}
+    scan.invalidate();
+    assert.equal(render().sampleLimit,CINEMATIC_SAMPLE_CAP);
+    assert.equal(scan.needsRefinement,true,'ordinary use refines to the cap');
+    scan.configure({enabled:true,mode:'standard'},'CTA',null);
+    assert.equal(scan.cinematicPace,null);
+  }finally{scan.dispose();}
+});
+
+test('cinematic MR without a visible vessel layer shows the standard image and says so',()=>{
+  const {renderer,draws}=recordingRenderer();
+  const volume={...cinematicPhantom(),compartments:cinematicPhantom().compartments.filter(layer=>layer.kind!=='artery')};
+  const scan=new ScanVolumeRenderer(renderer,volume,[0,1000]);
+  const camera=new THREE.PerspectiveCamera();
+  try{
+    scan.configure({enabled:true,mode:'cinematic'},'MRA',null);
+    scan.labels(null,{},{presentation:'segmentation'},[]);
+    let frame=scan.render(phantomScene().scene,camera,640,480,false,()=>{});
+    assert.equal(frame.mode,'cinematic');assert.equal(frame.cinematicFallback,'no-vessel-layer');
+    assert.notEqual(frame.shadowSampling,'path-traced');
+    assert.ok(draws.some(draw=>draw.material===scan.material),'the standard ray caster draws');
+    assert.equal(scan.cinematicActive,false);assert.equal(scan.cinematicPace,null);
+    assert.equal(frame.settled,false);
+    for(let i=0;i<3;i++)frame=scan.render(phantomScene().scene,camera,640,480,false,()=>{});
+    assert.equal(frame.samples,4);assert.equal(frame.settled,true,'settles as the standard image does');
+    assert.equal(scan.needsRefinement,false);
+    // A tagged MR vessel layer is path traced.
+    const tof=new ScanVolumeRenderer(recordingRenderer().renderer,cinematicPhantom(),[0,1000]);
+    try{
+      tof.configure({enabled:true,mode:'cinematic'},'MRA',null);
+      tof.labels(null,{},{presentation:'segmentation'},[]);
+      const traced=tof.render(phantomScene().scene,camera,640,480,false,()=>{});
+      assert.equal(traced.shadowSampling,'path-traced');assert.equal(traced.cinematicFallback,undefined);
+      assert.equal(tof.cinematic.uniforms.uGlass.value,false,'MR context is fog, not CT glass');
+    }finally{tof.dispose();}
+  }finally{scan.dispose();}
+});
+
+/** A cinematic CTA phantom whose preparation runs in time slices, with a readiness promise.
+ * Tests configure it without shadows so no optical atlas shares that callback. */
+function slicedCinematic(volume=cinematicPhantom()){
+  const {renderer,draws}=recordingRenderer();
+  const state={readies:0,wake:null};
+  const scan=new ScanVolumeRenderer(renderer,volume,[0,1000],undefined,undefined,()=>{state.readies++;state.wake?.();});
+  const published=()=>new Promise(resolve=>{state.wake=resolve;});
+  return {scan,draws,state,published};
+}
+
+test('a vessel layer set that cannot be prepared shows the standard image, settles and is not retried',async()=>{
+  const volume=cinematicPhantom();
+  volume.compartments.push({name:'broken',kind:'vein',color:'#325988',mask:new Uint8Array(volume.mri.length)});
+  const {scan,draws,state,published}=slicedCinematic(volume);
+  // Labels are packed at construction; the tags see a mask off the acquired grid.
+  volume.compartments.at(-1).mask=new Uint8Array(7);
+  const {scene}=phantomScene(),camera=new THREE.PerspectiveCamera();
+  const render=()=>scan.render(scene,camera,640,480,false,()=>{});
+  const warn=console.warn,warnings=[];console.warn=(...args)=>warnings.push(args);
+  try{
+    scan.configure({enabled:true,mode:'cinematic',shadows:false},'CTA',null);
+    scan.labels(null,{broken:false},{presentation:'segmentation'},[]);
+    let next=published();render();await next;
+    assert.equal(render().shadowSampling,'path-traced');
+    const pass=scan.cinematic,installed=pass.key;
+    // Showing the broken layer: the installed tags stay on screen while it is prepared.
+    scan.labels(null,{},{presentation:'segmentation'},[]);
+    next=published();
+    const pending=render();
+    assert.deepEqual([pending.shadowSampling,pending.opticsPending],['path-traced',true]);
+    await next;
+    assert.equal(state.readies,2);assert.equal(warnings.length,1);
+    const before=draws.length;
+    let frame=render();
+    assert.equal(frame.mode,'cinematic');assert.notEqual(frame.shadowSampling,'path-traced');
+    assert.equal(frame.cinematicUnavailable,'A vessel layer does not match the acquired grid');
+    assert.equal(frame.opticsPending,false);
+    assert.ok(draws.slice(before).some(draw=>draw.material===scan.material),'the standard ray caster draws');
+    assert.ok(!draws.slice(before).some(draw=>draw.material?.defines?.CINEMATIC_PASS!==undefined),'stale tags are not drawn');
+    assert.equal(scan.cinematicActive,false);assert.equal(scan.cinematicPace,null);
+    frame=renderUntil(render,frame=>frame.settled,8);
+    assert.equal(frame.samples,4);assert.equal(scan.needsRefinement,false);
+    // Further frames neither retry the preparation nor wake the view.
+    for(let i=0;i<3;i++)render();
+    await tick(20);
+    assert.deepEqual([state.readies,pass.pending,warnings.length,scan.cinematic],[2,false,1,pass]);
+    // The installed layer set is still available at once, and the failed one is not retried.
+    scan.labels(null,{broken:false},{presentation:'segmentation'},[]);
+    assert.equal(render().shadowSampling,'path-traced');assert.equal(pass.key,installed);assert.equal(pass.pending,false);
+    scan.labels(null,{},{presentation:'segmentation'},[]);
+    assert.equal(render().cinematicUnavailable,'A vessel layer does not match the acquired grid');
+    await tick(20);
+    assert.deepEqual([state.readies,warnings.length],[2,1]);
+  }finally{console.warn=warn;scan.dispose();}
+});
+
+test('leaving cinematic mode releases the pass and the standard caster draws at the current size',async()=>{
+  const {renderer,draws}=recordingRenderer();
+  const scan=new ScanVolumeRenderer(renderer,cinematicPhantom(),[0,1000]);
+  const {scene}=phantomScene(),camera=new THREE.PerspectiveCamera();
+  try{
+    scan.configure({enabled:true,mode:'cinematic'},'CTA',null);
+    scan.labels(null,{},{presentation:'segmentation'},[]);
+    scan.render(scene,camera,640,480,false,()=>{});
+    const resized=scan.render(scene,camera,800,400,false,()=>{});
+    assert.deepEqual([resized.width,resized.height,resized.shadowSampling],[1024,512,'path-traced']);
+    const pass=scan.cinematic;let disposed=0;
+    for(const texture of [pass.uniforms.uTags.value,pass.uniforms.uMajorant.value,pass.uniforms.uField.value])texture.addEventListener('dispose',()=>disposed++);
+    for(const target of [...pass.accumulation,pass.trace,...pass.restFiltered,pass.surfaceTarget].filter(Boolean))target.addEventListener('dispose',()=>disposed++);
+    const expected=3+2+1+pass.restFiltered.length+(pass.surfaceTarget?1:0);
+    scan.configure({enabled:true,mode:'standard'},'CTA',null);
+    assert.equal(scan.cinematic,undefined);assert.equal(disposed,expected,'tags, field, majorants and attachments are freed');
+    const before=draws.length,frame=scan.render(scene,camera,800,400,false,()=>{});
+    const caster=draws.slice(before).find(draw=>draw.material===scan.material);
+    assert.deepEqual([caster.target.width,caster.target.height],[frame.width,frame.height],'the scalar target follows the shared scene target');
+    assert.equal(frame.mode,undefined);
+    // Disabling the scan volume releases it too.
+    scan.configure({enabled:true,mode:'cinematic'},'CTA',null);
+    scan.render(scene,camera,800,400,false,()=>{});
+    assert.ok(scan.cinematic);
+    scan.configure({enabled:false,mode:'cinematic'},'CTA',null);
+    assert.equal(scan.cinematic,undefined);
+  }finally{scan.dispose();}
+});
+
+test('a preparation pending when cinematic mode is left is cancelled',async()=>{
+  const {scan,state}=slicedCinematic();
+  try{
+    scan.configure({enabled:true,mode:'cinematic',shadows:false},'CTA',null);
+    scan.labels(null,{},{presentation:'segmentation'},[]);
+    scan.render(phantomScene().scene,new THREE.PerspectiveCamera(),640,480,false,()=>{});
+    const pass=scan.cinematic;
+    assert.equal(pass.pending,true);
+    scan.configure({enabled:true,mode:'standard',shadows:false},'CTA',null);
+    assert.equal(pass.pending,false);
+    await tick(50);
+    assert.deepEqual([state.readies,pass.key,scan.cinematic],[0,null,undefined],'nothing is prepared or published after leaving');
+  }finally{scan.dispose();}
+});
+
+test('while a new vessel layer set is prepared, meshes and colours follow the tags on screen',async()=>{
+  const volume=cinematicPhantom(),count=volume.mri.length,vein=new Uint8Array(count);
+  for(let x=0;x<14;x++)for(let y=0;y<12;y++)for(let z=0;z<10;z++){const i=(x*12+y)*10+z;if((y-8)**2+(z-6)**2<=2){vein[i]=1;volume.mri[i]=260;}}
+  volume.compartments.push({name:'vein',kind:'vein',color:'#325988',mask:vein});
+  const {scan,draws,published}=slicedCinematic(volume);
+  const {scene,artery}=phantomScene();
+  const veinMesh=new THREE.Mesh(new THREE.BoxGeometry(),new THREE.MeshStandardMaterial());veinMesh.userData.compartment='vein';scene.add(veinMesh);
+  const camera=new THREE.PerspectiveCamera(),render=()=>scan.render(scene,camera,640,480,false,()=>{});
+  const sceneDraw=from=>draws.slice(from).find(draw=>draw.scene===scene);
+  try{
+    scan.configure({enabled:true,mode:'cinematic',shadows:false},'CTA',null);
+    scan.labels(null,{vein:false},{presentation:'segmentation'},[]);
+    let next=published();render();await next;
+    render();
+    const pass=scan.cinematic;
+    assert.equal(pass.uniforms.uTags.value.format,THREE.RedFormat);
+    // Show the vein: until its tags are installed the volume draws arteries only, so the vein mesh stays drawn.
+    scan.labels(null,{},{presentation:'segmentation'},[]);scan.invalidate();
+    next=published();
+    let from=draws.length;
+    const pending=render();
+    assert.deepEqual([pending.shadowSampling,pending.opticsPending],['path-traced',true]);
+    assert.deepEqual([sceneDraw(from).visible.get(veinMesh),sceneDraw(from).visible.get(artery)],[true,false]);
+    assert.equal(pass.uniforms.uTags.value.format,THREE.RedFormat);
+    await next;scan.invalidate();
+    from=draws.length;
+    const installed=render();
+    assert.equal(installed.opticsPending,false);
+    assert.equal(pass.uniforms.uTags.value.format,THREE.RGFormat);
+    assert.deepEqual([sceneDraw(from).visible.get(veinMesh),sceneDraw(from).visible.get(artery)],[false,false]);
+    // Hiding it again: the vein stays in the volume, not as a mesh, until the arteries-only tags return.
+    scan.labels(null,{vein:false},{presentation:'segmentation'},[]);
+    next=published();
+    render();
+    assert.equal(pass.uniforms.uTags.value.format,THREE.RGFormat);assert.equal(pass.pending,true);
+    await next;render();
+    assert.equal(pass.uniforms.uTags.value.format,THREE.RedFormat);
+  }finally{scan.dispose();}
+});
+
+test('a translucent tumour is composited over the traced image instead of vanishing',()=>{
+  const {renderer,draws}=recordingRenderer();
+  const scan=new ScanVolumeRenderer(renderer,cinematicPhantom(),[0,1000]);
+  const {scene,artery,tumor,brain}=phantomScene();
+  tumor.material.opacity=.5;tumor.material.transparent=true;brain.visible=false;
+  try{
+    scan.configure({enabled:true,mode:'cinematic',shadows:false},'CTA',null);
+    scan.labels(null,{brain:false},{presentation:'segmentation'},[]);
+    for(const interactive of [false,true]){
+      const before=draws.length,frame=scan.render(scene,new THREE.PerspectiveCamera(),640,480,interactive,()=>{},360);
+      const sceneDraws=draws.slice(before).filter(draw=>draw.scene===scene);
+      assert.equal(sceneDraws[0].visible.get(tumor),false,'the translucent tumour does not stop rays');
+      assert.ok(sceneDraws.slice(1).length&&sceneDraws.slice(1).every(draw=>draw.visible.get(tumor)&&!draw.visible.get(artery)));
+      const overlay=draws.slice(before).find(draw=>draw.material?.fragmentShader?.includes('uSurfaceCount'));
+      assert.ok(overlay,'peels are composited over the traced image');
+      assert.equal(overlay.material.uniforms.uSurfaceCount.value,frame.translucentLayers);
+      assert.equal(overlay.material.uniforms.uGuide.value,scan.cinematic.guide,'by the depth of the traced first collision');
+      assert.equal(scan.blitMaterial.map,overlay.target.texture);
+    }
+    // Without translucent meshes the traced image is shown directly.
+    tumor.material.opacity=1;
+    const before=draws.length,frame=scan.render(scene,new THREE.PerspectiveCamera(),640,480,true,()=>{},360);
+    assert.equal(frame.translucentLayers,0);
+    assert.ok(!draws.slice(before).some(draw=>draw.material?.fragmentShader?.includes('uSurfaceCount')));
+  }finally{scan.dispose();}
+});
+
+test('optical constants are rebuilt in slices only when their inputs change, and installed with their majorants',async()=>{
+  const {scan,state,published}=slicedCinematic();
+  const {scene}=phantomScene(),camera=new THREE.PerspectiveCamera(),render=()=>scan.render(scene,camera,640,480,false,()=>{});
+  try{
+    scan.configure({enabled:true,mode:'cinematic',shadows:false},'CTA',null);
+    scan.labels(null,{},{presentation:'segmentation',skullMode:'transparent'},[]);
+    let next=published();render();await next;render();
+    const pass=scan.cinematic,u=pass.uniforms,majorants=u.uMajorant.value;
+    assert.equal(u.uBoneRamp.value.z,0,'see-through bone without a cut');
+    // A cut makes bone solid: the rebuild is sliced and the old constants stay until it is installed.
+    const plane=new THREE.Plane(new THREE.Vector3(0,0,-1),2);
+    scan.configure({enabled:true,mode:'cinematic',shadows:false},'CTA',plane);
+    next=published();
+    const pending=render();
+    assert.deepEqual([pending.shadowSampling,pending.opticsPending,u.uBoneRamp.value.z,u.uMajorant.value],['path-traced',true,0,majorants]);
+    await next;
+    assert.equal(render().opticsPending,false);
+    assert.ok(u.uBoneRamp.value.z>0);assert.notEqual(u.uMajorant.value,majorants);
+    // Moving the cut changes no optical constant.
+    const installed=u.uMajorant.value,readies=state.readies;
+    for(const constant of [0,5,-3]){
+      scan.configure({enabled:true,mode:'cinematic',shadows:false},'CTA',new THREE.Plane(new THREE.Vector3(0,0,-1),constant));
+      assert.equal(render().opticsPending,false);
+    }
+    await tick(20);
+    assert.deepEqual([u.uMajorant.value,state.readies,pass.pending],[installed,readies,false]);
+  }finally{scan.dispose();}
+});
+
+test('the 3D PNG export draws the standard image in cinematic mode and says so',()=>{
+  const {renderer,draws}=recordingRenderer();
+  const scan=new ScanVolumeRenderer(renderer,cinematicPhantom(),[0,1000]);
+  const targets=new ScanVolumeExportTargets(),{scene}=phantomScene(),camera=new THREE.PerspectiveCamera();
+  try{
+    scan.configure({enabled:true},'CTA',null);
+    scan.labels(null,{},{presentation:'segmentation'},[]);
+    assert.equal(scan.exportMode,undefined);
+    scan.configure({enabled:true,mode:'cinematic',shadows:false},'CTA',null);
+    assert.equal(scan.render(scene,camera,640,480,false,()=>{}).exportMode,'standard');
+    assert.equal(scan.exportMode,'standard');
+    const before=draws.length;
+    scan.renderExportSample(scene,camera,targets,64,32,0,0);
+    assert.ok(draws.slice(before).some(draw=>draw.material===scan.material));
+    assert.ok(!draws.slice(before).some(draw=>draw.material?.defines?.CINEMATIC_PASS!==undefined));
+  }finally{targets.dispose();scan.dispose();}
+});

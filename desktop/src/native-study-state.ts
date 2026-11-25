@@ -238,6 +238,7 @@ export function anatomyPresentation(settings:ViewerWorkspaceSettings,layers:Laye
     volumeRendering:{enabled:!sourcedVesselContext,preset:'auto',density:scan?(ct?.26:.28):ct?(vesselFocus?.12:.075):
       sourcedVesselContext&&isStructuralMrModality(modality)?.02:nativeVessels?.018:vascular?.035:.025,
       ...(nativeTofVessels?{balanceTofContext:true}:{}),
+      ...(settings.volumeRendering?.mode==='cinematic'?{mode:'cinematic' as const}:{}),
       shadows:scan||!ct||sameSourceBone,
       ...(settings.volumeRendering?.showCtExteriorSignal!==undefined?{showCtExteriorSignal:settings.volumeRendering.showCtExteriorSignal}:{}),
       ...(settings.volumeRendering?.showCtBoneOverlay!==undefined||scan&&ct

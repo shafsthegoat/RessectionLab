@@ -12,7 +12,7 @@ import {retainedFieldOptics,SurgicalWetting} from "./surgicalFieldOptics";
 import {surgicalToolMesh,surgicalEffectGroup,surgicalToolGeometryKey,updateSurgicalToolMesh,updateSurgicalToolAnimation} from "./surgicalGeometry";
 import {surgicalFlowGroup,updateSurgicalFlowAnimation} from './surgicalFlowGeometry';
 import type {SurgicalInteraction} from "../surgical-types";
-import {InteractionSession, InteractionBudget} from './interactionBudget';
+import {InteractionSession, InteractionBudget, RefreshBudget, FenceWindow, nextTask, pollSoon} from './interactionBudget';
 import {SliceFrameCache} from './sliceFrameCache';
 import {GpuFrameTimer} from './gpuFrameTimer';
 import {renderAnatomyPng} from './anatomyExport';
@@ -323,6 +323,7 @@ export class VolumeRenderer {
   private paneBounds: {root:DOMRect;panes:Map<HTMLElement,DOMRect>} | null=null;
   private gpuSync:WebGLSync|null=null;
   private gpuPoll=0;
+  private refineTimer:ReturnType<typeof setTimeout>|undefined;
   private needsFrame=false;
   private renderSerial=0;
   private gpuTimer:GpuFrameTimer|null=null;
@@ -330,6 +331,9 @@ export class VolumeRenderer {
   private graphicsLost=false;
   private graphicsRecovery:WEBGL_lose_context|null=null;
   private readonly budget=new InteractionBudget();
+  private readonly motionBudget=new RefreshBudget();
+  private readonly motionSerials=new Set<number>();
+  private readonly restFence=new FenceWindow();
   private readonly interaction=new InteractionSession(active=>{
     this.interacting=active;
     if(active)this.refinementStarted=0;
@@ -353,7 +357,7 @@ export class VolumeRenderer {
   private readonly onContextLost = (event: Event) => {
     event.preventDefault();
     this.anatomyExport?.abort(new Error('The graphics context was lost during the 3D export.'));
-    this.graphicsLost=true;cancelAnimationFrame(this.frame);this.frame=0;cancelAnimationFrame(this.gpuPoll);this.gpuPoll=0;
+    this.graphicsLost=true;cancelAnimationFrame(this.frame);this.frame=0;cancelAnimationFrame(this.gpuPoll);this.gpuPoll=0;clearTimeout(this.refineTimer);
     this.gpuSync=null;this.needsFrame=false;this.lastSubmittedSurgicalView=null;
     const requested=this.modelStage?.interaction??this.initialSurgicalInteraction??this.pendingSurgicalPublication??this.surgicalInteraction;
     this.pendingSurgicalPublication=null;
@@ -409,7 +413,10 @@ export class VolumeRenderer {
     const gl = this.renderer.getContext() as WebGL2RenderingContext;
     this.graphicsRecovery=gl.getExtension('WEBGL_lose_context');
     this.renderer.info.autoReset=false;
-    this.gpuTimer=new GpuFrameTimer(gl,sample=>this.canvas.dispatchEvent(new CustomEvent('anatomy-gpu-time',{bubbles:true,detail:sample})));
+    this.gpuTimer=new GpuFrameTimer(gl,sample=>{
+      if(this.motionSerials.delete(sample.serial)&&sample.milliseconds!==undefined)this.motionBudget.gpuTime(sample.milliseconds);
+      this.canvas.dispatchEvent(new CustomEvent('anatomy-gpu-time',{bubbles:true,detail:sample}));
+    });
     const maximum = gl.getParameter(gl.MAX_3D_TEXTURE_SIZE) as number;
     if (volume.shape.some((x) => x > maximum)) {
       this.renderer.dispose();
@@ -887,7 +894,7 @@ export class VolumeRenderer {
       packed.codes.forEach((code,i)=>shader.uniforms.uLayerCodes.value[i].set(...code));
       next.compartments.forEach((layer,i)=>shader.uniforms.uLayerEnabled.value[i]=this.visible[layer.name]!==false?1:0);
     });
-    this.scanVolume.setLayers(next.compartments,packed.codes);
+    this.scanVolume.setLayers(next.compartments,packed.codes,next.labelSets);
     this.appearanceSignature=null;this.visibilitySignature=null;
     this.setWorkspaceSettings(this.workspaceSettings);
     if(firstLayers&&this.mode==='anatomy'&&!this.cameraRestored&&added.some(layer=>layer.surface!.source.length))
@@ -1100,7 +1107,7 @@ export class VolumeRenderer {
     this.materials().forEach(shader=>{if(replacement)shader.uniforms.uLabels.value=replacement;
       shader.uniforms.uLayerCount.value=this.volume.compartments.length;this.labelCodes.forEach((code,i)=>shader.uniforms.uLayerCodes.value[i].set(...code));
       shader.uniforms.uVisibleBits.value=bits;this.volume.compartments.forEach((layer,i)=>shader.uniforms.uLayerEnabled.value[i]=this.visible[layer.name]!==false?1:0);});
-    this.scanVolume.setLayers(this.volume.compartments,this.labelCodes);this.appearanceSignature=null;this.visibilitySignature=null;this.setWorkspaceSettings(this.workspaceSettings);
+    this.scanVolume.setLayers(this.volume.compartments,this.labelCodes,this.volume.labelSets);this.appearanceSignature=null;this.visibilitySignature=null;this.setWorkspaceSettings(this.workspaceSettings);
     if(replacement)oldLabels.dispose();
     this.modelStage=null;this.displayWork.modelCommits++;this.onSurfaceStatus(0);this.setSurgical(stage.interaction);this.requestRender();
     this.queueSurgicalPublication(stage.interaction);
@@ -2679,7 +2686,7 @@ export class VolumeRenderer {
 
   private prepareVesselDepth(camera: THREE.PerspectiveCamera, width: number, height: number, longEdge: number) {
     const settings = this.workspaceSettings;
-    const enabled = this.anatomy.visible && this.volume.displayIdentity && !settings.operativeView &&
+    const enabled = this.anatomy.visible && this.volume.displayIdentity && !settings.operativeView && !this.scanVolume.cinematicActive &&
       !this.replayActive && !this.passiveActive && !this.vesselInspectionFocus &&
       settings.vesselDepthSeparation !== false &&
       (settings.presentation === 'vascular' || settings.presentation === 'segmentation');
@@ -2737,6 +2744,7 @@ export class VolumeRenderer {
 
   private requestRender(slicesChanged=true): void {
     this.scanVolume?.invalidate?.();
+    clearTimeout(this.refineTimer);this.refineTimer=undefined;
     if(slicesChanged)this.sliceRevision++;
     if(this.disposed||this.graphicsLost)return;
     if(this.anatomyExport){
@@ -2813,7 +2821,8 @@ export class VolumeRenderer {
       slabContext=this.visibleVesselSlabContext();
       if (this.replayActive || this.passiveActive||(!this.scanVolume.active&&!cranialSurfaces))
         surfaceQuality=this.surfaceInteraction.render(this.renderer,this.scene,this.camera,main.w,main.h,this.interacting,this.budget.longEdge,()=>{viewport(this.panes.anatomy);},slabContext);
-      else scanQuality=this.scanVolume.render(this.scene,this.camera,main.w,main.h,this.interacting,()=>{viewport(this.panes.anatomy);},this.budget.longEdge,cranialSurfaces,slabContext)??null;
+      else scanQuality=this.scanVolume.render(this.scene,this.camera,main.w,main.h,this.interacting,()=>{viewport(this.panes.anatomy);},
+        this.scanVolume.cinematicActive?this.motionBudget.longEdge:this.budget.longEdge,cranialSurfaces,slabContext)??null;
       if(this.workspaceSettings.showOrientationGuide!==false){
         this.orientationGuide.setPosture(renderedView?.positionEffects);
         orientationGuideVisible=this.orientationGuide.render(this.renderer,this.camera,root,this.paneBounds!.panes.get(this.panes.orientationGuide)!);
@@ -2869,14 +2878,30 @@ export class VolumeRenderer {
     try{gl.flush();}catch{gl.deleteSync(sync);this.gpuSync=null;this.rendering=false;this.failSurgicalFrame(publication,'The GPU could not submit the requested image frame. Reopen the source before continuing.');
       if(this.needsFrame){this.needsFrame=false;this.requestRender(false);}return;}
     const refinement=!interactive?this.refinementStarted:0;
-    const poll=()=>{
+    // Path-traced refinement does not wait for a display refresh between
+    // samples until the view has settled; after that it runs at half duty.
+    // A path-traced motion frame is checked at the next refresh like any
+    // other, but one that is late is then followed up within a millisecond,
+    // not a refresh later: clock scaling can stretch it just past one refresh.
+    // Those fences are polled on a 1 ms timer rather than back-to-back tasks,
+    // which would hold a core for the whole GPU frame; a settling sample is
+    // polled back to back only around its predicted completion.
+    const pathTraced=scanQuality?.mode==='cinematic'&&scanQuality.shadowSampling==='path-traced';
+    const pace=pathTraced?interactive?'motion':this.scanVolume.cinematicPace:null;
+    if(pace==='motion'){this.motionSerials.add(serial);if(this.motionSerials.size>16)this.motionSerials.delete(this.motionSerials.values().next().value!);}
+    const poll=(time?:number)=>{
       this.gpuPoll=0;
-      if(this.disposed||this.graphicsLost)return;
+      if(this.disposed||this.graphicsLost||(pace==='fast'||pace==='motion')&&this.gpuSync!==sync)return;
+      if(pace==='motion'&&time!==undefined)this.motionBudget.frame(time);
       let status:number;try{status=gl.clientWaitSync(sync,0,0);}catch{status=gl.WAIT_FAILED;}
-      if(status===gl.TIMEOUT_EXPIRED){this.gpuPoll=requestAnimationFrame(poll);return;}
+      if(status===gl.TIMEOUT_EXPIRED){
+        if(pace==='fast'&&this.restFence.eager(performance.now()-frameStarted))nextTask(poll);
+        else if(pace==='fast'||pace==='motion')pollSoon(poll);else this.gpuPoll=requestAnimationFrame(poll);
+        return;}
       gl.deleteSync(sync);this.gpuSync=null;
       const elapsed=performance.now()-frameStarted;
-      if(interactive&&(status===gl.ALREADY_SIGNALED||status===gl.CONDITION_SATISFIED))this.budget.sample(elapsed);
+      if(pace==='fast')this.restFence.completed(elapsed);else if(interactive)this.restFence.reset();
+      if(interactive&&(status===gl.ALREADY_SIGNALED||status===gl.CONDITION_SATISFIED)){if(pace==='motion')this.motionBudget.sample(elapsed);else this.budget.sample(elapsed);}
       const completed=status===gl.ALREADY_SIGNALED||status===gl.CONDITION_SATISFIED;
       this.canvas.dispatchEvent(new CustomEvent('anatomy-gpu',{bubbles:true,detail:{serial,sourceCaseHash,displayIdentity,sourceSignalFingerprint:sourceSignal,surgicalStateId,surgicalFrame,completed,milliseconds:elapsed,completionPollMs:elapsed,measurement:'submission-to-fence-poll-upper-bound'}}));
       if(this.disposed||this.graphicsLost)return;
@@ -2888,9 +2913,16 @@ export class VolumeRenderer {
         this.refinementStarted=0;
         this.canvas.dispatchEvent(new CustomEvent('anatomy-refined',{bubbles:true,detail:{completed,milliseconds:performance.now()-refinement,volume:this.scanVolume.active}}));
       }
-      if(this.needsFrame){this.needsFrame=false;if(!this.frame){this.controls.update();this.render();}}
+      if(this.needsFrame){this.needsFrame=false;if(!this.frame){
+        if(pace==='paced'&&this.scanVolume.cinematicPace==='paced')this.refineTimer=setTimeout(()=>{
+          this.refineTimer=undefined;
+          if(!this.disposed&&!this.graphicsLost&&!this.frame&&!this.rendering&&!this.gpuSync){this.controls.update();this.render();}
+        },elapsed);
+        else{this.controls.update();this.render();}
+      }}
     };
-    this.rendering=false;this.gpuPoll=requestAnimationFrame(poll);
+    this.rendering=false;
+    if(pace==='fast')pollSoon(poll);else this.gpuPoll=requestAnimationFrame(poll);
   }
 
   dispose(): void {
@@ -2910,6 +2942,7 @@ export class VolumeRenderer {
     this.gpuTimer?.dispose();
     cancelAnimationFrame(this.frame);
     cancelAnimationFrame(this.gpuPoll);
+    clearTimeout(this.refineTimer);
     if(this.gpuSync)(this.renderer.getContext() as WebGL2RenderingContext).deleteSync(this.gpuSync);
     this.gpuSync=null;
     this.interaction.dispose();

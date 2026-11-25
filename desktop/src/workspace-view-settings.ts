@@ -30,8 +30,9 @@ export function checkedViewerSettings(source:CasePayload,input:unknown):ViewerWo
   if(value.skullMode!==undefined&&!['exterior','transparent','cutaway'].includes(value.skullMode))return fail();
   if(value.volumeRendering!==undefined){
     const volume=value.volumeRendering as Record<string,unknown>;
-    if(!volume||typeof volume!=='object'||Array.isArray(volume)||Object.keys(volume).some(k=>!['enabled','preset','density','window','points','shadows','isolateLabels','showCtExteriorSignal','showCtBoneOverlay','balanceTofContext'].includes(k))||
+    if(!volume||typeof volume!=='object'||Array.isArray(volume)||Object.keys(volume).some(k=>!['enabled','mode','preset','density','window','points','shadows','isolateLabels','showCtExteriorSignal','showCtBoneOverlay','balanceTofContext'].includes(k))||
       ('enabled'in volume&&typeof volume.enabled!=='boolean')||
+      ('mode'in volume&&!['standard','cinematic'].includes(volume.mode as string))||
       ('preset'in volume&&!['auto','ct-bone','ct-tissue','ct-angiography','mri'].includes(volume.preset as string))||
       ('density'in volume&&(typeof volume.density!=='number'||!Number.isFinite(volume.density)||volume.density<0||volume.density>2)))return fail();
   }

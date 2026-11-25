@@ -419,3 +419,19 @@ test('cranial views share the source camera and contours and restrict layers to 
   }
   assert.deepEqual(initial.visible,{tract:true});
 });
+
+test('cinematic volume lighting is a validated view choice that survives presentation presets',()=>{
+  const source={compartments:[],brainMask:null,metadata:{}};
+  for(const mode of ['standard','cinematic']){
+    const saved={volumeRendering:{enabled:true,mode}};
+    assert.deepEqual(checkedViewerSettings(source,saved),saved);
+  }
+  for(const mode of ['Cinematic','path-traced',true,null,1])
+    assert.throws(()=>checkedViewerSettings(source,{volumeRendering:{mode}}));
+  const network={id:'network',kind:'vessels',source_series:'tof'};
+  const cinematic={volumeRendering:{enabled:true,mode:'cinematic',density:.5}};
+  for(const mode of ['scan','segmentation','vascular'])
+    assert.equal(anatomyPresentation(cinematic,[network],mode,'TOF','tof').volumeRendering.mode,'cinematic');
+  assert.equal(anatomyPresentation({volumeRendering:{mode:'standard'}},[network],'vascular','TOF','tof').volumeRendering.mode,undefined);
+  assert.equal(anatomyPresentation({},[network],'vascular','TOF','tof').volumeRendering.mode,undefined);
+});

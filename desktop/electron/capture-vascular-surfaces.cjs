@@ -38,6 +38,14 @@ const windowSize={width:dimension('--width',1440),height:dimension('--height',96
 const deviceScale=expected?.deviceScale??(expected?.views[0]?.size.width===windowSize.width*2?2:1);
 assert([1,2].includes(deviceScale),'Unsupported reference display scale');
 const exportName=process.argv.includes('--export-view')?process.argv[process.argv.indexOf('--export-view')+1]:undefined;
+// Path-traced stills stop refining at this sample count, so they are captured
+// at a fixed, reported count instead of whenever refinement ends.
+const cinematicSamples=process.argv.includes('--cinematic-samples')?Number(process.argv[process.argv.indexOf('--cinematic-samples')+1]):256;
+assert(Number.isInteger(cinematicSamples)&&cinematicSamples>=1&&cinematicSamples<=1024,'Invalid --cinematic-samples');
+// The page takes its pixel ratio and refresh rate from the display its hidden
+// window sits on, so comparable runs name that display's scale factor.
+const displayScale=process.argv.includes('--display-scale')?Number(process.argv[process.argv.indexOf('--display-scale')+1]):undefined;
+assert(displayScale===undefined||[1,2].includes(displayScale),'Invalid --display-scale');
 assert(Array.isArray(recipes)&&recipes.length&&recipes.length<=32);
 assert.equal(new Set(recipes.map(r=>r.name)).size,recipes.length);
 assert(!process.argv.includes('--export-view')||recipes.some(recipe=>recipe.name===exportName),'Unknown export view');
@@ -97,7 +105,7 @@ app.commandLine.appendSwitch('force-device-scale-factor',String(deviceScale));
 dialog.showOpenDialog=async()=>({canceled:false,filePaths:[source]});
 const hash=file=>createHash('sha256').update(fs.readFileSync(file)).digest('hex');
 const report={source,snapshotId:document.snapshot_id,manifestSha256:hash(source),canonicalManifestSha256:hash(canonical),
-  windowSize,deviceScale,views:[],errors:[],windowEverVisible:false,passed:false};
+  windowSize,deviceScale,cinematicSamples,views:[],errors:[],windowEverVisible:false,passed:false};
 const processStarted=performance.now();
 let memoryPoll;
 const wait=ms=>new Promise(resolve=>setTimeout(resolve,ms));
@@ -157,6 +165,14 @@ ipcMain.handle=(name,handler)=>handle(name,async(event,...args)=>{
 
 app.on('browser-window-created',(_event,window)=>{
   window.on('show',()=>{report.windowEverVisible=true;window.hide();});
+  const {screen}=require('electron');
+  if(displayScale!==undefined){
+    const display=screen.getAllDisplays().find(candidate=>candidate.scaleFactor===displayScale);
+    assert(display,`No connected display has scale factor ${displayScale}`);
+    window.setPosition(display.workArea.x+40,display.workArea.y+40);
+  }
+  const display=screen.getDisplayMatching(window.getBounds());
+  report.display={scaleFactor:display.scaleFactor,refreshHz:display.displayFrequency,internal:display.internal,requestedScale:displayScale??null};
   window.webContents.on('console-message',(_event,details)=>{if(details.level==='error')report.errors.push(details.message);});
   window.webContents.once('did-finish-load',async()=>{
     const js=code=>window.webContents.executeJavaScript(code,true);
@@ -180,6 +196,9 @@ app.on('browser-window-created',(_event,window)=>{
     const settledFrame=async(after=0)=>{
       await until(`window.vascularFrame?.serial>${after}&&window.vascularFrame.interactive===false&&
         window.vascularFrame.scanQuality?.opticsPending!==true&&
+        (window.vascularFrame.scanQuality?.mode!=='cinematic'||(window.vascularFrame.scanQuality.shadowSampling==='path-traced'?
+          window.vascularFrame.scanQuality.sampleLimit===${cinematicSamples}&&window.vascularFrame.scanQuality.samples===${cinematicSamples}:
+          window.vascularFrame.scanQuality.settled===true))&&
         window.vascularGpu?.completed===true&&window.vascularGpu.serial===window.vascularFrame.serial&&
         window.vascularGpu.displayIdentity===window.vascularFrame.displayIdentity`,'settled GPU-completed anatomy frame');
       return submittedFrame();
@@ -310,7 +329,11 @@ app.on('browser-window-created',(_event,window)=>{
         const bytes=app.getAppMetrics().reduce((sum,process)=>sum+process.memory.workingSetSize*1024,0);
         report.memory.peakSampledElectronWorkingSetBytes=Math.max(report.memory.peakSampledElectronWorkingSetBytes,bytes);
       },report.memory.pollMs);
-      await js(`window.vascularTimes=new Map();window.vascularSubmitted=new Map();document.addEventListener('anatomy-gpu-time',e=>{
+      // The page reads the still sample count when an accumulation starts. A
+      // view may already be refining past it, so restart refinement (a
+      // document scroll relayouts and invalidates the anatomy view).
+      await js(`window.resectionCinematicStillSamples=${cinematicSamples};window.dispatchEvent(new Event('scroll'));
+        window.vascularTimes=new Map();window.vascularSubmitted=new Map();document.addEventListener('anatomy-gpu-time',e=>{
         window.vascularTimes.set(e.detail.serial,e.detail);
         if(window.vascularTimes.size>12)window.vascularTimes.delete(window.vascularTimes.keys().next().value);
       });document.addEventListener('anatomy-frame',e=>{

@@ -2,7 +2,8 @@ import type { Affine, Point3 } from './coordinates';
 import { inverseAffine, rasAffine } from './coordinates.ts';
 
 export type VolumePreset = 'auto' | 'ct-bone' | 'ct-tissue' | 'ct-angiography' | 'mri';
-export interface VolumeRenderingSettings { enabled?: boolean; preset?: VolumePreset; density?: number; window?: [number,number]; shadows?: boolean; isolateLabels?: boolean; showCtExteriorSignal?: boolean; showCtBoneOverlay?: boolean; balanceTofContext?: boolean; points?: Array<[number,number,number,number,number]> }
+export type VolumeRenderingMode = 'standard' | 'cinematic';
+export interface VolumeRenderingSettings { enabled?: boolean; mode?: VolumeRenderingMode; preset?: VolumePreset; density?: number; window?: [number,number]; shadows?: boolean; isolateLabels?: boolean; showCtExteriorSignal?: boolean; showCtBoneOverlay?: boolean; balanceTofContext?: boolean; points?: Array<[number,number,number,number,number]> }
 export const VOLUME_TRANSFER_WIDTH = 1024;
 /** One texel inside the zero-extinction prefix of the linearly filtered LUT. */
 export function zeroExtinctionLevel(data:Float32Array) {

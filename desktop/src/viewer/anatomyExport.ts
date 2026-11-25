@@ -143,6 +143,7 @@ export async function renderAnatomyPng(
       elapsedMs:performance.now() - started,cpuSubmissionMs,completionPollMs,readbackMs,
       encodingMs:performance.now() - encoding,peakAttachmentBytes,
       gpuTimingSupported:gpuTimer.supported,gpuElapsedMs:gpuTimedSamples ? gpuElapsedMs : null,gpuTimedSamples,
+      ...(scan?.exportMode ? {exportMode:scan.exportMode} : {}),
     }};
   } finally {
     gpuTimer.dispose();
