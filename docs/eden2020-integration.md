@@ -305,6 +305,15 @@ belonged to the same lateral wall, and a deliberate 1.5 mm superior shift
 still matched five edges within 1 mm. The local rehearsal review remains
 withheld. [Private source evidence index](local-storage-ledger.md)
 
+The PTNT_7959 follow-up recovered full acquired coverage and a continuous
+51-site wall. Structural estimates were positive near 49 sites. A prospective
+source screen matched seven cavity edges within 1 mm, while the independent
+point and perturbation checks left local registration unresolved. For
+PTNT_4509, a separate native TOF-only field preserved a continuous 96-site
+trace. A blinded source reader could not assign definite local tissue labels
+on the held-out planes. Both studies remain outside the ordinary native-wall
+catalog. [Private source evidence index](local-storage-ledger.md)
+
 The Scans review panel also supports a review for one native-wall field. Select
 the reference brain estimate, moving angiography scores, and review position.
 Pair at least four spatially distributed landmarks. The review checks nearby

@@ -128,6 +128,9 @@ The isolated native vessel wall section comparison and archived replay checks
 are at `qc/native-vessel-section-tail-20261124-v1/README.md`.
 The jointly conditioned publisher CTA meshes, matched desktop captures and
 whole-mesh source audits are at `qc/native-publisher-wall-20261124-v1/README.md`.
+The bounded follow-up on supplied CTA arteries is indexed at
+`qc/native-vessel-fairing-20261124-v1/README.md`. It includes signed matched
+views, geometry checks and the rejected broader and source-edge trials.
 The signed CTA vessel-to-bone contrast comparison and export are at
 `qc/cta-vessel-contrast-20261124-v1/README.md`. The index includes both
 TopCoW CTA cases, acquisition controls, and source-linked cutaways.
@@ -182,6 +185,13 @@ DICOM geometry and withheld local registration are indexed at
 The PTNT_7959 native coverage repair and held-out cavity and registration
 controls are indexed at
 `qc/eden2020-glioma-5714812/ptnt7959-covered-native-field-20261124.exh8pd93/README.md`.
+The blinded single-acquisition PTNT_4509 tissue review is indexed at
+`qc/eden2020-glioma-5714812/same-tof-blinded-tissue-20261124.jw7ec38r/README.md`.
+The adjacent native planes and protected branch comparison for the PTNT_0952
+attached tip are indexed at
+`qc/eden2020-glioma-5714812/attached-exterior-20261124.5pgejhvx/off-center-source-20261124.0y4OaM5l/README.md`.
+The follow-up contact timing, lattice parity and cold replay receipts are at
+`qc/native-wall-lattice-snapshot-20261124-v1/README.md`.
 The signed native TOF correction, matched score-surface preview and cohort
 picker checks are indexed at `qc/native-tof-local-correction-20261124-v1/README.md`.
 The signed faint vessel context comparisons, physical-cut and pick controls,

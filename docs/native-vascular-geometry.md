@@ -46,6 +46,22 @@ the class seams stay coincident. Disabling the control draws the exact supplied
 positions. Missing or mismatched partitions are shown in their exact source form.
 The native mask supports the displacement bounds. Original mask, mesh indices,
 source picking and the research wall use their existing source representations.
+
+On orthogonal CTA grids with same-series venous or sinus labels, the
+arterial display can use a second pass guided by adjacent face normals. The
+pass holds fixed vertices near native venous samples, nonmanifold edges,
+source borders and small isolated mesh components. It checks the rounded
+display vertices against the existing source displacement envelope and both
+triangle intersection controls. An unavailable adjacent label leaves the
+earlier conditioning available.
+
+Across TopCoW-006, 012 and 014, the upper decile of measured face-angle turns
+decreased. The 556 sampled sections still matched, with small increases in
+section-area differences from the exact supplied mesh. The three cases had
+zero newly introduced arterial–venous triangle contacts. The viewer uses a
+longer, angularly bounded lighting-normal pass on the newly refined surfaces.
+At a fixed camera this reduces mottled highlights, most visibly on close-ups.
+The coarse stair steps still follow the supplied contour.
 [Matched publisher validation](local-storage-ledger.md)
 
 ## Source-owned branch geometry
