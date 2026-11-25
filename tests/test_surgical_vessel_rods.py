@@ -833,9 +833,30 @@ def test_standard_environment_preserves_native_wall_contact():
 
 def test_segment_triangle_distance_includes_crossings_face_normals_and_edge_grazes():
     plane = np.array([[[0., 0., 0.], [1., 0., 0.], [0., 1., 0.]]])
-    for a, b, expected in (([.25, .25, -1.], [.25, .25, 1.], 0.),
-                           ([.25, .25, .2], [.3, .3, .2], .2),
-                           ([.6, .6, -1.], [.6, .6, 1.], np.sqrt(.02))):
+    for a, b, expected, closest in (([.25, .25, -1.], [.25, .25, 1.], 0., [.25, .25, 0.]),
+                                    ([.25, .25, .2], [.3, .3, .2], .2, [.25, .25, 0.]),
+                                    ([.6, .6, -1.], [.6, .6, 1.], np.sqrt(.02), [.5, .5, 0.])):
         distances, difference = surfaces._triangle_distances(np.array(a), np.array(b), plane)
+        measured, vectors, points = surfaces._triangle_distances(np.array(a), np.array(b), plane, with_points=True)
         assert distances[0] == pytest.approx(expected)
         assert np.linalg.norm(difference[0]) == pytest.approx(expected)
+        assert measured.tobytes() == distances.tobytes() and vectors.tobytes() == difference.tobytes()
+        assert points[0] == pytest.approx(closest)
+
+
+@pytest.mark.parametrize('with_points', [False, True])
+def test_native_wall_empty_face_search_still_checks_for_an_interior_axis(with_points):
+    engine = _fixture(guarded=True, vertex_transport=True)
+    frame, = rods._accepted_frames(engine, rods.definitions(engine))
+    wall, _, _, _, extent, _ = frame
+    inside = np.array([6.8, 6., 6.])
+    outside = np.array([6.8, 6., 2.])
+    for point in (inside, outside):
+        assert not len(surfaces._candidates(wall.tree, point, point, 0., wall.triangle_extent + extent))
+
+    interior = surfaces.contact_features(engine, frame, inside, inside, 0., with_points=with_points)
+    assert interior[0].shape == (1, 3) and interior[1].tolist() == [0.]
+    if with_points:
+        np.testing.assert_array_equal(interior[4][0], inside - interior[2][0])
+    empty = surfaces.contact_features(engine, frame, outside, outside, 0., with_points=with_points)
+    assert all(len(value) == 0 for value in empty)

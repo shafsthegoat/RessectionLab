@@ -104,8 +104,8 @@ def _local_face_guard(rest, faces, owners, *, hinge_filter=False):
     pairs, inverse = np.unique(np.sort(np.column_stack((pivot_owners, other_owners)), axis=1),
                               axis=0, return_inverse=True)
     first_owner, second_owner = pairs.T
-    face_pairs = inverse[:2 * len(faces)].reshape(-1, 2)
-    hinge_pairs = inverse[2 * len(faces):].reshape(-1, 3)
+    face_a, face_b = inverse[:2 * len(faces)].reshape(-1, 2).T
+    hinge_a, hinge_b, hinge_c = inverse[2 * len(faces):].reshape(-1, 3).T
 
     def clear(prior, candidate, static):
         if static:
@@ -115,9 +115,13 @@ def _local_face_guard(rest, faces, owners, *, hinge_filter=False):
             increment = candidate - prior
             if not np.any(increment):
                 return True
-            moving = np.any(increment[first_owner] != increment[second_owner], axis=1)
-            facets = np.flatnonzero(moving[face_pairs].any(axis=1))
-            hinges = np.flatnonzero(moving[hinge_pairs].any(axis=1))
+            # Keep the same ordered selections without gathering each pair
+            # and each face into temporary two-dimensional arrays.
+            dx, dy, dz = increment.T
+            moving = ((dx[first_owner] != dx[second_owner]) | (dy[first_owner] != dy[second_owner])
+                      | (dz[first_owner] != dz[second_owner]))
+            facets = np.flatnonzero(moving[face_a] | moving[face_b])
+            hinges = np.flatnonzero(moving[hinge_a] | moving[hinge_b] | moving[hinge_c])
             if not (len(facets) or len(hinges)):
                 return True
 

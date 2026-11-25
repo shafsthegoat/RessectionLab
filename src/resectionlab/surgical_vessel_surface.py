@@ -103,11 +103,14 @@ def propagate_binding(source, target):
     target._vessel_source_wall_proof = target.identity, target._vessel_source_walls
 
 
-def _projection(points, start, end):
-    vector = end - start
-    length2 = np.sum(vector * vector, axis=-1)
+def _project_along(points, start, vector, length2):
     fraction = np.clip(np.sum((points - start) * vector, axis=-1) / np.maximum(length2, 1e-30), 0, 1)
     return start + fraction[..., None] * vector, fraction
+
+
+def _projection(points, start, end):
+    vector = end - start
+    return _project_along(points, start, vector, np.sum(vector * vector, axis=-1))
 
 
 @dataclass(frozen=True)
@@ -210,6 +213,10 @@ def _candidates(tree, a, b, radius, extent):
 def _triangle_distances(a, b, triangles, *, with_points=False):
     """Closest triangle-to-segment vectors in millimeters."""
     first, second, third = triangles.transpose((1, 0, 2))
+    if (not len(first) and type(a) is np.ndarray and type(b) is np.ndarray
+            and triangles.dtype == a.dtype == b.dtype == np.float64 and a.shape == b.shape == (3,)):
+        empty = np.empty((0, 3))
+        return (np.empty(0), empty, empty.copy()) if with_points else (np.empty(0), empty)
     u, v = second - first, third - first
     normal = np.cross(u, v)
     normal2 = np.sum(normal * normal, axis=1)
@@ -226,29 +233,40 @@ def _triangle_distances(a, b, triangles, *, with_points=False):
         return (s >= -1e-10) & (t >= -1e-10) & (s + t <= 1 + 1e-10) & (normal2 > 1e-30)
 
     differences, valid, closest = [], [], []
+    safe_normal2 = np.maximum(normal2, 1e-30)
     for point in (a, b):
-        distance = np.sum((point - first) * normal, axis=1) / np.maximum(normal2, 1e-30)
+        distance = np.sum((point - first) * normal, axis=1) / safe_normal2
         delta = -distance[:, None] * normal
+        projected = point + delta
         differences.append(delta)
-        valid.append(inside(point + delta))
+        valid.append(inside(projected))
         if with_points:
-            closest.append(point + delta)
+            closest.append(projected)
     denominator = normal @ axis
-    fraction = np.sum((first - a) * normal, axis=1) / np.where(np.abs(denominator) > 1e-20, denominator, 1.)
+    nonparallel = np.abs(denominator) > 1e-20
+    fraction = np.sum((first - a) * normal, axis=1) / np.where(nonparallel, denominator, 1.)
+    intersection = a + fraction[:, None] * axis
     differences.append(np.zeros_like(first))
-    valid.append((np.abs(denominator) > 1e-20) & (fraction >= 0) & (fraction <= 1)
-                 & inside(a + fraction[:, None] * axis))
+    valid.append(nonparallel & (fraction >= 0) & (fraction <= 1) & inside(intersection))
     if with_points:
-        closest.append(a + fraction[:, None] * axis)
+        closest.append(intersection)
 
-    for start, end in ((first, second), (second, third), (third, first)):
+    # Each vertex-to-axis projection participates in two adjacent edge rows.
+    # Preserve the feature order and the distinct projection and line reductions.
+    axis_length2 = np.sum(axis * axis, axis=-1)
+    axis2 = axis @ axis
+    axis_deltas = tuple(point - _project_along(point, a, axis, axis_length2)[0]
+                        for point in (first, second, third))
+    always = np.ones(len(first), dtype=bool)
+    edges = ((first, second, 0, 1), (second, third, 1, 2), (third, first, 2, 0))
+    for start, end, i, j in edges:
         # Endpoint projections and the unconstrained line-to-line solution.
-        from_a, from_b = _projection(a, start, end)[0], _projection(b, start, end)[0]
-        differences.extend((from_a - a, from_b - b,
-                            start - _projection(start, a, b)[0], end - _projection(end, a, b)[0]))
-        valid.extend([np.ones(len(first), dtype=bool)] * 4)
         edge = end - start
-        edge2, axis2 = np.sum(edge * edge, axis=1), axis @ axis
+        edge2 = np.sum(edge * edge, axis=1)
+        from_a = _project_along(a, start, edge, edge2)[0]
+        from_b = _project_along(b, start, edge, edge2)[0]
+        differences.extend((from_a - a, from_b - b, axis_deltas[i], axis_deltas[j]))
+        valid.extend((always,) * 4)
         dot = edge @ axis
         det = edge2 * axis2 - dot ** 2
         from_edge = start - a
@@ -257,10 +275,11 @@ def _triangle_distances(a, b, triangles, *, with_points=False):
         safe = np.maximum(det, 1e-30)
         s = (dot * axis_from - axis2 * edge_from) / safe
         t = (edge2 * axis_from - dot * edge_from) / safe
-        differences.append(from_edge + s[:, None] * edge - t[:, None] * axis)
+        edge_step = s[:, None] * edge
+        differences.append(from_edge + edge_step - t[:, None] * axis)
         valid.append((det > 1e-20) & (s >= 0) & (s <= 1) & (t >= 0) & (t <= 1))
         if with_points:
-            closest.extend((from_a, from_b, start, end, start + s[:, None] * edge))
+            closest.extend((from_a, from_b, start, end, start + edge_step))
     differences = np.asarray(differences)
     distances = np.where(valid, np.linalg.norm(differences, axis=2), np.inf)
     rows = np.arange(len(first))
