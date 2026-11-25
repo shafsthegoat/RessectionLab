@@ -179,6 +179,9 @@ The contact solver timing and exact native-wall replay checks are indexed at
 `qc/native-wall-engine-performance-20261124-v1/README.md`. The PTNT_4509
 DICOM geometry and withheld local registration are indexed at
 `qc/eden2020-glioma-5714812/ptnt4509-dicom-native-field-20261124.4vlfst3a/README.md`.
+The PTNT_7959 native coverage repair and held-out cavity and registration
+controls are indexed at
+`qc/eden2020-glioma-5714812/ptnt7959-covered-native-field-20261124.exh8pd93/README.md`.
 The signed native TOF correction, matched score-surface preview and cohort
 picker checks are indexed at `qc/native-tof-local-correction-20261124-v1/README.md`.
 The signed faint vessel context comparisons, physical-cut and pick controls,
