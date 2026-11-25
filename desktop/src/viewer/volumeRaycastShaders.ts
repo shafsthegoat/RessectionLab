@@ -1,4 +1,5 @@
 import {labelMembershipShader} from './labelPacking';
+import {ctaCutKeyView} from './ctaVesselLight';
 export const volumeVertexShader = `
 out vec2 vUv;
 void main(){vUv=uv;gl_Position=vec4(position.xy,0.0,1.0);}
@@ -205,9 +206,14 @@ void applyContext(inout vec4 tissue,float value,ivec4 packed,bool selected,vec3 
     if(uSkullMode==2)tissue.a*=0.08;
   }
 }
-float cutSoftExtinction(float value,vec3 world,vec3 p){
+bool emptyCtaCutSample(float value,float level,float depth){
+  // The stock CTA transfer and the acquired skull term are both clear here.
+  // The added soft tissue term also needs signal above -140 HU within 6 mm.
+  return uCtaCutMaterial&&value<=160.0&&level<uZeroExtinctionLevel&&
+    (value<=-140.0||depth>=6.0);
+}
+float cutSoftExtinction(float value,float depth,vec3 p){
   if(!uCtaCutMaterial||value<=-140.0||value>=220.0)return 0.0;
-  float depth=dot(uCtaCutPlane.xyz,world)+uCtaCutPlane.w;
   if(depth>=6.0)return 0.0;
   float slab=1.0-smoothstep(1.0,6.0,depth);
   float nonMineral=smoothstep(-140.0,-20.0,value)*(1.0-smoothstep(105.0,220.0,value));
@@ -317,11 +323,12 @@ float opticalProbe(vec3 p,vec3 world,float footprint){
   vec4 tissue=transferAtLevel(level);
   tissue.a*=uDensity;
 #else
+  if(emptyCtaCutSample(value,level,clearance))return 0.0;
   vec4 tissue=transferAtLevel(level);
   ivec4 packed=ivec4(0);
   if(requiresLabels())packed=labelsAt((uLabelWorldToVoxel*vec4(world,1.0)).xyz);
   applyContext(tissue,value,packed,!uIsolate||selectedLabel(packed),p);
-  tissue.a+=cutSoftExtinction(value,world,p);
+  tissue.a+=cutSoftExtinction(value,clearance,p);
 #endif
   if(uGradientOpacity&&tissue.a>0.0)tissue.a*=boundaryExtinction(normalizedGradient(scalarNormal(p)));
   return min(tissue.a,1.5);
@@ -451,7 +458,7 @@ void main(){
   // A wide oblique key reveals acquired skull ridges and recesses in the
   // cut. As it follows the camera, it continues to light the actual new plane.
   if(uRakingBoneCut && uAcquiredBoneCut && uCt && uShadows && !uIsolate)
-    light=normalize(mat3(uCameraWorld)*vec3(-0.61,0.48,0.63));
+    light=normalize(mat3(uCameraWorld)*${ctaCutKeyView});
   vec3 sky=normalize(light-0.65*direction);
   for(int i=0;i<1536;i++){
     if(accumulated.a>0.995)break;
@@ -480,6 +487,11 @@ void main(){
     vec4 tissue=transferAtLevel(level);
     tissue.a*=uDensity;
 #else
+    float cutDepth=uCtaCutMaterial&&value>-140.0&&value<220.0
+      ?dot(uCtaCutPlane.xyz,origin+direction*sampleT)+uCtaCutPlane.w:0.0;
+    if(emptyCtaCutSample(value,level,cutDepth)){
+      t+=dt;continue;
+    }
     vec4 tissue=transferAtLevel(level);
     ivec4 packed=ivec4(0);
     if(useLabels)packed=labelsAt(labelOrigin+labelDirection*sampleT);
@@ -487,7 +499,7 @@ void main(){
     if(uIsolate&&any(notEqual(packed,previousLabels)))selected=selectedLabel(packed);
     previousSelected=selected;previousLabels=packed;
     applyContext(tissue,value,packed,selected,p);
-    float soft=cutSoftExtinction(value,origin+direction*sampleT,p);
+    float soft=cutSoftExtinction(value,cutDepth,p);
     if(soft>0.0)mixCutSoftTissue(tissue,value,soft);
 #endif
     if(tissue.a>0.0){

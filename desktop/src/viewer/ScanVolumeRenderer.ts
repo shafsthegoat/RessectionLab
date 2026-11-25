@@ -10,6 +10,7 @@ import type { VolumeRenderingSettings } from './volumeTransfer';
 import { volumeVertexShader, volumeFragmentShader } from './volumeRaycastShaders';
 import {SurfaceVolumePass} from './SurfaceVolumePass';
 import {renderTargetBytes} from './renderResourceEstimate';
+import {ctaCutKey,installCtaVesselLight} from './ctaVesselLight';
 import {renderAnatomyScene,type VesselSlabContext} from './vesselSlabContext';
 
 type VolumeTargets = {
@@ -64,6 +65,12 @@ export class ScanVolumeRenderer {
   private opticalCellAxes: THREE.Vector3[]=[];
   private readonly sourceOptics: OpticalSource;
   private readonly nativeAcquisition:boolean;
+  private readonly sourceSeriesId?:string;
+  private readonly ctaVesselLight={value:false};
+  private readonly ctaKeyDirection=new THREE.Vector3();
+  private readonly savedKeyPosition=new THREE.Vector3();
+  private anatomyKey?:THREE.DirectionalLight;
+  private hasCtaVesselReceiver=false;
   private readonly ctExterior?: ViewerVolume['ctExterior'];
   private exteriorVolume?: {source:OpticalSource; texture:THREE.Data3DTexture} | null;
   private standardCtAir=false;
@@ -98,6 +105,7 @@ export class ScanVolumeRenderer {
     private readonly onOpticsReady?:()=>void) {
     this.layers=volume.compartments;
     this.nativeAcquisition=!!volume.displayIdentity;
+    this.sourceSeriesId=volume.displayPreview?undefined:volume.sourceSeriesId;
     const affine=rasAffine(volume.affine,volume.frame),inverse=inverseAffine(affine);
     this.spacing=1/Math.max(...inverse.slice(0,3).map(row=>Math.hypot(...row.slice(0,3))));
     const worldToVoxel=new THREE.Matrix4().set(...inverse.flat() as Parameters<THREE.Matrix4['set']>);
@@ -156,6 +164,7 @@ export class ScanVolumeRenderer {
   }
   configure(input: VolumeRenderingSettings | undefined, modality: string, clip: THREE.Plane | null, balanceTof=false) {
     const settings=volumeSettings(input,modality);this.enabled=settings.enabled&&settings.density>0;
+    this.ctaVesselLight.value=false;
     this.showCtExteriorSignal=input?.showCtExteriorSignal===true;
     const signature=JSON.stringify([settings.preset,input?.window,input?.points,modality]);
     if(signature!==this.preset){
@@ -353,8 +362,22 @@ export class ScanVolumeRenderer {
     codes.forEach((code,i)=>this.material.uniforms.uLayerCodes.value[i].set(...code));
   }
   get active(){return this.enabled;}
-  setVesselDepthSeparation(enabled: boolean) {
+  setAnatomyKey(light:THREE.DirectionalLight){
+    this.anatomyKey=light;
+  }
+  lightCtaVessel(material:THREE.MeshStandardMaterial,sourceSeries:string|undefined) {
+    if(!this.sourceSeriesId||sourceSeries!==this.sourceSeriesId)return;
+    material.userData.ctaVesselReceiver=true;
+    const u=this.material.uniforms;
+    installCtaVesselLight(material,{
+      uCtaVesselLight:this.ctaVesselLight,uCtaVesselSignal:u.uVolume,uCtaVesselBone:u.uAuxiliary,
+      uCtaVesselWorldToVoxel:u.uWorldToVoxel,uCtaVesselShape:u.uShape,uCtaVesselCut:u.uCtaCutPlane,
+    });
+  }
+  setVesselDepthSeparation(enabled: boolean,hasCtaVesselReceiver=false) {
     this.material.uniforms.uRakingBoneCut.value = enabled;
+    this.hasCtaVesselReceiver=hasCtaVesselReceiver;
+    if(!enabled)this.ctaVesselLight.value=false;
   }
   get estimatedCtExteriorBytes(){
     const bytes=this.exteriorVolume?.source.signal.byteLength??0;
@@ -432,6 +455,7 @@ export class ScanVolumeRenderer {
       this.material.defines.DIRECTIONAL_OPTICS===1?'directional-atlas':u.uContextCoverageLayer.value>=0?'skull-atlas':'source-atlas';
     const ctExteriorDisplay=!!this.exteriorVolume&&u.uVolume.value===this.exteriorVolume.texture;
     return {width:w,height:h,samples:interactive?1:this.samples,opticsPending:this.opticsPending,shadowSampling,
+      ...(this.ctaVesselLight.value?{ctaVesselKeyLight:true}:{}),
       ...(u.uCtaCutMaterial.value?{ctaCutMaterial:true}:{}),
       ctExteriorDisplay,ctExteriorBytes:this.estimatedCtExteriorBytes,tofContextDensity:this.activeTofContextDensity};
   }
@@ -459,6 +483,9 @@ export class ScanVolumeRenderer {
       uniforms.uCtaCutSampleOffset.value.set(plane.x,plane.y,plane.z)
         .applyMatrix3(new THREE.Matrix3().setFromMatrix4(uniforms.uWorldToVoxel.value)).multiplyScalar(.75);
     }
+    const boneContext=this.layers[uniforms.uContextCoverageLayer.value];
+    this.ctaVesselLight.value=this.hasCtaVesselReceiver&&uniforms.uCtaCutMaterial.value&&uniforms.uRakingBoneCut.value&&
+      uniforms.uShadows.value&&uniforms.uLinear.value&&!!this.sourceSeriesId&&boneContext?.sourceSeries===this.sourceSeriesId;
     uniforms.uDrawScalar.value=this.enabled;
     uniforms.uScene.value=sceneTarget.texture;uniforms.uDepth.value=sceneTarget.depthTexture;
     camera.updateMatrixWorld();
@@ -472,7 +499,13 @@ export class ScanVolumeRenderer {
     this.renderer.getClearColor(this.background);
     const clearAlpha=this.renderer.getClearAlpha();
     const hidden:THREE.Object3D[]=[];
+    const anatomyKey=this.ctaVesselLight.value?this.anatomyKey:undefined;
     try {
+      if(anatomyKey){
+        this.savedKeyPosition.copy(anatomyKey.position);
+        this.ctaKeyDirection.set(...ctaCutKey).transformDirection(camera.matrixWorld);
+        anatomyKey.position.copy(anatomyKey.target.position).addScaledVector(this.ctaKeyDirection,300);
+      }
       this.renderer.setClearColor(0,0);
       if(interactive||sample===0){
         scene.traverse(o=>{if(o instanceof THREE.Mesh && o.visible && o.userData.compartment && !Array.isArray(o.material) && o.material.opacity<1){hidden.push(o);o.visible=false;}});
@@ -494,6 +527,7 @@ export class ScanVolumeRenderer {
       this.renderer.setRenderTarget(current);this.renderer.clear();this.renderer.render(this.accumulateScene,this.camera);
       return current;
     } finally {
+      if(anatomyKey)anatomyKey.position.copy(this.savedKeyPosition);
       hidden.forEach(o=>o.visible=true);
       this.renderer.setClearColor(this.background,clearAlpha);
     }

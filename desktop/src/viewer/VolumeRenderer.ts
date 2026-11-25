@@ -32,7 +32,7 @@ import {scanFitPoints} from './scanCameraFit';
 import {mprView,sourceSignalBounds} from './mprFraming';
 import {applySourceContextMaterial} from './sourceContextMaterial';
 import {isStructuralMrModality} from '../native-study-state';
-import {usesAcquiredCtBone} from './volumeTransfer';
+import {isCtAngiography,usesAcquiredCtBone} from './volumeTransfer';
 import {installNativeContextLighting,setNativeContextLighting} from './nativeContextLighting';
 import {advectScoreWallLighting,displaySurfaceNormals,scoreWallLighting} from './displaySurfaceNormals';
 import {applyCtaVesselFinish,applyVesselDepthMaterial,setVesselDepthAppearance,createVesselInspectionFocus,setVesselInspectionFocus,
@@ -566,6 +566,7 @@ export class VolumeRenderer {
     key.name='anatomy:key';
     key.position.copy(centre).add(new THREE.Vector3(170, -220, 240));
     key.target.position.copy(centre);
+    this.scanVolume.setAnatomyKey(key);
     const rim = new THREE.DirectionalLight(0x77bdb4, .75);
     rim.name='anatomy:rim';
     rim.position.copy(centre).add(new THREE.Vector3(-190, 160, 70));
@@ -792,7 +793,10 @@ export class VolumeRenderer {
       }
       applyVesselDepthMaterial(mesh.material,this.patientBounds??this.bounds,grid,sourceShape);
       setVesselDepthAppearance(mesh.material,this.workspaceSettings,layer,grid);
-      if(this.volume.displayIdentity&&!operativeVessel)this.vesselDepthSeparation.install(mesh.material);
+      if(this.volume.displayIdentity&&!operativeVessel){
+        this.vesselDepthSeparation.install(mesh.material);
+        if(isCtAngiography(this.volume.modality??''))this.scanVolume.lightCtaVessel(mesh.material,layer.sourceSeries);
+      }
     }
     applySourceContextMaterial(mesh.material,this.workspaceSettings.contextStyle==='shell'&&CONTEXT_SURFACES.has(layer.displayKind??layer.kind??''),
       ['bone','skull'].includes(layer.kind??''));
@@ -2683,7 +2687,8 @@ export class VolumeRenderer {
       return [mesh as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>];
     }) : [];
     this.vesselDepthSeparation.capture(this.renderer, camera, meshes, width, height, longEdge);
-    this.scanVolume.setVesselDepthSeparation(this.vesselDepthSeparation.active);
+    this.scanVolume.setVesselDepthSeparation(this.vesselDepthSeparation.active,
+      meshes.some(mesh=>mesh.material.userData.ctaVesselReceiver===true));
   }
 
   async exportAnatomyPng(signal:AbortSignal):Promise<Blob> {

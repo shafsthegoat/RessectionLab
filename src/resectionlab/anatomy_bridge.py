@@ -707,6 +707,7 @@ def dispatch(session, operation, args, request, progress):
             "compartments": layers,
             "labelSets": list(label_sets.values()),
             "modality": reference["modality"],
+            "sourceSeriesId": reference["id"],
             "displayPreview": None if preview is None else {"factor": 2, "meaning": "reversible source-image display preview; anatomical measurements retain native grids"},
             "unavailableLayers": unavailable,
             "sourceFrameIssue": source_frame_issue,

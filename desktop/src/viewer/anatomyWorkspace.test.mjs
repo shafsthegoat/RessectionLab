@@ -217,8 +217,9 @@ test('transparent CTA feathers only optical coverage while exact masks and scan 
   const renderer={extensions:{has:()=>true},getPixelRatio:()=>1,getClearColor:out=>out.set(0),getClearAlpha:()=>1,
     setClearColor(){},setRenderTarget(){},clear(){},render(){}};
   const mask=new Uint8Array(60);mask[31]=1;
-  const original=mask.slice(),layer={name:'bone',kind:'bone',color:'#ded0b6',mask};
-  const volume={...source,displayIdentity:'native-cta',affine:[[.4,0,0,0],[0,.7,0,0],[0,0,3,0],[0,0,0,1]],compartments:[layer]};
+  const original=mask.slice(),layer={name:'bone',kind:'bone',color:'#ded0b6',sourceSeries:'cta',mask};
+  const volume={...source,displayIdentity:'native-cta',sourceSeriesId:'cta',
+    affine:[[.4,0,0,0],[0,.7,0,0],[0,0,3,0],[0,0,0,1]],compartments:[layer]};
   const scan=new ScanVolumeRenderer(renderer,volume,[0,1000]);
   const supported=new ScanVolumeRenderer(renderer,{...volume,headSupport:{data:mask,sha256:'source-support'}},[0,1000]);
   const render=pass=>pass.render(new THREE.Scene(),new THREE.PerspectiveCamera(),640,480,false,()=>{});
@@ -244,8 +245,23 @@ test('transparent CTA feathers only optical coverage while exact masks and scan 
     assert.deepEqual(uniforms.uCtaCutSampleOffset.value.toArray(),[0,0,.25]);
     assert.equal(uniforms.uAuxiliary.value,aux,'a same-grid solid cut reuses the continuous coverage texture');
     assert.equal(uniforms.uOpticalCache.value,false,'solid extinction still uses the direct clip-aware shadow probes');
+    const own=new THREE.MeshStandardMaterial(),other=new THREE.MeshStandardMaterial();
+    scan.lightCtaVessel(own,'cta');scan.lightCtaVessel(other,'mra');
+    assert.match(own.customProgramCacheKey(),/cta-vessel-key/);
+    assert.doesNotMatch(other.customProgramCacheKey(),/cta-vessel-key/);
+    own.dispose();other.dispose();
+    const key=new THREE.DirectionalLight();key.position.set(12,9,4);
+    scan.setAnatomyKey(key);
+    scan.setVesselDepthSeparation(true,true);
+    scan.configure({},'CTA',cut);
+    assert.equal(render(scan).ctaVesselKeyLight,true);
+    assert.deepEqual(key.position.toArray(),[12,9,4]);
+    scan.setLayers([{...layer,sourceSeries:'another-ct'}],[[0,1]]);
+    assert.equal(render(scan).ctaVesselKeyLight,undefined);
+    scan.setLayers([layer],[[0,1]]);
     scan.configure({shadows:false,window:[-850,2200]},'CTA',cut);render(scan);
     assert.equal(uniforms.uCtaCutMaterial.value,false);
+    key.dispose();
     scan.configure({shadows:false},'CTA',cut);
     scan.labels(null,{}, {...settings,skullMode:'cutaway'},[new THREE.Plane(new THREE.Vector3(1,0,0),0)]);render(scan);
     assert.equal(uniforms.uCtaCutMaterial.value,false);

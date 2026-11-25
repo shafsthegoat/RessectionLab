@@ -195,6 +195,14 @@ separate color response to acquired attenuation. Eye and shadow rays use the
 same term. This is a display treatment, with no tissue masks or categories
 derived from the cut shading.
 
+With **Vessel depth lighting** enabled on a qualifying acquired CTA cut, the
+volume and the 3D surfaces share the same directional key. Vessels from the
+selected scan receive a bounded direct-light shadow from two probes into the
+retained CTA and its same-source skull context. Opacity, geometry, and linked
+source slices keep their existing paths. Samples inside the exact stock
+transfer's zero-opacity range can skip compositing when the cut's mineral and
+soft-tissue terms are also zero.
+
 With a ready source-bound atlas and no cut, two fixed RAS light directions
 integrate acquired optical depth to the edge of the field of view. The atlas
 stores the total and separable context contributions so the scalar light

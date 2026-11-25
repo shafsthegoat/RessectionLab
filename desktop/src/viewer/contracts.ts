@@ -35,6 +35,8 @@ export interface ViewerVolume {
   displayIdentity?: string;
   /** Modality of the selected acquisition in the native workspace. */
   modality?: string;
+  /** Identity of the acquisition supplying the scalar grid. */
+  sourceSeriesId?: string;
   /** Prepared off-thread for native sources. Legacy callers retain synchronous preparation. */
   packedLabels?: {data:Uint8Array;codes:Array<[number,number]>};
   caseId: string;

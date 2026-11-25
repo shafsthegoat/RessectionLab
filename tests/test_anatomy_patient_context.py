@@ -37,6 +37,7 @@ def test_shared_cutaway_saves_and_reopens_independently_of_selected_source(tmp_p
     view_args = {"patientModel": True, "previewAlignment": True}
     mri = call("anatomyView", {**args, **view_args, "seriesId": "mri"})
     assert mri["shape"] == [10, 10, 10]
+    assert mri["sourceSeriesId"] == "mri"
     assert mri["patientContext"]["boundsRasMm"] == [[-.5, -.5, -.5], [29.5, 9.5, 9.5]]
 
     def scan_view(mode, x):
@@ -66,6 +67,7 @@ def test_shared_cutaway_saves_and_reopens_independently_of_selected_source(tmp_p
             assert result["viewState"] == state
             restored = reopen("anatomyView", {**args, **view_args, "collectionId": result["collectionId"],
                                              "seriesId": selected})
+            assert restored["sourceSeriesId"] == selected
             if selected == "scout":
                 assert restored["registrationStatus"] == "independent source frame"
                 assert "patientContext" not in restored
