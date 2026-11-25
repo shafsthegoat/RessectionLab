@@ -138,6 +138,9 @@ The shared CTA directional light, exact clear-sample controls and signed
 render timings are indexed at `qc/cta-vessel-optical-light-20261124-v1/README.md`.
 The signed mixed MR lesion overlap control, unchanged source views and
 retained registration warning are at `qc/eden-structural-lesion-optics-20261124-v1/README.md`.
+The continuous TopCoW-014 film from acquired CTA intake through supplied-mask
+assembly, the prepared same-CTA cut, and live native-wall instrument actions is
+indexed at `qc/topcow014-continuous-source-rehearsal-20261124-v1/README.md`.
 The signed CTA vessel-to-bone contrast comparison and export are at
 `qc/cta-vessel-contrast-20261124-v1/README.md`. The index includes both
 TopCoW CTA cases, acquisition controls, and source-linked cutaways.
