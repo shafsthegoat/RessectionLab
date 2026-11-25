@@ -216,7 +216,8 @@ export function anatomyPresentation(settings:ViewerWorkspaceSettings,layers:Laye
     skullMode:mode==='segmentation'&&!cranial&&!nativeVessels?'exterior':'transparent',sourcedVesselContext:sourcedVesselContext||undefined,layerColor,layerOpacity,
     // Explicit presentation action only. Saved contrast, opacity and transfer
     // choices are otherwise restored verbatim; source signal is never altered.
-    volumeRendering:{enabled:!sourcedVesselContext,preset:'auto',density:scan?(ct?.26:.28):ct?(vesselFocus?.12:.075):(nativeVessels?.018:vascular?.035:.025),
+    volumeRendering:{enabled:!sourcedVesselContext,preset:'auto',density:scan?(ct?.26:.28):ct?(vesselFocus?.12:.075):
+      sourcedVesselContext&&isStructuralMrModality(modality)?.02:nativeVessels?.018:vascular?.035:.025,
       ...(nativeTofVessels?{balanceTofContext:true}:{}),
       shadows:scan||!ct||sameSourceBone,
       ...(settings.volumeRendering?.showCtExteriorSignal!==undefined?{showCtExteriorSignal:settings.volumeRendering.showCtExteriorSignal}:{}),

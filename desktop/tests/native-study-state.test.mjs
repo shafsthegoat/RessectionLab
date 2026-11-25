@@ -162,7 +162,7 @@ test('mixed MR Vessels starts with visible source cortex and vessels, with the n
   const vessels=present();
   assert.equal(vessels.sourcedVesselContext,true);
   assert.equal(vessels.volumeRendering.enabled,false);
-  assert.ok(vessels.volumeRendering.density>0);
+  assert.equal(vessels.volumeRendering.density,.02);
   assert.equal(anatomyPresentation({smoothSurfaces:false},layers,'vascular','T1CE','t1',{visible,series}).smoothSurfaces,false);
   assert.equal(vessels.layerOpacity.network,1);
   assert.ok(vessels.layerOpacity.skull<vessels.layerOpacity.cortex);

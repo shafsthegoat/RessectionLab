@@ -38,6 +38,9 @@ uniform vec3 uLabelShape;
 uniform mat4 uCameraWorld;
 uniform mat4 uInverseProjection;
 uniform bool uRakingBoneCut;
+uniform bool uCtaCutMaterial;
+uniform vec4 uCtaCutPlane;
+uniform vec3 uCtaCutSampleOffset;
 uniform vec3 uShape;
 uniform vec2 uRange;
 uniform float uZeroExtinctionLevel;
@@ -136,6 +139,11 @@ bool requiresLabels(){
   return uIsolate||(uCt&&(!uScanPresentation||(uSkullMode==1&&!uAcquiredCtBone))&&uContextLayerCount>0&&uContextCoverageLayer<0);
 }
 vec3 contextTint(vec3 acquired,vec3 color,float value){
+  if(uCtaCutMaterial){
+    float compact=smoothstep(310.0,1430.0,value);
+    vec3 tint=mix(vec3(0.63,0.47,0.35),vec3(1.07,1.18,1.35),compact);
+    return mix(color*tint,acquired,0.36);
+  }
   float mineral=smoothstep(180.0,1600.0,value);
   vec3 tint=mix(vec3(0.68,0.53,0.40),vec3(1.13,1.11,1.06),mineral);
   return mix(color*tint,acquired,0.24);
@@ -196,6 +204,25 @@ void applyContext(inout vec4 tissue,float value,ivec4 packed,bool selected,vec3 
     if(uSkullMode==1)tissue.a=10000.0;
     if(uSkullMode==2)tissue.a*=0.08;
   }
+}
+float cutSoftExtinction(float value,vec3 world,vec3 p){
+  if(!uCtaCutMaterial||value<=-140.0||value>=220.0)return 0.0;
+  float depth=dot(uCtaCutPlane.xyz,world)+uCtaCutPlane.w;
+  if(depth>=6.0)return 0.0;
+  float slab=1.0-smoothstep(1.0,6.0,depth);
+  float nonMineral=smoothstep(-140.0,-20.0,value)*(1.0-smoothstep(105.0,220.0,value));
+  float coverage=1.0-contextCoverage(p);
+  if(coverage<=0.0)return 0.0;
+  // Sample along the retained side of the cut. This keeps uniform tissue
+  // subdued and uses the same acquired contrast for the eye and shadow rays.
+  float gradient=abs(scalar(p+uCtaCutSampleOffset)-value)/0.75;
+  float boundary=mix(0.025,1.0,smoothstep(10.0,55.0,gradient));
+  return min(0.07,0.52*uDensity)*slab*nonMineral*coverage*boundary;
+}
+void mixCutSoftTissue(inout vec4 tissue,float value,float soft){
+  vec3 tint=mix(vec3(0.26,0.17,0.13),vec3(0.39,0.27,0.23),smoothstep(-30.0,95.0,value));
+  tissue.rgb=(tissue.rgb*tissue.a+tint*soft)/max(tissue.a+soft,0.000001);
+  tissue.a+=soft;
 }
 vec3 scalarNormal(vec3 p){
   vec3 gradient=vec3(scalar(p+vec3(1,0,0))-scalar(p-vec3(1,0,0)),
@@ -294,6 +321,7 @@ float opticalProbe(vec3 p,vec3 world,float footprint){
   ivec4 packed=ivec4(0);
   if(requiresLabels())packed=labelsAt((uLabelWorldToVoxel*vec4(world,1.0)).xyz);
   applyContext(tissue,value,packed,!uIsolate||selectedLabel(packed),p);
+  tissue.a+=cutSoftExtinction(value,world,p);
 #endif
   if(uGradientOpacity&&tissue.a>0.0)tissue.a*=boundaryExtinction(normalizedGradient(scalarNormal(p)));
   return min(tissue.a,1.5);
@@ -459,6 +487,8 @@ void main(){
     if(uIsolate&&any(notEqual(packed,previousLabels)))selected=selectedLabel(packed);
     previousSelected=selected;previousLabels=packed;
     applyContext(tissue,value,packed,selected,p);
+    float soft=cutSoftExtinction(value,origin+direction*sampleT,p);
+    if(soft>0.0)mixCutSoftTissue(tissue,value,soft);
 #endif
     if(tissue.a>0.0){
       // Central differences and the affine covector transform give signal/mm,

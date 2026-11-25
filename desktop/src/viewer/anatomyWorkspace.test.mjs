@@ -218,7 +218,7 @@ test('transparent CTA feathers only optical coverage while exact masks and scan 
     setClearColor(){},setRenderTarget(){},clear(){},render(){}};
   const mask=new Uint8Array(60);mask[31]=1;
   const original=mask.slice(),layer={name:'bone',kind:'bone',color:'#ded0b6',mask};
-  const volume={...source,affine:[[.4,0,0,0],[0,.7,0,0],[0,0,3,0],[0,0,0,1]],compartments:[layer]};
+  const volume={...source,displayIdentity:'native-cta',affine:[[.4,0,0,0],[0,.7,0,0],[0,0,3,0],[0,0,0,1]],compartments:[layer]};
   const scan=new ScanVolumeRenderer(renderer,volume,[0,1000]);
   const supported=new ScanVolumeRenderer(renderer,{...volume,headSupport:{data:mask,sha256:'source-support'}},[0,1000]);
   const render=pass=>pass.render(new THREE.Scene(),new THREE.PerspectiveCamera(),640,480,false,()=>{});
@@ -228,18 +228,27 @@ test('transparent CTA feathers only optical coverage while exact masks and scan 
     scan.labels(null,{},settings,[]);render(scan);
     const uniforms=scan.material.uniforms,aux=uniforms.uAuxiliary.value;
     assert.equal(uniforms.uContextCoverageLayer.value,0);
+    assert.equal(uniforms.uCtaCutMaterial.value,false);
     assert.equal(aux.magFilter,THREE.LinearFilter);
     assert.ok(aux.image.data[31]>0&&aux.image.data[31]<255);
     assert.equal(aux.image.data[30],aux.image.data[32]);
     assert.ok(aux.image.data[30]>0);
     assert.deepEqual(mask,original);
     assert.equal(scan.texture.image.data,source.mri);
-    scan.configure({shadows:false},'CTA',new THREE.Plane(new THREE.Vector3(0,0,1),0));
+    const cut=new THREE.Plane(new THREE.Vector3(0,0,1),0);
+    scan.configure({shadows:false},'CTA',cut);
     scan.labels(null,{}, {...settings,skullMode:'cutaway'},[]);render(scan);
     assert.equal(uniforms.uSkullMode.value,1);
     assert.equal(uniforms.uAcquiredBoneCut.value,true);
+    assert.equal(uniforms.uCtaCutMaterial.value,true);
+    assert.deepEqual(uniforms.uCtaCutSampleOffset.value.toArray(),[0,0,.25]);
     assert.equal(uniforms.uAuxiliary.value,aux,'a same-grid solid cut reuses the continuous coverage texture');
     assert.equal(uniforms.uOpticalCache.value,false,'solid extinction still uses the direct clip-aware shadow probes');
+    scan.configure({shadows:false,window:[-850,2200]},'CTA',cut);render(scan);
+    assert.equal(uniforms.uCtaCutMaterial.value,false);
+    scan.configure({shadows:false},'CTA',cut);
+    scan.labels(null,{}, {...settings,skullMode:'cutaway'},[new THREE.Plane(new THREE.Vector3(1,0,0),0)]);render(scan);
+    assert.equal(uniforms.uCtaCutMaterial.value,false);
     for(const [visible,view] of [ [{bone:false},settings], [{},{...settings,presentation:'scan'}], [{},{...settings,skullMode:'exterior'}],
       [{},{...settings,skullMode:'cutaway',presentation:'scan'}] ]){
       scan.labels(null,visible,view,[]);render(scan);

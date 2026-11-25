@@ -149,6 +149,11 @@ On first open, a native CTA with a compact visible arterial field and bone from 
 
 Source-bound unreviewed rigid transforms are labeled as alignment previews. Missing, stale or incompatible transforms exclude a scan from the patient reconstruction. The scan remains available in its independent frame. Corrections, planning and measurements use their own geometry checks.
 
+In mixed **Vessels** with sourced cortical context and a structural MRI
+selected, **Show scan volume with structures** starts at a density of 0.02.
+This lets the acquired outline remain visible while reducing overlap with the
+displayed vessels. **Appearance** offers manual density and transfer controls.
+
 New multi-scan studies, studies with an identified cortical label, and angiograms with a source-matched artery label start in **Structures**. Other single acquired scans start in **Scan**. A saved study restores its recorded appearance. **Scan** displays the original scalar field with modality-specific transfers for MRI, CT and bright-blood imaging. Linked slice panes display the original scan and its label contours.
 
 **Structures** recognizes a cortical gray-matter label from its declared type or model ontology. With that label, it displays the folded surface and target inside a subdued head outline. The renderer computes the nearest visible wall of the head and cortex separately, using the same physical camera and clipping planes for each group. This avoids building opacity from successive walls of one tissue. Surface shading uses local depth changes over a projected 2 mm neighborhood and samples each cortical layer’s own acquisition at its physical position. Switching linked slices from MRI to CT keeps the cortical MRI samples, contrast window and camera. Large sources use the same reversible display pyramid in either view. An independent source shows its own supported layers. The structures-only toolbar control retains those boundaries with scalar volume rendering disabled. On a CTA or MRA with a source-matched artery label, Structures leaves the brain and skull translucent so vessels remain visible. For a study with only whole-brain and bone envelopes, Structures shows those surfaces. **3D surface** compares the original and conditioned surfaces at the current camera. Display lighting and depth selection operate on the visual mesh. Planning, measurements and collision checks continue to use their source representations.
@@ -180,6 +185,15 @@ Settled Scan uses ray steps of one source spacing and at most 640 intervals. Lig
 Transparent CT context uses a centered optical footprint when a single visible, independent bone mask shares the selected acquisition's display grid. A symmetric six-face filter centered on each voxel reduces bands from the discrete mask. Face offsets are bounded to 1.45 cells and 1 mm along each source axis. The ray interpolates the resulting byte coverage grid and the shadow atlas uses the same grid. Geometry, measurements and linked source panes retain the original mask and acquired samples. Scan, exterior bone, isolated labels, multiple bone contexts and scans with native support keep their existing path. The optical texture needs one byte per displayed voxel and reuses the auxiliary sampler.
 
 In a physical CT cutaway in **Structures** or **Vessels**, the declared skull mask still controls where to style bone. Opacity builds over physical distance from the acquired mineral signal. For a single same-grid skull mask, the cutaway also uses the centered coverage grid to avoid abrupt opacity steps. Its shadow probes sample the retained side directly. Linked slices and the source-image section keep the selected acquired image.
+
+With standard CTA transfer settings and one physical cut, an independent
+same-grid skull mask also supports a shallow band of acquired soft-tissue
+contrast. The volume samples an additional point 0.75 mm into the retained
+side. The resulting gradient weights tissue extinction over the first 6 mm,
+with little contribution from uniform signal. Tagged skull context keeps a
+separate color response to acquired attenuation. Eye and shadow rays use the
+same term. This is a display treatment, with no tissue masks or categories
+derived from the cut shading.
 
 With a ready source-bound atlas and no cut, two fixed RAS light directions
 integrate acquired optical depth to the edge of the field of view. The atlas

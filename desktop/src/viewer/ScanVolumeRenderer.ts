@@ -2,7 +2,7 @@ import {packAnatomyLabels,MAX_ANATOMY_LAYERS} from './labelPacking';
 import * as THREE from 'three';
 import type { ViewerVolume } from './contracts';
 import { inverseAffine, rasAffine } from './coordinates.ts';
-import { canBalanceTofContext, isCtModality, volumeSettings, volumeTransfer, zeroExtinctionLevel } from './volumeTransfer.ts';
+import { canBalanceTofContext, isCtAngiography, isCtModality, volumeSettings, volumeTransfer, zeroExtinctionLevel } from './volumeTransfer.ts';
 import {balancedTofDensity, CT_EXTERIOR_AIR_HU, CT_EXTERIOR_TEXTURE_LIMIT_BYTES, ctExteriorDisplaySignal, ctOpticalCoverage, finishOpticalPreparation, opticalAtlasSteps, OPTICAL_KEY_LIGHTS, volumeOpticalAtlas, type OpticalContext, type OpticalSource} from './volumeOpticalDensity.ts';
 import {layerAppearance} from './workspaceSettings';
 import type {ViewerWorkspaceSettings} from './workspaceSettings';
@@ -70,6 +70,7 @@ export class ScanVolumeRenderer {
   private exteriorPresentation=false;
   private showCtExteriorSignal=false;
   private preset = '';
+  private standardCtaTransfer=false;
   private calibratedTofDensity?:number|null;
   private activeTofContextDensity?:number;
   private automaticMriTransfer=false;
@@ -131,7 +132,8 @@ export class ScanVolumeRenderer {
         uLabelWorldToVoxel:{value:worldToVoxel},uLabelShape:{value:shape},
         uDepth:{value:this.sceneTarget.depthTexture},uWorldToVoxel:{value:worldToVoxel},
         uCameraWorld:{value:new THREE.Matrix4()},uInverseProjection:{value:new THREE.Matrix4()},
-        uRakingBoneCut:{value:false},
+        uRakingBoneCut:{value:false},uCtaCutMaterial:{value:false},
+        uCtaCutPlane:{value:new THREE.Vector4()},uCtaCutSampleOffset:{value:new THREE.Vector3()},
         uShape:{value:shape},uRange:{value:new THREE.Vector2()},
         uZeroExtinctionLevel:{value:0},
         uSkullMode:{value:0},uAcquiredBoneCut:{value:false},uAcquiredCtBone:{value:false},uCt:{value:false},uScanPresentation:{value:false},uGradientOpacity:{value:false},uDensity:{value:.45},uStep:{value:this.spacing*.7},uLinear:{value:linear},
@@ -169,6 +171,8 @@ export class ScanVolumeRenderer {
       this.preset=signature;
     }
     this.material.uniforms.uCt.value=isCtModality(modality);
+    this.standardCtaTransfer=this.nativeAcquisition&&isCtAngiography(modality)&&
+      settings.preset==='ct-angiography'&&input?.window===undefined&&input?.points===undefined;
     // An explicit overlay preference keeps Scan's scalar field independent of
     // hull visibility in both positions. Legacy and isolate modes retain their transfer.
     this.material.uniforms.uAcquiredCtBone.value=this.nativeAcquisition&&input?.showCtBoneOverlay!==undefined&&!input.isolateLabels;
@@ -428,6 +432,7 @@ export class ScanVolumeRenderer {
       this.material.defines.DIRECTIONAL_OPTICS===1?'directional-atlas':u.uContextCoverageLayer.value>=0?'skull-atlas':'source-atlas';
     const ctExteriorDisplay=!!this.exteriorVolume&&u.uVolume.value===this.exteriorVolume.texture;
     return {width:w,height:h,samples:interactive?1:this.samples,opticsPending:this.opticsPending,shadowSampling,
+      ...(u.uCtaCutMaterial.value?{ctaCutMaterial:true}:{}),
       ctExteriorDisplay,ctExteriorBytes:this.estimatedCtExteriorBytes,tofContextDensity:this.activeTofContextDensity};
   }
 
@@ -445,6 +450,15 @@ export class ScanVolumeRenderer {
     this.configureContextCoverage();
     if(this.enabled)this.prepareOpticalAtlas(isExport);
     const uniforms=this.material.uniforms;
+    const hasPrimaryCut=uniforms.uClipEnabled.value;
+    uniforms.uCtaCutMaterial.value=this.standardCtaTransfer&&uniforms.uAcquiredBoneCut.value&&
+      uniforms.uContextCoverageLayer.value>=0&&Number(hasPrimaryCut)+uniforms.uExtraClipCount.value===1;
+    if(uniforms.uCtaCutMaterial.value){
+      const plane=hasPrimaryCut?uniforms.uClipPlane.value:uniforms.uExtraClips.value[0];
+      uniforms.uCtaCutPlane.value.copy(plane);
+      uniforms.uCtaCutSampleOffset.value.set(plane.x,plane.y,plane.z)
+        .applyMatrix3(new THREE.Matrix3().setFromMatrix4(uniforms.uWorldToVoxel.value)).multiplyScalar(.75);
+    }
     uniforms.uDrawScalar.value=this.enabled;
     uniforms.uScene.value=sceneTarget.texture;uniforms.uDepth.value=sceneTarget.depthTexture;
     camera.updateMatrixWorld();
