@@ -1,6 +1,8 @@
 """Transactional clearance of the source-bound score wall between rod poses."""
 
+from concurrent import futures
 from itertools import combinations
+import threading
 
 import numpy as np
 
@@ -14,6 +16,11 @@ CURRENT_POLICY = 'continuous-source-triangles-v2'
 POLICIES = (POLICY, CURRENT_POLICY)
 _MIN_AREA_RATIO = .2
 _LOCAL_SEARCH_DEPTH = 8
+_PARALLEL_MIN_FACES = 16_384
+_STOCK_NATIVE_CLEAR = native_backend.wall_sweep_clear
+_STOCK_NATIVE_CLEAR_CODE = _STOCK_NATIVE_CLEAR.__code__
+_native_slot = threading.Lock()
+_native_worker = None
 
 
 def topology(frames):
@@ -133,6 +140,51 @@ def _local_face_guard(rest, faces, owners):
     return clear
 
 
+def _serial_native_clear(check_local, source, prior, candidate, static):
+    return (check_local is None or check_local(prior, candidate, static)) and (
+        native_backend.wall_sweep_clear(source, prior, candidate, static))
+
+
+def _clear_in_parallel(check_local, source, prior, candidate):
+    global _native_worker
+    # A busy worker never queues another engine behind it. Only the pure C++
+    # check runs off-thread, using the owned read-only inputs to this call.
+    if not _native_slot.acquire(blocking=False):
+        return _serial_native_clear(check_local, source, prior, candidate, False)
+    try:
+        try:
+            kernel = native_backend.verified_wall_sweep_kernel()
+        except native_backend.NativeIntegrityError:
+            return _serial_native_clear(check_local, source, prior, candidate, False)
+        try:
+            if _native_worker is None:
+                _native_worker = futures.ThreadPoolExecutor(max_workers=1)
+            prior.flags.writeable = False
+            candidate.flags.writeable = False
+            job = _native_worker.submit(kernel, source, prior, candidate, False)
+        except RuntimeError:
+            if _native_worker is not None:
+                _native_worker.shutdown(cancel_futures=True)
+                _native_worker = None
+            return _serial_native_clear(check_local, source, prior, candidate, False)
+
+        try:
+            if not check_local(prior, candidate, False):
+                return False
+            # Keep the solver-thread integrity check in the original logical
+            # order, after local approval and before using the native result.
+            if kernel is not native_backend.verified_wall_sweep_kernel():
+                raise native_backend.NativeIntegrityError('Native wall sweep entrypoint changed')
+            return job.result()
+        finally:
+            # Even a local rejection or exception drains the native job before
+            # the engine can advance, publish or observe cancellation.
+            if not job.cancel():
+                job.exception()
+    finally:
+        _native_slot.release()
+
+
 def _build(frames, *, local_guard=False, shared_vertex=False):
     triangles, vertices, owners = [], [], []
     vertex_start = owner_start = 0
@@ -154,10 +206,13 @@ def _build(frames, *, local_guard=False, shared_vertex=False):
     check_local = _local_face_guard(*geometry[:3]) if local_guard and len(geometry[0]) else None
     if native_backend.wall_sweep_available(shared_vertex=shared_vertex):
         source = native_backend.make_wall_sweep(*geometry, shared_vertex=shared_vertex)
+        parallel = shared_vertex and check_local is not None and len(geometry[0]) >= _PARALLEL_MIN_FACES
 
         def clear(prior, candidate, static):
-            return (check_local is None or check_local(prior, candidate, static)) and (
-                native_backend.wall_sweep_clear(source, prior, candidate, static))
+            if (parallel and not static and native_backend.wall_sweep_clear is _STOCK_NATIVE_CLEAR
+                    and _STOCK_NATIVE_CLEAR.__code__ is _STOCK_NATIVE_CLEAR_CODE):
+                return _clear_in_parallel(check_local, source, prior, candidate)
+            return _serial_native_clear(check_local, source, prior, candidate, static)
 
         return clear
     from .surgical_wall_sweep_reference import WallSweepReference

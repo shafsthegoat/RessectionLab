@@ -279,6 +279,11 @@ def wall_sweep_clear(source, prior, candidate, static_check):
     return _module.wall_sweep_clear(source, prior, candidate, static_check)
 
 
+def verified_wall_sweep_kernel():
+    _check_live()
+    return _module.wall_sweep_clear
+
+
 def displacement_snapshot(field):
     index = _displacement_snapshot_index
     if index is None:

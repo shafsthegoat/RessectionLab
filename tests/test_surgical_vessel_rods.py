@@ -1,4 +1,5 @@
 import json
+import threading
 
 import numpy as np
 import pytest
@@ -593,6 +594,63 @@ def test_short_edge_transport_pools_motion_and_leaves_protected_components_separ
     expected = [[.5, .5], [.5, .5], [.5, .5], [1., 0.], [0., 1.]]
     np.testing.assert_array_equal(translation.toarray(), expected)
     np.testing.assert_array_equal(radial.toarray(), 2. * np.asarray(expected))
+
+
+@pytest.mark.parametrize('local_result', [False, True, 'abort'])
+def test_parallel_wall_certificate_keeps_local_failure_order_and_drains_worker(monkeypatch, local_result):
+    entered = threading.Event()
+    finished = threading.Event()
+    release = threading.Event()
+    owner_thread = threading.get_ident()
+
+    def nonlocal_check(source, before, after, static):
+        assert threading.get_ident() != owner_thread
+        assert not before.flags.writeable and not after.flags.writeable
+        entered.set()
+        assert release.wait(3)
+        finished.set()
+        raise ValueError('nonlocal refusal')
+
+    def local_check(before, after, static):
+        assert threading.get_ident() == owner_thread
+        try:
+            assert entered.wait(3)
+            if local_result == 'abort':
+                raise RuntimeError('local abort')
+            return local_result
+        finally:
+            release.set()
+
+    monkeypatch.setattr(native_backend, 'verified_wall_sweep_kernel', lambda: nonlocal_check)
+    before, after = np.zeros((3, 3)), np.ones((3, 3))
+    if local_result == 'abort':
+        with pytest.raises(RuntimeError, match='local abort'):
+            surgical_wall_sweep._clear_in_parallel(local_check, None, before, after)
+    elif local_result:
+        with pytest.raises(ValueError, match='nonlocal refusal'):
+            surgical_wall_sweep._clear_in_parallel(local_check, None, before, after)
+    else:
+        assert not surgical_wall_sweep._clear_in_parallel(local_check, None, before, after)
+    assert finished.is_set()
+    assert surgical_wall_sweep._native_slot.acquire(blocking=False)
+    surgical_wall_sweep._native_slot.release()
+
+
+def test_parallel_wall_certificate_uses_serial_checks_when_worker_busy(monkeypatch):
+    calls = []
+
+    def local_check(*args):
+        calls.append('local')
+        return True
+
+    def native_check(*args):
+        calls.append('native')
+        return False
+
+    monkeypatch.setattr(native_backend, 'wall_sweep_clear', native_check)
+    with surgical_wall_sweep._native_slot:
+        assert not surgical_wall_sweep._clear_in_parallel(local_check, None, np.zeros((3, 3)), np.ones((3, 3)))
+    assert calls == ['local', 'native']
 
 
 def test_wall_sweep_rejects_crossing_between_clear_endpoints_and_midpoint():
