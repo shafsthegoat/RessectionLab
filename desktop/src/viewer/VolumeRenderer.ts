@@ -744,7 +744,13 @@ export class VolumeRenderer {
     const vessel=surfaceKind(layer.kind)==='vessel';
     const displayKind=layer.displayKind??layer.kind??'';
     const fairNormals=vessel||layer.generatedFinish||CONTEXT_SURFACES.has(displayKind)||Boolean(layer.surface&&['brain-region','gray-matter','white-matter','cerebellar-cortex','dura','csf','ventricles'].includes(displayKind));
-    if(hasSmooth)smooth.setAttribute("normal", new THREE.BufferAttribute(fairNormals&&buffers.indices ? displaySurfaceNormals(smoothNormals!,buffers.smoothIndices??buffers.indices,this.affine) : smoothNormals!, 3));
+    if(hasSmooth){
+      const passes=layer.surfaceDiagnostics?.policy==='source-bound-publisher-cta-fairing-v2'?10:3;
+      const lighting=fairNormals&&buffers.indices
+        ?displaySurfaceNormals(smoothNormals!,buffers.smoothIndices??buffers.indices,this.affine,passes)
+        :smoothNormals!;
+      smooth.setAttribute('normal',new THREE.BufferAttribute(lighting,3));
+    }
     if(onlyNormals&&indices){
       const baseline=displaySurfaceNormals(normals,indices,this.affine);
       const score=buffers.scoreLighting&&scoreWallLighting(normals,baseline,buffers.scoreLighting,this.affine);

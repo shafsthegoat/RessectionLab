@@ -141,6 +141,10 @@ export. An acquired CT cut uses an angled key to bring out ridges in the
 source signal. The lighting leaves source slices, contours, vessel type,
 opacity, picking and geometry intact. The control can be turned off per scan.
 
+The conditioned publisher CTA arteries use an additional bounded pass on the
+lighting normals to soften fine highlight banding. The exact publisher view
+uses the acquired source geometry and its source normals.
+
 On first open, a native CTA with a compact visible arterial field and bone from the same scan can start at a superior axial cut. The plane clears the measured extent of the original and conditioned arterial meshes. The linked slice cursor remains at the selected source location. **Full head** clears the cut and frames the complete acquisition. A broad or incomplete arterial field, missing bone support, or a real visible lesion above the plane leaves the full field on first open. Saved camera and cutaway settings take precedence.
 
 Source-bound unreviewed rigid transforms are labeled as alignment previews. Missing, stale or incompatible transforms exclude a scan from the patient reconstruction. The scan remains available in its independent frame. Corrections, planning and measurements use their own geometry checks.
