@@ -205,8 +205,13 @@ derived from the cut shading.
 With **Vessel depth lighting** enabled on a qualifying acquired CTA cut, the
 volume and the 3D surfaces share the same directional key. Vessels from the
 selected scan receive a bounded direct-light shadow from two probes into the
-retained CTA and its same-source skull context. Opacity, geometry, and linked
-source slices keep their existing paths. Samples inside the exact stock
+retained CTA and its same-source skull context. Their visible opaque surfaces
+also cast soft shadows onto the acquired volume. Four light-space depth
+samples soften the shadow, with a 28 mm maximum caster distance and the same
+physical clip as the displayed meshes. This affects only direct illumination.
+The independent skull mask lets this pass use the packed-label sampler slot
+for light-space depth. Opacity, geometry, and linked source slices keep their
+existing paths. Samples inside the exact stock
 transfer's zero-opacity range can skip compositing when the cut's mineral and
 soft-tissue terms are also zero.
 

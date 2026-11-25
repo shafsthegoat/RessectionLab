@@ -14,6 +14,9 @@ export const volumeFragmentShader = `
 #ifndef SCALAR_ONLY
 #define SCALAR_ONLY 0
 #endif
+#ifndef CTA_VESSEL_SHADOW
+#define CTA_VESSEL_SHADOW 0
+#endif
 precision highp float;
 precision highp sampler3D;
 in vec2 vUv;
@@ -58,7 +61,14 @@ uniform bool uLinear;
 uniform bool uClipEnabled;
 uniform vec4 uClipPlane;
 uniform vec3 uBackground;
+#if CTA_VESSEL_SHADOW == 1
+uniform sampler2D uCtaShadow;
+uniform mat4 uCtaShadowProjection;
+uniform float uCtaShadowDepthMm;
+uniform float uCtaShadowPenumbra;
+#else
 uniform sampler3D uLabels;
+#endif
 ${labelMembershipShader}
 uniform int uLabelBits;
 uniform int uVisibleBits;
@@ -124,11 +134,28 @@ bool supported(vec3 p){
   return !uUseHeadSupport || texture(uAuxiliary,((p+0.5)/uShape).zyx).r>0.0;
 }
 ivec4 labelsAt(vec3 labelPoint){
+#if CTA_VESSEL_SHADOW == 1
+  return ivec4(0);
+#else
   vec3 labelUv=(labelPoint+0.5)/uLabelShape;
   if(all(greaterThanEqual(labelUv,vec3(0.0)))&&all(lessThan(labelUv,vec3(1.0))))
     return ivec4(round(texture(uLabels,labelUv.zyx)*255.0));
   return ivec4(0);
+#endif
 }
+#if CTA_VESSEL_SHADOW == 1
+float ctaShadowTap(vec2 uv,float depth){
+  float separation=(depth-texture(uCtaShadow,uv).r)*uCtaShadowDepthMm;
+  return smoothstep(0.55,1.1,separation)*(1.0-smoothstep(14.0,28.0,separation));
+}
+float ctaVesselKeyVisibility(vec3 world){
+  vec3 p=(uCtaShadowProjection*vec4(world,1.0)).xyz*0.5+0.5;
+  vec2 stepUv=vec2(uCtaShadowPenumbra);
+  float covered=ctaShadowTap(p.xy+stepUv,p.z)+ctaShadowTap(p.xy-stepUv,p.z)
+    +ctaShadowTap(p.xy+vec2(stepUv.x,-stepUv.y),p.z)+ctaShadowTap(p.xy+vec2(-stepUv.x,stepUv.y),p.z);
+  return 1.0-0.19*covered;
+}
+#endif
 bool selectedLabel(ivec4 packed){
   for(int slot=0;slot<128;slot++){
     if(slot>=uActiveLayerCount)break;
@@ -530,7 +557,11 @@ void main(){
       float scatter=uCt?mix(0.19,0.09,smoothstep(200.0,1300.0,value)):0.18;
       float scattered=scatter*(1.0-visibility.x)*(0.4+0.6*visibility.y);
       float ambientFloor=uCt?0.46:0.60;
-      vec3 lighting=vec3(key*(0.15+0.85*visibility.x)+fill*mix(ambientFloor,1.0,visibility.y));
+      float direct=key*(0.15+0.85*visibility.x);
+#if CTA_VESSEL_SHADOW == 1
+      direct*=ctaVesselKeyVisibility(origin+direction*sampleT);
+#endif
+      vec3 lighting=vec3(direct+fill*mix(ambientFloor,1.0,visibility.y));
       lighting+=scattered*vec3(1.0,0.89,0.76);
       accumulated.rgb+=(1.0-accumulated.a)*alpha*tissue.rgb*lighting;
       accumulated.a+=(1.0-accumulated.a)*alpha;

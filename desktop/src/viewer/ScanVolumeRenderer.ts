@@ -1,7 +1,7 @@
 import {packAnatomyLabels,MAX_ANATOMY_LAYERS} from './labelPacking';
 import * as THREE from 'three';
 import type { ViewerVolume } from './contracts';
-import { inverseAffine, rasAffine } from './coordinates.ts';
+import { inverseAffine, rasAffine, volumeBounds } from './coordinates.ts';
 import { canBalanceTofContext, isCtAngiography, isCtModality, volumeSettings, volumeTransfer, zeroExtinctionLevel } from './volumeTransfer.ts';
 import {balancedTofDensity, CT_EXTERIOR_AIR_HU, CT_EXTERIOR_TEXTURE_LIMIT_BYTES, ctExteriorDisplaySignal, ctOpticalCoverage, finishOpticalPreparation, opticalAtlasSteps, OPTICAL_KEY_LIGHTS, volumeOpticalAtlas, type OpticalContext, type OpticalSource} from './volumeOpticalDensity.ts';
 import {layerAppearance} from './workspaceSettings';
@@ -11,6 +11,7 @@ import { volumeVertexShader, volumeFragmentShader } from './volumeRaycastShaders
 import {SurfaceVolumePass} from './SurfaceVolumePass';
 import {renderTargetBytes} from './renderResourceEstimate';
 import {ctaCutKey,installCtaVesselLight} from './ctaVesselLight';
+import {CtaVesselShadow} from './ctaVesselShadow';
 import {renderAnatomyScene,type VesselSlabContext} from './vesselSlabContext';
 
 type VolumeTargets = {
@@ -68,6 +69,8 @@ export class ScanVolumeRenderer {
   private readonly sourceSeriesId?:string;
   private readonly ctaVesselLight={value:false};
   private readonly ctaKeyDirection=new THREE.Vector3();
+  private readonly ctaKeyUp=new THREE.Vector3();
+  private ctaVesselShadow?:CtaVesselShadow;
   private readonly savedKeyPosition=new THREE.Vector3();
   private anatomyKey?:THREE.DirectionalLight;
   private hasCtaVesselReceiver=false;
@@ -142,6 +145,8 @@ export class ScanVolumeRenderer {
         uCameraWorld:{value:new THREE.Matrix4()},uInverseProjection:{value:new THREE.Matrix4()},
         uRakingBoneCut:{value:false},uCtaCutMaterial:{value:false},
         uCtaCutPlane:{value:new THREE.Vector4()},uCtaCutSampleOffset:{value:new THREE.Vector3()},
+        uCtaShadow:{value:null},uCtaShadowProjection:{value:new THREE.Matrix4()},
+        uCtaShadowDepthMm:{value:1},uCtaShadowPenumbra:{value:0},
         uShape:{value:shape},uRange:{value:new THREE.Vector2()},
         uZeroExtinctionLevel:{value:0},
         uSkullMode:{value:0},uAcquiredBoneCut:{value:false},uAcquiredCtBone:{value:false},uCt:{value:false},uScanPresentation:{value:false},uGradientOpacity:{value:false},uDensity:{value:.45},uStep:{value:this.spacing*.7},uLinear:{value:linear},
@@ -387,7 +392,7 @@ export class ScanVolumeRenderer {
     const live=targetBytes({scene:this.sceneTarget,volume:this.volumeTarget,accumulation:this.accumulation,surfaces:this.surfacePass});
     const drag=this.interactionTargets?renderTargetBytes(this.interactionTargets.scene)+renderTargetBytes(this.interactionTargets.volume):0;
     return live+drag+(this.transfer?.image.data?.byteLength??0)+(this.contextCoverage?.texture.image.data?.byteLength??0)
-      +this.estimatedCtExteriorBytes.gpuTextureBytes;
+      +this.estimatedCtExteriorBytes.gpuTextureBytes+(this.ctaVesselShadow?.bytes??0);
   }
 
   /** In CT context, interpolate the optical coverage of one
@@ -456,6 +461,7 @@ export class ScanVolumeRenderer {
     const ctExteriorDisplay=!!this.exteriorVolume&&u.uVolume.value===this.exteriorVolume.texture;
     return {width:w,height:h,samples:interactive?1:this.samples,opticsPending:this.opticsPending,shadowSampling,
       ...(this.ctaVesselLight.value?{ctaVesselKeyLight:true}:{}),
+      ...(this.material.defines.CTA_VESSEL_SHADOW===1?{ctaVesselCastShadow:true}:{}),
       ...(u.uCtaCutMaterial.value?{ctaCutMaterial:true}:{}),
       ctExteriorDisplay,ctExteriorBytes:this.estimatedCtExteriorBytes,tofContextDensity:this.activeTofContextDensity};
   }
@@ -486,6 +492,14 @@ export class ScanVolumeRenderer {
     const boneContext=this.layers[uniforms.uContextCoverageLayer.value];
     this.ctaVesselLight.value=this.hasCtaVesselReceiver&&uniforms.uCtaCutMaterial.value&&uniforms.uRakingBoneCut.value&&
       uniforms.uShadows.value&&uniforms.uLinear.value&&!!this.sourceSeriesId&&boneContext?.sourceSeries===this.sourceSeriesId;
+    // This path uses the independent skull mask. It does not sample packed
+    // labels, so the light-space depth can occupy that fragment sampler.
+    const castVesselShadow=this.ctaVesselLight.value&&!uniforms.uIsolate.value;
+    const castMode=Number(castVesselShadow);
+    if((this.material.defines.CTA_VESSEL_SHADOW??0)!==castMode){
+      this.material.defines.CTA_VESSEL_SHADOW=castMode;
+      this.material.needsUpdate=true;
+    }
     uniforms.uDrawScalar.value=this.enabled;
     uniforms.uScene.value=sceneTarget.texture;uniforms.uDepth.value=sceneTarget.depthTexture;
     camera.updateMatrixWorld();
@@ -501,10 +515,19 @@ export class ScanVolumeRenderer {
     const hidden:THREE.Object3D[]=[];
     const anatomyKey=this.ctaVesselLight.value?this.anatomyKey:undefined;
     try {
+      if(this.ctaVesselLight.value)this.ctaKeyDirection.set(...ctaCutKey).transformDirection(camera.matrixWorld);
       if(anatomyKey){
         this.savedKeyPosition.copy(anatomyKey.position);
-        this.ctaKeyDirection.set(...ctaCutKey).transformDirection(camera.matrixWorld);
         anatomyKey.position.copy(anatomyKey.target.position).addScaledVector(this.ctaKeyDirection,300);
+      }
+      if(castVesselShadow){
+        const shadow=this.ctaVesselShadow??=new CtaVesselShadow(volumeBounds(this.sourceOptics.shape,this.sourceOptics.affine,true));
+        this.ctaKeyUp.setFromMatrixColumn(camera.matrixWorld,1);
+        if(interactive||sample===0)shadow.capture(this.renderer,scene,this.ctaKeyDirection,this.ctaKeyUp,uniforms.uCtaCutPlane.value);
+        uniforms.uCtaShadow.value=shadow.texture;
+        uniforms.uCtaShadowProjection.value.copy(shadow.projection);
+        uniforms.uCtaShadowDepthMm.value=shadow.depthMm;
+        uniforms.uCtaShadowPenumbra.value=shadow.penumbraUv;
       }
       this.renderer.setClearColor(0,0);
       if(interactive||sample===0){
@@ -534,6 +557,7 @@ export class ScanVolumeRenderer {
   }
   dispose(){
     this.cancelOpticalPreparation();
+    this.ctaVesselShadow?.dispose();
     this.sceneTarget.dispose();this.volumeTarget.dispose();if(this.ownsTexture)this.texture.dispose();this.supportTexture?.dispose();this.contextCoverage?.texture.dispose();this.exteriorVolume?.texture.dispose();this.transfer?.dispose();
     this.interactionTargets?.scene.dispose();this.interactionTargets?.volume.dispose();
     this.surfacePass.dispose();this.accumulation.forEach(t=>t.dispose());this.accumulateMaterial.dispose();

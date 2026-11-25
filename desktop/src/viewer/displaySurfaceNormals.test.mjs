@@ -7,8 +7,50 @@ import {applyCtaVesselFinish,applyVesselDepthMaterial,ctaVesselColor,vesselWallF
 import {applySourceContextMaterial} from './sourceContextMaterial.ts';
 import {SurfaceVolumePass} from './SurfaceVolumePass.ts';
 import {VesselDepthSeparation} from './vesselDepthSeparation.ts';
+import {CtaVesselShadow} from './ctaVesselShadow.ts';
 
 const identity=[[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]];
+
+test('CTA shadow depth uses only the visible opaque acquisition meshes and tracks the physical cut',()=>{
+  const shadow=new CtaVesselShadow([[-10,-20,-15],[10,20,15]]);
+  const scene=new THREE.Scene(),geometry=new THREE.BoxGeometry();
+  const caster=new THREE.MeshStandardMaterial(),ordinary=new THREE.MeshStandardMaterial();
+  caster.userData.ctaVesselReceiver=true;
+  const visible=new THREE.Mesh(geometry,caster),hidden=new THREE.Mesh(geometry,caster),foreign=new THREE.Mesh(geometry,ordinary);
+  visible.position.set(7,9,4);
+  hidden.visible=false;
+  scene.add(visible,hidden,foreign);
+  let target={prior:true};
+  const previous=target,frames=[];
+  const renderer={
+    getRenderTarget:()=>target,setRenderTarget:value=>{target=value;},
+    getViewport:out=>out.set(1,2,30,40),setViewport:value=>assert.deepEqual(value.toArray(),[1,2,30,40]),
+    getScissor:out=>out.set(3,4,20,30),setScissor:value=>assert.deepEqual(value.toArray(),[3,4,20,30]),
+    getScissorTest:()=>true,setScissorTest:value=>assert(value),clear(){},
+    render(casters,camera){
+      assert(camera.isOrthographicCamera);
+      assert.equal(target.depthTexture,shadow.texture);
+      frames.push(casters.children.map(mesh=>{
+        assert.equal(mesh.geometry,geometry);
+        assert.deepEqual(new THREE.Vector3().setFromMatrixPosition(mesh.matrix).toArray(),[7,9,4]);
+        return mesh.material.clippingPlanes[0].constant;
+      }));
+    },
+  };
+  const light=new THREE.Vector3(0,0,1),up=new THREE.Vector3(0,1,0),cut=new THREE.Vector4(0,0,-1,4);
+  try{
+    shadow.capture(renderer,scene,light,up,cut);
+    shadow.capture(renderer,scene,light,up,cut);
+    cut.w=6;
+    shadow.capture(renderer,scene,light,up,cut);
+    caster.opacity=.5;
+    shadow.capture(renderer,scene,light,up,cut);
+    assert.deepEqual(frames,[[4],[6],[]]);
+    assert.equal(target,previous);
+    assert.equal(scene.children.length,3);
+  }finally{shadow.dispose();geometry.dispose();caster.dispose();ordinary.dispose();}
+});
+
 test('vessel lighting becomes smoother without moving or connecting source anatomy',()=>{
   const shape=[25,25,25],mask=Uint8Array.from({length:25**3},(_,i)=>{
     const x=Math.floor(i/625),y=Math.floor(i/25)%25,z=i%25;
