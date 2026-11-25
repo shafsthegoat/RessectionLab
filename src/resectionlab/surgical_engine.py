@@ -202,7 +202,15 @@ def _displacement_snapshot(field):
     as JSON. Unusual containers/leaves retain the canonical validation path.
     This identity never replaces a public state digest or serialized value.
     """
-    if type(field) is not dict or not all(type(key) is str for key in field):
+    if type(field) is not dict:
+        return None
+    # Large active patches would otherwise revalidate and repack thousands
+    # of Python floats at each query. Small fields keep the local fast path.
+    if len(field) >= 256:
+        native = native_backend.displacement_snapshot(field)
+        if native is not NotImplemented:
+            return native
+    if not all(type(key) is str for key in field):
         return None
     keys = tuple(sorted(field))
     rows = [field[key] for key in keys]

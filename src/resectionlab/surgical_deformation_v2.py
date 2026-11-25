@@ -107,6 +107,10 @@ def _neighbor_ids(shape, cell):
             yield cell + stride, axis
 
 
+_STOCK_NEIGHBOR_IDS = _neighbor_ids
+_STOCK_NEIGHBOR_CODE = _neighbor_ids.__code__
+
+
 def _neighbors(engine, cell):
     for neighbor, axis in _neighbor_ids(engine.scene.shape, cell):
         yield neighbor, float(np.linalg.norm(engine.scene.affine[:3, axis]))
@@ -165,6 +169,26 @@ def release(engine, key):
     engine.state['holds'].pop(key, None)
 
 
+def _ordered_bond_indices(ids, retained, local_cuts, shape, coordinates, index):
+    if (_neighbor_ids is _STOCK_NEIGHBOR_IDS and _neighbor_ids.__code__ is _STOCK_NEIGHBOR_CODE
+            and len(ids) and len(ids) == len(retained) and tuple(ids) == tuple(sorted(retained))):
+        # Sorted source IDs and ascending positive strides give the original
+        # lexicographic bond order, including across flattened grid rows.
+        cells = np.asarray(ids)
+        neighbors = cells[:, None] + (1, shape[2], shape[1] * shape[2])
+        inside = coordinates[:, ::-1] < np.asarray(shape[::-1]) - 1
+        end = np.minimum(np.searchsorted(cells, neighbors), len(cells) - 1)
+        first, axes = np.nonzero(inside & (cells[end] == neighbors))
+        second = end[first, axes]
+        if local_cuts:
+            intact = [(cells[a], cells[b]) not in local_cuts for a, b in zip(first, second)]
+            first, second = first[intact], second[intact]
+        return first, second
+    bonds = sorted((c, n) for c in ids for n, _ in _neighbor_ids(shape, c)
+                   if c < n and n in retained and (c, n) not in local_cuts)
+    return np.asarray([(index[a], index[b]) for a, b in bonds], dtype=int).reshape(-1, 2).T
+
+
 def _system(engine, p, ids, anchors, retained, blocked, attachment_stiffness=None):
     held = tuple(sorted({c for h in _holds(engine) for c in h['cells']} & set(ids)))
     shape = engine.scene.shape
@@ -183,20 +207,21 @@ def _system(engine, p, ids, anchors, retained, blocked, attachment_stiffness=Non
         signature += (tuple(attachment_stiffness.items()),)
     cached = getattr(engine, '_deformation_system_v2', None)
     if cached and cached[0] == signature: return cached[1:]
-    bonds = sorted((c, n) for c in ids for n, _ in _neighbor_ids(shape, c)
-                   if c < n and n in retained and (c, n) not in local_cuts)
     n = len(ids); index = {c: i for i, c in enumerate(ids)}
-    stiffness = np.array([p['tumorStiffnessNPerMm'] if _material(engine, c) == 'tumor' else p['brainStiffnessNPerMm'] for c in ids])
     if material_profile:
         from .surgical_glioma_materials import material_values
         # Pa -> N/mm² times representative face area / bond length (mm).
         stiffness = 1e-6 * engine.scene.voxel_mm3 ** (1/3) * material_values(engine, ids, 'equilibriumShearPa')
-    rest = np.column_stack(np.unravel_index(ids, engine.scene.shape)) @ engine.scene.affine[:3, :3].T
-    first, second = np.asarray([(index[a], index[b]) for a, b in bonds], dtype=int).reshape(-1, 2).T
+    else:
+        stiffness = np.array([p['tumorStiffnessNPerMm'] if _material(engine, c) == 'tumor' else p['brainStiffnessNPerMm'] for c in ids])
+    coordinates = np.column_stack(np.unravel_index(ids, shape))
+    rest = coordinates @ engine.scene.affine[:3, :3].T
+    first, second = _ordered_bond_indices(ids, retained, local_cuts, shape, coordinates, index)
     vectors = rest[second] - rest[first]
     # Keep the scalar norm for each bond. A batched reduction can round
-    # differently and change the stored trajectories of older rehearsals.
-    lengths = np.asarray([np.linalg.norm(vector) for vector in vectors])
+    # differently. Identical oriented vectors reuse the same scalar result.
+    distinct, groups = np.unique(vectors, axis=0, return_inverse=True)
+    lengths = np.asarray([np.linalg.norm(vector) for vector in distinct])[groups.reshape(-1)]
     edges = [(int(a), int(b), length) for a, b, length in zip(first, second, lengths)]
     axes = np.arange(3)
     a_dof, b_dof = 3 * first[:, None] + axes, 3 * second[:, None] + axes

@@ -61,6 +61,7 @@ if _requested not in ('reference', 'cpp', 'auto'):
     raise ValueError(f'{_ENVIRONMENT} must be reference, cpp, or auto')
 _module = None
 _entry_points = ()
+_displacement_snapshot_index = None
 _embedded_identity = None
 _binary_path = None
 _files = {}
@@ -78,6 +79,7 @@ _identity = {'schema': 'resectionlab-numerical-backend-v1', 'requested': _reques
 
 def _load():
     global _module, _entry_points, _embedded_identity, _binary_path, _file_helpers, _file_methods
+    global _displacement_snapshot_index
     if _requested == 'reference':
         return
     if importlib.util.find_spec(_MODULE_NAME) is None:
@@ -133,6 +135,9 @@ def _load():
                                'simulation_prepare', 'simulation_query', 'simulation_json', 'simulation_stats',
                                'simulation_json_guard', 'bindings_unchanged')
         capabilities = _WALL_SWEEP_ENTRY_POINTS if sweep_version is not None else ()
+        snapshot_entry = getattr(module, 'displacement_snapshot', None)
+        if snapshot_entry is not None:
+            capabilities += ('displacement_snapshot',)
         _entry_points = tuple((name, getattr(module, name)) for name in base_entry_points + capabilities)
         if (sys.modules.get(_MODULE_NAME) is not module
                 or Path(module.__spec__.origin).resolve() != binary
@@ -142,6 +147,7 @@ def _load():
             raise ValueError('invalid native module origin or entrypoint')
         _embedded_identity = module.BUILD_IDENTITY
         _binary_path = str(binary)
+        _displacement_snapshot_index = len(_entry_points) - 1 if snapshot_entry is not None else None
         _module = module
         _identity.update(selected='cpp', buildIdentity=build, binaryPath=str(binary),
                          binarySha256=binary_digest, manifestPath=str(manifest_path))
@@ -271,6 +277,17 @@ def make_wall_sweep(rest, vertices, owners, owner_count, *, shared_vertex=False)
 def wall_sweep_clear(source, prior, candidate, static_check):
     _check_live()
     return _module.wall_sweep_clear(source, prior, candidate, static_check)
+
+
+def displacement_snapshot(field):
+    index = _displacement_snapshot_index
+    if index is None:
+        return NotImplemented
+    _check_live()
+    if (type(index) is not int or not 0 <= index < len(_entry_points)
+            or _entry_points[index][0] != 'displacement_snapshot'):
+        raise NativeIntegrityError('Native displacement snapshot entrypoint changed')
+    return _entry_points[index][1](field)
 
 
 def reference_call(count=1, *, unsupported=False):

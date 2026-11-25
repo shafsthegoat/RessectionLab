@@ -49,6 +49,48 @@ void finite_values(const std::vector<double>& values) {
         if (!std::isfinite(value)) throw py::value_error("native geometry metadata must be finite");
 }
 
+py::object displacement_snapshot(py::handle field) {
+    if (!PyDict_CheckExact(field.ptr()) || sizeof(double) != 8) return py::none();
+    const Py_ssize_t size = PyDict_GET_SIZE(field.ptr());
+    const Py_ssize_t row_bytes = 3 * sizeof(double);
+    if (size > PY_SSIZE_T_MAX / row_bytes) return py::none();
+
+    struct Row { py::object key; Triple values; };
+    std::vector<Row> rows;
+    rows.reserve(static_cast<std::size_t>(size));
+    Py_ssize_t position = 0;
+    PyObject *key, *value;
+    while (PyDict_Next(field.ptr(), &position, &key, &value)) {
+        if (!PyUnicode_CheckExact(key) || !PyList_CheckExact(value) || PyList_GET_SIZE(value) != 3)
+            return py::none();
+        Triple values;
+        for (int axis = 0; axis < 3; ++axis) {
+            PyObject* item = PyList_GET_ITEM(value, axis);
+            if (!PyFloat_CheckExact(item)) return py::none();
+            values[axis] = PyFloat_AS_DOUBLE(item);
+            if (!std::isfinite(values[axis])) return py::none();
+        }
+        rows.push_back({py::reinterpret_borrow<py::object>(key), values});
+    }
+    // Keep Python's Unicode ordering and preserve the raw double bytes,
+    // including a change of sign on zero.
+    std::sort(rows.begin(), rows.end(), [](const Row& first, const Row& second) {
+        const int order = PyUnicode_Compare(first.key.ptr(), second.key.ptr());
+        if (order == -1 && PyErr_Occurred()) throw py::error_already_set();
+        return order < 0;
+    });
+    py::tuple keys(size);
+    PyObject* storage = PyBytes_FromStringAndSize(nullptr, size * row_bytes);
+    if (!storage) throw py::error_already_set();
+    auto packed = py::reinterpret_steal<py::bytes>(storage);
+    char* bytes = PyBytes_AS_STRING(storage);
+    for (Py_ssize_t i = 0; i < size; ++i) {
+        keys[i] = rows[i].key;
+        std::memcpy(bytes + i * row_bytes, rows[i].values.data(), row_bytes);
+    }
+    return py::make_tuple(keys, packed);
+}
+
 constexpr char wall_sweep_capsule[] = "resectionlab.wall-sweep.v1";
 
 py::capsule make_wall_sweep(const py::array& rest, const py::array& vertices,
@@ -394,6 +436,7 @@ PYBIND11_MODULE(_geometry_cpp, module) {
     module.attr("MAX_PRIMITIVES") = max_primitives;
     module.attr("MAX_BATCH_ITEMS") = max_items;
     module.attr("WALL_SWEEP_VERSION") = 2;
+    module.def("displacement_snapshot", &displacement_snapshot);
     module.def("make_wall_sweep", &make_wall_sweep, py::arg("rest").noconvert(),
                py::arg("vertices").noconvert(), py::arg("owners").noconvert(), py::arg("owner_count"),
                py::arg("shared_vertex") = false);

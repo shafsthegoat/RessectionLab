@@ -251,6 +251,34 @@ def test_displacement_snapshot_unusual_values_keep_canonical_fallback(value):
     assert _displacement_snapshot({'1': value}) is None
 
 
+def test_compiled_displacement_snapshot_matches_python_and_rejects_subclasses(monkeypatch):
+    from resectionlab import native_backend
+    from resectionlab.surgical_engine import _displacement_snapshot
+
+    native = native_backend.displacement_snapshot
+    if native({}) is NotImplemented:
+        pytest.skip('Compiled displacement snapshot unavailable')
+    field = {str(cell): [float(cell), -0., 0.] for cell in reversed(range(256))}
+    field.update({'é': [1., 2., 3.], '💠': [0., 0., 0.], '\ud800': [0., 1., -0.]})
+    compiled = _displacement_snapshot(field)
+    with monkeypatch.context() as patch:
+        patch.setattr(native_backend, 'displacement_snapshot', lambda _: NotImplemented)
+        assert compiled == _displacement_snapshot(field)
+    with monkeypatch.context() as patch:
+        patch.setattr(native_backend, '_displacement_snapshot_index', 0)
+        with pytest.raises(native_backend.NativeIntegrityError, match='snapshot entrypoint changed'):
+            _displacement_snapshot(field)
+
+    field['0'][1] = 0.
+    assert compiled != _displacement_snapshot(field)
+
+    class WrappedList(list):
+        pass
+
+    field['0'] = WrappedList([0., 0., 0.])
+    assert native(field) is None and _displacement_snapshot(field) is None
+
+
 def test_displacement_occupancy_key_matches_json_reference_after_public_edits():
     actual, reference = SurgicalEngine(source()), LegacyKeyEngine(source())
     cell = str(int(np.ravel_multi_index((9, 9, 9), actual.scene.shape)))
