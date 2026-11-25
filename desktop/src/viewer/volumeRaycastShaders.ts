@@ -191,7 +191,10 @@ void applyContext(inout vec4 tissue,float value,ivec4 packed,bool selected,vec3 
     float coverage=contextCoverage(p);
     vec4 context=uLayerColor[layer];
     if(uAcquiredBoneCut){
-      float clear=tissue.a*(1.0-coverage);
+      // Keep high acquired attenuation visible across the boundary of the
+      // categorical skull estimate. Only tagged coverage gets the skull tint.
+      float acquired=uCtaCutMaterial ? min(0.32,2.67*uDensity)*smoothstep(440.0,850.0,value) : 0.0;
+      float clear=max(tissue.a,acquired)*(1.0-coverage);
       float bone=acquiredBoneExtinction(tissue.a,value)*coverage;
       tissue.rgb=(clear*tissue.rgb+bone*contextTint(tissue.rgb,context.rgb,value))/max(clear+bone,0.000001);
       tissue.a=clear+bone;

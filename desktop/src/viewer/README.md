@@ -202,6 +202,14 @@ separate color response to acquired attenuation. Eye and shadow rays use the
 same term. This is a display treatment, with no tissue masks or categories
 derived from the cut shading.
 
+The same standard CTA cut keeps a density-scaled contribution from high
+acquired attenuation outside the tagged skull fraction. The contribution
+ramps from 440 to 850 HU and is capped at 0.32 per mm. This helps dense
+source detail remain visible where the estimated skull coverage falls away.
+The skull hue still belongs to the tagged fraction. The visible ray and its
+scalar shadow probes share the transfer. Custom transfers and uncut views
+keep their own settings.
+
 With **Vessel depth lighting** enabled on a qualifying acquired CTA cut, the
 volume and the 3D surfaces share the same directional key. Vessels from the
 selected scan receive a bounded direct-light shadow from two probes into the
