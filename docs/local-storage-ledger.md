@@ -131,6 +131,9 @@ whole-mesh source audits are at `qc/native-publisher-wall-20261124-v1/README.md`
 The bounded follow-up on supplied CTA arteries is indexed at
 `qc/native-vessel-fairing-20261124-v1/README.md`. It includes signed matched
 views, geometry checks and the rejected broader and source-edge trials.
+The acquired CTA cut material and mixed structural MR volume comparisons are
+indexed at `qc/acquired-cta-cut-materials-20261124-v1/README.md`. The matched
+CTA cuts include the wider supplied artery labels and the signed workbench.
 The signed CTA vessel-to-bone contrast comparison and export are at
 `qc/cta-vessel-contrast-20261124-v1/README.md`. The index includes both
 TopCoW CTA cases, acquisition controls, and source-linked cutaways.
@@ -192,6 +195,14 @@ attached tip are indexed at
 `qc/eden2020-glioma-5714812/attached-exterior-20261124.5pgejhvx/off-center-source-20261124.0y4OaM5l/README.md`.
 The follow-up contact timing, lattice parity and cold replay receipts are at
 `qc/native-wall-lattice-snapshot-20261124-v1/README.md`.
+The overlapping wall clearance checks, paired request timings and replay
+receipts are at `qc/native-wall-overlapping-certification-20261124-v1/README.md`.
+The independently reviewed PTNT_1288 native tissue and stock branch proximity
+checks are indexed at
+`qc/eden2020-glioma-5714812/eden-dense-native-tissue-survey-20261124.4e5uy7_7/README.md`.
+The acquired profiles through the three persistent PTNT_5387 midfield
+fragments are indexed at
+`qc/eden2020-glioma-5714812/ptnt5387-signed-midfield-source-20261124.BJTrzZ5Z/README.md`.
 The signed native TOF correction, matched score-surface preview and cohort
 picker checks are indexed at `qc/native-tof-local-correction-20261124-v1/README.md`.
 The signed faint vessel context comparisons, physical-cut and pick controls,

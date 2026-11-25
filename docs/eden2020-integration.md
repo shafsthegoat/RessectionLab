@@ -314,6 +314,13 @@ trace. A blinded source reader could not assign definite local tissue labels
 on the held-out planes. Both studies remain outside the ordinary native-wall
 catalog. [Private source evidence index](local-storage-ledger.md)
 
+On PTNT_1288, an independent blinded review identified 257 connected
+parenchymal centers over nine acquired native TOF planes. The closest
+reviewed center was 2.178 mm from the existing working trace, whose support
+limit at that site was 1.309 mm. A separate check of all 14 continuous
+stock branches in the covered field also lacked near-wall support. The case
+remains withheld from ordinary preparation. [Private source evidence index](local-storage-ledger.md)
+
 The Scans review panel also supports a review for one native-wall field. Select
 the reference brain estimate, moving angiography scores, and review position.
 Pair at least four spatially distributed landmarks. The review checks nearby
