@@ -547,7 +547,7 @@ app.on('browser-window-created',(_event,window)=>{
         await js(inputScript(layer.label+' opacity',opacity));
       }
       if(process.env.SURFACE_VERIFY_FOCUS==='1'){
-        const labels=await js(`[...document.querySelectorAll('.native-structure-name')].map(e=>e.textContent.trim())`);
+        const labels=await js(`[...document.querySelectorAll('.native-structure-name')].map(e=>e.getAttribute('aria-label'))`);
         for(const [kind,re] of [['brain',/brain/i],['tumor',/tumor|lesion/i],['vessels',/vessel|arter|vein|branch/i]]){
           const label=labels.find(name=>re.test(name));if(!label)continue;
           await click(label);await click('Isolate');

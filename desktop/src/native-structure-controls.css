@@ -1,29 +1,80 @@
-.native-structures{font-size:11px;color:var(--text,#d9e2ed);min-width:0}
-.native-structure-heading,.native-structure-selection>div{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.native-structure-heading{margin-bottom:10px;font-size:12px}
-.native-structures button{display:inline-flex;align-items:center;justify-content:center;gap:5px;border:1px solid transparent;background:transparent;color:inherit;cursor:pointer;border-radius:5px;padding:4px 6px;font-size:10px}
-.native-structures button:hover{background:rgba(150,180,210,.1);border-color:rgba(150,180,210,.2)}
-.native-structures button:focus-visible{outline:2px solid #81d9ed;outline-offset:1px}
-.native-structure-list{max-height:310px;overflow:auto;scrollbar-width:thin}
-.native-structure-group+.native-structure-group{margin-top:10px}
-.native-structure-group-title{display:flex;justify-content:space-between;gap:8px;font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted,#93a4b9);padding:4px 2px}
-.native-structure-group-title span{font-variant-numeric:tabular-nums}
-.native-structure-row{display:flex;align-items:center;gap:2px;min-height:30px;border:1px solid transparent;border-radius:5px}
-.native-structure-row.is-selected{background:rgba(99,189,207,.11);border-color:rgba(99,189,207,.3)}
-.native-structure-row.is-hidden{opacity:.48}
-.native-structure-name{flex:1;min-width:0;justify-content:flex-start!important;text-align:left;font-size:11px!important}
-.native-structure-name i{flex:none;width:8px;height:8px;border-radius:50%;box-shadow:0 0 0 1px rgba(255,255,255,.15)}
-.native-structure-name span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.native-structure-empty{font-size:10px;color:var(--muted,#93a4b9);margin:3px 2px 7px;line-height:1.4}
-.native-structure-selection{border-top:1px solid rgba(145,170,195,.18);margin-top:10px;padding-top:10px}
-.native-structure-selection strong{font-size:10px;font-weight:500;overflow:hidden;text-overflow:ellipsis}
-.native-structure-selection label{display:flex;align-items:center;gap:7px;margin-top:8px;font-size:10px;color:var(--muted,#a0b0c3)}
-.native-structure-selection input[type=range]{min-width:30px;flex:1;accent-color:#86cddd}
-.native-structure-selection output{min-width:27px;font-variant-numeric:tabular-nums}
-.native-structure-selection input[type=color]{width:26px;height:20px;padding:0;border:0;background:transparent}
-.native-structure-details{font-size:10px;color:var(--muted,#93a4b9);margin-top:12px;line-height:1.5}
-.native-structure-details summary{cursor:pointer}
-.native-structure-details p{margin:6px 0}
-.native-structure-source{overflow-wrap:anywhere;font-family:monospace;font-size:9px}
-.native-surface-choice{display:flex;align-items:center;justify-content:space-between;gap:8px;color:#aab5ae;font-size:11px;margin:6px 0}
-.native-surface-choice select{max-width:65%;min-width:128px;min-height:24px}
+/* Structure inventory: one 40px row per structure with a colour swatch, a
+   short name, a muted detail line and one trailing visibility icon. Focus
+   appears on hover, keyboard focus and the selected row.
+   The prefix :is(.native-structures,#native-structures) gives these rules ID
+   weight so they outrank the older `.poc-workbench .study-inspector
+   .native-structure-*` rules in study-inspector.css. #native-structures never
+   matches; drop it from the prefix once those older rules are removed. */
+:is(.native-structures,#native-structures){font-size:var(--text-meta,12px);color:var(--text,#e6eae8);min-width:0}
+:is(.native-structures,#native-structures) button{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:0;margin:0;border:1px solid transparent;border-radius:var(--radius,6px);background:transparent;color:inherit;cursor:pointer;padding:4px 8px;font-size:var(--text-meta,12px);font-weight:500;line-height:1.3}
+:is(.native-structures,#native-structures) button:hover:not(:disabled){background:var(--panel-raised,#1b1d1e);border-color:transparent;color:var(--text,#e6eae8)}
+:is(.native-structures,#native-structures) button:focus-visible{outline:2px solid var(--accent,#7cdcbc);outline-offset:1px}
+:is(.native-structures,#native-structures) button:disabled{opacity:.4;cursor:default}
+
+:is(.native-structures,#native-structures) .native-structure-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 8px}
+:is(.native-structures,#native-structures) .native-structure-heading>div{display:flex;align-items:baseline;justify-content:space-between;flex:1;gap:10px;min-width:0}
+:is(.native-structures,#native-structures) .native-structure-heading strong{font-size:var(--text-body,13px);font-weight:600;color:var(--text,#e6eae8);white-space:nowrap}
+:is(.native-structures,#native-structures) .native-structure-heading span{font-size:var(--text-meta,12px);font-weight:400;color:var(--text-muted,#959e9b);font-variant-numeric:tabular-nums;white-space:nowrap}
+:is(.native-structures,#native-structures) .native-structure-heading>button{flex:none;width:28px;height:28px;padding:0;color:var(--text-muted,#959e9b)}
+
+:is(.native-structures,#native-structures) .native-surface-choice{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:6px 0 8px;color:var(--text-muted,#959e9b);font-size:var(--text-meta,12px)}
+:is(.native-structures,#native-structures) .native-surface-choice select{flex:1;width:auto;min-width:0;max-width:180px;min-height:28px;font-size:var(--text-meta,12px)}
+
+:is(.native-structures,#native-structures) .native-structure-search{display:flex;align-items:center;gap:6px;margin:0 0 8px;padding:0 8px;border:1px solid var(--line,#2b2e2f);border-radius:var(--radius,6px);background:var(--bg,#080909);color:var(--text-muted,#959e9b)}
+:is(.native-structures,#native-structures) .native-structure-search:focus-within{border-color:var(--accent,#7cdcbc)}
+:is(.native-structures,#native-structures) .native-structure-search input{flex:1;width:auto;min-width:0;min-height:30px;margin:0;padding:6px 0;border:0;border-radius:0;outline:none;background:transparent;color:var(--text,#e6eae8);font-size:var(--text-body,13px)}
+:is(.native-structures,#native-structures) .native-structure-empty{margin:6px 2px 10px;font-size:var(--text-meta,12px);line-height:1.5;color:var(--text-muted,#959e9b)}
+
+:is(.native-structures,#native-structures) .native-structure-list{max-height:310px;overflow:auto;scrollbar-width:thin}
+/* In the study inspector the inventory scrolls with the sidebar. */
+.study-inspector :is(.native-structures,#native-structures) .native-structure-list{max-height:none;overflow:visible}
+:is(.native-structures,#native-structures) .native-structure-group{margin:0;padding:2px 0 6px;border:0;border-top:1px solid var(--line,#2b2e2f);font-size:var(--text-meta,12px)}
+:is(.native-structures,#native-structures) .native-structure-group-title{display:flex;align-items:center;gap:6px;min-height:32px;margin:0;padding:2px 0 2px 2px;list-style:none;cursor:pointer;font-size:var(--text-meta,12px);font-weight:500;line-height:1.3;letter-spacing:0;text-transform:none;color:var(--text-muted,#959e9b)}
+:is(.native-structures,#native-structures) .native-structure-group-title::-webkit-details-marker{display:none}
+:is(.native-structures,#native-structures) .native-structure-group-title::before{content:none}
+:is(.native-structures,#native-structures) .native-structure-group-title:hover{color:var(--text,#e6eae8)}
+:is(.native-structures,#native-structures) .native-structure-group-title:focus-visible{outline:2px solid var(--accent,#7cdcbc);outline-offset:-2px;border-radius:var(--radius,6px)}
+:is(.native-structures,#native-structures) .native-structure-group-chevron{flex:none;transition:transform var(--dur-enter,180ms) var(--ease-out,cubic-bezier(.2,.8,.2,1))}
+:is(.native-structures,#native-structures) .native-structure-group[open]>.native-structure-group-title .native-structure-group-chevron{transform:rotate(90deg)}
+:is(.native-structures,#native-structures) .native-structure-group-title>span{flex:1;min-width:0}
+:is(.native-structures,#native-structures) .native-structure-group-title>small{font-size:var(--text-meta,12px);color:var(--text-muted,#959e9b);font-variant-numeric:tabular-nums}
+:is(.native-structures,#native-structures) .native-structure-group-title>button{flex:none;width:28px;height:28px;margin:0 4px 0 0;padding:0;color:var(--text-muted,#959e9b)}
+
+:is(.native-structures,#native-structures) .native-structure-row{position:relative;display:flex;align-items:center;gap:2px;min-height:40px;padding:0 4px 0 0;border:0;border-radius:var(--radius,6px);background:transparent;opacity:1}
+:is(.native-structures,#native-structures) .native-structure-row:hover{background:var(--panel-raised,#1b1d1e)}
+:is(.native-structures,#native-structures) .native-structure-row.is-selected{background:var(--accent-soft,rgba(124,220,188,.12));box-shadow:inset 2px 0 0 var(--accent,#7cdcbc)}
+:is(.native-structures,#native-structures) .native-structure-row>.native-structure-name{flex:1;min-width:0;min-height:40px;justify-content:flex-start;gap:10px;padding:3px 6px 3px 10px;border:0;border-radius:inherit;background:transparent;text-align:left}
+:is(.native-structures,#native-structures) .native-structure-row>.native-structure-name:hover:not(:disabled){background:transparent}
+:is(.native-structures,#native-structures) .native-structure-row>.native-structure-name:focus-visible{outline-offset:-2px}
+:is(.native-structures,#native-structures) .native-structure-swatch{flex:none;width:10px;height:10px;border-radius:3px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.16)}
+:is(.native-structures,#native-structures) .native-structure-text{display:flex;flex:1;flex-direction:column;gap:0;min-width:0;overflow:hidden;white-space:nowrap}
+:is(.native-structures,#native-structures) .native-structure-title{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:var(--text-body,13px);font-weight:500;line-height:18px;color:var(--text,#e6eae8)}
+:is(.native-structures,#native-structures) .native-structure-detail{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:var(--text-meta,12px);font-weight:400;line-height:16px;color:var(--text-muted,#959e9b);font-variant-numeric:tabular-nums}
+:is(.native-structures,#native-structures) :is(.native-structure-role,.native-structure-state){display:inline;white-space:nowrap}
+:is(.native-structures,#native-structures) .native-structure-role{font-size:var(--text-meta,12px);font-weight:400;color:var(--text-muted,#959e9b)}
+:is(.native-structures,#native-structures) .native-structure-state{font-size:inherit;color:inherit}
+:is(.native-structures,#native-structures) .native-structure-state.needs-alignment{color:var(--warning,#e3a35a)}
+:is(.native-structures,#native-structures) .native-structure-row.is-hidden :is(.native-structure-swatch,.native-structure-text){opacity:.5}
+:is(.native-structures,#native-structures) .native-structure-row>:is(.native-structure-focus,.native-structure-visibility){flex:none;width:28px;height:28px;padding:0;border:0;color:var(--text-muted,#959e9b)}
+:is(.native-structures,#native-structures) .native-structure-row>:is(.native-structure-focus,.native-structure-visibility):hover:not(:disabled){background:var(--line,#2b2e2f)}
+:is(.native-structures,#native-structures) .native-structure-row>.native-structure-focus{width:0;opacity:0;overflow:hidden;transition:opacity var(--dur-exit,140ms) var(--ease-in-out,cubic-bezier(.4,0,.2,1))}
+:is(.native-structures,#native-structures) .native-structure-row:is(:hover,:focus-within,.is-selected)>.native-structure-focus{width:28px;opacity:1;transition-duration:var(--dur-enter,180ms)}
+:is(.native-structures,#native-structures) .native-structure-row>.native-structure-retry{flex:none;min-height:28px;padding:0 8px;border-color:var(--line,#2b2e2f);color:var(--warning,#e3a35a)}
+
+:is(.native-structures,#native-structures) .native-structure-selection{margin-top:10px;padding-top:10px;border-top:1px solid var(--line,#2b2e2f)}
+:is(.native-structures,#native-structures) .native-structure-selection>div{display:flex;align-items:center;justify-content:space-between;gap:8px}
+:is(.native-structures,#native-structures) .native-structure-selection strong{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:var(--text-body,13px);font-weight:500}
+:is(.native-structures,#native-structures) .native-structure-selection-detail{margin:2px 0 0;font-size:var(--text-meta,12px);color:var(--text-muted,#959e9b)}
+:is(.native-structures,#native-structures) .native-structure-selection label{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:var(--text-meta,12px);color:var(--text-muted,#959e9b)}
+:is(.native-structures,#native-structures) .native-structure-selection input[type=range]{flex:1;min-width:30px;accent-color:var(--accent,#7cdcbc)}
+:is(.native-structures,#native-structures) .native-structure-selection output{min-width:32px;text-align:right;font-variant-numeric:tabular-nums}
+:is(.native-structures,#native-structures) .native-structure-selection input[type=color]{width:26px;height:20px;padding:0;border:0;background:transparent}
+:is(.native-structures,#native-structures) .native-structure-details{margin-top:12px;font-size:var(--text-meta,12px);line-height:1.5;color:var(--text-muted,#959e9b)}
+:is(.native-structures,#native-structures) .native-structure-details summary{cursor:pointer;color:var(--text-muted,#959e9b)}
+:is(.native-structures,#native-structures) .native-structure-details p{margin:6px 0;color:var(--text-muted,#959e9b)}
+:is(.native-structures,#native-structures) .native-structure-source{overflow-wrap:anywhere;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:var(--text-meta,12px)}
+
+@media (prefers-reduced-motion:reduce){
+  :is(.native-structures,#native-structures) .native-structure-group-chevron,
+  :is(.native-structures,#native-structures) .native-structure-row:is(*,:hover,:focus-within,.is-selected)>.native-structure-focus{transition:none}
+}
