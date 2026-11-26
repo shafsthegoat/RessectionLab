@@ -10,6 +10,17 @@ import type {Point3} from './coordinates';
 export const CINEMATIC_BRICK = 4;
 /** Voxels beyond a brick that a cubic B-spline sample inside it can read. */
 export const CINEMATIC_SUPPORT = 2;
+/** Voxels beyond a brick that a trilinear sample inside it can read. Tags are
+ * only ever read trilinearly where they decide extinction, so their brick
+ * maxima use this tighter window: a tagged voxel then lies in about 3.4 brick
+ * windows on average instead of 8, and thin vessels occupy that much less of
+ * the grid. */
+export const CINEMATIC_TAG_SUPPORT = 1;
+/** Dense bound (per mm) of a CT glass brick the tag gate reaches but where
+ * nothing is dense: above the shader's zero test, so the brick is walked and
+ * its tags thin the glass; it almost never schedules a collision, and any it
+ * schedules is null. */
+export const CINEMATIC_GATED_BOUND = 1e-5;
 export const CINEMATIC_TAG_SIGMA = .6;
 /** Tag value range over which the vessel material switches on. */
 export const CINEMATIC_TAG_GATE: [number, number] = [.12, .42];
@@ -68,7 +79,7 @@ export interface CinematicTags {
   /** Texture channel per class, or -1 when absent. */
   channelOf: [number, number];
   classes: [CinematicClassStats, CinematicClassStats];
-  /** Per-brick maximum tag per class (two values per brick) over the filter support. */
+  /** Per-brick maximum tag per class (two values per brick) over the trilinear support (CINEMATIC_TAG_SUPPORT). */
   maxTag: Uint8Array;
 }
 
@@ -99,15 +110,17 @@ function brickShape(shape: Point3): Point3 {
 }
 
 /** Per-brick maximum of one channel over the voxels a sample in the brick can
- * read: [4b - 2, 4b + 5] on each axis. Separable; yields every
- * CINEMATIC_STEP_WORK reads. NaN is ignored and an all-NaN window reports -Infinity. */
-export function* cinematicWindowMax(values: ArrayLike<number>, shape: Point3, channels = 1, channel = 0): Generator<void, Float32Array> {
+ * read: [4b - support, 4b + 3 + support] on each axis, which is [4b - 2, 4b + 5]
+ * for the cubic support. Separable; yields every CINEMATIC_STEP_WORK reads.
+ * NaN is ignored and an all-NaN window reports -Infinity. */
+export function* cinematicWindowMax(values: ArrayLike<number>, shape: Point3, channels = 1, channel = 0,
+  support = CINEMATIC_SUPPORT): Generator<void, Float32Array> {
   const [nx, ny, nz] = shape, [bx, by, bz] = brickShape(shape);
-  const window = (b: number, n: number) => [Math.max(0, b * CINEMATIC_BRICK - CINEMATIC_SUPPORT),
-    Math.min(n - 1, b * CINEMATIC_BRICK + CINEMATIC_BRICK - 1 + CINEMATIC_SUPPORT)];
+  const window = (b: number, n: number) => [Math.max(0, b * CINEMATIC_BRICK - support),
+    Math.min(n - 1, b * CINEMATIC_BRICK + CINEMATIC_BRICK - 1 + support)];
   const zw = Array.from({length: bz}, (_, b) => window(b, nz)), yw = Array.from({length: by}, (_, b) => window(b, ny));
   const xw = Array.from({length: bx}, (_, b) => window(b, nx));
-  const span = CINEMATIC_BRICK + 2 * CINEMATIC_SUPPORT;
+  const span = CINEMATIC_BRICK + 2 * support;
   let work = 0;
   const alongZ = new Float32Array(nx * ny * bz);
   for (let x = 0; x < nx; x++) {
@@ -394,7 +407,7 @@ export function* cinematicTagSteps(signal: Float32Array, shape: Point3, layers: 
       stats.ramp = [range[0] - 2, range[0] - 1];
       stats.tagBounded = true;
     }
-    const brickMax = yield* cinematicWindowMax(data, shape, channels, channel);
+    const brickMax = yield* cinematicWindowMax(data, shape, channels, channel, CINEMATIC_TAG_SUPPORT);
     for (let brick = 0; brick < brickCount; brick++) maxTag[2 * brick + cls] = Math.max(0, brickMax[brick]);
   }
   return {data, channels, channelOf, classes, maxTag};
@@ -440,10 +453,13 @@ function* emptyCubes(occupied: Uint8Array, bricks: Point3, data: Float32Array): 
 
 /** Per brick: the dense extinction bound (per mm), the radius in bricks of
  * the cube around an empty brick without dense matter, the faint extinction
- * bound, and the faint bound over that cube. Brick maxima cover the cubic
- * B-spline support; the material is monotone in intensity and in each tag
- * except bone, which a tag suppresses, so the bound takes the worse of the
- * gate's extremes. */
+ * bound, and the faint bound over that cube. Intensity maxima cover the cubic
+ * B-spline support and tag maxima the trilinear one; the material is monotone
+ * in intensity and in each tag except bone, which a tag suppresses, so the
+ * bound takes the worse of the gate's extremes. Under CT glass a brick inside
+ * the tag gate with no extinction keeps a negligible bound, so the walk reads
+ * its tags where they thin the glass; MR context never reads tags for faint
+ * matter, so such a brick stays empty there. */
 export function* cinematicMajorantSteps(signal: CinematicSignalStats, tags: CinematicTags | null, material: CinematicMaterial,
   field: CinematicField | null = null): Generator<void, Float32Array> {
   const count = signal.maxValue.length;
@@ -464,13 +480,14 @@ export function* cinematicMajorantSteps(signal: CinematicSignalStats, tags: Cine
     const v = material.vesselSigma;
     const bound = Math.min(v * vessel + bone, Math.max(bone, open * v * lumen + (1 - open) * bone));
     // Bounds carry 1% headroom against float rounding in filtering.
-    data[4 * brick] = 1.01 * bound;
+    const gated = open > 0 && material.faint.glass && field !== null;
+    data[4 * brick] = bound > 0 ? 1.01 * bound : gated ? CINEMATIC_GATED_BOUND : 0;
     let faint = 0;
     if (material.faint.glass) {
       if (field) faint = material.faint.soft * field.maxSurface[brick] + material.faint.bone * field.maxBone[brick];
     } else faint = material.faint.soft * cinematicRamp(material.faint.ramp[0], material.faint.ramp[1], value);
     data[4 * brick + 2] = 1.01 * faint;
-    dense[brick] = bound > 0 ? 1 : 0;
+    dense[brick] = bound > 0 || gated ? 1 : 0;
     if ((brick & (CINEMATIC_STEP_WORK / 8 - 1)) === CINEMATIC_STEP_WORK / 8 - 1) yield;
   }
   yield* emptyCubes(dense, signal.bricks, data);

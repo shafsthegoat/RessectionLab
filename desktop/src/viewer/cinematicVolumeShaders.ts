@@ -149,6 +149,10 @@ Medium medium(float v,vec2 tags){
   return m;
 }
 vec3 vesselColor(vec2 gate){return mix(uVesselColor0,uVesselColor1,gate.y/max(gate.x+gate.y,1e-4));}
+// Without dense bone, all dense matter lies inside the tag gate: a tentative
+// collision outside it is a null collision, decided without reading the
+// intensity. Thin vessels make most collisions in their bricks of this kind.
+bool clearOfTags(vec2 tags){return uBoneRamp.z<=0.0&&max(tags.x,tags.y)<=uTagGate.x;}
 
 // Faint matter at a point. CT glass reads the precomputed field: interfaces
 // and see-through bone are nearly clear face on and dense at their rims, so
@@ -318,7 +322,8 @@ float transmittance(vec3 world,vec3 direction,float limit){
     float m=w.dense,boundary=min(walkBoundary(w),end),next=eventAt(t,tau,m);
     if(next<boundary){
       t=next;vec3 p=vo+vd*t;
-      T*=max(0.0,1.0-medium(linearValue(p),tagsAt(p)).dense/m);
+      vec2 tags=tagsAt(p);
+      if(!clearOfTags(tags))T*=max(0.0,1.0-medium(linearValue(p),tags).dense/m);
       if(T<0.05){if(rnd()<0.5)return 0.0;T*=2.0;}
       tau=depth();
     }else{
@@ -371,12 +376,15 @@ Hit bounceHit(vec3 world,vec3 direction,float limit){
     float m=w.dense,boundary=min(walkBoundary(w),end),next=eventAt(t,tau,m);
     if(next<boundary){
       t=next;vec3 p=vo+vd*t;
-      Medium s=medium(linearValue(p),tagsAt(p));
-      if(rnd()*m<s.dense){
-        // The bounce point faces back along the ray; no gradient is needed.
-        h.found=true;h.world=world+direction*t;h.normal=-direction;
-        h.albedo=(s.vessel*vesselColor(s.gate)+s.bone*uBoneColor)/max(s.dense,1e-6);
-        return h;
+      vec2 tags=tagsAt(p);float xi=rnd();
+      if(!clearOfTags(tags)){
+        Medium s=medium(linearValue(p),tags);
+        if(xi*m<s.dense){
+          // The bounce point faces back along the ray; no gradient is needed.
+          h.found=true;h.world=world+direction*t;h.normal=-direction;
+          h.albedo=(s.vessel*vesselColor(s.gate)+s.bone*uBoneColor)/max(s.dense,1e-6);
+          return h;
+        }
       }
       tau=depth();
     }else{
@@ -492,7 +500,8 @@ void main(){
       if(dense<boundary&&dense<=next){
         faint-=mf*(dense-t);
         t=dense;vec3 p=vo+vd*t;
-        if(rnd()*m<medium(PRIMARY_VALUE(p),tagsAt(p)).dense){hitT=t;finished=true;break;}
+        float xi=rnd();vec2 tags=tagsAt(p);
+        if(!clearOfTags(tags)&&xi*m<medium(PRIMARY_VALUE(p),tags).dense){hitT=t;finished=true;break;}
         tau=depth();
       }else if(next<boundary){
         tau=max(0.0,tau-m*(next-t));

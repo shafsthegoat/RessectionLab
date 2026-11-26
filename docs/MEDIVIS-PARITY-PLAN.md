@@ -128,7 +128,7 @@ drives the hidden desktop harness and `resectionlab.vascular_parity`.
 | 3 Cleanup | Root-reachable components by default, the rest behind a review toggle; signal-supported bridging; caliber LOD; arteries red, veins blue | Zero floating components by default; no named major vessel lost | gates met on the drawn meshes 2026-11-26; see results |
 | 4 Sim geometry | Centerline and radius implicit tubes shared by drawing, collision, rods and tags | Deviation at most 0.5 voxel; no self-intersection; tools displace vessels | gates met on TopCoW 2026-11-26 behind the tube geometry option; see results |
 | 5 Integration | Volume, tubes, tools and clipping in the packaged build; films and pull request | All earlier gates; blind scores at least 4 | run 2026-11-26: frame budget met in the packaged build; TOF-A blind gate met; CTA-A blind gate not met after two attempts; volume-lit vessels do not follow a tool press; see results |
-| 6 Finer vessels (added after decision 6) | Thin branches followed in the CTA signal; detached model vessels joined along signal; one vessel colour; two more EDEN cases | The Phase 5 blind gates; zero floating components | run 2026-11-26: zero floating pieces on five cases; TOF-A blind gate holds; CTA-A blind gate not met on the third attempt; frame timing not re-measured on an idle machine; see results |
+| 6 Finer vessels (added after decision 6) | Thin branches followed in the CTA signal; detached model vessels joined along signal; one vessel colour; two more EDEN cases | The Phase 5 blind gates; zero floating components | run 2026-11-26: zero floating pieces on six cases; TOF-A blind gate holds; CTA-A blind gate not met on the third attempt; the Phase 1 frame budget holds on CTA-A after a renderer change (1.35 to 1.41 s settle); see results |
 
 A phase that fails its gate twice keeps its best version behind a toggle and
 goes to Shafrir. Gates are not lowered.
@@ -557,18 +557,25 @@ one third bone.
   teams, the frozen ensemble and the display candidates. PTNT_4503 and
   PTNT_7086 were chosen from the cohort's 2026-11-23 captures as the cleanest
   trees (distinct tubes, few stray pieces, no posterior slab).
+- *Thin vessels in the path tracer.* The fine branches raised the settle time
+  on CTA-A past the Phase 1 gate (below). Two changes to the path tracer's
+  empty-space bounds win it back without changing what is drawn: brick maxima
+  of the vessel tags cover the trilinear support the tags are read with
+  instead of the cubic one, so a thin vessel occupies fewer bricks; and with
+  see-through bone a tentative collision outside the tag gate is rejected
+  before the acquired intensity is read.
 
-| | CTA-A | CTA-B | TOF-A | TOF-B | PTNT_4503 |
-| --- | --- | --- | --- | --- | --- |
-| Voxels in the default view, Phase 3 → Phase 6 | 84,082 → 101,864 | 73,575 → 83,190 | 377,752 → 379,545 | 353,797 → 354,172 | 434,529 |
-| Fine branches grown / shown | 28,598 / 20,662 | 12,272 / 6,406 | not computed (MR) | not computed (MR) | not computed (MR) |
-| Detached model pieces joined along signal | 4 | 2 | 14 | 5 | 10 |
-| Detached model pieces left in review | 457 | 480 | 806 | 856 | 483 |
-| Floating mesh pieces in the default view | 0 of 23 | 0 of 11 | 0 of 5 | 0 of 3 | 0 of 4 |
-| Major named vessel lost | none | none | none listed | none listed | none listed |
-| Loops / cavities of the shown voxels, Phase 3 → Phase 6 | 27 / 1 → 200 / 22 | 33 / 1 → 107 / 8 | 150 / 6 unchanged | 199 / 2 unchanged | 128 / 2 |
-| Dice / clDice against the named-vessel annotation, Phase 3 → Phase 6 | 0.875 / 0.902 → 0.786 / 0.585 | 0.888 / 0.935 → 0.829 / 0.795 | no annotation | no annotation | no annotation |
-| Frame interval p95 / settle, volume lighting, **while model inference ran on the same machine** | 10.7 ms / 1.62 s | 10.1 ms / 1.93 s | 10.7 ms / 1.41 s | 10.1 ms / 1.42 s | 10.5 ms / 1.68 s |
+| | CTA-A | CTA-B | TOF-A | TOF-B | PTNT_4503 | PTNT_7086 |
+| --- | --- | --- | --- | --- | --- | --- |
+| Voxels in the default view, Phase 3 → Phase 6 | 84,082 → 101,864 | 73,575 → 83,190 | 377,752 → 379,545 | 353,797 → 354,172 | 434,529 | 418,855 |
+| Fine branches grown / shown | 28,598 / 20,662 | 12,272 / 6,406 | not computed (MR) | not computed (MR) | not computed (MR) | not computed (MR) |
+| Detached model pieces joined along signal | 4 | 2 | 14 | 5 | 10 | 20 |
+| Detached model pieces left in review | 457 | 480 | 806 | 856 | 483 | 384 |
+| Floating mesh pieces in the default view | 0 of 23 | 0 of 11 | 0 of 5 | 0 of 3 | 0 of 4 | 0 of 1 |
+| Major named vessel lost | none | none | none listed | none listed | none | none (153 of 20,931 right M2 voxels in review) |
+| Loops / cavities of the shown voxels, Phase 3 → Phase 6 | 27 / 1 → 200 / 22 | 33 / 1 → 107 / 8 | 150 / 6 unchanged | 199 / 2 unchanged | 128 / 2 | 268 / 0 |
+| Dice / clDice against the named-vessel annotation, Phase 3 → Phase 6 | 0.875 / 0.902 → 0.786 / 0.585 | 0.888 / 0.935 → 0.829 / 0.795 | no annotation | no annotation | no annotation | no annotation |
+| Frame interval p95 / settle, volume lighting, idle machine, after the path tracer change | 10.4 to 11.1 ms / 1.35 to 1.41 s (four runs) | 10.4 ms / 1.98 s | 10.1 ms / 1.22 s | 10.3 ms / 1.19 s | 10.4 ms / 1.32 s | 10.1 ms / 1.37 s |
 
 Reading the table. On CT the default view holds a fifth more vessel on the
 development case and an eighth more on the held-out case. On TOF almost
@@ -578,9 +585,20 @@ model piece is too small or too far from the tree to have signal support, so
 topology and agreement with the annotation: thin branches that touch form
 loops, and every unnamed branch counts as an error against an annotation of
 named vessels only. The Phase 2 gate is measured on the ensemble alone and is
-unchanged. The settle times above are not gate measurements: they were taken
-under load, and the Phase 1 gate (1.5 s on CTA-A) has to be re-measured on an
-idle machine with the richer tree.
+unchanged.
+
+**Frame budget with the richer tree.** On an idle machine the fine branches
+first failed the Phase 1 settle gate on CTA-A: 1.66, 1.69 and 1.72 s against
+1.5 s (Phase 5: 1.38 s), with the frame interval unchanged. Timing the view
+with and without the layer put about 22 percent of the per-sample cost on the
+fine branches, most of it in shadow and bounce rays from the added vessel
+pixels. After the path tracer change above, four full runs give 1.35, 1.36,
+1.39 and 1.41 s, so the gate is met again; captures before and after differ by a
+mean of 0.2 to 0.5 grey levels with no bias (a different noise draw, and
+glass that is now thinned in every brick the tag gate reaches). The TOF cases
+settle faster than in Phase 5. CTA-B, which the gate does not name, settles in
+1.98 s (Phase 5: 1.81 s). These are development-tree runs; the packaged build
+predates the phase.
 
 **Blind review, third attempt.** Same protocol; CTA-A sets were Phase 0, the
 Phase 5 final set and the Phase 6 set, the last two in the same eight
@@ -606,13 +624,14 @@ sinus. Still short of it: thin branches are ragged, the uncut see-through
 anterior view is a tangle at the midline, and the opaque uncut views show no
 vessel at all because this scan has no neck. CTA-B gains less than CTA-A.
 
-**Not done or not verified.** Frame timing on an idle machine and in the
-packaged build (the build in `desktop/release/` predates this phase).
-Standard-mode captures of Phase 6. The rehearsal tube model and the vessel
-rods still come from the named tree; fine branches are display only.
-PTNT_7086's first run stopped on non-finite network output while a hidden
-capture shared the GPU and was restarted; its capture is added when it
-finishes.
+**Not done or not verified.** Frame timing in the packaged build (the build
+in `desktop/release/` predates this phase). Standard-mode captures of Phase 6.
+The rehearsal tube model and the vessel rods still come from the named tree;
+fine branches are display only. PTNT_7086's first run stopped on non-finite
+network output while a hidden capture shared the GPU; the restart on an
+otherwise idle GPU completed. On the two added TOF cases the axial-cut preset
+frames almost nothing, because the cut sits at the skull base where the tree
+is thinnest; the other presets frame them well.
 
 ## Handoff, 2026-11-26
 
@@ -620,7 +639,7 @@ State of the gates:
 
 | Phase | Gate | State |
 | --- | --- | --- |
-| 1 | Interaction p95 at most 16.7 ms, settle at most 1.5 s on CTA-A | met (10.9 ms, 1.42 s worst of three packaged runs) |
+| 1 | Interaction p95 at most 16.7 ms, settle at most 1.5 s on CTA-A | met (10.9 ms, 1.42 s worst of three packaged runs in Phase 5; 11.1 ms, 1.41 s worst of four development-tree runs with the Phase 6 fine branches) |
 | 1 | Blind crispness and depth at least 4 | met with an opaque skull or a cut (4, 4); 3, 3 with the see-through skull |
 | 2 | Better Dice, clDice and Betti than vesselFM alone on the held-out cases | Dice, clDice, component count and patch Betti met on both; whole-volume loop count on CTA-B not met (9 against 7); TOF-B scored on a TopCoW MRA stand-in |
 | 3 | Zero floating components by default; no named major vessel lost | met on the drawn meshes of all four cases |

@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {test} from 'node:test';
-import {CINEMATIC_BRICK,CINEMATIC_SKIP_LIMIT,CINEMATIC_STEP_WORK,CINEMATIC_TAG_FLOOR,cinematicFieldSteps,cinematicMajorantSteps,cinematicMaterial,cinematicRamp,cinematicSignalSteps,cinematicTagClass,cinematicTagSteps} from './cinematicTags.ts';
+import {CINEMATIC_BRICK,CINEMATIC_GATED_BOUND,CINEMATIC_SKIP_LIMIT,CINEMATIC_TAG_SUPPORT,cinematicWindowMax,CINEMATIC_STEP_WORK,CINEMATIC_TAG_FLOOR,cinematicFieldSteps,cinematicMajorantSteps,cinematicMaterial,cinematicRamp,cinematicSignalSteps,cinematicTagClass,cinematicTagSteps} from './cinematicTags.ts';
 
 function finishCinematicSteps(steps){
   let result=steps.next();
@@ -176,6 +176,91 @@ test('brick maxima cover exactly the cubic support, two voxels past each face',(
   const along=x=>maxValue[(x*bricks[1]+1)*bricks[2]+1];
   // Voxel 10 lies in brick 2 and within two voxels of brick 3 (voxels 12-15), not of bricks 1 or 4.
   assert.deepEqual([0,1,2,3,4,5].map(along),[0,0,100,100,0,0]);
+});
+
+test('tag maxima cover the trilinear support only, one voxel past each face',()=>{
+  const shape=[24,8,8],along=(voxel,support)=>{
+    const values=new Uint8Array(24*8*8);values[index(shape,voxel,4,4)]=200;
+    const max=finishCinematicSteps(cinematicWindowMax(values,shape,1,0,support));
+    return [0,1,2,3,4,5].map(x=>max[(x*2+1)*2+1]);
+  };
+  assert.equal(CINEMATIC_TAG_SUPPORT,1);
+  // Voxel 10 is the third voxel of brick 2: a trilinear read in brick 3 (from 11.5) cannot reach it, a cubic one can.
+  assert.deepEqual(along(10,CINEMATIC_TAG_SUPPORT),[0,0,200,0,0,0]);
+  assert.deepEqual(along(10,undefined),[0,0,200,200,0,0]);
+  // Voxels 11 and 12 face each other across the boundary of bricks 2 and 3.
+  assert.deepEqual(along(11,CINEMATIC_TAG_SUPPORT),[0,0,200,200,0,0]);
+  assert.deepEqual(along(12,CINEMATIC_TAG_SUPPORT),[0,0,200,200,0,0]);
+});
+
+/** Random positions in a brick and the eight just inside its corners, where a neighbouring brick's voxels weigh most. */
+function* positionsWithCorners(shape,brick,count,seed){
+  yield* positionsIn(shape,brick,count,seed);
+  for(const dx of [0,1])for(const dy of [0,1])for(const dz of [0,1])
+    yield [dx,dy,dz].map((d,a)=>Math.min(shape[a]-.5,Math.max(-.5,brick[a]*CINEMATIC_BRICK-.5+(d?CINEMATIC_BRICK-1e-3:1e-3))));
+}
+const thinArtery=(shape,row)=>{
+  const count=shape[0]*shape[1]*shape[2],signal=new Float32Array(count).fill(40),mask=new Uint8Array(count);
+  for(let x=0;x<shape[0];x++){const i=index(shape,x,row,row);mask[i]=1;signal[i]=400;}
+  return {signal,mask};
+};
+
+test('a one-voxel vessel beside a brick face is bounded in the next brick too, and one mid-brick occupies a quarter of its cubic support',()=>{
+  const shape=[40,24,24];
+  // Voxel 11 is the last of brick 2: a trilinear read just inside brick 3 still weighs it above the gate.
+  const edge=thinArtery(shape,11),{stats,tags}=build(edge.signal,shape,[{cls:0,source:{kind:'mask',mask:edge.mask}}]);
+  const material=cinematicMaterial(tags,{ct:true,boneWeight:.03,window:[0,500]});
+  const majorants=cinematicMajorants(stats,tags,material);
+  const [bx,by,bz]=stats.bricks,tag=clampAt(shape,tags.data,1,0),value=clampAt(shape,edge.signal,1,0);
+  let openBeyondFace=0;
+  for(let x=0;x<bx;x++)for(let y=0;y<by;y++)for(let z=0;z<bz;z++){
+    const brick=(x*by+y)*bz+z,bound=majorants[4*brick];
+    for(const p of positionsWithCorners(shape,[x,y,z],16,brick+3)){
+      const t=trilinear(tag,p),gate=cinematicRamp(...material.gate,t/255);
+      if(gate>0&&y===3&&z===3)openBeyondFace++;
+      // The walk tests collisions and reads tags only in occupied bricks.
+      if(bound===0)assert.equal(gate,0,`brick ${[x,y,z]} is skipped inside the tag gate`);
+      assert.ok(denseAt(material,cubic(value,p),[t,0])<=bound+1e-6,`brick ${[x,y,z]} exceeds its bound`);
+    }
+  }
+  assert.ok(openBeyondFace>0,'the gate is open in the brick across the face, so a window without the facing voxel would fail above');
+  // Mid-brick (voxel 9 of 8 to 11): one brick per cross-section, where the cubic window marks four.
+  const middle=thinArtery(shape,9),built=build(middle.signal,shape,[{cls:0,source:{kind:'mask',mask:middle.mask}}]);
+  const data=cinematicMajorants(built.stats,built.tags,cinematicMaterial(built.tags,{ct:true,boneWeight:.03,window:[0,500]}));
+  const wide=finishCinematicSteps(cinematicWindowMax(built.tags.data,shape,1,0));
+  let occupied=0,cubicSupport=0;
+  for(let brick=0;brick<bx*by*bz;brick++){
+    if(data[4*brick]>0)occupied++;
+    if(cinematicRamp(...material.gate,wide[brick]/255)>0)cubicSupport++;
+  }
+  assert.equal(occupied,bx);assert.equal(cubicSupport,4*bx);
+});
+
+test('under CT glass a brick the tag gate reaches without extinction is walked with a negligible bound; elsewhere it stays empty',()=>{
+  // A bright artery sets the class ramp; far from it a model-only patch of probability .2 lies over background intensity.
+  const shape=[40,24,24],count=40*24*24,signal=new Float32Array(count).fill(40),probability=new Float32Array(count);
+  for(let x=0;x<40;x++)for(let y=4;y<7;y++)for(let z=4;z<7;z++){const i=index(shape,x,y,z);signal[i]=400;probability[i]=.97;}
+  for(let x=20;x<24;x++)for(let y=16;y<20;y++)for(let z=16;z<20;z++)probability[index(shape,x,y,z)]=.2;
+  const {stats,tags}=build(signal,shape,[{cls:0,source:{kind:'probability',probability}}]);
+  const field=finishCinematicSteps(cinematicFieldSteps(signal,shape,[1,0,0, 0,1,0, 0,0,1]));
+  const [bx,by,bz]=stats.bricks,patch=(5*by+4)*bz+4;
+  const glass=cinematicMaterial(tags,{ct:true,boneWeight:.03,window:[0,500]});
+  assert.ok(cinematicRamp(...glass.gate,.2)>0&&cinematicRamp(glass.floor[0],glass.floor[1],.2)===0&&cinematicRamp(...glass.ramps[0],40)===0,
+    'the patch is inside the gate, below the floor and below the intensity ramp');
+  const walked=cinematicMajorants(stats,tags,glass,field);
+  assert.ok(walked[4*((5*by+1)*bz+1)]>1,'the artery brick is dense');
+  assert.equal(walked[4*patch],Math.fround(CINEMATIC_GATED_BOUND));
+  assert.ok(walked[4*patch]>1e-7/.5,'above the shader zero test at the motion scale');
+  assert.equal(walked[4*patch+1],0,'a gated brick is walked, not skipped');
+  for(let x=0;x<bx;x++)for(let y=0;y<by;y++)for(let z=0;z<bz;z++){
+    const radius=walked[4*((x*by+y)*bz+z)+1];
+    if(radius)assert.ok(Math.max(Math.abs(x-5),Math.abs(y-4),Math.abs(z-4))>radius,`the empty cube of brick ${[x,y,z]} holds the gated brick`);
+  }
+  // MR context and glass without a field never read tags for faint matter there.
+  for(const [material,fieldArg] of [[cinematicMaterial(tags,{ct:false,boneWeight:0,window:[0,500]}),null],[glass,null]]){
+    const empty=cinematicMajorants(stats,tags,material,fieldArg);
+    assert.equal(empty[4*patch],0);assert.ok(empty[4*patch+1]>=1,'the brick is skipped');
+  }
 });
 
 test('the CT glass field points along the world gradient and its brick bounds cover faint matter',()=>{

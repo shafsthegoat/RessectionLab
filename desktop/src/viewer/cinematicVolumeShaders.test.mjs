@@ -145,6 +145,16 @@ test('the vessel albedo is one light vermilion for both tag classes',async()=>{
   assert.deepEqual(vein,artery,'veins are not drawn in a colour of their own');
 });
 
+test('a tentative collision outside the tag gate is rejected without reading the intensity, unless bone is dense',async()=>{
+  const {cinematicFragmentShader:code}=await import('./cinematicVolumeShaders.ts');
+  assert.match(code,/bool clearOfTags\(vec2 tags\)\{return uBoneRamp\.z<=0\.0&&max\(tags\.x,tags\.y\)<=uTagGate\.x;\}/);
+  // Primary, shadow and bounce walks: tags first, intensity only inside the gate; the random draw is kept either way.
+  assert.match(code,/float xi=rnd\(\);vec2 tags=tagsAt\(p\);\s*if\(!clearOfTags\(tags\)&&xi\*m<medium\(PRIMARY_VALUE\(p\),tags\)\.dense\)/);
+  assert.match(code,/vec2 tags=tagsAt\(p\);\s*if\(!clearOfTags\(tags\)\)T\*=max\(0\.0,1\.0-medium\(linearValue\(p\),tags\)\.dense\/m\);/);
+  assert.match(code,/vec2 tags=tagsAt\(p\);float xi=rnd\(\);\s*if\(!clearOfTags\(tags\)\)\{\s*Medium s=medium\(linearValue\(p\),tags\);\s*if\(xi\*m<s\.dense\)/);
+  assert.doesNotMatch(code,/medium\((PRIMARY_VALUE|linearValue)\(p\),tagsAt\(p\)\)/,'no collision test reads the intensity before the tags');
+});
+
 test('silhouette hits are shaded edge on and their secondary rays leave back along the eye ray',()=>{
   const texture=new THREE.Data3DTexture(new Float32Array(8),2,2,2);
   const shared={uClipEnabled:{value:false},uClipPlane:{value:new THREE.Vector4()},uExtraClipCount:{value:0},
