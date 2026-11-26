@@ -273,7 +273,12 @@ def _system(engine, p, ids, anchors, retained, blocked, attachment_stiffness=Non
     A = effective_K + sparse.diags(hold_diag + p['dragNsPerMm'] / p['fixedStepSeconds'])
     if attachment_stiffness:
         A += sparse.diags(np.repeat([attachment_stiffness.get(c, 0.) for c in ids], 3))
-    solve = factorized(A[free][:, free].tocsc()) if free.any() else lambda rhs: np.empty(0)
+    from . import acceleration as _accel
+    if free.any() and _accel.enabled('sparse-ordering'):
+        from .accel_continuum import ordered_factor
+        solve = ordered_factor(A[free][:, free].tocsc(), factorized)
+    else:
+        solve = factorized(A[free][:, free].tocsc()) if free.any() else lambda rhs: np.empty(0)
     cached = (signature, solve, free, index, edges, K)
     engine._deformation_system_v2 = cached
     return cached[1:]
@@ -538,10 +543,12 @@ def tick(engine, dt, *, vessel_tool_motion=None, vessel_tool_clock_hand=None):
                 stretch = np.linalg.norm(u[edge_nodes[:, 1]] - u[edge_nodes[:, 0]], axis=1)
                 scale = np.min(p['maxEdgeStrain'] * edge_lengths / np.maximum(stretch, 1e-15), initial=1.)
             else:
-                scale = min((p['maxEdgeStrain'] * length / max(np.linalg.norm(u[j] - u[i]), 1e-15) for i, j, length in edges), default=1.)
+                scale = (_bond_scan().bond_scale(u, edges, p['maxEdgeStrain']) if _bond_scan() else
+                         min((p['maxEdgeStrain'] * length / max(np.linalg.norm(u[j] - u[i]), 1e-15) for i, j, length in edges), default=1.))
         if diagnostic is not None:
             diagnostic['strainProjectionSteps'] += int(scale < 1)
-            ratio = max((float(np.linalg.norm(u[j] - u[i]) / length) for i, j, length in edges), default=0.)
+            ratio = (_bond_scan().bond_ratio(u, edges) if _bond_scan() else
+                     max((float(np.linalg.norm(u[j] - u[i]) / length) for i, j, length in edges), default=0.))
             diagnostic['maxPreStrainProjectionNeighborRatio'] = max(diagnostic['maxPreStrainProjectionNeighborRatio'], ratio)
         if scale < 1: u *= scale
         if material_profile and not (gradient_safe and np.max(np.abs(u)) < gradient_safe):
@@ -601,7 +608,8 @@ def tick(engine, dt, *, vessel_tool_motion=None, vessel_tool_clock_hand=None):
             stretch = np.linalg.norm(u[edge_nodes[:, 1]] - u[edge_nodes[:, 0]], axis=1)
             model['maxNeighborDisplacementRatio'] = float(np.max(stretch / edge_lengths, initial=0.))
         else:
-            model['maxNeighborDisplacementRatio'] = max((float(np.linalg.norm(u[j] - u[i]) / length) for i, j, length in edges), default=0.)
+            model['maxNeighborDisplacementRatio'] = (_bond_scan().bond_ratio(u, edges) if _bond_scan() else
+                max((float(np.linalg.norm(u[j] - u[i]) / length) for i, j, length in edges), default=0.))
         model['activeNodes'] = len(ids)
         model['model'] = p['model']
         if material_profile:
@@ -612,3 +620,12 @@ def tick(engine, dt, *, vessel_tool_motion=None, vessel_tool_clock_hand=None):
             rods.tick(engine, dt, tool_motion=vessel_tool_motion)
     elif material_profile:
         move_vessels(engine)
+
+
+def _bond_scan():
+    """Opt-in exact bond scan module (``RESECTIONLAB_ACCEL=deformation-scan``)."""
+    from . import acceleration
+    if not acceleration.enabled('deformation-scan'):
+        return None
+    from . import accel_mechanics
+    return accel_mechanics
