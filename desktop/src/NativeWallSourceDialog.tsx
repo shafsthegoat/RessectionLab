@@ -18,7 +18,8 @@ function fieldSettings({centerRasMm:target, layers, localField}:NativeWallSource
   const span=field?Math.max(...field.shape.map((size,axis)=>size*Math.hypot(field.affine[0][axis],field.affine[1][axis],field.affine[2][axis]))):59;
   const distance=Math.max(.44,Math.min(1,span/59));
   return {
-    layout:showsVessels?'3d-focus':'mri-review', showPlane:!showsVessels, sliceOverlay:'contour',
+    // This dialog reviews the listed wall-source layers themselves, so every one keeps its slice outline.
+    layout:showsVessels?'3d-focus':'mri-review', showPlane:!showsVessels, sliceOverlay:'contour', sliceStructures:'all',
     clipping:showsVessels?undefined:{axis:'z',value:target[2],enabled:true,flipped:true},
     camera:{target, position:[target[0]+24*distance,target[1]-98*distance,target[2]+59*distance], up:[0,0,1]},
     presentation:showsVessels&&extent==='full'?'vascular':undefined,

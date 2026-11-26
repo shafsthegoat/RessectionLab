@@ -37,6 +37,8 @@ export interface ViewerWorkspaceSettings {
   showPlane?: boolean;
   contrast?: number;
   sliceOverlay?: 'contour'|'fill';
+  /** Which visible structures draw on linked slices. Absent means the target and the selected structure. */
+  sliceStructures?: 'focus'|'all';
   sliceFraming?: {fit:'image'|'anatomy';zoom:number};
   contextStyle?: 'shell'|'uniform';
   presentation?: 'scan'|'segmentation'|'vascular';

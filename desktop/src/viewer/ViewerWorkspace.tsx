@@ -41,6 +41,7 @@ import { VolumeRenderer } from "./VolumeRenderer";
 import {mixedVesselLesion} from '../native-study-state';
 import { clippingForBounds, clippingPositionInBounds, newClippingPosition, usesPatientCutaway, viewerCutaway } from './workspaceSettings';
 import type { ViewerWorkspaceSettings } from './workspaceSettings';
+import { sliceOverlayStyle, sliceStructureScope } from './sliceOverlay';
 import { canBalanceTofContext, volumeSettings, isCtAngiography, isCtModality } from './volumeTransfer';
 import type { VolumePreset } from './volumeTransfer';
 import {
@@ -948,7 +949,8 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
             <label><input type="checkbox" aria-label="Smooth 3D surfaces" disabled={props.sourcePreview} checked={smoothSurfaces} onChange={e=>setSmoothSurfaces(e.target.checked)}/>Smooth surfaces</label>
             <label><input type="checkbox" aria-label="Body orientation guide" checked={settings.showOrientationGuide!==false} onChange={e=>changeSettings({...settings,showOrientationGuide:e.target.checked})}/>Body orientation guide</label>
             <label>Context appearance<select aria-label="Context appearance" value={settings.contextStyle??'uniform'} onChange={e=>changeSettings({...settings,contextStyle:e.target.value as 'shell'|'uniform'})}><option value="shell">Edge shell · structures visible</option><option value="uniform">Uniform transparency</option></select></label>
-            <label>Slice annotations<select aria-label="Slice annotation style" value={settings.sliceOverlay??'fill'} onChange={e=>changeSettings({...settings,sliceOverlay:e.target.value as 'contour'|'fill'})}><option value="contour">Contours · source detail</option><option value="fill">Filled labels</option></select></label>
+            <label>Slice annotations<select aria-label="Slice annotation style" value={sliceOverlayStyle(settings)} onChange={e=>changeSettings({...settings,sliceOverlay:e.target.value as 'contour'|'fill'})}><option value="contour">Contours · source detail</option><option value="fill">Filled labels</option></select></label>
+            <label title="Off: slices draw only the target and the selected structure. Every visible structure still renders in 3D."><input type="checkbox" checked={sliceStructureScope(settings)==='all'} onChange={e=>changeSettings({...settings,sliceStructures:e.target.checked?'all':'focus'})}/>Show all structures on slices</label>
             {tractDisplays.length>0&&<label><input type="checkbox" checked={showSliceTracts} onChange={e=>setShowSliceTracts(e.target.checked)}/>Supplied tracts in source slices</label>}
             <label><input type="checkbox" checked={settings.volumeRendering?.shadows!==false} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,shadows:e.target.checked}})}/>Volume shadows</label>
             <label><input type="checkbox" checked={settings.volumeRendering?.isolateLabels===true} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,isolateLabels:e.target.checked}})}/>Isolate selected tissue</label>

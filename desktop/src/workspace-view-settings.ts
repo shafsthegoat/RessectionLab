@@ -9,7 +9,7 @@ export function checkedViewerSettings(source:CasePayload,input:unknown):ViewerWo
   if(!input || typeof input!=='object' || Array.isArray(input))return fail();
   const value=input as ViewerWorkspaceSettings;
   const labels=[...source.compartments.map(layer=>layer.name),...(displayBrainMask(source)?['brain']:[])];
-  if(Object.keys(value).some(key=>!['showOrientationGuide','smoothSurfaces','skullMode','volumeRendering','layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast','clipBox','obliqueClip','sliceOverlay','presentation','sourcedVesselContext','vesselShading','sliceFraming','contextStyle','operativeView','microscope','externalCamera','resultInspection','resultCamera'].includes(key)))return fail();
+  if(Object.keys(value).some(key=>!['showOrientationGuide','smoothSurfaces','skullMode','volumeRendering','layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast','clipBox','obliqueClip','sliceOverlay','sliceStructures','presentation','sourcedVesselContext','vesselShading','sliceFraming','contextStyle','operativeView','microscope','externalCamera','resultInspection','resultCamera'].includes(key)))return fail();
   if(value.resultInspection!==undefined&&!['both','cavity','residual'].includes(value.resultInspection))return fail();
   if(value.resultCamera!=null&&!validCameraState(value.resultCamera))return fail();
   if(value.showOrientationGuide!==undefined&&typeof value.showOrientationGuide!=='boolean')return fail();
@@ -23,6 +23,7 @@ export function checkedViewerSettings(source:CasePayload,input:unknown):ViewerWo
     if(!framing||typeof framing!=='object'||Array.isArray(framing)||Object.keys(framing).some(k=>!['fit','zoom'].includes(k))||!['image','anatomy'].includes(framing.fit)||typeof framing.zoom!=='number'||!Number.isFinite(framing.zoom)||framing.zoom<.5||framing.zoom>4)return fail();
   }
   if(value.sliceOverlay!==undefined&&!['contour','fill'].includes(value.sliceOverlay))return fail();
+  if(value.sliceStructures!==undefined&&!['focus','all'].includes(value.sliceStructures))return fail();
   if(value.presentation!==undefined&&!['scan','segmentation','vascular'].includes(value.presentation))return fail();
   if(value.sourcedVesselContext!==undefined&&typeof value.sourcedVesselContext!=='boolean')return fail();
   if(value.vesselShading!==undefined&&!['balanced','large','fine','source','cta-contrast'].includes(value.vesselShading))return fail();

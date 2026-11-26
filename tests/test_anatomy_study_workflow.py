@@ -285,6 +285,7 @@ def test_anatomy_presentation_survives_native_and_portable_reopen(patient, tmp_p
              'snapshotId': patient.identity(), 'seriesId': 'mri', 'vesselScope': 'all',
              'states': {'mri': {'cursor': [0., 0., 0.], 'visible': {'vessels': True, 'tumor': True},
                                 'settings': {'sliceOverlay': style, 'presentation': mode,
+                                             'sliceStructures': 'all' if mode == 'segmentation' else 'focus',
                                              'showOrientationGuide': mode == 'segmentation',
                                              'contextStyle': 'shell', 'sliceFraming': {'fit': 'anatomy', 'zoom': 1.25},
                                              'volumeRendering': {'preset': 'auto', 'density': .085}}}}}
@@ -325,13 +326,14 @@ def test_anatomy_presentation_survives_native_and_portable_reopen(patient, tmp_p
     {'sliceFraming': {'fit': 'image', 'zoom': .49}},
     {'sliceFraming': {'fit': 'anatomy', 'zoom': 4.01}},
     {'sliceFraming': {'fit': 'image', 'zoom': 1, 'alterSource': True}},
+    {'sliceStructures': 'selected'}, {'sliceStructures': True}, {'sliceStructures': None},
 ])
 def test_view_rejects_invalid_context_and_slice_framing(patient, settings):
     from resectionlab.anatomy_workspace import save_view
     state = {'schema': 'patient-anatomy-view-v1', 'patientId': patient.document['patient_id'],
              'snapshotId': patient.identity(), 'seriesId': 'mri',
              'states': {'mri': {'cursor': None, 'visible': {}, 'settings': settings}}}
-    with pytest.raises(ValueError, match='Invalid (source context style|slice framing)'):
+    with pytest.raises(ValueError, match='Invalid (source context style|slice framing|slice structure scope)'):
         save_view(patient, state)
 
 

@@ -40,6 +40,7 @@ import {applyCtaVesselFinish,applyVesselDepthMaterial,setVesselDepthAppearance,c
 import {microscopeFov} from './microscope';
 import {applyOperativeSurface} from './operativeMaterial';
 import {surfaceKind} from './surfacePolicy';
+import {sliceFocusFlags,sliceLayerBits,sliceOutlineColor,sliceOutlineWidth,sliceOverlayStyle,sliceStructureScope} from './sliceOverlay';
 import {packAnatomyLabels,materializeLayerMask,MAX_ANATOMY_LAYERS} from './labelPacking';
 import {checkedPublicGoal,PUBLIC_GOAL_COLOR} from './publicGoal';
 import type {ViewerPublicGoal} from './publicGoal';
@@ -501,7 +502,10 @@ export class VolumeRenderer {
           uResolution: { value: new THREE.Vector2(1, 1) },
           uWindow: { value: new THREE.Vector2(...this.defaultWindow) },
           uOverlay: { value: this.opacity },
-          uSliceContours: { value: 0 },
+          uSliceContours: { value: 1 },
+          uSliceFocusBits: { value: sliceLayerBits(sliceFocusFlags(volume.compartments,null)) },
+          uSliceAllLayers: { value: 0 },
+          uContourWidth: { value: 1.5 },
           uLayerOpacities: { value: new Float32Array(MAX_ANATOMY_LAYERS).fill(.66) },
           uSelectedLayer: {value:-1},
           uClipEnabled: { value: 0 },
@@ -1255,6 +1259,7 @@ export class VolumeRenderer {
     if(this.panes?.anatomy)this.panes.anatomy.dataset.operativeView=surgeon?'surgeon':'external';
     const framingSignature=JSON.stringify(settings.sliceFraming);
     if(framingSignature!==this.sliceFramingSignature){this.sliceFramingSignature=framingSignature;this.requestRender();}
+    this.applySliceLayers();
     // Camera persistence and toolbar/layout choices do not change anatomy
     // materials. Compare values so cloned or in-place edited settings work too.
     const signature = JSON.stringify([settings.layerOpacity, settings.layerColor,
@@ -1301,8 +1306,11 @@ export class VolumeRenderer {
         material.depthWrite = !transparent;
         material.clippingPlanes=[...this.extraClipPlanes,...(this.clipPlane ? [this.clipPlane] : [])];
       }
+      // Slice outlines use the colour the 3D surface shows, including the
+      // CTA vessel-type palette and user colour overrides.
+      const sliceColor=sliceOutlineColor(layer,settings,this.volume,!!modeledAnatomy(this.volume)?.vesselSurfaces?.has(layer.name));
       this.materials().forEach(shader=>{
-        shader.uniforms.uColors.value[index].set(appearance.color).convertLinearToSRGB();
+        shader.uniforms.uColors.value[index].set(sliceColor).convertLinearToSRGB();
         shader.uniforms.uLayerOpacities.value[index]=appearance.opacity;
       });
     });
@@ -1313,7 +1321,7 @@ export class VolumeRenderer {
     this.exposure?.appearance(this.volume,settings,name=>this.surfaceVisible(name));
     this.clipSurgicalFieldEffects();
     this.materials().forEach(shader=>{
-      shader.uniforms.uSliceContours.value=settings.sliceOverlay==='contour'?1:0;
+      shader.uniforms.uSliceContours.value=sliceOverlayStyle(settings)==='contour'?1:0;
       shader.uniforms.uClipEnabled.value=clipping.enabled ? 1 : 0;
       shader.uniforms.uClipPlane.value.set(normal.x,normal.y,normal.z,clipping.flipped ? clipping.value : -clipping.value);
       if(shader.uniforms.uExtraClipCount){
@@ -1383,6 +1391,22 @@ export class VolumeRenderer {
     });
     const index=this.volume.compartments.findIndex(layer=>layer.name===this.selectedStructure);
     this.materials().forEach(shader=>{if(shader.uniforms.uSelectedLayer)shader.uniforms.uSelectedLayer.value=index;});
+    this.applySliceLayers();
+  }
+
+  /** Slice-only focus: the target/lesion and the selected structure, unless all are requested. */
+  private applySliceLayers():void {
+    const bits=sliceLayerBits(sliceFocusFlags(this.volume.compartments,this.selectedStructure));
+    const all=sliceStructureScope(this.workspaceSettings)==='all'?1:0;
+    let changed=false;
+    this.materials().forEach(shader=>{
+      const uniforms=shader.uniforms;
+      if(!uniforms.uSliceFocusBits)return;
+      const current=uniforms.uSliceFocusBits.value as Int32Array;
+      if(uniforms.uSliceAllLayers.value===all&&current.every((word,i)=>word===bits[i]))return;
+      current.set(bits);uniforms.uSliceAllLayers.value=all;changed=true;
+    });
+    if(changed)this.requestRender();
   }
 
   setSelectedStructure(name:string|null):void {
@@ -2835,6 +2859,7 @@ export class VolumeRenderer {
         rect.height / size.h,
       );
       slice.material.uniforms.uResolution.value.set(size.w, size.h);
+      slice.material.uniforms.uContourWidth.value=sliceOutlineWidth(pixelRatio);
       let cached=this.sliceCaches.get(plane);
       if(!cached){cached=new SliceFrameCache();this.sliceCaches.set(plane,cached);}
       if(cached.render(this.renderer,slice.scene,slice.camera,size.w,size.h,this.sliceRevision,()=>{viewport(this.panes[plane]);}))sliceDraws++;

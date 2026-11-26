@@ -231,6 +231,9 @@ test('scan switches retain the physical cursor and anatomy while restoring scan-
   assert.equal(next.settings.volumeRendering.preset,'ct-bone');
   assert.equal(next.settings.contextStyle,'shell');
   assert.deepEqual(next.settings.sliceFraming,{fit:'image',zoom:.75});
+  assert.equal('sliceStructures' in next.settings,false,'an unset slice scope stays absent');
+  assert.equal(nextScanState({...current,settings:{...current.settings,sliceStructures:'all'}},saved).settings.sliceStructures,'all',
+    'showing all structures on slices follows the study across scans');
   assert.deepEqual(next.cursor,current.cursor);
   next.cursor[0]=99;assert.deepEqual(current.cursor,[1,2,3]);assert.deepEqual(saved.cursor,[4,5,6]);
   next.visible.brain=false;

@@ -299,6 +299,7 @@ export function nextScanState(current:NativeScanState, saved:NativeScanState,lin
     ...(linked?{sourcedVesselContext:current.settings.sourcedVesselContext}:{}),
     ...(linked&&current.settings.presentation&&current.settings.presentation!=='scan'?{camera:current.settings.camera}:{}),
     sliceOverlay:current.settings.sliceOverlay,contextStyle:current.settings.contextStyle,
+    ...(current.settings.sliceStructures?{sliceStructures:current.settings.sliceStructures}:{}),
     layerColor:current.settings.layerColor,layerOpacity:current.settings.layerOpacity}};
 }
 
