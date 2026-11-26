@@ -91,6 +91,9 @@
   align-items: flex-start;
   pointer-events: none;
 }
+/* Leave the top-right overlays (CTA layer switch, operative locator) uncovered. */
+.rl-viewer .rl-viewer-anatomy-image:has(> .rl-cta-coverage) > .rl-viewport-start { right: 256px; }
+.rl-viewer .rl-viewer-anatomy-image:has(> .operative-source-locator) > .rl-viewport-start { right: calc(clamp(88px, 16%, 140px) + 24px); }
 /* The stack stays mounted (and empty) so screen readers hear a mode appear. */
 .rl-viewer .rl-viewport-start > .rl-mode-chips:not(:empty) + .rl-viewer-annotations { margin-top: 6px; }
 .rl-viewer .rl-viewport-start > .rl-viewer-annotations {
