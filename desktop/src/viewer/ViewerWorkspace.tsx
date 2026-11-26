@@ -911,7 +911,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
           <span className="viewer-tool-divider"/>
           <button aria-label="Show structures only" title="Structures" aria-pressed={!scanVolume.enabled} onClick={()=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,enabled:false}})}><Layers3 size={16}/><span className="rl-viewer-tool-label">Structures</span></button>
           <button aria-label="Show scan volume with structures" title="Volume" aria-pressed={scanVolume.enabled} disabled={props.segmentationOnly||props.generatedSignal||Boolean(replay)||passiveRequested||rehearsalRequested} onClick={()=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,enabled:true}})}><Box size={16}/><span className="rl-viewer-tool-label">Volume</span></button>
-          {!props.segmentationOnly&&!props.generatedSignal&&<select className="rl-volume-preset" aria-label="Volume rendering preset" title="Scan volume preset · display transfer only"
+          {!props.segmentationOnly&&!props.generatedSignal&&settings.operativeView!=='surgeon'&&<select className="rl-volume-preset" aria-label="Volume rendering preset" title="Scan volume preset · display transfer only"
             value={volumePresetChoice(settings.volumeRendering,signalName)} disabled={Boolean(replay)||passiveRequested||rehearsalRequested}
             onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,preset:e.target.value as VolumePreset}})}>
             {volumePresetOptions(signalName).map(option=><option key={option.label} value={option.value} disabled={option.disabled} title={option.title}>{option.label}</option>)}
