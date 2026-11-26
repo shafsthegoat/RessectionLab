@@ -428,6 +428,9 @@ def dispatch(session, operation, args, request, progress):
                 or artifacts.get(ARTIFACT, {}).get('branchId') != study_replay['branchId']):
             raise ValueError('STUDY_REPLAY_ONLY: the source-bound recording permits replay of its recorded branch only')
     raw = artifacts.get(ARTIFACT)
+    timing = getattr(request, 'rehearsal_timing', None)
+    if timing is not None and raw is not None:
+        timing.bind_source(raw.get('branchId'), raw.get('position'))
     source_role = (entry.case.metadata.get('data_case') or {}) if entry is not None else {}
     practice_role_allowed = isinstance(source_role, (dict, MappingProxyType)) and not any(
         source_role.get(k) for k in ('role', 'split', 'family_id'))
@@ -1289,7 +1292,8 @@ def dispatch(session, operation, args, request, progress):
     if practice_child:
         # Child navigation and instrument responses need no planner evaluation.
         # The timeline is derived by cold replay of the authenticated action log.
-        _require_json_budget(result, RESULT_BYTES, 'SURGICAL_RESULT_LIMIT', 'Practice response exceeds the display budget')
+        _require_json_budget(result, RESULT_BYTES, 'SURGICAL_RESULT_LIMIT',
+                             'Practice response exceeds the display budget', _builtin_fast=True)
         request.begin_commit()
         if result['changed'] or not admitted_bundle:
             compact = {k: v for k, v in record.items() if k != 'timeline'}

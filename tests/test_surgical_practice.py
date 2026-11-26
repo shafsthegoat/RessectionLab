@@ -8,8 +8,9 @@ from pathlib import Path
 
 import pytest
 
+from resectionlab import json_budget, surgical_bridge
 from resectionlab.core import semantic_digest, thaw_json
-from resectionlab.desktop_bridge import BridgeSession, _Request
+from resectionlab.desktop_bridge import BridgeError, BridgeSession, _Request
 from resectionlab.surgical_environment import SCHEMA
 from resectionlab.surgical_engine import SurgicalEngine
 from resectionlab.surgical_practice import THERMAL, verify_episode
@@ -51,6 +52,63 @@ def surgical(session, command, **args):
 def selection(view):
     return {'expectedStateId': view['view']['stateId'], 'position': view['position'], 'branchId': view['branchId'],
             'checkpointSeal': view['practiceAdmission']['checkpointSeal']}
+
+
+def test_practice_response_budget_keeps_exact_streaming_boundary(practice_source, monkeypatch):
+    session, _, _ = practice_source
+    surgical(session, 'practice', **selection(surgical(session, 'inspect')))
+    prove = json_budget.builtin_json_fits
+    proofs = []
+
+    def observe_proof(value, limit):
+        fits = prove(value, limit)
+        proofs.append((value, fits))
+        return fits
+
+    monkeypatch.setattr(json_budget, 'builtin_json_fits', observe_proof)
+    response = surgical(session, 'inspect')
+    assert len(proofs) == 1 and proofs[-1][0] is response and proofs[-1][1]
+
+    encoded = json.dumps(response, separators=(',', ':'), allow_nan=False).encode()
+    monkeypatch.setattr(surgical_bridge, 'RESULT_BYTES', len(encoded))
+    bounded = surgical(session, 'inspect')
+    assert len(proofs) == 2 and proofs[-1][0] is bounded and not proofs[-1][1]
+    assert bounded == response
+
+    monkeypatch.setattr(surgical_bridge, 'RESULT_BYTES', len(encoded) - 1)
+    with pytest.raises(BridgeError, match='Practice response exceeds the display budget') as error:
+        surgical(session, 'inspect')
+    assert error.value.code == 'SURGICAL_RESULT_LIMIT'
+
+
+def test_cancellation_after_practice_response_proof_does_not_publish(practice_source, monkeypatch):
+    session, _, _ = practice_source
+    child = surgical(session, 'practice', **selection(surgical(session, 'inspect')))
+    entry = session._get_case(THERMAL)
+    artifacts = entry.artifacts
+    committed = session.surgical_sessions[THERMAL]
+    args = {'expectedStateId': child['view']['stateId'], 'expectedEpisodeId': child['branchId'],
+            'action': {'slot': 'left', 'operation': 'exchange', 'instrument': 'brain_retractor', 'duration': .1}}
+    cancelled = _Request('cancelled-practice')
+    prove = json_budget.builtin_json_fits
+    proposals = []
+
+    def cancel_at_proof(value, limit):
+        assert prove(value, limit)
+        assert value['outcome']['status'] == 'accepted'
+        proposals.append(value)
+        assert cancelled.cancel()
+        return True
+
+    with monkeypatch.context() as patch:
+        patch.setattr(json_budget, 'builtin_json_fits', cancel_at_proof)
+        with pytest.raises(BridgeError) as error:
+            session.execute('surgicalRehearsal', {'caseHash': THERMAL, 'command': 'step', **args},
+                            cancelled, lambda *_: None)
+    assert error.value.code == 'CANCELLED' and not cancelled.committing
+    assert entry.artifacts is artifacts and session.surgical_sessions[THERMAL] is committed
+    assert len(proposals) == 1
+    assert surgical(session, 'step', **args) == proposals[0]
 
 
 def test_fork_partial_rejection_save_and_fresh_process_reopen(practice_source, tmp_path):
@@ -104,7 +162,6 @@ def test_fork_partial_rejection_save_and_fresh_process_reopen(practice_source, t
     assert final['outcome']['status'] == 'accepted' and not final['view']['slots']['right']['inserted']
     parent_file = tmp_path / 'parent.ressectionlab'
     original_sha = hashlib.sha256(parent_file.read_bytes()).hexdigest()
-    from resectionlab.desktop_bridge import BridgeError
     with pytest.raises(BridgeError) as blocked:
         request(session, 'saveCase', caseHash=THERMAL, path=str(parent_file), overwrite=True)
     assert blocked.value.code == 'PRACTICE_SAVE_AS' and hashlib.sha256(parent_file.read_bytes()).hexdigest() == original_sha

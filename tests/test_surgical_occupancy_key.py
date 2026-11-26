@@ -279,10 +279,12 @@ def test_compiled_displacement_snapshot_matches_python_and_rejects_subclasses(mo
     assert native(field) is None and _displacement_snapshot(field) is None
 
 
-def test_displacement_occupancy_key_matches_json_reference_after_public_edits():
+@pytest.mark.parametrize('count', [1, 128])
+def test_displacement_occupancy_key_matches_json_reference_after_public_edits(count):
     actual, reference = SurgicalEngine(source()), LegacyKeyEngine(source())
-    cell = str(int(np.ravel_multi_index((9, 9, 9), actual.scene.shape)))
-    for engine in (actual, reference): engine.state['deformation'] = {cell: [0., 0., 0.]}
+    cells = [str(cell) for cell in np.flatnonzero(actual.scene.labels)[:count]]
+    cell = cells[0]
+    for engine in (actual, reference): engine.state['deformation'] = {key: [0., 0., 0.] for key in cells}
     previous = actual.occupancy()
     for value in [-0., .125, .25, 0.]:
         for engine in (actual, reference): engine.state['deformation'][cell][0] = value
@@ -298,6 +300,10 @@ def test_displacement_occupancy_key_matches_json_reference_after_public_edits():
     actual.state['deformation'][cell][0] = 0.
     actual.occupancy()
     assert type(actual._occupancy_cache[0][1]) is tuple
+    for engine in (actual, reference):
+        engine.state['deformation'][cell][0] = float('nan')
+        with pytest.raises(ValueError, match='nonfinite'):
+            engine.occupancy()
 
 
 @pytest.mark.parametrize('v2', [False, True])

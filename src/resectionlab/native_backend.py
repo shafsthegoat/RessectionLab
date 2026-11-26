@@ -131,6 +131,7 @@ def _load():
                                'segment_predicate_batch', 'run_trajectory', 'physical_substep', 'owned_digest',
                                'function_identities', 'occupancy_values', 'canonical_json_digest',
                                'motion_envelopes', 'cranial_cells_partition',
+                               'deformation_sweep', 'deformation_strain_candidates',
                                'simulation_create', 'simulation_identity', 'simulation_clone',
                                'simulation_data', 'simulation_import', 'simulation_step',
                                'simulation_prepare', 'simulation_query', 'simulation_json', 'simulation_stats',
@@ -261,6 +262,13 @@ def backend_identity():
 def cpp_enabled():
     _check_live()
     return _module is not None
+
+
+def deformation_kernels():
+    """Pin the checked buffer kernels for one Python deformation tick."""
+    if not cpp_enabled():
+        return None, None, _identity['fallbackReason'] or 'reference-selected'
+    return _module.deformation_sweep, _module.deformation_strain_candidates, None
 
 
 def wall_sweep_available(*, shared_vertex=False):

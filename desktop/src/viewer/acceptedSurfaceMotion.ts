@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import type {SurgicalView} from '../surgical-types';
 import type {Point3,Shape3} from './coordinates';
+import {sameArray,sameFieldEntries,sameSurgicalGrid} from './surgicalDisplayInputs.ts';
 
 const bucketSize=8;
 const zero:Point3=[0,0,0];
@@ -28,6 +29,16 @@ function attachedVesselSites(view:SurgicalView,owner:Uint16Array,soft:Set<number
       donor?.length===3&&delta.every((v,i)=>v===donor[i])))supported.add(site);
   }
   return supported;
+}
+
+/** The caller also requires the same immutable volume/geometry installation. */
+export function sameAcceptedMotion(a:SurgicalView|undefined,b:SurgicalView|undefined):boolean {
+  if(a===b)return true;
+  // Retained exposure bodies are filtered out of the moved cells by the caller.
+  if(!a||!b||(a.operativeExposureV1&&a.moved.length)||(b.operativeExposureV1&&b.moved.length))return false;
+  return !!a.planarBladeManeuver===!!b.planarBladeManeuver&&sameSurgicalGrid(a.scene,b.scene)&&
+    sameArray(a.scene.regions,b.scene.regions,(p,q)=>p.id===q.id&&p.name===q.name&&p.material===q.material)&&
+    sameArray(a.removed,b.removed)&&sameArray(a.moved,b.moved,(p,q)=>sameArray(p,q))&&sameFieldEntries(a.deformation,b.deformation,(p,q)=>sameArray(p,q));
 }
 
 /** Accepted movement is defined on source cells. The displayed mask already

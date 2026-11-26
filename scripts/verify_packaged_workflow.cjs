@@ -3,22 +3,23 @@
 // The archive, executable, production options and application flags stay real.
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const {spawn}=require('node:child_process');
-const app=fs.realpathSync(process.env.WORKFLOW_APP),output=path.resolve(process.env.WORKFLOW_OUTPUT);
-const harness=path.resolve(__dirname,'../desktop/electron/verify-surgical-workflow.cjs');
-const executable=path.join(app,'Contents/MacOS/RessectionLab');
-assert(!fs.existsSync(output),'Preserve previous evidence');fs.mkdirSync(path.dirname(output),{recursive:true});
-const record={schema:'resectionlab-actual-packaged-workflow-v1',passed:false,executable,harness,output};
-const log=fs.createWriteStream(output+'.launcher.log');let diagnostic='',socket;
-const child=spawn(executable,['--automation-hidden','--inspect-brk=127.0.0.1:0'],
- {cwd:path.dirname(output),env:{...process.env,WORKFLOW_ACTUAL_APP:'1'},stdio:['ignore','pipe','pipe'],detached:true});
-let closed=false;child.once('close',()=>{closed=true;});
-const exited=()=>child.exitCode!==null||child.signalCode!==null;
-for(const stream of [child.stdout,child.stderr])stream.on('data',data=>{diagnostic+=data;log.write(data);});
-const delay=ms=>new Promise(resolve=>setTimeout(resolve,ms));
-const wait=async(test,label,seconds=90)=>{const started=Date.now();while(Date.now()-started<seconds*1000){if(await test())return;if(exited())throw Error('Application exited during '+label);await delay(50);}throw Error('Timeout '+label);};
-const waitClosed=milliseconds=>new Promise(resolve=>{if(closed)return resolve(true);const timer=setTimeout(()=>resolve(false),milliseconds);child.once('close',()=>{clearTimeout(timer);resolve(true);});});
-const terminate=signal=>{try{process.kill(-child.pid,signal);}catch(error){if(error.code!=='ESRCH')throw error;}};
-(async()=>{
+
+async function launchWithHarness({app, harness, output, launcher, env, schema, verify}) {
+ const executable=path.join(fs.realpathSync(app),'Contents/MacOS/RessectionLab');
+ assert(!fs.existsSync(launcher+'.json')&&!fs.existsSync(launcher+'.log'),'Preserve previous launch evidence');
+ fs.mkdirSync(path.dirname(launcher),{recursive:true});
+ const record={schema,passed:false,executable,harness,output};
+ const log=fs.createWriteStream(launcher+'.log');let diagnostic='',socket,spawnError;
+ const child=spawn(executable,['--automation-hidden','--inspect-brk=127.0.0.1:0'],
+  {cwd:path.dirname(output),env:{...process.env,...env},stdio:['ignore','pipe','pipe'],detached:true});
+ child.once('error',error=>{spawnError=error;});
+ let closed=false;child.once('close',()=>{closed=true;});
+ const exited=()=>child.exitCode!==null||child.signalCode!==null;
+ for(const stream of [child.stdout,child.stderr])stream.on('data',data=>{diagnostic=(diagnostic+data).slice(-128*1024);log.write(data);});
+ const delay=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+ const wait=async(test,label,seconds=90)=>{const started=Date.now();while(Date.now()-started<seconds*1000){if(spawnError)throw spawnError;if(await test())return;if(exited())throw Error('Application exited during '+label);await delay(50);}throw Error('Timeout '+label);};
+ const waitClosed=milliseconds=>new Promise(resolve=>{if(closed)return resolve(true);const timer=setTimeout(()=>resolve(false),milliseconds);child.once('close',()=>{clearTimeout(timer);resolve(true);});});
+ const terminate=signal=>{if(child.pid)try{process.kill(-child.pid,signal);}catch(error){if(error.code!=='ESRCH')throw error;}};
  try{
   let address;await wait(()=>{address=diagnostic.match(/Debugger listening on (ws:\/\/127\.0\.0\.1:\d+\/[^\s]+)/)?.[1];return address;},'main inspector startup');
   socket=new WebSocket(address);
@@ -47,17 +48,34 @@ const terminate=signal=>{try{process.kill(-child.pid,signal);}catch(error){if(er
   await command('Debugger.resume');await command('Debugger.disable');socket.close();socket=null;
   await wait(exited,'complete packaged workflow',900);
   record.exitCode=child.exitCode;assert.equal(child.exitCode,0);
-  const workflow=JSON.parse(fs.readFileSync(path.join(output,'report.json'),'utf8'));
-  assert(workflow.passed);assert(workflow.launcher.isPackaged);assert.equal(workflow.launcher.executable,executable);
-  assert(workflow.launcher.originalPackagedEngineOptions);record.passed=true;
+  await verify({executable,output});
+  record.passed=true;
  }catch(error){record.error=String(error);}
  finally{
   socket?.close();if(!record.passed||!exited())terminate('SIGTERM');
   if(!await waitClosed(5000)){terminate('SIGKILL');await waitClosed(5000);}
   record.signalCode=child.signalCode;
   if(!closed){record.passed=false;record.error='Application did not terminate after bounded cleanup';child.stdout.destroy();child.stderr.destroy();}
-  log.end();
-  fs.writeFileSync(output+'.launcher.json',JSON.stringify(record,null,2)+'\n');
-  console.log(JSON.stringify({passed:record.passed,error:record.error,output}));process.exitCode=record.passed?0:1;
+  await new Promise(resolve=>log.end(resolve));
+  fs.writeFileSync(launcher+'.json',JSON.stringify(record,null,2)+'\n');
  }
-})();
+ return record;
+}
+
+if(require.main===module){
+ const app=fs.realpathSync(process.env.WORKFLOW_APP),output=path.resolve(process.env.WORKFLOW_OUTPUT);
+ const harness=path.resolve(__dirname,'../desktop/electron/verify-surgical-workflow.cjs');
+ assert(!fs.existsSync(output),'Preserve previous evidence');
+ launchWithHarness({app,harness,output,launcher:output+'.launcher',
+  env:{WORKFLOW_ACTUAL_APP:'1'},schema:'resectionlab-actual-packaged-workflow-v1',
+  verify({executable}){
+   const workflow=JSON.parse(fs.readFileSync(path.join(output,'report.json'),'utf8'));
+   assert(workflow.passed);assert(workflow.launcher.isPackaged);assert.equal(workflow.launcher.executable,executable);
+   assert(workflow.launcher.originalPackagedEngineOptions);
+  }
+ }).then(record=>{
+  console.log(JSON.stringify({passed:record.passed,error:record.error,output}));process.exitCode=record.passed?0:1;
+ }).catch(error=>{console.error(error);process.exitCode=1;});
+}
+
+module.exports={launchWithHarness};

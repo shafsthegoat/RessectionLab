@@ -188,3 +188,21 @@ test('a connected-tree display takes its CTA kind from its name or layer, and th
   assert.equal(ctaDisplayKind({name:'full',kind:'vessels',color:'#aa352b',displayFilter:{scope:'all'}}),'vessels');
   assert.equal(ctaDisplayKind({name:'sinus',kind:'sinus',color:'#aa352b',displayFilter:rooted}),'sinus');
 });
+
+test('retiring a source surface releases both of its retained transparency materials',()=>{
+  const pass=new SurfaceVolumePass(),scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera();
+  const geometry=new THREE.BufferGeometry(),opaque=new THREE.Texture();
+  try{
+    for(let i=0;i<12;i++){
+      const source=new THREE.MeshStandardMaterial({transparent:true,opacity:.5});
+      const mesh=new THREE.Mesh(geometry,source);mesh.userData.compartment='retiring';scene.add(mesh);
+      const peelMaterials=new Set();
+      const renderer={setRenderTarget(){},clear(){},render(){peelMaterials.add(mesh.material);}};
+      pass.render(renderer,scene,camera,opaque,1,1,true);
+      assert.equal(mesh.material,source);assert.equal(peelMaterials.size,2);
+      let released=0;for(const material of peelMaterials)material.addEventListener('dispose',()=>released++);
+      mesh.removeFromParent();source.dispose();
+      assert.equal(released,2);assert.equal(pass.materials.size,0);
+    }
+  }finally{pass.dispose();geometry.dispose();opaque.dispose();}
+});

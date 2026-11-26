@@ -161,7 +161,7 @@ test('closure overlays bridge their two physical RAS anchors even when the seam 
 });
 
 test('blood color requires a generated empty-origin field with exclusively modeled wound input', async () => {
-  const {retainedFieldOptics} = await import('./surgicalFieldOptics.ts');
+  const {SurgicalFieldResources} = await import('./surgicalFieldOptics.ts');
   const {view} = model();
   Object.assign(view, {
     fluid: {[id(8, 7, 15)]: 0.26},
@@ -169,9 +169,9 @@ test('blood color requires a generated empty-origin field with exclusively model
     sources: [{kind: 'modeled-vessel-wound'}],
   });
   const wet = () => {
-    const f = retainedFieldOptics(view),
-      origin = f.group.userData.fieldSummary.fluidOrigin;
-    f.texture?.dispose();
+    const resources = new SurgicalFieldResources(),
+      origin = resources.update(view).group.userData.fieldSummary.fluidOrigin;
+    resources.clear();
     return origin;
   };
   assert.equal(wet(), 'vascular sources only');

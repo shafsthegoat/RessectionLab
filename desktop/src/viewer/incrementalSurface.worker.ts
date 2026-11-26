@@ -1,12 +1,14 @@
 import {IncrementalSurfaceEngine} from './incrementalSurface.ts';
 import type {IncrementalSurfaceRequest} from './incrementalSurface.ts';
+import {prepareDisplayNormals} from './displaySurfaceNormals.ts';
 import {packAnatomyLabels} from './labelPacking.ts';
 import type {ViewerVolume} from './contracts';
 const engine=new IncrementalSurfaceEngine();
 self.onmessage=(event:MessageEvent<IncrementalSurfaceRequest|{task:'pack';jobId:number;volume:Pick<ViewerVolume,'shape'|'compartments'|'labelSets'>}>)=>{
   try{
     if('task'in event.data){const packed=packAnatomyLabels(event.data.volume);self.postMessage({jobId:event.data.jobId,task:'pack',packed},{transfer:[packed.data.buffer]});return;}
-    const result=engine.prepare(event.data),transfer=[result.positions.buffer,result.indices.buffer,result.normals.buffer];
+    const result=prepareDisplayNormals(engine.prepare(event.data),event.data.affine,event.data.displayNormalPasses);
+    const transfer=[result.positions.buffer,result.indices.buffer,result.normals.buffer];
     if('smoothIndices' in result&&result.smoothIndices)transfer.push(result.smoothIndices.buffer);
     if(result.smoothPositions)transfer.push(result.smoothPositions.buffer,result.smoothNormals!.buffer);
     self.postMessage(result,{transfer});
