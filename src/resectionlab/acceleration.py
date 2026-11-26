@@ -36,7 +36,6 @@ FEATURES = {
     'contact': 'solver',
     'transaction-checks': 'exact',
     'deformation-scan': 'exact',
-    'vascular-rhs': 'reordered',
 }
 
 
