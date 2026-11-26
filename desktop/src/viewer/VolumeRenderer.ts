@@ -31,6 +31,7 @@ import type {IncrementalSurfaceRequest} from './incrementalSurface';
 import {scanFitPoints} from './scanCameraFit';
 import {mprView,sourceSignalBounds} from './mprFraming';
 import {applySourceContextMaterial} from './sourceContextMaterial';
+import {applyStructureSurface,structureSurfaceDisplay} from './structureGlass';
 import {isStructuralMrModality,mixedVesselLesion} from '../native-study-state';
 import {isCtAngiography,usesAcquiredCtBone} from './volumeTransfer';
 import {installNativeContextLighting,setNativeContextLighting} from './nativeContextLighting';
@@ -763,14 +764,15 @@ export class VolumeRenderer {
       if(score)smooth.userData.scoreWallLighting=score.supported;
     }
     const appearance = layerAppearance(layer.name,layer.color,this.workspaceSettings,layer.displayKind??layer.kind);
+    const surface = this.structureSurface(layer,appearance.opacity,this.workspaceSettings);
     const materialOptions: THREE.MeshStandardMaterialParameters = {
       color: appearance.color,
       metalness: 0,
-      transparent: appearance.opacity < 1,
-      opacity: appearance.opacity,
+      transparent: surface.materialOpacity < 1,
+      opacity: surface.materialOpacity,
       clippingPlanes: [...this.extraClipPlanes, ...(this.clipPlane ? [this.clipPlane] : [])],
       side: THREE.DoubleSide,
-      depthWrite: appearance.opacity >= 1,
+      depthWrite: surface.materialOpacity >= 1,
     };
     const material = vessel && (this.volume.displayIdentity || operativeVessel)
       ? new THREE.MeshPhysicalMaterial({...materialOptions,...vesselWallFinish})
@@ -801,6 +803,8 @@ export class VolumeRenderer {
     }
     applySourceContextMaterial(mesh.material,this.workspaceSettings.contextStyle==='shell'&&CONTEXT_SURFACES.has(layer.displayKind??layer.kind??''),
       ['bone','skull'].includes(layer.kind??''));
+    applyStructureSurface(mesh.material,surface);
+    mesh.renderOrder=surface.renderOrder;
     mesh.visible = this.surfaceVisible(layer.name);
     mesh.userData.compartment = layer.name;
     mesh.userData.corticalContact = ['csf','ventricles','dura','skull','bone'].includes(displayKind);
@@ -825,6 +829,16 @@ export class VolumeRenderer {
     this.exposure?.bindNativeSkinDomain(mesh,layer.name);
     this.picking?.install(mesh,geometry,eagerPicking);
     return {mesh,source:geometry,smooth,smoothingPrepared:operativeVessel||hasSmooth||layer.surfaceDiagnostics?.sourceSurfaceOnly===true};
+  }
+  /** Display-only glass and lighting terms; the mask and source triangles are unchanged. */
+  private structureSurface(layer:ViewerVolume['compartments'][number],opacity:number,settings:ViewerWorkspaceSettings){
+    const kind=layer.displayKind??layer.kind;
+    // Engine-modeled tissue keeps its operative finish and source-colour presentation.
+    return structureSurfaceDisplay(layer.name,kind,opacity,settings,{
+      contextShell:settings.contextStyle==='shell'&&CONTEXT_SURFACES.has(kind??''),
+      modeled:!!modeledAnatomy(this.volume)||layer.generatedFinish===true,
+      // Same condition as installNativeContextLighting in installSurface.
+      nativeLit:!!this.volume.displayIdentity&&!!layer.surface&&surfaceKind(layer.kind)==='context'});
   }
   private vesselLabelGrid(index:number){
     const code=this.labelCodes[index];
@@ -1257,7 +1271,7 @@ export class VolumeRenderer {
     if(framingSignature!==this.sliceFramingSignature){this.sliceFramingSignature=framingSignature;this.requestRender();}
     // Camera persistence and toolbar/layout choices do not change anatomy
     // materials. Compare values so cloned or in-place edited settings work too.
-    const signature = JSON.stringify([settings.layerOpacity, settings.layerColor,
+    const signature = JSON.stringify([settings.layerOpacity, settings.layerColor, settings.layerSurfaceStyle,
       settings.clipping, settings.clipBox, settings.obliqueClip,
       settings.fusion?.opacity, settings.volumeRendering,settings.skullMode,settings.sliceOverlay,settings.contextStyle,settings.presentation,settings.sourcedVesselContext,settings.operativeView,settings.microscope?.inspectionTransparency,settings.microscope?.inspectionCutaway,settings.microscope?.tissueStyle,settings.vesselShading,this.overlapLesion]);
     if (signature === this.appearanceSignature) return;
@@ -1282,7 +1296,8 @@ export class VolumeRenderer {
         if(mesh.userData.corticalSignalEnabled)mesh.userData.corticalSignalEnabled.value=this.showCorticalSignal(mesh);
         mesh.visible=this.surfaceVisible(layer.name);
         const material=mesh.material as THREE.MeshStandardMaterial;
-        material.color.set(appearance.color);material.opacity=appearance.opacity;
+        const surface=this.structureSurface(layer,appearance.opacity,settings);
+        material.color.set(appearance.color);material.opacity=surface.materialOpacity;
         setNativeContextLighting(material,this.surfaceSmoothing && settings.operativeView !== 'surgeon');
         applyOperativeSurface(material,layer.displayKind??layer.kind,settings);
         const operativeVessel=modeledAnatomy(this.volume)?.vesselSurfaces?.has(layer.name);
@@ -1293,7 +1308,8 @@ export class VolumeRenderer {
         }
         applySourceContextMaterial(material,settings.contextStyle==='shell'&&CONTEXT_SURFACES.has(layer.displayKind??layer.kind??''),
         ['bone','skull'].includes(layer.kind??''));
-        const transparent = appearance.opacity < 1;
+        applyStructureSurface(material,surface);
+        const transparent = surface.materialOpacity < 1;
         if (material.transparent !== transparent) {
           material.transparent = transparent;
           material.needsUpdate = true;

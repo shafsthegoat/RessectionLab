@@ -76,6 +76,20 @@ def test_body_orientation_guide_roundtrip_and_legacy_default(tmp_path, enabled):
         state['states']['primary']['viewer']={'showOrientationGuide':invalid}
         with pytest.raises(ValueError,match='orientation guide'):view_state(case,[],state)
 
+def test_layer_surface_style_roundtrip_and_legacy_default(tmp_path):
+    case=load_nifti_case(image(tmp_path/'source.nii.gz'),image(tmp_path/'tumor.nii.gz',labels=True),case_id='surface-style-test')
+    name=next(iter(case.compartments))
+    state=view_state(case,[])
+    for settings in ({},{'layerSurfaceStyle':{name:'solid'}},{'layerSurfaceStyle':{name:'glass'}}):
+        state['states']['primary']['viewer']=settings
+        path=tmp_path/'surface-style.ressectionlab'
+        save_workspace(case,path,sources=[],imaging=state,episode=None,selection=None,artifacts={})
+        _,_,saved=load_workspace(path)
+        assert saved['imagingState']['states']['primary']['viewer']==settings
+    for invalid,message in (({name:'matte'},'surface style'),({name:True},'surface style'),({'unknown-layer':'glass'},'layer names'),([],'layer names')):
+        state['states']['primary']['viewer']={'layerSurfaceStyle':invalid}
+        with pytest.raises(ValueError,match=message):view_state(case,[],state)
+
 def test_workspace_manifest_hash_overhead_refuses_before_replacing_destination(tmp_path):
     case=load_nifti_case(image(tmp_path/'source.nii.gz'),case_id='manifest-boundary-test')
     state=view_state(case,[]);path=tmp_path/'preserved.ressectionlab'

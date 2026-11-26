@@ -46,6 +46,8 @@ export interface ViewerWorkspaceSettings {
   vesselDepthSeparation?: boolean;
   layerOpacity?: Record<string, number>;
   layerColor?: Record<string, string>;
+  /** Per-structure surface style. A missing entry uses the kind's default (see structureGlass.ts). */
+  layerSurfaceStyle?: Record<string, 'glass'|'solid'>;
   camera?: ViewerCameraState | null;
   operativeView?: 'external'|'surgeon';
   resultInspection?: 'both'|'cavity'|'residual';
