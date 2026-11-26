@@ -24,6 +24,8 @@ from typing import Any, Iterable
 import numpy as np
 from scipy.ndimage import binary_fill_holes
 
+from . import acceleration as _accel
+from .accel_transactions import guarded as _transaction
 from .core import array_digest, freeze_json, semantic_digest, thaw_json
 from .post_exposure import PostExposureStart, preentry_tip
 from .native_cut_union import (CutUnionSpec, CutUnionLimit, PreviewCutCoverage,
@@ -332,6 +334,11 @@ def _connected_surface_cells(candidates: np.ndarray, connected_free: np.ndarray)
     """Remove only candidate components with a face exposed to existing free space."""
     if not len(candidates):
         return _EMPTY
+    if _accel.enabled("stroke"):
+        from .accel_geometry import connected_surface_cells
+        found = connected_surface_cells(candidates, connected_free)
+        if found is not None:
+            return _frozen(found, np.int64).reshape(-1, 3) if len(found) else _EMPTY
     pending = {tuple(int(v) for v in index) for index in candidates}
     accepted: set[tuple[int, int, int]] = set()
     shape = np.array(connected_free.shape)
@@ -357,6 +364,10 @@ def _extend_connected_free(new_cells: np.ndarray, remaining: np.ndarray,
                             connected_free: np.ndarray,
                             interaction_domain: np.ndarray | None = None) -> None:
     """Open only actually connected empty cells, including a newly opened pocket."""
+    if _accel.enabled("stroke"):
+        from .accel_geometry import extend_connected_free
+        if extend_connected_free(new_cells, remaining, connected_free, interaction_domain):
+            return
     queue = [tuple(int(v) for v in index) for index in new_cells]
     shape = np.array(remaining.shape)
     while queue:
@@ -528,6 +539,7 @@ class NativeResectionEngine:
         result._preview_digests = self._preview_digests.copy()
         return result
 
+    @_transaction
     def preview_stroke(self, tool_id: str, tip_mm: Any, *, entry_mm: Any | None = None,
                        interaction_mode: str = "aspirate", obstruction_diagnostics: bool = False,
                        obstruction_cell_limit: int = MAX_OBSTRUCTION_DIAGNOSTIC_CELLS) -> NativeStrokeResult:
