@@ -32,7 +32,7 @@ export interface SurgicalVesselMechanics {
   surfaceDisplacements?:Record<string,Point3>;
   vertexDisplacementsByLabel?:Record<string,{geometryBinding:string;vertexCount:number;indices:number[];offsetsMm:Point3[]}>;
   geometryModeByLabel?:Record<string,'native-probability-wall'|'edited-native-wall'|'accepted-source-cuboids'>;
-  editedWallsByLabel?:Record<string,{identity:string;positionsIJK:Point3[];triangles:[number,number,number][];sourceCells:number[];cuboidSourceCells?:number[]}>;
+  editedWallsByLabel?:Record<string,{identity:string;positionsIJK:Point3[];triangles:[number,number,number][];sourceCells:number[];cuboidSourceCells?:number[];vesselClasses?:number[];tubeRemovedCells?:number[];tubeModelDigest?:string}>;
 }
 export interface SurgicalView {vesselMechanics?:SurgicalVesselMechanics}
 export interface SurgicalProtection {configured:boolean;mode:string;contractId:string|null;status:string;missingRequired:string[];clearanceMm?:number;criticalMaxDisplacementMm?:number;anatomicalCompleteness:string;clinicalValidation:string;structures:Array<{id:string;name:string;sourceCells:number;provenance:unknown;reviewStatus:string}>;unknownStructures:string[]}

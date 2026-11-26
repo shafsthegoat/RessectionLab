@@ -281,6 +281,140 @@ R-OA, L-OA (018). TopCoW-018 was rerun in this round for the face-connectivity
 fix and the mesh gate (annotation and ensemble, full source and default view);
 each run is logged with the evidence.
 
+## Centerline tube model
+
+`vessel_tubes.py` (`centerline-tubes-v2`) turns a binary vessel layer, with an
+optional soft probability on the same grid, into one geometric model for the
+wall mesh, contact queries, rod sites and a soft tag volume. A local native
+wall uses it when prepared with `vessel_geometry` set to `vessel_tubes.MODEL`
+(the IPC field `vesselGeometry` passes it through; no desktop control sets it
+yet), which becomes `operative_vascular_geometry`. The option is refused
+without V2 tissue physics and the working-axis constraint, which carry its
+shell contact. The model is stored once in case metadata
+(`vessel_tube_models`), its digest in the wall receipt, and tube metadata under
+any other policy is refused. Derived from it: the collision and display wall,
+the desktop `vesselTags` volume and `vesselClasses`, and the positions and
+calibres of the rod sites (`vesselRodGeometry`). Which sites exist, their bonds
+and branches still come from `_local_chains`. An edit never refits: removed
+cells join the model's ordered edit record (`removedCells`, with the faces open
+to non-vessel), the stored field is cut by them, and the edited wall, its
+per-vertex classes and its digest come from that model and record alone. Wall
+vertices away from the cut are bit-identical, so vertex transport keeps
+treating them as unchanged. Walls prepared
+without the option, and every saved scene and replay, keep their earlier
+geometry; a run of the default path against the previous code gave identical
+report bytes, case hashes, engine snapshots and desktop arrays. Tools keep their whole
+working shell out of a tube wall (see the shell projection in
+[surgical physics v2](surgical-physics-v2.md)): on the fixture strokes the
+largest shell overlap at an accepted step was 0.018 mm, with the vessel
+displaced by up to 2.2 mm. Changing what `extract` or `mesh` produce without a
+new `vessel_tubes.MODEL` makes saved tube cases refuse to reopen, because the
+rebuilt wall no longer matches the stored binding.
+
+- **Graph.** Centerlines are the `build_source_branches` Lee skeleton paths
+  (certified H₀/H₁ representative edges). Spurs whose tip lies inside the
+  inscribed ball of their junction are pruned and degree-two nodes merged.
+  A component whose skeleton is empty becomes one ball. Each edge carries the
+  majority class and named label of its source cells.
+- **Samples and radii.** Samples are smoothed on the graph (Taubin, tips
+  pinned) and recentred from opposite pairs of 16 rays in the normal plane.
+  Each ray stops at the 0.5 crossing of the trilinear soft signal (the
+  probability, or the mask itself without one), refined by bisection. A
+  sample's starting radius is the median ray length (near a junction or tip,
+  the distance to the source half-level wall), then the median axis distance
+  of the wall points its tube is nearest to. Tips extend along the axis to the
+  measured lumen end. Radii have a floor of half the smallest spacing.
+- **Sections.** Each edge sample also carries angular harmonics of order 1 to
+  6 (`Re zⁿ`, `Im zⁿ`, `z` the unit direction from the axis in a
+  rotation-minimising frame of the edge) and, at a tip, two end-cap terms in
+  the axial component (`x²`, `x⁴`) that flatten or sharpen the cap. Radii and
+  sections are fitted in three rounds of regularised linear least squares to
+  the source half-level wall points each segment owns (the segment with the
+  smallest field within 1.5 voxels; node balls excluded): every point asks
+  that the interpolated offset equal its round-cone distance. Neighbouring
+  samples are tied (weight 1), order `n` has ridge 0.05 `n`, and a section's
+  largest offset is capped at 0.6 of its radius. This follows elliptical and
+  fused sections, flares, crotches and flat-cut ends.
+- **Field.** A segment's field is its round-cone distance less the offset
+  interpolated between its two samples, `F = d − (1 − t) h_a(w) − t h_b(w)`.
+  Junctions are the hard union of the incident tubes and the inscribed node
+  ball: with fitted sections a smooth blend did not help (`k` is kept in the
+  format and is 0). Edges that do not share a node are never blended. The
+  field is clipped to the acquired box, half a voxel past the outer sample
+  centres. Tubes of different 26-connected source components are shrunk where
+  they come within one mesh step.
+- **Consumers.** `mesh` evaluates `F` per segment box on a grid of smallest
+  spacing / 2, runs Lewiner marching cubes in 96-cell blocks, joins block
+  seams by grid-edge identity, orients faces outward and takes normals from
+  the field gradient. Wall components that enclose no centerline sample are
+  dropped and counted. `tag_volume` writes `clip(0.5 − F / spacing, 0, 1)` on
+  the source grid. `rod_sites` gives `[x, y, z, r]` per source cell, the
+  closest centerline point clamped into the cell. `audit` checks open,
+  non-manifold and inconsistently oriented edges, non-manifold vertices,
+  degenerate faces and edge-through-triangle self-intersections, and with the
+  model the largest field value over vertices, edge midpoints and face
+  centroids (`wall_outside_max_mm`). `deviation` measures both directions
+  against the source half-level wall, in millimetres, smallest-spacing voxels
+  and index-space voxels (each axis over its own spacing).
+- **Collision bound.** `query` and `capsule_clearance` use a lower bound on the
+  distance to the wall, not `F`. Per segment, `L` bounds the gradient of `F`
+  outside the wall: the angular slope of the section over the wall radius
+  (the round cone contains the ball of the interpolated radius about each axis
+  point, so outside the wall the axis distance exceeds it), the change of the
+  offset along the axis and the taper. Slopes are sampled on 256 axis-normal
+  and about 2,100 cap directions per end, each sample standing for its arc or
+  cap through second-derivative bounds. Inside, the value is `F / L`; outside
+  it is the largest `r` with `r L(r) ≤ F`, where `L(r)` uses the axis distance
+  over the ball of radius `r` (between `F / L` and `F`). `capsule_clearance`
+  is the smallest bound over axis samples less half the sample step (the true
+  distance is 1-Lipschitz) and less `wall_tolerance`, one mesh grid step,
+  which covers marching-cubes triangles that cut across concave creases and
+  narrow grooves between adjacent tubes (largest measured excursion 0.77 of a
+  step, 014 CTA). A positive clearance therefore means the capsule meets
+  neither the implicit nor the meshed wall; a caller holding an audited mesh
+  may pass its `wall_outside_max_mm` as `tolerance`. Tests check both on
+  synthetic tubes, and on 014 CTA 300 capsules beside the wall gave no
+  violation. The bound is conservative: the median slack of clear capsules
+  within 1 mm of the 014 CTA wall is about 0.5 mm (0.28 mm of it the
+  tolerance), and `L` is computed on first query (about 2 s per model).
+
+TopCoW 014 and 018 (CTA and MRA), Phase 2 ensemble probability as the vessel
+set and soft signal, measured 2026-11-26 on CPU. Deviation is mean / 95th
+percentile in smallest-spacing voxels (index-space p95 in brackets), arteries,
+points more than one voxel from the acquisition edge; 018 was run once per
+modality after the method was fixed on 014. Source wall points take the
+source's own artery/vein class and tube points their edge's class; a point no
+tube owns within four voxels keeps its full distance (none on the tube side;
+70 source points on 018 CTA, none elsewhere). Re-measured with that metric by
+`scratchpad/phase4-fit/real2.py` on the `ensemble-UZH-ARG-KDH` probabilities
+(the selected combined ensemble was not written to the drive):
+
+| Case | Tube to source | Source to tube | Veins (tube, source) | b0 / b1 source, tubes | Faces | Seconds, peak |
+| --- | --- | --- | --- | --- | ---: | --- |
+| 014 CTA | 0.08 / 0.25 (0.23) | 0.06 / 0.18 (0.16) | 0.09 / 0.25, 0.10 / 0.28 | 16 / 22, 16 / 21 | 738,128 | 22, 1.3 GB |
+| 018 CTA | 0.09 / 0.28 (0.25) | 0.08 / 0.25 (0.21) | 0.08 / 0.22, 0.13 / 0.26 | 27 / 23, 27 / 22 | 788,124 | 26, 1.4 GB |
+| 014 MRA | 0.11 / 0.33 (0.28) | 0.12 / 0.38 (0.30) | none | 11 / 11, 11 / 7 | 1,675,296 | 65, 1.7 GB |
+| 018 MRA | 0.12 / 0.34 (0.29) | 0.13 / 0.39 (0.32) | none | 27 / 31, 27 / 33 | 2,829,478 | 101, 2.4 GB |
+
+The half-voxel gate is met on all four: arterial p95 0.18 to 0.39 voxels
+(0.10 to 0.14 mm), means 0.06 to 0.13. Every wall is closed, edge- and
+vertex-manifold, consistently oriented and has no self-intersection; b0 is
+kept and no named label is lost (lowest tag coverage of a label's voxels
+0.71, 018 MRA R-ECA; tag Dice against the mask 0.98 to 0.99). Seconds are
+extract plus mesh; peak is the whole evaluation process. The remaining
+misses sit mostly at tips: on 014 MRA the p95 (tube to source, source to tube)
+is 0.48 / 0.56 voxels near tips, 0.37 / 0.41 near junctions and 0.31 / 0.36
+along vessels. The sections follow the source's lumpy half level, so the
+wall undulates where the source does.
+Tubes close source holes smaller than their radii: the four cycles 014 MRA
+loses are sub-millimetre holes (half-level probability 0.3 to 0.45 at their
+centres); the circle of Willis loops are kept. On 018 MRA the tube wall has
+two more cycles than the mask (not localised). Attempt one (circular sections,
+smooth junction blend) had p95 0.46 to 0.85 voxels on CTA and 1.06 to 1.35
+on MRA, with veins at 1.2 to 1.7. The annotation label maps alone give CTA
+arterial p95 0.55 to 0.94 voxels, because the binary half level is
+stair-stepped. Tests: `tests/test_vessel_tubes.py`.
+
 ## Source-owned branch geometry
 
 The existing TopBrain CTA001 now has reproducible, source-owned centerline

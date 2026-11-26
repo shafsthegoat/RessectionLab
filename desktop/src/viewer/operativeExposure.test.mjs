@@ -376,3 +376,38 @@ test('Raney backing and jaws use the actual accepted RAS capsules, including a r
   assert.equal(group.parent, null);
   display.clear();
 });
+
+test('a centerline tube vessel wall takes the wet finish only on a physical material', async () => {
+  const THREE = await import('three');
+  const {applyWetVesselFinish, wetVesselFinish} = await import('./surgicalFieldOptics.ts');
+  const wall = new THREE.MeshPhysicalMaterial({roughness: .43, clearcoat: .22});
+  assert.equal(applyWetVesselFinish(wall), true);
+  assert.equal(wall.clearcoat, wetVesselFinish.clearcoat);
+  // A broad soft coat band over a slightly tighter, faint wall glint.
+  assert.ok(wall.clearcoatRoughness >= .3 && wall.roughness < wall.clearcoatRoughness && wall.specularIntensity < .5 && wall.userData.wetVessel);
+  const plain = new THREE.MeshStandardMaterial({roughness: .52});
+  assert.equal(applyWetVesselFinish(plain), false);
+  assert.equal(plain.roughness, .52);
+});
+
+test('tube walls take the shared artery and vein colours from their vertex classes', async () => {
+  const THREE = await import('three');
+  const {applyTubeVesselColor, tubeVesselColors} = await import('./surgicalFieldOptics.ts');
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(12), 3));
+  const mesh = new THREE.Mesh(geometry, new THREE.MeshPhysicalMaterial());
+  applyTubeVesselColor(mesh, Uint8Array.of(0, 0, 0, 0));
+  assert.equal('#' + mesh.material.color.getHexString(), tubeVesselColors.artery);
+  assert.equal(mesh.material.vertexColors, false);
+  applyTubeVesselColor(mesh, Uint8Array.of(0, 1, 1, 0));
+  assert.equal(mesh.material.vertexColors, true);
+  const colors = geometry.getAttribute('color').array;
+  const vein = new THREE.Color(tubeVesselColors.vein);
+  assert.deepEqual([...colors.slice(3, 6)].map(v => +v.toFixed(5)), vein.toArray().map(v => +v.toFixed(5)));
+  applyTubeVesselColor(mesh, Uint8Array.of(1, 1, 1));  // Misaligned classes are never applied.
+  assert.equal(mesh.material.vertexColors, false);
+  assert.equal(geometry.hasAttribute('color'), false);
+  assert.equal('#' + mesh.material.color.getHexString(), tubeVesselColors.artery);
+  applyTubeVesselColor(mesh, Uint8Array.of(1, 1, 1, 1));
+  assert.equal('#' + mesh.material.color.getHexString(), tubeVesselColors.vein);
+});

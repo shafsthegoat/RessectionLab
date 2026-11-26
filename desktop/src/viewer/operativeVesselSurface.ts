@@ -16,6 +16,10 @@ export interface OperativeVesselSurface {
   geometryIdentity?:string;
   geometryBinding?:string;
   sourceVolumeBoundary?:boolean;
+  /** Tube walls: per vertex, 1 vein and 0 artery or unclassified, aligned with positions. */
+  vesselClasses?:Uint8Array;
+  /** A centerline-tube wall: its displayed normals are smoothed across small undulations. */
+  tube?:boolean;
 }
 type RestVessel=OperativeVesselSurface&{sites:number[]};
 type EditedWall=NonNullable<NonNullable<SurgicalView['vesselMechanics']>['editedWallsByLabel']>[string];
@@ -26,6 +30,41 @@ export function vesselGeometryToken(view:SurgicalView){
     const vertex=view.vesselMechanics?.vertexDisplacementsByLabel;
     return vertex?[geometry,edited,Object.entries(vertex).map(([label,packet])=>[label,packet.geometryBinding,packet.vertexCount])]:[geometry,edited];
   }
+}
+const neighbourCache=new WeakMap<Uint32Array,{start:Int32Array;list:Int32Array}>();
+function vertexNeighbours(indices:Uint32Array,count:number){
+  const cached=neighbourCache.get(indices);
+  if(cached&&cached.start.length===count+1)return cached;
+  const degree=new Int32Array(count+1);
+  for(let i=0;i<indices.length;i++)degree[indices[i]+1]+=2;
+  for(let i=0;i<count;i++)degree[i+1]+=degree[i];
+  const fill=degree.slice(0,count),list=new Int32Array(degree[count]);
+  for(let t=0;t<indices.length;t+=3)for(let k=0;k<3;k++){
+    const v=indices[t+k];list[fill[v]++]=indices[t+(k+1)%3];list[fill[v]++]=indices[t+(k+2)%3];
+  }
+  const result={start:degree,list};neighbourCache.set(indices,result);return result;
+}
+/** Display-only smoothing of a tube wall's normals: neighbours average in only while their normals
+ * stay within crease degrees, so cut caps and junction creases keep their edges while the few-degree
+ * undulations of the fitted sections even out into one highlight. Positions are untouched. */
+export function smoothTubeNormals(normals:Float32Array,indices:Uint32Array,iterations=20,crease=30):Float32Array{
+  const count=normals.length/3,{start,list}=vertexNeighbours(indices,count),limit=Math.cos(crease*Math.PI/180);
+  let current=Float32Array.from(normals);
+  for(let k=0;k<count;k++){const l=Math.hypot(current[3*k],current[3*k+1],current[3*k+2])||1;for(let j=0;j<3;j++)current[3*k+j]/=l;}
+  for(let iteration=0;iteration<iterations;iteration++){
+    const next=new Float32Array(current.length);
+    for(let v=0;v<count;v++){
+      let x=current[3*v],y=current[3*v+1],z=current[3*v+2];
+      for(let e=start[v];e<start[v+1];e++){
+        const u=list[e],c=current[3*v]*current[3*u]+current[3*v+1]*current[3*u+1]+current[3*v+2]*current[3*u+2];
+        const w=Math.max(0,Math.min(1,(c-limit)/(1-limit)))/2;
+        x+=w*current[3*u];y+=w*current[3*u+1];z+=w*current[3*u+2];
+      }
+      const l=Math.hypot(x,y,z)||1;next[3*v]=x/l;next[3*v+1]=y/l;next[3*v+2]=z/l;
+    }
+    current=next;
+  }
+  return current;
 }
 const sitePoint=(id:number,[,ny,nz]:Shape3):Point3=>[Math.floor(id/(ny*nz)),Math.floor(id/nz)%ny,id%nz];
 const edgeKey=(a:number,b:number)=>a<b?`${a},${b}`:`${b},${a}`;
@@ -74,7 +113,8 @@ export function bindNativeVesselSurfaces(source:ViewerVolume,owner:Uint16Array,r
     }
     const scoreLighting=field==='native-probability'&&layer.vesselScoreLighting?.length===sourceCells.length*4
       ?layer.vesselScoreLighting:undefined;
-    if(bound)result.set(name,{mode:'native-probability',region:id,positions,normals,indices,sourceCells,sites,scoreLighting,
+    const vesselClasses=layer.vesselClasses?.length===sourceCells.length?layer.vesselClasses:undefined,tube=!!layer.vesselTags;
+    if(bound)result.set(name,{mode:'native-probability',region:id,positions,normals:tube?smoothTubeNormals(normals,indices):normals,indices,sourceCells,sites,scoreLighting,vesselClasses,tube,
       geometryBinding:layer.vesselGeometryBinding,
       sourceVolumeBoundary:crossesSourceVolumeBoundary(positions,source.shape)});
   }
@@ -165,8 +205,12 @@ function editedNativeWall(wall:EditedWall,rest:RestVessel,owner:Uint16Array,remo
   }
   positions.set(cubes.positions,positionsIJK.length*3);cells.set(cubes.sourceCells,sourceCells.length);
   for(let i=0;i<cubes.indices.length;i++)indices[triangles.length*3+i]=sourceCells.length+cubes.indices[i];
-  return {mode:'edited-native-wall',region,positions,indices,sourceCells:cells,
-    normals:indexedSurfaceNormals(positions,indices,affine),cuboidCount:cuboidSourceCells.length,geometryIdentity:wall.identity,geometryBinding:wall.identity,
+  // A tube wall's edit packet carries the classes of its own vertices; cap boxes take the artery colour.
+  const vesselClasses=wall.vesselClasses&&wall.vesselClasses.length===sourceCells.length
+    ?Uint8Array.from({length:cells.length},(_,i)=>i<sourceCells.length&&wall.vesselClasses![i]?1:0):undefined;
+  const edgeNormals=indexedSurfaceNormals(positions,indices,affine);
+  return {mode:'edited-native-wall',region,positions,indices,sourceCells:cells,vesselClasses,tube:rest.tube,
+    normals:rest.tube?smoothTubeNormals(edgeNormals,indices):edgeNormals,cuboidCount:cuboidSourceCells.length,geometryIdentity:wall.identity,geometryBinding:wall.identity,
     sourceVolumeBoundary:crossesSourceVolumeBoundary(positions,shape),
     scoreLighting:retainedScoreLighting(rest,positions,cells,triangles,sourceCells.length)};
 }
@@ -266,6 +310,7 @@ export function deformOperativeVessel(surface:OperativeVesselSurface,view:Surgic
   const maxMotionWitness=positions&&maxVertex>=0?{sourceCell:surface.sourceCells[maxVertex],vertex:maxVertex,
     restNativeIJK:Array.from(surface.positions.subarray(3*maxVertex,3*maxVertex+3)),
     displayedNativeIJK:Array.from(positions.subarray(3*maxVertex,3*maxVertex+3))}:undefined;
-  return {positions:positions??surface.positions,normals:positions&&surface.mode!=='source-cell-boundary'?indexedSurfaceNormals(positions,surface.indices,affine):surface.normals,
+  const faceted=positions&&surface.mode!=='source-cell-boundary'?indexedSurfaceNormals(positions,surface.indices,affine):undefined;
+  return {positions:positions??surface.positions,normals:faceted?(surface.tube?smoothTubeNormals(faceted,surface.indices):faceted):surface.normals,
     movedVertices,maxVertexOffsetMm,maxMotionWitness};
 }

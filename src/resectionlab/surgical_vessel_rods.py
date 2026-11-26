@@ -10,7 +10,7 @@ from itertools import combinations
 
 import numpy as np
 from scipy import sparse
-from scipy.sparse.linalg import factorized
+from scipy.sparse.linalg import factorized, spsolve
 from scipy.spatial.transform import Rotation
 
 from .surgical_glioma_materials import PROPERTY, oriented_source_cells
@@ -51,6 +51,11 @@ MAX_COMPRESSION = .25
 MIN_CENTERLINE_STRETCH = .7
 SOLVER_ITERATIONS = 4
 CONTACT_MARGIN_MM = 1e-7
+# Tube walls: the working shell, not only the axis, stays out of the wall.
+SHELL_TOLERANCE_MM = .05
+SHELL_MARGIN_MM = .01
+SHELL_ITERATIONS = 6
+SHELL_SMOOTHING = .1
 
 
 def section_profile(*, vessel_contact=False, soft_contact=False, tissue_friction=None, bounded_tissue=False):
@@ -408,11 +413,82 @@ def check_working_axis(engine, key, operation):
             raise ValueError('VESSEL_COMPLIANT_CONTACT_LIMIT: working axis entered the retained vessel')
 
 
+def _tube_frame(frame):
+    return frame[0].source.geometry_policy == surfaces.TUBE_GEOMETRY
+
+
+def shell_contact_enabled(engine):
+    """Whether any wall is a centerline-tube wall, which keeps the whole working shell outside it."""
+    return any(wall.geometry_policy == surfaces.TUBE_GEOMETRY for wall in getattr(engine.scene, '_vessel_source_walls', ()))
+
+
 def _blocked_working_axis(engine, frames, tools):
-    for hand, a, b, _, _ in tools:
-        if any(len(surfaces.query(engine, frame, a, b, 0.)[0]) for frame in frames):
-            return hand
+    for hand, a, b, calibre, _ in tools:
+        for frame in frames:
+            reach = max(calibre - SHELL_TOLERANCE_MM, 0.) if _tube_frame(frame) else 0.
+            if len(surfaces.query(engine, frame, a, b, reach)[0]):
+                return hand
     return None
+
+
+def _wall_vertices(frame):
+    rest, faces, _, offsets = surfaces.sweep_mesh(frame)
+    vertices = np.zeros((len(offsets), 3))
+    for corner in range(3):
+        vertices[faces[:, corner]] = rest[:, corner]
+    return vertices + offsets
+
+
+def _project_shell(engine, rods, position, radius, bonds, retained, tools):
+    """Move rods, and with them the transported wall, out of each working shell.
+
+    A damped least-squares step maps the penetration of every wall vertex in a
+    shell to rod displacements through the wall's own vertex transport.
+    """
+    columns = np.asarray(retained, dtype=int)
+    hands = []
+    if not tools or not len(columns):
+        return position, hands
+    # Bonded sites move together, as a rod would, rather than shearing the wall.
+    local = np.full(len(position), -1)
+    local[columns] = np.arange(len(columns))
+    links = np.array([(local[rods.bonds[k][0]], local[rods.bonds[k][1]]) for k in bonds], dtype=int).reshape(-1, 2)
+    links = links[np.all(links >= 0, axis=1)]
+    difference = sparse.coo_matrix((np.r_[np.ones(len(links)), -np.ones(len(links))],
+                                    (np.r_[np.arange(len(links)), np.arange(len(links))], np.r_[links[:, 0], links[:, 1]])),
+                                   shape=(len(links), len(columns))).tocsc()
+    bending = (difference.T @ difference).tocsc()
+    for _ in range(SHELL_ITERATIONS):
+        rows, moves = [], []
+        for frame in surfaces.frames(engine, rods, position, radius, bonds):
+            motion = frame[0].vertex_motion
+            if motion is None or not _tube_frame(frame):
+                continue
+            vertices = _wall_vertices(frame)
+            for hand, a, b, calibre, _ in tools:
+                low, high = np.minimum(a, b) - calibre, np.maximum(a, b) + calibre
+                near = np.flatnonzero(np.all((vertices >= low) & (vertices <= high), axis=1))
+                axis = b - a
+                fraction = np.clip((vertices[near] - a) @ axis / max(axis @ axis, 1e-30), 0., 1.)
+                away = vertices[near] - (a + fraction[:, None] * axis)
+                distance = np.linalg.norm(away, axis=1)
+                depth = calibre + SHELL_MARGIN_MM - distance
+                hit = (depth > 0.) & (distance > 1e-9)
+                if hit.any():
+                    if hand not in hands:
+                        hands.append(hand)
+                    rows.append(motion.binding.translation[near[hit]])
+                    moves.append(away[hit] / distance[hit, None] * depth[hit, None])
+        if not rows:
+            break
+        matrix = sparse.vstack(rows).tocsc()[:, columns]
+        normal = (matrix.T @ matrix).tocsc()
+        scale = max(float(normal.diagonal().max(initial=0.)), 1e-12)
+        step = spsolve(normal + SHELL_SMOOTHING * scale * bending + 1e-3 * scale * sparse.identity(len(columns), format='csc'),
+                       matrix.T @ np.vstack(moves))
+        position = position.copy()
+        position[columns] += np.asarray(step).reshape(len(columns), 3)
+    return position, hands
 
 
 def _working_axis_error(hand):
@@ -782,6 +858,7 @@ def tick(engine, dt, *, tool_motion=None, excluded_tissue=(), tool_clock_hand=No
 
     swept = wall_sweep_enabled(engine)
     constrain_axes = working_axis_constraint_enabled(engine)
+    shell = constrain_axes and section is not None and shell_contact_enabled(engine)
     prior_wall = tuple(surfaces.frames(engine, rods, position, radius, bonds)) if swept else None
     soft_friction = section.get('tissueFrictionCoefficient', 0.) if soft_contact else 0.
     soft_contacts = tissue_contact.contacts(
@@ -843,6 +920,10 @@ def tick(engine, dt, *, tool_motion=None, excluded_tissue=(), tool_clock_hand=No
             position = solve(base + transpose @ target + force)
         if section is None:
             position = _valid_motion(engine, rods, previous, position, retained)
+        solved = position
+        if shell and tools:
+            # Contact, compression and the certified fraction all use the pose outside the shells.
+            position, _ = _project_shell(engine, rods, position, radius, bonds, retained, tools)
         rate = (position - previous) / STEP_SECONDS
         _, compression_target, touched = contact(position, radius, rate, measure_compression=True)
         if section is not None:
@@ -861,10 +942,20 @@ def tick(engine, dt, *, tool_motion=None, excluded_tissue=(), tool_clock_hand=No
             # Preserve the first obstacle- and sweep-certified fraction of
             # the increment. An uncertifiable motion remains transactional.
             delta, radial_delta = position - previous, proposed_radius - radius
-            limited_axis = None
+            limited_axis, accepted = None, 0.
             for fraction in (1., .5, .25, .125, .0625, .03125, .015625):
                 trial = previous + fraction * delta
                 trial_radius = radius + fraction * radial_delta
+                if shell and tools:
+                    projected, hands = _project_shell(engine, rods, trial, trial_radius, bonds, retained, tools)
+                    if projected is not trial:
+                        # A shell push the section limits cannot certify stops the tool instead.
+                        if not _valid_section_motion(engine, rods, previous, projected, retained, first, second,
+                                                     reference_length) or not wall_sweep.is_clear(
+                                engine, prior_wall, tuple(surfaces.frames(engine, rods, projected, trial_radius, bonds))):
+                            limited_axis = hands[0]
+                            continue
+                        trial = projected
                 if not _valid_section_motion(engine, rods, previous, trial, retained, first, second, reference_length):
                     continue
                 next_wall = tuple(surfaces.frames(engine, rods, trial, trial_radius, bonds))
@@ -884,6 +975,7 @@ def tick(engine, dt, *, tool_motion=None, excluded_tissue=(), tool_clock_hand=No
                     limited_axis = hand
                     continue
                 position, proposed_radius, prior_wall = trial, trial_radius, next_wall
+                accepted = fraction
                 if corrected or fraction < 1.:
                     _, _, touched = contact(position, proposed_radius, (position - previous) / STEP_SECONDS,
                                             measure_compression=True)
@@ -906,7 +998,9 @@ def tick(engine, dt, *, tool_motion=None, excluded_tissue=(), tool_clock_hand=No
             wall_sweep.require_clear(engine, prior_wall, next_wall)
             prior_wall = next_wall
         radius = proposed_radius
-        old_rate = (position - previous) / STEP_SECONDS
+        # A shell projection is a constraint correction, not solver motion: it stays out of the
+        # inertial term, so the carried velocity is the accepted share of the compliant step.
+        old_rate = ((accepted * (solved - previous)) if shell and tools else (position - previous)) / STEP_SECONDS
         if attachment_displacement is not None:
             attachment_displacement += position - rods.rest
         for interface, reaction in zip(soft_contacts, reactions):

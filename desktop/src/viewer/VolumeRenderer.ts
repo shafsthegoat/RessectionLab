@@ -8,7 +8,7 @@ import {TransformControls} from "three/addons/controls/TransformControls.js";
 import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
 import {cachedSurface,retainSurface} from './surfaceCache';
 import type {SurfaceDiagnostics} from './surfacePolicy';
-import {retainedFieldOptics,SurgicalWetting} from "./surgicalFieldOptics";
+import {applyTubeVesselColor,applyWetVesselFinish,retainedFieldOptics,SurgicalWetting} from "./surgicalFieldOptics";
 import {surgicalToolMesh,surgicalEffectGroup,surgicalToolGeometryKey,updateSurgicalToolMesh,updateSurgicalToolAnimation} from "./surgicalGeometry";
 import {surgicalFlowGroup,updateSurgicalFlowAnimation} from './surgicalFlowGeometry';
 import type {SurgicalInteraction} from "../surgical-types";
@@ -788,6 +788,7 @@ export class VolumeRenderer {
     if(layer.generatedFinish)generatedTissueFinish(mesh.material,displayKind,false);
     applyOperativeSurface(mesh.material,layer.displayKind??layer.kind,this.workspaceSettings);
     if(operativeVessel&&this.workspaceSettings.layerColor?.[layer.name])mesh.material.color.set(appearance.color);
+    if(operativeVessel&&layer.vesselTags){mesh.userData.vesselClasses=buffers.vesselClasses;applyWetVesselFinish(mesh.material);if(!this.workspaceSettings.layerColor?.[layer.name])applyTubeVesselColor(mesh,buffers.vesselClasses);}
     if(this.fieldOptics?.texture)this.surgicalWetting?.install(mesh.material);
     if(vessel){
       const grid=layer.surface&&!operativeVessel?this.vesselLabelGrid(this.volume.compartments.indexOf(layer)):undefined;
@@ -1294,6 +1295,7 @@ export class VolumeRenderer {
         applyOperativeSurface(material,layer.displayKind??layer.kind,settings);
         const operativeVessel=modeledAnatomy(this.volume)?.vesselSurfaces?.has(layer.name);
         if(operativeVessel&&settings.layerColor?.[layer.name])material.color.set(appearance.color);
+        if(operativeVessel&&layer.vesselTags){applyWetVesselFinish(material);if(!settings.layerColor?.[layer.name])applyTubeVesselColor(mesh,mesh.userData.vesselClasses);}
         if(surfaceKind(layer.kind)==='vessel'&&!operativeVessel){
           if(this.volume.displayIdentity)applyCtaVesselFinish(material,ctaDisplayKind(layer),settings,this.volume.modality);
           if(layer.surface)setVesselDepthAppearance(material,settings,layer,this.vesselLabelGrid(index));

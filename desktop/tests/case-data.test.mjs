@@ -85,6 +85,30 @@ test("native vessel score lighting is optional and must match the declared verti
   layer.vesselSurface.scoreLighting=typed('float32','lighting',[2,4]);
   assert.throws(()=>validateCaseDescriptor(input),/score lighting disagrees/);
 });
+test("centerline tube tags are an optional float volume on the case grid", async () => {
+  const input=fixture(), layer=input.compartments[0];
+  input.metadata.anatomy_layers={enhancing_target:{kind:'vessel'}};
+  const typed=(dtype,assetId,shape)=>({...descriptor(dtype,assetId),shape,byteLength:shape.reduce((a,b)=>a*b)*4});
+  layer.vesselSurface={positions:typed('float32','positions',[3,3]),indices:typed('uint32','indices',[1,3]),
+    normals:typed('float32','normals',[3,3]),sourceCells:typed('uint32','owners',[3]),vesselTags:typed('float32','tags',[2,2,2]),
+    vesselClasses:{...descriptor('uint8','classes'),shape:[3],byteLength:3}};
+  const tags=Float32Array.of(0,0,0,.25,0,.5,1,1);
+  const bytes=array=>new Uint8Array(array.buffer);
+  const supplied=api({positions:bytes(Float32Array.of(1,.8,1,1,1,.8,.8,1,1)),indices:bytes(Uint32Array.of(0,1,2)),
+    normals:bytes(Float32Array.of(0,0,1,0,1,0,1,0,0)),owners:bytes(Uint32Array.of(7,7,7)),tags:bytes(tags),classes:Uint8Array.of(0,1,0)});
+  const hydrated=(await hydrateCase(input,supplied)).compartments[0];
+  assert.deepEqual(hydrated.vesselTags,tags);
+  assert.deepEqual([...hydrated.vesselClasses],[0,1,0]);
+  tags[7]=1.5;
+  await assert.rejects(hydrateCase(input,supplied),/Invalid vessel tag values/);
+  layer.vesselSurface.vesselClasses={...descriptor('uint8','classes'),shape:[2],byteLength:2};
+  assert.throws(()=>validateCaseDescriptor(input),/Invalid vessel classes/);
+  delete layer.vesselSurface.vesselClasses;
+  layer.vesselSurface.vesselTags=typed('float32','tags',[2,2,1]);
+  assert.throws(()=>validateCaseDescriptor(input),/Invalid vessel tags/);
+  delete layer.vesselSurface.vesselTags;
+  assert.equal((await hydrateCase(input,supplied)).compartments[0].vesselTags,undefined);
+});
 test("LPS is converted once without resampling voxel data", async () => {
   const input = fixture();
   input.frame = "LPS+";

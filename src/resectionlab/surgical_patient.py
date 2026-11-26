@@ -285,7 +285,7 @@ def surgical_environment_options(collection, *, check=lambda: None):
 def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
                              resolution_mm=1., allow_unreviewed_registration=False,
                              tissue_physics=None, require_complete=True, approach=None,
-                             native_wall_center=None, check=lambda: None):
+                             native_wall_center=None, vessel_geometry=None, check=lambda: None):
     """Save patient.ressectionlab and report.json; return the auditable report.
 
     layer_ids maps exactly brain/tumor/bone/vessels to existing collection IDs.
@@ -329,6 +329,11 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
             'targetBinding': binding, **{key: copy.deepcopy(route[key]) for key in
                 ('id', 'name', 'sourceSnapshotId', 'targetLayerId', 'parameterHash', 'measurementHash',
                  'entry', 'target', 'radiusMm', 'direction')}}
+    if vessel_geometry is not None:
+        from .surgical_vessel_surface import TUBE_GEOMETRY
+
+        if vessel_geometry != TUBE_GEOMETRY or native_wall_center is None:
+            raise ValueError('A vessel geometry option requires a local native wall and the current tube model id')
     planned = selected_approach() if approach is not None else None
     manifest_hash = _sha(manifest_path)
     manifest = copy.deepcopy(collection.document)
@@ -467,21 +472,30 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
         from .surgical_motion import AXIAL_SWEEP_PROPERTY, AXIAL_SWEEP_POLICY
         from .surgical_patient_wall import qualifying_properties
         from .surgical_vessel_rods import STEP_SECONDS, TOOL_CONTACT_CLOCK_PROPERTY, TOOL_CONTACT_CLOCK_POLICY
-        from .surgical_vessel_surface import GEOMETRY_PROPERTY
+        from .surgical_vessel_surface import GEOMETRY_PROPERTY, TUBE_GEOMETRY, TUBE_MODELS
 
         check()
         brain_profile = physics.get('brain')
         reciprocal = physics_key == 'tissuePhysicsV2' and (
             brain_profile is None or isinstance(brain_profile, dict) and brain_profile.get('fixedStepSeconds') == STEP_SECONDS)
-        wall_properties, binding = qualifying_properties(local_wall, masks, rows['vessels'], manifest['patient_id'],
-                                                         reciprocal_attachments=reciprocal,
-                                                         working_axis_constraint=not planned and physics_key == 'tissuePhysicsV2')
+        if vessel_geometry == TUBE_GEOMETRY and (planned or physics_key != 'tissuePhysicsV2'):
+            raise ValueError('The tube vessel geometry requires V2 tissue physics and the working-axis constraint '
+                             '(an unplanned local native wall), which carry its shell contact')
+        wall_properties, binding, tube_models = qualifying_properties(
+            local_wall, masks, rows['vessels'], manifest['patient_id'], reciprocal_attachments=reciprocal,
+            working_axis_constraint=not planned and physics_key == 'tissuePhysicsV2',
+            tube_geometry=vessel_geometry == TUBE_GEOMETRY)
+        if tube_models is not None:
+            wall_metadata[TUBE_MODELS] = tube_models
         adapter['nativeWall'] = binding
         if native_alignment is not None:
             adapter['nativeWallAlignmentReview'] = copy.deepcopy(native_alignment)
         wall_metadata[GEOMETRY_PROPERTY] = binding['geometryPolicy']
         adapter['resolutionMm'] = np.linalg.norm(target_affine[:3, :3], axis=0).tolist()
-        adapter['representations']['nativeVesselWall'] = 'bounded conditioning of 0.5 score crossings on the unchanged native crop; accepted vertices shared by contact and rendering'
+        adapter['representations']['nativeVesselWall'] = (
+            'centerline tubes fitted to the 0.5 score crossings; one stored model gives the contact and rendering wall, rod sites and tags'
+            if tube_models is not None else
+            'bounded conditioning of 0.5 score crossings on the unchanged native crop; accepted vertices shared by contact and rendering')
         properties.update(wall_properties)
         if not planned:
             properties[AXIAL_SWEEP_PROPERTY] = AXIAL_SWEEP_POLICY
@@ -535,7 +549,7 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
 
 def prepare_surgical_environment(collection_path, output_dir, *, layer_ids,
                                  resolution_mm=1., allow_unreviewed_registration=False, approach=None,
-                                 native_wall_center=None, check=lambda: None):
+                                 native_wall_center=None, vessel_geometry=None, check=lambda: None):
     """One interoperable export path for desktop preparation, CLI, and RL.
 
     Missing roles are explicit. Source manifests are never rewritten. The saved
@@ -549,7 +563,7 @@ def prepare_surgical_environment(collection_path, output_dir, *, layer_ids,
     report = prepare_surgical_patient(collection_path, output_dir, layer_ids=layer_ids,
         resolution_mm=resolution_mm, allow_unreviewed_registration=allow_unreviewed_registration,
         tissue_physics=default_profile(), require_complete=False, approach=approach,
-        native_wall_center=native_wall_center, check=check)
+        native_wall_center=native_wall_center, vessel_geometry=vessel_geometry, check=check)
     case = load_case(report['casePath'])
     scene = standardize(from_case(case))
     from .surgical_rl_protection import GuardConfig

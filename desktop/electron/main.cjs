@@ -298,7 +298,7 @@ function bindOperations() {
   });
   handle('prepareSurgicalEnvironment', async args=>{
     if(!await rehearsalUnsaved.allowNavigation())return null;
-    args=plainArgs(args,['collectionId','snapshotId','layers','allowUnreviewedRegistration','approach','nativeWallCenter']);
+    args=plainArgs(args,['collectionId','snapshotId','layers','allowUnreviewedRegistration','approach','nativeWallCenter','vesselGeometry']);
     const result=await engine.request('prepareSurgicalEnvironment',args,300000);rememberReplayMode(result);currentCasePath=null;return result;
   });
   handle('inspectNativeWallSource', async args=>{

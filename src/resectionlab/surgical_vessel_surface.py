@@ -7,15 +7,20 @@ import numpy as np
 from scipy import ndimage
 from scipy.spatial import cKDTree
 
-from .core import immutable_array, semantic_digest
+from .core import immutable_array, semantic_digest, thaw_json
 from .geometry import _segment_cell_distances
 from . import surgical_vessel_vertex_motion as vertex_kinematics
+from . import vessel_tubes
 
 
 GEOMETRY_PROPERTY = 'operative_vascular_geometry'
 CONDITIONED_GEOMETRY = 'source-conditioned-v1'
 ISOLATED_SOURCE_GEOMETRY = 'source-conditioned-v2'
 CONDITIONED_GEOMETRIES = (CONDITIONED_GEOMETRY, ISOLATED_SOURCE_GEOMETRY)
+# Centerline tubes: one stored model gives the wall, rod sites and soft tags.
+TUBE_GEOMETRY = vessel_tubes.MODEL
+TUBE_MODELS = 'vessel_tube_models'
+WALL_GEOMETRIES = (*CONDITIONED_GEOMETRIES, TUBE_GEOMETRY)
 
 
 @dataclass(frozen=True)
@@ -30,6 +35,7 @@ class SourceWall:
     geometry_binding: str | None = None
     positions_ijk: np.ndarray | None = None
     geometry_policy: str | None = None
+    tube_model: object | None = None
 
 
 def source_cell_radius(scene):
@@ -37,9 +43,61 @@ def source_cell_radius(scene):
     return float(np.linalg.norm(corners, axis=1).max())
 
 
-def _wall_geometry(scores, mask, affine, policy, *, native_mask=None, cancelled=None):
+def tube_signal(scores, mask):
+    """Score field whose half level agrees with the (possibly edited) mask."""
+    below = np.nextafter(np.float32(.5), np.float32(0.))
+    return np.where(mask, np.maximum(scores, .5), np.minimum(scores, below)).astype(np.float32)
+
+
+def build_tube_model(scores, mask, affine, *, cancelled=None):
+    def check():
+        if cancelled is not None and cancelled():
+            raise InterruptedError('Vascular wall preparation cancelled')
+    return vessel_tubes.extract(np.asarray(mask, bool), affine, probability=tube_signal(scores, mask), check=check)
+
+
+def stored_tube_model(model):
+    """JSON form of a tube model without its timing, so equal sources store equal models."""
+    value = model.to_dict()
+    value['receipt'] = {key: item for key, item in value['receipt'].items() if key != 'seconds'}
+    return value
+
+
+def tube_model_digest(value):
+    return semantic_digest(thaw_json(value))
+
+
+def _tube_wall(model, mask):
+    from .anatomy_geometry import normals as index_normals
+
+    wall = vessel_tubes.mesh(model)
+    if not len(wall.faces):
+        return None
+    ijk = wall.positions_ijk.astype(np.float32)
+    faces = wall.faces.astype(np.int64)
+    # Each vertex is owned by the nearest positive source cell.
+    shape = np.asarray(mask.shape)
+    nearest = ndimage.distance_transform_edt(~mask, sampling=np.linalg.norm(model.affine[:3, :3], axis=0),
+                                             return_distances=False, return_indices=True)
+    cells = np.clip(np.rint(ijk).astype(np.int64), 0, shape - 1)
+    owner = nearest[(slice(None), *cells.T)].T
+    source_cells = np.ravel_multi_index(owner.T, mask.shape).astype(np.uint32)
+    # Field-gradient normals as index-space covectors, on the side of the face normals.
+    smooth = wall.normals @ model.affine[:3, :3]
+    smooth /= np.maximum(np.linalg.norm(smooth, axis=1), 1e-20)[:, None]
+    if np.sum(smooth * index_normals(ijk, faces)) < 0:
+        smooth = -smooth
+    return ijk, faces, smooth.astype(np.float32), source_cells
+
+
+def _wall_geometry(scores, mask, affine, policy, *, native_mask=None, cancelled=None, tube_model=None):
     from .anatomy_geometry import vascular_mesh_source_cells, vascular_probability_mesh
 
+    if policy == TUBE_GEOMETRY:
+        if not mask.any():
+            return None
+        model = tube_model if tube_model is not None else build_tube_model(scores, mask, affine, cancelled=cancelled)
+        return _tube_wall(model, mask)
     if policy is None:
         raw = vascular_probability_mesh(scores, mask)
         return None if raw is None else (*raw, vascular_mesh_source_cells(raw[0], mask))
@@ -53,10 +111,26 @@ def _wall_geometry(scores, mask, affine, policy, *, native_mask=None, cancelled=
     return None if mesh is None else (mesh.positions, mesh.indices, mesh.normals, mesh.source_cells)
 
 
-def case_wall_geometry(case, name, *, cancelled=None):
+def case_tube_model(case, name):
+    """The stored tube model of a compartment, checked against its grid."""
+    stored = case.metadata.get(TUBE_MODELS, {}).get(name)
+    if stored is None:
+        return None
+    model = vessel_tubes.TubeModel.from_dict(thaw_json(stored))
+    if tuple(model.shape) != case.compartments[name].shape or not np.allclose(model.affine, case.affine, atol=1e-9, rtol=0):
+        raise ValueError('VASCULAR_TUBE_MODEL_REQUIRES_THE_CASE_GRID')
+    return model
+
+
+def case_wall_geometry(case, name, *, cancelled=None, tube_model=None):
     """Canonical contour and source owner indices for contact and rendering."""
-    return _wall_geometry(case.vascular_probabilities[name], case.compartments[name], case.affine,
-                          case.metadata.get(GEOMETRY_PROPERTY), cancelled=cancelled)
+    policy = case.metadata.get(GEOMETRY_PROPERTY)
+    if policy == TUBE_GEOMETRY and tube_model is None:
+        tube_model = case_tube_model(case, name)
+    if policy == TUBE_GEOMETRY and tube_model is None:
+        raise ValueError('VASCULAR_TUBE_WALL_REQUIRES_ITS_STORED_MODEL')
+    return _wall_geometry(case.vascular_probabilities[name], case.compartments[name], case.affine, policy,
+                          cancelled=cancelled, tube_model=tube_model if policy == TUBE_GEOMETRY else None)
 
 
 def bind_case(scene, case):
@@ -69,7 +143,8 @@ def bind_case(scene, case):
         mask = case.compartments[name]
         if np.any(scene.labels[mask] != region['id']):
             raise ValueError('VASCULAR_WALL_REQUIRES_EXACT_NATIVE_MATERIAL_OWNERSHIP')
-        result = case_wall_geometry(case, name)
+        tube = case_tube_model(case, name) if case.metadata.get(GEOMETRY_PROPERTY) == TUBE_GEOMETRY else None
+        result = case_wall_geometry(case, name, tube_model=tube)
         if result is None:
             raise ValueError('VASCULAR_WALL_REQUIRES_VALID_SOURCE_PROBABILITIES')
         ijk, triangles, _, owners = result
@@ -80,7 +155,7 @@ def bind_case(scene, case):
                                 immutable_array(triangles), immutable_array(np.searchsorted(cells, owners)),
                                 case.vascular_probabilities[name],
                                 vertex_kinematics.geometry_binding(ijk, triangles, owners), immutable_array(ijk),
-                                case.metadata.get(GEOMETRY_PROPERTY)))
+                                case.metadata.get(GEOMETRY_PROPERTY), tube))
     scene._vessel_source_walls = tuple(walls)
     scene._vessel_source_wall_proof = (scene.identity, scene._vessel_source_walls)
 
@@ -142,6 +217,7 @@ class EditedWall:
     tree: cKDTree
     extent: float
     cuboids: np.ndarray
+    tube: dict | None = None
 
 
 def definitions(engine, rods):
@@ -443,7 +519,9 @@ def _edit_wall(engine, rods, wall, removed, cuts):
         native = mask.copy() if source.geometry_policy == ISOLATED_SOURCE_GEOMETRY else None
         mask.flat[list(retired)] = False
         if mask.any():
-            geometry = _wall_geometry(source.scores, mask, scene.affine, source.geometry_policy, native_mask=native)
+            # A tube wall is never refitted: the stored field is cut by the removed cells.
+            geometry = _wall_geometry(source.scores, mask, scene.affine, source.geometry_policy, native_mask=native,
+                                      tube_model=None if source.tube_model is None else removed_tube(source, scene.shape, retired))
             if geometry is None:
                 raise ValueError('VESSEL_WALL_SWEEP_UNSUPPORTED: retained score-wall contour is unavailable')
             ijk, faces, _, source_cells = geometry
@@ -464,7 +542,7 @@ def _edit_wall(engine, rods, wall, removed, cuts):
         axis /= np.linalg.norm(axis)
         reach = 1.65 * np.max(rods.radius[[i, j]]) + wall.cell_extent
         row_a, row_b = np.searchsorted(source.cells, [rods.cells[i], rods.cells[j]])
-        conditioned = source.geometry_policy in CONDITIONED_GEOMETRIES
+        conditioned = source.geometry_policy in WALL_GEOMETRIES
         # A conditioned crossing can graze a plane at the original midpoint.
         # Move the clipping bands within the kerf so the declared point of
         # transection remains inside the gap and both rings close.
@@ -502,9 +580,10 @@ def _edit_wall(engine, rods, wall, removed, cuts):
     world = ijk @ scene.affine[:3, :3].T + scene.affine[:3, 3]
     world_faces = world[faces]
     centers = world_faces.mean(axis=1)
-    edited = EditedWall(semantic_digest([scene.identity, key]), ijk, faces, owners, world_faces,
-                        cKDTree(centers), float(np.linalg.norm(world_faces - centers[:, None], axis=2).max(initial=0.)),
-                        cuboids)
+    tube = None if source.tube_model is None else tube_edit(removed_tube(source, scene.shape, retired), ijk)
+    edited = EditedWall(semantic_digest([scene.identity, key, *([tube['tubeModelDigest']] if tube else [])]), ijk, faces, owners,
+                        world_faces, cKDTree(centers),
+                        float(np.linalg.norm(world_faces - centers[:, None], axis=2).max(initial=0.)), cuboids, tube)
     engine._vessel_edited_walls = {**{old: entry for old, entry in cache.items() if old[0] != label}, key: edited}
     return edited
 
@@ -701,6 +780,36 @@ def displacements(frames):
     return result
 
 
+def removed_tube(source, shape, retired):
+    """The stored tube model with its edit record: removed cells and their faces open to non-vessel."""
+    return source.tube_model.with_removed(retired, open_faces(source.cells, shape, retired))
+
+
+def open_faces(cells, shape, retired):
+    vessel = np.zeros(shape, bool)
+    vessel.flat[cells] = True
+    ijk = np.column_stack(np.unravel_index(np.asarray(retired, np.int64), shape))
+    flags = np.zeros(len(ijk), np.int64)
+    for axis in range(3):
+        for side, bit in ((-1, 2 * axis), (1, 2 * axis + 1)):
+            step = ijk.copy()
+            step[:, axis] += side
+            inside = (step[:, axis] >= 0) & (step[:, axis] < shape[axis])
+            neighbour = np.zeros(len(ijk), bool)
+            neighbour[inside] = vessel[tuple(step[inside].T)]
+            flags |= (~neighbour).astype(np.int64) << bit
+    return flags
+
+
+def tube_edit(model, positions_ijk):
+    """Edit record, digest and per-vertex vein flags of an edited tube wall, all from the stored model."""
+    world = positions_ijk.astype(float) @ model.affine[:3, :3].T + model.affine[:3, 3]
+    owners = model.evaluate(world, reach=4 * float(model.spacing.max()), raw=True)[1]
+    veins = np.array([kind == 'vein' for kind in model.edge_class] + [False])[owners]
+    return {'tubeRemovedCells': list(model.removed), 'tubeModelDigest': tube_model_digest(stored_tube_model(model)),
+            'vesselClasses': veins.astype(int).tolist()}
+
+
 def geometry_metadata(frames):
     modes = {}
     edits = {}
@@ -712,6 +821,7 @@ def geometry_metadata(frames):
             edits[label] = {'identity': edited.identity, 'positionsIJK': edited.positions_ijk.tolist(),
                             'triangles': edited.triangles.tolist(),
                             'sourceCells': wall.source.cells[edited.owners].tolist(),
+                            **(edited.tube or {}),
                             **({'cuboidSourceCells': wall.source.cells[edited.cuboids].tolist()} if len(edited.cuboids) else {})}
         else:
             modes[label] = 'native-probability-wall'

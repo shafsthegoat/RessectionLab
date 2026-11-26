@@ -252,7 +252,8 @@ def dispatch(session, operation, args, request, progress):
         close_source_inspection(session, args['collectionId'])
         return True
     if operation == 'prepareSurgicalEnvironment':
-        _keys(args, {'collectionId', 'snapshotId', 'layers', 'allowUnreviewedRegistration', 'approach', 'nativeWallCenter'})
+        _keys(args, {'collectionId', 'snapshotId', 'layers', 'allowUnreviewedRegistration', 'approach', 'nativeWallCenter',
+                     'vesselGeometry'})
         from .surgical_patient import prepare_surgical_environment
         from .imaging import load_case, read_case_artifacts
         collection = getattr(session, 'anatomy_collections', {}).get(args['collectionId'])
@@ -268,7 +269,8 @@ def dispatch(session, operation, args, request, progress):
         with tempfile.TemporaryDirectory(prefix='surgical-environment-') as directory:
             report = prepare_surgical_environment(collection.root, directory, layer_ids=args['layers'],
                 resolution_mm=1., allow_unreviewed_registration=args.get('allowUnreviewedRegistration', False),
-                approach=args.get('approach'), native_wall_center=center, check=request.check)
+                approach=args.get('approach'), native_wall_center=center,
+                vessel_geometry=args.get('vesselGeometry'), check=request.check)
             if report['sourceCollectionHash'] != args['snapshotId']:
                 raise ValueError('Source collection changed during environment preparation')
             request.check()

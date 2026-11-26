@@ -531,7 +531,8 @@ export class ScanVolumeRenderer {
       if(cls===null||visible[layer.name]===false||layerAppearance(layer.name,layer.color,settings,layer.displayKind??layer.kind).opacity<=0)continue;
       const labels=layer.labelSet?this.labelSets?.find(set=>set.id===layer.labelSet)?.data:undefined;
       if(layer.labelSet&&(!labels||layer.labelValue===undefined))continue;
-      layers.push({cls,source:labels?{kind:'labels',labels,value:layer.labelValue!}:{kind:'mask',mask:layer.mask}});
+      const tags=layer.vesselTags?.length===layer.mask.length?layer.vesselTags:undefined;
+      layers.push({cls,source:tags?{kind:'probability',probability:tags}:labels?{kind:'labels',labels,value:layer.labelValue!}:{kind:'mask',mask:layer.mask}});
       names.push(layer.name);
     }
     const key=JSON.stringify(names.map((name,i)=>[name,layers[i].cls,sourceIdentity(layers[i].source)]));

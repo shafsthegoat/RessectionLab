@@ -7,7 +7,7 @@ import './native-planning-presentation.css';
 const roles:EnvironmentRole[]=['brain','tumor','bone','vessels'];
 const roleNames:Record<EnvironmentRole,string>={brain:'Brain',tumor:'Tumor',bone:'Bone',vessels:'Vessels'};
 export interface EnvironmentApproach {approachId:string;measurementHash?:string;parameterHash:string;targetLayerId:string;snapshotId:string}
-export interface EnvironmentPreparation {approach?:EnvironmentApproach;collectionId:string;snapshotId:string;layers:Record<string,string>;allowUnreviewedRegistration:boolean;nativeWallCenter?:Point3}
+export interface EnvironmentPreparation {approach?:EnvironmentApproach;collectionId:string;snapshotId:string;layers:Record<string,string>;allowUnreviewedRegistration:boolean;nativeWallCenter?:Point3;/** Engine tube model id (`vessel_tubes.MODEL`); omitted keeps the default wall. */ vesselGeometry?:string}
 const pairId=(pair:NativeWallPair)=>JSON.stringify([pair.brainLayerId,pair.vesselLayerId]);
 
 export function EnvironmentPreparationPanel({binding,approach,routeName,measurements,options,busy,sourceEditing,patientCursor,onPrepare,onAnatomy}:{

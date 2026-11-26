@@ -80,6 +80,10 @@ export interface ViewerVolume {
     vesselGeometryBinding?:string;
     /** Optional source-score display covector and weight (xyzw) per original wall vertex. */
     vesselScoreLighting?:Float32Array;
+    /** Soft vessel tag in [0, 1] per voxel of this grid, from the stored centerline tube model. */
+    vesselTags?:Float32Array;
+    /** Per wall vertex: 1 vein, 0 artery or unclassified, from the stored tube model's edge classes. */
+    vesselClasses?:Uint8Array;
   }>;
 }
 

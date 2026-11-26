@@ -93,7 +93,7 @@ drives the hidden desktop harness and `resectionlab.vascular_parity`.
 | 1 Cinematic renderer | Soft-label tagging, tricubic intensity, progressive path tracing, hybrid shading, HDR environment; WebGPU versus WebGL2 recorded | Interaction p95 at most 16.7 ms; settle at most 1.5 s on CTA-A; blind crispness and depth at least 4 | gates not met 2026-11-25; kept behind the Volume lighting setting |
 | 2 Segmentation | TopBrain 2025 top-three models, ensembled with vesselFM where connected to the named tree; soft probabilities kept; CTA labels never applied to MRA | Better Dice, clDice and Betti than vesselFM alone on the held-out cases | run 2026-11-26; one Betti count not met after two attempts, see results |
 | 3 Cleanup | Root-reachable components by default, the rest behind a review toggle; signal-supported bridging; caliber LOD; arteries red, veins blue | Zero floating components by default; no named major vessel lost | gates met on the drawn meshes 2026-11-26; see results |
-| 4 Sim geometry | Centerline and radius implicit tubes shared by drawing, collision, rods and tags | Deviation at most 0.5 voxel; no self-intersection; tools displace vessels | not started |
+| 4 Sim geometry | Centerline and radius implicit tubes shared by drawing, collision, rods and tags | Deviation at most 0.5 voxel; no self-intersection; tools displace vessels | gates met on TopCoW 2026-11-26 behind the tube geometry option; see results |
 | 5 Integration | Volume, tubes, tools and clipping in the packaged build; films and pull request | All earlier gates; blind scores at least 4 | not started |
 
 A phase that fails its gate twice keeps its best version behind a toggle and
@@ -317,3 +317,64 @@ result the default. Captures then showed two display faults that numbers had
 missed: CTA arteries drawn in the mauve reserved for unclassified vessels,
 and the small-vessel layer drawn as about 200 shells around the tree. Both
 are fixed.
+
+## Phase 4 results
+
+`resectionlab.vessel_tubes` stores one model per vessel layer
+(`centerline-tubes-v2`): a centerline graph from the existing source-branch
+skeleton, and per sample a radius plus angular harmonics up to order six in a
+rotation-minimising frame, with end-cap terms at tips. The surface is the
+hard union of the fitted segments and node balls, clipped to the acquired
+box. Details: [acquired vascular geometry](native-vascular-geometry.md).
+
+The engine option `operative_vascular_geometry = centerline-tubes-v2`
+(`vessel_geometry` in `prepare_surgical_environment`, `vesselGeometry` over
+IPC; no desktop control sets it yet) derives all four consumers from that
+stored model: the drawn and collision wall, rod positions and calibres, the
+soft tag volume the path-traced mode reads, and per-vertex artery or vein
+class. Which rod sites exist and how they bond still comes from the existing
+chain builder. An edit appends to the model's removal record and cuts the
+stored field; nothing is refitted, so geometry away from a cut is bit
+identical. The desktop's tag volume is sent once per case and is not yet
+refreshed after a removal. Existing geometry policies give byte-identical
+reports, case hashes, engine snapshots and desktop arrays to the previous
+code on the pinned studies.
+
+Attempt one used circular sections with a smooth junction blend and missed
+the deviation gate at the 95th percentile (arterial p95 0.46 to 1.35 voxels).
+Attempt two added the harmonic sections and was developed on TopCoW-014, then
+run on 018. Deviation between the tube wall and the 0.5 level of the model
+probability, in smallest-spacing voxels, arterial walls, mean / p95, measured
+after the independent review corrected the metric so that source wall with no
+tube nearby counts in full:
+
+| Case | Tube to source | Source to tube | Veins, both directions | Source wall with no tube |
+| --- | --- | --- | --- | --- |
+| TopCoW-014 CTA | 0.08 / 0.25 | 0.06 / 0.18 | 0.09 / 0.25, 0.10 / 0.28 | 0 points |
+| TopCoW-018 CTA | 0.09 / 0.28 | 0.08 / 0.25 | 0.08 / 0.22, 0.13 / 0.26 | 70 points |
+| TopCoW-014 MRA | 0.11 / 0.33 | 0.12 / 0.38 | none | 0 points |
+| TopCoW-018 MRA | 0.12 / 0.34 | 0.13 / 0.39 | none | 0 points |
+
+Every wall is closed, manifold, consistently oriented and free of
+self-intersections, including coplanar overlaps. Component counts match the
+source and no named label is lost. Loop counts differ by one to four where
+tubes close holes smaller than their radius, and 018 MRA gains two where
+tubes touch. Meshes have 0.7 to 2.8 million faces; extraction and meshing
+take 22 to 100 s and up to 2.8 GB on the M2 Pro.
+
+Tool contact under the tube option: after each compliant step the rods are
+projected so the wall leaves the tool's working shell, checked by the
+existing section-motion and wall-sweep rules; a step that cannot be cleared
+is partial or rejected and the tool keeps its last clear pose. Over five
+strokes with a 1 mm dissector (press, fast stroke, glancing sweep, stroke
+along the axis, slow press at a junction) the shell overlaps the displayed
+wall by at most 0.018 mm at any accepted step (0.84 to 0.87 mm before), the
+working axis stays outside the lumen, and the vessel moves by up to 2.2 mm.
+A two-tool pinch stops without either shell entering. The same strokes on
+existing walls are unchanged, where only the working axis is a hard limit.
+
+Limits. EDEN studies are not admitted for simulation, so the simulation gate
+is shown on TopCoW only. `capsule_clearance` is a lower bound whose mesh
+tolerance of one grid step rests on measurement, not proof; the engine
+collides against the wall triangles. The fitted sections follow lumps in the
+model boundary; displayed normals are smoothed for shading only.

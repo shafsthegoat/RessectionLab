@@ -107,3 +107,20 @@ test('score contours with mismatched source ownership or incompatible grid use t
   const unsupported={...source,compartments:[source.compartments[0],{...source.compartments[1],surface:{...source.compartments[1].surface,source:wrongGrid}}]};
   assert.equal(wall(view,unsupported),undefined);
 });
+
+test('tube normal smoothing evens small undulations and keeps creases', async () => {
+  const {smoothTubeNormals} = await import('./operativeVesselSurface.ts');
+  // A strip of quads along x whose normals wobble by about 6 degrees, ending in a 90-degree crease.
+  const rows = 12, positions = [], normals = [], indices = [];
+  for (let i = 0; i < rows; i++) for (const y of [0, 1]) {
+    positions.push(i, y, 0);
+    const wobble = i < rows - 1 ? (i % 2 ? .1 : -.1) : 0;
+    normals.push(...(i < rows - 1 ? [wobble, 0, 1] : [1, 0, 0]));
+  }
+  for (let i = 0; i < rows - 1; i++) { const a = 2 * i; indices.push(a, a + 2, a + 1, a + 1, a + 2, a + 3); }
+  const smooth = smoothTubeNormals(Float32Array.from(normals), Uint32Array.from(indices));
+  const tilt = i => Math.abs(smooth[6 * i]) / Math.hypot(smooth[6 * i], smooth[6 * i + 2]);
+  assert.ok(tilt(4) < .03 && tilt(5) < .03);
+  assert.ok(smooth[6 * (rows - 1)] > .99);  // the crease vertex is not pulled toward its neighbours
+  assert.ok(Math.abs(smooth[6 * (rows - 2) + 2]) > .99);
+});

@@ -589,18 +589,21 @@ class BridgeSession:
         from .anatomy_qa import mask_quality
         vessel_surfaces = {}
         if case.vascular_probabilities:
-            from .surgical_vessel_surface import case_wall_geometry
+            from .surgical_vessel_surface import GEOMETRY_PROPERTY, TUBE_GEOMETRY, case_tube_model, case_wall_geometry
             from .vascular_surface_lighting import score_lighting_normals
+            from .vessel_tubes import tag_volume
             for name, scores in case.vascular_probabilities.items():
                 if name not in case.compartments:
                     continue
                 request.check()
                 mask = case.compartments[name]
-                mesh = case_wall_geometry(case, name, cancelled=request.cancelled.is_set)
+                tubes = case_tube_model(case, name) if case.metadata.get(GEOMETRY_PROPERTY) == TUBE_GEOMETRY else None
+                mesh = case_wall_geometry(case, name, cancelled=request.cancelled.is_set, tube_model=tubes)
                 if mesh is not None and len(mesh[1]):
                     positions, indices, normals, source_cells = mesh
-                    lighting = score_lighting_normals(scores, mask, positions, normals,
-                                                      source_cells, case.affine, check=request.check)
+                    # Tube walls carry field normals; the score lighting describes crossing walls.
+                    lighting = None if tubes is not None else score_lighting_normals(
+                        scores, mask, positions, normals, source_cells, case.affine, check=request.check)
                     request.check()
                     vessel_surfaces[name] = {"positions": self.transfers.array(positions, "float32"),
                         "indices": self.transfers.array(indices, "uint32"),
@@ -608,6 +611,16 @@ class BridgeSession:
                         "sourceCells": self.transfers.array(source_cells, "uint32")}
                     if lighting is not None:
                         vessel_surfaces[name]["scoreLighting"] = self.transfers.array(lighting, "float32")
+                    if tubes is not None:
+                        origin, values = tag_volume(tubes, check=request.check)
+                        tags = np.zeros(mask.shape, np.float32)
+                        tags[tuple(slice(o, o + n) for o, n in zip(origin, values.shape))] = values
+                        vessel_surfaces[name]["vesselTags"] = self.transfers.array(tags, "float32")
+                        # One display class per vertex from its owning edge: 1 vein, 0 artery or unclassified.
+                        world = positions @ case.affine[:3, :3].T + case.affine[:3, 3]
+                        owners = tubes.evaluate(world, reach=4 * float(np.max(case.spacing_mm)), raw=True)[1]
+                        veins = np.array([kind == "vein" for kind in tubes.edge_class] + [False])[owners]
+                        vessel_surfaces[name]["vesselClasses"] = self.transfers.array(veins, "uint8")
         descriptor = {
             "caseId": case.case_id, "caseHash": case.semantic_hash, "planningHash": case.planning_hash,
             "revision": case.revision, "frame": case.frame, "physicalUnits": "mm",

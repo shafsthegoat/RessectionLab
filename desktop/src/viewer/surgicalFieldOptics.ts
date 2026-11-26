@@ -23,6 +23,40 @@ function woundOnlyField(view:SurgicalView):boolean{
   // carries a mixture with unknown per-cell proportions.
   return typeof added==='number'&&typeof blood==='number'&&blood>0&&Math.abs(added-blood)<=1e-10*Math.max(1,added);
 }
+/** Moist lumen wall of a centerline-tube vessel: a broad soft film highlight
+ * along the tube with a faint tighter glint from the wall beneath. */
+export const wetVesselFinish={roughness:.24,specularIntensity:.42,clearcoat:1,clearcoatRoughness:.3,sheen:0};
+/** Tube wall albedo: the rooted display's vein blue, and its artery red (#aa352b)
+ * lifted to the volume-lighting vessel albedo, which reads the same once lit. */
+export const tubeVesselColors={artery:'#c4553a',vein:'#42668f'} as const;
+
+export function applyWetVesselFinish(material:THREE.Material){
+  if(!(material instanceof THREE.MeshPhysicalMaterial))return false;
+  Object.assign(material,wetVesselFinish);
+  material.userData.wetVessel=true;
+  return true;
+}
+
+/** Colour a tube wall by the vein flag of each vertex. Rest and edited walls
+ * carry classes aligned with their own vertices; without them the wall is artery-coloured. */
+export function applyTubeVesselColor(mesh:THREE.Mesh,classes?:Uint8Array){
+  const material=mesh.material as THREE.MeshStandardMaterial,geometry=mesh.geometry;
+  const count=geometry.getAttribute('position')?.count??0;
+  const veins=classes?classes.reduce((sum,value)=>sum+value,0):0;
+  if(classes&&classes.length!==count)classes=undefined;
+  const mixed=!!classes&&veins>0&&veins<count;
+  if(mixed){
+    const artery=new THREE.Color(tubeVesselColors.artery),vein=new THREE.Color(tubeVesselColors.vein),colors=new Float32Array(count*3);
+    classes!.forEach((value,i)=>(value?vein:artery).toArray(colors,i*3));
+    geometry.setAttribute('color',new THREE.BufferAttribute(colors,3));
+    material.color.set('#ffffff');
+  }else{
+    if(geometry.hasAttribute('color'))geometry.deleteAttribute('color');
+    material.color.set(classes&&veins*2>classes.length?tubeVesselColors.vein:tubeVesselColors.artery);
+  }
+  if(material.vertexColors!==mixed){material.vertexColors=mixed;material.needsUpdate=true;}
+}
+
 export function retainedFieldOptics(view:SurgicalView) {
   const fluid=samples(view.fluid,view.scene.shape),debris=samples(view.debris,view.scene.shape);
   if(!fluid.length&&!debris.length)return null;

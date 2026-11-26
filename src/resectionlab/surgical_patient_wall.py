@@ -14,9 +14,12 @@ from .surgical_glioma_materials import research_profile
 from .surgical_vessel_rods import (ATTACHMENT_COUPLING_POLICY, ATTACHMENT_COUPLING_PROPERTY, GEOMETRY,
                                   MODEL, SECTION_MECHANICS, TOOL_CONTACT_CLOCK_PROPERTY,
                                   WORKING_AXIS_POLICY, WORKING_AXIS_PROPERTY, section_profile)
-from .surgical_vessel_surface import CONDITIONED_GEOMETRIES, GEOMETRY_PROPERTY, ISOLATED_SOURCE_GEOMETRY
+from .surgical_vessel_surface import (GEOMETRY_PROPERTY, ISOLATED_SOURCE_GEOMETRY, TUBE_GEOMETRY, TUBE_MODELS,
+                                      WALL_GEOMETRIES, _tube_wall, build_tube_model, stored_tube_model,
+                                      tube_model_digest)
 from . import surgical_vessel_vertex_motion as vertex_motion, surgical_wall_sweep as wall_sweep
 from .vascular_source_branches import build_source_branches
+from . import vessel_tubes
 
 
 SCHEMA = 'resectionlab.patient-native-wall.v1'
@@ -156,12 +159,19 @@ def _local_chains(grid, radius):
 
 
 def qualifying_properties(grid, masks, row, patient_id, *, reciprocal_attachments=False, working_axis_constraint=False,
-                          cancelled=lambda: False):
+                          tube_geometry=False, cancelled=lambda: False):
+    """Rod, attachment and wall properties of a local native wall.
+
+    With ``tube_geometry`` the wall, the rod sites and their calibres all come
+    from one centerline tube model, returned as the third value (else None).
+    """
     mask, affine, scores = grid.mask, grid.affine, grid.scores
     spacing = np.linalg.norm(affine[:3, :3], axis=0)
     radius = ndimage.distance_transform_edt(np.pad(mask, 1), sampling=spacing)[1:-1, 1:-1, 1:-1]
     chains = _local_chains(grid, radius)
     sites = sorted({cell for cells, _ in chains.values() for cell in cells})
+    tubes = build_tube_model(scores, mask, affine, cancelled=cancelled) if tube_geometry else None
+    tube_sites = vessel_tubes.rod_sites(tubes, sites) if tubes is not None else None
     tissue = masks['brain'].copy()
     if 'tumor' in masks:
         tissue |= masks['tumor']
@@ -177,6 +187,9 @@ def qualifying_properties(grid, masks, row, patient_id, *, reciprocal_attachment
         index = np.unravel_index(cell, mask.shape)
         point = affine[:3, :3] @ index + affine[:3, 3]
         caliber = float(np.clip(radius[index] - .5 * min(spacing), .03, 8.))
+        if tube_sites is not None:
+            *point, caliber = tube_sites[cell]
+            point = np.asarray(point)
         if distance[index] <= caliber + np.linalg.norm(spacing):
             attachments.append([cell, int(np.ravel_multi_index(nearest[(slice(None), *index)], mask.shape))])
         rod_sites[str(cell)] = [*point.tolist(), caliber]
@@ -195,7 +208,9 @@ def qualifying_properties(grid, masks, row, patient_id, *, reciprocal_attachment
                         'Compliant shell loads can act while the axis stays clear.')
     profile = research_profile()
     profile.update(vesselMotionModel=MODEL, assignment=assumptions, vesselAttachments=attachments)
-    profile[GEOMETRY] = {'source': 'Native source-cell centers with physical-distance caliber estimates from the vascular annotation.',
+    profile[GEOMETRY] = {'source': ('Closest centerline-tube samples within each source cell, with the fitted tube radius.'
+                                    if tubes is not None else
+                                    'Native source-cell centers with physical-distance caliber estimates from the vascular annotation.'),
                          'sites': rod_sites}
     profile[wall_sweep.PROPERTY] = wall_sweep.CURRENT_POLICY
     profile[vertex_motion.PROPERTY] = vertex_motion.POLICY
@@ -221,20 +236,31 @@ def qualifying_properties(grid, masks, row, patient_id, *, reciprocal_attachment
         'edges': edges, 'boundaries': [], 'regions': [], 'compressionForceN': .04,
         'coagulationDose': 2., 'clotRatePerSecond': 0.,
     }
-    geometry = conditioned_vascular_probability_mesh(scores, mask, affine, retain_isolated_components=True,
-                                                     cancelled=cancelled)
-    if geometry is None or not len(geometry.indices):
-        raise ValueError('The local window has no usable native score surface')
+    if tubes is not None:
+        wall = _tube_wall(tubes, mask)
+        if wall is None:
+            raise ValueError('The local window has no usable vessel tube wall')
+        stored = stored_tube_model(tubes)
+        policy = TUBE_GEOMETRY
+        geometry_receipt = {'geometryBinding': vertex_motion.geometry_binding(wall[0], wall[1], wall[3]),
+                            'tubeModelDigest': tube_model_digest(stored)}
+    else:
+        geometry = conditioned_vascular_probability_mesh(scores, mask, affine, retain_isolated_components=True,
+                                                         cancelled=cancelled)
+        if geometry is None or not len(geometry.indices):
+            raise ValueError('The local window has no usable native score surface')
+        policy = ISOLATED_SOURCE_GEOMETRY
+        geometry_receipt = {
+            'geometryBinding': vertex_motion.geometry_binding(geometry.positions, geometry.indices, geometry.source_cells),
+            'sourceCrossingBinding': vertex_motion.geometry_binding(geometry.source, geometry.indices, geometry.source_cells),
+            'sourceRetainedIsolatedComponents': geometry.diagnostics.get('sourceRetainedIsolatedComponents', 0)}
     receipt = {
         'schema': SCHEMA, 'sourceSeries': row['source_series'], 'layerId': row['id'],
         'sourceShape': list(grid.source_shape), 'sourceStartIJK': grid.start.tolist(),
         'centerRasMm': grid.center.tolist(), 'sourceImageSha256': grid.source_sha256,
         'sourceMaskSha256': row['data']['sha256'], 'sourceScoresSha256': row['probability']['sha256'],
         'localMaskHash': array_digest(mask), 'localScoreHash': array_digest(scores),
-        'geometryPolicy': ISOLATED_SOURCE_GEOMETRY, wall_sweep.PROPERTY: wall_sweep.CURRENT_POLICY,
-        'geometryBinding': vertex_motion.geometry_binding(geometry.positions, geometry.indices, geometry.source_cells),
-        'sourceCrossingBinding': vertex_motion.geometry_binding(geometry.source, geometry.indices, geometry.source_cells),
-        'sourceRetainedIsolatedComponents': geometry.diagnostics.get('sourceRetainedIsolatedComponents', 0),
+        'geometryPolicy': policy, wall_sweep.PROPERTY: wall_sweep.CURRENT_POLICY, **geometry_receipt,
         'branches': {branch_id: source_cells for branch_id, (_, source_cells) in chains.items()},
         'branchIdentityBasis': 'source study branch graph' if grid.source_branches is not None else 'local trace with original native source cell indices',
         'assumptions': assumptions, 'scope': 'cursor-local mechanical rehearsal',
@@ -244,7 +270,7 @@ def qualifying_properties(grid, masks, row, patient_id, *, reciprocal_attachment
         properties[ATTACHMENT_COUPLING_PROPERTY] = receipt[ATTACHMENT_COUPLING_PROPERTY] = ATTACHMENT_COUPLING_POLICY
     if working_axis_constraint:
         properties[WORKING_AXIS_PROPERTY] = receipt[WORKING_AXIS_PROPERTY] = WORKING_AXIS_POLICY
-    return properties, receipt
+    return properties, receipt, (None if tubes is None else {'vessels': stored})
 
 
 def validate_saved_wall(scene, case, receipt):
@@ -253,7 +279,11 @@ def validate_saved_wall(scene, case, receipt):
     profile = scene.properties.get('gliomaMaterialsV1', {})
     if (not isinstance(receipt, dict) or receipt.get('schema') != SCHEMA or len(walls) != 1
             or 'vessels' not in case.compartments
-            or receipt.get('geometryPolicy') not in CONDITIONED_GEOMETRIES
+            or receipt.get('geometryPolicy') not in WALL_GEOMETRIES
+            or (receipt.get('geometryPolicy') == TUBE_GEOMETRY) != ('tubeModelDigest' in receipt)
+            or (receipt.get('geometryPolicy') == TUBE_GEOMETRY) != (TUBE_MODELS in case.metadata)
+            or 'tubeModelDigest' in receipt and receipt['tubeModelDigest'] != tube_model_digest(
+                case.metadata.get(TUBE_MODELS, {}).get('vessels'))
             or receipt.get('geometryPolicy') != case.metadata.get(GEOMETRY_PROPERTY)
             or receipt.get('geometryPolicy') != walls[0].geometry_policy
             or receipt.get('geometryBinding') != walls[0].geometry_binding

@@ -159,7 +159,7 @@ export interface CasePayload {
     volumeMm3: number;
     array: ArrayDescriptor;
     sourceArray?: ArrayDescriptor;
-    vesselSurface?: Record<'positions'|'indices'|'normals'|'sourceCells',ArrayDescriptor>&{scoreLighting?:ArrayDescriptor};
+    vesselSurface?: Record<'positions'|'indices'|'normals'|'sourceCells',ArrayDescriptor>&{scoreLighting?:ArrayDescriptor;vesselTags?:ArrayDescriptor;vesselClasses?:ArrayDescriptor};
     qa?: import('./viewer/contracts').AnatomyQuality;
   }[];
   unknowns: string[];
@@ -201,6 +201,8 @@ export interface ViewerCase {
     vesselSourceCells?:Uint32Array;
     vesselGeometryBinding?:string;
     vesselScoreLighting?:Float32Array;
+    vesselTags?:Float32Array;
+    vesselClasses?:Uint8Array;
     color: string;
     mesh?: {
       positions: Float32Array;

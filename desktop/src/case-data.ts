@@ -10,8 +10,8 @@ import type {SurfaceAppearanceSource} from './viewer/contracts';
 import {surfaceKind} from './viewer/surfacePolicy.ts';
 import {isStructuralMrModality} from './native-study-state.ts';
 
-function validateVesselSurface(surface:NonNullable<CasePayload['compartments'][number]['vesselSurface']>) {
-  const {positions,normals,indices,sourceCells,scoreLighting}=surface;
+function validateVesselSurface(surface:NonNullable<CasePayload['compartments'][number]['vesselSurface']>,shape:readonly number[]) {
+  const {positions,normals,indices,sourceCells,scoreLighting,vesselTags,vesselClasses}=surface;
   for(const [name,descriptor,width,dtype] of [['positions',positions,3,'float32'],['normals',normals,3,'float32'],
     ['indices',indices,3,'uint32'],['sourceCells',sourceCells,1,'uint32'],['scoreLighting',scoreLighting,4,'float32']] as const){
     if(name==='scoreLighting'&&descriptor===undefined)continue;
@@ -22,6 +22,13 @@ function validateVesselSurface(surface:NonNullable<CasePayload['compartments'][n
   }
   if(positions.shape[0]!==normals.shape[0]||positions.shape[0]!==sourceCells.shape[0])throw Error('Vessel surface source cells disagree with its vertices.');
   if(scoreLighting&&scoreLighting.shape[0]!==positions.shape[0])throw Error('Vessel score lighting disagrees with its vertices.');
+  const voxels=shape.reduce((a,b)=>a*b,1);
+  if(vesselTags&&(vesselTags.dtype!=='float32'||vesselTags.byteOrder!=='little'||vesselTags.order!=='C'||!vesselTags.assetId||
+    !/^[a-f0-9]{64}$/.test(vesselTags.sha256)||vesselTags.shape.length!==3||vesselTags.shape.some((n,i)=>n!==shape[i])||
+    vesselTags.byteLength!==voxels*4))throw Error('Invalid vessel tags.');
+  if(vesselClasses&&(vesselClasses.dtype!=='uint8'||vesselClasses.byteOrder!=='little'||vesselClasses.order!=='C'||!vesselClasses.assetId||
+    !/^[a-f0-9]{64}$/.test(vesselClasses.sha256)||vesselClasses.shape.length!==1||vesselClasses.shape[0]!==positions.shape[0]||
+    vesselClasses.byteLength!==positions.shape[0]))throw Error('Invalid vessel classes.');
 }
 
 async function hydrateVesselSurface(raw:NonNullable<CasePayload['compartments'][number]['vesselSurface']>,api:ResectionApi){
@@ -29,14 +36,20 @@ async function hydrateVesselSurface(raw:NonNullable<CasePayload['compartments'][
     const bytes=await api.readAsset(d.assetId);if(bytes.byteLength!==d.byteLength)throw Error('Incomplete vessel surface transfer.');
     return bytes.slice().buffer;
   }
-  const [p,n,i,c,l]=await Promise.all([read(raw.positions),read(raw.normals),read(raw.indices),read(raw.sourceCells),raw.scoreLighting&&read(raw.scoreLighting)]);
+  const [p,n,i,c,l,t,k]=await Promise.all([read(raw.positions),read(raw.normals),read(raw.indices),read(raw.sourceCells),raw.scoreLighting&&read(raw.scoreLighting),
+    raw.vesselTags&&read(raw.vesselTags),raw.vesselClasses&&read(raw.vesselClasses)]);
   const positions=new Float32Array(p),normals=new Float32Array(n),indices=new Uint32Array(i),vesselSourceCells=new Uint32Array(c);
   if(indices.some(i=>i>=vesselSourceCells.length)||!positions.every(Number.isFinite)||!normals.every(Number.isFinite))throw Error('Invalid vessel surface values.');
   const vesselScoreLighting=l&&new Float32Array(l);
   if(vesselScoreLighting&&!vesselScoreLighting.every((value,index)=>Number.isFinite(value)&&(index%4!==3||value>=0&&value<=1)))
     throw Error('Invalid vessel score lighting values.');
+  const vesselTags=t?new Float32Array(t):undefined;
+  if(vesselTags&&!vesselTags.every(value=>value>=0&&value<=1))throw Error('Invalid vessel tag values.');
+  const vesselClasses=k?new Uint8Array(k):undefined;
+  if(vesselClasses&&!vesselClasses.every(value=>value<=1))throw Error('Invalid vessel class values.');
   const vesselGeometryBinding=[raw.positions.sha256,raw.indices.sha256,raw.sourceCells.sha256].join(':');
   return {surface:{source:positions,positions,sourceNormals:normals,normals,indices},vesselSourceCells,vesselScoreLighting,vesselGeometryBinding,
+    ...(vesselTags?{vesselTags}:{}),...(vesselClasses?{vesselClasses}:{}),
     surfaceDiagnostics:{policy:'native-source-isosurface-v1',kind:'vessel',maxDisplacementMm:0,restoredComponents:0,
       intersectionCheck:'passed',surfaceField:'native-probability',triangles:indices.length/3,sourceSurfaceOnly:true} as const};
 }
@@ -194,7 +207,7 @@ export function validateCaseDescriptor(payload: CasePayload): {
     validateArray(layer.array, "uint8", layer.name);
     if (layer.sourceArray)
       validateArray(layer.sourceArray, "uint8", `${layer.name} source`);
-    if(layer.vesselSurface)validateVesselSurface(layer.vesselSurface);
+    if(layer.vesselSurface)validateVesselSurface(layer.vesselSurface,payload.shape);
   });
   if (payload.brainMask)
     validateArray(payload.brainMask, "uint8", "Brain mask");
