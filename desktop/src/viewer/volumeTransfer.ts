@@ -39,6 +39,32 @@ export function canBalanceTofContext(input:VolumeRenderingSettings|undefined, mo
     !input?.isolateLabels&&input?.window===undefined&&input?.points===undefined;
 }
 
+export interface VolumePresetOption { value: VolumePreset; label: string; disabled: boolean; title: string }
+/** Task-named choices over the existing transfer functions; stored preset ids
+ * are unchanged. HU presets are offered only for CT. On MR angiography the
+ * sequence-aware MR transfer is its bright-blood (vessel) presentation. */
+export function volumePresetOptions(modality: string): VolumePresetOption[] {
+  const ct=isCtModality(modality), brightBlood=!ct&&MR_ANGIOGRAPHY.test(modality);
+  const ctOnly='Uses CT Hounsfield units; available for CT and CTA.';
+  return [
+    {value:'auto',label:'Automatic',disabled:false,title:`Choose from the acquisition (${modality})`},
+    brightBlood
+      ? {value:'mri',label:'Vessels',disabled:false,title:'Bright-blood MR signal. Bright voxels are not vessel classifications.'}
+      : {value:'ct-angiography',label:'Vessels',disabled:!ct,title:ct?'Contrast CT: iodine and mineral emphasis':ctOnly},
+    {value:'ct-bone',label:'Bone',disabled:!ct,title:ct?'CT bone':ctOnly},
+    {value:'ct-tissue',label:'Soft tissue',disabled:!ct,title:ct?'CT soft tissue':ctOnly},
+    ...(brightBlood?[]:[{value:'mri' as const,label:'Brain',disabled:false,
+      title:ct?'Intensity-windowed tissue boundaries; not a calibrated CT brain window':'MR tissue signal'}]),
+  ];
+}
+/** The option shown for a stored preset. A CT preset saved on MR signal is
+ * rendered with the MR transfer (see volumeSettings), so it shows that option. */
+export function volumePresetChoice(input: VolumeRenderingSettings|undefined, modality: string): VolumePreset {
+  const preset=input?.preset;
+  if(!preset||preset==='auto')return 'auto';
+  return preset.startsWith('ct-')&&!isCtModality(modality)?'mri':preset;
+}
+
 export function volumeSettings(input: VolumeRenderingSettings = {}, modality = 'MRI') {
   const ct=isCtModality(modality), acquired=!/segmentation only|analytic signal|generated image signal/i.test(modality);
   const explicit=input.preset && ['ct-bone','ct-tissue','ct-angiography','mri'].includes(input.preset)?input.preset:null;

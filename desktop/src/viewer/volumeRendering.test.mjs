@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {DataUtils} from 'three';
-import {canBalanceTofContext,isCtModality,volumeSettings,volumeTransfer,volumeRayInterval,opticalAlpha,mriBoundaryExtinction,VOLUME_TRANSFER_WIDTH,zeroExtinctionLevel} from './volumeTransfer.ts';
+import {canBalanceTofContext,isCtModality,volumePresetChoice,volumePresetOptions,volumeSettings,volumeTransfer,volumeRayInterval,opticalAlpha,mriBoundaryExtinction,VOLUME_TRANSFER_WIDTH,zeroExtinctionLevel} from './volumeTransfer.ts';
 import {balancedTofDensity,buildDirectionalOpticalDepth,buildOpticalDensity,CT_EXTERIOR_AIR_HU,CT_EXTERIOR_TEXTURE_LIMIT_BYTES,ctExteriorDisplaySignal,ctOpticalCoverage,OPTICAL_KEY_LIGHTS,volumeOpticalAtlas} from './volumeOpticalDensity.ts';
 import {inverseAffine,transformPoint} from './coordinates.ts';
 import {checkedViewerSettings} from '../workspace-view-settings.ts';
@@ -350,4 +350,25 @@ test('transfer row and both optical scales survive atlas packing in source XYZ o
   const faint=lut.data.findIndex((v,i)=>i%4===3&&v>.0007&&v<.001);
   assert.ok(Math.abs(read((faint-3)/4,0,3)-lut.data[faint])<.000001);
   assert.equal(volumeOpticalAtlas(lut).data.byteLength,8192);
+});
+
+test('volume presets: one dropdown with task names over the existing transfer functions',()=>{
+  const labels=options=>options.map(o=>`${o.label}:${o.value}:${o.disabled?'off':'on'}`);
+  assert.deepEqual(labels(volumePresetOptions('CTA')),
+    ['Automatic:auto:on','Vessels:ct-angiography:on','Bone:ct-bone:on','Soft tissue:ct-tissue:on','Brain:mri:on']);
+  assert.deepEqual(labels(volumePresetOptions('CT')),
+    ['Automatic:auto:on','Vessels:ct-angiography:on','Bone:ct-bone:on','Soft tissue:ct-tissue:on','Brain:mri:on']);
+  assert.deepEqual(labels(volumePresetOptions('T1CE')),
+    ['Automatic:auto:on','Vessels:ct-angiography:off','Bone:ct-bone:off','Soft tissue:ct-tissue:off','Brain:mri:on']);
+  assert.deepEqual(labels(volumePresetOptions('TOF MRA')),
+    ['Automatic:auto:on','Vessels:mri:on','Bone:ct-bone:off','Soft tissue:ct-tissue:off']);
+  for(const modality of ['CT','CTA','T1','FLAIR','TOF']){
+    const options=volumePresetOptions(modality),values=options.map(o=>o.value);
+    assert.equal(new Set(values).size,values.length,'each stored preset appears once');
+    assert.ok(options.filter(o=>o.value.startsWith('ct-')).every(o=>o.disabled===!/^CT/.test(modality)),'HU presets only on CT');
+  }
+  assert.equal(volumePresetChoice(undefined,'CT'),'auto');
+  assert.equal(volumePresetChoice({preset:'auto'},'CT'),'auto');
+  assert.equal(volumePresetChoice({preset:'ct-bone'},'CT'),'ct-bone');
+  assert.equal(volumePresetChoice({preset:'ct-bone'},'T1'),'mri','a CT preset opened on MR shows the MR transfer it uses');
 });
