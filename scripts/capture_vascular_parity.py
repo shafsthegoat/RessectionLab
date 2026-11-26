@@ -83,8 +83,14 @@ PRESETS = {
     'skull-base-wide': {'from': [0, -0.25, 1], 'up': [0, 1, 0], 'distance': 1.5, 'clip': ('z', 22.0, True)},
     'axial-clip-wide': {'from': [0, 0.85, 0.53], 'up': [0, 0, 1], 'distance': 1.6, 'clip': ('z', 6.0, True)},
     'anterior-coronal-cut': {'from': [0, 1, 0.12], 'up': [0, 0, 1], 'distance': 1.75, 'clip': ('y', 30.0, True)},
+    # Bone framings of the reference stills: an opaque skull, and a sagittal cut. They need
+    # acquired bone and the path-traced mode, whose bone is solid under an opaque skull or a cut.
+    'left-lateral-solid': {'from': [-1, 0.05, 0.1], 'up': [0, 0, 1], 'distance': 2.1, 'skull': 'exterior', 'bone': True},
+    'oblique-solid': {'from': [-0.62, 0.62, 0.48], 'up': [0, 0, 1], 'distance': 2.1, 'skull': 'exterior', 'bone': True},
+    'left-lateral-sagittal-cut': {'from': [-1, 0.05, 0.1], 'up': [0, 0, 1], 'distance': 1.9, 'clip': ('x', -8.0, False), 'bone': True},
 }
-REFERENCE_FRAME = {'skull-base-wide': 'skull-base', 'axial-clip-wide': 'axial-clip', 'anterior-coronal-cut': 'anterior'}
+REFERENCE_FRAME = {'skull-base-wide': 'skull-base', 'axial-clip-wide': 'axial-clip', 'anterior-coronal-cut': 'anterior',
+                   'left-lateral-solid': 'left-lateral', 'oblique-solid': 'oblique', 'left-lateral-sagittal-cut': 'left-lateral'}
 INTERACTION_PRESET = 'anterior'
 
 
@@ -536,7 +542,23 @@ def displayed_surface(collection, layer_id, scope='all'):
              if row is display else mesh(collection, row)) for name, row in parts]
 
 
-def recipes(collection, case, default_view, default_layers, volume_mode=None, scope='rooted'):
+def preset_applies(preset, volume_mode, modality):
+    """Bone framings need a CT scan and the path-traced mode; every other preset applies everywhere."""
+    return not preset.get('bone') or (volume_mode == 'cinematic' and image_modality(modality) == 'ct')
+
+
+def requested_presets(text):
+    """Preset names from a comma-separated option; an unknown name is an error, not a skip."""
+    names = [name.strip() for name in text.split(',') if name.strip()]
+    unknown = [name for name in names if name not in PRESETS]
+    if unknown or not names:
+        raise ValueError(f"Unknown presets {unknown}; choose from {', '.join(PRESETS)}")
+    return names
+
+
+def recipes(collection, case, default_view, default_layers, volume_mode=None, scope='rooted', only=None):
+    """View recipes for every preset that applies, then the timed drag and the orbit.
+    ``only`` names presets to capture alone, without the timed rows."""
     scan, _, extent = scan_geometry(collection, case)
     target = anchor(case)
     settings = {key: value for key, value in default_view['settings'].items() if key not in {'camera', 'clipping'}}
@@ -545,12 +567,18 @@ def recipes(collection, case, default_view, default_layers, volume_mode=None, sc
         settings['volumeRendering'] = {**settings.get('volumeRendering', {}), 'enabled': True, 'mode': volume_mode}
     rows = []
     for name, preset in PRESETS.items():
+        if only is not None and name not in only:
+            continue
+        if not preset_applies(preset, volume_mode, scan['modality']):
+            continue
         direction = np.asarray(preset['from'], float)
         direction /= np.linalg.norm(direction)
         view = {**settings, 'camera': {
             'position': (target + direction * preset['distance'] * extent).round(4).tolist(),
             'target': target.round(4).tolist(), 'up': preset['up'],
         }}
+        if 'skull' in preset:
+            view['skullMode'] = preset['skull']
         row = {'name': name, 'seriesId': scan['id'], 'layers': default_layers, 'cursor': target.round(4).tolist(), 'settings': view,
                'scope': scope}
         if 'clip' in preset:
@@ -559,6 +587,8 @@ def recipes(collection, case, default_view, default_layers, volume_mode=None, sc
             view['clipping'] = clipping
             row['patientCutaway'] = {'clipping': clipping}
         rows.append(row)
+    if only is not None:
+        return rows
     timed = next(row for row in rows if row['name'] == INTERACTION_PRESET)
     rows.append({**timed, 'name': 'interaction', 'interaction': {'frames': 180}})
     rows.append({**timed, 'name': 'orbit', 'rotationFrames': 48})
@@ -602,6 +632,61 @@ def pane_image(view):
     return image
 
 
+def preset_metrics(view, output):
+    image = pane_image(view)
+    image.save(output / f"{view['name']}.png")
+    quality = view['frame'].get('scanQuality') or {}
+    settled = [row['gpu']['milliseconds'] for row in view['settledSamples'] if row.get('gpu', {}).get('completed')]
+    return {
+        'image': f"{view['name']}.png", 'pane': [image.width, image.height], 'camera': view['frame']['cameraState'],
+        'volume': view['frame'].get('volume'), 'mode': quality.get('mode', 'standard'), 'settled_samples': quality.get('samples'),
+        'settled_resolution': [quality.get('width'), quality.get('height')],
+        'settled_sample_gpu_ms': settled,
+        # The app labels an active cut along the bottom of the pane.
+        'sharpness': image_sharpness(np.asarray(image)[:-56]),
+    }
+
+
+def add_presets(root, name, case, label, presets):
+    """Capture further presets into an existing capture of the same study, settings and window.
+
+    Works on captures that record their scope and vessel layers (Phase 3 onward). Returns the
+    presets added and those skipped with the reason."""
+    desktop = Path(__file__).resolve().parents[1] / 'desktop'
+    manifest = safe_path(root, case['manifest'])
+    collection = open_anatomy_manifest(manifest)
+    output = evidence(root, label) / 'captures' / name
+    metrics = json.loads((output / 'metrics.json').read_text())
+    existing = json.loads((output / 'views.json').read_text())
+    template = next(row for row in existing if row['name'] == INTERACTION_PRESET)
+    if 'vessels' not in metrics or 'scope' not in template:
+        raise ValueError(f'{label} predates recorded scope and vessel layers; capture it again instead of adding to it')
+    if metrics['manifest_sha256'] != sha256_file(manifest):
+        raise ValueError(f'{name}: the study changed since {label} was captured')
+    volume_mode = None if metrics['volume_mode'] in (None, 'default') else metrics['volume_mode']
+    modality = collection.series(case['series'])['modality']
+    skipped = {preset: 'already captured' for preset in presets if preset in metrics['presets']}
+    skipped.update({preset: 'needs a CT scan and the path-traced mode' for preset in presets
+                    if preset not in skipped and not preset_applies(PRESETS[preset], volume_mode, modality)})
+    wanted = [preset for preset in presets if preset not in skipped]
+    if not wanted:
+        return [], skipped
+    rows = recipes(collection, case, {'settings': template['settings']}, template['layers'], volume_mode, template['scope'], only=wanted)
+    for layer_id in metrics['vessels']:
+        displayed_surface(collection, layer_id, template['scope'])
+    atomic_json(output / 'views-added.json', rows)
+    report = run_capture(desktop, manifest, output / 'views-added.json', output / 'presets-added', output / 'presets-added.log',
+                         width=metrics['window']['width'], height=metrics['window']['height'])
+    if (report['snapshotId'], report['windowSize'], report['deviceScale']) != (
+            metrics['snapshot_id'], metrics['window'], metrics['device_scale']):
+        raise ValueError(f'{name}: the study snapshot or the capture window differs from the one {label} was captured with')
+    for view in report['views']:
+        metrics['presets'][view['name']] = preset_metrics(view, output)
+    atomic_json(output / 'views.json', [*existing, *rows])
+    atomic_json(output / 'metrics.json', metrics)
+    return wanted, skipped
+
+
 def capture(root, name, case, label, *, width, height, volume_mode=None, ensemble=None, scope='rooted'):
     """Capture today's default appearance at every fixed preset and time one continuous orbit.
 
@@ -642,18 +727,7 @@ def capture(root, name, case, label, *, width, height, volume_mode=None, ensembl
                'window': report['windowSize'], 'device_scale': report['deviceScale'], 'display': report.get('display'), 'presets': {}}
     for view in report['views']:
         if view['name'] in PRESETS:
-            image = pane_image(view)
-            image.save(output / f"{view['name']}.png")
-            quality = view['frame'].get('scanQuality') or {}
-            settled = [row['gpu']['milliseconds'] for row in view['settledSamples'] if row.get('gpu', {}).get('completed')]
-            metrics['presets'][view['name']] = {
-                'image': f"{view['name']}.png", 'pane': [image.width, image.height], 'camera': view['frame']['cameraState'],
-                'volume': view['frame'].get('volume'), 'mode': quality.get('mode', 'standard'), 'settled_samples': quality.get('samples'),
-                'settled_resolution': [quality.get('width'), quality.get('height')],
-                'settled_sample_gpu_ms': settled,
-                # The app labels an active cut along the bottom of the pane.
-                'sharpness': image_sharpness(np.asarray(image)[:-56]),
-            }
+            metrics['presets'][view['name']] = preset_metrics(view, output)
         elif view['name'] == 'interaction':
             metrics['interaction'] = {key: value for key, value in view['interaction'].items() if key != 'samples'}
         elif view['name'] == 'orbit':
@@ -806,13 +880,16 @@ def sheet(root, label, references, compare=None):
     output.mkdir(parents=True, exist_ok=True)
     cell = (560, 420)
     for name in HERO:
-        rows = []
+        rows, used = [], []
         for preset in PRESETS:
             folders = [evidence(root, item) / 'captures' / name for item in labels]
             # A capture without its metrics stopped part-way and is not evidence.
             if not all((folder / 'metrics.json').is_file() for folder in folders):
                 break
+            if not any((folder / f'{preset}.png').is_file() for folder in folders):
+                continue  # A preset that does not apply to this case, such as a bone framing on TOF.
             images = [references.get(preset)] + [folder / f'{preset}.png' for folder in folders]
+            used.append(preset)
             rows.append([Image.open(path).convert('RGB') if path and Path(path).is_file() else None for path in images])
         if not rows:
             continue
@@ -824,7 +901,7 @@ def sheet(root, label, references, compare=None):
                 image.thumbnail(cell, Image.LANCZOS)
                 canvas.paste(image, (x * cell[0] + (cell[0] - image.width) // 2, y * cell[1] + (cell[1] - image.height) // 2))
         canvas.save(output / f'{name}.jpg', quality=90)
-        atomic_json(output / f'{name}.json', {'columns': ['reference', *labels], 'rows': list(PRESETS)[:len(rows)]})
+        atomic_json(output / f'{name}.json', {'columns': ['reference', *labels], 'rows': used})
 
 
 def main():
@@ -837,6 +914,9 @@ def main():
     parser.add_argument('--volume-mode', choices=['cinematic'], help='Capture with this volume render mode instead of the default view')
     parser.add_argument('--ensemble', help='Phase 2 ensemble folder name (for example ensemble-UZH-ARG-KDH): wire it, '
                         'or show its wired layers instead of the case vessel layers')
+    parser.add_argument('--add', help='With capture: comma-separated presets to add to an existing capture of this label '
+                        '(Phase 3 onward), with its saved settings, layers, scope and window; --volume-mode, --ensemble, '
+                        '--scope, --width and --height are ignored, and presets that do not apply to a case are reported as skipped')
     parser.add_argument('--scope', choices=['rooted', 'all'], default='rooted',
                         help='Vessel display to capture and measure; rooted is the default view')
     parser.add_argument('--width', type=int, default=1440)
@@ -879,6 +959,11 @@ def main():
         return 0
     mesh_failures = []
     for name in cases:
+        if args.command == 'capture' and args.add:
+            added, skipped = add_presets(root, name, HERO[name], args.label, requested_presets(args.add))
+            print(name, 'added', ', '.join(added) or 'none', '; skipped',
+                  ', '.join(f'{preset} ({why})' for preset, why in skipped.items()) or 'none', flush=True)
+            continue
         if args.command == 'capture':
             metrics = capture(root, name, HERO[name], args.label, width=args.width, height=args.height,
                               volume_mode=args.volume_mode, ensemble=args.ensemble, scope=args.scope)

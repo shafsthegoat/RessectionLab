@@ -331,6 +331,33 @@ def test_capture_recipes_ask_for_the_rooted_view(tmp_path):
     assert {row['scope'] for row in parity.recipes(c, case, {'settings': {}}, ['supplied-veins'], scope='all')} == {'all'}
 
 
+def test_bone_framings_are_captured_only_on_ct_in_the_path_traced_mode():
+    bone = parity.PRESETS['left-lateral-solid']
+    assert bone['skull'] == 'exterior' and parity.PRESETS['left-lateral-sagittal-cut']['clip'][0] == 'x'
+    assert parity.preset_applies(bone, 'cinematic', 'CTA') and parity.preset_applies(bone, 'cinematic', 'CT')
+    assert not parity.preset_applies(bone, None, 'CTA') and not parity.preset_applies(bone, 'cinematic', 'TOF')
+    assert all(parity.preset_applies(parity.PRESETS[name], None, 'TOF') for name in ('anterior', 'skull-base', 'anterior-coronal-cut'))
+    assert all(parity.REFERENCE_FRAME[name] in parity.PRESETS for name in parity.PRESETS if parity.PRESETS[name].get('bone'))
+
+
+def test_recipes_for_named_presets_leave_out_the_timed_rows_and_inapplicable_framings(tmp_path):
+    c = study(tmp_path)
+    case = {'series': 'scan', 'anchor': [5., 5., 5.], 'vessels': ['supplied-veins']}
+    every = [row['name'] for row in parity.recipes(c, case, {'settings': {}}, ['supplied-veins'])]
+    assert every[-2:] == ['interaction', 'orbit'] and 'left-lateral-solid' not in every
+    only = parity.recipes(c, case, {'settings': {}}, ['supplied-veins'], only=['skull-base', 'oblique-solid'])
+    assert [row['name'] for row in only] == ['skull-base']
+    assert only[0]['patientCutaway']['clipping']['axis'] == 'z'
+
+
+def test_requested_presets_refuse_unknown_names_and_ignore_spacing():
+    assert parity.requested_presets('oblique-solid, left-lateral-solid') == ['oblique-solid', 'left-lateral-solid']
+    with pytest.raises(ValueError, match='Unknown presets'):
+        parity.requested_presets('oblique-solid,lateral')
+    with pytest.raises(ValueError):
+        parity.requested_presets(' , ')
+
+
 def test_the_mesh_gate_reports_inner_walls_apart_from_floating_pieces(tmp_path):
     from resectionlab.anatomy_geometry import mesh
     c = study(tmp_path)
