@@ -1,9 +1,9 @@
 .surgical-panel{padding:16px;display:flex;flex-direction:column;gap:10px;font-size:12px}.surgical-panel h2,.surgical-panel h3,.surgical-panel p{margin:0}.surgical-note{color:#9ab0bc;line-height:1.5}.surgical-panel label{display:flex;justify-content:space-between;align-items:center;gap:6px}.surgical-panel input,.surgical-panel select{min-width:0;background:#14252c;color:#e5f1f5;border:1px solid #35505b;padding:6px;border-radius:5px}.surgical-panel input[type=number]{width:78px}.surgical-panel button{border:1px solid #35505b;border-radius:6px;padding:8px;background:#172a31;color:#d9ebee;text-align:left}.surgical-panel button[aria-pressed=true]{border-color:#76d4bd;background:#24443f}.surgical-panel button:disabled{opacity:.45}.surgical-slots,.surgical-vector,.surgical-actions{display:flex;gap:5px}.surgical-slots button{flex:1;display:flex;flex-direction:column;gap:5px}.surgical-vector label{flex:1;flex-direction:column}.surgical-vector input{width:100%!important}.surgical-toolbox{display:grid;grid-template-columns:1fr 1fr;gap:5px;max-height:220px;overflow:auto}.surgical-toolbox button{display:flex;flex-direction:column;gap:4px}.surgical-toolbox small{color:#95b4bd}.surgical-actions{flex-wrap:wrap}.surgical-metrics{display:grid;grid-template-columns:1fr 1fr;gap:8px}.surgical-metrics div{display:flex;flex-direction:column;overflow-wrap:anywhere}.surgical-error{color:#ffc39d;background:#442d29;padding:10px;border-radius:6px}.surgical-panel details{border-top:1px solid #35505b;padding-top:8px}.surgical-panel summary{cursor:pointer}
 .surgical-controls{border:0;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;min-width:0}.surgical-map-row{display:flex;flex-direction:column;gap:7px;padding:10px 0;border-bottom:1px solid #35505b}.surgical-map-row strong{overflow-wrap:anywhere}.surgical-panel input[type=checkbox]{accent-color:#76d4bd}.surgical-preview{border:1px solid #76d4bd;background:#203e39;border-radius:6px;padding:10px;line-height:1.5}.surgical-warning{color:#f2d5a5;line-height:1.5}.surgical-panel button:focus-visible,.surgical-panel input:focus-visible,.surgical-panel select:focus-visible{outline:2px solid #a1ebd8;outline-offset:2px}.surgical-actions span{align-self:center}.surgical-panel li small{display:block;padding:5px;line-height:1.4}
 .surgical-research-context{display:flex;flex-direction:column;gap:8px}.surgical-research-context .surgical-warning{border-left:3px solid #dcb77f;padding:7px 10px;background:#352e23}.surgical-research-context details{line-height:1.5}.surgical-research-context li{margin-bottom:5px}.surgical-declared-fields{display:flex;flex-direction:column;gap:7px;margin:10px 0}.surgical-declared-fields>div{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:8px}.surgical-declared-fields dt{color:#9ab0bc}.surgical-declared-fields dd{margin:0;overflow-wrap:anywhere;white-space:pre-wrap}
-.environment-summary{border:1px solid #35505b;border-radius:7px;padding:10px;display:grid;gap:6px;line-height:1.5;background:#12252d}.rehearsal-model{display:flex;flex-direction:column;gap:6px;margin:0 16px 10px;color:#a9c1cb;font-size:12px}.rehearsal-model select{background:#14252c;color:#e5f1f5;border:1px solid #35505b;border-radius:5px;padding:8px}.rehearsal-anatomy{margin:8px 16px 18px;font-size:12px}.rehearsal-anatomy>summary{cursor:pointer;padding:9px 0}.surgical-toolbox{max-height:none;grid-template-columns:repeat(3,minmax(0,1fr))}.surgical-toolbox button{padding:7px;font-size:11px;overflow-wrap:anywhere}.surgical-toolbox small{font-size:9px}.rl-viewer-anatomy-image{user-select:none}.surgical-panel .surgical-actions{position:relative}
+.environment-summary{border:1px solid #35505b;border-radius:7px;padding:10px;display:grid;gap:6px;line-height:1.5;background:#12252d}.rehearsal-model{display:flex;flex-direction:column;gap:6px;margin:0 16px 10px;color:#a9c1cb;font-size:12px}.rehearsal-model select{background:#14252c;color:#e5f1f5;border:1px solid #35505b;border-radius:5px;padding:8px}.rehearsal-anatomy{margin:8px 16px 18px;font-size:12px}.rehearsal-anatomy>summary{cursor:pointer;padding:9px 0}.surgical-toolbox{max-height:none;grid-template-columns:repeat(3,minmax(0,1fr))}.surgical-toolbox button{padding:7px;font-size:11px;overflow-wrap:anywhere}.surgical-toolbox small{font-size:var(--text-micro,11px)}.rl-viewer-anatomy-image{user-select:none}.surgical-panel .surgical-actions{position:relative}
 .research-planning {margin:12px 0;padding:12px;border:1px solid var(--border,#344655);border-radius:8px;}
-.consequence-comparison [role=region]{max-width:100%;overflow-x:auto}.consequence-comparison table{min-width:570px;border-collapse:collapse;font-size:11px;font-variant-numeric:tabular-nums}.consequence-comparison th,.consequence-comparison td{padding:7px;text-align:left;border-bottom:1px solid var(--border,#344655)}.consequence-comparison pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:10px}.consequence-comparison section{display:grid;gap:7px;margin:12px 0}
+.consequence-comparison [role=region]{max-width:100%;overflow-x:auto}.consequence-comparison table{min-width:570px;border-collapse:collapse;font-size:11px;font-variant-numeric:tabular-nums}.consequence-comparison th,.consequence-comparison td{padding:7px;text-align:left;border-bottom:1px solid var(--border,#344655)}.consequence-comparison pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:var(--text-micro,11px)}.consequence-comparison section{display:grid;gap:7px;margin:12px 0}
 .research-plan-alternatives {display:grid;gap:12px;}
 .research-plan-alternatives article {padding:10px;border:1px solid var(--border,#344655);border-radius:6px;}
 .research-plan-alternatives dl>div {display:flex;justify-content:space-between;gap:12px;margin:5px 0;}
@@ -19,7 +19,7 @@
 .rescue-learning table {table-layout:fixed;}
 .rescue-learning th:first-child {width:42%;}
 .rescue-learning button {width:100%;white-space:normal;}
-.rescue-learning th small {display:block;font-size:10px;font-weight:normal;white-space:normal;}
+.rescue-learning th small {display:block;font-size:var(--text-micro,11px);font-weight:normal;white-space:normal;}
 .rescue-learning td {font-size:10.5px;overflow-wrap:anywhere;}
 .full-case-rehearsal{display:flex;flex-direction:column;gap:10px;border:1px solid #609d91;border-radius:8px;background:#152e31;padding:12px}.full-case-rehearsal>strong{font-size:15px;color:#b4e6da}.surgical-panel .full-case-phase-jump{flex-direction:column;align-items:stretch}.full-case-phase-jump select{width:100%}
 
@@ -27,10 +27,15 @@
 .surgical-panel{padding:10px;gap:8px;min-width:0}
 .rehearsal-heading h2{font-size:16px}.rehearsal-heading span{font-size:11px}
 .rehearsal-state{border-left:3px solid #76d4bd;padding:5px 8px;background:#142b2b;overflow-wrap:anywhere}
-.rehearsal-state p{color:#a9c1cb;font-size:11px;margin-top:3px}
+.rehearsal-state p{color:#a9c1cb;font-size:var(--text-micro,11px);margin-top:3px}
+.surgical-panel .rehearsal-state-details{border-top:0;padding-top:0;margin-top:3px;font-size:var(--text-micro,11px)}
+.surgical-panel .rehearsal-state-details>summary{color:var(--text-muted,#959e9b);padding:0}
+.surgical-panel .rehearsal-state-details[open]>summary{margin-bottom:2px}
+.surgical-panel .follow-tool-toggle{justify-content:flex-start;gap:8px;min-height:32px;font-size:var(--text-meta,12px)}
+.surgical-panel .follow-tool-toggle input{accent-color:var(--accent,#7cdcbc)}
 .surgical-panel h3{font-size:13px;color:#c6e4df}
 .surgical-panel button{padding:6px 8px}
-.surgical-slots button{gap:3px;font-size:11px}.surgical-slots small{font-size:10px;line-height:1.35}
+.surgical-slots button{gap:3px;font-size:11px}.surgical-slots small{font-size:var(--text-micro,11px);line-height:1.35}
 .surgical-panel summary{line-height:1.4;color:#b9d6d1;padding:2px 0}
 .surgical-panel summary:focus-visible{outline:2px solid #a1ebd8;outline-offset:3px;border-radius:3px}
 .surgical-panel details[open]>summary{margin-bottom:8px}
@@ -53,7 +58,7 @@
 .consequence-alternatives{display:grid;gap:9px;min-width:0}.consequence-alternatives article{display:grid;gap:7px;padding:8px;border:1px solid #35505b;border-radius:6px;min-width:0;overflow-wrap:anywhere}.consequence-alternatives h5{margin:0;font-size:12px;color:#c6e4df}.consequence-alternatives dl{margin:0;font-variant-numeric:tabular-nums}.consequence-alternatives dl>div{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:7px;padding:4px 0;border-bottom:1px solid #2a414a}.consequence-alternatives dt{color:#a9c1cb}.consequence-alternatives dd{margin:0;text-align:right;max-width:100px}.consequence-alternatives ul{margin:0;padding-left:16px;line-height:1.5}.consequence-alternatives li small{padding:0;color:#a9c1cb}.consequence-unknown{display:block}
 .planar-blade-maneuver{display:flex;flex-direction:column;gap:8px;padding:9px;border:1px solid #609d91;border-radius:7px;background:#152e31;min-width:0}.planar-blade-actions{display:grid;gap:6px}.planar-blade-actions button{flex:1}.planar-blade-maneuver dd{font-size:11px}.planar-blade-maneuver .surgical-declared-fields>div{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr)}
 
-.interactive-planning{border:1px solid #477185;border-radius:8px;background:#142b37;padding:10px;margin:12px 0}.interactive-planning>summary{font-weight:650;cursor:pointer}.approach-draft{display:grid;gap:10px;padding-top:10px}.approach-draft p{margin:0;font-size:12px}.approach-draft fieldset{min-width:0;margin:0;padding:9px;border:1px solid #3d586a;border-radius:6px}.approach-draft legend{font-size:12px;font-weight:650}.approach-coordinates{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.approach-draft label{font-size:11px;display:flex;gap:5px;align-items:center;flex-wrap:wrap}.approach-coordinates label{display:grid;gap:3px}.approach-draft input[type=number]{width:100%;min-width:0;box-sizing:border-box}.approach-tool{display:grid;gap:8px}.approach-evidence{display:flex;flex-wrap:wrap;gap:7px 12px}.approach-tool>label{justify-content:space-between}.approach-tool>label input{width:85px}.approach-table{overflow:auto}.approach-table table{border-collapse:collapse;width:100%;font-size:11px}.approach-table th,.approach-table td{text-align:left;padding:6px;border-bottom:1px solid #365063}.approach-table th button{text-align:left;width:100%;font-size:11px}.approach-table tr[aria-selected=true]{background:#285068}.approach-table button[aria-pressed=true]{outline:1px solid #70e0ff}.approach-selection{padding:9px;background:#1d3a4b;border-radius:6px;display:grid;gap:7px}.approach-draft pre{font-size:10px;max-height:260px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere}.approach-draft code{overflow-wrap:anywhere}.approach-draft .surgical-actions{margin-top:6px;flex-wrap:wrap}
+.interactive-planning{border:1px solid #477185;border-radius:8px;background:#142b37;padding:10px;margin:12px 0}.interactive-planning>summary{font-weight:650;cursor:pointer}.approach-draft{display:grid;gap:10px;padding-top:10px}.approach-draft p{margin:0;font-size:12px}.approach-draft fieldset{min-width:0;margin:0;padding:9px;border:1px solid #3d586a;border-radius:6px}.approach-draft legend{font-size:12px;font-weight:650}.approach-coordinates{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.approach-draft label{font-size:11px;display:flex;gap:5px;align-items:center;flex-wrap:wrap}.approach-coordinates label{display:grid;gap:3px}.approach-draft input[type=number]{width:100%;min-width:0;box-sizing:border-box}.approach-tool{display:grid;gap:8px}.approach-evidence{display:flex;flex-wrap:wrap;gap:7px 12px}.approach-tool>label{justify-content:space-between}.approach-tool>label input{width:85px}.approach-table{overflow:auto}.approach-table table{border-collapse:collapse;width:100%;font-size:11px}.approach-table th,.approach-table td{text-align:left;padding:6px;border-bottom:1px solid #365063}.approach-table th button{text-align:left;width:100%;font-size:11px}.approach-table tr[aria-selected=true]{background:#285068}.approach-table button[aria-pressed=true]{outline:1px solid #70e0ff}.approach-selection{padding:9px;background:#1d3a4b;border-radius:6px;display:grid;gap:7px}.approach-draft pre{font-size:var(--text-micro,11px);max-height:260px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere}.approach-draft code{overflow-wrap:anywhere}.approach-draft .surgical-actions{margin-top:6px;flex-wrap:wrap}
 
 .approach-constraints>summary{font-size:12px;cursor:pointer}.approach-constraints-body{display:grid;gap:10px;padding-top:10px}.approach-draft .approach-radius{display:flex;flex-wrap:nowrap;justify-content:space-between;margin-top:8px}.approach-draft .approach-radius input{width:88px}.approach-coordinates input[type=number]{padding-left:5px;padding-right:2px;font-size:12px}.approach-coordinates input::-webkit-inner-spin-button{appearance:none;margin:0}
 .approach-table{overflow:visible;min-width:0}.approach-table table{table-layout:fixed}.approach-table caption{white-space:normal;overflow-wrap:anywhere;text-align:left;margin-bottom:6px}.approach-table th,.approach-table td{white-space:normal;overflow-wrap:anywhere;padding:5px 3px}.approach-table th:first-child{width:20%}.approach-table th:nth-child(2){width:32%}.approach-table th button{min-width:0;padding:5px 3px;white-space:normal}
@@ -64,12 +69,17 @@
 
 /* Keep the supported workflow in the existing instrument panel. */
 .surgical-workflow{border-block:1px solid var(--border,#35505b);padding-block:12px;margin-block:12px}
-.surgical-workflow nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}
-.surgical-workflow nav button{display:flex;align-items:center;gap:6px;padding:8px;min-width:0;font-size:12px;line-height:1.25;white-space:normal}
-.surgical-workflow nav button span{font-size:11px;opacity:.7}
-.surgical-workflow nav button[aria-current="step"]{border-color:#76d4bd;background:#24443f;color:#d9ebee;font-weight:650}
+/* Compact stage stepper: one row, a bar per stage, accent on the current one. */
+.surgical-workflow nav{display:flex;gap:6px;align-items:stretch;min-width:0}
+.surgical-workflow nav button{position:relative;flex:1 1 auto;display:grid;align-content:start;min-width:0;padding:8px 2px 2px;border:0;border-radius:0;background:none;color:var(--text-muted,#959e9b);font-size:var(--text-meta,12px);font-weight:500;line-height:1.3;text-align:left;white-space:nowrap;cursor:pointer}
+.surgical-workflow nav button::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:2px;background:var(--line,#2b2e2f)}
+.surgical-workflow nav button span{font-size:var(--text-micro,11px);font-variant-numeric:tabular-nums;color:inherit;opacity:.8}
+.surgical-workflow nav button:hover:not([aria-current="step"]){color:var(--text,#e6eae8)}
+.surgical-workflow nav button[aria-current="step"]{color:var(--accent,#7cdcbc);background:none;font-weight:600}
+.surgical-workflow nav button[aria-current="step"]::before{background:var(--accent,#7cdcbc)}
+@media (prefers-reduced-motion:no-preference){.surgical-workflow nav button::before{transition:background-color var(--dur-enter,180ms) var(--ease-out,cubic-bezier(.2,.8,.2,1))}}
 .workflow-identity{overflow-wrap:anywhere}
-.workflow-bindings code{overflow-wrap:anywhere;font-size:10px}
+.workflow-bindings code{overflow-wrap:anywhere;font-size:var(--text-micro,11px)}
 .workflow-alternatives{display:grid;gap:9px;margin-block:12px}
 .workflow-alternative{border:1px solid var(--border,#35505b);border-radius:7px;padding:10px;background:var(--panel,#12252d)}
 .workflow-alternative:has(button[aria-pressed="true"]){border-color:#76d4bd}
@@ -92,7 +102,7 @@
 .sequential-episodes .rescue-comparison th:nth-child(2){width:25%}
 .sequential-episodes .rescue-comparison th:nth-child(3){width:35%}
 .sequential-episodes .rescue-comparison button{white-space:normal;overflow-wrap:normal;font-size:11px;max-width:100%}
-.sequential-episodes pre{max-width:100%;overflow:auto;white-space:pre-wrap;font-size:10px}
+.sequential-episodes pre{max-width:100%;overflow:auto;white-space:pre-wrap;font-size:var(--text-micro,11px)}
 .sequential-attempts ol{padding-left:18px}.sequential-attempts li{margin-bottom:10px}
 .sequential-attempts [data-request-status=rejected]{color:#f2d5a5}
 .planning-evidence{display:grid;gap:8px;margin-block:12px}
@@ -115,12 +125,12 @@
 .practice-jog span,.practice-pose p {font-size:11px;line-height:1.5}
 .practice-jog span {color:#a9c1cb}
 .practice-pose {font-variant-numeric:tabular-nums}
-.practice-pose button {padding:1px 4px;font-size:10px}
+.practice-pose button {padding:1px 4px;font-size:var(--text-micro,11px)}
 .practice-controls details p {overflow-wrap:anywhere}
 .operative-readout.practice-hud {max-width:320px;font-size:11px}
 .practice-hud dl {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 12px;margin:2px 0}
 .practice-hud dl div {display:grid;gap:1px}
-.practice-hud dt {color:#c1cbc9;font-size:10px}
+.practice-hud dt {color:#c1cbc9;font-size:var(--text-micro,11px)}
 .practice-hud dd {margin:0;font-size:12px}
 .surgical-panel[data-practice-active="true"] .rehearsal-state {padding-block:4px}
 .surgical-panel[data-practice-active="true"] .rehearsal-state>strong {font-size:12px}

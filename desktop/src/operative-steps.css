@@ -6,6 +6,9 @@
 .operative-inspector strong {font-size: 15px;}
 .operative-inspector p {font-size: 12px; line-height: 1.5; color: #aab5ae;}
 .operative-inspector button, .native-approaches .approach-preview {min-height: 32px;}
+.operative-details summary {cursor: pointer; color: var(--text-muted,#959e9b); font-size: var(--text-meta,12px);}
+.operative-details[open] > summary {margin-bottom: 6px;}
+.operative-details p + p {margin-top: 6px;}
 .operative-playback, .operative-placeholder {
   position: absolute; inset: 0; display: flex; flex-direction: column;
   color: #dfebe5; background: #101514; font: 13px/1.45 "Inter",sans-serif;
@@ -20,7 +23,7 @@
   background: #171d1b; position: relative; z-index: 2;
 }
 .operative-topline strong {font-size: 15px; font-weight: 600;}
-.operative-topline small, .operative-chapters small {display: block; color: #9caaa2; font-size: 11px;}
+.operative-topline small {display: block; color: var(--text-muted,#959e9b); font-size: var(--text-micro,11px);}
 .operative-sources summary {cursor: pointer; color: #c2d2c8;}
 .operative-sources > div {
   position: absolute; top: 100%; right: 4px; width: min(340px,90%); max-height: 45vh;
@@ -47,23 +50,36 @@
 .operative-scrub {gap: 5px; margin: 6px 0;}
 .operative-scrub input {flex: 1; min-width: 80px; accent-color: #8dd9b7;}
 .operative-scrub button {width: 30px; height: 28px; display: grid; place-items: center;}
-.operative-chapters {display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 4px;}
+/* Compact stepper above the timeline. Each step's bar fills with its own
+   progress; the current step carries the accent in its label as well. */
+.operative-chapters {display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 6px; margin: 8px 0 2px;}
 .operative-chapters button {
-  padding: 5px 6px; text-align: left; line-height: 1.35; font-size: 12px; min-height: 32px;
-  color: #c7d3cc; background: #1f2622; border: 1px solid #38423b; border-radius: 4px;
+  position: relative; display: grid; align-content: start; gap: 1px; min-width: 0; min-height: 32px; padding: 8px 2px 2px;
+  text-align: left; line-height: 1.3; font-size: var(--text-meta,12px); font-weight: 500; cursor: pointer;
+  color: var(--text-muted,#959e9b); background: none; border: 0; border-radius: 0;
 }
-.operative-chapters button[aria-pressed=true] {color: #adedd2; border-color: #75b998; box-shadow: inset 0 -2px #75b998;}
-.operative-chapters button:disabled {opacity: .62;}
+.operative-chapters button::before, .operative-chapters button::after {
+  content: ''; position: absolute; top: 0; left: 0; height: 3px; border-radius: 2px;
+}
+.operative-chapters button::before {right: 0; background: var(--line,#2b2e2f);}
+.operative-chapters button::after {width: calc(var(--step-fill,0) * 100%); background: var(--accent,#7cdcbc);}
+.operative-chapters button[data-step-state=done] {color: var(--text,#e6eae8);}
+.operative-chapters button[aria-pressed=true] {color: var(--accent,#7cdcbc);}
+.operative-chapters button:hover:not(:disabled) {color: var(--text,#e6eae8);}
+.operative-chapters button[aria-pressed=true]:hover {color: var(--accent,#7cdcbc);}
+.operative-chapters button:disabled {opacity: .55; cursor: default;}
+.operative-chapters span {overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
+.operative-chapters small {display: block; color: var(--text-muted,#959e9b); font-size: var(--text-micro,11px); font-weight: 400;}
 .operative-options {margin-top: 8px; flex-wrap: wrap; color: #b9c6be; font-size: 12px;}
 .operative-options label {display: flex; align-items: center; gap: 5px;}
 .operative-options input {accent-color: #8dd9b7;}
 .operative-conflict {color: #f2c89a; font-size: 12px; padding-bottom: 5px; max-height: 4em; overflow: auto;}
 .operative-playback :is(button,input,summary):focus-visible {outline: 2px solid #9fe1c0; outline-offset: 1px;}
-.operative-scale {position:absolute;z-index:1;right:12px;bottom:10px;color:#e0e9e4;border:solid currentColor;border-width:0 1px 2px;text-align:center;font-size:10px;text-shadow:0 1px 3px #000;pointer-events:none;}
+.operative-scale {position:absolute;z-index:1;right:12px;bottom:10px;color:#e0e9e4;border:solid currentColor;border-width:0 1px 2px;text-align:center;font-size:var(--text-micro,11px);text-shadow:0 1px 3px #000;pointer-events:none;}
 .operative-overview {position:absolute;top:8px;left:10px;margin:0;width:clamp(72px,17%,144px);background:#101514df;border:1px solid #45564e;border-radius:3px;overflow:hidden;pointer-events:none;}
 .operative-overview canvas {display:block;width:100%;max-height:132px;object-fit:contain;}
-.operative-overview figcaption {text-align:center;font-size:10px;color:#c7d3cc;}
-.operative-overview span {position:absolute;color:#e4e9e7;text-shadow:0 1px 3px #000;font-size:9px;}
+.operative-overview figcaption {text-align:center;font-size:var(--text-micro,11px);color:#c7d3cc;}
+.operative-overview span {position:absolute;color:#e4e9e7;text-shadow:0 1px 3px #000;font-size:var(--text-micro,11px);}
 .operative-up {top:0;left:50%;}
 .operative-right {top:42%;right:2px;}
 .operative-legend {max-width:calc(100% - 112px);}
@@ -74,46 +90,54 @@
 .operative-image > .operative-legend {
   inset:auto auto 8px 12px; width:max-content; height:max-content; min-height:0; align-content:flex-end;
 }
-.operative-picked {position:absolute;z-index:2;top:32px;right:10px;max-width:min(260px,48%);max-height:50%;overflow:auto;background:#17201ef2;border:1px solid #405249;border-radius:4px;padding:8px 10px;font-size:11px;overflow-wrap:anywhere}
+.operative-picked {max-width:100%;max-height:40vh;overflow:auto;background:#17201ef2;border:1px solid #405249;border-radius:4px;padding:8px 10px;font-size:var(--text-micro,11px);overflow-wrap:anywhere;box-sizing:border-box}
+
+/* Top-right stack in the operative field: modeled tip distances, the
+   aspiration amount and a picked-tissue record. The tip stays clear. */
+.operative-field-readouts {
+  position:absolute;z-index:2;top:8px;right:12px;display:flex;flex-direction:column;align-items:flex-end;gap:4px;
+  max-width:min(280px,48%);pointer-events:none;
+}
+.operative-field-readouts > * {pointer-events:auto;}
+.operative-field-readouts > .operative-cavity {position:static;pointer-events:none;}
+.operative-navigation {
+  min-width:150px;box-sizing:border-box;padding:6px 10px 7px;border:1px solid var(--line,#2b2e2f);border-radius:var(--radius,6px);
+  background:rgba(16,17,18,.88);color:var(--text,#e6eae8);font-size:var(--text-meta,12px);line-height:1.4;font-variant-numeric:tabular-nums;
+}
+.operative-navigation strong {display:block;margin-bottom:2px;color:var(--text-muted,#959e9b);font-size:var(--text-micro,11px);font-weight:400;}
+.operative-navigation dl {display:grid;gap:1px;margin:0;}
+.operative-navigation dl > div {display:flex;justify-content:space-between;gap:14px;}
+.operative-navigation dt {color:var(--text-muted,#959e9b);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.operative-navigation dd {margin:0;font-weight:600;white-space:nowrap;}
 .operative-picked small,.operative-picked strong{display:block}
 .operative-picked button{float:right;margin-left:6px;cursor:pointer}
 .operative-topline select {margin-left:auto;width:auto;max-width:50%;min-height:27px;border:1px solid #46564e;border-radius:4px;background:#202a25;color:#dce8e1;font:inherit;}
 .operative-playback select:focus-visible {outline:2px solid #9fe1c0;outline-offset:1px;}
 .surgeon-view-modes button[aria-pressed=true] {border-color:#75b998;box-shadow:inset 0 -2px #75b998;}
 
-/* Keep the planning renderer and its patient camera alive beside the changing
-   local field. Both reference panes follow the selected study and approach. */
+/* Navigation layout: the operative field stays the main pane and the linked
+   source slices keep Anatomy's pane treatment in one column on the right.
+   The column width is set from viewer/layout.ts (rehearseSliceColumnCss). */
 .viewer-shell.has-operative-reference {
-  display:grid;grid-template-columns:minmax(0,1fr) clamp(152px,24%,300px);
-  grid-template-rows:auto minmax(0,1.16fr) minmax(0,1fr) auto;
+  display:grid;column-gap:4px;background:var(--bg,#080909);
+  grid-template-columns:minmax(0,1fr) var(--rehearse-slice-column,clamp(232px,33%,420px));
+  grid-template-rows:auto minmax(0,1fr) auto;
 }
 .has-operative-reference > .operative-playback {display:contents;}
-.has-operative-reference .operative-topline {grid-area:1 / 1 / 2 / 3;}
-.has-operative-reference .operative-image {grid-area:2 / 1 / 4 / 2;}
-.has-operative-reference .operative-transport {grid-area:4 / 1 / 5 / 3;}
+.has-operative-reference .operative-topline {grid-area:1 / 1 / 2 / 2;}
+.has-operative-reference .operative-image {grid-area:2 / 1 / 3 / 2;}
+.has-operative-reference .operative-transport {grid-area:3 / 1 / 4 / 2;}
 .viewer-shell.has-operative-reference > .rl-viewer {
-  grid-area:2 / 2 / 4 / 3;display:block;min-height:0;min-width:0;box-sizing:border-box;
-  border:1px solid #343936;background:#080909;
+  grid-area:1 / 2 / 4 / 3;position:relative;display:grid;min-height:0;min-width:0;
+  grid-template-columns:minmax(0,1fr);grid-template-rows:repeat(3,minmax(0,1fr));
 }
-.has-operative-reference:has(.operative-playback > .operative-overview) > .rl-viewer {grid-row-end:3;}
 .has-operative-reference:has(.operative-placeholder) > .rl-viewer {visibility:hidden;}
-.has-operative-reference .operative-reference-heading {
-  position:absolute;inset:0 0 auto;height:24px;padding:4px 8px;background:#151a18;
-  color:#cbd6cf;font-size:11px;line-height:16px;z-index:1;box-sizing:border-box;
-}
-.has-operative-reference .rl-viewer .rl-viewer-anatomy {position:absolute;inset:24px 0 0;border:0;}
-.has-operative-reference .rl-viewer .rl-viewer-anatomy-image {
-  inset:50% 0 auto;width:100%;height:auto;aspect-ratio:1.08;max-height:100%;transform:translateY(-50%);
-}
-.has-operative-reference .rl-viewer :is(.rl-viewer-slice,.rl-viewer-layoutbar,.rl-viewer-annotations,.rl-body-guide) {display:none;}
-.has-operative-reference .operative-playback > .operative-overview {
-  grid-area:3 / 2 / 4 / 3;position:relative;inset:auto;width:auto;min-height:0;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  margin:0;border-radius:0;background:#080909;
-}
-.has-operative-reference .operative-overview-plane {min-height:0;width:100%;flex:1;}
-.has-operative-reference .operative-overview-plane canvas {width:100%;height:100%;object-fit:contain;}
-.has-operative-reference .operative-overview figcaption {width:100%;flex:none;}
+/* The intact 3D reference and its toolbar give way to the three slices. */
+.has-operative-reference > .rl-viewer :is(.rl-viewer-anatomy,.rl-viewer-layoutbar,.operative-reference-heading,.rl-viewer-details) {display:none;}
+.has-operative-reference > .rl-viewer .rl-viewer-axial {grid-column:1;grid-row:1;}
+.has-operative-reference > .rl-viewer .rl-viewer-coronal {grid-column:1;grid-row:2;}
+.has-operative-reference > .rl-viewer .rl-viewer-sagittal {grid-column:1;grid-row:3;}
+.has-operative-reference > .rl-viewer.has-expanded .rl-viewer-slice.is-expanded {grid-column:1;grid-row:1 / -1;}
 
 .viewer-shell.has-engine-reference {
   display:grid;grid-template-columns:minmax(0,1fr) clamp(156px,21%,270px);
@@ -129,7 +153,7 @@
 .engine-intact-reference header strong {font-size:13px;}
 .engine-intact-reference header span,.engine-intact-reference footer span {font-size:11px;overflow-wrap:anywhere;}
 .engine-intact-reference footer {border-top:1px solid #353c38;}
-.engine-intact-reference footer strong {font-size:10px;color:#9bad9f;}
+.engine-intact-reference footer strong {font-size:var(--text-micro,11px);color:#9bad9f;}
 .engine-intact-reference footer span+strong {margin-top:4px;}
 .engine-approach-views {display:flex;flex-wrap:wrap;gap:4px;margin:3px 0;}
 .engine-approach-views button {flex:1 1 auto;padding:4px 6px;color:#d8e9e1;border:1px solid #42554b;border-radius:4px;background:#202c26;font:11px/1.3 system-ui;cursor:pointer;}
@@ -149,7 +173,7 @@
 .engine-route-plane canvas {display:block;width:100%;height:auto;}
 .engine-route-plane svg {position:absolute;inset:0;display:block;width:100%;height:100%;}
 .engine-route-plane text {text-anchor:middle;fill:#ecfff5;font:11px system-ui;paint-order:stroke;stroke:#101814;stroke-width:2.5px;}
-.engine-route-plane figcaption {color:#bfcbc3;text-align:center;font-size:10px;margin-top:3px;}
+.engine-route-plane figcaption {color:#bfcbc3;text-align:center;font-size:var(--text-micro,11px);margin-top:3px;}
 
 .operative-entry-marker {
   position:absolute; z-index:1; pointer-events:none; transform:translate(15px,-50%);
@@ -165,3 +189,5 @@
 .operative-sweep-choice select {background:#1c2621;color:#dce8e1;border:1px solid #405048;border-radius:4px;padding:4px;}
 
 .operative-field-canvas[data-entry-caption]:not([data-entry-caption=""])::after {content:attr(data-entry-caption);}
+/* The source route plane is an inset at top-left; keep captions beside it. */
+.operative-image:has(> .operative-overview) .operative-field-canvas::after {left:calc(clamp(72px,17%,144px) + 22px);}
