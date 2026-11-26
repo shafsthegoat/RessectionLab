@@ -3,8 +3,8 @@ import pytest
 from scipy import ndimage as ndi
 
 from resectionlab.vascular_parity import (
-    betti, betti_error, centerline, cl_dice, dice, floating_components, image_sharpness, source_deviation,
-    surface_quality,
+    agreement, betti, betti_error, centerline, cl_dice, dice, floating_components, image_sharpness,
+    patch_betti_error, source_deviation, surface_quality,
 )
 
 
@@ -180,3 +180,18 @@ def test_image_sharpness_orders_a_blurred_frame_behind_its_source():
     colour = np.repeat((frame * 255)[..., None], 3, axis=2)
     assert image_sharpness(colour)['rise_px_p50'] == pytest.approx(sharp['rise_px_p50'])
     assert image_sharpness(np.zeros((160, 160)))['rise_px_p50'] is None
+
+
+def test_patch_betti_error_does_not_let_noise_loops_cancel_missing_loops():
+    shape = (40, 20, 9)
+    reference = np.zeros(shape, bool)
+    reference[:20] = ring((20, 20, 9), radius=6, tube=1)
+    predicted = np.zeros(shape, bool)
+    predicted[20:] = ring((20, 20, 9), radius=6, tube=1)
+    assert betti_error(predicted, reference)['b1_error'] == 0
+    patch = patch_betti_error(predicted, reference, (1.0, 1.0, 1.0), cube_mm=20.0, bounds=((0, 0, 0), shape))
+    assert patch['cubes'] == 2 and patch['cube_voxels'] == [20, 20, 20]
+    assert patch['b1_sum'] == 2 and patch['b1_mean'] == 1 and patch['b0_sum'] == 2
+    same = patch_betti_error(reference, reference, (1.0, 1.0, 1.0), cube_mm=20.0, bounds=((0, 0, 0), shape))
+    assert same['b0_sum'] == same['b1_sum'] == 0
+    assert agreement(reference, reference, (1.0, 1.0, 1.0))['patch_betti']['b1_sum'] == 0

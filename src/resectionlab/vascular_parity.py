@@ -6,6 +6,8 @@ reference: overlap and topology agreement need an independent annotation.
 
 from __future__ import annotations
 
+import itertools
+
 import numpy as np
 from scipy import ndimage as ndi
 from skimage.morphology import skeletonize
@@ -96,6 +98,53 @@ def betti_error(predicted, reference):
     return {
         'predicted': found, 'reference': wanted,
         'b0_error': abs(found['b0'] - wanted['b0']), 'b1_error': abs(found['b1'] - wanted['b1']),
+    }
+
+
+def annotated_bounds(reference, spacing, margin_mm=5.0):
+    found = np.argwhere(reference)
+    pad = np.ceil(margin_mm / np.asarray(spacing)).astype(int)
+    return np.maximum(found.min(axis=0) - pad, 0), np.minimum(found.max(axis=0) + pad + 1, reference.shape)
+
+
+def annotated_region(reference, spacing, margin_mm=5.0):
+    """Bounding region of the annotation, padded. Unlabelled anatomy outside it is not scored."""
+    lower, upper = annotated_bounds(reference, spacing, margin_mm)
+    region = np.zeros(reference.shape, bool)
+    region[tuple(slice(a, b) for a, b in zip(lower, upper))] = True
+    return region
+
+
+def patch_betti_error(predicted, reference, spacing, cube_mm=16.0, bounds=None):
+    """Betti error per cube, as in the clDice paper: the scored region is tiled from its lower corner into cubes of
+    `cube_mm` (edge cubes are cut at the region), and each cube adds |b0 difference| and |b1 difference| between the
+    prediction and the annotation cropped to it. Loops in noise elsewhere cannot cancel loops missed here."""
+    predicted, reference = _matched(predicted, reference)
+    lower, upper = bounds if bounds is not None else annotated_bounds(reference, spacing)
+    size = np.maximum(np.round(cube_mm / np.asarray(spacing, float)).astype(int), 1)
+    errors = {'b0': [], 'b1': []}
+    for start in itertools.product(*(range(int(a), int(b), int(n)) for a, b, n in zip(lower, upper, size))):
+        window = tuple(slice(s, min(s + int(n), int(u))) for s, n, u in zip(start, size, upper))
+        found, wanted = betti(predicted[window]), betti(reference[window])
+        for key in errors:
+            errors[key].append(abs(found[key] - wanted[key]))
+    return {'cube_mm': cube_mm, 'cube_voxels': size.tolist(), 'cubes': len(errors['b0']),
+            **{f'{key}_{kind}': float(f(values)) for key, values in errors.items()
+               for kind, f in (('mean', np.mean), ('sum', np.sum))}}
+
+
+def agreement(predicted, reference, spacing):
+    """Overlap inside the annotated region; topology on whole components that enter it, and per 16 mm cube."""
+    region = annotated_region(reference, spacing)
+    inside = predicted & region
+    labels, _ = ndi.label(predicted, np.ones((3, 3, 3), bool))
+    entering = np.isin(labels, np.setdiff1d(np.unique(labels[region]), [0]))
+    return {
+        'scored_region': 'annotation bounding box padded by 5 mm',
+        'dice': dice(inside, reference), 'cl_dice': cl_dice(inside, reference),
+        'betti': {**betti_error(entering, reference), 'scope': 'whole predicted components that enter the scored region'},
+        'whole_grid_dice': dice(predicted, reference),
+        'patch_betti': patch_betti_error(predicted, reference, spacing),
     }
 
 

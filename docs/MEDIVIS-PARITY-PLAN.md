@@ -51,21 +51,19 @@ drives the hidden desktop harness and `resectionlab.vascular_parity`.
 | Normal turn p95 | Dihedral angle across shared edges of the displayed wall, in physical space. |
 | Source deviation | Millimetres, and smallest-spacing voxels, from each wall vertex to the steepest fall of acquired signal along its outward normal, searched to two voxels. A vertex with no clear edge in reach counts as a full-reach miss, and the resolved fraction is reported. |
 | Sharpness | Median 10 to 90 percent rise width across the strongest edges of the 3D pane at logical display scale. The cursor crosshair remains in frame. |
-| Dice, clDice, Betti | Dice and clDice inside the annotation's bounding region padded by 5 mm. Betti numbers on whole predicted components that enter that region. |
+| Dice, clDice, Betti | Dice and clDice inside the annotation's bounding region padded by 5 mm. Betti numbers on whole predicted components that enter that region, and, since Phase 2, a patch Betti error: the region is tiled in 16 mm cubes and the absolute b0 and b1 differences per cube are summed, so loops in unrelated noise cannot cancel missing ones. |
 | Blind review | A fresh reviewer scores shuffled, unlabeled frames 1 to 5 on crispness, depth, clutter, connectivity, realism and usefulness beside the reference frames. |
 
 ## Open decisions
 
-1. **No annotation exists for either EDEN case.** The Phase 2 gate asks for
-   better Dice, clDice and Betti on TOF-B, which cannot be computed there.
-   Proposed: score the labelled TopCoW-018 MRA as the held-out angiography
-   reference, and judge PTNT_9937 on floating components, Betti counts and
-   blind review. Needs Shafrir's agreement before Phase 2 closes.
-2. **The TopBrain dockers target linux/amd64 with an NVIDIA GPU.** No
-   container runtime is installed, and one would run emulated on CPU here.
-   The five images (36.7 GB, CC BY 4.0, citation requested) are kept on the
-   HDD; the plan is to unpack them and run the weights natively. Whether the
-   archives allow that is not yet confirmed.
+1. **No annotation exists for either EDEN case.** Phase 2 scored the
+   labelled TopCoW-018 MRA as the held-out angiography reference and gives
+   PTNT_9937 label-free measures only. Shafrir has not yet confirmed this
+   substitution.
+2. **Which Betti measure decides the Phase 2 gate.** The whole-volume loop
+   count on CTA-B still favours vesselFM alone by two loops (9 against 7)
+   after both attempts, while the patch Betti error and every other measure
+   favour the ensemble. Needs Shafrir's decision; see Phase 2 results.
 3. **The annotation itself has unrooted named vessels.** TopCoW-014 has six
    and TopCoW-018 four components (M2, M3, choroidal and ophthalmic segments)
    that do not touch a root label. "Zero floating components" and "no named
@@ -90,7 +88,7 @@ drives the hidden desktop harness and `resectionlab.vascular_parity`.
 | --- | --- | --- | --- |
 | 0 Baseline | Headless harness reproduces presets and metrics for today's app | Evidence saved for all four cases | done 2026-11-25 |
 | 1 Cinematic renderer | Soft-label tagging, tricubic intensity, progressive path tracing, hybrid shading, HDR environment; WebGPU versus WebGL2 recorded | Interaction p95 at most 16.7 ms; settle at most 1.5 s on CTA-A; blind crispness and depth at least 4 | gates not met 2026-11-25; kept behind the Volume lighting setting |
-| 2 Segmentation | TopBrain 2025 top-three models, ensembled with vesselFM where connected to the named tree; soft probabilities kept; CTA labels never applied to MRA | Better Dice, clDice and Betti than vesselFM alone on the held-out cases | not started |
+| 2 Segmentation | TopBrain 2025 top-three models, ensembled with vesselFM where connected to the named tree; soft probabilities kept; CTA labels never applied to MRA | Better Dice, clDice and Betti than vesselFM alone on the held-out cases | run 2026-11-26; one Betti count not met after two attempts, see results |
 | 3 Cleanup | Root-reachable components by default, the rest behind a review toggle; signal-supported bridging; caliber LOD; arteries red, veins blue | Zero floating components by default; no named major vessel lost | not started |
 | 4 Sim geometry | Centerline and radius implicit tubes shared by drawing, collision, rods and tags | Deviation at most 0.5 voxel; no self-intersection; tools displace vessels | not started |
 | 5 Integration | Volume, tubes, tools and clipping in the packaged build; films and pull request | All earlier gates; blind scores at least 4 | not started |
@@ -203,3 +201,67 @@ TOF views did not move because fragments and tangles dominate them.
 Rendered lumen connectivity on CTA-A matches the label mask (arteries 8 of 8
 components, veins 3 of 3). Thin vessels are beaded where their opacity follows
 the binary mask. PNG export in this mode writes the standard image.
+
+## Phase 2 results
+
+The three top TopBrain 2025 submissions (labelled UZH, ARG and KDH here;
+Zenodo record 20158639, CC BY 4.0) run natively on the M2 Pro from their
+unpacked container archives: no container runtime, Apple MPS, half-precision
+networks, one prediction at a time. `scripts/topbrain_native.py` unpacks,
+predicts, combines, scores and retains; `resectionlab.vessel_ensemble` holds
+the combination rules. CT pipelines run only on CT and MR pipelines only on
+MR. Soft artery, vein and vessel probabilities and a named label map are kept
+per case. Evidence, licences and deviations from the containers:
+`qc/medivis-parity-20261125/phase2-segmentation/README.md`.
+
+All three teams trained on every TopBrain case, including TopCoW-014 and 018,
+so both are in-sample for the models. "Held out" means held out from this
+project's choices: everything was chosen on TopCoW-014 and applied to 018.
+
+Attempt one pooled the teams by a plain mean. On CTA-B it lost loops (23
+against 42 annotated) and missed the Betti part of the gate. Attempt two chose
+the pooling rule on TopCoW-014 only, from five candidates: the best
+development team as the base (UZH on CT, ARG on MR), the others added only
+where they connect to it. Because attempt two was prompted by a miss on 018,
+018 is not a clean test of it; TopCoW-001 CT and MR are pre-registered as
+confirmation cases and have not been run.
+
+Held-out scores for the frozen attempt-two ensemble. "vesselFM alone" is the
+Phase 0 baseline at a 0.5 threshold. "vesselFM tuned" has its threshold and
+component filter chosen on TopCoW-014 with the same objective.
+
+| CTA-B (TopCoW-018 CT) | vesselFM alone | vesselFM tuned | Ensemble |
+| --- | --- | --- | --- |
+| Dice / clDice | 0.266 / 0.373 | 0.452 / 0.530 | 0.910 / 0.978 |
+| Component error (b0) | 357 | 8 | 4 |
+| Loop count error (b1; 42 annotated) | 7 | 32 | 9 |
+| Patch Betti error, b0 / b1 sums | 655 / 50 | 189 / 24 | 27 / 17 |
+
+| TopCoW-018 MRA (stand-in for TOF-B) | vesselFM alone | vesselFM tuned | Ensemble |
+| --- | --- | --- | --- |
+| Dice / clDice | 0.499 / 0.375 | 0.651 / 0.520 | 0.952 / 0.983 |
+| Component error (b0) | 1,448 | 6 | 7 |
+| Loop count error (b1; 31 annotated) | 406 | 1 | 16 |
+| Patch Betti error, b0 / b1 sums | 2,381 / 146 | 219 / 20 | 33 / 15 |
+
+Gate reading. Against vesselFM alone the ensemble is better on Dice, clDice,
+component error and both patch Betti sums on both cases, and on the loop count
+on MRA. It is not better on the whole-volume loop count on CTA-B (9 against
+7) after two attempts. vesselFM reaches 35 loops there across 366 separate
+components, so its count sits near 42 without matching the annotated loops;
+the patch error measures that (50 against 17). Against the tuned vesselFM row
+the ensemble wins everything on CT and Dice, clDice and patch Betti on MRA,
+and loses the two whole-volume counts on MRA (7 against 6, 16 against 1). The
+plain mean had the better MRA loop count (0), which the development case did
+not predict.
+
+The vesselFM signal is added only where it touches the named tree, and is
+kept as its own soft layer. Against these annotations it always lowers Dice
+and clDice (CTA-B 0.910 to 0.889 Dice) because the annotations cover named
+vessels only; every unnamed vessel counts as an error. Its value is judged on
+the display, under the Phase 3 calibre rule.
+
+One team's CT pipeline labels external carotid branches with the vein label
+numbers; those classes go to background on the path that feeds the ensemble.
+"CT models only on CT" holds per pipeline: two teams ship weights that serve
+both modalities.

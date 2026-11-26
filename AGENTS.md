@@ -80,6 +80,7 @@ constraints and evaluation. It is a research prototype, not a medical device.
 - [Native patient anatomy workbench](docs/patient-anatomy-workbench.md), [fresh patient reproduction](docs/fresh-patient-reproduction.md)
 - [Interactive patient planning](docs/interactive-patient-planning.md), [research planning](docs/research-planning.md), [neighboring paths panel](docs/neighboring-paths-panel.md)
 - [Rehearsal performance](docs/rehearsal-performance.md), [surgeon rehearsal](docs/surgeon-rehearsal.md), [operative demonstration](docs/operative-demonstration.md)
+- [Vascular rendering parity plan](docs/MEDIVIS-PARITY-PLAN.md): phases, gates and measurements for the vessel display work
 - [POC A workbench](docs/poc-a-workbench.md) and [first-release gate ledger](docs/poc-first-gate-ledger.md) (October foundation)
 
 **Data, cohorts and reconstruction**
