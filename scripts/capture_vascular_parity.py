@@ -73,10 +73,16 @@ HERO = {
     # Two further EDEN cases, chosen on 2026-11-26 from the cohort's earlier captures as the cleanest trees.
     # Anchors: the internal carotid centroid of the named labels, shifted by (-0.2, -3.4, -3.6) mm.
     'TOF-C': {
-        'title': 'EDEN PTNT_4503 TOF', 'held_out': True,
+        'title': 'EDEN PTNT_4503 TOF, held out', 'held_out': True,
         'manifest': 'prepared/Eden 2020 ResectionLab Projects (restricted)/PTNT_4503/vascular-review.anatomy.json',
         'series': 'tof', 'vessels': ['vesselfm-cleanup'], 'reference': None, 'cohort_view': True,
         'anchor': [3.14, 23.77, -12.94], 'phase2': 'PTNT_4503-mr',
+    },
+    'TOF-D': {
+        'title': 'EDEN PTNT_7086 TOF, held out', 'held_out': True,
+        'manifest': 'prepared/Eden 2020 ResectionLab Projects (restricted)/PTNT_7086/vascular-review.anatomy.json',
+        'series': 'tof', 'vessels': ['vesselfm-cleanup'], 'reference': None, 'cohort_view': True,
+        'anchor': [-1.52, 21.22, -22.08], 'phase2': 'PTNT_7086-mr',
     },
 }
 # View direction is from the camera toward the anchor, in patient RAS.
