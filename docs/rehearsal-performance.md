@@ -2,6 +2,51 @@
 
 ## Manual rehearsal on Apple M2 Pro
 
+This work is merged onto the vascular parity line (`shaf/rehearsal-performance-port-20261126`, merge `bcf3be83` on `f2562cae`). The parity line changed the same engine and renderer code after the performance branch was frozen, so the merge re-applies the performance work onto the current code. The first subsection states what the merged line does and what was measured on it. The later subsections record the November 21 comparison on the performance branch. They were not repeated on the merged line unless the first subsection says so.
+
+### Merged line on November 26
+
+The lattice tick runs the batched obstacle sweep and the strain-candidate screen beside the current material profiles, vessel coupling and `sparse-ordering` switch. The cached solver keeps its bond list and adds the bond arrays the kernels read. Two current paths keep their own strain limit and do not use the screen: soft vessel contact, which defines its limit with a batched norm, and the opt-in `deformation-scan` feature. Under soft vessel contact, a substep that proves every node stays in its source voxel still skips the sweep.
+
+The engine's current compiled displacement snapshot stays. It is integrity-checked through the backend entry index and takes stock fields of 256 entries or more. The performance branch's separate snapshot binding, which took 64 entries or more inside the executor boundary, is not carried over. The timing trace reports the current entry point under the same `nativeBindings` names. The tissue control's deformation field never exceeds 90 entries, so all 5,888 snapshot checks in its instrumented run took the Python path, with a p95 of 26.7 ms per action. The November 21 candidate reported 7.3 ms for that stage. A scratch replay that admitted fields of 64 entries or more to the current compiled snapshot reproduced every accepted state and cut snapshot time across the 33 actions from 204.9 to 41.8 ms. That threshold is unchanged here.
+
+Mesh workers diffuse display normals with the pass count each layer uses, three by default and ten for the CTA fairing policy, and the surface cache keys prepared normals by that count. Retained fluid and debris keep their resources between accepted updates and keep the blood-origin colour rule; a change of origin rebuilds the fluid component. Wet-capable materials compile with the dry microscope draw, including the exposure walls. Accepted motion is reused for a fresh receipt only when the displacement inputs are unchanged and the volume has no operative vessel walls or retained exposure bodies, which read further view fields.
+
+Measurements on the same Mac14,9 compare a clean build of the merge with a clean build of its parity parent. Both ran hidden at 1440 × 900 with a 1072 × 818 drawing buffer at device pixel ratio 1, where the November 21 runs used ratio 2. Another session's Python process held one CPU core during these runs, so absolute times are higher than on November 21 and vary more between pairs.
+
+| Tissue and wound, 165 accepted inputs per build | Parity parent p50 / p95 / max (ms) | Merged line p50 / p95 / max (ms) |
+| --- | ---: | ---: |
+| Input to matching GPU fence | 129.7 / 278.3 / 508.2 | 89.9 / 247.1 / 340.3 |
+| Main handler to engine response | 32.9 / 221.6 / 253.4 | 27.6 / 194.3 / 246.3 |
+| CPU frame submission | 0.8 / 21.4 / 250.9 | 0.7 / 9.4 / 46.2 |
+
+The merged line had the lower p95 in each of the five alternating pairs (298.9 / 268.5, 297.4 / 219.0, 308.7 / 288.3, 248.9 / 236.4 and 236.9 / 210.6 ms). Its median was higher in one pair. At the first action that adds free fluid, median CPU submission fell from 26.1 to 4.2 ms. Both builds produced the same ordered accepted states, and their witness digest `badaf9cd…` equals the November 21 digest.
+
+A headless replay of the frozen November 21 tissue receipt checked every outcome and accepted state on the merged line. Over three alternating rounds after one warm-up, the 33 actions summed to 2,291 ms with the scalar sweep and strain loops, 2,048 ms with the NumPy screens and 1,908 ms with the C++ kernels. The native run made 1,916 sweeps over 689,760 sample points and 646 strain screens over 130,492 edges, refined 1,264 edges with the scalar norm, and recorded no fallback. The instrumented desktop run reported the same counts, with Python dispatch p95 at 199.8 ms and simulation p95 at 193.3 ms.
+
+The sustained tissue verifier completed 359 loaded moves in 180 s on the merged build, two physical ticks each, with input-to-matching-GPU p50 / p95 / maximum of 78.7 / 107.8 / 207.4 ms. All twelve of its checks passed, including burst admission, cancellation after deformation started, held slices, protected-save refusal and the saved log. A fresh process reopened the 371-row history exactly. Settled samples before and after held 40 geometries, 17 textures and 23 programs. Summed working sets went from 732 to 768 MiB and peaked at 992 MiB.
+
+On the merged build, Electron main passed 377 tests, the viewer suite 485, the UI suite 837, and the deformation, occupancy and practice files 58. A wider selection of engine, native and bridge files passed 345 tests and failed 13 on both builds, with identical failing tests. The compact numbers are in the [port record](../artifacts/rehearsal-performance-20261121/port-20261126.json).
+
+The cranial opening control does not open on either build. `SurgicalEngine.parameters` reads `self.tools`, which the cranial exit planner's view namespace does not carry. Its comparison, acquired playback, camera and proposed-tool cadence, recordings, matched stills and the signed package were not repeated on the merged line.
+
+To repeat the merged-line comparison, build the two revisions in separate directories and point the runner at local copies of the fixtures:
+
+```sh
+for name in baseline candidate; do git clone --local --no-checkout . "outputs/perf-$name"; done
+git -C outputs/perf-baseline checkout --detach f2562cae
+git -C outputs/perf-candidate checkout --detach bcf3be83
+# In each directory: install or link the Python environment and desktop modules, then
+#   .venv/bin/python setup.py build_ext --inplace && (cd desktop && pnpm build)
+cd outputs/perf-candidate
+node scripts/benchmark_practice_desktop.cjs --baseline ../perf-baseline --baseline-revision f2562cae \
+  --fixture-manifest testcases/outputs/port-fixtures.json --case tissue --output "$PWD/testcases/outputs/port-pairs-tissue"
+```
+
+The fixture manifest names the tissue source, the cranial source and the paired tissue action file. The `--diagnostics` phase needs the timing trace in both builds, so it summarizes only against a baseline that has it.
+
+### November 21 comparison
+
 The performance branch starts at `a07df309`, which includes the accepted-surface motion and cranial practice changes. The comparison uses a production-built renderer, the ordinary Python sidecar and its verified C++ extension. Both sides run on the same 16 GiB Mac with a 1440 × 900 CSS viewport and a 1072 × 818 microscope canvas. Both generated controls used a 2144 × 1636 WebGL drawing buffer at device pixel ratio 2. A trusted input and the completed GPU fence for its accepted frame share the renderer's monotonic clock. The baseline joins the submitted geometry and fence by source, accepted-state hash, display identity and unique frame serial. The candidate also emits numeric model and surface generations. The action receipt ties that frame to the originating request, branch and position. A separate recording samples compositor delivery. Hidden automation cannot measure physical display presentation.
 
 The [machine-readable comparison](../artifacts/rehearsal-performance-20261121/summary.json) records the environment, fixture identities, per-pair results, stage timings, and signed package. The [local storage ledger](local-storage-ledger.md) points to the complete raw measurements, recordings and saved workspaces on the optional data drive.
@@ -73,11 +118,11 @@ The final Electron main suite passed all 367 tests, and the viewer suite passed 
 
 The local ad-hoc signed ARM64 app passed deep strict signature verification before and after use. Its packaged engine ran the ordinary rehearsal with source, action, physical and state hashes checked at each step. Six wall-time movies were probed and hashed. A film, the signed execution proof and the zipped saved state were copied back from the HDD, decoded or CRC-checked, and matched their original hashes.
 
-The concurrently developed rehearsal branch advanced after the performance base was frozen. A dry merge against `9f020329` requires coordinated resolution in the two renderer files and the manual verifier. A provisional renderer resolution preserves cavity-specific display indices and raw picking geometry. TypeScript and seven requests through both worker entry points passed. The separate verifier patch preserves the other branch’s single-pixel-ratio option and this branch’s frame and recording evidence. Syntax and targeted checks passed. The HDD integration folder records both pinned patches. The combined Electron and GPU behavior still needs qualification after integration. The original comparison is reproducible from the pinned performance build.
+The rehearsal and vascular lines advanced after the performance base was frozen. The [merged line](#merged-line-on-november-26) resolves the renderer, engine and manual verifier against them and lists its own checks. The manual verifier keeps the single-pixel-ratio option and native build hashes of the current line beside this branch's frame and recording evidence. The November 21 comparison remains reproducible from the pinned performance build `6a001823`.
 
 ### Reproduce the manual workload
 
-Run the following from the performance checkout. Prepare two independent desktop builds with the repository's [local development dependencies](../README.md#local-development). Use a fresh directory for the baseline. Commit `91fbb5c5` contains the diagnostic overlay on `a07df309` and precedes all performance changes. Each build needs its own Python environment, C++ extension, Electron modules and production renderer.
+These commands reproduce the November 21 comparison. Run them from a checkout of the performance build `6a001823`. Prepare two independent desktop builds with the repository's [local development dependencies](../README.md#local-development). Use a fresh directory for the baseline. Commit `91fbb5c5` contains the diagnostic overlay on `a07df309` and precedes all performance changes. Each build needs its own Python environment, C++ extension, Electron modules and production renderer.
 
 ```sh
 baseline="$PWD/outputs/perf-baseline"

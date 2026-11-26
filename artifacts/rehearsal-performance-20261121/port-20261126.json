@@ -1,0 +1,356 @@
+{
+  "schema": "resectionlab.rehearsal-performance-port.v1",
+  "date": "2026-11-26",
+  "baseline": "f2562caefb793f35c8265681fe6dd7b1c32fec03",
+  "candidate": "bcf3be83352bc89f5d32044d38477db2ee2ae166",
+  "machine": {
+    "model": "Mac14,9",
+    "macOS": "26.5.2",
+    "osBuild": "25F84"
+  },
+  "measurement": {
+    "clock": "Trusted DOM listener receipt to polling the successful WebGL fence for the serial that published the accepted state.",
+    "warmupsPerArm": 1,
+    "alternatingPairs": 5,
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "pixelRatio": 1
+    },
+    "drawingBuffer": {
+      "width": 1072,
+      "height": 818
+    },
+    "hidden": true,
+    "percentile": "nearest-rank p95",
+    "load": "Another session's Python process held one CPU core during the runs."
+  },
+  "tissue": {
+    "orderedWitnessDigest": "badaf9cd1e3315209a81a890bc843a92554007c1823947629977b471dba95f8f",
+    "matchesNovember21Digest": true,
+    "pairs": [
+      {
+        "round": 1,
+        "first": "baseline",
+        "baseline": {
+          "n": 33,
+          "p50": 78.4,
+          "p95": 298.9,
+          "max": 398.4
+        },
+        "candidate": {
+          "n": 33,
+          "p50": 59.5,
+          "p95": 268.5,
+          "max": 340.3
+        }
+      },
+      {
+        "round": 2,
+        "first": "candidate",
+        "baseline": {
+          "n": 33,
+          "p50": 138.3,
+          "p95": 297.4,
+          "max": 340
+        },
+        "candidate": {
+          "n": 33,
+          "p50": 56.7,
+          "p95": 219,
+          "max": 248.7
+        }
+      },
+      {
+        "round": 3,
+        "first": "baseline",
+        "baseline": {
+          "n": 33,
+          "p50": 198.3,
+          "p95": 308.7,
+          "max": 318.9
+        },
+        "candidate": {
+          "n": 33,
+          "p50": 117.5,
+          "p95": 288.3,
+          "max": 292
+        }
+      },
+      {
+        "round": 4,
+        "first": "candidate",
+        "baseline": {
+          "n": 33,
+          "p50": 58.2,
+          "p95": 248.9,
+          "max": 508.2
+        },
+        "candidate": {
+          "n": 33,
+          "p50": 116.8,
+          "p95": 236.4,
+          "max": 238.6
+        }
+      },
+      {
+        "round": 5,
+        "first": "baseline",
+        "baseline": {
+          "n": 33,
+          "p50": 67.2,
+          "p95": 236.9,
+          "max": 258.6
+        },
+        "candidate": {
+          "n": 33,
+          "p50": 48.6,
+          "p95": 210.6,
+          "max": 238.5
+        }
+      }
+    ],
+    "pooled": {
+      "baseline": {
+        "inputToMatchingGpuMs": {
+          "n": 165,
+          "p50": 129.7,
+          "p95": 278.3,
+          "max": 508.2
+        },
+        "mainHandlerToResultMs": {
+          "n": 165,
+          "p50": 32.9,
+          "p95": 221.6,
+          "max": 253.4
+        },
+        "renderCpuSubmissionMs": {
+          "n": 165,
+          "p50": 0.8,
+          "p95": 21.4,
+          "max": 250.9
+        },
+        "mainResultToRenderStartMs": {
+          "n": 165,
+          "p50": 12.2,
+          "p95": 95.9,
+          "max": 259.1
+        },
+        "renderStartToMatchingFenceMs": {
+          "n": 165,
+          "p50": 10.2,
+          "p95": 120,
+          "max": 299.8
+        },
+        "matchingGpuExecutionMs": {
+          "n": 165,
+          "p50": 0.8,
+          "p95": 88.5,
+          "max": 184.3
+        },
+        "launchToReadyMicroscopeMs": {
+          "n": 5,
+          "p50": 2270.5,
+          "p95": 2374.0,
+          "max": 2374.0
+        },
+        "firstActionWithAddedFreeFluid": {
+          "cpuSubmissionMs": {
+            "n": 5,
+            "p50": 26.1,
+            "p95": 250.9,
+            "max": 250.9
+          },
+          "inputToMatchingGpuMs": {
+            "n": 5,
+            "p50": 249.6,
+            "p95": 508.2,
+            "max": 508.2
+          },
+          "positions": [
+            12
+          ]
+        },
+        "committed": 165,
+        "rejected": 0,
+        "runs": 5
+      },
+      "candidate": {
+        "inputToMatchingGpuMs": {
+          "n": 165,
+          "p50": 89.9,
+          "p95": 247.1,
+          "max": 340.3
+        },
+        "mainHandlerToResultMs": {
+          "n": 165,
+          "p50": 27.6,
+          "p95": 194.3,
+          "max": 246.3
+        },
+        "renderCpuSubmissionMs": {
+          "n": 165,
+          "p50": 0.7,
+          "p95": 9.4,
+          "max": 46.2
+        },
+        "mainResultToRenderStartMs": {
+          "n": 165,
+          "p50": 12.5,
+          "p95": 79.0,
+          "max": 128.9
+        },
+        "renderStartToMatchingFenceMs": {
+          "n": 165,
+          "p50": 9.7,
+          "p95": 86.3,
+          "max": 132.5
+        },
+        "matchingGpuExecutionMs": {
+          "n": 165,
+          "p50": 0.9,
+          "p95": 68.6,
+          "max": 96.6
+        },
+        "launchToReadyMicroscopeMs": {
+          "n": 5,
+          "p50": 2437.9,
+          "p95": 2493.5,
+          "max": 2493.5
+        },
+        "firstActionWithAddedFreeFluid": {
+          "cpuSubmissionMs": {
+            "n": 5,
+            "p50": 4.2,
+            "p95": 4.3,
+            "max": 4.3
+          },
+          "inputToMatchingGpuMs": {
+            "n": 5,
+            "p50": 196.8,
+            "p95": 292,
+            "max": 292
+          },
+          "positions": [
+            12
+          ]
+        },
+        "committed": 165,
+        "rejected": 0,
+        "runs": 5
+      }
+    }
+  },
+  "instrumentedCandidateRun": {
+    "actions": 33,
+    "pythonRows": 39,
+    "electronRows": 39,
+    "stepStageMs": {
+      "dispatch": {
+        "p50": 26.5,
+        "p95": 199.8,
+        "max": 218.1
+      },
+      "simulationStep": {
+        "p50": 19.8,
+        "p95": 193.3,
+        "max": 211.0
+      },
+      "deformationTick": {
+        "p50": 2.5,
+        "p95": 19.1,
+        "max": 19.2
+      },
+      "displacementSnapshot": {
+        "p50": 1.6,
+        "p95": 26.7,
+        "max": 26.7
+      },
+      "jsonBudget": {
+        "p50": 1.5,
+        "p95": 2.5,
+        "max": 2.6
+      }
+    },
+    "deformationKernels": {
+      "latticeTicks": 565,
+      "latticeSubsteps": 1916,
+      "sweepNativeCalls": 1916,
+      "sweepNativeSamplePoints": 689760,
+      "strainNativeCalls": 646,
+      "strainNativeEdges": 130492,
+      "strainRefinedEdges": 1264,
+      "strainIdleSubsteps": 1785,
+      "fallbacks": 0
+    },
+    "displacementSnapshot": {
+      "checks": 5888,
+      "compiledCalls": 0,
+      "reason": "python-snapshot-selected",
+      "largestFieldEntries": 90,
+      "compiledThresholdEntries": 256
+    }
+  },
+  "headlessKernelReplay": {
+    "protocol": "One warm-up round, then three alternating rounds per variant; every outcome and state checked against the frozen receipt.",
+    "receiptSha256": "6c0a1e84ba34cd8e27607caea70786ea26d8047688d8615be0ea204c2f51428c",
+    "sourceSha256": "a2ce46b66912199e891c761fff64114444ed925cf5b2a9ffbecbf93db2b8ce2a",
+    "identicalStatesAcrossVariants": true,
+    "sumOfPerActionMediansMs": {
+      "scalar": 2291.2,
+      "numpy": 2047.7,
+      "native": 1908.3
+    }
+  },
+  "snapshotThresholdExperiment": {
+    "adopted": false,
+    "threshold256SnapshotMs": 204.9,
+    "threshold64SnapshotMs": 41.8,
+    "statesIdentical": true
+  },
+  "sustainedTissuePractice": {
+    "acceptedMoves": 359,
+    "durationSeconds": 180,
+    "physicalTicksPerMove": 2,
+    "inputToMatchingGpuMs": {
+      "p50": 78.7,
+      "p95": 107.8,
+      "p99": 136.4,
+      "max": 207.4
+    },
+    "checksPassed": 12,
+    "coldReopenChecksPassed": 2,
+    "finalHistoryRows": 371,
+    "settledResources": {
+      "geometries": 40,
+      "textures": 17,
+      "programs": 23
+    },
+    "summedWorkingSetMiB": {
+      "first": 732,
+      "last": 768,
+      "peak": 992
+    },
+    "hidden": true,
+    "windowAppeared": false
+  },
+  "tests": {
+    "electronMain": 377,
+    "viewer": 485,
+    "ui": 837,
+    "pythonDeformationOccupancyPractice": 58,
+    "pythonWiderSelection": {
+      "passed": 345,
+      "failed": 13,
+      "skipped": 3,
+      "failuresIdenticalOnBaseline": true
+    }
+  },
+  "notRepeated": [
+    "cranial opening control (does not open on either build)",
+    "acquired playback",
+    "camera and proposed-tool cadence",
+    "recordings and matched stills",
+    "signed package"
+  ]
+}
