@@ -3,7 +3,7 @@
 The active tracked checkout is substantially smaller. The complete historical
 rehearsal and desktop capture collections were archived, independently verified,
 restored and consumed before explicit tracked files were removed. This follows
-the [earlier support pass](cleanup-20261116.md); its original register is reused
+the [earlier support pass](retired-docs-20261126.md); its original register is reused
 with a separate execution section, rather than replaced by another audit.
 
 <!-- execution-metrics-start -->
