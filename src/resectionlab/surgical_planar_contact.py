@@ -394,8 +394,16 @@ class PlanarContact:
         def objective(x):
             guard()
             return float(.5 * x @ (compliance @ x) - deficit @ x), compliance @ x - deficit
+        from . import acceleration as _accel
+        accelerated = None
+        if _accel.enabled('contact') and np.max(deficit, initial=0.) > 0:
+            from .accel_contact import applies, polished as _exact
+            if applies(minimize):
+                accelerated = _exact(compliance, deficit, gap_tolerance=GAP_MM, energy_tolerance=BALANCE_NMM, check=guard)
         if np.max(deficit, initial=0.) <= 0:
             force = np.zeros(m); iterations = 0; optimizer_status = 0; function_calls = 0
+        elif accelerated is not None:
+            force, iterations, _ = accelerated; optimizer_status = 0; function_calls = iterations
         else:
             solved = minimize(objective, np.zeros(m), jac=True, method='L-BFGS-B', bounds=[(0., None)] * m,
                 options={'gtol': GAP_MM / 10, 'ftol': 0., 'maxiter': 1000, 'maxfun': 5000, 'maxls': 50})

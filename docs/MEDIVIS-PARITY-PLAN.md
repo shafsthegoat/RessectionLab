@@ -640,8 +640,14 @@ Not done: the pre-registered TopCoW-001 confirmation of the Phase 2 ensemble;
 EDEN cases in the simulator (not admitted for simulation); a tag volume that
 follows cuts and displacement; the surgeon view in the path-traced mode.
 
-Open decisions 1 to 8 above need Shafrir. This branch also carries
-`shaf/interactive-operative-practice-20261121` and
-`shaf/rehearsal-performance-20261121`, merged in at Shafrir's request; the
-pull request to `main` itself was not merged.
+Open decisions 1 to 8 above need Shafrir. At Shafrir's request this branch
+now also carries the later commits of
+`shaf/interactive-operative-practice-20261121` (opt-in acceleration paths and
+the README rewrite), merged without conflict. `shaf/rehearsal-performance-20261121`
+was not merged: its ten commits conflict with this branch in twelve files (42
+places), mostly in `surgical_deformation_v2.py` and `VolumeRenderer.ts`,
+where both lines changed the same internals in different ways (for example
+the cached solver tuple and the displacement snapshot entry point). That is a
+port to be verified with that branch's own benchmarks, not a mechanical
+merge. The pull request to `main` itself was not merged.
 

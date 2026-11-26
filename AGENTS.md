@@ -37,7 +37,7 @@ constraints and evaluation. It is a research prototype, not a medical device.
 
 | Task | Command or guide |
 | --- | --- |
-| Python environment | [README › Local development](README.md#local-development) (`requirements-lock.txt`, `pip install -e . --no-deps`) |
+| Python environment | [README › Local development](README.md#local-development) (`requirements-lock.txt`, `pip install -e . --no-deps`); full setup, public cases and data rules in the [developer guide](docs/developer-guide.md) |
 | Desktop | `pnpm --dir desktop install --frozen-lockfile`, `pnpm --dir desktop test`, `pnpm --dir desktop build`, `pnpm --dir desktop start` |
 | Python tests | `.venv/bin/python -m pytest tests/<focused files> -q`; run the subsystem you touched |
 | C++ backend | [C++ acceleration record](docs/cpp-acceleration.md) |

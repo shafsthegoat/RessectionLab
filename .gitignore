@@ -17,6 +17,9 @@ __pycache__/
 src/resectionlab/_geometry_cpp*.so
 src/resectionlab/_geometry_cpp*.pyd
 src/resectionlab/_geometry_cpp.build.json
+src/resectionlab/_accel_cpp*.so
+src/resectionlab/_accel_cpp*.pyd
+src/resectionlab/_accel_cpp.build.json
 .DS_Store
 ._*
 *.swp

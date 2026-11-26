@@ -8,6 +8,7 @@ from importlib import resources
 import numpy as np
 from scipy import ndimage as ndi, sparse
 from scipy.spatial import cKDTree
+from . import acceleration as _accel
 
 POLICY = json.loads(resources.files('resectionlab').joinpath('surface_policy.json').read_text())
 NATIVE_POLICY = POLICY['native']
@@ -65,6 +66,11 @@ def intersection_vertices(source, candidate, faces, cancelled=lambda: False):
 
 
 def _intersection_vertices(source, candidate, faces, cancelled, changed_points=None):
+    if _accel.enabled('surface-audit'):
+        from .accel_geometry import intersection_vertices
+        found = intersection_vertices(source, candidate, faces, cancelled, changed_points)
+        if found is not None:
+            return found
     moved = np.any(source != candidate, axis=1)[faces].any(axis=1)
     if not moved.any():
         return np.empty(0, int)

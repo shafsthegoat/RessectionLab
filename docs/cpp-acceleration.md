@@ -1050,3 +1050,45 @@ frozen review is `ff960aeb…0d12c`; the reviewed owner snapshot precedes only f
 status/review-pointer annotation, avoiding a circular hash. No production defect
 remains. The trial remains rejected, accepted v6 results remain unchanged, and
 further optimization stops at the requested cutoff after a normal verified push.
+
+## Opt-in acceleration paths (`RESECTIONLAB_ACCEL`), November 26
+
+This increment is separate from the resident engine record above and does not
+change it. Every path is off unless named in `RESECTIONLAB_ACCEL` (`all` or a
+comma list) or enabled with `acceleration.override(...)`. With the variable
+unset, every result is the reference result. Receipts made with any path
+enabled must record `acceleration.identity()` and must not be compared
+bit-for-bit with reference runs. Compiled kernels live in a separate optional
+extension, `resectionlab._accel_cpp`, built with
+`python -m resectionlab.build_accel_native`; `setup.py`, `_geometry_cpp` and
+its manifest are untouched. Without that build, the Python paths still apply
+and the compiled ones fall back to the reference.
+
+| Feature | Relation | Where | Measured on Linux (x86-64) |
+| --- | --- | --- | --- |
+| `continuum` | exact | `accel_continuum.py`; hooks in `surgical_continuum.py` | first tick 765 → 112 ms (575 cells), 1,701 → 248 ms (1,159 cells), together with `sparse-ordering` |
+| `sparse-ordering` | reordered | `accel_continuum.py`; continuum, V2 and retractor factorizations | SPD solve 494 → 209 ms (6k dofs), 5,167 → 1,775 ms (19k dofs) |
+| `deformation-scan` | exact | `accel_mechanics.py`; `surgical_deformation_v2.py` | bond scan 9.3 → 0.38 ms; only runs when the small-displacement shortcut does not apply |
+| `contact` | solver | `accel_contact.py`; complementarity and planar contact | 3,091 QPs 1.48 → 0.42 s, max force difference 1.4e-15 relative; 60 blade steps 2,466 → 1,693 ms |
+| `surface-audit` | exact | `accel_geometry.py`, `accel_native.cpp`; `surface_fairing._intersection_vertices` | 115k triangles 1.65 → 0.22 s and 2.9 → 0.29 s |
+| `stroke` | exact | `accel_geometry.py`, `accel_native.cpp`; `native_resection` flood fills | 1,850-cell stroke 36 → 1.3 ms and 49 → 0.2 ms |
+| `transaction-checks` | exact | `accel_transactions.py`; `NativeResectionEngine.preview_stroke` | stroke previews −27% in the native spatial tests |
+| `rl-ledger` | exact | `accel_rl.py`; `surgical_rl_env._ProtectedEngine._substep` | near-margin ledger 2.6 → 0.5 ms per substep at 11k cells, only when protected cells have moved |
+
+Exactness rules. A replaced or instrumented reference (a monkeypatched
+`factorized`, `splu` partial, `scipy.optimize.minimize` or `capsule_hits`) is
+always called unchanged. `surface-audit` measures NumPy's `einsum` summation
+order once per process and is disabled if none of the supported orders
+matches; a candidate pair within 1e-9 of the k-d tree distance bound, or an
+`rl-ledger` cell within 1e-9 of its threshold, is decided by the reference.
+`contact` returns only solutions certified by the callers' own gap,
+complementarity and KKT checks; anything else runs L-BFGS-B. `transaction-checks`
+scans native files on entry to and exit from each preview (the scope the
+operative substep executor already uses) while every binding call still checks
+the loaded module and entry points.
+
+Not done here: admitting V2, procedure-policy and RL engines to the resident
+C++ engine still needs the deferred native physics port and Mac verification.
+A vascular right-hand-side path was measured at no gain and dropped. These
+numbers are Linux-only; the Mac (Accelerate, arm64) paths and the resident
+engine were not run. Tests: `tests/test_acceleration_*.py`.
