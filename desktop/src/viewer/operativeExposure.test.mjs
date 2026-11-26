@@ -411,3 +411,11 @@ test('tube walls take the shared artery and vein colours from their vertex class
   applyTubeVesselColor(mesh, Uint8Array.of(1, 1, 1, 1));
   assert.equal('#' + mesh.material.color.getHexString(), tubeVesselColors.vein);
 });
+
+test('a prepared vessel surface carries the tube-wall mark of its source surface', async () => {
+  const {prepareOperativeVessel} = await import('./prepareSurface.ts');
+  const wall = {mode: 'native-probability', region: 1, positions: new Float32Array(9), normals: new Float32Array(9),
+    indices: Uint32Array.of(0, 1, 2), sourceCells: Uint32Array.of(0, 1, 2), sites: []};
+  assert.equal(prepareOperativeVessel({...wall, tube: true}).tubeWall, true);
+  assert.equal(prepareOperativeVessel(wall).tubeWall, false);
+});

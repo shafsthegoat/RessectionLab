@@ -9,10 +9,12 @@ import type {SurfaceDiagnostics} from './surfacePolicy';
 import type {SurfaceIntersectionAudit} from './surfaceSafety';
 import type {SurfacePolynomialFilter} from './incrementalSurfaceFilter';
 import type {OperativeVesselSurface} from './operativeVesselSurface';
-export interface PreparedSurface {positions:Float32Array;normals:Float32Array;smoothPositions?:Float32Array;smoothNormals?:Float32Array;smoothIndices?:Uint32Array;indices:Uint32Array;diagnostics?:SurfaceDiagnostics;smoothingPrepared?:boolean;representation?:'stable-source-ids'|'operative-vessel';activeBounds?:Bounds3;scoreLighting?:Float32Array;sourceVolumeBoundary?:boolean;vesselClasses?:Uint8Array}
-export function prepareOperativeVessel({positions,normals,indices,mode,scoreLighting,sourceVolumeBoundary,vesselClasses}:OperativeVesselSurface):PreparedSurface {
+export interface PreparedSurface {positions:Float32Array;normals:Float32Array;smoothPositions?:Float32Array;smoothNormals?:Float32Array;smoothIndices?:Uint32Array;indices:Uint32Array;diagnostics?:SurfaceDiagnostics;smoothingPrepared?:boolean;representation?:'stable-source-ids'|'operative-vessel';activeBounds?:Bounds3;scoreLighting?:Float32Array;sourceVolumeBoundary?:boolean;vesselClasses?:Uint8Array;
+  /** A centerline-tube wall; it keeps its tube colour and finish through displaced and edited frames. */
+  tubeWall?:boolean}
+export function prepareOperativeVessel({positions,normals,indices,mode,scoreLighting,sourceVolumeBoundary,vesselClasses,tube}:OperativeVesselSurface):PreparedSurface {
   const raw=mode==='source-cell-boundary';
-  return {positions,normals,indices,representation:'operative-vessel',scoreLighting,sourceVolumeBoundary,vesselClasses,diagnostics:{
+  return {positions,normals,indices,representation:'operative-vessel',scoreLighting,sourceVolumeBoundary,vesselClasses,tubeWall:!!tube,diagnostics:{
     policy:raw?'engine-source-vessel-caps-v1':'engine-native-probability-v1',
     kind:'vessel',triangles:indices.length/3,maxDisplacementMm:0,restoredComponents:0,
     ...(raw?{intersectionCheck:'source-restored',surfaceField:'categorical',fallbackReason:'Accepted vessel contact uses source cell faces after this edit.'}:

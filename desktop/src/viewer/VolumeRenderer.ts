@@ -788,7 +788,10 @@ export class VolumeRenderer {
     if(layer.generatedFinish)generatedTissueFinish(mesh.material,displayKind,false);
     applyOperativeSurface(mesh.material,layer.displayKind??layer.kind,this.workspaceSettings);
     if(operativeVessel&&this.workspaceSettings.layerColor?.[layer.name])mesh.material.color.set(appearance.color);
-    if(operativeVessel&&layer.vesselTags){mesh.userData.vesselClasses=buffers.vesselClasses;applyWetVesselFinish(mesh.material);if(!this.workspaceSettings.layerColor?.[layer.name])applyTubeVesselColor(mesh,buffers.vesselClasses);}
+    // The prepared wall says whether it is a tube wall: displaced and edited frames carry no tag
+    // volume, and source-cell boxes drawn for a tube layer keep the layer colour.
+    mesh.userData.tubeWall=operativeVessel&&buffers.tubeWall===true;
+    if(mesh.userData.tubeWall){mesh.userData.vesselClasses=buffers.vesselClasses;applyWetVesselFinish(mesh.material);if(!this.workspaceSettings.layerColor?.[layer.name])applyTubeVesselColor(mesh,buffers.vesselClasses);}
     if(this.fieldOptics?.texture)this.surgicalWetting?.install(mesh.material);
     if(vessel){
       const grid=layer.surface&&!operativeVessel?this.vesselLabelGrid(this.volume.compartments.indexOf(layer)):undefined;
@@ -1295,7 +1298,7 @@ export class VolumeRenderer {
         applyOperativeSurface(material,layer.displayKind??layer.kind,settings);
         const operativeVessel=modeledAnatomy(this.volume)?.vesselSurfaces?.has(layer.name);
         if(operativeVessel&&settings.layerColor?.[layer.name])material.color.set(appearance.color);
-        if(operativeVessel&&layer.vesselTags){applyWetVesselFinish(material);if(!settings.layerColor?.[layer.name])applyTubeVesselColor(mesh,mesh.userData.vesselClasses);}
+        if(operativeVessel&&mesh.userData.tubeWall){applyWetVesselFinish(material);if(!settings.layerColor?.[layer.name])applyTubeVesselColor(mesh,mesh.userData.vesselClasses);}
         if(surfaceKind(layer.kind)==='vessel'&&!operativeVessel){
           if(this.volume.displayIdentity)applyCtaVesselFinish(material,ctaDisplayKind(layer),settings,this.volume.modality);
           if(layer.surface)setVesselDepthAppearance(material,settings,layer,this.vesselLabelGrid(index));
