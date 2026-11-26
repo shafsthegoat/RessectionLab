@@ -9,7 +9,7 @@ export function checkedViewerSettings(source:CasePayload,input:unknown):ViewerWo
   if(!input || typeof input!=='object' || Array.isArray(input))return fail();
   const value=input as ViewerWorkspaceSettings;
   const labels=[...source.compartments.map(layer=>layer.name),...(displayBrainMask(source)?['brain']:[])];
-  if(Object.keys(value).some(key=>!['showOrientationGuide','smoothSurfaces','skullMode','volumeRendering','layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast','clipBox','obliqueClip','sliceOverlay','sliceStructures','presentation','sourcedVesselContext','vesselShading','sliceFraming','contextStyle','operativeView','microscope','externalCamera','resultInspection','resultCamera'].includes(key)))return fail();
+  if(Object.keys(value).some(key=>!['showOrientationGuide','smoothSurfaces','skullMode','volumeRendering','layerOpacity','layerColor','layerSurfaceStyle','camera','clipping','fusion','layout','activePlane','showPlane','contrast','clipBox','obliqueClip','sliceOverlay','sliceStructures','presentation','sourcedVesselContext','vesselShading','sliceFraming','contextStyle','operativeView','microscope','externalCamera','resultInspection','resultCamera'].includes(key)))return fail();
   if(value.resultInspection!==undefined&&!['both','cavity','residual'].includes(value.resultInspection))return fail();
   if(value.resultCamera!=null&&!validCameraState(value.resultCamera))return fail();
   if(value.showOrientationGuide!==undefined&&typeof value.showOrientationGuide!=='boolean')return fail();
@@ -50,7 +50,8 @@ export function checkedViewerSettings(source:CasePayload,input:unknown):ViewerWo
   if(value.showPlane!==undefined&&typeof value.showPlane!=='boolean')return fail();
   if(value.contrast!==undefined&&(!Number.isFinite(value.contrast)||value.contrast<.4||value.contrast>2))return fail();
   for(const [key,check] of [['layerOpacity',(v:unknown)=>typeof v==='number'&&Number.isFinite(v)&&v>=0&&v<=1],
-    ['layerColor',(v:unknown)=>typeof v==='string'&&/^#[a-f0-9]{6}$/i.test(v)]] as const){
+    ['layerColor',(v:unknown)=>typeof v==='string'&&/^#[a-f0-9]{6}$/i.test(v)],
+    ['layerSurfaceStyle',(v:unknown)=>v==='glass'||v==='solid']] as const){
     const map=value[key];
     if(map && (typeof map!=='object'||Array.isArray(map)||Object.entries(map).some(([k,v])=>!labels.includes(k)||!check(v))))return fail();
   }

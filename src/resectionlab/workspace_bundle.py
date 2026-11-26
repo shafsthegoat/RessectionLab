@@ -220,7 +220,7 @@ def _viewer_cutaway(viewer, *, corners, frame_name):
 
 def _viewer_state(case,viewer,cases):
     """Bound display preferences without treating them as image registration."""
-    if not isinstance(viewer,dict) or set(viewer)-{'showOrientationGuide','smoothSurfaces','skullMode','volumeRendering','layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast','clipBox','obliqueClip','sliceOverlay','sliceStructures','presentation','sourcedVesselContext','vesselShading','sliceFraming','contextStyle','operativeView','microscope','externalCamera','resultInspection','resultCamera'}:
+    if not isinstance(viewer,dict) or set(viewer)-{'showOrientationGuide','smoothSurfaces','skullMode','volumeRendering','layerOpacity','layerColor','layerSurfaceStyle','camera','clipping','fusion','layout','activePlane','showPlane','contrast','clipBox','obliqueClip','sliceOverlay','sliceStructures','presentation','sourcedVesselContext','vesselShading','sliceFraming','contextStyle','operativeView','microscope','externalCamera','resultInspection','resultCamera'}:
         raise ValueError('Unknown viewer settings')
     if 'showOrientationGuide' in viewer and type(viewer['showOrientationGuide']) is not bool:
         raise ValueError('Invalid body orientation guide flag')
@@ -290,7 +290,7 @@ def _viewer_state(case,viewer,cases):
         raise ValueError('Contrast is outside the supported range')
     # Renderer layer IDs include the whole-brain envelope as well as labels.
     names=set(case.compartments)|({'brain'} if case.brain_mask is not None else set())
-    for field in ('layerOpacity','layerColor'):
+    for field in ('layerOpacity','layerColor','layerSurfaceStyle'):
         values=viewer.get(field,{})
         if not isinstance(values,dict) or set(values)-names:
             raise ValueError('Viewer layer names differ from source')
@@ -298,6 +298,9 @@ def _viewer_state(case,viewer,cases):
             if field=='layerOpacity':
                 if type(value) not in (int,float) or not math.isfinite(value) or not 0<=value<=1:
                     raise ValueError('Layer opacity must be between zero and one')
+            elif field=='layerSurfaceStyle':
+                if value not in ('glass','solid'):
+                    raise ValueError('Layer surface style must be glass or solid')
             elif not isinstance(value,str) or not re.fullmatch('#[a-fA-F0-9]{6}',value):
                 raise ValueError('Layer color must be a six-digit hex color')
     for camera_name in ('camera','externalCamera','resultCamera'):

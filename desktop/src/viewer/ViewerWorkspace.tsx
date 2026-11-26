@@ -42,7 +42,7 @@ import {mixedVesselLesion} from '../native-study-state';
 import { clippingForBounds, clippingPositionInBounds, newClippingPosition, usesPatientCutaway, viewerCutaway } from './workspaceSettings';
 import type { ViewerWorkspaceSettings } from './workspaceSettings';
 import { sliceOverlayStyle, sliceStructureScope } from './sliceOverlay';
-import { canBalanceTofContext, volumeSettings, isCtAngiography, isCtModality } from './volumeTransfer';
+import { canBalanceTofContext, volumeSettings, isCtAngiography, isCtModality, volumePresetChoice, volumePresetOptions } from './volumeTransfer';
 import type { VolumePreset } from './volumeTransfer';
 import {
   PLANE_AXES,
@@ -911,6 +911,11 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
           <span className="viewer-tool-divider"/>
           <button aria-label="Show structures only" title="Structures" aria-pressed={!scanVolume.enabled} onClick={()=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,enabled:false}})}><Layers3 size={16}/><span className="rl-viewer-tool-label">Structures</span></button>
           <button aria-label="Show scan volume with structures" title="Volume" aria-pressed={scanVolume.enabled} disabled={props.segmentationOnly||props.generatedSignal||Boolean(replay)||passiveRequested||rehearsalRequested} onClick={()=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,enabled:true}})}><Box size={16}/><span className="rl-viewer-tool-label">Volume</span></button>
+          {!props.segmentationOnly&&!props.generatedSignal&&<select className="rl-volume-preset" aria-label="Volume rendering preset" title="Scan volume preset · display transfer only"
+            value={volumePresetChoice(settings.volumeRendering,signalName)} disabled={Boolean(replay)||passiveRequested||rehearsalRequested}
+            onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,preset:e.target.value as VolumePreset}})}>
+            {volumePresetOptions(signalName).map(option=><option key={option.label} value={option.value} disabled={option.disabled} title={option.title}>{option.label}</option>)}
+          </select>}
           <button aria-label="View information and navigation" title="View information and navigation" aria-expanded={controlPanel==='info'} aria-controls={controlsId} onClick={event=>toggleControls('info',event.currentTarget)}><Ellipsis size={17}/></button>
         </div>
         <div ref={controlPanelElement} id={controlsId} className="rl-control-popover" role="region" aria-label={`${controlPanel??'view'} controls`} hidden={!controlPanel}>
@@ -945,7 +950,6 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
                   onChange={event=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,showCtBoneOverlay:event.target.checked}})}/>
                 Show 3D bone overlay
               </label>}
-            <label>Preset<select aria-label="Volume rendering preset" value={settings.volumeRendering?.preset??'auto'} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,preset:e.target.value as VolumePreset}})}><option value="auto">Automatic · {signalName}</option><option value="ct-bone" disabled={!isCtModality(signalName)}>CT bone</option><option value="ct-tissue" disabled={!isCtModality(signalName)}>CT tissue</option><option value="ct-angiography" disabled={!isCtModality(signalName)}>CT angiography · contrast scan</option><option value="mri">{/MRA|TOF|angiogra/i.test(signalName)?'Bright-blood MR signal':'MRI tissue'}</option></select></label>
             <label>Scan density<input aria-label="Scan volume density" data-viewport-hud="Scan density" type="range" min="0" max="2" step=".01" value={scanVolume.density}
               onChange={e=>{
                 const volumeRendering={...settings.volumeRendering,density:+e.target.value};

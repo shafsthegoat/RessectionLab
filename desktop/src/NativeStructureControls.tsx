@@ -8,6 +8,7 @@ import {structureDisplayName} from './structure-display-name';
 import {tractColor} from './viewer/tractDisplay';
 import {layerAppearance,withLayerColor} from './viewer/workspaceSettings';
 import type {ViewerWorkspaceSettings} from './viewer/workspaceSettings';
+import {layerSurfaceStyle,withLayerSurfaceStyle} from './viewer/structureGlass';
 import './native-structure-controls.css';
 
 export interface NativeStructureControlsProps {
@@ -110,6 +111,7 @@ export function NativeStructureControls({volume,layers,tracts,visibleLayers,onVi
       {selected.display.detail&&<p className="native-structure-selection-detail">{selected.display.detail}</p>}
       <label>Opacity<input aria-label={`${selected.label} opacity`} type="range" min="0" max="1" step=".01" value={layerAppearance(selected.id,selected.color,settings,selected.displayKind).opacity} onChange={event=>onSettingsChange({...settings,layerOpacity:{...settings.layerOpacity,[selected.id]:+event.target.value}})}/><output>{Math.round(layerAppearance(selected.id,selected.color,settings,selected.displayKind).opacity*100)}%</output></label>
       <label>Color<input aria-label={`${selected.label} color`} type="color" value={layerAppearance(selected.id,selected.color,settings,selected.displayKind).color} onChange={event=>onSettingsChange(withLayerColor(settings,selected.id,selected.kind,event.target.value))}/></label>
+      {selected.kind!=='tract'&&<label>3D surface<select aria-label={`${selected.label} 3D surface`} value={layerSurfaceStyle(selected.id,selected.displayKind,settings)} onChange={event=>onSettingsChange(withLayerSurfaceStyle(settings,selected.id,event.target.value as 'glass'|'solid'))}><option value="glass">Glass</option><option value="solid">Solid</option></select></label>}
     </div>}
     {showSelectionControls&&<details className="native-structure-details"><summary>Source & display details</summary><p>Visibility and opacity change the display only. Measurements retain all available source labels.</p><p>Tracts keep supplied bundle names and registration. Streamline previews reduce display load; source data remains unchanged. Slice fibers lie within ±0.65 mm of each source plane.</p>{selected&&<p>{selected.kind==='tract'?'Supplied tractography · independent registration accuracy unmeasured.':`${selected.kind.replaceAll('-',' ')} · inspect source evidence for provenance`}{selected.qa?` · ${selected.qa.reviewStatus}`:''}</p>}{selected?.source&&<p className="native-structure-source">{selected.source}</p>}</details>}
   </section>;

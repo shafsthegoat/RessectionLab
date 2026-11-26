@@ -91,6 +91,9 @@
 .rl-viewer .rl-primary-tools button[aria-pressed=true] { background: var(--accent-soft); border-color: var(--accent-line); color: var(--accent); }
 .rl-viewer .rl-primary-tools button:disabled { opacity: .3; cursor: default; }
 .rl-viewer .viewer-tool-divider { height: 15px; margin: 0 3px; background: var(--line); }
+.rl-viewer .rl-volume-preset { flex: 0 1 auto; min-width: 0; max-width: 112px; height: 26px; margin: 0 2px; padding: 0 4px; border: 1px solid var(--line, #2b2e2f); border-radius: var(--radius, 6px); background: var(--panel, #101112); color: var(--text, #e6eae8); font: inherit; font-size: var(--text-meta, 12px); cursor: pointer; }
+.rl-viewer .rl-volume-preset:disabled { opacity: .4; cursor: default; }
+.rl-viewer .rl-volume-preset:focus-visible { outline: 2px solid var(--accent, #7cdcbc); outline-offset: 1px; }
 .rl-viewer-tool-label {
   position: absolute;
   width: 1px;

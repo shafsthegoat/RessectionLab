@@ -83,3 +83,11 @@ test('RAS display bounds allow empty oblique corners without silently moving the
  const selected=checkedImagingState(source,[],{selectedSeriesId:null,states:{primary:{...view,cursor:null}}});
  assert.deepEqual(selected.states.primary.cursor,[0,12,5.5]);
 });
+test('per-structure surface style reopens, and older views without it keep the default',async()=>{
+ const {source}=await fixture(),name=source.compartments[0].name;
+ const view={cursor:[0,0,0],visibleLayers:{[name]:true}};
+ assert.deepEqual(checkedImageView(source,{...view,viewer:{layerOpacity:{[name]:.5}}}).viewer,{layerOpacity:{[name]:.5}});
+ assert.deepEqual(checkedImageView(source,{...view,viewer:{layerSurfaceStyle:{[name]:'solid'}}}).viewer,{layerSurfaceStyle:{[name]:'solid'}});
+ for(const invalid of [{[name]:'matte'},{[name]:true},{'unknown-layer':'glass'}])
+  assert.throws(()=>checkedImageView(source,{...view,viewer:{layerSurfaceStyle:invalid}}),/invalid anatomy view settings/);
+});
