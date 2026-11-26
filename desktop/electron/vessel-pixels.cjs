@@ -1,9 +1,9 @@
 'use strict';
 // Pixel classes for hidden vessel-display captures (BGRA bitmaps from capturePage).
-// Vessel walls: artery red or pink source colours (red well above green and blue),
-// vein blue (well above red and green; the cyan tumour is not), or the mauve of an
-// unclassified CTA vessel layer, #865c7b, which the lit view draws near (174,144,166):
-// red a little above blue, both above green. Tumour and planning pinks and violets
+// Vessel walls: the vessel red or pink source colours (red well above green and blue),
+// a blue source layer colour (well above red and green; the cyan tumour is not), or the
+// mauve earlier builds gave an unclassified CTA vessel layer, #865c7b, drawn lit near
+// (174,144,166): red a little above blue, both above green. Tumour and planning pinks and violets
 // fall outside that band (redder, or blue above red). The review overlay is amber.
 // Skull and brain colours match none of these.
 function pixelClass(r,g,b){

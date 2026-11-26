@@ -232,9 +232,9 @@ ROOTED_DISPLAY = "rooted-vessel-display-v1"
 ROOTED_VESSEL_KINDS = {"vessel", "vessels", "artery", "vein", "sinus"}
 ROOTED_REVIEW_PREFIX = "__vessel_review:"
 ROOTED_REVIEW_COLOR = "#ffad54"
-# Arteries, and unclassified vessels, red; veins and sinuses blue. The same
-# values are the desktop presentation colours for these layer kinds.
-VESSEL_CLASS_COLORS = {"artery": "#aa352b", "vein": "#42668f"}
+# One vessel colour. Arteries and veins are still told apart in the receipts and
+# as separate display parts, but they are not drawn in different colours.
+VESSEL_CLASS_COLORS = {"artery": "#aa352b", "vein": "#aa352b"}
 _TUMOUR_KINDS = {"tumor", "tumor-whole", "tumor-core", "enhancing-tumor", "nonenhancing-tumor"}
 _TOPBRAIN_RECORD = "https://zenodo.org/records/21972006"
 

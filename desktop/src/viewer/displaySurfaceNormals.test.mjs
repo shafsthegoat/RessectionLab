@@ -153,10 +153,10 @@ test('vessel depth capture shares physical clipping and reuses the prior view ac
   }finally{separation.dispose();material.dispose();geometry.dispose();}
 });
 
-test('acquired CTA contrast uses declared vessel types and retains the original physical finish on exit',()=>{
+test('acquired CTA contrast gives every vessel type one colour and retains the original physical finish on exit',()=>{
   const settings={presentation:'segmentation',vesselShading:'cta-contrast'};
   const colors=['artery','vein','sinus','vessels'].map(kind=>ctaVesselColor(kind,settings,'CTA'));
-  assert.equal(new Set(colors).size,colors.length);
+  assert.equal(new Set(colors).size,1);
   assert.ok(colors.every(color=>/^#[0-9a-f]{6}$/.test(color)));
   assert.equal(ctaVesselColor('brain',settings,'CTA'),undefined);
   assert.equal(ctaVesselColor('artery',settings,'MRA'),undefined);
@@ -178,13 +178,13 @@ test('acquired CTA contrast uses declared vessel types and retains the original 
   }finally{material.dispose();}
 });
 
-test('a connected-tree display takes its CTA colour from its class, and the review overlay keeps its own',()=>{
+test('a connected-tree display takes its CTA kind from its name or layer, and the review overlay keeps its own colour',()=>{
   const rooted={scope:'rooted'};
   assert.equal(ctaDisplayKind({name:'model',kind:'vessels',color:'#aa352b',displayFilter:rooted}),'artery');
-  assert.equal(ctaDisplayKind({name:'model',kind:'vessels',color:'#42668F',displayFilter:{scope:'rooted-review'}}),'vein');
-  assert.equal(ctaDisplayKind({name:'__vessel_veins:model',kind:'vein',color:'#42668f'}),'vein');
+  assert.equal(ctaDisplayKind({name:'model',kind:'vessels',color:'#aa352b',displayFilter:{scope:'rooted-review'}}),'artery');
+  assert.equal(ctaDisplayKind({name:'__vessel_veins:model',kind:'vein',color:'#aa352b'}),'vein');
   assert.equal(ctaDisplayKind({name:'__vessel_arteries:model',kind:'artery',color:'#aa352b'}),'artery');
   assert.equal(ctaDisplayKind({name:'__vessel_review:model',kind:'vessels',color:'#ffad54'}),undefined);
   assert.equal(ctaDisplayKind({name:'full',kind:'vessels',color:'#aa352b',displayFilter:{scope:'all'}}),'vessels');
-  assert.equal(ctaDisplayKind({name:'sinus',kind:'sinus',color:'#42668f',displayFilter:rooted}),'sinus');
+  assert.equal(ctaDisplayKind({name:'sinus',kind:'sinus',color:'#aa352b',displayFilter:rooted}),'sinus');
 });

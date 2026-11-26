@@ -253,7 +253,7 @@ export function NativeSidebar({workspace:w,tab,onOpenAnatomy,onOpenPlan,onOpenSc
       {cta&&<NativeCtaCoverage key={JSON.stringify([b.collectionId,b.document.snapshot_id,w.series])} workspace={w} disabled={blocked}/>}
       {(presentation==='vascular'||cta&&presentation==='segmentation')&&b.document.layers.some(l=>['vessel','vessels','artery','vein','sinus'].includes(l.kind))&&
         <label className="vascular-shading">Vessel shading<select aria-label="Vessel shading" value={w.state.settings.vesselShading??(presentation==='vascular'?'balanced':'source')} disabled={blocked||!sourceLikeVesselScope(w.vesselScope)} onChange={e=>w.setSettings({...w.state.settings,vesselShading:e.target.value as VesselShading})}>
-          {cta&&<option value="cta-contrast">CTA contrast · by vessel type</option>}
+          {cta&&<option value="cta-contrast">CTA contrast</option>}
           <option value="balanced">Depth and caliber</option><option value="large">Emphasize wider vessels</option><option value="fine">Emphasize finer vessels</option><option value="source">Source layer colors</option>
         </select><span>{w.state.settings.vesselShading==='cta-contrast'?'3D uses declared vessel types. Source slices retain layer colors.':'Depth and local mask thickness guide shading.'}</span></label>}
       <details className="anatomy-display-tools"><summary>Display & fragments</summary>

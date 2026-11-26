@@ -207,8 +207,8 @@ export function anatomyPresentation(settings:ViewerWorkspaceSettings,layers:Laye
       const namedArtery=layer.kind==='artery'&&source?.kind==='supplied_annotation'&&
         Number.isInteger(layer.label_value)&&(layer.label_value??0)>0&&source.publisher_class_id===layer.label_value;
       layerColor[layer.id]=(namedArtery||reviewedEvidence)&&/^#[0-9a-f]{6}$/i.test(layer.color)?layer.color:
-        // Arteries red, veins and sinuses blue; unclassified vessels take the artery colour.
-        ['vein','sinus'].includes(layer.kind)?'#42668f':'#aa352b';
+        // One vessel colour: arteries, veins, sinuses and unclassified vessels are not told apart by colour.
+        '#aa352b';
       layerOpacity[layer.id]=reviewedEvidence?(scan?.08:.32):scan?(['vein','sinus'].includes(layer.kind)?.08:.16):
         cranial&&layer.kind==='vessels'&&!nativeVessels?.09:1;
     }else if(layer.kind==='tumor'){

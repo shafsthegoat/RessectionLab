@@ -26,9 +26,9 @@ function woundOnlyField(view:SurgicalView):boolean{
 /** Moist lumen wall of a centerline-tube vessel: a broad soft film highlight
  * along the tube with a faint tighter glint from the wall beneath. */
 export const wetVesselFinish={roughness:.24,specularIntensity:.42,clearcoat:1,clearcoatRoughness:.3,sheen:0};
-/** Tube wall albedo: the rooted display's vein blue, and its artery red (#aa352b)
- * lifted to the volume-lighting vessel albedo, which reads the same once lit. */
-export const tubeVesselColors={artery:'#c4553a',vein:'#42668f'} as const;
+/** Tube wall albedo: the rooted display's vessel red (#aa352b) lifted to the volume-lighting
+ * vessel albedo, which reads the same once lit. Veins take the same colour. */
+export const tubeVesselColors={artery:'#c4553a',vein:'#c4553a'} as const;
 
 export function applyWetVesselFinish(material:THREE.Material){
   if(!(material instanceof THREE.MeshPhysicalMaterial))return false;

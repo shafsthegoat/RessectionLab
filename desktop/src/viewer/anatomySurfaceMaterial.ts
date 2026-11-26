@@ -78,12 +78,13 @@ export const vesselWallFinish = {
   clearcoatRoughness:.36,
 };
 
+/** One vessel colour for every vessel kind; classes are not told apart by colour. */
 export const ctaVesselColors = {
   artery:'#a32e22',
-  vein:'#325988',
-  sinus:'#434f7f',
-  vessel:'#865c7b',
-  vessels:'#865c7b',
+  vein:'#a32e22',
+  sinus:'#a32e22',
+  vessel:'#a32e22',
+  vessels:'#a32e22',
 } as const;
 
 const ctaVesselFinish = {
@@ -100,14 +101,14 @@ export function ctaVesselColor(kind:string|undefined,settings:ViewerWorkspaceSet
   return Object.hasOwn(ctaVesselColors,kind??'')?ctaVesselColors[kind as keyof typeof ctaVesselColors]:undefined;
 }
 
-/** Kind used for the CTA vessel colour. A connected-tree display declares its class by
- * colour: an unclassified layer's shown tree is arterial, and the amber review overlay keeps
- * its own colour. */
+/** Kind used for the CTA vessel colour. A derived part is named after its class, an
+ * unclassified layer's connected tree is arterial, and the amber review overlay keeps its
+ * own colour. */
 export function ctaDisplayKind(layer:{name:string;kind?:string;color?:string;displayFilter?:{scope?:string}}) {
   const derived=/^__vessel_(veins|arteries|review):/.exec(layer.name)?.[1];
   if(derived)return derived==='veins'?'vein':derived==='arteries'?'artery':undefined;
   if(!['rooted','rooted-review'].includes(layer.displayFilter?.scope??'')||!['vessel','vessels'].includes(layer.kind??''))return layer.kind;
-  return layer.color?.toLowerCase()==='#42668f'?'vein':'artery';
+  return 'artery';
 }
 
 export function applyCtaVesselFinish(material:THREE.MeshStandardMaterial,kind:string|undefined,

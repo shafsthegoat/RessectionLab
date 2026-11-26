@@ -567,7 +567,7 @@ export class ScanVolumeRenderer {
     // layer set until a newly requested one has been prepared.
     const names=(JSON.parse(pass.key!) as Array<[string]>).map(([name])=>name);
     const tagged=this.layers.filter(layer=>names.includes(layer.name));
-    // Arteries and unclassified vessels share the artery red; veins and sinuses are blue.
+    // Both tag classes take the one vessel colour.
     pass.setLighting({
       vesselColors:[new THREE.Color(CINEMATIC_VESSEL_ALBEDO.artery),new THREE.Color(CINEMATIC_VESSEL_ALBEDO.vein)],
       boneColor:new THREE.Color(shownSkull.length?appearance(shownSkull[0]).color:'#e3d6bf')});

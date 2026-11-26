@@ -135,15 +135,14 @@ test('the wet and porcelain finishes add no sampled highlight and keep the firef
   }finally{pass.dispose();}
 });
 
-test('vessel albedos are a light vermilion and a blue of matching value',async()=>{
+test('the vessel albedo is one light vermilion for both tag classes',async()=>{
   const {CINEMATIC_VESSEL_ALBEDO}=await import('./CinematicVolumePass.ts');
   const hsv=hex=>{const [r,g,b]=[1,3,5].map(i=>parseInt(hex.slice(i,i+2),16)/255),max=Math.max(r,g,b),min=Math.min(r,g,b),d=max-min;
     const h=d===0?0:max===r?((g-b)/d+6)%6:max===g?(b-r)/d+2:(r-g)/d+4;return {h:h*60,s:d/max,v:max};};
   const artery=hsv(CINEMATIC_VESSEL_ALBEDO.artery),vein=hsv(CINEMATIC_VESSEL_ALBEDO.vein);
   assert.ok(artery.h>=8&&artery.h<=20,`artery hue ${artery.h} is vermilion, not crimson`);
   assert.ok(artery.v>=.7,'and light');
-  assert.ok(vein.h>=200&&vein.h<=230);
-  assert.ok(Math.abs(vein.v-artery.v)<=.1&&Math.abs(vein.s-artery.s)<=.15,'the vein blue matches the artery in value and saturation');
+  assert.deepEqual(vein,artery,'veins are not drawn in a colour of their own');
 });
 
 test('silhouette hits are shaded edge on and their secondary rays leave back along the eye ray',()=>{

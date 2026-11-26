@@ -28,9 +28,9 @@ export function cinematicFilterBlend(samples: number) {
 export const CINEMATIC_FAINT_FLOOR = {glass: .1, fog: .2};
 /** Peel layers of translucent meshes that can be composited over the traced image. */
 export const CINEMATIC_SURFACE_LAYERS = 5;
-/** Vessel albedo (sRGB) by tag class: a light vermilion lumen, and a vein blue
- * of the same value and similar saturation so the two classes read as one material. */
-export const CINEMATIC_VESSEL_ALBEDO = {artery: '#b64f37', vein: '#4a70a8'} as const;
+/** Vessel albedo (sRGB): a light vermilion lumen. Both tag classes take it; arteries and
+ * veins are not told apart by colour. */
+export const CINEMATIC_VESSEL_ALBEDO = {artery: '#b64f37', vein: '#b64f37'} as const;
 /** Bone albedo (sRGB): porcelain, tinted by a share of the skull layer's colour. */
 export const CINEMATIC_BONE_ALBEDO = '#e6d9d5';
 export const CINEMATIC_BONE_TINT = .2;

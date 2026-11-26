@@ -135,8 +135,9 @@ test('an unclassified native TOF network gets foreground emphasis in the artery 
   assert.equal(view.layerOpacity.network,1);
   // Unclassified vessels follow the artery red; the display receipt says they are unclassified.
   assert.equal(view.layerColor.network,view.layerColor.artery);
-  assert.equal(view.layerColor.vein,'#42668f');
-  assert.equal(view.layerColor.sinus,'#42668f');
+  // One vessel colour: veins and sinuses are not drawn in a colour of their own.
+  assert.equal(view.layerColor.vein,view.layerColor.artery);
+  assert.equal(view.layerColor.sinus,view.layerColor.artery);
   assert.equal(view.skullMode,'transparent');
   assert.ok(view.volumeRendering.density<.03);
   assert.equal(anatomyPresentation({},layers,'segmentation','T1','other').skullMode,'exterior');

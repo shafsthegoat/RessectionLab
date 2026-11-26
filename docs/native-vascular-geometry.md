@@ -133,11 +133,12 @@ that the shown display has no component without a root.
   grid; without a registration the receipt says so (`lod.tumourReason`). Named
   vessels and roots are exempt. Only thin terminal subtrees are hidden: a thin
   piece that joins two kept parts stays, so the shown tree never disconnects.
-- **Colour.** Arteries and unclassified vessels are red, veins and sinuses
-  blue, in the standard and Volume lighting paths. When a layer holds both
-  classes, its other-class voxels (and bridges joining them) form a separate
-  compartment, `__vessel_veins:<layer>` or `__vessel_arteries:<layer>`, in that
-  class's colour. The receipt notes when vessels are unclassified.
+- **Colour.** Every vessel is drawn in one red, in the standard and Volume
+  lighting paths (owner's decision, 2026-11-26). Arteries and veins are still
+  told apart in the receipt, and when a layer holds both classes its
+  other-class voxels (and bridges joining them) still form a separate
+  compartment, `__vessel_veins:<layer>` or `__vessel_arteries:<layer>`, in the
+  same colour. The receipt notes when vessels are unclassified.
 
 **Show detached and thin parts** (`'rooted-review'`) adds each layer's hidden
 voxels as an amber overlay, `__vessel_review:<layer>`; a version 3 view saved

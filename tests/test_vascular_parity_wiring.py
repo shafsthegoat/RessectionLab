@@ -204,13 +204,13 @@ def test_wired_layers_show_a_rooted_tree_and_the_addition_only_where_it_joins(tm
     assert floating_components(union, roots & union, (.5, .5, .5))['floating'] == 0
 
 
-def test_an_addition_joining_a_vein_is_drawn_as_vein(tmp_path):
+def test_an_addition_joining_a_vein_is_kept_as_a_vein_part(tmp_path):
     score = np.zeros(SHAPE, np.float32)
     score[10:20, 5:9, 2:5] = 0.8  # Touches only the straight sinus.
     c = study(tmp_path)
     ids = parity.wire_ensemble(c, 'scan', ensemble(tmp_path, score=score))['layers']
     display, receipt, _, split = rooted_vessel_layer(c, c.layer(ids[1]))
-    assert not c.mask(display).any() and split['kind'] == 'vein' and split['color'] == '#42668f'
+    assert not c.mask(display).any() and split['kind'] == 'vein' and split['color'] == '#aa352b'
     overlap = np.zeros(SHAPE, bool); overlap[10:20, 4, 2:5] = True  # Straight-sinus voxels it enters, drawn as vein.
     assert np.array_equal(c.mask(split), (score > 0) | overlap) and receipt['rooting']['classes']['vein'] == int((score > 0).sum())
 
