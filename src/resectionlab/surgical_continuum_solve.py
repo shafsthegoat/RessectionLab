@@ -6,6 +6,8 @@ the existing topology signature; corner history is transferred by source owner.
 """
 from __future__ import annotations
 
+from functools import partial
+
 import numpy as np
 from scipy import sparse
 from scipy.linalg import lu_factor, lu_solve
@@ -69,7 +71,13 @@ class ProportionalHistorySolve:
 
     def _equilibrium_factor(self):
         if self._factor is None:
-            self._factor=splu(self.k0[self.free][:,self.free].tocsc(),permc_spec='MMD_AT_PLUS_A',options={'SymmetricMode':True})
+            from . import acceleration as _accel
+            reference=partial(splu,permc_spec='MMD_AT_PLUS_A',options={'SymmetricMode':True})
+            if _accel.enabled('sparse-ordering'):
+                from .accel_continuum import ordered_factor
+                self._factor=ordered_factor(self.k0[self.free][:,self.free].tocsc(),reference)
+            else:
+                self._factor=reference(self.k0[self.free][:,self.free].tocsc())
         return self._factor
 
     def advance(self,memories,gravity,targets):

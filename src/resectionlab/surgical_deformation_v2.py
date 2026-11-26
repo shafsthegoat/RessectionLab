@@ -273,7 +273,12 @@ def _system(engine, p, ids, anchors, retained, blocked, attachment_stiffness=Non
     A = effective_K + sparse.diags(hold_diag + p['dragNsPerMm'] / p['fixedStepSeconds'])
     if attachment_stiffness:
         A += sparse.diags(np.repeat([attachment_stiffness.get(c, 0.) for c in ids], 3))
-    solve = factorized(A[free][:, free].tocsc()) if free.any() else lambda rhs: np.empty(0)
+    from . import acceleration as _accel
+    if free.any() and _accel.enabled('sparse-ordering'):
+        from .accel_continuum import ordered_factor
+        solve = ordered_factor(A[free][:, free].tocsc(), factorized)
+    else:
+        solve = factorized(A[free][:, free].tocsc()) if free.any() else lambda rhs: np.empty(0)
     cached = (signature, solve, free, index, edges, K)
     engine._deformation_system_v2 = cached
     return cached[1:]

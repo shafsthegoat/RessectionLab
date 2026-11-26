@@ -35,7 +35,14 @@ def step(matrices,free,before,memories,times,h,body,mesh,surface,old_blade,blade
     a=effective[free][:,free].tocsc();f=rhs[free]
     if not free.any():raise ValueError('RETRACTOR_CONTACT_REQUIRES_EXPLICIT_FREE_BODY')
     if inverse is None:
-        factor=splu(a,permc_spec='MMD_AT_PLUS_A',diag_pivot_thresh=0.,options={'SymmetricMode':True})
+        from functools import partial
+        reference=partial(splu,permc_spec='MMD_AT_PLUS_A',diag_pivot_thresh=0.,options={'SymmetricMode':True})
+        from . import acceleration as _accel
+        if _accel.enabled('sparse-ordering'):
+            from .accel_continuum import ordered_factor
+            factor=ordered_factor(a,reference)
+        else:
+            factor=reference(a)
         inverse=factor.solve
     rest,_=surface.geometry(mesh.nodes,np.zeros_like(mesh.nodes));old_points,_=surface.geometry(mesh.nodes,u0)
     old_local=old_blade.local(old_points) if blade is not None else np.zeros_like(old_points)
