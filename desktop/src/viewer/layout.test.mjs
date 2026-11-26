@@ -1,6 +1,11 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { paneViewport } from "./layout.ts";
+import {
+  paneViewport,
+  rehearseNavigationPanes,
+  rehearseSliceColumnCss,
+  rehearseSliceColumnPx,
+} from "./layout.ts";
 import {
   PLANE_AXES,
   inverseAffine,
@@ -94,4 +99,41 @@ test("The same physical landmark remains clickable in focus, review and expanded
       );
     }
   }
+});
+
+// Viewer-shell sizes in the native Rehearse workspace: window minus the rail,
+// inspector, 48 px header, 26 px status bar and 4 px main padding per side.
+// The rail and inspector narrow to 58/260 px at 1200 px and below.
+const rehearseShell = (width, height) => {
+  const [rail, inspector] = width <= 1200 ? [58, 260] : [64, 296];
+  return { width: width - rail - inspector - 8, height: height - 48 - 26 - 8 };
+};
+
+test("Rehearse keeps the operative field as the main pane beside three real slice panes", () => {
+  assert.equal(rehearseSliceColumnCss(), "clamp(232px, 33%, 420px)");
+  for (const [width, height] of [[1440, 900], [1050, 720]]) {
+    const shell = rehearseShell(width, height);
+    const panes = rehearseNavigationPanes(shell, { toplinePx: 45, transportPx: 160 });
+    const { field, slices, sliceImages } = panes;
+    const label = `${width}x${height}`;
+    assert.ok(field.width >= 1.8 * slices.axial.width, `${label}: field stays the main pane`);
+    assert.ok(field.width * field.height > 2.5 * slices.axial.width * slices.axial.height, label);
+    for (const plane of ["axial", "coronal", "sagittal"]) {
+      const image = sliceImages[plane];
+      assert.ok(image.width >= 200 && image.height >= 150, `${label} ${plane} image ${image.width}x${image.height}`);
+      assert.equal(image.width, sliceImages.axial.width);
+      assert.equal(image.height, sliceImages.axial.height);
+      // Each image pane is its own exact scissor rectangle inside the shell.
+      const viewport = paneViewport({ left: 0, top: 0, ...shell }, image);
+      assert.ok(viewport && viewport.left >= 0 && viewport.bottom >= 0, label);
+      assert.ok(viewport.left + viewport.width <= shell.width + 0.5, label);
+    }
+    assert.ok(slices.sagittal.top + slices.sagittal.height <= shell.height + 1e-9, `${label}: slices fit the shell height`);
+    assert.ok(slices.coronal.top >= slices.axial.top + slices.axial.height, `${label}: slices do not overlap`);
+    assert.ok(field.left + field.width <= slices.axial.left, `${label}: field and slices do not overlap`);
+  }
+  // Very wide shells stop growing the slices; narrow ones keep a usable minimum.
+  assert.equal(rehearseSliceColumnPx(2400), 420);
+  assert.equal(rehearseSliceColumnPx(500), 232);
+  assert.ok(Math.abs(rehearseSliceColumnPx(1072) - 353.76) < 1e-9);
 });

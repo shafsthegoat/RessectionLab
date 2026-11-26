@@ -1,5 +1,5 @@
 import {installRetractionMorph} from './retractionMorph';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
@@ -20,8 +20,14 @@ import {operativeSectionContext,type OperativeViewChoice} from './operativeSecti
 import type {ViewerVolume} from './contracts';
 import {pickOperativeStructure,type OperativePick} from './operativeFieldPick.ts';
 import {operativeEntryCover,operativeFieldContext,limitToOperativePatch} from './operativeFieldContext.ts';
+import type {Point3} from './coordinates';
+import {fieldGrid,fieldLocalToRas,formatLabelDistance,labelDistance,labeledCells} from './toolNavigation.ts';
 
-type Props = {visibleLayers?:Readonly<Record<string,boolean>>;sweepPattern:AspirationPattern;sourceVolume:ViewerVolume|null;collectionId:string;field:OperativeField; phase:OperativePhase; progress:number; withRetraction:boolean; view:OperativeViewChoice; raw:boolean; onContext:(layers:string[])=>void;
+/** The visible modeled instrument tip in field-local rest coordinates (the
+ * frame of the sampled labels, before display-only retraction morphing). */
+export type OperativeToolTip = {tool:'Drill'|'Scalpel'|'CUSA'; local:Point3; ras:Point3};
+
+type Props = {onToolTip?:(tip:OperativeToolTip|null)=>void;visibleLayers?:Readonly<Record<string,boolean>>;sweepPattern:AspirationPattern;sourceVolume:ViewerVolume|null;collectionId:string;field:OperativeField; phase:OperativePhase; progress:number; withRetraction:boolean; view:OperativeViewChoice; raw:boolean; onContext:(layers:string[])=>void;
   onVesselDisplay:(display:OperativeModel['vesselDisplay'])=>void};
 
 function fieldScene(host:HTMLDivElement, field:OperativeField, sourceVolume:ViewerVolume|null,collectionId:string,sweepPattern:AspirationPattern,visibleLayers:Props['visibleLayers'],pick:(value:OperativePick|null)=>void,lost:()=>void) {
@@ -293,6 +299,7 @@ function fieldScene(host:HTMLDivElement, field:OperativeField, sourceVolume:View
     return removed;
   }
   function presentStep({phase:next,progress,withRetraction,raw}:Props,cutaway:boolean){
+    let activeTip:Omit<OperativeToolTip,'ras'>|null=null;
     if(previousCutaway!==cutaway){
       // Look down the saved approach at intact and opened layers; orbit remains available.
       if(cutaway)prepareSectionContext();
@@ -321,6 +328,7 @@ function fieldScene(host:HTMLDivElement, field:OperativeField, sourceVolume:View
       const active=next===kind && cutting && (!entering||progress>=entryApproachEnd);
       const z=active?model.surfaceHeight(kind,x,y):null;tool.visible=z!==null;
       if(z!==null){tool.position.set(x,y,z);tool.rotation.set(.24,.21,angle,'ZXY');
+        activeTip={tool:kind==='bone'?'Drill':'Scalpel',local:[x,y,z]};
         const bit=kind==='bone'?tool.getObjectByName('instrument:drill-bit'):null;if(bit)bit.rotation.z=fraction*Math.PI*48;
       }
     }
@@ -352,8 +360,11 @@ function fieldScene(host:HTMLDivElement, field:OperativeField, sourceVolume:View
       const travel=opening*.8*(1-smooth(tumor/.16))+opening*.32*smooth((tumor-.94)/.06);
       const [dx,,dz]=retractionOffset(...tip,opening,brainZ);
       equipment.cusa.position.set(tip[0]+held*dx,tip[1],tip[2]+travel+held*dz);equipment.cusa.rotation.set(.055,-.10,0);
+      // The retraction offset only follows the morphed display; the sampled
+      // labels stay in rest space, where the tip is the path cell plus travel.
+      if(equipment.cusa.visible)activeTip={tool:'CUSA',local:[tip[0],tip[1],tip[2]+travel]};
     }
-    return model.stepCount ? removedCells : null;
+    return {removed:model.stepCount ? removedCells : null,tip:activeTip};
   }
   function dispose(){
     disposed=true;cancelAnimationFrame(frame);observer.disconnect();controls.dispose();
@@ -374,6 +385,8 @@ export function OperativeFieldCanvas(props:Props) {
   const [error,setError]=useState('');
   const [picked,setPicked]=useState<OperativePick|null>(null);
   const [removed,setRemoved]=useState<number|null>(null);
+  const [tip,setTip]=useState<Omit<OperativeToolTip,'ras'>|null>(null);
+  const onToolTip=useRef(props.onToolTip);onToolTip.current=props.onToolTip;
   useEffect(()=>{
     if(!host.current)return;
     setError('');setPicked(null);
@@ -384,8 +397,43 @@ export function OperativeFieldCanvas(props:Props) {
     catch(cause){setError(cause instanceof Error?cause.message:'3D graphics could not be initialized.');}
     return ()=>{scene.current?.dispose();scene.current=null;};
   },[props.field,props.sourceVolume,props.collectionId,props.sweepPattern,props.visibleLayers,props.onVesselDisplay,props.onContext]);
-  useEffect(()=>{if(scene.current)setRemoved(scene.current.update(props));},[props.field,props.sourceVolume,props.collectionId,props.sweepPattern,props.visibleLayers,props.phase,props.progress,props.withRetraction,props.view,props.raw]);
+  useEffect(()=>{if(scene.current){
+    const state=scene.current.update(props);setRemoved(state.removed);
+    setTip(previous=>previous&&state.tip&&previous.tool===state.tip.tool&&previous.local.every((v,i)=>Math.abs(v-state.tip!.local[i])<1e-6)?previous:state.tip);
+  }},[props.field,props.sourceVolume,props.collectionId,props.sweepPattern,props.visibleLayers,props.phase,props.progress,props.withRetraction,props.view,props.raw]);
+  const field=props.field;
+  const labels=useMemo(()=>{
+    const {grid,fromLocal}=fieldGrid(field),bits=field.materialBits,voxels=field.voxels;
+    const target=(i:number)=>(voxels[i]&bits.tumor)!==0,vessel=(i:number)=>(voxels[i]&bits.vessels)!==0;
+    return {grid,fromLocal,target,vessel,targetCells:labeledCells(voxels.length,target),vesselCells:labeledCells(voxels.length,vessel)};
+  },[field]);
+  const shownTip=error||props.phase==='overview'?null:tip;
+  const navigation=useMemo(()=>{
+    if(!shownTip||!labels.targetCells.length)return null;
+    // Distances refer to the labels sampled in this local field: outside the
+    // field no label is assumed, and the readout says so.
+    const q=labels.fromLocal(shownTip.local),limit={complete:true,maxMm:Math.hypot(...field.shape)*field.spacingMm};
+    const target=labelDistance(labels.grid,labels.target,q,{...limit,cells:labels.targetCells});
+    const vessel=labels.vesselCells.length?labelDistance(labels.grid,labels.vessel,q,{...limit,cells:labels.vesselCells}):null;
+    return target&&{tool:shownTip.tool,target,vessel};
+  },[shownTip,labels,field]);
+  useEffect(()=>{onToolTip.current?.(shownTip?{...shownTip,ras:fieldLocalToRas(field,shownTip.local)}:null);},[shownTip,field]);
+  useEffect(()=>()=>onToolTip.current?.(null),[]);
+  const targetLabel=field.layers.find(l=>l.id===field.targetLayerId)?.label??'Target';
   return <div ref={host} className="operative-field-canvas">
+    <div className="operative-field-readouts">
+    {!error&&navigation&&<aside className="operative-navigation" aria-label="Modeled tip distances" data-tip-tool={navigation.tool}
+      data-target-distance-mm={(navigation.target.inside?-1:1)*navigation.target.distanceMm}
+      title={`Signed distance from the modeled ${navigation.tool} tip to the boundary of the labels sampled in this local field (${field.spacingMm.toFixed(2)} mm grid); negative inside. Labels outside the field are not included. Geometric preview, not tracked navigation.`}>
+      <strong>Modeled tip · {navigation.tool} · field labels</strong>
+      <dl>
+        <div data-inside={navigation.target.inside||undefined}><dt>{targetLabel}</dt><dd>{formatLabelDistance(navigation.target)}</dd></div>
+        {navigation.vessel&&<div><dt>Vessel label</dt><dd>{formatLabelDistance(navigation.vessel)}</dd></div>}
+      </dl>
+    </aside>}
+    {!error&&props.phase==='tumor'&&<span className="operative-cavity" data-removed-cells={removed??0}>{removed===null
+      ?'No eligible lesion cells at this tip position'
+      :'Modeled aspiration · '+(removed*props.field.spacingMm**3).toFixed(1)+' mm³ of local lesion label'}</span>}
     {picked&&!error&&<aside className="operative-picked" aria-label="Picked tissue provenance">
       <button aria-label="Close picked tissue" onClick={()=>setPicked(null)}>×</button>
       {picked.layers.map(l=><div key={l.id}><strong>{l.label}</strong><small>{l.evidence} · {l.reviewStatus?.replaceAll('_',' ')}</small>
@@ -394,11 +442,9 @@ export function OperativeFieldCanvas(props:Props) {
       <small>Rest position RAS {picked.ras.map(n=>n.toFixed(1)).join(', ')} mm</small>
       {picked.voxel&&<small>Scan {picked.series} · voxel {picked.voxel.join(', ')}</small>}
     </aside>}
+    </div>
     {!error&&<span className="operative-entry-marker" hidden>Planned entry</span>}
     {!error&&<span className="operative-scale" aria-label="Physical scale"/>}
     {error&&<div role="alert">{error}</div>}
-    {!error&&props.phase==='tumor'&&<span className="operative-cavity" data-removed-cells={removed??0}>{removed===null
-      ?'No eligible lesion cells at this tip position'
-      :'Modeled aspiration · '+(removed*props.field.spacingMm**3).toFixed(1)+' mm³ of local lesion label'}</span>}
   </div>;
 }

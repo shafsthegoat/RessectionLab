@@ -37,11 +37,11 @@ export function SurgicalWorkflow({c,stage,onStage,pause,cursor,onCursor,artifact
     {(stage==='compare'||stage==='rehearse')&&<PlanningEvidencePanel c={c} pause={pause}/>}
     {(stage==='compare'||stage==='rehearse')&&cranialExplanation&&<p className="surgical-note" aria-label="Canonical cranial decision">{cranialExplanation}</p>}
     <section hidden={stage!=='case'} aria-label="Case anatomy and evidence"><h3>Review this case</h3>
-      <p>Inspect source planes and 3D anatomy in the linked views before planning.</p>
       <dl><div><dt>Declared target</dt><dd>{target.length?target.join(', '):'No target mapped'}</dd></div>
         <div><dt>Protected regions</dt><dd>{v.protection?.configured?v.protection.structures.map(row=>row.name).join(', ')||'No masks supplied':'No exclusion contract attached'}</dd></div>
         <div><dt>Missing or uncertain evidence</dt><dd>{missing.length?missing.join(', '):'Completeness has not been established'}</dd></div></dl>
-      <p className="surgical-note">Mapped anatomy and constraints support engineering research. Missing anatomy remains unknown; this app does not establish clinical eligibility.</p>
+      <details><summary>Details</summary><p>Inspect source planes and 3D anatomy in the linked views before planning.</p>
+        <p className="surgical-note">Mapped anatomy and constraints support engineering research. Missing anatomy remains unknown; this app does not establish clinical eligibility.</p></details>
       {qualification&&<details><summary>Source and task qualification</summary><p>{qualification.sourceEvidence.sourceRole} · {qualification.sourceEvidence.studyTimepoint}</p><ul>{Object.entries(qualification.sourceEvidence.anatomy).map(([name,row])=><li key={name}>{name}: {row.kind} · {row.reviewStatus}. {row.coverage}</li>)}</ul></details>}
       <button className="primary-button" disabled={c.pending} onClick={()=>onStage('plan')}>Review constraints and plan</button>
     </section>

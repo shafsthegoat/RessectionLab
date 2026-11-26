@@ -6,6 +6,8 @@ import {caseImageEvidence,caseLayerEvidence,conditionalRehearsalNotice} from './
 import {SurgicalPanel} from "./SurgicalPanel";
 import {EnvironmentPreparationPanel} from './EnvironmentPreparationPanel';
 import {OperativeSteps} from './OperativeSteps';
+import {TipNavigationContext,acceptedToolTip,createCursorFollower,sourceTargetMeasure} from './tool-follow';
+import {rehearseSliceColumnCss} from './viewer/layout';
 import {EngineStudyReference} from './EngineStudyReference';
 import {recordedMicroscope,recordingMatchesStudy,recordingSelectionKey} from './study-engine-presentation';
 import type {VerifiedStudyReplay} from './types';
@@ -782,6 +784,30 @@ export default function App() {
       setPrimaryViewer(settings=>defaultSurgeonView(view,initialRehearsalPresentation(view.scene.regions,settings),imaging.selected?null:annotationCenterMm));
     }
   },[surgical.view?.scene.sceneId]);
+  // Follow tool: in Rehearse the linked slices pass through the visible
+  // instrument tip. Stopping returns the cursor to where the user left it.
+  const followIO=useRef<{read:()=>Vec3|null;write:(point:Vec3)=>void}>({read:()=>null,write:()=>{}});
+  followIO.current={read:()=>displayedCursor,write:point=>{if(native.binding)native.setCursor(point);else if(imaging.selected)imaging.setCursor(point);else setCursor(point);}};
+  const [toolFollower]=useState(()=>createCursorFollower(()=>followIO.current.read(),point=>followIO.current.write(point)));
+  const nativeFollowKey=native.binding?JSON.stringify(['native',native.binding.collectionId,native.series]):null;
+  const nativeFollowKeyRef=useRef(nativeFollowKey);nativeFollowKeyRef.current=nativeFollowKey;
+  const followOperativeTool=useCallback((tip:Vec3|null)=>{
+    const key=nativeFollowKeyRef.current;if(!key)return;
+    if(tip)toolFollower.follow(tip,key);else toolFollower.stop(key);
+  },[toolFollower]);
+  const [followEngineTool,setFollowEngineTool]=useState(true);
+  const engineFollowKey=surgical.view?JSON.stringify(['engine',displayedCase?.caseHash,surgical.view.scene.sceneId]):null;
+  const engineFollowing=workbenchTab==='rehearsal'&&!native.binding&&followEngineTool&&!!engineFollowKey;
+  const engineTip=engineFollowing?acceptedToolTip(surgical.view,surgical.slot)?.position??null:null;
+  const engineTipKey=engineTip?.join(',')??null;
+  useEffect(()=>{if(engineFollowing&&engineTip&&engineFollowKey)toolFollower.follow(engineTip,engineFollowKey);},[engineFollowing,engineTipKey,engineFollowKey]);
+  useEffect(()=>{if(!engineFollowing||!engineFollowKey)return;const key=engineFollowKey;return ()=>toolFollower.stop(key);},[engineFollowing,engineFollowKey]);
+  // Modeled tip-to-original-target distance for overlays inside the viewer.
+  const engineTargetNames=useMemo(()=>surgical.view?.scene.regions.filter(region=>region.target).map(region=>region.name)??[],[surgical.view?.scene.sceneId]);
+  const tipNavigation=useMemo(()=>{
+    const measure=workbenchTab==='rehearsal'&&!native.binding?sourceTargetMeasure(displayedCase,engineTargetNames):null;
+    return measure?{measure}:null;
+  },[workbenchTab,native.binding,displayedCase,engineTargetNames]);
   const rehearsal = useRehearsal(!native.binding && !imaging.selected ? viewerCase : null,
     api?.createRehearsal && !api.readOnly && !payload?.artifacts?.nativeStudyReplay ? api as RehearsalApi : null);
   useEffect(()=>{
@@ -1764,7 +1790,7 @@ export default function App() {
               {nativeRoute&&<strong>{nativeRoute.name}</strong>}
               {native.planning.loading?<p role="status">Loading saved approaches…</p>:operativeIssue?<p>{operativeIssue}</p>:native.draft?<p>Finish the anatomy correction to preview this approach.</p>:<>
                 <p>{native.binding.document.layers.find(l=>l.id===nativeRoute?.targetLayerId)?.label} · {nativeRoute?.measurements?.lengthMm.toFixed(1)} mm path</p>
-                {showOperative?<p>The animation uses the selected path and tissue labels. Displacement and aspiration illustrate the tool actions. Tissue response and outcomes remain unassessed.</p>
+                {showOperative?<p>Illustrative geometry · tissue response and outcomes unassessed</p>
                   :<button className="primary-button" onClick={openOperative}>Preview operative steps</button>}
               </>}
               <button onClick={()=>setWorkbenchTab('research')}>{showOperative?'Return to plan':'Open plan'}</button>
@@ -1782,10 +1808,12 @@ export default function App() {
                       throw Error('The recorded patient, target or approach differs from the current plan.');
                     await installCase(replay,api,generation,selectionKey);
                   })}>Open recorded engine episode</button>
-                <p className="surgical-note">{native.planning.activeTargetLayerId?
-                  'Checks the recorded instruments and actions against this study revision and target. A new procedure requires reviewed brainstem, cerebellum, entry, compartment and instrument-workspace evidence.':
-                  'Select a treatment target in Plan to check an engine recording.'}</p>
+                {!native.planning.activeTargetLayerId&&<p className="surgical-note">Select a treatment target in Plan to check an engine recording.</p>}
               </div>}
+              {(showOperative&&!operativeIssue&&!native.draft||api?.openBoundSurgicalReplay&&native.planning.activeTargetLayerId)&&<details className="operative-details"><summary>Details</summary>
+                {showOperative&&!operativeIssue&&!native.draft&&<p>The animation uses the selected path and tissue labels. Displacement and aspiration illustrate the tool actions. Tissue response and outcomes remain unassessed. Tip distances are measured on the sampled field labels.</p>}
+                {api?.openBoundSurgicalReplay&&native.planning.activeTargetLayerId&&<p>Open recorded engine episode checks the recorded instruments and actions against this study revision and target. A new procedure requires reviewed brainstem, cerebellum, entry, compartment and instrument-workspace evidence.</p>}
+              </details>}
             </section>
             {api?.compareBoundSurgicalReplays&&currentSelection&&<RecordedStrategyComparison
               key={JSON.stringify([currentSelection.collectionId,currentSelection.snapshotId,currentSelection.targetLayerId,
@@ -1817,7 +1845,7 @@ export default function App() {
             </section>}
             {!payload?.artifacts?.nativeStudyReplay&&<details className="rehearsal-environment"><summary>Environment · {rehearsalModel==='standard'?'standard':'legacy'}</summary><label className="rehearsal-model">Rehearsal model<select aria-label="Rehearsal model" value={rehearsalModel} onChange={e=>{rehearsal.pause();surgical.cancel();setRehearsalModel(e.target.value as typeof rehearsalModel)}}><option value="standard">Standard instrument environment</option><option value="legacy">Legacy bounded episode</option></select></label></details>}
             {rehearsalModel==='standard'?<>
-              {frozenCusaRunning&&<button onClick={()=>void api?.cancelFrozenCusa?.()}>Cancel frozen policy execution</button>}<fieldset disabled={frozenCusaPending} style={{border:0,padding:0,margin:0,minWidth:0}}><SurgicalPanel c={surgical} studyRecording={!!payload?.artifacts?.nativeStudyReplay} planningCursor={displayedCursor} onPlanningCursor={point=>{if(imaging.selected)imaging.setCursor(point);else setCursor(point);}} inspectionNotice={inspectionNotice(viewerSettings)} onRunFrozenCusa={api?.executeFrozenCusa?executeFrozenCusa:undefined} onRunFrozenSector={api?.executeFrozenCusa?(method=>executeFrozenCusa(method,'sector')):undefined} frozenCusaPending={frozenCusaPending} learningReport={payload?.artifacts?.patient_rescue_learning} executionReport={payload?.artifacts?.patient_rescue_ppo_bc??payload?.artifacts?.patient_rescue_bc} cusaLearning={payload?.artifacts?.surgical_toolbox} microscopeControls={<><SurgeonViewControls c={surgical} settings={viewerSettings} onSettings={setViewerSettings} onFitAnatomy={()=>{setCameraMode('anatomy');setCameraFitRequest(request=>request+1);}}/>{viewerSettings.operativeView!=='surgeon'&&<SurgicalCloseViewControls c={surgical} source={displayedCase} settings={viewerSettings} cursor={displayedCursor} onSettings={setViewerSettings} onCursor={point=>{if(imaging.selected&&point)imaging.setCursor(point);else setCursor(point);}} onFitAnatomy={()=>{setCameraMode('anatomy');setCameraFitRequest(request=>request+1);}}/>}</>} fieldDisplayControls={<label><input type="checkbox" checked={viewerSettings.smoothSurfaces!==false} onChange={e=>setViewerSettings({...viewerSettings,smoothSurfaces:e.target.checked})}/>Smooth 3D surfaces</label>} onFrameField={()=>{if(surgical.view){const field=operativeFieldFrame(surgical.view,imaging.selected?null:annotationCenterMm,viewerSettings,displayedCase);if(field){if(imaging.selected)imaging.setCursor(field.center);else setCursor(field.center);setViewerSettings(field.settings);setMessage(field.anchor==='target'?'Framed supplied annotation.':'Framed accepted instrument in source scan.');}else setMessage('No accepted instrument or supplied annotation lies within this source scan.');}}} anatomyControls={!!surgical.view&&<details className="rehearsal-anatomy"><summary>Anatomy visibility and appearance</summary><button onClick={()=>setViewerSettings(rehearsalPresentation(surgical.view!.scene.regions,viewerSettings))}>Reference appearance</button>
+              {frozenCusaRunning&&<button onClick={()=>void api?.cancelFrozenCusa?.()}>Cancel frozen policy execution</button>}<fieldset disabled={frozenCusaPending} style={{border:0,padding:0,margin:0,minWidth:0}}><SurgicalPanel c={surgical} studyRecording={!!payload?.artifacts?.nativeStudyReplay} planningCursor={displayedCursor} onPlanningCursor={point=>{if(imaging.selected)imaging.setCursor(point);else setCursor(point);}} inspectionNotice={inspectionNotice(viewerSettings)} onRunFrozenCusa={api?.executeFrozenCusa?executeFrozenCusa:undefined} onRunFrozenSector={api?.executeFrozenCusa?(method=>executeFrozenCusa(method,'sector')):undefined} frozenCusaPending={frozenCusaPending} learningReport={payload?.artifacts?.patient_rescue_learning} executionReport={payload?.artifacts?.patient_rescue_ppo_bc??payload?.artifacts?.patient_rescue_bc} cusaLearning={payload?.artifacts?.surgical_toolbox} microscopeControls={<><SurgeonViewControls c={surgical} settings={viewerSettings} onSettings={setViewerSettings} onFitAnatomy={()=>{setCameraMode('anatomy');setCameraFitRequest(request=>request+1);}}/><label className="follow-tool-toggle" title="Move the linked axial, coronal and sagittal slices through the accepted tip of the selected inserted instrument"><input type="checkbox" checked={followEngineTool} onChange={event=>setFollowEngineTool(event.target.checked)}/>Follow tool</label>{viewerSettings.operativeView!=='surgeon'&&<SurgicalCloseViewControls c={surgical} source={displayedCase} settings={viewerSettings} cursor={displayedCursor} onSettings={setViewerSettings} onCursor={point=>{if(imaging.selected&&point)imaging.setCursor(point);else setCursor(point);}} onFitAnatomy={()=>{setCameraMode('anatomy');setCameraFitRequest(request=>request+1);}}/>}</>} fieldDisplayControls={<label><input type="checkbox" checked={viewerSettings.smoothSurfaces!==false} onChange={e=>setViewerSettings({...viewerSettings,smoothSurfaces:e.target.checked})}/>Smooth 3D surfaces</label>} onFrameField={()=>{if(surgical.view){const field=operativeFieldFrame(surgical.view,imaging.selected?null:annotationCenterMm,viewerSettings,displayedCase);if(field){if(imaging.selected)imaging.setCursor(field.center);else setCursor(field.center);setViewerSettings(field.settings);setMessage(field.anchor==='target'?'Framed supplied annotation.':'Framed accepted instrument in source scan.');}else setMessage('No accepted instrument or supplied annotation lies within this source scan.');}}} anatomyControls={!!surgical.view&&<details className="rehearsal-anatomy"><summary>Anatomy visibility and appearance</summary><button onClick={()=>setViewerSettings(rehearsalPresentation(surgical.view!.scene.regions,viewerSettings))}>Reference appearance</button>
                 <AnatomyPanel layers={surgical.view.scene.regions.map(r=>({name:r.name,kind:r.material,color:r.color,provenance:`${r.material} · ${r.target?'declared target':'context anatomy'}`}))} visibleLayers={displayedLayers} onVisibilityChange={setDisplayedLayers} settings={viewerSettings} onSettingsChange={setViewerSettings}/>
               </details>} onImport={async options=>{if(api?.importSurgicalScene){const imported=await api.importSurgicalScene(options);if(imported&&await installCase(imported,api))setWorkbenchTab('rehearsal')}}} available={!!displayedCase} onFixture={()=>void act(async()=>{if(api?.createSurgicalFixture){const fixture=await api.createSurgicalFixture();if(fixture&&await installCase(fixture,api))setWorkbenchTab('rehearsal')}})}/></fieldset>
 
@@ -2083,8 +2111,10 @@ export default function App() {
         {native.binding&&!showOperative&&native.registration==='alignment preview'&&<div className="workspace-alignment-banner" role="status">Estimated scan alignment <span>{alignmentBannerWarning(native.volume?.alignmentQuality)??'Shared structures · verify in Scans before planning'}</span></div>}
         <NativeCorrectionBar workspace={native}/>
         <div className={linkedOperative?"viewer-shell has-operative-reference":showEngineRecording?"viewer-shell has-engine-reference":"viewer-shell"}
+          style={linkedOperative?{'--rehearse-slice-column':rehearseSliceColumnCss()} as React.CSSProperties:undefined}
           data-engine-replay-layout={showEngineRecording?'source-bound':undefined}>
-          {showOperative && native.binding && nativeApi && nativeRoute && <OperativeSteps key={routeKey} api={nativeApi} collectionId={native.binding.collectionId} route={nativeRoute} visibleLayers={native.state.visible} linkedOverview={linkedOperative} sourceVolume={linkedOperative?native.volume:null}/>}
+          {showOperative && native.binding && nativeApi && nativeRoute && <OperativeSteps key={routeKey} api={nativeApi} collectionId={native.binding.collectionId} route={nativeRoute} visibleLayers={native.state.visible} linkedOverview={linkedOperative} sourceVolume={linkedOperative?native.volume:null} onFollowTool={linkedOperative?followOperativeTool:undefined}/>}
+          <TipNavigationContext.Provider value={tipNavigation}>
           {(!showOperative||linkedOperative) && displayedCase && (
             <ViewerWorkspace
               engineInspection={showEngineRecording}
@@ -2125,6 +2155,7 @@ export default function App() {
               modes={viewerModes}
             />
           )}
+          </TipNavigationContext.Provider>
           {showEngineRecording&&replayReceipt&&caseData&&<EngineStudyReference receipt={replayReceipt} engineScene={surgical.view?.scene}
             operativeSettings={viewerSettings} onOperativeSettings={setViewerSettings}
             nativeSource={!!nativeReference} targetLabel={nativeReference?study.binding?.document.layers.find(l=>l.id===replayReceipt.targetLayerId)?.label??replayReceipt.targetLayerId:replayReceipt.targetLayerId.replaceAll('_',' ')}

@@ -1,6 +1,8 @@
-import {useMemo} from 'react';
+import {useContext,useMemo} from 'react';
 import {surgicalFieldAmounts} from '../full-case-presentation';
 import type {SurgicalInteraction, SurgicalView} from '../surgical-types';
+import {TipNavigationContext,acceptedToolTip} from '../tool-follow';
+import {formatLabelDistance} from './toolNavigation';
 
 const finite = (n: unknown): n is number => typeof n === 'number' && Number.isFinite(n);
 const quantity = (n: unknown, unit: string) => finite(n) ? `${+n.toFixed(2)} ${unit}` : 'Unknown';
@@ -10,6 +12,12 @@ const quantity = (n: unknown, unit: string) => finite(n) ? `${+n.toFixed(2)} ${u
 export function PracticeHud({view, interaction, membrane}: {view:SurgicalView; interaction:SurgicalInteraction; membrane?:string|null}) {
   const hud = interaction.practiceHud;
   const field=useMemo(()=>surgicalFieldAmounts(view),[view]);
+  // Exact distance from the displayed accepted tip to the original declared
+  // target cells. Hidden while no instrument is inserted.
+  const navigation=useContext(TipNavigationContext);
+  const tip=acceptedToolTip(view,interaction.selectedSlot);
+  const tipKey=tip?`${tip.hand}:${tip.position.join(',')}`:null;
+  const tipDistance=useMemo(()=>tip&&navigation?{hand:tip.hand,distance:navigation.measure(tip.position)}:null,[tipKey,navigation]);
   if (!hud) return null;
   const total = hud.originalTargetVolumeMm3;
   const remaining = view.originalTargetResidualMm3;
@@ -33,6 +41,8 @@ export function PracticeHud({view, interaction, membrane}: {view:SurgicalView; i
     {membrane&&<span>{membrane}</span>}
     {(activity||!!sources?.length)&&<span>{[activity,sources?.length?`${emitting} of ${sources.length} modeled sources emitting`:null].filter(Boolean).join(' · ')}</span>}
     <dl>
+      {tipDistance?.distance&&<div data-tip-hand={tipDistance.hand} title={`Signed distance from the accepted ${tipDistance.hand} tip to the boundary of the original declared target cells on the source grid; negative inside. Modeled engine pose, not tracked navigation.`}>
+        <dt>Tip to original target · modeled</dt><dd>{formatLabelDistance(tipDistance.distance)}</dd></div>}
       <div><dt>Original target removed</dt><dd>{quantity(removed,'mm³')}</dd></div>
       <div><dt>Original target remaining</dt><dd>{quantity(remaining,'mm³')}</dd></div>
       <div><dt>Non-target brain removed</dt><dd>{quantity(hud.nonTargetBrainRemovedMm3,'mm³')}</dd></div>
