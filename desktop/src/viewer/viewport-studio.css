@@ -321,10 +321,12 @@
 .rl-viewer.has-expanded .rl-viewer-layoutbar > :is(.rl-fusion-readout, .rl-viewer-prior-readout) { position: relative; top: 38px; }
 .rl-viewer .rl-viewer-annotations { top: 12px; left: 12px; color: #9bafa2; font-size: var(--text-micro); line-height: 1.5; text-shadow: 0 0 2px #000, 0 0 6px rgba(0, 0, 0, .85); }
 .rl-viewer .rl-viewer-annotations:empty { display: none; }
+/* Provenance captions sit on a dark backing so they stay legible over the bright operative field. */
+.rl-viewer .rl-viewport-start > .rl-viewer-annotations:not(:empty) { background: rgba(8, 9, 9, .66); padding: 1px 7px; border-radius: var(--radius, 6px); }
 .rl-viewer .rl-viewer-route-key { white-space: normal; }
 .rl-viewer .rl-viewer-error { top: 50px; left: 14px; max-width: min(440px, calc(100% - 58px)); border-radius: var(--radius-card); }
 .rl-viewer .rl-body-guide { width: 84px; min-height: 94px; left: 12px; bottom: 10px; }
-.rl-viewer .rl-body-guide [data-guide-caption] { font-size: var(--text-micro); color: #839d8d; text-shadow: 0 0 2px #000, 0 0 6px rgba(0, 0, 0, .85); }
+.rl-viewer .rl-body-guide [data-guide-caption] { font-size: var(--text-micro); color: #839d8d; text-shadow: 0 0 2px #000, 0 0 6px rgba(0, 0, 0, .85); background: rgba(8, 9, 9, .66); padding: 0 4px; border-radius: 4px; }
 .rl-viewer .rl-viewer-anatomy-image:has(.rl-body-guide:not([hidden])) .operative-readout { left: 108px; }
 
 @media (max-width: 1100px) {
