@@ -65,7 +65,7 @@ import {
 } from "./structuralProposal";
 import { ModeChipStack, ModeEscape } from "./ModeChip";
 import { resolveModes } from "./viewerModes";
-import { ViewportScaleBar, ViewportSliderHud } from "./ViewportHud";
+import { ViewportScaleBar, ViewportSliderHud } from "./ViewportHudView";
 import "./viewer.css";
 import "./operativePresentation.css";
 
