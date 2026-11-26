@@ -339,6 +339,15 @@ export function withVesselReviewVisibility(visible:Record<string,boolean>,compar
   if(!derived.length&&!children.length)return visible;
   return {...visible,...Object.fromEntries(children),...Object.fromEntries(derived)};
 }
+/** The viewer reports its whole settings object on any change, including the inherited
+ * entries of derived parts. Those names are not study layers and are never stored. */
+export function withoutVesselDerivedSettings<T extends {layerOpacity?:Record<string,number>;layerColor?:Record<string,string>}>(settings:T):T {
+  const kept=<V,>(values:Record<string,V>|undefined)=>values&&Object.keys(values).some(name=>vesselDerivedParent(name)!==null)
+    ?Object.fromEntries(Object.entries(values).filter(([name])=>vesselDerivedParent(name)===null)):values;
+  const layerOpacity=kept(settings.layerOpacity),layerColor=kept(settings.layerColor);
+  if(layerOpacity===settings.layerOpacity&&layerColor===settings.layerColor)return settings;
+  return {...settings,...(layerOpacity?{layerOpacity}:{}),...(layerColor?{layerColor}:{})};
+}
 /** Derived class parts and overlays inherit their layer's opacity; a vein part follows
  * the vein rule of the scan presentation. */
 export function withVesselDerivedSettings(settings:import('./viewer/workspaceSettings').ViewerWorkspaceSettings,

@@ -20,7 +20,7 @@ import {hasSavedFullCaseBranch} from './full-case-workspace';
 import {useRehearsal} from "./use-rehearsal";
 import {RehearsalPanel} from "./RehearsalPanel";
 import type {RehearsalApi} from "./rehearsal-types";
-import {alignmentBannerWarning,scanLabel,vesselDerivedParent,withVesselDerivedSettings,withVesselReviewVisibility} from './native-study-state';
+import {alignmentBannerWarning,scanLabel,vesselDerivedParent,withVesselDerivedSettings,withoutVesselDerivedSettings,withVesselReviewVisibility} from './native-study-state';
 import {useNativeWorkspace} from './use-native-workspace';
 import {NativeSidebar,NativeCorrectionBar,NativeResearch} from './NativeWorkspacePanels';
 import {isNativeBinding} from './native-anatomy-data';
@@ -758,6 +758,11 @@ export default function App() {
   const displayedLayers = native.binding ? native.state.visible : imaging.selected ? imaging.visibleLayers : visibleLayers;
   const setDisplayedLayers = native.binding ? native.setVisible : imaging.selected ? imaging.setVisibleLayers : setVisibleLayers;
   const viewerSettings = native.binding ? native.state.settings : imaging.selected ? imaging.viewer ?? {} : primaryViewer;
+  // Derived vessel parts inherit their layer's opacity for display only; memoised so the viewer
+  // sees one settings object per change, not one per render.
+  const nativeCompartments = native.volume?.compartments, nativeBound = !!native.binding;
+  const displayedViewerSettings = useMemo(() => nativeBound ? withVesselDerivedSettings(viewerSettings, nativeCompartments) : viewerSettings,
+    [nativeBound, viewerSettings, nativeCompartments]);
   const setViewerSettings = native.binding ? native.setSettings : imaging.selected ? imaging.setViewer : setPrimaryViewer;
   const fusionSeries = !imaging.selected && primaryViewer.fusion?.seriesId ? imaging.series.find(s=>s.descriptor.seriesId===primaryViewer.fusion?.seriesId && s.descriptor.registration.overlayPermitted) : null;
   const registeredFusion = useMemo(()=>fusionSeries && payload && fusionSeries.descriptor.registration.sourceToReferenceRasMm ? {
@@ -2122,9 +2127,9 @@ export default function App() {
               approachOverview={linkedOperative}
               surgicalInteraction={!showOperative&&workbenchTab==="rehearsal"?surgical.interaction:undefined}
               rehearsalState={showOperative||surgical.interaction.view?null:rehearsal.viewerState}
-              workspaceSettings={native.binding?withVesselDerivedSettings(viewerSettings,native.volume?.compartments):viewerSettings}
+              workspaceSettings={displayedViewerSettings}
               readCamera={native.binding?native.readCamera:undefined}
-              onWorkspaceSettingsChange={setViewerSettings}
+              onWorkspaceSettingsChange={settings=>setViewerSettings(withoutVesselDerivedSettings(settings))}
               sourceLabel={native.binding?native.binding.document.series.find(s=>s.id===native.series)?.modality:String(displayedSource?.metadata.selected_modality??'Image')}
               sourcePreview={!!native.binding&&native.scanPreview}
               onSliceStroke={native.binding?native.onStroke:undefined}

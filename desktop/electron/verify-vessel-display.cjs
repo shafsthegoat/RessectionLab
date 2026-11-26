@@ -1,7 +1,10 @@
 'use strict';
 // Real UI verification. Saving preferences is permitted only in a disposable copy.
 const {countVesselPixels}=require('./vessel-pixels.cjs');
-const {app}=require('electron'),fs=require('node:fs'),os=require('node:os'),path=require('node:path'),crypto=require('node:crypto');
+const {app,ipcMain}=require('electron'),fs=require('node:fs'),os=require('node:os'),path=require('node:path'),crypto=require('node:crypto');
+// Reopening a study replaces the engine's transfers; a view requested before it finishes is discarded.
+const opens={started:0,finished:0},handleIpc=ipcMain.handle.bind(ipcMain);
+ipcMain.handle=(channel,handler)=>handleIpc(channel,channel!=='research:openListedWorkspace'?handler:async(...args)=>{opens.started++;try{return await handler(...args)}finally{opens.finished++}});
 process.argv.push('--automation-hidden');
 const filename=process.argv[process.argv.indexOf('--anatomy')+1];
 if(!filename?.includes('/ressection-vessel-display-'))throw Error('Use a disposable ressection-vessel-display- patient copy');
@@ -60,8 +63,10 @@ app.on('browser-window-created',(_event,window)=>window.webContents.once('did-fi
   const saved=JSON.parse(fs.readFileSync(path.join(path.dirname(filename),'workspace-view.json'),'utf8'));
   if(saved.vesselDisplayVersion!==3||saved.vesselScope!=='intracranial')throw Error('Versioned preference did not save');
   await js(`document.querySelector('button[aria-label="Cases"]').click()`);await pause(500);
-  const patient=JSON.parse(initial).patient_id;
-  await js(`(()=>{const b=[...document.querySelectorAll('button')].find(b=>b.querySelector('strong')?.textContent===${JSON.stringify(patient)});if(!b)throw Error('Saved collection missing');b.click()})()`);await ready();
+  const patient=JSON.parse(initial).patient_id,opened=opens.finished;
+  await js(`(()=>{const b=[...document.querySelectorAll('button')].find(b=>b.querySelector('strong')?.textContent===${JSON.stringify(patient)});if(!b)throw Error('Saved collection missing');b.click()})()`);
+  for(let i=0;opens.finished===opened||opens.started!==opens.finished;i++){if(i>=240)throw Error('The study did not reopen');await pause(250)}
+  await ready();
   // Reopening may restore either sidebar tab.
   if(!await js(`!!document.querySelector('select[aria-label="Vessel display"]')`))await click('Anatomy');
   report.reopenedScope=await scope();if(report.reopenedScope!=='intracranial')throw Error('Explicit saved scope lost');

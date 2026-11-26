@@ -652,7 +652,9 @@ VESSEL_VERIFY_OUTPUT=../outputs/vessel-display-verification/PATIENT \
 The Electron verifier requires a disposable `ressection-vessel-display-` path
 because it exercises saving and reopening view preferences. It compares both
 scopes in Structures and Volume, captures the linked slices, measures delivered
-rotation frames, and checks that the manifest remains unchanged. Data checks
+rotation frames, and checks that the manifest remains unchanged. It waits for
+the reopened study before acting on it, and its vessel pixel count includes
+the mauve of an unclassified CTA vessel layer. Data checks
 compare the transmitted full-source mask with native-source resampling and
 verify source-array hashes. Residual source-gap candidates, their physical
 coordinates and original-image/probability crops are recorded separately;

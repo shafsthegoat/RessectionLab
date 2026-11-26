@@ -487,3 +487,15 @@ test('derived vessel parts inherit their layer opacity and a vein part keeps the
   const none={presentation:'vascular'};
   assert.equal(withVesselDerivedSettings(none,compartments),none);
 });
+
+test('settings reported by the viewer drop derived vessel entries before they are stored',async()=>{
+  const {withVesselDerivedSettings,withoutVesselDerivedSettings}=await import('../src/native-study-state.ts');
+  const stored={presentation:'scan',layerOpacity:{tree:.16,brain:.06},layerColor:{tree:'#c4553a'}};
+  const shown=withVesselDerivedSettings(stored,[{name:'tree'},{name:'__vessel_veins:tree'},{name:'__vessel_review:tree'}]);
+  const reported={...shown,layerColor:{...shown.layerColor,'__vessel_arteries:tree':'#c4553a'}};
+  assert.deepEqual(withoutVesselDerivedSettings(reported),stored);
+  assert.equal(withoutVesselDerivedSettings(stored),stored);
+  assert.deepEqual(withoutVesselDerivedSettings({presentation:'scan'}),{presentation:'scan'});
+  const opacityOnly=withoutVesselDerivedSettings({presentation:'scan',layerOpacity:{tree:1,'__vessel_review:tree':1}});
+  assert.deepEqual(Object.keys(opacityOnly),['presentation','layerOpacity']);
+});
