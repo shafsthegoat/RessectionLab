@@ -167,6 +167,8 @@ export interface ViewerWorkspaceProps {
   priorLayer?: ViewerPriorLayer | null;
   inspectionTool?: ViewerInspectionTool | null;
   onClearInspection?: () => void;
+  /** Host display modes (replay, estimate, prior) shown as chips in the 3D pane; each exit restores the source view. */
+  modes?: readonly import('./viewerModes').ViewerMode[];
 }
 
 /** Host-validated complete inspector report; never a route or replay payload. */

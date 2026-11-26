@@ -115,6 +115,7 @@ import { AnatomyPanel } from "./AnatomyPanel";
 import { CaseLibraryPanel, WorkbenchDataPanel, anatomyDescription } from "./WorkbenchPanels";
 import type { LibraryCase, AnatomyRecord } from "./WorkbenchPanels";
 import type { ViewerWorkspaceSettings } from "./viewer/workspaceSettings";
+import type { ViewerMode } from "./viewer/viewerModes";
 import "./workbench.css";
 
 interface Operation {
@@ -1601,6 +1602,27 @@ export default function App() {
   const scanName = showEngineRecording?'Engine playback':native.binding ? scanLabel(native.binding.document.series.find(s => s.id === native.series) ?? {id: '', modality: 'Study'})
     : displayedSource ? String(displayedSource.metadata.selected_modality ?? 'Source imaging') : '';
   const inspectorName = {cases: 'Cases', data: 'Scans', anatomy: 'Anatomy', research: native.binding ? 'Planning' : 'Case evidence', rehearsal: 'Rehearsal'}[workbenchTab];
+  // Source-view inspection modes, shown as chips in the 3D pane. Each exit, and
+  // Escape, restores the source view exactly as the former banners did.
+  const passiveShown = episodeVisible && episodeWorkflow === 'passive' && passiveView && caseData && passiveView.source.caseHash === caseData.caseHash;
+  const viewerModeCandidates: Array<ViewerMode | false | null | undefined | ''> = [
+    priorView && {id: 'prior-view', detail: `${priorView.title} · alignment review required · inspection only · not used in route scoring`,
+      onExit: restoreSourceView},
+    proposalView && {id: 'estimate-view', detail: `${proposalView.label} · ${proposalView.reviewStatus === 'review_required' ? 'review required'
+      : proposalView.reviewStatus === 'rejected' ? 'rejected estimate' : 'reviewed envelope'} · view only · cortical access not certified`,
+      onExit: restoreSourceView},
+    episodeVisible && episodeWorkflow === 'aspiration' && displayedEpisodeView && {id: 'generated-episode',
+      detail: `modeled cavity · ${comparison.arm === 'search' ? 'matched search' : 'selected episode'} · frame ${displayedEpisodeStep}/${displayedEpisodeView.frames.length-1} · ${displayedEpisodeView.episode.replayFrames[displayedEpisodeStep].phase} · no patient admission`,
+      onExit: restoreSourceView},
+    certifiedReplay && {id: 'modeled-replay', detail: `native source grid · selection step ${certifiedReplay.result.step}/${certifiedReplay.result.stepCount}`,
+      onExit: restoreSourceView},
+    episodeVisible && activeContactView && {id: 'generated-episode', label: 'Generated contact',
+      detail: `public retained-contact · frame ${activeContactStep}/${activeContactView.frames.length-1} · no patient admission`, onExit: restoreSourceView},
+    passiveShown && {id: 'generated-episode', label: 'Generated poses',
+      detail: `two persistent tool poses · state ${passiveStep}/5 · declared ${passiveView.frames[passiveStep].elapsedGeneratedSeconds.toFixed(1)} s · no patient admission`,
+      onExit: restoreSourceView},
+  ];
+  const viewerModes = viewerModeCandidates.filter((mode): mode is ViewerMode => !!mode);
 
   return (
     <div data-native-series={native.binding?native.series:undefined} data-native-view-state={native.binding?JSON.stringify(native.viewState):undefined} className={`app-shell poc-workbench ${native.binding?"native-workspace":""} ${libraryOpen?"library-open":""} ${workbenchTab === "research" && !native.binding ? "research-open" : "anatomy-only"} ${casePanel ? "" : "case-panel-collapsed"}`}>
@@ -2058,59 +2080,6 @@ export default function App() {
             </button>
           </div>
         </div>}
-        {priorView && (
-          <div className="prior-view-notice">
-            <span className="prior-population-badge">Population prior</span>
-            <div>
-              <strong>{priorView.title}</strong>
-              <span>
-                Alignment review required · inspection only · not used in route
-                scoring
-              </span>
-            </div>
-            <button className="text-button" onClick={restoreSourceView}>
-              Source view <X size={12} />
-            </button>
-          </div>
-        )}
-        {proposalView && (
-          <div className="proposal-view-notice" role="status">
-            <span className="proposal-contour-key" />
-            <div>
-              <strong>{proposalView.label}</strong>
-              <span>
-                {proposalView.reviewStatus === "review_required"
-                  ? "Review required"
-                  : proposalView.reviewStatus === "rejected"
-                    ? "Rejected estimate"
-                    : "Reviewed envelope"}{" "}
-                · view only · cortical access not certified
-              </span>
-            </div>
-            <button className="text-button" onClick={restoreSourceView}>
-              Source view <X size={12} />
-            </button>
-          </div>
-        )}
-        {episodeVisible && episodeWorkflow === "aspiration" && displayedEpisodeView && (
-          <div className="modeled-replay-notice" role="status"><span>GENERATED · modeled cavity · {comparison.arm === "search" ? "matched search" : "selected episode"} · frame {displayedEpisodeStep}/{displayedEpisodeView.frames.length-1} · {displayedEpisodeView.episode.replayFrames[displayedEpisodeStep].phase} · no patient admission</span><button className="text-button" onClick={restoreSourceView}>Source view <X size={12}/></button></div>
-        )}
-        {certifiedReplay && (
-          <div className="modeled-replay-notice">
-            <span>
-              <span className="layer-swatch" />
-              Modeled removal · native source grid · selection step{" "}
-              {certifiedReplay.result.step}/{certifiedReplay.result.stepCount}
-            </span>
-            <button className="text-button" onClick={restoreSourceView}>
-              Source view <X size={12} />
-            </button>
-          </div>
-        )}
-        {episodeVisible && activeContactView && <div className="modeled-replay-notice" role="status"><span>GENERATED · public retained-contact · frame {activeContactStep}/{activeContactView.frames.length-1} · no patient admission</span><button className="text-button" onClick={restoreSourceView}>Source view <X size={12}/></button></div>}
-        {episodeVisible&&episodeWorkflow==='passive'&&passiveView&&caseData&&passiveView.source.caseHash===caseData.caseHash&&
-          <div className="modeled-replay-notice" role="status"><span>GENERATED · two persistent tool poses · state {passiveStep}/5 · declared {passiveView.frames[passiveStep].elapsedGeneratedSeconds.toFixed(1)} s · no patient admission</span>
-            <button className="text-button" onClick={restoreSourceView}>Source view <X size={12}/></button></div>}
         {native.binding&&!showOperative&&native.registration==='alignment preview'&&<div className="workspace-alignment-banner" role="status">Estimated scan alignment <span>{alignmentBannerWarning(native.volume?.alignmentQuality)??'Shared structures · verify in Scans before planning'}</span></div>}
         <NativeCorrectionBar workspace={native}/>
         <div className={linkedOperative?"viewer-shell has-operative-reference":showEngineRecording?"viewer-shell has-engine-reference":"viewer-shell"}
@@ -2153,6 +2122,7 @@ export default function App() {
               passiveReplay={display.primaryOverlaysPermitted&&episodeVisible&&episodeWorkflow==='passive'&&passiveView&&caseData&&passiveView.source.caseHash===caseData.caseHash?passiveView.frames[passiveStep]:null}
               structuralProposal={!native.binding && display.primaryOverlaysPermitted ? proposalView : null}
               priorLayer={!native.binding && display.primaryOverlaysPermitted ? priorView : null}
+              modes={viewerModes}
             />
           )}
           {showEngineRecording&&replayReceipt&&caseData&&<EngineStudyReference receipt={replayReceipt} engineScene={surgical.view?.scene}

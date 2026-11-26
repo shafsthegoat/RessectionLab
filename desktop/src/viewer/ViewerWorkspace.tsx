@@ -63,6 +63,9 @@ import {
   STRUCTURAL_PROPOSAL_COLOR,
   structuralProposalReviewLabel,
 } from "./structuralProposal";
+import { ModeChipStack, ModeEscape } from "./ModeChip";
+import { resolveModes } from "./viewerModes";
+import { ViewportScaleBar, ViewportSliderHud } from "./ViewportHud";
 import "./viewer.css";
 import "./operativePresentation.css";
 
@@ -240,12 +243,6 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   const [fieldExpanded,setFieldExpanded]=useState(false);
   const fieldPresentable=!!surgicalView&&(settings.operativeView==='surgeon'||!!surgicalView.operativeExposureV1)&&!resultParts;
   const fieldPresentation=fieldExpanded&&fieldPresentable;
-  useEffect(()=>{
-    if(!fieldPresentation)return;
-    const escape=(event:globalThis.KeyboardEvent)=>{if(event.key==='Escape')setFieldExpanded(false);};
-    document.addEventListener('keydown',escape);
-    return ()=>document.removeEventListener('keydown',escape);
-  },[fieldPresentation]);
   useEffect(()=>{engine.current?.setFieldPresentation(fieldPresentation);},[fieldPresentation,ready,graphicsGeneration,rendererIdentity]);
   const [expanded, setExpanded] = useState<SlicePlane | null>(null);
   const [navigationMode,setNavigationMode]=useState<'orbit'|'pan'>('orbit');
@@ -808,6 +805,42 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     setInspectionError(null);
     latestProps.current.onClearInspection?.();
   };
+  const showFullCtaHead=()=>{
+    engine.current?.fitCamera('anatomy');
+    changeSettings({...settings,clipping:undefined,
+      camera:engine.current?.getCameraState()??null});
+  };
+  const sectionAxis=PLANE_AXES[activePlane][2];
+  const ctaCutShown=ctaCutaway&&!surgicalView&&!sourceSectionActive&&!depthSlabBox&&!corridorCrop&&!settings.clipBox?.enabled&&
+    !settings.obliqueClip?.enabled&&!props.vesselTrace?.isolationRadiusMm;
+  const cropShown=!sourceSectionActive&&(!depthSlabBox||!!corridorCrop)&&!surgicalView&&
+    Boolean(corridorCrop||settings.clipBox?.enabled||props.vesselTrace?.isolationRadiusMm);
+  // Every temporary view with a way back, as one chip each. The × and Escape
+  // call the same restore the previous readout buttons called.
+  const viewerModes=resolveModes([
+    fieldPresentation&&{id:'expanded-field',onExit:()=>setFieldExpanded(false)},
+    expanded&&{id:'expanded-pane',detail:`${TITLES[expanded]} ${signalName}`,onExit:()=>setExpanded(null)},
+    resultParts&&{id:'result-view',detail:resultParts==='both'?'Cavity and residual':resultParts==='cavity'?'Cavity only':'Residual only',
+      exitLabel:'Return to operative field',onExit:()=>inspectResult(undefined)},
+    approachViewMode&&{id:'approach-view',detail:`${approachViewMode==='along'?'Along':'Oblique'}${selectedApproach?` · ${selectedApproach.label??'selected corridor'}`:''}`,
+      onExit:restoreApproachView},
+    sourceSectionActive&&{id:'source-section',
+      detail:`${props.generatedSignal?'Generated image':`Source ${signalName}`} · ${TITLES[activePlane]} · ${'XYZ'[sectionAxis]} ${currentCursor[sectionAxis].toFixed(1)} mm`,
+      onExit:exitSourceSection},
+    depthSlabBox&&!corridorCrop&&{id:'vessel-slab',detail:`${TITLES[activePlane]} · ${depthSlabThickness} mm · linked slices stay full`,
+      exitLabel:'Exit vessel slab in 3D',onExit:()=>setDepthSlab(null)},
+    cropShown&&(props.vesselTrace?.isolationRadiusMm
+      ?{id:'branch-crop',detail:'3D only · linked slices retain full anatomy'}
+      :corridorCrop?{id:'corridor-crop',detail:'3D only',onExit:()=>setCropApproach(false)}
+      :{id:'box-crop',detail:'3D only',onExit:()=>changeSettings({...settings,clipBox:undefined})}),
+    ctaCutShown&&{id:'cta-cut',detail:`Axial · Z ${settings.clipping!.value.toFixed(1)} mm · linked slices stay full`,
+      exitLabel:'Show full CTA head',onExit:showFullCtaHead},
+    inspectLesionOverlap&&{id:'lesion-overlap',detail:'projected with the displayed scan alignment',onExit:()=>setOverlapInspection(false)},
+    inspected&&{id:'tool-preview',exitLabel:'Clear tool',onExit:clearInspection},
+    ...(props.modes??[]),
+  ]);
+  const anatomyModes=viewerModes.filter(mode=>mode.id!=='expanded-pane');
+  const paneModes=viewerModes.filter(mode=>mode.id==='expanded-pane');
   return (
     <div
       className={`rl-viewer rl-layout-${layout}${props.engineInspection?' engine-operated-view':''}${expanded ? " has-expanded" : ""}`}
@@ -840,8 +873,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
         role="toolbar"
         aria-label="Imaging layout and 3D controls"
       >
-        {resultParts&&<div className="result-heading"><strong>3D result</strong>
-          <button onClick={()=>inspectResult(undefined)}>Return to operative field</button></div>}
+        {resultParts&&<div className="result-heading"><strong>3D result</strong></div>}
         <div className="rl-primary-tools">
           {fieldPresentable&&<button className="field-expand"
             aria-label={fieldPresentation?'Restore operative workspace':'Expand operative field'}
@@ -850,7 +882,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
             {fieldPresentation?<Minimize2 size={16}/>:<Maximize2 size={16}/>}
           </button>}
           <div className="rl-viewer-title">
-            <strong>3D View</strong>
+            <strong>3D view</strong>
             <span title={settings.operativeView==='surgeon' ? 'Operative field · illustrative material' : `${signalName} · ${volumeDisplayed ? 'source volume + structures' : 'segmentation surfaces'}`}>
               {settings.operativeView==='surgeon' ? 'Operative field' : signalName}
             </span>
@@ -914,7 +946,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
                 Show 3D bone overlay
               </label>}
             <label>Preset<select aria-label="Volume rendering preset" value={settings.volumeRendering?.preset??'auto'} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,preset:e.target.value as VolumePreset}})}><option value="auto">Automatic · {signalName}</option><option value="ct-bone" disabled={!isCtModality(signalName)}>CT bone</option><option value="ct-tissue" disabled={!isCtModality(signalName)}>CT tissue</option><option value="ct-angiography" disabled={!isCtModality(signalName)}>CT angiography · contrast scan</option><option value="mri">{/MRA|TOF|angiogra/i.test(signalName)?'Bright-blood MR signal':'MRI tissue'}</option></select></label>
-            <label>Scan density<input aria-label="Scan volume density" type="range" min="0" max="2" step=".01" value={scanVolume.density}
+            <label>Scan density<input aria-label="Scan volume density" data-viewport-hud="Scan density" type="range" min="0" max="2" step=".01" value={scanVolume.density}
               onChange={e=>{
                 const volumeRendering={...settings.volumeRendering,density:+e.target.value};
                 delete volumeRendering.balanceTofContext;
@@ -971,7 +1003,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
               changeSettings({...settings,clipping:{...clipping,axis,value:newClippingPosition(axis,displayBounds,currentCursor[i])}});
             }}><option value="z">Axial</option><option value="y">Coronal</option><option value="x">Sagittal</option></select></label>
             {settings.clipping&&!clippingPositionInBounds(settings.clipping.axis,settings.clipping.value,displayBounds)&&<p role="status">Cutaway is outside this field. Choose a new plane or turn Cutaway on to reset its position.</p>}
-            <input aria-label="Cutaway position" type="range" min={displayBounds[0][clipAxis]} max={displayBounds[1][clipAxis]} step=".1" value={clipping.value} disabled={!clipping.enabled||sourceSectionActive} title={sourceSectionActive?'Section follows the linked cursor':'Cutaway position'} onChange={e=>changeSettings({...settings,clipping:{...clipping,value:+e.target.value}})}/>
+            <input aria-label="Cutaway position" data-viewport-hud={`${TITLES[({x:'sagittal',y:'coronal',z:'axial'} as const)[clipping.axis]]} cutaway`} aria-valuetext={`${clipping.axis.toUpperCase()} ${clipping.value.toFixed(1)} mm`} type="range" min={displayBounds[0][clipAxis]} max={displayBounds[1][clipAxis]} step=".1" value={clipping.value} disabled={!clipping.enabled||sourceSectionActive} title={sourceSectionActive?'Section follows the linked cursor':'Cutaway position'} onChange={e=>changeSettings({...settings,clipping:{...clipping,value:+e.target.value}})}/>
             <button disabled={!clipping.enabled} onClick={()=>changeSettings({...settings,clipping:{...clipping,flipped:!clipping.flipped}})}>Flip side</button>
             <label><input type="checkbox" checked={showPlane} disabled={props.segmentationOnly} onChange={e=>setShowPlane(e.target.checked)}/>Source plane in 3D</label><select aria-label="Source plane orientation" value={activePlane} disabled={sourceSectionActive||props.segmentationOnly} onChange={e=>setActivePlane(e.target.value as SlicePlane)}>{PLANES.map(p=><option key={p} value={p}>{TITLES[p]}</option>)}</select>
             <details><summary>Oblique & box cuts</summary><label>Angle · degrees<input aria-label="Oblique angle" type="number" min="-180" max="180" value={obliqueAngle} onChange={e=>setObliqueAngle(+e.target.value)}/></label><button onClick={()=>{const normal:Point3=[Math.sin(obliqueAngle*Math.PI/180),0,Math.cos(obliqueAngle*Math.PI/180)];changeSettings({...settings,obliqueClip:{enabled:true,normal,offset:-normal.reduce((sum,n,i)=>sum+n*currentCursor[i],0)}})}}>Cut at cursor</button><button onClick={()=>changeSettings({...settings,clipBox:{enabled:true,min:currentCursor.map(n=>n-50) as Point3,max:currentCursor.map(n=>n+50) as Point3}})}>100 mm box at cursor</button><button onClick={()=>changeSettings({...settings,clipBox:undefined,obliqueClip:undefined})}>Clear extra cuts</button></details>
@@ -981,7 +1013,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
             <p className="rl-info-source"><strong>{signalName}</strong> · {settings.operativeView==='surgeon' ? (settings.microscope?.tissueStyle==='labels'?'operative field · source labels':'operative field · illustrative material') : volumeDisplayed?'source volume + structures':'segmentation surfaces'}</p>
             <div className="rl-viewer-statusbar" onPointerDown={event=>event.stopPropagation()}>
               <span><i className="rl-viewer-linked"/>Linked views <b>RAS</b> {currentCursor.map(v=>v.toFixed(1)).join(' / ')} mm</span>
-              <label>Contrast<input type="range" min="0.4" max="2" step="0.05" value={contrast} onChange={event=>setContrast(Number(event.target.value))} aria-label={`Source ${signalName} window width`}/></label>
+              <label>Contrast<input type="range" min="0.4" max="2" step="0.05" value={contrast} onChange={event=>setContrast(Number(event.target.value))} aria-label={`Source ${signalName} window width`} data-viewport-hud="Window width" aria-valuetext={`${Math.round(contrast*100)}% of source default`}/></label>
               <span>Neurological convention</span>
             </div>
             {geometry&&<p>Source voxel · {transformPoint(geometry.inverse,currentCursor).map(v=>v.toFixed(1)).join(' / ')}</p>}
@@ -1065,6 +1097,12 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
               <strong>Native operative state · {Number(surgicalView.metrics.elapsedSeconds).toFixed(1)} s</strong>
               {operativeMeasurements}
             </div>)}
+          <ViewportSliderHud scope={anatomy}/>
+          <div className="rl-viewport-start">
+          <ModeChipStack modes={anatomyModes} actions={{'vessel-slab':slabContextAllowed&&
+            <button className="rl-mode-chip-action" aria-label="Faint vessel context outside slab" aria-pressed={slabContextActive}
+              title="Show more distant vessels faintly behind the focused slab"
+              onClick={()=>setDepthSlab(current=>current&&{...current,context:!current.context})}>Faint context</button>}}/>
           <div className="rl-viewer-annotations">
             {exportStatus&&<span className="rl-viewer-preparing" role="status" aria-label="3D PNG export status">{exportStatus}</span>}
             {settings.operativeView==='surgeon'&&<span>{settings.microscope?.tissueStyle==='labels'?'Operative field · source labels':'Operative field · illustrative material'}</span>}
@@ -1099,7 +1137,6 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
             {inspected && (
               <span className="rl-viewer-route-key" style={{ color: INSPECTION_TOOL_COLOR }}>
                 ● Inspection tool · unexecuted preview · no tissue removed
-                <button className="rl-viewer-inspection-clear" onClick={clearInspection}>Clear tool</button>
               </span>
             )}
             {inspected?.unknowns.includes("tool_geometry_outside_image_unassessed") && (
@@ -1148,36 +1185,12 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
               </span>
             )}
           </div>
-          {sourceSectionActive&&<div className="rl-source-section-readout" role="status">
-            <span>{props.generatedSignal?'Generated image section':`Source ${signalName} section`} · {TITLES[activePlane]} · {'XYZ'[PLANE_AXES[activePlane][2]]} {currentCursor[PLANE_AXES[activePlane][2]].toFixed(1)} mm</span>
-            <button aria-label="Exit source section" onClick={exitSourceSection}>Exit section</button>
-          </div>}
-          {depthSlabBox&&!corridorCrop&&<div className="rl-source-section-readout" role="status">
-            <span>{TITLES[activePlane]} {depthSlabThickness} mm slab · linked slices stay full</span>
-            {slabContextAllowed&&<button aria-label="Faint vessel context outside slab" aria-pressed={slabContextActive}
-              title="Show more distant vessels faintly behind the focused slab"
-              onClick={()=>setDepthSlab(current=>current&&{...current,context:!current.context})}>Faint context</button>}
-            <button aria-label="Exit vessel slab in 3D" onClick={()=>setDepthSlab(null)}>Exit slab</button>
-          </div>}
+          </div>
           {ctaCoverage&&!surgicalView&&<div className="rl-cta-coverage" role="group" aria-label="CTA arterial layers">
             <button aria-pressed={ctaCoverage.mode==='combined'} onClick={()=>ctaCoverage.onChange(true)}>Combined arteries</button>
             <button aria-pressed={ctaCoverage.mode==='focused'} onClick={()=>ctaCoverage.onChange(false)}>Focused branches</button>
           </div>}
-          {ctaCutaway&&!surgicalView&&!sourceSectionActive&&!depthSlabBox&&!corridorCrop&&!settings.clipBox?.enabled&&
-            !settings.obliqueClip?.enabled&&!props.vesselTrace?.isolationRadiusMm&&<div className="rl-source-section-readout" role="status">
-            <span>Axial CTA cut · Z {settings.clipping!.value.toFixed(1)} mm · linked slices stay full</span>
-            <button aria-label="Show full CTA head" onClick={()=>{
-              engine.current?.fitCamera('anatomy');
-              changeSettings({...settings,clipping:undefined,
-                camera:engine.current?.getCameraState()??null});
-            }}>Full head</button>
-          </div>}
-          {!sourceSectionActive&&(!depthSlabBox||corridorCrop)&&!surgicalView&&(corridorCrop||settings.clipBox?.enabled||props.vesselTrace?.isolationRadiusMm)&&
-            <div className="rl-source-section-readout" role="status">
-              <span>{props.vesselTrace?.isolationRadiusMm?'3D branch crop · linked slices retain full anatomy':corridorCrop?'3D corridor crop':'3D box crop'}</span>
-              {corridorCrop?<button onClick={()=>setCropApproach(false)}>Exit corridor crop</button>:
-                !props.vesselTrace?.isolationRadiusMm&&settings.clipBox?.enabled&&<button onClick={()=>changeSettings({...settings,clipBox:undefined})}>Clear box</button>}
-            </div>}
+          <ViewportScaleBar canvas={canvas} pane={anatomy} fieldOfView={()=>engine.current?.verticalFovDegrees}/>
           <div className="rl-body-guide" hidden={fieldPresentation||settings.showOrientationGuide===false}>
             <div ref={orientationGuide} className="rl-body-guide-image" role="img" aria-label="Body orientation guide. Mint head follows the brain. Anatomical reference.">
               <span data-guide-side="right" aria-hidden="true">R</span>
@@ -1275,6 +1288,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
               </button>
               <button className="rl-viewer-expand rl-viewer-details" aria-label={`${TITLES[plane]} view information`} title="View information" aria-expanded={controlPanel==='info'&&activePlane===plane} aria-controls={controlsId} onClick={event=>{setActivePlane(plane);toggleControls('info',event.currentTarget,activePlane!==plane)}}><Ellipsis size={16}/></button>
             </div>
+            {expanded===plane&&<ModeChipStack className="rl-pane-mode-chips" modes={paneModes}/>}
             <div
               ref={refs[plane]}
               className="rl-viewer-slice-image"
@@ -1343,6 +1357,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
           </div>
         );
       })}
+      <ModeEscape modes={viewerModes} scope={container}/>
       {(error || modelDisplayError || replayError || passiveError || rehearsalError || proposalError || priorError || diagnosticError || inspectionError || goalSelection.error || fusionError) && (
         <div className="rl-viewer-error" role="alert">
           <strong>Imaging view needs attention</strong>

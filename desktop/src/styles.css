@@ -1887,35 +1887,6 @@ h3 {
   color: var(--text-muted);
   margin-top: 5px;
 }
-.modeled-replay-notice {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 9px 11px;
-  margin-bottom: 10px;
-  border: 1px solid #456f62;
-  background: #203a32;
-  border-radius: var(--radius-card);
-  font-size: var(--text-meta);
-  color: #bad7ca;
-  flex: none;
-}
-.modeled-replay-notice > span {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.modeled-replay-notice .layer-swatch {
-  background: #b8f1d1;
-  height: 11px;
-  width: 11px;
-}
-.modeled-replay-notice .text-button {
-  padding: 0;
-  color: #a7c8b5;
-  white-space: nowrap;
-}
 @media (max-width: 1300px) {
   .view-presets button {
     font-size: var(--text-meta);
@@ -2196,40 +2167,6 @@ h3 {
   line-height: 1.45;
   color: #b2a8c4;
 }
-.proposal-view-notice {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex: none;
-  padding: 9px 16px;
-  border-top: 1px solid #51435f;
-  border-bottom: 1px solid #51435f;
-  background: #282130;
-}
-.proposal-view-notice > div {
-  display: grid;
-  gap: 3px;
-  flex: 1;
-}
-.proposal-view-notice strong {
-  font-size: var(--text-meta);
-  color: #ded4ef;
-}
-.proposal-view-notice span {
-  font-size: var(--text-meta);
-  color: #b8abc8;
-}
-.proposal-view-notice .text-button {
-  font-size: var(--text-meta);
-  color: #d0c2e5;
-}
-.proposal-contour-key {
-  width: 17px;
-  height: 17px;
-  border: 2px solid #c6a8e5;
-  border-radius: 5px;
-  flex: none;
-}
 .proposal-mode-hint {
   margin: 0 16px 12px;
   font-size: var(--text-meta);
@@ -2335,32 +2272,6 @@ h3 {
 .prior-use-note strong {
   color: #b8c5d9;
   font-weight: 500;
-}
-.prior-view-notice {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 9px 16px;
-  border-block: 1px solid #49566e;
-  background: #202b3a;
-  flex: none;
-}
-.prior-view-notice > div {
-  flex: 1;
-  display: grid;
-  gap: 3px;
-}
-.prior-view-notice strong {
-  font-size: var(--text-meta);
-  color: #d0dcec;
-}
-.prior-view-notice > div span {
-  font-size: var(--text-meta);
-  color: #9fb1c9;
-}
-.prior-view-notice .text-button {
-  font-size: var(--text-meta);
-  color: #c4d2e7;
 }
 
 /* Generated episode workflow inherits the existing workspace controls. */
