@@ -86,15 +86,16 @@ drives the hidden desktop harness and `resectionlab.vascular_parity`.
 5. **Python suite baseline.** At `9b079d28` the full suite has 571 failures
    and 515 errors from data-policy gates and absent local data, none in vessel
    code. The saved list is the reference: phases must add no new failure.
-6. **CTA-A blind gate failed twice.** The best CTA-A set scores 4 on
-   crispness and depth and 3 on clutter, connectivity, realism and usefulness.
-   The reviewers' main reason is a vessel tree much sparser than the reference
-   clip. Three things bound that: the scan has no neck; the calibre rule hides
-   vessels under 1 mm away from a tumour or corridor; and small-vessel signal
-   that does not join the named tree stays in review. Shafrir decides whether
-   to relax the calibre rule or the review rule for display, to try a richer
-   source (a head-and-neck CTA), or to accept the result. The path-traced mode
-   stays behind its setting meanwhile.
+6. **CTA-A blind gate not met after three attempts.** After the second
+   failure Shafrir chose to show finer vessels (2026-11-26); see Phase 6
+   results. The third review scores the richer tree 3, 4, 3, 3, 3, 4
+   (crispness, depth, clutter, connectivity, realism, usefulness) and ranks it
+   above the Phase 5 set (4, 4, 4, 3, 3, 3 from the same reviewer): usefulness
+   rose, crispness and clutter fell because the thin branches are lumpy and
+   beaded. The reviewer's main remaining gap is vessel surface quality.
+   Shafrir decides whether to work on how thin branches are drawn (a smooth
+   tube model or tag for 1 to 2 voxel vessels), to try a head-and-neck CTA, or
+   to accept the result. The path-traced mode stays behind its setting.
 7. **Path-traced vessels do not follow a tool press.** In rehearsal the
    path-traced mode draws vessels from a tag volume sent once per case, so the
    wall mesh dents under a tool only in standard mode. Rehearsal should stay in
@@ -105,7 +106,14 @@ drives the hidden desktop harness and `resectionlab.vascular_parity`.
    reviewers scored the path-traced mode higher on every criterion on both
    hero cases, and it meets the frame budget, but it fails decision 7 in
    rehearsal.
-9. **Earlier uncommitted work is stashed.** Twenty-three edited files from the
+9. **Decided by Shafrir on 2026-11-26.** Every vessel is drawn in one
+   colour; arteries and veins need not be told apart. Detached vessel signal
+   should join the tree where that is realistic. Two more EDEN cases, chosen
+   for the cleanest trees, go through the pipeline instead of the whole
+   cohort (about two hours of inference each). These replace the Phase 3
+   colour rule and extend the Phase 2 rule that vesselFM is used only where
+   it already touches the named tree.
+10. **Earlier uncommitted work is stashed.** Twenty-three edited files from the
    previous session (CTA receiver shadows, vessel-rod caching, walkthrough
    documentation) are in `stash@{0}` on the old branch and are not part of
    this branch.
@@ -120,6 +128,7 @@ drives the hidden desktop harness and `resectionlab.vascular_parity`.
 | 3 Cleanup | Root-reachable components by default, the rest behind a review toggle; signal-supported bridging; caliber LOD; arteries red, veins blue | Zero floating components by default; no named major vessel lost | gates met on the drawn meshes 2026-11-26; see results |
 | 4 Sim geometry | Centerline and radius implicit tubes shared by drawing, collision, rods and tags | Deviation at most 0.5 voxel; no self-intersection; tools displace vessels | gates met on TopCoW 2026-11-26 behind the tube geometry option; see results |
 | 5 Integration | Volume, tubes, tools and clipping in the packaged build; films and pull request | All earlier gates; blind scores at least 4 | run 2026-11-26: frame budget met in the packaged build; TOF-A blind gate met; CTA-A blind gate not met after two attempts; volume-lit vessels do not follow a tool press; see results |
+| 6 Finer vessels (added after decision 6) | Thin branches followed in the CTA signal; detached model vessels joined along signal; one vessel colour; two more EDEN cases | The Phase 5 blind gates; zero floating components | run 2026-11-26: zero floating pieces on five cases; TOF-A blind gate holds; CTA-A blind gate not met on the third attempt; frame timing not re-measured on an idle machine; see results |
 
 A phase that fails its gate twice keeps its best version behind a toggle and
 goes to Shafrir. Gates are not lowered.
@@ -507,6 +516,104 @@ count the colour of an unclassified CTA layer. On this study the
 skull-supported scope shows no vessels, for the supplied annotations too,
 because the study has no skull coverage estimate.
 
+## Phase 6 results: finer vessels
+
+Evidence: `qc/medivis-parity-20261125/phase6-finer-vessels/README.md`.
+
+**What was hiding vessels.** Not the calibre rule: on the two CTAs it hid 0
+and 1 voxels. The named models stop where a vessel narrows to one or two
+voxels, and the scored vesselFM addition (0.7 and 0.9, components touching the
+tree only) had been chosen against annotations of named vessels, so it left
+out unnamed branches. On CT the vesselFM score outside the tree is also about
+one third bone.
+
+**What changed.**
+
+- *Fine branches on CT.* `resectionlab.vessel_fine_growth` follows thin bright
+  tubes outward from the tree in the acquired CTA and returns them as a
+  separate display-only layer ("Image-derived fine branches"). Rule, frozen on
+  CTA-A and applied unchanged to CTA-B, in
+  [acquired vascular geometry](native-vascular-geometry.md). Never computed
+  for MR.
+- *Detached model vessels.* The drawn vesselFM layer now holds every component
+  at the display thresholds, connected or not, so the existing
+  signal-supported bridging (gaps of at most 3 mm) can join detached pieces;
+  the rest stay in the amber review overlay. On CT the thresholds are 0.5 with
+  voxels at or above 700 HU left out. On MR 0.5 was tried and rejected: on
+  TOF-A it joined a noisy mass at the face and skull base to the tree, so MR
+  keeps 0.7 and 0.9. Longer gaps were measured on TOF-A (at 0.5, before the
+  wall rule): 118 pieces joined at 3 mm, 149 at 6 mm and 169 at 10 mm, for 2
+  and 3 percent more shown voxels and 1.6 and 4.6 times the preparation time,
+  so the 3 mm rule was kept.
+- *Vessel detail.* A **Vessel detail** control: "With fine branches" (default
+  on CT) or "Major vessels only" (default on MR; the Phase 3 calibre rule, and
+  the fine-branch layer hidden whole).
+- *One colour.* All vessels are one red in both render paths.
+- *Reopening.* The connected display is stored beside the study
+  (`display-cache/`), so it is prepared once: about 25 to 30 s for the three
+  CT layers on an idle machine, then read back.
+- *EDEN.* `scripts/topbrain_native.py --eden PTNT_#### run PTNT_####-mr`
+  registers a restricted case from its prepared study and runs the three
+  teams, the frozen ensemble and the display candidates. PTNT_4503 and
+  PTNT_7086 were chosen from the cohort's 2026-11-23 captures as the cleanest
+  trees (distinct tubes, few stray pieces, no posterior slab).
+
+| | CTA-A | CTA-B | TOF-A | TOF-B | PTNT_4503 |
+| --- | --- | --- | --- | --- | --- |
+| Voxels in the default view, Phase 3 → Phase 6 | 84,082 → 101,864 | 73,575 → 83,190 | 377,752 → 379,545 | 353,797 → 354,172 | 434,529 |
+| Fine branches grown / shown | 28,598 / 20,662 | 12,272 / 6,406 | not computed (MR) | not computed (MR) | not computed (MR) |
+| Detached model pieces joined along signal | 4 | 2 | 14 | 5 | 10 |
+| Detached model pieces left in review | 457 | 480 | 806 | 856 | 483 |
+| Floating mesh pieces in the default view | 0 of 23 | 0 of 11 | 0 of 5 | 0 of 3 | 0 of 4 |
+| Major named vessel lost | none | none | none listed | none listed | none listed |
+| Loops / cavities of the shown voxels, Phase 3 → Phase 6 | 27 / 1 → 200 / 22 | 33 / 1 → 107 / 8 | 150 / 6 unchanged | 199 / 2 unchanged | 128 / 2 |
+| Dice / clDice against the named-vessel annotation, Phase 3 → Phase 6 | 0.875 / 0.902 → 0.786 / 0.585 | 0.888 / 0.935 → 0.829 / 0.795 | no annotation | no annotation | no annotation |
+| Frame interval p95 / settle, volume lighting, **while model inference ran on the same machine** | 10.7 ms / 1.62 s | 10.1 ms / 1.93 s | 10.7 ms / 1.41 s | 10.1 ms / 1.42 s | 10.5 ms / 1.68 s |
+
+Reading the table. On CT the default view holds a fifth more vessel on the
+development case and an eighth more on the held-out case. On TOF almost
+nothing changes: the trees were already dense, and nearly every detached
+model piece is too small or too far from the tree to have signal support, so
+"joining fragments" adds 5 to 14 pieces per case. The fine branches cost
+topology and agreement with the annotation: thin branches that touch form
+loops, and every unnamed branch counts as an error against an annotation of
+named vessels only. The Phase 2 gate is measured on the ensemble alone and is
+unchanged. The settle times above are not gate measurements: they were taken
+under load, and the Phase 1 gate (1.5 s on CTA-A) has to be re-measured on an
+idle machine with the richer tree.
+
+**Blind review, third attempt.** Same protocol; CTA-A sets were Phase 0, the
+Phase 5 final set and the Phase 6 set, the last two in the same eight
+reference framings; TOF-A sets were Phase 0, Phase 5 and Phase 6.
+
+| | Crispness | Depth | Clutter | Connectivity | Realism | Usefulness |
+| --- | --- | --- | --- | --- | --- | --- |
+| CTA-A Phase 6 | 3 | 4 | 3 | 3 | 3 | 4 |
+| CTA-A Phase 5, same reviewer | 4 | 4 | 4 | 3 | 3 | 3 |
+| TOF-A Phase 6 | 4 | 3 | 4 | 4 | 3 | 4 |
+| TOF-A Phase 5, same reviewer | 4 | 3 | 4 | 4 | 3 | 4 |
+
+The reviewer ranked the Phase 6 CTA-A set first ("wins on vessel coverage")
+and named its gap to the reference as vessel surface quality: lumpy, beaded
+thin segments and scattered small stubs. The CTA-A gate is not met. The TOF-A
+gate (clutter and connectivity at least 4) holds; the reviewer could not tell
+the Phase 5 and Phase 6 TOF-A sets apart.
+
+**Coordinator's reading of the captures** (`visual-assessments.md`). With an
+opaque skull and a cut, CTA-A now shows what the clip shows: a dense connected
+red tree over ivory bone, cortical branches and veins up to the sagittal
+sinus. Still short of it: thin branches are ragged, the uncut see-through
+anterior view is a tangle at the midline, and the opaque uncut views show no
+vessel at all because this scan has no neck. CTA-B gains less than CTA-A.
+
+**Not done or not verified.** Frame timing on an idle machine and in the
+packaged build (the build in `desktop/release/` predates this phase).
+Standard-mode captures of Phase 6. The rehearsal tube model and the vessel
+rods still come from the named tree; fine branches are display only.
+PTNT_7086's first run stopped on non-finite network output while a hidden
+capture shared the GPU and was restarted; its capture is added when it
+finishes.
+
 ## Handoff, 2026-11-26
 
 State of the gates:
@@ -519,18 +626,22 @@ State of the gates:
 | 3 | Zero floating components by default; no named major vessel lost | met on the drawn meshes of all four cases |
 | 4 | Deviation at most 0.5 voxel; no self-intersection; tools displace vessels | met on TopCoW behind the tube geometry option, in standard mode |
 | 5 | Phase 1 frame budget with volume, tubes, tools and clipping in the packaged build | met |
-| 5 | Blind at least 4 on all criteria for CTA-A | not met after two attempts (4, 4, 3, 3, 3, 3) |
-| 5 | Blind at least 4 on clutter and connectivity for TOF-A | met on the second attempt (4, 4) |
+| 5 | Blind at least 4 on all criteria for CTA-A | not met after three attempts (4, 4, 3, 3, 3, 3; then 3, 4, 3, 3, 3, 4 with the finer vessels of Phase 6) |
+| 5 | Blind at least 4 on clutter and connectivity for TOF-A | met on the second and third attempts (4, 4) |
 | 5 | All earlier gates hold | not in the path-traced mode during rehearsal: vessels do not follow a tool press |
 
 What ships by default: the connected, rooted vessel tree from the model
-ensemble in standard mode, arteries red and veins blue, with the review
-toggle. Behind settings: the path-traced mode (Volume lighting) with its Bone
-choice, and the tube geometry option for rehearsal cases.
+ensemble in standard mode, in one vessel colour, with the review toggle; on CT
+with the image-derived fine branches (Vessel detail). Behind settings: the
+path-traced mode (Volume lighting) with its Bone choice, and the tube geometry
+option for rehearsal cases.
 
 Not done: the pre-registered TopCoW-001 confirmation of the Phase 2 ensemble;
 EDEN cases in the simulator (not admitted for simulation); a tag volume that
 follows cuts and displacement; the surgeon view in the path-traced mode.
 
-Open decisions 1 to 8 above need Shafrir. Nothing was merged.
+Open decisions 1 to 8 above need Shafrir. This branch also carries
+`shaf/interactive-operative-practice-20261121` and
+`shaf/rehearsal-performance-20261121`, merged in at Shafrir's request; the
+pull request to `main` itself was not merged.
 

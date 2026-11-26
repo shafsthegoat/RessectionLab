@@ -6,7 +6,7 @@ export interface TissueDisplaySupport {
   sourceSha256:string; rawDataSha256:string; sampledDataSha256:string;
   sourceVoxels?:number; retainedVoxels?:number; hiddenVoxels?:number;
 }
-export interface VesselDisplayFilter {scope:string;hiddenVoxels?:number;reason?:string;excludedVolumeMm3?:number;excludedFragments?:number;outsideVoxels?:number;boneConflictVoxels?:number;uncertainVoxels?:number}
+export interface VesselDisplayFilter {scope:string;detail?:'major'|'fine';hiddenVoxels?:number;reason?:string;excludedVolumeMm3?:number;excludedFragments?:number;outsideVoxels?:number;boneConflictVoxels?:number;uncertainVoxels?:number}
 export interface PatientContextSource {
   seriesId:string; modality:string; sourceSha256:string; alignment:string; reason?:string;
   inPatientBounds:boolean; voxelToPatientRasMm?:Affine; nativeShape?:Shape3;

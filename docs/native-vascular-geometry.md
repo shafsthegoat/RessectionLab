@@ -133,6 +133,14 @@ that the shown display has no component without a root.
   grid; without a registration the receipt says so (`lod.tumourReason`). Named
   vessels and roots are exempt. Only thin terminal subtrees are hidden: a thin
   piece that joins two kept parts stays, so the shown tree never disconnects.
+- **Vessel detail.** The rule above is the **Major vessels only** detail
+  (`vesselDetail: 'major'`). **With fine branches** (`'fine'`) shows 0.5 mm and
+  wider everywhere and also shows layers that hold only image-derived fine
+  branches; at the major detail such a layer is hidden whole and stays under
+  review (`detailHidden` in its receipt). Without a saved choice the
+  acquisition decides: fine on CT, major on MR. On the hero CTAs the calibre
+  rule itself hides almost nothing (0 to 34 voxels at about 0.5 mm spacing),
+  so the detail mainly switches the fine-branch layer.
 - **Colour.** Every vessel is drawn in one red, in the standard and Volume
   lighting paths (owner's decision, 2026-11-26). Arteries and veins are still
   told apart in the receipt, and when a layer holds both classes its
@@ -199,12 +207,32 @@ this fallback.
 `scripts/capture_vascular_parity.py wire --ensemble <folder>` adds a Phase 2
 ensemble to each hero study that has one: a `vessels` layer with the named
 TopBrain labels (`named_labels: {data, scheme}`, the CT map only on CT studies
-and the MR map only on MR) and the soft vessel probability, plus the connected
-vesselFM score as a separate unnamed layer whose `rooted_parent` is that tree.
-The addition is shown only where it reaches the tree's shown display, under the
-calibre rule: directly, or across a signal-supported bridge of at most 3 mm.
-It never joins the named labels; each of its pieces takes the class (and
-colour) of the tree part it joins. A face-connected piece of the addition is
+and the MR map only on MR) and the soft vessel probability, plus the vesselFM
+score as a separate unnamed layer whose `rooted_parent` is that tree. When the
+ensemble folder holds the display candidates
+(`scripts/topbrain_native.py display-additions <case>`), that layer is every
+vesselFM component outside the tree, connected to it or not, instead of the
+scored connected addition, which keeps only components that touch the tree.
+On CT the candidates are voxels at 0.5 or above and below 700 HU. On MR they
+keep the scored thresholds (0.7, with a voxel at 0.9 in each component): on
+the development TOF case 0.5 joins a noisy mass at the face and skull base to
+the tree. On CT a third layer, the image-derived fine
+branches, has the candidates as its `rooted_parent` (the named tree when there
+are no candidates): thin bright tubes followed outward from the tree and the
+candidates, detached ones included, in the acquired CTA
+(`resectionlab.vessel_fine_growth`: scale-normalised tube response of 6 HU to
+continue and 20 HU to keep a piece, 60 to 450 HU, inside an intracranial
+envelope estimated from the CT, 1.5 mm clear of bone and 3 mm clear of air,
+without thick enhancing tissue, pieces of at least 4 mm3 that touch the tree;
+frozen on TopCoW-014). Its score orders voxels by tube response and is not a
+probability. It is never computed for MR.
+An addition is shown only where it reaches the shown display of the layers it
+extends, down to the named tree, under the calibre rule: directly, or across a
+signal-supported bridge of at most 3 mm. Detached candidates therefore join the
+tree only along acquired signal, and the rest stay in review. A chain of more
+than three layers, a loop, or a missing tree shows nothing.
+An addition never joins the named labels; each of its pieces takes the class
+of the tree part it joins. A face-connected piece of the addition is
 shown only when at least one of its voxels lies outside the tree dilated by
 two voxels (26-connected), that is, when it extends the tree by more than its
 wall. Pieces that only hug the tree wall go to review (amber overlay) and are

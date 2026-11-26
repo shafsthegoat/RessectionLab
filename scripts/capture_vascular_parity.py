@@ -70,6 +70,14 @@ HERO = {
         'series': 'tof', 'vessels': ['vesselfm-cleanup'], 'reference': None, 'cohort_view': True,
         'anchor': [1.3713, 6.0276, -22.1647], 'phase2': 'PTNT_9937-mr',
     },
+    # Two further EDEN cases, chosen on 2026-11-26 from the cohort's earlier captures as the cleanest trees.
+    # Anchors: the internal carotid centroid of the named labels, shifted by (-0.2, -3.4, -3.6) mm.
+    'TOF-C': {
+        'title': 'EDEN PTNT_4503 TOF', 'held_out': True,
+        'manifest': 'prepared/Eden 2020 ResectionLab Projects (restricted)/PTNT_4503/vascular-review.anatomy.json',
+        'series': 'tof', 'vessels': ['vesselfm-cleanup'], 'reference': None, 'cohort_view': True,
+        'anchor': [3.14, 23.77, -12.94], 'phase2': 'PTNT_4503-mr',
+    },
 }
 # View direction is from the camera toward the anchor, in patient RAS.
 PRESETS = {
@@ -117,7 +125,10 @@ def vessel_mask(collection, case):
     return mask
 
 
-ENSEMBLE_FILES = ('named_labels', 'vessel_probability', 'vesselfm_connected_probability')
+# The last two are display-only candidates (topbrain_native.py display-additions): every vesselFM voxel at 0.5
+# outside the tree, and on CT the thin branches followed outward in the acquired image.
+ENSEMBLE_FILES = ('named_labels', 'vessel_probability', 'vesselfm_connected_probability',
+                  'vesselfm_candidate_probability', 'fine_branch_score')
 
 
 def _ensemble_image(path, series):
@@ -127,7 +138,7 @@ def _ensemble_image(path, series):
     return np.asarray(image.dataobj)
 
 
-WIRED_MODELS = {'topbrain-2025-ensemble', 'vesselfm-connected-addition'}
+WIRED_MODELS = {'topbrain-2025-ensemble', 'vesselfm-connected-addition', 'vesselfm-candidate-addition', 'signal-grown-fine-branches'}
 VESSEL_KINDS = {'vessel', 'vessels', 'artery', 'vein', 'sinus'}
 
 
@@ -222,7 +233,7 @@ def wire_ensemble(collection, series_id, folder, *, manifest=None, source=None):
         raise ValueError(f'{folder} lacks named labels or the vessel probability')
     hashes = {name: sha256_file(path) for name, path in files.items()}
     binding = digest({'ensemble': meta, 'files': hashes})[:12]
-    ids = [f'ensemble-{binding}', f'ensemble-{binding}-vesselfm']
+    ids = [f'ensemble-{binding}', f'ensemble-{binding}-vesselfm', f'ensemble-{binding}-fine']
     source = source or _data_root_relative(folder)
     before_sha, before_snapshot = sha256_file(manifest), collection.identity()
     display = collection.document.setdefault('display', {})
@@ -260,16 +271,40 @@ def wire_ensemble(collection, series_id, folder, *, manifest=None, source=None):
                                        provenance=provenance)
             row['named_labels'] = {'data': collection.put_array(named), 'scheme': scheme}
             added.append(ids[0])
-            if 'vesselfm_connected_probability' in files:
-                score = np.clip(_ensemble_image(files['vesselfm_connected_probability'], series).astype(np.float32), 0, 1)
+            # The candidates (connected or not) replace the scored connected addition as the drawn layer when present.
+            candidate = 'vesselfm_candidate_probability' in files
+            extra_file = files.get('vesselfm_candidate_probability') or files.get('vesselfm_connected_probability')
+            parent = ids[0]
+            if extra_file:
+                score = np.clip(_ensemble_image(extra_file, series).astype(np.float32), 0, 1)
+                score[named > 0] = 0
                 if score.any():
                     extra = collection.add_layer(
                         (score > 0).astype(np.uint8), series['affine'], layer_id=ids[1], source_series=series_id,
                         kind='vessels', role='context', color='#aa352b',
-                        label='Model vessels · connected vesselFM addition (unnamed)', probability=score,
-                        provenance={**provenance, 'model': 'vesselfm-connected-addition', 'addition': meta.get('addition')})
-                    extra['rooted_parent'] = ids[0]
+                        label=('Model vessels · vesselFM candidates (unnamed)' if candidate
+                               else 'Model vessels · connected vesselFM addition (unnamed)'), probability=score,
+                        provenance={**provenance, 'model': 'vesselfm-candidate-addition' if candidate else 'vesselfm-connected-addition',
+                                    'addition': {'connected': False, 'rule': 'topbrain_native.DISPLAY_CANDIDATES'} if candidate
+                                    else meta.get('addition')})
+                    extra['rooted_parent'] = parent
                     added.append(ids[1])
+                    parent = ids[1]
+            if 'fine_branch_score' in files:
+                fine = np.clip(_ensemble_image(files['fine_branch_score'], series).astype(np.float32), 0, 1)
+                taken = named > 0
+                if parent == ids[1]:
+                    taken = taken | (score > 0)
+                fine[taken] = 0
+                if fine.any():
+                    branch = collection.add_layer(
+                        (fine > 0).astype(np.uint8), series['affine'], layer_id=ids[2], source_series=series_id,
+                        kind='vessels', role='context', color='#aa352b',
+                        label='Image-derived fine branches (unnamed)', probability=fine,
+                        provenance={**provenance, 'model': 'signal-grown-fine-branches', 'estimate': 'image-derived tube response',
+                                    'score_meaning': 'uncalibrated tube response, not a probability'})
+                    branch['rooted_parent'] = parent
+                    added.append(ids[2])
             current = added
         if retired:
             collection.document['layers'] = [row for row in collection.document['layers'] if row not in retired]

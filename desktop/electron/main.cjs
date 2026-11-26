@@ -189,7 +189,7 @@ function bindOperations() {
     anatomyLocalAlignment: ['seriesId','center'],
     anatomyDiffusionBaseline: ['assetId'],
     anatomyCtaArterialCoverage: ['seriesId','focusLayerIds','widerLayerIds'],
-    anatomyView: ['seriesId','layers','original','highlightLayer','highlightComponents','reviewId','previewAlignment','vesselScope','patientModel','vesselSurfaceMode','sourceExtent','localVesselField','requestId'],
+    anatomyView: ['seriesId','layers','original','highlightLayer','highlightComponents','reviewId','previewAlignment','vesselScope','vesselDetail','patientModel','vesselSurfaceMode','sourceExtent','localVesselField','requestId'],
     anatomyEdit: ['action','layerId','author','points','radiusMm','threshold','reviewId','componentIds','findingId','seriesId'],
     anatomySample: ['point','layerId','independentSeries'],
     anatomyRegister: ['action','seriesId','movingPoints','referencePoints','reviewer','nativeWallScope'],

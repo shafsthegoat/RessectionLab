@@ -15,6 +15,7 @@ import hashlib
 import io
 import json
 import os
+import re
 from pathlib import Path, PurePosixPath
 import shutil
 import tarfile
@@ -807,6 +808,67 @@ CLEANUP = {
 ROOTS = {'ct': (1, 4, 6, 23, 24, 35, 36, 40), 'mr': (1, 4, 6, 23, 24, 35, 36)}
 
 
+EDEN_COHORT = 'prepared/Eden 2020 ResectionLab Projects (restricted)'
+
+
+def register_eden(root, patients):
+    """Add EDEN patients (restricted, local only) to the case table: the acquired TOF original named by the
+    patient's prepared study, and the retained vesselFM run of that same file."""
+    runs = {}
+    for record in sorted(safe_path(root, 'cache/poc-model-results').glob('anatomy-*/vesselfm-base/*/inference.json')):
+        document = json.loads(record.read_text())
+        if document.get('status', 'succeeded') == 'succeeded' and document.get('probability'):
+            runs.setdefault(document['input'].get('sha256'), record.parents[1])
+    added = []
+    for patient in patients:
+        case = f'{patient}-mr'
+        if case not in CASES:
+            if not re.fullmatch(r'PTNT_\d{4}', patient):
+                raise SystemExit(f'{patient!r} is not an EDEN patient id')
+            study = json.loads(safe_path(root, f'{EDEN_COHORT}/{patient}/patient-anatomy.json').read_text())
+            series = next((row for row in study['series'] if row['modality'] == 'TOF' and row.get('original')), None)
+            if series is None:
+                raise SystemExit(f'{patient} has no acquired TOF')
+            run = runs.get(series['original']['sha256'])
+            if run is None:
+                raise SystemExit(f'{patient} has no retained vesselFM run of its TOF')
+            CASES[case] = {'modality': 'mr', 'reference': None, 'image': f'{EDEN_COHORT}/{patient}/{series["original"]["path"]}'}
+            VESSELFM[case] = str(run.relative_to(root))
+            if 'gaussian' not in vesselfm_runs(root, case):
+                raise SystemExit(f'{patient}: the retained vesselFM run is not a gaussian-blend run of this TOF file')
+        added.append(case)
+    return added
+
+
+def run_cases(root, cases, teams=('UZH', 'ARG', 'KDH'), device='mps'):
+    """Each case in turn: every team that has not finished (one process each, so memory is returned), the frozen
+    combined ensemble with the frozen vesselFM rule, then retain. A case already retained is skipped."""
+    import subprocess
+    import sys
+    combiner = frozen_combiner(root)
+    if combiner is None:
+        raise SystemExit('Run select-combiner first')
+    name = combined_name(combiner, list(teams))
+    done = []
+    for case in cases:
+        if safe_path(root, f'{PHASE}/cases/{case}/{name}/ensemble.json').is_file():
+            print(f'{case}: already retained', flush=True)
+            done.append(case)
+            continue
+        patient = ['--eden', case[:-3]] if case.startswith('PTNT_') else []
+        for team in teams:
+            if safe_path(root, f'{WORK}/{case}/{team}/predict.json').is_file():
+                continue
+            print(f'{case}: {team} starting {time.strftime("%H:%M:%S")}', flush=True)
+            subprocess.run([sys.executable, __file__, *patient, 'predict', team, case, '--device', device], check=True,
+                           stdout=subprocess.DEVNULL)
+        folder, record = ensemble(root, case, list(teams), None, combiner)
+        print(f'{case}: ensemble {record["named_voxels"]:,} named voxels, {record["added_voxels"]:,} added', flush=True)
+        retain(root, case)
+        done.append(case)
+    return done
+
+
 def frozen_addition(root):
     selection = safe_path(root, f'{PHASE}/addition-selection.json')
     if not selection.is_file():
@@ -873,7 +935,73 @@ def ensemble(root, case, teams, addition=None, combiner=None):
     record = {'case': case, 'modality': modality, 'teams': list(teams), 'labels': list(mean.labels),
               'vein_labels': list(VEIN_LABELS[modality]), 'named_voxels': int((named > 0).sum()),
               'combiner': combiner or {'method': 'mean'}}
-    return folder, add_vesselfm(root, case, folder, record, named, groups['vessel'], addition)
+    record = add_vesselfm(root, case, folder, record, named, groups['vessel'], addition)
+    display_additions(root, case, folder)
+    return folder, record
+
+
+# Display candidates: vesselFM components (26-connected) at or above `low` that hold a voxel at `high`. Chosen
+# on the development cases by looking at the drawn tree: on the TOF case 0.5 joins a noisy mass at the face and
+# skull base to the tree (395,165 voxels shown beyond the named tree against 208,629 at the scored thresholds), so
+# MR keeps the scored thresholds; on the CTA case the bone ceiling removes that kind of signal and 0.5 stays clean.
+DISPLAY_CANDIDATES = {'ct': {'low': 0.5, 'high': 0.5}, 'mr': {'low': 0.7, 'high': 0.9}}
+DISPLAY_FILES = ('vesselfm_candidate_probability.nii.gz', 'fine_branch_score.nii.gz', 'display_additions.json')
+
+
+def display_additions(root, case, folder):
+    """Display-only vessel candidates beside an ensemble; the ensemble and its scored addition are not changed.
+
+    `vesselfm_candidate_probability` is every vesselFM component outside the named tree at the display thresholds
+    of its modality (DISPLAY_CANDIDATES), connected to the tree or not, with its score. The scored connected
+    addition drops every component that does not touch the tree. Which candidates are shown is decided when a
+    study is drawn: those that reach the tree directly or across a signal-supported gap; the rest stay in review.
+    On CT, voxels at or above the bone ceiling are left out. On CT, `fine_branch_score` adds the thin branches
+    followed outward from the tree and the candidates in the acquired image (resectionlab.vessel_fine_growth).
+    Never applied across modalities.
+    """
+    from resectionlab.vascular_rooting import RootingPolicy
+    from resectionlab.vessel_fine_growth import grow_fine_branches
+    folder = Path(folder)
+    image = nib.load(safe_path(root, CASES[case]['image']))
+    modality = CASES[case]['modality']
+    run = vesselfm_runs(root, case)['gaussian']
+    if run.vesselfm_modality != modality:
+        raise ValueError(f'A {run.vesselfm_modality} vesselFM run cannot extend a {modality} tree')
+    named = nib.load(folder / 'named_labels.nii.gz')
+    require_same_grid(image.shape, image.affine, named.shape, named.affine)
+    tree = np.asarray(named.dataobj) > 0
+    score = np.asarray(run.dataobj, np.float32)
+    rule = DISPLAY_CANDIDATES[modality]
+    candidates = (score >= rule['low']) & ~tree
+    receipt = {'case': case, 'modality': modality, 'rule': ' '.join(display_additions.__doc__.split()),
+               'vesselfm': {**rule, 'blend': 'gaussian'}}
+    signal = None
+    if modality == 'ct':
+        signal = np.asarray(image.dataobj, np.float32)
+        ceiling = RootingPolicy().ct_ceiling_hu
+        bone = candidates & (signal >= ceiling)
+        receipt['vesselfm'].update(boneCeilingHu=ceiling, boneVoxelsExcluded=int(bone.sum()))
+        candidates &= ~bone
+        del bone
+    labels, count = ndi.label(candidates, np.ones((3, 3, 3), bool))
+    if rule['high'] > rule['low'] and count:
+        strong = np.zeros(count + 1, bool)
+        strong[np.unique(labels[candidates & (score >= rule['high'])])] = True
+        strong[0] = False
+        candidates = strong[labels]
+        count = int(strong.sum())
+    del labels
+    receipt['vesselfm'].update(voxels=int(candidates.sum()), components=int(count))
+    save_nifti(np.where(candidates, score, 0).astype(np.float32), image, folder / DISPLAY_FILES[0])
+    del score
+    if modality == 'ct':
+        spacing = np.sqrt((np.asarray(image.affine, float)[:3, :3] ** 2).sum(axis=0))
+        fine, _, receipt['fineBranches'] = grow_fine_branches(signal, spacing, tree | candidates, 'CT')
+        save_nifti(fine, image, folder / DISPLAY_FILES[1])
+    else:
+        (folder / DISPLAY_FILES[1]).unlink(missing_ok=True)
+    atomic_json(folder / DISPLAY_FILES[2], receipt)
+    return receipt
 
 
 def addition_evidence(image, tree, added):
@@ -1325,8 +1453,22 @@ def retain(root, case):
 
 
 def main():
+    early = argparse.ArgumentParser(add_help=False)
+    early.add_argument('--eden', action='append', default=[])
+    patients = early.parse_known_args()[0].eden
+    root = checked_root(None if os.environ.get(ROOT_ENV) else HDD_ROOT, expected_uuid=HDD_UUID) if patients else None
+    if patients:
+        register_eden(root, patients)
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--eden', action='append', default=[], metavar='PTNT_0000',
+                        help='Register this EDEN patient (restricted, local only) as case PTNT_0000-mr; repeatable')
     sub = parser.add_subparsers(dest='command', required=True)
+    displaying = sub.add_parser('display-additions', help='Write the display-only vessel candidates beside an ensemble')
+    displaying.add_argument('case', nargs='+')
+    displaying.add_argument('--ensemble', default='combined-base-UZH-ARG-KDH')
+    running = sub.add_parser('run', help='Predict every team, build the frozen combined ensemble and retain, per case')
+    running.add_argument('case', nargs='+')
+    running.add_argument('--device', choices=['mps', 'cpu'], default='mps')
     unpacking = sub.add_parser('unpack', help='Stream one archive once and extract code, weights and metadata')
     unpacking.add_argument('image', choices=list(ARCHIVES))
     unpacking.add_argument('--package', action='append', default=[],
@@ -1360,8 +1502,17 @@ def main():
     merging = sub.add_parser('merge', help='Apply already extracted layers into rootfs/')
     merging.add_argument('image', choices=list(ARCHIVES))
     args = parser.parse_args()
-    root = checked_root(None if os.environ.get(ROOT_ENV) else HDD_ROOT, expected_uuid=HDD_UUID)
-    if args.command == 'unpack':
+    root = root or checked_root(None if os.environ.get(ROOT_ENV) else HDD_ROOT, expected_uuid=HDD_UUID)
+    if args.command == 'run':
+        unknown = [case for case in args.case if case not in CASES]
+        if unknown:
+            raise SystemExit(f'Unknown cases {unknown}; register EDEN patients with --eden')
+        print(run_cases(root, args.case, device=args.device))
+    elif args.command == 'display-additions':
+        for case in args.case:
+            receipt = display_additions(root, case, case_folder(root, case, args.ensemble))
+            print(case, json.dumps({key: value for key, value in receipt.items() if key != 'rule'})[:1500], flush=True)
+    elif args.command == 'unpack':
         print(unpack(root, args.image, tuple(args.package)))
     elif args.command == 'predict':
         print(json.dumps(predict(root, args.team, args.case, args.device))[:2000])

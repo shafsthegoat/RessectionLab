@@ -331,9 +331,16 @@ export {vesselReviewPrefix,vesselDerivedPrefixes,vesselDerivedParent} from './na
  * never written into saved visibility. */
 export function withVesselReviewVisibility(visible:Record<string,boolean>,compartments?:ReadonlyArray<{name:string}>,
   studyLayers?:ReadonlyArray<{id:string;rooted_parent?:string}>):Record<string,boolean> {
-  // A model addition that extends a named tree is drawn only while that tree is.
+  // A model addition is drawn only while every layer it extends, down to the named tree, is.
   const parents=new Map((studyLayers??[]).flatMap(layer=>layer.rooted_parent?[[layer.id,layer.rooted_parent] as const]:[]));
-  const shown=(id:string)=>visible[id]===true&&(!parents.has(id)||visible[parents.get(id)!]===true);
+  const shown=(id:string)=>{
+    const seen=new Set<string>();
+    for(let current:string|undefined=id;current!==undefined;current=parents.get(current)){
+      if(visible[current]!==true||seen.has(current))return false;
+      seen.add(current);
+    }
+    return true;
+  };
   const derived=(compartments??[]).flatMap(layer=>{const parent=vesselDerivedParent(layer.name);return parent?[[layer.name,shown(parent)] as const]:[];});
   const children=[...parents.keys()].filter(id=>id in visible&&visible[id]!==shown(id)).map(id=>[id,false] as const);
   if(!derived.length&&!children.length)return visible;

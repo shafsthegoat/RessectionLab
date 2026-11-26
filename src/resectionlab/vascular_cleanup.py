@@ -2,13 +2,15 @@
 
 from base64 import b64encode
 from copy import deepcopy
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, replace
+import json
 
 import numpy as np
 from scipy import ndimage as ndi, sparse
 from scipy.spatial import cKDTree
 
 from .anatomy_siam_display import _head_support
+from .data_root import atomic_json
 from .patient_anatomy import affine, digest, file_hash, resample, world
 
 
@@ -229,12 +231,38 @@ def supported_tof_layer(collection, row, *, check=lambda: None):
 
 
 ROOTED_DISPLAY = "rooted-vessel-display-v1"
+# Name of the stored display beside a study. Raise it whenever rooted_vessel_layer or
+# root_vessels would prepare a different display from the same inputs and policy.
+ROOTED_CACHE = "rooted-vessel-display-cache-v1"
 ROOTED_VESSEL_KINDS = {"vessel", "vessels", "artery", "vein", "sinus"}
 ROOTED_REVIEW_PREFIX = "__vessel_review:"
 ROOTED_REVIEW_COLOR = "#ffad54"
 # One vessel colour. Arteries and veins are still told apart in the receipts and
 # as separate display parts, but they are not drawn in different colours.
 VESSEL_CLASS_COLORS = {"artery": "#aa352b", "vein": "#aa352b"}
+# Vessel detail of the connected display. "major" is the calibre rule of
+# RootingPolicy (1 mm and wider everywhere, 0.5 to 1 mm near a tumour or planned
+# corridor) without the image-derived fine branches; "fine" shows 0.5 mm and
+# wider everywhere, with those branches. CT defaults to fine, where thin
+# enhanced branches are followed in the acquired image.
+VESSEL_DETAILS = ("major", "fine")
+# Layers that are only fine branches (resectionlab.vessel_fine_growth): hidden whole at the major detail.
+FINE_BRANCH_MODELS = {"signal-grown-fine-branches"}
+_PARENT_DEPTH = 3
+
+
+def vessel_detail(modality, requested=None):
+    """The requested detail, or the default for the acquisition."""
+    from .vascular_rooting import image_modality
+
+    if requested is not None:
+        if requested not in VESSEL_DETAILS:
+            raise ValueError(f"Vessel detail must be one of {VESSEL_DETAILS}")
+        return requested
+    try:
+        return "fine" if image_modality(modality) == "ct" else "major"
+    except ValueError:
+        return "major"
 _TUMOUR_KINDS = {"tumor", "tumor-whole", "tumor-core", "enhancing-tumor", "nonenhancing-tumor"}
 _TOPBRAIN_RECORD = "https://zenodo.org/records/21972006"
 
@@ -346,7 +374,7 @@ def _context_mask(collection, row, layers, frame, *, check=lambda: None):
     return union, used, reasons
 
 
-def rooted_vessel_layer(collection, row, *, review=False, check=lambda: None):
+def rooted_vessel_layer(collection, row, *, review=False, detail=None, check=lambda: None, _depth=0):
     """Root-reachable display derivative of one vessel layer, with its receipt.
 
     Returns ``(display row, receipt, review row or None, class row or None)``.
@@ -355,7 +383,8 @@ def rooted_vessel_layer(collection, row, *, review=False, check=lambda: None):
     the layer also holds the other class, those voxels form the class row, drawn
     in that class's colour. The review row (only when ``review`` is set) holds
     the detached and level-of-detail-hidden source voxels. The source layer,
-    its labels and the manifest are never changed.
+    its labels and the manifest are never changed. ``detail`` is "major" or
+    "fine" (see ``VESSEL_DETAILS``); without it the acquisition decides.
     """
     if row["kind"] not in ROOTED_VESSEL_KINDS:
         return row, None, None, None
@@ -365,6 +394,7 @@ def rooted_vessel_layer(collection, row, *, review=False, check=lambda: None):
 
     scope = "rooted-review" if review else "rooted"
     series = collection.series(row["source_series"])
+    detail = vessel_detail(series["modality"], detail)
     signal = series["data"] if _same_grid(row, series) else None
     score = row if row.get("probability") else vascular_cleanup_source(collection, row)
     probability = score["probability"] if score and score.get("probability") and _same_grid(row, score) else None
@@ -389,34 +419,41 @@ def rooted_vessel_layer(collection, row, *, review=False, check=lambda: None):
                if layer["kind"] in _TUMOUR_KINDS and _same_session(collection, row, layer)]
     bones = [layer for layer in collection.document["layers"] if layer["kind"] in _BONE_KINDS
              and layer["source_series"] == row["source_series"] and _same_grid(row, layer)]
-    # A model addition (for example the connected vesselFM score) never joins the
-    # named tree it extends: it is shown only where it reaches that tree's shown
-    # display, and only under the calibre rule.
-    # Whatever goes wrong with that tree, the addition shows nothing by default.
+    # A model addition (for example the vesselFM candidates) never joins the
+    # named tree it extends: it is shown only where it reaches the shown display
+    # of that tree, and only under the calibre rule. An addition may extend
+    # another addition (fine branches on the candidates); its roots are then the
+    # shown display of the whole chain down to the named tree.
+    # Whatever goes wrong with that chain, the addition shows nothing by default.
     parent_rows, parent_issue, parent = None, None, None
     parent_id = row.get("rooted_parent")
     if parent_id is not None:
         parent = next((layer for layer in collection.document["layers"] if layer["id"] == parent_id), None)
         if parent is None:
             parent_issue = f"the tree it extends ({parent_id}) is not in this study"
-        elif (parent["kind"] not in ROOTED_VESSEL_KINDS or parent.get("rooted_parent")
+        elif (parent["kind"] not in ROOTED_VESSEL_KINDS or parent["id"] == row["id"]
                 or parent["source_series"] != row["source_series"] or not _same_grid(row, parent)):
             parent_issue = f"the tree it extends ({parent_id}) is not a vessel tree on this grid"
+        elif parent.get("rooted_parent") and _depth + 2 >= _PARENT_DEPTH:
+            parent_issue = f"the chain of trees it extends is longer than {_PARENT_DEPTH} layers"
         else:
             try:
-                parent_display, _, _, parent_class = rooted_vessel_layer(collection, parent, check=check)
+                parent_rows = _shown_chain(collection, parent, detail, check, _depth + 1)
             except InterruptedError:
                 raise
             except Exception as error:
                 check()  # A cancellation still cancels.
                 parent_issue = f"the tree it extends ({parent_id}) could not be prepared ({type(error).__name__}: {error})"
             else:
-                parent_rows = [parent_display] + ([parent_class] if parent_class else [])
                 if not any(collection.mask(part).any() for part in parent_rows):
                     parent_issue, parent_rows = f"the tree it extends ({parent_id}) shows nothing", None
     if parent_issue is not None:
-        return _detached_addition(collection, row, scope, review, parent_issue)
-    policy = RootingPolicy()
+        return _detached_addition(collection, row, scope, review, parent_issue, detail=detail)
+    if detail == "major" and (row.get("provenance") or {}).get("model") in FINE_BRANCH_MODELS:
+        return _detached_addition(collection, row, scope, review,
+                                  "these image-derived fine branches are shown at the fine vessel detail", detail=detail,
+                                  key="detailHidden")
+    policy = RootingPolicy() if detail == "major" else replace(RootingPolicy(), always_mm=RootingPolicy().local_mm)
     identity = {
         "version": ROOTED_DISPLAY, "policy": asdict(policy), "rawDataSha256": row["data"]["sha256"],
         "label": row["label_value"], "kind": row["kind"], "affine": row["affine"],
@@ -434,6 +471,15 @@ def rooted_vessel_layer(collection, row, *, review=False, check=lambda: None):
         collection._rooted_display_cache = {}
     cache = collection._rooted_display_cache
     entry = cache.get(key)
+    # The display is also kept beside the study, so reopening does not prepare it again.
+    stored = collection.root / "display-cache" / f"{ROOTED_CACHE}-{key}.json"
+    if entry is None and stored.is_file():
+        try:
+            saved = json.loads(stored.read_text())
+            if saved["identity"] == json.loads(json.dumps(identity)) and saved["checksum"] == digest(saved["result"]):
+                entry = saved["result"]
+        except (ValueError, KeyError, TypeError):
+            entry = None  # An unreadable cache file is prepared again and replaced.
     try:
         for data in (entry or {}).get("arrays", ()):
             collection.array(data)
@@ -528,7 +574,14 @@ def rooted_vessel_layer(collection, row, *, review=False, check=lambda: None):
         # A temporarily missing label original must not pin a label-less view for the session.
         if not (named_binding and named_reason):
             cache[key] = entry
-    receipt = {**entry["receipt"], "scope": scope}
+            try:
+                stored.parent.mkdir(exist_ok=True)
+                atomic_json(stored, {"identity": identity, "result": entry, "checksum": digest(entry)})
+            except OSError:
+                pass  # A study that cannot be written to keeps the display for this session only.
+    elif key not in cache:
+        cache[key] = entry
+    receipt = {**entry["receipt"], "scope": scope, "detail": detail}
     own_class = "vein" if row["kind"] in {"vein", "sinus"} else "artery"
     other_class = "artery" if own_class == "vein" else "vein"
     display = {**deepcopy(row), "data": entry["shown"], "label_value": 1, "color": VESSEL_CLASS_COLORS[own_class],
@@ -548,14 +601,30 @@ def rooted_vessel_layer(collection, row, *, review=False, check=lambda: None):
     return display, receipt, hidden_row, class_row
 
 
-def _detached_addition(collection, row, scope, review, issue):
-    """An addition whose tree is unavailable: nothing by default, everything under review."""
+def _shown_chain(collection, layer, detail, check, depth):
+    """Display rows of a layer and of every tree it extends, nearest first."""
+    display, receipt, _, class_row = rooted_vessel_layer(collection, layer, detail=detail, check=check, _depth=depth)
+    if (receipt or {}).get("parentUnavailable"):
+        raise ValueError(receipt["parentUnavailable"])
+    rows = [display] + ([class_row] if class_row else [])
+    above = layer.get("rooted_parent")
+    if above is not None:
+        parent = next((row for row in collection.document["layers"] if row["id"] == above), None)
+        if parent is None:
+            raise ValueError(f"the tree it extends ({above}) is not in this study")
+        rows += _shown_chain(collection, parent, detail, check, depth + 1)
+    return rows
+
+
+def _detached_addition(collection, row, scope, review, issue, *, detail, key="parentUnavailable"):
+    """An addition that cannot be shown (its tree is unavailable, or the detail hides it): nothing by default,
+    everything under review."""
     mask = collection.mask(row)
     shown = collection.put_array(np.zeros(mask.shape, np.uint8))
     hidden = collection.put_array(mask.astype(np.uint8)) if mask.any() else None
     receipt = {"rawDataSha256": row["data"]["sha256"], "sampledDataSha256": shown["sha256"], "scope": scope,
                "hiddenVoxels": int(mask.sum()), "excludedFragments": int(ndi.label(mask, CONNECTIVITY)[1]),
-               "sourcePreserved": True, "parentUnavailable": issue,
+               "sourcePreserved": True, "detail": detail, key: issue,
                "reason": f"Not shown: {issue}. Its voxels are available under review. Source anatomy is preserved."}
     display = {**deepcopy(row), "data": shown, "label_value": 1, "color": VESSEL_CLASS_COLORS["artery"],
                "edits": [{"display_only": ROOTED_DISPLAY, "scope": scope}]}

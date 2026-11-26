@@ -10,7 +10,8 @@ import {inverseAffine,rasAffine,sampleTrilinear,transformPoint,volumeBounds} fro
 import type {ViewerVolume} from './viewer/contracts';
 import type {Point3} from './viewer/coordinates';
 import {scanLabel,studyTimepoint,studyLabel,sourceEvidenceLabel,defaultAnatomyPresentation,studyLayerDisplayKind,isCtaCoverageLayer,rootedVesselScope,sourceLikeVesselScope} from './native-study-state';
-import type {ComponentReview,NativeVesselFieldRequest,NativeVesselGraph,VesselScope} from './native-anatomy-data';
+import type {ComponentReview,NativeVesselFieldRequest,NativeVesselGraph,VesselDetail,VesselScope} from './native-anatomy-data';
+import {defaultVesselDetail} from './native-anatomy-data';
 import type {NativeWorkspace} from './use-native-workspace';
 import {AnatomyInspection} from './AnatomyInspection';
 import {NativeImportPanel} from './NativeImportPanel';
@@ -273,6 +274,10 @@ export function NativeSidebar({workspace:w,tab,onOpenAnatomy,onOpenPlan,onOpenSc
           <option value="intracranial">Skull-supported only</option><option value="excluded">Excluded fragments (highlighted)</option>
           <option value="brain">Within brain only</option><option value="all">Full source estimate</option>
         </select></label>
+        {rootedVesselScope(w.vesselScope)&&<label>Vessel detail<select aria-label="Vessel detail" disabled={blocked}
+          value={w.vesselDetail??w.volume?.compartments.find(l=>l.displayFilter?.detail)?.displayFilter?.detail??defaultVesselDetail(b.document.series.find(s=>s.id===w.series)?.modality)} onChange={e=>w.changeVesselDetail(e.target.value as VesselDetail)}>
+          <option value="fine">With fine branches</option><option value="major">Major vessels only</option>
+        </select></label>}
         {rootedVesselScope(w.vesselScope)&&<label><input type="checkbox" aria-label="Show hidden vessel parts" checked={w.vesselScope==='rooted-review'} disabled={blocked}
           onChange={e=>w.changeVesselScope(e.target.checked?'rooted-review':'rooted')}/>Show detached and thin parts (amber)</label>}
         {w.vesselScope==='exterior-air'?<>
@@ -284,7 +289,7 @@ export function NativeSidebar({workspace:w,tab,onOpenAnatomy,onOpenPlan,onOpenSc
             <>{w.volume.compartments.filter(l=>l.displayFilter?.reason).map(l=><span key={l.name} data-vessel-receipt={l.name}>{l.displayFilter!.reason}</span>)}</>:
             <span>{w.volume?.compartments.find(l=>l.displayFilter?.reason)?.displayFilter?.reason??'Preparing filtered vessel display…'}</span>}
         {w.vesselScope!=='all'&&<>
-          {w.vesselScope!=='exterior-air'&&<span>{rootedVesselScope(w.vesselScope)?'Parts not connected to the main vessel roots, and thin end branches away from the target, are hidden, never deleted. Gaps are joined only where the scan supports it.':'Filters hide source estimates and can introduce gaps. Source anatomy is preserved.'}</span>}
+          {w.vesselScope!=='exterior-air'&&<span>{rootedVesselScope(w.vesselScope)?'Parts not connected to the main vessel roots, and end branches thinner than the chosen detail, are hidden, never deleted. Gaps are joined only where the scan supports it.':'Filters hide source estimates and can introduce gaps. Source anatomy is preserved.'}</span>}
           <button disabled={blocked} onClick={()=>w.changeVesselScope('all')}>Show full source</button>
         </>}</details>
       {b.document.series.length>0&&<details className="unified-details native-study-readiness"><summary>Planning & rehearsal availability</summary>

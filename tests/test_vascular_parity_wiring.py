@@ -366,3 +366,117 @@ def test_the_mesh_gate_reports_inner_walls_apart_from_floating_pieces(tmp_path):
     roots = np.zeros(SHAPE, bool); roots[4:6, 8:16, 8:16] = True
     gate = parity.mesh_floating([('hollow', mesh(c, row))], roots, SHAPE)
     assert gate['pieces'] == 2 and gate['innerWalls'] == 1 and gate['floating'] == 0
+
+
+def test_candidates_and_fine_branches_are_wired_as_a_chain_and_the_major_detail_hides_the_fine_layer(tmp_path):
+    from resectionlab.vascular_cleanup import vessel_detail
+    folder = ensemble(tmp_path)
+    save(folder / 'vesselfm_candidate_probability.nii.gz', additions())  # One connected piece, one that reaches nothing.
+    fine = np.zeros(SHAPE, np.float32)
+    fine[22:24, 20:23, 11:13] = 0.7  # Continues the connected candidate, three voxels beyond it.
+    fine[2:6, 20:23, 20:23] = 0.7    # Reaches nothing.
+    save(folder / 'fine_branch_score.nii.gz', fine)
+    c = study(tmp_path)
+    ids = parity.wire_ensemble(c, 'scan', folder)['layers']
+    assert [layer.rsplit('-', 1)[-1] for layer in ids[1:]] == ['vesselfm', 'fine']
+    extra, branch = c.layer(ids[1]), c.layer(ids[2])
+    assert extra['rooted_parent'] == ids[0] and branch['rooted_parent'] == ids[1]
+    assert extra['provenance']['model'] == 'vesselfm-candidate-addition'
+    assert branch['provenance']['model'] == 'signal-grown-fine-branches'
+    assert c.document['display']['initial_layers'][-3:] == ids
+
+    # The candidates: the connected piece is shown, the other waits in review. Nothing is lost.
+    shown, receipt, review, _ = rooted_vessel_layer(c, extra, review=True)
+    assert c.mask(shown)[20:26, 15:20, 10:14].all() and not c.mask(shown)[30:34, 18:22, 18:22].any()
+    assert c.mask(review)[30:34, 18:22, 18:22].all()
+
+    # CT shows fine branches by default, rooted on the candidates' shown display.
+    assert vessel_detail('CTA') == 'fine' and vessel_detail('TOF') == 'major' and vessel_detail('TOF', 'fine') == 'fine'
+    shown, receipt, review, _ = rooted_vessel_layer(c, branch, review=True)
+    assert receipt['detail'] == 'fine' and receipt['rooting']['rootedOn']['layer'] == ids[1]
+    assert c.mask(shown)[22:24, 20:23, 11:13].all() and not c.mask(shown)[2:6, 20:23, 20:23].any()
+    assert c.mask(review)[2:6, 20:23, 20:23].all()
+
+    # The major detail hides the whole fine layer and keeps it under review; other layers are unchanged.
+    hidden, receipt, review, _ = rooted_vessel_layer(c, branch, review=True, detail='major')
+    assert not c.mask(hidden).any() and 'fine vessel detail' in receipt['detailHidden'] and receipt['detail'] == 'major'
+    assert int(c.mask(review).sum()) == int((fine > 0).sum())
+    major, _, _, _ = rooted_vessel_layer(c, extra, detail='major')
+    assert c.mask(major)[20:26, 15:20, 10:14].all()
+    with pytest.raises(ValueError, match='detail'):
+        rooted_vessel_layer(c, branch, detail='everything')
+
+
+def test_a_chain_of_additions_that_loops_or_loses_its_tree_shows_nothing(tmp_path):
+    folder = ensemble(tmp_path)
+    save(folder / 'vesselfm_candidate_probability.nii.gz', additions())
+    fine = np.zeros(SHAPE, np.float32)
+    fine[22:24, 20:23, 11:13] = 0.7
+    save(folder / 'fine_branch_score.nii.gz', fine)
+    c = study(tmp_path)
+    ids = parity.wire_ensemble(c, 'scan', folder)['layers']
+    c.layer(ids[1])['rooted_parent'] = ids[2]  # The candidates and the fine branches now extend each other.
+    for layer in ids[1:]:
+        display, receipt, _, _ = rooted_vessel_layer(c, c.layer(layer))
+        assert not c.mask(display).any() and receipt['parentUnavailable']
+    c.layer(ids[1])['rooted_parent'] = 'retired-layer'
+    display, receipt, _, _ = rooted_vessel_layer(c, c.layer(ids[2]))
+    assert not c.mask(display).any() and 'retired-layer' in receipt['parentUnavailable']
+
+
+def test_the_major_detail_hides_a_thin_end_branch_that_the_fine_detail_shows(tmp_path):
+    score = additions()
+    score[22, 16, 14:23] = 0.8  # One voxel (0.5 mm) wide, leaving the connected piece.
+    folder = ensemble(tmp_path)
+    save(folder / 'vesselfm_candidate_probability.nii.gz', score)
+    c = study(tmp_path)
+    extra = c.layer(parity.wire_ensemble(c, 'scan', folder)['layers'][1])
+    tip = (22, 16, slice(19, 23))
+    fine, receipt, _, _ = rooted_vessel_layer(c, extra, detail='fine')
+    assert c.mask(fine)[tip].all() and receipt['rooting']['lod']['voxels'] == 0
+    assert receipt['rooting']['policy']['always_mm'] == 0.5
+    major, receipt, review, _ = rooted_vessel_layer(c, extra, detail='major', review=True)
+    assert not c.mask(major)[tip].any() and c.mask(review)[tip].all()
+    assert receipt['rooting']['lod']['voxels'] >= 4 and receipt['rooting']['policy']['always_mm'] == 1.0
+    assert c.mask(major)[20:26, 15:20, 10:14].all()
+
+
+def test_a_fourth_layer_in_a_chain_shows_nothing(tmp_path):
+    folder = ensemble(tmp_path)
+    save(folder / 'vesselfm_candidate_probability.nii.gz', additions())
+    fine = np.zeros(SHAPE, np.float32)
+    fine[22:24, 20:23, 11:13] = 0.7
+    save(folder / 'fine_branch_score.nii.gz', fine)
+    c = study(tmp_path)
+    ids = parity.wire_ensemble(c, 'scan', folder)['layers']
+    more = np.zeros(SHAPE, np.uint8)
+    more[22:24, 20:23, 13:17] = 1
+    fourth = c.add_layer(more, FRAME, layer_id='fourth', source_series='scan', kind='vessels', role='context', color='#aa352b')
+    fourth['rooted_parent'] = ids[2]
+    display, receipt, _, _ = rooted_vessel_layer(c, fourth)
+    assert not c.mask(display).any() and 'longer than 3 layers' in receipt['parentUnavailable']
+    shown, _, _, _ = rooted_vessel_layer(c, c.layer(ids[2]))
+    assert c.mask(shown).any()
+
+
+def test_the_connected_display_is_kept_beside_the_study_and_reused_on_reopen(tmp_path, monkeypatch):
+    import resectionlab.vascular_rooting as rooting
+    from resectionlab.anatomy_bridge import open_anatomy_manifest
+    c = study(tmp_path)
+    tree = parity.wire_ensemble(c, 'scan', ensemble(tmp_path))['layers'][0]
+    first, receipt, _, _ = rooted_vessel_layer(c, c.layer(tree))
+    stored = list((c.root / 'display-cache').glob('rooted-vessel-display-cache-*.json'))
+    assert len(stored) == 1
+    calls = []
+    original = rooting.root_vessels
+    monkeypatch.setattr(rooting, 'root_vessels', lambda *args, **kwargs: calls.append(1) or original(*args, **kwargs))
+    reopened = open_anatomy_manifest(c.root / 'patient-anatomy.json')
+    again, same, _, _ = rooted_vessel_layer(reopened, reopened.layer(tree))
+    assert not calls and again['data'] == first['data'] and same == receipt
+    # The other detail is its own display; a damaged file is prepared again and replaced.
+    rooted_vessel_layer(reopened, reopened.layer(tree), detail='major')
+    assert len(calls) == 1 and len(list((c.root / 'display-cache').glob('rooted-vessel-display-cache-*.json'))) == 2
+    stored[0].write_text('{"identity": 1')
+    fresh = open_anatomy_manifest(c.root / 'patient-anatomy.json')
+    repaired, _, _, _ = rooted_vessel_layer(fresh, fresh.layer(tree))
+    assert len(calls) == 2 and repaired['data'] == first['data'] and json.loads(stored[0].read_text())['result']

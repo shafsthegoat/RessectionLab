@@ -20,7 +20,7 @@ from .anatomy_geometry import mesh, normals, appearance_kind, vascular_cleanup_s
 from .anatomy_qa import layer_quality
 from .vascular_cleanup import (
     ATTACHED_ERASE, ATTACHED_SCORE_SURFACE, ROOTED_CLASS_PREFIXES, ROOTED_REVIEW_COLOR, ROOTED_REVIEW_PREFIX,
-    ROOTED_VESSEL_KINDS, rooted_vessel_layer,
+    ROOTED_VESSEL_KINDS, VESSEL_DETAILS, rooted_vessel_layer,
 )
 from .anatomy_display import (
     add_cta_arterial_coverage, brain_vessel_display, cta_coverage_is_current, display_affine, is_cta_coverage,
@@ -387,6 +387,10 @@ def dispatch(session, operation, args, request, progress):
         vessel_scope = args.get("vesselScope", "all")
         if vessel_scope not in VESSEL_SCOPES:
             raise ValueError("Unknown vessel display scope")
+        # None lets the acquisition decide (fine on CT, major vessels otherwise).
+        vessel_detail = args.get("vesselDetail")
+        if vessel_detail is not None and vessel_detail not in VESSEL_DETAILS:
+            raise ValueError("Unknown vessel detail")
         native_vessel_review = c.document.get("vascular_review", {}).get("schema") == "eden2020-restricted-vascular-companion-v1"
         vessel_surface_mode = args.get("vesselSurfaceMode", "source" if native_vessel_review else "conditioned")
         if vessel_surface_mode not in {"source", "conditioned"}:
@@ -429,7 +433,7 @@ def dispatch(session, operation, args, request, progress):
                 corridor_key = _read_plan(c)[4]
             except (ValueError, OSError):
                 corridor_key = "unreadable"
-        cache_key = (source_cache_key, vessel_scope, vessel_surface_mode, corridor_key)
+        cache_key = (source_cache_key, vessel_scope, vessel_detail, vessel_surface_mode, corridor_key)
         cacheable = not (session.anatomy_drafts.get(key) or key in session.anatomy_removal
                          or args.get("highlightComponents"))
         cache = getattr(session, "anatomy_view_cache", None)
@@ -574,7 +578,7 @@ def dispatch(session, operation, args, request, progress):
                     and not args.get("highlightLayer")):
                 try:
                     row, display_filter, rooted_review, rooted_class = rooted_vessel_layer(
-                        c, row, review=vessel_scope == "rooted-review", check=request.check)
+                        c, row, review=vessel_scope == "rooted-review", detail=vessel_detail, check=request.check)
                 except InterruptedError:
                     raise
                 except Exception as error:  # One layer's derivative must not fail the whole view.

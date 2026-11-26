@@ -20,6 +20,8 @@ def checked_view(collection, state, *, retired_clipping=None):
     # Version 3 added the rooted default; version 2 views still open.
     if state.get('vesselScope', 'all') not in {'rooted', 'rooted-review', 'brain', 'all', 'intracranial', 'excluded', 'exterior-air'}:
         raise ValueError('Invalid vessel display scope')
+    if state.get('vesselDetail') not in {None, 'major', 'fine'}:
+        raise ValueError('Invalid vessel detail')
     if 'vesselDisplayVersion' in state and (type(state['vesselDisplayVersion']) is not int or state['vesselDisplayVersion'] not in (2, 3)):
         raise ValueError('Unsupported vessel display version')
     if state.get('vesselScope') in {'rooted', 'rooted-review'} and state.get('vesselDisplayVersion') != 3:

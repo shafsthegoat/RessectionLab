@@ -500,3 +500,25 @@ test('settings reported by the viewer drop derived vessel entries before they ar
   const opacityOnly=withoutVesselDerivedSettings({presentation:'scan',layerOpacity:{tree:1,'__vessel_review:tree':1}});
   assert.deepEqual(Object.keys(opacityOnly),['presentation','layerOpacity']);
 });
+
+test('vessel detail defaults to fine branches on CT and major vessels on MR',async()=>{
+  const {defaultVesselDetail}=await import('../src/native-anatomy-data.ts');
+  for(const modality of ['CT','CTA',' cta '])assert.equal(defaultVesselDetail(modality),'fine',modality);
+  for(const modality of ['TOF','MRA','T1',undefined,''])assert.equal(defaultVesselDetail(modality),'major',String(modality));
+});
+
+test('an addition is drawn only while every layer it extends is shown',async()=>{
+  const {withVesselReviewVisibility}=await import('../src/native-study-state.ts');
+  const study=[{id:'tree'},{id:'candidates',rooted_parent:'tree'},{id:'fine',rooted_parent:'candidates'}];
+  const parts=[{name:'__vessel_review:fine'},{name:'__vessel_veins:candidates'}];
+  const all={tree:true,candidates:true,fine:true};
+  assert.deepEqual(withVesselReviewVisibility(all,parts,study),{...all,'__vessel_review:fine':true,'__vessel_veins:candidates':true});
+  // Hiding the tree hides the candidates and the fine branches that hang from them.
+  assert.deepEqual(withVesselReviewVisibility({...all,tree:false},parts,study),
+    {tree:false,candidates:false,fine:false,'__vessel_review:fine':false,'__vessel_veins:candidates':false});
+  assert.deepEqual(withVesselReviewVisibility({...all,candidates:false},parts,study),
+    {tree:true,candidates:false,fine:false,'__vessel_review:fine':false,'__vessel_veins:candidates':false});
+  // A loop of parents shows nothing and terminates.
+  const loop=[{id:'a',rooted_parent:'b'},{id:'b',rooted_parent:'a'}];
+  assert.deepEqual(withVesselReviewVisibility({a:true,b:true},[],loop),{a:false,b:false});
+});

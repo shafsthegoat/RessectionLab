@@ -302,6 +302,12 @@ def test_projection_metadata_preserves_source_preview_and_excludes_patient_fusio
     assert preview["compartments"][0]["alignment"] == "independent"
     checked_view(c, {"schema":"patient-anatomy-view-v1","snapshotId":c.identity(),"patientId":"patient",
                      "seriesId":"tof","states":{"tof":{"cursor":None,"visible":{},"settings":{}}}})
+    view = {"schema":"patient-anatomy-view-v1","snapshotId":c.identity(),"patientId":"patient",
+            "seriesId":"tof","states":{"tof":{"cursor":None,"visible":{},"settings":{}}}}
+    for detail in ("major", "fine"):
+        checked_view(c, {**view, "vesselDetail": detail})
+    with pytest.raises(ValueError, match="vessel detail"):
+        checked_view(c, {**view, "vesselDetail": "everything"})
 
 def test_sidecar_only_scout_stays_independent_after_import_and_reopen(tmp_path):
     from resectionlab.anatomy_import import import_nifti_series, select_intake_reference
