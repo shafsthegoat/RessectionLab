@@ -35,7 +35,7 @@ FEATURES = {
     'surface-audit': 'exact',
     'contact': 'solver',
     'transaction-checks': 'exact',
-    'deformation-scan': 'reordered',
+    'deformation-scan': 'exact',
     'vascular-rhs': 'reordered',
 }
 
