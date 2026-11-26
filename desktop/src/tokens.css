@@ -1,0 +1,128 @@
+/* Design tokens for the desktop renderer.
+ * This is the single source for chrome type sizes, neutrals, the accent, status colours, radii and motion.
+ * Anatomy, evidence, route and transfer-function colours carry meaning and are defined where they are used.
+ * Imported first by main.tsx so every stylesheet can rely on these names.
+ */
+:root {
+  /* Type: four working sizes; nothing smaller than --text-micro.
+   * --text-display is reserved for page, dialog and empty-state headings. */
+  --font-ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --text-display: 20px;
+  --text-title: 15px; /* weight 600 */
+  --text-body: 13px; /* weight 500 for controls */
+  --text-meta: 12px; /* weight 400 */
+  --text-micro: 11px; /* rail labels, slice indices and image readouts only */
+  --weight-title: 600;
+  --weight-body: 500;
+  --weight-meta: 400;
+
+  /* Neutrals */
+  --bg: #080909;
+  --panel: #101112;
+  --panel-raised: #1b1d1e;
+  --line: #2b2e2f;
+  --line-strong: #3d4241;
+  --text: #e6eae8;
+  --text-muted: #959e9b;
+  --panel-overlay: rgba(16, 17, 18, 0.9); /* readouts floating over images */
+  --scrim: rgba(0, 0, 0, 0.62); /* behind dialogs */
+
+  /* Accent: interaction and selection only. */
+  --accent: #7cdcbc;
+  --accent-ink: #112e25;
+  --accent-soft: rgba(124, 220, 188, 0.12);
+  --accent-soft-hover: rgba(124, 220, 188, 0.2);
+  --accent-line: rgba(124, 220, 188, 0.42);
+  --accent-hover: #a3e8d0;
+
+  /* Status */
+  --warning: #e3a35a;
+  --danger: #e5675f;
+  --ok: #7cdcbc;
+  --warning-soft: rgba(227, 163, 90, 0.1);
+  --warning-line: rgba(227, 163, 90, 0.42);
+  --danger-soft: rgba(229, 103, 95, 0.1);
+  --danger-line: rgba(229, 103, 95, 0.42);
+
+  /* Radius */
+  --radius: 6px; /* controls */
+  --radius-card: 8px; /* cards, panels, popovers, dialogs */
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-enter: 180ms;
+  --dur-exit: 140ms;
+
+  /* Older names kept as aliases so existing rules resolve to the tokens. */
+  --teal: var(--accent);
+  --teal-ink: var(--accent-ink);
+  --amber: var(--warning);
+  --muted: var(--text-muted);
+  --surface: var(--panel-raised);
+  --studio-control: var(--panel-raised);
+  --studio-border: var(--line-strong);
+}
+
+/* One transition system for hover, press, menus and disclosures.
+ * Entering a state uses --dur-enter; leaving it uses the faster --dur-exit.
+ * Range inputs, their thumbs and drag surfaces are excluded so they track the pointer exactly.
+ */
+:where(button, summary, a, [role="button"], [role="tab"], select, textarea, input:not([type="range"])) {
+  transition-property: background-color, border-color, color, box-shadow, opacity, transform;
+  transition-duration: var(--dur-exit);
+  transition-timing-function: var(--ease-out);
+}
+:where(button, summary, a, [role="button"], [role="tab"], select, textarea, input:not([type="range"])):is(:hover, :focus-visible) {
+  transition-duration: var(--dur-enter);
+}
+:where(button:not(:disabled):not(.practice-jog):not([role="slider"]):not([class*="-row"])):active {
+  transform: scale(0.97);
+  transition-duration: var(--dur-exit);
+}
+:where(.practice-jog, [role="slider"], input[type="range"]) {
+  transition: none;
+}
+
+/* Menus, dialogs and disclosures ease in; closing is immediate, so exits are always faster than entrances
+ * and a dialog never waits on an animation that a hidden window may not run. */
+@keyframes rl-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes rl-pop-in {
+  from { opacity: 0; transform: translateY(-3px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes rl-dialog-in {
+  from { opacity: 0; transform: translate(-50%, -48%) scale(0.98); }
+  to { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+@keyframes rl-drawer-in {
+  from { opacity: 0; transform: translateX(16px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Where the motion applies. */
+:where(details[open] > :not(summary)) {
+  animation: rl-fade-in var(--dur-enter) var(--ease-out);
+}
+.dialog-overlay[data-state="open"] { animation: rl-fade-in var(--dur-enter) var(--ease-out); }
+:is(.study-dialog, .structural-import-dialog)[data-state="open"] { animation: rl-dialog-in var(--dur-enter) var(--ease-out); }
+.evidence-drawer[data-state="open"] { animation: rl-drawer-in var(--dur-enter) var(--ease-out); }
+.rl-control-popover:not([hidden]) { animation: rl-pop-in var(--dur-enter) var(--ease-out); }
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  :where(button):active {
+    transform: none !important;
+  }
+}

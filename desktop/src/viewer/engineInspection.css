@@ -11,67 +11,67 @@
 .engine-section {
   z-index:2;position:relative;grid-area:1 / 2;min-width:0;min-height:0;
   display:flex;flex-direction:column;align-items:stretch;gap:10px;padding:13px;
-  box-sizing:border-box;overflow:auto;background:#101b22;border-left:1px solid #30434b;
-  color:#e0edef;font:12px/1.35 system-ui,sans-serif;font-variant-numeric:tabular-nums;
+  box-sizing:border-box;overflow:auto;background:var(--panel-raised);border-left:1px solid var(--line-strong);
+  color:var(--text);font:var(--text-meta)/1.35 system-ui,sans-serif;font-variant-numeric:tabular-nums;
 }
 .engine-section header {display:flex;flex-direction:column;gap:2px}
-.engine-section h3 {margin:0;font-size:15px;color:#f1f4f3;letter-spacing:0;font-weight:600}
-.engine-section header span,.engine-section-status,.engine-section-metrics span,.engine-section-position {color:#a7b8c0;font-size:11px}
-.engine-section-image {min-height:100px;flex:1 1 140px;display:grid;place-items:center;background:#0a1015;container-type:size;border:1px solid #34434b;overflow:hidden}
+.engine-section h3 {margin:0;font-size:var(--text-title);color:var(--text);letter-spacing:0;font-weight:600}
+.engine-section header span,.engine-section-status,.engine-section-metrics span,.engine-section-position {color:var(--text-muted);font-size:var(--text-meta)}
+.engine-section-image {min-height:100px;flex:1 1 140px;display:grid;place-items:center;background:var(--panel);container-type:size;border:1px solid var(--line-strong);overflow:hidden}
 .engine-section-frame {position:relative;width:min(100cqw,100cqh);max-height:100%;max-width:100%}
 .engine-section-frame canvas,.engine-section-frame svg {width:100%;height:100%;position:absolute;inset:0;display:block}
 .engine-section-frame svg {pointer-events:none;fill:none;stroke:#fff;filter:drop-shadow(0 0 1px #061017)}
 .engine-section-frame svg :is(path,circle) {vector-effect:non-scaling-stroke;stroke-width:1.7}
-.engine-section-frame .edge {position:absolute;color:#f5f5ee;text-shadow:0 1px 3px #000,0 0 2px #000;font:600 10px/1 system-ui;pointer-events:none}
+.engine-section-frame .edge {position:absolute;color:#f5f5ee;text-shadow:0 1px 3px #000,0 0 2px #000;font:600 var(--text-micro)/1 system-ui;pointer-events:none}
 .edge-0 {left:4px;top:48%}.edge-1 {right:4px;top:48%}.edge-2 {top:4px;left:49%}.edge-3 {bottom:4px;left:49%}
-.engine-section-key {display:flex;flex-wrap:wrap;gap:4px 10px;font-size:11px;color:#c2d0d5}
+.engine-section-key {display:flex;flex-wrap:wrap;gap:4px 10px;font-size:var(--text-meta);color:#c2d0d5}
 .engine-section-key span {white-space:nowrap}
 .engine-section-key span::before {display:inline-block;content:'';width:8px;height:8px;border-radius:2px;margin-right:5px;background:#659cad}
 .engine-section-key .residual::before {background:#4eb2bc}.engine-section-key .cavity::before {border:1px solid #ffc36b;background:#553916;box-sizing:border-box}
 .engine-section-key .vessels::before {background:#df6175}.engine-section-key .protected::before {background:#b995ec}.engine-section-key .tool::before {border:1px solid white;border-radius:50%;background:transparent}
-.engine-section-metrics {display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #34434b;padding-top:9px;gap:6px}
-.engine-section-metrics p {grid-column:1/-1;margin:0;display:flex;justify-content:space-between;gap:6px;color:#a7b8c0;font-size:11px}
-.engine-section-metrics p b {color:#e0edef;font-weight:500}
+.engine-section-metrics {display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line-strong);padding-top:9px;gap:6px}
+.engine-section-metrics p {grid-column:1/-1;margin:0;display:flex;justify-content:space-between;gap:6px;color:var(--text-muted);font-size:var(--text-meta)}
+.engine-section-metrics p b {color:var(--text);font-weight:500}
 .engine-section-metrics div {display:flex;flex-direction:column}
-.engine-section-metrics strong {font-size:17px;font-weight:550}.engine-section-metrics small {font-size:10px;color:#a4b6bd;font-weight:400}
+.engine-section-metrics strong {font-size:var(--text-title);font-weight:550}.engine-section-metrics small {font-size:var(--text-meta);color:var(--text-muted);font-weight:400}
 .engine-section-position,.engine-section-status {display:flex;align-items:center;justify-content:space-between;gap:6px}
 .engine-section-position label {display:inline-flex;align-items:center;gap:4px}
-.engine-section-position input {flex:1;min-width:25px;width:40%;accent-color:#78b6c0}
-.engine-section select,.engine-section-status button {background:#192a34;border:1px solid #38515e;border-radius:4px;color:#d4e1e6;font:inherit;padding:3px}
-.engine-section-status button {padding:3px 6px;cursor:pointer}.engine-section-status button:disabled {cursor:default;background:none;color:#a6c8cc}
+.engine-section-position input {flex:1;min-width:25px;width:40%;accent-color:var(--accent)}
+.engine-section select,.engine-section-status button {background:var(--panel-raised);border:1px solid var(--line-strong);border-radius:var(--radius);color:var(--text);font:inherit;padding:3px}
+.engine-section-status button {padding:3px 6px;cursor:pointer}.engine-section-status button:disabled {cursor:default;background:none;color:var(--text-muted)}
 @container (max-width:620px) {
   .engine-section {padding:8px;gap:6px}
-  .engine-section h3 {font-size:13px}
-  .engine-section-metrics strong {font-size:14px}
+  .engine-section h3 {font-size:var(--text-body)}
+  .engine-section-metrics strong {font-size:var(--text-title)}
 }
 .engine-operated-view .engine-frame-metrics {
   position:absolute;z-index:4;right:12px;bottom:12px;max-width:min(76%,340px);padding:7px 10px;
-  color:#e8e2d3;border:1px solid #514e41;border-radius:5px;background:#131914e8;font:11px/1.4 system-ui;
+  color:var(--text);border:1px solid var(--line-strong);border-radius:var(--radius-card);background:var(--panel-overlay);font:var(--text-meta)/1.4 system-ui;
 }
 .engine-frame-metrics summary {cursor:pointer;color:#e3ceb0;font-weight:600}
 .engine-frame-metrics span {display:block;margin-top:3px}
 .engine-operated-view .engine-anatomy-key {max-width:calc(100% - clamp(88px,16%,140px) - 38px)}
 .inspect-3d-result,.result-heading button,.result-controls button {
-  color:#dcece9;border:1px solid #435b58;background:#1c312f;border-radius:4px;
-  font:500 12px/1.4 system-ui;cursor:pointer;padding:5px 9px;
+  color:var(--text);border:1px solid var(--line-strong);background:var(--panel-raised);border-radius:var(--radius);
+  font:500 var(--text-body)/1.4 system-ui;cursor:pointer;padding:5px 9px;
 }
 .engine-section .inspect-3d-result {align-self:flex-start;margin-top:5px}
 .rl-viewer[data-result-inspection] .rl-primary-tools,
 .rl-viewer[data-result-inspection] .rl-control-popover {display:none}
 .rl-viewer[data-result-inspection] .rl-viewer-anatomy-image > * {visibility:hidden}
 .result-heading {height:100%;display:flex;align-items:center;justify-content:space-between;padding:0 10px}
-.result-heading strong {font-size:13px;font-weight:600;color:#e0e9e5}
-.result-heading button {font-size:11px;background:#172320}
+.result-heading strong {font-size:var(--text-body);font-weight:600;color:var(--text)}
+.result-heading button {font-size:var(--text-meta);background:var(--panel-raised)}
 .engine-result-orbit {position:absolute;inset:38px 0 0;z-index:2;touch-action:none;cursor:grab}
 .engine-result-orbit:active {cursor:grabbing}
 .result-controls,.result-key {position:absolute;z-index:3;display:flex;flex-wrap:wrap;gap:4px;left:10px;right:10px}
 .result-controls {top:48px}
-.result-controls button {font-size:11px;background:#172321}
-.result-controls button[aria-pressed=true] {background:#37564e;border-color:#82afa1}
-.result-key {bottom:12px;gap:6px 14px;color:#d6dfdf;font:11px/1.5 system-ui;pointer-events:none}
+.result-controls button {font-size:var(--text-meta);background:var(--panel-raised)}
+.result-controls button[aria-pressed=true] {background:var(--accent-soft);border-color:var(--accent)}
+.result-key {bottom:12px;gap:6px 14px;color:#d6dfdf;font:var(--text-meta)/1.5 system-ui;pointer-events:none}
 .result-key span::before {content:'';display:inline-block;width:8px;height:8px;margin-right:5px;border-radius:2px;background:#e5a456}
 .result-key span+span::before {background:#53c6d1}
-.result-empty {display:none;position:absolute;top:48%;left:10%;right:10%;text-align:center;color:#a2b7b8;font-size:12px}
+.result-empty {display:none;position:absolute;top:48%;left:10%;right:10%;text-align:center;color:var(--text-muted);font-size:var(--text-meta)}
 .engine-result-orbit[data-result-empty=true] .result-empty {display:block}
 
 .result-key small {flex-basis:100%;font:inherit;color:#b2c1c2}

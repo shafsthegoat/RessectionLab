@@ -46,8 +46,8 @@
   display: none;
 }
 .rl-viewer[data-field-presentation='true'] .field-expand {
-  background: #17201ed9;
-  border: 1px solid #62736c;
+  background: var(--panel-overlay);
+  border: 1px solid var(--line-strong);
 }
 .field-presentation-readout {
   position: absolute;
@@ -58,11 +58,11 @@
   gap: 10px;
   padding: 5px 9px;
   pointer-events: none;
-  background: #131b19cb;
-  color: #e4e9e4;
-  border-radius: 4px;
+  background: var(--panel-overlay);
+  color: var(--text);
+  border-radius: var(--radius-card);
   font:
-    11px/1.4 system-ui,
+    var(--text-meta)/1.4 system-ui,
     sans-serif;
 }
 .field-presentation-readout span:empty {

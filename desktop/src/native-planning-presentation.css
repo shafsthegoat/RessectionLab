@@ -3,48 +3,48 @@
  * belong to their existing feature components.
  */
 .poc-workbench .native-approaches {
-  color: #d6deda;
-  font-size: 11px;
+  color: var(--text);
+  font-size: var(--text-meta);
   line-height: 1.5;
 }
 .poc-workbench .native-approaches .approach-intro h1 {
   margin: 4px 0 8px !important;
-  color: #e2e7e4;
-  font-size: 17px !important;
+  color: var(--text);
+  font-size: var(--text-title) !important;
   font-weight: 550;
   letter-spacing: -.25px;
   line-height: 1.35;
 }
 .poc-workbench .native-approaches .approach-intro p {
   margin: 5px 0;
-  color: #929c97;
-  font-size: 10px;
+  color: var(--text-muted);
+  font-size: var(--text-meta);
   line-height: 1.5;
 }
 .poc-workbench .native-approaches .approach-target-picker {
   margin-top: 14px;
   gap: 6px;
-  color: #b5bfb9;
-  font-size: 10px;
+  color: var(--text-muted);
+  font-size: var(--text-meta);
 }
 .poc-workbench .native-approaches :is(select, input:not([type=range])) {
-  background-color: #1a1c1c;
-  border-color: #363a38;
-  color: #d4dcd6;
-  font-size: 11px;
+  background-color: var(--panel-raised);
+  border-color: var(--line-strong);
+  color: var(--text);
+  font-size: var(--text-meta);
 }
 .poc-workbench .native-approaches :is(.approach-editor, .approach-measurements, .approach-input-comparison, .approach-sensitivity, .approach-structure-disclosure) {
-  border-color: #2d3230;
+  border-color: var(--line);
   margin-top: 14px;
   padding-top: 12px;
 }
 .poc-workbench .native-approaches :is(h2, h3) {
-  color: #d3dcd6;
+  color: var(--text);
   font-weight: 550;
 }
 .poc-workbench .native-approaches h2 {
   margin-bottom: 10px;
-  font-size: 12px;
+  font-size: var(--text-meta);
 }
 .poc-workbench .native-approaches .approach-section-heading {
   margin-bottom: 9px;
@@ -55,28 +55,28 @@
 .poc-workbench .native-approaches .approach-section-heading button {
   border-color: transparent;
   background: transparent;
-  color: #a4b4ab;
+  color: var(--text-muted);
 }
 .poc-workbench .native-approaches .approach-editor fieldset > label {
   margin-block: 10px;
-  color: #b7c0ba;
-  font-size: 11px;
+  color: var(--text-muted);
+  font-size: var(--text-meta);
 }
 .poc-workbench .native-approaches .approach-radius {
   row-gap: 10px;
 }
 .poc-workbench .native-approaches .approach-radius output {
-  color: #a0ddc7;
+  color: var(--accent);
   font-variant-numeric: tabular-nums;
 }
 .poc-workbench .native-approaches .approach-radius input {
   margin: 0 0 3px;
-  accent-color: #7cdcbc;
+  accent-color: var(--accent);
 }
 .poc-workbench .native-approaches .approach-caption {
   margin: 6px 0;
-  color: #939f98;
-  font-size: 10px;
+  color: var(--text-muted);
+  font-size: var(--text-meta);
   line-height: 1.5;
 }
 .poc-workbench .native-approaches .approach-cursor-actions {
@@ -85,28 +85,28 @@
 }
 .poc-workbench .native-approaches .approach-cursor-actions button {
   min-height: 31px;
-  font-size: 10px !important;
+  font-size: var(--text-meta) !important;
   line-height: 1.35;
 }
 .poc-workbench .native-approaches details {
   margin-block: 9px;
-  color: #9ba89f;
-  font-size: 10px;
+  color: var(--text-muted);
+  font-size: var(--text-meta);
 }
 .poc-workbench .native-approaches details > summary {
   padding: 8px 0;
-  color: #a7b8ac;
+  color: var(--text-muted);
   line-height: 1.45;
 }
 .poc-workbench .native-approaches details[open] > summary {
-  color: #d6e1d9;
+  color: var(--text);
 }
 .poc-workbench .native-approaches details p {
-  color: #9daaa2;
+  color: var(--text-muted);
   line-height: 1.55;
 }
 .poc-workbench .native-approaches .approach-point {
-  color: #a2afa6;
+  color: var(--text-muted);
 }
 .poc-workbench .native-approaches .approach-primary-actions {
   margin-top: 13px;
@@ -116,13 +116,13 @@
   min-height: 35px;
 }
 .poc-workbench .native-approaches .approach-primary-actions .approach-suggest {
-  background: #1c3027;
-  border-color: #486c59;
-  color: #b4e7d2;
+  background: var(--panel-raised);
+  border-color: var(--line-strong);
+  color: var(--accent);
 }
 .poc-workbench .native-approaches .approach-primary-actions .approach-suggest:hover:not(:disabled) {
-  background: #253f32;
-  border-color: #6b9b80;
+  background: var(--line);
+  border-color: var(--accent);
 }
 .poc-workbench .native-approaches .approach-cards {
   gap: 7px;
@@ -132,77 +132,77 @@
   position: relative;
   gap: 5px;
   padding: 11px 12px;
-  border-color: #343936;
-  border-radius: 5px;
-  background: #181b19;
-  color: #a1ada4;
-  font-size: 10px;
+  border-color: var(--line-strong);
+  border-radius: var(--radius-card);
+  background: var(--panel-raised);
+  color: var(--text-muted);
+  font-size: var(--text-meta);
   line-height: 1.45;
   overflow-wrap: anywhere;
 }
 .poc-workbench .native-approaches .approach-cards .approach-card:hover:not(:disabled) {
-  background: #202722;
-  border-color: #53695a;
+  background: var(--line);
+  border-color: var(--line-strong);
 }
 .poc-workbench .native-approaches .approach-cards .approach-card.selected {
-  border-color: #5d9b7d;
-  background: #22352a;
-  box-shadow: inset 3px 0 #8ad7b5;
+  border-color: var(--accent-line);
+  background: var(--accent-soft);
+  box-shadow: inset 3px 0 var(--accent);
 }
 .poc-workbench .native-approaches .approach-card-heading {
   align-items: flex-start;
-  color: #dce7de;
-  font-size: 11px;
+  color: var(--text);
+  font-size: var(--text-meta);
 }
 .poc-workbench .native-approaches .approach-card-heading > span {
   flex: none;
-  color: #a4bbae;
-  font-size: 10px;
+  color: var(--text-muted);
+  font-size: var(--text-meta);
   font-variant-numeric: tabular-nums;
 }
 .poc-workbench .native-approaches .approach-card-heading b {
   font-weight: 550;
 }
 .poc-workbench .native-approaches .approach-observed {
-  color: #cedbd1;
-  font-size: 10px;
+  color: var(--text);
+  font-size: var(--text-meta);
   font-weight: 550;
 }
 .poc-workbench .native-approaches .approach-observed.no-intersection {
-  color: #b4dac5;
+  color: var(--text);
 }
 .poc-workbench .native-approaches .approach-observed.unavailable {
-  color: #abb7af;
+  color: var(--text-muted);
 }
 .poc-workbench .native-approaches :is(.approach-observed.intersection, .approach-card-concern, .approach-constraint-failure) {
-  color: #e9aaa0;
+  color: var(--danger);
 }
 .poc-workbench .native-approaches .approach-evidence {
   display: block;
   color: #ceb786;
-  font-size: 10px;
+  font-size: var(--text-meta);
   line-height: 1.5;
 }
 .poc-workbench .native-approaches .approach-card-metric {
-  color: #a0afa4;
+  color: var(--text-muted);
   line-height: 1.45;
   font-variant-numeric: tabular-nums;
 }
 .poc-workbench .native-approaches .approach-card-metric b {
-  color: #d2e0d5;
+  color: var(--text);
 }
 .poc-workbench .native-approaches .approach-metrics {
   gap: 8px;
   padding-block: 10px;
 }
 .poc-workbench .native-approaches .approach-metrics > span {
-  color: #a0afa4;
+  color: var(--text-muted);
 }
 .poc-workbench .native-approaches :is(.approach-metrics b, .approach-value-list dd) {
-  color: #d0ddd2;
+  color: var(--text);
 }
 .poc-workbench .native-approaches :is(.approach-value-list, .approach-diagnostics-list, .approach-sensitivity p, .approach-input-result p) {
-  color: #a2afa6;
+  color: var(--text-muted);
 }
 .poc-workbench .native-approaches .approach-value-list div {
   gap: 10px;
@@ -218,36 +218,36 @@
   font-variant-numeric: tabular-nums;
 }
 .poc-workbench .native-approaches .approach-concerns button {
-  border-bottom-color: #2d3630 !important;
+  border-bottom-color: var(--line) !important;
 }
 .poc-workbench .native-approaches .approach-concerns small {
-  color: #8d9f92;
+  color: var(--text-muted);
 }
 .poc-workbench .native-approaches :is(.approach-metric-results article, .approach-input-result section, .approach-consequence-comparison) {
-  background: #171c18;
-  border-color: #343e36;
-  border-radius: 5px;
+  background: var(--panel-raised);
+  border-color: var(--line-strong);
+  border-radius: var(--radius-card);
 }
 .poc-workbench .native-approaches .approach-consequence-comparison {
   gap: 8px;
   padding: 11px;
-  font-size: 10px;
+  font-size: var(--text-meta);
   line-height: 1.5;
 }
 .poc-workbench .native-approaches .approach-consequence-comparison :is(th, td) {
   padding: 7px 3px;
-  border-color: #343e36;
-  font-size: 10px;
+  border-color: var(--line-strong);
+  font-size: var(--text-meta);
   line-height: 1.45;
   overflow-wrap: anywhere;
 }
 .poc-workbench .native-approaches .approach-consequence-comparison th {
   font-weight: 500;
-  color: #b4c2b7;
+  color: var(--text-muted);
 }
 .poc-workbench .native-approaches .approach-consequence-comparison :is(th:not(:first-child), td) {
   min-width: 29px;
-  color: #d4dfd6;
+  color: var(--text);
 }
 .poc-workbench .native-approaches .approach-consequence-comparison .approach-consequence-disposition {
   color: #cfb57e;
@@ -259,19 +259,19 @@
   margin-block: 10px;
   padding: 10px;
   border: 1px solid #4f513d;
-  border-radius: 4px;
-  background: #22251d;
+  border-radius: var(--radius);
+  background: var(--panel-raised);
   color: #c8c5ad;
-  font-size: 10px;
+  font-size: var(--text-meta);
   line-height: 1.5;
 }
 .poc-workbench .native-approaches .approach-access-evidence[data-access-assessment=supported] {
   border-color: #425f4a;
-  background: #1a261e;
+  background: var(--panel-raised);
 }
 .poc-workbench .native-approaches .approach-access-evidence[data-access-assessment=rejected] {
   border-color: #6b5046;
-  background: #2a221e;
+  background: var(--panel-raised);
 }
 .poc-workbench .native-approaches .approach-access-evidence :is(h3, p, ul) {
   margin: 0;
@@ -281,43 +281,43 @@
 }
 .poc-workbench .native-approaches .approach-access-evidence h3 {
   color: #d3d9c8;
-  font-size: 11px;
+  font-size: var(--text-meta);
   line-height: 1.45;
 }
 .poc-workbench .native-approaches :is(.approach-source-row, .approach-source-values > div + div, .approach-diagnostics-list > li) {
-  border-color: #2d3630;
+  border-color: var(--line);
 }
 .poc-workbench .native-approaches :is(.approach-error, .approach-constraint-failures) {
   padding: 10px;
-  border-left-color: #c99582;
-  border-radius: 0 4px 4px 0;
-  background: #2d2420;
-  color: #e8bbab;
-  font-size: 10px;
+  border-left-color: var(--danger);
+  border-radius: 0 var(--radius-card) var(--radius-card) 0;
+  background: var(--danger-soft);
+  color: var(--danger);
+  font-size: var(--text-meta);
 }
 .poc-workbench .native-approaches .approach-computing {
   padding: 7px 0;
-  color: #a0ddc1;
-  font-size: 10px;
+  color: var(--accent);
+  font-size: var(--text-meta);
 }
 .poc-workbench .native-approaches .approach-save {
   min-height: 35px;
-  background: #1e2c23 !important;
-  border-color: #4c6756;
-  color: #bcddca;
+  background: var(--panel-raised) !important;
+  border-color: var(--line-strong);
+  color: var(--text);
 }
 
 .poc-workbench .surgical-panel.environment-preparation {
   gap: 14px;
   padding: 12px 16px 20px;
-  color: #d6deda;
-  font-size: 11px;
+  color: var(--text);
+  font-size: var(--text-meta);
   line-height: 1.5;
 }
 .poc-workbench .surgical-panel.environment-preparation > h2 {
   margin: 0;
-  color: #e2e7e4;
-  font-size: 17px;
+  color: var(--text);
+  font-size: var(--text-title);
   font-weight: 550;
   letter-spacing: -.25px;
   line-height: 1.35;
@@ -326,25 +326,25 @@
   display: grid;
   gap: 5px;
   padding: 10px 11px;
-  border: 1px solid #343b35;
-  border-left: 2px solid #758078;
-  border-radius: 4px;
-  background: #171b18;
+  border: 1px solid var(--line-strong);
+  border-left: 2px solid var(--text-muted);
+  border-radius: var(--radius-card);
+  background: var(--panel-raised);
 }
 .poc-workbench .environment-preparation .environment-preparation-status[data-readiness=ready] {
-  border-left-color: #82c7a4;
+  border-left-color: var(--accent);
 }
 .poc-workbench .environment-preparation .environment-preparation-status[data-readiness=review] {
-  border-left-color: #cfb079;
+  border-left-color: var(--warning);
 }
 .poc-workbench .environment-preparation .environment-preparation-status strong {
-  color: #d2ded5;
-  font-size: 11px;
+  color: var(--text);
+  font-size: var(--text-meta);
   font-weight: 550;
 }
 .poc-workbench .environment-preparation .environment-preparation-status .surgical-note {
-  color: #a1aca4;
-  font-size: 10px;
+  color: var(--text-muted);
+  font-size: var(--text-meta);
   line-height: 1.5;
 }
 .poc-workbench .environment-preparation .environment-preparation-controls {
@@ -354,21 +354,21 @@
   width: 100%;
   margin-bottom: 7px;
   padding: 0;
-  color: #d0d9d2;
-  font-size: 11px;
+  color: var(--text);
+  font-size: var(--text-meta);
   font-weight: 550;
 }
 .poc-workbench .environment-preparation .environment-preparation-controls > legend span {
   float: right;
-  color: #8f9e93;
-  font-size: 10px;
+  color: var(--text-muted);
+  font-size: var(--text-meta);
   font-weight: 400;
   font-variant-numeric: tabular-nums;
 }
 .poc-workbench .environment-preparation .environment-layer-list {
   display: grid;
   gap: 1px;
-  border-block: 1px solid #2c332e;
+  border-block: 1px solid var(--line);
 }
 .poc-workbench .environment-preparation .environment-layer-row.environment-mode {
   grid-template-columns: 72px minmax(0, 1fr);
@@ -379,7 +379,7 @@
 }
 .poc-workbench .environment-preparation .environment-native-pair dd {
   margin: 0;
-  color: #d4dcd6;
+  color: var(--text);
   overflow-wrap: anywhere;
 }
 .poc-workbench .environment-preparation .environment-layer-row {
@@ -389,17 +389,17 @@
   padding-block: 8px;
 }
 .poc-workbench .environment-preparation .environment-layer-row + .environment-layer-row {
-  border-top: 1px solid #272e29;
+  border-top: 1px solid var(--line);
 }
 .poc-workbench .environment-preparation .environment-layer-role {
-  color: #c5cfc7;
-  font-size: 11px;
+  color: var(--text);
+  font-size: var(--text-meta);
   line-height: 1.4;
 }
 .poc-workbench .environment-preparation .environment-layer-role small {
   display: block;
-  color: #8a998e;
-  font-size: 9px;
+  color: var(--text-muted);
+  font-size: var(--text-meta);
   font-weight: 400;
 }
 .poc-workbench .environment-preparation [data-layer-status=ready] .environment-layer-role small {
@@ -413,15 +413,15 @@
   min-width: 0;
   min-height: 34px;
   padding: 7px 25px 7px 8px;
-  background-color: #1a1c1c;
-  border-color: #363a38;
-  color: #d4dcd6;
-  font-size: 10px;
+  background-color: var(--panel-raised);
+  border-color: var(--line-strong);
+  color: var(--text);
+  font-size: var(--text-meta);
   line-height: 1.4;
 }
 .poc-workbench .environment-preparation .environment-unassessed {
   color: #b9ab8c;
-  font-size: 10px;
+  font-size: var(--text-meta);
   line-height: 1.5;
 }
 .poc-workbench .environment-preparation .environment-alignment-choice {
@@ -429,25 +429,25 @@
   gap: 8px;
   padding: 10px;
   border: 1px solid #5b503c;
-  border-radius: 4px;
-  background: #27251d;
+  border-radius: var(--radius);
+  background: var(--panel-raised);
 }
 .poc-workbench .environment-preparation .environment-alignment-choice .surgical-warning {
-  color: #d9c498;
-  font-size: 10px;
+  color: var(--warning);
+  font-size: var(--text-meta);
 }
 .poc-workbench .environment-preparation .environment-alignment-choice label {
   justify-content: flex-start;
   align-items: flex-start;
   gap: 8px;
   color: #d6c9ac;
-  font-size: 10px;
+  font-size: var(--text-meta);
   line-height: 1.5;
 }
 .poc-workbench .environment-preparation .environment-alignment-choice input {
   flex: none;
   margin: 2px 0 0;
-  accent-color: #7cdcbc;
+  accent-color: var(--accent);
 }
 .poc-workbench .environment-preparation .environment-preparation-actions {
   display: grid;
@@ -457,51 +457,51 @@
 .poc-workbench .surgical-panel.environment-preparation .environment-preparation-actions button {
   min-height: 34px;
   padding: 8px 10px;
-  border-color: #3b443d;
-  background: #1a1e1b;
-  color: #c5d1c8;
-  font-size: 11px;
+  border-color: var(--line-strong);
+  background: var(--panel-raised);
+  color: var(--text);
+  font-size: var(--text-meta);
   text-align: center;
   line-height: 1.4;
 }
 .poc-workbench .surgical-panel.environment-preparation .environment-preparation-actions .primary-button {
-  background: #223a2b;
-  border-color: #5a8c6e;
-  color: #c6efd5;
+  background: var(--accent-soft);
+  border-color: var(--accent-line);
+  color: var(--accent);
   font-weight: 550;
 }
 .poc-workbench .surgical-panel.environment-preparation .environment-preparation-actions button:hover:not(:disabled) {
-  background: #28392c;
-  border-color: #6e9278;
+  background: var(--line);
+  border-color: var(--text-muted);
 }
 .poc-workbench .environment-preparation :is(.environment-excluded, .environment-preparation-method) {
-  border-color: #2e3830;
+  border-color: var(--line);
   padding-top: 8px;
-  color: #a6b3a9;
-  font-size: 10px;
+  color: var(--text-muted);
+  font-size: var(--text-meta);
 }
 .poc-workbench .environment-preparation :is(.environment-excluded, .environment-preparation-method) > summary {
   padding-block: 3px;
-  color: #a5b7aa;
-  font-size: 10px;
+  color: var(--text-muted);
+  font-size: var(--text-meta);
 }
 .poc-workbench .environment-preparation :is(.environment-excluded, .environment-preparation-method) p {
-  color: #9daaa0;
+  color: var(--text-muted);
   line-height: 1.6;
 }
 .poc-workbench .environment-preparation .environment-preparation-error {
   display: grid;
   gap: 5px;
   padding: 10px;
-  border: 1px solid #6d5043;
-  border-radius: 4px;
-  background: #2d2420;
-  color: #e9c1ad;
-  font-size: 10px;
+  border: 1px solid var(--danger-line);
+  border-radius: var(--radius-card);
+  background: var(--danger-soft);
+  color: var(--danger);
+  font-size: var(--text-meta);
   overflow-wrap: anywhere;
 }
 .poc-workbench .environment-preparation .environment-preparation-error strong {
-  font-size: 11px;
+  font-size: var(--text-meta);
   font-weight: 550;
 }
 @media (max-width: 1150px) {
@@ -514,7 +514,7 @@
   }
 }
 
-.environment-route-decision {margin-block: .6rem; padding: .65rem .8rem; border-inline-start: 3px solid #dfb773; background: #1c2228; overflow-wrap: anywhere;}
-.environment-route-decision h3 {margin: 0 0 .4rem; font-size: 1rem;}
+.environment-route-decision {margin-block: .6rem; padding: .65rem .8rem; border-inline-start: 3px solid #dfb773; background: var(--panel-raised); overflow-wrap: anywhere;}
+.environment-route-decision h3 {margin: 0 0 .4rem; font-size: var(--text-body);}
 .environment-route-decision p {margin: .4rem 0;}
 .environment-route-decision details {margin-top: .55rem;}
