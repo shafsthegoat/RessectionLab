@@ -1323,15 +1323,15 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
                 {scaleMm} mm
               </span>
               <span className="rl-viewer-slice-note">
-                {props.segmentationOnly ? 'SEGMENTATION ONLY · NO ACQUIRED IMAGE' : props.generatedSignal ? "GENERATED IMAGE SIGNAL" : `SOURCE ${signalName.toUpperCase()}`}
-                {surgicalView ? (displayedSurgical?.preview?" · MODELED PREVIEW":" · MODELED EFFECT OVERLAY") : rehearsalMode ? " · RESEARCH EFFECT OVERLAY" : inspected
-                  ? " · UNEXECUTED TOOL PREVIEW"
+                {props.segmentationOnly ? 'Segmentation only · no acquired image' : props.generatedSignal ? "Generated image signal" : `Source ${signalName}`}
+                {surgicalView ? (displayedSurgical?.preview?" · modeled preview":" · modeled effect overlay") : rehearsalMode ? " · research effect overlay" : inspected
+                  ? " · unexecuted tool preview"
                   : proposalReviewLabel
-                  ? " · ESTIMATE"
+                  ? " · estimate"
                   : displayedPrior
-                    ? " · PRIOR"
+                    ? " · prior"
                     : displayedDiagnostic
-                      ? " · UNREVIEWED DIAGNOSTIC"
+                      ? " · unreviewed diagnostic"
                       : ""}
               </span>
             </div>

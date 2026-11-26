@@ -308,8 +308,7 @@
   right: 9px;
   bottom: 7px;
   color: #577080;
-  font-size: 6px;
-  letter-spacing: 0.12em;
+  font-size: var(--text-micro, 11px);
   pointer-events: none;
 }
 .rl-body-guide {
