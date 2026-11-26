@@ -1607,6 +1607,9 @@ export class VolumeRenderer {
     return {position:this.camera.position.toArray() as Point3,target:this.controls.target.toArray() as Point3,up:this.camera.up.toArray() as Point3};
   }
 
+  /** Vertical field of view of the 3D camera, for the pane's physical scale bar. */
+  get verticalFovDegrees(): number { return this.camera.fov; }
+
   private exposure?:OperativeExposureScene;
   private surgicalGroup: THREE.Group | null = null;
   private planningGroup:THREE.Group|null=null;

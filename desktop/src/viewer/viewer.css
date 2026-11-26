@@ -483,17 +483,6 @@
     gap: 5px;
   }
 }
-.rl-viewer-inspection-clear {
-  margin-left: 8px;
-  padding: 2px 7px;
-  border: 1px solid currentColor;
-  border-radius: 4px;
-  background: transparent;
-  color: inherit;
-  font: inherit;
-  cursor: pointer;
-  pointer-events: auto;
-}
 .rl-fusion-readout {display:flex;flex-wrap:wrap;flex-basis:100%;gap:5px 14px;font-size:9px;color:#abd8f9;padding-top:3px}
 .rl-fusion-readout span {color:#668ba8}
 .rl-viewer-dot {background:#389eff;box-shadow:0 0 8px #268fff45}

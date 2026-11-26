@@ -1,0 +1,116 @@
+/* Visible, escapable modes. A chip sits top-left under its pane header; the
+ * accent marks the current mode only. Token fallbacks match tokens.css. */
+.rl-mode-chips {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  max-width: 100%;
+  min-width: 0;
+  pointer-events: none;
+}
+.rl-mode-chip {
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  max-width: min(100%, 520px);
+  min-height: 28px;
+  box-sizing: border-box;
+  padding: 2px 3px 2px 8px;
+  border: 1px solid var(--accent, #7cdcbc);
+  border-radius: var(--radius, 6px);
+  /* The soft accent is translucent; the opaque underlay keeps text legible over bright anatomy. */
+  background-color: rgba(8, 9, 9, .86);
+  background-image: linear-gradient(var(--accent-soft, rgba(124, 220, 188, .12)), var(--accent-soft, rgba(124, 220, 188, .12)));
+  color: var(--text, #e6eae8);
+  font-size: var(--text-meta, 12px);
+  font-weight: 400;
+  line-height: 1.35;
+  letter-spacing: 0;
+  text-shadow: none;
+  animation: rl-mode-chip-enter var(--dur-enter, 180ms) var(--ease-out, cubic-bezier(.2, .8, .2, 1));
+}
+.rl-mode-chip-icon { flex: none; color: var(--accent, #7cdcbc); }
+.rl-mode-chip-text { min-width: 0; padding: 3px 0; overflow-wrap: anywhere; }
+.rl-mode-chip-name { font-weight: 600; color: var(--text, #e6eae8); }
+.rl-mode-chip-detail { color: var(--text-muted, #959e9b); font-variant-numeric: tabular-nums; }
+.rl-mode-chip-detail::before { content: ' · '; }
+.rl-mode-chip-exit,
+.rl-mode-chip-action {
+  flex: none;
+  min-height: 22px;
+  margin: 0;
+  border-radius: calc(var(--radius, 6px) - 2px);
+  font: inherit;
+  cursor: pointer;
+}
+.rl-mode-chip-exit {
+  display: inline-grid;
+  place-items: center;
+  width: 22px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text, #e6eae8);
+}
+.rl-mode-chip-exit:hover { background: var(--accent-soft, rgba(124, 220, 188, .12)); color: var(--accent, #7cdcbc); }
+.rl-mode-chip-action {
+  padding: 1px 7px;
+  border: 1px solid var(--line, #2b2e2f);
+  background: transparent;
+  color: var(--text-muted, #959e9b);
+  white-space: nowrap;
+}
+.rl-mode-chip-action:hover { color: var(--text, #e6eae8); }
+.rl-mode-chip-action[aria-pressed=true] {
+  border-color: var(--accent, #7cdcbc);
+  background: var(--accent-soft, rgba(124, 220, 188, .12));
+  color: var(--accent, #7cdcbc);
+}
+.rl-mode-chip :is(.rl-mode-chip-exit, .rl-mode-chip-action):focus-visible {
+  outline: 1px solid var(--accent, #7cdcbc);
+  outline-offset: 1px;
+}
+@keyframes rl-mode-chip-enter {
+  from { opacity: 0; transform: translateY(-2px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rl-mode-chip { animation: none; }
+}
+
+/* 3D pane: chips, then the existing legend lines, flow down from the top-left. */
+.rl-viewer .rl-viewport-start {
+  position: absolute;
+  top: 8px;
+  left: 10px;
+  right: 10px;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  pointer-events: none;
+}
+/* The stack stays mounted (and empty) so screen readers hear a mode appear. */
+.rl-viewer .rl-viewport-start > .rl-mode-chips:not(:empty) + .rl-viewer-annotations { margin-top: 6px; }
+.rl-viewer .rl-viewport-start > .rl-viewer-annotations {
+  position: static;
+  max-width: 80%;
+  padding-left: 2px;
+}
+/* Result view hides the anatomy overlays; its own chip stays operable. */
+.rl-viewer[data-result-inspection] .rl-viewer-anatomy-image > .rl-viewport-start { visibility: visible; }
+.rl-viewer[data-result-inspection] .rl-viewport-start > :not(.rl-mode-chips) { visibility: hidden; }
+.rl-viewer[data-result-inspection] .rl-viewer-anatomy:has(.rl-mode-chip) > .result-controls { top: 84px; }
+/* The operative legend starts below a chip when both are shown. */
+.rl-viewer .rl-viewer-anatomy-image:has(.rl-mode-chip) > .engine-anatomy-key { top: calc(32px + 34px); }
+.rl-viewer[data-field-presentation='true'] .rl-viewport-start { top: 10px; left: 12px; right: 64px; }
+
+/* Source slice pane: the expanded-view chip, under the pane header. */
+.rl-viewer .rl-pane-mode-chips {
+  position: absolute;
+  top: 46px;
+  left: 10px;
+  z-index: 5;
+  max-width: calc(100% - 48px);
+}
