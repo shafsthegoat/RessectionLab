@@ -42,7 +42,7 @@ import {mixedVesselLesion} from '../native-study-state';
 import { clippingForBounds, clippingPositionInBounds, newClippingPosition, usesPatientCutaway, viewerCutaway } from './workspaceSettings';
 import type { ViewerWorkspaceSettings } from './workspaceSettings';
 import { canBalanceTofContext, volumeSettings, isCtAngiography, isCtModality } from './volumeTransfer';
-import type { VolumePreset, VolumeRenderingMode } from './volumeTransfer';
+import type { CinematicBone, VolumePreset, VolumeRenderingMode } from './volumeTransfer';
 import {
   PLANE_AXES,
   PLANE_LABELS,
@@ -913,6 +913,14 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
                 Show 3D bone overlay
               </label>}
             <label title="Cinematic lighting traces shadows and light bounces through the acquired scan and refines the still image while the view is at rest. Vessel layers shown here color the volume instead of drawing their surfaces.">Volume lighting<select aria-label="Volume lighting" value={settings.volumeRendering?.mode??'standard'} disabled={!scanVolume.enabled} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,mode:e.target.value as VolumeRenderingMode}})}><option value="standard">Standard</option><option value="cinematic">Cinematic · refines at rest</option></select></label>
+            {settings.volumeRendering?.mode==='cinematic'&&isCtModality(signalName)&&
+              <label title="Solid bone is lit and opaque and hides vessels inside an uncut skull; see-through keeps them visible behind a thin bone shell. Automatic uses solid bone at a cut.">Bone<select aria-label="Cinematic bone" value={settings.volumeRendering.cinematicBone??'auto'} disabled={!scanVolume.enabled}
+                onChange={e=>{
+                  const volumeRendering={...settings.volumeRendering};
+                  if(e.target.value==='auto')delete volumeRendering.cinematicBone;
+                  else volumeRendering.cinematicBone=e.target.value as CinematicBone;
+                  changeSettings({...settings,volumeRendering});
+                }}><option value="auto">Automatic · solid when cut</option><option value="shell">See-through</option><option value="solid">Solid</option></select></label>}
             <label>Preset<select aria-label="Volume rendering preset" value={settings.volumeRendering?.preset??'auto'} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,preset:e.target.value as VolumePreset}})}><option value="auto">Automatic · {signalName}</option><option value="ct-bone" disabled={!isCtModality(signalName)}>CT bone</option><option value="ct-tissue" disabled={!isCtModality(signalName)}>CT tissue</option><option value="ct-angiography" disabled={!isCtModality(signalName)}>CT angiography · contrast scan</option><option value="mri">{/MRA|TOF|angiogra/i.test(signalName)?'Bright-blood MR signal':'MRI tissue'}</option></select></label>
             <label>Scan density<input aria-label="Scan volume density" type="range" min="0" max="2" step=".01" value={scanVolume.density}
               onChange={e=>{

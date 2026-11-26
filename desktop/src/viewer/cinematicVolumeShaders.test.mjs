@@ -11,6 +11,7 @@ registerHooks({resolve(specifier,context,nextResolve){
   }
 }});
 const {CinematicVolumePass}=await import('./CinematicVolumePass.ts');
+const finishModule=await import('./CinematicVolumePass.ts');
 
 /** Active lines of a GLSL source under the given defines, with #if balance checked. */
 function preprocess(source,defines){
@@ -87,7 +88,7 @@ test('each cinematic kernel assembles to balanced GLSL 3 whose uniforms are exac
       assert.match(code,/layout\(location=0\)\s*out\s+vec4\s+outColor;/);assert.match(code,/layout\(location=1\)\s*out\s+vec4\s+outGuide;/);
       if(kernel.defines.CINEMATIC_PASS===1)assert.match(code,/isnan\(color\)\)\|\|any\(isinf\(color\)\)\)color=vec3\(0\.0\)/,'a non-finite sample is dropped');
     }
-    for(const [name,material] of [['denoise',pass.filter],['surfaces',pass.surfaces]]){
+    for(const [name,material] of [['denoise',pass.filter],['surfaces',pass.surfaces],['accumulate',pass.accumulate]]){
       const {code}=preprocess(material.fragmentShader,material.defines??{});
       checkStructure(name,code,new Set(Object.keys(material.uniforms)));
     }
@@ -109,4 +110,54 @@ test('the structural checks reject the mistakes they look for',()=>{
   assert.throws(()=>checkStructure('t','uniform float uA;\nvoid main(){}',new Set(['uA','uB'])));
   assert.throws(()=>checkStructure('t','struct H{bool a;vec3 b,c;};\nH h(){return H(true,vec3(0.0));}',new Set()));
   checkStructure('t','struct H{bool a;vec3 b,c;};\nH h(){return H(true,vec3(0.0),vec3(1.0));}\nvoid main(){vec3 v=vec3(0,0,1);float y=2.0*3.0;}',new Set());
+});
+
+test('the wet and porcelain finishes add no sampled highlight and keep the firefly clamp',()=>{
+  const texture=new THREE.Data3DTexture(new Float32Array(8),2,2,2);
+  const shared={uClipEnabled:{value:false},uClipPlane:{value:new THREE.Vector4()},uExtraClipCount:{value:0},
+    uExtraClips:{value:Array.from({length:7},()=>new THREE.Vector4())},uBackground:{value:new THREE.Color()}};
+  const pass=new CinematicVolumePass({signal:new Float32Array(8),shape:[2,2,2],texture,worldToVoxel:new THREE.Matrix4(),voxelMm:1,ct:true,floatLinear:false},shared);
+  try{
+    for(const rest of [1,0]){
+      const {code}=preprocess(pass.rest[1].fragmentShader,{CINEMATIC_REST:rest,CINEMATIC_PASS:1});
+      const key=code.slice(code.indexOf('vec3 keyLight('),code.indexOf('vec3 reflection('));
+      // Highlights come from the disc centre: every ggx lobe reads the key direction, never the sampled one.
+      const lobes=[...key.matchAll(/ggx\(([^;]*?)uKeyDirection/g)];
+      assert.equal(lobes.length,2,'a base lobe and a wet coat lobe');
+      assert.doesNotMatch(key,/ggx\([^)]*,l,/);
+      assert.match(code,/reflection\(h,view\)/,`rest ${rest}: the studio reflection is shaded`);
+      assert.match(code,/if\(luminance>6\.0\)/,'the firefly clamp stays');
+    }
+    const {CINEMATIC_FINISH:f}=finishModule;
+    for(const value of [f.vessel.roughness,f.vessel.coatRoughness,f.bone.roughness])assert.ok(value>.1&&value<.6);
+    assert.ok(f.vessel.coatRoughness<f.vessel.roughness&&f.vessel.roughness<f.bone.roughness,'wet lumen is glossier than bone');
+    assert.ok(f.bone.shellDiffuse>0&&f.bone.shellDiffuse<1);
+  }finally{pass.dispose();}
+});
+
+test('vessel albedos are a light vermilion and a blue of matching value',async()=>{
+  const {CINEMATIC_VESSEL_ALBEDO}=await import('./CinematicVolumePass.ts');
+  const hsv=hex=>{const [r,g,b]=[1,3,5].map(i=>parseInt(hex.slice(i,i+2),16)/255),max=Math.max(r,g,b),min=Math.min(r,g,b),d=max-min;
+    const h=d===0?0:max===r?((g-b)/d+6)%6:max===g?(b-r)/d+2:(r-g)/d+4;return {h:h*60,s:d/max,v:max};};
+  const artery=hsv(CINEMATIC_VESSEL_ALBEDO.artery),vein=hsv(CINEMATIC_VESSEL_ALBEDO.vein);
+  assert.ok(artery.h>=8&&artery.h<=20,`artery hue ${artery.h} is vermilion, not crimson`);
+  assert.ok(artery.v>=.7,'and light');
+  assert.ok(vein.h>=200&&vein.h<=230);
+  assert.ok(Math.abs(vein.v-artery.v)<=.1&&Math.abs(vein.s-artery.s)<=.15,'the vein blue matches the artery in value and saturation');
+});
+
+test('silhouette hits are shaded edge on and their secondary rays leave back along the eye ray',()=>{
+  const texture=new THREE.Data3DTexture(new Float32Array(8),2,2,2);
+  const shared={uClipEnabled:{value:false},uClipPlane:{value:new THREE.Vector4()},uExtraClipCount:{value:0},
+    uExtraClips:{value:Array.from({length:7},()=>new THREE.Vector4())},uBackground:{value:new THREE.Color()}};
+  const pass=new CinematicVolumePass({signal:new Float32Array(8),shape:[2,2,2],texture,worldToVoxel:new THREE.Matrix4(),voxelMm:1,ct:true,floatLinear:false},shared);
+  try{
+    const {code}=preprocess(pass.rest[1].fragmentShader,{CINEMATIC_REST:1,CINEMATIC_PASS:1});
+    const surface=code.slice(code.indexOf('Hit surfaceAt('),code.indexOf('Hit bounceHit('));
+    assert.doesNotMatch(surface,/h\.normal=-h\.normal/,'a back-facing normal is not mirrored into the lumen');
+    assert.match(surface,/h\.normal=normalize\(h\.normal-direction\*\(away\+/);
+    // Shadow and bounce origins step back toward the viewer as well as off the surface.
+    assert.match(code,/vec3 origin=h\.world\+\(h\.normal\*\(0\.6\*h\.surface\)\+view\*0\.4\)\*uVoxelMm;/);
+    assert.match(code,/vec3 origin2=world\+\(h\.normal\*\(0\.6\*h\.surface\)\+view\*0\.4\)\*uVoxelMm;/);
+  }finally{pass.dispose();}
 });

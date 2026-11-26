@@ -3,7 +3,10 @@ import { inverseAffine, rasAffine } from './coordinates.ts';
 
 export type VolumePreset = 'auto' | 'ct-bone' | 'ct-tissue' | 'ct-angiography' | 'mri';
 export type VolumeRenderingMode = 'standard' | 'cinematic';
-export interface VolumeRenderingSettings { enabled?: boolean; mode?: VolumeRenderingMode; preset?: VolumePreset; density?: number; window?: [number,number]; shadows?: boolean; isolateLabels?: boolean; showCtExteriorSignal?: boolean; showCtBoneOverlay?: boolean; balanceTofContext?: boolean; points?: Array<[number,number,number,number,number]> }
+/** Acquired CT bone in cinematic mode: a see-through shell or solid lit bone.
+ * Unset, a physical cut or an opaque skull display chooses solid, otherwise the shell. */
+export type CinematicBone = 'shell' | 'solid';
+export interface VolumeRenderingSettings { enabled?: boolean; mode?: VolumeRenderingMode; cinematicBone?: CinematicBone; preset?: VolumePreset; density?: number; window?: [number,number]; shadows?: boolean; isolateLabels?: boolean; showCtExteriorSignal?: boolean; showCtBoneOverlay?: boolean; balanceTofContext?: boolean; points?: Array<[number,number,number,number,number]> }
 export const VOLUME_TRANSFER_WIDTH = 1024;
 /** One texel inside the zero-extinction prefix of the linearly filtered LUT. */
 export function zeroExtinctionLevel(data:Float32Array) {

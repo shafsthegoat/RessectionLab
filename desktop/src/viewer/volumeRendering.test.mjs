@@ -78,6 +78,16 @@ test('saved volume choices round-trip detached from source arrays and reject mal
     assert.throws(()=>checkedViewerSettings(source,{volumeRendering}));
 });
 
+test('the cinematic bone choice is validated and survives saving',()=>{
+  const source={compartments:[],brainMask:null,metadata:{}};
+  for(const cinematicBone of ['shell','solid']){
+    const saved={volumeRendering:{enabled:true,mode:'cinematic',cinematicBone}};
+    assert.deepEqual(checkedViewerSettings(source,saved),saved);
+  }
+  for(const cinematicBone of ['opaque','Solid',true,null,1])
+    assert.throws(()=>checkedViewerSettings(source,{volumeRendering:{mode:'cinematic',cinematicBone}}));
+});
+
 test('explicit skull modes survive settings validation',()=>{
  const source={compartments:[],brainMask:null,metadata:{}};
  for(const skullMode of ['exterior','transparent','cutaway'])assert.equal(checkedViewerSettings(source,{skullMode}).skullMode,skullMode);

@@ -378,3 +378,26 @@ is shown on TopCoW only. `capsule_clearance` is a lower bound whose mesh
 tolerance of one grid step rests on measurement, not proof; the engine
 collides against the wall triangles. The fitted sections follow lumps in the
 model boundary; displayed normals are smoothed for shading only.
+
+## Path-traced mode after the look pass
+
+After the Phase 3 captures were compared with the reference stills, the
+path-traced mode ("Volume lighting") changed, and only that mode: standard
+stays the default.
+
+- Bone: a `cinematicBone` setting ("Bone" beside Volume lighting on CT).
+  Automatic uses solid, lit bone at any cut or with an opaque skull display,
+  and a see-through shell otherwise; the shell keeps its rim and highlight
+  and 30 percent of its diffuse light, which removes most of the haze over
+  uncut views. Bone tint follows scan density.
+- Vessels: an orange-red artery and a blue vein of matching value, a wet
+  highlight from a base and a coat lobe evaluated at the key light, and lumen
+  normals from a two-voxel stencil at rest so thin vessels shade as tubes.
+- Translucent mesh layers are composited into each rest sample before it
+  joins the running mean, and silhouette normals are turned edge-on; both
+  removed dark dotted rims around vessels.
+- A saved native view may now carry the path-traced mode and the bone choice.
+
+Three capture presets framed like the reference stills were added beside the
+six fixed ones: a wide skull base, a wide axial clip and an anterior view cut
+coronally. Frame timing and blind review of this mode are measured in Phase 5.

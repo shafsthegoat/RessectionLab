@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import type {Point3} from './coordinates';
 import {ctaCutKey} from './ctaVesselLight';
-import {cinematicDenoiseShader, cinematicFragmentShader, cinematicSurfaceShader} from './cinematicVolumeShaders';
+import {cinematicAccumulateShader, cinematicDenoiseShader, cinematicFragmentShader, cinematicSurfaceShader} from './cinematicVolumeShaders';
 import {volumeVertexShader} from './volumeRaycastShaders';
 import {renderTargetBytes} from './renderResourceEstimate';
 import {cinematicFieldSteps, cinematicMajorantSteps, cinematicMaterial, cinematicSignalSteps, cinematicTagSteps,
@@ -28,6 +28,25 @@ export function cinematicFilterBlend(samples: number) {
 export const CINEMATIC_FAINT_FLOOR = {glass: .1, fog: .2};
 /** Peel layers of translucent meshes that can be composited over the traced image. */
 export const CINEMATIC_SURFACE_LAYERS = 5;
+/** Vessel albedo (sRGB) by tag class: a light vermilion lumen, and a vein blue
+ * of the same value and similar saturation so the two classes read as one material. */
+export const CINEMATIC_VESSEL_ALBEDO = {artery: '#b64f37', vein: '#4a70a8'} as const;
+/** Bone albedo (sRGB): porcelain, tinted by a share of the skull layer's colour. */
+export const CINEMATIC_BONE_ALBEDO = '#e6d9d5';
+export const CINEMATIC_BONE_TINT = .2;
+/** Surface finishes. Vessels: base roughness, wet coat roughness and weight,
+ * environment reflection weight. Bone: roughness (a soft porcelain sheen),
+ * diffuse wrap past the terminator, reflection weight, and the share of
+ * diffuse light a see-through bone shell keeps. */
+export const CINEMATIC_FINISH = {
+  vessel: {roughness: .34, coatRoughness: .22, coat: 2, reflection: .9},
+  bone: {roughness: .46, wrap: .5, reflection: .3, shellDiffuse: .3},
+  /** Albedo multiplier of bone just past the bone ramp (linear RGB), reaching
+   * the full porcelain albedo this far (HU) above the ramp's top. */
+  marrow: {tint: [.78, .62, .6] as [number, number, number], span: 700},
+  /** Tint of the wrapped light on bone (linear RGB). */
+  subsurface: [1, .5, .38] as [number, number, number],
+};
 const MOTION_FILTER_STEPS = [1, 2, 4];
 const REST_FILTER_STEPS = [1, 2];
 
@@ -90,6 +109,9 @@ export class CinematicVolumePass {
   private readonly motion: [THREE.ShaderMaterial, THREE.ShaderMaterial];
   private readonly filter: THREE.ShaderMaterial;
   private readonly surfaces: THREE.ShaderMaterial;
+  private readonly accumulate: THREE.ShaderMaterial;
+  /** One rest sample before translucent layers are composited over it. */
+  private sampleTarget: THREE.WebGLRenderTarget | null = null;
   private readonly quad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2));
   private readonly scene = new THREE.Scene();
   private readonly camera = new THREE.Camera();
@@ -134,13 +156,19 @@ export class CinematicVolumePass {
       uResolution: {value: new THREE.Vector2(1, 1)}, uSample: {value: 0}, uAccumulate: {value: false}, uJitter: {value: false},
       uTagChannels: {value: 0}, uSingleClass: {value: 0}, uTagGate: {value: new THREE.Vector2()}, uTagFloor: {value: new THREE.Vector3()},
       uVesselRamp: {value: new THREE.Vector4(1e30, 2e30, 1e30, 2e30)}, uVesselSigma: {value: 0},
-      uVesselColor0: {value: linear('#a32e22')}, uVesselColor1: {value: linear('#325988')},
-      uBoneRamp: {value: new THREE.Vector3(1e30, 2e30, 0)}, uBoneColor: {value: linear('#e3d6bf')},
+      uVesselColor0: {value: linear(CINEMATIC_VESSEL_ALBEDO.artery)}, uVesselColor1: {value: linear(CINEMATIC_VESSEL_ALBEDO.vein)},
+      uBoneRamp: {value: new THREE.Vector3(1e30, 2e30, 0)}, uBoneColor: {value: linear(CINEMATIC_BONE_ALBEDO)},
+      uVesselFinish: {value: new THREE.Vector4(CINEMATIC_FINISH.vessel.roughness, CINEMATIC_FINISH.vessel.coatRoughness,
+        CINEMATIC_FINISH.vessel.coat, CINEMATIC_FINISH.vessel.reflection)},
+      uBoneFinish: {value: new THREE.Vector4(CINEMATIC_FINISH.bone.roughness, CINEMATIC_FINISH.bone.wrap,
+        CINEMATIC_FINISH.bone.reflection, CINEMATIC_FINISH.bone.shellDiffuse)},
+      uSubsurface: {value: new THREE.Vector3(...CINEMATIC_FINISH.subsurface)},
+      uMarrow: {value: new THREE.Vector4(...CINEMATIC_FINISH.marrow.tint, CINEMATIC_FINISH.marrow.span)},
       uGlass: {value: false}, uFaint: {value: new THREE.Vector4()}, uSoftColor: {value: linear('#c4a196')},
       uGradientScale: {value: 1}, uVoxelMm: {value: source.voxelMm},
-      uKeyDirection: {value: new THREE.Vector3()}, uKeyCosine: {value: .97}, uKeyIrradiance: {value: new THREE.Vector3(3, 2.91, 2.76)},
+      uKeyDirection: {value: new THREE.Vector3()}, uKeyCosine: {value: .985}, uKeyIrradiance: {value: new THREE.Vector3(3, 2.91, 2.76)},
       uFillDirection: {value: new THREE.Vector3()}, uFillRadiance: {value: new THREE.Vector3(.22, .26, .32)},
-      uSkyUp: {value: new THREE.Vector3()}, uSkyColor: {value: new THREE.Vector3(.3, .32, .36)}, uGroundColor: {value: new THREE.Vector3(.05, .045, .04)},
+      uSkyUp: {value: new THREE.Vector3()}, uSkyColor: {value: new THREE.Vector3(.3, .32, .36)}, uGroundColor: {value: new THREE.Vector3(.1, .088, .078)},
       uBounceMm: {value: 20}, uFaintFloor: {value: 0},
     };
     const kernel = (rest: boolean, pass: number) => new THREE.ShaderMaterial({glslVersion: THREE.GLSL3, vertexShader: volumeVertexShader,
@@ -155,6 +183,9 @@ export class CinematicVolumePass {
       depthTest: false, depthWrite: false, toneMapped: false,
       uniforms: {uImage: {value: null}, uGuide: {value: null}, uInverseProjection: this.uniforms.uInverseProjection, uSurfaceCount: {value: 0},
         ...Object.fromEntries(Array.from({length: CINEMATIC_SURFACE_LAYERS}, (_, i) => [[`uSurfaceColor${i}`, {value: null}], [`uSurfaceDepth${i}`, {value: null}]]).flat())}});
+    this.accumulate = new THREE.ShaderMaterial({glslVersion: THREE.GLSL3, vertexShader: volumeVertexShader, fragmentShader: cinematicAccumulateShader,
+      depthTest: false, depthWrite: false, toneMapped: false,
+      uniforms: {uSampleColor: {value: null}, uSampleGuide: {value: null}, uPrevious: {value: null}, uSample: {value: 0}}});
     this.quad.frustumCulled = false;
     this.scene.add(this.quad);
   }
@@ -268,12 +299,13 @@ export class CinematicVolumePass {
     this.samples = 0;
   }
 
-  /** Light and material colours; they do not bound extinction, so they apply at once. */
+  /** Light and material colours; they do not bound extinction, so they apply at once.
+   * Bone is porcelain carrying CINEMATIC_BONE_TINT of the given layer colour. */
   setLighting(lighting: CinematicLighting) {
     const u = this.uniforms;
     u.uVesselColor0.value.copy(lighting.vesselColors[0]);
     u.uVesselColor1.value.copy(lighting.vesselColors[1]);
-    u.uBoneColor.value.copy(lighting.boneColor);
+    u.uBoneColor.value.copy(linear(CINEMATIC_BONE_ALBEDO)).lerp(lighting.boneColor, CINEMATIC_BONE_TINT);
   }
 
   private draw(renderer: THREE.WebGLRenderer, material: THREE.Material, target: THREE.WebGLRenderTarget) {
@@ -309,9 +341,14 @@ export class CinematicVolumePass {
   }
 
   /** One sample. Interactive frames are filtered single samples at the drag
-   * resolution; settled frames extend the running mean and fade the filter. */
+   * resolution; settled frames extend the running mean and fade the filter.
+   * Translucent mesh layers are composited over each rest sample before it
+   * joins the mean, each against that sample's own first collision: deciding
+   * on the mean with one sample's depth would leave pixels at a silhouette
+   * without the layer behind them, as dark speckle. */
   render(renderer: THREE.WebGLRenderer, camera: THREE.PerspectiveCamera, scene: THREE.WebGLRenderTarget,
-    w: number, h: number, interactive: boolean): THREE.Texture {
+    w: number, h: number, interactive: boolean, layers?: CinematicSurfaceLayers): THREE.Texture {
+    const composite = !!layers && layers.count > 0;
     const u = this.uniforms;
     camera.updateMatrixWorld();
     u.uCameraWorld.value.copy(camera.matrixWorld);
@@ -333,17 +370,29 @@ export class CinematicVolumePass {
       u.uJitter.value = false;
       u.uSample.value = 0;
       this.sample(renderer, this.motion, this.motionTrace, this.motionTarget);
-      return this.denoise(renderer, this.motionTarget.textures[0], this.motionTarget.textures[1], this.motionFiltered, 0, MOTION_FILTER_STEPS);
+      const moving = this.denoise(renderer, this.motionTarget.textures[0], this.motionTarget.textures[1], this.motionFiltered, 0, MOTION_FILTER_STEPS);
+      return composite ? this.overlay(renderer, moving, layers!, w, h) : moving;
     }
     if (this.samples === 0) this.limit = cinematicSampleLimit();
     const current = this.accumulation[this.samples % 2], previous = this.accumulation[(this.samples + 1) % 2];
     fit(current, w, h); fit(previous, w, h);
     u.uPrevious.value = previous.textures[0];
-    u.uAccumulate.value = true;
+    u.uAccumulate.value = !composite;
     u.uJitter.value = true;
     u.uSample.value = this.samples;
     fit(this.trace, w, h);
-    this.sample(renderer, this.rest, this.trace, current);
+    if (composite) {
+      this.sampleTarget ??= multipleTarget(THREE.FloatType, false);
+      fit(this.sampleTarget, w, h);
+      this.sample(renderer, this.rest, this.trace, this.sampleTarget);
+      const a = this.accumulate.uniforms;
+      a.uSampleColor.value = this.overlay(renderer, this.sampleTarget.textures[0], layers!, w, h);
+      a.uSampleGuide.value = this.sampleTarget.textures[1];
+      a.uPrevious.value = previous.textures[0];
+      a.uSample.value = this.samples;
+      this.draw(renderer, this.accumulate, current);
+      this.guide = current.textures[1];
+    } else this.sample(renderer, this.rest, this.trace, current);
     this.samples++;
     if (!this.motionCompiled) {
       // Compile the moving-frame kernels in the background so the first drag
@@ -365,9 +414,9 @@ export class CinematicVolumePass {
     return this.denoise(renderer, current.textures[0], current.textures[1], this.restFiltered, blend, REST_FILTER_STEPS, this.samples);
   }
 
-  /** Composite translucent mesh layers over the last rendered image where
-   * they lie in front of its first dense collision. */
-  overlay(renderer: THREE.WebGLRenderer, image: THREE.Texture, layers: CinematicSurfaceLayers, w: number, h: number): THREE.Texture {
+  /** Composite translucent mesh layers over one sample where they lie in
+   * front of that sample's first dense collision. */
+  private overlay(renderer: THREE.WebGLRenderer, image: THREE.Texture, layers: CinematicSurfaceLayers, w: number, h: number): THREE.Texture {
     const u = this.surfaces.uniforms;
     u.uImage.value = image;
     u.uGuide.value = this.guide;
@@ -386,7 +435,7 @@ export class CinematicVolumePass {
   get filterWeight() { return this.samples ? 1 - cinematicFilterBlend(this.samples) : 1; }
 
   get bytes() {
-    const targets = [...this.accumulation, this.trace, ...[this.motionTarget, this.motionTrace, this.surfaceTarget].filter(target => !!target),
+    const targets = [...this.accumulation, this.trace, ...[this.motionTarget, this.motionTrace, this.surfaceTarget, this.sampleTarget].filter(target => !!target),
       ...this.motionFiltered, ...this.restFiltered];
     return targets.reduce((sum, target) => sum + renderTargetBytes(target), 0) + (this.tagTexture?.image.data?.byteLength ?? 0) +
       (this.majorantTexture?.image.data?.byteLength ?? 0) + (this.fieldTexture?.image.data?.byteLength ?? 0);
@@ -402,8 +451,9 @@ export class CinematicVolumePass {
     this.motionTarget?.dispose();
     this.motionTrace?.dispose();
     this.surfaceTarget?.dispose();
+    this.sampleTarget?.dispose();
     [...this.motionFiltered, ...this.restFiltered].forEach(target => target.dispose());
     this.quad.geometry.dispose();
-    [...this.rest, ...this.motion, this.filter, this.surfaces].forEach(material => material.dispose());
+    [...this.rest, ...this.motion, this.filter, this.surfaces, this.accumulate].forEach(material => material.dispose());
   }
 }

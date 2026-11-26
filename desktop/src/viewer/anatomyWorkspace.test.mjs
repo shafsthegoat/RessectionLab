@@ -932,7 +932,8 @@ test('cinematic mode path traces tagged vessels, keeps opaque meshes and refines
     const overlay=draws.filter(draw=>draw.material?.fragmentShader?.includes('uSurfaceCount')).at(-1);
     // The last peel only bounds the tail, which replaces its colour.
     assert.ok(overlay&&overlay.material.uniforms.uSurfaceCount.value===peels.length-1,'every peel and the tail are composited');
-    assert.equal(scan.blitMaterial.map,overlay.target.texture);
+    assert.ok(draws.some(draw=>draw.material===pass.accumulate&&draw.material.uniforms.uSampleColor.value===overlay.target.texture),
+      'over the sample, before it joins the mean');
     assert.equal(first.translucentLayers,peels.length-1);
     const perAccumulation=draws.filter(draw=>draw.scene===scene).length;
     let scenes=perAccumulation;
@@ -967,10 +968,10 @@ test('cinematic mode path traces tagged vessels, keeps opaque meshes and refines
     const hidden=[];let disposed=0;
     scan.labels(null,{},{presentation:'segmentation'},[]);render();
     for(const texture of [pass.uniforms.uTags.value,pass.uniforms.uMajorant.value,pass.uniforms.uField.value])texture.addEventListener('dispose',()=>disposed++);
-    for(const target of [...pass.accumulation,pass.trace,pass.motionTarget,pass.motionTrace,...pass.motionFiltered,pass.surfaceTarget])target.addEventListener('dispose',()=>disposed++);
+    for(const target of [...pass.accumulation,pass.trace,pass.motionTarget,pass.motionTrace,...pass.motionFiltered,pass.surfaceTarget,pass.sampleTarget])target.addEventListener('dispose',()=>disposed++);
     hidden.push(...pass.restFiltered);hidden.forEach(target=>target.addEventListener('dispose',()=>disposed++));
     scan.dispose();
-    assert.equal(disposed,11+hidden.length,'tags, glass field, majorants and every attachment are released');
+    assert.equal(disposed,12+hidden.length,'tags, glass field, majorants and every attachment are released');
   }catch(error){scan.dispose();throw error;}
 });
 
@@ -1034,6 +1035,32 @@ test('cinematic refinement runs back to back until settled, then paced, and stop
     assert.equal(scan.needsRefinement,true,'ordinary use refines to the cap');
     scan.configure({enabled:true,mode:'standard'},'CTA',null);
     assert.equal(scan.cinematicPace,null);
+  }finally{scan.dispose();}
+});
+
+test('cinematic CT bone is solid at a cut and a see-through shell otherwise unless chosen, with its own lit finish',()=>{
+  const {renderer}=recordingRenderer();
+  const scan=new ScanVolumeRenderer(renderer,cinematicPhantom(),[0,1000]);
+  const camera=new THREE.PerspectiveCamera(),{scene}=phantomScene();
+  const plane=new THREE.Plane(new THREE.Vector3(0,0,-1),2);
+  const bone=(cinematicBone,clip)=>{
+    scan.configure({enabled:true,mode:'cinematic',...(cinematicBone?{cinematicBone}:{})},'CTA',clip);
+    scan.labels(null,{},{presentation:'segmentation',skullMode:'transparent'},[]);
+    scan.render(scene,camera,640,480,false,()=>{});
+    const u=scan.cinematic.uniforms;
+    return u.uBoneRamp.value.z>0&&u.uFaint.value.y===0?'solid':u.uBoneRamp.value.z===0&&u.uFaint.value.y>0?'shell':'mixed';
+  };
+  try{
+    assert.deepEqual([bone(undefined,null),bone(undefined,plane)],['shell','solid'],'automatic: solid only at a cut');
+    assert.deepEqual([bone('solid',null),bone('shell',plane),bone('shell',null),bone('solid',plane)],['solid','shell','shell','solid']);
+    const u=scan.cinematic.uniforms,{CINEMATIC_FINISH,CINEMATIC_VESSEL_ALBEDO,CINEMATIC_BONE_ALBEDO,CINEMATIC_BONE_TINT}=cinematicPass;
+    assert.deepEqual(u.uVesselFinish.value.toArray(),[CINEMATIC_FINISH.vessel.roughness,CINEMATIC_FINISH.vessel.coatRoughness,CINEMATIC_FINISH.vessel.coat,CINEMATIC_FINISH.vessel.reflection]);
+    assert.deepEqual(u.uBoneFinish.value.toArray(),[CINEMATIC_FINISH.bone.roughness,CINEMATIC_FINISH.bone.wrap,CINEMATIC_FINISH.bone.reflection,CINEMATIC_FINISH.bone.shellDiffuse]);
+    assert.ok(u.uVesselColor0.value.equals(new THREE.Color(CINEMATIC_VESSEL_ALBEDO.artery)),'cinematic arteries take the vermilion lumen albedo');
+    assert.ok(u.uVesselColor1.value.equals(new THREE.Color(CINEMATIC_VESSEL_ALBEDO.vein)));
+    assert.ok(u.uBoneColor.value.equals(new THREE.Color(CINEMATIC_BONE_ALBEDO).lerp(new THREE.Color('#e3d6bf'),CINEMATIC_BONE_TINT)),'porcelain tinted by the layer colour');
+    scan.configure({enabled:true,mode:'standard',cinematicBone:'solid'},'CTA',null);
+    assert.equal(scan.cinematic,undefined,'the bone choice allocates nothing in standard mode');
   }finally{scan.dispose();}
 });
 
@@ -1222,8 +1249,18 @@ test('a translucent tumour is composited over the traced image instead of vanish
       const overlay=draws.slice(before).find(draw=>draw.material?.fragmentShader?.includes('uSurfaceCount'));
       assert.ok(overlay,'peels are composited over the traced image');
       assert.equal(overlay.material.uniforms.uSurfaceCount.value,frame.translucentLayers);
-      assert.equal(overlay.material.uniforms.uGuide.value,scan.cinematic.guide,'by the depth of the traced first collision');
-      assert.equal(scan.blitMaterial.map,overlay.target.texture);
+      if(interactive){
+        assert.equal(overlay.material.uniforms.uGuide.value,scan.cinematic.guide,'by the depth of the traced first collision');
+        assert.equal(scan.blitMaterial.map,overlay.target.texture);
+      }else{
+        // At rest each sample is composited against its own collision before it joins the mean.
+        const pass=scan.cinematic,accumulate=draws.slice(before).find(draw=>draw.material===pass.accumulate);
+        assert.equal(overlay.material.uniforms.uGuide.value,pass.sampleTarget.textures[1],'by this sample\'s first collision');
+        assert.ok(accumulate&&draws.indexOf(accumulate)>draws.indexOf(overlay));
+        assert.equal(accumulate.material.uniforms.uSampleColor.value,overlay.target.texture);
+        assert.ok(pass.accumulation.includes(accumulate.target),'into the running mean');
+        assert.notEqual(scan.blitMaterial.map,overlay.target.texture);
+      }
     }
     // Without translucent meshes the traced image is shown directly.
     tumor.material.opacity=1;

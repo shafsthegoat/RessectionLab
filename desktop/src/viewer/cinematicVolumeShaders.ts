@@ -74,6 +74,10 @@ uniform vec3 uVesselColor0;
 uniform vec3 uVesselColor1;
 uniform vec3 uBoneRamp;
 uniform vec3 uBoneColor;
+uniform vec4 uVesselFinish;
+uniform vec4 uBoneFinish;
+uniform vec3 uSubsurface;
+uniform vec4 uMarrow;
 uniform bool uGlass;
 uniform vec4 uFaint;
 uniform vec3 uSoftColor;
@@ -260,10 +264,13 @@ float lumenLevel(vec3 p,int kind,bool cubic){
   float tag=kind==0?tags.x:tags.y;
   return max(clamp((v-edge.x)/max(edge.y-edge.x,1e-6),-2.0,3.0),(tag-uTagFloor.x)/max(uTagFloor.y-uTagFloor.x,1e-6));
 }
+// At rest the lumen stencil spans two voxels: a vessel one or two voxels
+// across is then shaded as a round tube rather than by its staircase.
 vec3 lumenGradientWorld(vec3 p,int kind,bool cubic){
-  const vec3 a=vec3(0.5,0.5,0.5),b=vec3(0.5,-0.5,-0.5),c=vec3(-0.5,0.5,-0.5),d=vec3(-0.5,-0.5,0.5);
+  float r=cubic?1.0:0.5;
+  vec3 a=vec3(r,r,r),b=vec3(r,-r,-r),c=vec3(-r,r,-r),d=vec3(-r,-r,r);
   vec3 g=a*lumenLevel(p+a,kind,cubic)+b*lumenLevel(p+b,kind,cubic)+c*lumenLevel(p+c,kind,cubic)+d*lumenLevel(p+d,kind,cubic);
-  return transpose(mat3(uWorldToVoxel))*g;
+  return transpose(mat3(uWorldToVoxel))*g*(0.25/(r*r));
 }
 // Cosine-convolved environment: the unoccluded mean of the bounce estimator.
 vec3 ambient(vec3 n){
@@ -324,21 +331,31 @@ float transmittance(vec3 world,vec3 direction,float limit){
   return T;
 }
 
-struct Hit{bool found;vec3 world;vec3 albedo;vec3 normal;float surface;float rough;};
-Hit noHit(){return Hit(false,vec3(0.0),vec3(0.0),vec3(0.0,0.0,1.0),0.0,0.5);}
-Hit surfaceAt(vec3 world,vec3 p,vec3 direction,Medium s,bool cubic){
+// wet: the vessel share of the hit, which takes the wet lumen finish; the rest is bone.
+struct Hit{bool found;vec3 world;vec3 albedo;vec3 normal;float surface;float rough;float wet;};
+Hit noHit(){return Hit(false,vec3(0.0),vec3(0.0),vec3(0.0,0.0,1.0),0.0,0.5,0.0);}
+// Bone albedo follows the acquired density: thin and cancellous bone just
+// past the bone ramp is darker and warmer than dense cortex.
+vec3 boneAlbedo(float v){return uBoneColor*mix(uMarrow.rgb,vec3(1.0),ramp(uBoneRamp.x,uBoneRamp.y+uMarrow.w,v));}
+Hit surfaceAt(vec3 world,vec3 p,vec3 direction,Medium s,float v,bool cubic){
   Hit h=noHit();h.found=true;h.world=world;
   float total=max(s.vessel+s.bone,1e-6);
-  h.albedo=(s.vessel*vesselColor(s.gate)+s.bone*uBoneColor)/total;
-  h.rough=mix(0.58,0.3,s.vessel/total);
+  h.albedo=(s.vessel*vesselColor(s.gate)+s.bone*boneAlbedo(v))/total;
+  h.wet=s.vessel/total;
+  h.rough=mix(uBoneFinish.x,uVesselFinish.x,h.wet);
   bool lumen=s.vessel>s.bone;
   vec3 g=lumen?lumenGradientWorld(p,s.gate.y>s.gate.x?1:0,cubic):gradientWorld(p,cubic);
   float magnitude=length(g);
   h.normal=magnitude>1e-6?-g/magnitude:-direction;
-  if(dot(h.normal,direction)>0.0)h.normal=-h.normal;
+  // A normal just past the silhouette is turned edge on, not mirrored: a
+  // mirrored one points into the lumen, away from the light, and rims the
+  // silhouette with dark dots.
+  float away=dot(h.normal,direction);
+  if(away>0.0)h.normal=normalize(h.normal-direction*(away+0.02));
   // A lumen level rises by one across its ramp, so its slope per voxel says
   // directly how wall-like the hit is.
-  h.surface=lumen?ramp(0.15,0.6,magnitude*uVoxelMm):ramp(0.12,0.5,magnitude*uGradientScale);
+  // The two-voxel rest stencil reads a gentler slope across a thin lumen.
+  h.surface=lumen?(cubic?ramp(0.08,0.4,magnitude*uVoxelMm):ramp(0.15,0.6,magnitude*uVoxelMm)):ramp(0.12,0.5,magnitude*uGradientScale);
   return h;
 }
 // Delta-track dense matter for a short bounce ray, trilinear.
@@ -372,22 +389,36 @@ Hit bounceHit(vec3 world,vec3 direction,float limit){
   return h;
 }
 // The key light is a disc: diffuse light and the shadow ray sample it, while
-// its highlight comes from the disc centre with roughness widened by the
-// disc's angular radius, which removes glint noise at no cost.
-vec3 keyLight(vec3 world,vec3 normal,vec3 view,vec3 albedo,float surface,float rough){
+// its highlights come from the disc centre with roughness widened by the
+// disc's angular radius, which removes glint noise at no cost. Vessels add a
+// sharper wet coat lobe; bone wraps diffuse light past the terminator with a
+// warm tint, a cheap stand-in for light scattered under its surface.
+vec3 keyLight(Hit h,vec3 view){
   vec3 l=sampleCone(uKeyDirection,uKeyCosine,stratified(1));
-  float nl=max(dot(normal,l),0.0),nc=max(dot(normal,uKeyDirection),0.0);
-  float widened=sqrt(min(1.0,rough*rough+0.5*sqrt(1.0-uKeyCosine*uKeyCosine)/uKeyCosine));
-  vec3 surfaceTerm=albedo*(nl/PI)+vec3(ggx(normal,view,uKeyDirection,widened)*nc);
-  vec3 f=mix(albedo*(0.25/PI),surfaceTerm,surface);
+  float nl=dot(h.normal,l),nc=max(dot(h.normal,uKeyDirection),0.0);
+  float disc=0.5*sqrt(1.0-uKeyCosine*uKeyCosine)/uKeyCosine;
+  float wrap=uBoneFinish.y*(1.0-h.wet),lambert=max(nl,0.0),wrapped=max(nl+wrap,0.0)/(1.0+wrap);
+  vec3 diffuse=h.albedo*(lambert+(wrapped-lambert)*uSubsurface)/PI;
+  float specular=ggx(h.normal,view,uKeyDirection,sqrt(min(1.0,h.rough*h.rough+disc)))+
+    h.wet*uVesselFinish.z*ggx(h.normal,view,uKeyDirection,sqrt(min(1.0,uVesselFinish.y*uVesselFinish.y+0.25*disc)));
+  vec3 f=mix(h.albedo*(0.25/PI),diffuse+vec3(specular*nc),h.surface);
   if(max(f.r,max(f.g,f.b))<=0.0)return vec3(0.0);
-  vec3 origin=world+normal*(0.6*uVoxelMm*surface);
+  // The shadow ray starts off the surface and a little back along the eye
+  // ray, which was just crossed: a smoothed normal alone can leave it inside
+  // a thin lumen, which then shadows itself in dark seams.
+  vec3 origin=h.world+(h.normal*(0.6*h.surface)+view*0.4)*uVoxelMm;
 #if CINEMATIC_REST == 1
   return uKeyIrradiance*f*transmittance(origin,l,1e10);
 #else
   // Moving frames light without shadow rays; shadows return at rest.
   return uKeyIrradiance*f;
 #endif
+}
+// The studio seen in a surface: Fresnel-weighted, from the cosine-convolved
+// environment so it adds no noise. Wet vessels take more of it than bone.
+vec3 reflection(Hit h,vec3 view){
+  float nv=max(dot(h.normal,view),0.0),F=0.04+0.96*pow(1.0-nv,5.0);
+  return mix(uBoneFinish.z,uVesselFinish.w,h.wet)*h.surface*F*ambient(reflect(-view,h.normal));
 }
 // Faint matter is lit without a shadow ray. Glass adds a sharp key highlight.
 vec3 veilRadiance(vec3 p,vec3 direction,Faint f){
@@ -403,7 +434,9 @@ vec3 veilRadiance(vec3 p,vec3 direction,Faint f){
   float nl=max(dot(f.normal,uKeyDirection),0.0);
   vec3 key=uKeyIrradiance*mix(vec3(0.25/PI),vec3(nl/PI),f.surface);
   vec3 radiance=albedo*(key+mix(0.5*ambient(-direction),ambient(f.normal),f.surface));
-  if(uGlass)radiance+=uKeyIrradiance*(f.surface*ggx(f.normal,-direction,uKeyDirection,0.32)*nl);
+  // See-through bone reads as glass: mostly its highlight and rim, with only
+  // a share of its diffuse light, so stacked shells do not fog what lies behind.
+  if(uGlass)radiance=radiance*mix(1.0,uBoneFinish.w,f.bone)+uKeyIrradiance*(f.surface*ggx(f.normal,-direction,uKeyDirection,0.32)*nl);
   return radiance;
 }
 
@@ -508,14 +541,15 @@ void main(){
   vec4 guide=vec4(0.0,0.0,0.0,ray.limit<1e9?ray.limit*dot(ray.direction,forward):1e4);
   if(hitT>=0.0){
     vec3 direction=ray.direction,world=ray.origin+direction*hitT,p=ray.vo+ray.vd*hitT;
-    Medium s=medium(PRIMARY_VALUE(p),tagsAt(p));
-    Hit h=surfaceAt(world,p,direction,s,CINEMATIC_REST==1);
+    float v=PRIMARY_VALUE(p);
+    Medium s=medium(v,tagsAt(p));
+    Hit h=surfaceAt(world,p,direction,s,v,CINEMATIC_REST==1);
     // A cut through dense matter is shaded as the flat cut face.
     if(gEntryCut&&hitT-gEntryT<1.5*uVoxelMm){h.normal=-normalize(gEntryPlane.xyz);h.surface=1.0;h.rough=0.7;}
     vec3 view=-direction;
 #if CINEMATIC_REST == 1
-    vec3 radiance=keyLight(world,h.normal,view,h.albedo,h.surface,h.rough);
-    vec3 origin2=world+h.normal*(0.6*uVoxelMm*h.surface);
+    vec3 radiance=keyLight(h,view);
+    vec3 origin2=world+(h.normal*(0.6*h.surface)+view*0.4)*uVoxelMm;
     vec2 u=stratified(2);
     vec3 bounce=rnd()<h.surface?sampleCosine(h.normal,u):sampleSphere(u);
     Hit b=bounceHit(origin2,bounce,uBounceMm);
@@ -526,10 +560,14 @@ void main(){
     // tint each other without a second shadow ray.
     vec3 open=mix(ambient(-direction),ambient(h.normal),h.surface);
     float near=b.found?1.0-distance(b.world,origin2)/uBounceMm:0.0;
-    radiance+=h.albedo*mix(open,0.5*b.albedo*ambient(b.normal),near*(2.0-near));
+    // Nearby matter returns its colour under half the studio light and a
+    // quarter of an unshadowed key: bone under a vessel lights its underside warmly
+    // instead of leaving a dark rim at the silhouette.
+    float occluded=near*(2.0-near);
+    vec3 nearby=0.5*b.albedo*(ambient(b.normal)+0.25*uKeyIrradiance*max(dot(b.normal,uKeyDirection),0.0)/PI);
+    radiance+=h.albedo*mix(open,nearby,occluded)+(1.0-occluded)*reflection(h,view);
 #else
-    vec3 radiance=keyLight(world,h.normal,view,h.albedo,h.surface,h.rough)+
-      0.8*h.albedo*mix(ambient(view),ambient(h.normal),h.surface);
+    vec3 radiance=keyLight(h,view)+0.8*h.albedo*mix(ambient(view),ambient(h.normal),h.surface)+reflection(h,view);
 #endif
     color=radiance;
     guide=vec4(h.normal,hitT*dot(direction,forward));
@@ -597,6 +635,28 @@ void main(){
   }
   vec3 filtered=sum/max(total,1e-6);
   outColor=vec4(mix(filtered,texelFetch(uOriginal,pixel,0).rgb,uBlend),1.0);
+}
+`;
+
+/** The running mean of composited samples: colour and the mean of squared
+ * luminance (for the filter's variance), with the sample's guide passed on. */
+export const cinematicAccumulateShader = `
+precision highp float;
+in vec2 vUv;
+layout(location=0) out vec4 outColor;
+layout(location=1) out vec4 outGuide;
+uniform sampler2D uSampleColor;
+uniform sampler2D uSampleGuide;
+uniform sampler2D uPrevious;
+uniform float uSample;
+void main(){
+  ivec2 pixel=ivec2(gl_FragCoord.xy);
+  vec3 color=texelFetch(uSampleColor,pixel,0).rgb;
+  float luminance=dot(color,vec3(0.2126,0.7152,0.0722));
+  vec4 sampled=vec4(color,luminance*luminance);
+  vec4 previous=texelFetch(uPrevious,pixel,0);
+  outColor=uSample<0.5?sampled:previous+(sampled-previous)/(uSample+1.0);
+  outGuide=texelFetch(uSampleGuide,pixel,0);
 }
 `;
 

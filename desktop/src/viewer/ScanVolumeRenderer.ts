@@ -6,16 +6,15 @@ import { canBalanceTofContext, isCtAngiography, isCtModality, volumeSettings, vo
 import {balancedTofDensity, CT_EXTERIOR_AIR_HU, CT_EXTERIOR_TEXTURE_LIMIT_BYTES, ctExteriorDisplaySignal, ctOpticalCoverage, finishOpticalPreparation, opticalAtlasSteps, OPTICAL_KEY_LIGHTS, volumeOpticalAtlas, type OpticalContext, type OpticalSource} from './volumeOpticalDensity.ts';
 import {layerAppearance} from './workspaceSettings';
 import type {ViewerWorkspaceSettings} from './workspaceSettings';
-import type { VolumeRenderingSettings } from './volumeTransfer';
+import type { CinematicBone, VolumeRenderingSettings } from './volumeTransfer';
 import { volumeVertexShader, volumeFragmentShader } from './volumeRaycastShaders';
 import {SurfaceVolumePass} from './SurfaceVolumePass';
 import {renderTargetBytes} from './renderResourceEstimate';
 import {ctaCutKey,installCtaVesselLight} from './ctaVesselLight';
 import {CtaVesselShadow} from './ctaVesselShadow';
 import {renderAnatomyScene,type VesselSlabContext} from './vesselSlabContext';
-import {CinematicVolumePass} from './CinematicVolumePass';
+import {CINEMATIC_VESSEL_ALBEDO,CinematicVolumePass} from './CinematicVolumePass';
 import {cinematicTagClass,type CinematicTagLayer} from './cinematicTags.ts';
-import {ctaVesselColors} from './anatomySurfaceMaterial';
 
 type VolumeTargets = {
   scene: THREE.WebGLRenderTarget;
@@ -112,6 +111,7 @@ export class ScanVolumeRenderer {
     depthTest:false,depthWrite:false,toneMapped:false,uniforms:{uCurrent:{value:null},uPrevious:{value:null},uWeight:{value:1}}});
   private samples=0;
   private cinematicMode=false;
+  private cinematicBone?:CinematicBone;
   private cinematic?:CinematicVolumePass;
   private labelState:{visible:Record<string,boolean>;settings:ViewerWorkspaceSettings}={visible:{},settings:{}};
   private labelSets?:ViewerVolume['labelSets'];
@@ -197,6 +197,7 @@ export class ScanVolumeRenderer {
     const cinematic=input?.mode==='cinematic';
     if(cinematic!==this.cinematicMode)this.invalidate();
     this.cinematicMode=cinematic;
+    this.cinematicBone=input?.cinematicBone;
     if(!this.enabled||!cinematic)this.releaseCinematic();
     this.ctaVesselLight.value=false;
     this.showCtExteriorSignal=input?.showCtExteriorSignal===true;
@@ -549,10 +550,12 @@ export class ScanVolumeRenderer {
     const appearance=(layer:ViewerVolume['compartments'][number])=>layerAppearance(layer.name,layer.color,settings,layer.displayKind??layer.kind);
     const skull=this.layers.filter(layer=>layer.kind==='bone'||layer.kind==='skull');
     const shownSkull=skull.filter(layer=>visible[layer.name]!==false);
-    // A see-through skull without a cut scales bone extinction by half its
-    // layer opacity. Any cut shows solid bone so the cut face reads.
+    // Solid bone unless the shell is chosen; unset, any cut or an opaque skull
+    // display chooses solid so the cut face reads. The see-through shell scales
+    // bone extinction by half its layer opacity.
     const cut=u.uClipEnabled.value||u.uExtraClipCount.value>0;
-    const boneWeight=!ct?0:skull.length&&!shownSkull.length?0:settings.skullMode!=='transparent'||cut?1:
+    const bone=this.cinematicBone??(settings.skullMode!=='transparent'||cut?'solid':'shell');
+    const boneWeight=!ct?0:skull.length&&!shownSkull.length?0:bone==='solid'?1:
       .5*(shownSkull.length?Math.max(...shownSkull.map(layer=>appearance(layer).opacity)):.08);
     const {key,layers}=this.cinematicLayers();
     pass.prepare(key,layers,{ct,boneWeight,window:this.window},!this.onOpticsReady);
@@ -564,10 +567,9 @@ export class ScanVolumeRenderer {
     // layer set until a newly requested one has been prepared.
     const names=(JSON.parse(pass.key!) as Array<[string]>).map(([name])=>name);
     const tagged=this.layers.filter(layer=>names.includes(layer.name));
-    const unclassified=tagged.find(layer=>layer.kind==='vessel'||layer.kind==='vessels');
-    const arterial=tagged.some(layer=>layer.kind==='artery');
+    // Arteries and unclassified vessels share the artery red; veins and sinuses are blue.
     pass.setLighting({
-      vesselColors:[new THREE.Color(arterial||!unclassified?ctaVesselColors.artery:appearance(unclassified).color),new THREE.Color(ctaVesselColors.vein)],
+      vesselColors:[new THREE.Color(CINEMATIC_VESSEL_ALBEDO.artery),new THREE.Color(CINEMATIC_VESSEL_ALBEDO.vein)],
       boneColor:new THREE.Color(shownSkull.length?appearance(shownSkull[0]).color:'#e3d6bf')});
     this.cinematicHidden=new Set([...names,...(ct?skull.map(layer=>layer.name):[])]);
     return pass;
@@ -594,11 +596,10 @@ export class ScanVolumeRenderer {
         translucent.forEach(o=>o.visible=true);
         this.cinematicSurfaces=this.surfacePass.render(this.renderer,scene,camera,sceneTarget.depthTexture!,w,h,interactive);
       }
-      const image=pass.render(this.renderer,camera,sceneTarget,w,h,interactive);
       const {count,tailIndex}=this.cinematicSurfaces,surfaces=this.surfacePass;
-      if(!count)return image;
-      return pass.overlay(this.renderer,image,{count,colors:Array.from({length:count},(_,i)=>i===tailIndex?surfaces.tail.texture:surfaces.targets[i].texture),
-        depths:Array.from({length:count},(_,i)=>surfaces.targets[i].depthTexture)},w,h);
+      return pass.render(this.renderer,camera,sceneTarget,w,h,interactive,count?{count,
+        colors:Array.from({length:count},(_,i)=>i===tailIndex?surfaces.tail.texture:surfaces.targets[i].texture),
+        depths:Array.from({length:count},(_,i)=>surfaces.targets[i].depthTexture)}:undefined);
     } finally {
       for(const o of [...hidden,...translucent])o.visible=true;
       this.renderer.setClearColor(this.background,clearAlpha);

@@ -268,8 +268,10 @@ def _viewer_state(case,viewer,cases):
     if 'smoothSurfaces' in viewer and type(viewer['smoothSurfaces']) is not bool:raise ValueError('Invalid surface display flag')
     volume=viewer.get('volumeRendering')
     if 'volumeRendering' in viewer:
-        if (not isinstance(volume,dict) or set(volume)-{'enabled','preset','density','window','points','shadows','isolateLabels','showCtExteriorSignal','showCtBoneOverlay','balanceTofContext'} or
+        if (not isinstance(volume,dict) or set(volume)-{'enabled','mode','cinematicBone','preset','density','window','points','shadows','isolateLabels','showCtExteriorSignal','showCtBoneOverlay','balanceTofContext'} or
                 ('enabled' in volume and type(volume['enabled']) is not bool) or
+                ('mode' in volume and volume['mode'] not in {'standard','cinematic'}) or
+                ('cinematicBone' in volume and volume['cinematicBone'] not in {'shell','solid'}) or
                 ('preset' in volume and volume['preset'] not in {'auto','ct-bone','ct-tissue','ct-angiography','mri'}) or
                 ('density' in volume and (type(volume['density']) not in (int,float) or
                     not math.isfinite(volume['density']) or not 0<=volume['density']<=2))):

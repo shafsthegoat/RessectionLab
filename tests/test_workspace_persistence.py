@@ -50,7 +50,8 @@ def test_volume_rendering_preferences_roundtrip_without_changing_source(tmp_path
     assert saved['imagingState']['states']['primary']['viewer']['vesselShading']=='cta-contrast'
     assert reopened.semantic_hash==identity
     np.testing.assert_array_equal(reopened.mri,before)
-    for invalid in [None,[],{'density':float('nan')},{'density':-1},{'density':3},{'enabled':1},{'preset':'invented-vessels'},{'other':1}]:
+    for invalid in [None,[],{'density':float('nan')},{'density':-1},{'density':3},{'enabled':1},{'preset':'invented-vessels'},{'other':1},
+                    {'mode':'path-traced'},{'cinematicBone':'opaque'}]:
         state['states']['primary']['viewer']={'volumeRendering':invalid}
         with pytest.raises(ValueError,match='volume rendering'):view_state(case,[],state)
     for flag in ('showCtExteriorSignal', 'showCtBoneOverlay', 'balanceTofContext'):
@@ -58,6 +59,16 @@ def test_volume_rendering_preferences_roundtrip_without_changing_source(tmp_path
             state['states']['primary']['viewer']={'volumeRendering': {**settings, flag: invalid}}
             with pytest.raises(ValueError, match='volume display flag'):
                 view_state(case, [], state)
+
+def test_cinematic_volume_choices_roundtrip(tmp_path):
+    case=load_nifti_case(image(tmp_path/'source.nii.gz'),case_id='cinematic-settings-test')
+    state=view_state(case,[])
+    settings={'enabled':True,'mode':'cinematic','cinematicBone':'solid'}
+    state['states']['primary']['viewer']={'volumeRendering':settings}
+    path=tmp_path/'cinematic.ressectionlab'
+    save_workspace(case,path,sources=[],imaging=state,episode=None,selection=None,artifacts={})
+    _,_,saved=load_workspace(path)
+    assert saved['imagingState']['states']['primary']['viewer']['volumeRendering']==settings
 
 @pytest.mark.parametrize('enabled', [True, False, None])
 def test_body_orientation_guide_roundtrip_and_legacy_default(tmp_path, enabled):
