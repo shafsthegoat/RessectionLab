@@ -86,14 +86,14 @@ test('explicit skull modes survive settings validation',()=>{
 
 test('presentation and slice annotations reopen in legacy saves and reject malformed choices',()=>{
   const source={compartments:[],brainMask:null,metadata:{}};
-  for(const presentation of ['scan','segmentation','vascular'])for(const sliceOverlay of ['contour','fill']){
-    const stored={presentation,sliceOverlay,volumeRendering:{enabled:true,preset:'auto',density:.11}};
+  for(const presentation of ['scan','segmentation','vascular'])for(const sliceOverlay of ['contour','fill'])for(const sliceStructures of [undefined,'focus','all']){
+    const stored={presentation,sliceOverlay,...(sliceStructures?{sliceStructures}:{}),volumeRendering:{enabled:true,preset:'auto',density:.11}};
     const reopened=checkedViewerSettings(source,JSON.parse(JSON.stringify(stored)));
     assert.deepEqual(reopened,stored);
     reopened.volumeRendering.density=.9;
     assert.equal(stored.volumeRendering.density,.11);
   }
-  for(const key of ['presentation','sliceOverlay'])for(const invalid of ['unknown',null,1,[],{}])
+  for(const key of ['presentation','sliceOverlay','sliceStructures'])for(const invalid of ['unknown',null,1,true,[],{}])
     assert.throws(()=>checkedViewerSettings(source,{[key]:invalid}));
 });
 

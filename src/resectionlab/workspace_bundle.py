@@ -220,7 +220,7 @@ def _viewer_cutaway(viewer, *, corners, frame_name):
 
 def _viewer_state(case,viewer,cases):
     """Bound display preferences without treating them as image registration."""
-    if not isinstance(viewer,dict) or set(viewer)-{'showOrientationGuide','smoothSurfaces','skullMode','volumeRendering','layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast','clipBox','obliqueClip','sliceOverlay','presentation','sourcedVesselContext','vesselShading','sliceFraming','contextStyle','operativeView','microscope','externalCamera','resultInspection','resultCamera'}:
+    if not isinstance(viewer,dict) or set(viewer)-{'showOrientationGuide','smoothSurfaces','skullMode','volumeRendering','layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast','clipBox','obliqueClip','sliceOverlay','sliceStructures','presentation','sourcedVesselContext','vesselShading','sliceFraming','contextStyle','operativeView','microscope','externalCamera','resultInspection','resultCamera'}:
         raise ValueError('Unknown viewer settings')
     if 'showOrientationGuide' in viewer and type(viewer['showOrientationGuide']) is not bool:
         raise ValueError('Invalid body orientation guide flag')
@@ -257,6 +257,8 @@ def _viewer_state(case,viewer,cases):
             raise ValueError('Invalid slice framing')
     if 'sliceOverlay' in viewer and viewer['sliceOverlay'] not in ('contour','fill'):
         raise ValueError('Invalid slice annotation style')
+    if 'sliceStructures' in viewer and viewer['sliceStructures'] not in ('focus','all'):
+        raise ValueError('Invalid slice structure scope')
     if 'presentation' in viewer and viewer['presentation'] not in ('scan','segmentation','vascular'):
         raise ValueError('Invalid anatomy presentation')
     if 'sourcedVesselContext' in viewer and type(viewer['sourcedVesselContext']) is not bool:

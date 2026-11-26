@@ -146,7 +146,7 @@
 .rl-viewer .rl-orientation-bottom { bottom: 20px; }
 .rl-viewer .rl-viewer-scale { color: #83978b; font-size: 8px; bottom: 9px; }
 .rl-viewer .rl-viewer-scale i { border-color: #6b8275; }
-.rl-viewer .rl-viewer-slice-note { color: #7b8d80; font-size: 7px; letter-spacing: .035em; bottom: 7px; right: 8px; }
+.rl-viewer .rl-viewer-slice-note { color: var(--text-muted, #959e9b); font-size: var(--text-micro, 11px); line-height: 1.25; letter-spacing: normal; bottom: 7px; right: 8px; max-width: 46%; text-align: right; }
 
 /* The rail occupies its own image margin, so it cannot capture a source stroke. */
 .rl-slice-scrubber {

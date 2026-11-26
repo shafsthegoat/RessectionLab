@@ -565,14 +565,54 @@ test('slice contour changes reach every image material and preserve source data 
   r.materials=()=>[{uniforms},second];let rendered=0;r.requestRender=()=>rendered++;
   const scalar=r.volume.mri.slice(),mask=r.volume.compartments[0].mask.slice();
   r.setWorkspaceSettings({});const opacity=mesh.material.opacity,layerOpacity=uniforms.uLayerOpacities.value[0];
-  assert.equal(uniforms.uSliceContours.value,0,'existing saved views retain filled overlays');
-  r.setWorkspaceSettings({sliceOverlay:'contour'});
-  assert.equal(uniforms.uSliceContours.value,1);assert.equal(second.uniforms.uSliceContours.value,1);
-  assert.equal(mesh.material.opacity,opacity);assert.equal(uniforms.uLayerOpacities.value[0],layerOpacity);
-  assert.equal(rendered,2,'changing only the overlay must invalidate the image');
+  assert.equal(uniforms.uSliceContours.value,1,'views without a saved style draw outlines, not filled labels');
   r.setWorkspaceSettings({sliceOverlay:'fill'});
   assert.equal(uniforms.uSliceContours.value,0);assert.equal(second.uniforms.uSliceContours.value,0);
+  assert.equal(mesh.material.opacity,opacity);assert.equal(uniforms.uLayerOpacities.value[0],layerOpacity);
+  assert.equal(rendered,2,'changing only the overlay must invalidate the image');
+  r.setWorkspaceSettings({sliceOverlay:'contour'});
+  assert.equal(uniforms.uSliceContours.value,1);assert.equal(second.uniforms.uSliceContours.value,1);
   assert.deepEqual(r.volume.mri,scalar);assert.deepEqual(r.volume.compartments[0].mask,mask);
+});
+
+test('linked slices outline only the target and the selection, in the 3D surface colour, unless all are requested',()=>{
+  const {r,mesh,uniforms}=renderer();
+  const focus=()=>[...uniforms.uSliceFocusBits.value];
+  Object.assign(uniforms,{uSliceFocusBits:{value:new Int32Array(4)},uSliceAllLayers:{value:0},uSelectedLayer:{value:-1},
+    uColors:{value:Array.from({length:3},()=>new THREE.Color())},uLayerOpacities:{value:new Float32Array(3)}});
+  r.volume={...r.volume,displayIdentity:'native/revision',modality:'CTA',compartments:[
+    {name:'brain',kind:'brain',color:'#b8a8b6',mask:new Uint8Array(60)},
+    {name:'tumor',kind:'tumor',color:'#65bfd3',mask:new Uint8Array(60)},
+    {name:'artery',kind:'artery',color:'#ff0000',mask:new Uint8Array(60)}]};
+  let interactions=0,slices=0;r.beginInteraction=()=>interactions++;r.requestRender=(changed=true)=>{if(changed)slices++;};
+  const settings={presentation:'vascular',vesselShading:'cta-contrast'};
+  r.setWorkspaceSettings(settings);
+  assert.deepEqual(focus(),[0b010,0,0,0],'only the declared lesion draws on slices by default');
+  assert.equal(uniforms.uSliceAllLayers.value,0);
+  const sliceColor=hex=>new THREE.Color(hex).convertLinearToSRGB();
+  assert.ok(uniforms.uColors.value[2].equals(sliceColor('#a32e22')),'CTA vessel outlines use the 3D vessel-type colour');
+  assert.ok(uniforms.uColors.value[1].equals(sliceColor('#65bfd3')));
+  const opacity=mesh.material.opacity,visible=mesh.visible;
+  r.setSelectedStructure('brain');
+  assert.deepEqual(focus(),[0b011,0,0,0],'the selected structure joins the target');
+  r.setSelectedStructure(null);
+  assert.deepEqual(focus(),[0b010,0,0,0]);
+  const before={interactions,slices};
+  r.setWorkspaceSettings({...settings,sliceStructures:'all'});
+  assert.equal(uniforms.uSliceAllLayers.value,1);
+  assert.equal(interactions,before.interactions,'a slice-only choice keeps the settled 3D view');
+  assert.equal(slices,before.slices+1,'and redraws the linked slices');
+  assert.equal(mesh.material.opacity,opacity);assert.equal(mesh.visible,visible);
+  r.setWorkspaceSettings({...settings,sliceStructures:'focus',vesselShading:'source',layerColor:{artery:'#123456'}});
+  assert.equal(uniforms.uSliceAllLayers.value,0);
+  assert.ok(uniforms.uColors.value[2].equals(sliceColor('#123456')),'user colour overrides reach the slice outline');
+});
+
+test('the slice shader limits non-focus layers to slices and strokes at the device-aware width',async()=>{
+  const {fragmentShader}=await server.ssrLoadModule('/src/viewer/shaders.ts');
+  assert.match(fragmentShader,/if\(uThreeD==0 && uSliceAllLayers==0 && !focus\)continue;/,'the 3D source plane keeps every visible layer');
+  assert.equal(fragmentShader.match(/max\(uRect\.[zw]\*uResolution\.[xy],1\.0\)\*uContourWidth;/g)?.length,2);
+  assert.match(fragmentShader,/color=mix\(color,uColors\[i\],focus\?strokeAlpha:strokeAlpha\*0\.55\);\s*\}\s*continue;/,'outlines carry no fill');
 });
 
 test('vessel depth lighting toggles redraw the 3D view without resubmitting its source slices',()=>{
