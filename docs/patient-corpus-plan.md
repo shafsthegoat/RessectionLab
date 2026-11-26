@@ -155,7 +155,7 @@ No location is guessed for UCSF004 or unrelated saved variants.
 ## Construction driven by the recording
 
 The supplied recording was previously sampled and documented in
-[the functional reference audit](SUPERGOAL_REAL_OBSERVATIONS.md#appendix-b-functional-reading-of-the-supplied-medivis-recording).
+[the functional reference audit](retired-docs-20261126.md).
 The 32.67-second recording was sampled at 0.65, 5.55, 10.78, 16.34,
 21.89, 27.44 and 31.69 seconds. The inspected frames show session/source selection
 and linked views, bone/vessel volume presentation, primary/overlay fusion,
