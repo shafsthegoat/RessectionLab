@@ -3,7 +3,7 @@
 Recorded October 4, 2026. **Local research prototype.** This card describes
 implemented behavior and retained evidence, not a surgical recommendation or a
 claim of clinical readiness. Requirements remain in the three specification
-documents; ongoing work is tracked in [PROJECT_STATUS](../PROJECT_STATUS.md).
+documents; ongoing work is tracked in [PROJECT_STATUS](retired-docs-20261126.md).
 
 Historical capture receipts remain at their original repository paths. Most
 screenshots and recordings are in the [verified visual evidence archive](visual-evidence-archive-20261116.md);
