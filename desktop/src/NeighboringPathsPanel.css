@@ -1,7 +1,7 @@
 .neighboring-paths-panel {
   min-width: 0;
-  color: #a5b4be;
-  font-size: 11px;
+  color: var(--text-muted);
+  font-size: var(--text-meta);
   line-height: 1.5;
 }
 .neighboring-paths-panel p {
@@ -17,10 +17,10 @@
 }
 .neighboring-anchor {
   padding: 10px 0;
-  border-bottom: 1px solid #2c3942;
+  border-bottom: 1px solid var(--line-strong);
 }
 .neighboring-anchor strong {
-  color: #d0dce3;
+  color: var(--text);
   overflow-wrap: anywhere;
 }
 .neighboring-tools {
@@ -30,7 +30,7 @@
 }
 .neighboring-tools legend {
   font-weight: 600;
-  color: #c9d5de;
+  color: var(--text);
 }
 .neighboring-tools label,
 .neighboring-ack {
@@ -51,16 +51,16 @@
   margin: 8px 0;
 }
 .neighboring-status {
-  color: #b9cbd4;
+  color: var(--text);
 }
 .neighboring-results {
   margin-top: 20px;
   padding-top: 16px;
-  border-top: 1px solid #30404a;
+  border-top: 1px solid var(--line-strong);
 }
 .neighboring-results h3 {
-  font-size: 13px;
-  color: #d1dfe6;
+  font-size: var(--text-body);
+  color: var(--text);
 }
 .neighboring-counts {
   display: grid;
@@ -75,11 +75,11 @@
 .neighboring-counts dd {
   margin: 0;
   font-variant-numeric: tabular-nums;
-  color: #d4e2e9;
+  color: var(--text);
 }
 .neighboring-path-row,
 .neighboring-binding {
-  border-top: 1px solid #2a3741;
+  border-top: 1px solid var(--line);
   padding: 10px 0;
 }
 .neighboring-path-row summary,
@@ -92,12 +92,12 @@
 .neighboring-path-row summary > span:first-child {
   flex: 1;
   min-width: 0;
-  color: #ccd9e1;
+  color: var(--text);
 }
 .neighboring-path-row summary > span:nth-child(2) {
   max-width: 82px;
-  color: #b7c2cf;
-  font-size: 10px;
+  color: var(--text);
+  font-size: var(--text-meta);
 }
 .neighboring-path-row summary svg,
 .neighboring-binding summary svg {
@@ -105,15 +105,15 @@
 }
 .neighboring-coordinates {
   font-variant-numeric: tabular-nums;
-  color: #c4d4de;
+  color: var(--text);
 }
 .neighboring-attempt {
-  border-left: 2px solid #455561;
+  border-left: 2px solid var(--line-strong);
   padding-left: 9px;
   margin-top: 12px;
 }
 .neighboring-attempt strong {
-  font-size: 10px;
+  font-size: var(--text-meta);
   font-weight: 500;
 }
 .neighboring-binding pre {
@@ -121,17 +121,17 @@
   overflow: auto;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
-  font-size: 9px;
+  font-size: var(--text-meta);
   padding: 10px;
-  background: #10181e;
+  background: var(--panel-raised);
 }
 .neighboring-limits {
-  border: 1px solid #3b4350;
-  border-radius: 6px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
   padding: 11px;
   margin-top: 18px;
-  color: #a6b4c0;
+  color: var(--text-muted);
 }
 .neighboring-limits strong {
-  color: #bdcad5;
+  color: var(--text);
 }

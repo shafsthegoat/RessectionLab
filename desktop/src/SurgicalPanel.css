@@ -1,84 +1,84 @@
-.surgical-panel{padding:16px;display:flex;flex-direction:column;gap:10px;font-size:12px}.surgical-panel h2,.surgical-panel h3,.surgical-panel p{margin:0}.surgical-note{color:#9ab0bc;line-height:1.5}.surgical-panel label{display:flex;justify-content:space-between;align-items:center;gap:6px}.surgical-panel input,.surgical-panel select{min-width:0;background:#14252c;color:#e5f1f5;border:1px solid #35505b;padding:6px;border-radius:5px}.surgical-panel input[type=number]{width:78px}.surgical-panel button{border:1px solid #35505b;border-radius:6px;padding:8px;background:#172a31;color:#d9ebee;text-align:left}.surgical-panel button[aria-pressed=true]{border-color:#76d4bd;background:#24443f}.surgical-panel button:disabled{opacity:.45}.surgical-slots,.surgical-vector,.surgical-actions{display:flex;gap:5px}.surgical-slots button{flex:1;display:flex;flex-direction:column;gap:5px}.surgical-vector label{flex:1;flex-direction:column}.surgical-vector input{width:100%!important}.surgical-toolbox{display:grid;grid-template-columns:1fr 1fr;gap:5px;max-height:220px;overflow:auto}.surgical-toolbox button{display:flex;flex-direction:column;gap:4px}.surgical-toolbox small{color:#95b4bd}.surgical-actions{flex-wrap:wrap}.surgical-metrics{display:grid;grid-template-columns:1fr 1fr;gap:8px}.surgical-metrics div{display:flex;flex-direction:column;overflow-wrap:anywhere}.surgical-error{color:#ffc39d;background:#442d29;padding:10px;border-radius:6px}.surgical-panel details{border-top:1px solid #35505b;padding-top:8px}.surgical-panel summary{cursor:pointer}
-.surgical-controls{border:0;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;min-width:0}.surgical-map-row{display:flex;flex-direction:column;gap:7px;padding:10px 0;border-bottom:1px solid #35505b}.surgical-map-row strong{overflow-wrap:anywhere}.surgical-panel input[type=checkbox]{accent-color:#76d4bd}.surgical-preview{border:1px solid #76d4bd;background:#203e39;border-radius:6px;padding:10px;line-height:1.5}.surgical-warning{color:#f2d5a5;line-height:1.5}.surgical-panel button:focus-visible,.surgical-panel input:focus-visible,.surgical-panel select:focus-visible{outline:2px solid #a1ebd8;outline-offset:2px}.surgical-actions span{align-self:center}.surgical-panel li small{display:block;padding:5px;line-height:1.4}
-.surgical-research-context{display:flex;flex-direction:column;gap:8px}.surgical-research-context .surgical-warning{border-left:3px solid #dcb77f;padding:7px 10px;background:#352e23}.surgical-research-context details{line-height:1.5}.surgical-research-context li{margin-bottom:5px}.surgical-declared-fields{display:flex;flex-direction:column;gap:7px;margin:10px 0}.surgical-declared-fields>div{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:8px}.surgical-declared-fields dt{color:#9ab0bc}.surgical-declared-fields dd{margin:0;overflow-wrap:anywhere;white-space:pre-wrap}
-.environment-summary{border:1px solid #35505b;border-radius:7px;padding:10px;display:grid;gap:6px;line-height:1.5;background:#12252d}.rehearsal-model{display:flex;flex-direction:column;gap:6px;margin:0 16px 10px;color:#a9c1cb;font-size:12px}.rehearsal-model select{background:#14252c;color:#e5f1f5;border:1px solid #35505b;border-radius:5px;padding:8px}.rehearsal-anatomy{margin:8px 16px 18px;font-size:12px}.rehearsal-anatomy>summary{cursor:pointer;padding:9px 0}.surgical-toolbox{max-height:none;grid-template-columns:repeat(3,minmax(0,1fr))}.surgical-toolbox button{padding:7px;font-size:11px;overflow-wrap:anywhere}.surgical-toolbox small{font-size:9px}.rl-viewer-anatomy-image{user-select:none}.surgical-panel .surgical-actions{position:relative}
-.research-planning {margin:12px 0;padding:12px;border:1px solid var(--border,#344655);border-radius:8px;}
-.consequence-comparison [role=region]{max-width:100%;overflow-x:auto}.consequence-comparison table{min-width:570px;border-collapse:collapse;font-size:11px;font-variant-numeric:tabular-nums}.consequence-comparison th,.consequence-comparison td{padding:7px;text-align:left;border-bottom:1px solid var(--border,#344655)}.consequence-comparison pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:10px}.consequence-comparison section{display:grid;gap:7px;margin:12px 0}
+.surgical-panel{padding:16px;display:flex;flex-direction:column;gap:10px;font-size:var(--text-meta)}.surgical-panel h2,.surgical-panel h3,.surgical-panel p{margin:0}.surgical-note{color:var(--text-muted);line-height:1.5}.surgical-panel label{display:flex;justify-content:space-between;align-items:center;gap:6px}.surgical-panel input,.surgical-panel select{min-width:0;background:var(--panel-raised);color:var(--text);border:1px solid var(--line-strong);padding:6px;border-radius:var(--radius)}.surgical-panel input[type=number]{width:78px}.surgical-panel button{border:1px solid var(--line-strong);border-radius:var(--radius);padding:8px;background:var(--panel-raised);color:var(--text);text-align:left}.surgical-panel button[aria-pressed=true]{border-color:var(--accent);background:var(--accent-soft)}.surgical-panel button:disabled{opacity:.45}.surgical-slots,.surgical-vector,.surgical-actions{display:flex;gap:5px}.surgical-slots button{flex:1;display:flex;flex-direction:column;gap:5px}.surgical-vector label{flex:1;flex-direction:column}.surgical-vector input{width:100%!important}.surgical-toolbox{display:grid;grid-template-columns:1fr 1fr;gap:5px;max-height:220px;overflow:auto}.surgical-toolbox button{display:flex;flex-direction:column;gap:4px}.surgical-toolbox small{color:var(--text-muted)}.surgical-actions{flex-wrap:wrap}.surgical-metrics{display:grid;grid-template-columns:1fr 1fr;gap:8px}.surgical-metrics div{display:flex;flex-direction:column;overflow-wrap:anywhere}.surgical-error{color:var(--danger);background:var(--danger-soft);padding:10px;border-radius:var(--radius-card)}.surgical-panel details{border-top:1px solid var(--line-strong);padding-top:8px}.surgical-panel summary{cursor:pointer}
+.surgical-controls{border:0;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;min-width:0}.surgical-map-row{display:flex;flex-direction:column;gap:7px;padding:10px 0;border-bottom:1px solid var(--line-strong)}.surgical-map-row strong{overflow-wrap:anywhere}.surgical-panel input[type=checkbox]{accent-color:var(--accent)}.surgical-preview{border:1px solid var(--accent);background:var(--panel-raised);border-radius:var(--radius-card);padding:10px;line-height:1.5}.surgical-warning{color:var(--warning);line-height:1.5}.surgical-panel button:focus-visible,.surgical-panel input:focus-visible,.surgical-panel select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}.surgical-actions span{align-self:center}.surgical-panel li small{display:block;padding:5px;line-height:1.4}
+.surgical-research-context{display:flex;flex-direction:column;gap:8px}.surgical-research-context .surgical-warning{border-left:3px solid var(--warning);padding:7px 10px;background:var(--warning-soft)}.surgical-research-context details{line-height:1.5}.surgical-research-context li{margin-bottom:5px}.surgical-declared-fields{display:flex;flex-direction:column;gap:7px;margin:10px 0}.surgical-declared-fields>div{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:8px}.surgical-declared-fields dt{color:var(--text-muted)}.surgical-declared-fields dd{margin:0;overflow-wrap:anywhere;white-space:pre-wrap}
+.environment-summary{border:1px solid var(--line-strong);border-radius:var(--radius-card);padding:10px;display:grid;gap:6px;line-height:1.5;background:var(--panel-raised)}.rehearsal-model{display:flex;flex-direction:column;gap:6px;margin:0 16px 10px;color:var(--text-muted);font-size:var(--text-meta)}.rehearsal-model select{background:var(--panel-raised);color:var(--text);border:1px solid var(--line-strong);border-radius:var(--radius);padding:8px}.rehearsal-anatomy{margin:8px 16px 18px;font-size:var(--text-meta)}.rehearsal-anatomy>summary{cursor:pointer;padding:9px 0}.surgical-toolbox{max-height:none;grid-template-columns:repeat(3,minmax(0,1fr))}.surgical-toolbox button{padding:7px;font-size:var(--text-meta);overflow-wrap:anywhere}.surgical-toolbox small{font-size:var(--text-meta)}.rl-viewer-anatomy-image{user-select:none}.surgical-panel .surgical-actions{position:relative}
+.research-planning {margin:12px 0;padding:12px;border:1px solid var(--line);border-radius:var(--radius-card);}
+.consequence-comparison [role=region]{max-width:100%;overflow-x:auto}.consequence-comparison table{min-width:570px;border-collapse:collapse;font-size:var(--text-meta);font-variant-numeric:tabular-nums}.consequence-comparison th,.consequence-comparison td{padding:7px;text-align:left;border-bottom:1px solid var(--line)}.consequence-comparison pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:var(--text-meta)}.consequence-comparison section{display:grid;gap:7px;margin:12px 0}
 .research-plan-alternatives {display:grid;gap:12px;}
-.research-plan-alternatives article {padding:10px;border:1px solid var(--border,#344655);border-radius:6px;}
+.research-plan-alternatives article {padding:10px;border:1px solid var(--line);border-radius:var(--radius-card);}
 .research-plan-alternatives dl>div {display:flex;justify-content:space-between;gap:12px;margin:5px 0;}
 .research-plan-alternatives dd {margin:0;text-align:right;}
 .research-plan-alternatives p {overflow-wrap:anywhere;}
 .rescue-comparison {overflow-x:auto;margin:12px 0;}
-.rescue-comparison table {width:100%;border-collapse:collapse;font-size:11px;font-variant-numeric:tabular-nums;}
-.rescue-comparison caption {text-align:left;color:#9ab0bc;padding:6px 0;}
-.rescue-comparison th,.rescue-comparison td {padding:6px 3px;border-bottom:1px solid #35505b;text-align:right;}
+.rescue-comparison table {width:100%;border-collapse:collapse;font-size:var(--text-meta);font-variant-numeric:tabular-nums;}
+.rescue-comparison caption {text-align:left;color:var(--text-muted);padding:6px 0;}
+.rescue-comparison th,.rescue-comparison td {padding:6px 3px;border-bottom:1px solid var(--line-strong);text-align:right;}
 .rescue-comparison th:first-child {text-align:left;}
-.rescue-comparison button {padding:5px;font-size:11px;}
-.rescue-comparison tr[aria-selected=true] {background:#24443f;}
+.rescue-comparison button {padding:5px;font-size:var(--text-meta);}
+.rescue-comparison tr[aria-selected=true] {background:var(--accent-soft);}
 .rescue-learning table {table-layout:fixed;}
 .rescue-learning th:first-child {width:42%;}
 .rescue-learning button {width:100%;white-space:normal;}
-.rescue-learning th small {display:block;font-size:10px;font-weight:normal;white-space:normal;}
-.rescue-learning td {font-size:10.5px;overflow-wrap:anywhere;}
-.full-case-rehearsal{display:flex;flex-direction:column;gap:10px;border:1px solid #609d91;border-radius:8px;background:#152e31;padding:12px}.full-case-rehearsal>strong{font-size:15px;color:#b4e6da}.surgical-panel .full-case-phase-jump{flex-direction:column;align-items:stretch}.full-case-phase-jump select{width:100%}
+.rescue-learning th small {display:block;font-size:var(--text-meta);font-weight:normal;white-space:normal;}
+.rescue-learning td {font-size:var(--text-meta);overflow-wrap:anywhere;}
+.full-case-rehearsal{display:flex;flex-direction:column;gap:10px;border:1px solid var(--accent-line);border-radius:var(--radius-card);background:var(--panel-raised);padding:12px}.full-case-rehearsal>strong{font-size:var(--text-title);color:var(--accent)}.surgical-panel .full-case-phase-jump{flex-direction:column;align-items:stretch}.full-case-phase-jump select{width:100%}
 
 /* Keep decisions ahead of evidence. Native disclosures retain mounted drafts. */
 .surgical-panel{padding:10px;gap:8px;min-width:0}
-.rehearsal-heading h2{font-size:16px}.rehearsal-heading span{font-size:11px}
-.rehearsal-state{border-left:3px solid #76d4bd;padding:5px 8px;background:#142b2b;overflow-wrap:anywhere}
-.rehearsal-state p{color:#a9c1cb;font-size:11px;margin-top:3px}
-.surgical-panel h3{font-size:13px;color:#c6e4df}
+.rehearsal-heading h2{font-size:var(--text-title)}.rehearsal-heading span{font-size:var(--text-meta)}
+.rehearsal-state{border-left:3px solid var(--accent);padding:5px 8px;background:var(--panel-raised);overflow-wrap:anywhere}
+.rehearsal-state p{color:var(--text-muted);font-size:var(--text-meta);margin-top:3px}
+.surgical-panel h3{font-size:var(--text-body);color:var(--text)}
 .surgical-panel button{padding:6px 8px}
-.surgical-slots button{gap:3px;font-size:11px}.surgical-slots small{font-size:10px;line-height:1.35}
-.surgical-panel summary{line-height:1.4;color:#b9d6d1;padding:2px 0}
-.surgical-panel summary:focus-visible{outline:2px solid #a1ebd8;outline-offset:3px;border-radius:3px}
+.surgical-slots button{gap:3px;font-size:var(--text-meta)}.surgical-slots small{font-size:var(--text-meta);line-height:1.35}
+.surgical-panel summary{line-height:1.4;color:var(--text);padding:2px 0}
+.surgical-panel summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:var(--radius)}
 .surgical-panel details[open]>summary{margin-bottom:8px}
 .surgical-panel details>p,.surgical-panel details>.surgical-controls{margin-top:7px}
-.full-case-rehearsal{padding:8px;gap:6px}.full-case-rehearsal>strong{font-size:13px}
+.full-case-rehearsal{padding:8px;gap:6px}.full-case-rehearsal>strong{font-size:var(--text-body)}
 .full-case-rehearsal .surgical-actions>.primary-button{width:100%}
-.surgical-panel .primary-button{background:#254e43;border-color:#73b8a5;color:#dbf7ee}
-.manual-actions,.rehearsal-replay,.surgical-outcome,.rehearsal-view-controls{display:flex;flex-direction:column;gap:7px;border-top:1px solid #35505b;padding-top:8px;min-width:0}
+.surgical-panel .primary-button{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.manual-actions,.rehearsal-replay,.surgical-outcome,.rehearsal-view-controls{display:flex;flex-direction:column;gap:7px;border-top:1px solid var(--line-strong);padding-top:8px;min-width:0}
 .surgical-outcome .surgical-metrics{font-variant-numeric:tabular-nums}
-.surgical-outcome .surgical-metrics strong{font-size:14px}
+.surgical-outcome .surgical-metrics strong{font-size:var(--text-title)}
 .surgical-panel .surgeon-view,.surgical-panel [aria-label="Close instrument view"]{display:flex;flex-direction:column;gap:6px}
 .surgeon-view>div{display:flex;flex-wrap:wrap;gap:5px}
-.surgeon-view>strong[role=status]{color:#f2d5a5;line-height:1.4}
+.surgeon-view>strong[role=status]{color:var(--warning);line-height:1.4}
 .surgical-panel .rehearsal-anatomy{margin:8px 0}
 .surgical-panel details .surgical-preview{margin-top:7px}
 .surgical-panel .rehearsal-secondary>section{margin:10px 0}
-.rehearsal-environment{margin:0 16px 4px;font-size:11px;color:#a9c1cb}.rehearsal-environment>summary{cursor:pointer;padding:5px 0}.rehearsal-environment .rehearsal-model{margin:6px 0}
-.rehearsal-environment>summary:focus-visible{outline:2px solid #a1ebd8;outline-offset:2px}
-.consequence-editor{min-width:0}.consequence-editor h4{margin:0}.consequence-editor fieldset{display:grid;gap:9px;margin:0;padding:9px;border:1px solid #35505b;border-radius:5px;min-width:0}.consequence-editor legend{padding:0 4px;color:#b9d6d1}.consequence-editor label{line-height:1.45}.consequence-editor input[type=number]{width:96px;flex-shrink:0}.consequence-editor .consequence-evidence label{justify-content:space-between}.consequence-editor [role=status]{padding:8px;border-left:3px solid #76d4bd;background:#142b2b;display:grid;gap:7px}.consequence-editor td{vertical-align:top}.consequence-editor td ul{padding-left:16px;margin:0;min-width:190px}.consequence-editor th:first-child{overflow-wrap:anywhere;min-width:110px}.consequence-editor p{line-height:1.5}
-.consequence-alternatives{display:grid;gap:9px;min-width:0}.consequence-alternatives article{display:grid;gap:7px;padding:8px;border:1px solid #35505b;border-radius:6px;min-width:0;overflow-wrap:anywhere}.consequence-alternatives h5{margin:0;font-size:12px;color:#c6e4df}.consequence-alternatives dl{margin:0;font-variant-numeric:tabular-nums}.consequence-alternatives dl>div{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:7px;padding:4px 0;border-bottom:1px solid #2a414a}.consequence-alternatives dt{color:#a9c1cb}.consequence-alternatives dd{margin:0;text-align:right;max-width:100px}.consequence-alternatives ul{margin:0;padding-left:16px;line-height:1.5}.consequence-alternatives li small{padding:0;color:#a9c1cb}.consequence-unknown{display:block}
-.planar-blade-maneuver{display:flex;flex-direction:column;gap:8px;padding:9px;border:1px solid #609d91;border-radius:7px;background:#152e31;min-width:0}.planar-blade-actions{display:grid;gap:6px}.planar-blade-actions button{flex:1}.planar-blade-maneuver dd{font-size:11px}.planar-blade-maneuver .surgical-declared-fields>div{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr)}
+.rehearsal-environment{margin:0 16px 4px;font-size:var(--text-meta);color:var(--text-muted)}.rehearsal-environment>summary{cursor:pointer;padding:5px 0}.rehearsal-environment .rehearsal-model{margin:6px 0}
+.rehearsal-environment>summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.consequence-editor{min-width:0}.consequence-editor h4{margin:0}.consequence-editor fieldset{display:grid;gap:9px;margin:0;padding:9px;border:1px solid var(--line-strong);border-radius:var(--radius-card);min-width:0}.consequence-editor legend{padding:0 4px;color:var(--text)}.consequence-editor label{line-height:1.45}.consequence-editor input[type=number]{width:96px;flex-shrink:0}.consequence-editor .consequence-evidence label{justify-content:space-between}.consequence-editor [role=status]{padding:8px;border-left:3px solid var(--accent);background:var(--panel-raised);display:grid;gap:7px}.consequence-editor td{vertical-align:top}.consequence-editor td ul{padding-left:16px;margin:0;min-width:190px}.consequence-editor th:first-child{overflow-wrap:anywhere;min-width:110px}.consequence-editor p{line-height:1.5}
+.consequence-alternatives{display:grid;gap:9px;min-width:0}.consequence-alternatives article{display:grid;gap:7px;padding:8px;border:1px solid var(--line-strong);border-radius:var(--radius-card);min-width:0;overflow-wrap:anywhere}.consequence-alternatives h5{margin:0;font-size:var(--text-meta);color:var(--text)}.consequence-alternatives dl{margin:0;font-variant-numeric:tabular-nums}.consequence-alternatives dl>div{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:7px;padding:4px 0;border-bottom:1px solid var(--line-strong)}.consequence-alternatives dt{color:var(--text-muted)}.consequence-alternatives dd{margin:0;text-align:right;max-width:100px}.consequence-alternatives ul{margin:0;padding-left:16px;line-height:1.5}.consequence-alternatives li small{padding:0;color:var(--text-muted)}.consequence-unknown{display:block}
+.planar-blade-maneuver{display:flex;flex-direction:column;gap:8px;padding:9px;border:1px solid var(--accent-line);border-radius:var(--radius-card);background:var(--panel-raised);min-width:0}.planar-blade-actions{display:grid;gap:6px}.planar-blade-actions button{flex:1}.planar-blade-maneuver dd{font-size:var(--text-meta)}.planar-blade-maneuver .surgical-declared-fields>div{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr)}
 
-.interactive-planning{border:1px solid #477185;border-radius:8px;background:#142b37;padding:10px;margin:12px 0}.interactive-planning>summary{font-weight:650;cursor:pointer}.approach-draft{display:grid;gap:10px;padding-top:10px}.approach-draft p{margin:0;font-size:12px}.approach-draft fieldset{min-width:0;margin:0;padding:9px;border:1px solid #3d586a;border-radius:6px}.approach-draft legend{font-size:12px;font-weight:650}.approach-coordinates{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.approach-draft label{font-size:11px;display:flex;gap:5px;align-items:center;flex-wrap:wrap}.approach-coordinates label{display:grid;gap:3px}.approach-draft input[type=number]{width:100%;min-width:0;box-sizing:border-box}.approach-tool{display:grid;gap:8px}.approach-evidence{display:flex;flex-wrap:wrap;gap:7px 12px}.approach-tool>label{justify-content:space-between}.approach-tool>label input{width:85px}.approach-table{overflow:auto}.approach-table table{border-collapse:collapse;width:100%;font-size:11px}.approach-table th,.approach-table td{text-align:left;padding:6px;border-bottom:1px solid #365063}.approach-table th button{text-align:left;width:100%;font-size:11px}.approach-table tr[aria-selected=true]{background:#285068}.approach-table button[aria-pressed=true]{outline:1px solid #70e0ff}.approach-selection{padding:9px;background:#1d3a4b;border-radius:6px;display:grid;gap:7px}.approach-draft pre{font-size:10px;max-height:260px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere}.approach-draft code{overflow-wrap:anywhere}.approach-draft .surgical-actions{margin-top:6px;flex-wrap:wrap}
+.interactive-planning{border:1px solid var(--line-strong);border-radius:var(--radius-card);background:var(--panel-raised);padding:10px;margin:12px 0}.interactive-planning>summary{font-weight:650;cursor:pointer}.approach-draft{display:grid;gap:10px;padding-top:10px}.approach-draft p{margin:0;font-size:var(--text-body)}.approach-draft fieldset{min-width:0;margin:0;padding:9px;border:1px solid var(--line-strong);border-radius:var(--radius-card)}.approach-draft legend{font-size:var(--text-meta);font-weight:650}.approach-coordinates{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.approach-draft label{font-size:var(--text-meta);display:flex;gap:5px;align-items:center;flex-wrap:wrap}.approach-coordinates label{display:grid;gap:3px}.approach-draft input[type=number]{width:100%;min-width:0;box-sizing:border-box}.approach-tool{display:grid;gap:8px}.approach-evidence{display:flex;flex-wrap:wrap;gap:7px 12px}.approach-tool>label{justify-content:space-between}.approach-tool>label input{width:85px}.approach-table{overflow:auto}.approach-table table{border-collapse:collapse;width:100%;font-size:var(--text-meta)}.approach-table th,.approach-table td{text-align:left;padding:6px;border-bottom:1px solid var(--line-strong)}.approach-table th button{text-align:left;width:100%;font-size:var(--text-meta)}.approach-table tr[aria-selected=true]{background:var(--accent-soft)}.approach-table button[aria-pressed=true]{outline:1px solid var(--accent)}.approach-selection{padding:9px;background:var(--line);border-radius:var(--radius);display:grid;gap:7px}.approach-draft pre{font-size:var(--text-meta);max-height:260px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere}.approach-draft code{overflow-wrap:anywhere}.approach-draft .surgical-actions{margin-top:6px;flex-wrap:wrap}
 
-.approach-constraints>summary{font-size:12px;cursor:pointer}.approach-constraints-body{display:grid;gap:10px;padding-top:10px}.approach-draft .approach-radius{display:flex;flex-wrap:nowrap;justify-content:space-between;margin-top:8px}.approach-draft .approach-radius input{width:88px}.approach-coordinates input[type=number]{padding-left:5px;padding-right:2px;font-size:12px}.approach-coordinates input::-webkit-inner-spin-button{appearance:none;margin:0}
+.approach-constraints>summary{font-size:var(--text-body);cursor:pointer}.approach-constraints-body{display:grid;gap:10px;padding-top:10px}.approach-draft .approach-radius{display:flex;flex-wrap:nowrap;justify-content:space-between;margin-top:8px}.approach-draft .approach-radius input{width:88px}.approach-coordinates input[type=number]{padding-left:5px;padding-right:2px;font-size:var(--text-body)}.approach-coordinates input::-webkit-inner-spin-button{appearance:none;margin:0}
 .approach-table{overflow:visible;min-width:0}.approach-table table{table-layout:fixed}.approach-table caption{white-space:normal;overflow-wrap:anywhere;text-align:left;margin-bottom:6px}.approach-table th,.approach-table td{white-space:normal;overflow-wrap:anywhere;padding:5px 3px}.approach-table th:first-child{width:20%}.approach-table th:nth-child(2){width:32%}.approach-table th button{min-width:0;padding:5px 3px;white-space:normal}
 
-.preparation-planning .approach-table{min-width:0;max-width:100%}.preparation-planning .approach-table table{table-layout:fixed}.preparation-planning .approach-table th:first-child{width:21%}.preparation-planning .approach-table th,.preparation-planning .approach-table td{vertical-align:top;padding:6px 4px;overflow-wrap:normal;word-break:normal}.preparation-planning .approach-table button{white-space:nowrap}.preparation-planning .approach-table td p{margin-top:5px;font-size:11px}
+.preparation-planning .approach-table{min-width:0;max-width:100%}.preparation-planning .approach-table table{table-layout:fixed}.preparation-planning .approach-table th:first-child{width:21%}.preparation-planning .approach-table th,.preparation-planning .approach-table td{vertical-align:top;padding:6px 4px;overflow-wrap:normal;word-break:normal}.preparation-planning .approach-table button{white-space:nowrap}.preparation-planning .approach-table td p{margin-top:5px;font-size:var(--text-meta)}
 .preparation-planning{min-width:0}.preparation-draft{min-width:0;grid-template-columns:minmax(0,1fr)}.preparation-draft>*{min-width:0}.preparation-draft .approach-selection{box-sizing:border-box;max-width:100%;overflow-wrap:anywhere}
 .preparation-draft[data-preparation-family="paired-lanes-v1"] .approach-table th:first-child{width:27%}
 
 /* Keep the supported workflow in the existing instrument panel. */
-.surgical-workflow{border-block:1px solid var(--border,#35505b);padding-block:12px;margin-block:12px}
+.surgical-workflow{border-block:1px solid var(--line);padding-block:12px;margin-block:12px}
 .surgical-workflow nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}
-.surgical-workflow nav button{display:flex;align-items:center;gap:6px;padding:8px;min-width:0;font-size:12px;line-height:1.25;white-space:normal}
-.surgical-workflow nav button span{font-size:11px;opacity:.7}
-.surgical-workflow nav button[aria-current="step"]{border-color:#76d4bd;background:#24443f;color:#d9ebee;font-weight:650}
+.surgical-workflow nav button{display:flex;align-items:center;gap:6px;padding:8px;min-width:0;font-size:var(--text-meta);line-height:1.25;white-space:normal}
+.surgical-workflow nav button span{font-size:var(--text-meta);opacity:.7}
+.surgical-workflow nav button[aria-current="step"]{border-color:var(--accent);background:var(--accent-soft);color:var(--text);font-weight:650}
 .workflow-identity{overflow-wrap:anywhere}
-.workflow-bindings code{overflow-wrap:anywhere;font-size:10px}
+.workflow-bindings code{overflow-wrap:anywhere;font-size:var(--text-meta)}
 .workflow-alternatives{display:grid;gap:9px;margin-block:12px}
-.workflow-alternative{border:1px solid var(--border,#35505b);border-radius:7px;padding:10px;background:var(--panel,#12252d)}
-.workflow-alternative:has(button[aria-pressed="true"]){border-color:#76d4bd}
-.workflow-alternative>strong{display:block;font-size:14px}
+.workflow-alternative{border:1px solid var(--line);border-radius:var(--radius-card);padding:10px;background:var(--panel)}
+.workflow-alternative:has(button[aria-pressed="true"]){border-color:var(--accent)}
+.workflow-alternative>strong{display:block;font-size:var(--text-title)}
 .workflow-alternative p{margin-block:6px}
 .workflow-alternative dl,.surgical-workflow dl{margin-block:8px}
 .workflow-alternative dl>div,.surgical-workflow dl>div{display:flex;justify-content:space-between;gap:12px;margin-block:5px}
-.workflow-alternative dt,.surgical-workflow dt{font-size:12px;color:var(--muted,#9ab0bc)}
-.workflow-alternative dd,.surgical-workflow dd{margin:0;text-align:right;font-size:12px;overflow-wrap:anywhere}
+.workflow-alternative dt,.surgical-workflow dt{font-size:var(--text-meta);color:var(--muted)}
+.workflow-alternative dd,.surgical-workflow dd{margin:0;text-align:right;font-size:var(--text-body);overflow-wrap:anywhere}
 .workflow-alternative dl>div{display:grid;grid-template-columns:minmax(0,1fr) minmax(65px,.9fr);gap:7px}
 .workflow-alternative dd{overflow-wrap:normal}
 /* Author styles may otherwise override the browser's hidden display rule. */
@@ -86,56 +86,56 @@
 
 .sequential-episodes{min-width:0;overflow-wrap:anywhere}
 .sequential-episodes>p,.sequential-episodes>div,.sequential-episodes>details{margin-top:9px}
-.sequential-episodes .rescue-comparison table{table-layout:fixed;font-size:11px}
+.sequential-episodes .rescue-comparison table{table-layout:fixed;font-size:var(--text-meta)}
 .sequential-episodes .rescue-comparison th,.sequential-episodes .rescue-comparison td{vertical-align:top;white-space:normal;padding:6px 3px}
 .sequential-episodes .rescue-comparison th:first-child{width:40%}
 .sequential-episodes .rescue-comparison th:nth-child(2){width:25%}
 .sequential-episodes .rescue-comparison th:nth-child(3){width:35%}
-.sequential-episodes .rescue-comparison button{white-space:normal;overflow-wrap:normal;font-size:11px;max-width:100%}
-.sequential-episodes pre{max-width:100%;overflow:auto;white-space:pre-wrap;font-size:10px}
+.sequential-episodes .rescue-comparison button{white-space:normal;overflow-wrap:normal;font-size:var(--text-meta);max-width:100%}
+.sequential-episodes pre{max-width:100%;overflow:auto;white-space:pre-wrap;font-size:var(--text-meta)}
 .sequential-attempts ol{padding-left:18px}.sequential-attempts li{margin-bottom:10px}
-.sequential-attempts [data-request-status=rejected]{color:#f2d5a5}
+.sequential-attempts [data-request-status=rejected]{color:var(--warning)}
 .planning-evidence{display:grid;gap:8px;margin-block:12px}
 .planning-evidence :is(h3,h4,p){margin:0}
 .planning-evidence-alternatives{display:grid;gap:7px}
-.planning-evidence-alternatives article,.planning-evidence-decision{display:grid;gap:5px;border:1px solid var(--border,#35505b);border-radius:7px;padding:9px}
+.planning-evidence-alternatives article,.planning-evidence-decision{display:grid;gap:5px;border:1px solid var(--line);border-radius:var(--radius-card);padding:9px}
 .planning-evidence-alternatives article[data-planning-alternative="harm-aware"]{border-color:#6bb7a7;background:#1b3536}
 .planning-evidence-decision[data-intent="stop_with_residual"]{border-color:#b99858}
 .planning-evidence button{justify-self:start}
-.planning-evidence pre,.approach-access-evidence pre{max-height:240px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;font-size:11px}
+.planning-evidence pre,.approach-access-evidence pre{max-height:240px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;font-size:var(--text-meta)}
 .planning-evidence code{overflow-wrap:anywhere}
 
 .practice-entry {margin-top:6px}
 .practice-controls {display:grid;gap:7px;min-width:0}
 .practice-controls>fieldset {gap:7px}
 .practice-tools {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}
-.practice-tools button {text-align:center;font-size:11px;line-height:1.3}
+.practice-tools button {text-align:center;font-size:var(--text-meta);line-height:1.3}
 .practice-controls select {max-width:72%}
 .practice-jog {display:grid;gap:2px;touch-action:none;user-select:none;cursor:crosshair}
-.practice-jog span,.practice-pose p {font-size:11px;line-height:1.5}
-.practice-jog span {color:#a9c1cb}
+.practice-jog span,.practice-pose p {font-size:var(--text-meta);line-height:1.5}
+.practice-jog span {color:var(--text-muted)}
 .practice-pose {font-variant-numeric:tabular-nums}
-.practice-pose button {padding:1px 4px;font-size:10px}
+.practice-pose button {padding:1px 4px;font-size:var(--text-meta)}
 .practice-controls details p {overflow-wrap:anywhere}
-.operative-readout.practice-hud {max-width:320px;font-size:11px}
+.operative-readout.practice-hud {max-width:320px;font-size:var(--text-meta)}
 .practice-hud dl {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 12px;margin:2px 0}
 .practice-hud dl div {display:grid;gap:1px}
-.practice-hud dt {color:#c1cbc9;font-size:10px}
-.practice-hud dd {margin:0;font-size:12px}
+.practice-hud dt {color:var(--text);font-size:var(--text-meta)}
+.practice-hud dd {margin:0;font-size:var(--text-body)}
 .surgical-panel[data-practice-active="true"] .rehearsal-state {padding-block:4px}
-.surgical-panel[data-practice-active="true"] .rehearsal-state>strong {font-size:12px}
+.surgical-panel[data-practice-active="true"] .rehearsal-state>strong {font-size:var(--text-meta)}
 
 .practice-mode,.practice-hold-buttons {display:flex;gap:4px}
 .practice-mode button,.practice-hold-buttons button {flex:1;text-align:center;min-width:0}
 .practice-hold-buttons button {min-height:36px;touch-action:none;user-select:none}
-.practice-hold-buttons button[aria-pressed=true] {border-color:#9de9d5;background:#285849}
-.practice-hold-status {color:#c6e4df;font-size:11px;font-variant-numeric:tabular-nums}
+.practice-hold-buttons button[aria-pressed=true] {border-color:var(--accent);background:var(--accent-soft)}
+.practice-hold-status {color:var(--text);font-size:var(--text-meta);font-variant-numeric:tabular-nums}
 
 .exposure-controls { display: grid; gap: 8px; padding: 10px 0; }
 .exposure-controls header { display: flex; align-items: baseline; justify-content: space-between; gap: 6px; }
-.exposure-controls header span, .exposure-layers small { color: #9fb9bc; }
+.exposure-controls header span, .exposure-layers small { color: var(--text-muted); }
 .exposure-layers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; }
 .exposure-layers button { display: grid; gap: 3px; }
 .exposure-layers small { text-transform: capitalize; }
-.walkthrough-cue { display: grid; gap: 6px; border-left: 2px solid #77a99f; padding: 2px 0 4px 10px; }
-.walkthrough-cue small { text-transform: capitalize; color: #a0bbb7; }
+.walkthrough-cue { display: grid; gap: 6px; border-left: 2px solid var(--accent); padding: 2px 0 4px 10px; }
+.walkthrough-cue small { text-transform: capitalize; color: var(--text-muted); }
