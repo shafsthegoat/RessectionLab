@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import * as THREE from 'three';
 import {prepareSurface} from './prepareSurface.ts';
 import {displaySurfaceNormals} from './displaySurfaceNormals.ts';
-import {applyCtaVesselFinish,applyVesselDepthMaterial,ctaVesselColor,vesselWallFinish} from './anatomySurfaceMaterial.ts';
+import {applyCtaVesselFinish,applyVesselDepthMaterial,ctaDisplayKind,ctaVesselColor,vesselWallFinish} from './anatomySurfaceMaterial.ts';
 import {applySourceContextMaterial} from './sourceContextMaterial.ts';
 import {SurfaceVolumePass} from './SurfaceVolumePass.ts';
 import {VesselDepthSeparation} from './vesselDepthSeparation.ts';
@@ -176,4 +176,15 @@ test('acquired CTA contrast uses declared vessel types and retains the original 
     applyCtaVesselFinish(material,'artery',{...settings,vesselShading:'source'},'CTA');
     for(const [name,value] of Object.entries(vesselWallFinish))assert.equal(material[name],value);
   }finally{material.dispose();}
+});
+
+test('a connected-tree display takes its CTA colour from its class, and the review overlay keeps its own',()=>{
+  const rooted={scope:'rooted'};
+  assert.equal(ctaDisplayKind({name:'model',kind:'vessels',color:'#aa352b',displayFilter:rooted}),'artery');
+  assert.equal(ctaDisplayKind({name:'model',kind:'vessels',color:'#42668F',displayFilter:{scope:'rooted-review'}}),'vein');
+  assert.equal(ctaDisplayKind({name:'__vessel_veins:model',kind:'vein',color:'#42668f'}),'vein');
+  assert.equal(ctaDisplayKind({name:'__vessel_arteries:model',kind:'artery',color:'#aa352b'}),'artery');
+  assert.equal(ctaDisplayKind({name:'__vessel_review:model',kind:'vessels',color:'#ffad54'}),undefined);
+  assert.equal(ctaDisplayKind({name:'full',kind:'vessels',color:'#aa352b',displayFilter:{scope:'all'}}),'vessels');
+  assert.equal(ctaDisplayKind({name:'sinus',kind:'sinus',color:'#42668f',displayFilter:rooted}),'sinus');
 });

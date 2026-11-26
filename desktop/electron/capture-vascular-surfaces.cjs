@@ -90,7 +90,7 @@ for(const recipe of recipes){
     new Set(recipe.compareVesselShading).size===recipe.compareVesselShading.length&&
     recipe.compareVesselShading.every(mode=>['source','balanced','large','fine','cta-contrast'].includes(mode)));
   assert(!recipe.preset||['superior','anterior','left','oblique'].includes(recipe.preset));
-  assert(!recipe.scope||['all','brain','intracranial','excluded','exterior-air'].includes(recipe.scope));
+  assert(!recipe.scope||['rooted','rooted-review','all','brain','intracranial','excluded','exterior-air'].includes(recipe.scope));
   assert(!recipe.rotationFrames||Number.isInteger(recipe.rotationFrames)&&recipe.rotationFrames>=2&&recipe.rotationFrames<=120);
   assert(!recipe.rotationFrames||!recipe.compareLayerIds,'Use separate recipes for simultaneous camera comparisons and rotation');
   if(recipe.interaction){
@@ -157,7 +157,7 @@ ipcMain.handle=(name,handler)=>handle(name,async(event,...args)=>{
   openCount++;
   if(activeRecipe.useDefaultState)return result;
   return {...result,viewState:{schema:'patient-anatomy-view-v1',patientId:document.patient_id,snapshotId:document.snapshot_id,
-    seriesId,vesselDisplayVersion:2,vesselScope:scope,patientCutaway:activeRecipe.patientCutaway??{},states:{[seriesId]:{
+    seriesId,vesselDisplayVersion:3,vesselScope:scope,patientCutaway:activeRecipe.patientCutaway??{},states:{[seriesId]:{
       cursor,visible:Object.fromEntries([...layers].map(id=>[id,visibleLayers.includes(id)])),settings:{presentation:'vascular',layout:'3d-focus',
       skullMode:'transparent',smoothSurfaces:document.vascular_review?.schema!=='eden2020-restricted-vascular-companion-v1',
       showOrientationGuide:false,sliceOverlay:'contour',volumeRendering:{enabled:false},...settings}}}}};
@@ -401,7 +401,7 @@ app.on('browser-window-created',(_event,window)=>{
         const view=await nativeView();
         const frame=await settledFrame();
         assert.equal(view.seriesId,recipe.seriesId);
-        assert.equal(view.vesselScope,recipe.scope??'all');
+        assert.equal(view.vesselScope,recipe.scope??(recipe.useDefaultState?'rooted':'all'));
         if(recipe.useDefaultState)assert.deepEqual(
           Object.keys(view.states[recipe.seriesId].visible).filter(id=>view.states[recipe.seriesId].visible[id]).sort(),
           [...recipe.layers].sort(),'Default visible anatomy differs from the study declaration');

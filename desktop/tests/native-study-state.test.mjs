@@ -128,11 +128,15 @@ test('editing a CTA vessel layer color explicitly selects label colors',()=>{
   assert.deepEqual(checkedViewerSettings({metadata:{},compartments:[]},{vesselShading:'cta-contrast'}),{vesselShading:'cta-contrast'});
 });
 
-test('an unclassified native TOF network gets foreground emphasis without an artery color or a CT bone profile',()=>{
-  const layers=[{id:'network',kind:'vessels',source_series:'tof'},{id:'bone',kind:'skull'},{id:'artery',kind:'artery',source_series:'tof'}];
+test('an unclassified native TOF network gets foreground emphasis in the artery color without a CT bone profile',()=>{
+  const layers=[{id:'network',kind:'vessels',source_series:'tof'},{id:'bone',kind:'skull'},{id:'artery',kind:'artery',source_series:'tof'},
+    {id:'vein',kind:'vein',source_series:'tof'},{id:'sinus',kind:'sinus',source_series:'tof'}];
   const view=anatomyPresentation({},layers,'segmentation','3D TOF','tof');
   assert.equal(view.layerOpacity.network,1);
-  assert.notEqual(view.layerColor.network,view.layerColor.artery);
+  // Unclassified vessels follow the artery red; the display receipt says they are unclassified.
+  assert.equal(view.layerColor.network,view.layerColor.artery);
+  assert.equal(view.layerColor.vein,'#42668f');
+  assert.equal(view.layerColor.sinus,'#42668f');
   assert.equal(view.skullMode,'transparent');
   assert.ok(view.volumeRendering.density<.03);
   assert.equal(anatomyPresentation({},layers,'segmentation','T1','other').skullMode,'exterior');
@@ -179,7 +183,8 @@ test('mixed MR Vessels starts with visible source cortex and vessels, with the n
   assert.equal(vessels.volumeRendering.balanceTofContext,undefined);
   const independentTof=anatomyPresentation({},[network],'vascular','TOF','tof',{visible,series});
   assert.equal(independentTof.volumeRendering.balanceTofContext,true);
-  assert.equal(independentTof.layerColor.network,'#c16d72');
+  // Unclassified TOF vessels take the artery red.
+  assert.equal(independentTof.layerColor.network,'#aa352b');
   assert.equal(anatomyPresentation({smoothSurfaces:false},[network],'vascular','TOF','tof').smoothSurfaces,false);
   assert.equal(anatomyPresentation({},[network],'scan','TOF','tof').volumeRendering.balanceTofContext,undefined);
   assert.ok(vessels.layerOpacity.lesion>0&&vessels.layerOpacity.lesion<1);
@@ -254,20 +259,42 @@ test('legacy skull transparency migrates without rewriting explicitly selected m
   assert.equal(migrateSkullView(explicit,layers),explicit);
 });
 
-test('legacy vessel filters migrate once; explicit new choices survive save and reopen',async()=>{
+test('the connected tree is the default; legacy views open rooted and explicit filters survive',async()=>{
   const {vesselScopeForView}=await import('../src/native-study-state.ts');
-  assert.equal(vesselScopeForView(),'all');
-  assert.equal(vesselScopeForView(null,true),'exterior-air');
-  assert.equal(vesselScopeForView({vesselDisplayVersion:2,vesselScope:'all'},true),'all');
-  assert.equal(vesselScopeForView({vesselDisplayVersion:2,vesselScope:'exterior-air'},true),'exterior-air');
+  assert.equal(vesselScopeForView(),'rooted');
+  assert.equal(vesselScopeForView(null),'rooted');
   for(const vesselScope of ['brain','intracranial','excluded','all',undefined]){
     const legacy={vesselScope,states:{mri:{settings:{contrast:4}}}};
     const before=structuredClone(legacy);
-    assert.equal(vesselScopeForView(legacy),'all');
+    assert.equal(vesselScopeForView(legacy),'rooted');
     assert.deepEqual(legacy,before);
+    // Version 2 stored 'all' as its default, so only its explicit filters are kept.
     const saved=JSON.parse(JSON.stringify({...legacy,vesselDisplayVersion:2}));
-    assert.equal(vesselScopeForView(saved),vesselScope??'all');
+    assert.equal(vesselScopeForView(saved),vesselScope===undefined||vesselScope==='all'?'rooted':vesselScope);
   }
+  assert.equal(vesselScopeForView({vesselDisplayVersion:2,vesselScope:'exterior-air'}),'exterior-air');
+  // Version 3 restores every saved choice, including the review toggle and the full source.
+  for(const vesselScope of ['rooted','rooted-review','all','brain','intracranial','excluded','exterior-air']){
+    const saved=JSON.parse(JSON.stringify({vesselScope,vesselDisplayVersion:3,states:{}}));
+    assert.equal(vesselScopeForView(saved),vesselScope);
+  }
+  assert.equal(vesselScopeForView({vesselDisplayVersion:3,states:{}}),'rooted');
+});
+
+test('review overlays follow their source layer and never enter saved visibility',async()=>{
+  const {withVesselReviewVisibility,rootedVesselScope,sourceLikeVesselScope,vesselReviewPrefix}=await import('../src/native-study-state.ts');
+  const visible={arteries:true,veins:false,brain:true};
+  const compartments=[{name:'arteries'},{name:vesselReviewPrefix+'arteries'},{name:'__vessel_veins:arteries'},{name:'veins'},
+    {name:vesselReviewPrefix+'veins'},{name:'__vessel_arteries:veins'},{name:'brain'}];
+  const before=structuredClone(visible);
+  assert.deepEqual(withVesselReviewVisibility(visible,compartments),
+    {...visible,[vesselReviewPrefix+'arteries']:true,'__vessel_veins:arteries':true,[vesselReviewPrefix+'veins']:false,'__vessel_arteries:veins':false});
+  assert.deepEqual(visible,before);
+  assert.equal(withVesselReviewVisibility(visible,[{name:'arteries'}]),visible);
+  assert.equal(withVesselReviewVisibility(visible,undefined),visible);
+  assert.deepEqual(['rooted','rooted-review','all','brain'].map(rootedVesselScope),[true,true,false,false]);
+  assert.deepEqual(['rooted','rooted-review','all','exterior-air','intracranial','brain','excluded'].map(sourceLikeVesselScope),
+    [true,true,true,true,false,false,false]);
 });
 
 test('presentation choices preserve source identities, selected anatomy, camera and quantitative masks',()=>{
@@ -434,4 +461,29 @@ test('cinematic volume lighting is a validated view choice that survives present
     assert.equal(anatomyPresentation(cinematic,[network],mode,'TOF','tof').volumeRendering.mode,'cinematic');
   assert.equal(anatomyPresentation({volumeRendering:{mode:'standard'}},[network],'vascular','TOF','tof').volumeRendering.mode,undefined);
   assert.equal(anatomyPresentation({},[network],'vascular','TOF','tof').volumeRendering.mode,undefined);
+});
+
+test('a model addition is drawn only while the tree it extends is drawn',async()=>{
+  const {withVesselReviewVisibility}=await import('../src/native-study-state.ts');
+  const layers=[{id:'tree'},{id:'addition',rooted_parent:'tree'}];
+  const compartments=[{name:'tree'},{name:'addition'},{name:'__vessel_veins:addition'}];
+  assert.deepEqual(withVesselReviewVisibility({tree:true,addition:true},compartments,layers),
+    {tree:true,addition:true,'__vessel_veins:addition':true});
+  assert.deepEqual(withVesselReviewVisibility({tree:false,addition:true},compartments,layers),
+    {tree:false,addition:false,'__vessel_veins:addition':false});
+  assert.deepEqual(withVesselReviewVisibility({tree:true,addition:false},compartments,layers),
+    {tree:true,addition:false,'__vessel_veins:addition':false});
+});
+
+test('derived vessel parts inherit their layer opacity and a vein part keeps the scan vein rule',async()=>{
+  const {withVesselDerivedSettings}=await import('../src/native-study-state.ts');
+  const compartments=[{name:'tree'},{name:'__vessel_veins:tree'},{name:'__vessel_review:tree'}];
+  const scan=withVesselDerivedSettings({presentation:'scan',layerOpacity:{tree:.16}},compartments);
+  assert.equal(scan.layerOpacity['__vessel_veins:tree'],.08);
+  assert.equal(scan.layerOpacity['__vessel_review:tree'],.16);
+  const vascular=withVesselDerivedSettings({presentation:'vascular',layerOpacity:{tree:1,'__vessel_review:tree':.5}},compartments);
+  assert.equal(vascular.layerOpacity['__vessel_veins:tree'],1);
+  assert.equal(vascular.layerOpacity['__vessel_review:tree'],.5);
+  const none={presentation:'vascular'};
+  assert.equal(withVesselDerivedSettings(none,compartments),none);
 });

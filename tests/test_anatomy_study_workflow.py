@@ -262,19 +262,83 @@ def test_header_save_updates_the_open_portable_file(patient,tmp_path):
         assert json.loads(archive.read('workspace-view.json')) == state
 
 
-@pytest.mark.parametrize('scope', ['all', 'brain', 'intracranial', 'excluded'])
-def test_versioned_vessel_scope_roundtrip_preserves_anatomy(patient, scope):
+@pytest.mark.parametrize('scope,version', [('all', 2), ('brain', 2), ('intracranial', 2), ('excluded', 2),
+                                           ('rooted', 3), ('rooted-review', 3), ('all', 3), ('exterior-air', 3)])
+def test_versioned_vessel_scope_roundtrip_preserves_anatomy(patient, scope, version):
     from resectionlab.anatomy_workspace import save_view, read_view
     before = deepcopy(patient.document)
     state = {'schema': 'patient-anatomy-view-v1', 'patientId': patient.document['patient_id'],
              'snapshotId': patient.identity(), 'seriesId': 'mri', 'vesselScope': scope,
-             'vesselDisplayVersion': 2, 'states': {'mri': {'cursor': None, 'visible': {}, 'settings': {}}}}
+             'vesselDisplayVersion': version, 'states': {'mri': {'cursor': None, 'visible': {}, 'settings': {}}}}
     save_view(patient, state)
     assert read_view(patient) == state
     assert patient.document == before
-    for invalid in [True, 1, 3, '2', None]:
+    for invalid in [True, 1, 4, '2', None]:
         with pytest.raises(ValueError, match='vessel display version'):
             save_view(patient, {**state, 'vesselDisplayVersion': invalid})
+
+
+@pytest.mark.parametrize('scope', ['rooted', 'rooted-review'])
+def test_rooted_scopes_need_the_rooted_display_version(patient, scope):
+    from resectionlab.anatomy_workspace import save_view
+    state = {'schema': 'patient-anatomy-view-v1', 'patientId': patient.document['patient_id'],
+             'snapshotId': patient.identity(), 'seriesId': 'mri', 'vesselScope': scope,
+             'vesselDisplayVersion': 2, 'states': {'mri': {'cursor': None, 'visible': {}, 'settings': {}}}}
+    with pytest.raises(ValueError, match='display version 3'):
+        save_view(patient, state)
+    with pytest.raises(ValueError, match='vessel display scope'):
+        save_view(patient, {**state, 'vesselScope': 'rooted-everything', 'vesselDisplayVersion': 3})
+
+
+def test_rooted_vessel_view_hides_detached_parts_behind_a_review_overlay(tmp_path):
+    import nibabel as nib
+    from scipy import ndimage as ndi
+    from resectionlab.vascular_cleanup import ROOTED_REVIEW_PREFIX, VESSEL_CLASS_COLORS
+    shape = (48, 32, 32)
+    signal = np.full(shape, 40., np.float32)
+    tree = np.zeros(shape, bool); tree[4:30, 14:18, 14:18] = True
+    loose = np.zeros(shape, bool); loose[40:46, 14:18, 14:18] = True
+    signal[tree | loose] = 400.
+    image = nib.Nifti1Image(signal, np.diag([.5, .5, .5, 1])); image.header.set_xyzt_units('mm')
+    nib.save(image, tmp_path/'tof.nii.gz')
+    c = Collection.create(tmp_path/'rooted', 'rooted-vessels')
+    c.add_series(tmp_path/'tof.nii.gz', series_id='tof', modality='TOF')
+    vessel = (tree | loose).astype(np.uint8)
+    c.add_layer(vessel, np.diag([.5, .5, .5, 1]), layer_id='vessels', source_series='tof', kind='vessels',
+                role='context', color='#ef5679')
+    c.save(); before = deepcopy(c.document); arrays = set((c.root/'arrays').iterdir())
+    bridge = BridgeSession(tmp_path/'transfer')
+    def call(op, args): return bridge.execute(op, args, _Request('rooted-test'), lambda *x: None)
+    opened = call('anatomyOpen', {'path': str(c.root/'patient-anatomy.json')})
+    args = {'collectionId': opened['collectionId'], 'snapshotId': c.identity(), 'seriesId': 'tof', 'layers': ['vessels'],
+            'previewAlignment': True}
+    def read(record):
+        return np.fromfile(record['mask']['path'], dtype=np.uint8).reshape(shape)
+    for scope in ['rooted', 'rooted-review', 'all', 'rooted-review']:
+        compartments = call('anatomyView', {**args, 'vesselScope': scope})['compartments']
+        shown = read(compartments[0])
+        if scope == 'all':
+            assert len(compartments) == 1 and np.array_equal(shown, vessel)
+            continue
+        assert np.array_equal(shown > 0, tree)
+        assert ndi.label(shown)[1] == 1
+        report = compartments[0]['displayFilter']
+        assert report['scope'] == scope and report['sourcePreserved'] is True
+        assert report['excludedFragments'] == 1 and report['hiddenVoxels'] == int(loose.sum())
+        assert report['rooting']['roots']['source'] == 'largest-component'
+        assert report['rooting']['display']['floatingComponents'] == 0
+        assert 'artery colour' in report['reason']
+        assert compartments[0]['color'] == VESSEL_CLASS_COLORS['artery']
+        if scope == 'rooted':
+            assert len(compartments) == 1
+        else:
+            overlay = compartments[1]
+            assert overlay['name'] == ROOTED_REVIEW_PREFIX + 'vessels' and overlay['color'] == '#ffad54'
+            assert np.array_equal(read(overlay) > 0, loose)
+            assert 'kind' not in overlay
+    assert c.document == before and Collection(c.root).document == before
+    assert np.array_equal(c.mask(c.layer('vessels')), tree | loose)
+    assert arrays <= set((c.root/'arrays').iterdir())
 
 
 @pytest.mark.parametrize('style,mode', [('contour', 'scan'), ('contour', 'segmentation'), ('fill', 'vascular')])
@@ -396,3 +460,176 @@ def test_named_tract_display_and_selected_approach_survive_native_view_roundtrip
     assert patient.identity() == identity
     with pytest.raises(ValueError, match='visibility'):
         save_view(patient, {**state, 'states': {'mri': {**state['states']['mri'], 'visible': {'invented-tract': True}}}})
+
+
+def test_rooted_display_binds_supplied_topbrain_ct_labels_and_never_on_mr(tmp_path):
+    import nibabel as nib
+    from resectionlab.vascular_cleanup import rooted_vessel_layer
+    shape, frame = (40, 24, 24), np.diag([.5, .5, .5, 1])
+    labels = np.zeros(shape, np.int16)
+    labels[2:20, 10:14, 10:14] = 4    # R-ICA, a root
+    labels[20:26, 10:14, 10:14] = 5   # R-M1, attached to it
+    labels[33:38, 10:14, 10:14] = 17  # R-M2, more than 3 mm from the tree
+    labels[2:10, 2:5, 2:5] = 36       # Straight sinus, outside the arterial grouping
+    for name, data in (('scan', np.where(labels > 0, 400., 40.).astype(np.float32)), ('topcow_ct_001', labels)):
+        image = nib.Nifti1Image(data, frame); image.header.set_xyzt_units('mm')
+        nib.save(image, tmp_path/f'{name}.nii.gz')
+    arteries = (labels > 0) & (labels <= 34)
+    for modality, expected in (('CTA', 'named'), ('TOF', 'largest-component')):
+        c = Collection.create(tmp_path/modality, f'topbrain-{modality.lower()}')
+        c.add_series(tmp_path/'scan.nii.gz', series_id='scan', modality=modality)
+        c.series('scan')['publisher_dataset'] = 'https://zenodo.org/records/21972006'
+        supplied = c.original(tmp_path/'topcow_ct_001.nii.gz')
+        c.add_layer(arteries.astype(np.uint8), frame, layer_id='arteries', source_series='scan', kind='artery',
+                    role='context', color='#f06455',
+                    provenance={'kind': 'supplied_annotation', 'source': supplied, 'source_label_values': list(range(1, 35))})
+        before = deepcopy(c.document)
+        display, receipt, review, split = rooted_vessel_layer(c, c.layer('arteries'), review=True)
+        assert split is None
+        rooting = receipt['rooting']
+        assert rooting['roots']['source'] == expected
+        assert np.array_equal(c.mask(display) | c.mask(review), arteries)
+        assert not (c.mask(display) & c.mask(review)).any()
+        if modality == 'CTA':
+            assert [row['name'] for row in rooting['roots']['labels']] == ['R-ICA']
+            rows = {row['name']: row for row in rooting['namedLabels']}
+            assert rows['R-ICA']['status'] == rows['R-M1']['status'] == 'shown'
+            assert rows['R-M2']['status'] == 'review' and 'StS' not in rows
+            assert np.array_equal(c.mask(review), labels == 17)
+        else:
+            assert 'never applied' in receipt['namedLabelsUnavailable']
+            assert rooting['namedLabels'] == []
+        assert c.document == before
+
+
+def _topbrain_ct_study(tmp_path, name, labels, *, modality='CTA', dictionary=None, original_name='topcow_ct_001'):
+    import nibabel as nib
+    frame = np.diag([.5, .5, .5, 1])
+    folder = tmp_path / f'{name}-sources'
+    folder.mkdir()
+    for stem, data in (('scan', np.where(labels > 0, 400., 40.).astype(np.float32)), (original_name, labels)):
+        image = nib.Nifti1Image(data, frame); image.header.set_xyzt_units('mm')
+        nib.save(image, folder / f'{stem}.nii.gz')
+    c = Collection.create(tmp_path / name, name)
+    c.add_series(folder / 'scan.nii.gz', series_id='scan', modality=modality)
+    c.series('scan')['publisher_dataset'] = 'https://zenodo.org/records/21972006'
+    supplied = c.original(folder / f'{original_name}.nii.gz')
+    provenance = {'kind': 'supplied_annotation', 'source': supplied, 'source_label_values': list(range(1, 35))}
+    if dictionary:
+        provenance['publisher_label_dictionary'] = dictionary
+    c.add_layer(((labels > 0) & (labels <= 34)).astype(np.uint8), frame, layer_id='arteries', source_series='scan',
+                kind='artery', role='context', color='#f06455', provenance=provenance)
+    return c
+
+
+def _two_class_labels():
+    labels = np.zeros((40, 24, 24), np.uint8)
+    labels[2:20, 10:14, 10:14] = 4     # R-ICA
+    labels[20:26, 10:14, 10:14] = 5    # R-M1
+    labels[33:38, 10:14, 10:14] = 17   # R-M2, detached
+    labels[2:30, 2:5, 2:5] = 36        # Straight sinus
+    return labels
+
+
+def test_rooted_display_splits_vein_voxels_of_a_mixed_layer_into_their_own_compartment(tmp_path):
+    from resectionlab.vascular_cleanup import VESSEL_CLASS_COLORS, rooted_vessel_layer
+    labels = _two_class_labels()
+    c = _topbrain_ct_study(tmp_path, 'mixed', labels)
+    row = c.add_layer((labels > 0).astype(np.uint8), np.diag([.5, .5, .5, 1]), layer_id='ensemble',
+                      source_series='scan', kind='vessels', role='context', color='#ef5679')
+    row['named_labels'] = {'data': c.put_array(labels), 'scheme': 'topbrain-v1-ct'}
+    display, receipt, review, split = rooted_vessel_layer(c, row)
+    assert np.array_equal(c.mask(display), np.isin(labels, (4, 5)))
+    assert np.array_equal(c.mask(split), labels == 36)
+    assert split['kind'] == 'vein' and split['color'] == VESSEL_CLASS_COLORS['vein']
+    assert display['color'] == VESSEL_CLASS_COLORS['artery'] and review is None
+    assert receipt['rooting']['classes']['vein'] == int((labels == 36).sum())
+    # A venous layer keeps its veins and splits off any arteries.
+    row['kind'] = 'vein'
+    display, _, _, split = rooted_vessel_layer(c, row)
+    assert np.array_equal(c.mask(display), labels == 36) and split['kind'] == 'artery'
+
+
+def test_rooted_view_falls_back_to_the_source_when_the_derivative_fails(tmp_path):
+    labels = _two_class_labels()
+    c = _topbrain_ct_study(tmp_path, 'failing', labels)
+    bad = labels.copy(); bad[bad == 17] = 99  # Outside the TopBrain CT label map.
+    row = c.add_layer((labels > 0).astype(np.uint8), np.diag([.5, .5, .5, 1]), layer_id='ensemble',
+                      source_series='scan', kind='vessels', role='context', color='#ef5679')
+    row['named_labels'] = {'data': c.put_array(bad), 'scheme': 'topbrain-v1-ct'}
+    c.save()
+    bridge = BridgeSession(tmp_path / 'transfer')
+    opened = bridge.execute('anatomyOpen', {'path': str(c.root / 'patient-anatomy.json')}, _Request('open'), lambda *x: None)
+    view = bridge.execute('anatomyView', {'collectionId': opened['collectionId'], 'snapshotId': c.identity(),
+                                          'seriesId': 'scan', 'layers': ['ensemble', 'arteries'],
+                                          'previewAlignment': True, 'vesselScope': 'rooted'},
+                          _Request('view'), lambda *x: None)
+    records = {record['name']: record for record in view['compartments']}
+    failed = records['ensemble']['displayFilter']
+    assert failed['failed'] is True and 'Named labels outside' in failed['reason'] and 'full source' in failed['reason']
+    shown = np.fromfile(records['ensemble']['mask']['path'], dtype=np.uint8).reshape(labels.shape)
+    assert np.array_equal(shown > 0, labels > 0)
+    assert records['arteries']['displayFilter']['rooting']['roots']['source'] == 'named'
+
+
+def test_rooted_derived_compartments_never_exceed_the_viewer_layer_budget(tmp_path, monkeypatch):
+    import resectionlab.anatomy_bridge as anatomy_bridge
+    labels = _two_class_labels()
+    c = _topbrain_ct_study(tmp_path, 'budget', labels)
+    c.save()
+    bridge = BridgeSession(tmp_path / 'transfer')
+    opened = bridge.execute('anatomyOpen', {'path': str(c.root / 'patient-anatomy.json')}, _Request('open'), lambda *x: None)
+    args = {'collectionId': opened['collectionId'], 'snapshotId': c.identity(), 'seriesId': 'scan',
+            'layers': ['arteries'], 'previewAlignment': True, 'vesselScope': 'rooted-review'}
+    full = bridge.execute('anatomyView', args, _Request('full'), lambda *x: None)
+    assert [r['name'] for r in full['compartments']] == ['arteries', '__vessel_review:arteries']
+    monkeypatch.setattr(anatomy_bridge, 'MAX_DISPLAY_COMPARTMENTS', 1)
+    capped = bridge.execute('anatomyView', args, _Request('capped'), lambda *x: None)
+    assert [r['name'] for r in capped['compartments']] == ['arteries']
+    assert capped['omittedDerivedCompartments'] == 1
+
+
+def test_a_tumour_on_another_registered_series_enables_the_local_tier(tmp_path):
+    import nibabel as nib
+    from resectionlab.vascular_cleanup import rooted_vessel_layer
+    labels = _two_class_labels()
+    c = _topbrain_ct_study(tmp_path, 'tumour', labels)
+    t1 = np.zeros((20, 12, 12), np.float32)
+    image = nib.Nifti1Image(t1, np.diag([1., 1., 1., 1])); image.header.set_xyzt_units('mm')
+    nib.save(image, tmp_path / 't1.nii.gz')
+    c.add_series(tmp_path / 't1.nii.gz', series_id='t1', modality='T1CE')
+    tumour = np.zeros(t1.shape, np.uint8); tumour[16:18, 5:7, 5:7] = 1
+    c.add_layer(tumour, np.diag([1., 1., 1., 1]), layer_id='lesion', source_series='t1', kind='tumor',
+                role='target', color='#ff00ff')
+    _, receipt, _, _ = rooted_vessel_layer(c, c.layer('arteries'))
+    lod = receipt['rooting']['lod']
+    assert lod['tumourLayers'] == [] and 'no registration' in lod['tumourReason']
+    c.set_registration('t1', np.eye(4), status='source-provided', method='fixture')
+    _, receipt, _, _ = rooted_vessel_layer(c, c.layer('arteries'))
+    lod = receipt['rooting']['lod']
+    assert lod['tumourLayers'] == ['lesion'] and lod['tumourReason'] is None and lod['tumour'] is True
+
+
+def test_supplied_labels_whose_dictionary_and_file_name_disagree_are_refused(tmp_path):
+    from resectionlab.vascular_cleanup import rooted_vessel_layer
+    labels = _two_class_labels()
+    c = _topbrain_ct_study(tmp_path, 'disagree', labels, original_name='topcow_mr_001',
+                           dictionary='TopBrain/labelmap_jsons/labels_topbrain_v1_ct.json')
+    _, receipt, _, _ = rooted_vessel_layer(c, c.layer('arteries'))
+    assert 'disagree' in receipt['namedLabelsUnavailable']
+    assert receipt['rooting']['roots']['source'] == 'largest-component'
+
+
+def test_a_missing_label_original_is_not_cached_for_the_session(tmp_path):
+    from resectionlab.vascular_cleanup import rooted_vessel_layer
+    labels = _two_class_labels()
+    c = _topbrain_ct_study(tmp_path, 'missing', labels)
+    original = c.path(c.layer('arteries')['provenance']['source']['path'])
+    moved = original.with_suffix('.away')
+    original.rename(moved)
+    _, receipt, _, _ = rooted_vessel_layer(c, c.layer('arteries'))
+    assert 'missing' in receipt['namedLabelsUnavailable']
+    assert not getattr(c, '_rooted_display_cache', {})
+    moved.rename(original)
+    _, receipt, _, _ = rooted_vessel_layer(c, c.layer('arteries'))
+    assert receipt['rooting']['roots']['source'] == 'named' and len(c._rooted_display_cache) == 1

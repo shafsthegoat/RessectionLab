@@ -1,6 +1,7 @@
 """Conservative, reversible review of native angiographic vessel predictions."""
 
 from base64 import b64encode
+from copy import deepcopy
 from dataclasses import asdict, dataclass
 
 import numpy as np
@@ -8,7 +9,7 @@ from scipy import ndimage as ndi, sparse
 from scipy.spatial import cKDTree
 
 from .anatomy_siam_display import _head_support
-from .patient_anatomy import affine, digest, file_hash, world
+from .patient_anatomy import affine, digest, file_hash, resample, world
 
 
 RETAINED, UNCERTAIN, HIDDEN = 1, 2, 3
@@ -225,6 +226,439 @@ def supported_tof_layer(collection, row, *, check=lambda: None):
         }
         cache[key] = data, receipt
     return ({**row, "data": data, "label_value": 1} if data else row), receipt
+
+
+ROOTED_DISPLAY = "rooted-vessel-display-v1"
+ROOTED_VESSEL_KINDS = {"vessel", "vessels", "artery", "vein", "sinus"}
+ROOTED_REVIEW_PREFIX = "__vessel_review:"
+ROOTED_REVIEW_COLOR = "#ffad54"
+# Arteries, and unclassified vessels, red; veins and sinuses blue. The same
+# values are the desktop presentation colours for these layer kinds.
+VESSEL_CLASS_COLORS = {"artery": "#aa352b", "vein": "#42668f"}
+_TUMOUR_KINDS = {"tumor", "tumor-whole", "tumor-core", "enhancing-tumor", "nonenhancing-tumor"}
+_TOPBRAIN_RECORD = "https://zenodo.org/records/21972006"
+
+
+def _same_grid(row, other):
+    return row["affine"] == other["affine"] and row["data"]["shape"] == other["data"]["shape"]
+
+
+def rooted_named_labels(collection, row, series, *, load=True):
+    """Named vessel labels bound to this layer: ``(labels, scheme, sha256, reason)``.
+
+    A layer may carry ``named_labels: {"data": <array>, "scheme": "topbrain-v1-ct"
+    | "topbrain-v1-mr"}`` on its own grid (model ensembles, Phase 2). A supplied
+    TopBrain v1 annotation is read from its imported original only when the layer
+    is exactly the original's listed label values on the scan grid. Labels of one
+    modality are never bound to a scan of the other. With ``load=False`` only the
+    binding is checked and ``labels`` is None.
+    """
+    import nibabel as nib
+
+    from .vascular_rooting import SCHEMES, image_modality
+
+    try:
+        modality = image_modality(series["modality"])
+    except ValueError:
+        return None, None, None, "Unknown acquisition modality"
+    attached = row.get("named_labels")
+    if isinstance(attached, dict):
+        scheme = attached.get("scheme")
+        data = attached.get("data")
+        if scheme not in SCHEMES or not isinstance(data, dict) or data.get("shape") != row["data"]["shape"]:
+            return None, None, None, "Attached named labels are not on this layer grid"
+        if SCHEMES[scheme].modality != modality:
+            return None, None, None, "Named labels of one modality are never applied to another"
+        return (np.asarray(collection.array(data)) if load else None), scheme, data["sha256"], None
+    provenance = row.get("provenance") or {}
+    original = provenance.get("source")
+    grouping = provenance.get("source_label_values")
+    if (provenance.get("kind") not in {"supplied_annotation", "observed_source_annotation"}
+            or not isinstance(original, dict) or not isinstance(original.get("path"), str)
+            or not isinstance(grouping, list) or not grouping
+            or any(type(value) is not int or value <= 0 for value in grouping)):
+        return None, None, None, "No named labels are bound to this layer"
+    dictionary = str(provenance.get("publisher_label_dictionary", ""))
+    name = str(original.get("name", ""))
+    by_dictionary = {c for c in ("ct", "mr") if dictionary.endswith(f"labels_topbrain_v1_{c}.json")}
+    by_name = {c for c in ("ct", "mr") if series.get("publisher_dataset") == _TOPBRAIN_RECORD
+               and name.startswith(f"topcow_{c}_")}
+    if by_dictionary and by_name and by_dictionary != by_name:
+        return None, None, None, "The label dictionary and the label file name disagree on modality"
+    found = by_dictionary or by_name
+    scheme = f"topbrain-v1-{found.pop()}" if len(found) == 1 else None
+    if scheme is None:
+        return None, None, None, "The supplied labels are not a recognised TopBrain v1 label map"
+    if scheme != f"topbrain-v1-{modality}":
+        return None, None, None, "Supplied labels of one modality are never applied to another"
+    if not _same_grid(row, series):
+        return None, None, None, "The supplied labels are not on the scan grid"
+    if not load:
+        return None, scheme, original.get("sha256"), None
+    path = collection.path(original["path"])
+    if not path.is_file() or file_hash(path) != original.get("sha256"):
+        return None, None, None, "The supplied label original is missing or changed"
+    values = np.asanyarray(nib.load(path).dataobj)
+    if values.shape != tuple(row["data"]["shape"]) or not np.issubdtype(values.dtype, np.integer):
+        return None, None, None, "The supplied label original is not on this grid"
+    inside = np.isin(values, grouping)
+    if not np.array_equal(inside, collection.mask(row)):
+        return None, None, None, "The layer differs from its supplied label values"
+    return np.where(inside, values, 0).astype(np.uint8), scheme, original["sha256"], None
+
+
+ROOTED_CLASS_PREFIXES = {"vein": "__vessel_veins:", "artery": "__vessel_arteries:"}
+_BONE_KINDS = {"bone", "skull"}
+
+
+def _same_session(collection, row, other):
+    return collection.series(other["source_series"])["timepoint"] == collection.series(row["source_series"])["timepoint"]
+
+
+def _registered(collection, layer):
+    try:
+        return np.asarray(collection.patient_affine(layer)).round(9).tolist()
+    except ValueError:
+        return None
+
+
+def _context_mask(collection, row, layers, frame, *, check=lambda: None):
+    """Union of context layers on this vessel grid: same-grid layers directly, others
+    resampled through their registration. Returns (mask or None, used ids, reasons)."""
+    union, used, reasons = None, [], []
+    shape = tuple(row["data"]["shape"])
+    for layer in layers:
+        check()
+        if _same_grid(row, layer) and layer["source_series"] == row["source_series"]:
+            current = collection.mask(layer)
+        elif frame is None:
+            reasons.append(f"{layer['id']}: this vessel layer has no registered patient frame")
+            continue
+        else:
+            try:
+                source = collection.patient_affine(layer)
+            except ValueError as error:
+                reasons.append(f"{layer['id']}: no registration to this grid ({error})")
+                continue
+            current = resample(collection.mask(layer).astype(np.uint8), source, shape, frame, order=0) > 0
+        union = current if union is None else union | current
+        used.append(layer["id"])
+    return union, used, reasons
+
+
+def rooted_vessel_layer(collection, row, *, review=False, check=lambda: None):
+    """Root-reachable display derivative of one vessel layer, with its receipt.
+
+    Returns ``(display row, receipt, review row or None, class row or None)``.
+    The display row keeps the rooted, bridged and level-of-detail-kept voxels of
+    the layer's own class (arteries with unclassified vessels, or veins). When
+    the layer also holds the other class, those voxels form the class row, drawn
+    in that class's colour. The review row (only when ``review`` is set) holds
+    the detached and level-of-detail-hidden source voxels. The source layer,
+    its labels and the manifest are never changed.
+    """
+    if row["kind"] not in ROOTED_VESSEL_KINDS:
+        return row, None, None, None
+    from .anatomy_approaches import read_approaches
+    from .anatomy_geometry import vascular_cleanup_source
+    from .vascular_rooting import ARTERY, UNCLASSIFIED, VEIN, RootingPolicy, root_vessels
+
+    scope = "rooted-review" if review else "rooted"
+    series = collection.series(row["source_series"])
+    signal = series["data"] if _same_grid(row, series) else None
+    score = row if row.get("probability") else vascular_cleanup_source(collection, row)
+    probability = score["probability"] if score and score.get("probability") and _same_grid(row, score) else None
+    _, scheme, named_sha, named_reason = rooted_named_labels(collection, row, series, load=False)
+    named_binding = {"scheme": scheme, "sha256": named_sha} if scheme else None
+    try:
+        frame = collection.patient_affine(row)
+    except ValueError:
+        frame = None
+    # Saved approaches are capsules in the registered patient frame.
+    corridors, corridor_reason = [], None
+    try:
+        approaches = read_approaches(collection)
+        if approaches and frame is None:
+            corridor_reason = "Corridors unavailable: this vessel layer has no registered patient frame"
+        elif approaches:
+            corridors = [{"entry": approach["entry"], "target": approach["target"],
+                          "radiusMm": float(approach["radiusMm"])} for approach in approaches]
+    except (ValueError, KeyError, OSError) as error:
+        corridor_reason = f"Corridors unavailable: {error}"
+    tumours = [layer for layer in collection.document["layers"]
+               if layer["kind"] in _TUMOUR_KINDS and _same_session(collection, row, layer)]
+    bones = [layer for layer in collection.document["layers"] if layer["kind"] in _BONE_KINDS
+             and layer["source_series"] == row["source_series"] and _same_grid(row, layer)]
+    # A model addition (for example the connected vesselFM score) never joins the
+    # named tree it extends: it is shown only where it reaches that tree's shown
+    # display, and only under the calibre rule.
+    # Whatever goes wrong with that tree, the addition shows nothing by default.
+    parent_rows, parent_issue, parent = None, None, None
+    parent_id = row.get("rooted_parent")
+    if parent_id is not None:
+        parent = next((layer for layer in collection.document["layers"] if layer["id"] == parent_id), None)
+        if parent is None:
+            parent_issue = f"the tree it extends ({parent_id}) is not in this study"
+        elif (parent["kind"] not in ROOTED_VESSEL_KINDS or parent.get("rooted_parent")
+                or parent["source_series"] != row["source_series"] or not _same_grid(row, parent)):
+            parent_issue = f"the tree it extends ({parent_id}) is not a vessel tree on this grid"
+        else:
+            try:
+                parent_display, _, _, parent_class = rooted_vessel_layer(collection, parent, check=check)
+            except InterruptedError:
+                raise
+            except Exception as error:
+                check()  # A cancellation still cancels.
+                parent_issue = f"the tree it extends ({parent_id}) could not be prepared ({type(error).__name__}: {error})"
+            else:
+                parent_rows = [parent_display] + ([parent_class] if parent_class else [])
+                if not any(collection.mask(part).any() for part in parent_rows):
+                    parent_issue, parent_rows = f"the tree it extends ({parent_id}) shows nothing", None
+    if parent_issue is not None:
+        return _detached_addition(collection, row, scope, review, parent_issue)
+    policy = RootingPolicy()
+    identity = {
+        "version": ROOTED_DISPLAY, "policy": asdict(policy), "rawDataSha256": row["data"]["sha256"],
+        "label": row["label_value"], "kind": row["kind"], "affine": row["affine"],
+        "signalSha256": signal["sha256"] if signal else None,
+        "probabilitySha256": probability["sha256"] if probability else None,
+        "named": named_binding, "corridors": corridors,
+        "frame": None if frame is None else np.asarray(frame).round(9).tolist(),
+        "tumours": [[layer["data"]["sha256"], layer["affine"], layer["source_series"], _registered(collection, layer)]
+                    for layer in tumours],
+        "bones": sorted(layer["data"]["sha256"] for layer in bones),
+        "parent": None if parent_rows is None else [part["data"]["sha256"] for part in parent_rows],
+    }
+    key = digest(identity)
+    if not hasattr(collection, "_rooted_display_cache"):
+        collection._rooted_display_cache = {}
+    cache = collection._rooted_display_cache
+    entry = cache.get(key)
+    try:
+        for data in (entry or {}).get("arrays", ()):
+            collection.array(data)
+    except FileNotFoundError:
+        entry = None
+    if entry is None:
+        mask = np.ascontiguousarray(collection.mask(row, check=check))
+        named = None
+        if named_binding:
+            named, scheme, _, named_reason = rooted_named_labels(collection, row, series)
+        tumour, tumour_ids, tumour_reasons = _context_mask(collection, row, tumours, frame, check=check)
+        bone, bone_ids, _ = _context_mask(collection, row, bones, frame, check=check)
+        tree = vein_tree = wall = None
+        own_mask = mask.copy()
+        if parent_rows is not None:
+            tree = np.zeros(mask.shape, bool)
+            vein_tree = np.zeros(mask.shape, bool)
+            for part in parent_rows:
+                part_mask = collection.mask(part)
+                tree |= part_mask
+                if part["kind"] in {"vein", "sinus"}:
+                    vein_tree |= part_mask
+            mask |= tree
+        result = root_vessels(
+            mask, affine=frame if frame is not None else affine(row["affine"]),
+            named=named, scheme=scheme, modality=series["modality"], layer_kind=row["kind"],
+            signal=None if signal is None else collection.array(signal),
+            probability=None if probability is None else collection.array(probability),
+            tumour=tumour, corridors=corridors, bone=bone, root_mask=tree, policy=policy, check=check)
+        check()
+        if tree is not None:
+            # Keep only this layer's own voxels and bridges; the tree is drawn by its own layer.
+            for output in (result.shown, result.review, result.lod_hidden):
+                output &= ~tree
+            result.classes[tree] = 0
+            wall = _wall_thickening(result, tree)
+            _addition_classes(result, tree, vein_tree)
+        details = result.receipt
+        if parent_id is not None:
+            _addition_receipt(details, result, own_mask, parent, wall)
+        details["lod"]["tumourLayers"] = tumour_ids
+        details["lod"]["tumourReason"] = ("; ".join(tumour_reasons) if tumour_reasons else
+                                          None if tumour_ids else "No tumour layer in this session")
+        details["bridged"]["boneLayers"] = bone_ids
+        display = result.display
+        if wall and wall["overlapVoxels"]:
+            # Display-only: the shown branches reach one voxel into the tree, in the class of the part they enter.
+            box, overlap = wall["box"], wall["overlap"]
+            display[box] |= overlap
+            result.classes[box][overlap] = np.where(vein_tree[box][overlap], VEIN, ARTERY)
+            del overlap
+        own_vein = row["kind"] in {"vein", "sinus"}
+        other = (result.classes == ARTERY) | (result.classes == UNCLASSIFIED) if own_vein else result.classes == VEIN
+        other &= display
+        own = display & ~other
+        shown = collection.put_array(own.astype(np.uint8))
+        split = collection.put_array(other.astype(np.uint8)) if other.any() else None
+        hidden_mask = result.review | result.lod_hidden
+        hidden = collection.put_array(hidden_mask.astype(np.uint8)) if hidden_mask.any() else None
+        del display, own, other
+        roots = details["roots"]
+        named_roots = ", ".join(item["name"] for item in roots.get("labels", []))
+        source = (f"named roots ({named_roots})" if roots["source"] == "named"
+                  else f"{len(roots.get('acceptedRoots', [])):,} unnamed root components (largest, and entering from below)")
+        review_count = details["review"]["components"]
+        crust = details["review"].get("wallThickening", {}).get("components", 0)
+        hidden_text = (f"{review_count - crust:,} detached components"
+                       + (f", {crust:,} wall-thickening pieces that hug the tree wall without extending it" if crust else "")
+                       + f" ({details['review']['volumeMm3'] / 1000:.2f} mL) and "
+                       f"{details['lod']['voxels']:,} thin end-branch voxels are hidden for review. Source anatomy is preserved.")
+        if parent_id is not None:
+            reason = (f"Attached to the named tree of {parent['label']}: {details['display']['components']:,} of "
+                      f"{details['input']['components']:,} pieces shown, {details['bridged']['components']:,} joined "
+                      f"across signal-supported gaps; {hidden_text}")
+        else:
+            reason = (f"Connected tree from {source}. {details['bridged']['components']:,} fragments joined across "
+                      f"signal-supported gaps; {hidden_text}")
+        if details["classes"].get("note"):
+            reason += " " + details["classes"]["note"]
+        receipt = {
+            "rawDataSha256": row["data"]["sha256"], "sampledDataSha256": shown["sha256"],
+            "hiddenVoxels": int(hidden_mask.sum()), "excludedFragments": int(review_count),
+            "excludedVolumeMm3": float(details["review"]["volumeMm3"] + details["lod"]["volumeMm3"]),
+            "sourcePreserved": True, "reason": reason,
+            **({"classSplitSha256": split["sha256"]} if split else {}),
+            **({"namedLabelsUnavailable": named_reason} if named_reason else {}),
+            **({"corridorsUnavailable": corridor_reason} if corridor_reason else {}),
+            "rooting": details,
+        }
+        entry = {"arrays": [data for data in (shown, split, hidden) if data], "shown": shown, "split": split,
+                 "hidden": hidden, "receipt": receipt}
+        # A temporarily missing label original must not pin a label-less view for the session.
+        if not (named_binding and named_reason):
+            cache[key] = entry
+    receipt = {**entry["receipt"], "scope": scope}
+    own_class = "vein" if row["kind"] in {"vein", "sinus"} else "artery"
+    other_class = "artery" if own_class == "vein" else "vein"
+    display = {**deepcopy(row), "data": entry["shown"], "label_value": 1, "color": VESSEL_CLASS_COLORS[own_class],
+               "edits": [{"display_only": ROOTED_DISPLAY, "scope": scope}]}
+    display.pop("probability", None)
+    class_row = None
+    if entry["split"] is not None:
+        class_row = {**deepcopy(row), "data": entry["split"], "label_value": 1, "kind": other_class,
+                     "color": VESSEL_CLASS_COLORS[other_class],
+                     "edits": [{"display_only": ROOTED_DISPLAY, "class": other_class}]}
+        class_row.pop("probability", None)
+    hidden_row = None
+    if review and entry["hidden"] is not None:
+        hidden_row = {**deepcopy(row), "data": entry["hidden"], "label_value": 1, "color": ROOTED_REVIEW_COLOR,
+                      "edits": [{"display_only": ROOTED_DISPLAY, "review": True}]}
+        hidden_row.pop("probability", None)
+    return display, receipt, hidden_row, class_row
+
+
+def _detached_addition(collection, row, scope, review, issue):
+    """An addition whose tree is unavailable: nothing by default, everything under review."""
+    mask = collection.mask(row)
+    shown = collection.put_array(np.zeros(mask.shape, np.uint8))
+    hidden = collection.put_array(mask.astype(np.uint8)) if mask.any() else None
+    receipt = {"rawDataSha256": row["data"]["sha256"], "sampledDataSha256": shown["sha256"], "scope": scope,
+               "hiddenVoxels": int(mask.sum()), "excludedFragments": int(ndi.label(mask, CONNECTIVITY)[1]),
+               "sourcePreserved": True, "parentUnavailable": issue,
+               "reason": f"Not shown: {issue}. Its voxels are available under review. Source anatomy is preserved."}
+    display = {**deepcopy(row), "data": shown, "label_value": 1, "color": VESSEL_CLASS_COLORS["artery"],
+               "edits": [{"display_only": ROOTED_DISPLAY, "scope": scope}]}
+    display.pop("probability", None)
+    hidden_row = None
+    if review and hidden is not None:
+        hidden_row = {**deepcopy(row), "data": hidden, "label_value": 1, "color": ROOTED_REVIEW_COLOR,
+                      "edits": [{"display_only": ROOTED_DISPLAY, "review": True}]}
+        hidden_row.pop("probability", None)
+    return display, receipt, hidden_row, None
+
+
+def _addition_classes(result, tree, vein_tree):
+    """Each shown piece of an addition takes the class of the tree part it joins."""
+    from .vascular_rooting import UNCLASSIFIED, VEIN
+
+    shown = result.shown | result.bridge
+    if not shown.any():
+        return
+    pieces, count = ndi.label(shown, CONNECTIVITY)
+    near_vein = ndi.binary_dilation(vein_tree, CONNECTIVITY) & shown
+    near_artery = ndi.binary_dilation(tree & ~vein_tree, CONNECTIVITY) & shown
+    vein = np.bincount(pieces[near_vein], minlength=count + 1)
+    artery = np.bincount(pieces[near_artery], minlength=count + 1)
+    venous = vein > artery
+    venous[0] = False
+    result.classes[shown] = UNCLASSIFIED
+    result.classes[venous[pieces] & shown] = VEIN
+
+
+def _wall_thickening(result, tree):
+    """Move addition pieces that only thicken the tree wall to review; return them and the display overlap,
+    as masks over ``box``, with their counts.
+
+    A face-connected piece is a branch only when some voxel lies outside the
+    tree dilated twice (26-connected). The overlap is the tree voxels
+    face-adjacent to the shown branches, so their surface is drawn into the tree.
+    """
+    from scipy.sparse.csgraph import connected_components
+
+    display = result.shown | result.bridge
+    found = ndi.find_objects(display.view(np.uint8))
+    wall = {"box": None, "crust": None, "overlap": None, "components": 0, "voxels": 0, "bridgeVoxels": 0, "overlapVoxels": 0}
+    if not found:
+        return wall
+    box = tuple(slice(max(0, s.start - 3), min(n, s.stop + 3)) for s, n in zip(found[0], tree.shape))
+    local = display[box]
+    del display
+    # Boolean propagation from the voxels beyond the wall; a label volume would not fit large TOF grids.
+    seeds = local & ~ndi.binary_dilation(tree[box], CONNECTIVITY, iterations=2)
+    branch = ndi.binary_propagation(seeds, ndi.generate_binary_structure(3, 1), mask=local)
+    del seeds
+    crust = local & ~branch
+    points = np.argwhere(crust)
+    if len(points):
+        pairs = cKDTree(points).query_pairs(1.01, output_type="ndarray")
+        graph = sparse.coo_matrix((np.ones(len(pairs)), (pairs[:, 0], pairs[:, 1])), shape=(len(points),) * 2)
+        wall.update(components=int(connected_components(graph, directed=False)[0]), crust=crust,
+                    voxels=int((result.shown[box] & crust).sum()), bridgeVoxels=int((result.bridge[box] & crust).sum()))
+        result.review[box] |= result.shown[box] & crust
+        result.shown[box] &= ~crust
+        result.bridge[box] &= ~crust
+    del points
+    wall["overlap"] = ndi.binary_dilation(branch) & tree[box]
+    wall.update(box=box, overlapVoxels=int(wall["overlap"].sum()))
+    return wall
+
+
+def _addition_receipt(details, result, own, parent, wall=None):
+    """Counts of the addition itself; the union with its tree is kept apart."""
+    details["union"] = {key: details[key] for key in ("input", "attached", "display")}
+    shown = result.shown | result.bridge
+    voxel = details["input"]["volumeMm3"] / max(details["input"]["voxels"], 1)
+    details["input"] = {"voxels": int(own.sum()), "volumeMm3": round(float(own.sum() * voxel), 4),
+                        "components": int(ndi.label(own, CONNECTIVITY)[1])}
+    details["display"] = {**details["display"], "voxels": int(shown.sum()), "sourceVoxels": int(result.shown.sum()),
+                          "components": int(ndi.label(shown, CONNECTIVITY)[1])}
+    details["attached"] = {"components": details["display"]["components"], "voxels": int(result.shown.sum()),
+                           "volumeMm3": round(float(result.shown.sum() * voxel), 4)}
+    wall = wall or {"crust": None, "components": 0, "voxels": 0, "bridgeVoxels": 0, "overlapVoxels": 0}
+    rest = result.review
+    if wall["crust"] is not None:
+        rest = result.review.copy()
+        rest[wall["box"]] &= ~wall["crust"]
+    detached = int(ndi.label(rest, CONNECTIVITY)[1])
+    del rest
+    crust_voxels = wall["voxels"]
+    details["review"] = {**details["review"], "components": detached + wall["components"],
+                         "detachedComponents": detached,
+                         "voxels": int(result.review.sum()), "volumeMm3": round(float(result.review.sum() * voxel), 4),
+                         "wallThickening": {"components": wall["components"], "voxels": crust_voxels,
+                                            "volumeMm3": round(float(crust_voxels * voxel), 4),
+                                            "bridgeVoxelsDropped": wall["bridgeVoxels"],
+                                            "reason": "Hugs the tree wall without extending it: no voxel lies more than "
+                                                      "two voxels outside the tree."}}
+    details["display"]["overlapVoxels"] = wall["overlapVoxels"]
+    details["display"]["overlapRule"] = ("Display only: tree voxels face-adjacent to the shown branches, in the class of "
+                                         "the tree part they belong to, so the branch surface joins the tree surface.")
+    details["lod"] = {**details["lod"], "voxels": int(result.lod_hidden.sum())}
+    details["classes"] = {**details["classes"], "vein": int((result.classes == 2).sum()),
+                          "unclassified": int((result.classes == 3).sum())}
+    details["rootedOn"] = {"layer": parent["id"], "label": parent["label"],
+                           "rule": "shown only where it reaches that tree's shown display, directly or by a bridge of at most 3 mm"}
 
 
 def _weak_components(points, shape, check):

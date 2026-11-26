@@ -293,6 +293,15 @@ applied 2026-11-26. Unstaged.
   view: 014 annotation 9 -> 0, ensemble 438 -> 0; 018 annotation 11 -> 0,
   ensemble 966 -> 0; PTNT_4509 21 outer pieces, 0 floating. No major vessel
   lost against the references (M2 now major; R-M2 018 92.7 %).
+- Wall thickening (2026-11-26): addition pieces with no voxel beyond the tree
+  dilated twice go to review (`review.wallThickening`); shown pieces get a
+  display-only one-voxel overlap into the tree (`display.overlapVoxels`). The
+  mesh gate also joins a vertex lying inside another part's displayed voxels;
+  `geometry` prints the mesh count and exits 1 on any mesh floating piece.
+  Combined ensemble, mesh floating 0 on CTA-A (3 pieces), CTA-B (6), TOF-A
+  (5), TOF-B (3); additions keep 6/3/63/82 pieces, 215/613/6,479/6,755 crusts
+  to review. Geometry peak RSS 2.7 to 4.0 GB (3.85 GB on TOF-A without the
+  filter). Desktop `verify-vessel-display` counts only "detached components".
 - Still to run: re-wire if the combiner changes and for PTNT_4509/9937,
   geometry, hidden captures, sheets, films, `verify-vessel-display` (on a
   CTA-A copy), blind review.

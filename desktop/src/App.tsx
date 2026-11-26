@@ -20,7 +20,7 @@ import {hasSavedFullCaseBranch} from './full-case-workspace';
 import {useRehearsal} from "./use-rehearsal";
 import {RehearsalPanel} from "./RehearsalPanel";
 import type {RehearsalApi} from "./rehearsal-types";
-import {alignmentBannerWarning,scanLabel} from './native-study-state';
+import {alignmentBannerWarning,scanLabel,vesselDerivedParent,withVesselDerivedSettings,withVesselReviewVisibility} from './native-study-state';
 import {useNativeWorkspace} from './use-native-workspace';
 import {NativeSidebar,NativeCorrectionBar,NativeResearch} from './NativeWorkspacePanels';
 import {isNativeBinding} from './native-anatomy-data';
@@ -1918,7 +1918,7 @@ export default function App() {
             center={imaging.selected ? null : annotationCenterMm}
             onCenter={setCursor}
           />
-          {displayedCase?.compartments.map((layer) => (
+          {displayedCase?.compartments.filter(layer=>vesselDerivedParent(layer.name)===null).map((layer) => (
             <label className="layer-row" key={layer.name}>
               <input
                 type="checkbox"
@@ -2122,7 +2122,7 @@ export default function App() {
               approachOverview={linkedOperative}
               surgicalInteraction={!showOperative&&workbenchTab==="rehearsal"?surgical.interaction:undefined}
               rehearsalState={showOperative||surgical.interaction.view?null:rehearsal.viewerState}
-              workspaceSettings={viewerSettings}
+              workspaceSettings={native.binding?withVesselDerivedSettings(viewerSettings,native.volume?.compartments):viewerSettings}
               readCamera={native.binding?native.readCamera:undefined}
               onWorkspaceSettingsChange={setViewerSettings}
               sourceLabel={native.binding?native.binding.document.series.find(s=>s.id===native.series)?.modality:String(displayedSource?.metadata.selected_modality??'Image')}
@@ -2135,7 +2135,7 @@ export default function App() {
               segmentationOnly={!native.binding && displayedSource?.metadata.generated_signal===true}
               publicGoal={!native.binding && display.primaryOverlaysPermitted ? publicGoalMarker : null}
               caseData={linkedOperative?native.volume:surgical.previewVolume??surgical.volume??displayedCase}
-              visibleLayers={displayedLayers}
+              visibleLayers={native.binding?withVesselReviewVisibility(displayedLayers,native.volume?.compartments,native.binding.document.layers as ReadonlyArray<{id:string;rooted_parent?:string}>):displayedLayers}
               overlayOpacity={overlayOpacity}
               cursor={displayedCursor}
               onCursorChange={native.binding ? native.setCursor : imaging.selected ? imaging.setCursor : setCursor}

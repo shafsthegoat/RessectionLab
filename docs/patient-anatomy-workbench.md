@@ -299,9 +299,13 @@ parent transforms, geometry, or algorithm versions invalidate the cache.
 The default skull mode is opaque exterior. Transparent and cutaway modes change
 both mesh and CT-volume presentation; they never change source anatomy. Legacy
 views without an explicit skull mode migrate to exterior. The default vessel
-scope is **Full source estimate**, preserving all source components and retained
-probability surfaces. Legacy saved scopes migrate once to full source; saved
-preferences with `vesselDisplayVersion: 2` retain explicit scope choices.
+scope is **Connected tree**: vessels reachable from the named roots, with
+detached and thin end parts hidden (never deleted) and available through **Show
+detached and thin parts**; see [the connected display](native-vascular-geometry.md#default-connected-vessel-display).
+**Full source estimate** preserves all source components and retained
+probability surfaces. Unversioned views, and `vesselDisplayVersion: 2` views
+that stored the full source, open on the connected tree; other explicit scopes
+are retained, and version 3 views retain every choice.
 The optional **Skull-supported only** filter uses enclosed, brain-seeded CT cranial rings. A ring must be closed within
 a 2 mm morphological tolerance, avoid the acquisition border, cover at least
 70% of its brain seed, and have no more than three times its area. Supported

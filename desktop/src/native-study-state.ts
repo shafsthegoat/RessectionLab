@@ -2,6 +2,7 @@ import type {Binding, CranialView, Layer, NativeScanState, NativeViewState, Vess
 import type {ViewerWorkspaceSettings} from './viewer/workspaceSettings';
 import type {ViewerVolume} from './viewer/contracts';
 import {isCtAngiography,isCtModality,isMrAngiography} from './viewer/volumeTransfer.ts';
+import {vesselDerivedParent} from './native-layer-residency.ts';
 
 export type AnatomyPresentation = 'scan'|'segmentation'|'vascular';
 type PresentationEvidence = {
@@ -206,7 +207,8 @@ export function anatomyPresentation(settings:ViewerWorkspaceSettings,layers:Laye
       const namedArtery=layer.kind==='artery'&&source?.kind==='supplied_annotation'&&
         Number.isInteger(layer.label_value)&&(layer.label_value??0)>0&&source.publisher_class_id===layer.label_value;
       layerColor[layer.id]=(namedArtery||reviewedEvidence)&&/^#[0-9a-f]{6}$/i.test(layer.color)?layer.color:
-        layer.kind==='artery'?'#aa352b':layer.kind==='vein'?'#42668f':layer.kind==='sinus'?'#54548b':nativeTofVessels?'#c16d72':'#a74b52';
+        // Arteries red, veins and sinuses blue; unclassified vessels take the artery colour.
+        ['vein','sinus'].includes(layer.kind)?'#42668f':'#aa352b';
       layerOpacity[layer.id]=reviewedEvidence?(scan?.08:.32):scan?(['vein','sinus'].includes(layer.kind)?.08:.16):
         cranial&&layer.kind==='vessels'&&!nativeVessels?.09:1;
     }else if(layer.kind==='tumor'){
@@ -313,8 +315,40 @@ export function migrateSkullView(view:NativeScanState,layers:Binding['document']
     obliqueClip:view.settings.obliqueClip?{...view.settings.obliqueClip,enabled:false}:undefined}};
 }
 
-/** Legacy scopes were implicit filters; migrate once without changing anatomy. */
-export function vesselScopeForView(view?:NativeViewState|null, useTofExterior=false):VesselScope {
-  if(!view&&useTofExterior)return 'exterior-air';
-  return view?.vesselDisplayVersion===2 ? view.vesselScope??'all' : 'all';
+/** The connected tree is the default. Version 2 stored 'all' as its default, so
+ * that value and unversioned legacy views open rooted; explicit filters keep. */
+export function vesselScopeForView(view?:NativeViewState|null):VesselScope {
+  if(view?.vesselDisplayVersion===3)return view.vesselScope??'rooted';
+  if(view?.vesselDisplayVersion===2&&view.vesselScope&&!['all','rooted','rooted-review'].includes(view.vesselScope))return view.vesselScope;
+  return 'rooted';
+}
+export const rootedVesselScope=(scope:VesselScope)=>scope==='rooted'||scope==='rooted-review';
+/** Scopes whose shown vessels keep source shading and branch tools: no boundary cut is introduced. */
+export const sourceLikeVesselScope=(scope:VesselScope)=>scope==='all'||scope==='exterior-air'||rootedVesselScope(scope);
+export {vesselReviewPrefix,vesselDerivedPrefixes,vesselDerivedParent} from './native-layer-residency.ts';
+/** Derived vessel compartments (the review overlay and the other-class part of a
+ * layer) are named after their source layer and follow its visibility. They are
+ * never written into saved visibility. */
+export function withVesselReviewVisibility(visible:Record<string,boolean>,compartments?:ReadonlyArray<{name:string}>,
+  studyLayers?:ReadonlyArray<{id:string;rooted_parent?:string}>):Record<string,boolean> {
+  // A model addition that extends a named tree is drawn only while that tree is.
+  const parents=new Map((studyLayers??[]).flatMap(layer=>layer.rooted_parent?[[layer.id,layer.rooted_parent] as const]:[]));
+  const shown=(id:string)=>visible[id]===true&&(!parents.has(id)||visible[parents.get(id)!]===true);
+  const derived=(compartments??[]).flatMap(layer=>{const parent=vesselDerivedParent(layer.name);return parent?[[layer.name,shown(parent)] as const]:[];});
+  const children=[...parents.keys()].filter(id=>id in visible&&visible[id]!==shown(id)).map(id=>[id,false] as const);
+  if(!derived.length&&!children.length)return visible;
+  return {...visible,...Object.fromEntries(children),...Object.fromEntries(derived)};
+}
+/** Derived class parts and overlays inherit their layer's opacity; a vein part follows
+ * the vein rule of the scan presentation. */
+export function withVesselDerivedSettings(settings:import('./viewer/workspaceSettings').ViewerWorkspaceSettings,
+  compartments?:ReadonlyArray<{name:string}>):import('./viewer/workspaceSettings').ViewerWorkspaceSettings {
+  const opacity=settings.layerOpacity??{};
+  const inherited=(compartments??[]).flatMap(layer=>{
+    const parent=vesselDerivedParent(layer.name);
+    if(!parent||layer.name in opacity||typeof opacity[parent]!=='number')return [];
+    const vein=layer.name.startsWith('__vessel_veins:')&&settings.presentation==='scan';
+    return [[layer.name,vein?Math.min(opacity[parent],.08):opacity[parent]] as const];
+  });
+  return inherited.length?{...settings,layerOpacity:{...opacity,...Object.fromEntries(inherited)}}:settings;
 }

@@ -1,0 +1,341 @@
+import importlib.util
+import json
+from copy import deepcopy
+from pathlib import Path
+
+import nibabel as nib
+import numpy as np
+import pytest
+
+from resectionlab.patient_anatomy import PatientImagingCollection as Collection
+from resectionlab.vascular_cleanup import rooted_vessel_layer
+from resectionlab.vascular_parity import floating_components
+
+SCRIPT = Path(__file__).resolve().parents[1] / 'scripts' / 'capture_vascular_parity.py'
+spec = importlib.util.spec_from_file_location('capture_vascular_parity', SCRIPT)
+parity = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(parity)
+
+FRAME = np.diag([.5, .5, .5, 1.])
+SHAPE = (40, 24, 24)
+
+
+def save(path, data, frame=FRAME):
+    image = nib.Nifti1Image(data, frame)
+    image.header.set_xyzt_units('mm')
+    nib.save(image, path)
+
+
+def labels():
+    named = np.zeros(SHAPE, np.uint8)
+    named[2:20, 10:14, 10:14] = 4     # R-ICA, a root
+    named[20:26, 10:14, 10:14] = 5    # R-M1
+    named[33:38, 10:14, 10:14] = 17   # R-M2, more than 3 mm away
+    named[2:30, 2:5, 2:5] = 36        # Straight sinus
+    return named
+
+
+def additions():
+    score = np.zeros(SHAPE, np.float32)
+    score[20:26, 14:20, 10:14] = 0.8  # Touches R-M1: a connected 2 mm addition.
+    score[30:34, 18:22, 18:22] = 0.9  # Reaches nothing.
+    return score
+
+
+def ensemble(tmp_path, *, modality='ct', frame=FRAME, name='ensemble-UZH-ARG-KDH', named=None, score=None):
+    """A Phase 2 ensemble folder inside a marked data root at tmp_path."""
+    (tmp_path / '.ressectionlab-data-root.json').write_text('{}')
+    folder = tmp_path / 'phase2' / name
+    folder.mkdir(parents=True, exist_ok=True)
+    named = labels() if named is None else named
+    save(folder / 'named_labels.nii.gz', named, frame)
+    save(folder / 'vessel_probability.nii.gz', np.where(named > 0, .9, .1).astype(np.float32), frame)
+    save(folder / 'vesselfm_connected_probability.nii.gz', additions() if score is None else score, frame)
+    (folder / 'ensemble.json').write_text(json.dumps({'case': 'synthetic', 'modality': modality, 'teams': ['UZH', 'ARG', 'KDH'],
+                                                       'labels': list(range(41)), 'vein_labels': list(range(35, 41))}))
+    return folder
+
+
+def study(tmp_path, modality='CTA'):
+    tmp_path.mkdir(parents=True, exist_ok=True)
+    save(tmp_path / 'scan.nii.gz', np.where((labels() > 0) | (additions() > 0), 400., 40.).astype(np.float32))
+    c = Collection.create(tmp_path / 'study', 'wiring')
+    c.add_series(tmp_path / 'scan.nii.gz', series_id='scan', modality=modality)
+    c.add_layer((labels() == 36).astype(np.uint8), FRAME, layer_id='supplied-veins', source_series='scan', kind='vein',
+                role='context', color='#71b7ef', provenance={'kind': 'supplied_annotation'})
+    c.add_layer((labels() == 0).astype(np.uint8), FRAME, layer_id='brain', source_series='scan', kind='brain',
+                role='context', color='#d09bb6')
+    c.document['display'] = {'initial_layers': ['brain', 'supplied-veins']}
+    c.save()
+    return c
+
+
+def files(root):
+    return {path.relative_to(root) for folder in ('arrays', 'revisions') if (root / folder).is_dir()
+            for path in (root / folder).iterdir()}
+
+
+def test_wiring_makes_the_ensemble_the_default_vessels_once_and_keeps_the_annotation(tmp_path):
+    c = study(tmp_path)
+    before = deepcopy(c.document['layers']), deepcopy(c.document['series'])
+    folder = ensemble(tmp_path)
+    receipt = parity.wire_ensemble(c, 'scan', folder)
+    ids = receipt['layers']
+    assert receipt['added'] == ids and len(ids) == 2 and ids[1] == ids[0] + '-vesselfm' and receipt['changed']
+    reopened = Collection(c.root)
+    assert reopened.document['layers'][:2] == before[0] and reopened.document['series'] == before[1]
+    assert reopened.document['display']['initial_layers'] == ['brain', *ids]
+    assert receipt['initial_layers'] == {'before': ['brain', 'supplied-veins'], 'after': ['brain', *ids]}
+    assert receipt['replaced_initial_layers'] == ['supplied-veins'] and 'unwire' in receipt['undo']
+    assert receipt['manifest_sha256']['before'] != receipt['manifest_sha256']['after']
+    tree, extra = reopened.layer(ids[0]), reopened.layer(ids[1])
+    assert tree['provenance']['kind'] == 'image_derived_estimate' and tree['provenance']['estimate'] == 'model'
+    assert tree['provenance']['source'] == 'phase2/ensemble-UZH-ARG-KDH'  # Relative to the marked data root.
+    assert tree['named_labels']['scheme'] == 'topbrain-v1-ct'
+    assert np.array_equal(reopened.array(tree['named_labels']['data']), labels())
+    assert extra['rooted_parent'] == ids[0] and not (reopened.mask(extra) & reopened.mask(tree)).any()
+    again = parity.wire_ensemble(reopened, 'scan', folder)
+    assert again['layers'] == ids and not again['added'] and not again['changed']
+    assert parity.ensemble_layers(reopened, folder) == ids
+    assert parity.displayed_vessels(reopened, {'vessels': ['supplied-veins']}, folder) == ids
+
+
+def test_a_rewire_retires_the_previous_generation_and_a_revert_must_be_rewired(tmp_path):
+    c = study(tmp_path)
+    folder = ensemble(tmp_path)
+    first = parity.wire_ensemble(c, 'scan', folder)
+    old_arrays = parity._array_paths([c.layer(layer) for layer in first['layers']])
+    changed = labels(); changed[33:38, 10:14, 10:14] = 0
+    save(folder / 'named_labels.nii.gz', changed)
+    with pytest.raises(LookupError, match='wire --ensemble ensemble-UZH-ARG-KDH'):
+        parity.ensemble_layers(c, folder)
+    second = parity.wire_ensemble(c, 'scan', folder)
+    assert second['retired'] == first['layers'] and set(second['layers']).isdisjoint(first['layers'])
+    reopened = Collection(c.root)
+    assert [row['id'] for row in reopened.document['layers'] if row['id'].startswith('ensemble-')] == second['layers']
+    assert reopened.document['display']['initial_layers'] == ['brain', *second['layers']]
+    shared = parity._array_paths(reopened.document)
+    assert all(not reopened.path(path).exists() for path in old_arrays - shared)
+    save(folder / 'named_labels.nii.gz', labels())  # Revert the folder.
+    with pytest.raises(LookupError, match='changed since it was wired'):
+        parity.ensemble_layers(reopened, folder)
+    third = parity.wire_ensemble(reopened, 'scan', folder)
+    assert third['retired'] == second['layers'] and parity.ensemble_layers(reopened, folder) == third['layers']
+    undo = parity.unwire(reopened)
+    assert undo['changed'] and Collection(c.root).document['display']['initial_layers'] == ['brain', 'supplied-veins']
+    assert not any(row['id'].startswith('ensemble-') for row in Collection(c.root).document['layers'])
+
+
+def test_wiring_refuses_the_other_modality_another_grid_and_an_empty_map(tmp_path):
+    c = study(tmp_path)
+    with pytest.raises(ValueError, match='cannot be wired'):
+        parity.wire_ensemble(c, 'scan', ensemble(tmp_path, modality='mr'))
+    with pytest.raises(ValueError, match='not on the scan'):
+        parity.wire_ensemble(c, 'scan', ensemble(tmp_path, frame=np.diag([.6, .5, .5, 1.]), name='shifted'))
+    with pytest.raises(ValueError, match='empty named vessel map'):
+        parity.wire_ensemble(c, 'scan', ensemble(tmp_path, name='empty', named=np.zeros(SHAPE, np.uint8)))
+    mr = study(tmp_path / 'mr', modality='TOF')
+    with pytest.raises(ValueError, match='cannot be wired'):
+        parity.wire_ensemble(mr, 'scan', ensemble(tmp_path, name='ct-on-mr'))
+    assert len(Collection(c.root).document['layers']) == 2
+
+
+def test_a_failed_wiring_leaves_no_trace(tmp_path, monkeypatch):
+    c = study(tmp_path)
+    manifest = (c.root / 'patient-anatomy.json').read_bytes()
+    stored = files(c.root)
+    monkeypatch.setattr(parity, '_publish', lambda *args: (_ for _ in ()).throw(OSError('disk full')))
+    with pytest.raises(OSError):
+        parity.wire_ensemble(c, 'scan', ensemble(tmp_path))
+    assert (c.root / 'patient-anatomy.json').read_bytes() == manifest and files(c.root) == stored
+    assert len(c.document['layers']) == 2
+
+
+def test_wiring_refuses_when_saving_would_change_anything_else(tmp_path, monkeypatch):
+    import resectionlab.anatomy_display as display
+    c = study(tmp_path)
+    manifest = (c.root / 'patient-anatomy.json').read_bytes()
+    stored = files(c.root)
+    monkeypatch.setattr(display, 'retire_stale_cta_coverage', lambda collection: collection.document['layers'].pop())
+    with pytest.raises(ValueError, match='retire stale CTA coverage'):
+        parity.wire_ensemble(c, 'scan', ensemble(tmp_path))
+    assert (c.root / 'patient-anatomy.json').read_bytes() == manifest and files(c.root) == stored
+
+
+def test_wiring_a_linked_review_manifest_writes_only_that_document(tmp_path):
+    from resectionlab.anatomy_bridge import open_anatomy_manifest
+    from resectionlab.data_root import sha256_file
+    c = study(tmp_path)
+    source = c.root / 'patient-anatomy.json'
+    document = deepcopy(c.document)
+    document['vascular_review'] = {'schema': 'eden2020-restricted-vascular-companion-v1', 'linked_source': True,
+                                   'source_manifest': {'sha256': sha256_file(source), 'snapshot_id': c.identity()}}
+    document.pop('snapshot_id')
+    document['snapshot_id'] = Collection(c.root, document).identity()
+    linked = c.root / 'vascular-review.anatomy.json'
+    linked.write_text(json.dumps(document))
+    review = open_anatomy_manifest(linked)
+    before = source.read_bytes()
+    receipt = parity.wire_ensemble(review, 'scan', ensemble(tmp_path), manifest=linked)
+    assert source.read_bytes() == before
+    reopened = open_anatomy_manifest(linked)
+    assert reopened.document['display']['initial_layers'] == ['brain', *receipt['layers']]
+    assert reopened.layer(receipt['layers'][0])['named_labels']['scheme'] == 'topbrain-v1-ct'
+
+
+def test_wired_layers_show_a_rooted_tree_and_the_addition_only_where_it_joins(tmp_path):
+    c = study(tmp_path)
+    ids = parity.wire_ensemble(c, 'scan', ensemble(tmp_path))['layers']
+    display, receipt, _, split = rooted_vessel_layer(c, c.layer(ids[0]))
+    assert np.array_equal(c.mask(display), np.isin(labels(), (4, 5)))
+    assert np.array_equal(c.mask(split), labels() == 36) and split['kind'] == 'vein'
+    shown, child, _, _ = rooted_vessel_layer(c, c.layer(ids[1]))
+    near = np.zeros(SHAPE, bool); near[:30] = True
+    # The shown branch reaches one voxel into R-M1 (display-only overlap), so its surface joins the tree's.
+    overlap = np.zeros(SHAPE, bool); overlap[20:26, 13, 10:14] = True
+    assert np.array_equal(c.mask(shown), ((additions() > 0) & near) | overlap)
+    assert child['rooting']['display']['overlapVoxels'] == int(overlap.sum())
+    # The addition's own receipt: its own wording and counts, not the tree's.
+    assert child['reason'].startswith('Attached to the named tree of Model vessels') and '1 detached components' in child['reason']
+    assert child['rooting']['input']['voxels'] == int((additions() > 0).sum())
+    assert child['rooting']['input']['components'] == 2 and child['rooting']['display']['components'] == 1
+    union, receipts = parity.rooted_display(c, ids)
+    roots = parity.display_roots(c, ids, SHAPE)
+    assert floating_components(union, roots & union, (.5, .5, .5))['floating'] == 0
+
+
+def test_an_addition_joining_a_vein_is_drawn_as_vein(tmp_path):
+    score = np.zeros(SHAPE, np.float32)
+    score[10:20, 5:9, 2:5] = 0.8  # Touches only the straight sinus.
+    c = study(tmp_path)
+    ids = parity.wire_ensemble(c, 'scan', ensemble(tmp_path, score=score))['layers']
+    display, receipt, _, split = rooted_vessel_layer(c, c.layer(ids[1]))
+    assert not c.mask(display).any() and split['kind'] == 'vein' and split['color'] == '#42668f'
+    overlap = np.zeros(SHAPE, bool); overlap[10:20, 4, 2:5] = True  # Straight-sinus voxels it enters, drawn as vein.
+    assert np.array_equal(c.mask(split), (score > 0) | overlap) and receipt['rooting']['classes']['vein'] == int((score > 0).sum())
+
+
+@pytest.mark.parametrize('depth, branch', [(1, False), (2, False), (3, True)])
+def test_an_addition_that_only_thickens_the_tree_wall_is_kept_for_review(tmp_path, depth, branch):
+    score = np.zeros(SHAPE, np.float32)
+    score[4:14, 14:14 + depth, 10:14] = 0.8  # Lies on the R-ICA wall, depth voxels thick.
+    score[20:26, 14:20, 10:14] = 0.8         # A branch off R-M1.
+    c = study(tmp_path)
+    ids = parity.wire_ensemble(c, 'scan', ensemble(tmp_path, score=score))['layers']
+    display, receipt, hidden, split = rooted_vessel_layer(c, c.layer(ids[1]), review=True)
+    tree = np.isin(labels(), (4, 5, 36))
+    shown, review, own = c.mask(display), c.mask(hidden) if hidden else np.zeros(SHAPE, bool), score > 0
+    crust = np.zeros(SHAPE, bool); crust[4:14, 14:14 + depth, 10:14] = True
+    overlap = np.zeros(SHAPE, bool); overlap[20:26, 13, 10:14] = True
+    if branch:
+        overlap[4:14, 13, 10:14] = True
+    assert np.array_equal(shown & tree, overlap) and not (review & tree).any() and split is None
+    assert np.array_equal(shown & ~tree, own if branch else own & ~crust)
+    assert np.array_equal(review, np.zeros(SHAPE, bool) if branch else crust)
+    rooting = receipt['rooting']
+    wall = rooting['review']['wallThickening']
+    assert wall['components'] == (0 if branch else 1) and wall['voxels'] == (0 if branch else int(crust.sum()))
+    assert wall['volumeMm3'] == wall['voxels'] * .125 and 'hugs the tree wall' in wall['reason'].lower()
+    assert rooting['review']['components'] == wall['components'] and rooting['review']['detachedComponents'] == 0
+    # The overlap is display-only: the partition of the addition's own voxels is unchanged.
+    assert rooting['display']['overlapVoxels'] == int(overlap.sum())
+    assert rooting['display']['sourceVoxels'] + rooting['review']['voxels'] + rooting['lod']['voxels'] == int(own.sum())
+    assert receipt['hiddenVoxels'] == int(review.sum()) and receipt['excludedFragments'] == wall['components']
+    assert ('1 wall-thickening pieces that hug the tree wall' in receipt['reason']) is not branch
+
+
+@pytest.mark.parametrize('case', ['missing', 'grid', 'failed', 'empty'])
+def test_an_addition_without_a_usable_tree_shows_nothing(tmp_path, monkeypatch, case):
+    import resectionlab.vascular_cleanup as cleanup
+    c = study(tmp_path)
+    ids = parity.wire_ensemble(c, 'scan', ensemble(tmp_path))['layers']
+    child = deepcopy(c.layer(ids[1]))
+    if case == 'missing':
+        child['rooted_parent'] = 'retired-layer'
+    elif case == 'grid':
+        c.layer(ids[0])['affine'] = np.diag([.6, .5, .5, 1.]).tolist()
+    elif case == 'failed':
+        c.layer(ids[0])['named_labels']['data'] = c.put_array(np.full(SHAPE, 99, np.uint8))
+    else:
+        c.layer(ids[0])['data'] = c.put_array(np.zeros(SHAPE, np.uint8))
+        c.layer(ids[0])['named_labels']['data'] = c.put_array(np.zeros(SHAPE, np.uint8))
+    display, receipt, hidden, split = rooted_vessel_layer(c, child, review=True)
+    assert not c.mask(display).any() and split is None
+    assert np.array_equal(c.mask(hidden), additions() > 0) and receipt['reason'].startswith('Not shown:')
+
+
+def test_named_review_measures_major_vessels_against_the_reference(tmp_path):
+    c = study(tmp_path)
+    ids = parity.wire_ensemble(c, 'scan', ensemble(tmp_path))['layers']
+    union, receipts = parity.rooted_display(c, ids)
+    none = parity.named_review({'x': {'rooting': {'roots': {'scheme': None}, 'namedLabels': []}}})
+    assert none['gate'] == 'not-measured'
+    gone = parity.named_review({'x': {'namedLabelsUnavailable': 'The supplied label original is missing',
+                                      'rooting': {'roots': {'scheme': None}, 'namedLabels': []}}})
+    assert gone['gate'] == 'not-measured' and 'missing' in gone['reason']
+    prediction = parity.named_review(receipts)
+    assert prediction['basis'] == 'prediction-side status only' and 'not available' in prediction['referenceCheck']
+    assert [row['name'] for row in prediction['partlyInReview'] + prediction['lost']] == ['R-M2']  # M2 is major.
+    reference = labels().astype(np.int16)
+    reference[2:30, 18:20, 18:20] = 6  # A left ICA the model never predicted.
+    review = parity.named_review(receipts, display=union, reference=reference, spacing=(.5, .5, .5))
+    assert {row['name'] for row in review['lost']} == {'L-ICA', 'R-M2'} and review['gate'] == 'not met'
+    assert next(row for row in review['referenceCheck'] if row['name'] == 'R-ICA')['covered'] == 1.0
+    assert 'A1-A2' in review['mergedClasses']
+
+
+def test_the_mesh_gate_counts_surface_pieces_and_can_fail(tmp_path):
+    from resectionlab.anatomy_geometry import mesh
+    c = study(tmp_path)
+    roots = np.zeros(SHAPE, bool); roots[4:8, 10:14, 10:14] = True
+    joined = np.zeros(SHAPE, np.uint8); joined[4:12, 10:14, 10:14] = 1
+    edge = joined.copy(); edge[12:16, 14:18, 14:18] = 1  # Touches only at a corner.
+    rows = {}
+    for name, data in (('joined', joined), ('edge', edge)):
+        rows[name] = c.add_layer(data, FRAME, layer_id=name, source_series='scan', kind='artery', role='context',
+                                 color='#aa352b')
+    ok = parity.mesh_floating([('joined', mesh(c, rows['joined']))], roots, SHAPE)
+    assert ok == {**ok, 'pieces': 1, 'floating': 0}
+    bad = parity.mesh_floating([('edge', mesh(c, rows['edge']))], roots, SHAPE)
+    assert bad['pieces'] == 2 and bad['floating'] == 1
+
+
+def test_the_mesh_gate_joins_a_branch_that_enters_the_tree_but_not_one_that_only_abuts_it(tmp_path):
+    from resectionlab.anatomy_geometry import mesh
+    c = study(tmp_path)
+    roots = np.zeros(SHAPE, bool); roots[4:6, 8:14, 8:14] = True
+    tree = np.zeros(SHAPE, np.uint8); tree[4:20, 8:14, 8:14] = 1
+    abut = np.zeros(SHAPE, np.uint8); abut[10:14, 14:20, 9:13] = 1
+    enter = np.zeros(SHAPE, np.uint8); enter[10:14, 13:20, 9:13] = 1  # One voxel into the tree.
+    # Score fields put the abutting walls at different positions, as on the real models.
+    rows = {name: c.add_layer(data, FRAME, layer_id=name, source_series='scan', kind='artery', role='context',
+                              color='#aa352b', probability=np.where(data > 0, level, 0.).astype(np.float32))
+            for name, data, level in (('tree', tree, .9), ('abut', abut, .7))}
+    rows['enter'] = c.add_layer(enter, FRAME, layer_id='enter', source_series='scan', kind='artery', role='context',
+                                color='#aa352b')
+    surfaces = {name: mesh(c, row) for name, row in rows.items()}
+    for child, pieces, floating in (('abut', 2, 1), ('enter', 1, 0)):
+        gate = parity.mesh_floating([('tree', surfaces['tree']), (child, surfaces[child])], roots, SHAPE,
+                                    [c.mask(rows['tree']), c.mask(rows[child])])
+        assert gate['pieces'] == pieces and gate['floating'] == floating, child
+    # Without the displayed masks the entering branch is a separate piece too.
+    alone = parity.mesh_floating([('tree', surfaces['tree']), ('enter', surfaces['enter'])], roots, SHAPE)
+    assert alone['floating'] == 1
+
+
+def test_capture_recipes_ask_for_the_rooted_view(tmp_path):
+    c = study(tmp_path)
+    case = {'series': 'scan', 'anchor': [5., 5., 5.], 'vessels': ['supplied-veins']}
+    rows = parity.recipes(c, case, {'settings': {}}, ['supplied-veins'])
+    assert {row['scope'] for row in rows} == {'rooted'}
+    assert {row['scope'] for row in parity.recipes(c, case, {'settings': {}}, ['supplied-veins'], scope='all')} == {'all'}
+
+
+def test_the_mesh_gate_reports_inner_walls_apart_from_floating_pieces(tmp_path):
+    from resectionlab.anatomy_geometry import mesh
+    c = study(tmp_path)
+    hollow = np.zeros(SHAPE, np.uint8); hollow[4:20, 8:16, 8:16] = 1; hollow[8:16, 11:13, 11:13] = 0
+    row = c.add_layer(hollow, FRAME, layer_id='hollow', source_series='scan', kind='artery', role='context', color='#aa352b')
+    roots = np.zeros(SHAPE, bool); roots[4:6, 8:16, 8:16] = True
+    gate = parity.mesh_floating([('hollow', mesh(c, row))], roots, SHAPE)
+    assert gate['pieces'] == 2 and gate['innerWalls'] == 1 and gate['floating'] == 0

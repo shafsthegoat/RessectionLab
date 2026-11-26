@@ -64,6 +64,223 @@ At a fixed camera this reduces mottled highlights, most visibly on close-ups.
 The coarse stair steps still follow the supplied contour.
 [Matched publisher validation](local-storage-ledger.md)
 
+## Default connected vessel display
+
+The desktop opens vessel layers as a **Connected tree** (`vesselScope:
+'rooted'`). `resectionlab.vascular_rooting.root_vessels` derives it per layer;
+nothing in the source mask, labels or manifest changes. Every source voxel is
+in exactly one of three outputs: shown, review (components that reach no root
+and were not bridged) or hidden by level of detail. Bridge voxels are a fourth,
+separate output with their own provenance. Tests check the exact partition and
+that the shown display has no component without a root.
+
+- **Roots.** TopBrain v1 named labels where the layer has them: basilar (1),
+  internal carotids (4, 6) and vertebrals (23, 24), plus on CT the vein of Galen
+  (35), straight sinus (36) and superior sagittal sinus (40). Label numbers
+  come from the TopBrain label maps (`labels_topbrain_CT.json` and
+  `_MR.json`); CT and MR maps are never applied to the other modality. On MR the
+  external carotid branches (35 to 42) are not roots; those that do not reach a
+  root stay in review and the receipt lists them. A supplied TopBrain
+  annotation is bound only when the layer equals the imported original's listed
+  label values on the scan grid and the original is identified as a TopBrain v1
+  map by its label dictionary or by its file name on the TopBrain record; when
+  both are present they must agree on the modality. A layer may also carry `named_labels: {data, scheme}` for model
+  ensembles. Without named labels the roots are the largest 26-connected
+  component plus any component that enters through the inferior face of the
+  field of view with a calibre of at least 2 mm (widest over an even sample of
+  the component) and an extent of at least 10 mm (the other carotid tree or a
+  separate posterior circulation); the receipt records the fallback, each
+  accepted root and each refused entering component with its calibre.
+- **Bridging.** A detached component of at least 0.5 mm³ is joined when a
+  geodesic path of at most 3 mm (voxel centre to centre) reaches the shown tree
+  through voxels that are all supported. A voxel is supported when its signal
+  is at least 0.5 of the local lumen contrast above background, or when a model
+  probability reaches 0.25. Lumen and background are fixed physical
+  quantities, not properties of the search window: within 6 mm of the midpoint
+  of the closest fragment-to-tree voxel pair, the lumen is the median signal of
+  the tree and fragment voxels and the background the median of the 1 to 3 mm
+  shell outside the mask; the signal criterion is used only when their
+  difference exceeds three robust noise widths of that shell. The search
+  window always contains this neighbourhood, and a test checks that the
+  decision and the recorded contrast are unchanged in a larger window. A supported voxel is then vetoed when its signal is
+  above twice the local contrast, above 700 HU on CT, or inside a same-grid
+  bone or skull layer, so probability cannot carry a bridge through bone. A
+  fragment joins only tree voxels of its own class (artery or vein, from named
+  labels or the layer kind); an unclassified fragment may join either. The
+  search window covers only the fragment voxels within 3 mm of the tree, padded
+  by 6 mm. The path is widened to the smaller end radius (the deepest lumen
+  within 0.6 mm of each end, less half a voxel, at most 1 mm) through supported
+  voxels, keeping only the piece that holds the path. Up to three rounds let a
+  chain attach one gap at a time. Bridges take the class of the tree voxel they
+  join. Bridge paths are face-connected (6-connected), because the drawn
+  surface joins voxels only across faces. Thresholds were frozen on TopCoW-014
+  and PTNT_4509 only.
+- **Face connectivity.** Every shown part must be face-connected to a root.
+  Where shown parts touch only at an edge or a corner, a display-only
+  connectivity fill adds the minimal face-connecting voxel (one for an edge,
+  two for a corner) with the highest probability or signal, vetoed by the
+  bridge rules; if every candidate is vetoed the far side goes to review. Fill
+  voxels are counted separately in the receipt and never enter a source mask.
+- **Level of detail.** Calibre is lumen diameter from the lumen volume inside a
+  1.5 mm sphere, inverted for a cylinder through the centre, plus 0.1 mm, and
+  taken as the widest within 1.5 mm. It does not depend on how the centreline
+  sits on the voxel lattice: 1.0 to 1.3 mm branches are kept at 0.3 to 0.6 mm
+  spacing and 0.6 mm reads thin at 0.3 and 0.45 mm. At 0.6 mm spacing a 0.6 mm
+  vessel can read up to about 0.85 mm. Thin branches within about 2 mm of a
+  wider vessel read wide. Calibre 1 mm and up is always shown; 0.5 to 1 mm only
+  within 10 mm of a tumour or of a saved corridor capsule. A tumour drawn on
+  another registered series of the same session is resampled into the vessel
+  grid; without a registration the receipt says so (`lod.tumourReason`). Named
+  vessels and roots are exempt. Only thin terminal subtrees are hidden: a thin
+  piece that joins two kept parts stays, so the shown tree never disconnects.
+- **Colour.** Arteries and unclassified vessels are red, veins and sinuses
+  blue, in the standard and Volume lighting paths. When a layer holds both
+  classes, its other-class voxels (and bridges joining them) form a separate
+  compartment, `__vessel_veins:<layer>` or `__vessel_arteries:<layer>`, in that
+  class's colour. The receipt notes when vessels are unclassified.
+
+**Show detached and thin parts** (`'rooted-review'`) adds each layer's hidden
+voxels as an amber overlay, `__vessel_review:<layer>`; a version 3 view saved
+with it on reopens with the overlay on. Derived compartments
+follow their layer's visibility, select their layer when picked, are never
+saved as layers and give way before the viewer's 128-compartment budget. Saved
+views now carry `vesselDisplayVersion: 3`. Views without a version, and version
+2 views that stored `'all'`, open on the connected tree; version 2 views that
+stored another filter keep it. Native-adaptive TOF studies, which used to open
+on the TOF exterior-air review, also open on the connected tree; that scope
+remains selectable. **Show full source** remains available. If the derivative
+fails for one layer, that layer shows its full source with the reason in its
+display filter. The derivative and its receipt are cached per session like the
+TOF exterior-air filter; saved corridors and tumour registrations are part of
+the key, and a view built while a supplied label original was missing is not
+cached. Memory-mapped signal and probability are read once in large sequential
+blocks over the box around candidate fragments, as float16. A bridge voxel
+outside the source mask makes that layer's wall use the categorical contour
+rather than the score contour.
+
+CPU check on the supplied annotations (named roots, CT signal, same-grid skull
+as bone, no corridors), 2026-11-26, with the fixed 6 mm statistics
+neighbourhood. Floating components count the union of shown layers against
+the root labels.
+
+| | TopCoW-014 (development) | TopCoW-018 (held out) |
+| --- | --- | --- |
+| Floating components, annotation / default view | 6 / 0 | 4 / 0 |
+| Arterial components bridged (gap, contrast fraction) | 3: R-M2 with R-M3, R-M2, R-M3 (1.7 to 2.4 mm, 0.52 to 0.62) | 1: an R-M3 piece (1.0 mm, 0.74) |
+| Arterial components in review | 3: R-OA, L-OA (too far), an R-AChA piece (no supported path) | 3: R-M2 with R-M3 (no supported path), R-OA, L-OA (too far) |
+| Venous components in review | 1: L-BVR, more than 10 mm from the venous tree (it touches an artery) | 0 |
+| Hidden by level of detail | 0 (every annotated voxel is named) | 0 |
+| Peak footprint of the check | 0.83 GB | 0.99 GB |
+
+The named segments hidden by default are the ophthalmic segments, part of the
+right anterior choroidal artery and, on TopCoW-014, the left basal vein of
+Rosenthal; on TopCoW-018 also its R-M2 with R-M3 segment. Ophthalmic segments
+would join only at 8 to 10 mm gaps; the 3 mm limit was kept. TopCoW-018 had
+been run twice before this definition was fixed, while the lumen and
+background statistics still followed the search window (first one bridge, R-M2
+with R-M3 at 1.4 mm; then none after the window was cropped). The result above
+is the single run after the fix; nothing was adjusted after any TopCoW-018 run.
+
+On the merged vesselFM TOF layer of EDEN PTNT_4509 (development; no named
+labels; TOF signal and vesselFM probability), the fallback accepted the largest
+component and 20 components entering through the inferior face at 2.1 to
+2.9 mm calibre (10 to 112 mm long). It refused 124 entering components: 117
+shorter than 10 mm and 7 of 1.2 to 1.95 mm. 250 of 2,476 components joined
+across bridges, 2,205 stayed in review (1,262 below 0.5 mm³) and the level of
+detail hid 2,689 voxels in 126 thin end pieces. The default view has 21
+components, each holding a root. The 672 × 672 × 210 grid took 51 s on the CPU
+with a 1.89 GB peak footprint for the whole check. In stage B the hero TOF
+studies get named MR labels, whose ICA, vertebral and basilar roots replace
+this fallback.
+
+### Phase 2 model layers in the hero studies
+
+`scripts/capture_vascular_parity.py wire --ensemble <folder>` adds a Phase 2
+ensemble to each hero study that has one: a `vessels` layer with the named
+TopBrain labels (`named_labels: {data, scheme}`, the CT map only on CT studies
+and the MR map only on MR) and the soft vessel probability, plus the connected
+vesselFM score as a separate unnamed layer whose `rooted_parent` is that tree.
+The addition is shown only where it reaches the tree's shown display, under the
+calibre rule: directly, or across a signal-supported bridge of at most 3 mm.
+It never joins the named labels; each of its pieces takes the class (and
+colour) of the tree part it joins. A face-connected piece of the addition is
+shown only when at least one of its voxels lies outside the tree dilated by
+two voxels (26-connected), that is, when it extends the tree by more than its
+wall. Pieces that only hug the tree wall go to review (amber overlay) and are
+counted in the receipt as `review.wallThickening` (pieces, voxels, volume and
+the reason). The shown pieces' displayed mask also holds the tree voxels
+face-adjacent to them (a one-voxel overlap, in the class of the tree part it
+belongs to), so the branch surface is drawn into the tree's rather than
+beside it. The overlap is display-only: it is counted as
+`display.overlapVoxels` and is not part of the named labels, the review set or
+the shown, review and hidden partition. If its tree is missing, on another grid,
+fails, shows nothing or is hidden, the addition shows nothing and its voxels
+stay under review. Both carry an
+`image_derived_estimate` provenance with the model, teams, ensemble folder and
+file hashes. The newest generation becomes the study's initial vessel layers
+in place of the previous initial vessel layers; supplied annotation layers stay
+in the study, unchanged and selectable, and non-vessel initial layers are
+untouched, so the desktop default, the capture recipe and the geometry gate
+show the same layers. A binding of the hashes names the layers: a second run
+changes nothing, and a re-wire after the ensemble changed retires the previous
+wired generation (its entries and arrays, reproducible from the folder; older
+revision snapshots of the manifest still name them). Layers wired from a folder
+that has since changed are refused until re-wired. The write is all or nothing
+and refuses if saving would change anything else; source-linked review
+manifests are written as their own document beside the pinned source. Each
+wiring writes a receipt (manifest hash and snapshot before and after, the
+previous initial layers) under the evidence folder, and `unwire` undoes it. `geometry` and `capture` take the same
+`--ensemble` and `--scope` (default `rooted`): the geometry measures the rooted
+union the default view shows. Its floating count is taken on the surfaces the
+desktop receives: each displayed part is meshed as the viewer meshes it, and
+pieces of different parts are joined where they share a vertex position or
+where a vertex of one lies inside the displayed voxels of the other (a vertex
+on a boundary between voxels counts only when all of them are set, so a
+surface that only abuts another part stays separate). Every piece with no
+root-label geometry counts as floating; face-connected voxel components are
+reported beside it. The command prints the mesh count with the voxel count
+beside it and exits non-zero when any case has a floating mesh piece in the
+default view. The major-vessel gate covers the basilar, ICA, M1, A1-A2 and the
+third A2, M2, P1-P2 and vertebrals, and on CT the vein of Galen, straight and
+superior sagittal sinuses (TopBrain merges A1 with A2 and P1 with P2). Where a
+reference annotation exists, a major vessel counts as lost when less than 90 %
+of its reference centerline lies within one voxel of the default display
+(declared before measuring); 90 to 100 % is listed as partly in review. Without
+a reference the gate uses the prediction-side status and says so; without named
+labels it reports `not-measured`.
+
+Mesh gate, 2026-11-26 (CPU; each displayed part meshed as the desktop meshes
+it). "Pieces" are outer surface pieces; "floating" are pieces with no root-label
+geometry within one voxel; face components are counted beside them.
+
+| | Full source: pieces / floating (face components / floating) | Default view: pieces / floating (face components / floating) | Connectivity fill voxels | Major vessels against the reference (coverage below 100 %) |
+| --- | --- | --- | --- | --- |
+| TopCoW-014 annotation | 12 / 9 (16 / 13) | 3 / 0 (3 / 0) | 6 | none lost; R-M2 98.9 % |
+| TopCoW-014 UZH+ARG+KDH ensemble | 544 / 438 (37 / 34) | 3 / 0 (3 / 0) | 15 | none lost; R-M2 98.4 %, L-M2 97.7 % |
+| TopCoW-018 annotation (held out) | 16 / 11 (19 / 14) | 5 / 0 (5 / 0) | 8 | none lost; R-M2 92.7 % (19.4 mm uncovered) |
+| TopCoW-018 ensemble (held out) | 1,192 / 966 (55 / 50) | 5 / 0 (5 / 0) | 30 | none lost; R-M2 92.7 %, L-M2 94.5 % |
+| PTNT_4509 vesselFM cleanup (no names) | 3,367 outer pieces, no root labels (3,367) | 21 / 0 against the fallback root seeds, plus 28 inner walls (21 / 0) | 312 | not measured (no named labels, no reference) |
+
+With the combined `combined-base-UZH-ARG-KDH` ensemble and its connected
+vesselFM addition (2026-11-26, after the wall-thickening rule and the overlap):
+TopCoW-014 default view 3 mesh pieces / 0 floating (3 / 0 face components);
+the addition keeps 6 pieces (9,683 voxels), sends 215 wall-thickening pieces
+(546 voxels) to review and draws 233 overlap voxels. TopCoW-018: 6 / 0 (5 / 0);
+3 pieces kept, 613 wall-thickening pieces (2,069 voxels) to review, 27 overlap
+voxels. The two Eden2020 TOF studies: 5 / 0 and 3 / 0 outer pieces (1 / 0 face
+components each); 63 and 82 pieces kept, 6,479 and 6,755 wall-thickening pieces
+to review, 4,878 and 5,380 overlap voxels. The major-vessel gate is met on all
+four. Before the rule, the TopCoW-014 addition drawn as its own meshes gave 207
+pieces, 187 of them floating.
+
+The full-source ensemble is drawn from its probability contour, which splits
+into many more pieces than its face-connected voxel components. Named segments
+left in review on the ensembles: pieces of R and L M2 and M3, R-AICA, R-PICA,
+L-AChA, R-OA, L-OA (014); pieces of R and L M2 and M3, R-P3P4, R and L AChA,
+R-OA, L-OA (018). TopCoW-018 was rerun in this round for the face-connectivity
+fix and the mesh gate (annotation and ensemble, full source and default view);
+each run is logged with the evidence.
+
 ## Source-owned branch geometry
 
 The existing TopBrain CTA001 now has reproducible, source-owned centerline

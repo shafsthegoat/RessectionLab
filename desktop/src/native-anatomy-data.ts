@@ -216,7 +216,7 @@ export async function hydrateAnatomy(payload:ViewPayload,api:ResectionApi,cached
 export type CranialView = 'planning'|'inspection';
 export interface NativeScanState {cranialView?:CranialView;cursor:Point3|null;visible:Record<string,boolean>;settings:ViewerWorkspaceSettings}
 export interface RetiredClipping {seriesId:string|null;cutaway:import('./viewer/workspaceSettings').ViewerCutaway}
-export interface NativeViewState {schema:'patient-anatomy-view-v1';patientId:string;snapshotId:string;seriesId:string;states:Record<string,NativeScanState>;scalarTransferBasis?:'selected-acquisition-v1';patientCutaway?:import('./viewer/workspaceSettings').ViewerCutaway;vesselScope?:VesselScope;vesselDisplayVersion?:2;selectedApproachId?:string|null;selectedPlanningTargetId?:string|null;selectedApproachIds?:Record<string,string|null>;selectedStructure?:string|null}
+export interface NativeViewState {schema:'patient-anatomy-view-v1';patientId:string;snapshotId:string;seriesId:string;states:Record<string,NativeScanState>;scalarTransferBasis?:'selected-acquisition-v1';patientCutaway?:import('./viewer/workspaceSettings').ViewerCutaway;vesselScope?:VesselScope;vesselDisplayVersion?:2|3;selectedApproachId?:string|null;selectedPlanningTargetId?:string|null;selectedApproachIds?:Record<string,string|null>;selectedStructure?:string|null}
 export interface ComponentReview {
   reviewId:string;layerId:string;snapshotId?:string;
   components:Array<{id:number;voxels:number;volumeMm3:number;center:Point3}>;
@@ -245,4 +245,5 @@ export interface VesselGapReview {
 }
 export function isNativeBinding(value:unknown):value is Binding {return !!value&&typeof value==='object'&&'collectionId' in value&&'document' in value;}
 
-export type VesselScope='brain'|'all'|'intracranial'|'excluded'|'exterior-air';
+/** 'rooted' is the default connected tree; 'rooted-review' also shows its hidden parts as an overlay. */
+export type VesselScope='rooted'|'rooted-review'|'brain'|'all'|'intracranial'|'excluded'|'exterior-air';

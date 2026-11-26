@@ -64,12 +64,15 @@ drives the hidden desktop harness and `resectionlab.vascular_parity`.
    count on CTA-B still favours vesselFM alone by two loops (9 against 7)
    after both attempts, while the patch Betti error and every other measure
    favour the ensemble. Needs Shafrir's decision; see Phase 2 results.
-3. **The annotation itself has unrooted named vessels.** TopCoW-014 has six
-   and TopCoW-018 four components (M2, M3, choroidal and ophthalmic segments)
-   that do not touch a root label. "Zero floating components" and "no named
-   vessel lost" conflict there unless signal-supported bridging joins them.
-   Phase 3 will report floating components against the annotation's own
-   count, and bridged versus hidden named segments separately.
+3. **What counts as a major vessel lost.** Phase 3 treats a major named
+   vessel as lost when it is absent from the default view or less than 90
+   percent of its reference centerline is shown, and lists anything between
+   90 and 100 percent as partly in review. The list is the basilar, ICA, M1,
+   M2, A1-A2, third A2, P1-P2 and vertebral arteries and, on CT, the superior
+   sagittal sinus, straight sinus and vein of Galen. Small named segments
+   (ophthalmic, anterior choroidal, distal M3 pieces) stay in the review
+   overlay when no signal-supported path joins them. The threshold and the
+   list were set by the coordinator and need Shafrir's agreement.
 4. **Venous walls beside bone do not resolve.** The edge model expects lumen
    brighter than its surroundings. Only 14 to 57 percent of sinus wall vertices
    find such an edge on CTA, so the half-voxel deviation gate is meaningful
@@ -89,7 +92,7 @@ drives the hidden desktop harness and `resectionlab.vascular_parity`.
 | 0 Baseline | Headless harness reproduces presets and metrics for today's app | Evidence saved for all four cases | done 2026-11-25 |
 | 1 Cinematic renderer | Soft-label tagging, tricubic intensity, progressive path tracing, hybrid shading, HDR environment; WebGPU versus WebGL2 recorded | Interaction p95 at most 16.7 ms; settle at most 1.5 s on CTA-A; blind crispness and depth at least 4 | gates not met 2026-11-25; kept behind the Volume lighting setting |
 | 2 Segmentation | TopBrain 2025 top-three models, ensembled with vesselFM where connected to the named tree; soft probabilities kept; CTA labels never applied to MRA | Better Dice, clDice and Betti than vesselFM alone on the held-out cases | run 2026-11-26; one Betti count not met after two attempts, see results |
-| 3 Cleanup | Root-reachable components by default, the rest behind a review toggle; signal-supported bridging; caliber LOD; arteries red, veins blue | Zero floating components by default; no named major vessel lost | not started |
+| 3 Cleanup | Root-reachable components by default, the rest behind a review toggle; signal-supported bridging; caliber LOD; arteries red, veins blue | Zero floating components by default; no named major vessel lost | gates met on the drawn meshes 2026-11-26; see results |
 | 4 Sim geometry | Centerline and radius implicit tubes shared by drawing, collision, rods and tags | Deviation at most 0.5 voxel; no self-intersection; tools displace vessels | not started |
 | 5 Integration | Volume, tubes, tools and clipping in the packaged build; films and pull request | All earlier gates; blind scores at least 4 | not started |
 
@@ -265,3 +268,52 @@ One team's CT pipeline labels external carotid branches with the vein label
 numbers; those classes go to background on the path that feeds the ensemble.
 "CT models only on CT" holds per pipeline: two teams ship weights that serve
 both modalities.
+
+## Phase 3 results
+
+The default vessel display (`vesselScope: 'rooted'`) shows the components
+that reach a named root (ICA, vertebral, basilar; on CT also the vein of
+Galen, straight sinus and superior sagittal sinus), joins fragments across
+signal-supported gaps of at most 3 mm, and keeps everything else in an amber
+review overlay behind "Show detached and thin parts". Nothing is deleted and
+source masks are never edited. Arteries and unclassified vessels are red,
+veins and sinuses blue. Vessels of 1 mm and wider always show; 0.5 to 1 mm
+vessels show within 10 mm of a tumour or planned corridor. Rules, receipts and
+limits: [acquired vascular geometry](native-vascular-geometry.md).
+
+The Phase 2 ensemble is wired into the four hero studies as their initial
+vessel layers: the named tree, and the connected small-vessel signal as a
+child layer. Supplied annotation layers stay in each study, unchanged and
+selectable. The child shows only pieces that extend at least two voxels
+beyond the tree wall; one-voxel crusts on the wall go to review.
+
+The gate is counted on the meshes the desktop draws, with face connectivity,
+by `capture_vascular_parity.py geometry`, which exits non-zero on any
+floating piece. Phase 0 counted voxel components of the earlier layers.
+
+| | CTA-A | CTA-B | TOF-A | TOF-B |
+| --- | --- | --- | --- | --- |
+| Floating components before (Phase 0 layers) | 6 | 4 | 2,475 | 2,486 |
+| Drawn mesh pieces / floating, default view | 3 / 0 | 6 / 0 (one inner wall) | 5 / 0 (four inner walls) | 3 / 0 (two inner walls) |
+| Voxel components / floating, default view | 3 / 0 | 5 / 0 | 1 / 0 | 1 / 0 |
+| Fragments joined across gaps | 0 | 2 (0.96 and 1.45 mm) | 1 (1.64 mm) | 2 (1.20 and 0.60 mm) |
+| Named tree components left in review | 12 | 6 | 5 | 6 |
+| Small-vessel pieces shown / wall crusts in review | 6 / 215 | 3 / 613 | 63 / 6,479 | 82 / 6,755 |
+| Major vessel lost | none | none | none listed | none listed |
+| Major vessels partly in review | R-M2 99.5%, L-M2 98.1% of centerline shown | none | R-M2, 60 of 20,403 voxels | none |
+
+TOF has no reference annotation, so its major-vessel check uses the model's
+own labels. Named vessels wholly in review: ophthalmic arteries on both CTA
+cases, one anterior choroidal piece on CTA-A, and on TOF the maxillary and
+middle meningeal branches, which belong to the external carotid and reach no
+intracranial root. TopCoW-018 was run more than once while the measurement
+was being corrected after review; each run is logged in the evidence folder.
+
+Two independent reviews changed this phase. The first count could only come
+out as zero and used corner connectivity that the drawn surface does not
+have; the gate now measures meshes. The desktop first opened the CTA studies
+on the annotation instead of the model result; wiring now makes the model
+result the default. Captures then showed two display faults that numbers had
+missed: CTA arteries drawn in the mauve reserved for unclassified vessels,
+and the small-vessel layer drawn as about 200 shells around the tree. Both
+are fixed.

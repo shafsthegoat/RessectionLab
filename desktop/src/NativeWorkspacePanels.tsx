@@ -9,7 +9,7 @@ import {Check,ChevronRight,ScanLine} from 'lucide-react';
 import {inverseAffine,rasAffine,sampleTrilinear,transformPoint,volumeBounds} from './viewer/coordinates';
 import type {ViewerVolume} from './viewer/contracts';
 import type {Point3} from './viewer/coordinates';
-import {scanLabel,studyTimepoint,studyLabel,sourceEvidenceLabel,defaultAnatomyPresentation,studyLayerDisplayKind,isCtaCoverageLayer} from './native-study-state';
+import {scanLabel,studyTimepoint,studyLabel,sourceEvidenceLabel,defaultAnatomyPresentation,studyLayerDisplayKind,isCtaCoverageLayer,rootedVesselScope,sourceLikeVesselScope} from './native-study-state';
 import type {ComponentReview,NativeVesselFieldRequest,NativeVesselGraph,VesselScope} from './native-anatomy-data';
 import type {NativeWorkspace} from './use-native-workspace';
 import {AnatomyInspection} from './AnatomyInspection';
@@ -172,7 +172,7 @@ export function NativeSidebar({workspace:w,tab,onOpenAnatomy,onOpenPlan,onOpenSc
             if(w.state.cursor)onInspectVessel({...w.args(),seriesId:w.series,localVesselField:{layerId:layer.id,center:w.state.cursor,frame:w.registration}});
           }}>Inspect local vessel field</button>:null}
         {w.volume?.compartments.find(l=>l.name===layer.id)?.qa&&(()=>{const q=w.volume!.compartments.find(l=>l.name===layer.id)!.qa!;return <details className="unified-details" open={q.voxelCount===0}><summary>Anatomy quality · {q.voxelCount===0?'empty segmentation':q.issues.length?'review findings':'source checks complete'}</summary><p>{q.componentCount.toLocaleString()} source components · anatomical accuracy unmeasured</p>{q.issues.map(issue=><p key={issue}>{issue}</p>)}<p>Findings do not change the source. Inspect linked slices before accepting corrections.</p></details>})()}
-        {!w.scanPreview&&!combinedLayer&&!w.draft&&['all','exterior-air'].includes(w.vesselScope)&&layer.source_series===w.series&&['vessel','vessels','artery','vein','sinus'].includes(layer.kind)&&
+        {!w.scanPreview&&!combinedLayer&&!w.draft&&sourceLikeVesselScope(w.vesselScope)&&layer.source_series===w.series&&['vessel','vessels','artery','vein','sinus'].includes(layer.kind)&&
           (layer.provenance as {model?:string}|null)?.model!=='siam-v2'&&<NativeVesselBranchPanel key={`${b.document.snapshot_id}/${layer.id}`} workspace={w} layerId={layer.id}/>}
         {!w.scanPreview&&!w.draft&&source?.modality==='TOF'&&layer.source_series===w.series&&['vessel','vessels','artery','vein','sinus'].includes(layer.kind)&&
           (layer.provenance as {model?:string}|null)?.model!=='siam-v2'&&
@@ -252,7 +252,7 @@ export function NativeSidebar({workspace:w,tab,onOpenAnatomy,onOpenPlan,onOpenSc
       <NativeStructureControls volume={w.volume} layers={b.document.layers} tracts={b.document.tractography} visibleLayers={w.state.visible} onVisibilityChange={w.setVisible} settings={w.state.settings} onSettingsChange={w.setSettings} selectedStructure={w.selectedStructure} onSelectStructure={choose} onFocusStructure={w.focusStructure} unavailable={unavailable} pendingLayers={w.pendingLayers} layerErrors={w.layerErrors} onRetryLayer={w.retryLayer} selectionInspector={layerInspector} disabled={blocked} showSelectionControls={!!w.selectedStructure&&!layer}/>
       {cta&&<NativeCtaCoverage key={JSON.stringify([b.collectionId,b.document.snapshot_id,w.series])} workspace={w} disabled={blocked}/>}
       {(presentation==='vascular'||cta&&presentation==='segmentation')&&b.document.layers.some(l=>['vessel','vessels','artery','vein','sinus'].includes(l.kind))&&
-        <label className="vascular-shading">Vessel shading<select aria-label="Vessel shading" value={w.state.settings.vesselShading??(presentation==='vascular'?'balanced':'source')} disabled={blocked||!['all','exterior-air'].includes(w.vesselScope)} onChange={e=>w.setSettings({...w.state.settings,vesselShading:e.target.value as VesselShading})}>
+        <label className="vascular-shading">Vessel shading<select aria-label="Vessel shading" value={w.state.settings.vesselShading??(presentation==='vascular'?'balanced':'source')} disabled={blocked||!sourceLikeVesselScope(w.vesselScope)} onChange={e=>w.setSettings({...w.state.settings,vesselShading:e.target.value as VesselShading})}>
           {cta&&<option value="cta-contrast">CTA contrast · by vessel type</option>}
           <option value="balanced">Depth and caliber</option><option value="large">Emphasize wider vessels</option><option value="fine">Emphasize finer vessels</option><option value="source">Source layer colors</option>
         </select><span>{w.state.settings.vesselShading==='cta-contrast'?'3D uses declared vessel types. Source slices retain layer colors.':'Depth and local mask thickness guide shading.'}</span></label>}
@@ -267,17 +267,24 @@ export function NativeSidebar({workspace:w,tab,onOpenAnatomy,onOpenPlan,onOpenSc
           b.document.series.some(s=>['CT','CTA'].includes(s.modality))&&
           <label><input type="checkbox" checked={w.original} disabled={blocked} onChange={w.compare}/>Raw source layers (QC)</label>}
         <label>Skull view<select aria-label="Skull view" disabled={blocked} value={w.state.settings.skullMode??'exterior'} onChange={e=>w.changeSkullMode(e.target.value as 'exterior'|'transparent'|'cutaway')}><option value="exterior">Opaque exterior</option><option value="transparent">Transparent</option><option value="cutaway">Cutaway</option></select></label>
-        <label>Vessel display<select aria-label="Vessel display" disabled={blocked} value={w.vesselScope} onChange={e=>w.changeVesselScope(e.target.value as VesselScope)}>
+        <label>Vessel display<select aria-label="Vessel display" disabled={blocked} value={w.vesselScope==='rooted-review'?'rooted':w.vesselScope} onChange={e=>w.changeVesselScope(e.target.value as VesselScope)}>
+          <option value="rooted">Connected tree</option>
           {(w.vesselScope==='exterior-air'||!b.document.vascular_review&&b.document.series.some(s=>s.modality==='TOF'))&&<option value="exterior-air">TOF exterior-air review</option>}
           <option value="intracranial">Skull-supported only</option><option value="excluded">Excluded fragments (highlighted)</option>
           <option value="brain">Within brain only</option><option value="all">Full source estimate</option>
         </select></label>
+        {rootedVesselScope(w.vesselScope)&&<label><input type="checkbox" aria-label="Show hidden vessel parts" checked={w.vesselScope==='rooted-review'} disabled={blocked}
+          onChange={e=>w.changeVesselScope(e.target.checked?'rooted-review':'rooted')}/>Show detached and thin parts (amber)</label>}
         {w.vesselScope==='exterior-air'?<>
           {w.volume?.compartments.filter(l=>l.displayFilter?.scope==='exterior-air').map(l=><span key={l.name}>{l.displayFilter?.reason}</span>)}
           <span>Applies to native TOF model estimates. Attached and uncertain findings stay visible.</span>
-        </>:<span>{w.vesselScope==='all'?'Vessel estimates are unreviewed. Completeness is unmeasured.':w.volume?.compartments.find(l=>l.displayFilter?.reason)?.displayFilter?.reason??'Preparing filtered vessel display…'}</span>}
+        </>:w.vesselScope==='all'?<span>Vessel estimates are unreviewed. Completeness is unmeasured.</span>:
+          rootedVesselScope(w.vesselScope)&&w.volume?.compartments.some(l=>l.displayFilter?.reason)?
+            // One explanation per vessel layer: each has its own roots, bridges and hidden parts.
+            <>{w.volume.compartments.filter(l=>l.displayFilter?.reason).map(l=><span key={l.name} data-vessel-receipt={l.name}>{l.displayFilter!.reason}</span>)}</>:
+            <span>{w.volume?.compartments.find(l=>l.displayFilter?.reason)?.displayFilter?.reason??'Preparing filtered vessel display…'}</span>}
         {w.vesselScope!=='all'&&<>
-          {w.vesselScope!=='exterior-air'&&<span>Filters hide source estimates and can introduce gaps. Source anatomy is preserved.</span>}
+          {w.vesselScope!=='exterior-air'&&<span>{rootedVesselScope(w.vesselScope)?'Parts not connected to the main vessel roots, and thin end branches away from the target, are hidden, never deleted. Gaps are joined only where the scan supports it.':'Filters hide source estimates and can introduce gaps. Source anatomy is preserved.'}</span>}
           <button disabled={blocked} onClick={()=>w.changeVesselScope('all')}>Show full source</button>
         </>}</details>
       {b.document.series.length>0&&<details className="unified-details native-study-readiness"><summary>Planning & rehearsal availability</summary>

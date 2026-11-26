@@ -21,15 +21,16 @@ import subprocess
 import nibabel as nib
 import numpy as np
 from PIL import Image
-from scipy import ndimage as ndi
 
 from resectionlab.anatomy_bridge import open_anatomy_manifest
 from resectionlab.anatomy_geometry import mesh, vascular_cleanup_source
 from resectionlab.data_root import atomic_json, checked_root, safe_path, sha256_file
-from resectionlab.patient_anatomy import affine, world
+from resectionlab.patient_anatomy import affine, digest, world
+from resectionlab.vascular_cleanup import rooted_vessel_layer
 from resectionlab.vascular_parity import (
-    betti, betti_error, cl_dice, dice, floating_components, image_sharpness, source_deviation, surface_quality,
+    agreement, betti, floating_components, image_sharpness, source_deviation, surface_quality,
 )
+from resectionlab.vascular_rooting import MAJOR_VESSELS, SCHEMES, image_modality
 
 HDD_ROOT = Path('/Volumes/shafrir/old coding projects/RessectionLabData')
 HDD_UUID = '9CC3623C-E38B-3EEE-B6BB-B9A06C193700'
@@ -38,14 +39,16 @@ TOPBRAIN = 'sources/topbrain/selective/{case}/TopBrain_Data_Release_Batches1n2nT
 # TopBrain v1 CT values: 1-34 arteries, 35-40 veins and sinuses. Roots are the
 # basilar (1), internal carotids (4, 6), vertebrals (23, 24), the vein of Galen
 # (35) and the straight and superior sagittal sinuses (36, 40).
-ROOT_LABELS = (1, 4, 6, 23, 24, 35, 36, 40)
+ROOT_LABELS = SCHEMES['topbrain-v1-ct'].roots
+# Phase 2 ensembles: <PHASE2>/<phase2 case>/<ensemble folder>/ (the folder is a parameter).
+PHASE2 = EVIDENCE / 'phase2-segmentation' / 'cases'
 
 HERO = {
     'CTA-A': {
         'title': 'TopCoW-014 CTA with skull', 'held_out': False,
         'manifest': 'prepared/cta-native-showcases-v1/TopCoW-014-CTA-ORGANIC-01-v1-NATIVE-SHOWCASE/patient-anatomy.json',
         'series': 'ct', 'vessels': ['supplied_arterial_annotation_union', 'supplied_venous_sinus_annotation_union'],
-        'anchor': [4.07, 210.81, -67.40], 'reference': TOPBRAIN.format(case='014'),
+        'anchor': [4.07, 210.81, -67.40], 'reference': TOPBRAIN.format(case='014'), 'phase2': 'TopCoW-014-ct',
     },
     'CTA-B': {
         'title': 'TopCoW-018 CTA, held out', 'held_out': True,
@@ -53,18 +56,19 @@ HERO = {
         'series': 'cta', 'vessels': ['publisher-arteries', 'publisher-veins'],
         'anchor': [-5.07, 208.28, 78.50], 'reference': TOPBRAIN.format(case='018'),
         'model_probability': 'cache/poc-model-results/TopCoW-018-annotated-cta-benchmark-v1/vesselfm-base',
+        'phase2': 'TopCoW-018-ct',
     },
     'TOF-A': {
         'title': 'EDEN PTNT_4509 TOF', 'held_out': False,
         'manifest': 'qc/eden2020-glioma-5714812/vascular-reconstruction-20261123-v1/studies/PTNT_4509/patient-anatomy.json',
         'series': 'tof', 'vessels': ['vesselfm-cleanup'], 'reference': None, 'cohort_view': True,
-        'anchor': [3.2779, 5.3626, -13.3764],
+        'anchor': [3.2779, 5.3626, -13.3764], 'phase2': 'PTNT_4509-mr',
     },
     'TOF-B': {
         'title': 'EDEN PTNT_9937 TOF, held out', 'held_out': True,
         'manifest': 'prepared/Eden 2020 ResectionLab Projects (restricted)/PTNT_9937/vascular-review.anatomy.json',
         'series': 'tof', 'vessels': ['vesselfm-cleanup'], 'reference': None, 'cohort_view': True,
-        'anchor': [1.3713, 6.0276, -22.1647],
+        'anchor': [1.3713, 6.0276, -22.1647], 'phase2': 'PTNT_9937-mr',
     },
 }
 # View direction is from the camera toward the anchor, in patient RAS.
@@ -75,7 +79,12 @@ PRESETS = {
     'oblique': {'from': [-0.62, 0.62, 0.48], 'up': [0, 0, 1], 'distance': 1.75},
     'skull-base': {'from': [0, -0.25, 1], 'up': [0, 1, 0], 'distance': 1.05, 'clip': ('z', 22.0, True)},
     'axial-clip': {'from': [-0.35, 0.75, 0.56], 'up': [0, 0, 1], 'distance': 1.55, 'clip': ('z', 6.0, True)},
+    # Variants framed like the reference stills; the six above stay the fixed baseline.
+    'skull-base-wide': {'from': [0, -0.25, 1], 'up': [0, 1, 0], 'distance': 1.5, 'clip': ('z', 22.0, True)},
+    'axial-clip-wide': {'from': [0, 0.85, 0.53], 'up': [0, 0, 1], 'distance': 1.6, 'clip': ('z', 6.0, True)},
+    'anterior-coronal-cut': {'from': [0, 1, 0.12], 'up': [0, 0, 1], 'distance': 1.75, 'clip': ('y', 30.0, True)},
 }
+REFERENCE_FRAME = {'skull-base-wide': 'skull-base', 'axial-clip-wide': 'axial-clip', 'anterior-coronal-cut': 'anterior'}
 INTERACTION_PRESET = 'anterior'
 
 
@@ -102,19 +111,432 @@ def vessel_mask(collection, case):
     return mask
 
 
+ENSEMBLE_FILES = ('named_labels', 'vessel_probability', 'vesselfm_connected_probability')
+
+
+def _ensemble_image(path, series):
+    image = nib.load(path)
+    if image.shape != tuple(series['data']['shape']) or not np.allclose(image.affine, series['affine'], atol=1e-3):
+        raise ValueError(f'{path.name} is not on the {series["id"]} scan grid')
+    return np.asarray(image.dataobj)
+
+
+WIRED_MODELS = {'topbrain-2025-ensemble', 'vesselfm-connected-addition'}
+VESSEL_KINDS = {'vessel', 'vessels', 'artery', 'vein', 'sinus'}
+
+
+def _wired(row):
+    return (row.get('provenance') or {}).get('model') in WIRED_MODELS and 'phase2_binding' in row.get('provenance', {})
+
+
+def _array_paths(value, found=None):
+    """Every stored array path a document (or part of one) refers to."""
+    found = set() if found is None else found
+    if isinstance(value, dict):
+        if isinstance(value.get('path'), str) and value['path'].startswith('arrays/'):
+            found.add(value['path'])
+        for item in value.values():
+            _array_paths(item, found)
+    elif isinstance(value, list):
+        for item in value:
+            _array_paths(item, found)
+    return found
+
+
+def _data_root_relative(folder):
+    """The folder relative to the data root that holds it (marked by .ressectionlab-data-root.json)."""
+    folder = Path(folder).resolve()
+    for parent in folder.parents:
+        if (parent / '.ressectionlab-data-root.json').is_file():
+            return str(folder.relative_to(parent))
+    raise ValueError(f'{folder} is not inside a marked data root; pass source= relative to it')
+
+
+def _linked(collection):
+    return (collection.document.get('vascular_review') or {}).get('linked_source') is True
+
+
+def _publish(collection, manifest, event):
+    """Save a native study, or write a source-linked review document beside its pinned source."""
+    if not _linked(collection):
+        return collection.save(event)
+    from datetime import datetime, timezone
+    from resectionlab.patient_anatomy import PatientImagingCollection
+    document = {key: value for key, value in collection.document.items() if key != 'snapshot_id'}
+    document['revision'] = document.get('revision', 0) + 1
+    document['history'] = [*document.get('history', []), {'event': event, 'author': 'local researcher',
+                                                           'at': datetime.now(timezone.utc).isoformat()}]
+    document['snapshot_id'] = PatientImagingCollection(collection.root, dict(document)).identity()
+    PatientImagingCollection(collection.root, document)  # Validate before replacing the file.
+    atomic_json(manifest, document)
+    collection.document.clear()
+    collection.document.update(document)
+    return document['snapshot_id']
+
+
+def _guard_save_side_effects(collection):
+    """Refuse when saving would change anything beyond the wiring's declared edits."""
+    from copy import deepcopy
+    from resectionlab.anatomy_display import retire_stale_cta_coverage
+    from resectionlab.patient_anatomy import PatientImagingCollection
+    if _linked(collection):
+        return
+    document = {key: value for key, value in deepcopy(collection.document).items() if key != 'snapshot_id'}
+    shadow = PatientImagingCollection(collection.root, deepcopy(document))
+    retire_stale_cta_coverage(shadow)
+    if {key: value for key, value in shadow.document.items() if key != 'snapshot_id'} != document:
+        raise ValueError('Saving this study would also retire stale CTA coverage; resolve that before wiring')
+
+
+def wire_ensemble(collection, series_id, folder, *, manifest=None, source=None):
+    """Make a Phase 2 ensemble the study's displayed vessels, as model-estimate layers.
+
+    Adds the named tree (``named_labels``, scheme, soft probability) and the
+    connected vesselFM score as a separate child layer (``rooted_parent``) that
+    is shown only where it reaches the tree's shown display. Both become the
+    study's initial vessel layers in place of the previous initial vessel
+    layers; those (for example supplied annotations) stay in the study,
+    unchanged and selectable, and non-vessel initial layers are untouched. A
+    re-wire retires the previous generation of these wired layers (their entries
+    and arrays, reproducible from the ensemble folder) so two generations are
+    never drawn together. Nothing else changes: the save is all or nothing, and
+    it refuses if saving would alter anything else. Returns a receipt.
+    """
+    from copy import deepcopy
+    folder = Path(folder)
+    manifest = Path(manifest) if manifest else collection.root / 'patient-anatomy.json'
+    meta = json.loads((folder / 'ensemble.json').read_text())
+    modality = meta.get('modality')
+    series = collection.series(series_id)
+    if modality not in ('ct', 'mr') or image_modality(series['modality']) != modality:
+        raise ValueError(f'A {modality} ensemble cannot be wired to a {series["modality"]} scan')
+    scheme = f'topbrain-v1-{modality}'
+    files = {name: folder / f'{name}.nii.gz' for name in ENSEMBLE_FILES if (folder / f'{name}.nii.gz').is_file()}
+    if not {'named_labels', 'vessel_probability'} <= set(files):
+        raise ValueError(f'{folder} lacks named labels or the vessel probability')
+    hashes = {name: sha256_file(path) for name, path in files.items()}
+    binding = digest({'ensemble': meta, 'files': hashes})[:12]
+    ids = [f'ensemble-{binding}', f'ensemble-{binding}-vesselfm']
+    source = source or _data_root_relative(folder)
+    before_sha, before_snapshot = sha256_file(manifest), collection.identity()
+    display = collection.document.setdefault('display', {})
+    initial_before = list(display.get('initial_layers', []))
+    rows = {row['id']: row for row in collection.document['layers']}
+    current = [row['id'] for row in collection.document['layers'] if _wired(row) and row['provenance']['phase2_binding'] == binding]
+    retired = [row for row in collection.document['layers'] if _wired(row) and row['provenance']['phase2_binding'] != binding]
+    wiring = display.get('ensemble_wiring') or {}
+    replaced = wiring.get('replacedInitialLayers',
+                          [layer for layer in initial_before if rows.get(layer, {}).get('kind') in VESSEL_KINDS and not _wired(rows[layer])])
+    arrays, revisions = collection.root / 'arrays', collection.root / 'revisions'
+    existing = {path for folder_ in (arrays, revisions) if folder_.is_dir() for path in folder_.iterdir()}
+    previous_document = deepcopy(collection.document)
+    manifest_bytes = manifest.read_bytes()
+    try:
+        _guard_save_side_effects(collection)
+        added = []
+        if not current:
+            named = _ensemble_image(files['named_labels'], series)
+            unknown = set(np.unique(named).tolist()) - {0} - set(SCHEMES[scheme].names)
+            if not np.issubdtype(named.dtype, np.integer) or unknown:
+                raise ValueError(f'Named labels outside {scheme}: {sorted(unknown)}')
+            if not named.any():
+                raise ValueError(f'{folder} has an empty named vessel map')
+            named = named.astype(np.uint8)
+            probability = np.clip(_ensemble_image(files['vessel_probability'], series).astype(np.float32), 0, 1)
+            provenance = {'kind': 'image_derived_estimate', 'model': 'topbrain-2025-ensemble', 'estimate': 'model',
+                          'evidence_use': 'display_only', 'teams': meta.get('teams', []), 'scheme': scheme,
+                          'ensemble': folder.name, 'source': source, 'files_sha256': hashes,
+                          'ensemble_sha256': sha256_file(folder / 'ensemble.json'), 'phase2_binding': binding}
+            teams = '+'.join(meta.get('teams', [])) or 'model'
+            row = collection.add_layer((named > 0).astype(np.uint8), series['affine'], layer_id=ids[0], source_series=series_id,
+                                       kind='vessels', role='context', color='#aa352b',
+                                       label=f'Model vessels · TopBrain {teams} ensemble', probability=probability,
+                                       provenance=provenance)
+            row['named_labels'] = {'data': collection.put_array(named), 'scheme': scheme}
+            added.append(ids[0])
+            if 'vesselfm_connected_probability' in files:
+                score = np.clip(_ensemble_image(files['vesselfm_connected_probability'], series).astype(np.float32), 0, 1)
+                if score.any():
+                    extra = collection.add_layer(
+                        (score > 0).astype(np.uint8), series['affine'], layer_id=ids[1], source_series=series_id,
+                        kind='vessels', role='context', color='#aa352b',
+                        label='Model vessels · connected vesselFM addition (unnamed)', probability=score,
+                        provenance={**provenance, 'model': 'vesselfm-connected-addition', 'addition': meta.get('addition')})
+                    extra['rooted_parent'] = ids[0]
+                    added.append(ids[1])
+            current = added
+        if retired:
+            collection.document['layers'] = [row for row in collection.document['layers'] if row not in retired]
+        others = [layer for layer in initial_before if layer not in replaced and not (layer in rows and _wired(rows[layer]))]
+        initial_after = others + current
+        changed = bool(added or retired or initial_after != initial_before or not wiring)
+        if changed:
+            display['initial_layers'] = initial_after
+            display['ensemble_wiring'] = {'binding': binding, 'ensemble': folder.name, 'replacedInitialLayers': replaced}
+            _publish(collection, manifest, f'wire Phase 2 ensemble {folder.name} as the displayed model vessels')
+            from resectionlab.anatomy_bridge import open_anatomy_manifest
+            reopened = open_anatomy_manifest(manifest)
+            if reopened.identity() != collection.identity():
+                raise ValueError('The saved study does not reopen as written')
+    except BaseException:
+        # All or nothing: restore the manifest and remove the arrays this call wrote.
+        if manifest.read_bytes() != manifest_bytes:
+            manifest.write_bytes(manifest_bytes)
+        collection.document.clear()
+        collection.document.update(previous_document)
+        for path in {path for folder_ in (arrays, revisions) if folder_.is_dir() for path in folder_.iterdir()} - existing:
+            path.unlink(missing_ok=True)
+        raise
+    removed = []
+    if retired:
+        keep = _array_paths(collection.document)
+        for path in sorted(_array_paths(retired) - keep):
+            collection.path(path).unlink(missing_ok=True)
+            removed.append(path)
+    return {'case_manifest': manifest.name, 'ensemble': folder.name, 'source': source, 'binding': binding,
+            'layers': current, 'added': added, 'retired': [row['id'] for row in retired], 'removed_arrays': removed,
+            'changed': changed, 'manifest_sha256': {'before': before_sha, 'after': sha256_file(manifest)},
+            'snapshot': {'before': before_snapshot, 'after': collection.identity()},
+            'initial_layers': {'before': initial_before, 'after': display.get('initial_layers', initial_before)},
+            'replaced_initial_layers': replaced,
+            'undo': f'PYTHONPATH=src .venv/bin/python scripts/capture_vascular_parity.py unwire --case <case>'}
+
+
+def unwire(collection, *, manifest=None):
+    """Undo the wiring: remove every wired generation and restore the replaced initial vessel layers."""
+    manifest = Path(manifest) if manifest else collection.root / 'patient-anatomy.json'
+    display = collection.document.setdefault('display', {})
+    wiring = display.get('ensemble_wiring')
+    wired = [row for row in collection.document['layers'] if _wired(row)]
+    if not wiring and not wired:
+        return {'changed': False}
+    _guard_save_side_effects(collection)
+    ids = {row['id'] for row in wired}
+    collection.document['layers'] = [row for row in collection.document['layers'] if row['id'] not in ids]
+    replaced = (wiring or {}).get('replacedInitialLayers', [])
+    display['initial_layers'] = [layer for layer in display.get('initial_layers', []) if layer not in ids] + \
+        [layer for layer in replaced if layer not in display.get('initial_layers', [])]
+    display.pop('ensemble_wiring', None)
+    _publish(collection, manifest, 'unwire Phase 2 ensemble layers')
+    keep = _array_paths(collection.document)
+    removed = sorted(_array_paths(wired) - keep)
+    for path in removed:
+        collection.path(path).unlink(missing_ok=True)
+    return {'changed': True, 'removed_layers': sorted(ids), 'removed_arrays': removed, 'initial_layers': display['initial_layers']}
+
+
+def ensemble_layers(collection, folder):
+    """Layer ids wired from an ensemble folder, refusing when the folder no longer matches them."""
+    folder = Path(folder)
+    rows = [row for row in collection.document['layers'] if _wired(row) and row['provenance'].get('ensemble') == folder.name]
+    command = f'capture_vascular_parity.py wire --ensemble {folder.name}'
+    if not rows:
+        raise LookupError(f'No layers wired from {folder.name}; run {command}')
+    for row in rows:
+        recorded = row['provenance'].get('files_sha256', {})
+        present = {name: sha256_file(folder / f'{name}.nii.gz') for name in recorded if (folder / f'{name}.nii.gz').is_file()}
+        if present != recorded or sha256_file(folder / 'ensemble.json') != row['provenance'].get('ensemble_sha256'):
+            raise LookupError(f'{folder.name} changed since it was wired into this study; run {command}')
+    return [row['id'] for row in rows]
+
+
+def displayed_vessels(collection, case, ensemble=None, root=None):
+    if not ensemble:
+        return list(case['vessels'])
+    folder = safe_path(root, PHASE2 / case['phase2'] / ensemble) if root else Path(ensemble)
+    ids = ensemble_layers(collection, folder)
+    if not set(ids) <= set(collection.document.get('display', {}).get('initial_layers', [])):
+        raise LookupError(f'The wired layers are not the study default; re-run wire --ensemble {Path(ensemble).name}')
+    return ids
+
+
+def rooted_display(collection, layer_ids, *, check=lambda: None):
+    """The default view's vessels: the rooted union of the layers, and each layer's receipt."""
+    union, receipts = None, {}
+    for layer_id in layer_ids:
+        display, receipt, _, split = rooted_vessel_layer(collection, collection.layer(layer_id), check=check)
+        shown = collection.mask(display)
+        if split is not None:
+            shown |= collection.mask(split)
+        union = shown if union is None else union | shown
+        receipts[layer_id] = receipt
+    return union, receipts
+
+
+def _inside(mask, points):
+    """Vertices inside a voxel mask: every voxel whose cell the vertex touches is set.
+
+    A vertex off a cell boundary rounds to its nearest voxel; one on a boundary
+    between voxels (a half-integer coordinate) needs all of them, so a surface
+    that only abuts the mask does not count as inside it."""
+    lo, hi = np.floor(points + 0.499).astype(int), np.floor(points + 0.501).astype(int)
+    inside = np.ones(len(points), bool)
+    for corner in range(8):
+        cells = np.where([(corner >> axis) & 1 for axis in range(3)], hi, lo)
+        valid = ((cells >= 0) & (cells < mask.shape)).all(1)
+        inside &= valid
+        inside[valid] &= mask[tuple(cells[valid].T)]
+    return inside
+
+
+def mesh_floating(surfaces, roots, shape, masks=None):
+    """Floating pieces of the drawn vessel surface, counted on the meshes the desktop receives.
+
+    ``surfaces`` are (name, mesh) pairs. Pieces of different parts that share a
+    vertex position (touching surfaces) are one piece; so are pieces of
+    different parts where a vertex of one lies inside the displayed voxels of
+    the other (``masks``, one per part, or callables loading it), joined to
+    that part's nearest vertex.
+    A piece floats when no vertex lies within one voxel of a root-label voxel.
+    Independent of the rooting code, so it can come out non-zero.
+    """
+    from scipy import ndimage as ndi
+    from scipy.sparse import coo_matrix
+    from scipy.sparse.csgraph import connected_components
+    from scipy.spatial import cKDTree
+
+    points, faces, owner, offset = [], [], [], 0
+    for part, (_, surface) in enumerate(surfaces):
+        raw = np.asarray(surface['source'], float).reshape(-1, 3)
+        index = np.asarray(surface['indices'], np.int64).reshape(-1, 3)
+        points.append(raw)
+        faces.append(index + offset)
+        owner.append(np.full(len(raw), part))
+        offset += len(raw)
+    if not offset:
+        return {'pieces': 0, 'floating': 0, 'parts': len(surfaces)}
+    points, faces, owner = np.concatenate(points), np.concatenate(faces), np.concatenate(owner)
+    # Within one part only shared triangles join; separate parts join where their surfaces touch.
+    keys, shared = np.unique(np.round(points, 3), axis=0, return_inverse=True)
+    shared = shared.ravel()
+    parts_at = np.zeros(len(keys), int)
+    for part in range(len(surfaces)):
+        parts_at[np.unique(shared[owner == part])] += 1
+    touching = parts_at[shared] > 1
+    edges = np.concatenate([faces[:, [0, 1]], faces[:, [1, 2]], faces[:, [0, 2]]])
+    nodes = len(points) + len(keys)
+    links = [edges, np.column_stack([np.flatnonzero(touching), len(points) + shared[touching]])]
+    for part, mask in enumerate(masks or ()):
+        own = np.flatnonzero(owner == part)
+        others = np.flatnonzero(owner != part)
+        if mask is None or not len(own) or not len(others):
+            continue
+        inside = others[_inside(np.asarray(mask() if callable(mask) else mask, bool), points[others])]
+        if len(inside):
+            links.append(np.column_stack([inside, own[cKDTree(points[own]).query(points[inside])[1]]]))
+    links = np.concatenate(links)
+    graph = coo_matrix((np.ones(len(links)), (links[:, 0], links[:, 1])), shape=(nodes, nodes))
+    _, component = connected_components(graph, directed=False)
+    used = np.unique(faces)
+    pieces = np.unique(component[used])
+    # Inner walls of hollow parts are closed pieces wound the other way round;
+    # they are reported, not counted as floating vessels.
+    a, b, c = (points[faces[:, corner]] for corner in range(3))
+    signed = np.bincount(component[faces[:, 0]], weights=np.einsum('ij,ij->i', a, np.cross(b, c)), minlength=nodes)
+    outward = np.sign(signed[pieces[np.argmax(np.abs(signed[pieces]))]])
+    cavities = {int(piece) for piece in pieces if np.sign(signed[piece]) == -outward}
+    near = ndi.binary_dilation(roots, np.ones((3, 3, 3), bool)) if roots is not None else None
+    anchored = set()
+    if near is not None:
+        cells = np.clip(np.rint(points[used]).astype(int), 0, np.array(shape) - 1)
+        hit = near[tuple(cells.T)]
+        anchored = set(np.unique(component[used][hit]).tolist())
+    outer = [int(piece) for piece in pieces if int(piece) not in cavities]
+    floating = [piece for piece in outer if piece not in anchored] if near is not None else outer[1:]
+    return {'pieces': int(len(pieces)), 'outerPieces': len(outer), 'innerWalls': len(cavities),
+            'floating': len(floating), 'parts': len(surfaces),
+            'roots': 'root-label voxels' if near is not None else 'none: every outer piece but one counts as floating'}
+
+
+REFERENCE_COVERAGE = 0.9  # Declared before measuring: below this a major vessel counts as lost.
+
+
+def named_review(receipts, *, display=None, reference=None, spacing=None):
+    """Named vessels not fully shown by default, and the "no named major vessel lost" gate.
+
+    With a reference annotation, each major vessel in it is measured on the
+    reference: the share of its centerline within one voxel of the default
+    display. Below REFERENCE_COVERAGE (or absent from the display) it is lost;
+    from there to 100 % it is listed as partly in review. Without a reference the
+    gate uses the prediction-side status only and says so. Without named labels
+    nothing is measured. TopBrain merges A1 with A2 and P1 with P2, so those
+    segments are one class each.
+    """
+    from scipy import ndimage as ndi
+    from resectionlab.vascular_parity import centerline
+
+    rows, major, schemes, unavailable = [], [], set(), []
+    for layer_id, receipt in receipts.items():
+        rooting = receipt.get('rooting') or {}
+        scheme = (rooting.get('roots') or {}).get('scheme')
+        if receipt.get('namedLabelsUnavailable'):
+            unavailable.append(f"{layer_id}: {receipt['namedLabelsUnavailable']}")
+        if scheme and not receipt.get('namedLabelsUnavailable'):
+            schemes.add(scheme)
+        for row in rooting.get('namedLabels', []):
+            if row['status'] in {'shown', 'bridged'}:
+                continue
+            item = {'layer': layer_id, 'label': row['label'], 'name': row['name'], 'status': row['status'],
+                    'voxels': row['voxels'], 'review': row['review'], 'lodHidden': row['lodHidden']}
+            rows.append(item)
+            if scheme and row['label'] in MAJOR_VESSELS[scheme]:
+                major.append(item)
+    result = {'inReview': rows, 'majorInReview': major, 'mergedClasses': 'A1-A2 and P1-P2 are one TopBrain class each',
+              'majorList': {name: [SCHEMES[name].names[v] for v in labels] for name, labels in MAJOR_VESSELS.items()}}
+    if not schemes and reference is None:
+        reason = '; '.join(unavailable) or 'No named labels are bound to the displayed layers'
+        return {**result, 'gate': 'not-measured', 'reason': reason, 'referenceCheck': 'not available'}
+    scheme = next(iter(schemes)) if len(schemes) == 1 else 'topbrain-v1-ct'
+    if reference is None or display is None:
+        lost = [item for item in major if item['status'] in {'review', 'lod'}]
+        return {**result, 'gate': 'not met' if lost else 'met', 'lost': lost,
+                'partlyInReview': [item for item in major if item['status'] == 'partly-review'],
+                'basis': 'prediction-side status only', 'referenceCheck': 'not available (no reference annotation)'}
+    near = ndi.binary_dilation(display, np.ones((3, 3, 3), bool))
+    step = float(np.mean(spacing)) if spacing is not None else 1.0
+    measured, lost, partly = [], [], []
+    for value in MAJOR_VESSELS[scheme]:
+        label = reference == value
+        if not label.any():
+            continue
+        box = ndi.find_objects(label.astype(np.uint8))[0]
+        line = centerline(label[box])
+        covered = line & near[box]
+        fraction = float(covered.sum() / max(int(line.sum()), 1))
+        item = {'label': int(value), 'name': SCHEMES[scheme].names[value], 'referenceVoxels': int(label.sum()),
+                'centerlineVoxels': int(line.sum()), 'covered': round(fraction, 4),
+                'uncoveredCenterlineMm': round(float((line & ~covered).sum()) * step, 2),
+                'shownVoxels': int((label & display).sum())}
+        measured.append(item)
+        if not (label & near).any() or fraction < REFERENCE_COVERAGE:
+            lost.append(item)
+        elif fraction < 1:
+            partly.append(item)
+    return {**result, 'gate': 'not met' if lost else 'met', 'basis': f'reference centerline coverage >= {REFERENCE_COVERAGE:g}',
+            'referenceCheck': measured, 'lost': lost, 'partlyInReview': partly}
+
+
 def anchor(case):
     """Frozen circle-of-Willis level. Cameras must not move when a reconstruction changes."""
     return np.asarray(case['anchor'], float)
 
 
-def displayed_surface(collection, layer_id):
-    """The wall the desktop opens with. Restricted TOF companions show the unconditioned score contour."""
+def displayed_surface(collection, layer_id, scope='all'):
+    """The walls the desktop opens with: (name, layer row, mesh) for the layer and, in the
+    rooted view, its other-class part. Restricted TOF companions show the unconditioned score contour."""
     layer = collection.layer(layer_id)
     companion = (collection.document.get('vascular_review') or {}).get('schema') == 'eden2020-restricted-vascular-companion-v1'
-    return layer, mesh(collection, layer, display_source=vascular_cleanup_source(collection, layer), conditioned=not companion)
+    source = vascular_cleanup_source(collection, layer)
+    if scope != 'rooted':
+        return [(layer_id, layer, mesh(collection, layer, display_source=source, conditioned=not companion))]
+    display, _, _, split = rooted_vessel_layer(collection, layer)
+    parts = [(layer_id, display)] + ([(f'{layer_id}:{split["kind"]}', split)] if split else [])
+    # As in the desktop view: the filtered mask with the unfiltered score field where it still fits.
+    return [(name, row, mesh(collection, row, display_source=source or layer, conditioned=not companion)
+             if row is display else mesh(collection, row)) for name, row in parts]
 
 
-def recipes(collection, case, default_view, default_layers, volume_mode=None):
+def recipes(collection, case, default_view, default_layers, volume_mode=None, scope='rooted'):
     scan, _, extent = scan_geometry(collection, case)
     target = anchor(case)
     settings = {key: value for key, value in default_view['settings'].items() if key not in {'camera', 'clipping'}}
@@ -129,7 +551,8 @@ def recipes(collection, case, default_view, default_layers, volume_mode=None):
             'position': (target + direction * preset['distance'] * extent).round(4).tolist(),
             'target': target.round(4).tolist(), 'up': preset['up'],
         }}
-        row = {'name': name, 'seriesId': scan['id'], 'layers': default_layers, 'cursor': target.round(4).tolist(), 'settings': view}
+        row = {'name': name, 'seriesId': scan['id'], 'layers': default_layers, 'cursor': target.round(4).tolist(), 'settings': view,
+               'scope': scope}
         if 'clip' in preset:
             axis, above, flipped = preset['clip']
             clipping = {'axis': axis, 'value': round(float(target['xyz'.index(axis)] + above), 4), 'enabled': True, 'flipped': flipped}
@@ -179,8 +602,11 @@ def pane_image(view):
     return image
 
 
-def capture(root, name, case, label, *, width, height, volume_mode=None):
-    """Capture today's default appearance at every fixed preset and time one continuous orbit."""
+def capture(root, name, case, label, *, width, height, volume_mode=None, ensemble=None, scope='rooted'):
+    """Capture today's default appearance at every fixed preset and time one continuous orbit.
+
+    ``ensemble`` shows the layers wired from that Phase 2 ensemble folder in place of
+    the case's vessel layers; ``scope`` is the vessel display ('rooted' is the default view)."""
     desktop = Path(__file__).resolve().parents[1] / 'desktop'
     manifest = safe_path(root, case['manifest'])
     collection = open_anatomy_manifest(manifest)
@@ -189,24 +615,29 @@ def capture(root, name, case, label, *, width, height, volume_mode=None):
     if output.exists():
         raise FileExistsError(f'{output} already holds a capture. Choose a new label or remove it deliberately.')
     output.mkdir(parents=True)
-    initial = collection.document['display']['initial_layers']
+    vessels = displayed_vessels(collection, case, ensemble, root)
+    # With an ensemble the wired layers are the study's own default, so the
+    # default-state recipe, these recipes and the geometry gate show the same thing.
+    initial = list(collection.document['display']['initial_layers']) if ensemble else \
+        [layer for layer in collection.document['display']['initial_layers'] if layer not in case['vessels']] + vessels
     # A slow first contour read would outlast the bounded interactive request.
-    for layer_id in case['vessels']:
-        displayed_surface(collection, layer_id)
+    for layer_id in vessels:
+        displayed_surface(collection, layer_id, scope)
     if case.get('cohort_view'):
         # Restricted TOF companions open through the cohort review view, as in the earlier EDEN captures.
-        default_view, initial = {'settings': {}}, case['vessels']
+        default_view, initial = {'settings': {}}, vessels
     else:
         default_recipe = [{'name': 'default', 'seriesId': scan['id'], 'layers': initial, 'useDefaultState': True}]
         atomic_json(output / 'default-view.json', default_recipe)
         default = run_capture(desktop, manifest, output / 'default-view.json', output / 'default', output / 'default.log',
                               width=width, height=height)
         default_view = default['views'][0]['view']
-    rows = recipes(collection, case, default_view, initial, volume_mode)
+    rows = recipes(collection, case, default_view, initial, volume_mode, scope)
     atomic_json(output / 'views.json', rows)
     report = run_capture(desktop, manifest, output / 'views.json', output / 'presets', output / 'presets.log',
                          width=width, height=height)
     metrics = {'case': name, 'title': case['title'], 'held_out': case['held_out'], 'label': label, 'volume_mode': volume_mode or 'default',
+               'scope': scope, 'vessels': vessels, 'ensemble': ensemble,
                'manifest_sha256': sha256_file(manifest), 'snapshot_id': report['snapshotId'],
                'window': report['windowSize'], 'device_scale': report['deviceScale'], 'display': report.get('display'), 'presets': {}}
     for view in report['views']:
@@ -254,47 +685,76 @@ def reference_labels(root, case, shape, frame):
     return np.asarray(image.dataobj)
 
 
-def annotated_region(reference, spacing, margin_mm=5.0):
-    """Bounding region of the annotation, padded. Unlabelled anatomy outside it is not scored."""
-    found = np.argwhere(reference)
-    pad = np.ceil(margin_mm / np.asarray(spacing)).astype(int)
-    lower = np.maximum(found.min(axis=0) - pad, 0)
-    upper = np.minimum(found.max(axis=0) + pad + 1, reference.shape)
-    region = np.zeros(reference.shape, bool)
-    region[tuple(slice(a, b) for a, b in zip(lower, upper))] = True
-    return region
+def display_roots(collection, layer_ids, shape, receipts=None, display=None):
+    """Root voxels from the named labels bound to the displayed layers; without
+    any, the seed voxels of the unnamed fallback roots recorded in the receipts; else None."""
+    from resectionlab.vascular_cleanup import rooted_named_labels
+    roots = None
+    for layer_id in layer_ids:
+        layer = collection.layer(layer_id)
+        named, scheme, _, _ = rooted_named_labels(collection, layer, collection.series(layer['source_series']))
+        if named is not None and named.shape == tuple(shape):
+            found = np.isin(named, SCHEMES[scheme].roots)
+            roots = found if roots is None else roots | found
+    if roots is None and receipts:
+        seeds = [row['seedIjk'] for receipt in receipts.values()
+                 for row in ((receipt.get('rooting') or {}).get('roots') or {}).get('acceptedRoots', []) if 'seedIjk' in row]
+        if seeds:
+            # A seed is the deepest voxel of its root component; its root geometry is the
+            # ball reaching from it to the wall of the displayed vessel.
+            from scipy import ndimage as ndi
+            roots = np.zeros(shape, bool)
+            for seed in seeds:
+                box = tuple(slice(max(0, v - 12), min(n, v + 13)) for v, n in zip(seed, shape))
+                local = display[box] if display is not None else np.ones([b.stop - b.start for b in box], bool)
+                depth = ndi.distance_transform_edt(local)
+                centre = tuple(v - b.start for v, b in zip(seed, box))
+                grid = np.ogrid[tuple(slice(0, b.stop - b.start) for b in box)]
+                ball = sum((g - c) ** 2 for g, c in zip(grid, centre)) <= (depth[centre] + 1.5) ** 2
+                roots[box] |= ball & local
+    return roots
 
 
-def agreement(predicted, reference, spacing):
-    """Overlap inside the annotated region; topology on whole components that enter it."""
-    region = annotated_region(reference, spacing)
-    inside = predicted & region
-    labels, _ = ndi.label(predicted, np.ones((3, 3, 3), bool))
-    entering = np.isin(labels, np.setdiff1d(np.unique(labels[region]), [0]))
-    return {
-        'scored_region': 'annotation bounding box padded by 5 mm',
-        'dice': dice(inside, reference), 'cl_dice': cl_dice(inside, reference),
-        'betti': {**betti_error(entering, reference), 'scope': 'whole predicted components that enter the scored region'},
-        'whole_grid_dice': dice(predicted, reference),
-    }
+def geometry(root, name, case, label, *, ensemble=None, scope='rooted'):
+    """Measure the displayed vessel geometry, and reference agreement where an annotation exists.
 
-
-def geometry(root, name, case, label):
-    """Measure the displayed vessel geometry, and reference agreement where an annotation exists."""
+    In the rooted scope the measured mask is what the default view shows: the rooted
+    union of the displayed layers, with the named vessels left in review listed."""
     collection = open_anatomy_manifest(safe_path(root, case['manifest']))
     scan, frame, _ = scan_geometry(collection, case)
     spacing = np.linalg.norm(frame[:3, :3], axis=0)
     signal = collection.array(scan['data'])
-    mask = vessel_mask(collection, case)
+    vessels = displayed_vessels(collection, case, ensemble, root)
+    receipts = {}
+    if scope == 'rooted':
+        mask, receipts = rooted_display(collection, vessels)
+    else:
+        mask = vessel_mask(collection, {'vessels': vessels})
     labels = reference_labels(root, case, mask.shape, frame)
-    roots = np.isin(labels, ROOT_LABELS) if labels is not None else None
-    result = {'case': name, 'label': label, 'spacing_mm': spacing.tolist(), 'displayed_layers': case['vessels'],
-              'displayed_voxels': int(mask.sum()),
+    roots = display_roots(collection, vessels, mask.shape, receipts, mask)
+    root_source = 'named roots of the displayed layers, else the recorded fallback root seeds'
+    if roots is None and labels is not None:
+        roots, root_source = np.isin(labels, ROOT_LABELS), 'named roots of the reference annotation'
+    if roots is not None and not (roots & mask).any():
+        roots = None
+    result = {'case': name, 'label': label, 'scope': scope, 'ensemble': ensemble, 'spacing_mm': spacing.tolist(),
+              'displayed_layers': vessels, 'displayed_voxels': int(mask.sum()),
               'floating': {**floating_components(mask, roots, spacing),
-                           'roots': 'named ICA, vertebral, basilar and sinus labels' if roots is not None else 'largest component'},
+                           'roots': root_source if roots is not None else 'largest component'},
               'betti': betti(mask), 'surfaces': {}}
-    for layer_id in case['vessels']:
-        layer, surface = displayed_surface(collection, layer_id)
+    result['named_review'] = named_review(receipts, display=mask, reference=labels, spacing=spacing)
+    if receipts:
+        result['rooting'] = {layer_id: {key: receipt['rooting'][key] for key in ('roots', 'attached', 'bridged', 'review', 'lod', 'display')}
+                             for layer_id, receipt in receipts.items() if 'rooting' in receipt}
+    parts = [part for vessel in vessels for part in displayed_surface(collection, vessel, scope)]
+    # The gate counts pieces of the drawn surfaces, independently of the rooting code.
+    result['floating_mesh'] = mesh_floating([(name, surface) for name, _, surface in parts], roots, mask.shape,
+                                            [lambda row=row: collection.mask(row) for _, row, _ in parts])
+    from scipy import ndimage as ndi
+    faces6, count6 = ndi.label(mask)
+    rooted6 = set(np.unique(faces6[roots & mask]).tolist()) - {0} if roots is not None else set()
+    result['floating_face_voxels'] = {'components': int(count6), 'floating': int(count6 - len(rooted6)) if roots is not None else None}
+    for layer_id, layer, surface in parts:
         points, faces = np.asarray(surface['positions'], float), np.asarray(surface['indices']).reshape(-1, 3)
         physical = world(affine(layer['affine']), points)
         a, b, c = physical[faces].transpose(1, 0, 2)
@@ -369,30 +829,74 @@ def sheet(root, label, references, compare=None):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('command', choices=['capture', 'geometry', 'sheet'])
-    parser.add_argument('--label', required=True, help='Evidence folder under the parity root, such as phase0-baseline')
+    parser.add_argument('command', choices=['wire', 'unwire', 'capture', 'geometry', 'sheet'])
+    parser.add_argument('--label', help='Evidence folder under the parity root, such as phase0-baseline')
     parser.add_argument('--case', action='append', choices=list(HERO))
     parser.add_argument('--compare', action='append', help='Earlier labels to place before this one on a sheet')
     parser.add_argument('--references', type=Path, help='Folder of reference frames named after each preset')
     parser.add_argument('--volume-mode', choices=['cinematic'], help='Capture with this volume render mode instead of the default view')
+    parser.add_argument('--ensemble', help='Phase 2 ensemble folder name (for example ensemble-UZH-ARG-KDH): wire it, '
+                        'or show its wired layers instead of the case vessel layers')
+    parser.add_argument('--scope', choices=['rooted', 'all'], default='rooted',
+                        help='Vessel display to capture and measure; rooted is the default view')
     parser.add_argument('--width', type=int, default=1440)
     parser.add_argument('--height', type=int, default=960)
     args = parser.parse_args()
     root = checked_root(HDD_ROOT, expected_uuid=HDD_UUID)
     cases = args.case or list(HERO)
+    if args.command in {'wire', 'unwire'}:
+        if args.command == 'wire' and not args.ensemble:
+            parser.error('wire needs --ensemble')
+        failures = 0
+        for name in cases:
+            manifest = safe_path(root, HERO[name]['manifest'])
+            try:
+                collection = open_anatomy_manifest(manifest)
+                if args.command == 'unwire':
+                    receipt = unwire(collection, manifest=manifest)
+                else:
+                    relative = PHASE2 / HERO[name]['phase2'] / args.ensemble
+                    folder = safe_path(root, relative)
+                    if not (folder / 'ensemble.json').is_file():
+                        print(name, 'no ensemble at', relative, flush=True)
+                        continue
+                    receipt = wire_ensemble(collection, HERO[name]['series'], folder, manifest=manifest, source=str(relative))
+                    receipt['undo'] = receipt['undo'].replace('<case>', name)
+                    if receipt['changed']:
+                        record = evidence(root, 'phase3-cleanup') / 'wiring' / f"{name}-{receipt['binding']}-{receipt['snapshot']['after'][:12]}.json"
+                        record.parent.mkdir(parents=True, exist_ok=True)
+                        atomic_json(record, receipt)
+                print(name, args.command, json.dumps({key: receipt.get(key) for key in ('changed', 'layers', 'added', 'retired', 'removed_layers')}), flush=True)
+            except Exception as error:  # One case must not stop the others.
+                failures += 1
+                print(name, args.command, 'failed:', type(error).__name__, error, flush=True)
+        return 1 if failures else 0
+    if not args.label:
+        parser.error(f'{args.command} needs --label')
     if args.command == 'sheet':
-        references = {preset: args.references / f'{preset}.png' for preset in PRESETS} if args.references else {}
+        references = {preset: args.references / f'{REFERENCE_FRAME.get(preset, preset)}.png' for preset in PRESETS} if args.references else {}
         sheet(root, args.label, references, args.compare)
         return 0
+    mesh_failures = []
     for name in cases:
         if args.command == 'capture':
-            metrics = capture(root, name, HERO[name], args.label, width=args.width, height=args.height, volume_mode=args.volume_mode)
+            metrics = capture(root, name, HERO[name], args.label, width=args.width, height=args.height,
+                              volume_mode=args.volume_mode, ensemble=args.ensemble, scope=args.scope)
             timing = metrics.get('interaction', {})
             print(name, 'frame interval p95', timing.get('frameIntervalMs', {}).get('p95'), 'ms; settle',
                   (timing.get('settle') or {}).get('milliseconds'), 'ms', flush=True)
         else:
-            result = geometry(root, name, HERO[name], args.label)
-            print(name, 'floating', result['floating']['floating'], 'betti', result['betti'], flush=True)
+            result = geometry(root, name, HERO[name], args.label, ensemble=args.ensemble, scope=args.scope)
+            drawn = result['floating_mesh']
+            print(name, 'mesh floating', drawn['floating'], 'of', drawn['pieces'], 'pieces; voxel floating',
+                  result['floating']['floating'], 'of', result['floating'].get('components'), 'components; betti', result['betti'],
+                  'major named in review', [row['name'] for row in result.get('named_review', {}).get('majorInReview', [])],
+                  flush=True)
+            if args.scope == 'rooted' and drawn['floating']:
+                mesh_failures.append(name)
+    if mesh_failures:
+        print('mesh floating pieces in the default view:', ', '.join(mesh_failures), flush=True)
+        return 1
     return 0
 
 

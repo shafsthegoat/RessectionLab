@@ -54,8 +54,9 @@ original planes. Weak-signal candidates and partial graph coverage remain
 visible. The reconstruction and quantitative anatomy continue to use the
 source-bound mask. [Evidence location](local-storage-ledger.md)
 
-New patient import workspaces start with **TOF exterior-air review**. The
-view uses a native TOF head envelope with a physical margin and hides a
+New patient import workspaces start with the **Connected tree** vessel display
+([rules](native-vascular-geometry.md#default-connected-vessel-display)); the
+**TOF exterior-air review** remains selectable. That review uses a native TOF head envelope with a physical margin and hides a
 detached vesselFM component only when the entire finding is sufficiently
 dark and its measured 2 mm neighborhood contains no signal above the
 envelope threshold. Acquisition edges, attached findings and ambiguous

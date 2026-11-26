@@ -100,6 +100,16 @@ export function ctaVesselColor(kind:string|undefined,settings:ViewerWorkspaceSet
   return Object.hasOwn(ctaVesselColors,kind??'')?ctaVesselColors[kind as keyof typeof ctaVesselColors]:undefined;
 }
 
+/** Kind used for the CTA vessel colour. A connected-tree display declares its class by
+ * colour: an unclassified layer's shown tree is arterial, and the amber review overlay keeps
+ * its own colour. */
+export function ctaDisplayKind(layer:{name:string;kind?:string;color?:string;displayFilter?:{scope?:string}}) {
+  const derived=/^__vessel_(veins|arteries|review):/.exec(layer.name)?.[1];
+  if(derived)return derived==='veins'?'vein':derived==='arteries'?'artery':undefined;
+  if(!['rooted','rooted-review'].includes(layer.displayFilter?.scope??'')||!['vessel','vessels'].includes(layer.kind??''))return layer.kind;
+  return layer.color?.toLowerCase()==='#42668f'?'vein':'artery';
+}
+
 export function applyCtaVesselFinish(material:THREE.MeshStandardMaterial,kind:string|undefined,
   settings:ViewerWorkspaceSettings,modality:string|undefined) {
   if(!(material instanceof THREE.MeshPhysicalMaterial))return;
@@ -252,7 +262,7 @@ export function setVesselDepthAppearance(material:THREE.MeshStandardMaterial,set
   const style=material.userData.vesselStyle as VesselUniforms|undefined;
   if(!style||!grid)return;
   const explicitScope=layer.displayFilter?.scope;
-  const mode=settings.operativeView||(explicitScope&&explicitScope!=='exterior-air')?'source':
+  const mode=settings.operativeView||(explicitScope&&!['exterior-air','rooted','rooted-review'].includes(explicitScope))?'source':
     settings.vesselShading??(settings.presentation==='vascular'?'balanced':'source');
   style.uVesselStyle.value=shadingValue[mode];
   style.uVesselColor.value.copy(material.color);

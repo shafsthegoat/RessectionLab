@@ -1,5 +1,5 @@
 import {useNativeApproaches} from './use-native-approaches';
-import {nextScanState,migrateSkullView,vesselScopeForView,corticalLayers,cranialComposition,hasNativeAngiographicVessels,initialNativeLayers,presentationLayers,anatomyPresentation,defaultAnatomyPresentation,ctaCoverageOptions,applyCtaCoverageVisibility,resolveCtaCoverageVisibility,isCtaCoverageLayer} from './native-study-state';
+import {nextScanState,migrateSkullView,vesselScopeForView,vesselDerivedParent,corticalLayers,cranialComposition,hasNativeAngiographicVessels,initialNativeLayers,presentationLayers,anatomyPresentation,defaultAnatomyPresentation,ctaCoverageOptions,applyCtaCoverageVisibility,resolveCtaCoverageVisibility,isCtaCoverageLayer} from './native-study-state';
 import type {AnatomyPresentation} from './native-study-state';
 import {drainLayerRequests} from './native-layer-queue';
 import {mergeResidentLayers,prepareNativeLabels} from './native-layer-residency';
@@ -49,8 +49,8 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
   const [structureFocusPoint,setStructureFocusPoint]=useState<Point3|null>(null);
   const [vesselTrace,setVesselTrace]=useState<ViewerVesselTrace|null>(null);
   const [vesselPick,setVesselPick]=useState<{layerId:string;point:Point3;key:string}|null>(null);
-  const [vesselScope,setVesselScope]=useState<VesselScope>('all');
-  const scopeRef=useRef<VesselScope>('all');
+  const [vesselScope,setVesselScope]=useState<VesselScope>('rooted');
+  const scopeRef=useRef<VesselScope>('rooted');
   const [unavailable,setUnavailable]=useState<string[]>([]),[draft,setDraft]=useState<Draft>(null),[original,setOriginal]=useState(false);
   const [editLayer,setEditLayer]=useState<string|null>(null),[tool,setTool]=useState('navigate'),[radius,setRadius]=useState(2),[threshold,setThreshold]=useState(.5),[author,setAuthor]=useState('');
   const [review,setReview]=useState<ComponentReview|null>(null),[components,setComponents]=useState<number[]>([]);
@@ -105,7 +105,9 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
   const previousCranialView=useRef<{key:string;view:NativeScanState;structure:string|null}|null>(null);
   const compositionKey=JSON.stringify([binding?.collectionId,binding?.document.snapshot_id,series]);
   useEffect(()=>setVesselTrace(null),[compositionKey,selectedStructure,vesselScope,draft]);
-  function pickStructureWithPoint(layerId:string,point:Point3){
+  function pickStructureWithPoint(picked:string,point:Point3){
+    // A derived vessel compartment selects the study layer it was derived from.
+    const layerId=vesselDerivedParent(picked)??picked;
     setSelectedStructure(layerId);
     setVesselPick({layerId,point,key:compositionKey});
   }
@@ -267,7 +269,7 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
     previousCranialView.current=null;generation.current++;abortViewRequest();resetOpening();resetLayers();installVolume(null);setBinding(b);setDraft(null);setOriginal(false);setReview(null);setComponents([]);setEditLayer(null);
     const saved=b.viewState?.snapshotId===b.document.snapshot_id?b.viewState:null;setSelectedStructure(saved?.selectedStructure??null);
     setPatientCutaway(saved?.patientCutaway??{});
-    scopeRef.current=vesselScopeForView(saved,!nativeVascularReview(b)&&b.document.preparation_workflow==='native-adaptive-v1');
+    scopeRef.current=vesselScopeForView(saved);
     setVesselScope(scopeRef.current);
     const s=saved?.seriesId??b.document.reference_series??'';setSeries(s);
     const views=saved?.states??{};const base=migrateSkullView(views[s]??initial(b,s),b.document.layers);
@@ -433,7 +435,7 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
     if(point){const prev=stroke.current.at(-1);if(prev){const distance=Math.hypot(...point.map((v,i)=>v-prev[i]));const steps=Math.min(200,Math.ceil(distance/Math.max(.2,radius*.4)));for(let i=1;i<=steps;i++)stroke.current.push(point.map((v,j)=>prev[j]+(v-prev[j])*i/steps) as Point3)}else stroke.current.push(point)}
     if(phase==='end'&&stroke.current.length)void edit(tool,stroke.current.splice(0,10000));
   }
-  const currentViewState=():NativeViewState|null=>binding?{schema:'patient-anatomy-view-v1',patientId:binding.document.patient_id,snapshotId:binding.document.snapshot_id,seriesId:series,states,scalarTransferBasis:'selected-acquisition-v1',patientCutaway,vesselScope:scopeRef.current,vesselDisplayVersion:2,selectedApproachId:planning.selectedId,selectedPlanningTargetId:planning.activeTargetLayerId,selectedApproachIds:planning.selectedApproachIds,selectedStructure}:null;
+  const currentViewState=():NativeViewState|null=>binding?{schema:'patient-anatomy-view-v1',patientId:binding.document.patient_id,snapshotId:binding.document.snapshot_id,seriesId:series,states,scalarTransferBasis:'selected-acquisition-v1',patientCutaway,vesselScope:scopeRef.current,vesselDisplayVersion:3,selectedApproachId:planning.selectedId,selectedPlanningTargetId:planning.activeTargetLayerId,selectedApproachIds:planning.selectedApproachIds,selectedStructure}:null;
   async function save(saveArchive=true){if(!binding||binding.readOnlyStudy||!api||draft)return;await run(async()=>{
     const viewState=currentViewState()!;
     if(series)await api.anatomySaveView({...args(),viewState,saveArchive});setMessage('Workspace saved · scans, layers and views preserved');

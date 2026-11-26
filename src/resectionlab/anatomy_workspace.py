@@ -17,10 +17,13 @@ def checked_view(collection, state, *, retired_clipping=None):
         raise ValueError('Unsupported patient view state')
     if state.get('patientId') != collection.document['patient_id'] or state.get('snapshotId') != collection.identity():
         raise ValueError('View state belongs to a different anatomy revision')
-    if state.get('vesselScope', 'all') not in {'brain', 'all', 'intracranial', 'excluded', 'exterior-air'}:
+    # Version 3 added the rooted default; version 2 views still open.
+    if state.get('vesselScope', 'all') not in {'rooted', 'rooted-review', 'brain', 'all', 'intracranial', 'excluded', 'exterior-air'}:
         raise ValueError('Invalid vessel display scope')
-    if 'vesselDisplayVersion' in state and (type(state['vesselDisplayVersion']) is not int or state['vesselDisplayVersion'] != 2):
+    if 'vesselDisplayVersion' in state and (type(state['vesselDisplayVersion']) is not int or state['vesselDisplayVersion'] not in (2, 3)):
         raise ValueError('Unsupported vessel display version')
+    if state.get('vesselScope') in {'rooted', 'rooted-review'} and state.get('vesselDisplayVersion') != 3:
+        raise ValueError('Rooted vessel display requires display version 3')
     if 'scalarTransferBasis' in state and state['scalarTransferBasis'] != 'selected-acquisition-v1':
         raise ValueError('Unsupported scalar transfer basis')
     series = {s['id'] for s in collection.document['series']}

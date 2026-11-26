@@ -35,7 +35,7 @@ import {isStructuralMrModality,mixedVesselLesion} from '../native-study-state';
 import {isCtAngiography,usesAcquiredCtBone} from './volumeTransfer';
 import {installNativeContextLighting,setNativeContextLighting} from './nativeContextLighting';
 import {advectScoreWallLighting,displaySurfaceNormals,scoreWallLighting} from './displaySurfaceNormals';
-import {applyCtaVesselFinish,applyVesselDepthMaterial,setVesselDepthAppearance,createVesselInspectionFocus,setVesselInspectionFocus,
+import {applyCtaVesselFinish,ctaDisplayKind,applyVesselDepthMaterial,setVesselDepthAppearance,createVesselInspectionFocus,setVesselInspectionFocus,
   vesselInspectionContains,vesselWallFinish,type VesselInspectionFocus} from './anatomySurfaceMaterial';
 import {microscopeFov} from './microscope';
 import {applyOperativeSurface} from './operativeMaterial';
@@ -792,7 +792,7 @@ export class VolumeRenderer {
     if(vessel){
       const grid=layer.surface&&!operativeVessel?this.vesselLabelGrid(this.volume.compartments.indexOf(layer)):undefined;
       if(this.volume.displayIdentity&&!operativeVessel)
-        applyCtaVesselFinish(mesh.material,layer.kind,this.workspaceSettings,this.volume.modality);
+        applyCtaVesselFinish(mesh.material,ctaDisplayKind(layer),this.workspaceSettings,this.volume.modality);
       const sourceShape=buffers.sourceVolumeBoundary?this.volume.shape:undefined;
       if(sourceShape){
         const rest=new THREE.BufferAttribute(positions,3);
@@ -1295,7 +1295,7 @@ export class VolumeRenderer {
         const operativeVessel=modeledAnatomy(this.volume)?.vesselSurfaces?.has(layer.name);
         if(operativeVessel&&settings.layerColor?.[layer.name])material.color.set(appearance.color);
         if(surfaceKind(layer.kind)==='vessel'&&!operativeVessel){
-          if(this.volume.displayIdentity)applyCtaVesselFinish(material,layer.kind,settings,this.volume.modality);
+          if(this.volume.displayIdentity)applyCtaVesselFinish(material,ctaDisplayKind(layer),settings,this.volume.modality);
           if(layer.surface)setVesselDepthAppearance(material,settings,layer,this.vesselLabelGrid(index));
         }
         applySourceContextMaterial(material,settings.contextStyle==='shell'&&CONTEXT_SURFACES.has(layer.displayKind??layer.kind??''),

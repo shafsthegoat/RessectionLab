@@ -18,7 +18,10 @@ from .anatomy_editor import AnatomyDraft
 from .anatomy_workspace import read_view, save_view, component_review
 from .anatomy_geometry import mesh, normals, appearance_kind, vascular_cleanup_source
 from .anatomy_qa import layer_quality
-from .vascular_cleanup import ATTACHED_ERASE, ATTACHED_SCORE_SURFACE
+from .vascular_cleanup import (
+    ATTACHED_ERASE, ATTACHED_SCORE_SURFACE, ROOTED_CLASS_PREFIXES, ROOTED_REVIEW_COLOR, ROOTED_REVIEW_PREFIX,
+    ROOTED_VESSEL_KINDS, rooted_vessel_layer,
+)
 from .anatomy_display import (
     add_cta_arterial_coverage, brain_vessel_display, cta_coverage_is_current, display_affine, is_cta_coverage,
     patient_display_context, source_display_grid,
@@ -69,6 +72,29 @@ def _retain(session, result):
     elif isinstance(result, list):
         for x in result:
             _retain(session, x)
+
+
+# "rooted" is the default display; "rooted-review" adds the hidden parts as an overlay.
+VESSEL_SCOPES = {"rooted", "rooted-review", "all", "brain", "intracranial", "excluded", "exterior-air"}
+# The viewer packs at most this many compartments; derived overlays never push past it.
+MAX_DISPLAY_COMPARTMENTS = 128
+_DERIVED = "__derived:"
+
+
+def _overlay_record(c, row, name, color, source, shape, displayed, transfer, cancelled, *, mask=None):
+    """A display-only overlay compartment; it never enters layers, revisions or planning."""
+    geometry = mesh(c, row, cancelled=cancelled)
+    transform = np.linalg.inv(displayed) @ source
+    positions = world(transform, geometry["positions"]).astype(np.float32)
+    raw = world(transform, geometry["source"]).astype(np.float32)
+    indices = geometry["indices"] if np.linalg.det(transform[:3, :3]) >= 0 else geometry["indices"][:, ::-1]
+    mask = c.mask(row) if mask is None else mask
+    return {"name": name, "color": color,
+            "mask": transfer(resample(mask.astype(np.uint8), source, shape, displayed, order=0), "uint8"),
+            "surface": {"positions": transfer(positions, "float32"), "source": transfer(raw, "float32"),
+                        "normals": transfer(normals(positions, indices), "float32"),
+                        "sourceNormals": transfer(normals(raw, indices), "float32"),
+                        "indices": transfer(indices, "uint32")}}
 
 
 def _surface_assets(geometry, transform, source_only, transfer):
@@ -359,7 +385,7 @@ def dispatch(session, operation, args, request, progress):
         native = affine(reference["affine"])
         preview_alignment = args.get("previewAlignment") is True
         vessel_scope = args.get("vesselScope", "all")
-        if vessel_scope not in {"all", "brain", "intracranial", "excluded", "exterior-air"}:
+        if vessel_scope not in VESSEL_SCOPES:
             raise ValueError("Unknown vessel display scope")
         native_vessel_review = c.document.get("vascular_review", {}).get("schema") == "eden2020-restricted-vascular-companion-v1"
         vessel_surface_mode = args.get("vesselSurfaceMode", "source" if native_vessel_review else "conditioned")
@@ -395,7 +421,15 @@ def dispatch(session, operation, args, request, progress):
         shape = tuple(image_data["shape"])
         source_cache_key = (key, c.identity(), reference["id"], image_data["sha256"],
                             displayed.tobytes(), bool(args.get("original")), preview_alignment, bool(patient_context))
-        cache_key = (source_cache_key, vessel_scope, vessel_surface_mode)
+        corridor_key = None
+        if vessel_scope in {"rooted", "rooted-review"}:
+            # Saved corridors widen the fine-vessel level of detail near them.
+            from .anatomy_approaches import _read_plan
+            try:
+                corridor_key = _read_plan(c)[4]
+            except (ValueError, OSError):
+                corridor_key = "unreadable"
+        cache_key = (source_cache_key, vessel_scope, vessel_surface_mode, corridor_key)
         cacheable = not (session.anatomy_drafts.get(key) or key in session.anatomy_removal
                          or args.get("highlightComponents"))
         cache = getattr(session, "anatomy_view_cache", None)
@@ -413,6 +447,7 @@ def dispatch(session, operation, args, request, progress):
         # have temporary transfer files pruned and must not cache those paths.
         cache = {**cache, "layers": dict(cache["layers"]), "label_sets": dict(cache["label_sets"])}
         layers = []
+        derived = []
         label_sets = {}
         unavailable = []
         transfer = session.transfers.array
@@ -421,6 +456,7 @@ def dispatch(session, operation, args, request, progress):
             if name in cache["layers"]:
                 record = deepcopy(cache["layers"][name])
                 layers.append(record)
+                derived.extend(deepcopy(cache["layers"].get(_DERIVED + name, [])))
                 alignment_previews.extend(record.get("alignmentPreviews", []))
                 if record.get("labelSet"):
                     set_id = record["labelSet"]
@@ -530,6 +566,22 @@ def dispatch(session, operation, args, request, progress):
                     and not draft and not args.get("highlightLayer")):
                 from .anatomy_intracranial import intracranial_vessels
                 row, display_filter = intracranial_vessels(c, row, excluded=vessel_scope == "excluded", cancelled=request.cancelled.is_set)
+            rooted_review = rooted_class = None
+            # The default view: root-reachable vessels, bridged where acquired
+            # signal supports it; detached and thin terminal parts go to review.
+            if (not raw_siam and not source_grid_preview and vessel_scope in {"rooted", "rooted-review"}
+                    and row["kind"] in ROOTED_VESSEL_KINDS and not draft and not args.get("original")
+                    and not args.get("highlightLayer")):
+                try:
+                    row, display_filter, rooted_review, rooted_class = rooted_vessel_layer(
+                        c, row, review=vessel_scope == "rooted-review", check=request.check)
+                except InterruptedError:
+                    raise
+                except Exception as error:  # One layer's derivative must not fail the whole view.
+                    request.check()  # A cancellation still cancels.
+                    display_filter = {"scope": vessel_scope, "failed": True, "sourcePreserved": True,
+                                      "reason": f"Connected tree unavailable for this layer ({type(error).__name__}: "
+                                                f"{error}). Showing the full source estimate."}
             score_source = vascular_cleanup_source(c, unfiltered)
             if score_source is None and row is not unfiltered:
                 score_source = unfiltered
@@ -589,6 +641,20 @@ def dispatch(session, operation, args, request, progress):
             layers.append(record)
             if cacheable:
                 cache["layers"][name] = deepcopy(record)
+            extra = []
+            if rooted_class is not None:
+                # The other vessel class of this layer, drawn in its own colour.
+                kind = rooted_class["kind"]
+                extra.append({"label": f"{row['label']} · {kind} part", "kind": kind, "displayKind": kind,
+                              **_overlay_record(c, rooted_class, ROOTED_CLASS_PREFIXES[kind] + name, rooted_class["color"],
+                                                source, shape, displayed, transfer, request.cancelled.is_set)})
+            if rooted_review is not None:
+                extra.append({"label": "Detached and thin vessel parts (review)",
+                              **_overlay_record(c, rooted_review, ROOTED_REVIEW_PREFIX + name, ROOTED_REVIEW_COLOR,
+                                                source, shape, displayed, transfer, request.cancelled.is_set)})
+            derived.extend(extra)
+            if cacheable and extra:
+                cache["layers"][_DERIVED + name] = deepcopy(extra)
             # A review highlight is a display-only overlay; it is never included in
             # quantitative layers, revisions or planning. Exact component ids are
             # bound to the draft's immutable starting mask.
@@ -607,12 +673,8 @@ def dispatch(session, operation, args, request, progress):
                 hrow["data"] = c.put_array(highlight.astype(np.uint8))
                 hrow["label_value"] = 1
                 hrow["edits"] = [{"review_highlight": True}]
-                hgeo = mesh(c, hrow, cancelled=request.cancelled.is_set)
-                transform = np.linalg.inv(displayed) @ source
-                hp = world(transform, hgeo["positions"]).astype(np.float32)
-                hr = world(transform, hgeo["source"]).astype(np.float32)
-                hi = hgeo["indices"] if np.linalg.det(transform[:3, :3]) >= 0 else hgeo["indices"][:, ::-1]
-                layers.append({"name": "__fragment_review", "color": "#ffb454", "mask": transfer(resample(highlight.astype(np.uint8), source, shape, displayed, order=0), "uint8"), "surface": {"positions": transfer(hp,"float32"), "source": transfer(hr,"float32"), "normals": transfer(normals(hp,hi),"float32"), "sourceNormals": transfer(normals(hr,hi),"float32"), "indices": transfer(hi,"uint32")}})
+                layers.append(_overlay_record(c, hrow, "__fragment_review", "#ffb454", source, shape, displayed,
+                                              transfer, request.cancelled.is_set, mask=highlight))
         tracts = []
         unavailable_tracts = []
         for tract in ([] if inspection or cache["tracts"] is not None else c.document.get("tractography", [])):
@@ -704,7 +766,9 @@ def dispatch(session, operation, args, request, progress):
             "mri": cache["mri"],
             **({"headSupport": cache["headSupport"]} if "headSupport" in cache else {}),
             **({"ctExterior": cache["ctExterior"]} if cache.get("ctExterior") is not None else {}),
-            "compartments": layers,
+            "compartments": layers + derived[:max(0, MAX_DISPLAY_COMPARTMENTS - len(layers))],
+            **({"omittedDerivedCompartments": len(derived) - max(0, MAX_DISPLAY_COMPARTMENTS - len(layers))}
+               if len(layers) + len(derived) > MAX_DISPLAY_COMPARTMENTS else {}),
             "labelSets": list(label_sets.values()),
             "modality": reference["modality"],
             "sourceSeriesId": reference["id"],

@@ -1,4 +1,13 @@
 import type {ViewerVolume} from './viewer/contracts';
+import {MAX_ANATOMY_LAYERS} from './viewer/labelPacking.ts';
+
+/** Display-only compartments derived from one vessel layer, named after it. */
+export const vesselReviewPrefix='__vessel_review:';
+export const vesselDerivedPrefixes=[vesselReviewPrefix,'__vessel_veins:','__vessel_arteries:'] as const;
+export function vesselDerivedParent(name:string):string|null {
+  const prefix=vesselDerivedPrefixes.find(prefix=>name.startsWith(prefix));
+  return prefix?name.slice(prefix.length):null;
+}
 
 export function mergeResidentLayers(current:ViewerVolume, incoming:ViewerVolume, order:readonly string[]):ViewerVolume {
   if(!current.displayIdentity||current.displayIdentity!==incoming.displayIdentity||current.mri!==incoming.mri||
@@ -9,7 +18,17 @@ export function mergeResidentLayers(current:ViewerVolume, incoming:ViewerVolume,
   for(const layer of incoming.compartments)if(!layers.has(layer.name))layers.set(layer.name,layer);
   const sets=new Map((current.labelSets??[]).map(set=>[set.id,set]));
   for(const set of incoming.labelSets??[])if(!sets.has(set.id))sets.set(set.id,set);
-  return {...current,alignmentQuality:{...current.alignmentQuality,...incoming.alignmentQuality},packedLabels:undefined,compartments:order.filter(id=>layers.has(id)).map(id=>layers.get(id)!),labelSets:[...sets.values()]};
+  // Derived compartments stay beside their layer, once each, and never push the
+  // source layers past the viewer's layer budget.
+  const ordered:string[]=[],seen=new Set<string>();
+  for(const id of order){
+    if(vesselDerivedParent(id)!==null)continue;
+    for(const name of [id,...vesselDerivedPrefixes.map(prefix=>prefix+id)])
+      if(layers.has(name)&&!seen.has(name)){seen.add(name);ordered.push(name);}
+  }
+  let room=MAX_ANATOMY_LAYERS-ordered.filter(name=>vesselDerivedParent(name)===null).length;
+  const kept=ordered.filter(name=>vesselDerivedParent(name)===null||room-->0);
+  return {...current,alignmentQuality:{...current.alignmentQuality,...incoming.alignmentQuality},packedLabels:undefined,compartments:kept.map(id=>layers.get(id)!),labelSets:[...sets.values()]};
 }
 
 /** Bounded copies avoid one large structured-clone task on the UI thread. */
