@@ -230,7 +230,8 @@ outcomes. [Native glioma evidence](approach-comparison-checkpoint.md#native-glio
 | Independent replay/monitor tooling | [Maintained rehearsal support](../scripts/rehearsal_support/README.md) |
 | Source collections and data-root workflow | [Local HDD ledger and access limits](local-storage-ledger.md), [EDEN segmented cohort](eden2020-healthy-synthetic.md), [data rebuild](data-rebuild.md); ignored `testcases/README.md` and HDD `catalog/START-HERE.md` |
 | Experimental features | [Neighboring paths integration contract](neighboring-paths-panel.md), [continuum](voxel-continuum.md), [research planning](research-planning.md), [interactive approaches](interactive-patient-planning.md) |
-| Historical steering, requirements and negative results | [Master plan](../MASTER_PLAN.md), [status narratives](../PROJECT_STATUS.md), [handoff](../IMPLEMENTING_AGENT_HANDOFF.md), [execution ledger](REAL_OBSERVATION_EXECUTION_LEDGER.md) |
+| Historical steering, requirements and negative results | [Master plan](../MASTER_PLAN.md), [experiment log](../EXPERIMENT_LOG.md), [retired steering, handoff and status diaries](retired-docs-20261126.md) |
+| Topic index for agents and new contributors | [AGENTS.md](../AGENTS.md) |
 
 SurgicalEngine remains authoritative. Source ownership/admission, anatomical
 exclusions, cumulative harm, vascular consequences, STOP/withdrawal, residual
@@ -241,6 +242,5 @@ planning/training paths while reproducing earlier work.
 
 The [cleanup execution record](cleanup-execution-20261116.md) explains the verified
 historical archives, checkout reduction, restoration and remaining KEEP decisions.
-The [earlier support pass](cleanup-20261116.md) remains dated context. Neither
-replaces the research goal.
-Earlier status documents retain their dated narratives and requirements.
+Superseded steering prompts, handoffs, status diaries and unlinked one-off notes
+are listed with restore commands in the [retired documentation index](retired-docs-20261126.md).

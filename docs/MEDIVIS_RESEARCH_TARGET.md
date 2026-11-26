@@ -1,6 +1,6 @@
 # Research claims and evidence
 
-The user-supplied [research charter](MEDIVIS_SUPERGOAL_NEUROLOGICAL_HARM.md)
+The user-supplied [research charter](retired-docs-20261126.md)
 provides hypotheses and scientific boundaries. Its dataset and product statements
 require source verification. It does not replace executed evidence, patient roles,
 or the prohibition on paid infrastructure without explicit permission. The
@@ -39,5 +39,5 @@ describes supervised execution of approved plans. These are product/research
 statements from MEDiVIS, not validation of RessectionLab or proof of clinical
 performance for any proposed extension.
 
-See [PROJECT_STATUS](../PROJECT_STATUS.md) for actual runs, artifacts and open
+See [PROJECT_STATUS](retired-docs-20261126.md) for actual runs, artifacts and open
 issues. Do not promote a claim because code or a software test exists alone.

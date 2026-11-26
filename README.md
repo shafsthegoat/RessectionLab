@@ -1,262 +1,48 @@
 # RessectionLab
 
-Repository upkeep follows the [maintenance policy](CONTRIBUTING.md): keep current-use material,
-retire obsolete code/docs/artifacts, and archive useful history outside the tracked tree.
+RessectionLab is a local-first research workbench for patient-specific
+neurosurgical planning and rehearsal. It follows one patient from acquired scans
+and supplied annotations through reconstruction, source-slice inspection,
+approach comparison and 3D rehearsal in **Cases → Scans → Anatomy → Plan →
+Rehearse**. Every input needs an anatomical contribution or an exclusion reason.
+`SurgicalEngine` is authoritative: executed replay shows the instrument actions
+and tissue changes it recorded, while the geometric preview only illustrates a
+selected route. Search and learned policies are compared under the same inputs,
+actions and constraints. This is an experimental research platform, not a
+clinically validated medical device.
 
-Start with the [current status and working entry points](docs/current-status.md)
-for architecture, workflow, verification, experimental features and dated history.
-The workbench follows one patient from acquired scans and supplied annotations
-through reconstruction, source-slice inspection, approach comparison and 3D
-rehearsal in **Cases → Scans → Anatomy → Plan → Rehearse**. Every input needs an
-anatomical contribution or an exclusion reason. Watching the operation, pausing,
-scrubbing and reopening the recorded procedure are permanent product
-requirements. The geometric preview illustrates a selected route. Executed
-replay shows the instrument actions and tissue changes recorded by
-`SurgicalEngine`. [Use the scan-to-rehearsal workflow](docs/desktop-workflow.md#from-patient-scans-to-operative-steps).
+**Start here:**
+
+- [Current status and working entry points](docs/current-status.md): architecture,
+  current demonstrations, verification and evidence limits.
+- [Desktop workflow](docs/desktop-workflow.md): scan-to-rehearsal walkthrough,
+  practice controls, replay and reproduction commands.
+- [AGENTS.md](AGENTS.md): a topic index of the docs, code and data locations for
+  coding agents and new contributors.
+- [Maintenance policy](CONTRIBUTING.md): keep current-use material, retire
+  obsolete code/docs/artifacts and archive useful history outside the tracked tree.
 
 In **Rehearse**, play the recorded instrument motion and tissue changes together
-or export the observed engine frames as a movie. The microscope and linked
-source slices identify the treatment target and vascular estimates. The
-generated cranial example supports a separate editable practice episode after
-verified opening. Use the mouse or keyboard to place, move, activate and
-withdraw an instrument, then save and reopen the accepted state.
+or export the observed engine frames as a movie. The generated cranial example
+supports a separate editable practice episode after verified opening.
 [Practice controls and starting case](docs/desktop-workflow.md#practice-from-an-accepted-engine-state).
-The selected acquired glioma route ends at an intact STOP before access.
+The selected acquired glioma route ends at an intact STOP before access, and
+full acquired-patient completion remains zero.
 [See the demonstration and its evidence limits](docs/current-status.md#continuous-operative-rehearsal).
-The [cleanup execution record](docs/cleanup-execution-20261116.md) documents the
-archived historical data, measured checkout reduction and verified restoration.
-The [earlier support pass](docs/cleanup-20261116.md) retains its original scope.
 
 Additional datasets, models and historical archives may be on Shafrir's optional
 HDD. The [local storage ledger](docs/local-storage-ledger.md) records its location
 and contents. This storage is unavailable to Sayem Kamal and other collaborators.
 
-The [decision-system contract](docs/decision-system-objective.md) and
-[progress record](docs/decision-system-progress.md) describe the current cranial
-Case → Plan → Generate → Compare → Rehearse → Save → cold Open integration,
-including source-bound opening roots, native B/P/W accounting and explicit
-refusals. The [November 13 engineering closeout](artifacts/decision-system-closeout-20261113.json)
-records final validation and package identities. Generated workflow success does
-not qualify patient treatment: zero completed patient tumor tasks, missing anatomy
-and the existing scientific/RL holds remain.
-
-The examples and dated artifact links below retain earlier research milestones;
-their test counts, app snapshots and performance measurements apply to their
-recorded source versions. See [C++ delivery and limitations](docs/cpp-acceleration.md)
-for native scope, accepted latency regressions and historical benchmark limits.
-
-The [interactive patient approach planner](docs/interactive-patient-planning.md)
-generates new, source-bound post-exposure CUSA approaches from edited target,
-entry, tool and mapped-tissue constraints. The desktop compares trajectories,
-checks native insertion/withdrawal, and installs ordinary replayable branches.
-Its one development case retains missing anatomy and all scientific holds.
-
-The [simulator qualification workflow](docs/simulator-qualification.md) now
-checks source evidence, exact replay, access-inclusive removal and lattice
-force/energy behavior before physiological planning. It exposes grid-dependent
-mechanics and keeps measured-response and large-scale RL gates open.
-An [opt-in voxel continuum](docs/voxel-continuum.md) adds source-owned mechanics,
-stress relaxation, mechanical exposure and checked retraction/resection replay;
-its patient material and injury claims remain unvalidated.
-The [donor-held-out force comparison](docs/continuum-donor-transfer.md) now
-scores acquired human brain measurements: the calibrated continuum improves
-on the default lattice, but loses to zero force in tension. Physical acceptance
-and physiological RL remain on hold.
-An [opt-in bipolar heat model](docs/bipolar-thermal.md) now budgets delivered
-heat, tissue conduction and heat exported with removal. Equal-energy continuous
-and pulsed programs replay with distinct modeled temperature histories; device
-calibration, temperature-based coagulation and injury remain unvalidated.
-The [recorded consequence comparison](docs/consequence-comparison.md) now
-selects between exact native programs with a vector and matched-scenario Pareto
-rule. Full access cost stays visible; requiring unavailable vascular, motor,
-language and shift evidence selects checked STOP with residual.
-An [artificial-boundary audit](docs/continuum-domain-sensitivity.md) finds material
-force/stress sensitivity to patch radius. Truncated continuum patches now reject
-and roll back; radius adequacy and physiological RL remain unqualified.
-An [offline contact-compliance reference](docs/continuum-contact-reference.md)
-now reproduces detailed histories with a 21-coordinate update and runs larger
-domains. Both frozen 16-to-20 mm stress-stability tests still fail.
-An [opt-in vascular graph](docs/vascular-graph.md) separates compression,
-occlusion, transection, wound sealing and declared supply/drainage signals.
-Matched generated maneuvers pass independent numerical checks; patient-specific
-vascular evaluation and physiological RL remain on hold.
-The [acquired vascular geometry checks](docs/native-vascular-geometry.md) now
-retain original CTA voxel IDs, distinguish veins and sinuses, and certify a
-separate H₁ representative graph while exposing missing and ambiguous anatomy.
-The [acquired-case performance comparison](docs/continuum-performance.md)
-profiles headless physics separately from display work. A
-[certified intersection cache](docs/local-surface-audits.md) and
-[exact polynomial dependency halo](docs/local-surface-filter.md) now reduce
-changed brain preparation from 1.97 to 1.16 seconds in the latest paired
-120-action comparison, retaining exact buffers. Global graph/face work, initial
-admission, responsive replay and physiological RL readiness remain open.
-
-The [historical full case rehearsal handoff](artifacts/full-case-rehearsal-20261020/README.md)
-describes the saved meningioma source and substantial primary resection, same-case
-vascular rescue, checkpoints, action histories and audit evidence. Its original
-data and review code now live in the verified optional archive; use the
-[current restore, launch and check commands](scripts/rehearsal_support/README.md).
-The recorded rehearsal removed 81.34% of
-the owned target before a budget-limited stop. Playback is very slow; full final
-GUI playthrough and frame-audit limitations are explicitly retained. These
-selected data files are preserved by the external archive and pushed pre-cleanup
-Git reference, with their original relative paths and hashes intact.
-
-The [Research Planning desktop integration](docs/research-planning.md) now
-compares observation-only greedy and a frozen learned continuation in the
-existing source-bound instrument workbench, with checked native replay and
-save/reopen. The UCSF development result remains negative: greedy hits a shaft
-collision and the learner stops; neither adds target removal. This does not
-close the admitted TRAIN glioma or hybrid/search benchmark gates.
-
-The [bounded two-instrument task](docs/coordinated-burring.md) now learns to
-schedule shallow bone burring and debris aspiration in the unchanged simulator.
-All three Q-learning seeds match the successful script; either instrument alone
-fails. This is fixed-motion scheduling on one development anatomy, with native
-replay and strict safeguards preserved, not clinical or transfer validation.
-
-The healthy IXI multimodal workflow preserves acquired T1, MRA and diffusion
-sources, measured rigid registration estimates and diagnostic tensor scalars.
-Use `./scripts/launch_ixi_multimodal.sh anatomy` or `simulator` for the prepared
-local study. The canonical simulator retains partial vessel exclusion and native
-source views; tumor-removal RL refuses this case because it has no tumor target.
-Preparation and verification are in `scripts/prepare_ixi_multimodal.py` and
-`scripts/verify_ixi_multimodal.py`; local source inventories and QC stay in the
-Git-ignored `testcases/` directory. No tract or functional protection is inferred
-from uncorrected diffusion.
-
-The [anatomy visual/RL integration check](artifacts/anatomy-integration-v3/RESULT.txt)
-adds topology-preserving vessel-margin previews, clearer source-derived rendering,
-and a fixed-policy Electron comparison with exact shared-engine state matches.
-Launch the prepared local examples with `./scripts/launch_anatomy_fidelity.sh mri`,
-`cta`, or `rehearsal`. No inference or training runs when opening these examples.
-
-The [October 18 integrated instrument rehearsal](docs/integrated-rehearsal.md)
-adds source-pinned CT/MRI drilling followed by a retained retractor hold and
-CUSA removal, second-case MRI interoperability, shared persisted protection,
-measured action costs and inspectable bimanual telemetry. We referenced
-[Yilmaz et al. (2022)](https://doi.org/10.1038/s41746-022-00596-8) for the
-behavior-measurement framework. The [bounded learning pilot](docs/surgical-pilot.md)
-keeps its actual optimizer updates, baselines, costs and limitations separate
-from anatomical or clinical validation.
-
-Earlier anatomy foundation work follows the [October 16 first-release gate ledger](docs/poc-first-gate-ledger.md)
-and [patient corpus construction plan](docs/patient-corpus-plan.md): actual
-anatomical reconstruction, then one stateful two-tool rehearsal in Electron,
-then diverse real patients and explicitly labeled virtual gliomas. The merged
-native workbench from PR #12 was its integration base; the later integrated
-rehearsal branch was merged through PR #15.
-
-The [local Apple Silicon app](artifacts/poc-first-local-package-build-v1/RESULT.md)
-now runs the current workbench with its bundled numerical engine. Actual app
-checks cover the remembered case-library folder, two-tool rehearsal, branches,
-play/pause/scrub, tissue cutaways, separate CT/MRI views and native save/restart.
-The packaged-engine audit preserves every tested source array and original file.
-This is a local research preview; anatomical accuracy, physiological calibration,
-and public-distribution licensing/notarization remain open.
-
-The [first executable patient-source rehearsal](artifacts/poc-first-rehearsal-v1/RESULT.md)
-now passes the actual Electron and independent save/replay checks. **Rehearse**
-provides two persistent tools, a shared action timeline, play/pause/scrub and two
-continuations from the same state. Source anatomy remains unchanged. Current
-physics and initial exposure are explicit research assumptions; diverse-case
-qualification and anatomical/physiological validation remain in progress.
-
-The [first nine-person corpus qualification](artifacts/patient-corpus-first-tranche-v1/RESULT.md)
-now provides resumable source checks and JSON/SQLite search. A bounded, pinned FK
-adapter passes independent numerical and source-admission checks; generated
-geometry remains distinct from observed tumors and physiological validation.
-The [IXI265 integration demonstration](artifacts/ixi265-virtual-pilot-v1/RESULT.md)
-also opens fresh brain/vessel estimates and an explicitly generated lesion overlay
-in Electron, with native branch save/reopen. Tissue-conditioned growth and
-anatomical review remain open.
-
-The [ten-person catalog release](artifacts/patient-corpus-ten-person-v1/RESULT.md)
-now adds IXI through a separate frozen release and exposes all ten source cases
-in **Cases**, searchable by name, dataset and available anatomy. Catalog opens
-verify exact bundle checksums. Actual Electron checks cover BTC discovery/open
-and separate IXI vessel-model inspection; source checking does not accept anatomy
-as truth or count generated variants as new people.
-
-Two further [acquired SynthRAD CT/MRI cases](artifacts/poc-synthrad-bc-integration-v1/RESULT.md)
-now open with fresh brain/skull estimates and pass native save/fresh-process
-reopen checks. Their original scans and separate MRI views are preserved. They
-remain unreviewed source/model candidates outside the frozen ten-person catalog.
-
-The [separate twelve-source release](artifacts/patient-corpus-twelve-recovery-v1/RESULT.md)
-now adds those two cases to **Cases**, preserving the frozen nine/ten releases.
-Actual Electron checks show 12 source identities, three skull cases and native
-CT/MRI switching. Independent checks preserve earlier receipts and source bytes.
-Reviewed tumor-location diversity and anatomical accuracy remain open.
-
-The [IXI tissue-estimate workspace](artifacts/poc-ixi265-tissue-display-package-v1/RESULT.md)
-now shows separate tissue estimates and explicit UNKNOWN voxels in actual
-Electron. Layer controls, cutaway, original-image switching and native save/fresh
-reopen work; the acquired image and earlier references remain unchanged.
-
-The [six BTC source reports](artifacts/btc-six-source-location-evidence-v1/RESULT.md)
-now add location and side to **Cases** search. Actual Electron checks find the
-expected left-frontal/parietal cases and open the matching acquired scan.
-Labels say “Dataset / paper report · review pending”; reviewed anatomy remains
-UNKNOWN and unrelated saved versions receive no inferred location.
-
-The [fixed RESECT ultrasound comparison](artifacts/poc-resect-case3-image-registration-v1/RESULT.md)
-now measures real paired-image alignment: on all 17 landmarks of one TRAIN
-person, the image-only rigid fit increases RMS error from 2.029 to 2.087 mm.
-The negative result, unchanged baseline and initial file-format refusal remain
-preserved. Improved image similarity does not establish anatomical accuracy.
-
-A local macOS anatomy workbench for acquired patient imaging, saved segmentations,
-and linked 3D/source-image inspection.
-
-The **October 14 POC A reset** established Cases / Data / 3D Workspace as the
-anatomy foundation. Three separate public cases demonstrate glioma MRI, head CT,
-and TOF-MRA with actual locally inferred masks. Original downloaded files,
-physical coordinates, registration declarations, and viewing settings are saved
-together. Opening a case or changing layers does not run inference.
-
-On the prepared Mac, launch the actual Electron application from this repository:
-
-```sh
-./scripts/launch_poc.sh
-```
-
-The last opened case is restored. See the [POC A workbench guide](docs/poc-a-workbench.md)
-for the walkthrough, model records, acceptance results, and remaining gaps.
-The [full surgical planning/rehearsal supergoal](docs/SUPERGOAL_REAL_OBSERVATIONS.md),
-[execution ledger](docs/REAL_OBSERVATION_EXECUTION_LEDGER.md),
-[master plan](MASTER_PLAN.md), and [handoff](IMPLEMENTING_AGENT_HANDOFF.md)
-remain historical context. Those anatomy gates remain scientific requirements;
-later generated simulation integration does not establish surgical or clinical
-validity.
-
-The active Mac application uses **Electron, React and TypeScript**. The Python
-engine handles physical geometry, evidence and independent validation. Legacy
-patient/policy entry points retain their existing guards. A [scoped generated
-opening-task learner](docs/native-opening-learning.md) now supports an explicit
-development context. Its [first fixed comparison](artifacts/native-opening-learning-v1/RESULT.md)
-completed with a negative learning result: complete search outperformed both
-learned policies. The earlier Qt prototype is retained as a tested
-historical reference. Application source is in `desktop/`; the
-[desktop workflow guide](docs/desktop-workflow.md) covers opening imaging,
-inspecting evidence, comparing routes, refinement, replay and local saving.
-
-The [earlier simulation development app](artifacts/integration-first-shared-episode-v1/RESULT.md)
-has been exercised on this Mac with generated sequential aspiration/probe episodes,
-exact full-tool replay, and public RESECT T1/FLAIR display in separate native frames.
-The [saved workspace](artifacts/integrated-workspace-persistence-v1/RESULT.md) now
-retains those images, source frames, individual view settings and generated replay
-position across restarts. Additional images remain display-only; opening or saving
-them does not register them or make them policy inputs. A legacy trained actor runs through the shared backend, while
-the desktop episode selector currently offers scripted and SEARCH execution.
-The [replay-linked vessel evaluator](artifacts/integrated-episode-vascular-v1/RESULT.md)
-now reports generated annotation encounters and unknown coverage for the exact
-recorded full-tool paths, separately from removal and clinical injury.
-The [matched generated search control](artifacts/shared-search-width4-generated-v1/RESULT.md)
-slightly outperforms that actor on one fixed task. No patient generalization is established.
-That historical desktop snapshot was not repackaged at its milestone; see the
-current closeout receipt above and [Electron packaging](docs/electron-packaging.md)
-for validation of each complete app snapshot.
+Earlier milestones (the October POC workbench, patient corpus releases,
+integrated rehearsal, learning pilots and their dated artifacts) are summarized
+in [current status](docs/current-status.md), the
+[experiment log](EXPERIMENT_LOG.md) and the per-topic guides indexed in
+[AGENTS.md](AGENTS.md). Superseded steering prompts, handoffs and status diaries
+are listed with restore commands in the
+[retired documentation index](docs/retired-docs-20261126.md). The
+[cleanup execution record](docs/cleanup-execution-20261116.md) documents the
+archived historical data and verified restoration.
 
 ## Local development
 

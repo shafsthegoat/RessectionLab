@@ -1,6 +1,6 @@
 # RessectionLab: a Medivis-relevant project blueprint
 
-October 6, 2026. Research and implementation proposal; nothing in this plan has been implemented or benchmarked by this review. Clinical basis: [operative research dossier](glioma-operative-research-dossier.md). Existing results remain authoritative in [PROJECT_STATUS](../PROJECT_STATUS.md).
+October 6, 2026. Research and implementation proposal; nothing in this plan has been implemented or benchmarked by this review. Clinical basis: [operative research dossier](glioma-operative-research-dossier.md). Existing results remain authoritative in [PROJECT_STATUS](retired-docs-20261126.md).
 
 ## 1. Recommended project thesis
 
