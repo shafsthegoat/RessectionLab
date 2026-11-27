@@ -168,10 +168,23 @@ test('microscope optics stay sharp at the focus plane and fall off gently toward
   assert.equal(fieldFalloff(0),1);assert.equal(fieldFalloff(.6),1);
   assert(fieldFalloff(1)>.7&&fieldFalloff(1)<1);assert(Math.abs(fieldFalloff(2)-.7)<1e-9);
   const pass=new MicroscopeOpticsPass();
+  assert.match(pass.material.fragmentShader,/uOpening/);
   assert.match(pass.material.fragmentShader,/perspectiveDepthToViewZ/);
   assert.match(pass.material.fragmentShader,/#include <colorspace_fragment>/);
   assert.equal(pass.estimatedTargetBytes,0);
   pass.dispose();
+});
+
+test('the microscope lamp centres on the bone flap outline and darkens the scalp around it',async()=>{
+  const {openingFalloff,openingFromCells}=await import('./microscopeOptics.ts');
+  assert.equal(openingFalloff(0,20),1);assert.equal(openingFalloff(21,20),1,'the opening and its rim stay fully lit');
+  assert(openingFalloff(30,20)<.85&&openingFalloff(30,20)>.5);assert(Math.abs(openingFalloff(60,20)-.4)<1e-9);
+  assert.equal(openingFalloff(60,0),1,'no opening, no lamp spot');
+  // A 3 mm thick disc of radius 10 mm in the z=0 plane, outward +z: the radius ignores the thickness.
+  const cells=[];for(let x=-10;x<=10;x++)for(let y=-10;y<=10;y++)if(x*x+y*y<=100)for(const z of [0,1,2])cells.push([x+5,y,z]);
+  const o=openingFromCells(cells,[0,0,1]);
+  assert.deepEqual(o.centerMm.map(v=>+v.toFixed(6)),[5,0,1]);assert(Math.abs(o.radiusMm-10)<1e-9);
+  assert.equal(openingFromCells([]),null);
 });
 
 test('the wet film is a surgeon-view illustration and never applies to source-label colours',async()=>{

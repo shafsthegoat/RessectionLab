@@ -1,8 +1,8 @@
 import type {SurgicalView} from '../surgical-types';
-import {effectsOutsideExposure} from './exposureAnatomy';
+import {effectsOutsideExposure,sourceCenter} from './exposureAnatomy';
 import {generatedTissueFinish} from './generatedTissueFinish';
 import {displayRemovalCells,maskCells,SCAN_SHADED_KINDS,scanTissueWindow} from './scanRemoval';
-import {MicroscopeOpticsPass} from './microscopeOptics';
+import {MicroscopeOpticsPass,openingFromCells} from './microscopeOptics';
 import {OperativeExposureScene} from './operativeExposureScene';
 import { ResultInspectionScene } from './ResultInspectionScene';
 import {interactivePlanningGroup} from './interactivePlanningGeometry';
@@ -969,6 +969,15 @@ export class VolumeRenderer {
     this.pendingSurgicalPublication=null;
     if(interaction.onDisplayError)interaction.onDisplayError(interaction.preview??interaction.view,message);
     else this.onError?.(message);
+  }
+  private openingCache=new WeakMap<object,ReturnType<typeof openingFromCells>>();
+  /** The bone flap outline the microscope lamp centres on (display only). */
+  private microscopeOpening(view:SurgicalView|null|undefined){
+    const exposure=view?.operativeExposureV1;
+    if(!view||!exposure)return null;
+    const bone=exposure.bodies.bone;
+    if(!this.openingCache.has(bone))this.openingCache.set(bone,openingFromCells(bone.cells.map(id=>sourceCenter(id,view.scene.shape,view.scene.affine)),exposure.exteriorNormalRas));
+    return this.openingCache.get(bone)!;
   }
   private partitionRequest(worker:Worker,reference:EngineSurfaceReference|undefined,smooth:boolean,layer:ViewerVolume['compartments'][number]):EnginePartitionRequest|undefined {
     if(!reference)return undefined;
@@ -2977,7 +2986,7 @@ export class VolumeRenderer {
       if(!this.interacting&&!this.scanVolume.active&&microscope&&this.microscopeTissueView())
         // Settled surgeon view: illustrative depth of field about the focus plane and field falloff.
         surfaceQuality=this.microscopeOptics.render(this.renderer,this.scene,this.camera,main.w,main.h,
-          {focusDistanceMm:this.camera.position.distanceTo(this.controls.target),fieldMm:microscope.fieldMm},()=>{viewport(this.panes.anatomy);},slabContext);
+          {focusDistanceMm:this.camera.position.distanceTo(this.controls.target),fieldMm:microscope.fieldMm,opening:this.microscopeOpening(renderedView)},()=>{viewport(this.panes.anatomy);},slabContext);
       else if ((this.replayActive&&!this.scanVolume.carvedCells) || this.passiveActive||(!this.scanVolume.active&&!cranialSurfaces))
         surfaceQuality=this.surfaceInteraction.render(this.renderer,this.scene,this.camera,main.w,main.h,this.interacting,this.budget.longEdge,()=>{viewport(this.panes.anatomy);},slabContext);
       else scanQuality=this.scanVolume.render(this.scene,this.camera,main.w,main.h,this.interacting,()=>{viewport(this.panes.anatomy);},

@@ -115,6 +115,10 @@ drawn), and subarachnoid space reaching a crop face is not exterior air, so
 white matter under it takes the cortex cover. The fairing adds about 1.5 s of
 worker time for a 1-million-vertex cortex.
 
+The settled microscope image falls off darker beyond
+1.08 radii of the bone flap outline (to 40% before tone mapping by about two
+radii), so scalp and drapes recede and the eye goes to the opening.
+
 The working grid's crop faces are drawn in one neutral section colour. The
 planned bone flap outline is marked on the intact skin in violet until the
 scalp is incised. **Head axes** above the body guide show R, A and S of the
@@ -135,6 +139,16 @@ time. Removal, counts and picking stay with the engine's whole cells.
 CUSA V4 (`cusaV4`) keeps the same per-cell pending layout; the bridge sends
 its progress through the same `cusaProgressV1` field, with each cell's
 threshold set by its tissue kind's relative rate.
+
+The practice HUD (`PracticeHud.tsx`) is closed by default to one status line
+at the lower-right pane edge, clear of the body guide: modeled time, percentage
+of the original target removed, blood loss (or **not modelled**) and the single
+most urgent of open bleeding, recorded injury or a navigation discrepancy
+(`practiceStatus` in `../operative-scenarios.ts`). Opening it shows the full
+readout along the right edge, within half the pane. It also stays in the
+expanded field. In the microscope, **Layers** and **Source extent** fold the
+layer keys and the source locator into two chips; a picked layer's inspection
+stays outside the fold.
 
 ### Opt-in operative scenarios
 

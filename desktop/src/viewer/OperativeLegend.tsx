@@ -5,17 +5,20 @@ import {vesselSourceBoundaryColor} from './anatomySurfaceMaterial';
 import {operativeLegend,originalLabelLocation} from './operativeLegendData';
 import type {ViewerWorkspaceSettings} from './workspaceSettings';
 
-export function OperativeLegend({scene,settings,cursor,picked,onPick,onSmooth,visible,sourceVolumeBoundary}:{
+/** Layer keys and contour comparison. In the microscope view they fold into
+ * one "Layers" disclosure so the operative image keeps the space; a picked
+ * layer's inspection stays visible outside the fold. */
+export function OperativeLegend({scene,settings,cursor,picked,onPick,onSmooth,visible,sourceVolumeBoundary,collapsible}:{
   scene:SurgicalView['scene'];settings:ViewerWorkspaceSettings;cursor:Point3;
   picked:string|null;onPick:(name:string|null)=>void;onSmooth:(smooth:boolean)=>void;visible:Record<string,boolean>;
-  sourceVolumeBoundary?:boolean;
+  sourceVolumeBoundary?:boolean;collapsible?:boolean;
 }){
   const rows=useMemo(()=>operativeLegend(scene,settings),[scene.sceneId,settings.layerColor,settings.operativeView,settings.microscope?.tissueStyle]);
   const selected=rows.find(r=>r.name===picked);
   const primary=rows.filter(r=>r.target||r.isVessel||r===selected);
   const smooth=settings.smoothSurfaces!==false;
   const point=selected?originalLabelLocation(selected,cursor):null;
-  return <div className="engine-anatomy-key" aria-label="Operative anatomy legend" onDoubleClick={e=>e.stopPropagation()}>
+  const keys=<>
     <div className="engine-anatomy-key-keys">{primary.map(row=><button key={row.name} aria-pressed={row===selected}
       title={row.target?'Selected treatment target':row.method??row.title} data-region={row.name}
       data-source-color={row.sourceColor} data-field-color={row.fieldColor}
@@ -29,6 +32,12 @@ export function OperativeLegend({scene,settings,cursor,picked,onPick,onSmooth,vi
     {sourceVolumeBoundary&&<span className="operative-source-boundary-key">
       <i aria-hidden="true" style={{background:vesselSourceBoundaryColor}}/>Source volume boundary
     </span>}
+  </>;
+  return <div className="engine-anatomy-key" aria-label="Operative anatomy legend" onDoubleClick={e=>e.stopPropagation()}>
+    {collapsible?<details className="engine-anatomy-fold">
+      <summary title="Show layer keys and contour comparison">Layers{selected?` · ${selected.title}`:''}</summary>
+      {keys}
+    </details>:keys}
     {selected&&<div className="operative-layer-inspection" role="status">
       <strong>{selected.layerId??selected.name}</strong>
       {selected.method&&<span>{selected.method}{selected.review?' · '+selected.review:''}</span>}

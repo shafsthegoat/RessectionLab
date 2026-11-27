@@ -47,12 +47,15 @@ export function OperativeSourceLocator({source, bounds, inverse, microscope, lab
     });
     ctx.putImageData(image,0,0);
   },[plane,planeX,inverse,source,labelsOnly]);
-  return <figure className="operative-source-locator" data-operative-locator-state={stateId}
+  // Folded to a small chip by default so the operative image keeps the corner.
+  return <details className="operative-source-locator-fold" onDoubleClick={event=>event.stopPropagation()}>
+    <summary title="Show where the microscope focus lies in the whole source">Source extent</summary>
+    <figure className="operative-source-locator" data-operative-locator-state={stateId}
     data-source-case={source.caseHash} data-focus-inside={inside} aria-label="Whole-source operative locator">
     <figcaption>Source extent · sagittal</figcaption>
     <div><canvas ref={canvas} width={width} height={height}/>
       {inside&&<svg viewBox={`0 0 ${width} ${height}`} aria-hidden="true"><circle cx={cx} cy={cy} r="5"/><path d={`M${cx-8},${cy}h5m6,0h5M${cx},${cy-8}v5m0,6v5`}/></svg>}
     </div>
     <span>{inside?'Microscope focus':'Focus outside source'}{labelsOnly?' · labels':''}</span>
-  </figure>;
+  </figure></details>;
 }

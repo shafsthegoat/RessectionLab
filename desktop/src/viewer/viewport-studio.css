@@ -348,7 +348,7 @@
 .rl-viewer .rl-viewer-error { top: 50px; left: 14px; max-width: min(440px, calc(100% - 58px)); border-radius: 4px; }
 .rl-viewer .rl-body-guide { width: 84px; min-height: 94px; left: 12px; bottom: 10px; }
 .rl-viewer .rl-body-guide [data-guide-caption] { font-size: 8px; color: #839d8d; }
-.rl-viewer .rl-viewer-anatomy-image:has(.rl-body-guide:not([hidden])) .operative-readout { left: 108px; }
+.rl-viewer .rl-viewer-anatomy-image:has(.rl-body-guide:not([hidden])) .operative-readout:not(.practice-hud) { left: 108px; }
 
 @media (max-width: 1100px) {
   .rl-viewer, .poc-workbench .rl-viewer { --rl-slice-column: max(215px, 33%); }

@@ -117,11 +117,34 @@
 .practice-pose {font-variant-numeric:tabular-nums}
 .practice-pose button {padding:1px 4px;font-size:10px}
 .practice-controls details p {overflow-wrap:anywhere}
-.operative-readout.practice-hud {max-width:320px;font-size:11px}
-.practice-hud dl {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 12px;margin:2px 0}
-.practice-hud dl div {display:grid;gap:1px}
+/* Closed: one status line at the pane's lower-right edge, clear of the body
+   guide. Open: the full readout grows upward along the right edge and stays
+   within half the pane, so the centre of the field stays visible. */
+.operative-readout.practice-hud {left:auto;right:10px;bottom:10px;max-width:calc(100% - 106px);box-sizing:border-box;padding:0;
+  display:flex;flex-direction:column-reverse;gap:0;font-size:11px;pointer-events:auto;background:rgba(12,17,17,.72);border-color:rgba(225,214,190,.18)}
+.practice-hud > summary {display:flex;gap:0;align-items:baseline;min-width:0;padding:4px 9px;cursor:pointer;list-style:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#e8e2d3}
+.practice-hud > summary::-webkit-details-marker {display:none}
+.practice-hud > summary::before {content:'';flex:none;align-self:center;width:0;height:0;margin-right:7px;border:4px solid transparent;border-bottom:5px solid #cdbb98;border-top:0}
+.practice-hud[open] > summary::before {border-bottom:0;border-top:5px solid #cdbb98}
+/* Time, target, loss and the urgent finding keep their width; only the urgent
+   finding's detail elides (the full line is in the summary's title). */
+.practice-hud > summary > span {flex:none}
+.practice-hud > summary > :is(span,b,small) + :is(span,b,small)::before {content:'·';padding:0 6px;color:#8d9a96;font-weight:400;font-style:normal}
+.practice-hud > summary > b {flex:none;font-weight:600}
+.practice-hud > summary > small {flex:0 6 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;font-size:inherit}
+.practice-hud > summary > small[data-tone=bleeding] {color:#f0a497}
+.practice-hud > summary > small[data-tone=injury] {color:#e0a6c6}
+.practice-hud > summary > b[data-tone=bleeding] {color:#f0a497}
+.practice-hud > summary > b[data-tone=injury] {color:#e0a6c6}
+.practice-hud > summary > b[data-tone=navigation] {color:#d8c497;font-style:italic}
+.practice-hud > summary:focus-visible {outline:2px solid #8effc6;outline-offset:-2px}
+.operative-readout.practice-hud[open] {width:min(300px,calc(50% - 20px));max-width:none;max-height:calc(100% - 64px);background:rgba(12,17,17,.86)}
+.practice-hud[open] > summary {border-top:1px solid rgba(225,214,190,.16)}
+.practice-hud-body {display:grid;gap:3px;padding:8px 10px 6px;overflow:auto;min-height:0}
+.practice-hud dl {display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;margin:2px 0}
+.practice-hud dl div {display:contents}
 .practice-hud dt {color:#c1cbc9;font-size:10px}
-.practice-hud dd {margin:0;font-size:12px}
+.practice-hud dd {margin:0;font-size:11px;text-align:right}
 .surgical-panel[data-practice-active="true"] .rehearsal-state {padding-block:4px}
 .surgical-panel[data-practice-active="true"] .rehearsal-state>strong {font-size:12px}
 

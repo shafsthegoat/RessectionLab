@@ -121,3 +121,32 @@ export function scenarioReadout(view:SurgicalView|null|undefined,proximity?:TipP
      proximity.vessel?`${proximity.vessel.name} ${mm(proximity.vessel.distanceMm)}`:`no vessel within ${proximity.searchMm} mm`].join(' · ')});
   return lines;
 }
+
+export type UrgentTone='bleeding'|'injury'|'navigation';
+export interface PracticeStatus {elapsed:string;removed:string;bloodLoss:string;urgent:{tone:UrgentTone;text:string;detail?:string}|null}
+const finite=(n:unknown):n is number=>typeof n==='number'&&Number.isFinite(n);
+
+/** One compact practice status line: clock, original-target removal, blood
+ * loss and the single most urgent of open bleeding, recorded injury or a
+ * navigation discrepancy (rehearsal truth). The urgent finding's `detail` is
+ * the part that may be elided first on a narrow pane. Missing inputs read as
+ * unknown or not modelled, never as zero. */
+export function practiceStatus(view:SurgicalView,originalTargetMm3?:number|null):PracticeStatus {
+  const seconds=Number(view.metrics.elapsedSeconds);
+  const elapsed=Number.isFinite(seconds)?`${Math.floor(seconds/60)}:${String(Math.floor(seconds%60)).padStart(2,'0')}`:'time unknown';
+  const remaining=view.originalTargetResidualMm3;
+  const removed=finite(originalTargetMm3)&&originalTargetMm3>0&&finite(remaining)?
+    `${+(100*(originalTargetMm3-remaining)/originalTargetMm3).toFixed(1)}% of target`:'target removal unknown';
+  const bleeding=bleedingSummary(view.vesselBleedingV1 as VesselBleedingState|undefined);
+  const bloodLoss=bleeding&&finite(bleeding.lossMm3)?`loss ${ml(bleeding.lossMm3)}`:'blood loss not modelled';
+  let urgent:PracticeStatus['urgent']=null;
+  const injury=view.surgicalInjuryV1 as InjuryDisplay|undefined;
+  const truth=latestNavigation(view)?.truth;
+  if(bleeding?.open)urgent={tone:'bleeding',text:`Bleeding${bleeding.rateMm3PerSecond>0?` ${(bleeding.rateMm3PerSecond*.06).toFixed(1)} mL/min`:''}`,detail:`${bleeding.open} open${bleeding.unknown?' · kind UNKNOWN':''}`};
+  else if(injury?.eventCount){
+    const structures=[...new Set(injury.events.flatMap(e=>e.structures))];
+    urgent={tone:'injury',text:`Injury · lacerated ${injury.totalsMm3.lacerated.toFixed(0)} mm³`,...(structures.length?{detail:`${structures[0]}${structures.length>1?` +${structures.length-1}`:''}`}:{})};
+  }else if(truth&&finite(truth.navigationErrorMm)&&truth.navigationErrorMm>=1)
+    urgent={tone:'navigation',text:`Rehearsal truth · navigation off ${mm(truth.navigationErrorMm)}`};
+  return {elapsed,removed,bloodLoss,urgent};
+}

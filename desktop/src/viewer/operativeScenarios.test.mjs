@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import {scenarioReadout,mappingText,latestNavigation,bleedingSummary} from '../operative-scenarios.ts';
+import {scenarioReadout,mappingText,latestNavigation,bleedingSummary,practiceStatus} from '../operative-scenarios.ts';
 import {mappingSites,woundEmitters,injuryMarkGrid} from './operativeScenarioScene.ts';
 import {bloodShare,fieldLiquidAppearance} from './surgicalFieldOptics.ts';
 import {nearestLayers,tipProximity,workingTip} from './tipProximity.ts';
@@ -45,6 +45,21 @@ test('brain shift, bleeding with kind UNKNOWN and injury lines',()=>{
   assert.match(text[2],/^Injury recorded · contused 2 mm³ · lacerated 1 mm³ · 1 vessel cells · cst$/);
   assert.equal(bleedingSummary(view.vesselBleedingV1).unknown,1);
   assert.deepEqual(scenarioReadout({...base(),brainShiftV1:{...view.brainShiftV1,started:false}}).map(l=>l.text),['Brain shift scenario · begins at dural opening']);
+});
+
+test('practice status is one line: clock, target removal, blood loss and the most urgent finding',()=>{
+  const nav={observations:[{kind:'navigation',reportedImageRasMm:[1,2,3],imageRegion:null}],
+    navigationV1:{privilegedTruth:{readings:[{tipRasMm:[1,2,1],registrationErrorMm:[0,0,2],navigationErrorMm:5.7}]}}};
+  const bleeding={wounds:{a:{kind:'uncertain',sealFraction:0,lossMm3:1500,rateMm3PerSecond:76,cells:[1]}},bloodLossMm3:1500,lossByKindMm3:{},tumourOozeMm3:0,rateMm3PerSecond:76,depositedMm3:0};
+  const injury={contused:[],lacerated:[3],vesselInjured:[],totalsMm3:{contused:0,lacerated:141,vessel:0},avulsions:0,eventCount:1,events:[{structures:['Artery','Cortex']}]};
+  const view={...base(),...nav,metrics:{elapsedSeconds:908.5},originalTargetResidualMm3:10272,vesselBleedingV1:bleeding,surgicalInjuryV1:injury};
+  assert.deepEqual(practiceStatus(view,13696),{elapsed:'15:08',removed:'25% of target',bloodLoss:'loss 1.5 mL',
+    urgent:{tone:'bleeding',text:'Bleeding 4.6 mL/min',detail:'1 open · kind UNKNOWN'}});
+  const sealed={...bleeding,wounds:{a:{...bleeding.wounds.a,sealFraction:1}},rateMm3PerSecond:0};
+  assert.deepEqual(practiceStatus({...view,vesselBleedingV1:sealed},13696).urgent,{tone:'injury',text:'Injury · lacerated 141 mm³',detail:'Artery +1'});
+  assert.deepEqual(practiceStatus({...view,vesselBleedingV1:sealed,surgicalInjuryV1:undefined},13696).urgent,{tone:'navigation',text:'Rehearsal truth · navigation off 5.7 mm'});
+  const bare=practiceStatus({...base(),metrics:{}},null);
+  assert.deepEqual(bare,{elapsed:'time unknown',removed:'target removal unknown',bloodLoss:'blood loss not modelled',urgent:null});
 });
 
 test('mapping sites and wound emitters come from the view',()=>{

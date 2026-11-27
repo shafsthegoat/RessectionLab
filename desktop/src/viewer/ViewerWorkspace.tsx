@@ -1090,7 +1090,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
             {acquiredBrainSection?<span>Gray end faces mark the source volume boundary</span>:
               sourceVolumeBoundary&&<span>Gray vessel ends mark the source volume boundary</span>}
           </div>}
-          {surgicalView&&!fieldPresentation&&<OperativeLegend scene={surgicalView.scene} settings={settings} cursor={currentCursor}
+          {surgicalView&&!fieldPresentation&&<OperativeLegend scene={surgicalView.scene} settings={settings} cursor={currentCursor} collapsible={settings.operativeView==='surgeon'}
             visible={visibleLayers} picked={pickedLayer?.sceneId===surgicalView.scene.sceneId?pickedLayer.name:null}
             onPick={inspectRegion} onSmooth={setSmoothSurfaces} sourceVolumeBoundary={sourceVolumeBoundary||acquiredBrainSection||undefined}/>}
           {!fieldPresentation&&settings.operativeView==='surgeon'&&settings.microscope&&geometrySource&&geometry&&surgicalView&&
@@ -1100,7 +1100,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
           {!fieldPresentation&&settings.operativeView==='surgeon'&&settings.microscope?.inspectionCutaway&&geometrySource&&geometry&&
             surgicalView?.operativeExposureV1&&!displayedSurgical?.preview&&
             <OperativeDepthSection source={geometrySource} inverse={geometry.inverse} microscope={settings.microscope} stateId={surgicalView.stateId}/>}
-          {!fieldPresentation&&displayedSurgical?.practiceHud&&surgicalView&&<PracticeHud interaction={displayedSurgical} view={surgicalView} membrane={membrane} scenarios={scenarioLines}/>}
+          {displayedSurgical?.practiceHud&&surgicalView&&<PracticeHud interaction={displayedSurgical} view={surgicalView} membrane={membrane} scenarios={scenarioLines}/>}
           {!fieldPresentation&&!displayedSurgical?.practiceHud&&settings.operativeView==='surgeon'&&surgicalView&&(showEngineSection?
             <details className="engine-frame-metrics" data-operative-readout-state={surgicalView.stateId}>
               <summary>{membrane??'Engine'} · {Number(surgicalView.metrics.elapsedSeconds).toFixed(1)} s</summary>
