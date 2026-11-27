@@ -6,6 +6,7 @@ import type {SurfaceDiagnostics} from './surfacePolicy';
 import {surfaceKind} from './surfacePolicy.ts';
 import {indexedSurfaceNormals} from './surfaceNormals.ts';
 import {fairNativeBrainSurface,NATIVE_BRAIN_SURFACE_POLICY} from './operativeBrainFairing.ts';
+import {fairHostSurface,hostFairingMobility,HOST_FAIRING_POLICY} from './hostSurfaceFairing.ts';
 
 /** The undeformed material partition is shared across every frame of an
  * accepted engine mapping. Fields derived from it are for drawing only. */
@@ -16,6 +17,10 @@ export interface EngineSurfaceReference {
   nativeBrainRegion?:number;
   layerRegion?:number;
   cavity?:AcceptedCavity;
+  /** A host-head rehearsal layer: relax its free surface in 3D within half a cell (display only). */
+  hostFairing?:boolean;
+  /** Region ids of the brain parenchyma and head-wall groups; interfaces inside a group stay shared. */
+  hostGroups?:number[][];
 }
 export const ENGINE_SURFACE_POLICY = 'engine-shared-implicit-v1';
 export const MAX_ENGINE_REFERENCE_BYTES = 32 * 1024 ** 2;
@@ -248,12 +253,23 @@ export function engineImplicitSurface(points:Float32Array,indices:Uint32Array,no
     diagnostics.maxDisplacementMm=refined.maximum;
     diagnostics.displacementLimitMm=refined.limit;
   }
+  // A host head is a real 1 mm reconstruction: its gentle slopes, vessels and
+  // assumed membrane would otherwise keep whole-cell terraces in the display.
+  const setup=!refined&&reference.hostFairing?hostFairingMobility(points,display.positions,owner,mask,shape,protectedIds,reference.hostGroups,affine,.9*cap):undefined;
+  const host=setup?fairHostSurface(points,setup.start,display.smoothIndices??indices,setup.mobile,affine,
+    {limitMm:(kind==='vessel'?.8:.98)*cap,vessel:kind==='vessel'}):undefined;
+  if(host){
+    diagnostics.policy=HOST_FAIRING_POLICY;
+    diagnostics.backedOffVertices=host.backedOffVertices;
+    diagnostics.maxDisplacementMm=Math.max(diagnostics.maxDisplacementMm,host.maximumMm);
+    if(diagnostics.maxDisplacementMm>cap)throw Error(`Host display fairing exceeded the physical source bound (${host.maximumMm} > ${cap} mm)`);
+  }
   diagnostics.preparationMs=performance.now()-started;
-  return {positions:refined?.positions??display.positions,smoothNormals:refined?.smoothNormals??display.smoothNormals,
+  return {positions:host?.positions??refined?.positions??display.positions,smoothNormals:host?.normals??refined?.smoothNormals??display.smoothNormals,
     smoothIndices:display.smoothIndices,diagnostics};
 }
 
-export interface EnginePartitionRequest {key:string;reference?:EngineSurfaceReference|null;cavity?:AcceptedCavity;layerRegion?:number}
+export interface EnginePartitionRequest {key:string;reference?:EngineSurfaceReference|null;cavity?:AcceptedCavity;layerRegion?:number;hostFairing?:boolean;hostGroups?:number[][]}
 export class WorkerSurfacePartition {
   private key?:string;
   private value?:EngineSurfaceReference|null;
@@ -265,8 +281,8 @@ export class WorkerSurfacePartition {
       this.value=request.reference&&request.reference.owner.byteLength>maxBytes?null:request.reference;
     }
     if(request.key!==this.key||this.value===undefined)throw Error('Missing shared engine display partition');
-    return this.value&&(request.cavity||request.layerRegion!==undefined)?
-      {...this.value,cavity:request.cavity,layerRegion:request.layerRegion}:this.value;
+    return this.value&&(request.cavity||request.layerRegion!==undefined||request.hostFairing)?
+      {...this.value,cavity:request.cavity,layerRegion:request.layerRegion,...(request.hostFairing?{hostFairing:true,hostGroups:request.hostGroups}:{})}:this.value;
   }
   get retainedBytes(){return this.value?.owner.byteLength??0;}
 }

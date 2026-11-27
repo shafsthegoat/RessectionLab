@@ -521,3 +521,28 @@
 .operative-layer-inspection {width:fit-content; max-width:100%; display:grid; gap:2px; padding:7px; border-radius:4px; background:rgba(14,21,22,.94); overflow-wrap:anywhere}
 
 .engine-source-swatch {display:inline-flex; align-items:center; margin-left:5px; padding-left:5px; border-left:1px solid #627572; font-size:9px; color:#afc1bb}
+/* Host-head operative scenes: head axes above the body guide, and the depth section of the inspection cutaway. */
+.rl-body-guide .rl-head-axes { position: absolute; left: 0; bottom: calc(100% + 2px); width: 64px; text-align: center; pointer-events: none; }
+.rl-body-guide .rl-head-axes svg { display: block; width: 64px; height: 64px; overflow: visible; }
+.rl-body-guide .rl-head-axes line { stroke-width: 2; stroke-linecap: round; }
+.rl-body-guide .rl-head-axes text { font: 700 10px system-ui; text-anchor: middle; dominant-baseline: central; paint-order: stroke; stroke: #0b1110; stroke-width: 2.5px; }
+.rl-body-guide .rl-head-axes small { display: block; margin-top: 8px; font: 8px system-ui; color: #839d8d; }
+.rl-head-axes .axis-R line { stroke: #e2836f; } .rl-head-axes .axis-R text { fill: #f0a594; }
+.rl-head-axes .axis-A line { stroke: #84cf8c; } .rl-head-axes .axis-A text { fill: #a8e3ad; }
+.rl-head-axes .axis-S line { stroke: #84aee6; } .rl-head-axes .axis-S text { fill: #a9c8f0; }
+.operative-depth-section { position:absolute; top:clamp(118px,22%,190px); right:12px; z-index:3; width:clamp(230px,30%,340px); margin:0; padding:6px; border:1px solid #58655c; border-radius:5px; background:#101715f0; color:#dee6dc; font:10px/1.3 system-ui; pointer-events:none; box-sizing:border-box; }
+.operative-depth-section figcaption { margin-bottom:4px; font-weight:600; }
+.operative-depth-body { display:flex; gap:6px; align-items:flex-start; }
+.operative-depth-image { position:relative; flex:0 0 46%; }
+.operative-depth-image canvas { display:block; width:100%; height:100%; image-rendering:auto; background:#050807; }
+.operative-depth-image svg { position:absolute; inset:0; width:100%; height:100%; }
+.operative-depth-image .axis { stroke:#8effc6; stroke-width:.8; stroke-dasharray:3 3; vector-effect:non-scaling-stroke; }
+.operative-depth-image .focus { stroke:#ffd27a; stroke-width:1.4; vector-effect:non-scaling-stroke; }
+.operative-depth-image .tick { stroke:#e7efe9; stroke-width:1; vector-effect:non-scaling-stroke; }
+.operative-depth-image .depth-label { position:absolute; left:10px; transform:translateY(-50%); font:600 9px system-ui; color:#f3f6f2; text-shadow:0 0 2px #000,0 0 2px #000; }
+.operative-depth-key { flex:1; margin:0; padding:0; list-style:none; }
+.operative-depth-key li { display:grid; grid-template-columns:9px minmax(0,1fr) auto; gap:4px; align-items:center; padding:1px 0; }
+.operative-depth-key span { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.operative-depth-key i { width:9px; height:9px; border-radius:2px; }
+.operative-depth-key small { color:#a9b8ae; font-variant-numeric:tabular-nums; }
+.operative-depth-note { display:block; margin-top:4px; color:#a9b8ae; font-size:9px; }

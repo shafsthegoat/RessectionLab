@@ -12,15 +12,14 @@ export const EXTERIOR_AIR = 1,
   // the operative scene from its region kinds.
   OUTSIDE_BRAIN = 16;
 
-/** Source-certified external skin faces around tetrahedral diagonal shortcuts.
- * Points lie exactly on native rectangular skin/air faces. Quarter faces meet
- * on the same grid as the local visibility test on the other tissue meshes. */
-export function exteriorSkinSurface(
+/** Owner flags of the undeformed partition: original skin, free space, and the
+ * free space connected to the crop faces (exterior air). */
+export function exteriorAirFlags(
   owner: Uint16Array,
   shape: Shape3,
-  affine: Affine,
   skin: number,
-  protectedIds: ReadonlySet<number>,
+  /** Free space touching these owners (brain, membrane) is never exterior air, even where it reaches a crop face. */
+  interiorIds?: ReadonlySet<number>,
 ) {
   const [nx, ny, nz] = shape,
     strides = [ny * nz, nz, 1];
@@ -28,8 +27,17 @@ export function exteriorSkinSurface(
     queue = new Int32Array(owner.length);
   let front = 0,
     end = 0;
+  const interior = (id: number) => {
+    if (!interiorIds) return false;
+    const [x, y, z] = sourceVoxel(id, shape);
+    return (
+      (x > 0 && interiorIds.has(owner[id - strides[0]])) || (x < nx - 1 && interiorIds.has(owner[id + strides[0]])) ||
+      (y > 0 && interiorIds.has(owner[id - nz])) || (y < ny - 1 && interiorIds.has(owner[id + nz])) ||
+      (z > 0 && interiorIds.has(owner[id - 1])) || (z < nz - 1 && interiorIds.has(owner[id + 1]))
+    );
+  };
   const addAir = (id: number) => {
-    if (!owner[id] && !(flags[id] & EXTERIOR_AIR)) {
+    if (!owner[id] && !(flags[id] & EXTERIOR_AIR) && !interior(id)) {
       flags[id] |= EXTERIOR_AIR;
       queue[end++] = id;
     }
@@ -53,6 +61,24 @@ export function exteriorSkinSurface(
     if (z > 0) addAir(id - 1);
     if (z < nz - 1) addAir(id + 1);
   }
+  return flags;
+}
+
+/** Source-certified external skin faces around tetrahedral diagonal shortcuts.
+ * Points lie exactly on native rectangular skin/air faces. Quarter faces meet
+ * on the same grid as the local visibility test on the other tissue meshes. */
+export function exteriorSkinSurface(
+  owner: Uint16Array,
+  shape: Shape3,
+  affine: Affine,
+  skin: number,
+  protectedIds: ReadonlySet<number>,
+  /** Free space touching these owners (brain, membrane) is never exterior air, even where it reaches a crop face. */
+  interiorIds?: ReadonlySet<number>,
+) {
+  const [nx, ny, nz] = shape,
+    strides = [ny * nz, nz, 1];
+  const flags = exteriorAirFlags(owner, shape, skin, interiorIds);
   const corners: Point3[] = Array.from({length: 8}, (_, i) => [i & 1, (i >> 1) & 1, i >> 2]);
   const offsets = corners.map((p) => cIndex(shape, p)),
     affected = new Set<number>();

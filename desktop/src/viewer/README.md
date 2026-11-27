@@ -98,6 +98,33 @@ the working grid. Brain and lesion walls in the microscope are shaded by the
 case scan's intensity (5th to 95th percentile over brain and lesion cells), so
 cortex, white matter and tumour read differently wherever a cut exposes them.
 
+A host head is a real reconstruction on a 1 mm grid, so its display surfaces
+take one more conditioning step (`hostSurfaceFairing.ts`). After the shared
+implicit field, the free surface of each layer (against free space, a vessel
+or membrane, or the other group: brain against the head wall) relaxes in 3D
+with a bounded Laplacian; every vertex stays within 0.49 mm of its source
+vertex. Faces shared by two layers of one group (cortex and white matter,
+scalp and galea) keep one position, and where such an interface reaches the
+free surface its vertex is lifted by a fixed amount computed from the owner
+grid alone, so both layers stay joined. Vessels use a volume-preserving λ|μ
+pair. Crop faces stay flat. Free cells walled by brain on four or more faces,
+and enclosed free pockets of at most 12 cells, are closed for display only;
+the picking surface, contours and the engine's cells keep the source. The
+native scalp is the exterior surface (the rectangular intact-face mesh is not
+drawn), and subarachnoid space reaching a crop face is not exterior air, so
+white matter under it takes the cortex cover. The fairing adds about 1.5 s of
+worker time for a 1-million-vertex cortex.
+
+The working grid's crop faces are drawn in one neutral section colour. The
+planned bone flap outline is marked on the intact skin in violet until the
+scalp is incised. **Head axes** above the body guide show R, A and S of the
+scene frame as the camera sees them. Parked (not inserted) instruments are
+hidden in the microscope and drawn faint outside it. **Inspection cutaway**
+caps the cut plane with the layer owning each point, shaded by the scan
+intensity, and adds a longitudinal section along the microscope axis with the
+layers met from the skin listed by depth; unlabelled space (CSF is not
+segmented) stays unlabelled.
+
 CUSA V3 keeps exact pending work on cells it has not yet removed. The bridge
 sends it as `cusaProgressV1` (pending cells and the fraction of each cell's
 removal threshold); views without it are unchanged. The cavity field treats a

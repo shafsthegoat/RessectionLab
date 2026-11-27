@@ -2,10 +2,13 @@ import * as THREE from 'three';
 import type {ExposureBodyName, OperativeExposureBody, OperativeExposureObject} from '../operative-exposure-types';
 import type {SurgicalView} from '../surgical-types';
 import type {ViewerVolume} from './contracts';
+import type {Point3} from './coordinates';
 import {bodyNames, bodyIsDisplaced, sourceCenter} from './exposureAnatomy.ts';
 import {buildExposureSurface, ExposureBodyTransport} from './exposureBodySurface.ts';
 import {exteriorSkinSurface} from './exteriorSkinSurface.ts';
 import {ExteriorSkinDomain, OUTSIDE_BRAIN_KINDS, surfaceCoverFor} from './exteriorSkinDomain.ts';
+import {HOST_BRAIN_KINDS} from './hostSurfaceFairing.ts';
+import {craniotomyOutline} from './hostSceneDisplay.ts';
 import {placeInSourceFrame} from './sceneGeometry.ts';
 import {generatedTissueFinish} from './generatedTissueFinish.ts';
 import {applyOperativeSurface, operativeSurfaceStyle} from './operativeMaterial.ts';
@@ -197,6 +200,9 @@ export class OperativeExposureScene {
   private rest?: THREE.Group;
   private restKey?: string;
   private smooth = true;
+  private hostHead = false;
+  /** The planned bone flap outline marked on the intact skin of a host head. */
+  private outline?: {mesh: THREE.Mesh; skin: string; intact: boolean; shown: boolean};
   private exterior?: {
     mesh: THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
     contour: NonNullable<ReturnType<typeof exteriorSkinSurface>>;
@@ -223,7 +229,7 @@ export class OperativeExposureScene {
   }
   private refreshExterior() {
     if (this.exterior) {
-      this.exterior.mesh.visible = this.smooth && this.exterior.opaque;
+      this.exterior.mesh.visible = this.smooth && this.exterior.opaque && !this.hostHead;
       this.exterior.domain.enabled = this.exterior.mesh.visible;
     }
   }
@@ -254,6 +260,7 @@ export class OperativeExposureScene {
     this.fixtures.clear();
     this.exterior?.domain.dispose();
     this.exterior = undefined;
+    this.outline = undefined;
     this.rest = undefined;
     this.restKey = undefined;
     this.markers = new THREE.Group();
@@ -272,6 +279,14 @@ export class OperativeExposureScene {
       const skinId = view.scene.regions.find((r) => r.name === skin?.name)?.id;
       const galeaId = view.scene.regions.find((r) => r.name === galea?.name)?.id;
       if (skin && skinId && galeaId) {
+        // A host head (declared layer provenance) is a real reconstruction cropped
+        // through the brain: subarachnoid space reaches the crop faces, so it must
+        // not count as exterior air. Its faired native scalp is the exterior surface.
+        this.hostHead = volume.compartments.some((layer) => layer.provenance);
+        const kindOf = (r: {name: string}) => {
+          const layer = volume.compartments.find((l) => l.name === r.name);
+          return layer?.displayKind ?? layer?.kind ?? '';
+        };
         const contour = exteriorSkinSurface(
           owner,
           view.scene.shape,
@@ -280,6 +295,9 @@ export class OperativeExposureScene {
           new Set(
             view.scene.regions.filter((r) => r.material === 'vessel' || r.material === 'membrane').map((r) => r.id),
           ),
+          this.hostHead
+            ? new Set(view.scene.regions.filter((r) => r.material === 'membrane' || HOST_BRAIN_KINDS.has(kindOf(r))).map((r) => r.id))
+            : undefined,
         );
         if (contour) {
           const geometry = new THREE.BufferGeometry();
@@ -318,6 +336,25 @@ export class OperativeExposureScene {
       this.outward = state.exteriorNormalRas
         ? new THREE.Vector3(...state.exteriorNormalRas).normalize()
         : center(state.bodies.scalp).sub(center(state.bodies.dura)).normalize();
+      const skinLayer = volume.compartments.find((layer) => (layer.displayKind ?? layer.kind) === 'scalp');
+      const loop = this.hostHead && skinLayer
+        ? craniotomyOutline(state.bodies.bone.cells, owner, view.scene.shape, view.scene.affine, this.outward.toArray() as Point3)
+        : undefined;
+      if (loop && skinLayer) {
+        const curve = new THREE.CatmullRomCurve3(loop.map((p) => new THREE.Vector3(...p)), true, 'centripetal');
+        const mesh = new THREE.Mesh(new THREE.TubeGeometry(curve, loop.length * 3, 0.35, 6, true),
+          new THREE.MeshStandardMaterial({color: '#4b2f78', roughness: 0.7, metalness: 0}));
+        mesh.name = 'planned-craniotomy-outline';
+        mesh.userData.displayOnly = true;
+        this.group.add(mesh);
+        this.outline = {mesh, skin: skinLayer.name, intact: true, shown: true};
+      }
+    }
+    if (this.outline) {
+      // The marking belongs to the intact skin; it goes once the scalp is incised or reflected.
+      const scalp = state.bodies.scalp;
+      this.outline.intact = !scalp.cutCells.length && !bodyIsDisplaced(scalp, view.scene.shape, view.scene.affine);
+      this.outline.mesh.visible = this.outline.intact && this.outline.shown;
     }
     if (this.view === view && this.volume === volume) return;
     this.source = owner;
@@ -471,6 +508,10 @@ export class OperativeExposureScene {
       }
   }
   appearance(volume: ViewerVolume, settings: ViewerWorkspaceSettings, isVisible: (name: string) => boolean) {
+    if (this.outline) {
+      this.outline.shown = isVisible(this.outline.skin) && settings.microscope?.tissueStyle !== 'labels';
+      this.outline.mesh.visible = this.outline.intact && this.outline.shown;
+    }
     if (this.exterior) {
       // A covered face takes the colour its covering layer has in this view.
       for (const [cover, kind] of [['skin', 'scalp'], ['cortex', 'grayMatter']] as const) {

@@ -42,6 +42,8 @@ export class OrientationGuide {
   private readonly arrow:SVGLineElement|null;
   private readonly arrowhead:SVGPathElement|null;
   private readonly axial:HTMLElement|null;
+  private readonly axes:SVGSVGElement|null;
+  private readonly axisDirection=new THREE.Vector3();
   constructor(private readonly element:HTMLElement){
     this.scene.add(this.mannequin.model,new THREE.AmbientLight(0xffffff,1.2),this.light,this.light.target);
     this.sides=Array.from(element.querySelectorAll<HTMLElement>('[data-guide-side]'));
@@ -49,6 +51,7 @@ export class OrientationGuide {
     this.gravity=element.querySelector('[data-guide-gravity]');
     this.arrow=element.querySelector('[data-guide-arrow]');this.arrowhead=element.querySelector('[data-guide-arrowhead]');
     this.axial=element.querySelector('[data-guide-axial]');
+    this.axes=element.parentElement?.querySelector<SVGSVGElement>('[data-head-axes]')??null;
     this.fit();
   }
   setPosture(effects:PositionEffects|null|undefined):void {
@@ -83,6 +86,7 @@ export class OrientationGuide {
       this.projected.set(side.dataset.guideSide==='right'?.355:-.355,0,-.16).applyMatrix4(this.bodyRotation).project(this.camera);
       side.style.left=`${(this.projected.x+1)*width/2}px`;side.style.top=`${(1-this.projected.y)*height/2}px`;
     }
+    if(this.axes&&!this.axes.closest('[hidden]'))this.syncAxes();
     if(this.down&&this.gravity){
       this.projected.copy(this.down).applyQuaternion(this.cameraRotation.clone().invert());
       const axial=Math.abs(this.projected.z)>.95,x=this.projected.x*9,y=-this.projected.y*9,angle=Math.atan2(y,x),ex=12+x,ey=12+y;
@@ -91,6 +95,21 @@ export class OrientationGuide {
       if(this.axial){this.axial.hidden=!axial;this.axial.textContent=this.projected.z>0?'⊙':'⊗';}
       this.gravity.setAttribute('aria-label',`Down${axial?(this.projected.z>0?' toward viewer':' away from viewer'):''}`);
     }
+  }
+  /** Head RAS axes as seen by the camera: right, anterior and superior, with their opposite ends. */
+  private syncAxes(){
+    const inverse=this.cameraRotation.clone().invert();
+    this.axes!.querySelectorAll<SVGGElement>('[data-head-axis]').forEach(group=>{
+      const axis=Number(group.dataset.headAxis);
+      this.axisDirection.set(axis===0?1:0,axis===1?1:0,axis===2?1:0).applyQuaternion(inverse);
+      const {x,y,z}=this.axisDirection,line=group.querySelector('line'),ends=group.querySelectorAll('text');
+      line?.setAttribute('x2',String(32+20*x));line?.setAttribute('y2',String(32-20*y));
+      ends[0]?.setAttribute('x',String(32+27*x));ends[0]?.setAttribute('y',String(32-27*y));
+      ends[1]?.setAttribute('x',String(32-27*x));ends[1]?.setAttribute('y',String(32+27*y));
+      // An axis pointing at the viewer reads strongest; one seen end-on keeps both labels apart.
+      group.style.opacity=String(.55+.45*Math.max(0,Math.min(1,.5+.5*z)));
+      ends[1]?.style.setProperty('opacity',Math.hypot(x,y)<.2?'0':'.7');
+    });
   }
   render(renderer:THREE.WebGLRenderer,main:THREE.Camera,root:PaneBounds,rect:PaneBounds):boolean {
     const viewport=paneViewport(root,rect);if(!viewport)return false;

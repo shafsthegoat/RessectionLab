@@ -25,6 +25,9 @@ import {VesselDepthSeparation} from './vesselDepthSeparation';
 import {LabelTextureUpdates} from './labelTextureUpdates';
 import {MAX_ENGINE_REFERENCE_BYTES} from './engineImplicitSurface';
 import type {EnginePartitionRequest,EngineSurfaceReference} from './engineImplicitSurface';
+import {HOST_BRAIN_KINDS,HOST_HEAD_KINDS} from './hostSurfaceFairing';
+import {installCropSection,presentParkedTool} from './hostSceneDisplay';
+import {SectionCap} from './sectionCap';
 import {modeledAnatomy} from './modeledAnatomy';
 import {maskSurface} from './surface';
 import {SourcePickingBvh} from './sourcePickingBvh';
@@ -850,6 +853,8 @@ export class VolumeRenderer {
       mesh.userData.nativeCortex=nativeCortex;
       mesh.userData.corticalSignalEnabled=installCorticalSignal(mesh.material,signal,this.showCorticalSignal(mesh));
     }
+    // A host head is cropped to the working grid: its crop faces are a section, not anatomy.
+    if(layer.provenance&&layer.generatedFinish)installCropSection(mesh.material,this.volume.shape);
     this.exposure?.bindNativeSkinDomain(mesh,layer.name,layer.displayKind);
     this.surgicalWetting?.install(mesh.material);
     this.picking?.install(mesh,geometry,eagerPicking);
@@ -967,12 +972,52 @@ export class VolumeRenderer {
   private partitionRequest(worker:Worker,reference:EngineSurfaceReference|undefined,smooth:boolean,layer:ViewerVolume['compartments'][number]):EnginePartitionRequest|undefined {
     if(!reference)return undefined;
     const request={key:this.modelIdentity(reference),cavity:layer.cavity,
-      layerRegion:layer.appearanceSource?.nativeWallCrop?reference.nativeBrainRegion:undefined};
+      layerRegion:layer.appearanceSource?.nativeWallCrop?reference.nativeBrainRegion:undefined,
+      // A host-head rehearsal declares each layer's provenance; generated phantoms declare none.
+      ...(layer.provenance&&layer.generatedFinish?{hostFairing:true,hostGroups:this.hostGroups(reference)}:{})};
     if(!smooth||workerPartitions.get(worker)===reference)return request;
     workerPartitions.set(worker,reference);
     const value=reference.owner.byteLength<=MAX_ENGINE_REFERENCE_BYTES?reference:null;
     this.displayWork.workerInputCloneBytes+=value?.owner.byteLength??0;
     return {...request,reference:value};
+  }
+  private sectionCap?:SectionCap;
+  /** While navigating an operative exposure, the editing ghost of a parked tool is not drawn over the head. */
+  private parkedGhost(interaction:SurgicalInteraction){
+    const view=interaction.preview??interaction.view;
+    return interaction.mode==='navigate'&&!!view?.operativeExposureV1&&!view.slots[interaction.selectedSlot]?.inserted;
+  }
+  /** Parked (not inserted) tools of an operative exposure: hidden in the microscope, faint outside it. */
+  private presentParkedTools(){
+    const surgeon=this.workspaceSettings?.operativeView==='surgeon';
+    for(const {group} of this.surgicalSlots?.values()??[])presentParkedTool(group,group.userData.parked===true,surgeon);
+  }
+  /** A host head is a modeled engine scene whose layers declare provenance. */
+  private hostScene(){return !!modeledAnatomy(this.volume)&&this.volume.compartments.some(layer=>layer.provenance);}
+  /** Inspection cutaway through a host head: cap the cut with the owning layer and scan intensity. */
+  private updateSectionCap(){
+    const settings=this.workspaceSettings,microscope=settings?.microscope;
+    const plane=settings?.operativeView==='surgeon'&&microscope?.inspectionCutaway&&this.extraClipPlanes?.length===1&&this.hostScene()?this.extraClipPlanes[0]:null;
+    if(!plane&&!this.sectionCap)return;
+    if(!this.sectionCap){this.sectionCap=new SectionCap();this.scene.add(this.sectionCap.mesh);}
+    this.sectionCap.update(plane,this.volume,this.affine,new THREE.Vector3(...(microscope?.target??[0,0,0])));
+  }
+  private readonly hostGroupCache=new WeakMap<EngineSurfaceReference,number[][]>();
+  /** Region ids of the brain and head-wall groups, read from where each layer's cells sit in the undeformed owner grid. */
+  private hostGroups(reference:EngineSurfaceReference):number[][] {
+    let groups=this.hostGroupCache.get(reference);
+    if(groups)return groups;
+    const brain=new Set<number>(),head=new Set<number>(),{owner}=reference;
+    for(const layer of this.volume.compartments){
+      const kind=layer.displayKind??layer.kind??'',target=HOST_BRAIN_KINDS.has(kind)?brain:HOST_HEAD_KINDS.has(kind)?head:undefined;
+      if(!target||layer.mask.length!==owner.length)continue;
+      const votes=new Map<number,number>();let seen=0;
+      for(let i=0;i<layer.mask.length&&seen<64;i++)if(layer.mask[i]&&owner[i]){votes.set(owner[i],(votes.get(owner[i])??0)+1);seen++;}
+      const id=[...votes].sort((a,b)=>b[1]-a[1])[0]?.[0];
+      if(id)target.add(id);
+    }
+    groups=[[...brain],[...head]];this.hostGroupCache.set(reference,groups);
+    return groups;
   }
   private modelIdentity(value:object){let key=this.modelIdentities.get(value);if(!key){key=`tissue-${++this.modelIdentityCounter}`;this.modelIdentities.set(value,key);}return key;}
   private disposeSurfacePair(pair:SurfacePair){
@@ -1290,7 +1335,7 @@ export class VolumeRenderer {
     this.updateFieldAppearance();
     if(this.surgicalGhost){
       const interaction=this.surgicalInteraction;
-      this.surgicalGhost.visible=!!interaction&&!interaction.readOnly&&
+      this.surgicalGhost.visible=!!interaction&&!interaction.readOnly&&!this.parkedGhost(interaction)&&
         (interaction.mode!=='navigate'||(!interaction.practiceHud&&settings.operativeView!=='surgeon'));
     }
     const surgeon=settings.operativeView==='surgeon'&&settings.microscope;
@@ -1377,6 +1422,7 @@ export class VolumeRenderer {
     for (const group of [this.replayGroup, this.pendingReplayGroup])
       group?.children.forEach(mesh => this.applyReplaySurfaceAppearance(mesh));
     this.exposure?.appearance(this.volume,settings,name=>this.surfaceVisible(name));
+    this.presentParkedTools();
     this.clipSurgicalFieldEffects();
     this.materials().forEach(shader=>{
       shader.uniforms.uSliceContours.value=settings.sliceOverlay==='contour'?1:0;
@@ -1937,10 +1983,12 @@ export class VolumeRenderer {
       // Latched slot activation alone does not prove that the observed
       // microstep applied a working part. Animate only explicit evidence.
       this.surgicalSlots.get(name)!.group.userData.effectiveActive=interaction.effectiveActivation?.[name]===true;
+      this.surgicalSlots.get(name)!.group.userData.parked=!!view.operativeExposureV1&&!recordedSlot.inserted;
     }
     for(const [name,old] of this.surgicalSlots)if(!retained.has(name)){
       disposeObject(old.group);this.surgicalGroup.remove(old.group);this.surgicalSlots.delete(name);
     }
+    this.presentParkedTools();
     if(this.panes?.anatomy)this.panes.anatomy.dataset.renderedToolSlots=JSON.stringify([...this.surgicalSlots.keys()]);
     if(!this.surgicalGhost){
       this.surgicalGhost=new THREE.Group();this.scene.add(this.surgicalGhost);
@@ -1949,7 +1997,7 @@ export class VolumeRenderer {
       this.surgicalGizmo.addEventListener('dragging-changed',event=>{this.controls.enabled=!event.value;if(event.value)this.beginInteraction();else this.endInteraction();});
       this.surgicalGizmo.addEventListener('objectChange',()=>{if(this.surgicalGhost&&this.surgicalInteraction){this.surgicalInteraction.onPose({position:this.surgicalGhost.position.toArray(),quaternion:this.surgicalGhost.quaternion.toArray()});this.requestRender();}});
     }
-    this.surgicalGhost.visible=!interaction.readOnly&&
+    this.surgicalGhost.visible=!interaction.readOnly&&!this.parkedGhost(interaction)&&
       (mode!=='navigate'||(!interaction.practiceHud&&this.workspaceSettings?.operativeView!=='surgeon'));
     this.surgicalGhost.position.set(...pose.position);this.surgicalGhost.quaternion.set(...pose.quaternion);
     const selected=view.slots[selectedSlot],tool=selected?view.catalog.find(t=>t.id===selected.instrument):undefined;
@@ -2895,6 +2943,7 @@ export class VolumeRenderer {
       return { w: rect.width, h: rect.height };
     };
     const main = viewport(this.panes.anatomy);
+    this.updateSectionCap();
     const anatomyStart=performance.now();
     let orientationGuideVisible=false;
     let surfaceQuality:{adaptive:boolean;width:number;height:number}|null=null;
@@ -3078,6 +3127,7 @@ export class VolumeRenderer {
     this.scanVolume.dispose();
     this.surfaceInteraction.dispose();this.microscopeOptics.dispose();
     this.orientationGuide.dispose();
+    this.sectionCap?.dispose();
     this.environmentTarget.dispose();
     this.fusionTexture.dispose();
     this.labelTexture.dispose();

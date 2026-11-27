@@ -4,6 +4,7 @@ import {membraneTransport} from './membraneTransport';
 import {resultMembership} from './resultInspectionData';
 import {EngineOperatedSection} from './EngineOperatedSection';
 import {OperativeSourceLocator} from './OperativeSourceLocator';
+import {OperativeDepthSection} from './OperativeDepthSection';
 import {OperativeLegend} from './OperativeLegend';
 import {planningSliceSegments,planningSphereSliceRadius,planningSliceMemberships} from '../interactive-planning-data';
 import {surgicalEffectMarkers,clipSurgicalMarkersToSlab,surgicalMarkerRadiusPx} from './surgicalGeometry';
@@ -1064,6 +1065,9 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
             (!displayedSurgical?.preview||displayedSurgical.recordedFrame)&&
             <OperativeSourceLocator source={geometrySource} bounds={geometry.bounds} inverse={geometry.inverse}
               microscope={settings.microscope} labelsOnly={!!props.segmentationOnly} stateId={surgicalView.stateId}/>}
+          {!fieldPresentation&&settings.operativeView==='surgeon'&&settings.microscope?.inspectionCutaway&&geometrySource&&geometry&&
+            surgicalView?.operativeExposureV1&&!displayedSurgical?.preview&&
+            <OperativeDepthSection source={geometrySource} inverse={geometry.inverse} microscope={settings.microscope} stateId={surgicalView.stateId}/>}
           {!fieldPresentation&&displayedSurgical?.practiceHud&&surgicalView&&<PracticeHud interaction={displayedSurgical} view={surgicalView} membrane={membrane}/>}
           {!fieldPresentation&&!displayedSurgical?.practiceHud&&settings.operativeView==='surgeon'&&surgicalView&&(showEngineSection?
             <details className="engine-frame-metrics" data-operative-readout-state={surgicalView.stateId}>
@@ -1197,6 +1201,15 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
               </span>
             </div>
             <small data-guide-caption>Anatomical reference</small>
+            <div className="rl-head-axes" hidden={!surgicalView?.operativeExposureV1}>
+              <svg data-head-axes viewBox="0 0 64 64" role="img"
+                aria-label="Head axes: R patient right, A anterior, S superior; L, P and I opposite">
+                {(['R','A','S'] as const).map((end,axis)=><g key={end} data-head-axis={axis} className={`axis-${end}`}>
+                  <line x1="32" y1="32" x2="32" y2="32"/><text x="32" y="32">{end}</text><text x="32" y="32">{['L','P','I'][axis]}</text>
+                </g>)}
+              </svg>
+              <small>Head axes</small>
+            </div>
           </div>
         </div>
         {resultParts&&<>

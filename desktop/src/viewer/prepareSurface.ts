@@ -3,6 +3,7 @@ import type {EngineSurfaceReference} from './engineImplicitSurface';
 import {maskSurface} from './surface.ts';
 import {indexSurface,fairIndexedSurface,vesselLimits} from './surfaceSmoothing.ts';
 import {indexedSurfaceNormals} from './surfaceNormals.ts';
+import {hostDisplayMask,hostDisplayOwner} from './hostSurfaceFairing.ts';
 import {surfaceKind} from './surfacePolicy.ts';
 import type {Affine,Bounds3,Shape3} from './coordinates';
 import type {SurfaceDiagnostics} from './surfacePolicy';
@@ -36,6 +37,18 @@ export function prepareIndexedSurface(positions:Float32Array,indices:Uint32Array
   if(preparedNormals&&preparedNormals.length!==positions.length)throw Error('Cached source normals differ from canonical vertices');
   const normals=preparedNormals??indexedSurfaceNormals(positions,indices,affine);
   if(!smooth)return {positions,indices,normals,smoothingPrepared:false};
+  if(reference?.hostFairing){
+    // A host head closes brain pinholes for display only; picking keeps these source buffers.
+    const closed=hostDisplayOwner(reference.owner,shape,reference.hostGroups?.[0]??[]);
+    const displayMask=closed.filled?hostDisplayMask(mask,reference.owner,closed.owner,shape):mask;
+    if(displayMask!==mask){
+      const indexed=indexSurface(maskSurface(displayMask,shape),shape);
+      const display=engineImplicitSurface(indexed.positions,indexed.indices,indexedSurfaceNormals(indexed.positions,indexed.indices,affine),
+        displayMask,shape,affine,kind,{...reference,owner:closed.owner});
+      return {positions,indices,normals,smoothPositions:display.positions,smoothNormals:display.smoothNormals,
+        smoothIndices:display.smoothIndices??indexed.indices,diagnostics:display.diagnostics,smoothingPrepared:true};
+    }
+  }
   if(reference!==undefined){
     const display=engineImplicitSurface(positions,indices,normals,mask,shape,affine,kind,reference);
     return {positions,indices,normals,smoothPositions:display.positions,smoothNormals:display.smoothNormals,smoothIndices:display.smoothIndices,diagnostics:display.diagnostics,smoothingPrepared:true};
