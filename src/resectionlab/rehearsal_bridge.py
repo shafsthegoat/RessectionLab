@@ -117,8 +117,7 @@ def dispatch(session, operation, args, request, progress):
     entry = session._get_case(args["caseHash"])
     case = entry.case
     if operation != 'inspectRehearsal' and ('nativeStudyReplay' in entry.artifacts or
-            'practiceEpisodes' in (entry.artifacts.get('surgical_toolbox') or {}) or
-            'cranialPlanningCandidateV1' in case.metadata.get('surgical_properties', {})):
+            'practiceEpisodes' in (entry.artifacts.get('surgical_toolbox') or {})):
         raise BridgeError('STUDY_REPLAY_ONLY', 'Use the recorded engine branch for this study.')
     cache = getattr(session, "rehearsal_sessions", None)
     if cache is None:

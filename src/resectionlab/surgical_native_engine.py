@@ -185,6 +185,11 @@ def create(engine):
     scene = engine.scene
     if 'operativeExposureV1' in scene.properties or 'gliomaMaterialsV1' in scene.properties:
         return None, 'advanced-operative-profile'
+    from .surgical_source_inspection import legacy_marker
+    if legacy_marker(scene):
+        # The compiled admission still binds this provenance marker to its
+        # retired no-action contract. Such a scene runs on the reference path.
+        return None, 'legacy-source-marker'
     scene.require_cache_source()
     from .surgical_craniotomy import _original_targets, validate_contract
     access = validate_contract(scene) if engine._cranial_access is not None else None
@@ -201,7 +206,7 @@ def create(engine):
         'protectedCells': sorted(engine._protected_ids),
         'originalTargetMemberships': None if scene._original_target_memberships is None else {
             key: value.tolist() for key, value in scene._original_target_memberships.items()},
-        'inspectionOnly': engine._source_inspection_only,
+        'inspectionOnly': False,
         'initialStateId': getattr(engine, '_native_initial_state_id', engine.state_id)}
     if access is not None:
         metadata['originalTargetCells'] = sorted(_original_targets(scene))

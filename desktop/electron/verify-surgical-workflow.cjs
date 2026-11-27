@@ -202,7 +202,8 @@ app.on('browser-window-created',(_event,window)=>{
      assert.equal(last.view.metrics.targetRemovedMm3,0);assert.equal(last.view.metrics.nonTargetRemovedMm3,0);assert.equal(last.view.metrics.elapsedSeconds,0);
      assert(!last.cranialPlanning&&!last.stagedPlanning&&!last.jointPlanning);assert.equal(last.view.protection.configured,false);
      assert.equal(adapter.type,'native-patient-source-inspection');assert.equal(adapter.sourceRole,'DEVELOPMENT_CANDIDATE');assert.equal(adapter.physicalProtectionIndexConstructed,false);
-     assert(a.present&&!a.available);assert.deepEqual(a.roots,[]);assert(a.blockers.some(row=>row.code==='SOURCE_INSPECTION_ONLY'));
+     // Owner decision 2026-11-27: the marker labels the source and refuses nothing.
+     assert(!a||!a.blockers?.some(row=>row.code==='SOURCE_INSPECTION_ONLY'));assert(last.planningAdmission?.available);
      const targets=s.regions.filter(row=>row.target);assert(targets.length>0);assert(targets.every(row=>adapter.sourceLayers[row.name]?.cells>0));
      if(process.env.WORKFLOW_EXPECT_TARGET_CELLS)assert.equal(targets.reduce((total,row)=>total+adapter.sourceLayers[row.name].cells,0),Number(process.env.WORKFLOW_EXPECT_TARGET_CELLS));
      if(process.env.WORKFLOW_EXPECT_CASE_HASH)assert.equal(last.caseHash,process.env.WORKFLOW_EXPECT_CASE_HASH);

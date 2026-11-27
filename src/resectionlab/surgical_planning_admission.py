@@ -86,16 +86,9 @@ def source_classification(scene):
 
 def planning_admission(scene, protection=None):
     from .surgical_procedure_policy import PROPERTY, procedure_admission
-    from .surgical_source_inspection import inspection_only, inspection_blockers
     from .surgical_patient_role import source_role_label
     classification = source_classification(scene)
     role = source_role_label(scene, classification)
-    if inspection_only(scene):
-        # The engine executes no native action on a source-inspection export.
-        # This mirrors that execution contract; it is not a source-class gate.
-        return {'schema': SCHEMA, 'available': False, 'scope': 'source-inspection-only',
-            'sourceClass': classification, 'sourceRole': role, 'blockers': inspection_blockers(scene),
-            'policyHash': None, 'clinicalValidation': False}
     if PROPERTY in scene.properties:
         procedure = procedure_admission(scene, protection)
         return {'schema': SCHEMA, 'available': procedure['available'], 'scope': 'procedure-aware',

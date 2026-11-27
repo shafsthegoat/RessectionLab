@@ -1160,7 +1160,7 @@ app.on('browser-window-created',(_event,window)=>{
         await capture(frameName);
         return evidence;
       };
-      const verifyGuardedRefusal=async target=>{
+      const verifyLabelledAdmission=async target=>{
         await click('Rehearse');
         const prepare='Prepare standard environment';
         const enabled=label=>`[...document.querySelectorAll('button')].some(b=>b.textContent.trim()===${JSON.stringify(label)}&&!b.disabled)`;
@@ -1197,17 +1197,20 @@ app.on('browser-window-created',(_event,window)=>{
         // The standard setup exports tumor layers. A native synthetic-target
         // still binds the visible contour here, but requires explicit mapping.
         assert.deepEqual(before.targets,target.kind==='tumor'?['tumor']:[]);
-        assert.equal(before.planningAdmission.available,false);
+        // Owner decision 2026-11-27: acquired anatomy is admitted to planning and
+        // labelled with its source class; missing evidence is still reported by name.
+        assert.equal(before.planningAdmission.available,true);
+        assert.equal(before.planningAdmission.sourceClass,'patient-or-unverified');
         assert(before.fullCaseReadiness.blockers.some(row=>['missing-protection','missing-critical-annotations'].includes(row.code)));
-        const code='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING';
-        assert(before.planningAdmission.blockers.some(row=>row.code===code));
+        const retired='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING';
         const {error:refusal}=await call({command:'generateApproaches',expectedStateId:before.stateId,
           acknowledgeResearchUnknowns:true},'()=>null');
-        assert(refusal?.includes(code),'The guarded planning request must explicitly refuse the acquired source');
+        assert(!refusal?.includes(retired),'Planning must not refuse acquired anatomy by source class');
         const after=await inspect();
-        assert.deepEqual(after,before);
-        await capture('native-glioma-rehearsal-refusal');
-        return {caseHash:prepared.caseHash,sourceTargetKind:target.kind,command:'generateApproaches',code,refusal,before,after};
+        assert.equal(after.position,0);assert.equal(after.actions,0);assert.equal(after.removedCells,0);
+        await capture('native-glioma-rehearsal-admitted');
+        return {caseHash:prepared.caseHash,sourceTargetKind:target.kind,command:'generateApproaches',
+          sourceClass:before.planningAdmission.sourceClass,refusal:refusal??null,before,after};
       };
       for(const row of rows){
         const canonical=fs.realpathSync(path.resolve(root,row.native_case.path));
@@ -1288,7 +1291,7 @@ app.on('browser-window-created',(_event,window)=>{
           report.saved=saved;report.savedSha256=digest(saved);
           report.nativeGliomas.savedViewState=JSON.parse(execFileSync('unzip',['-p',saved,'workspace-view.json'],{encoding:'utf8'}));
         }
-        if(scored&&process.env.DATA_REBUILD_NATIVE_GLIOMA_REHEARSE==='1')item.guardedRefusal=await verifyGuardedRefusal(target);
+        if(scored&&process.env.DATA_REBUILD_NATIVE_GLIOMA_REHEARSE==='1')item.labelledAdmission=await verifyLabelledAdmission(target);
         assert.equal(digest(canonical),row.native_case.sha256,`${row.case_id} source package changed`);
       }
       assert.equal(digest(input),inputSha);
@@ -1298,7 +1301,7 @@ app.on('browser-window-created',(_event,window)=>{
       else report.checks.push('Actual Cases cards open distinct portable studies with checksum-bound source and visible generated target geometry',
         'The desktop saved the scored study and selected view to a new portable archive');
       if(report.nativeGliomas.cases.some(item=>item.independentCta))report.checks.push('Original acquired CTA opens independently and switching back restores the exact registered CTA and generated contour');
-      if(process.env.DATA_REBUILD_NATIVE_GLIOMA_REHEARSE==='1')report.checks.push('The guarded production planning request refused acquired anatomy and preserved the zero-action scene');
+      if(process.env.DATA_REBUILD_NATIVE_GLIOMA_REHEARSE==='1')report.checks.push('The production planning request admitted acquired anatomy with its source label and committed no action');
       report.passed=!report.windowEverVisible;
     };
     try{

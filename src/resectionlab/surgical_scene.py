@@ -190,22 +190,14 @@ def from_case(case, mapping=None):
         labels[masks[r['name']]] = r['id']
     # Exclusion membership is independent of categorical material ownership.
     # Only an explicit declaration grants protection; names/kinds do not.
+    # A source provenance marker (cranialPlanningCandidateV1) is a label: the
+    # declarations of a marked source become real protection like any other.
     properties = thaw_json(case.metadata).get('surgical_properties', {})
-    from .surgical_source_inspection import PROPERTY as INSPECTION_PROPERTY
-    inspection = INSPECTION_PROPERTY in properties
-    if adapter.get('type') == 'native-patient-research-derivative' and 'selectedApproach' in adapter and not inspection:
-        raise ValueError('Missing planned derivative inspection binding')
     protected = []
-    inspection_declarations = []
     for r in regions:
         layer = layers.get(r['name'], {})
         declared = [explicitly_protected(row) for row in (r, layer)]
         if not any(declared):
-            continue
-        if inspection:
-            inspection_declarations.append({'region': copy.deepcopy(r), 'layer': copy.deepcopy(layer),
-                'maskHash': array_digest(masks[r['name']]),
-                'meaning': 'Source exclusion retained for inspection; native protection index not constructed.'})
             continue
         protected.append({'structureId': r.get('structureId', layer.get('structure_id', r['name'])),
             'cells': np.flatnonzero(masks[r['name']]).tolist(),
@@ -243,7 +235,6 @@ def from_case(case, mapping=None):
         'adapter': thaw_json(case.metadata).get('surgical_adapter'),
         'annotationHashes': {name: array_digest(mask) for name, mask in masks.items()},
         **({'protectedAnatomyV1': protected} if protected else {}),
-        **({'inspectionProtectionDeclarations': inspection_declarations} if inspection_declarations else {}),
         'overlapRule': 'last mapped region owns the material; original memberships retained',
         **({'workingGridRefinement': thaw_json(case.metadata['working_grid_refinement'])}
            if 'working_grid_refinement' in case.metadata else {})}, properties)

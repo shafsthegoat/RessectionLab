@@ -189,18 +189,18 @@ def test_stage_bound_archive_display_keeps_hash_and_remains_read_only(roots):
         inspect_archive_checkpoint(scene, bad, branch_id='first')
 
 
-def test_generated_flags_cannot_promote_a_reserved_or_patient_descendant_role():
+def test_source_role_is_a_recorded_label_and_never_promoted_by_generated_flags():
+    # Owner decision 2026-11-27: the role labels provenance; it never refuses.
     from resectionlab.surgical_bridge import _cranial_source_role
     case = SimpleNamespace(metadata={'generated': True, 'is_synthetic': True},
         source_refs=(SourceRef('control', 'synthetic://bridge-role', provenance='simulated'),))
     assert _cranial_source_role(SimpleNamespace(), case) == 'GENERATED_CONTROL'
-    for declaration in ({'role': 'EVAL', 'split': 'EVAL'},
-            {'role': 'TRAIN', 'split': 'TRAIN', 'family_id': 'patient-descendant'},
-            {'role': None, 'split': 'TRAIN'}):
+    for declaration, label in (({'role': 'EVAL', 'split': 'EVAL'}, 'EVAL-UNVERIFIED'),
+            ({'role': 'TRAIN', 'split': 'TRAIN', 'family_id': 'patient-descendant'}, 'TRAIN-UNVERIFIED'),
+            ({'role': None, 'split': 'TRAIN'}, 'TRAIN-UNVERIFIED')):
         changed = SimpleNamespace(metadata={**case.metadata, 'data_case': declaration},
             source_refs=case.source_refs)
-        with pytest.raises(ValueError, match='SOURCE_ROLE'):
-            _cranial_source_role(SimpleNamespace(), changed)
+        assert _cranial_source_role(SimpleNamespace(), changed) == label
 
 
 @pytest.mark.parametrize('status,cells,expected', [
@@ -219,8 +219,10 @@ def test_acquired_critical_floor_cannot_be_acknowledged_away(status, cells, expe
     result = _cranial_context_availability(acquired, record, available)
     errors = _cranial_critical_blockers(record, {'source-opening'})
     assert bool(errors) == bool(expected)
-    assert result['available'] is False
-    assert result['blockers'][0]['code']=='PROCEDURE_ACQUIRED_SOURCE_QUALIFICATION_UNAVAILABLE'
+    # Source class labels the case; only the critical-anatomy evidence floor blocks.
+    assert result['sourceClass'] == 'patient-or-unverified'
+    assert result['available'] is (expected is None)
+    assert all(b['code'] != 'PROCEDURE_ACQUIRED_SOURCE_QUALIFICATION_UNAVAILABLE' for b in result['blockers'])
     assert available['available'] is True  # Projection never mutates saved qualification.
     if expected:
         assert errors[0]['code'] == expected

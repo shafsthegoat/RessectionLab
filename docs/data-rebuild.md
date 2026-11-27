@@ -269,15 +269,16 @@ retained conditioned surfaces.
 For the standard rehearsal check on ISLES variant 02, a temporary copy maps
 the exact simulated contour to the standard environment's tumor field. The
 contour bytes and simulated provenance are preserved. The production engine
-reopens an intact scene with 19,036 mm³ of sampled target. Planning refuses
+reopens an intact scene with 19,036 mm³ of sampled target. Planning refused
 with `PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING`. The full-case check
 also requires supplied brainstem and critical-structure coverage. The scene
-stays at zero actions. The result is `qc/isles0146-cta-guarded-refusal-v1.json`.
-The desktop's unmodified setup independently refuses the same guarded
-planning command and preserves its zero-action state. That receipt records the
+stayed at zero actions. The result is `qc/isles0146-cta-guarded-refusal-v1.json`.
+The desktop's unmodified setup independently refused the same guarded
+planning command and preserved its zero-action state. That receipt records the
 earlier behaviour: since the 2026-11-27 owner decision, planning admits this
-source and labels it `patient-or-unverified`, so `--guarded-rehearsal` needs
-updating before it is rerun.
+source and labels it `patient-or-unverified`; `--guarded-rehearsal` and the
+desktop data-rebuild check now expect that labelled admission and write
+`qc/isles0146-cta-labelled-admission-v1.json` (not yet rerun).
 
 ```sh
 .venv/bin/python scripts/build_new_cta_gliomas.py --guarded-rehearsal

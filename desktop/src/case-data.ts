@@ -361,18 +361,23 @@ function recordedBrainSignal(payload: CasePayload, mri: Float32Array, affine: Vi
     shape: payload.shape, affine, data: mri};
 }
 
-function validatePlannedDerivative(payload: CasePayload, marker: Record<string, unknown>) {
+/** A planned derivative is an ordinary operable scene (owner decision
+ * 2026-11-27). Its selected route is provenance and must bind the source; a
+ * legacy saved derivative also carries the retired marker, whose copy of that
+ * binding must agree. Neither grants nor withholds any action. */
+function validatePlannedDerivative(payload: CasePayload, marker: Record<string, unknown> | undefined) {
   const adapter = payload.metadata.surgical_adapter;
   const route = objectRecord(adapter) && adapter.selectedApproach;
   const layers = objectRecord(adapter) && adapter.sourceLayers;
   const digest = (value: unknown) => typeof value === "string" && /^[0-9a-f]{64}$/.test(value);
-  if (payload.metadata.anatomy_workbench_only !== true || marker.status !== "inspection-only" ||
-      marker.patientTaskAdmission !== false || !objectRecord(adapter) || adapter.type !== "native-patient-research-derivative" ||
+  if (!objectRecord(adapter) || adapter.type !== "native-patient-research-derivative" ||
       !objectRecord(route) || route.schema !== "resectionlab.native-environment-approach.v1" ||
-      !digest(marker.sourceSnapshotId) || marker.sourceSnapshotId !== adapter.sourceCollectionHash ||
-      marker.sourceSnapshotId !== route.sourceSnapshotId || !digest(marker.targetBinding) ||
-      marker.targetBinding !== route.targetBinding || !digest(marker.planRevision) || marker.planRevision !== route.planRevision ||
-      typeof route.id !== "string" || !route.id || marker.approachId !== route.id ||
+      !digest(route.sourceSnapshotId) || route.sourceSnapshotId !== adapter.sourceCollectionHash ||
+      !digest(route.targetBinding) || !digest(route.planRevision) ||
+      typeof route.id !== "string" || !route.id ||
+      (marker !== undefined && (marker.sourceSnapshotId !== route.sourceSnapshotId ||
+        marker.targetBinding !== route.targetBinding || marker.planRevision !== route.planRevision ||
+        marker.approachId !== route.id)) ||
       !digest(route.parameterHash) || !digest(route.measurementHash) ||
       JSON.stringify(adapter.targetAffine) !== JSON.stringify(payload.affine) || !objectRecord(layers) ||
       !objectRecord(layers.tumor) || typeof route.targetLayerId !== "string" || route.targetLayerId !== layers.tumor.layerId ||
@@ -381,7 +386,7 @@ function validatePlannedDerivative(payload: CasePayload, marker: Record<string, 
       payload.compartments.some(layer => {
         const row = layers[layer.name];
         return !objectRecord(row) || typeof row.sampledMaskHash !== "string" || !/^sha256:[0-9a-f]{64}$/.test(row.sampledMaskHash);
-      })) throw Error("Invalid planned derivative inspection binding");
+      })) throw Error("Invalid planned derivative route binding");
 }
 
 export async function hydrateCase(
@@ -459,17 +464,16 @@ export async function hydrateCase(
   };
   const properties=payload.metadata.surgical_properties;
   const adapter = payload.metadata.surgical_adapter;
-  if (objectRecord(adapter) && adapter.type === 'native-patient-research-derivative' && 'selectedApproach' in adapter &&
-      (!objectRecord(properties) || !('cranialPlanningCandidateV1' in properties))) {
-    throw Error('Missing planned derivative inspection binding');
+  const marker = objectRecord(properties) && Object.prototype.hasOwnProperty.call(properties, 'cranialPlanningCandidateV1')
+    ? properties.cranialPlanningCandidateV1 : undefined;
+  const plannedMarker = objectRecord(marker) && marker.schema === 'resectionlab.planned-derivative-inspection.v1';
+  if (objectRecord(adapter) && adapter.type === 'native-patient-research-derivative' && 'selectedApproach' in adapter) {
+    validatePlannedDerivative(payload, plannedMarker ? marker : undefined);
+  } else if (plannedMarker) {
+    throw Error('Invalid planned derivative route binding');
   }
-  if (objectRecord(properties) && Object.prototype.hasOwnProperty.call(properties, 'cranialPlanningCandidateV1')) {
-    const marker = properties.cranialPlanningCandidateV1;
-    if (objectRecord(marker) && marker.schema === 'resectionlab.planned-derivative-inspection.v1') {
-      validatePlannedDerivative(payload, marker);
-    } else {
-      registerSourceInspection(result, marker, payload.metadata.source_inspection_annotations);
-    }
+  if (marker !== undefined && !plannedMarker) {
+    registerSourceInspection(result, marker, payload.metadata.source_inspection_annotations);
   }
   return result;
 }

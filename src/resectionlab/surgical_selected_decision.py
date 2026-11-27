@@ -1,7 +1,10 @@
-"""A selected native route can end at the intact admission boundary.
+"""Receipt of a selected native route at the intact state of its derivative.
 
-The forecast belongs to the inspection exporter. The outcome is measured
-again from the restored engine, including the original target membership.
+The forecast belongs to the exporter and is kept verbatim as its recorded
+provenance. Owner decision 2026-11-27: the planned derivative is an ordinary
+operable scene, so the receipt neither refuses nor locks editing; it is shown
+only while the engine is still intact. The outcome is measured again from the
+restored engine, including the original target membership.
 """
 from .core import semantic_digest
 from .surgical_sequence_outcomes import original_target_residual_mm3
@@ -21,26 +24,28 @@ def selected_route_forecast():
 
 
 def selected_plan_decision(engine, admission, *, branch_id):
-    """Return a receipt only for a new forecast-bearing, intact planned source."""
+    """Return a receipt for a forecast-bearing planned source while it is intact."""
     adapter = engine.scene.source.get('adapter', {})
     route = adapter.get('selectedApproach', {})
     forecast = route.get('forecast')
     if forecast is None:
         return None
-    marker = engine.scene.properties.get(PROPERTY, {})
-    if (forecast != selected_route_forecast() or admission['available']
-            or admission['scope'] != 'source-inspection-only'
-            or marker.get('sourceSnapshotId') != adapter.get('sourceCollectionHash')
-            or marker.get('sourceSnapshotId') != route.get('sourceSnapshotId')
-            or marker.get('targetBinding') != route.get('targetBinding')
-            or marker.get('approachId') != route.get('id')
-            or marker.get('planRevision') != route.get('planRevision')
-            or adapter['sourceLayers']['tumor']['layerId'] != route.get('targetLayerId')):
-        raise ValueError('Selected plan forecast differs from the current admission or source binding')
+    # A legacy saved derivative also carries the retired marker; its copy of
+    # the route binding must still agree. New derivatives bind through the route.
+    marker = engine.scene.properties.get(PROPERTY)
+    if (forecast != selected_route_forecast()
+            or route.get('sourceSnapshotId') != adapter.get('sourceCollectionHash')
+            or adapter['sourceLayers']['tumor']['layerId'] != route.get('targetLayerId')
+            or marker is not None and (not isinstance(marker, dict)
+                or marker.get('sourceSnapshotId') != route.get('sourceSnapshotId')
+                or marker.get('targetBinding') != route.get('targetBinding')
+                or marker.get('approachId') != route.get('id')
+                or marker.get('planRevision') != route.get('planRevision'))):
+        raise ValueError('Selected plan forecast differs from its source binding')
     metrics = engine.metrics()
     if (engine.actions or engine.history or engine.state['removed'] or metrics['elapsedSeconds']
             or any(slot['inserted'] or slot['active'] for slot in engine.state['slots'].values())):
-        raise ValueError('Selected plan STOP requires the intact state with both instruments out')
+        return None
     residual = original_target_residual_mm3(engine)
     if residual is None:
         raise ValueError('Selected plan requires the original target membership on the engine grid')

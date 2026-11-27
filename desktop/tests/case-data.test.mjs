@@ -406,7 +406,7 @@ test('segmentation-only import retains zero source intensities with a usable dis
  input.metadata={};assert.throws(()=>validateCaseDescriptor(input),/intensity range/);
 });
 
-test("planned inspection hydrates sampled material and rejects a mismatched target or source declaration", async () => {
+test("planned derivative hydrates with or without the legacy marker and rejects a mismatched route binding", async () => {
   const input = fixture();
   input.compartments[0].name = 'tumor';
   const marker = {schema:'resectionlab.planned-derivative-inspection.v1', status:'inspection-only',
@@ -420,10 +420,15 @@ test("planned inspection hydrates sampled material and rejects a mismatched targ
   const volume = await hydrateCase(input, api());
   assert.equal(volume.compartments[0].kind, 'tumor');
   route.targetLayerId = 'other-lesion';
-  await assert.rejects(hydrateCase(input, api()), /planned derivative inspection binding/);
+  await assert.rejects(hydrateCase(input, api()), /planned derivative route binding/);
   route.targetLayerId = 'lesion';
+  marker.approachId = 'route-B';
+  await assert.rejects(hydrateCase(input, api()), /planned derivative route binding/);
+  marker.approachId = 'route-A';
   marker.schema = 'resectionlab.cranial-planning-candidate.v1';
   await assert.rejects(hydrateCase(input, api()), /Invalid source-owned inspection declaration/);
+  // Owner decision 2026-11-27: a new derivative carries no inspection-only marker.
   delete input.metadata.surgical_properties.cranialPlanningCandidateV1;
-  await assert.rejects(hydrateCase(input, api()), /Missing planned derivative inspection binding/);
+  delete input.metadata.anatomy_workbench_only;
+  assert.equal((await hydrateCase(input, api())).compartments[0].kind, 'tumor');
 });

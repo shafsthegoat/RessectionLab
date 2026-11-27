@@ -27,10 +27,10 @@ ignored `testcases/decision-system-v1/milestone-results.json` and
 
 The November 13 closeout fixes source-inspection refusal routing in `3984eaa0`:
 malformed or false inspection markers previously reached native preparation
-before returning the wrong refusal. No transition succeeded. The inspection-only
-check now precedes native preparation, and nine operation controls prohibit
-preparation for those step/preview requests. The combined decision regression
-passes 110 tests in17.40s; final delivery evidence is linked above.
+before returning the wrong refusal. No transition succeeded. The combined
+decision regression passed 110 tests in17.40s; final delivery evidence is linked
+above. Since the 2026-11-27 owner decision the inspection marker is a provenance
+label only: marked sources and planned derivatives open as ordinary operable scenes.
 
 Final delivery passes 23 gates and 20 runtime variants across source, installed
 wheel, frozen sidecar and signed app. Current checks pass 1,120 C++ tests / 77

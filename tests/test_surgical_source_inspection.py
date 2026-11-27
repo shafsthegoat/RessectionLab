@@ -1,4 +1,4 @@
-"""Small generated export/authority controls; never patient execution."""
+"""Small generated export controls: the marker is a provenance label, never a refusal (owner decision 2026-11-27)."""
 import copy
 import hashlib
 import json
@@ -14,7 +14,10 @@ from resectionlab.patient_anatomy import PatientImagingCollection
 from resectionlab.surgical_engine import SurgicalEngine
 from resectionlab.surgical_scene import from_case, original_target_memberships
 from resectionlab.surgical_source_inspection import (
-    PROPERTY, REASON, inspection_case, export_inspection_case)
+    PROPERTY, inspection_case, export_inspection_case)
+
+RETIRED = 'SOURCE_INSPECTION_ONLY'
+INSPECT = {'slot': 'left', 'operation': 'inspect', 'duration': .5}
 
 
 @pytest.fixture
@@ -73,24 +76,20 @@ def test_exact_grid_all_originals_arbitrary_masks_full_target_and_provenance_ret
     assert engine.protection is None and engine.actions == []
 
 
-@pytest.mark.parametrize('operation', ['configure', 'exchange', 'place', 'move', 'apply', 'withdraw', 'inspect', 'deactivate', 'activate'])
-def test_every_direct_native_action_and_preview_is_rejected_before_transition(source, monkeypatch, operation):
+def test_marked_source_is_operable_on_the_reference_path(source):
     from resectionlab import surgical_native_engine
     engine = SurgicalEngine(from_case(built(source)))
-    before = copy.deepcopy(engine.snapshot()); metrics = engine.metrics()
-    monkeypatch.setattr(engine, '_transition_clone', lambda: pytest.fail('Inspection cannot start a native transition'))
-    monkeypatch.setattr(surgical_native_engine, 'prepare',
-        lambda *_: pytest.fail('Inspection cannot create or prepare a resident native owner'))
-    action = {'slot': 'left', 'operation': operation}
-    result = engine.step(action)
-    assert result['status'] == 'rejected' and result['reason'] == REASON and result['completedFraction'] == 0
-    preview = engine.preview(action)
-    assert preview['status'] == 'rejected' and preview['reason'] == REASON and preview['preview']
-    assert engine.snapshot() == before and engine.metrics() == metrics
-    assert engine.actions == engine.history == []
+    before = copy.deepcopy(engine.snapshot())
+    preview = engine.preview(INSPECT)
+    assert preview['preview'] and preview['status'] == 'accepted'
+    assert engine.snapshot() == before
+    result = engine.step(INSPECT)
+    assert result['status'] == 'accepted' and result.get('reason') != RETIRED and len(engine.actions) == 1
+    # The compiled admission still binds the marker to its retired contract.
+    assert surgical_native_engine.create(engine) in ((None, 'legacy-source-marker'), (None, 'reference-selected'))
 
 
-def test_save_cold_open_marker_identity_and_empty_snapshot_restore_preserve_no_permission(source):
+def test_save_cold_open_marker_identity_and_acted_snapshot_restore(source):
     destination = source.tmp/'inspection.ressectionlab'
     export_inspection_case(source.collection.root, destination, **source.options)
     first = built(source); cold = load_case(destination)
@@ -99,33 +98,31 @@ def test_save_cold_open_marker_identity_and_empty_snapshot_restore_preserve_no_p
     scene = from_case(cold); engine = SurgicalEngine(scene)
     restored = SurgicalEngine.restore(scene, json.loads(json.dumps(engine.snapshot())), use_cache=False)
     assert restored.snapshot() == engine.snapshot()
-    assert restored.step({'slot': 'right', 'operation': 'configure'})['reason'] == REASON
+    assert restored.step(dict(INSPECT, slot='right'))['status'] == 'accepted'
+    acted = SurgicalEngine.restore(scene, json.loads(json.dumps(restored.snapshot())), use_cache=False)
+    assert acted.snapshot() == restored.snapshot() and len(acted.actions) == 1
     assert np.array_equal(cold.source_compartments['inferior-container'], source.critical)
 
 
-def test_marker_edit_cannot_unlock_the_same_scene_and_malformed_presence_is_blocked(source):
+def test_marker_edit_is_detected_and_malformed_marker_is_only_a_label(source):
     from resectionlab.surgical_scene import SurgicalScene
     scene = from_case(built(source)); engine = SurgicalEngine(scene)
     del scene.properties[PROPERTY]
     with pytest.raises(ValueError, match='Source scene changed'):
-        engine.step({'slot': 'left', 'operation': 'inspect'})
-    with pytest.raises(ValueError, match='Source scene changed'):
         SurgicalEngine(scene)
     base = from_case(built(source))
     malformed = SurgicalScene(base.labels, base.affine, base.regions, base.source, {PROPERTY: False})
-    assert SurgicalEngine(malformed).step({'slot': 'left', 'operation': 'inspect'})['reason'] == REASON
+    assert SurgicalEngine(malformed).step(INSPECT)['status'] == 'accepted'
 
 
-@pytest.mark.parametrize('field', ['protectionContract', 'cranialStagesContract', 'actions'])
-def test_cold_inspection_rejects_executable_records_before_guard_or_replay(source, monkeypatch, field):
-    from resectionlab import surgical_rl_protection as protection
-    scene = from_case(built(source)); engine = SurgicalEngine(scene)
-    snapshot = engine.snapshot()
-    snapshot[field] = [{'slot': 'left', 'operation': 'configure'}] if field == 'actions' else {}
-    monkeypatch.setattr(protection, 'restore_protection_contract', lambda *a: pytest.fail('No guard allocation'))
-    monkeypatch.setattr(SurgicalEngine, 'step', lambda *a, **k: pytest.fail('No action replay'))
-    with pytest.raises(ValueError, match='SOURCE_INSPECTION_ONLY'):
-        SurgicalEngine.restore(scene, snapshot, use_cache=True)
+def test_marked_source_accepts_declared_protection_contract(source):
+    from resectionlab.surgical_rl_protection import GuardConfig, ProtectionAnnotation, ProtectionSet, grid_binding
+    scene = from_case(built(source))
+    cells = tuple(int(i) for i in np.flatnonzero(scene.labels.reshape(-1) == 0)[:4])
+    protection = ProtectionSet(scene, [ProtectionAnnotation('declared', cells, grid_binding(scene),
+        'Generated test declaration', 'unreviewed', 'declared')], required=())
+    engine = SurgicalEngine(scene, protection=protection, guard_config=GuardConfig(require_critical_coverage=False))
+    assert engine.protection is protection and engine.guard_report()['configured']
 
 
 @pytest.mark.parametrize('change', ['original', 'target-count', 'target-hash', 'grid', 'reference-grid', 'patient'])
@@ -143,33 +140,33 @@ def test_exact_export_contract_cannot_drop_original_target_or_frame(source, chan
         inspection_case(source.collection.root, **options)
 
 
-def test_candidate_presence_blocks_no_bone_no_registry_and_direct_adapter_search(source, monkeypatch):
+def test_marker_adds_no_cranial_blocker_and_no_bone_offers_no_cranial_planner(source):
     from resectionlab import surgical_cranial_planning as planning
     scene = from_case(built(source)); engine = SurgicalEngine(scene)
     record = {'branchId': 'main', 'position': 0, 'branches': {'main': engine.snapshot()}}
-    monkeypatch.setattr(planning, 'search_opening_forest', lambda *a, **k: pytest.fail('No planning on inspection source'))
-    dto = planning.cranial_planning_availability(scene, record)
-    assert dto['present'] and not dto['available'] and dto['roots'] == []
-    assert dto['blockers'][0]['code'] == REASON
-    assert dto['blockers'][1]['code'] == 'LOCAL_MATERIAL_AND_STAGE_REVIEW_REQUIRED'
-    with pytest.raises(ValueError, match=REASON):
+    # Without bone or a root registry there is simply no cranial planner; the marker refuses nothing.
+    assert planning.cranial_planning_availability(scene, record) is None
+    with pytest.raises(ValueError, match='QUALIFIED_COMPLETE_SEQUENCE_ROOT_REQUIRED'):
         planning.compare_cranial_strategies(scene, record)
-    assert not engine.actions and not engine.history
 
 
-@pytest.mark.parametrize('command', ['step', 'preview', 'plan', 'generateStrategies', 'generateApproaches', 'generatePreparations', 'attachProtection', 'fullCase'])
-def test_real_bridge_refuses_manual_and_every_planner_before_session_state(source, tmp_path, command):
-    from resectionlab.desktop_bridge import BridgeSession, BridgeError
-    from resectionlab.surgical_bridge import dispatch
+@pytest.mark.parametrize('command', ['step', 'preview'])
+def test_real_bridge_admits_manual_actions_on_a_marked_source(source, command):
+    from resectionlab.desktop_bridge import BridgeSession, _Request
     case = built(source)
-    owner = BridgeSession(tmp_path/'bridge-transfers')
-    owner._get_case = lambda _: SimpleNamespace(case=case, artifacts={})
-    args = {'caseHash': case.semantic_hash, 'command': command}
-    if command == 'step': args['action'] = {'slot': 'left', 'operation': 'configure'}
-    if command == 'plan': args.update(opponent='anatomy-strategy', acknowledgeResearchUnknowns=True)
-    with pytest.raises(BridgeError, match='inspection only'):
-        dispatch(owner, 'surgicalRehearsal', args, SimpleNamespace(check=lambda: None), lambda *a: None)
-    assert not getattr(owner, 'surgical_sessions', {})
+    owner = BridgeSession(source.tmp/'bridge-transfers')
+    try:
+        owner._install_case(case, {}, _Request('install-inspection'))
+        def call(args):
+            return owner.execute('surgicalRehearsal', {'caseHash': case.semantic_hash, **args}, _Request(command), lambda *_: None)
+        created = call({'command': 'create'})
+        assert created['planningAdmission']['available'] and created['planningAdmission']['sourceClass'] == 'patient-or-unverified'
+        result = call({'command': command, 'action': INSPECT, 'expectedStateId': created['view']['stateId']})
+        outcome = result['outcome'] if command == 'step' else result
+        assert outcome['status'] == 'accepted' and RETIRED not in str(outcome.get('reason'))
+        assert command == 'preview' or result['position'] == 1
+    finally:
+        owner.close()
 
 
 def test_existing_scene_without_marker_keeps_native_inspection_action():
@@ -214,32 +211,26 @@ def test_existing_typed_critical_evidence_is_preserved_without_review_promotion(
     assert evidence.review is None and evidence.lineage['kind'] == 'unknown'
     assert np.array_equal(case.critical_evidence[evidence.evidence_id].mask, source.critical)
     engine = SurgicalEngine(from_case(case))
-    assert engine.protection is None and engine.step({'slot': 'left', 'operation': 'inspect'})['reason'] == REASON
+    assert engine.protection is None and engine.step(INSPECT)['status'] == 'accepted'
 
 
-def test_explicit_mapping_protection_retained_without_ids_or_index_allocation(source, monkeypatch):
-    import resectionlab.surgical_scene as scene_module
-    from resectionlab import surgical_rl_protection as protection
+def test_explicit_mapping_protection_becomes_real_protection(source):
     case = built(source)
     mapping = [{'id': i+1, 'name': name, 'material': 'tumor' if name == 'model-target' else 'unknown',
-                'target': name == 'model-target', 'protected': True} for i, name in enumerate(case.compartments)]
-    original_flatnonzero = scene_module.np.flatnonzero
-    def no_exclusion_expansion(mask):
-        assert np.array_equal(mask, source.target), 'Only the small complete target can expand to source IDs'
-        return original_flatnonzero(mask)
-    monkeypatch.setattr(scene_module.np, 'flatnonzero', no_exclusion_expansion)
-    monkeypatch.setattr(protection, 'declared_scene_protection', lambda *a: pytest.fail('No physical protection index during inspection'))
+                'target': name == 'model-target', 'protected': name != 'model-target'} for i, name in enumerate(case.compartments)]
     scene = from_case(case, mapping)
-    assert len(scene.source['inspectionProtectionDeclarations']) == len(mapping)
-    assert 'protectedAnatomyV1' not in scene.source
+    rows = scene.source['protectedAnatomyV1']
+    assert {row['structureId'] for row in rows} == {'inferior-container', 'padding-unknown'}
+    assert 'inspectionProtectionDeclarations' not in scene.source
+    by_name = {row['structureId']: row for row in rows}
+    assert len(by_name['inferior-container']['cells']) == int(source.critical.sum())
     engine = SurgicalEngine(scene)
-    assert engine.protection is None and not engine._protected_ids
-    assert engine.step({'slot': 'left', 'operation': 'configure'})['reason'] == REASON
-    assert 'physical protection index not constructed' in engine.guard_report()['unknownStructures'][0]
+    assert engine.protection is not None and engine._protected_ids
+    assert engine.guard_report()['configured']
 
 
-def test_real_bridge_case_create_inspect_save_and_cold_open_stay_unacted(source):
-    from resectionlab.desktop_bridge import BridgeSession, _Request, BridgeError
+def test_real_bridge_case_create_inspect_save_and_cold_open(source):
+    from resectionlab.desktop_bridge import BridgeSession, _Request
     from resectionlab.imaging import save_case, read_case_artifacts
     case = built(source)
     owner = BridgeSession(source.tmp/'warm-transfers')
@@ -249,23 +240,21 @@ def test_real_bridge_case_create_inspect_save_and_cold_open_stay_unacted(source)
         def call(session, args):
             return session.execute('surgicalRehearsal', args, _Request('inspection'), lambda *_: None)
         created = call(owner, {'caseHash': case.semantic_hash, 'command': 'create'})
-        available = created['cranialPlanningAvailability']
-        assert available['present'] and not available['available'] and available['roots'] == []
-        assert available['blockers'][0]['code'] == REASON
+        assert created.get('cranialPlanningAvailability') is None  # No bone: no cranial planner, no marker blocker.
         assert created['position'] == 0 and created['view']['history'] == []
+        assert created['planningAdmission']['available']
         raw = thaw_json(owner.cases[case.semantic_hash].artifacts)
         source_snapshot = raw['surgical_toolbox']['branches']['main']
-        assert source_snapshot['actions'] == [] and 'protectionContract' not in source_snapshot
-        with pytest.raises(BridgeError, match='inspection only'):
+        assert source_snapshot['actions'] == []
+        with pytest.raises(Exception) as refused:
             call(owner, {'caseHash': case.semantic_hash, 'command': 'plan',
                 'opponent': 'anatomy-cranial-strategy', 'acknowledgeResearchUnknowns': True})
-        assert thaw_json(owner.cases[case.semantic_hash].artifacts) == raw
+        assert RETIRED not in str(refused.value) and 'inspection only' not in str(refused.value)
         path = save_case(case, source.tmp/'warm-saved.ressectionlab', artifacts=raw)
         cold = load_case(path)
         cold_owner._install_case(cold, read_case_artifacts(path), _Request('cold-install-inspection'))
         inspected = call(cold_owner, {'caseHash': cold.semantic_hash, 'command': 'inspect'})
-        assert inspected['view']['stateId'] == created['view']['stateId']
-        assert inspected['position'] == 0 and inspected['cranialPlanningAvailability'] == available
+        assert inspected['view']['stateId'] == created['view']['stateId'] and inspected['position'] == 0
         assert thaw_json(cold_owner.cases[cold.semantic_hash].artifacts)['surgical_toolbox']['branches']['main'] == source_snapshot
     finally:
         owner.close(); cold_owner.close()

@@ -377,21 +377,26 @@ def register(root, report, libraries):
 
 
 def probe_guarded_rehearsal(root):
+    """Check that standard planning admits the mapped ISLES contour with its source label.
+
+    Owner decision 2026-11-27: acquired anatomy is admitted and labelled. The
+    retained ``qc/isles0146-cta-guarded-refusal-v1.json`` records the earlier refusal.
+    """
     from resectionlab.full_case_readiness import full_case_readiness
     from resectionlab.imaging import read_case_artifacts
     from resectionlab.surgical_engine import SurgicalEngine
     from resectionlab.surgical_environment import load_environment
     from resectionlab.surgical_patient import prepare_surgical_environment, surgical_environment_options
-    from resectionlab.surgical_planning_admission import REQUIRED, planning_admission, require_planning_admission
+    from resectionlab.surgical_planning_admission import ACQUIRED, planning_admission, require_planning_admission
 
     cohort = safe_path(root, f'{OUTPUT}/collection.json')
     row = read_json(cohort)['cases'][1]
     archive = checked_file(root, row['native_case'])
-    output = safe_path(root, 'qc/isles0146-cta-guarded-refusal-v1.json')
+    output = safe_path(root, 'qc/isles0146-cta-labelled-admission-v1.json')
     if output.exists():
         report = read_json(output)
-        if report['input'] != row['native_case'] or report['refusal_code'] != REQUIRED:
-            raise ValueError('The retained guard proof belongs to a different case')
+        if report['input'] != row['native_case'] or report['planning_admission'].get('sourceClass') != ACQUIRED:
+            raise ValueError('The retained admission proof belongs to a different case')
         return output
     with TemporaryDirectory(dir=output.parent, prefix='.isles-guarded-rehearsal-') as scratch:
         native = open_package(archive, Path(scratch) / 'native')
@@ -419,23 +424,18 @@ def probe_guarded_rehearsal(root):
         readiness = full_case_readiness(engine)
         admission = planning_admission(engine.scene, engine.protection)
         target_volume = prepared['environment']['target']['initialVolumeMm3']
-        if before['actions'] or not target_volume or toolbox['timeline']['main'] or admission['available']:
-            raise ValueError('Expected a populated target and an unacted, nonadmitted scene')
-        try:
-            require_planning_admission(engine)
-        except ValueError as error:
-            refusal = str(error)
-        else:
-            raise ValueError('The actual patient-planning guard accepted the limited research scene')
-        if (not refusal.startswith(REQUIRED + ':') or engine.snapshot() != before
+        if (before['actions'] or not target_volume or toolbox['timeline']['main'] or not admission['available']
+                or admission['sourceClass'] != ACQUIRED):
+            raise ValueError('Expected a populated target and an unacted scene admitted with its acquired-source label')
+        if (require_planning_admission(engine) != admission or engine.snapshot() != before
                 or checked_file(root, row['native_case']) != archive):
-            raise ValueError('The refusal changed the unacted scene or differs from the source policy')
-        report = {'schema': 'ressectionlab-new-cta-guarded-rehearsal-v1', 'input': row['native_case'],
+            raise ValueError('The admission changed the unacted scene or differs from the source policy')
+        report = {'schema': 'ressectionlab-new-cta-labelled-admission-v1', 'input': row['native_case'],
                   'source_snapshot': source_snapshot, 'temporary_mapped_snapshot': study.identity(),
                   'target_array_sha256': target['data']['sha256'], 'target_scene_volume_mm3': target_volume,
                   'scene_id': scene.identity, 'initial_state_id': engine.state_id, 'actions_before_and_after': [0, 0],
-                  'planning_admission': admission, 'full_case_readiness': readiness, 'refusal_code': REQUIRED,
-                  'refusal': refusal, 'selected_layer_ids': selected}
+                  'planning_admission': admission, 'full_case_readiness': readiness,
+                  'selected_layer_ids': selected}
         checked_root(root, expected_uuid=UUID)
         atomic_json(output, report)
     return output
@@ -446,7 +446,7 @@ def main():
     parser.add_argument('--root', type=Path)
     parser.add_argument('--register', type=Path, action='append', default=[])
     parser.add_argument('--host', choices=('isles', 'tair'), default='isles')
-    parser.add_argument('--guarded-rehearsal', action='store_true', help='Check the standard planning guard on ISLES variant 02')
+    parser.add_argument('--guarded-rehearsal', action='store_true', help='Check labelled standard planning admission on ISLES variant 02')
     args = parser.parse_args()
     root = checked_root(args.root, expected_uuid=UUID, required_bytes=5 * 1024**3)
     with reconstruction_lock():

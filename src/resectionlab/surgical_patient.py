@@ -504,21 +504,14 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
     if local_wall is not None:
         anatomy_layers['vessels'].update(kind=rows['vessels']['kind'], color=rows['vessels']['color'])
     if planned:
-        from .surgical_source_inspection import PROPERTY
+        # The selected route is provenance: it binds source snapshot, target,
+        # approach and plan revision. The derivative is an ordinary operable
+        # scene (owner decision 2026-11-27); no inspection-only marker is written.
         adapter['selectedApproach'] = planned
-        # The native guard uses presence of PROPERTY for every inspection variant.
-        # This derivative has sampled materials, unlike the exact-grid annotation export.
-        properties[PROPERTY] = {'schema': 'resectionlab.planned-derivative-inspection.v1',
-            'status': 'inspection-only', 'patientTaskAdmission': False,
-            'sourceSnapshotId': planned['sourceSnapshotId'], 'targetBinding': planned['targetBinding'],
-            'approachId': planned['id'], 'planRevision': planned['planRevision'], 'blockers': [
-            {'code': 'PROCEDURE_ACQUIRED_SOURCE_QUALIFICATION_UNAVAILABLE',
-             'message': 'The saved approach supplies proposed geometry. Executing it requires qualified source coverage, entry, compartments, operative stages and swept instrument workspace.'}]}
     case = CaseData(case_id=manifest['patient_id'] + '-surgical-research', mri=mri,
         compartments=masks, affine=target_affine, frame='RAS+', source_refs=tuple(source_refs),
         vascular_probabilities={} if local_wall is None else {'vessels': local_wall.scores},
         metadata={'surgical_adapter': adapter, 'surgical_properties': properties, **wall_metadata,
-            **({'anatomy_workbench_only': True} if planned else {}),
             'anatomy_layers': anatomy_layers,
             'missing_anatomy': [name for name in ORDER if name not in masks],
             'description': 'Acquired reference image with explicitly selected source annotations and research estimates; missing anatomy remains unknown.'})

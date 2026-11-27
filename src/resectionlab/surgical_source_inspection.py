@@ -1,8 +1,12 @@
-"""Exact-grid source inspection exports; these are never executable patients.
+"""Exact-grid source exports with their provenance marker.
 
 Arbitrary source annotations remain independent masks, including overlaps.
-Their inspection declarations are not a native ProtectionSet. Every native
-action is forbidden while this source-bound marker is present.
+Owner decision 2026-11-27: the engine, planners and RL environment operate on
+any 3D reconstruction, so the ``cranialPlanningCandidateV1`` marker is a
+provenance label, never a refusal. A scene carrying it is an ordinary operable
+scene; an explicit protection declaration becomes real protection. The compiled
+resident simulator still treats the marker as its retired inspection contract,
+so such scenes run on the Python reference path (see ``legacy_marker``).
 """
 from __future__ import annotations
 
@@ -18,31 +22,18 @@ from .patient_anatomy import PatientImagingCollection
 
 PROPERTY = 'cranialPlanningCandidateV1'
 SCHEMA = 'resectionlab.cranial-planning-candidate.v1'
-REASON = 'SOURCE_INSPECTION_ONLY'
 
 
-def inspection_only(scene):
-    # Presence is fail-closed, including a malformed/false marker. Permission
-    # cannot arise by changing a status string on an inspection source.
+def legacy_marker(scene):
+    """True when a scene carries the provenance marker; it grants and refuses nothing."""
     return PROPERTY in scene.properties
-
-
-def inspection_blockers(scene):
-    result = [{'code': REASON, 'message': 'Source annotations are retained for inspection. Physical protection is not constructed; all native actions and plan generation are forbidden.'}]
-    marker = scene.properties.get(PROPERTY)
-    if isinstance(marker, dict):
-        rows = marker.get('blockers', [])
-        if isinstance(rows, (list, tuple)):
-            result.extend(copy.deepcopy(row) for row in rows if isinstance(row, dict)
-                          and type(row.get('code')) is str and type(row.get('message')) is str)
-    return result
 
 
 def inspection_case(collection_path, *, source_group, target_layer_ids,
                     expected_originals, expected_reference_grid, expected_target_cells,
                     expected_target_ids_sha256, blockers,
                     critical_evidence=None, evidence_identity=None, check=lambda: None):
-    """Build an unqualified CaseData from an existing verified native collection.
+    """Build a source-labelled CaseData from an existing verified native collection.
 
     No resampling, registration estimation, segmentation, material adoption or
     native transition is performed. All collection layers are retained; the
@@ -139,7 +130,7 @@ def inspection_case(collection_path, *, source_group, target_layer_ids,
         'targetLayerIds': sorted(targets), 'blockers': copy.deepcopy(blockers),
         'physicalProtectionIndexConstructed': False, 'patientTaskAdmission': False,
         'officialTrainClaim': False, 'annotationAuthority': False,
-        'meaning': 'Complete source masks/declarations retained for inspection; no executable protection or material/entry/work/exit qualification.'}
+        'meaning': 'Complete source masks/declarations retained with their provenance. The scene is operable; protection applies only where a mapping declares it, and material/entry/work/exit remain unqualified.'}
     mri = collection.array(reference['data'])
     check()
     case = CaseData(case_id=source_group+'-source-inspection', mri=mri, affine=affine,

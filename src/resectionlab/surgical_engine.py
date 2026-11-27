@@ -416,14 +416,12 @@ class SurgicalEngine:
     def __init__(self, scene, *, protection=None, guard_config=None, cranial_stages=None):
         scene.require_cache_source()
         self.scene = scene
-        from .surgical_source_inspection import inspection_only
-        self._source_inspection_only = inspection_only(scene)
         self._operative = 'operativeExposureV1' in scene.properties
         from .surgical_motion import AXIAL_SWEEP_PROPERTY, AXIAL_SWEEP_POLICY
         self._axial_tool_sweep = AXIAL_SWEEP_PROPERTY in scene.properties
         if self._axial_tool_sweep and (
                 scene.properties[AXIAL_SWEEP_PROPERTY] != AXIAL_SWEEP_POLICY
-                or self._operative or self._source_inspection_only
+                or self._operative
                 or not (scene.source.get('adapter') or {}).get('nativeWall')
                 or not getattr(scene, '_vessel_source_walls', ())
                 or not vessel_rods.wall_sweep_enabled(self)
@@ -432,7 +430,7 @@ class SurgicalEngine:
         self._vessel_tool_clock = scene.properties.get(vessel_rods.TOOL_CONTACT_CLOCK_PROPERTY)
         if vessel_rods.TOOL_CONTACT_CLOCK_PROPERTY in scene.properties and (
                 self._vessel_tool_clock not in vessel_rods.TOOL_CONTACT_CLOCK_POLICIES
-                or self._operative or self._source_inspection_only
+                or self._operative
                 or not getattr(scene, '_vessel_source_walls', ())
                 or not vessel_rods.wall_sweep_enabled(self)
                 or not vessel_rods.bounded_tissue_capacity_enabled(self)):
@@ -440,7 +438,7 @@ class SurgicalEngine:
         if vessel_rods.ATTACHMENT_COUPLING_PROPERTY in scene.properties:
             from .surgical_deformation_v2 import _settings
             if (not vessel_rods.reciprocal_attachments_enabled(self)
-                    or self._operative or self._source_inspection_only
+                    or self._operative
                     or not scene.properties.get('tissuePhysicsV2') or 'brainContinuumV1' in scene.properties
                     or not getattr(scene, '_vessel_source_walls', ())
                     or not vessel_rods.wall_sweep_enabled(self)
@@ -449,7 +447,7 @@ class SurgicalEngine:
                 raise ValueError('VESSEL_ATTACHMENT_COUPLING_REQUIRES_SUPPORTED_NATIVE_WALL')
         if vessel_rods.WORKING_AXIS_PROPERTY in scene.properties and (
                 not vessel_rods.working_axis_constraint_enabled(self)
-                or self._operative or self._source_inspection_only
+                or self._operative
                 or not getattr(scene, '_vessel_source_walls', ())
                 or not vessel_rods.wall_sweep_enabled(self)
                 or not vessel_rods.bounded_tissue_capacity_enabled(self)):
@@ -458,11 +456,8 @@ class SurgicalEngine:
         self._operative_tool_revision = 0
         if self._operative:
             # An operative exposure runs on any reconstruction, whatever its
-            # source class. Only an inspection-only source, which forbids every
-            # native action, is refused. A host provenance declaration, when
-            # present, must be well formed; it records evidence, not permission.
-            if self._source_inspection_only:
-                raise ValueError('SOURCE_INSPECTION_ONLY: an inspection-only source cannot open an operative exposure')
+            # source class. A host provenance declaration, when present, must
+            # be well formed; it records evidence, not permission.
             from .surgical_host_rehearsal import declaration as host_rehearsal
             host_rehearsal(scene)
             from .surgical_tools import tools_for_operative_profile
@@ -475,12 +470,10 @@ class SurgicalEngine:
                 raise ValueError('OPERATIVE_EXPOSURE_REQUIRES_COMPATIBLE_PHYSICS')
             self._operative_tool_revision = revision
             self.tools = tools_for_operative_profile(True)
-        if self._source_inspection_only and any(value is not None for value in (protection, guard_config, cranial_stages)):
-            raise ValueError('SOURCE_INSPECTION_ONLY: executable protection/stage contracts cannot be attached')
         from .surgical_milling import resolve_contract
         self._cranial_access = resolve_contract(scene)
         from .surgical_rl_protection import GuardConfig, ProtectionSet, missing_critical, protection_contract, declared_scene_protection
-        declared = protection if self._source_inspection_only else declared_scene_protection(scene, protection)
+        declared = declared_scene_protection(scene, protection)
         from .surgical_procedure_policy import PROPERTY as PROCEDURE_PROPERTY, procedure_protection, procedure_admission
         self._procedure_policy = None
         if PROCEDURE_PROPERTY in scene.properties:
@@ -577,9 +570,7 @@ class SurgicalEngine:
             return {'configured': False, 'mode': 'unconfigured-research', 'contractId': None,
                 'status': 'unknown-coverage', 'missingRequired': ['brainstem'], 'clearanceMm': 0.,
                 'criticalMaxDisplacementMm': None, 'anatomicalCompleteness': 'unknown',
-                'clinicalValidation': 'none', 'structures': [], 'unknownStructures': (
-                    ['Source annotations retained for inspection; physical protection index not constructed; all native actions forbidden.']
-                    if self._source_inspection_only else ['critical anatomy not supplied'])}
+                'clinicalValidation': 'none', 'structures': [], 'unknownStructures': ['critical anatomy not supplied']}
         missing = missing_critical(self.protection)
         return {**self.protection.report(), 'configured': True,
             'mode': 'strict-research' if self.guard_config.require_critical_coverage else 'relaxed-research',
@@ -769,11 +760,6 @@ class SurgicalEngine:
 
     def preview(self, action, *, check=None, include_view=True, include_history=True):
         if check is not None: check()
-        from .surgical_source_inspection import inspection_only
-        if self._source_inspection_only or inspection_only(self.scene):
-            _, result = self._prepare_step(action, check=check)
-            return {**result, 'preview': True,
-                **({'view': self.view(_state_id=result['stateId'], include_history=include_history)} if include_view else {})}
         if (type(self) is SurgicalEngine and all(
                 name not in self.__dict__ and getattr(SurgicalEngine, name) is method
                 for name, method in _PREVIEW_NATIVE_METHODS)):
@@ -885,12 +871,6 @@ class SurgicalEngine:
         refusal = procedure_action_rejection(self, action, check=check or (lambda: None))
         if refusal is not None:
             return None, refusal
-        from .surgical_source_inspection import inspection_only, REASON
-        if self._source_inspection_only or inspection_only(self.scene):
-            self.scene.require_cache_source()
-            return None, {'status': 'rejected', 'reason': REASON, 'reasonCode': REASON,
-                'completedFraction': 0., 'elapsedSeconds': 0., 'stateId': self.state_id,
-                'events': [], 'deltas': {}, 'metrics': self.metrics()}
         from .surgical_native_engine import prepare
         prepared = prepare(self, action, check)
         if prepared is not NotImplemented:
@@ -1724,10 +1704,6 @@ class SurgicalEngine:
                 raise ValueError('PROCEDURE_SNAPSHOT_INCOMPATIBLE: historical partial protection is not admitted')
         elif 'procedurePolicy' in record:
             raise ValueError('PROCEDURE_SNAPSHOT_INCOMPATIBLE: source scene has no procedure policy')
-        from .surgical_source_inspection import inspection_only
-        if inspection_only(scene) and (record.get('actions') != []
-                or 'protectionContract' in record or 'cranialStagesContract' in record):
-            raise ValueError('SOURCE_INSPECTION_ONLY: only unacted inspection snapshots can be restored')
         # Boundary observers need the intact state and every causal step, even when a verified endpoint is cached.
         cache = None
         if use_cache and on_boundary is None and 'cranialStagesContract' not in record:

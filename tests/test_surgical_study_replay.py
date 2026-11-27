@@ -1,6 +1,7 @@
 """Replay joins an exact native target and remains read-only across a saved workspace."""
 import copy
 from dataclasses import replace
+from types import SimpleNamespace
 
 import numpy as np
 import pytest
@@ -88,7 +89,7 @@ def test_recorded_branch_keeps_source_and_ledger_through_seek_rejection_and_save
         session.close()
 
 
-def test_selected_plan_export_preserves_target_and_current_revision_without_action_authority(study, tmp_path):
+def test_selected_plan_export_preserves_target_and_revision_and_opens_operable(study, tmp_path):
     from resectionlab.imaging import load_case, read_case_artifacts
     from resectionlab.surgical_engine import SurgicalEngine
     from resectionlab.surgical_environment import load_environment
@@ -120,30 +121,30 @@ def test_selected_plan_export_preserves_target_and_current_revision_without_acti
     proposed = case.metadata['surgical_adapter']['selectedApproach']
     assert proposed['targetLayerId'] == 'lesion' and proposed['sourceSnapshotId'] == native.identity()
     assert proposed['id'] == approach['approachId'] and proposed['parameterHash'] == approach['parameterHash']
-    marker = case.metadata['surgical_properties']['cranialPlanningCandidateV1']
-    assert marker['schema'] == 'resectionlab.planned-derivative-inspection.v1'
-    assert marker['sourceSnapshotId'] == proposed['sourceSnapshotId']
-    assert marker['targetBinding'] == proposed['targetBinding'] and marker['planRevision'] == proposed['planRevision']
-    from resectionlab.core import thaw_json
-    from resectionlab.surgical_scene import from_case
-    altered = thaw_json(case.metadata)
-    del altered['surgical_properties']['cranialPlanningCandidateV1']
-    with pytest.raises(ValueError, match='Missing planned derivative inspection binding'):
-        from_case(replace(case, metadata=altered))
+    # Owner decision 2026-11-27: no inspection-only marker; the route is the provenance.
+    assert 'cranialPlanningCandidateV1' not in case.metadata.get('surgical_properties', {})
+    assert 'anatomy_workbench_only' not in case.metadata
+    assert proposed['sourceSnapshotId'] == case.metadata['surgical_adapter']['sourceCollectionHash']
     scene = load_environment(report['casePath'])
     record = read_case_artifacts(report['casePath'])['surgical_toolbox']
     engine = SurgicalEngine.restore(scene, record['branches']['main'])
-    assert not planning_admission(scene)['available'] and not engine.actions
+    admission = planning_admission(scene)
+    assert admission['available'] and admission['sourceClass'] == 'patient-or-unverified' and not engine.actions
     original = engine.state_id
-    outcome = engine.step({'slot': 'right', 'operation': 'inspect', 'duration': 1.})
-    assert outcome['status'] == 'rejected' and engine.state_id == original
+    probe = engine.clone()
+    outcome = probe.step({'slot': 'right', 'operation': 'inspect', 'duration': 1.})
+    assert outcome['status'] == 'accepted' and probe.state_id != original and engine.state_id == original
 
     # The intact decision survives a portable save and is measured independently
     # again on fresh-process hydration. A geometric corridor is never tissue loss.
     from resectionlab.surgical_selected_decision import selected_plan_decision
     from resectionlab.surgical_patient import surgical_environment_options
-    with pytest.raises(ValueError, match='admission or source binding'):
-        selected_plan_decision(engine, {'available': True}, branch_id='main')
+    assert selected_plan_decision(probe, admission, branch_id='main') is None  # Acted: no intact receipt.
+    changed = copy.deepcopy(scene.source['adapter']['selectedApproach']); changed['sourceSnapshotId'] = 'stale'
+    stale = SimpleNamespace(scene=SimpleNamespace(source={'adapter': {**scene.source['adapter'], 'selectedApproach': changed}},
+        properties=scene.properties))
+    with pytest.raises(ValueError, match='source binding'):
+        selected_plan_decision(stale, admission, branch_id='main')
     session = BridgeSession(tmp_path/'selected-transfers')
     def call(operation, args):
         return session.execute(operation, args, _Request(operation), lambda *_: None)
@@ -151,7 +152,7 @@ def test_selected_plan_export_preserves_target_and_current_revision_without_acti
         call('loadCase', {'path': report['casePath']})
         response = call('surgicalRehearsal', {'caseHash': case.semantic_hash, 'command': 'inspect'})
         decision = response['selectedPlanDecision']
-        assert response['readOnly'] and decision['stateId'] == response['view']['stateId'] == original
+        assert not response.get('readOnly') and decision['stateId'] == response['view']['stateId'] == original
         assert decision['caseHash'] == case.semantic_hash and decision['sceneId'] == scene.identity
         assert decision['forecast'] == surgical_environment_options(native)['selectedRouteForecast']
         assert decision['forecast']['physicalCandidatesExamined'] == 0

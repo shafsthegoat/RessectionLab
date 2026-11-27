@@ -170,16 +170,11 @@ def _cranial_critical_blockers(record, root_ids=None):
 
 
 def _cranial_context_availability(case, record, available):
-    if available is None or _cranial_generated_control(case):
+    """Apply the critical-anatomy evidence floor to every source; label, never refuse, by class."""
+    if available is None:
         return available
     result = copy.deepcopy(available)
-    qualification = {'code': 'PROCEDURE_ACQUIRED_SOURCE_QUALIFICATION_UNAVAILABLE',
-        'message': 'The supratentorial task requires trusted complete intracranial, brainstem and cerebellar source review; existing acquired cases have no qualified receipt.'}
-    result['available'] = False
-    result.setdefault('blockers', []).append(qualification)
-    for row in result.get('roots', []):
-        row['available'] = False
-        row.setdefault('blockers', []).append(copy.deepcopy(qualification))
+    result['sourceClass'] = 'generated-control' if _cranial_generated_control(case) else 'patient-or-unverified'
     blockers = _cranial_critical_blockers(record)
     for row in result.get('roots', []):
         failed = [b for b in blockers if b['rootId'] == row['rootId']]
@@ -193,28 +188,31 @@ def _cranial_context_availability(case, record, available):
 
 
 def _cranial_source_role(session, case):
-    """Use trusted app-owned role evidence; metadata cannot promote a patient."""
+    """Return the recorded source role as a provenance label; it never authorizes or refuses.
+
+    App-owned role evidence still decides whether TRAIN or DEVELOPMENT is
+    verified. A role that cannot be verified is reported as recorded, with an
+    ``-UNVERIFIED`` suffix, rather than raising.
+    """
     from .surgical_patient_role import patient_role_evidence
     data = case.metadata.get('data_case', {})
     role = data.get('role')
     split = data.get('split')
-    if role not in (None, 'TRAIN', 'DEVELOPMENT') or (
-            split is not None and split != role):
-        raise ValueError('SOURCE_ROLE: reserved or conflicting source role')
-    # This root is application/session configuration, never a path in case data
-    # or request JSON. Without it acquired TRAIN remains explicitly unavailable.
     evidence = patient_role_evidence(case, getattr(session, 'surgical_patient_role_root', None))
     if (evidence.get('status') == 'generated_control' and role is None and
             split is None and not data.get('family_id')):
         return 'GENERATED_CONTROL'
+    if role not in (None, 'TRAIN', 'DEVELOPMENT') or (split is not None and split != role):
+        return f'{role or split}-UNVERIFIED'
     if role == 'TRAIN':
-        if data.get('split') != 'TRAIN' or evidence.get('status') != 'verified_train_source':
-            raise ValueError('SOURCE_ROLE: trusted original TRAIN evidence is required')
-        return 'TRAIN'
+        return 'TRAIN' if evidence.get('status') == 'verified_train_source' else 'TRAIN-UNVERIFIED'
     from .surgical_source_roles import development_role
-    development_role(thaw_json(case.metadata.get('surgical_adapter', {})), declarations_root=getattr(
-        session, 'surgical_development_declarations_root',
-        Path(__file__).resolve().parents[2]/'testcases/downloaded-datasets'))
+    try:
+        development_role(thaw_json(case.metadata.get('surgical_adapter', {})), declarations_root=getattr(
+            session, 'surgical_development_declarations_root',
+            Path(__file__).resolve().parents[2]/'testcases/downloaded-datasets'))
+    except ValueError:
+        return f'{role}-UNVERIFIED' if role else 'UNVERIFIED'
     return 'DEVELOPMENT'
 
 
@@ -480,15 +478,6 @@ def dispatch(session, operation, args, request, progress):
     from .surgical_environment import (
         standardize, default_target_names, resolve_branch_scene, SCHEMA as ENVIRONMENT_SCHEMA)
     original_builder = scene_builder
-    # Source-only Case inspection is useful before any native qualification.
-    # Its presence must not fall back to an exposed-brain/legacy planner.
-    if entry is not None:
-        from .surgical_source_inspection import PROPERTY as INSPECTION_PROPERTY, REASON as INSPECTION_REASON
-        if INSPECTION_PROPERTY in entry.case.metadata.get('surgical_properties', {}) and command not in {
-                'create', 'inspect', 'inspectArchive', 'seek', 'seekFrame',
-                'seekPrefix', 'seekPrefixFrame', 'selectBranch', 'selectScene'}:
-            raise BridgeError(INSPECTION_REASON,
-                'This source project retains annotations for inspection only; native actions and plan generation require separate qualification.')
     scene_builder = lambda mapping=None: standardize(original_builder(mapping), default_target_names(entry.case) if entry is not None and mapping is None else None,
         raw.get('physicsProfile') if raw and command != 'create' else None) if (
         command == 'create' or raw and raw.get('environmentSchema') == ENVIRONMENT_SCHEMA) else original_builder(mapping)
@@ -634,8 +623,11 @@ def dispatch(session, operation, args, request, progress):
         scene = scene_builder(args.get('mapping'))
         base_scene = scene
         from .surgical_rl_protection import GuardConfig
-        from .surgical_source_inspection import inspection_only
-        engine = (SurgicalEngine(scene) if inspection_only(scene) else
+        from .surgical_source_inspection import legacy_marker
+        # A marked exact-grid source keeps its unguarded intact view (the
+        # desktop source display binds it); declared protection still applies.
+        # Neither form refuses any action.
+        engine = (SurgicalEngine(scene) if legacy_marker(scene) else
                   SurgicalEngine(scene, guard_config=GuardConfig(require_critical_coverage=False)))
         record = {'environmentSchema': ENVIRONMENT_SCHEMA, 'physicsProfile': copy.deepcopy(scene.properties['tissuePhysicsV2']), 'mapping': scene.regions, 'branches': {'main': engine.snapshot()}, 'branchId': 'main', 'position': 0, 'parents': {'main': None}, 'timeline': {'main': []}}
     elif raw is None:
@@ -995,10 +987,9 @@ def dispatch(session, operation, args, request, progress):
             raise ValueError('Save a trusted unreserved source before complete cranial planning')
         if args.get('acknowledgeResearchUnknowns') is not True:
             raise ValueError('Acknowledge the complete cranial sequence research assumptions and missing evidence')
+        # The role is a provenance label on the outcome; the planner's own root
+        # qualification decides what runs, the same for every source class.
         source_role = _cranial_source_role(session, entry.case)
-        if source_role != 'GENERATED_CONTROL':
-            raise BridgeError('PROCEDURE_ACQUIRED_SOURCE_QUALIFICATION_UNAVAILABLE',
-                'No existing acquired case has trusted complete intracranial and critical-anatomy coverage for the supported supratentorial task.')
         if (record['position'] != 0 or engine.actions or engine.scene.identity != base_scene.identity or
                 record['branches'][record['branchId']]['actions'] or
                 record.get('cranialPlanningRoots', {}).get('branchRoots', {}).get(record['branchId']) is not None):
@@ -1013,7 +1004,7 @@ def dispatch(session, operation, args, request, progress):
                 len(candidate.actions), check=request.check)
         cranial_computation['budget'].check()
         outcome = {'status': 'accepted', 'reason': 'complete_cranial_comparison_recorded',
-                   'completedFraction': 1., 'events': []}
+                   'completedFraction': 1., 'events': [], 'sourceRole': source_role}
     elif command == 'plan' and args.get('opponent') == 'anatomy-staged-strategy':
         from .surgical_staged_planning import (
             compare_staged_strategies, install_staged_comparison,
@@ -1276,8 +1267,8 @@ def dispatch(session, operation, args, request, progress):
         from .surgical_selected_decision import selected_plan_decision
         decision = selected_plan_decision(engine, result['planningAdmission'], branch_id=record['branchId'])
         if decision is not None:
+            # A receipt of the planned route at the intact state; the scene stays operable.
             result['selectedPlanDecision'] = decision
-            result['readOnly'] = True
     if study_replay:
         result['readOnly'] = True
         result['branches'] = [b for b in result['branches'] if b['id'] == study_replay['branchId']]

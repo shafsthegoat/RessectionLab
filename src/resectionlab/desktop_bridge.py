@@ -1735,9 +1735,8 @@ class BridgeSession:
             entry = self._get_case(args.get("caseHash"))
             toolbox = entry.artifacts.get("surgical_toolbox", {})
             practice = toolbox.get("practiceEpisodes") if isinstance(toolbox, Mapping) else None
-            if args.get("forFrozenExecution") and ('nativeStudyReplay' in entry.artifacts or
-                    'cranialPlanningCandidateV1' in entry.case.metadata.get('surgical_properties', {}) or practice):
-                raise BridgeError('STUDY_REPLAY_ONLY', 'Recordings, inspection workspaces and manual practice episodes cannot start a frozen policy.')
+            if args.get("forFrozenExecution") and ('nativeStudyReplay' in entry.artifacts or practice):
+                raise BridgeError('STUDY_REPLAY_ONLY', 'Recordings and manual practice episodes cannot start a frozen policy.')
             if entry.public_surface_contact_active:
                 raise BridgeError("CONTACT_EPISODE_TRANSIENT",
                                   "The current public contact episode cannot yet be saved as a workspace")

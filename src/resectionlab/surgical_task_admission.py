@@ -147,8 +147,21 @@ def _validate_task(value):
     return expected
 
 
+def _operative_revision(engine):
+    # Saved-report validation passes a scene-only stand-in; the revision is then
+    # read from the same scene declaration the engine itself resolves.
+    if hasattr(engine, '_operative_tool_revision'):
+        return engine._operative_tool_revision
+    declaration = engine.scene.properties.get('operativeExposureV1')
+    if declaration is None:
+        return 0
+    return declaration.get('instrumentGeometryRevision', 1) if isinstance(declaration, dict) else 1
+
+
 def _models(engine):
-    return {'physicsHash': semantic_digest(engine.scene.properties), 'instrumentCatalogHash': semantic_digest(catalog(operative=engine._operative_tool_revision)),
+    revision = _operative_revision(engine)
+    tools = catalog(operative=revision) if revision else catalog()
+    return {'physicsHash': semantic_digest(engine.scene.properties), 'instrumentCatalogHash': semantic_digest(tools),
             'toolMechanicsRevision': 2, 'physicalClockRevision': 1}
 
 
@@ -160,7 +173,7 @@ def _compatible_models(engine, models):
     # Adding the unrelated holder does not alter any of its tools or physics.
     # Recompute the complete preceding catalog, rather than accepting a caller's
     # arbitrary old hash; any change to an existing instrument still refuses.
-    if engine._operative:
+    if _operative_revision(engine):
         return False
     for extra_ids in ({'membrane_forceps'}, {'membrane_forceps', 'bone_flap_holder'}):
         preceding = dict(current, instrumentCatalogHash=semantic_digest(
