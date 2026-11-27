@@ -50,6 +50,8 @@ MAX_CASE_BYTES = 1024 * 1024 * 1024
 MAX_COMPARTMENTS = 80
 MAX_WORKSPACE_BYTES = 512 * 1024
 MAX_PENDING = 8
+# Absolute bound on a progress-renewed replay admission (matches surgical-timeout.cjs).
+ADMISSION_CEILING_SECONDS = 24 * 3600
 MAX_PRIOR_PROPOSALS = 16
 MAX_AXIS_INSPECTION_VOXELS = 16_000_000
 MAX_AXIS_INSPECTION_METADATA_BYTES = 256 * 1024
@@ -404,6 +406,8 @@ class _Request:
     cancelled: threading.Event = field(default_factory=threading.Event)
     terminal: bool = False
     timer: threading.Timer | None = None
+    # (stall window seconds, monotonic ceiling) for progress-renewed replay admission.
+    renewal: tuple[float, float] | None = None
     committing: bool = False
     lock: threading.Lock = field(default_factory=threading.Lock)
     _native_stop: Any = field(default=None, init=False, repr=False, compare=False)
@@ -573,6 +577,7 @@ class BridgeSession:
             request.begin_commit()
             self.cases[case.semantic_hash]=entry
             self.cases.move_to_end(case.semantic_hash)
+            self.source_surface_transfer_paths = ()
             self.prune_transfers()
             return {**entry.descriptor,"artifacts":self._display_artifacts(entry),**extra}
         # Native voxels stay unchanged. The affine explicitly declares RAS or
@@ -664,6 +669,7 @@ class BridgeSession:
         self.cases[case.semantic_hash] = entry
         while len(self.cases) > self.max_cases:
             self.cases.popitem(last=False)
+        self.source_surface_transfer_paths = ()
         self.prune_transfers()
         return {**descriptor, "artifacts": self._display_artifacts(entry),**extra}
 
@@ -671,6 +677,8 @@ class BridgeSession:
         """Discard generated arrays belonging to failed or cancelled imports."""
         retained = set(getattr(self, 'anatomy_transfer_paths', ()))
         retained.update(getattr(self, 'anatomy_vessel_field_paths', ()))
+        # Source-surface arrays of the last reply, released at the next case install.
+        retained.update(getattr(self, 'source_surface_transfer_paths', ()))
         inspection = getattr(self, 'native_wall_source', None)
         if inspection:
             retained.update(inspection.transfer_paths)
@@ -1622,8 +1630,11 @@ class BridgeSession:
             if any(not path.is_absolute() for path in paths.values()):
                 raise BridgeError("INVALID_PATH", "File paths must be absolute")
             from .surgical_source_surfaces import bridge_result
-            return bridge_result(entry.case, encode=self.transfers.array, case_path=paths.get("casePath"),
-                                 asset_path=paths.get("assetPath"), check=request.check)
+            result = bridge_result(entry.case, encode=self.transfers.array, case_path=paths.get("casePath"),
+                                   asset_path=paths.get("assetPath"), check=request.check)
+            # The renderer reads these arrays after the reply: keep them until the next case install.
+            self.source_surface_transfer_paths = tuple(array["path"] for array in (result.get("arrays") or {}).values())
+            return result
         if operation == "importStructuralEvidence":
             _keys(args, {"caseHash", "sourceImagePath", "maskPath", "reportPath", "variant"})
             entry = self._get_case(args.get("caseHash"))
@@ -2055,6 +2066,9 @@ class BridgeRuntime:
                 if self._rehearsal_timing is not None:
                     request.rehearsal_timing = RequestTiming.for_operation(request_id, operation, copied_args)
                 self._requests[request_id] = request
+                if replay_admission:
+                    # Replay admission: timeoutMs is a stall window renewed by progress.
+                    request.renewal = (timeout / 1000, time.monotonic() + ADMISSION_CEILING_SECONDS)
                 request.timer = threading.Timer(timeout / 1000, self._timeout, args=(request,))
                 request.timer.daemon = True
                 request.timer.start()
@@ -2078,6 +2092,15 @@ class BridgeRuntime:
         def progress(fraction: float, message: str, details: dict | None = None) -> None:
             with self._lock:
                 if not request.terminal and not request.cancelled.is_set():
+                    if request.renewal is not None:
+                        # An advancing replay renews its stall window up to the ceiling.
+                        window, ceiling = request.renewal
+                        if request.timer:
+                            request.timer.cancel()
+                        request.timer = threading.Timer(max(0., min(window, ceiling - time.monotonic())),
+                                                        self._timeout, args=(request,))
+                        request.timer.daemon = True
+                        request.timer.start()
                     self.emit({"id": request.request_id, "event": "progress", "progress": {"fraction": float(fraction), "message": message, **(details or {})}})
         try:
             if timing is None:

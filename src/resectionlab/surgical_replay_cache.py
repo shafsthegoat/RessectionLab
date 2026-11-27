@@ -130,7 +130,7 @@ class SurgicalReplayCache:
                 template._protected_ids = shared._protected_ids
         return template
 
-    def seek(self, current, snapshot, position, *, check=lambda: None, include_history=False):
+    def seek(self, current, snapshot, position, *, check=lambda: None, include_history=False, progress=None):
         """Admit a complete branch, then replay from its nearest prior checkpoint.
 
         A live engine may admit its own exact endpoint. Every other new archive
@@ -159,11 +159,24 @@ class SurgicalReplayCache:
                 and snapshot['actions'] == current.actions and snapshot.get('stateId') == current.state_id
                 and (checkpoint is None or (checkpoint.get('position') == len(current.actions)
                      and checkpoint.get('stateId') == snapshot['stateId'] and checkpoint.get('state') == current.state)))
-            full = current if live_endpoint else SurgicalEngine.restore(current.scene, snapshot, check=check)
+            full = current if live_endpoint else SurgicalEngine.restore(current.scene, snapshot, check=check, progress=progress)
             check()
             # Size before copying: oversized states use the full-replay fallback.
             if _owned_bytes((snapshot, full.history)) > self.max_bytes:
-                result = full.branch(position, check=check)
+                if position == len(full.actions) and full.state_id == snapshot['stateId']:
+                    # The endpoint was just admitted (replayed or matched as the
+                    # live endpoint). Detach that exact state instead of a second
+                    # complete replay of the same actions.
+                    result = self._shell(full)
+                    result.state = copy.deepcopy(full.state)
+                    result.actions = copy.deepcopy(full.actions)
+                    result.history = copy.deepcopy(full.history)
+                    self._checkpoint_runtime(result)
+                    if result.state_id != snapshot['stateId']:
+                        raise ValueError('Replay checkpoint ancestry differs')
+                    check()
+                else:
+                    result = full.branch(position, check=check, progress=progress)
                 return (result, copy.deepcopy(full.history)) if include_history else result
             owned_snapshot, history = copy.deepcopy((snapshot, full.history))
             state = owned_snapshot.get('checkpoint', {}).get('state')
@@ -220,6 +233,8 @@ class SurgicalReplayCache:
         self._checkpoint_runtime(result)
         for index, action in enumerate(archive['snapshot']['actions'][start:position], start):
             check()
+            if progress is not None:
+                progress(index - start, position - start)
             observed = archive['history'][index]
             result._restoring_legacy_guard_partial = (observed.get('status') == 'partial'
                 and str(observed.get('reason', '')).split(':', 1)[0] == 'PROTECTED_STRUCTURE')

@@ -489,3 +489,30 @@ def test_observed_engine_transaction_samples_match_legacy(monkeypatch):
         expected = capture_episode(scene, actions)
     assert encoded(actual) == encoded(expected)
     assert {'accepted', 'partial', 'rejected'} <= {row['status'] for row in actual['attempts']}
+
+
+def test_operative_exposure_numpy_scalar_keeps_legacy_copy_aliases_and_ownership():
+    """A NumPy scalar under operativeExposureV1 used to send every microstep through deepcopy."""
+    shared = [1., 2., 3.]
+    exposure = {'objects': [{'id': 'flap', 'surfaceOffsetMm': np.float64(0.25), 'positionMm': shared}],
+                'bodies': {'scalp': {'cut': [0, 1, 2]}}}
+    components = [{'cells': [8, 9]}]
+    state = {'removed': [4, 1], 'debris': {'1': 2.}, 'flapComponents': components,
+             'operativeExposureV1': exposure, 'slots': {'right': {'position': shared}},
+             'drillingV2': {'workJ': {'3': .5}, 'temperatureC': {}, 'thermalDoseCSeconds': {}}}
+    actual, reference = _microstep_checkpoint(state), legacy_checkpoint(state)
+    assert encoded(actual) == encoded(reference)
+    copied = actual['operativeExposureV1']['objects'][0]
+    assert type(copied['surfaceOffsetMm']) is np.float64 and copied['surfaceOffsetMm'] == 0.25
+    assert copied['positionMm'] is actual['slots']['right']['position'] is not shared
+    assert actual['flapComponents'] is components and actual['operativeExposureV1'] is not exposure
+    copied['positionMm'].append(4.); actual['operativeExposureV1']['bodies']['scalp']['cut'].clear()
+    assert shared == [1., 2., 3.] and exposure['bodies']['scalp']['cut'] == [0, 1, 2]
+    # An unusual leaf elsewhere still takes the complete reference path.
+    class Newtons(float):
+        pass
+    state['slots']['right']['force'] = Newtons(1.5)
+    actual, reference = _microstep_checkpoint(state), legacy_checkpoint(state)
+    assert encoded(actual) == encoded(reference)
+    assert type(actual['slots']['right']['force']) is Newtons
+    assert actual['operativeExposureV1']['objects'][0]['positionMm'] is actual['slots']['right']['position']

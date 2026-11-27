@@ -385,3 +385,71 @@ def test_signed_v2_state_continues_with_identical_physics_after_reconstruction(t
     next_action = {'slot': 'right', 'operation': 'inspect', 'duration': .3}
     assert cached.step(next_action) == reference.step(next_action)
     assert cached.snapshot() == reference.snapshot()
+
+
+def test_long_capture_recounts_the_cache_tree_in_windows_not_per_file(tmp_path):
+    """Per-file recounts made a 1,500-action capture quadratic in its own part files."""
+    full = engine(300)
+    record = full.snapshot()
+    counted = []
+    class Counting(VerifiedSurgicalCache):
+        # A subclass outside the fingerprinted module keeps cache admission enabled.
+        def _bytes(self):
+            counted.append(1)
+            return super()._bytes()
+    cache = Counting(tmp_path / 'cache')
+    restored = SurgicalEngine.restore(full.scene, record, use_cache=True, verified_cache=cache)
+    assert restored.snapshot() == record and cache.publications == 1
+    entry = next(cache.directory.glob('entry-*'))
+    files = len(list(entry.iterdir()))
+    assert files > 300 and len(counted) <= 3 * (files // 128 + 2), (files, len(counted))
+    # The disk budget still holds: a budget below one complete entry publishes nothing.
+    small = VerifiedSurgicalCache(tmp_path / 'small', max_disk_bytes=cache.statistics['diskBytes'] // 2)
+    assert SurgicalEngine.restore(full.scene, record, use_cache=True, verified_cache=small).state_id == full.state_id
+    assert small.publications == 0 and small.statistics['diskBytes'] <= small.max_disk_bytes
+    hit = SurgicalEngine.restore(full.scene, record, use_cache=True, verified_cache=cache)
+    assert cache.hits == 1 and hit.snapshot() == record
+
+
+def test_replay_progress_reports_every_action_without_changing_verification(tmp_path):
+    full = engine(6)
+    record = full.snapshot()
+    seen = []
+    restored = SurgicalEngine.restore(full.scene, record, progress=lambda done, total: seen.append((done, total)))
+    assert restored.snapshot() == record
+    assert seen == [(index, 6) for index in range(7)]
+    branched = []
+    assert full.branch(4, progress=lambda done, total: branched.append((done, total))).state_id == full.branch(4).state_id
+    assert branched == [(index, 4) for index in range(4)]
+    cache = VerifiedSurgicalCache(tmp_path / 'cache')
+    SurgicalEngine.restore(full.scene, record, use_cache=True, verified_cache=cache)
+    hit = []
+    SurgicalEngine.restore(full.scene, record, use_cache=True, verified_cache=cache, progress=lambda *a: hit.append(a))
+    assert cache.hits == 1 and hit == [], 'a signed hit replays nothing and reports no replay'
+
+
+def test_oversized_archive_admits_its_verified_endpoint_without_a_second_replay(monkeypatch):
+    full = engine(5)
+    record = full.snapshot()
+    owner = SurgicalReplayCache(max_bytes=1)
+    calls = []
+    original = SurgicalEngine.step
+    def counted(self, action, **kwargs):
+        calls.append(action)
+        return original(self, action, **kwargs)
+    monkeypatch.setattr(SurgicalEngine, 'step', counted)
+    admitted = SurgicalEngine.restore(full.scene, record)
+    assert len(calls) == 5
+    seen = []
+    endpoint, timeline = owner.seek(admitted, record, 5, include_history=True,
+                                    progress=lambda *value: seen.append(value))
+    assert len(calls) == 5 and seen == [], 'the endpoint was not replayed a second time'
+    assert endpoint.snapshot() == record and timeline == full.history and endpoint.history == full.history
+    assert endpoint.state is not admitted.state and endpoint.history is not admitted.history
+    endpoint.state['observations'].append({'detached': True})
+    timeline[0]['stateAfter'] = 'caller-owned'
+    assert admitted.state_id == full.state_id and admitted.history == full.history
+    # Earlier positions of an oversized archive still replay from the intact start.
+    earlier = owner.seek(admitted, record, 3, progress=lambda *value: seen.append(value))
+    assert len(calls) == 8 and earlier.state_id == full.branch(3).state_id
+    assert seen == [(0, 3), (1, 3), (2, 3)]

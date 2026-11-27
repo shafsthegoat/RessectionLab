@@ -378,3 +378,53 @@ def test_workspace_save_keeps_only_the_admitted_live_surgery_owner(practice_sour
     request(session, 'saveCase', caseHash=key, path=str(tmp_path/'routes.ressectionlab'), workspace={})
     assert session.surgical_sessions[key] is owner
     assert owner[3] is not entry.artifacts and entry.artifacts['route_search'] is entry.routes
+
+
+def test_practice_reopen_replays_once_then_admits_the_signed_entry_until_code_or_file_changes(
+        practice_source, tmp_path, monkeypatch):
+    from resectionlab import surgical_verified_cache
+    session, _, _ = practice_source
+    child = surgical(session, 'practice', **selection(surgical(session, 'inspect')))
+    episode = child['practiceEpisode']['episodeId']
+    def step(view, operation, **extra):
+        action = {'slot': 'right', 'operation': operation, 'duration': .1, **extra}
+        return surgical(session, 'step', expectedStateId=view['view']['stateId'], expectedEpisodeId=episode, action=action)
+    placed = step(child, 'place', pose={'position': [11., 10., -5.], 'quaternion': [0., 0., 0., 1.]},
+                  parameters={'radiusMm': 1.5, 'power': 1., 'duty': 1.})
+    archive = tmp_path / 'child.ressectionlab'
+    request(session, 'saveCase', caseHash=THERMAL, path=str(archive))
+    cache_root = tmp_path / 'signed-cache'
+
+    def reopen(path, name):
+        fresh = BridgeSession(tmp_path / name)
+        fresh.surgical_cache_root = cache_root
+        progress = []
+        try:
+            loaded = fresh.execute('loadCase', {'path': str(path)}, _Request(name), lambda *unused: None)
+            shown = fresh.execute('surgicalRehearsal', {'caseHash': loaded['caseHash'], 'command': 'inspect'},
+                                  _Request(name), lambda *event: progress.append(event))
+            verified = fresh.surgical_replay_cache.verified_cache
+            return shown, verified.hits, verified.publications, progress
+        finally:
+            fresh.close()
+
+    shown, hits, publications, progress = reopen(archive, 'first')
+    assert shown['view']['stateId'] == placed['view']['stateId'] and shown['position'] == placed['position']
+    assert (hits, publications) == (1, 1), 'canonical replay sealed the entry the endpoint seek then read'
+    replayed = [event[2] for event in progress if len(event) > 2 and 'replayTotal' in (event[2] or {})]
+    assert replayed[0] == {'replayVerified': 0, 'replayTotal': placed['position']}
+    assert replayed[-1] == {'replayVerified': placed['position'], 'replayTotal': placed['position']}
+    shown, hits, publications, progress = reopen(archive, 'second')
+    assert shown['view']['stateId'] == placed['view']['stateId'] and (hits, publications) == (2, 0)
+    assert not [event for event in progress if len(event) > 2 and 'replayTotal' in (event[2] or {})]
+    # Different loaded code: the entry is not admitted and the history replays again.
+    monkeypatch.setattr(surgical_verified_cache, 'implementation_fingerprint', lambda: 'f' * 64)
+    shown, hits, publications, _ = reopen(archive, 'changed-code')
+    assert shown['view']['stateId'] == placed['view']['stateId'] and (hits, publications) == (1, 1)
+    monkeypatch.undo()
+    # A changed file (one more accepted action) is a different snapshot: full replay.
+    final = step(placed, 'withdraw', pose={'position': [11., 10., -6.], 'quaternion': [0., 0., 0., 1.]})
+    changed = tmp_path / 'child-changed.ressectionlab'
+    request(session, 'saveCase', caseHash=THERMAL, path=str(changed))
+    shown, hits, publications, _ = reopen(changed, 'changed-file')
+    assert shown['view']['stateId'] == final['view']['stateId'] and (hits, publications) == (1, 1)

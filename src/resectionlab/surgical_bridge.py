@@ -31,6 +31,25 @@ def _verified_cache(session):
     return VerifiedSurgicalCache(directory=_cache_directory(session, 'verified'))
 
 
+def _replay_progress(progress, *, interval=0.5, clock=time.monotonic):
+    """Report canonical replay position at most every ``interval`` seconds.
+
+    Each event also tells Electron and the sidecar that the admission is still
+    advancing, so a long verification is bounded by stalls, not a fixed hour.
+    """
+    last = [None]
+
+    def report(done, total):
+        now = clock()
+        if done not in (0, total) and last[0] is not None and now - last[0] < interval:
+            return
+        last[0] = now
+        progress(.05 + .9 * done / max(total, 1),
+                 f'Verifying saved actions by replay: {done} of {total}',
+                 {'replayVerified': done, 'replayTotal': total})
+    return report
+
+
 def cache_directories(session):
     """Report actual cache owners without touching or admitting their contents."""
     paths = {}
@@ -651,11 +670,14 @@ def dispatch(session, operation, args, request, progress):
         artifacts[ARTIFACT] = raw
     cache = getattr(session, 'surgical_sessions', {})
     replay_cache = getattr(session, 'surgical_replay_cache', None)
+    # Full cases and practice episodes may admit a signed local entry that
+    # this machine published after its own complete canonical replay.
+    signed_replay = bool(raw and (raw.get('fullCase') or practice_child))
     if replay_cache is None:
         replay_cache = SurgicalReplayCache(verified_cache=_verified_cache(session)
-            if raw and raw.get('fullCase') else False)
+            if signed_replay else False)
         session.surgical_replay_cache = replay_cache
-    elif raw and raw.get('fullCase') and replay_cache.verified_cache is None:
+    elif signed_replay and replay_cache.verified_cache is None:
         replay_cache.verified_cache = _verified_cache(session)
     cached = cache.get(identity)
     # Bundle artifacts are recursively immutable and privately constructed by
@@ -703,8 +725,9 @@ def dispatch(session, operation, args, request, progress):
         scene = (resolve_branch_scene(base_scene, record, record['branchId'])
             if record.get('cranialPlanningRoots') is not None else base_scene)
         full = SurgicalEngine.restore(scene, record['branches'][record['branchId']], check=request.check,
-            use_cache=bool(record.get('fullCase')), verified_cache=replay_cache.verified_cache
-            if getattr(session, 'surgical_cache_root', None) is not None else None)
+            use_cache=signed_replay, verified_cache=replay_cache.verified_cache
+            if getattr(session, 'surgical_cache_root', None) is not None else None,
+            progress=_replay_progress(progress))
         if practice_child:
             practice.verify_episode(full, record, identity)
         if record.get('sequentialEpisodes') is not None:

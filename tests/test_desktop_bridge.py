@@ -276,6 +276,32 @@ def test_long_replay_admission_is_cancellable_without_extending_action_budgets(b
         assert result['event'] == 'error' and result['error']['code'] == 'INVALID_ARGUMENT'
 
 
+def test_replay_admission_budget_is_a_stall_window_renewed_by_progress(bridge, monkeypatch):
+    runtime, events = bridge
+    def advancing(operation, args, request_state, progress):
+        # Three times the stall window in total, but never silent for long.
+        for index in range(12):
+            time.sleep(.05)
+            progress(index / 12, f'Verifying saved actions by replay: {index} of 12')
+            request_state.check()
+        return {'verified': True}
+    def silent(operation, args, request_state, progress):
+        progress(0., 'Verifying saved actions by replay: 0 of 12')
+        request_state.cancelled.wait(2)
+        request_state.check()
+    monkeypatch.setattr(runtime.session, "execute", advancing)
+    result = request(bridge, 'advancing', 'surgicalRehearsal', {'command': 'inspect'}, timeoutMs=200)
+    assert result['event'] == 'result' and result['result'] == {'verified': True}
+    assert sum(event['event'] == 'progress' for event in events if event['id'] == 'advancing') == 12
+    monkeypatch.setattr(runtime.session, "execute", silent)
+    result = request(bridge, 'stalled', 'surgicalRehearsal', {'command': 'inspect'}, timeoutMs=200)
+    assert result['event'] == 'error' and result['error']['code'] == 'TIMEOUT'
+    # Ordinary actions keep a fixed budget: progress does not extend it.
+    monkeypatch.setattr(runtime.session, "execute", advancing)
+    result = request(bridge, 'fixed', 'surgicalRehearsal', {'command': 'step'}, timeoutMs=200)
+    assert result['event'] == 'error' and result['error']['code'] == 'TIMEOUT'
+
+
 def test_reconstruction_transport_accepts_bounded_model_job_and_cancellation(bridge, monkeypatch):
     runtime, events = bridge
     entered = threading.Event()

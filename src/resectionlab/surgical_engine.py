@@ -353,6 +353,43 @@ def rotation(q):
     return Rotation.from_quat(q)
 
 
+# Slack added to pair_conflict's threshold before the box screen may decide.
+# Segment coordinates are tens to hundreds of millimetres, so the reference
+# distance has rounding error near 1e-12 mm; 1e-6 mm leaves a wide margin.
+_SEPARATION_SLACK_MM = 1e-6
+
+
+def _capsules_separated(first, second, predicate):
+    """True only when every capsule pair is provably clear of ``pair_conflict``.
+
+    The Euclidean distance between two segments is at least the gap between
+    their axis-aligned bounding boxes along any axis. When that gap exceeds
+    ``ar + br + 1e-9`` (pair_conflict's threshold) plus a rounding slack for
+    every pair, pair_conflict must return False, so the exact scalar/native
+    predicate need not run. Any doubt (a patched predicate or helper, unusual
+    shapes, non-finite input, a pair inside the slack) returns False and the
+    caller runs the unchanged exact check.
+    """
+    from . import surgical_motion as motion
+    if (predicate is not _PAIR_CONFLICT or not first or not second
+            or not motion._contact_helpers_unchanged(motion.segments_within_distance)):
+        return False
+    try:
+        a = np.array([(capsule[0], capsule[1]) for capsule in first], dtype=np.float64)
+        b = np.array([(capsule[0], capsule[1]) for capsule in second], dtype=np.float64)
+        ra = np.array([capsule[2] for capsule in first], dtype=np.float64)
+        rb = np.array([capsule[2] for capsule in second], dtype=np.float64)
+    except (TypeError, ValueError, IndexError):
+        return False
+    if (a.shape != (len(first), 2, 3) or b.shape != (len(second), 2, 3)
+            or not (np.isfinite(a).all() and np.isfinite(b).all() and np.isfinite(ra).all() and np.isfinite(rb).all())
+            or (ra < 0).any() or (rb < 0).any()):
+        return False
+    gap = np.maximum(b.min(axis=1)[None] - a.max(axis=1)[:, None],
+                     a.min(axis=1)[:, None] - b.max(axis=1)[None]).max(axis=-1)
+    return bool((gap > ra[:, None] + rb[None] + (1e-9 + _SEPARATION_SLACK_MM)).all())
+
+
 def _microstep_checkpoint(state):
     """Copy rollback state, preserving aliases and independently owned fields.
 
@@ -393,8 +430,19 @@ def _microstep_checkpoint(state):
                 memo[id(value)] = value.copy()
     # Preserve caller-installed deepcopy hooks and the established flat-field admission.
     if _engine_copy_hooks_unchanged():
-        copied = native_engine_copy(state, memo, _engine_copy_fallback)
+        # Operative exposure bodies can hold NumPy scalars, which decline the
+        # bounded native copy of the whole graph and sent every microstep of a
+        # real-head rehearsal through deepcopy. Copy the remaining fields
+        # natively and that one field with the engine-clone copier, sharing one
+        # memo so every cross-field alias is preserved exactly as before. A
+        # declined native copy leaves memo intact for the paths below.
+        exposure = state.get('operativeExposureV1') if type(state) is dict else None
+        whole = state if exposure is None else {name: value for name, value in state.items()
+                                                 if name != 'operativeExposureV1'}
+        copied = native_engine_copy(whole, memo, _engine_copy_fallback)
         if copied is not _engine_copy_fallback:
+            if exposure is not None:
+                _copy_engine_data(exposure, memo)
             return copy.deepcopy(state, memo)
     # Corner fields contain thousands of immutable scalar leaves. Recursing
     # through deepcopy for every float dominated rollback during retraction.
@@ -769,7 +817,13 @@ class SurgicalEngine:
             return tuple(self.touched(*query) for query in queries)
         covers = self._cell_cover_cache.query_many(self.grid, queries, kernel=capsule_voxel_indices,
             check=getattr(self, '_transition_check', None))
-        return tuple(self.occupancy().material_ids(cells) for cells in covers)
+        if not covers:
+            return ()
+        # Material lookups do not change the occupancy key, so every cover of
+        # this query reads the same owner. Resolve it once instead of rebuilding
+        # the removed-cell and displacement key for each capsule.
+        owner = self.occupancy()
+        return tuple(owner.material_ids(cells) for cells in covers)
 
     def parameters(self, slot):
         tool = self.tools[slot['instrument']]
@@ -1431,7 +1485,10 @@ class SurgicalEngine:
         for other_key, other in self.state['slots'].items():
             if other_key == key: continue
             other_tool = self.tools[other['instrument']]
-            if pair_conflict(swept, envelopes(other_tool, self.parameters(other), other['position'], other['quaternion'])):
+            other_envelopes = envelopes(other_tool, self.parameters(other), other['position'], other['quaternion'])
+            if _capsules_separated(swept, other_envelopes, pair_conflict):
+                continue
+            if pair_conflict(swept, other_envelopes):
                 raise ValueError('TOOL_COLLISION:' + other_key)
         if tool['effect'] not in ('suction', 'irrigate') and working_cells - held and op not in ('withdraw', 'release', 'deactivate', 'inspect', 'exchange'):
             if any(self.by_label[int(self.scene.labels.ravel()[i])]['material'] not in tool['materials'] for i in working_cells - held - special_contacts):
@@ -1856,7 +1913,13 @@ class SurgicalEngine:
                 'checkpoint': {'position': len(self.actions), 'stateId': self.state_id, 'state': copy.deepcopy(self.state)}}
 
     @classmethod
-    def restore(cls, scene, record, *, check=None, use_cache=False, force_verify=False, verified_cache=None, on_boundary=None):
+    def restore(cls, scene, record, *, check=None, use_cache=False, force_verify=False, verified_cache=None, on_boundary=None,
+                progress=None):
+        """Replay a saved snapshot from its intact start, or admit a signed local cache entry.
+
+        ``progress(done, total)`` is called after each replayed action. It only
+        reports; it cannot alter, skip or reorder any verification step.
+        """
         if check is not None: check()
         if record['schema'] != SCHEMA or record['sceneId'] != scene.identity: raise ValueError('Saved scene or engine version differs')
         from .surgical_procedure_policy import PROPERTY as PROCEDURE_PROPERTY, procedure_admission
@@ -1896,9 +1959,12 @@ class SurgicalEngine:
         legacy = set(legacy)
         historical = 'hardConstraintPolicy' not in record
         writer = cache._begin_replay(result, record) if cache is not None else None
+        total = len(record['actions'])
         try:
             if writer is not None:
                 writer.capture(result, check)
+            if progress is not None:
+                progress(0, total)
             for index, action in enumerate(record['actions']):
                 if check is not None: check()
                 result._restoring_legacy_guard_partial = historical or index in legacy
@@ -1914,6 +1980,8 @@ class SurgicalEngine:
                     on_boundary(result)
                 if writer is not None:
                     writer.capture(result, check)
+                if progress is not None:
+                    progress(index + 1, total)
             if result.state_id != record['stateId']: raise ValueError('Replay state identity differs')
             checkpoint = record.get('checkpoint')
             if checkpoint is not None and (checkpoint.get('position') != len(result.actions) or checkpoint.get('stateId') != result.state_id or semantic_digest(checkpoint.get('state')) != semantic_digest(result.state)):
@@ -1926,11 +1994,12 @@ class SurgicalEngine:
                 writer.abort()
         return result
 
-    def branch(self, position, *, check=None):
+    def branch(self, position, *, check=None, progress=None):
         if type(position) is not int or not 0 <= position <= len(self.actions): raise ValueError('Invalid history position')
         result = self.fresh()
         legacy = self._historical_guard_partials()
         for action in self.actions[:position]:
+            if progress is not None: progress(len(result.actions), position)
             if check is not None: check()
             result._restoring_legacy_guard_partial = len(result.actions) in legacy
             try:
@@ -1943,6 +2012,9 @@ class SurgicalEngine:
         if check is not None: check()
         return result
 
+
+# Definition-time original: a replaced pair_conflict always runs unscreened.
+from .surgical_motion import pair_conflict as _PAIR_CONFLICT
 
 # Definition-time originals for the drill's local pure-query fast path. Looking
 # up both sides on SurgicalEngine later would incorrectly admit a class patch.

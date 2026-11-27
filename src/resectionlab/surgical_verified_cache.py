@@ -419,19 +419,34 @@ class _ReplayWriter:
         self.components = dict(globals().get('_last_components', {}))
         self.states = []
         self.closed = False
+        # Bytes in the cache directory as last counted, plus this writer's
+        # writes since. Recounting the whole tree before every one of the
+        # thousands of part files of a long episode made capture quadratic.
+        self._used = None
+        self._writes_since_count = 0
 
     def abort(self):
         if not self.closed:
             shutil.rmtree(self.directory, ignore_errors=True)
             self.closed = True
 
+    # Recount the real directory at least this often, so writers in other
+    # processes cannot carry the total far past the disk budget unnoticed.
+    _RECOUNT_WRITES = 128
+
     def _write(self, name, data):
         with self.owner._locked():
-            if not self.owner._room(len(data), self.directory):
-                raise ValueError('Verified cache disk budget exhausted')
+            if (self._used is None or self._used + len(data) > self.owner.max_disk_bytes
+                    or self._writes_since_count >= self._RECOUNT_WRITES):
+                if not self.owner._room(len(data), self.directory):
+                    raise ValueError('Verified cache disk budget exhausted')
+                self._used = self.owner._bytes()
+                self._writes_since_count = 0
             fd = os.open(self.directory / name, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
             with os.fdopen(fd, 'wb') as stream:
                 stream.write(data)
+            self._used += len(data)
+            self._writes_since_count += 1
 
     def capture(self, engine, check=None):
         _check(check)

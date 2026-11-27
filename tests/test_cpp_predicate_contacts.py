@@ -422,3 +422,33 @@ def test_contact_work_preserves_qualified_proof_epoch():
     assert before is not None and implementation_fingerprint() is not None
     assert motion.pair_conflict(capsules(0., 1), capsules(10., 2)) is False
     assert implementation_epoch() == before
+
+
+def test_engine_separation_screen_never_clears_a_conflicting_pair():
+    """The box screen may only skip pair_conflict when it is provably False."""
+    from resectionlab.surgical_engine import _capsules_separated, _SEPARATION_SLACK_MM
+    rng = np.random.default_rng(20261127)
+    cleared = 0
+    for trial in range(4000):
+        def capsule_set(count, centre):
+            return [(centre + rng.normal(0, 6, 3), centre + rng.normal(0, 6, 3), float(rng.uniform(0, 3)),
+                     'shaft' if index == 0 else 'working') for index in range(count)]
+        first = capsule_set(int(rng.integers(1, 6)), rng.uniform(-40, 40, 3))
+        second = capsule_set(int(rng.integers(1, 6)), rng.uniform(-40, 40, 3))
+        separated = _capsules_separated(first, second, motion.pair_conflict)
+        cleared += separated
+        if separated:
+            assert not motion.pair_conflict(first, second) and not scalar(first, second)
+    assert cleared > 1000
+    # Touching boxes within the slack, empty sets, non-finite input and a
+    # replaced predicate all defer to the exact check.
+    a = [(np.array([0., 0., 0.]), np.array([0., 0., 10.]), 1., 'shaft')]
+    edge = 2. + 1e-9 + _SEPARATION_SLACK_MM / 2
+    b = [(np.array([edge, 0., 0.]), np.array([edge, 0., 10.]), 1., 'shaft')]
+    assert not _capsules_separated(a, b, motion.pair_conflict)
+    far = [(np.array([50., 0., 0.]), np.array([50., 0., 10.]), 1., 'shaft')]
+    assert _capsules_separated(a, far, motion.pair_conflict)
+    assert not _capsules_separated(a, far, lambda first, second: True)
+    assert not _capsules_separated([], far, motion.pair_conflict)
+    assert not _capsules_separated(a, [(np.array([np.nan, 0., 0.]), np.array([50., 0., 10.]), 1., 'shaft')],
+                                   motion.pair_conflict)

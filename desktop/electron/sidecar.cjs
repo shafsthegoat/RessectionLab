@@ -14,7 +14,7 @@ const { persistentPassiveRequest, validatePersistentPassiveV1Result } = require(
 const { validateWorkspaceResult } = require('./workspace-session.cjs');
 const { AssetRegistry } = require('./assets.cjs');
 const { observedRequest, validateObservedEvent } = require('./observed-landmark-contract.cjs');
-const {surgicalTransportLimitMs}=require('./surgical-timeout.cjs');
+const {surgicalTransportLimitMs,progressRenewalCeilingMs}=require('./surgical-timeout.cjs');
 
 const {validateDiagnosticResult,diagnosticRequest}=require('./diagnostic-contract.cjs');
 const MAX_RESPONSE_LINE_BYTES=32*1024*1024;
@@ -129,16 +129,22 @@ class Sidecar extends EventEmitter {
     const encodeRequest = encodingStartedNs === null ? undefined : Number(process.hrtime.bigint() - encodingStartedNs);
     if (Buffer.byteLength(message) > 1024 * 1024) return Promise.reject(new Error('Operation request is too large'));
     if (lease) lease.id = id;
+    const ceilingMs = progressRenewalCeilingMs(op, args);
     return new Promise((resolve, reject) => {
-      const timeout = setTimeout(() => {
+      const expire = () => {
         this.pending.delete(id);
         this.child.stdin.write(JSON.stringify({ id: randomUUID(), op: 'cancel', args: { requestId: id } }) + '\n');
-        reject(new Error('Operation exceeded its local time budget'));
-      }, timeoutMs + 5000);
+        reject(new Error(ceilingMs === null ? 'Operation exceeded its local time budget'
+          : Date.now() >= renew.ceilingAt ? 'Verification exceeded its absolute local time ceiling'
+            : 'Verification stopped reporting progress within its local time budget'));
+      };
+      const timeout = setTimeout(expire, timeoutMs + 5000);
+      // Replay admission renews its stall window on each progress event, up to an absolute ceiling.
+      const renew = ceilingMs === null ? null : { windowMs: timeoutMs + 5000, ceilingAt: Date.now() + ceilingMs, expire };
       const timing = command === undefined ? null : { command, requestStartedNs, encodeRequest,
         caseHash: timingText(args.caseHash), expectedStateId: timingText(args.expectedStateId),
         actionOperation: timingText(args.action?.operation), actionSlot: timingText(args.action?.slot) };
-      this.pending.set(id, { resolve, reject, timeout, op, timing,
+      this.pending.set(id, { resolve, reject, timeout, op, timing, ...(renew ? { renew } : {}),
         ...(op === 'importDiagnosticLayer' ? {diagnosticArgs:{caseHash:args.caseHash,seriesId:args.seriesId}} : {}),
         ...(op === 'evaluateDevelopmentEpisodeVascular' ? { vascularArgs: args } : {}),
         ...(op === 'executePublicContactFamilyEpisode' ? {familyArgs:args,familyCatalog:structuredClone(this.contactFamilyAvailability)} : {}),
@@ -210,6 +216,11 @@ class Sidecar extends EventEmitter {
     if (!pending) return;
     if (!['started', 'progress', 'result', 'error', 'cancelled'].includes(message.event)) throw new Error('Unknown local engine event');
     const terminal = ['result', 'error', 'cancelled'].includes(message.event);
+    if (message.event === 'progress' && pending.renew) {
+      clearTimeout(pending.timeout);
+      pending.timeout = setTimeout(pending.renew.expire,
+        Math.max(0, Math.min(pending.renew.windowMs, pending.renew.ceilingAt - Date.now())));
+    }
     const timing = terminal && transport ? pending.timing : null;
     let exposeAssets;
     const observed = pending.op === 'inspectObservedLandmarkUpdate';
@@ -227,10 +238,7 @@ class Sidecar extends EventEmitter {
       if (pending.op === 'executePersistentPassiveEpisode') validatePersistentPassiveV1Result(message.result);
       if (pending.op === 'loadCase') validateWorkspaceResult(message.result);
       if (['loadCase', 'importNifti', 'importStructuralEvidence', 'createSyntheticCase', 'executeDevelopmentEpisode', 'executePersistentPassiveEpisode', 'executePublicSurfaceContactEpisode', 'executePublicContactFamilyEpisode'].includes(pending.op)) this.assets.clear();
-      // Source-surface arrays are re-read by the main process from the checked asset; keep digests, drop disk paths.
-      if (pending.op === 'operativeSourceSurfaces' && message.result?.arrays) message.result = {...message.result,
-        arrays: Object.fromEntries(Object.entries(message.result.arrays).map(([key, {path: _path, ...descriptor}]) => [key, descriptor]))};
-      else if (!observed) {
+      if (!observed) {
         const startedNs = timing ? process.hrtime.bigint() : null;
         message.result = await this.assets.expose(message.result);
         if (timing) exposeAssets = Number(process.hrtime.bigint() - startedNs);
