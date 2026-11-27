@@ -64,12 +64,23 @@ drives the hidden desktop harness and `resectionlab.vascular_parity`.
 
 1. **No annotation exists for either EDEN case.** Phase 2 scored the
    labelled TopCoW-018 MRA as the held-out angiography reference and gives
-   PTNT_9937 label-free measures only. Shafrir has not yet confirmed this
-   substitution.
+   PTNT_9937 label-free measures only. *Settled 2026-11-27 (Shafrir left
+   it to the coordinator):* the substitution stands, because no labelled
+   time-of-flight scan of these patients exists. It supports one claim only:
+   the ensemble beats vesselFM alone on a labelled MR angiogram. Accuracy on
+   the EDEN scans themselves stays unmeasured and is reported that way.
 2. **Which Betti measure decides the Phase 2 gate.** The whole-volume loop
    count on CTA-B still favours vesselFM alone by two loops (9 against 7)
    after both attempts, while the patch Betti error and every other measure
-   favour the ensemble. Needs Shafrir's decision; see Phase 2 results.
+   favour the ensemble. *Settled 2026-11-27 (left to the coordinator):* the
+   patch Betti error decides, and on it the gate is met on both held-out
+   cases. A whole-volume count lets loops in unrelated fragments cancel
+   missing ones: vesselFM reaches its count across 366 separate components.
+   Two cautions stay on the record. The patch measure was added during
+   Phase 2, after the first miss, so it was not fixed in advance; and the
+   whole-volume count on CTA-B is still reported as not better. The
+   pre-registered TopCoW-001 confirmation remains the clean test and has not
+   been run.
 3. **What counts as a major vessel lost.** Phase 3 treats a major named
    vessel as lost when it is absent from the default view or less than 90
    percent of its reference centerline is shown, and lists anything between
@@ -78,7 +89,7 @@ drives the hidden desktop harness and `resectionlab.vascular_parity`.
    sagittal sinus, straight sinus and vein of Galen. Small named segments
    (ophthalmic, anterior choroidal, distal M3 pieces) stay in the review
    overlay when no signal-supported path joins them. The threshold and the
-   list were set by the coordinator and need Shafrir's agreement.
+   list were set by the coordinator and stand as set (2026-11-27).
 4. **Venous walls beside bone do not resolve.** The edge model expects lumen
    brighter than its surroundings. Only 14 to 57 percent of sinus wall vertices
    find such an edge on CTA, so the half-voxel deviation gate is meaningful
@@ -100,13 +111,21 @@ drives the hidden desktop harness and `resectionlab.vascular_parity`.
 7. **Path-traced vessels do not follow a tool press.** In rehearsal the
    path-traced mode draws vessels from a tag volume sent once per case, so the
    wall mesh dents under a tool only in standard mode. Rehearsal should stay in
-   standard mode until the tag volume follows the wall; whether that work is
-   wanted is Shafrir's call. The surgeon view also needs its own treatment in
-   this mode (see Phase 5 results).
+   standard mode until the tag volume follows the wall. The surgeon view also
+   needs its own treatment in this mode (see Phase 5 results). *Settled
+   2026-11-27 (Shafrir left it to the coordinator):* the work is wanted,
+   because the goal asks for this look to be usable in simulated surgery, but
+   it is its own change after this pull request and is not started here.
 8. **Which mode is the default.** Standard mode stays the default. Blind
    reviewers scored the path-traced mode higher on every criterion on both
    hero cases, and it meets the frame budget, but it fails decision 7 in
-   rehearsal.
+   rehearsal. *Settled 2026-11-27 (left to the coordinator):* it stays behind
+   its setting until three things hold: vessels follow a tool press in it,
+   the surgeon view draws correctly in it, and the packaged build has been
+   rebuilt and measured with the Phase 6 to 8 changes. A default that breaks
+   rehearsal would trade the goal's last clause for its first. Note what
+   this leaves: the Phase 1 frame gate is met in the path-traced mode (10.9
+   ms); standard mode, the default, measures 18.5 ms on CTA-A.
 9. **Decided by Shafrir on 2026-11-26.** Every vessel is drawn in one
    colour; arteries and veins need not be told apart. Detached vessel signal
    should join the tree where that is realistic. Two more EDEN cases, chosen
@@ -775,7 +794,7 @@ MR studies and a second new CT were not run through the new command; the
 four time-of-flight cases went through the same functions under their fixed
 names. A blind review was not run on this scan.
 
-## Handoff, 2026-11-26
+## Handoff, 2026-11-27
 
 State of the gates:
 
@@ -783,7 +802,7 @@ State of the gates:
 | --- | --- | --- |
 | 1 | Interaction p95 at most 16.7 ms, settle at most 1.5 s on CTA-A | met (10.9 ms, 1.42 s worst of three packaged runs in Phase 5; 11.1 ms, 1.41 s worst of four development-tree runs with the Phase 6 fine branches) |
 | 1 | Blind crispness and depth at least 4 | met with an opaque skull or a cut (4, 4); 3, 3 with the see-through skull |
-| 2 | Better Dice, clDice and Betti than vesselFM alone on the held-out cases | Dice, clDice, component count and patch Betti met on both; whole-volume loop count on CTA-B not met (9 against 7); TOF-B scored on a TopCoW MRA stand-in |
+| 2 | Better Dice, clDice and Betti than vesselFM alone on the held-out cases | met on the patch Betti error, which decides since 2026-11-27 (decision 2): Dice, clDice, component count and patch Betti better on both; whole-volume loop count on CTA-B still not better (9 against 7); TOF-B scored on a TopCoW MRA stand-in (decision 1) |
 | 3 | Zero floating components by default; no named major vessel lost | met on the drawn meshes of all six cases, with the tube drawing of Phase 7 |
 | 4 | Deviation at most 0.5 voxel; no self-intersection; tools displace vessels | met on TopCoW behind the tube geometry option, in standard mode |
 | 5 | Phase 1 frame budget with volume, tubes, tools and clipping in the packaged build | met |
@@ -802,7 +821,15 @@ Not done: the pre-registered TopCoW-001 confirmation of the Phase 2 ensemble;
 EDEN cases in the simulator (not admitted for simulation); a tag volume that
 follows cuts and displacement; the surgeon view in the path-traced mode.
 
-Open decisions 1 to 8 above need Shafrir. At Shafrir's request this branch
+No decision is waiting. On 2026-11-27 Shafrir left decisions 1, 2, 7 and 8 to
+the coordinator (settled above; decision 3's threshold and list stand as set)
+and accepted four gaps for the merge: the CTA-A blind gate (decision 6), a
+packaged build not rebuilt since Phase 5, the rehearsal-performance checks
+not run again, and the one small scalp piece drawn on the Phase 8 scan. The
+next step toward the goal is decision 7's work: a tag volume that follows
+tool presses and cuts, and the surgeon view in the path-traced mode.
+
+At Shafrir's request this branch
 now also carries the later commits of
 `shaf/interactive-operative-practice-20261121` (opt-in acceleration paths and
 the README rewrite), merged without conflict, and the ten commits of
@@ -811,6 +838,6 @@ two lines had changed the same internals of the deformation engine and the
 renderer; [rehearsal performance](rehearsal-performance.md) records what was
 kept from each side, the paired timing against the pre-merge code, and the
 checks of that branch that were not run again (acquired playback, camera
-cadence, recordings, the signed package). The pull request to `main` itself
-was not merged.
+cadence, recordings, the signed package). Shafrir asked on 2026-11-27
+for the pull request to `main` to be merged with the gaps listed above.
 
