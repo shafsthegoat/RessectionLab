@@ -24,6 +24,9 @@ def initialize_effect_state(engine):
         source.setdefault('patent', None)
         source.setdefault('exposure', 0.)
         source.setdefault('bleedingActive', True)
+    if 'vesselBleedingV1' in engine.scene.properties:
+        from .surgical_vessel_bleeding import initialize as initialize_bleeding
+        initialize_bleeding(engine)
 
 
 def _neighbors(engine, cell):
@@ -317,6 +320,10 @@ def apply_effect(engine, key, op, cells, p, q, dt):
         if engine.scene.properties.get('tissuePhysicsV2'):
             from .surgical_vessels_v2 import coagulate
             coagulate(engine, cells, params['power'], dt)
+        bleeding = []
+        if 'vesselBleedingV1' in engine.scene.properties:
+            from .surgical_vessel_bleeding import coagulate as coagulate_wounds
+            bleeding = coagulate_wounds(engine, key, cells, p, params['power'], dt)
         for source in state['sources']:
             if source.get('modelVersion') in (2, 'vascular-graph-v1'): continue
             if source['cell'] in cells:
@@ -324,7 +331,7 @@ def apply_effect(engine, key, op, cells, p, q, dt):
                 source['exposure'] += exposure
                 if source['exposure'] >= source['coagulationExposure'] and source.get('bleedingActive', True):
                     source['bleedingActive'] = False; changed.append(source['id'])
-        return [{'kind': 'local_energy', 'exposure': exposure, 'controlledBleedingSources': changed}, *heat_events]
+        return [{'kind': 'local_energy', 'exposure': exposure, 'controlledBleedingSources': changed}, *heat_events, *bleeding]
     if effect == 'probe':
         probe = name.removesuffix('_probe')
         evidence = [e for e in engine.scene.properties.get('functionalEvidence', []) if e['probe'] == probe and e['cell'] in cells]
@@ -353,6 +360,11 @@ def tick_fields(engine, dt):
     """
     from . import surgical_vascular_graph as graph
     if graph.enabled(engine) and not graph.consume_field_interval(engine, dt): return
+    if 'vesselBleedingV1' in engine.scene.properties:
+        # Opt-in cut-vessel and tumour-bed bleeding enters the same inventory
+        # before overflow and gravity relaxation below.
+        from .surgical_vessel_bleeding import tick as bleed
+        bleed(engine, dt)
     flow = getattr(engine, '_flow_display_trace', None)
     if flow is not None and not flow.active: flow = None
     for source in engine.state['sources']:

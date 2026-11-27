@@ -397,3 +397,22 @@ def test_indirect_occlusion_of_protected_segment_is_rejected_atomically():
     result = e.step({'slot':'left','operation':'apply','duration':.1,'parameters':{'power':1.}})
     assert result['status'] == 'rejected' and result['reason'].startswith('PROTECTED_STRUCTURE: indirect vascular')
     assert e.snapshot() == before
+
+
+def test_vessel_bleeding_property_supersedes_graph_wound_ports_on_its_segments():
+    from resectionlab import surgical_vessel_bleeding as bleeding
+    base = engine().scene
+    regions = [{**r, 'name': r['name'].capitalize()} for r in base.regions]
+    props = {**copy.deepcopy(base.properties), bleeding.PROPERTY: bleeding.declare(base.labels, regions, base.affine)}
+    scene = SurgicalScene(base.labels, base.affine, regions, base.source, props)
+    labels = base.labels.copy()
+    e = SimpleNamespace(scene=scene, state={'sources': [], 'fluid': {}, 'fluidAddedMm3': 0., 'fluidEscapedMm3': 0.,
+                                            'debris': {}}, by_label={r['id']: r for r in regions},
+                        occupancy=lambda: labels.ravel())
+    graph.initialize(e); cut(e, 'artery')
+    ports = e.state[graph.PROPERTY]['ports']
+    assert {p['conductanceMm3PerPaS'] for p in ports.values()} == {0.}
+    assert {p['supersededBy'] for p in ports.values()} == {bleeding.PROPERTY}
+    graph.tick(e, 1.)
+    assert graph.metrics(e)['generatedMm3'] == 0.
+    assert [s['kind'] for s in scene.properties[bleeding.PROPERTY]['segments']] == ['artery', 'vein']

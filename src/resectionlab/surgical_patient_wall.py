@@ -159,11 +159,14 @@ def _local_chains(grid, radius):
 
 
 def qualifying_properties(grid, masks, row, patient_id, *, reciprocal_attachments=False, working_axis_constraint=False,
-                          tube_geometry=False, cancelled=lambda: False):
+                          tube_geometry=False, vessel_bleeding=False, cancelled=lambda: False):
     """Rod, attachment and wall properties of a local native wall.
 
     With ``tube_geometry`` the wall, the rod sites and their calibres all come
     from one centerline tube model, returned as the third value (else None).
+    With ``vessel_bleeding`` the angiography mask also declares opt-in
+    ``vesselBleedingV1`` segments. The graph edges keep zero conductance; a cut
+    then bleeds through the uncertain-kind venous law instead of emitting 0 mm3.
     """
     mask, affine, scores = grid.mask, grid.affine, grid.scores
     spacing = np.linalg.norm(affine[:3, :3], axis=0)
@@ -266,6 +269,11 @@ def qualifying_properties(grid, masks, row, patient_id, *, reciprocal_attachment
         'assumptions': assumptions, 'scope': 'cursor-local mechanical rehearsal',
     }
     properties = {'gliomaMaterialsV1': profile, 'vascularGraphV1': vascular}
+    if vessel_bleeding:
+        from .surgical_vessel_bleeding import PROPERTY as BLEEDING, declare_mask
+        # Angiography does not separate arteries from veins: kind stays uncertain.
+        properties[BLEEDING] = declare_mask(mask, affine, name='angiography vessel', kind='uncertain')
+        receipt[BLEEDING] = properties[BLEEDING]['schema']
     if reciprocal_attachments:
         properties[ATTACHMENT_COUPLING_PROPERTY] = receipt[ATTACHMENT_COUPLING_PROPERTY] = ATTACHMENT_COUPLING_POLICY
     if working_axis_constraint:

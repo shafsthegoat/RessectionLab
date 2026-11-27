@@ -202,6 +202,7 @@ def damage(engine, faces, dt=0., kind='transection'):
     identifiers = {'vascular:' + e['id'] + ':' + str(side) for e, _ in changes for side in (0, 1)}
     if identifiers.intersection(source['id'] for source in engine.state['sources']):
         raise ValueError('VASCULAR_GRAPH_SOURCE_ID_COLLISION')
+    bleeding = 'vesselBleedingV1' in engine.scene.properties
     for e, face in changes:
         s['edges'][e['id']]['cutFace'] = list(face)
         for side, (node, cell, leak) in enumerate(zip((e['from'], e['to']), face, e['woundConductanceMm3PerPaS'])):
@@ -209,6 +210,11 @@ def damage(engine, faces, dt=0., kind='transection'):
             s['ports'][identifier] = {'edge': e['id'], 'node': node, 'cell': cell, 'conductanceMm3PerPaS': float(leak),
                 'sealFraction': 0., 'compressionFraction': 0., 'coagulationDose': 0.,
                 'openedAtSeconds': s['elapsedSeconds'], 'generatedMm3': 0.}
+            if bleeding:
+                from .surgical_vessel_bleeding import segment_of
+                if segment_of(engine.scene, [cell])[0] >= 0:
+                    # vesselBleedingV1 bleeds this segment; the port must not emit twice.
+                    s['ports'][identifier].update(conductanceMm3PerPaS=0., supersededBy='vesselBleedingV1')
             engine.state['sources'].append({'id': identifier, 'kind': 'modeled-vessel-wound', 'modelVersion': MODEL_VERSION,
                 'cell': cell, 'rateMm3PerSecond': 0., 'emittedMm3': 0., 'reservoirMm3': 0.,
                 'bleedingActive': True, 'patent': False, 'exposure': 0.})

@@ -1633,7 +1633,8 @@ class SurgicalEngine:
             by_label[name] = by_label.get(name, 0.) + self.scene.voxel_mm3
         target = sum(self.scene.voxel_mm3 for i in self.state['removed'] if self.by_label[int(self.scene.labels.ravel()[i])].get('target'))
         from .surgical_cusa_v3 import metrics as cusa_metrics
-        return {**physics_metrics(self), **v2_metrics(self), **(cusa_metrics(self) if 'cusaV3' in self.state else {}), 'removedByLabelMm3': by_label, 'targetRemovedMm3': target,
+        from .surgical_vessel_bleeding import metrics as bleeding_metrics
+        return {**physics_metrics(self), **v2_metrics(self), **(cusa_metrics(self) if 'cusaV3' in self.state else {}), **(bleeding_metrics(self) if 'vesselBleedingV1' in self.state else {}), 'removedByLabelMm3': by_label, 'targetRemovedMm3': target,
                 'nonTargetRemovedMm3': len(self.state['removed']) * self.scene.voxel_mm3 - target,
                 'elapsedSeconds': self.state['elapsedSeconds'], 'travelMm': self.state['travelMm'],
                 'contactCellSeconds': sum(self.state['contact'].values()), 'debrisMm3': self.state['debrisMm3'],
@@ -1716,6 +1717,7 @@ class SurgicalEngine:
                 'geometryRevision': identity, 'removed': self.state['removed'][:], 'moved': moved, 'cuts': copy.deepcopy(self.state['cuts']),
                 'holds': copy.deepcopy(self.state['holds']),
                 'contact': list(map(int, self.state['contact'])), 'thermal': copy.deepcopy(self.state['thermal']),
+                **({'vesselBleedingV1': copy.deepcopy(self.state['vesselBleedingV1'])} if 'vesselBleedingV1' in self.state else {}),
                 'fluid': copy.deepcopy(self.state['fluid']), 'history': copy.deepcopy(self.history) if include_history else [],
                 **{name: _copy_engine_data(self.state.get(name)) for name in ('cutEdges', 'separatedAttachments',
                     'transectedEdges', 'flapComponents', 'debris', 'sources', 'meshCutEdges', 'meshSeams',

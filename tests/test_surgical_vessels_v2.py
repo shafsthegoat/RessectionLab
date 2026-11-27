@@ -157,3 +157,16 @@ def test_profile_requires_every_assumption_and_no_profile_is_noop():
     e=engine(); del e.scene.properties['tissuePhysicsV2']; del e.state['vesselsV2']
     assert vessels.initialize(e) is None
     vessels.tick(e,1.); assert not e.state['sources']
+
+
+def test_vessel_bleeding_property_supersedes_the_compliant_compartment():
+    e = engine(); e.scene.properties['vesselBleedingV1'] = {'declared': 'elsewhere'}
+    assert vessels.damage(e, edges(e)) == []
+    assert not e.state['vesselsV2']['faces'] and not e.state['sources']
+    cell = edges(e)[0][0]
+    torn = vessels.contact(e, [cell], 10., 1.)
+    assert torn and all(e.state['vesselsV2']['faces'][k]['damage'] == 1. for k in torn)
+    assert not e.state['vesselsV2']['wounds'] and not e.state['sources']
+    assert vessels.coagulate(e, [cell], 10., 1.) == []
+    vessels.tick(e, 1.)
+    assert e.state['vesselsV2']['generatedMm3'] == 0.

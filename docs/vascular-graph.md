@@ -144,3 +144,91 @@ procedure. Postoperative diffusion imaging motivates tracking ischemic effects
 separately from bleeding. [clDice](https://openaccess.thecvf.com/content/CVPR2021/html/Shit_clDice_-_A_Novel_Topology-Preserving_Loss_Function_for_Tubular_Structure_CVPR_2021_paper.html)
 · [Vascular segmentation and SEEG trajectories](https://discovery.ucl.ac.uk/id/eprint/10082723/)
 · [DWI and acquired deficits after glioma resection](https://pubmed.ncbi.nlm.nih.gov/24992634/).
+
+## Cut-vessel bleeding (`vesselBleedingV1`)
+
+The opt-in scene property `vesselBleedingV1`
+(`src/resectionlab/surgical_vessel_bleeding.py`) shows where bleeding comes
+from on a scene whose vessels came from imaging. Scenes without it keep their
+exact state and state identity. It requires `tissuePhysicsV2`, which keeps the
+Python reference engine. When present it supersedes the single compliant V2
+compartment and zeroes graph wound ports on its segments, so blood is not
+emitted twice.
+
+`declare(labels, regions, affine)` makes one segment per 26-connected
+component of each vessel region, with run-length cell lists. A segment's kind
+comes from the region's `vesselKind` or its name: artery, vein, sinus, else
+uncertain. Angiography-only masks (`declare_mask`, or
+`qualifying_properties(..., vessel_bleeding=True)` for a native wall) stay
+uncertain. Calibre is the local thickness at the wound (Hildebrand and
+Rüegsegger 1997, J Microsc 185:67-75): the largest inscribed sphere of the
+segment containing the cell, as `2R - s` with `s` the voxel spacing. The
+estimate is floored at `s` and labelled `grid-floor`. A 1 mm grid cannot
+resolve a sub-millimetre vessel, and the floor overstates its flow.
+
+A wound opens when a segment cell is removed or a face between two segment
+cells is transected, cut or torn by contact. Its opening fraction is the breach
+area over the lumen area `π d²/4`, capped at 1. Arterial flow is
+`Q = 717 mL/min × 0.21 × (d / 2.8 mm)³ × opening` (mL/min × 1000/60 = mm³/s),
+modulated by `1 + (PI/2) sin(2π f t)` and integrated exactly over each substep.
+A 1 mm artery bleeds 114 mm³/s on average. Veins, sinuses and uncertain
+vessels well steadily at that flow times the venous-to-arterial pressure ratio
+(10/90). The site-minus-heart hydrostatic pressure of a declared
+`patientPosition` adds to the 10 mmHg venous pressure, floored at zero.
+Exposed tumour faces ooze `0.004 mm³ s⁻¹ mm⁻²`, decaying with a 1800 s time
+constant. For a 14 cm³ spherical cavity this gives about 40 mL/h on the smooth
+2,800 mm² surface. The grid surface is about 1.5 times larger, giving about
+60 mL/h, falling to about 26 mL/h averaged over the first hour.
+
+Blood is deposited into the ordinary per-cell `fluid` inventory, next to the
+wound or within two voxels of it. Suction, irrigation, overflow and gravity
+pooling therefore act on it unchanged. A wound with no free outlet holds its
+blood in a reservoir until one opens. `bloodLossMm3` equals the deposited
+volume plus the held volume, and losses are kept per segment and per kind.
+
+The bipolar seals a wound only where the electrodes touch it, after
+`2 × max(1, (d/1.5)²)` activation-seconds. A vessel no wider than 1.5 mm seals
+fully. A wider vessel is capped at a seal fraction of `(1.5/d)²`. A sinus does
+not seal. With at least a quarter-voxel of free fluid within one voxel of the
+tip, the required dose rises 1.5 times and char sticking falls by 0.5 per
+activation-second. Dry coagulation adds 0.25 per activation-second. When
+sticking reaches 1, moving the tip more than 0.5 mm, opening the jaws or
+withdrawing re-opens the wound, once. Ooze stops after 0.5 activation-seconds
+on a cell or one of its neighbours, or under a placed haemostatic dressing,
+which also reduces venous wound flow by 0.7.
+
+Metrics appear as `metrics()['vesselPhysicsV2']['vesselBleedingV1']`: blood
+loss total, by kind and by segment, tumour ooze, open wounds by kind, the
+largest uncontrolled calibre, the current rate and the conservation residual.
+The physics descriptor lists every parameter with its source.
+
+| Parameter | Value | Source |
+| --- | --- | --- |
+| Total cerebral blood flow | 717 mL/min | Zarrinkoob et al. 2015, J Cereb Blood Flow Metab 35:648-654 |
+| MCA share of that flow | 0.21 | Zarrinkoob et al. 2015 |
+| Flow proportional to d³ | exponent 3 | Murray 1926, Proc Natl Acad Sci USA 12:207-214 |
+| Reference M1 diameter | 2.8 mm | assumed-research |
+| Heart rate | 70 /min | assumed-research |
+| Pulsatility index (Gosling-King definition) | 0.9 | assumed-research |
+| Mean arterial pressure | 90 mmHg | assumed-research |
+| Cortical venous pressure | 10 mmHg | assumed-research |
+| Full bipolar seal limit | 1.5 mm | assumed-research |
+| Seal dose | 2 activation-s | assumed-research |
+| Irrigation cooling factor | 1.5 | assumed-research |
+| Wet threshold | 0.25 voxel of fluid | assumed-research |
+| Dry sticking / wet cleaning | 0.25 / 0.5 per activation-s | assumed-research |
+| Pull-off distance | 0.5 mm | assumed-research |
+| Tumour ooze rate | 0.004 mm³ s⁻¹ mm⁻² | assumed-research |
+| Ooze decay time constant | 1800 s | assumed-research |
+| Ooze seal dose | 0.5 activation-s | assumed-research |
+| Dressing venous tamponade | 0.7 | assumed-research, matching the glioma-materials dressing |
+| Outlet search / calibre window | 2 / 10 voxels | assumed-research numerical bounds |
+
+Limits: the model has no ischaemic territory, so a cut vessel starves no
+tissue. Calibres below the grid resolution are unknown. There is no
+coagulopathy, systemic blood volume or haemorrhagic shock. Arterial flow is
+the normal segment flow, not an orifice law, and there is no distal
+back-bleeding. Blood and irrigation share one inventory. Sealing uses delivered
+activation, not tissue temperature. Only tumour, not brain, oozes.
+`SurgicalEngine.metrics()` and `view()` do not yet expose the property at top
+level.

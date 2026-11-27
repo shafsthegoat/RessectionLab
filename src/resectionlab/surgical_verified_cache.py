@@ -46,13 +46,14 @@ _MODULES = ('core', 'geometry', 'anatomy_geometry', 'surface_fairing', 'surgical
             'surgical_retractor_runtime', 'surgical_retractor_surface', 'surgical_retractor_contact',
             'surgical_contact_complementarity', 'surgical_mechanical_exposure', 'surgical_task_domain',
             'surgical_procedure_policy', 'surgical_planning_admission', 'surgical_sequence_outcomes', 'surgical_modeled_outcomes',
-            'surgical_vascular_graph', 'surgical_bipolar_thermal',
+            'surgical_vascular_graph', 'surgical_bipolar_thermal', 'surgical_vessel_bleeding',
             'surgical_occupancy', 'surgical_rl_protection', 'surgical_geometry_cache',
             'surgical_vessel_rods', 'surgical_vessel_surface', 'surgical_vessel_vertex_motion',
             'surgical_wall_sweep', 'surgical_wall_sweep_reference', 'surgical_wall_contact', 'surgical_vessel_tissue_contact',
             'surgical_verified_cache', 'surgical_cusa_v3', 'surgical_clock', 'surgical_idle_native',
             'build_surgical_idle_native', 'surgical_cranial_stages', 'surgical_membrane_transport',
-            'native_backend', 'surgical_native_engine', 'surgical_native_control')
+            'native_backend', 'surgical_native_engine', 'surgical_native_control',
+            'surgical_injury')
 
 
 def _code_signature(code):

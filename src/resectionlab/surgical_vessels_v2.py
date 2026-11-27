@@ -148,6 +148,10 @@ def damage(engine, edges, dt=0., kind='transection'):
     if kind not in ('transection', 'incision', 'ablation', 'drill'): raise ValueError('UNKNOWN_V2_VESSEL_DAMAGE_KIND')
     state = initialize(engine)
     if state is None: return []
+    from .surgical_vessel_bleeding import superseded
+    if superseded(engine):
+        # vesselBleedingV1 reads transectedEdges itself; no compartment wound.
+        return []
     changed = []
     # Validate all supplied geometry before mutation.
     supplied = [_face(engine, *edge) for edge in sorted(set(tuple(sorted(map(int, e))) for e in edges))]
@@ -191,7 +195,9 @@ def contact(engine, cells, dt, force_n, temperature=None):
             edge, new = item; face = state['faces'].setdefault(edge, new)
             if severity > face['damage']:
                 face['damage'] = severity; face['patent'] = severity < 1.; changed.append(edge)
-    if changed: _recluster(engine)
+    from .surgical_vessel_bleeding import superseded
+    # A superseded compartment keeps torn faces; vesselBleedingV1 bleeds them.
+    if changed and not superseded(engine): _recluster(engine)
     return sorted(set(changed))
 
 
@@ -201,6 +207,8 @@ def coagulate(engine, cells, power, dt):
     power = _positive(power, 'POWER'); dt = _positive(dt, 'DT')
     state = initialize(engine)
     if state is None: return []
+    from .surgical_vessel_bleeding import superseded
+    if superseded(engine): return []
     touched = set(map(int, cells)); p = _profile(engine); changed = []
     for key, face in state['faces'].items():
         if touched.intersection(face['cells']):
@@ -271,9 +279,12 @@ def tick(engine, dt):
 
 def descriptor(engine):
     from . import surgical_vascular_graph as graph
-    if graph.enabled(engine): return graph.descriptor(engine)
+    from .surgical_vessel_bleeding import PROPERTY as BLEEDING, descriptor as bleeding
+    if graph.enabled(engine):
+        result = graph.descriptor(engine)
+        return {**result, BLEEDING: bleeding(engine)} if BLEEDING in engine.scene.properties else result
     p = _profile(engine)
-    return {'enabled': p is not None, 'model': MODEL, 'profile': copy.deepcopy(p),
+    return {**({BLEEDING: bleeding(engine), 'supersededBy': BLEEDING} if BLEEDING in engine.scene.properties else {}),'enabled': p is not None, 'model': MODEL, 'profile': copy.deepcopy(p),
             'patientCalibratedPhysiology': False, 'globalPerfusion': 'unknown',
             'assumptions': ['one finite compliant compartment with declared external refill',
                 'unique affine voxel-face area; adjacent wounds share an outlet',
@@ -285,11 +296,13 @@ def descriptor(engine):
 
 def metrics(engine):
     from . import surgical_vascular_graph as graph
-    if graph.enabled(engine): return graph.metrics(engine)
+    from .surgical_vessel_bleeding import PROPERTY as BLEEDING, metrics as bleeding
+    extra = {BLEEDING: bleeding(engine)} if BLEEDING in engine.scene.properties else {}
+    if graph.enabled(engine): return {**graph.metrics(engine), **extra}
     state = engine.state.get('vesselsV2')
     if state is None: return {'enabled': False}
     sources = [s for s in engine.state['sources'] if s.get('modelVersion') == 2]
-    return {'enabled': True, 'woundCount': len(state['wounds']), 'damagedFaceCount': len(state['faces']),
+    return {**extra,'enabled': True, 'woundCount': len(state['wounds']), 'damagedFaceCount': len(state['faces']),
             'woundAreaMm2': sum(f['areaMm2'] for f in state['faces'].values()),
             'activeWounds': sum(s['bleedingActive'] for s in sources),
             'pressurePa': state['pressurePa'], 'vascularRemainingMm3': state['remainingMm3'],
