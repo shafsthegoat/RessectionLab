@@ -235,3 +235,54 @@ def test_v2_displacements_override_lattice_holds_and_removed_cells_ignored():
     e.state['deformation'] = {}
     e.state['removed'] = [0]
     assert deformation_scores(e) == {}
+
+
+def injury_engine():
+    from resectionlab.surgical_injury import default_profile
+    labels = np.ones((3, 3, 3), np.uint16)
+    labels[1, 1, 1] = 2
+    labels[2, :, :] = 3
+    regions = [dict(id=1, name='healthy', material='soft_tissue', target=False),
+               dict(id=2, name='lesion', material='tumor', target=True),
+               dict(id=3, name='vessel', material='vessel', target=False)]
+    return SurgicalEngine(SurgicalScene(labels, np.eye(4), regions, {}, {'surgicalInjuryV1': default_profile()}))
+
+
+def test_injury_terms_exist_only_for_injury_scenes_and_cost_injury():
+    from resectionlab.surgical_rl_rewards import InjuryRewardConfig, reward_config_for
+    plain = engine()
+    assert not any(k.startswith('injury') for k in RewardTracker(plain).measure(plain))
+    assert type(reward_config_for(plain)) is RewardConfig
+    _, terms = compute_reward(RewardTracker(plain).measure(plain), RewardTracker(plain).measure(plain),
+                              {'status': 'partial', 'reasonCode': 'SHAFT_COLLISION'})
+    assert 'physical_stop' not in terms and 'injury_lacerated' not in terms and terms['invalid_action'] == 0
+    e = injury_engine(); tracker = RewardTracker(e)
+    assert isinstance(reward_config_for(e), InjuryRewardConfig)
+    before = tracker.measure(e)
+    record = e.state['injuryV1']
+    # A shaft tore the lesion cell and a vessel cell; one healthy cell is contused.
+    e.state['removed'] = [13, 18]
+    record.update(lacerated=[13, 18], vesselInjured=[18], contused=[0], avulsions=['pia'])
+    after = tracker.measure(e)
+    assert after['tumor_removed_mm3'] == 0 and after['healthy_removed_mm3'] == 0
+    assert (after['injury_lacerated_mm3'], after['injury_contused_mm3'], after['injury_vessel_cells'],
+            after['injury_avulsions']) == (2, 1, 1, 1)
+    reward, terms = compute_reward(before, after, {'status': 'accepted'})
+    defaults = InjuryRewardConfig()
+    assert terms['injury_lacerated'] == pytest.approx(-defaults.injury_lacerated_weight * 2 / 1000)
+    assert terms['injury_contused'] == pytest.approx(-defaults.injury_contused_weight / 1000)
+    assert terms['injury_vessel'] == pytest.approx(-defaults.injury_vessel_cell_weight)
+    assert terms['injury_avulsion'] == pytest.approx(-defaults.injury_avulsion_weight)
+    assert terms['tumor_removal'] == 0 and reward < 0
+    # Physical stops are no longer free in injury scenes; progress dwell stays free.
+    _, stop = compute_reward(after, after, {'status': 'partial', 'reasonCode': 'SHAFT_COLLISION'})
+    assert stop['physical_stop'] == -RewardConfig().invalid_action_cost
+    _, dwell = compute_reward(after, after, {'status': 'partial', 'reasonCode': 'BONE_CUTTING_IN_PROGRESS'})
+    assert dwell['physical_stop'] == 0
+    _, off = compute_reward(after, after, {'status': 'partial', 'reasonCode': 'SHAFT_COLLISION'},
+                            InjuryRewardConfig(penalize_physical_stops=False))
+    assert 'physical_stop' not in off and off['invalid_action'] == 0
+    with pytest.raises(ValueError, match='boolean'):
+        InjuryRewardConfig(penalize_physical_stops=1)
+    with pytest.raises(ValueError, match='Injury-mode measurements'):
+        compute_reward(RewardTracker(plain).measure(plain), after, {'status': 'accepted'})

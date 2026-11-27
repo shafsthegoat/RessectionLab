@@ -43,6 +43,10 @@ class RewardConfig:
     def __post_init__(self):
         for field in fields(self):
             value = getattr(self, field.name)
+            if field.type in (bool, 'bool'):
+                if type(value) is not bool:
+                    raise ValueError(field.name + ' must be a boolean')
+                continue
             if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value):
                 raise ValueError(field.name + ' must be finite')
             if value < 0 or ('scale' in field.name and value == 0):
@@ -60,6 +64,32 @@ class GeneratedGraphRewardConfig(RewardConfig):
         super().__post_init__()
         if min(self.supply_deficit_weight, self.drainage_deficit_weight) <= 0:
             raise ValueError('Both declared vascular mechanisms require positive costs')
+
+
+@dataclass(frozen=True)
+class InjuryRewardConfig(RewardConfig):
+    """Explicit injury-mode costs (scenes declaring ``surgicalInjuryV1``).
+
+    All weights are assumed research values, not calibrated harm. Contused and
+    lacerated volume use ``volume_scale_mm3``; vessel injury is per source cell
+    and avulsion per torn attachment. A partial action stopped by a remaining
+    physical refusal costs ``invalid_action_cost`` like a rejection.
+    """
+    injury_contused_weight: float = 1.
+    injury_lacerated_weight: float = 4.
+    injury_vessel_cell_weight: float = .05
+    injury_avulsion_weight: float = .5
+    penalize_physical_stops: bool = True
+
+
+INJURY_METRICS = ('injury_contused_mm3', 'injury_lacerated_mm3', 'injury_vessel_cells', 'injury_avulsions')
+# Progress stops are expected dwell at a hard contact, not a physical refusal.
+_PROGRESS_STOPS = ('TISSUE_ASPIRATION_IN_PROGRESS', 'BONE_CUTTING_IN_PROGRESS')
+
+
+def reward_config_for(engine):
+    """Injury scenes get the explicit injury config; every other scene keeps RewardConfig."""
+    return InjuryRewardConfig() if 'injuryV1' in engine.state else RewardConfig()
 
 
 class RewardTracker:
@@ -130,6 +160,11 @@ class RewardTracker:
         state = engine.state
         volume = self.scene.voxel_mm3
         removed = set(map(int, state['removed']))
+        injury = state.get('injuryV1')
+        if injury is not None:
+            # Tissue torn by an unsafe move is injury, not resection: it earns no
+            # tumour credit and is costed by the laceration term instead.
+            removed -= set(map(int, injury['lacerated']))
         tumor = sum(self._target(engine, c) for c in removed) * volume
         bone = sum(engine.by_label.get(int(self.scene.labels.flat[c]), {}).get('material') == 'bone'
                    for c in removed) * volume
@@ -176,6 +211,11 @@ class RewardTracker:
                        protected_damage_mm3=float(protection.get('protected_damage_mm3', 0.)),
                        near_contact_exposure_mm3_seconds=float(protection.get('near_contact_exposure_mm3_seconds', 0.)),
                        elapsed_seconds=float(state['elapsedSeconds']))
+        if injury is not None:
+            current.update(injury_contused_mm3=len(injury['contused']) * volume,
+                           injury_lacerated_mm3=len(injury['lacerated']) * volume,
+                           injury_vessel_cells=float(len(injury['vesselInjured'])),
+                           injury_avulsions=float(len(injury['avulsions'])))
         if self.graph_evaluation:
             from .surgical_vascular_graph import maximum_interface_deficits
             if state.get('toolMechanicsRevision') != 2 or 'vascularGraphV1' not in state:
@@ -286,6 +326,19 @@ def compute_reward(before, after, outcome, config=None):
             ('drainage_deficit', 'drainageDeficitSeconds', -config.drainage_deficit_weight, config.time_scale_seconds))
     elif any(key in before or key in after for key in DEFICIT_METRICS):
         raise ValueError('VASCULAR_GRAPH_RL_HOLD: graph reward weights required')
+    # Injury terms exist only for injury-mode ledgers. A plain RewardConfig on
+    # such a scene uses the documented InjuryRewardConfig defaults.
+    injured = any(key in before or key in after for key in INJURY_METRICS)
+    if injured:
+        if not all(key in before and key in after for key in INJURY_METRICS):
+            raise ValueError('Injury-mode measurements required before and after')
+        weights = config if isinstance(config, InjuryRewardConfig) else InjuryRewardConfig()
+        specifications += (
+            ('injury_contused', 'injury_contused_mm3', -weights.injury_contused_weight, config.volume_scale_mm3),
+            ('injury_lacerated', 'injury_lacerated_mm3', -weights.injury_lacerated_weight, config.volume_scale_mm3),
+            ('injury_vessel', 'injury_vessel_cells', -weights.injury_vessel_cell_weight, 1.),
+            ('injury_avulsion', 'injury_avulsions', -weights.injury_avulsion_weight, 1.))
+    penalize_stops = (config.penalize_physical_stops if isinstance(config, InjuryRewardConfig) else injured)
     terms = {name: weight * delta(key) / scale for name, key, weight, scale in specifications}
     # Feasibility is authoritative. A rejected proposal never buys treatment
     # credit, even if a caller supplies a speculative endpoint as ``after``.
@@ -295,6 +348,11 @@ def compute_reward(before, after, outcome, config=None):
     terms['invalid_action'] = -config.invalid_action_cost if outcome.get('status') == 'rejected' else 0.
     blocked = str(outcome.get('reasonCode') or outcome.get('reason') or '').startswith('PROTECTED_STRUCTURE')
     terms['protected_blocked'] = -config.protected_blocked_weight if blocked else 0.
+    if penalize_stops:
+        # A partial cut short by a physical refusal is no longer free.
+        reason = str(outcome.get('reasonCode') or outcome.get('reason') or '').split(':')[0]
+        stopped = outcome.get('status') == 'partial' and bool(reason) and reason not in _PROGRESS_STOPS
+        terms['physical_stop'] = -config.invalid_action_cost if stopped else 0.
     reward = math.fsum(terms.values())
     if not math.isfinite(reward):
         raise ValueError('Reward overflow; choose representable weights and scales')

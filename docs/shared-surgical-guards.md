@@ -19,6 +19,25 @@ Case anatomy layers can explicitly declare `protected: true` or `critical: true`
 
 An explicit `reviewedTaskDomainV1` restriction is also enforced inside the engine transaction before effects. Direct planner skills and manual desktop commands therefore share the same whole-tool restriction against unreviewed space. The desktop retains its additional capability gates for unsupported autonomous tasks.
 
+## Guarded mode and injury mode
+
+Guarded mode is the default: an unsafe physical microstep is refused and the tissue is untouched (an earlier part of the stroke still commits as `partial`). A scene may instead declare `surgicalInjuryV1` (`src/resectionlab/surgical_injury.py`, defaults from `default_profile()`) with `mode: 'injury'`, so a surgeon sees what the unsafe move does. `mode: 'guarded'` keeps the refusals but carries the empty injury ledger. Without the property every transition, metric and state id is unchanged.
+
+In injury mode, `injury.admit()` converts these physical refusals in `_physical_substep_reference` and the motion continues:
+
+- `SHAFT_COLLISION`, `RETAINED_TISSUE_COLLISION` (passive tip, CUSA body, fluid nozzle), `WITHDRAWAL_PATH_BLOCKED` and `POST_DEFORMATION_SHAFT_COLLISION` are blunt contact. Each touched soft-tissue, tumour, membrane, functional or vessel cell gains a contusion dose (substep seconds x `forceN`, else `defaultForceN`). Past `contusionDoseThresholdNs` the cell is `contused` and stays in place. Once the rigid part has travelled `lacerationTravelMm` through it, the cell is `lacerated` and removed.
+- `UNSUPPORTED_MATERIAL` and `OTHER_ACTIVE_TOOL_UNSUPPORTED_MATERIAL` from a cutting or aspirating part (effects remove, incise, transect, kerf, sheet_cut) lacerate the contacted cells at once. A drill or craniotome on dura or cortex is recorded as a `plunge`. Vessel cells are listed by id in `vesselInjured` and added to `state['removed']`, so a bleeding model reading removal can open a wound. A non-cutting part on unsupported soft material is blunt contact.
+- `ATTACHMENT_PREVENTS_DISPLACEMENT` and `SEPARATE_ATTACHMENTS_BEFORE_DISPLACEMENT` (tumour forceps pull) avulse the attachment. Its id joins `separatedAttachments`, and its cells are recorded as contused.
+- `PROTECTED_STRUCTURE` checks record the named structure and mechanism instead of refusing. Clearance entry is a `protected_clearance` event, and indirect removal, cut, displacement, heat or vessel damage is a `protected_structure_injury` event.
+
+These still refuse: contact with bone, unknown or fluid material; `TOOL_COLLISION`; `DISPLACEMENT_COLLISION` (occupancy cannot hold two materials in one cell); `VESSEL_COMPLIANT_CONTACT_LIMIT` and `VESSEL_ATTACHMENT_LOAD_LIMIT` (the compliant rod model has no rupture law); `OPERATIVE_REFLECTION_TRACTION_LIMIT` (flap tear lives in the operative exposure module; `injury.tear()` records a hinge or tether tear once that module calls it and breaks its own coupling); `CRANIAL_ACCESS_*` (a cranial-access contract discards the whole action); all operative exterior, fixture, sequence and input-validity guards.
+
+`state['injuryV1']` holds per-cell `contusionDoseNs` and `contactTravelMm`, sorted `contused`, `lacerated` and `vesselInjured` cells, `avulsions`, `protectedCells` by mechanism, an `events` list (kind, code, cell count, structures, regions, time, slot, instrument), `totalsMm3` and `byRegionMm3`. It is JSON data and is restored with the rest of the state when a microstep fails. `metrics()` adds `injuryContusedMm3`, `injuryLaceratedMm3`, `injuryVesselCells`, `injuryAvulsions` and `injuryEvents`. Outcome summaries add an `injury` block, and consequence vectors add `injury:*` dimensions. RL ledgers move lacerated cells from resection to injury terms (`InjuryRewardConfig`). In injury scenes, a partial action cut short by a remaining physical refusal costs the same 0.1 as a rejection.
+
+Injury scenes always run the Python reference substep. The resident C++ simulator is declined in Python (`surgical_native_engine.create`), because `simulation_effects_native.hpp` cannot list the property without a rebuild.
+
+Constants and provenance: contusion threshold 0.05 N·s, laceration travel 1.5 mm, default force 1 N; reward weights per 1000 mm³ contused 1, lacerated 4, per vessel cell 0.05, per avulsion 0.5. All are assumed research values chosen to make unsafe motion visible. None comes from a measured tissue tolerance. Limits: whole-voxel injury with no oedema, swelling, delayed haemorrhage, delayed deficit or functional outcome. Contusion is a dose ledger, not a mechanical damage law.
+
 ## Persistence and explicit missing evidence
 
 `snapshot().protectionContract` contains the exact annotation cells, source binding, provenance, review status, required identities, clearance, and `GuardConfig`. A content digest binds that contract into the engine state identity. `SurgicalEngine.restore(scene, record)` reconstructs and verifies it before replay; changing or omitting it cannot silently reproduce the saved guarded identity. The contract travels inside the native archive, so it does not depend on an external JSON/NPZ file remaining available.

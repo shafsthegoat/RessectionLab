@@ -84,7 +84,8 @@ def _stock(engine):
     if type(engine.scene.properties) is dict and any(name in engine.scene.properties
             for name in ('tissuePhysicsV2', 'brainContinuumV1', 'vascularGraphV1',
                          'bipolarThermalV1', 'planarBladeManeuverV1', 'retractorSurfaceContactV1',
-                         'surgicalProcedurePolicyV1', 'operativeExposureV1', 'gliomaMaterialsV1')):
+                         'surgicalProcedurePolicyV1', 'operativeExposureV1', 'gliomaMaterialsV1',
+                         'surgicalInjuryV1')):
         return False
     if not _numeric_qualified():
         return False
@@ -185,6 +186,10 @@ def create(engine):
     scene = engine.scene
     if 'operativeExposureV1' in scene.properties or 'gliomaMaterialsV1' in scene.properties:
         return None, 'advanced-operative-profile'
+    if 'surgicalInjuryV1' in scene.properties:
+        # The compiled actor has no injury ledger (simulation_effects_native.hpp
+        # cannot list it without a rebuild); injury scenes run the reference.
+        return None, 'surgical-injury-reference'
     from .surgical_source_inspection import legacy_marker
     if legacy_marker(scene):
         # The compiled admission still binds this provenance marker to its

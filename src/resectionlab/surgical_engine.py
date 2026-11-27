@@ -27,6 +27,7 @@ from .geometry import GeometryScene, capsule_voxel_indices, segment_segment_dist
 from .surgical_tools import TOOLS, catalog
 from .surgical_cusa_v3 import profile as cusa_profile
 from . import surgical_clock
+from . import surgical_injury as injury
 
 SCHEMA = 'resectionlab.surgical-toolbox.v1'
 MAX_STEPS = 8192
@@ -454,6 +455,8 @@ class SurgicalEngine:
             raise ValueError('VESSEL_WORKING_AXIS_POLICY_REQUIRES_SUPPORTED_NATIVE_WALL')
         self.tools = TOOLS
         self._operative_tool_revision = 0
+        # Opt-in injury mode; absent, every transition and state id is unchanged.
+        self._injury = injury.profile(scene)
         if self._operative:
             # An operative exposure runs on any reconstruction, whatever its
             # source class. A host provenance declaration, when present, must
@@ -524,6 +527,8 @@ class SurgicalEngine:
         self._removed_ids_proof = None
         from .surgical_effects import initialize_effect_state
         initialize_effect_state(self)
+        if self._injury is not None:
+            injury.initialize(self)
         self._cranial_stages = None
         self._cranial_stage_bone_prefix = None
         self._cranial_stage_permission = None
@@ -908,6 +913,7 @@ class SurgicalEngine:
         finally:
             candidate.__dict__.pop('_transition_check',None)
             candidate.__dict__.pop('_fixed_dissector_extent', None)
+            candidate.__dict__.pop('_injury_seen', None)
         if check is not None: check()
         result['reasonCode'] = result['reason'].split(':')[0] if result.get('reason') else None
         result.setdefault('elapsedSeconds', candidate.state['elapsedSeconds'] - before_time if result['status'] != 'rejected' else 0.)
@@ -1070,7 +1076,8 @@ class SurgicalEngine:
         if total > 20000: raise ValueError('PATH_TOO_LONG: split this stroke into shorter actions')
         if any(np.linalg.norm(np.subtract(q['position'], p['position'])) > 250 for p, q, _ in segments):
             raise ValueError('PATH_TOO_LONG')
-        if native_backend._module is not None and not self._operative and not vessel_rods.enabled(self):
+        if (native_backend._module is not None and not self._operative and not vessel_rods.enabled(self)
+                and self.__dict__.get('_injury') is None):
             done, reason, contact_position, path_fraction = native_backend.run_trajectory(
                 self, key, op, segments, active, duration, total, articulate,
                 jaw_target, previous_jaw, progress_reason, cusa_v3, check, events)
@@ -1205,8 +1212,10 @@ class SurgicalEngine:
     def _guard_sweep(self, key, p, q, positions):
         for other_key, other in self.state['slots'].items():
             end = {'position': p, 'quaternion': q} if other_key == key else other
-            if len(self.protection.sweep_hits(self.tools[other['instrument']], self._sweep_parameters(other_key, other), other, end, positions=positions)):
-                raise ValueError('PROTECTED_STRUCTURE: instrument or shaft enters the declared clearance')
+            hits = self.protection.sweep_hits(self.tools[other['instrument']], self._sweep_parameters(other_key, other), other, end, positions=positions)
+            if len(hits):
+                # Guarded mode raises; injury mode records the named structure.
+                injury.protected(self, 'PROTECTED_STRUCTURE: instrument or shaft enters the declared clearance', hits, other_key)
 
     def _protected_exposure(self):
         fields = {'thermal': self.state['thermal'],
@@ -1225,28 +1234,32 @@ class SurgicalEngine:
         impacted = set(self.state['removed'])
         for field in ('cutEdges', 'transectedEdges'):
             impacted.update(cell for edge in self.state.get(field, []) for cell in edge)
+        # Each guard raises in guarded mode; injury mode records the named
+        # structure and the mechanism instead (surgical_injury.protected).
         if impacted & self._protected_ids:
-            raise ValueError('PROTECTED_STRUCTURE: indirect removal or cutting is blocked')
+            injury.protected(self, 'PROTECTED_STRUCTURE: indirect removal or cutting is blocked', impacted & self._protected_ids, key)
         limit = self.guard_config.critical_max_displacement_mm + 1e-9
-        for cell, displacement in self.state.get('deformation', {}).items():
-            if int(cell) in self._protected_ids and np.linalg.norm(displacement) > limit:
-                raise ValueError('PROTECTED_STRUCTURE: indirect deformation exceeds the declared limit')
+        moved = [int(cell) for cell, displacement in self.state.get('deformation', {}).items()
+                 if int(cell) in self._protected_ids and np.linalg.norm(displacement) > limit]
+        if moved:
+            injury.protected(self, 'PROTECTED_STRUCTURE: indirect deformation exceeds the declared limit', moved, key)
         for hold in self.state['holds'].values():
             if 'target' not in hold and self._protected_ids.intersection(hold['cells']) and np.linalg.norm(self.scene.affine[:3, :3] @ np.asarray(hold['offset'])) > limit:
-                raise ValueError('PROTECTED_STRUCTURE: grasp displaces protected fragment membership')
+                injury.protected(self, 'PROTECTED_STRUCTURE: grasp displaces protected fragment membership', self._protected_ids.intersection(hold['cells']), key)
         ambient = self.scene.properties.get('tissuePhysicsV2', {}).get('bone', {}).get('ambientTemperatureC', 37.)
-        for (name, cell), value in self._protected_exposure().items():
-            if value > previous_thermal.get((name, cell), ambient if name == 'boneTemperature' else 0.):
-                raise ValueError('PROTECTED_STRUCTURE: indirect thermal exposure is blocked')
+        heated = [int(cell) for (name, cell), value in self._protected_exposure().items()
+                  if value > previous_thermal.get((name, cell), ambient if name == 'boneTemperature' else 0.)]
+        if heated:
+            injury.protected(self, 'PROTECTED_STRUCTURE: indirect thermal exposure is blocked', heated, key)
         for face in self.state.get('vesselsV2', {}).get('faces', {}).values():
             if face['damage'] > 0 and self._protected_ids.intersection(face['cells']):
-                raise ValueError('PROTECTED_STRUCTURE: indirect vessel injury is blocked')
+                injury.protected(self, 'PROTECTED_STRUCTURE: indirect vessel injury is blocked', self._protected_ids.intersection(face['cells']), key)
         graph_state = self.state.get('vascularGraphV1')
         if graph_state:
             for edge in self.scene.properties['vascularGraphV1']['edges']:
                 row = graph_state['edges'][edge['id']]
                 if (row['cutFace'] is not None or row['compressionFraction'] > 0 or row['occlusionFraction'] > 0) and self._protected_ids.intersection(edge['sourceCells']):
-                    raise ValueError('PROTECTED_STRUCTURE: indirect vascular conductance change is blocked')
+                    injury.protected(self, 'PROTECTED_STRUCTURE: indirect vascular conductance change is blocked', self._protected_ids.intersection(edge['sourceCells']), key)
         # A coupled patch can enter a parked instrument after the tool sweep.
         positions = self._positions()
         if positions is not None: self._guard_sweep(key, p, q, positions)
@@ -1256,7 +1269,8 @@ class SurgicalEngine:
         if native_backend._module is not None:
             if self._operative:
                 return native_backend.operative_python_substep(self._physical_substep_reference, key, op, p, q, active, dt)
-            if vessel_rods.enabled(self):
+            # Injury mode has no compiled ledger; it runs the reference substep.
+            if vessel_rods.enabled(self) or self.__dict__.get('_injury') is not None:
                 return self._physical_substep_reference(key, op, p, q, active, dt)
             return native_backend.physical_substep(self, key, op, p, q, active, dt)
         return self._physical_substep_reference(key, op, p, q, active, dt)
@@ -1277,6 +1291,15 @@ class SurgicalEngine:
             if (rotation(q)*rotation(slot['quaternion']).inv()).magnitude() > 1e-8:
                 raise ValueError('BONE_FLAP_ROTATION_UNSUPPORTED: translate the source-bound fragment')
         axis = rotation(q).apply([0, 0, 1]); previous = finite(slot['position'], 3)
+        injured = injury.converting(self)
+        if injured:
+            # Per-substep contact bookkeeping; each cell takes one dose per substep.
+            self._injury_seen = set()
+            injury_events = len(self.state['injuryV1']['events'])
+            tip_travel = float(np.linalg.norm(finite(p, 3) - previous))
+            shaft_travel = tip_travel + 40 * (rotation(q) * rotation(slot['quaternion']).inv()).magnitude()
+        else:
+            tip_travel = shaft_travel = 0.
         previous_vessel_tool_rotation = None
         if (dt > 0 and op in ('move', 'apply', 'withdraw') and vessel_rods.mechanics(self) is not None
                 and vessel_rods.allows_tip_contact(self, key, 'move')):
@@ -1337,9 +1360,17 @@ class SurgicalEngine:
         compliant = vessel_rods.compliant_cells(self, working_cells) if vessel_rods.allows_tip_contact(self, key, op) else set()
         if compliant:
             special_contacts.update(compliant)
-        if set(shaft_cells) - self._shaft_held_cells(key): raise ValueError('SHAFT_COLLISION')
-        if cusa_v3 and active and self.state.get('toolMechanicsRevision') != 2 and working_cells - held - set(self.touched(p, p, params['radiusMm'])):
-            raise ValueError('RETAINED_TISSUE_COLLISION: CUSA body requires a cleared corridor')
+        # Physical refusals below go through injury.admit: guarded mode raises
+        # the same code; injury mode records contusion/laceration/vessel injury
+        # and the motion continues, while rigid contact still raises.
+        shaft_contact = set(shaft_cells) - self._shaft_held_cells(key)
+        if shaft_contact:
+            injury.admit(self, 'SHAFT_COLLISION', shaft_contact, key, op, dt, params, travel_mm=shaft_travel)
+        if cusa_v3 and active and self.state.get('toolMechanicsRevision') != 2:
+            body_contact = working_cells - held - set(self.touched(p, p, params['radiusMm']))
+            if body_contact:
+                injury.admit(self, 'RETAINED_TISSUE_COLLISION: CUSA body requires a cleared corridor', body_contact,
+                             key, op, dt, params, travel_mm=tip_travel)
         for other_key, other in self.state['slots'].items():
             if other_key == key: continue
             other_tool = self.tools[other['instrument']]
@@ -1347,8 +1378,12 @@ class SurgicalEngine:
                 raise ValueError('TOOL_COLLISION:' + other_key)
         if tool['effect'] not in ('suction', 'irrigate') and working_cells - held and op not in ('withdraw', 'release', 'deactivate', 'inspect', 'exchange'):
             if any(self.by_label[int(self.scene.labels.ravel()[i])]['material'] not in tool['materials'] for i in working_cells - held - special_contacts):
-                raise ValueError('UNSUPPORTED_MATERIAL')
-            if not active and key not in self.state['holds'] and working_cells - held - compliant: raise ValueError('RETAINED_TISSUE_COLLISION')
+                # Guarded mode raises before any further material lookup.
+                injury.admit(self, 'UNSUPPORTED_MATERIAL', [i for i in working_cells - held - special_contacts
+                             if self.by_label[int(self.scene.labels.ravel()[i])]['material'] not in tool['materials']] if injured else (),
+                             key, op, dt, params, active=active, travel_mm=tip_travel)
+            if not active and key not in self.state['holds'] and working_cells - held - compliant:
+                injury.admit(self, 'RETAINED_TISSUE_COLLISION', working_cells - held - compliant, key, op, dt, params, travel_mm=tip_travel)
         effect_cells = sorted(working_cells) if self.state.get('toolMechanicsRevision') in (1, 2) and tool['effect'] not in ('remove','suction','irrigate','probe') else tip_cells
         eligible = [i for i in effect_cells if i not in compliant
                     and (i in special_contacts or self.by_label[int(self.scene.labels.ravel()[i])]['material'] in tool['materials'])]
@@ -1361,11 +1396,12 @@ class SurgicalEngine:
                 if part != 'shaft':
                     old_contact.update(self.touched(a, b, radius))
             if working_cells - old_contact:
-                raise ValueError('RETAINED_TISSUE_COLLISION')
+                injury.admit(self, 'RETAINED_TISSUE_COLLISION', working_cells - old_contact, key, op, dt, params, travel_mm=tip_travel)
         elif field_action and np.linalg.norm(p - previous) > 1e-8:
             physical = set(self.touched(p, p, tool['shaftRadiusMm']))
-            if physical - set(self.touched(previous, previous, tool['shaftRadiusMm'])):
-                raise ValueError('RETAINED_TISSUE_COLLISION')
+            fresh = physical - set(self.touched(previous, previous, tool['shaftRadiusMm']))
+            if fresh:
+                injury.admit(self, 'RETAINED_TISSUE_COLLISION', fresh, key, op, dt, params, travel_mm=tip_travel)
         if op == 'withdraw':
             previous_contacts = set(self.touched(previous, previous, params['radiusMm']))
             current_contacts = set(tip_cells)
@@ -1376,11 +1412,15 @@ class SurgicalEngine:
                     if part != 'shaft': previous_contacts.update(self.touched(a,b,radius))
                 for a,b,radius,part in envelopes(tool,params,p,q):
                     if part != 'shaft': current_contacts.update(self.touched(a,b,radius))
-            if current_contacts - previous_contacts: raise ValueError('WITHDRAWAL_PATH_BLOCKED')
+            if current_contacts - previous_contacts:
+                injury.admit(self, 'WITHDRAWAL_PATH_BLOCKED', current_contacts - previous_contacts, key, op, dt, params, travel_mm=tip_travel)
         tip_checks = [i for i in tip_cells if i not in compliant and (not self._operative or i not in held)]
         if tip_checks and not field_action and (not active and key not in self.state['holds'] or any(self.by_label[int(self.scene.labels.ravel()[i])]['material'] not in tool['materials'] for i in tip_checks if i not in special_contacts)):
             if op not in ('withdraw', 'release', 'deactivate', 'inspect', 'exchange'):
-                raise ValueError('UNSUPPORTED_MATERIAL' if active else 'RETAINED_TISSUE_COLLISION')
+                blocking = (() if not injured else tip_checks if not active and key not in self.state['holds'] else
+                            [i for i in tip_checks if i not in special_contacts and self.by_label[int(self.scene.labels.ravel()[i])]['material'] not in tool['materials']])
+                injury.admit(self, 'UNSUPPORTED_MATERIAL' if active else 'RETAINED_TISSUE_COLLISION', blocking,
+                             key, op, dt, params, active=active, travel_mm=tip_travel)
         events = []
         shared_clock = surgical_clock.enabled(self)
         if shared_clock:
@@ -1402,7 +1442,7 @@ class SurgicalEngine:
         if key in self.state['holds'] and (op == 'move' or operative_specimen or self.state['holds'][key].get('kind') in ('bone-flap-v1', 'membrane-patch-v1')):
             from .surgical_effects import validate_hold_motion
             if not operative_specimen or op == 'move':
-                validate_hold_motion(self, key)
+                self._validate_hold_motion(validate_hold_motion, key)
             hold = self.state['holds'][key]
             if v2 and 'target' in hold:
                 from .surgical_deformation_v2 import set_target
@@ -1414,7 +1454,7 @@ class SurgicalEngine:
                 offset = (np.rint(delta).astype(int) + np.asarray(hold.get('baseOffset', [0,0,0]))).tolist()
                 if operative_specimen:
                     if op != 'move' and offset != hold['offset']:
-                        validate_hold_motion(self, key)
+                        self._validate_hold_motion(validate_hold_motion, key)
                     check_specimen(self, key, key, swept, offset)
                 if slot['instrument'] == 'bone_flap_holder':
                     from .surgical_bone_transport import check_sweep
@@ -1438,7 +1478,9 @@ class SurgicalEngine:
             compliant_other = vessel_rods.compliant_cells(self, other_cells) if vessel_rods.allows_tip_contact(
                 self, other_key, 'apply') else set()
             if other_tool['materials'] and set(other_cells) - set(other_eligible) - compliant_other:
-                raise ValueError('OTHER_ACTIVE_TOOL_UNSUPPORTED_MATERIAL:' + other_key)
+                injury.admit(self, 'OTHER_ACTIVE_TOOL_UNSUPPORTED_MATERIAL:' + other_key, set(other_cells) - set(other_eligible) - compliant_other,
+                             other_key, 'apply', dt, self.parameters(other), active=True)
+                other_eligible = [i for i in other_eligible if i not in set(self.state['removed'])]
             events.extend(self._effect(other_key, 'apply', [i for i in other_eligible if i not in compliant_other],
                                        np.asarray(other['position']), np.asarray(other['quaternion']), dt))
             if v2:
@@ -1499,8 +1541,10 @@ class SurgicalEngine:
                     shaft_tool = self.tools[shaft_slot['instrument']]
                     for a, b, radius, part in envelopes(shaft_tool, self.parameters(shaft_slot),
                             shaft_slot['position'], shaft_slot['quaternion']):
-                        if part == 'shaft' and set(self.touched(a, b, radius))-own_held:
-                            raise ValueError('POST_DEFORMATION_SHAFT_COLLISION:'+shaft_key)
+                        pressed = set(self.touched(a, b, radius))-own_held if part == 'shaft' else ()
+                        if pressed:
+                            injury.admit(self, 'POST_DEFORMATION_SHAFT_COLLISION:'+shaft_key, pressed,
+                                         shaft_key, 'inspect', dt, self.parameters(shaft_slot))
             drill.end_step(self, dt)
             bipolar_heat.end_step(self, dt)
             vessel.tick(self, dt)
@@ -1523,7 +1567,19 @@ class SurgicalEngine:
                     check_membrane_sweep(self, hold_key, hold['offset'], self.state['slots'][hold_key])
             check_membrane_detached(self)
             validate_effects(self)
+        if injured:
+            # Surface this substep's recorded injury with the action events.
+            events.extend(copy.deepcopy(self.state['injuryV1']['events'][injury_events:]))
+            self.__dict__.pop('_injury_seen', None)
         return events
+
+    def _validate_hold_motion(self, validate, key):
+        """Guarded mode refuses a pull against an intact attachment; injury mode avulses it."""
+        try:
+            validate(self, key)
+        except ValueError as error:
+            injury.avulse(self, str(error), key)
+            validate(self, key)
 
     def _effect(self, key, op, cells, p, q, dt):
         slot = self.state['slots'][key]; tool = self.tools[slot['instrument']]
@@ -1590,7 +1646,8 @@ class SurgicalEngine:
                 'exposureByMaterialCellSeconds': copy.deepcopy(self.state['materialExposure']),
                 'unknownStimulationSites': sum(o.get('result') == 'unknown' for o in self.state['observations']),
                 'collisions': sum(h['status'] == 'partial' and h.get('reason') != 'TISSUE_ASPIRATION_IN_PROGRESS' and (not self.scene.properties.get('tissuePhysicsV2') or h.get('reason') != 'BONE_CUTTING_IN_PROGRESS') for h in self.history),
-                'unknownMaterialCells': int(sum(np.count_nonzero(self.scene.labels == r['id']) for r in self.scene.regions if r['material'] == 'unknown'))}
+                'unknownMaterialCells': int(sum(np.count_nonzero(self.scene.labels == r['id']) for r in self.scene.regions if r['material'] == 'unknown')),
+                **(injury.metrics(self) if self.__dict__.get('_injury') is not None else {})}
 
     def observe(self, *, _state_id=None):
         from .surgical_position import describe_position

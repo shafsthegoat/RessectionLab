@@ -299,6 +299,18 @@ def summarize_engine_outcomes(engine: SurgicalEngine, *, baseline: SurgicalEngin
     else:
         vessel={'status':'unavailable','reason':'mapped_vessels_and_tissue_physics_v2_required',
                 'value':None}
+    injury = None
+    if 'injuryV1' in engine.state:
+        # Opt-in injury mode only: recorded unsafe-motion injury, assumed thresholds.
+        injury = {name: {'endpoint': _measured(metrics[name], unit), 'baseline': _measured(baseline_metrics[name], unit),
+                         'delta': _measured(metrics[name] - baseline_metrics[name], unit)}
+                  for name, unit in (('injuryContusedMm3', 'mm3'), ('injuryLaceratedMm3', 'mm3'),
+                                     ('injuryVesselCells', 'cells'), ('injuryAvulsions', 'count'),
+                                     ('injuryEvents', 'count'))}
+        injury.update(status='recorded_assumed_thresholds_model_only',
+                      protectedStructures=list(metrics['injuryProtectedStructures']),
+                      meaning='Contusion, laceration, vessel injury and avulsion recorded from unsafe instrument motion; '
+                              'assumed research thresholds, no oedema, delayed deficit or functional outcome.')
     from .surgical_sequence_outcomes import sequence_ledger
     sequence = sequence_ledger(engine, base, target=target, metrics=metrics,
                                baseline_metrics=baseline_metrics, mapped_materials=mapped_materials)
@@ -333,6 +345,7 @@ def summarize_engine_outcomes(engine: SurgicalEngine, *, baseline: SurgicalEngin
                 'meaning': 'Assumed delivered heat and passive conduction; not calibrated device temperature, patency or injury.'}}
                 if 'bipolarThermalV1' in engine.state else {})},
         'fluid':fluid,'localVessels':vessel,
+        **({'injury':injury} if injury is not None else {}),
         'globalPerfusion':_unavailable('no_anatomical_perfusion_network',status='unknown'),
         'neurologicalRisk':_unavailable('no_calibrated_neurological_outcome_model',status='unknown'),
         'limitations':['Whole-cell removal and source-estimate anatomy; missing structures stay unknown.',

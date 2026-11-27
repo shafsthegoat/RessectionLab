@@ -42,6 +42,11 @@ METRICS = {
 }
 PROCEDURE_METRICS = {name: ('mm3', 'min') for name in (
     'boneRemovedMm3', 'nonbonePreparationRemovedMm3', 'neuralRemovedMm3', 'protectedRemovedMm3', 'neuralCutSourceMm3')}
+# Injury-mode ledgers (scenes declaring surgicalInjuryV1 only); assumed-research model.
+INJURY_METRICS = {'injury:contusedMm3': ('mm3', 'min'), 'injury:laceratedMm3': ('mm3', 'min'),
+                  'injury:vesselInjuredCells': ('cells', 'min'), 'injury:avulsions': ('count', 'min')}
+_INJURY_SOURCES = {'injury:contusedMm3': 'injuryContusedMm3', 'injury:laceratedMm3': 'injuryLaceratedMm3',
+                   'injury:vesselInjuredCells': 'injuryVesselCells', 'injury:avulsions': 'injuryAvulsions'}
 SOURCE_COUNTS = frozenset(('targetRemovedMm3', 'nonTargetRemovedMm3', 'elapsedSeconds'))
 EXPOSURE_METRICS = ('brainStrainSquaredMm3S', 'brainStressSquaredPa2Mm3S',
     'thermalPeakC', 'thermalExposureMm3KS', 'bloodGeneratedMm3',
@@ -89,6 +94,8 @@ def procedure_priority_choice(branches, values, required, *, regional_exposures=
 def _metric_spec(name):
     if name in METRICS:
         return METRICS[name]
+    if name in INJURY_METRICS:
+        return INJURY_METRICS[name]
     if name in PROCEDURE_METRICS:
         return PROCEDURE_METRICS[name]
     if (type(name) is str and name.startswith('structure:') and name.endswith((':removedMm3', ':cutSourceMm3')) and
@@ -110,6 +117,15 @@ def _metric_spec(name):
 
 
 def _vector_metrics(vector):
+    injury = vector.get('injuryMetricIds')
+    if injury is None:
+        return _base_vector_metrics(vector)
+    if injury != sorted(INJURY_METRICS):
+        raise ValueError('Explicit injury dimensions required')
+    return {**_base_vector_metrics(vector), **INJURY_METRICS}
+
+
+def _base_vector_metrics(vector):
     schema = vector.get('schema')
     revision = vector.get('mechanismEvidenceRevision')
     if revision is not None and (schema != EVIDENCE_VECTOR_SCHEMA or type(revision) is not int
@@ -377,6 +393,15 @@ def consequence_vector(engine, baseline, *, extended=False, mechanism_revision=M
             vector['treatmentIntent'] = intent
             if intent['residual']['residualMm3'] is not None:
                 vector['residualTargetMm3'] = intent['residual']['residualMm3']
+    from .surgical_injury import PROPERTY as INJURY_PROPERTY
+    if INJURY_PROPERTY in engine.scene.properties:
+        # Recorded injury from unsafe motion; absent for every other scene.
+        now, initial = engine.metrics(), baseline.metrics()
+        for name, (unit, direction) in INJURY_METRICS.items():
+            value, start = _finite(now[_INJURY_SOURCES[name]]), _finite(initial[_INJURY_SOURCES[name]])
+            dimensions[name] = {'unit': unit, 'direction': direction, 'status': 'modeled_unvalidated',
+                'cumulative': value, 'incremental': value - start, 'reason': None}
+        vector['injuryMetricIds'] = sorted(INJURY_METRICS)
     return vector
 
 
