@@ -82,6 +82,31 @@ class InjuryRewardConfig(RewardConfig):
     penalize_physical_stops: bool = True
 
 
+@dataclass(frozen=True)
+class StructureRewardConfig(RewardConfig):
+    """Opt-in structure-aware costs (scenes declaring ``functionalMappingV1``).
+
+    Replaces the flat healthy-removal weight: declared tract cells are costed by
+    function family, vessel cells by kind and the remaining healthy tissue by
+    ``healthy_removal_weight``. Retained tract volume within 0-2 mm and 2-5 mm of
+    the resection cavity costs a fraction of its family weight (a high-water
+    ledger, so it is never refunded). All defaults are assumed-research values;
+    tracts are estimates from a published baseline tract, not patient function,
+    and no weight is a clinical deficit probability. Volumes use
+    ``volume_scale_mm3``.
+    """
+    tract_motor_weight: float = 10.
+    tract_language_weight: float = 8.
+    tract_vision_weight: float = 6.
+    tract_other_weight: float = 3.
+    tract_unclassified_weight: float = 3.
+    band_0_2mm_fraction: float = .25
+    band_2_5mm_fraction: float = .05
+    vessel_artery_weight: float = 8.
+    vessel_vein_weight: float = 6.
+    vessel_unclassified_weight: float = 6.
+
+
 INJURY_METRICS = ('injury_contused_mm3', 'injury_lacerated_mm3', 'injury_vessel_cells', 'injury_avulsions')
 # Progress stops are expected dwell at a hard contact, not a physical refusal.
 _PROGRESS_STOPS = ('TISSUE_ASPIRATION_IN_PROGRESS', 'BONE_CUTTING_IN_PROGRESS')
@@ -216,6 +241,8 @@ class RewardTracker:
                            injury_lacerated_mm3=len(injury['lacerated']) * volume,
                            injury_vessel_cells=float(len(injury['vesselInjured'])),
                            injury_avulsions=float(len(injury['avulsions'])))
+        if 'functionalMappingV1' in self.scene.properties:
+            current.update(self._structure(engine, removed, volume))
         if self.graph_evaluation:
             from .surgical_vascular_graph import maximum_interface_deficits
             if state.get('toolMechanicsRevision') != 2 or 'vascularGraphV1' not in state:
@@ -228,6 +255,28 @@ class RewardTracker:
                 raise ValueError('Invalid reward measurement: ' + key)
             self._ledger[key] = max(self._ledger.get(key, 0.), value)
         return dict(self._ledger)
+
+
+    def _structure(self, engine, removed, volume):
+        """Split healthy removal by declared tract family and vessel kind, plus band volumes."""
+        from .surgical_functional_mapping import STRUCTURE_METRICS, band_volumes, label_classes
+        classes = label_classes(self.scene)
+        result = dict.fromkeys(STRUCTURE_METRICS, 0.)
+        for cell in removed:
+            if not self._occupied(cell) or self._target(engine, cell):
+                continue
+            label = int(self.scene.labels.flat[cell])
+            if engine.by_label[label]['material'] == 'bone':
+                continue
+            kind = classes.get(label)
+            key = ('structure_other_healthy_removed_mm3' if kind is None else
+                   f'structure_tract_{kind[1]}_removed_mm3' if kind[0] == 'tract' else
+                   f'structure_vessel_{kind[1]}_removed_mm3')
+            result[key] += volume
+        for family, (near, far) in band_volumes(engine).items():
+            result[f'structure_tract_{family}_band_0_2mm_mm3'] = near
+            result[f'structure_tract_{family}_band_2_5mm_mm3'] = far
+        return result
 
 
 def _neighbors(scene, cell):
@@ -317,6 +366,25 @@ def compute_reward(before, after, outcome, config=None):
         ('protected_damage', 'protected_damage_mm3', -config.protected_damage_weight, config.volume_scale_mm3),
         ('near_contact', 'near_contact_exposure_mm3_seconds', -config.near_contact_weight, config.near_contact_scale_mm3_seconds),
         ('time', 'elapsed_seconds', -config.time_cost, config.time_scale_seconds))
+    if isinstance(config, StructureRewardConfig):
+        from .surgical_functional_mapping import FAMILIES, STRUCTURE_METRICS, VESSEL_KINDS
+        if not all(key in before and key in after for key in STRUCTURE_METRICS):
+            raise ValueError('STRUCTURE_REWARD_REQUIRES_FUNCTIONAL_MAPPING: declare functionalMappingV1 on the scene')
+        # Remaining healthy tissue keeps the flat weight; declared structures replace it.
+        specifications = tuple(
+            ('healthy_removal', 'structure_other_healthy_removed_mm3', -config.healthy_removal_weight, config.volume_scale_mm3)
+            if name == 'healthy_removal' else (name, key, weight, scale) for name, key, weight, scale in specifications)
+        for family in FAMILIES + ('unclassified',):
+            weight = getattr(config, f'tract_{family}_weight')
+            specifications += (
+                (f'tract_removal:{family}', f'structure_tract_{family}_removed_mm3', -weight, config.volume_scale_mm3),
+                (f'tract_band_0_2mm:{family}', f'structure_tract_{family}_band_0_2mm_mm3',
+                 -weight * config.band_0_2mm_fraction, config.volume_scale_mm3),
+                (f'tract_band_2_5mm:{family}', f'structure_tract_{family}_band_2_5mm_mm3',
+                 -weight * config.band_2_5mm_fraction, config.volume_scale_mm3))
+        specifications += tuple((f'vessel_removal:{kind}', f'structure_vessel_{kind}_removed_mm3',
+                                 -getattr(config, f'vessel_{kind}_weight'), config.volume_scale_mm3)
+                                for kind in VESSEL_KINDS)
     from .surgical_vascular_graph import DEFICIT_METRICS
     if isinstance(config, GeneratedGraphRewardConfig):
         if not all(key in before and key in after for key in DEFICIT_METRICS):

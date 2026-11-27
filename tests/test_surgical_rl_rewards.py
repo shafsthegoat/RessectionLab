@@ -286,3 +286,16 @@ def test_injury_terms_exist_only_for_injury_scenes_and_cost_injury():
         InjuryRewardConfig(penalize_physical_stops=1)
     with pytest.raises(ValueError, match='Injury-mode measurements'):
         compute_reward(RewardTracker(plain).measure(plain), after, {'status': 'accepted'})
+
+
+def test_structure_reward_is_opt_in_and_legacy_ledger_is_unchanged():
+    from dataclasses import asdict
+    from resectionlab.surgical_rl_rewards import StructureRewardConfig
+    e = engine(); tracker = RewardTracker(e)
+    ledger = tracker.measure(e)
+    assert not any(key.startswith('structure_') for key in ledger)
+    structure = asdict(StructureRewardConfig())
+    assert {k: structure[k] for k in asdict(RewardConfig())} == asdict(RewardConfig())
+    assert structure['healthy_removal_weight'] == 2. and structure['tract_motor_weight'] > structure['healthy_removal_weight']
+    with pytest.raises(ValueError, match='STRUCTURE_REWARD_REQUIRES_FUNCTIONAL_MAPPING'):
+        compute_reward(ledger, ledger, {'status': 'accepted'}, StructureRewardConfig())

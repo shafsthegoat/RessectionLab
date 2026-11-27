@@ -216,13 +216,20 @@ class ProtectionSet:
             raise ValueError('Protection static geometry changed; construct a new ProtectionSet')
 
     def report(self):
-        return {'status': 'unknown-coverage' if self.missing else 'declared-masks-only',
+        result = {'status': 'unknown-coverage' if self.missing else 'declared-masks-only',
                 'missingRequired': list(self.missing), 'clearanceMm': self.clearance_mm,
                 'anatomicalCompleteness': 'unknown', 'clinicalValidation': 'none',
                 'unknownStructures': ['motor/language cortex', 'corticospinal tract', 'optic pathways', 'cranial nerves'],
                 'structures': [{'id': a.structure_id, 'name': a.display_name,
                                 'sourceCells': len(a.cells), 'provenance': a.provenance,
                                 'reviewStatus': a.review_status} for a in self.annotations]}
+        # Admission is unchanged (a brainstem-only set is still accepted); a
+        # procedure-scale scene with tract layers but no mapping is reported.
+        from .surgical_functional_mapping import missing_declaration_warning
+        warning = missing_declaration_warning(self.scene)
+        if warning is not None:
+            result['functionalMappingWarning'] = warning
+        return result
 
     def intersects_cells(self, cells):
         return np.intersect1d(self.cells, np.asarray(list(cells), dtype=np.int64))

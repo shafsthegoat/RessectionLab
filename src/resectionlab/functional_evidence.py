@@ -201,6 +201,11 @@ def _probe_records(state, probe, result):
             and row.get("probe") == probe and row.get("result") == result]
 
 
+def _model_estimate_records(state, probe, result):
+    return [row for row in state["observations"] if row.get("kind") == "model-estimate"
+            and row.get("probe") == probe and row.get("result") == result]
+
+
 def _native_probe_evidence(engine, baseline):
     from .surgical_sequence_outcomes import _quantity
 
@@ -217,6 +222,15 @@ def _native_probe_evidence(engine, baseline):
                                          len(_probe_records(baseline.state, probe, "unknown")), "count"),
             "suppliedSiteIds": sorted({site["id"] for row in supplied for site in row["evidence"]}),
         }
+        if "functionalMappingV1" in engine.scene.properties:
+            # Model estimates are counted apart from supplied evidence and from
+            # the unmatched-site unknowns above; they are not observations.
+            for result, name in (("model_estimate_response", "modelEstimateResponseRecords"),
+                                 ("model_estimate_no_response", "modelEstimateNoResponseRecords"),
+                                 ("unknown", "modelEstimateUnknownRecords")):
+                measurements[probe][name] = _quantity(
+                    len(_model_estimate_records(engine.state, probe, result)),
+                    len(_model_estimate_records(baseline.state, probe, result)), "count")
     return {"status": "native_probe_ledger", "probes": measurements,
             "scope": "Recorded probe queries and supplied-site matches. Unmatched sites have unknown response."
                      " Probe type identifies sampling location class only."}

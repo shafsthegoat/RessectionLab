@@ -335,11 +335,17 @@ def apply_effect(engine, key, op, cells, p, q, dt):
     if effect == 'probe':
         probe = name.removesuffix('_probe')
         evidence = [e for e in engine.scene.properties.get('functionalEvidence', []) if e['probe'] == probe and e['cell'] in cells]
-        observation = {'kind': 'mapping', 'probe': probe, 'position': p.tolist(), 'cells': sorted(cells),
-                       'parameters': {k: params[k] for k in ('amplitudeMa', 'frequencyHz', 'pulseWidthUs') if k in params},
-                       'coverage': 'supplied sites only' if evidence else 'unknown',
-                       'evidence': copy.deepcopy(evidence), 'result': 'supplied_evidence' if evidence else 'unknown',
-                       'uncertainty': 'source supplied' if evidence else 'no matching supplied functional evidence'}
+        stimulus = {k: params[k] for k in ('amplitudeMa', 'frequencyHz', 'pulseWidthUs') if k in params}
+        if not evidence and 'functionalMappingV1' in engine.scene.properties:
+            # Opt-in labelled model estimate; supplied site evidence still wins.
+            from .surgical_functional_mapping import stimulation_observation
+            observation = stimulation_observation(engine, probe, p, cells, stimulus)
+        else:
+            observation = {'kind': 'mapping', 'probe': probe, 'position': p.tolist(), 'cells': sorted(cells),
+                           'parameters': stimulus,
+                           'coverage': 'supplied sites only' if evidence else 'unknown',
+                           'evidence': copy.deepcopy(evidence), 'result': 'supplied_evidence' if evidence else 'unknown',
+                           'uncertainty': 'source supplied' if evidence else 'no matching supplied functional evidence'}
         if not state['observations'] or state['observations'][-1] != observation: state['observations'].append(observation)
         return [observation]
     raise ValueError('UNSUPPORTED_MECHANISM')

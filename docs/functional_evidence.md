@@ -141,3 +141,86 @@ Acceptance cases include unknown availability, timezone-equivalent cutoffs,
 available-exactly-at-cutoff, known prior biopsy, postoperative pathology,
 estimated genotype and absent baseline function. Source timestamps must not be
 replaced with file download time. Any context edit invalidates dependent results.
+
+## Stimulation-mapping estimate and structure-aware harm (`functionalMappingV1`)
+
+An opt-in scene property, implemented in
+`src/resectionlab/surgical_functional_mapping.py`. Scenes without it keep the
+same probe rows, state IDs, consequence vectors and reward ledgers as before.
+Build the value with `declaration(tracts=None, awake=False, max_search_mm=20)`:
+`ischaemicTerritory: 'unknown'` is required. Ischaemic territory is not simulated,
+and every output reports it as UNKNOWN, never zero.
+
+**Tracts.** The property lists tract regions by region ID or name, or finds
+regions named `... (tract)`, as the host rehearsal builds them. Each tract
+carries a function family taken from its name: corticospinal → motor;
+arcuate, IFOF, aslant and uncinate → language-related association; optic
+radiation → vision; cingulum → other. Any other name is unclassified. Every
+tract is an ESTIMATE fitted from a published baseline tract, with provenance
+`estimated`. `declare(scene)` lists the tracts, vessel kinds, families with no
+tract, the response law and the unknowns.
+
+**Response law (model estimate).** A `cortical_probe` or `subcortical_probe`
+measures the distance from the tip to the nearest retained cell of each tract.
+It uses one k-d tree per scene, cached outside the scene object, and skips
+removed cells. A motor response is estimated when the effective current reaches
+the distance threshold. The law and its references:
+
+- `distance_mm = 1.42 + 0.81 × current_mA` is **owner-supplied**. The project
+  owner gave it as one published series' fit, and its source is still to be
+  confirmed. No citation is bound to it. It decides the result.
+- The commonly taught rule of roughly 1 mm per mA is a second,
+  **assumed-research** reference. It only widens the stated uncertainty.
+- Effective current is `amplitude × pulse-width factor × frequency factor`, both
+  **assumed-research**. The pulse-width factor is the Weiss/Lapicque form,
+  `(1 + c/500 µs)/(1 + c/PW)` with chronaxie `c` = 200 µs, bounded to
+  [0.25, 1.4]. The frequency factor is `(f/60 Hz)^0.1`, bounded to [0.8, 1.2].
+  The reference setting is 500 µs and 60 Hz. Both factors are monotone.
+  A pulse width or frequency that is not supplied takes the reference value,
+  and the row records that it did.
+
+The probe row has `kind: 'model-estimate'` (`category: 'mapping'`). It carries
+the parameters, the estimated distance to each tract, the result for each
+family, a distance band such as "tract within ~5.0 mm" and the provenance.
+`uncertaintyMm` is half the cell diagonal plus the difference between the two
+references. The fit residual is not supplied. `result` is one of
+`model_estimate_response`, `model_estimate_no_response` or `unknown`. The
+result is `unknown` when:
+
+- no current is declared, or the current, pulse width or frequency is zero;
+- a family has no tract;
+- no retained tract of that family lies within `maxSearchMm` (default 20 mm,
+  assumed);
+- the family is language or vision and the scene declares no awake scenario.
+  Mapping these needs an awake patient doing tasks. With an awake scenario, the
+  row marks the motor law as extrapolated to that family;
+- the family is cingulum or other;
+- a cortical probe evokes no tract-mediated response, because cortical
+  function is not represented.
+
+Supplied `functionalEvidence` sites take precedence and keep the
+`supplied_evidence` row unchanged. `functional_consequence_evidence` counts
+model-estimate responses, no-responses and unknowns separately from supplied
+evidence.
+
+**Structure-aware harm.** `structure_harm(engine)` reports the following for
+each tract and each vessel kind (artery, vein, unclassified): removed volume,
+the minimum centre-to-centre distance from the resection cavity, and retained
+cells in the 0–2 mm and 2–5 mm bands. The cavity is the removed cells outside
+bone and membrane. With the property, the consequence vector adds
+`functional:<tract>:removedMm3` (min) and `functional:<tract>:minDistanceMm`
+(max). Distances are capped at `maxSearchMm`; the cap means "at least this far,
+or no cavity yet". The vector also adds a separate `functionalModelEstimate`
+block. `motorEncounterMm3` and `languageEncounterMm3` stay unavailable as
+patient outcomes. `StructureRewardConfig` is an opt-in RL reward. It replaces
+the flat healthy weight with weights for each tract family, each vessel kind
+and the two distance bands, all assumed-research defaults. `RewardConfig` is
+unchanged. `ProtectionSet.report()` keeps admission unchanged. It adds
+`functionalMappingWarning` when a procedure-scale scene has tract layers but no
+mapping declaration.
+
+**Limits.** Tractography is not function. Every response is a model estimate
+from a declared relation, not an observed stimulation. Distances use the
+undeformed source cell centres, so brain shift is not modelled. No response
+does not mean safe tissue. No deficit probability is produced
+(`clinical_deficit_probability` stays `null`).

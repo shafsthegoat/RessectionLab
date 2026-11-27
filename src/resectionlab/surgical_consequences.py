@@ -53,6 +53,9 @@ EXPOSURE_METRICS = ('brainStrainSquaredMm3S', 'brainStressSquaredPa2Mm3S',
     'supplyDeficitSeconds', 'drainageDeficitSeconds')
 _FLOW_DEFICITS = {'supplyDeficitSeconds': 'supply', 'drainageDeficitSeconds': 'drainage'}
 _FUNCTIONAL_CONTACT = 'recordedContactCellSeconds'
+# Declared tract estimates (scenes declaring functionalMappingV1 only); model estimates.
+_MAPPING_METRICS = {'removedMm3': ('mm3', 'min'), 'minDistanceMm': ('mm', 'max')}
+_MAPPING_AGGREGATION = {'removedMm3': 'cumulative_volume', 'minDistanceMm': 'minimum_distance'}
 _CONTINUUM_AGGREGATES = {'brainStrainSquaredMm3S': 'soft_tissue',
     'brainStressSquaredPa2Mm3S': 'soft_tissue', 'tumorStrainSquaredMm3S': 'tumor'}
 PROCEDURE_PRIORITY = {
@@ -78,7 +81,9 @@ def procedure_priority_choice(branches, values, required, *, regional_exposures=
             exposures.append('tumorStrainSquaredMm3S')
     for group, label in ((neural, 'neural'), (exposures, 'exposure')):
         def vector(branch):
-            return tuple(values(branch, key) for key in group)
+            # A distance to a declared tract is better when larger (functionalMappingV1 only).
+            return tuple(-values(branch, key) if key.endswith(':minDistanceMm') else values(branch, key)
+                         for key in group)
         remaining = [b for b in remaining if not any(
             all(x <= y for x, y in zip(vector(a), vector(b))) and
             any(x < y for x, y in zip(vector(a), vector(b))) for a in remaining)]
@@ -109,6 +114,8 @@ def _metric_spec(name):
                 return ('s', 'min')
             if mechanism == 'functional' and metric == _FUNCTIONAL_CONTACT:
                 return ('cell*s', 'min')
+            if mechanism == 'functional' and metric in _MAPPING_METRICS:
+                return _MAPPING_METRICS[metric]
             if mechanism == 'mechanical':
                 from .surgical_mechanical_exposure import METRICS as mechanical_metrics
                 if metric in mechanical_metrics:
@@ -119,10 +126,24 @@ def _metric_spec(name):
 def _vector_metrics(vector):
     injury = vector.get('injuryMetricIds')
     if injury is None:
-        return _base_vector_metrics(vector)
-    if injury != sorted(INJURY_METRICS):
+        metrics = _base_vector_metrics(vector)
+    elif injury != sorted(INJURY_METRICS):
         raise ValueError('Explicit injury dimensions required')
-    return {**_base_vector_metrics(vector), **INJURY_METRICS}
+    else:
+        metrics = {**_base_vector_metrics(vector), **INJURY_METRICS}
+    mapped = vector.get('functionalMappingMetricIds')
+    if mapped is None:
+        return metrics
+    if (type(mapped) is not list or len(mapped) > 512 or any(type(k) is not str for k in mapped)
+            or mapped != sorted(set(mapped)) or any(not _mapping_metric(k) for k in mapped)):
+        raise ValueError('Explicit functional mapping dimensions required')
+    return {**metrics, **{key: _metric_spec(key) for key in mapped}}
+
+
+def _mapping_metric(name):
+    mechanism, _, rest = name.partition(':')
+    subject, _, metric = rest.rpartition(':')
+    return mechanism == 'functional' and metric in _MAPPING_METRICS and 0 < len(subject) <= 100
 
 
 def _base_vector_metrics(vector):
@@ -154,6 +175,11 @@ def _base_vector_metrics(vector):
         raise ValueError('Explicit structure identities required in procedure consequence vector')
     return {**METRICS, **PROCEDURE_METRICS, **regional,
         **{'structure:' + name + ':' + effect: ('mm3', 'min') for name in ids for effect in ('removedMm3', 'cutSourceMm3')}}
+
+
+def _mapping_distance(name):
+    """A tract distance may shrink between prefix and endpoint; larger is better."""
+    return name.startswith('functional:') and name.endswith(':minDistanceMm')
 
 
 def _source_count(name):
@@ -402,6 +428,14 @@ def consequence_vector(engine, baseline, *, extended=False, mechanism_revision=M
             dimensions[name] = {'unit': unit, 'direction': direction, 'status': 'modeled_unvalidated',
                 'cumulative': value, 'incremental': value - start, 'reason': None}
         vector['injuryMetricIds'] = sorted(INJURY_METRICS)
+    from .surgical_functional_mapping import PROPERTY as MAPPING_PROPERTY
+    if MAPPING_PROPERTY in engine.scene.properties:
+        # Declared tract estimates only; motor/language encounters stay unknown outcomes.
+        from .surgical_functional_mapping import consequence_dimensions
+        mapped, estimate = consequence_dimensions(engine, baseline)
+        dimensions.update(mapped)
+        vector['functionalMappingMetricIds'] = sorted(mapped)
+        vector['functionalModelEstimate'] = estimate
     return vector
 
 
@@ -437,6 +471,8 @@ def _validate_mechanism_dimension(name, dimension, scene_id):
         aggregation = 'maximum_regional_integral'
     elif name == 'bloodGeneratedMm3':
         aggregation = 'cumulative_volume'
+    elif mechanism == 'functional' and metric in _MAPPING_AGGREGATION:
+        aggregation = _MAPPING_AGGREGATION[metric]
     elif name in _CONTINUUM_AGGREGATES or mechanism in ('functional', 'vascular'):
         aggregation = 'time_integral'
     elif mechanism == 'mechanical':
@@ -535,7 +571,8 @@ def compare_samples(samples, policy, *, stop_branch, scenario_ids, branch_ids, s
                 expected = 'source_count' if _source_count(name) else 'modeled_unvalidated'
                 if d['status'] != expected:
                     raise ValueError('Source count and unvalidated model status cannot be exchanged')
-                if _finite(d['cumulative']) < 0 or _finite(d['incremental']) < 0:
+                incremental = _finite(d['incremental'])
+                if _finite(d['cumulative']) < 0 or (incremental < 0 and not _mapping_distance(name)):
                     raise ValueError('Source count, time and cumulative exposure cannot be negative')
             else: raise ValueError('Unknown consequence status')
             if v.get('mechanismEvidenceRevision') == MECHANISM_EVIDENCE_REVISION:
@@ -605,7 +642,7 @@ def compare_samples(samples, policy, *, stop_branch, scenario_ids, branch_ids, s
     elif selection_rule is not None and frontier:
         def worst_value(branch, metric):
             values = [matrix[branch, world]['vector']['dimensions'][metric][objective_scope(metric)] for world in worlds]
-            return min(values) if metric == 'targetRemovedMm3' else max(values)
+            return min(values) if metric == 'targetRemovedMm3' or _mapping_distance(metric) else max(values)
         selected, selection_reason = procedure_priority_choice(frontier, worst_value, required,
             regional_exposures=revisions == {MECHANISM_EVIDENCE_REVISION})
         if selected is None and stop_valid:
