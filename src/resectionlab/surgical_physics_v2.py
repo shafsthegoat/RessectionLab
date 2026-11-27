@@ -43,7 +43,17 @@ def initialize(engine):
         from .surgical_bipolar_thermal import initialize as initialize_bipolar_thermal
         initialize_bipolar_thermal(engine)
 
-def raster(engine, *, include_rods=True):
+def raster(engine, *, include_rods=True, brain_shift=True):
+    """Source->raster pairs. An active brainShiftV1 scenario composes with local displacement.
+
+    ``brain_shift``: True adds every shifted source; 'local' only composes the
+    shift into locally displaced cells; False ignores the scenario entirely.
+    """
+    if brain_shift:
+        from .surgical_brain_shift import shifted_raster
+        shifted = shifted_raster(engine, include_rods=include_rods, local_only=brain_shift == 'local')
+        if shifted is not None:
+            return shifted
     removed = set(engine.state['removed'])
     excluded = ()
     if not include_rods:

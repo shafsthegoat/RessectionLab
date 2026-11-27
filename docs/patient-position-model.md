@@ -82,3 +82,78 @@ shift, while subsurface shift during resection included cavity collapse and
 complex internal changes. Their observations support evaluating that boundary
 model against repeated images; they do not supply a universal displacement,
 safety threshold, ICP or perfusion predictor.
+
+## Brain shift after dural opening and navigation (scenario, opt-in)
+
+A scene may declare `brainShiftV1` (`src/resectionlab/surgical_brain_shift.py`).
+It is a labelled **scenario**, not a prediction: it shows what navigation gets
+wrong once the dura is open and the brain sags. Scenes without it keep their
+state, state ids and transitions unchanged.
+
+- **Onset and ramp.** When operative access first opens (scalp and dura
+  reflected at least 90°, bone flap parked), the engine stores compact
+  parameters in `state['brainShiftV1']`: onset time, gravity direction and its
+  source, peak, settling time and a settling level. The sag ramps to the peak in
+  `settlingSteps` equal steps over `settlingSeconds` (default 6 steps over 60 s).
+  Direction is the declared `gravityRasUnit`, else gravity from an applied
+  patient position, else the inward normal of the opening.
+- **Field.** Peak (default 5 mm) at the exposed cortex in the centre of the
+  opening, halving every `depthHalfLengthMm` of depth (default: the depth of the
+  deepest original target margin, so that margin moves about half the peak),
+  decaying beyond the opening edge with `lateralDecayMm` (15 mm), and tapering
+  to zero within one cell plus `boundaryTaperMm` (3 mm) of rigid support. Bone,
+  dura still attached to bone and every non-declared region never move; a
+  shifting cell within one cell of them (falx, tentorium, skull base) does not
+  move either. Default shifting regions are the soft, tumour and vessel regions
+  that lie inside the cranial shell as seen from the target.
+- **Raster.** The field is never written to `state['deformation']`, so the
+  protected-displacement guard, which reads only that local lattice field, does
+  not refuse actions because of it. For each settling level a destination map is
+  built once and cached on the scene: each shifting source has one rounded
+  destination, pulled back along the displacement if it would be rigid; several
+  sources in one cell keep all identities as memberships with the existing
+  region precedence; vacated cells are filled from the inverse field when that
+  source landed adjacent, and any vacated cell enclosed on all six faces is
+  filled from its nearest face neighbour. The CSF gap therefore opens under the
+  dura, free space downstream closes, and no one-cell hole appears. Instruments
+  meet tissue at its shifted position through the shared occupancy; removal and
+  every ledger still name the original source cells. Local lattice displacement
+  composes with the shift in `surgical_physics_v2.raster`.
+- **Readout.** `view()['brainShiftV1']` holds the parameters, current peak, a
+  coarse lattice of at most 512 displacement samples and the planned and
+  shifted original-target centroids; `metrics()` adds `brainShiftPeakMm` and
+  `targetShiftMm`. `view()['moved']` does not list the shifted cells.
+
+`navigationV1` (`src/resectionlab/surgical_navigation.py`) adds a
+`navigation_pointer`. Inspecting with it records, in `observations`, what a
+navigation screen shows: the tip mapped into the preoperative image through a
+rigid registration error drawn once from a declared seed (default 2 mm RMS
+target error, 0.5° rotation SD about the target centroid; assumed research,
+error model after Fitzpatrick, West and Maurer, IEEE Trans Med Imaging 1998),
+the image label there and the distance to the planned tumour. It knows nothing
+about brain shift. The latent truth (tip, registration error, the shifted
+tissue under the tip and its preoperative position, the tumour-edge
+discrepancy) is kept in `state['navigationV1']` and shown only in
+`view()['navigationV1']['privilegedTruth']`, never in `observe()`.
+
+**Magnitudes.** Intraoperative series report cortical surface displacement of
+several millimetres up to about a centimetre after dural opening, mostly along
+gravity, with smaller displacement at the deep tumour margin (Roberts et al.,
+Neurosurgery 1998; Nimsky et al., Neurosurgery 2000; Nabavi et al. 2001 above).
+No coefficient is fitted to them; the 5 mm peak and half-peak deep margin are
+assumed research. For comparison, the repository's RESECT ultrasound
+correspondence records give the unchanged-image (no update) error between
+preoperative and intraoperative landmarks on single patients: Case4 held-out
+RMS 4.04 mm (maximum 5.22 mm), Case2 3.35 mm (maximum 5.19 mm) and Case3
+2.03 mm (maximum 3.02 mm) (`artifacts/resect-case4-sparse-update-v1`,
+`artifacts/resect-case2-sparse-update-v1`,
+`artifacts/poc-resect-case3-image-registration-v1`). These sparse, deep
+landmark errors bracket the default scenario: the target-centroid shift on the
+host head is about 3.4 mm at a 5 mm cortical peak. They are not a validation of
+the field shape.
+
+What a surgeon would still find wrong: the shift is a fixed analytic field that
+does not grow with resection, cavity collapse, retraction, CSF drainage volume,
+mannitol or ventilation; it never reverses on closure; outward bulging through
+the opening is clamped by the reflected flaps; and the pointer has no tracking
+jitter, line-of-sight loss or reference-frame slip.

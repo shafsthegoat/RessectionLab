@@ -552,6 +552,14 @@ class SurgicalEngine:
             self.state['operativeInstrumentCatalogHash'] = semantic_digest(catalog(operative=self._operative_tool_revision))
         if vessel_rods.wall_sweep_enabled(self):
             vessel_rods.check_wall_topology(self)
+        # Opt-in brain-shift and navigation scenarios; absent, nothing changes.
+        from .surgical_brain_shift import declaration as brain_shift_declaration
+        from .surgical_navigation import declaration as navigation_declaration
+        self._brain_shift = brain_shift_declaration(scene)
+        self._navigation = navigation_declaration(scene)
+        if self._navigation is not None:
+            from .surgical_tools import NAVIGATION_POINTER
+            self.tools = {**self.tools, 'navigation_pointer': NAVIGATION_POINTER}
         self._native_initial_state_id = self.state_id
 
     @property
@@ -615,6 +623,8 @@ class SurgicalEngine:
 
     def occupancy(self):
         changes = {'holds': self.state['holds'], **({'detachedFragments': self.state['detachedFragments']} if 'detachedFragments' in self.state else {}), **({'deformation': self.state['deformation']} if 'deformation' in self.state else {})}
+        if 'brainShiftV1' in self.state:
+            changes['brainShiftV1'] = self.state['brainShiftV1']
         if self._operative:
             from . import surgical_operative_exposure as exposure
             changes['operativeExposureGeometry'] = exposure.geometry_key(self)
@@ -650,6 +660,13 @@ class SurgicalEngine:
             key = _owned_digest({'removed': removed_ids, **changes})
         if self._occupancy_cache is not None and self._occupancy_cache[0] == key:
             return self._occupancy_cache[1]
+        if self.__dict__.get('_brain_shift') is not None and self.state.get('brainShiftV1', {}).get('level'):
+            # The settled scenario shift is the base raster; holds, local
+            # displacement and exposure bodies compose on top of it.
+            from .surgical_brain_shift import occupancy as shifted_occupancy
+            owner = shifted_occupancy(self)
+            self._occupancy_cache = (key, owner)
+            return owner
         from .surgical_occupancy import MaterialOccupancy
         removed = set(self.state['removed'])
         cleared = set(removed)
@@ -752,6 +769,9 @@ class SurgicalEngine:
         parameters = {**extra, 'radiusMm': tool['radiusMm'], 'depthMm': 2., 'flowMm3PerSecond': 20., 'power': 1., 'jawOpeningMm': 2., **slot['parameters'], **({'contactGeometryRevision':2} if self.state.get('toolMechanicsRevision')==2 else {}),
             **({'retractorFaceContactRevision':1} if slot['instrument']=='brain_retractor' and 'retractorSurfaceContactV1' in self.scene.properties else {})}
 
+        if self._operative and slot['instrument'] == 'navigation_pointer':
+            from .surgical_tools import navigation_pointer_parameters
+            return navigation_pointer_parameters(parameters, self._operative_tool_revision)
         if self._operative:
             from .surgical_tools import operative_tool_parameters
             if self._operative_tool_revision == 1:
@@ -1054,7 +1074,7 @@ class SurgicalEngine:
         if op == 'withdraw':
             if slot['grip'] or key in self.state['holds'] or (self._operative and exposure.holding(self, key)): raise ValueError('RELEASE_BEFORE_WITHDRAWAL')
             slot['active'] = False
-        active = op in ('apply', 'hold', 'grasp', 'extract', 'activate') or slot['active'] and op == 'move' or op == 'inspect' and tool['effect'] == 'probe'
+        active = op in ('apply', 'hold', 'grasp', 'extract', 'activate') or slot['active'] and op == 'move' or op == 'inspect' and tool['effect'] in ('probe', 'navigate')
         # The explicit thermal model shares one physical clock: a persistent
         # activation continues during inspection regardless of the selected hand.
         # Historical recordings retain their original scheduling semantics.
@@ -1077,7 +1097,7 @@ class SurgicalEngine:
         if any(np.linalg.norm(np.subtract(q['position'], p['position'])) > 250 for p, q, _ in segments):
             raise ValueError('PATH_TOO_LONG')
         if (native_backend._module is not None and not self._operative and not vessel_rods.enabled(self)
-                and self.__dict__.get('_injury') is None):
+                and self.__dict__.get('_injury') is None and self.__dict__.get('_navigation') is None):
             done, reason, contact_position, path_fraction = native_backend.run_trajectory(
                 self, key, op, segments, active, duration, total, articulate,
                 jaw_target, previous_jaw, progress_reason, cusa_v3, check, events)
@@ -1179,7 +1199,14 @@ class SurgicalEngine:
                 destination = np.asarray(np.unravel_index(cell, self.scene.shape)) + hold['offset']
                 mapping[cell] = int(np.ravel_multi_index(destination, self.scene.shape))
         from .surgical_physics_v2 import raster
-        mapping.update((cell, destination) for cell, destination in raster(self) if cell in self._protected_ids)
+        if self.__dict__.get('_brain_shift') is not None and 'brainShiftV1' in self.state:
+            # Same pairs as the full composed raster, without listing every shifted cell.
+            from .surgical_brain_shift import forward_pairs
+            mapping.update((cell, destination) for cell, destination in forward_pairs(self, self.protection.cells)
+                           if cell != destination)
+            mapping.update((cell, destination) for cell, destination in raster(self, brain_shift='local') if cell in self._protected_ids)
+        else:
+            mapping.update((cell, destination) for cell, destination in raster(self) if cell in self._protected_ids)
         if self._operative:
             from .surgical_operative_exposure import moved
             mapping.update((cell, target) for cell, target in moved(self) if cell in self._protected_ids)
@@ -1270,7 +1297,8 @@ class SurgicalEngine:
             if self._operative:
                 return native_backend.operative_python_substep(self._physical_substep_reference, key, op, p, q, active, dt)
             # Injury mode has no compiled ledger; it runs the reference substep.
-            if vessel_rods.enabled(self) or self.__dict__.get('_injury') is not None:
+            if (vessel_rods.enabled(self) or self.__dict__.get('_injury') is not None
+                    or self.__dict__.get('_navigation') is not None):
                 return self._physical_substep_reference(key, op, p, q, active, dt)
             return native_backend.physical_substep(self, key, op, p, q, active, dt)
         return self._physical_substep_reference(key, op, p, q, active, dt)
@@ -1503,6 +1531,9 @@ class SurgicalEngine:
         if op not in ('place', 'exchange', 'release', 'inspect', 'deactivate'): slot['inserted'] = True
         self.state['elapsedSeconds'] += dt
         self.state['travelMm'] += float(np.linalg.norm(p - previous))
+        if self.__dict__.get('_brain_shift') is not None:
+            from .surgical_brain_shift import advance as advance_brain_shift
+            events.extend(advance_brain_shift(self))
         from .surgical_effects import tick_fields
         if v2:
             from . import surgical_deformation_v2 as brain
@@ -1583,6 +1614,9 @@ class SurgicalEngine:
 
     def _effect(self, key, op, cells, p, q, dt):
         slot = self.state['slots'][key]; tool = self.tools[slot['instrument']]
+        if tool['effect'] == 'navigate':
+            from .surgical_navigation import read_pointer
+            return read_pointer(self, key, p, q)
         if self._operative:
             from .surgical_operative_exposure import interact
             handled = interact(self, key, op, p, q, True, dt, cells)
@@ -1648,7 +1682,19 @@ class SurgicalEngine:
                 'unknownStimulationSites': sum(o.get('result') == 'unknown' for o in self.state['observations']),
                 'collisions': sum(h['status'] == 'partial' and h.get('reason') != 'TISSUE_ASPIRATION_IN_PROGRESS' and (not self.scene.properties.get('tissuePhysicsV2') or h.get('reason') != 'BONE_CUTTING_IN_PROGRESS') for h in self.history),
                 'unknownMaterialCells': int(sum(np.count_nonzero(self.scene.labels == r['id']) for r in self.scene.regions if r['material'] == 'unknown')),
-                **(injury.metrics(self) if self.__dict__.get('_injury') is not None else {})}
+                **(injury.metrics(self) if self.__dict__.get('_injury') is not None else {}),
+                **(self._scenario_metrics() if self.__dict__.get('_brain_shift') is not None
+                   or self.__dict__.get('_navigation') is not None else {})}
+
+    def _scenario_metrics(self):
+        result = {}
+        if self.__dict__.get('_brain_shift') is not None:
+            from .surgical_brain_shift import metrics as brain_shift_metrics
+            result.update(brain_shift_metrics(self))
+        if self.__dict__.get('_navigation') is not None:
+            from .surgical_navigation import metrics as navigation_metrics
+            result.update(navigation_metrics(self))
+        return result
 
     def observe(self, *, _state_id=None):
         from .surgical_position import describe_position
@@ -1707,7 +1753,8 @@ class SurgicalEngine:
                 moved.append([i, int(np.ravel_multi_index(target, self.scene.shape))])
         if 'deformation' in self.state:
             from .surgical_physics_v2 import raster
-            moved.extend(raster(self))
+            # A scenario brain shift is described compactly below, not per cell.
+            moved.extend(raster(self, brain_shift=False))
         if self._operative:
             from . import surgical_operative_exposure as exposure
             moved.extend([int(a), int(b)] for a, b in exposure.moved(self))
@@ -1726,7 +1773,18 @@ class SurgicalEngine:
                 **({vessel_rods.FIELD: vessel_rods.view(self)} if vessel_rods.enabled(self) else {}),
                 **({'bipolarThermalV1': copy.deepcopy(self.state['bipolarThermalV1'])} if 'bipolarThermalV1' in self.state else {}),
                 **({'cusaV3': copy.deepcopy(self.state['cusaV3'])} if 'cusaV3' in self.state else {}),
+                **self._scenario_view(),
                 **planar_view}
+
+    def _scenario_view(self):
+        result = {}
+        if self.__dict__.get('_brain_shift') is not None:
+            from .surgical_brain_shift import view as brain_shift_view
+            result['brainShiftV1'] = brain_shift_view(self)
+        if self.__dict__.get('_navigation') is not None:
+            from .surgical_navigation import view as navigation_view
+            result['navigationV1'] = navigation_view(self)
+        return result
 
     def _historical_guard_partials(self):
         # Cache restorers hydrate verified history directly; derive the legacy

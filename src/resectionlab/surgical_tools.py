@@ -72,3 +72,17 @@ def catalog(operative=False):
                 rows.append(dict(tool,id=name,workingLengthMm=40.,approximation='fixed distal research profile in mm',physicalProfile=profile))
         return rows
     return [dict(v, id=k, workingLengthMm=40., approximation='generic research geometry') for k, v in TOOLS.items()]
+
+
+# Appended for the opt-in ``navigationV1`` scenario only. TOOLS, OPERATIVE_TOOLS
+# and every catalogue hash are unchanged; an engine adds this instrument to its
+# own table when the scene declares navigation. assumed-research: a blunt 1 mm
+# tracked pointer tip that reads position and never treats tissue.
+NAVIGATION_POINTER = _tool('Navigation pointer', 'Navigation', 'probe', [], 'navigate', 1.)
+
+
+def navigation_pointer_parameters(params, revision=1):
+    """Operative geometry of the pointer: the existing slender probe profile."""
+    return {**params, 'radiusMm': NAVIGATION_POINTER['radiusMm'],
+            'operativeToolProfileV1': operative_profile('cortical_probe', revision),
+            **({'operativeToolAssemblyRevision': 2} if revision in (2, 3) else {})}

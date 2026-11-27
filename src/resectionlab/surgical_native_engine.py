@@ -85,7 +85,7 @@ def _stock(engine):
             for name in ('tissuePhysicsV2', 'brainContinuumV1', 'vascularGraphV1',
                          'bipolarThermalV1', 'planarBladeManeuverV1', 'retractorSurfaceContactV1',
                          'surgicalProcedurePolicyV1', 'operativeExposureV1', 'gliomaMaterialsV1',
-                         'surgicalInjuryV1')):
+                         'surgicalInjuryV1', 'brainShiftV1', 'navigationV1', 'functionalMappingV1')):
         return False
     if not _numeric_qualified():
         return False
@@ -190,6 +190,10 @@ def create(engine):
         # The compiled actor has no injury ledger (simulation_effects_native.hpp
         # cannot list it without a rebuild); injury scenes run the reference.
         return None, 'surgical-injury-reference'
+    if any(name in scene.properties for name in ('brainShiftV1', 'navigationV1', 'functionalMappingV1')):
+        # Brain-shift scenarios, navigation readings and functional mapping have
+        # no compiled ledger; such scenes run the Python reference transition.
+        return None, 'scenario-reference'
     from .surgical_source_inspection import legacy_marker
     if legacy_marker(scene):
         # The compiled admission still binds this provenance marker to its
