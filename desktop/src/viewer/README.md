@@ -19,7 +19,7 @@ Source binary annotations produce display surfaces in a worker. The 0.5 isosurfa
 
 The **Scan volume** control composites CT or MRI scalar data by GPU ray marching, independently of annotation surfaces. CT bone, CT soft tissue, CTA and sequence-aware MRI presets map the source values to linear color and extinction per millimetre. The primary ray uses linear source interpolation, affine-correct gradients and ray steps, and front-to-back Beer–Lambert compositing. Explicitly styled CT skull context combines the configured color with the underlying HU to retain variation inside the bone. Opaque scene depth stops rays at anatomy and instruments. Depth peeling retains four foreground translucent mesh boundaries at rest, using the mesh materials and clipping. The remaining transparent fragments are composited as a tail at its nearest depth, with approximate ordering inside the tail. Interaction uses that bounded tail alone, and release restores the foreground peels. Colors are tone mapped once at final display.
 
-The same RAS cutaway clips the scalar volume and surfaces, exposing the acquired intensity field at the cut. Camera movement uses coarser ray steps and a smaller framebuffer. Pointer release restores four progressively jittered samples accumulated in linear space. A camera, geometry, appearance, instrument, clipping or layout change invalidates accumulation. Static refinement reuses the mesh/depth passes. The volume framebuffer's long edge is capped at 1024 pixels when settled. During interaction it ranges from 240 to 720 pixels, adjusted from asynchronous GPU completion. Drag and final-quality render targets are cached separately and disposed on case replacement with the volume textures. The shared drawing buffer and linked slices retain their display resolution throughout gestures. Wheel bursts, slice navigation, and appearance changes stay in interaction mode until 150 ms of quiet. A single GPU frame may be in flight, with later input coalesced to its latest state. Scan-volume settings persist per source. Modeled removal and passive replay hide the original scalar volume so accepted cavities remain visible. Scan volume and annotation visibility have independent controls.
+The same RAS cutaway clips the scalar volume and surfaces, exposing the acquired intensity field at the cut. Camera movement uses coarser ray steps and a smaller framebuffer. Pointer release restores four progressively jittered samples accumulated in linear space. A camera, geometry, appearance, instrument, clipping or layout change invalidates accumulation. Static refinement reuses the mesh/depth passes. The volume framebuffer's long edge is capped at 1024 pixels when settled. During interaction it ranges from 240 to 720 pixels, adjusted from asynchronous GPU completion. Drag and final-quality render targets are cached separately and disposed on case replacement with the volume textures. The shared drawing buffer and linked slices retain their display resolution throughout gestures. Wheel bursts, slice navigation, and appearance changes stay in interaction mode until 150 ms of quiet. A single GPU frame may be in flight, with later input coalesced to its latest state. Scan-volume settings persist per source. Accepted removal carves the displayed scalar volume: a display-only copy of the grid draws removed cells, and operative bodies that have left their bed, at the scan's lowest value, so the cavity is empty instead of hidden. The source texture, linked slices and the engine's counts are unchanged. Passive replay, which removes nothing, still hides the volume. Scan volume and annotation visibility have independent controls.
 
 Camera persistence does not reapply unchanged layer materials. Cursor, visibility and opacity updates independently invalidate their own uniforms. The volume pass visits visible layer indices in original order, preserving overlap compositing and isolation behavior, including opaque and zero-opacity selections. Native visibility loads retain previously admitted layers from the same scan in document order, so hiding one while loading another does not evict its masks and meshes. Scan changes, revisions, corrections and original/preview changes still hydrate their own view.
 
@@ -71,6 +71,47 @@ existing geometry.
 A local wall prepared with the centerline-tube geometry sends the tube mesh through the same `vesselSurface` arrays (index-space positions, field-gradient normals, one source cell per vertex) and adds `vesselTags`, a float32 volume on the case grid with values in [0, 1] from the same stored model. Hydration rejects tags of another shape or outside [0, 1]. It also sends `vesselClasses`, one byte per wall vertex (1 vein, 0 artery or unclassified) from the stored model's edge classes. The operative wall of such a vessel uses the wet finish in `surgicalFieldOptics.ts` (a broad soft clear-coat band over a faint tighter glint) and one tube colour for every class: the volume-lighting vessel albedo `#c4553a` (the rooted display's `#aa352b` lifted). An edited tube wall carries its own per-vertex classes in its edit packet; classes that do not match a wall's vertices are not applied (artery colour). A user layer colour still wins. Displayed tube normals are smoothed on the mesh (`smoothTubeNormals`: 20 passes, neighbours averaged only within 30 degrees, so cut caps and junction creases stay sharp) so the highlight runs along the vessel; positions, the collision wall and the stored model are unchanged. Also, **Volume lighting** tags the vessel from `vesselTags` (the `'probability'` tag source) instead of its binary mask. Tube walls carry no score lighting.
 
 An already-modeled vessel keeps its score-derived lighting and the gray source-volume boundary markers when the viewer starts or rebuilds. The local matched anatomy and microscope record checks the indexed position, triangle, and owner binding when the case supplies that binding.
+
+## Operative rehearsal on a host head
+
+A rehearsal scene built on a prepared head study (`hostRehearsalV1`) uses the
+same operative renderer as the generated phantoms. Its layer kinds add
+`extracranial` (declared as `tissue`: muscle, fat and fascia between scalp and
+bone) and `tract` (a published bundle, drawn as the white matter it belongs to
+in the illustrative material and in its own colour with source labels). The
+field readout names what each layer is from its declared provenance, for
+example **Estimated anatomy · assumed dura · generated tumour**; the
+inventory leads each row with the same provenance and review status. An
+acquired image with an inserted lesion signal is labelled **acquired image ·
+generated tumour signal**.
+
+In the illustrative material, a tissue face that meets free space in the
+undeformed head takes its covering layer's colour: soft tissue or bone under
+exterior air reads as skin where the scalp estimate has gaps, and white matter
+under CSF, dura or a surface vessel reads as cortex where the cortex estimate
+is thin. Faces exposed later by a cut keep their own material. Source labels,
+contours, picking and the engine's ownership are unchanged.
+
+**External scalp overview** looks at the opening from outside along the scene's
+declared exterior normal, tilted toward the patient's superior side, and fits
+the working grid. Brain and lesion walls in the microscope are shaded by the
+case scan's intensity (5th to 95th percentile over brain and lesion cells), so
+cortex, white matter and tumour read differently wherever a cut exposes them.
+
+CUSA V3 keeps exact pending work on cells it has not yet removed. The bridge
+sends it as `cusaProgressV1` (pending cells and the fraction of each cell's
+removal threshold); views without it are unchanged. The cavity field treats a
+worked cell as partly occupied, so the displayed wall recedes into it within
+the existing half-cell display bound instead of stepping a whole cell at a
+time. Removal, counts and picking stay with the engine's whole cells.
+
+The settled surgeon view in the illustrative material adds microscope optics:
+the lamp sits close to the viewing axis, brain, tumour and dura carry a moist
+glint toward the eyepiece, the image keeps sharp within 5 mm of the focus
+plane and blurs with defocus (at most 6 pixels), and brightness falls off
+gently toward the edge of the field circle. These are display conventions, not
+a model of a particular microscope; source-label colours, external views and
+interaction frames are drawn without them.
 
 ## Estimated envelope inspection
 

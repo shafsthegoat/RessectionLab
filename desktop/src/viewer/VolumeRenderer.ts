@@ -1,6 +1,8 @@
 import type {SurgicalView} from '../surgical-types';
 import {effectsOutsideExposure} from './exposureAnatomy';
 import {generatedTissueFinish} from './generatedTissueFinish';
+import {displayRemovalCells,maskCells,SCAN_SHADED_KINDS,scanTissueWindow} from './scanRemoval';
+import {MicroscopeOpticsPass} from './microscopeOptics';
 import {OperativeExposureScene} from './operativeExposureScene';
 import { ResultInspectionScene } from './ResultInspectionScene';
 import {interactivePlanningGroup} from './interactivePlanningGeometry';
@@ -213,6 +215,7 @@ export class VolumeRenderer {
   private readonly environmentTarget:THREE.WebGLRenderTarget;
   private readonly scanVolume: ScanVolumeRenderer;
   private readonly surfaceInteraction=new SurfaceInteractionRenderer();
+  private readonly microscopeOptics=new MicroscopeOpticsPass();
   private readonly labelTextureUpdates=new LabelTextureUpdates();
   private readonly picking=new SourcePickingBvh({maxInputBytes:128*1024*1024,onEvent:detail=>{
     this.canvas?.dispatchEvent(new CustomEvent('anatomy-work',{bubbles:true,detail}));
@@ -826,6 +829,10 @@ export class VolumeRenderer {
     mesh.userData.compartment = layer.name;
     mesh.userData.corticalContact = ['csf','ventricles','dura','skull','bone'].includes(displayKind);
     const source=layer.appearanceSource;
+    // Operative brain and lesion walls carry the case scan's intensity, so
+    // cortex, white matter and tumour read differently wherever they are cut.
+    const scanShading=!source&&layer.generatedFinish&&SCAN_SHADED_KINDS.has(displayKind)?this.operativeScanSignal():undefined;
+    if(scanShading)mesh.userData.corticalSignalEnabled=installCorticalSignal(mesh.material,scanShading,this.showCorticalSignal(mesh));
     mesh.userData.vesselCortexSource=!!source&&isStructuralMrModality(source.modality);
     mesh.userData.cranialBoundary=this.cranialBoundary(layer,this.workspaceSettings,mesh.userData.vesselCortexSource);
     const nativeCortex=['gray-matter','cerebral-cortex','cerebellar-cortex'].includes(displayKind);
@@ -843,10 +850,19 @@ export class VolumeRenderer {
       mesh.userData.nativeCortex=nativeCortex;
       mesh.userData.corticalSignalEnabled=installCorticalSignal(mesh.material,signal,this.showCorticalSignal(mesh));
     }
-    this.exposure?.bindNativeSkinDomain(mesh,layer.name);
+    this.exposure?.bindNativeSkinDomain(mesh,layer.name,layer.displayKind);
     this.surgicalWetting?.install(mesh.material);
     this.picking?.install(mesh,geometry,eagerPicking);
     return {mesh,source:geometry,smooth,smoothingPrepared:operativeVessel||hasSmooth||layer.surfaceDiagnostics?.sourceSurfaceOnly===true};
+  }
+  private operativeSignal?:{mri:Float32Array;signal:CorticalSignal|undefined};
+  private operativeScanSignal():CorticalSignal|undefined{
+    const mri=this.volume.mri;
+    if(this.operativeSignal?.mri!==mri){
+      const window=scanTissueWindow(mri,this.volume.compartments.filter(l=>SCAN_SHADED_KINDS.has(l.displayKind??'')).map(l=>l.mask));
+      this.operativeSignal={mri,signal:window&&{texture:this.mriTexture,window,contrast:.9,worldToVoxel:matrix(inverseAffine(this.affine))}};
+    }
+    return this.operativeSignal.signal;
   }
   private vesselLabelGrid(index:number){
     const code=this.labelCodes[index];
@@ -1461,7 +1477,8 @@ export class VolumeRenderer {
     if(this.workspaceSettings?.operativeView==='surgeon'){
       const direction=this.camera.position.clone().sub(this.controls.target).normalize();
       const right=new THREE.Vector3().crossVectors(this.camera.up,direction).normalize();
-      this.operativeLight.position.addScaledVector(right,(this.workspaceSettings.microscope?.fieldMm??26)*.4);
+      // The microscope lamp is close to the viewing axis; a small offset keeps descending walls legible.
+      this.operativeLight.position.addScaledVector(right,(this.workspaceSettings.microscope?.fieldMm??26)*.05);
     }
     this.operativeLight.target.position.copy(this.controls.target);
   }
@@ -1737,7 +1754,7 @@ export class VolumeRenderer {
           normalStyle:pair.smooth.userData.scoreWallLighting?'source-score-gradient-0.30mm':'bounded-lighting'};
         continue;
       }
-      const generatedTissue=layer.generatedFinish&&['grayMatter','whiteMatter','tumor','artery','vein'].includes(layer.displayKind??'');
+      const generatedTissue=layer.generatedFinish&&['grayMatter','whiteMatter','tract','tumor','artery','vein'].includes(layer.displayKind??'');
       const registered=!!signal||!!generatedTissue;
       const soft=['brain','soft_tissue','tumor'].includes(layer.kind??'');
       const vesselRegion=layer.kind==='vessel'?motion?.scene.regions.find(r=>r.name===layer.name&&r.material==='vessel')?.id:undefined;
@@ -1807,11 +1824,12 @@ export class VolumeRenderer {
     }
     const motionStarted=performance.now(),motionApplied=this.updateAcceptedSurfaces(incomingView??undefined),motionMs=performance.now()-motionStarted;
     this.updatePlanarPartition(incomingView);
+    if(!this.replayActive)this.scanVolume?.setRemoval?.(incomingView?displayRemovalCells(incomingView):null);
     const exposureOwner=incomingView?.operativeExposureV1&&modeledAnatomy(this.volume)?.surfaceReference?.owner;
     if(incomingView&&exposureOwner){
       if(!this.exposure){this.exposure=new OperativeExposureScene();this.exposure.setSmooth(this.surfaceSmoothing!==false);this.scene.add(this.exposure.group);}
       this.exposure.update(incomingView,this.volume,exposureOwner);
-      for(const [name,mesh] of this.surfaces??[])this.exposure.bindNativeSkinDomain(mesh,name);
+      for(const [name,mesh] of this.surfaces??[])this.exposure.bindNativeSkinDomain(mesh,name,this.volume.compartments.find(l=>l.name===name)?.displayKind);
       this.exposure.appearance(this.volume,this.workspaceSettings,name=>this.surfaceVisible(name));
       if(this.panes?.anatomy)this.panes.anatomy.dataset.exposureGeometry=JSON.stringify({
         ...(incomingView.operativeExposureV1!.boneRest?{boneRest:incomingView.operativeExposureV1!.boneRest}:{}),
@@ -2061,6 +2079,7 @@ export class VolumeRenderer {
     disposeObject(this.replayGroup);
     this.replayGroup.clear();
     this.replayActive = false;
+    if(!this.surgicalInteraction)this.scanVolume?.setRemoval?.(null);
     this.recordedDisplay = null;
     this.passiveActive = false;
     this.passiveDisplays = [];
@@ -2126,6 +2145,8 @@ export class VolumeRenderer {
     scope: string, overlays: Array<{id:string;name:string;color:string;mask:Uint8Array;removed:boolean}>): void {
     const generation = this.replayGeneration;
     const texture = dataTexture(effects, this.volume.shape);
+    // The displayed scan is carved by the same accepted removal, not hidden.
+    this.scanVolume?.setRemoval?.(maskCells(removed));
     this.removedTexture.dispose();
     this.removedTexture = texture;
     this.materials().forEach((shader) => {
@@ -2794,7 +2815,7 @@ export class VolumeRenderer {
       camera.aspect=viewport.width/viewport.height;
       camera.updateProjectionMatrix();
       this.prepareVesselDepth(camera, viewport.width * 2, viewport.height * 2, 960);
-      const scan=!this.replayActive&&!this.passiveActive&&
+      const scan=(!this.replayActive||this.scanVolume.carvedCells>0)&&!this.passiveActive&&
         (this.scanVolume.active||this.hasTranslucentCranialSurfaces())?this.scanVolume:null;
       const {blob,metrics}=await renderAnatomyPng(this.renderer,this.scene,camera,scan,job.signal,this.visibleVesselSlabContext());
       this.canvas.dispatchEvent(new CustomEvent('anatomy-export',{bubbles:true,detail:metrics}));
@@ -2889,7 +2910,13 @@ export class VolumeRenderer {
         this.interacting ? Math.min(320, this.budget.longEdge) : 640);
       const cranialSurfaces=!this.scanVolume.active&&this.hasTranslucentCranialSurfaces();
       slabContext=this.visibleVesselSlabContext();
-      if (this.replayActive || this.passiveActive||(!this.scanVolume.active&&!cranialSurfaces))
+      // A replay with carved removal keeps the scan volume; passive replay has no removal to carve.
+      const microscope=this.workspaceSettings.microscope;
+      if(!this.interacting&&!this.scanVolume.active&&microscope&&this.microscopeTissueView())
+        // Settled surgeon view: illustrative depth of field about the focus plane and field falloff.
+        surfaceQuality=this.microscopeOptics.render(this.renderer,this.scene,this.camera,main.w,main.h,
+          {focusDistanceMm:this.camera.position.distanceTo(this.controls.target),fieldMm:microscope.fieldMm},()=>{viewport(this.panes.anatomy);},slabContext);
+      else if ((this.replayActive&&!this.scanVolume.carvedCells) || this.passiveActive||(!this.scanVolume.active&&!cranialSurfaces))
         surfaceQuality=this.surfaceInteraction.render(this.renderer,this.scene,this.camera,main.w,main.h,this.interacting,this.budget.longEdge,()=>{viewport(this.panes.anatomy);},slabContext);
       else scanQuality=this.scanVolume.render(this.scene,this.camera,main.w,main.h,this.interacting,()=>{viewport(this.panes.anatomy);},
         this.scanVolume.cinematicActive?this.motionBudget.longEdge:this.budget.longEdge,cranialSurfaces,slabContext)??null;
@@ -2982,7 +3009,7 @@ export class VolumeRenderer {
       if(completed)this.finishSurgicalFrame(publication,serial);
       else this.failSurgicalFrame(publication,'The GPU did not complete the requested image frame. Reopen the source before continuing.');
       if(this.disposed||this.graphicsLost)return;
-      if(!interactive&&!this.replayActive&&!this.passiveActive&&this.scanVolume.needsRefinement)this.needsFrame=true;
+      if(!interactive&&(!this.replayActive||this.scanVolume.carvedCells)&&!this.passiveActive&&this.scanVolume.needsRefinement)this.needsFrame=true;
       if(refinement&&this.refinementStarted===refinement&&!this.interacting&&!this.needsFrame&&!this.scanVolume.opticsPending){
         this.refinementStarted=0;
         this.canvas.dispatchEvent(new CustomEvent('anatomy-refined',{bubbles:true,detail:{completed,milliseconds:performance.now()-refinement,volume:this.scanVolume.active}}));
@@ -3049,7 +3076,7 @@ export class VolumeRenderer {
     this.corticalSignals.clear();
     this.mriTexture.dispose();
     this.scanVolume.dispose();
-    this.surfaceInteraction.dispose();
+    this.surfaceInteraction.dispose();this.microscopeOptics.dispose();
     this.orientationGuide.dispose();
     this.environmentTarget.dispose();
     this.fusionTexture.dispose();

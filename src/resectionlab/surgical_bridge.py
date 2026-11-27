@@ -81,6 +81,39 @@ def display_timeline(history):
     return result
 
 
+def cusa_progress_display(engine):
+    """Display-only CUSA V3 progress of each pending cell, as a fraction of its removal threshold.
+
+    The engine removes whole cells and keeps exact pending work in
+    ``cusaV3.progressExact``. A renderer may use these fractions to draw a
+    partly worked cell as partly occupied; removal, counts and picking stay
+    with the engine. Returns None when no cell is pending.
+    """
+    from fractions import Fraction
+    state = getattr(engine, 'state', None)
+    pending = ((state.get('cusaV3') if isinstance(state, dict) else None) or {}).get('progressExact') or {}
+    if not pending:
+        return None
+    cells = sorted(int(key) for key in pending)
+    volume = Fraction.from_float(float(engine.scene.voxel_mm3))
+    resistance = None
+    if 'gliomaMaterialsV1' in engine.scene.properties:
+        from .surgical_glioma_materials import material_values
+        resistance = material_values(engine, cells, 'referenceCapacityPerSolidVolume')
+    fractions = []
+    for index, cell in enumerate(cells):
+        threshold = volume if resistance is None else volume * Fraction.from_float(float(resistance[index]))
+        fractions.append(round(min(1., max(0., float(Fraction(*pending[str(cell)]) / threshold))), 4))
+    return {'schema': 'resectionlab.cusa-progress-display.v1', 'cells': cells, 'fraction': fractions}
+
+
+def _with_display_fields(engine, view):
+    progress = cusa_progress_display(engine)
+    if progress is not None:
+        view['cusaProgressV1'] = progress
+    return view
+
+
 def display_receipt(entry):
     """Row-local prefix display projection; canonical receipt stays complete."""
     return display_timeline((entry,))[0]
@@ -431,16 +464,6 @@ def dispatch(session, operation, args, request, progress):
     timing = getattr(request, 'rehearsal_timing', None)
     if timing is not None and raw is not None:
         timing.bind_source(raw.get('branchId'), raw.get('position'))
-    source_role = (entry.case.metadata.get('data_case') or {}) if entry is not None else {}
-    practice_role_allowed = isinstance(source_role, (dict, MappingProxyType)) and not any(
-        source_role.get(k) for k in ('role', 'split', 'family_id'))
-    if not practice_role_allowed and entry is not None:
-        # A declared development rehearsal on an acquired host is the one
-        # attributed source with a manual practice domain of its own.
-        from .surgical_host_rehearsal import development_practice_source
-        practice_role_allowed = development_practice_source(entry.case)
-    if command == 'practice' and not practice_role_allowed:
-        raise ValueError('Reserved or attributed cohort sources have no manual practice authorization.')
     if command == 'practice' and (entry is None or not raw):
         raise ValueError('Open a verified case checkpoint to start a separate practice episode.')
     practice_child = raw is not None and ('practiceEpisodes' in raw or str(raw.get('branchId', '')).startswith('practice-'))
@@ -448,7 +471,7 @@ def dispatch(session, operation, args, request, progress):
             and (not practice_child or args.get('expectedEpisodeId') != raw['branchId'])):
         raise ValueError('The displayed practice episode changed. Refresh before applying another action.')
     if practice_child:
-        if not practice_role_allowed or 'practiceEpisodes' not in raw or command not in practice.MANUAL_COMMANDS:
+        if 'practiceEpisodes' not in raw or command not in practice.MANUAL_COMMANDS:
             raise ValueError('Practice episodes permit manual actions at the accepted endpoint and read-only replay.')
         if args.get('branchId', raw['branchId']) != raw['branchId']:
             raise ValueError('This practice workspace contains only its own episode.')
@@ -706,7 +729,7 @@ def dispatch(session, operation, args, request, progress):
     preparation_suggestion = None
     if command == 'preview':
         refusal = action_rejection(engine, args['action'], domain=task_domain, check=request.check) if task_domain is not None else None
-        preview = ({**refusal, 'preview': True, 'view': engine.view(_state_id=refusal['stateId'], include_history=not bool(record.get('fullCase')))}
+        preview = ({**refusal, 'preview': True, 'view': _with_display_fields(engine, engine.view(_state_id=refusal['stateId'], include_history=not bool(record.get('fullCase'))))}
                    if refusal is not None else engine.preview(args['action'], check=request.check, include_history=not bool(record.get('fullCase'))))
         result = {**preview, 'caseHash': identity}
         _require_json_budget(result, RESULT_BYTES, 'SURGICAL_RESULT_LIMIT', 'Preview exceeds the display budget')
@@ -752,7 +775,7 @@ def dispatch(session, operation, args, request, progress):
         # Current engines avoid detaching an acknowledged heavy value at all.
         # Older replay adapters still produce a full view and discard it below.
         view_options = {'_omit_fields': omitted} if getattr(displayed, '_view_omit_fields', None) else {}
-        shown_view = displayed.view(_state_id=playback['frameStateId'], include_history=False, **view_options)
+        shown_view = _with_display_fields(displayed, displayed.view(_state_id=playback['frameStateId'], include_history=False, **view_options))
         if not compact:
             shown_view['history'] = shown_timeline[:len(displayed.actions)]
         else:
@@ -1236,7 +1259,7 @@ def dispatch(session, operation, args, request, progress):
         from .surgical_recorded_sequential import validate_episode_boundary
         validate_episode_boundary(engine, record)
     full_case = bool(record.get('fullCase'))
-    shown_view = engine.view(_state_id=verified_display_state_id, include_history=not full_case)
+    shown_view = _with_display_fields(engine, engine.view(_state_id=verified_display_state_id, include_history=not full_case))
     shown_timeline = record.get('timeline', {}).get(record['branchId'], engine.history)
     if full_case:
         shown_timeline = display_timeline(shown_timeline)
@@ -1270,8 +1293,6 @@ def dispatch(session, operation, args, request, progress):
             result['readOnly'] = True
     if study_replay:
         result['practiceAdmission'] = practice.refusal('This source-bound imported recording permits replay only.')
-    elif not practice_role_allowed:
-        result['practiceAdmission'] = practice.refusal('Reserved or attributed cohort sources have no manual practice authorization.')
     elif entry is None:
         result['practiceAdmission'] = practice.refusal('Open a verified case checkpoint to start practice.')
     else:

@@ -62,6 +62,7 @@ import {
   STRUCTURAL_PROPOSAL_COLOR,
   structuralProposalReviewLabel,
 } from "./structuralProposal";
+import {operativeAnatomyTitle} from "./operativeProvenance";
 import "./viewer.css";
 import "./operativePresentation.css";
 
@@ -120,7 +121,8 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     catch (cause) { return {goal:null,error:cause instanceof Error?cause.message:String(cause)}; }
   },[caseData,props.publicGoal,diagnosticRequested,passiveRequested,rehearsalRequested]);
   const publicGoal = goalSelection.goal;
-  const signalName = props.segmentationOnly ? 'segmentation only' : props.generatedSignal ? "generated image signal" : (props.sourceLabel ?? "MRI");
+  const generatedSignalName = props.generatedSignalLabel ?? "generated image signal";
+  const signalName = props.segmentationOnly ? 'segmentation only' : props.generatedSignal ? generatedSignalName : (props.sourceLabel ?? "MRI");
   const [localSettings,setLocalSettings] = useState<ViewerWorkspaceSettings>({});
   const settings=props.workspaceSettings ?? localSettings;
   const [overlapInspection,setOverlapInspection]=useState(false);
@@ -877,7 +879,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
           </button>}
           <span className="viewer-tool-divider"/>
           <button aria-label="Show structures only" title="Structures" aria-pressed={!scanVolume.enabled} onClick={()=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,enabled:false}})}><Layers3 size={16}/><span className="rl-viewer-tool-label">Structures</span></button>
-          <button aria-label="Show scan volume with structures" title="Volume" aria-pressed={scanVolume.enabled} disabled={props.segmentationOnly||props.generatedSignal||Boolean(replay)||passiveRequested||rehearsalRequested} onClick={()=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,enabled:true}})}><Box size={16}/><span className="rl-viewer-tool-label">Volume</span></button>
+          <button aria-label="Show scan volume with structures" title="Volume" aria-pressed={scanVolume.enabled} disabled={props.segmentationOnly||passiveRequested} onClick={()=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,enabled:true}})}><Box size={16}/><span className="rl-viewer-tool-label">Volume</span></button>
           <button aria-label="View information and navigation" title="View information and navigation" aria-expanded={controlPanel==='info'} aria-controls={controlsId} onClick={event=>toggleControls('info',event.currentTarget)}><Ellipsis size={17}/></button>
         </div>
         <div ref={controlPanelElement} id={controlsId} className="rl-control-popover" role="region" aria-label={`${controlPanel??'view'} controls`} hidden={!controlPanel}>
@@ -903,7 +905,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
             </div>}
           </div>
           {controlPanel==='appearance'&&<>
-            <label><input type="checkbox" aria-label="Scan volume" checked={scanVolume.enabled} disabled={props.segmentationOnly||props.generatedSignal||Boolean(replay)||passiveRequested||rehearsalRequested} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,enabled:e.target.checked}})}/>Scan volume</label>
+            <label><input type="checkbox" aria-label="Scan volume" checked={scanVolume.enabled} disabled={props.segmentationOnly||passiveRequested} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,enabled:e.target.checked}})}/>Scan volume</label>
             {caseData?.displayIdentity&&settings.presentation==='scan'&&!settings.operativeView&&volumeDisplayed&&isCtModality(signalName)&&
               caseData.compartments.some(layer=>layer.kind==='bone'||layer.kind==='skull')&&
               <label title="Show skull and bone estimates over the acquired CT. Linked slice contours stay available.">
@@ -967,7 +969,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
           </>}
           {controlPanel==='clip'&&<>
             <button className="rl-section-action" aria-label={sourceSectionActive?'Exit section':'Section at cursor'} aria-pressed={sourceSectionActive} disabled={!sourceSectionAllowed} onClick={toggleSourceSection}><ScanLine size={16}/>{sourceSectionActive?'Exit section':'Section at cursor'}</button>
-            <p className="rl-section-help">{props.segmentationOnly?'Segmentation only · no acquired image to section.':!sourceSectionAllowed?'Exit the operative view to inspect a source image section.':sourceSectionActive?`${props.generatedSignal?'Generated image signal':`Source ${signalName}`} · ${TITLES[activePlane]} section follows the linked cursor. Exit restores the previous cut.`:'Show the source image across the cut, at the linked cursor. Choose its plane below.'}</p>
+            <p className="rl-section-help">{props.segmentationOnly?'Segmentation only · no acquired image to section.':!sourceSectionAllowed?'Exit the operative view to inspect a source image section.':sourceSectionActive?`${props.generatedSignal?generatedSignalName.charAt(0).toUpperCase()+generatedSignalName.slice(1):`Source ${signalName}`} · ${TITLES[activePlane]} section follows the linked cursor. Exit restores the previous cut.`:'Show the source image across the cut, at the linked cursor. Choose its plane below.'}</p>
             {depthSlabActive?<>
               <label>Slab plane<select aria-label="Slab plane" value={activePlane} onChange={event=>setActivePlane(event.target.value as SlicePlane)}>{PLANES.map(plane=><option key={plane} value={plane}>{TITLES[plane]}</option>)}</select></label>
               <label>Slab thickness<select aria-label="Slab thickness" value={depthSlabThickness} onChange={event=>setDepthSlabThickness(Number(event.target.value))}>{[20,28,36,44,60,80].map(mm=><option key={mm} value={mm}>{mm} mm</option>)}</select></label>
@@ -1049,7 +1051,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
           aria-label={props.surgicalInteraction?.mode==='draw'?'3-D source anatomy. Drag on anatomy to draw a proposed instrument stroke.':`3-D source anatomy. Drag to ${navigationMode==='pan'?'pan':'rotate'}, scroll to zoom, double-click to set linked cursor.`}
         >
           {fieldPresentation&&surgicalView&&<div className="field-presentation-readout" role="status">
-            <b>{surgicalView.operativeExposureV1?'Generated anatomy':'Operative field'}</b>
+            <b>{surgicalView.operativeExposureV1?operativeAnatomyTitle(geometrySource?.compartments??[]):'Operative field'}</b>
             <span>{displayedSurgical?.preview?'Preview':modelDisplayPending?'Preparing accepted state':settings.microscope?.inspectionTransparency||settings.microscope?.inspectionCutaway?'Inspection only · anatomy exposed by view':settings.operativeView==='surgeon'?'Opaque microscope':Object.values(settings.layerOpacity??{}).some(o=>o<1)?'Inspection only · transparent anatomy':'External scalp overview'}</span>
             <span>{Object.values(surgicalView.slots).filter(s=>s.inserted).map(s=>s.instrument.replaceAll('_',' ')).join(' · ')}</span>
             {acquiredBrainSection?<span>Gray end faces mark the source volume boundary</span>:
@@ -1156,7 +1158,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
             )}
           </div>
           {sourceSectionActive&&<div className="rl-source-section-readout" role="status">
-            <span>{props.generatedSignal?'Generated image section':`Source ${signalName} section`} · {TITLES[activePlane]} · {'XYZ'[PLANE_AXES[activePlane][2]]} {currentCursor[PLANE_AXES[activePlane][2]].toFixed(1)} mm</span>
+            <span>{props.generatedSignal?`Section of ${generatedSignalName}`:`Source ${signalName} section`} · {TITLES[activePlane]} · {'XYZ'[PLANE_AXES[activePlane][2]]} {currentCursor[PLANE_AXES[activePlane][2]].toFixed(1)} mm</span>
             <button aria-label="Exit source section" onClick={exitSourceSection}>Exit section</button>
           </div>}
           {depthSlabBox&&!corridorCrop&&<div className="rl-source-section-readout" role="status">
@@ -1330,7 +1332,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
                 {scaleMm} mm
               </span>
               <span className="rl-viewer-slice-note">
-                {props.segmentationOnly ? 'SEGMENTATION ONLY · NO ACQUIRED IMAGE' : props.generatedSignal ? "GENERATED IMAGE SIGNAL" : `SOURCE ${signalName.toUpperCase()}`}
+                {props.segmentationOnly ? 'SEGMENTATION ONLY · NO ACQUIRED IMAGE' : props.generatedSignal ? generatedSignalName.toUpperCase() : `SOURCE ${signalName.toUpperCase()}`}
                 {surgicalView ? (displayedSurgical?.preview?" · MODELED PREVIEW":" · MODELED EFFECT OVERLAY") : rehearsalMode ? " · RESEARCH EFFECT OVERLAY" : inspected
                   ? " · UNEXECUTED TOOL PREVIEW"
                   : proposalReviewLabel

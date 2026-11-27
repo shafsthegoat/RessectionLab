@@ -36,6 +36,28 @@ export function exposureMicroscope(view:SurgicalView):MicroscopeSettings|undefin
     workingDistanceMm:160,fieldMm:Math.min(120,Math.max(22,Math.round(2.85*radius))),focusOffsetMm:0,light:2.1};
 }
 
+/** External view of an operative scene from outside its declared opening.
+ * The camera looks down the scene's outward normal, tilted toward the patient's
+ * superior side, and fits the working grid (34 degree external field). */
+export function exposureOverviewCamera(view:SurgicalView,fovDeg=34):ViewerCameraState|undefined{
+  const normal=view.operativeExposureV1?.exteriorNormalRas;
+  if(!normal)return;
+  const outward=new THREE.Vector3(...normal).normalize();
+  if(!(outward.length()>.5))return;
+  const [nx,ny,nz]=view.scene.shape,corners:THREE.Vector3[]=[];
+  for(const i of [0,nx-1])for(const j of [0,ny-1])for(const k of [0,nz-1])
+    corners.push(new THREE.Vector3(...transformPoint(view.scene.affine,[i,j,k])));
+  const centre=corners.reduce((sum,p)=>sum.add(p),new THREE.Vector3()).divideScalar(corners.length);
+  const radius=corners.reduce((r,p)=>Math.max(r,p.distanceTo(centre)),0);
+  const reference=Math.abs(outward.z)>.95?new THREE.Vector3(0,1,0):new THREE.Vector3(0,0,1);
+  const right=new THREE.Vector3().crossVectors(reference,outward).normalize();
+  // Rotate toward the reference so the head below the opening stays in view.
+  const direction=outward.clone().applyAxisAngle(right,-THREE.MathUtils.degToRad(28)).normalize();
+  const distance=.86*radius/Math.sin(THREE.MathUtils.degToRad(fovDeg/2));
+  const up=reference.clone().addScaledVector(direction,-reference.dot(direction)).normalize();
+  return {target:centre.toArray() as Point3,position:centre.clone().addScaledVector(direction,distance).toArray() as Point3,up:up.toArray() as Point3};
+}
+
 /** Establish the microscope once per scene. An explicit saved view takes
  * precedence, including an external camera or a pinned inspection section. */
 export function defaultSurgeonView(view:SurgicalView,settings:ViewerWorkspaceSettings,annotationCenter:Point3|null=null):ViewerWorkspaceSettings {

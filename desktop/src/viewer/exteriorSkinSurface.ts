@@ -4,7 +4,13 @@ import {sourceVoxel} from './exposureAnatomy.ts';
 
 export const EXTERIOR_AIR = 1,
   ORIGINAL_SKIN = 2,
-  INTACT_FACE = 4;
+  INTACT_FACE = 4,
+  // Unowned in the undeformed partition: exterior air or enclosed free space
+  // such as subarachnoid CSF. Later removal never sets it.
+  FREE_SPACE = 8,
+  // Free space or a declared layer outside the brain (scalp to dura); set by
+  // the operative scene from its region kinds.
+  OUTSIDE_BRAIN = 16;
 
 /** Source-certified external skin faces around tetrahedral diagonal shortcuts.
  * Points lie exactly on native rectangular skin/air faces. Quarter faces meet
@@ -33,7 +39,9 @@ export function exteriorSkinSurface(
       for (let z = 0; z < nz; z++) {
         const id = (x * ny + y) * nz + z;
         if (owner[id] === skin) flags[id] = ORIGINAL_SKIN;
-        else if (x === 0 || x === nx - 1 || y === 0 || y === ny - 1 || z === 0 || z === nz - 1) addAir(id);
+        else if (!owner[id]) flags[id] |= FREE_SPACE;
+        if (owner[id] === skin) continue;
+        if (x === 0 || x === nx - 1 || y === 0 || y === ny - 1 || z === 0 || z === nz - 1) addAir(id);
       }
   while (front < end) {
     const id = queue[front++],

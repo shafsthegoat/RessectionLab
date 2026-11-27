@@ -54,6 +54,8 @@ export interface ViewerVolume {
     /** Source-facing anatomical name; name remains the stable layer identifier. */
     label?: string;
     kind?: string;
+    /** Declared provenance of the layer (for example estimated, assumed or simulated). */
+    provenance?: string;
     sourceIdentity?: string;
     appearanceSource?:SurfaceAppearanceSource;
     /** Display-only cut support from accepted, locally stationary source cells. */
@@ -144,6 +146,8 @@ export interface ViewerWorkspaceProps {
   publicGoal?: import('./publicGoal').ViewerPublicGoal | null;
   /** Analytic software-fixture intensities; never an acquired MRI. */
   generatedSignal?: boolean;
+  /** What the generated signal is, when it is not wholly generated (for example an acquired image with a generated lesion). */
+  generatedSignalLabel?: string;
   segmentationOnly?: boolean;
   caseData: ViewerVolume | null;
   visibleLayers: Record<string, boolean>;

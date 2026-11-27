@@ -3,7 +3,10 @@ import {fairCavityPatch} from './fairCavityPatch.ts';
 import {guardCavityPatch} from './cavityPatchSafety.ts';
 import type {CavityRail} from './fairCavityPatch';
 
-export interface AcceptedCavity {region:number;cells:Uint32Array}
+/** Accepted removed cells of one region. `progress` lists retained cells of
+ * that region with exact pending CUSA work, as a fraction of their removal
+ * threshold; the display treats them as partly occupied. */
+export interface AcceptedCavity {region:number;cells:Uint32Array;progress?:{cells:Uint32Array;fraction:Float32Array}}
 type Edge = {inside:number[];outside:number[];insideWeight:number;outsideWeight:number;insideCut:number;outsideCut:number;cut:boolean;exterior:boolean;pinned:boolean;free:boolean};
 
 /** The accepted binary surface splices original material interfaces directly
@@ -130,5 +133,10 @@ export function cavityNeighborhood(cavity:AcceptedCavity,shape:Shape3){
       for(let b=Math.max(0,y-2);b<=Math.min(ny-1,y+2);b++)
         for(let c=Math.max(0,z-2);c<=Math.min(nz-1,z+2);c++)near.add(a*yz+b*nz+c);
   }
-  return {region:cavity.region,cells,near};
+  let progress:Map<number,number>|undefined;
+  if(cavity.progress?.cells.length){
+    progress=new Map();
+    cavity.progress.cells.forEach((cell,k)=>{const f=cavity.progress!.fraction[k];if(f>0&&f<1)progress!.set(cell,f);});
+  }
+  return {region:cavity.region,cells,near,progress};
 }

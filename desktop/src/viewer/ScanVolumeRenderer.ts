@@ -87,6 +87,9 @@ export class ScanVolumeRenderer {
   private hasCtaVesselReceiver=false;
   private readonly ctExterior?: ViewerVolume['ctExterior'];
   private exteriorVolume?: {source:OpticalSource; texture:THREE.Data3DTexture} | null;
+  /** Display-only copy of the scalar grid with accepted removal carved to the scan's empty value. */
+  private carved?: {cells:Uint32Array; signal:Float32Array; texture:THREE.Data3DTexture; source:OpticalSource};
+  private emptyValue?: number;
   private standardCtAir=false;
   private exteriorPresentation=false;
   private showCtExteriorSignal=false;
@@ -285,8 +288,44 @@ export class ScanVolumeRenderer {
   }
 
   private get displayOpticalSource(){
+    if(this.carved)return this.carved.source;
     return this.showCleanExterior&&this.exteriorVolume?this.exteriorVolume.source:this.sourceOptics;
   }
+
+  /** Carve accepted removal (source cell indices) out of the displayed scan.
+   * The original grid, linked slices and the source texture are unchanged;
+   * a removed cell draws as the scan's lowest value, so the cavity is empty
+   * rather than hidden behind the uncut signal. */
+  setRemoval(cells:ArrayLike<number>|null){
+    const source=this.sourceOptics.signal,count=source.length;
+    const next=cells&&cells.length&&source.byteLength<=CT_EXTERIOR_TEXTURE_LIMIT_BYTES
+      ?Uint32Array.from(cells).filter(i=>i<count).sort():null;
+    if(!next?.length){
+      if(this.carved){this.carved.texture.dispose();this.carved=undefined;this.selectScalarTexture();this.cancelStaleOpticalSource();this.invalidate();}
+      return false;
+    }
+    const current=this.carved;
+    if(current&&current.cells.length===next.length&&current.cells.every((v,i)=>v===next[i]))return true;
+    if(this.emptyValue===undefined){let low=Infinity;for(let i=0;i<count;i++)if(source[i]<low)low=source[i];this.emptyValue=low;}
+    let carved=current;
+    if(!carved){
+      const signal=source.slice(),[x,y,z]=this.sourceOptics.shape;
+      const texture=new THREE.Data3DTexture(signal,z,y,x);
+      texture.format=this.texture.format;texture.type=this.texture.type;
+      texture.minFilter=this.texture.minFilter;texture.magFilter=this.texture.magFilter;
+      texture.unpackAlignment=this.texture.unpackAlignment;
+      carved={cells:new Uint32Array(0),signal,texture,source:this.sourceOptics};
+    }
+    for(const i of carved.cells)carved.signal[i]=source[i];
+    for(const i of next)carved.signal[i]=this.emptyValue;
+    carved.cells=next;carved.texture.needsUpdate=true;
+    // A new optical source object rebuilds any shadow cache from the carved grid.
+    carved.source={...this.sourceOptics,signal:carved.signal};
+    this.carved=carved;
+    this.selectScalarTexture();this.cancelStaleOpticalSource();this.invalidate();
+    return true;
+  }
+  get carvedCells(){return this.carved?.cells.length??0;}
 
   private selectScalarTexture(){
     const clean=this.showCleanExterior;
@@ -305,7 +344,7 @@ export class ScanVolumeRenderer {
         this.exteriorVolume={source:{...this.sourceOptics,signal},texture};
       }
     }
-    const texture=clean&&this.exteriorVolume?this.exteriorVolume.texture:this.texture;
+    const texture=this.carved?this.carved.texture:clean&&this.exteriorVolume?this.exteriorVolume.texture:this.texture;
     const uniform=this.material.uniforms.uVolume;
     const changed=texture!==uniform.value;
     uniform.value=texture;
@@ -425,7 +464,7 @@ export class ScanVolumeRenderer {
     if(!enabled)this.ctaVesselLight.value=false;
   }
   get estimatedCtExteriorBytes(){
-    const bytes=this.exteriorVolume?.source.signal.byteLength??0;
+    const bytes=(this.exteriorVolume?.source.signal.byteLength??0)+(this.carved?.signal.byteLength??0);
     return {cpuBytes:bytes,gpuTextureBytes:bytes};
   }
   get estimatedTargetBytes(){
@@ -708,7 +747,7 @@ export class ScanVolumeRenderer {
     this.cancelOpticalPreparation();
     this.cinematic?.dispose();
     this.ctaVesselShadow?.dispose();
-    this.sceneTarget.dispose();this.volumeTarget.dispose();if(this.ownsTexture)this.texture.dispose();this.supportTexture?.dispose();this.contextCoverage?.texture.dispose();this.exteriorVolume?.texture.dispose();this.transfer?.dispose();
+    this.sceneTarget.dispose();this.volumeTarget.dispose();if(this.ownsTexture)this.texture.dispose();this.supportTexture?.dispose();this.contextCoverage?.texture.dispose();this.exteriorVolume?.texture.dispose();this.carved?.texture.dispose();this.transfer?.dispose();
     this.interactionTargets?.scene.dispose();this.interactionTargets?.volume.dispose();
     this.surfacePass.dispose();this.accumulation.forEach(t=>t.dispose());this.accumulateMaterial.dispose();
     for(const scene of [this.rayScene,this.blitScene,this.accumulateScene])scene.traverse(child=>{if(child instanceof THREE.Mesh)child.geometry.dispose();});

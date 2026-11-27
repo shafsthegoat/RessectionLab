@@ -3,7 +3,7 @@ import {Vector3} from 'three';
 import type {Point3} from './viewer/coordinates';
 import type {SurgicalController} from './use-surgical';
 import type {ViewerWorkspaceSettings,MicroscopeSettings} from './viewer/workspaceSettings';
-import {defaultSurgeonView,exposureMicroscope,microscopeCamera} from './viewer/microscope';
+import {defaultSurgeonView,exposureMicroscope,exposureOverviewCamera,microscopeCamera} from './viewer/microscope';
 
 /** Surface inspection is display state, never a claim of operative exposure. */
 export function inspectionNotice(settings:ViewerWorkspaceSettings):string|null {
@@ -47,10 +47,12 @@ export function SurgeonViewControls({c,settings,onSettings,onFitAnatomy}:{onFitA
   }
   function scalpOverview(){
     if(!c.view?.operativeExposureV1)return;
-    onSettings({...settings,operativeView:'external',camera:null,showPlane:false,clipping:undefined,clipBox:undefined,obliqueClip:undefined,
+    // Look at the operative site from outside along the declared exterior normal.
+    const camera=exposureOverviewCamera(c.view)??null;
+    onSettings({...settings,operativeView:'external',camera,showPlane:false,clipping:undefined,clipBox:undefined,obliqueClip:undefined,
       layerOpacity:Object.fromEntries(c.view.scene.regions.map(region=>[region.name,1])),
       layerColor:Object.fromEntries(c.view.scene.regions.map(region=>[region.name,region.color]))});
-    onFitAnatomy?.();
+    if(!camera)onFitAnatomy?.();
   }
   function update(patch:Partial<MicroscopeSettings>){if(!m)return;const next={...m,...patch};onSettings({...settings,microscope:next,camera:microscopeCamera(next)});}
   return <section className="surgeon-view" aria-label="Surgeon microscope view" data-operative-view={enabled?'surgeon':'external'}>

@@ -1,6 +1,22 @@
 import * as THREE from 'three';
 import type {Shape3} from './coordinates';
-import {EXTERIOR_AIR, ORIGINAL_SKIN, INTACT_FACE} from './exteriorSkinSurface.ts';
+import {EXTERIOR_AIR, ORIGINAL_SKIN, INTACT_FACE, OUTSIDE_BRAIN} from './exteriorSkinSurface.ts';
+
+/** Illustrative covering of a segmented tissue where it meets free space in
+ * the undeformed head: soft tissue under exterior air is drawn as skin, and
+ * white matter under subarachnoid space as cortex. Source labels, contours
+ * and picking are unchanged; later cuts are never covered. */
+export type SurfaceCover = 'skin' | 'cortex';
+export function surfaceCoverFor(kind: string | undefined): SurfaceCover | undefined {
+  // Where the scalp estimate has gaps, deeper soft tissue or bone meets the air.
+  if (kind === 'galea' || kind === 'extracranial' || kind === 'skull' || kind === 'diploe') return 'skin';
+  // Where the cortex estimate is thin, white matter meets CSF or the dura.
+  if (kind === 'whiteMatter' || kind === 'tract') return 'cortex';
+  return undefined;
+}
+/** Region kinds outside the brain parenchyma in an undeformed head, including surface vessels. */
+export const OUTSIDE_BRAIN_KINDS = new Set(['scalp', 'galea', 'extracranial', 'tissue', 'skull', 'diploe', 'dura', 'artery', 'vein']);
+const COVER_BITS: Record<SurfaceCover, [number, number]> = {skin: [EXTERIOR_AIR, 0], cortex: [OUTSIDE_BRAIN, EXTERIOR_AIR]};
 
 /** Test each intersected anatomical fragment against its native skin/air
  * voxel at certified outer faces. This also runs in the light's depth pass,
@@ -68,6 +84,78 @@ export class ExteriorSkinDomain {
     mesh.customDepthMaterial = depth;
     install(depth);
     material.addEventListener('dispose', () => depth.dispose());
+  }
+  /** Flag free space and the given outside-brain owners of the undeformed partition. */
+  markOutsideBrain(owner: Uint16Array, outside: ReadonlySet<number>) {
+    const flags = this.texture.image.data as Uint8Array;
+    if (flags.length !== owner.length) throw Error('Outside-brain flags differ from the source grid');
+    for (let i = 0; i < owner.length; i++) if (!owner[i] || outside.has(owner[i])) flags[i] |= OUTSIDE_BRAIN;
+    this.texture.needsUpdate = true;
+  }
+  readonly coverColors: Record<SurfaceCover, {value: THREE.Color}> = {
+    skin: {value: new THREE.Color('#bf8d7e')},
+    cortex: {value: new THREE.Color('#b38b8b')},
+  };
+  readonly rasToVoxel = {value: new THREE.Matrix4()};
+  /** Requires the illustrative finish on this material; follows it on and off. */
+  cover(material: THREE.Material, cover: SurfaceCover, mobile: boolean) {
+    if (!(material instanceof THREE.MeshStandardMaterial) || !material.userData.tissueFinish) return false;
+    const existing = material.userData.surfaceCover as {domain: ExteriorSkinDomain} | undefined;
+    if (existing) {
+      existing.domain = this;
+      return true;
+    }
+    const state = {domain: this as ExteriorSkinDomain};
+    material.userData.surfaceCover = state;
+    const previous = material.onBeforeCompile,
+      key = material.customProgramCacheKey(),
+      [mask, exclude] = COVER_BITS[cover];
+    material.onBeforeCompile = (shader, renderer) => {
+      previous.call(material, shader, renderer);
+      shader.uniforms.uCoverFlags = {
+        get value() {
+          return state.domain.texture;
+        },
+      };
+      shader.uniforms.uCoverColor = {
+        get value() {
+          return state.domain.coverColors[cover].value;
+        },
+      };
+      shader.uniforms.uCoverRasToVoxel = {
+        get value() {
+          return state.domain.rasToVoxel.value;
+        },
+      };
+      shader.uniforms.uCoverActive = material.userData.tissueFinish;
+      shader.vertexShader =
+        'varying vec3 vCoverVoxel;uniform mat4 uCoverRasToVoxel;\n' +
+        shader.vertexShader.replace(
+          '#include <begin_vertex>',
+          '#include <begin_vertex>\nvCoverVoxel=' +
+            (mobile ? '(uCoverRasToVoxel*vec4(exposureRest,1.)).xyz;' : 'position+finishRestOffset;'),
+        );
+      shader.fragmentShader =
+        'varying vec3 vCoverVoxel;uniform highp sampler3D uCoverFlags;uniform vec3 uCoverColor;uniform bool uCoverActive;\n' +
+        shader.fragmentShader.replace(
+          '#include <color_fragment>',
+          `#include <color_fragment>
+        if(uCoverActive){
+          ivec3 coverSize=textureSize(uCoverFlags,0).zyx,coverBase=ivec3(floor(vCoverVoxel+1e-4));
+          bool covered=false;
+          for(int i=0;i<8;i++){
+            ivec3 c=coverBase+ivec3(i&1,(i>>1)&1,i>>2);
+            if(any(lessThan(c,ivec3(0)))||any(greaterThanEqual(c,coverSize)))continue;
+            int f=int(round(texelFetch(uCoverFlags,c.zyx,0).r*255.));
+            if((f&${mask})!=0&&(f&${exclude})==0){covered=true;break;}
+          }
+          if(covered)diffuseColor.rgb=uCoverColor;
+        }`,
+        );
+    };
+    material.customProgramCacheKey = () => key + '/surface-cover/' + cover + '/' + mobile;
+    material.needsUpdate = true;
+    return true;
   }
   dispose() {
     this.enabled = false;

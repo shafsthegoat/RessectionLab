@@ -99,6 +99,9 @@ export function engineImplicitSurface(points:Float32Array,indices:Uint32Array,no
     const interior=x>=2&&x<nx-2&&y>=2&&y<ny-2&&z>=2&&z<nz-2;
     let same=0,px=0,py=0,pz=0,filled=0,fx=0,fy=0,fz=0,guarded=false;
     const nearCut=cavity?.near.has(i)&&label===cavity.region;
+    // Pending CUSA work makes a retained cell partly occupied for display.
+    const progress=nearCut?cavity!.progress:undefined;
+    const own=valid&&mask[i]?1-(progress?.get(i)??0):0;
     let materialMass=0,activeSame=0;
     let peerNearby=false;
     let pin=x<=0||x>=nx-1||y<=0||y>=ny-1||z<=0||z>=nz-1;
@@ -118,7 +121,10 @@ export function engineImplicitSurface(points:Float32Array,indices:Uint32Array,no
       }
       if(nearCut&&other===label){
         materialMass+=k.weight;
-        if(!!mask[j]===!!mask[i])activeSame+=k.weight;
+        if(progress){
+          const occupied=mask[j]?1-(progress.get(j)??0):0;
+          activeSame+=k.weight*(own*occupied+(1-own)*(1-occupied));
+        }else if(!!mask[j]===!!mask[i])activeSame+=k.weight;
       }
       if(other===label){
         same+=k.weight;

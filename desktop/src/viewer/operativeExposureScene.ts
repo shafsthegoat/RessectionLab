@@ -5,10 +5,10 @@ import type {ViewerVolume} from './contracts';
 import {bodyNames, bodyIsDisplaced, sourceCenter} from './exposureAnatomy.ts';
 import {buildExposureSurface, ExposureBodyTransport} from './exposureBodySurface.ts';
 import {exteriorSkinSurface} from './exteriorSkinSurface.ts';
-import {ExteriorSkinDomain} from './exteriorSkinDomain.ts';
+import {ExteriorSkinDomain, OUTSIDE_BRAIN_KINDS, surfaceCoverFor} from './exteriorSkinDomain.ts';
 import {placeInSourceFrame} from './sceneGeometry.ts';
 import {generatedTissueFinish} from './generatedTissueFinish.ts';
-import {applyOperativeSurface} from './operativeMaterial.ts';
+import {applyOperativeSurface, operativeSurfaceStyle} from './operativeMaterial.ts';
 import {layerAppearance, type ViewerWorkspaceSettings} from './workspaceSettings.ts';
 
 type BodyMesh = ReturnType<typeof buildExposureSurface> & {
@@ -227,8 +227,11 @@ export class OperativeExposureScene {
       this.exterior.domain.enabled = this.exterior.mesh.visible;
     }
   }
-  bindNativeSkinDomain(mesh: THREE.Mesh, layerName: string) {
-    if (this.exterior) this.exterior.domain.bind(mesh, layerName === this.exterior.mesh.userData.compartment);
+  bindNativeSkinDomain(mesh: THREE.Mesh, layerName: string, kind?: string) {
+    if (!this.exterior) return;
+    this.exterior.domain.bind(mesh, layerName === this.exterior.mesh.userData.compartment);
+    const cover = surfaceCoverFor(kind);
+    if (cover) this.exterior.domain.cover(mesh.material as THREE.Material, cover, false);
   }
   setSmooth(enabled: boolean) {
     this.smooth = enabled;
@@ -298,6 +301,11 @@ export class OperativeExposureScene {
             domain: new ExteriorSkinDomain(contour.flags, view.scene.shape),
             opaque: false,
           };
+          this.exterior.domain.rasToVoxel.value.fromArray(view.scene.affine.flat()).transpose().invert();
+          this.exterior.domain.markOutsideBrain(owner, new Set(view.scene.regions.filter((r) => {
+            const layer = volume.compartments.find((l) => l.name === r.name);
+            return OUTSIDE_BRAIN_KINDS.has(layer?.displayKind ?? layer?.kind ?? '');
+          }).map((r) => r.id)));
         }
       }
       const center = (b: OperativeExposureBody) =>
@@ -404,6 +412,8 @@ export class OperativeExposureScene {
           );
           const material = new THREE.MeshStandardMaterial({side: THREE.DoubleSide});
           if (layer?.generatedFinish) generatedTissueFinish(material, layer.displayKind ?? layer.kind ?? '', true);
+          const cover = surfaceCoverFor(layer?.displayKind);
+          if (cover && this.exterior) this.exterior.domain.cover(material, cover, true);
           const mesh = new THREE.Mesh(this.smooth ? surface.geometry : surface.sourceGeometry(), material);
           mesh.name = 'exposure:' + name + ':' + region.name;
           mesh.userData.compartment = region.name;
@@ -461,6 +471,15 @@ export class OperativeExposureScene {
       }
   }
   appearance(volume: ViewerVolume, settings: ViewerWorkspaceSettings, isVisible: (name: string) => boolean) {
+    if (this.exterior) {
+      // A covered face takes the colour its covering layer has in this view.
+      for (const [cover, kind] of [['skin', 'scalp'], ['cortex', 'grayMatter']] as const) {
+        const layer = volume.compartments.find((l) => (l.displayKind ?? l.kind) === kind);
+        const color = operativeSurfaceStyle(kind, settings)?.color ??
+          (layer ? layerAppearance(layer.name, layer.color, settings, kind).color : undefined);
+        if (color) this.exterior.domain.coverColors[cover].value.set(color);
+      }
+    }
     for (const mesh of [...this.picksIncludingHidden(), ...(this.exterior ? [this.exterior.mesh] : [])]) {
       const layer = volume.compartments.find((l) => l.name === mesh.userData.compartment);
       if (!layer) continue;

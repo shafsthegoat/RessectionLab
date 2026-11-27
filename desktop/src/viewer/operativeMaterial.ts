@@ -12,7 +12,9 @@ export function operativeSurfaceStyle(kind:string|undefined,settings:ViewerWorks
     case 'diploe':return {color:'#ae8b71',roughness:.88};
     case 'brain':case 'soft_tissue':case 'tissue':case 'head-envelope':return {color:operativeColors.brain,roughness:.53};
     case 'gray-matter':case 'grayMatter':return {color:operativeColors.grayMatter,roughness:.53};
-    case 'white-matter':case 'whiteMatter':return {color:operativeColors.whiteMatter,roughness:.64};
+    // A tract bundle is not visible as such in an operative field.
+    case 'white-matter':case 'whiteMatter':case 'tract':return {color:operativeColors.whiteMatter,roughness:.64};
+    case 'extracranial':return {color:'#9a6356',roughness:.62};
     case 'tumor':return {color:operativeColors.tumor,roughness:.58};
     case 'vessel':case 'vessels':return {color:'#ac6579',roughness:.67};
     case 'artery':case 'vein':case 'sinus':return {color:operativeColors[kind],roughness:.46};
@@ -26,6 +28,8 @@ export function operativeSurfaceStyle(kind:string|undefined,settings:ViewerWorks
 export function applyOperativeSurface(material:THREE.MeshStandardMaterial,kind:string|undefined,settings:ViewerWorkspaceSettings){
   const active=material.userData.tissueFinish;
   if(active)active.value=settings.microscope?.tissueStyle!=='labels'&&(settings.operativeView==='surgeon'||settings.layerOpacity&&Object.values(settings.layerOpacity).every(o=>o===1));
+  const wet=material.userData.wetFilm as {value:number;strength:number}|undefined;
+  if(wet)wet.value=settings.operativeView==='surgeon'&&settings.microscope?.tissueStyle!=='labels'?wet.strength:0;
   const style=operativeSurfaceStyle(kind,settings);
   if(style){material.color.set(style.color);material.roughness=style.roughness;material.metalness=0;}
   else if(material instanceof THREE.MeshPhysicalMaterial)material.roughness=.43;

@@ -10,6 +10,11 @@ const profiles: Record<string, [number, number, number]> = {
   dura: [0.12, 0.012, 1],
   grayMatter: [0.15, 0.012, 0],
   whiteMatter: [0.11, 0.01, 1],
+  // A published tract bundle is a named membership of white matter; it looks
+  // like the white matter around it.
+  tract: [0.11, 0.01, 1],
+  // Other extracranial head tissue: muscle, fat and fascia between scalp and bone.
+  extracranial: [0.17, 0.016, 1],
   tumor: [0.12, 0.012, 0],
   artery: [0.065, 0.005, 0],
   vein: [0.065, 0.005, 0],
@@ -24,17 +29,25 @@ float tissueGrain(vec3 p) {
   return mix(mix(mix(tissueHash(c),tissueHash(c+dx),f.x),mix(tissueHash(c+dy),tissueHash(c+dx+dy),f.x),f.y),
     mix(mix(tissueHash(c+dz),tissueHash(c+dx+dz),f.x),mix(tissueHash(c+dy+dz),tissueHash(c+dx+dy+dz),f.x),f.y),f.z);
 }`;
+/** Strength of the moist film highlight under the coaxial microscope lamp.
+ * Illustrative: brain, tumour and dura look wet; dry layers have none. */
+export const wetFilmStrength: Record<string, number> = {
+  grayMatter: 0.34, whiteMatter: 0.28, tract: 0.28, tumor: 0.3, dura: 0.42, galea: 0.12, extracranial: 0.1,
+};
 export function generatedTissueFinish(material: THREE.MeshStandardMaterial, kind: string, mobile: boolean) {
   const profile = profiles[kind];
   if (!profile) return;
   const previous = material.onBeforeCompile,
     key = material.customProgramCacheKey(),
-    active = {value: true};
+    active = {value: true},
+    wet = {value: 0, strength: wetFilmStrength[kind] ?? 0};
   material.userData.tissueFinish = active;
+  material.userData.wetFilm = wet;
   material.onBeforeCompile = (shader, renderer) => {
     previous.call(material, shader, renderer);
     shader.uniforms.uGeneratedFinish = active;
     shader.uniforms.uFinishProfile = {value: new THREE.Vector3(...profile)};
+    shader.uniforms.uWetFilm = wet;
     shader.vertexShader =
       'varying vec3 vFinishRas;varying float vFinishUnknown;\n' +
       (mobile ? 'attribute vec3 exposureRest;\n' : 'attribute vec3 finishRestOffset;attribute float finishRestUnknown;\n') +
@@ -43,7 +56,7 @@ export function generatedTissueFinish(material: THREE.MeshStandardMaterial, kind
         '#include <begin_vertex>\nvFinishRas=' + (mobile ? 'exposureRest;vFinishUnknown=0.;' : '(modelMatrix*vec4(position+finishRestOffset,1.)).xyz;vFinishUnknown=finishRestUnknown;'),
       );
     shader.fragmentShader =
-      'varying vec3 vFinishRas;varying float vFinishUnknown;uniform bool uGeneratedFinish;uniform vec3 uFinishProfile;\n' +
+      'varying vec3 vFinishRas;varying float vFinishUnknown;uniform bool uGeneratedFinish;uniform vec3 uFinishProfile;uniform float uWetFilm;\n' +
       noise +
       '\n' +
       shader.fragmentShader
@@ -68,6 +81,16 @@ export function generatedTissueFinish(material: THREE.MeshStandardMaterial, kind
           vec3 a=cross(dy,normal),b=cross(normal,dx);float det=dot(dx,a);
           normal=normalize(max(abs(det),1e-12)*normal-sign(det)*(dFdx(finishRelief)*a+dFdy(finishRelief)*b));
         }`,
+        )
+        .replace(
+          '#include <opaque_fragment>',
+          `if(uWetFilm>0.){
+          // Moist film under a lamp on the viewing axis: a tight glint where the
+          // surface faces the eyepiece and a faint broad sheen around it.
+          float facing=max(dot(normal,normalize(vViewPosition)),0.);
+          outgoingLight+=uWetFilm*(.38*pow(facing,120.)+.05*pow(facing,14.))*vec3(1.,.97,.94);
+        }
+        #include <opaque_fragment>`,
         );
   };
   material.customProgramCacheKey = () => key + '/generated-finish-' + mobile;

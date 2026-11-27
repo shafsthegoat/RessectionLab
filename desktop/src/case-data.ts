@@ -437,13 +437,16 @@ export async function hydrateCase(
         1e-5 * Math.max(1, layer.volumeMm3)
       )
         throw new Error(`${layer.name} volume disagrees with its source grid.`);
-      const kind = (payload.metadata.anatomy_layers as Record<string,{kind?:string}>|undefined)?.[layer.name]?.kind;
+      const declared = (payload.metadata.anatomy_layers as Record<string,{kind?:string;provenance?:unknown}>|undefined)?.[layer.name];
+      const kind = declared?.kind;
+      const provenance = typeof declared?.provenance === "string" ? declared.provenance : undefined;
       const vessel=vesselSurfaces[index];
       const appearanceSource = kind === "brain" ? localWallBrainSignal(payload, mri, affine, mask) ?? brainSignal : undefined;
       if(vessel&&(surfaceKind(kind)!=='vessel'||vessel.vesselSourceCells.some(i=>!mask[i])))throw Error('Vessel surface differs from the declared native mask.');
       return {
         name: layer.name,
         kind,
+        ...(provenance ? {provenance} : {}),
         ...(appearanceSource ? {appearanceSource, displayKind: kind} : {}),
         sourceIdentity: `${payload.caseHash}:${layer.name}:${layer.array.sha256}`,
         qa: layer.qa,

@@ -68,6 +68,12 @@ function inspectionSourceVolume(source:ViewerVolume,view:SurgicalView):ViewerVol
   return source;
 }
 export const modeledVolumeWork=(volume:ViewerVolume)=>work.get(volume);
+/** Display kind of a declared operative-exposure layer. A host head declares
+ * its remaining extracranial soft tissue (muscle, fat, fascia) as `tissue`,
+ * which elsewhere names brain tissue; give it its own kind here. */
+export function exposureDisplayKind(kind:string|undefined){
+  return kind==='tissue'?'extracranial':kind;
+}
 export function modeledVolumeCacheStatistics(source:ViewerVolume){
   const cache=caches.get(source);return {frames:cache?.frames.size??0,maxFrames:3,baseOwnerBytes:cache?.base.owner.byteLength??0};
 }
@@ -80,6 +86,7 @@ function validateGrid(source:ViewerVolume,view:SurgicalView){
 function compartment(region:SurgicalRegion,original:Base['originals'][number],mask:Uint8Array,difference:number):Layer {
   const {layer,labels}=original,unchanged=!!layer&&difference===0,sameKind=surfaceKind(layer?.kind)===surfaceKind(region.material);
   return {...(unchanged?layer:{}),name:region.name,color:region.color,kind:region.material,
+    ...(layer?.provenance?{provenance:layer.provenance}:{}),
     // A cut changes mesh ownership, not the registered acquisition sampled on
     // its stationary walls. Transported surfaces resolve correspondence locally.
     ...(layer?.appearanceSource && sameKind ? {appearanceSource:layer.appearanceSource,displayKind:layer.displayKind??layer.kind} : {}),
@@ -92,7 +99,7 @@ function displayVolume(source:ViewerVolume,compartments:Layer[],key:string):View
 }
 function stateKey(view:SurgicalView,coupled:boolean){
   const vessel=vesselGeometryToken(view);
-  return JSON.stringify([view.scene.regions,view.removed,view.moved,
+  return JSON.stringify([view.scene.regions,view.removed,view.moved,...(view.cusaProgressV1?.cells.length?[view.cusaProgressV1.cells,view.cusaProgressV1.fraction]:[]),
     ...((view.cutEdges?.length||view.transectedEdges?.length)?[view.cutEdges??[],view.transectedEdges??[]]:[]),
     ...(vessel?[vessel]:[]),...(coupled?['coupled-v2']:[]),
     ...(view.operativeExposureV1?[displacedBodies(view.operativeExposureV1,view.scene.shape,view.scene.affine)]:[])]);
@@ -160,12 +167,23 @@ function attachCavitySupport(state:State,base:Base,view:SurgicalView){
       }
     }
   }
+  // Exact pending CUSA work on retained cells of the same region (display only).
+  const pending=new Map<number,Array<[number,number]>>(),progress=view.cusaProgressV1;
+  if(progress&&progress.cells.length===progress.fraction.length&&progress.cells.length<=65536)
+    progress.cells.forEach((cell,k)=>{
+      const id=base.owner[cell],fraction=progress.fraction[k];
+      if(!id||!(fraction>0&&fraction<1)||state.overrides.has(cell)||!byRegion.has(id))return;
+      const rows=pending.get(id)??[];rows.push([cell,fraction]);pending.set(id,rows);
+    });
   state.volume.compartments=state.volume.compartments.map((layer,r)=>{
     const region=base.regions[r]?.id,indices=byRegion.get(region);
     if(!indices||indices.length<3)return layer.cavity?{...layer,cavity:undefined}:layer;
     const cells=Uint32Array.from(new Set(indices)).sort(),old=layer.cavity;
-    if(old?.region===region&&old.cells.length===cells.length&&cells.every((value,i)=>value===old.cells[i]))return layer;
-    return {...layer,cavity:{region,cells}};
+    const rows=(pending.get(region)??[]).sort((a,b)=>a[0]-b[0]);
+    const worked=rows.length?{cells:Uint32Array.from(rows,row=>row[0]),fraction:Float32Array.from(rows,row=>row[1])}:undefined;
+    const sameProgress=(old?.progress?.cells.length??0)===rows.length&&rows.every(([cell,f],i)=>old!.progress!.cells[i]===cell&&old!.progress!.fraction[i]===Math.fround(f));
+    if(old?.region===region&&old.cells.length===cells.length&&cells.every((value,i)=>value===old.cells[i])&&sameProgress)return layer;
+    return {...layer,cavity:{region,cells,...(worked?{progress:worked}:{})}};
   });
 }
 /** Source ownership is built once per mapping. Follow-up states inspect only
@@ -211,7 +229,7 @@ export function modeledVolume(source:ViewerVolume,view:SurgicalView):ViewerVolum
   }
   attachCavitySupport(state,cache.base,view);
   if(view.operativeExposureV1)state.volume.compartments=state.volume.compartments.map((layer,i)=>{
-    const kind=cache.base.originals[i]?.layer?.kind;
+    const kind=exposureDisplayKind(cache.base.originals[i]?.layer?.kind);
     return kind&&(!layer.generatedFinish||layer.displayKind!==kind)?{...layer,generatedFinish:true,displayKind:kind}:layer;
   });
   partitionExposureSurfaces(state.volume,view,cache.base.owner,state.overrides);
