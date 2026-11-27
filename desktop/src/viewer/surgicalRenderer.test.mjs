@@ -70,6 +70,17 @@ test('observed effective activation colors both tools without mutating latched s
   r.setSurgical(input);assert.equal(r.surgicalGhost.visible,true);
   assert.equal(r.surgicalSlots.get('left').group.userData.surgicalAccent.color.getHexString(),'41677a');
 });
+test('settled practice shows only the accepted tool in external and microscope views, preserving explicit edit handles',()=>{
+  const r=renderer(),input={...interaction(),practiceHud:{episodeId:'practice'}};
+  for(const operativeView of ['external','surgeon']){
+    r.workspaceSettings={operativeView};
+    for(const [mode,visible] of [['navigate',false],['translate',true],['rotate',true],['draw',true]]){
+      r.setSurgical({...input,mode});
+      assert.equal(r.surgicalGhost.visible,visible);
+      assert.equal(r.surgicalSlots.get('left').group.visible,true);
+    }
+  }
+});
 test('draw path grows a reusable bounded-capacity buffer, hides on cancel and releases recorded state on exit',()=>{
   const r=renderer(),input=interaction();r.setSurgical(input);
   const path=Array.from({length:3},(_,i)=>({position:[i,2,3],quaternion:[0,0,0,1]}));r.setSurgical({...input,path});const line=r.surgicalPath,geometry=line.geometry;
@@ -269,7 +280,8 @@ function modeledFixture(){
     {name:'brain',kind:'brain',color:'#aabbcc',mask:new Uint8Array(count).fill(1)},
     {name:'vessel',kind:'vessel',color:'#bb3344',mask:Uint8Array.from({length:count},(_,i)=>Number(i%20===0))}]};
   const r=Object.create(VolumeRenderer.prototype),packed=packAnatomyLabels(source),work={};
-  const uniforms={uLayerCount:{value:2},uVisibleBits:{value:3},uLayerEnabled:{value:new Float32Array(128)},uLayerCodes:{value:Array.from({length:128},()=>new THREE.Vector2())}};
+  r.vesselDepthSeparation={install(){}};
+  const uniforms={uLabels:{value:null},uLayerCount:{value:2},uVisibleBits:{value:3},uLayerEnabled:{value:new Float32Array(128)},uLayerCodes:{value:Array.from({length:128},()=>new THREE.Vector2())}};
   for(const key of ['surgicalUpdates','toolBuilds','effectBuilds','pathBufferBuilds','sourceWorkerBuilds','replayWorkerBuilds','sourceRemeshedLayers','replayRemeshedLayers','workerInputCloneBytes','workerInputTransferBytes','workerResultTransferBytes','modelWorkerBuilds','modelRemeshedLayers','modelRemeshedChunks','modelCommits'])work[key]=0;
   Object.assign(r,{volume:source,affine,bounds:[[0,0,0],[5,4,3]],workspaceSettings:{},extraClipPlanes:[],clipPlane:null,surfaceSmoothing:true,visible:{},
     anatomy:new THREE.Group(),surfaces:new Map(),surfaceGeometry:new Map(),preparedSourceLayers:new Set(),retiredSurfaces:[],
@@ -292,6 +304,25 @@ function modelWorkerMock(){
     }};
   return {workers,restore(){globalThis.Worker=previous;}};
 }
+test('only the checked native crop brain passes a conditioning region to the modeled surface worker',async()=>{
+  const {modeledVolume}=await server.ssrLoadModule('/src/modeled-volume.ts');
+  const mock=modelWorkerMock();try{
+    const {r,source}=modeledFixture();
+    const [brain]=source.compartments;
+    brain.appearanceSource={nativeWallCrop:true,seriesId:'cta',modality:'CTA',shape:source.shape,
+      data:source.mri,affine:source.affine,softTissueWindow:[9,107]};
+    const view={stateId:'native-local',scene:{shape:source.shape,affine:source.affine,regions:[
+      {id:13,name:'brain',material:'soft_tissue',color:brain.color},{id:21,name:'vessel',material:'vessel',color:'#bb3344'}]},
+      removed:[12],moved:[]};
+    assert.equal(r.installSurgicalState(modeledVolume(source,view),{view}),true);
+    const worker=r.modelWorker;
+    assert.equal(worker.messages[0].layerId,'brain');
+    assert.equal(worker.messages[0].kind,'soft_tissue');
+    assert.equal(worker.messages[0].partition.reference.nativeBrainRegion,13);
+    assert.equal(worker.messages[0].partition.layerRegion,13);
+    assert.equal(brain.mask[12],1);
+  }finally{mock.restore();}
+});
 test('exact unacted inspection source publishes actual tools/state at the frame fence without remeshing its overlapping annotations',async()=>{
   const {modeledVolume,registerSourceInspection}=await server.ssrLoadModule('/src/modeled-volume.ts');
   const mock=modelWorkerMock();try{
@@ -321,6 +352,79 @@ test('modeled tissue stages labels/surfaces/tools atomically, reuses unchanged M
     const brainA=r.surfaces.get('brain');r.installSurgicalState(b,{view:{stateId:'b'}});assert.equal(worker.messages.at(-1).mask,undefined);assert.deepEqual([...worker.messages.at(-1).indices],[23]);worker.flush();submitPreparedState(r);
     assert.equal(r.volume,b);assert.equal(r.surfaces.get('vessel'),vessel);assert.equal(r.labelTexture,texture);assert.deepEqual(texture.image.data,packAnatomyLabels(b).data);
     const requests=worker.messages.length;r.installSurgicalState(a,interactionA);submitPreparedState(r);assert.equal(r.volume,a);assert.equal(r.surfaces.get('brain'),brainA);assert.equal(worker.messages.length,requests);assert.deepEqual(source.compartments[0].mask,sourceCopy);
+  }finally{mock.restore();}
+});
+test('modeled installation and native restoration rebind compact and sparse label formats',()=>{
+  const mock=modelWorkerMock();try{
+    const {r,source,derive,uniforms}=modeledFixture(),next=derive([22]);
+    const packed=packAnatomyLabels(source,true);
+    source.packedLabels=packed;
+    const compact=new THREE.Data3DTexture(packed.data,4,5,6);compact.format=THREE.RedFormat;
+    r.labelTexture=compact;r.labelCodes=packed.codes;uniforms.uLabels.value=compact;
+    let disposed=0;compact.addEventListener('dispose',()=>disposed++);
+    assert(r.installSurgicalState(next,{view:{stateId:'modeled'}}));
+    while(r.modelWorker.queue.length)r.modelWorker.flush();
+    assert.equal(r.labelTexture,compact);
+    submitPreparedState(r);
+    const modeled=r.labelTexture;
+    assert.equal(modeled.format,THREE.RGBAFormat);
+    assert.equal(uniforms.uLabels.value,modeled);
+    assert.equal(disposed,1);
+    assert.deepEqual(modeled.image.data,packAnatomyLabels(next).data);
+    modeled.addEventListener('dispose',()=>disposed++);
+    assert(r.installSurgicalState(source,null));
+    while(r.modelWorker?.queue.length)r.modelWorker.flush();
+    submitPreparedState(r);
+    assert.equal(r.labelTexture.format,THREE.RedFormat);
+    assert.equal(uniforms.uLabels.value,r.labelTexture);
+    assert.equal(r.labelTexture.image.data,packed.data);
+    assert.equal(disposed,2);
+  }finally{mock.restore();}
+});
+for(const withScore of [false,true])test(`modeled native vessels share live positions and indices with ${withScore?'score-bound':'legacy'} lighting`,async()=>{
+  const {modeledVolume}=await server.ssrLoadModule('/src/modeled-volume.ts');
+  const mock=modelWorkerMock();try{
+    const {r,source}=modeledFixture(),layer=source.compartments[1];
+    const rest=Float32Array.of(2,0,-.2,3,0,-.2,2,.3,0,3,.3,0),normals=Float32Array.of(0,0,1,0,0,1,0,1,0,0,1,0);
+    layer.surface={source:rest,positions:rest,sourceNormals:normals,normals,indices:Uint32Array.of(0,1,2,2,1,3)};
+    layer.surfaceDiagnostics={surfaceField:'native-probability'};
+    if(withScore)layer.vesselScoreLighting=Float32Array.of(.1,0,1,1,.1,0,1,1,0,1,.1,1,0,1,.1,1);
+    r.workspaceSettings={operativeView:'surgeon',layerColor:{vessel:'#a64c45'}};
+    const view={stateId:'native',scene:{shape:source.shape,affine:source.affine,regions:[
+      {id:1,name:'brain',material:'brain',color:'#aabbcc'},{id:2,name:'vessel',material:'vessel',color:'#bb3344'}]},
+      moved:[],removed:[],vesselMechanics:{geometryModeByLabel:{2:'native-probability-wall'},surfaceDisplacements:{}}};
+    r.installSurgicalState(modeledVolume(source,view),{view});
+    while(r.modelWorker.queue.length)r.modelWorker.flush();submitPreparedState(r);
+    assert.equal(r.modelWorker.messages.filter(m=>m.layerId==='vessel').length,0);
+    const pair=r.surfaceGeometry.get('vessel'),mesh=r.surfaces.get('vessel'),position=pair.source.getAttribute('position');
+    const restBoundary=pair.source.getAttribute('vesselRestNative');
+    assert.equal(mesh.material.color.getHexString(),'a64c45');
+    assert.equal(pair.smooth.getAttribute('position'),position);
+    assert.equal(pair.smooth.getIndex(),pair.source.getIndex());
+    assert.equal(pair.smooth.getAttribute('vesselRestNative'),restBoundary);
+    assert.notEqual(restBoundary,position);
+    assert.equal(restBoundary.array,rest);
+    const shader={uniforms:{},vertexShader:THREE.ShaderLib.standard.vertexShader,fragmentShader:THREE.ShaderLib.standard.fragmentShader};
+    mesh.material.onBeforeCompile(shader,{});
+    assert.match(shader.vertexShader,/vVesselRestNative=vesselRestNative/);
+    assert.match(shader.fragmentShader,/diffuseColor.rgb=mix\(diffuseColor.rgb,uVesselSourceBoundaryColor,sourceBoundary\)/);
+    assert.deepEqual(shader.uniforms.uVesselSourceLastSample.value.toArray(),source.shape.map(n=>n-1));
+    assert.notEqual(pair.smooth.getAttribute('normal'),pair.source.getAttribute('normal'));
+    const restLighting=pair.smooth.getAttribute('normal').array.slice();
+    r.updateAcceptedSurfaces({...view,vesselMechanics:{...view.vesselMechanics,surfaceDisplacements:{40:[0,0,.2]}}});
+    assert.equal(pair.source.getAttribute('position'),position);
+    assert.equal(pair.smooth.getAttribute('position'),position);
+    assert.ok(Math.abs(position.getZ(0))<1e-7);
+    assert.equal(restBoundary.getZ(0),Math.fround(-.2));
+    r.setSurfaceSmoothing(true);
+    assert.equal(mesh.geometry,pair.smooth);
+    assert.equal(mesh.geometry.userData.operativeVessel.sourceVolumeBoundary,true);
+    assert.equal(mesh.geometry.userData.operativeVessel.normalStyle,withScore?'source-score-gradient-0.30mm':'bounded-lighting');
+    r.setSurfaceSmoothing(false);
+    assert.equal(mesh.geometry,pair.source);assert.equal(mesh.geometry.userData.operativeVessel.normalStyle,'physical-indexed');
+    r.updateAcceptedSurfaces(view);
+    assert.deepEqual(position.array,rest);
+    assert.deepEqual(pair.smooth.getAttribute('normal').array,restLighting);
   }finally{mock.restore();}
 });
 test('new read-only tissue surfaces defer picking acceleration while editable boundaries keep eager admission',()=>{
@@ -539,4 +643,211 @@ test('accepted engine mapping replaces even unchanged native pairs with one shar
     assert.equal(r.volume,source);assert.deepEqual(r.labelTexture.image.data,packAnatomyLabels(source).data);
     assert.deepEqual(source.compartments.map(l=>l.mask),masks);
   }finally{mock.restore();}
+});
+
+test('surgeon wetting and retained material follow the accepted affine and ledger, clear on suction, and exclude reservoirs',()=>{
+  const r=renderer(),input=interaction();
+  r.workspaceSettings={operativeView:'surgeon',microscope:{tissueStyle:'illustrative'}};
+  const wall=new THREE.Mesh(new THREE.BufferGeometry(),new THREE.MeshStandardMaterial());
+  r.surfaces=new Map([['wall',wall]]);
+  const view={...input.view,scene:{...input.view.scene,affine:[[0,-2,0,10],[1,0,.25,20],[0,0,3,30],[0,0,0,1]]},
+    stateId:'irrigated',fluid:{13:3,14:1.5},debris:{14:.75},metrics:{fluidPresentMm3:9.5},sources:[{reservoirMm3:5}]};
+  const original=structuredClone(view);
+  r.setSurgical({...input,view});
+  const optics=r.fieldOptics;
+  assert.deepEqual(optics.group.userData.fieldSummary,{stateId:'irrigated',fluidCells:2,debrisCells:1,fluidMm3:4.5,debrisMm3:.75,wetTextureBytes:36,joinedFluidCells:2});
+  const texels=optics.texture.image.data;
+  assert.deepEqual([...texels.filter(n=>n>0)],[128,64],'normalized by the absolute affine determinant');
+  const pool=optics.group.getObjectByName('field:fluid'),m=new THREE.Matrix4();
+  pool.getMatrixAt(0,m);pool.updateWorldMatrix(true,false);
+  const site=new THREE.Vector3().setFromMatrixPosition(m).applyMatrix4(pool.matrixWorld);
+  assert.deepEqual(site.toArray(),[8,21.25,33]);
+  assert.deepEqual(site.applyMatrix4(optics.worldToCell).toArray(),[1,1,1]);
+  assert.equal(pool.material.depthTest,true);
+  assert.equal(r.surgicalEffects.getObjectByName('effect:fluid').visible,false);
+  assert.equal(r.surgicalEffects.getObjectByName('effect:contact').visible,false);
+  const shader={uniforms:{},vertexShader:THREE.ShaderLib.standard.vertexShader,fragmentShader:THREE.ShaderLib.standard.fragmentShader};
+  wall.material.onBeforeCompile(shader,{});
+  assert.equal(shader.uniforms.uWetVisible.value,true);
+  assert.equal(shader.uniforms.uWetDensity.value,optics.texture);
+  assert(shader.fragmentShader.includes('roughnessFactor=mix'));
+  r.workspaceSettings.microscope.tissueStyle='labels';r.updateFieldAppearance();
+  assert.equal(shader.uniforms.uWetVisible.value,false);assert.equal(optics.group.visible,false);
+  assert.equal(r.surgicalEffects.getObjectByName('effect:fluid').visible,true);
+  r.workspaceSettings.microscope.tissueStyle='illustrative';r.updateFieldAppearance();
+  let disposed=0;optics.texture.addEventListener('dispose',()=>disposed++);
+  r.setSurgical({...input,view,pose:{...input.pose,position:[2,3,4]}});
+  assert.equal(r.fieldOptics,optics);assert.equal(disposed,0);
+  r.setSurgical({...input,view:{...view,stateId:'drained',fluid:{},debris:{},metrics:{fluidPresentMm3:5}}});
+  assert.equal(disposed,1);assert.equal(r.fieldOptics,null);
+  assert.equal(shader.uniforms.uWetVisible.value,false);assert.equal(shader.uniforms.uWetDensity.value,null);
+  assert.deepEqual(view,original);
+});
+test('a dispersed field keeps every cell footprint without allocating a full-grid wet texture',()=>{
+  const r=renderer(),input=interaction(),shape=[400,400,400];
+  input.view={...input.view,scene:{...input.view.scene,shape},fluid:{0:1,[400**3-1]:.03}};
+  r.workspaceSettings={operativeView:'surgeon'};
+  r.setSurgical(input);assert.equal(r.fieldOptics.texture,null);
+  assert.equal(r.fieldOptics.group.getObjectByName('field:fluid').count,2);
+  assert.equal(r.fieldOptics.group.userData.fieldSummary.fluidMm3,1.03);
+});
+test('dry microscope materials keep their program and accepted field resources follow independent ledger changes',()=>{
+  const r=renderer(),input=interaction();
+  r.workspaceSettings={operativeView:'surgeon',microscope:{tissueStyle:'illustrative'}};
+  r.volume={caseHash:'one',shape:input.view.scene.shape,compartments:[]};
+  const wall=new THREE.Mesh(new THREE.BufferGeometry(),new THREE.MeshStandardMaterial());
+  r.surfaces=new Map([['wall',wall]]);r.setSurgical(input);
+  const shader={uniforms:{},vertexShader:THREE.ShaderLib.standard.vertexShader,fragmentShader:THREE.ShaderLib.standard.fragmentShader};
+  wall.material.onBeforeCompile(shader,{});
+  const version=wall.material.version,key=wall.material.customProgramCacheKey();
+  assert.equal(shader.uniforms.uWetVisible.value,false);
+
+  const irrigated={...input.view,stateId:'irrigated',fluid:{13:.5,14:.6},debris:{15:.25}};
+  r.setSurgical({...input,view:irrigated});
+  assert.equal(wall.material.version,version);assert.equal(wall.material.customProgramCacheKey(),key);
+  const optics=r.fieldOptics,wet=optics.texture;
+  const pool=optics.group.getObjectByName('field:free-surface'),fluid=optics.group.getObjectByName('field:fluid');
+  const debris=optics.group.getObjectByName('field:debris'),matrixVersion=fluid.instanceMatrix.version;
+  let wetReleased=0,fluidReleased=0,debrisReleased=0;
+  wet.addEventListener('dispose',()=>wetReleased++);
+  fluid.geometry.addEventListener('dispose',()=>fluidReleased++);
+  debris.geometry.addEventListener('dispose',()=>debrisReleased++);
+
+  const later=structuredClone(irrigated);later.stateId='withdrew';later.slots.left.inserted=false;
+  r.setSurgical({...input,view:later});
+  assert.equal(r.fieldOptics,optics);
+  assert.equal(optics.group.userData.fieldSummary.stateId,'withdrew');
+  const preview={...later,stateId:'proposed',fluid:{16:9}};
+  r.setSurgical({...input,view:later,preview});
+  assert.equal(r.fieldOptics,null);assert.equal(shader.uniforms.uWetVisible.value,false);
+  assert.deepEqual([wetReleased,fluidReleased,debrisReleased],[0,0,0]);
+  r.setSurgical({...input,view:irrigated});
+  assert.equal(r.fieldOptics,optics);assert.equal(shader.uniforms.uWetDensity.value,wet);
+
+  const newDebris={...later,stateId:'debris',debris:{15:.7}};
+  r.setSurgical({...input,view:newDebris});
+  assert.equal(r.fieldOptics.texture,wet);assert.equal(fluid.instanceMatrix.version,matrixVersion);
+  assert.equal(r.fieldOptics.group.getObjectByName('field:free-surface'),pool);
+  assert.notEqual(r.fieldOptics.group.getObjectByName('field:debris'),debris);
+  assert.deepEqual([wetReleased,fluidReleased,debrisReleased],[0,0,1]);
+  const newDebrisObject=r.fieldOptics.group.getObjectByName('field:debris');
+  r.setSurgical({...input,view:{...newDebris,stateId:'suction',fluid:{}}});
+  assert.equal(r.fieldOptics.texture,null);assert.equal(shader.uniforms.uWetVisible.value,false);
+  assert.equal(r.fieldOptics.group.getObjectByName('field:debris'),newDebrisObject);
+  assert.deepEqual([wetReleased,fluidReleased,debrisReleased],[1,1,1]);
+
+  let finalDisposals=0;newDebrisObject.material.addEventListener('dispose',()=>finalDisposals++);
+  r.volume={...r.volume,caseHash:'two'};
+  r.setSurgical({...input,view:{...newDebris,stateId:'other',fluid:{}}});
+  assert.notEqual(r.fieldOptics.group.getObjectByName('field:debris'),newDebrisObject);
+  r.setSurgical(null);r.setSurgical(null);assert.equal(finalDisposals,1);
+});
+
+test('normal diffusion is transferred once with exact original source, implicit and legacy worker geometry',async()=>{
+  const {displaySurfaceNormals}=await server.ssrLoadModule('/src/viewer/displaySurfaceNormals.ts');
+  const shape=[36,12,12],affine=[[-.75,.2,0,12],[0,1.1,.08,22],[0,0,1.5,8],[0,0,0,1]];
+  const mask=Uint8Array.from({length:shape.reduce((a,b)=>a*b)},(_,i)=>{
+    const x=Math.floor(i/144),y=Math.floor(i/12)%12,z=i%12;
+    return Number(((x-29)/6)**2+((y-6)/4)**2+((z-6)/4)**2<=1);
+  });
+  const base={affine,shape,kind:'brain',displayNormalPasses:3};
+  let delivered,transfers=0;
+  const previous=globalThis.self;
+  globalThis.self={postMessage(result,options){transfers=options?.transfer?.length??0;delivered=structuredClone(result,options);}};
+  try{
+    const check=(result,reference)=>{
+      assert.equal(result.error,undefined);assert.equal(result.displayNormalsPrepared,3);assert.equal(typeof result.displayNormalsMs,'number');
+      assert.equal(transfers,5,'normal diffusion replaces the display attribute on the wire');
+      for(const key of ['positions','indices','normals','smoothPositions'])assert.deepEqual(result[key],reference[key]);
+      assert.deepEqual(result.smoothNormals,displaySurfaceNormals(reference.smoothNormals,reference.indices,affine));
+    };
+    await server.ssrLoadModule('/src/viewer/surface.worker.ts');
+    self.onmessage({data:{...base,name:'legacy',mask:mask.slice()}});
+    const legacy=prepareSurface(mask,shape,affine,'brain');check(delivered,legacy);
+    const fair=delivered;
+    retainSurface(mask,affine,'brain',fair,shape);
+    assert.equal(cachedSurface(mask,affine,'brain',shape,true),undefined);
+    assert.equal(cachedSurface(mask,affine,'brain',shape,true,undefined,3),fair);
+    assert.equal(cachedSurface(mask,affine,'brain',shape,true,undefined,10),undefined,'another pass count is not the same lighting');
+    self.onmessage({data:{...base,name:'raw',displaySmoothing:false,mask:mask.slice()}});
+    assert.equal(delivered.displayNormalsPrepared,undefined);assert.equal(transfers,3);assert.deepEqual(delivered.normals,legacy.normals);
+
+    const owner={owner:Uint16Array.from(mask),protectedRegions:[]};
+    await server.ssrLoadModule('/src/viewer/incrementalSurface.worker.ts');
+    self.onmessage({data:{...base,jobId:1,layerId:'brain',identity:'start',previousIdentity:'',mask:mask.slice(),partition:{key:'grid',reference:owner}}});
+    const implicit=prepareSurface(mask,shape,affine,'brain',true,owner);check(delivered,implicit);
+    const index=(31*12+6)*12+6,edited=mask.slice();edited[index]=0;
+    self.onmessage({data:{...base,jobId:2,layerId:'brain',identity:'cut',previousIdentity:'start',indices:Uint32Array.of(index),values:Uint8Array.of(0),partition:{key:'grid'}}});
+    assert.equal(delivered.work.incremental,true);check(delivered,prepareSurface(edited,shape,affine,'brain',true,owner));
+    self.onmessage({data:{...base,jobId:3,layerId:'brain',identity:'undo',previousIdentity:'cut',indices:Uint32Array.of(index),values:Uint8Array.of(1),partition:{key:'grid'}}});
+    check(delivered,implicit);
+  }finally{globalThis.self=previous;}
+});
+test('a local accepted movement preserves registered microscope contrast on the remaining anatomy',()=>{
+  const r=renderer(),input=interaction(),mesh=new THREE.Mesh();
+  mesh.userData.corticalSignalEnabled={value:false};mesh.userData.nativeCortex=false;
+  r.surfaces=new Map([['brain',mesh]]);
+  r.workspaceSettings={operativeView:'surgeon',microscope:{tissueStyle:'illustrative'}};
+  r.setSurgical(input);assert.equal(mesh.userData.corticalSignalEnabled.value,true);
+  r.setSurgical({...input,view:{...input.view,moved:[[13,13]],deformation:{13:[.04,0,0]}}});
+  assert.equal(mesh.userData.corticalSignalEnabled.value,true);
+  r.setSurgical({...input,view:{...input.view,moved:[[13,14]]}});assert.equal(mesh.userData.corticalSignalEnabled.value,true);
+  r.setSurgical(input);assert.equal(mesh.userData.corticalSignalEnabled.value,true);
+  r.workspaceSettings.microscope.tissueStyle='labels';assert.equal(r.showCorticalSignal(mesh),false);
+  r.workspaceSettings={presentation:'segmentation'};assert.equal(r.showCorticalSignal(mesh),false);
+  mesh.userData.nativeCortex=true;assert.equal(r.showCorticalSignal(mesh),true);
+});
+test('the submitted conditioned vessel surface keeps accepted displacement after support removal',()=>{
+  const r=renderer(),input=interaction(),shape=[3,3,3],name='TOF candidate vessel';
+  const owner=new Uint16Array(27),mask=new Uint8Array(27),site=13,support=14;
+  owner[site]=2;owner[support]=1;mask[site]=1;
+  const source=new THREE.BufferGeometry();
+  source.setAttribute('position',new THREE.Float32BufferAttribute([1,1,1.5,.8,1,1.5,1,.8,1.5],3));
+  const smooth=source.clone(),mesh=new THREE.Mesh(smooth);
+  r.volume={shape,mri:new Float32Array(27),compartments:[{name,kind:'vessel',mask}]};
+  r.surfaces=new Map([[name,mesh]]);r.surfaceGeometry=new Map([[name,{source,smooth}]]);
+  registerModeledAnatomy({shape,mri:r.volume.mri},r.volume,'mapped',[],{owner,protectedRegions:[2]});
+  const schema='resectionlab.generated-glioma-materials.v1',view={...input.view,stateId:'supported',
+    scene:{...input.view.scene,source:{procedurePolicySourceClass:'acquired-or-unknown'},
+      regions:[{id:1,name:'Pad',material:'soft_tissue'},{id:2,name,material:'vessel'}]},
+    physics:{brain:{model:schema,assignment:{schema,kind:'assigned-generated-research',
+      vesselMotionModel:'retained-source-segments-v1',vesselAttachments:[[site,support]]}}},
+    moved:[[site,site],[support,support]],deformation:{[site]:[0,0,.16],[support]:[0,0,.16]}};
+  r.setSurgical({...input,view});
+  assert(Math.abs(mesh.geometry.getAttribute('position').getZ(0)-1.66)<1e-6);
+  const report=r.displayedVesselMotion(view);
+  assert.equal(report[0].layer,name);
+  assert.equal(report[0].movedVertices,3);
+  assert(Math.abs(report[0].maxSubvoxelVertexOffsetMm-.16)<1e-6);
+  const after={...view,stateId:'support-removed',removed:[support],moved:[[site,site]],deformation:{[site]:[0,0,.16]}};
+  r.setSurgical({...input,view:after});
+  assert.deepEqual(r.displayedVesselMotion(after),report);
+  assert.equal(source.getAttribute('position').getZ(0),1.5);
+  const stationary={...after,stateId:'resting',moved:[],deformation:{}};
+  r.setSurgical({...input,view:stationary});
+  assert.deepEqual(r.displayedVesselMotion(stationary),[]);
+  assert.equal(mesh.geometry.getAttribute('position').getZ(0),1.5);
+});
+test('Q1 displacement picks the accepted physical face, preserves an unmodeled island in the same layer and restores on exit',()=>{
+  const r=renderer(),input=interaction(),shape=[5,5,5],mask=new Uint8Array(125);
+  mask[31]=1;mask[93]=1;
+  const layer={name:'body',mask},sourceMesh=new THREE.Mesh(new THREE.BufferGeometry(),new THREE.MeshStandardMaterial());
+  r.volume={shape,compartments:[layer]};r.anatomy=new THREE.Group();r.affine=input.view.scene.affine;
+  r.surfaces=new Map([['body',sourceMesh]]);r.surfaceGeometry=new Map();r.visible={};r.replayGroup=new THREE.Group();
+  r.sourcePlane={visible:false};r.panes={anatomy:{dataset:{},getBoundingClientRect:()=>({left:0,top:0,width:100,height:100})}};
+  r.pickRay=new THREE.Raycaster();r.camera=new THREE.PerspectiveCamera(30,1,.01,100);
+  r.camera.position.set(1,1,9);r.camera.lookAt(1,1,1);r.camera.updateMatrixWorld(true);
+  input.view={...input.view,metrics:{},scene:{...input.view.scene,shape},
+    planarBladeManeuver:{declarationId:'fixed-domain',contactSurface:{sourceIds:[31],triangles:[[0,1,2]],positionsMm:[[.5,.5,1.425],[1.5,.5,1.425],[1,1.5,1.425]]}}};
+  r.setSurgical(input);
+  assert.equal(sourceMesh.visible,false);const island=r.planarRemainder.get('body');
+  island.geometry.computeBoundingBox();
+  assert.deepEqual(island.geometry.boundingBox.min.toArray(),[2.5,2.5,2.5]);
+  assert.deepEqual(island.geometry.boundingBox.max.toArray(),[3.5,3.5,3.5]);
+  let name;const hit=r.pick(50,50,value=>name=value);
+  assert.equal(name,'body');assert(Math.abs(hit[2]-1.425)<1e-6);
+  r.setSurgical({...input,view:{...input.view,stateId:'next'}});assert.equal(r.planarRemainder.get('body'),island);
+  r.setSurgical({...input,view:{...input.view,planarBladeManeuver:undefined}});
+  assert.equal(sourceMesh.visible,true);assert.equal(r.planarRemainder.size,0);
+  assert.equal(mask[31]+mask[93],2);
 });

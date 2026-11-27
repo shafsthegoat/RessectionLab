@@ -16,10 +16,18 @@ import numpy as np
 from scipy import sparse
 from scipy.sparse.linalg import factorized
 
-from . import surgical_mechanical_exposure as mechanical
+from . import native_backend, surgical_mechanical_exposure as mechanical
 
 
 _diagnostics = ContextVar('surgical_deformation_diagnostics', default=None)
+_kernel_execution = ContextVar('surgical_deformation_kernel_execution', default=None)
+_strain_margin = 1. + 64. * np.finfo(np.float64).eps
+_sweep_samples = (.25, .5, .75, 1.)
+_numpy_error_defaults = {'divide': 'warn', 'over': 'warn', 'under': 'ignore', 'invalid': 'warn'}
+_integer_coordinate_limit = float(1 << (np.dtype(int).itemsize * 8 - 1))
+CONTACT_ACTIVATION_FORCE_FLOOR_N = 1e-10
+CONTACT_OMITTED_FORCE_LIMIT_N = 1e-8
+CONTACT_RECEPTOR_RESERVE_NODES = 512
 
 
 @contextmanager
@@ -33,12 +41,31 @@ def diagnostic_scope():
         ticks=0, substeps=0, targetCapNodeTicks=0, forceCapNodeTicks=0,
         displacementCapNodeSteps=0, strainProjectionSteps=0, collisionRejectedSteps=0,
         maxPreStrainProjectionNeighborRatio=0., maxFreeResidualN=0.,
-        maxAbsDiscreteEnergyBalanceNmm=0.)
+        maxAbsDiscreteEnergyBalanceNmm=0., maxOmittedWallReactionN=0., omittedWallReceptorTicks=0)
     token = _diagnostics.set(report)
     try:
         yield report
     finally:
         _diagnostics.reset(token)
+
+
+@contextmanager
+def kernel_execution_scope():
+    """Count actual lattice kernel work, including uncommitted attempts."""
+    report = dict(latticeTicks=0, continuumTicks=0, latticeSubsteps=0,
+        sweepNativeCalls=0, sweepNativeSamplePoints=0, sweepVectorCalls=0, sweepScalarCalls=0, sweepFallbackReasons={},
+        sweepIdleSubsteps=0, strainNativeCalls=0, strainNativeEdges=0, strainVectorCalls=0, strainRefinedEdges=0,
+        strainIdleSubsteps=0, strainCoupledSubsteps=0, strainFallbackReasons={})
+    token = _kernel_execution.set(report)
+    try:
+        yield report
+    finally:
+        _kernel_execution.reset(token)
+
+
+def _record_fallback(report, kernel, reason):
+    reasons = report[kernel]
+    reasons[reason] = reasons.get(reason, 0) + 1
 
 
 def profile():
@@ -92,13 +119,25 @@ def _blocked(engine):
             for e in engine.state.get(name, []) if isinstance(e, (list, tuple)) and len(e) == 2}
 
 
+def _neighbor_ids(shape, cell):
+    cell = int(cell)
+    wide = shape[1] * shape[2]
+    i, tail = divmod(cell, wide)
+    j, k = divmod(tail, shape[2])
+    for axis, (coordinate, extent, stride) in enumerate(zip((i, j, k), shape, (wide, shape[2], 1))):
+        if coordinate > 0:
+            yield cell - stride, axis
+        if coordinate + 1 < extent:
+            yield cell + stride, axis
+
+
+_STOCK_NEIGHBOR_IDS = _neighbor_ids
+_STOCK_NEIGHBOR_CODE = _neighbor_ids.__code__
+
+
 def _neighbors(engine, cell):
-    ijk = list(np.unravel_index(cell, engine.scene.shape))
-    for axis in range(3):
-        for sign in (-1, 1):
-            other = ijk.copy(); other[axis] += sign
-            if 0 <= other[axis] < engine.scene.shape[axis]:
-                yield int(np.ravel_multi_index(tuple(other), engine.scene.shape)), float(np.linalg.norm(engine.scene.affine[:3, axis]))
+    for neighbor, axis in _neighbor_ids(engine.scene.shape, cell):
+        yield neighbor, float(np.linalg.norm(engine.scene.affine[:3, axis]))
 
 
 def begin_hold(engine, key, cells, position):
@@ -154,40 +193,123 @@ def release(engine, key):
     engine.state['holds'].pop(key, None)
 
 
-def _system(engine, p, ids, anchors, bonds):
-    held = tuple(sorted({c for h in _holds(engine) for c in h['cells']} & set(ids)))
-    signature = (tuple(ids), tuple(_material(engine, c) for c in ids), tuple(anchors), tuple(bonds), held, tuple((k, p[k]) for k in sorted(profile())))
+def _ordered_bond_indices(ids, retained, local_cuts, shape, coordinates, index):
+    if (_neighbor_ids is _STOCK_NEIGHBOR_IDS and _neighbor_ids.__code__ is _STOCK_NEIGHBOR_CODE
+            and len(ids) and len(ids) == len(retained) and tuple(ids) == tuple(sorted(retained))):
+        # Sorted source IDs and ascending positive strides give the original
+        # lexicographic bond order, including across flattened grid rows.
+        cells = np.asarray(ids)
+        neighbors = cells[:, None] + (1, shape[2], shape[1] * shape[2])
+        inside = coordinates[:, ::-1] < np.asarray(shape[::-1]) - 1
+        end = np.minimum(np.searchsorted(cells, neighbors), len(cells) - 1)
+        first, axes = np.nonzero(inside & (cells[end] == neighbors))
+        second = end[first, axes]
+        if local_cuts:
+            intact = [(cells[a], cells[b]) not in local_cuts for a, b in zip(first, second)]
+            first, second = first[intact], second[intact]
+        return first, second
+    bonds = sorted((c, n) for c in ids for n, _ in _neighbor_ids(shape, c)
+                   if c < n and n in retained and (c, n) not in local_cuts)
+    return np.asarray([(index[a], index[b]) for a, b in bonds], dtype=int).reshape(-1, 2).T
+
+
+def _bond_lengths(vectors):
+    representatives = vectors
+    byte_groups = None
+    if (len(vectors) >= 128 and vectors.dtype == np.float64
+            and vectors.flags.c_contiguous and np.isfinite(vectors).all()):
+        # Each 24-byte record contains the three Float64 components of a bond.
+        # Remove identical records before the numerical sort of the remainder.
+        _, indices, groups = np.unique(vectors.view('V24').ravel(),
+                                       return_index=True, return_inverse=True)
+        if len(indices) * 4 <= len(vectors):
+            representatives = vectors[indices]
+            byte_groups = groups.reshape(-1)
+    # Keep numerical grouping (including signed zeros) and the original
+    # scalar norm. A batched norm can round differently.
+    distinct, groups = np.unique(representatives, axis=0, return_inverse=True)
+    lengths = np.asarray([np.linalg.norm(vector) for vector in distinct])[groups.reshape(-1)]
+    return lengths if byte_groups is None else lengths[byte_groups]
+
+
+def _system(engine, p, ids, anchors, retained, blocked, attachment_stiffness=None):
+    held = {c for h in _holds(engine) for c in h['cells']} & set(ids)
+    shape = engine.scene.shape
+    strides = {1, shape[2], shape[1] * shape[2]}
+    # Only cuts between potential axial neighbors can alter this system. At
+    # most three forward pairs per active node enter the cache, even with a
+    # large cut ledger elsewhere. _neighbors handles the actual grid bounds.
+    local_cuts = frozenset((a, b) for a, b in blocked
+                           if a in retained and b in retained and b - a in strides)
+    grid = (tuple(shape), engine.scene.affine[:3, :3].tobytes())
+    material_profile = engine.scene.properties.get('gliomaMaterialsV1')
+    signature = (grid, engine.scene.identity if material_profile else None,
+                 tuple(ids), tuple(_material(engine, c) for c in ids), tuple(anchors),
+                 local_cuts, tuple(sorted(held)), tuple((k, p[k]) for k in sorted(profile())))
+    if attachment_stiffness:
+        signature += (tuple(attachment_stiffness.items()),)
     cached = getattr(engine, '_deformation_system_v2', None)
-    if cached and cached[0] == signature: return cached[1:]
+    if cached and cached[0] == signature: return cached[1:6]
     n = len(ids); index = {c: i for i, c in enumerate(ids)}
-    stiffness = np.array([p['tumorStiffnessNPerMm'] if _material(engine, c) == 'tumor' else p['brainStiffnessNPerMm'] for c in ids])
-    rows = []; cols = []; vals = []; dr = []; dc = []; dv = []
-    rest = np.column_stack(np.unravel_index(ids, engine.scene.shape)) @ engine.scene.affine[:3, :3].T
-    edges = []
-    for a, b in bonds:
-        i, j = index[a], index[b]; vector = rest[j] - rest[i]; length = np.linalg.norm(vector); direction = vector / length
-        k = 2 * stiffness[i] * stiffness[j] / (stiffness[i] + stiffness[j])
-        edges.append((i, j, length))
-        for axis in range(3):
-            ai, bj = 3 * i + axis, 3 * j + axis
-            rows.extend((ai, ai, bj, bj)); cols.extend((ai, bj, ai, bj)); vals.extend((k, -k, -k, k))
-            # Each endpoint estimates divergence from incident oriented differences.
-            for node in (i, j):
-                dr.extend((node, node)); dc.extend((ai, bj)); dv.extend((-direction[axis] / (2 * length), direction[axis] / (2 * length)))
-    K = sparse.coo_matrix((vals, (rows, cols)), shape=(3*n, 3*n)).tocsr()
-    D = sparse.coo_matrix((dv, (dr, dc)), shape=(n, 3*n)).tocsr()
+    if material_profile:
+        from .surgical_glioma_materials import material_values
+        # Pa -> N/mm² times representative face area / bond length (mm).
+        stiffness = 1e-6 * engine.scene.voxel_mm3 ** (1/3) * material_values(engine, ids, 'equilibriumShearPa')
+    else:
+        stiffness = np.array([p['tumorStiffnessNPerMm'] if _material(engine, c) == 'tumor' else p['brainStiffnessNPerMm'] for c in ids])
+    coordinates = np.column_stack(np.unravel_index(ids, shape))
+    rest = coordinates @ engine.scene.affine[:3, :3].T
+    first, second = _ordered_bond_indices(ids, retained, local_cuts, shape, coordinates, index)
+    vectors = rest[second] - rest[first]
+    lengths = _bond_lengths(vectors)
+    edges = [(int(a), int(b), length) for a, b, length in zip(first, second, lengths)]
+    axes = np.arange(3)
+    a_dof, b_dof = 3 * first[:, None] + axes, 3 * second[:, None] + axes
+    bond_stiffness = 2 * stiffness[first] * stiffness[second] / (stiffness[first] + stiffness[second])
+    # Match the original bond, axis, and endpoint entry order before CSR
+    # conversion so repeated coefficients are still summed in the same order.
+    rows = np.stack((a_dof, a_dof, b_dof, b_dof), axis=2).ravel()
+    cols = np.stack((a_dof, b_dof, a_dof, b_dof), axis=2).ravel()
+    entries = np.column_stack((bond_stiffness, -bond_stiffness, -bond_stiffness, bond_stiffness))
+    values = np.broadcast_to(entries[:, None, :], (len(edges), 3, 4)).ravel()
+    K = sparse.coo_matrix((values, (rows, cols)), shape=(3*n, 3*n)).tocsr()
+    # Each endpoint estimates divergence from incident oriented differences.
+    projected = (vectors / lengths[:, None]) / (2 * lengths[:, None])
+    divergence_shape = (len(edges), 3, 2, 2)
+    rows = np.broadcast_to(np.column_stack((first, second))[:, None, :, None], divergence_shape).ravel()
+    cols = np.broadcast_to(np.stack((a_dof, b_dof), axis=2)[:, :, None, :], divergence_shape).ravel()
+    values = np.broadcast_to(np.stack((-projected, projected), axis=2)[:, :, None, :], divergence_shape).ravel()
+    D = sparse.coo_matrix((values, (rows, cols)), shape=(n, 3*n)).tocsr()
     cell_length_squared = abs(np.linalg.det(engine.scene.affine[:3, :3])) ** (2 / 3)
     K += D.T @ sparse.diags(stiffness * p['bulkPenaltyRatio'] * cell_length_squared) @ D
     # Weak local foundation represents unresolved surrounding tissue and removes
     # rigid modes in detached fragments; it is a disclosed surrogate assumption.
     K += sparse.diags(np.repeat(stiffness * .05, 3))
     hold_diag = np.repeat([p['holdStiffnessNPerMm'] if c in held else 0 for c in ids], 3)
-    free = np.repeat([c not in anchors for c in ids], 3)
-    A = K + sparse.diags(hold_diag + p['dragNsPerMm'] / p['fixedStepSeconds'])
-    solve = factorized(A[free][:, free].tocsc()) if free.any() else lambda rhs: np.empty(0)
-    cached = (signature, solve, free, index, edges, K)
+    # Keep the original active-cell order while avoiding a boundary scan for
+    # every degree of freedom in a growing contact patch.
+    anchor_cells = set(anchors)
+    free = np.repeat([c not in anchor_cells for c in ids], 3)
+    effective_K = K
+    if material_profile:
+        tau = material_profile['relaxationSeconds']
+        effective_K = K * (1 + material_profile['maxwellShearRatio'] * tau / (tau + p['fixedStepSeconds']))
+    A = effective_K + sparse.diags(hold_diag + p['dragNsPerMm'] / p['fixedStepSeconds'])
+    if attachment_stiffness:
+        A += sparse.diags(np.repeat([attachment_stiffness.get(c, 0.) for c in ids], 3))
+    from . import acceleration as _accel
+    if free.any() and _accel.enabled('sparse-ordering'):
+        from .accel_continuum import ordered_factor
+        solve = ordered_factor(A[free][:, free].tocsc(), factorized)
+    else:
+        solve = factorized(A[free][:, free].tocsc()) if free.any() else lambda rhs: np.empty(0)
+    # The batched sweep and strain kernels read the same bonds as arrays.
+    edge_nodes = np.array([(i, j) for i, j, _ in edges], dtype=np.int64).reshape(-1, 2)
+    edge_lengths = np.array([length for _, _, length in edges], dtype=float)
+    shortest = min((length for _, _, length in edges), default=0.)
+    cached = (signature, solve, free, index, edges, K, edge_nodes, edge_lengths, shortest)
     engine._deformation_system_v2 = cached
-    return cached[1:]
+    return cached[1:6]
 
 
 def _obstacle_collision(engine, vox, inside, removed, blocking_labels):
@@ -199,35 +321,286 @@ def _obstacle_collision(engine, vox, inside, removed, blocking_labels):
     return bool(np.any(blocked & ~np.isin(cells, removed)))
 
 
-def tick(engine, dt):
+def _sweep_scalar(engine, rest, old, proposed, removed, blocking_labels, execution=None):
+    if execution is not None: execution['sweepScalarCalls'] += 1
+    inverse = engine.scene.inverse
+    collision = False
+    for alpha in _sweep_samples:
+        world = rest + old + alpha * (proposed - old)
+        vox = np.rint(world @ inverse[:3, :3].T + inverse[:3, 3]).astype(int)
+        inside = np.all((vox >= 0) & (vox < np.array(engine.scene.shape)), axis=1)
+        collision |= _obstacle_collision(engine, vox, inside, removed, blocking_labels)
+    return collision
+
+
+def _sweep_numpy(engine, rest, old, proposed, removed, blocking_labels, execution=None):
+    inverse = engine.scene.inverse
+    # Keep the original affine multiplication shape at each alpha so BLAS
+    # evaluates it in the same order. Classify the rounded samples together.
+    with np.errstate(all='ignore'):
+        start = rest + old
+        travel = proposed - old
+        worlds = [(start + alpha * travel) @ inverse[:3, :3].T for alpha in _sweep_samples]
+        rounded = np.rint(np.concatenate(worlds) + inverse[:3, 3])
+    if not np.all((rounded >= -_integer_coordinate_limit) & (rounded < _integer_coordinate_limit)):
+        # Keep the original per-sample validation and warning/exception order.
+        if execution is not None: _record_fallback(execution, 'sweepFallbackReasons', 'vector-numeric-domain')
+        return _sweep_scalar(engine, rest, old, proposed, removed, blocking_labels, execution)
+    if execution is not None: execution['sweepVectorCalls'] += 1
+    vox = rounded.astype(int)
+    inside = np.all((vox >= 0) & (vox < np.array(engine.scene.shape)), axis=1)
+    return _obstacle_collision(engine, vox, inside, removed, blocking_labels)
+
+
+def _strain_candidates_numpy(u, edges, lengths, max_strain):
+    if u.dtype != np.float64:
+        return None
+    if max_strain and not 1e-120 <= max_strain <= 1e120:
+        return None
+    if not np.all((lengths >= 1e-120) & (lengths <= 1e120)):
+        return None
+    # Speculative scores only decide which edges to refine. Let the original
+    # scalar arithmetic handle extreme values (and any configured FP errors).
+    with np.errstate(all='ignore'):
+        delta = u[edges[:, 1]] - u[edges[:, 0]]
+        norms = np.linalg.norm(delta, axis=1)
+        zero = norms == 0.
+        if not np.all(zero | ((norms >= 1e-120) & (norms <= 1e120))) or np.any(delta[zero]):
+            return None
+        if max_strain:
+            scores = max_strain * lengths / np.maximum(norms, 1e-15)
+            return np.flatnonzero(scores <= scores.min() * _strain_margin)
+        scores = norms / lengths
+        best = scores.max()
+        return np.flatnonzero(scores >= best / _strain_margin) if best else (0,)
+
+
+def _strain_extreme(u, edges, lengths, max_strain, native, execution, fallback=None):
+    """Smallest strain scale, or largest bond ratio when ``max_strain`` is zero.
+
+    A native or NumPy screen only picks the bonds that could hold the extreme
+    value; those are evaluated in bond order with the scalar reference norm.
+    """
+    if not len(lengths):
+        return 1. if max_strain else 0.
+    candidates = None
+    if native is not None and fallback is None:
+        selected = native(u, edges, lengths, max_strain)
+        if type(selected) is str:
+            fallback = selected
+        else:
+            candidates = selected
+            if execution is not None:
+                execution['strainNativeCalls'] += 1
+                execution['strainNativeEdges'] += len(lengths)
+    scalar_reference = fallback in ('diagnostic-reference', 'numpy-error-policy', 'rounding-mode', 'floating-point-format')
+    if candidates is None and not scalar_reference:
+        if execution is not None:
+            _record_fallback(execution, 'strainFallbackReasons', fallback or 'native-numeric-domain')
+        candidates = _strain_candidates_numpy(u, edges, lengths, max_strain)
+        if execution is not None and candidates is not None:
+            execution['strainVectorCalls'] += 1
+    if candidates is None:
+        candidates = range(len(lengths))
+        if execution is not None:
+            reason = fallback if scalar_reference else 'scalar-numeric-domain'
+            _record_fallback(execution, 'strainFallbackReasons', reason)
+    if execution is not None:
+        execution['strainRefinedEdges'] += len(candidates)
+    # Evaluate contenders in their original edge order with the stock scalar
+    # norm. A BLAS reduction may differ by ulps from the batched estimate.
+    if max_strain:
+        return min(max_strain * lengths[k] / max(np.linalg.norm(u[edges[k, 1]] - u[edges[k, 0]]), 1e-15)
+                   for k in candidates)
+    return max(float(np.linalg.norm(u[edges[k, 1]] - u[edges[k, 0]]) / lengths[k]) for k in candidates)
+
+
+def _bounded_contact_reactions(reactions, active):
+    """Keep existing receivers and bound the sum of omitted new loads."""
+    new_cells = np.array([cell for cell in reactions if cell not in active], dtype=np.intp)
+    if not len(new_cells):
+        return reactions, 0.
+    magnitudes = np.linalg.norm([reactions[cell] for cell in new_cells], axis=1)
+    weak = magnitudes < CONTACT_ACTIVATION_FORCE_FLOOR_N
+    cells, loads = new_cells[weak], magnitudes[weak]
+    total = float(np.sum(loads))
+    if total > CONTACT_OMITTED_FORCE_LIMIT_N:
+        # Keep larger loads when the aggregate omission limit is reached.
+        # Source-cell order breaks ties independently of reaction assembly.
+        order = np.lexsort((cells, loads))
+        running = np.cumsum(loads[order])
+        count = np.searchsorted(running, CONTACT_OMITTED_FORCE_LIMIT_N, side='right')
+        cells = cells[order[:count]]
+        total = float(running[count - 1]) if count else 0.
+    if not len(cells):
+        return reactions, 0.
+    omitted = set(cells)
+    return {cell: force for cell, force in reactions.items() if cell not in omitted}, total
+
+
+def _activate_contact_patch(engine, model, cells, excluded, max_nodes, *, reserve_nodes=0):
+    active = set(model['active']) - excluded
+    anchors = set(model['anchors'])
+    free = active - anchors
+    seeds = set(cells) - excluded
+    if seeds <= free:
+        return
+    active.update(seeds)
+    if len(active) > max_nodes:
+        raise ValueError('VESSEL_TISSUE_NODE_LIMIT: insufficient local lattice nodes for contact')
+    blocked = _blocked(engine)
+    # Growing the lattice patch does not change which source neighbors can
+    # exchange load. Cuts and excluded cells invalidate these lookups.
+    topology = (frozenset(blocked), frozenset(excluded))
+    cached = getattr(engine, '_vessel_tissue_neighbor_cache', None)
+    if cached is None or cached[0] != topology:
+        cached = topology, {}
+        engine._vessel_tissue_neighbor_cache = cached
+    cache = cached[1]
+
+    def neighbors(cell):
+        if cell not in cache:
+            cache[cell] = {n for n, _ in _neighbor_ids(engine.scene.shape, cell) if n not in excluded
+                           and tuple(sorted((cell, n))) not in blocked
+                           and _material(engine, n) in ('soft_tissue', 'brain', 'tumor')}
+        return cache[cell]
+
+    # Bind the loaded cells to at most two local tissue shells. Existing holds
+    # keep their active cells and the patch boundary anchors remain clamped.
+    # Optional neighbors only use the remaining expansion budget. Receptors
+    # already added above can use the full hard node limit.
+    neighborhood_limit = max(len(active), max_nodes - reserve_nodes)
+    frontier = seeds
+    for _ in range(2):
+        new = set().union(*(neighbors(cell) for cell in frontier)) - active
+        frontier = set(sorted(new)[:neighborhood_limit - len(active)])
+        active.update(frontier)
+    held = {c for hold in _holds(engine) for c in hold['cells']}
+    model['active'] = sorted(active)
+    model['anchors'] = sorted(cell for cell in active - held - seeds - free if neighbors(cell) - active)
+
+
+def tick(engine, dt, *, vessel_tool_motion=None, vessel_tool_clock_hand=None):
     initialize(engine)
     if not np.isfinite(dt) or dt < 0: raise ValueError('INVALID_DEFORMATION_TIME')
     p = _settings(engine); model = engine.state['deformationModel']; removed = set(engine.state['removed'])
     diagnostic = _diagnostics.get()
+    execution = _kernel_execution.get()
     if diagnostic is not None: diagnostic['ticks'] += 1
     if 'brainContinuumV1' in engine.scene.properties:
         from .surgical_continuum import tick as continuum_tick
+        if execution is not None: execution['continuumTicks'] += 1
         return continuum_tick(engine, dt, diagnostic)
+    if execution is not None: execution['latticeTicks'] += 1
     if 'patientPosition' in engine.state:
         from .surgical_position import activate_exposed_patch
         activate_exposed_patch(engine, radius_mm=p['radiusMm'], max_nodes=p['maxNodes'])
     rigid = rigid_cells(engine)
+    for h in engine.state['holds'].values(): h['cells'] = [c for c in h['cells'] if c not in removed]
+    material_profile = engine.scene.properties.get('gliomaMaterialsV1')
+    vessel_displacements = {}
+    distributed = False
+    coupled_vessels = False
+    wall_reactions = {}
+    attachment_targets = {}
+    if material_profile:
+        from .surgical_glioma_materials import move_vessels, retained_vessel_segments, vessel_displacements as vessel_motion
+        from . import surgical_vessel_rods as rods
+        distributed = rods.enabled(engine)
+        if distributed:
+            coupled_vessels = rods.soft_contact_enabled(engine)
+            if coupled_vessels:
+                # Advance rods against the current lattice and hand off the
+                # accepted mean contact forces and support targets.
+                loads = rods.tick(engine, dt, tool_motion=vessel_tool_motion, excluded_tissue=rigid,
+                                  tool_clock_hand=vessel_tool_clock_hand)
+                if loads is not None:
+                    wall_reactions, attachment_targets = loads.wall_reactions, loads.attachment_targets
+                receivers = wall_reactions
+                if attachment_targets:
+                    receivers = wall_reactions.copy()
+                    deformation = engine.state['deformation']
+                    for cell, (count, offset) in attachment_targets.items():
+                        tissue_offset = np.asarray(deformation.get(str(cell), (0., 0., 0.)))
+                        force = rods.SUPPORT_N_PER_MM * (offset - count * tissue_offset)
+                        if np.any(force):
+                            receivers[cell] = receivers.get(cell, 0.) + force
+                if receivers:
+                    excluded = removed | rigid
+                    reserve = 0
+                    if rods.bounded_tissue_capacity_enabled(engine):
+                        active = set(model['active']) - excluded
+                        supplied = len(receivers)
+                        receivers, omitted = _bounded_contact_reactions(receivers, active)
+                        reserve = min(CONTACT_RECEPTOR_RESERVE_NODES, p['maxNodes'] // 3)
+                        if diagnostic is not None:
+                            diagnostic['maxOmittedWallReactionN'] = max(diagnostic['maxOmittedWallReactionN'], omitted)
+                            diagnostic['omittedWallReceptorTicks'] += supplied - len(receivers)
+                    if receivers:
+                        _activate_contact_patch(engine, model, receivers, excluded, p['maxNodes'], reserve_nodes=reserve)
+                    if not attachment_targets:
+                        wall_reactions = receivers
+                    else:
+                        active = set(model['active']) - excluded
+                        wall_reactions = {cell: force for cell, force in wall_reactions.items() if cell in active}
+            vessel_displacements = {str(cell): value for cell, value in vessel_motion(engine).items()}
+        elif retained_vessel_segments(engine):
+            deformation = engine.state['deformation']
+            vessel_displacements = {str(vessel): deformation[str(vessel)]
+                                    for vessel, _ in material_profile['vesselAttachments']
+                                    if vessel not in removed and str(vessel) in deformation}
     ids = [c for c in model['active'] if c not in removed and c not in rigid]
     model['active'] = ids
-    for h in engine.state['holds'].values(): h['cells'] = [c for c in h['cells'] if c not in removed]
-    for field in (engine.state['deformation'], model['velocities']):
-        for c in list(field):
-            if int(c) not in ids: field.pop(c)
-    if not ids: return
-    blocked = _blocked(engine); retained = set(ids)
-    bonds = sorted((c, n) for c in ids for n, _ in _neighbors(engine, c)
-                   if c < n and n in retained and (c, n) not in blocked)
+    retained = set(ids)
+    for c in list(engine.state['deformation']):
+        if int(c) not in retained and c not in vessel_displacements:
+            engine.state['deformation'].pop(c)
+    for c in list(model['velocities']):
+        if int(c) not in retained:
+            model['velocities'].pop(c)
+    if material_profile:
+        memory_field = model.setdefault('maxwellMemoryMm', {})
+        for c in list(memory_field):
+            if int(c) not in retained:
+                memory_field.pop(c)
+        if not ids and 'activeReferenceVolumeMm3' in model:
+            model.update(activeNodes=0, elasticEnergyNmm=0., summedHandleLoadN=0.,
+                         maxNeighborDisplacementRatio=0., maxGradientNorm=0.,
+                         activeReferenceVolumeMm3=0., activeDeformedVolumeMm3=0.,
+                         minVolumeRatio=1., maxVolumeRatio=1.)
+    if not ids:
+        if distributed and not coupled_vessels:
+            rods.tick(engine, dt, tool_motion=vessel_tool_motion)
+        if coupled_vessels:
+            model['remainderSeconds'] = engine.state[rods.FIELD]['remainderSeconds']
+        return
+    blocked = _blocked(engine)
     anchors = sorted(set(model['anchors']) & retained)
-    solve, free, index, edges, K = _system(engine, p, ids, anchors, bonds)
+    attachment_stiffness = {cell: rods.SUPPORT_N_PER_MM * attachment_targets[cell][0]
+                            for cell in ids if cell in attachment_targets}
+    solve, free, index, edges, K = _system(engine, p, ids, anchors, retained, blocked, attachment_stiffness)
+    edge_nodes, edge_lengths, shortest = engine._deformation_system_v2[6:]
     h = p['fixedStepSeconds']; total = model['remainderSeconds'] + dt
     steps = int(np.floor((total + 1e-12) / h))
     model['remainderSeconds'] = max(0., round(total - steps*h, 14))
+    sweep, strain_candidates, no_native = None, None, None
+    if steps:
+        # A batched estimate may skip an edge where a caller configured
+        # per-operation floating-point errors. Honor these policies verbatim.
+        if np.geterr() == _numpy_error_defaults:
+            sweep, strain_candidates, no_native = native_backend.deformation_kernels()
+        else:
+            no_native = 'numpy-error-policy'
+    strain_fallback = 'diagnostic-reference' if diagnostic is not None else no_native
+    bond_scan = _bond_scan()
     u = np.array([engine.state['deformation'].get(str(c), [0., 0., 0.]) for c in ids])
+    if material_profile:
+        from .surgical_glioma_materials import gradient_stencil
+        stencil = gradient_stencil(engine, ids, edges)
+        memory = np.array([memory_field.get(str(c), [0., 0., 0.]) for c in ids])
+        tau = material_profile['relaxationSeconds']
+        memory_weight = tau / (tau + h)
+        branch_ratio = material_profile['maxwellShearRatio']
     targets = np.zeros_like(u)
     for hold in _holds(engine):
         delta = np.subtract(hold.get('target', hold['origin']), hold['origin'])
@@ -244,15 +617,26 @@ def tick(engine, dt):
     if 'patientPosition' in engine.state:
         from .surgical_position import gravity_forces_n
         forcing += gravity_forces_n(engine, ids)
+    for cell, force in wall_reactions.items():
+        forcing[index[cell]] += force
     if diagnostic is not None:
         diagnostic['forceCapNodeTicks'] += int(np.count_nonzero(np.linalg.norm(forcing, axis=1) > p['maxForceN']))
     force_scale = np.minimum(1., p['maxForceN'] / np.maximum(np.linalg.norm(forcing, axis=1), 1e-15))
     forcing *= force_scale[:, None]
+    if attachment_stiffness:
+        # Use the same spring energy as the rod solve, with the mean accepted
+        # rod displacement held fixed during this lattice increment. Implicit
+        # receptor stiffness keeps multiple springs on one cell stable.
+        attachment_drive = np.zeros_like(u)
+        for cell in attachment_stiffness:
+            attachment_drive[index[cell]] = rods.SUPPORT_N_PER_MM * attachment_targets[cell][1]
+        attachment_diagonal = np.asarray([attachment_stiffness.get(cell, 0.) for cell in ids])[:, None]
+        forcing += attachment_drive
+        if diagnostic is not None:
+            diagnostic_hold_diagonal = diagnostic_hold_diagonal + np.repeat(attachment_diagonal.ravel(), 3)
     track_mechanics = steps and mechanical.enabled(engine)
     if track_mechanics:
         labels = engine.scene.labels.ravel()[ids]
-        edge_nodes = np.asarray([(i, j) for i, j, _ in edges], dtype=int).reshape(-1, 2)
-        edge_lengths = np.asarray([length for _, _, length in edges])
         retractor_cells = sorted({c for key, hold in engine.state['holds'].items()
                                   if 'target' in hold and engine.state['slots'][key]['instrument'] == 'brain_retractor'
                                   for c in hold['cells'] if c in index})
@@ -260,34 +644,85 @@ def tick(engine, dt):
         effective_targets = targets[retractor_nodes] * force_scale[retractor_nodes, None]
     rest = np.column_stack(np.unravel_index(ids, engine.scene.shape)) @ engine.scene.affine[:3, :3].T + engine.scene.affine[:3, 3]
     removed_array = np.fromiter(removed, dtype=np.int64)
+    if sweep is not None: removed_array.sort()
     blocking_labels = np.array([label for label, region in engine.by_label.items()
         if region.get('material') in ('bone', 'vessel', 'unknown')], dtype=engine.scene.labels.dtype)
+    # For every bond the displacement difference is at most 2*sqrt(3)
+    # times the largest absolute node component. Staying below one eighth
+    # of the shortest bond's allowed extension leaves the projection idle,
+    # including ample margin for roundoff. Resolve the edge limit near the
+    # threshold, outside ordinary magnitudes, or when collecting diagnostics.
+    strain_limit = p['maxEdgeStrain'] * shortest
+    safe_component = strain_limit / 8 if 2e-15 < strain_limit < 1e150 and diagnostic is None else 0.
+    inverse = engine.scene.inverse[:3, :3]
+    # Each index-space gradient entry is bounded by twice the maximum
+    # displacement component. The smaller determinant bound is sufficient
+    # both for the deformation gradient cap and for its volume bounds.
+    gradient_safe = (1.18 ** (1 / 3) - 1) / (7. * np.linalg.norm(inverse)) if coupled_vessels else 0.
+    same_voxel_safe = .49 / np.abs(inverse).sum(axis=1).max() if coupled_vessels else 0.
     velocity = np.zeros_like(u)
     for _ in range(steps):
         old = u.copy(); rhs = (p['dragNsPerMm'] / h * u + forcing).ravel()
+        if material_profile:
+            rhs += (branch_ratio * memory_weight) * (K @ memory.ravel())
         result = np.zeros(u.size); result[free] = solve(rhs[free]); u = result.reshape((-1, 3))
+        if execution is not None: execution['latticeSubsteps'] += 1
         if diagnostic is not None:
             diagnostic['substeps'] += 1
             diagnostic['displacementCapNodeSteps'] += int(np.count_nonzero(np.linalg.norm(u, axis=1) > p['maxDisplacementMm']))
         u *= np.minimum(1., p['maxDisplacementMm'] / np.maximum(np.linalg.norm(u, axis=1), 1e-15))[:, None]
         # Global rescaling preserves continuity while bounding every bond strain.
-        scale = min((p['maxEdgeStrain'] * length / max(np.linalg.norm(u[j] - u[i]), 1e-15) for i, j, length in edges), default=1.)
+        scale = 1.
+        if safe_component and np.max(np.abs(u)) < safe_component:
+            if execution is not None: execution['strainIdleSubsteps'] += 1
+        elif coupled_vessels:
+            # Soft vessel contact defines its limit with the batched norm.
+            if execution is not None: execution['strainCoupledSubsteps'] += 1
+            stretch = np.linalg.norm(u[edge_nodes[:, 1]] - u[edge_nodes[:, 0]], axis=1)
+            scale = np.min(p['maxEdgeStrain'] * edge_lengths / np.maximum(stretch, 1e-15), initial=1.)
+        elif bond_scan:
+            scale = bond_scan.bond_scale(u, edges, p['maxEdgeStrain'])
+        else:
+            scale = _strain_extreme(u, edge_nodes, edge_lengths, p['maxEdgeStrain'],
+                strain_candidates, execution, strain_fallback)
         if diagnostic is not None:
             diagnostic['strainProjectionSteps'] += int(scale < 1)
-            ratio = max((float(np.linalg.norm(u[j] - u[i]) / length) for i, j, length in edges), default=0.)
+            ratio = (bond_scan.bond_ratio(u, edges) if bond_scan else
+                     _strain_extreme(u, edge_nodes, edge_lengths, 0., None, None, 'diagnostic-reference'))
             diagnostic['maxPreStrainProjectionNeighborRatio'] = max(diagnostic['maxPreStrainProjectionNeighborRatio'], ratio)
         if scale < 1: u *= scale
+        if material_profile and not (gradient_safe and np.max(np.abs(u)) < gradient_safe):
+            from .surgical_glioma_materials import limit_gradient
+            u = limit_gradient(stencil, u)
         # Conservative swept point-in-source-cell obstacle constraint; collision
         # integration additionally accounts for the displaced voxel's extent.
         collision = False
-        for alpha in (.25, .5, .75, 1.):
-            world = rest + old + alpha * (u - old)
-            vox = np.rint(world @ engine.scene.inverse[:3, :3].T + engine.scene.inverse[:3, 3]).astype(int)
-            inside = np.all((vox >= 0) & (vox < np.array(engine.scene.shape)), axis=1)
-            collision |= _obstacle_collision(engine, vox, inside, removed_array, blocking_labels)
+        if same_voxel_safe and max(np.max(np.abs(old)), np.max(np.abs(u))) < same_voxel_safe:
+            if execution is not None: execution['sweepIdleSubsteps'] += 1
+        else:
+            collision = (no_native if sweep is None else
+                sweep(rest, old, u, engine.scene.labels, engine.scene.inverse, removed_array, blocking_labels))
+            if type(collision) is str:
+                if execution is not None:
+                    _record_fallback(execution, 'sweepFallbackReasons', collision)
+                sweep_fallback = _sweep_scalar if collision in (
+                    'numpy-error-policy', 'numeric-domain', 'rounding-mode', 'floating-point-format') else _sweep_numpy
+                collision = sweep_fallback(engine, rest, old, u, removed_array, blocking_labels, execution)
+            elif execution is not None:
+                execution['sweepNativeCalls'] += 1
+                execution['sweepNativeSamplePoints'] += len(_sweep_samples) * len(rest)
         # Reject the coupled increment as a whole: clamping single nodes would
         # introduce fresh strain discontinuities after the strain projection.
         if collision: u = old
+        if attachment_stiffness:
+            # The implicit spring contributes only its relative displacement
+            # load. Reject an out-of-domain combined load instead of clipping
+            # one endpoint of a spring.
+            combined_load = forcing - attachment_diagonal * u
+            if np.any(np.linalg.norm(combined_load, axis=1) > p['maxForceN'] + 1e-12):
+                raise ValueError('VESSEL_ATTACHMENT_LOAD_LIMIT: coupled tissue force exceeds the numerical bound')
+        if material_profile:
+            memory = memory_weight * memory + (1 - memory_weight) * u
         if track_mechanics:
             mechanical.record_lattice_step(engine, labels, edge_nodes, edge_lengths, u, h)
             if retractor_cells:
@@ -299,19 +734,46 @@ def tick(engine, dt):
             ku = K @ u.ravel() + diagnostic_hold_diagonal * u.ravel()
             kold = K @ old.ravel() + diagnostic_hold_diagonal * old.ravel()
             kdelta = K @ delta + diagnostic_hold_diagonal * delta
-            residual = (ku + p['dragNsPerMm'] / h * delta - forcing.ravel())[free]
+            residual = ku + p['dragNsPerMm'] / h * delta - forcing.ravel()
+            if material_profile:
+                residual += branch_ratio * (K @ (u - memory).ravel())
+            residual = residual[free]
             diagnostic['maxFreeResidualN'] = max(diagnostic['maxFreeResidualN'], float(np.max(np.abs(residual), initial=0.)))
             # Constant-target implicit Euler balance includes the hold-spring
             # quadratic potential, viscous and algorithmic dissipation. This
             # is solver verification, not measured retractor work.
             change = .5 * (u.ravel() @ ku - old.ravel() @ kold)
             balance = forcing.ravel() @ delta - change - p['dragNsPerMm'] / h * (delta @ delta) - .5 * delta @ kdelta
+            if material_profile:
+                balance -= branch_ratio * ((u - memory).ravel() @ (K @ delta))
             diagnostic['maxAbsDiscreteEnergyBalanceNmm'] = max(diagnostic['maxAbsDiscreteEnergyBalanceNmm'], abs(float(balance)))
         velocity = (u - old) / h
     if steps:
-        engine.state['deformation'] = {str(c): u[i].tolist() for i, c in enumerate(ids)}
+        engine.state['deformation'] = {**vessel_displacements, **{str(c): u[i].tolist() for i, c in enumerate(ids)}}
         model['velocities'] = {str(c): velocity[i].tolist() for i, c in enumerate(ids)}
         model['elasticEnergyNmm'] = float(.5 * u.ravel() @ (K @ u.ravel()))
-        model['maxNeighborDisplacementRatio'] = max((float(np.linalg.norm(u[j] - u[i]) / length) for i, j, length in edges), default=0.)
+        if coupled_vessels:
+            stretch = np.linalg.norm(u[edge_nodes[:, 1]] - u[edge_nodes[:, 0]], axis=1)
+            model['maxNeighborDisplacementRatio'] = float(np.max(stretch / edge_lengths, initial=0.))
+        else:
+            model['maxNeighborDisplacementRatio'] = (bond_scan.bond_ratio(u, edges) if bond_scan else
+                _strain_extreme(u, edge_nodes, edge_lengths, 0., strain_candidates, execution, strain_fallback))
         model['activeNodes'] = len(ids)
         model['model'] = p['model']
+        if material_profile:
+            from .surgical_glioma_materials import record_lattice
+            record_lattice(engine, ids, stencil, u, memory, K, targets * force_scale[:, None], held, p)
+    if distributed:
+        if not coupled_vessels:
+            rods.tick(engine, dt, tool_motion=vessel_tool_motion)
+    elif material_profile:
+        move_vessels(engine)
+
+
+def _bond_scan():
+    """Opt-in exact bond scan module (``RESECTIONLAB_ACCEL=deformation-scan``)."""
+    from . import acceleration
+    if not acceleration.enabled('deformation-scan'):
+        return None
+    from . import accel_mechanics
+    return accel_mechanics

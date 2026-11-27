@@ -370,6 +370,18 @@
   gap: 1px;
   border-block: 1px solid #2c332e;
 }
+.poc-workbench .environment-preparation .environment-layer-row.environment-mode {
+  grid-template-columns: 72px minmax(0, 1fr);
+  align-items: center;
+}
+.poc-workbench .environment-preparation .environment-native-pair {
+  margin: 0;
+}
+.poc-workbench .environment-preparation .environment-native-pair dd {
+  margin: 0;
+  color: #d4dcd6;
+  overflow-wrap: anywhere;
+}
 .poc-workbench .environment-preparation .environment-layer-row {
   display: grid;
   grid-template-columns: 47px minmax(0, 1fr);
@@ -496,7 +508,7 @@
   .poc-workbench .surgical-panel.environment-preparation {
     padding-inline: 12px;
   }
-  .poc-workbench .environment-preparation .environment-layer-row {
+  .poc-workbench .environment-preparation .environment-layer-row:not(.environment-mode) {
     grid-template-columns: 42px minmax(0, 1fr);
     gap: 5px;
   }

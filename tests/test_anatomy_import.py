@@ -8,6 +8,7 @@ import numpy as np
 import pydicom
 import pytest
 import SimpleITK as sitk
+from scipy import ndimage as ndi
 
 from resectionlab.anatomy_import import (
     imaging_modality, import_anatomy_derivative, import_dicom, import_nifti_series,
@@ -31,6 +32,100 @@ def collection(tmp_path):
     import_nifti_series(c, source, series_id="t1", modality="T1")
     c.save("fresh source")
     return c
+
+
+def test_local_alignment_evidence_is_source_bound_and_keeps_review_pending(tmp_path):
+    shape = (57, 57, 57)
+    values = ndi.gaussian_filter(np.random.default_rng(31).normal(size=shape), 1.6).astype(np.float32)
+    moving = -ndi.shift(values, (1., -.5, .5), order=1, prefilter=False)
+    c = PatientImagingCollection.create(tmp_path / 'field-study', 'patient-a')
+    for sid, modality, image in [('t1', 'T1', values), ('tof', 'TOF', moving)]:
+        import_nifti_series(c, volume(tmp_path / f'{sid}.nii.gz', image), series_id=sid, modality=modality)
+    c.set_registration('tof', np.eye(4), status='unreviewed', method='generated comparison')
+    c.save('Paired generated source control')
+    manifest = c.root / 'patient-anatomy.json'
+    original_manifest = manifest.read_bytes()
+    session = BridgeSession(tmp_path / 'transfers')
+
+    def call(operation, args):
+        return session.execute(operation, args, _Request(operation), lambda *_: None)
+
+    try:
+        opened = call('anatomyOpen', {'path': str(manifest)})
+        binding = {'collectionId': opened['collectionId'], 'snapshotId': c.identity(), 'seriesId': 'tof'}
+        central = call('anatomyLocalAlignment', {**binding, 'center': [28., 28., 28.]})
+        assert central['commonCoverageCount'] == central['sampleCount'] == 25**3
+        assert central['transformStatus'] == 'unreviewed'
+        assert central['movingImageSha256'] == c.series('tof')['original']['sha256']
+        middle = next(p for p in central['patches'] if p['centerRasMm'] == central['centerRasMm'])
+        assert middle['status'] == 'distinguishable_peak'
+        np.testing.assert_allclose(middle['movingSamplingShiftMm'], [1., -.5, .5], atol=.5)
+        assert middle['bestScore'] > middle['candidateScore']
+
+        edge = call('anatomyLocalAlignment', {**binding, 'center': [2., 28., 28.]})
+        assert edge['commonCoverageCount'] == 15 * 25**2
+        assert any(p['status'] == 'insufficient_source_coverage' for p in edge['patches'])
+        assert manifest.read_bytes() == original_manifest
+        with pytest.raises(ValueError, match='Anatomy changed'):
+            call('anatomyLocalAlignment', {**binding, 'snapshotId': 'stale', 'center': [2., 28., 28.]})
+    finally:
+        session.close()
+
+
+def test_local_wall_alignment_review_admits_only_its_bound_crop_and_layers(tmp_path):
+    from test_surgical_patient import native_wall_fixture
+    from resectionlab.anatomy_local_wall_review import PROPERTY
+    from resectionlab.surgical_patient import surgical_environment_options
+
+    source, _, _ = native_wall_fixture(tmp_path, registration='unreviewed')
+    manifest = source.root / 'patient-anatomy.json'
+    layers = {'brain': 'brain', 'vessels': 'vessels'}
+    center = [0., 0., 1.]
+    landmarks = [[-4., -4., 0.], [4., -3., 0.], [-1., 3., 0.], [1., 1., 4.]]
+    scope = {'brainLayerId': layers['brain'], 'vesselLayerId': layers['vessels'], 'center': center}
+    session = BridgeSession(tmp_path / 'transfers')
+
+    def call(operation, args):
+        return session.execute(operation, args, _Request(operation), lambda *_: None)
+
+    try:
+        opened = call('anatomyOpen', {'path': str(manifest)})
+        args = {'collectionId': opened['collectionId'], 'snapshotId': source.identity(), 'seriesId': 'tof',
+                'action': 'reviewNativeWall', 'reviewer': 'generated scope control', 'nativeWallScope': scope}
+        with pytest.raises(ValueError, match='four non-coplanar'):
+            call('anatomyRegister', {**args, 'movingPoints': landmarks[:3], 'referencePoints': landmarks[:3]})
+        completed = call('anatomyRegister', {**args, 'movingPoints': landmarks, 'referencePoints': landmarks})
+        assert completed['document']['transforms']['tof']['status'] == 'unreviewed'
+        assert completed['document']['transforms']['tof'][PROPERTY] == completed['result']
+        binding = {'collectionId': opened['collectionId'], 'snapshotId': completed['document']['snapshot_id'], 'layers': layers}
+        saved_manifest = manifest.read_bytes()
+        confirmed = call('anatomyRegister', {**args, 'snapshotId': binding['snapshotId'],
+            'movingPoints': landmarks, 'referencePoints': landmarks})
+        assert confirmed['document']['snapshot_id'] == binding['snapshotId']
+        assert manifest.read_bytes() == saved_manifest
+        with pytest.raises(ValueError, match='Unreviewed registration requires explicit research opt-in'):
+            call('prepareSurgicalEnvironment', binding)
+        with pytest.raises(ValueError, match='outside the reviewed local native-wall crop'):
+            call('prepareSurgicalEnvironment', {**binding, 'nativeWallCenter': [1., 0., 1.]})
+        prepared = call('prepareSurgicalEnvironment', {**binding, 'nativeWallCenter': center})
+        adapter = prepared['metadata']['surgical_adapter']
+        assert adapter['nativeWallAlignmentReview'] == completed['result']
+        assert adapter['sourceManifest']['transforms']['tof']['status'] == 'unreviewed'
+    finally:
+        session.close()
+
+    source = PatientImagingCollection(source.root)
+    options = surgical_environment_options(source)
+    vascular = next(row for row in options['layers'] if row['layerId'] == layers['vessels'])
+    assert vascular['status'] == 'estimated_alignment'
+    assert vascular['nativeWallAlignment'] == {'brainLayerId': layers['brain'], 'centerRasMm': center}
+    source.layer('brain')['coverage'] = 'Updated positive tissue support declaration after review'
+    source.save('Generated stale alignment receipt control')
+    options = surgical_environment_options(source)
+    vascular = next(row for row in options['layers'] if row['layerId'] == layers['vessels'])
+    assert vascular['status'] == 'estimated_alignment' and 'nativeWallAlignment' not in vascular
+    with pytest.raises(ValueError, match='requires reviewed source alignment: tof'):
+        prepare_surgical_environment(source.root, tmp_path / 'stale', layer_ids=layers, native_wall_center=center)
 
 
 def test_semantic_sequence_required_for_nifti_and_dicom_family():
@@ -183,6 +278,82 @@ def test_raw_diffusion_companions_and_projection_stay_out_of_scalar_series(tmp_p
     reopened = PatientImagingCollection(c.root)
     assert [row["id"] for row in reopened.source_records()] == ["t1", "dwi", "mip"]
     assert reopened.document["reference_series"] == "t1"
+
+
+def test_native_diffusion_baseline_uses_measured_volume_and_keeps_structural_reference(tmp_path):
+    c = collection(tmp_path)
+    grid = np.diag([1.2, 1.1, 2.5, 1.])
+    grid[:3, 3] = [-5, 6, -8]
+    values = np.arange(8**3, dtype=np.float32).reshape((8, 8, 8))
+    dwi = volume(tmp_path / "diffusion.nii.gz", np.stack([values, values + 3, values + 5, values + 7], axis=-1), grid)
+    (tmp_path / "diffusion.bval").write_text("1000 0 0 500\n")
+    asset = import_nifti_series(c, dwi, series_id="dwi")
+    c.save("retain raw directional source")
+    path = c.root / "patient-anatomy.json"
+    session = BridgeSession(tmp_path / "diffusion-transfers")
+
+    def call(operation, args):
+        return session.execute(operation, args, _Request(operation), lambda *_: None)
+
+    try:
+        opened = call("anatomyOpen", {"path": str(path)})
+        binding = {"collectionId": opened["collectionId"], "snapshotId": c.identity()}
+        result = call("anatomyDiffusionBaseline", {**binding, "assetId": asset["id"]})
+        binding["snapshotId"] = result["document"]["snapshot_id"]
+        reopened = PatientImagingCollection(c.root)
+        baseline = reopened.series(result["seriesId"])
+        assert baseline["modality"] == "DWI_B0"
+        assert baseline["diffusion_baseline"]["volume_index"] == 1
+        assert baseline["diffusion_baseline"]["low_b_volume_count"] == 2
+        assert baseline["diffusion_baseline"]["source_sha256"] == asset["original"]["sha256"]
+        assert baseline["diffusion_baseline"]["bvals_sha256"] == asset["companions"]["bval"]["sha256"]
+        np.testing.assert_array_equal(reopened.array(baseline["data"]), values + 3)
+        np.testing.assert_array_equal(baseline["affine"], asset["affine"])
+        assert reopened.document["reference_series"] == "t1"
+        assert baseline["id"] not in reopened.document["transforms"]
+        assert reopened.document["source_assets"] == [asset]
+
+        expected = path.read_bytes()
+        repeated = call("anatomyDiffusionBaseline", {**binding, "assetId": "dwi"})
+        assert repeated == result
+        assert path.read_bytes() == expected
+        derivative = reopened.path(baseline["original"]["path"])
+        captured = derivative.read_bytes()
+        derivative.write_bytes(captured + b"modified")
+        with pytest.raises(ValueError, match="baseline identity changed"):
+            call("anatomyDiffusionBaseline", {**binding, "assetId": "dwi"})
+        derivative.write_bytes(captured)
+        reopened.path(asset["companions"]["bval"]["path"]).write_text("0 1000 0 500\n")
+        with pytest.raises(ValueError, match="b-values changed"):
+            call("anatomyDiffusionBaseline", {**binding, "assetId": "dwi"})
+        assert path.read_bytes() == expected
+    finally:
+        session.close()
+
+
+def test_diffusion_only_reference_yields_to_verified_structural_acquisition(tmp_path):
+    from resectionlab.anatomy_diffusion import add_native_diffusion_baseline
+    from resectionlab.anatomy_alignment import alignment_pairs
+
+    c = PatientImagingCollection.create(tmp_path / "study", "patient-a")
+    dwi = volume(tmp_path / "first_dwi.nii.gz", np.ones((8, 8, 8, 2), np.float32))
+    (tmp_path / "first_dwi.bval").write_text("1000 700\n")
+    import_nifti_series(c, dwi, series_id="without-baseline")
+    with pytest.raises(ValueError, match="at most 50 s/mm²"):
+        add_native_diffusion_baseline(c, "without-baseline")
+    assert c.document["series"] == []
+    (tmp_path / "first_dwi.bval").write_text("1000 0\n")
+    import_nifti_series(c, dwi, series_id="complete")
+    baseline = add_native_diffusion_baseline(c, "complete")
+    assert c.document["reference_series"] == baseline["id"]
+    c.save("diffusion baseline only")
+
+    c = PatientImagingCollection(c.root)
+    assert alignment_pairs(c) == []
+    t1 = volume(tmp_path / "T1w.nii.gz", np.ones((8, 8, 8), np.float32))
+    import_nifti_series(c, t1, series_id="t1")
+    assert select_intake_reference(c) == "t1"
+    assert [(source["id"], parent["id"]) for source, parent in alignment_pairs(c)] == [(baseline["id"], "t1")]
 
 
 def test_sidecar_preserves_processed_swi_and_reports_declared_coverage(tmp_path):

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import * as THREE from 'three';
 import {operativeVoxelSurface} from './operativeVoxelSurface.ts';
 import {operativeEntryCover,operativeFieldContext} from './operativeFieldContext.ts';
-import {operativeSectionVisible,operativeSectionContext} from './operativeSectionContext.ts';
+import {operativeSectionContext} from './operativeSectionContext.ts';
 import {fieldTargetOnOverview} from './operativeFieldSlice.ts';
 
 const field={shape:[2,2,2],origin:[0,0,0],spacingMm:2,voxels:Uint8Array.of(8,0,0,0,8,0,0,0),
@@ -43,10 +43,9 @@ test('surrounding source geometry maps the patient target to the local origin an
   assert.equal(operativeFieldContext(volume,field,'other').children.length,0);
   // The inspected MRI origin maps to voxel [1,0,0] in the contributing CT.
   const ctFrame=[[1,0,0,11],[0,1,0,20],[0,0,1,30],[0,0,0,1]];
-  const ct={seriesId:'bone-ct',modality:'CT',sourceSha256:'ct-original',signalSha256:'ct-signal',
+  const ct={seriesId:'bone-ct',modality:'CT',intensityUnits:'HU',sourceSha256:'ct-original',signalSha256:'ct-signal',
     data:Float32Array.of(2000,2000,2000,2000,500,0,0,0),shape:[2,2,2],affine:ctFrame};
   volume.compartments[0].appearanceSource=ct;
-  volume.patientContext={sources:[{seriesId:'bone-ct',sourceSha256:'ct-original',displayWindow:[0,1000]}]};
   const scanField={...field,intensity:{sourceSeries:'series',sourceSha256:'mr-original',window:[20,60]}};
   const mesh=operativeFieldContext(volume,scanField,'collection').children[0];
   assert.equal(mesh.geometry.getAttribute('scanSignal').array[0],128);
@@ -55,16 +54,6 @@ test('surrounding source geometry maps the patient target to the local origin an
   assert.equal(operativeFieldContext(volume,scanField,'collection').children[0].geometry.hasAttribute('scanSignal'),false);
   volume.compartments[0].sourceSupport.sampledDataSha256='raw';
   assert.equal(operativeFieldContext(volume,field,'collection').children.length,0);
-});
-
-test('depth following retains the exterior for shallow work and respects explicit view choices',()=>{
-  const route={stations:{bone:28,dura:22,brain:16,tumor:12},spacingMm:.5,routeRadiusMm:3};
-  assert(!operativeSectionVisible(route,'dura','follow'));
-  assert(operativeSectionVisible(route,'brain','follow'));
-  assert(operativeSectionVisible(route,'tumor','follow'));
-  assert(!operativeSectionVisible({...route,stations:{bone:null,dura:null,brain:14,tumor:12}},'tumor','follow'));
-  assert(!operativeSectionVisible(route,'tumor','exterior'));
-  assert(operativeSectionVisible(route,'overview','section'));
 });
 
 test('intact MRI continuation samples the matching source outside the operated footprint only',()=>{

@@ -84,12 +84,14 @@ def validate(scene):
     claimed_faces = set(); labels = scene.labels.ravel()
     vessel_ids = {r['id'] for r in scene.regions if r['material'] == 'vessel'}
     for edge in edges.values():
-        if edge['from'] not in nodes or edge['to'] not in nodes or edge['from'] == edge['to'] or edge['kind'] not in KINDS:
+        bed = ('gliomaMaterialsV1' in scene.properties and edge['kind'] == 'microvascular-bed'
+               and edge['sourceFace'] == scene.properties['gliomaMaterialsV1'].get('biopsyNeckFace'))
+        if edge['from'] not in nodes or edge['to'] not in nodes or edge['from'] == edge['to'] or (edge['kind'] not in KINDS and not bed):
             raise ValueError('INVALID_VASCULAR_GRAPH_EDGE')
         g = _number(edge['conductanceMm3PerPaS'], 'conductance')
         cells = edge['sourceCells']; face = edge['sourceFace']; leaks = edge['woundConductanceMm3PerPaS']
         if (not isinstance(cells, list) or len(cells) > 256
-                or any(type(c) is not int or not 0 <= c < labels.size or labels[c] not in vessel_ids for c in cells)
+                or any(type(c) is not int or not 0 <= c < labels.size or (not bed and labels[c] not in vessel_ids) for c in cells)
                 or len(set(cells)) != len(cells) or not isinstance(face, list)
                 or not isinstance(leaks, list) or len(leaks) != 2):
             raise ValueError('INVALID_VASCULAR_GRAPH_SOURCE_BINDING')
@@ -105,6 +107,9 @@ def validate(scene):
                 raise ValueError('VASCULAR_GRAPH_DISTINCT_NEIGHBOR_FACE_REQUIRED')
             claimed_faces.add(key)
         for name, leak in zip((edge['from'], edge['to']), leaks): rates[name] += g + leak
+    if scene.properties.get('gliomaMaterialsV1', {}).get('vesselMotionModel'):
+        from .surgical_glioma_materials import validate_vessel_chains
+        validate_vessel_chains(scene)
     boundaries = _rows(p['boundaries'], {'id', 'node', 'pressurePa', 'conductanceMm3PerPaS', 'source'}, 64)
     for b in boundaries.values():
         if b['node'] not in nodes: raise ValueError('INVALID_VASCULAR_GRAPH_BOUNDARY_NODE')
@@ -159,27 +164,47 @@ def contact(engine, cells, dt, force_n, temperature=None):
     p = engine.scene.properties[PROPERTY]
     bound = {c for e in p['edges'] for c in e['sourceCells']}
     labels = engine.scene.labels.ravel()
-    unknown = {int(c) for c in cells if engine.by_label[int(labels[c])]['material'] == 'vessel' and c not in bound}
-    s['unmappedContactCells'] = sorted(set(s['unmappedContactCells']) | unknown)
+    reached = {int(c) for c in cells if engine.by_label[int(labels[c])]['material'] == 'vessel'}
+    s['unmappedContactCells'] = sorted(set(s['unmappedContactCells']) | (reached - bound))
+    if engine.scene.properties.get('gliomaMaterialsV1', {}).get('vesselMotionModel') and dt > 0:
+        for edge in p['edges']:
+            mapped = reached.intersection(edge['sourceCells'])
+            if mapped:
+                row = s['edges'][edge['id']]
+                row['contactedSourceCells'] = sorted(set(row.get('contactedSourceCells', ())) | mapped)
 
 
 def damage(engine, faces, dt=0., kind='transection'):
     _number(dt, 'damageDuration')
     if kind != 'transection': raise ValueError('VASCULAR_GRAPH_UNQUALIFIED_DAMAGE_KIND')
     s = initialize(engine); _idle(s); p = engine.scene.properties[PROPERTY]
-    bindings = {tuple(sorted(e['sourceFace'])): e for e in p['edges'] if e['sourceFace']}
+    bindings = {tuple(sorted(e['sourceFace'])): (e, e['sourceFace']) for e in p['edges'] if e['sourceFace']}
+    materials = engine.scene.properties.get('gliomaMaterialsV1', {})
+    if materials.get('vesselMotionModel'):
+        from .surgical_glioma_materials import oriented_source_cells
+        for edge in p['edges']:
+            if edge['kind'] in materials['axialStiffnessN']:
+                cells = oriented_source_cells(edge)
+                for face in zip(cells, cells[1:]):
+                    bindings[tuple(sorted(face))] = (edge, face)
     changes = []
     for face in sorted({tuple(sorted(map(int, pair))) for pair in faces}):
         if face not in bindings: raise ValueError('VASCULAR_GRAPH_UNMAPPED_CUT: refine source graph; missing connectivity is unknown')
-        e = bindings[face]
-        if s['edges'][e['id']]['cutFace'] is None: changes.append(e)
+        edge, oriented = bindings[face]
+        opened = s['edges'][edge['id']]['cutFace']
+        if opened is None:
+            changes.append((edge, oriented))
+        elif tuple(opened) != tuple(oriented):
+            raise ValueError('VASCULAR_GRAPH_ONE_WOUND_FACE_PER_EDGE')
     # Validate the whole set before mutation. One oriented face per lumped edge.
-    identifiers = {'vascular:' + e['id'] + ':' + str(side) for e in changes for side in (0, 1)}
+    if len({edge['id'] for edge, _ in changes}) != len(changes):
+        raise ValueError('VASCULAR_GRAPH_ONE_WOUND_FACE_PER_EDGE')
+    identifiers = {'vascular:' + e['id'] + ':' + str(side) for e, _ in changes for side in (0, 1)}
     if identifiers.intersection(source['id'] for source in engine.state['sources']):
         raise ValueError('VASCULAR_GRAPH_SOURCE_ID_COLLISION')
-    for e in changes:
-        s['edges'][e['id']]['cutFace'] = list(e['sourceFace'])
-        for side, (node, cell, leak) in enumerate(zip((e['from'], e['to']), e['sourceFace'], e['woundConductanceMm3PerPaS'])):
+    for e, face in changes:
+        s['edges'][e['id']]['cutFace'] = list(face)
+        for side, (node, cell, leak) in enumerate(zip((e['from'], e['to']), face, e['woundConductanceMm3PerPaS'])):
             identifier = 'vascular:' + e['id'] + ':' + str(side)
             s['ports'][identifier] = {'edge': e['id'], 'node': node, 'cell': cell, 'conductanceMm3PerPaS': float(leak),
                 'sealFraction': 0., 'compressionFraction': 0., 'coagulationDose': 0.,
@@ -213,6 +238,28 @@ def refresh_compression(engine):
     s = initialize(engine); _idle(s); p = engine.scene.properties[PROPERTY]
     for row in s['edges'].values(): row['compressionFraction'] = 0.
     for row in s['ports'].values(): row['compressionFraction'] = 0.
+    materials = engine.scene.properties.get('gliomaMaterialsV1')
+    from . import surgical_vessel_rods as rods
+    section_model = rods.mechanics(engine) is not None
+    if section_model and s['ports']:
+        vessel_rods = rods.definitions(engine)
+        _, radius = rods._current(engine, vessel_rods)
+        for port in s['ports'].values():
+            site = vessel_rods.index.get(port['cell'])
+            port['acceptedLumenOpeningFraction'] = (
+                float((radius[site] / vessel_rods.radius[site]) ** 2) if site is not None else 1.)
+    closing_force = {}
+    if materials:
+        from .surgical_glioma_materials import biopsy_wound, scalp_wound, vessel_load
+        biopsy_wound(engine, s)
+        scalp_wound(engine, p, s)
+        pressure = {n['id']: s['storageMm3'][n['id']]/n['complianceMm3PerPa'] for n in p['nodes']}
+        for edge in p['edges']:
+            if edge['kind'] in materials['effectiveLumenAreaMm2']:
+                row = s['edges'][edge['id']]
+                vessel_load(engine, edge, row)
+                gauge_pa = .5 * (pressure[edge['from']] + pressure[edge['to']])
+                closing_force[edge['id']] = p['compressionForceN'] + gauge_pa * materials['effectiveLumenAreaMm2'][edge['kind']] * 1e-6
     from .surgical_motion import envelopes
     from .surgical_tools import TOOLS
     from .surgical_effects import _current_points
@@ -220,30 +267,44 @@ def refresh_compression(engine):
     for slot in engine.state['slots'].values():
         if slot['instrument'] != 'bipolar_forceps' or not slot.get('inserted'): continue
         params = engine.parameters(slot)
+        if section_model and not params['power']:
+            continue  # Passive compression already uses the accepted section.
         if params['jawOpeningMm'] > .5 or params['forceN'] == 0: continue
         cells = set()
-        for a, b, radius, part in envelopes(TOOLS[slot['instrument']], params, slot['position'], slot['quaternion']):
+        for a, b, radius, part in envelopes(getattr(engine, 'tools', TOOLS)[slot['instrument']], params, slot['position'], slot['quaternion']):
             if part != 'shaft': cells.update(engine.touched(a, b, radius))
         cells = sorted(cells)
         local = Rotation.from_quat(slot['quaternion']).inv().apply(_current_points(engine, cells) - slot['position']) if cells else []
         contacts = {c for c, v in zip(cells, local) if abs(v[0]) <= .35 + params['jawOpeningMm']/2
                     and abs(v[1]) <= .35 and -params['depthMm']-.35 <= v[2] <= .35}
-        fraction = min(1., params['forceN'] / p['compressionForceN'])
         for e in p['edges']:
             if contacts.intersection(e['sourceCells']):
+                fraction = min(1., params['forceN'] / closing_force.get(e['id'], p['compressionForceN']))
                 row = s['edges'][e['id']]; row['compressionFraction'] = max(row['compressionFraction'], fraction)
         for port in s['ports'].values():
-            if port['cell'] in contacts: port['compressionFraction'] = max(port['compressionFraction'], fraction)
+            if port['cell'] in contacts:
+                fraction = min(1., params['forceN'] / closing_force.get(port['edge'], p['compressionForceN']))
+                port['compressionFraction'] = max(port['compressionFraction'], fraction)
 
 
 def _edge_conductance(edge, state):
     if state['cutFace'] is not None:
         return 0.
-    return edge['conductanceMm3PerPaS'] * (1-state['occlusionFraction']) * (1-state['compressionFraction'])
+    conductance = edge['conductanceMm3PerPaS'] * (1-state['occlusionFraction']) * (1-state['compressionFraction'])
+    if 'acceptedLumenResistanceRatio' in state:
+        conductance /= state['acceptedLumenResistanceRatio']
+    elif 'stretchResistanceRatio' in state:
+        conductance /= state['stretchResistanceRatio']
+    elif 'axialStrain' in state:
+        # Assigned cylindrical segment, constant lumen volume during axial
+        # stretch: area scales as 1/lambda and Poiseuille G as area²/length.
+        conductance /= (1 + state['axialStrain']) ** 3
+    return conductance
 
 
 def _wound_flow(port, pressure, clot_rate, time):
     return (port['conductanceMm3PerPaS'] * (1-port['sealFraction']) * (1-port['compressionFraction'])
+            * port.get('acceptedLumenOpeningFraction', 1.)
             * math.exp(-clot_rate * (time-port['openedAtSeconds'])) * max(0., pressure))
 
 
@@ -415,11 +476,18 @@ def consequence_evidence(engine):
             'signedFlowMm3PerSecond': _edge_conductance(edge, row) * (pressure[edge['from']]-pressure[edge['to']]),
             'wounds': [],
         }
+        if engine.scene.properties.get('gliomaMaterialsV1', {}).get('vesselMotionModel'):
+            for key in ('loadedFace', 'peakLoadedFace', 'axialStrain', 'peakAxialStrain', 'tractionN',
+                        'stretchResistanceRatio', 'acceptedLumenResistanceRatio', 'contactedSourceCells'):
+                if key in row:
+                    segments[edge_id][key] = copy.deepcopy(row[key])
     for port_id, port in sorted(state['ports'].items()):
         segments[port['edge']]['wounds'].append({
             'id': port_id, 'node': port['node'], 'cell': port['cell'],
             'sealFraction': port['sealFraction'], 'compressionFraction': port['compressionFraction'],
             'generatedMm3': port['generatedMm3'],
+            **({'acceptedLumenOpeningFraction': port['acceptedLumenOpeningFraction']}
+               if 'acceptedLumenOpeningFraction' in port else {}),
             'modeledFlowMm3PerSecond': _wound_flow(port, pressure[port['node']], profile['clotRatePerSecond'], elapsed),
         })
 
@@ -449,13 +517,16 @@ def consequence_evidence(engine):
 
 def descriptor(engine):
     s = initialize(engine); p = engine.scene.properties[PROPERTY]
-    bound = {c for e in p['edges'] for c in e['sourceCells']}
+    bed = {c for e in p['edges'] if e['kind'] == 'microvascular-bed' for c in e['sourceCells']}
+    bound = {c for e in p['edges'] if e['kind'] != 'microvascular-bed' for c in e['sourceCells']}
     vessel_ids = [r['id'] for r in engine.scene.regions if r['material'] == 'vessel']
     return {'model': SCHEMA, 'status': 'numerically tested research model; patient flow and injury unvalidated',
         'supersedesLegacyVesselProfile': True, 'profile': copy.deepcopy(p),
         'coverage': copy.deepcopy(p['coverage']), 'nodeCount': len(p['nodes']), 'edgeCount': len(p['edges']),
         'boundSourceCells': len(bound), 'vesselSourceCells': int(np.isin(engine.scene.labels, vessel_ids).sum()),
-        'edgeKinds': {kind: sum(e['kind'] == kind for e in p['edges']) for kind in KINDS},
+        **({'boundMicrovascularBedSourceCells': len(bed)} if bed else {}),
+        'edgeKinds': {kind: sum(e['kind'] == kind for e in p['edges'])
+                      for kind in (KINDS + ('microvascular-bed',) if bed else KINDS)},
         'summary': metrics(engine), 'edges': copy.deepcopy(s['edges']),
         'limits': ['Pressure-supporting storage P=V/C, zero unstressed volume; no patient ICP or systemic blood-volume model.',
             'Declared conductance, compliance, fixed pressure boundaries and territory interfaces; no inferred microvascular tree.',

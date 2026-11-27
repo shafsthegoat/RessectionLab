@@ -2,21 +2,28 @@
 
 from __future__ import annotations
 import os
+import json
 import tempfile
+from dataclasses import dataclass
 from time import perf_counter
+from itertools import product
 import numpy as np
 from scipy import ndimage as ndi
-from skimage.morphology import skeletonize
-from .patient_anatomy import digest, affine, world
-from .surface_fairing import fair_surface, surface_kind, broad_context_surface, NATIVE_POLICY, POLICY
+from .patient_anatomy import digest, affine, world, file_hash
+from .core import immutable_array
+from .surface_fairing import (
+    fair_surface, intersection_vertices, surface_kind, broad_context_surface, NATIVE_POLICY, POLICY,
+    NATIVE_VASCULAR_POLICY, OPEN_VASCULAR_POLICY,
+)
 
 
-def _save_cache(path, values):
+def _save_cache(path, values, *, compressed=True):
     """Interrupted writers cannot leave a partially readable geometry cache."""
     fd, temporary = tempfile.mkstemp(dir=path.parent, suffix=".npz")
     try:
         with os.fdopen(fd, "wb") as stream:
-            np.savez_compressed(stream, **values)
+            save = np.savez_compressed if compressed else np.savez
+            save(stream, **values)
         os.replace(temporary, path)
     finally:
         if os.path.exists(temporary):
@@ -29,7 +36,10 @@ def _poly(values, probability):
     from vtkmodules.util.numpy_support import numpy_to_vtk
     image = vtkImageData()
     image.SetDimensions(*values.shape)
-    image.GetPointData().SetScalars(numpy_to_vtk(np.asarray(values).ravel(order="F"), deep=True))
+    # VTK reads this contiguous buffer synchronously during Update.
+    storage = np.asarray(values).ravel(order="F")
+    scalars = numpy_to_vtk(storage, deep=False)
+    image.GetPointData().SetScalars(scalars)
     if probability:
         contour = vtkFlyingEdges3D()
         contour.SetValue(0, 0.5)
@@ -41,6 +51,14 @@ def _poly(values, probability):
     contour.SetInputData(image)
     contour.Update()
     return contour.GetOutput()
+
+
+def _padded_contour_field(values):
+    # Allocate the boundary samples in VTK's axis order so flattening to its
+    # image buffer does not also allocate a full copy of a padded acquisition.
+    padded = np.zeros(tuple(size + 2 for size in values.shape), dtype=values.dtype, order="F")
+    padded[1:-1, 1:-1, 1:-1] = values
+    return padded
 
 
 def _arrays(poly):
@@ -63,6 +81,153 @@ def _arrays(poly):
     else:
         raise ValueError("Unexpected VTK surface cell topology")
     return points, faces
+
+
+def _indexed_contour(values, probability):
+    raw, faces = _arrays(_poly(values, probability))
+    triangles = raw[faces]
+    areas = np.linalg.norm(
+        np.cross(triangles[:, 1] - triangles[:, 0], triangles[:, 2] - triangles[:, 0]), axis=1)
+    # Threshold ties may emit zero-area VTK triangles.
+    keep = areas > 1e-12
+    return raw, faces[keep], int(np.count_nonzero(~keep))
+
+
+def _suppress_vascular_scores(values, mask):
+    """Reflect excluded positives without shifting the retained score samples."""
+    excluded = ~mask & (values >= .5)
+    if excluded.any():
+        below = np.nextafter(values.dtype.type(.5), values.dtype.type(0))
+        values[excluded] = np.minimum(1 - values[excluded], below)
+    return values
+
+
+def _vascular_score_contour(scores, mask):
+    if np.any(scores[mask] < .5) or not mask.any():
+        # A correction may introduce categorically supplied cells. The old
+        # score field cannot describe that revision.
+        return None
+    axes = [np.flatnonzero(mask.any(axis=tuple(i for i in range(3) if i != axis))) for axis in range(3)]
+    lo = np.maximum(0, np.array([axis[0] for axis in axes]) - 2)
+    hi = np.minimum(mask.shape, np.array([axis[-1] for axis in axes]) + 3)
+    crop = tuple(slice(a, b) for a, b in zip(lo, hi))
+    cropped = mask[crop]
+    values = _suppress_vascular_scores(scores[crop].copy(order="C"), cropped)
+    positions, indices, _ = _indexed_contour(_padded_contour_field(values), probability=True)
+    origin = lo - 1
+    return (positions + origin).astype(np.float32), indices, cropped, origin
+
+
+def vascular_probability_mesh(scores, mask):
+    """Raw native isosurface for a score-bound case compartment."""
+    result = _vascular_score_contour(scores, mask)
+    if result is None:
+        return None
+    positions, indices, _, _ = result
+    return positions, indices, normals(positions, indices)
+
+
+@dataclass(frozen=True)
+class ConditionedVascularWall:
+    """Source edges and a conditionable wall in the same native IJK frame."""
+
+    source: np.ndarray
+    positions: np.ndarray
+    indices: np.ndarray
+    normals: np.ndarray
+    source_cells: np.ndarray
+    diagnostics: dict
+
+
+def _retain_isolated_score_components(source, positions, faces, owners, mask, native_mask, affine, cancelled):
+    """Retain native crossings of completely sampled, single- or two-center components."""
+    labels, count = ndi.label(native_mask, structure=np.ones((3, 3, 3), bool))
+    sizes = np.bincount(labels.ravel(), minlength=count + 1)
+    eligible = sizes <= 2
+    eligible[0] = False
+    for axis in range(3):
+        border = np.swapaxes(labels, 0, axis)[[0, -1]]
+        eligible[np.unique(border)] = False
+    if mask is not native_mask:
+        # An edit can split the original material. Its new fragments do not
+        # provide the original isolated-component evidence.
+        eligible &= np.bincount(labels[mask], minlength=count + 1) == sizes
+    if not eligible.any():
+        return positions, {}
+    groups = labels.ravel()[owners]
+    corner_groups = groups[faces]
+    corner_selected = eligible[corner_groups]
+    mixed = corner_selected.any(axis=1) & ~corner_selected.all(axis=1)
+    eligible[corner_groups[mixed].ravel()] = False
+    changed = eligible[groups] & np.any(source != positions, axis=1)
+    if not changed.any():
+        return positions, {}
+
+    candidate = positions.copy()
+    candidate[changed] = source[changed]
+    # Each selected closed component uses its original faces and coordinates.
+    # Check contact with other components before accepting the replacement.
+    linear = np.asarray(affine)[:3, :3]
+    physical = candidate.astype(float) @ linear.T
+    raw = source.astype(float) @ linear.T
+    previous = positions.astype(float) @ linear.T
+    if (len(intersection_vertices(raw, physical, faces, cancelled))
+            or len(intersection_vertices(previous, physical, faces, cancelled))):
+        return positions, {}
+    return candidate, {
+        'sourceRetainedIsolatedComponents': len(np.unique(groups[changed])),
+        'maxDisplacementMm': float(np.linalg.norm(physical - raw, axis=1).max(initial=0.)),
+    }
+
+
+def conditioned_vascular_probability_mesh(scores, mask, affine, *, retain_isolated_components=False,
+                                          native_mask=None, cancelled=lambda: False):
+    """Build the versioned wall shared by research collision and rendering."""
+    if cancelled():
+        raise InterruptedError("Vascular wall preparation cancelled")
+    result = _vascular_score_contour(scores, mask)
+    if result is None:
+        return None
+    raw, faces, cropped, origin = result
+    owners = vascular_mesh_source_cells(raw, mask)
+    positions, diagnostics = fair_surface(
+        raw, faces, affine, "vessel", mask=np.pad(cropped, 1), mask_origin=origin,
+        source_shape=mask.shape, cancelled=cancelled,
+    )
+    if retain_isolated_components:
+        positions, retention = _retain_isolated_score_components(
+            raw, positions, faces, owners, mask, mask if native_mask is None else native_mask, affine, cancelled,
+        )
+        diagnostics.update(retention)
+    return ConditionedVascularWall(
+        immutable_array(raw), immutable_array(positions), immutable_array(faces),
+        immutable_array(normals(positions, faces)), immutable_array(owners), diagnostics,
+    )
+
+
+def vascular_mesh_source_cells(positions, mask):
+    """Bind every score crossing to the nearest positive endpoint of its native edge."""
+    rounded = np.rint(positions)
+    positions = np.where(np.abs(positions - rounded) <= 1e-5, rounded, positions)
+    floor = np.floor(positions).astype(np.int64)
+    ceil = np.ceil(positions).astype(np.int64)
+    if np.any(np.count_nonzero(floor != ceil, axis=1) > 1):
+        raise ValueError("Vascular surface must use native score edges")
+    distance = np.full(len(positions), np.inf)
+    source = np.full(len(positions), np.iinfo(np.uint32).max, dtype=np.uint32)
+    for step in product((0, 1), repeat=3):
+        candidate = np.where(step, ceil, floor)
+        inside = ((candidate >= 0) & (candidate < mask.shape)).all(axis=1)
+        rows = np.flatnonzero(inside)
+        occupied = rows[mask[tuple(candidate[rows].T)]]
+        error = np.sum((candidate[occupied] - positions[occupied])**2, axis=1)
+        take = error < distance[occupied]
+        accepted = occupied[take]
+        distance[accepted] = error[take]
+        source[accepted] = np.ravel_multi_index(candidate[accepted].T, mask.shape)
+    if not np.isfinite(distance).all():
+        raise ValueError("Vascular surface contains an unbound source crossing")
+    return source
 
 
 def normals(points, faces):
@@ -144,41 +309,208 @@ def _display_geometry(collection, row, result, cache_hit, started):
     return {**result, "cache_hit": cache_hit, "preparation_ms": (perf_counter() - started) * 1000}
 
 
-def mesh(collection, row, *, cancelled=lambda: False):
+def _field_values(collection, row, cropped, slices, display_source, *, check=None):
+    source = display_source if display_source is not None else row
+    probability = source.get("probability")
+    if probability is None or source.get("edits"):
+        return cropped.astype(np.uint8), "categorical"
+    values = collection.array(probability, check=check)[slices]
+    vascular = surface_kind(row["kind"]) == "vessel"
+    if vascular:
+        # Materialize the small native crop in storage order once. Repeated
+        # strided scans against an external-drive memmap delay cold extraction.
+        values = np.array(values, dtype=np.result_type(values.dtype, np.float32), order="C", copy=True)
+    original = collection.array(source["data"], check=check)[slices] == source["label_value"] if display_source is not None else cropped
+    if values.shape != cropped.shape or not np.isfinite(values).all():
+        return cropped.astype(np.uint8), "categorical"
+    if not vascular:
+        if np.array_equal(values >= .5, cropped):
+            return values, "native-probability"
+        return cropped.astype(np.uint8), "categorical"
+    if (np.any((values > .5) & ~original) or np.any((values < .5) & original)
+            or np.any(cropped & ~original)):
+        return cropped.astype(np.uint8), "categorical"
+    # Match explicit source membership for scores exactly at the isovalue.
+    # Only removed positives and excluded ties cross below the contour.
+    # Uncut interfaces retain their source field.
+    return _suppress_vascular_scores(values, cropped), "native-probability" if display_source is None else "filtered-native-probability"
+
+
+def local_source_contour(collection, row, slices, *, mask=None, check=None):
+    """Read a native sublattice and leave any cut surface edges open."""
+    if mask is None:
+        mask = collection.array(row['data'], check=check)[slices] == row['label_value']
+    values, field = _field_values(collection, row, mask, slices, vascular_cleanup_source(collection, row), check=check)
+    if not mask.any() or min(mask.shape) < 2:
+        return (np.empty((0, 3), np.float32), np.empty((0, 3), np.uint32), field)
+    positions, indices, _ = _indexed_contour(values, field != 'categorical')
+    return positions, indices, field
+
+
+def condition_open_vascular_contour(source, faces, mask, affine, *, cancelled=lambda: False):
+    """Condition a native score surface while holding its open rims fixed."""
+    from .vessel_section_stability import preserve_open_sections
+
+    if len(faces) > 80_000:
+        return source, {'policy': OPEN_VASCULAR_POLICY, 'kind': 'vessel', 'maxDisplacementMm': 0.,
+                        'fallbackReason': 'Field exceeds the interactive vessel geometry budget. Source contour retained.'}
+    positions, diagnostics = fair_surface(source, faces, affine, 'vessel', mask=mask,
+                                         source_shape=mask.shape, cancelled=cancelled, open_field=True)
+    owners = vascular_mesh_source_cells(source, mask)
+    positions, retained = _retain_isolated_score_components(source, positions, faces, owners, mask, mask, affine, cancelled)
+    guarded, sections = preserve_open_sections(source, positions, faces, mask, affine, cancelled=cancelled)
+    if sections['sectionRestoredVertices']:
+        linear = np.asarray(affine)[:3, :3]
+        raw, guarded_mm = source.astype(float) @ linear.T, guarded.astype(float) @ linear.T
+        changed = np.any(guarded != positions, axis=1)[faces].any(axis=1)
+        original_tri, new_tri = raw[faces[changed]], guarded_mm[faces[changed]]
+        old_normal = np.cross(original_tri[:, 1] - original_tri[:, 0], original_tri[:, 2] - original_tri[:, 0])
+        normal = np.cross(new_tri[:, 1] - new_tri[:, 0], new_tri[:, 2] - new_tri[:, 0])
+        flipped = np.any(np.einsum('ij,ij->i', normal, old_normal) <= 0.)
+        collapsed = np.any(np.linalg.norm(normal, axis=1) < POLICY['minimumFaceAreaRatio'] * np.linalg.norm(old_normal, axis=1))
+        if flipped or collapsed or len(intersection_vertices(raw, guarded_mm, faces, cancelled)):
+            guarded, guarded_mm = source, raw
+            sections['fallbackReason'] = 'Source contour retained after the section repair geometry check.'
+        sections['maxDisplacementMm'] = float(np.linalg.norm(guarded_mm - raw, axis=1).max(initial=0.))
+    return guarded, {**diagnostics, **retained, **sections}
+
+
+def vascular_cleanup_source(collection, row):
+    """Admit an exact, display-only score binding to an unchanged native layer."""
+    if surface_kind(row["kind"]) != "vessel" or row.get("edits"):
+        return None
+    binding = row.get("provenance", {}).get("vascular_cleanup")
+    if not isinstance(binding, dict) or binding.get("result_mask_sha256") != row["data"]["sha256"]:
+        return None
+    source = next((layer for layer in collection.document["layers"]
+                   if layer["id"] == binding.get("source_layer_id")), None)
+    if (source is None or source["id"] == row["id"] or source["kind"] != row["kind"]
+            or source["source_series"] != row["source_series"] or source["affine"] != row["affine"]
+            or source["data"]["shape"] != row["data"]["shape"]
+            or source["data"]["sha256"] != binding.get("source_mask_sha256")
+            or source.get("edits") or not source.get("probability")
+            or source["probability"]["sha256"] != binding.get("source_probability_sha256")):
+        return None
+    return source
+
+
+def _attached_erase_source(row):
+    from .vascular_cleanup import ATTACHED_SCORE_SURFACE
+
+    edits = row.get("edits")
+    if (row["kind"] != "vessels" or not row.get("probability") or not row.get("original_data")
+            or not edits or edits[-1].get("surface_policy") != ATTACHED_SCORE_SURFACE):
+        return None
+    return {**row, "data": row["original_data"], "label_value": row["original_label_value"], "edits": []}
+
+
+def _brain_envelope_signal(collection, row):
+    """Identify the actual same-grid acquisition of an ordinary brain estimate."""
+    if (row["kind"] != "brain" or row.get("role") != "context" or row.get("edits")
+            or row.get("conditioned_surface") or row.get("probability")
+            or row.get("provenance", {}).get("kind") != "image_derived_estimate"):
+        return None
+    from .anatomy_model_registry import source_volume
+
+    scan = collection.series(row["source_series"])
+    if (scan["modality"] not in {"CT", "CTA", "MRI", "T1", "T1CE", "T1C", "T2", "FLAIR"}
+            or not source_volume(scan) or scan["affine"] != row["affine"]
+            or scan["data"]["shape"] != row["data"]["shape"]):
+        return None
+    try:
+        collection.require_native_geometry(scan)
+        collection.require_native_geometry(row)
+    except ValueError:
+        return None
+    return scan["data"]
+
+
+def mesh(collection, row, *, cancelled=lambda: False, display_source=None, conditioned=True,
+         cache_directory=None, mask=None, check=None):
     """Separate source/display mesh; same connectivity, bounded local movement."""
     started = perf_counter()
-    if row.get("publisher_surface") is not None:
-        from .anatomy_publisher_surface import publisher_surface
+    display_source = _attached_erase_source(display_source if display_source is not None else row) or display_source
+    if display_source is not None:
+        if (display_source["kind"] != row["kind"] or display_source["affine"] != row["affine"]
+                or display_source["data"]["shape"] != row["data"]["shape"]):
+            raise ValueError("Vascular display filtering requires the source lattice")
+        if display_source["data"] == row["data"] and display_source["label_value"] == row["label_value"]:
+            # The display kept every source voxel; it still carries its own thin-branch tubes.
+            from .vessel_display_tubes import DISPLAY_TUBES
+
+            same = {**display_source, DISPLAY_TUBES: row[DISPLAY_TUBES]} if DISPLAY_TUBES in row else display_source
+            return mesh(collection, same, cancelled=cancelled, conditioned=conditioned,
+                        cache_directory=cache_directory, mask=mask, check=check)
+    if display_source is None and row.get("publisher_surface") is not None:
+        from .anatomy_publisher_surface import conditioned_publisher_cta, publisher_surface
 
         supplied = publisher_surface(collection, row, cancelled=cancelled)
         if supplied is not None:
-            return {**supplied, "normals": normals(supplied["positions"], supplied["indices"]),
+            if conditioned:
+                supplied = conditioned_publisher_cta(collection, row, supplied, cancelled=cancelled)
+            if "normals" not in supplied:
+                supplied["normals"] = normals(supplied["positions"], supplied["indices"])
+            return {**supplied,
                     "preparation_ms": (perf_counter() - started) * 1000}
     display_kind = display_surface_kind(row)
     profile = surface_kind(display_kind)
     native = profile != "vessel"
-    version = NATIVE_POLICY["version"] if native else POLICY["version"]
+    version = NATIVE_POLICY["version"] if native else NATIVE_VASCULAR_POLICY["version"]
     if broad_context_surface(display_kind):
         version = NATIVE_POLICY["broadContext"]["version"]
-    key = digest(
-        {
-            "algorithm": version,
-            "data": row["data"],
-            "probability": row.get("probability"),
-            "affine": row["affine"],
-            "label": row["label_value"],
-            "revision": row["revision"],
-            "kind": row["kind"],
+    brain_signal = _brain_envelope_signal(collection, row) if conditioned and display_source is None else None
+    identity = {"algorithm": version, "data": row["data"], "probability": row.get("probability"),
+                "affine": row["affine"], "label": row["label_value"],
+                "revision": row["revision"], "kind": row["kind"]}
+    if profile == "vessel":
+        identity["fairing_parameters"] = NATIVE_VASCULAR_POLICY
+    if brain_signal is not None:
+        from .anatomy_brain_surface import BRAIN_ENVELOPE_POLICY
+
+        identity["brain_envelope"] = {"policy": BRAIN_ENVELOPE_POLICY, "signal": brain_signal["sha256"]}
+    if profile == "vessel" and (display_source is not None or row.get("probability")):
+        identity["field_policy"] = "native-vascular-filter-v2"
+        identity["edited"] = bool(row.get("edits"))
+    if display_source is not None:
+        identity["display_source"] = {
+            "data": display_source["data"], "probability": display_source.get("probability"),
+            "label": display_source["label_value"], "edited": bool(display_source.get("edits")),
         }
-    )
-    cache = collection.root / "meshes" / f"{key}.npz"
+    from .vessel_display_tubes import (DISPLAY_TUBES, SURFACE, WALL_LEVEL, softened_mask, surface_field, unpack,
+                                       without_lone_samples)
+
+    tubes = row.get(DISPLAY_TUBES) if profile == "vessel" else None
+    if tubes is not None:
+        identity["display_tubes"] = {"field": tubes, "wall_level": WALL_LEVEL, "surface": SURFACE}
+    directory = collection.root / "meshes" if cache_directory is None else cache_directory
+    conditioned_cache = directory / f"{digest(identity)}.npz"
+    legacy_source_cache = directory / f"{digest({**identity, 'source_only': True})}.npz"
+    cache = conditioned_cache if conditioned else directory / f"{digest({**identity, 'source_only': True, 'storage': 'single-source-v1'})}.npz"
     cache.parent.mkdir(exist_ok=True)
-    if cache.exists():
-        with np.load(cache, allow_pickle=False) as z:
+    readable_cache = cache if conditioned or cache.exists() else legacy_source_cache
+    if readable_cache.is_file():
+        with np.load(readable_cache, allow_pickle=False) as z:
             result = {k: z[k] for k in z.files}
+        if not conditioned:
+            result.setdefault("positions", result["source"])
         return _display_geometry(collection, row, result, True, started)
-    mask = collection.mask(row)
-    bounds = [np.flatnonzero(mask.any(axis=tuple(i for i in range(3) if i != axis))) for axis in range(3)]
+    if not conditioned and conditioned_cache.is_file():
+        # The conditioned cache records the separately retained raw contour
+        # with the same source, mask, affine and field policy. Reuse it verbatim.
+        with np.load(conditioned_cache, allow_pickle=False) as archive:
+            raw, faces = archive["source"], archive["indices"]
+            field = archive["surface_field"] if "surface_field" in archive else np.array("categorical")
+        result = {"source": raw, "positions": raw, "indices": faces, "normals": normals(raw, faces),
+                  "max_displacement_mm": np.array(0.), "policy_version": np.array("native-source-isosurface-v1"),
+                  "surface_field": field}
+        return _display_geometry(collection, row, result, True, started)
+    if mask is None:
+        mask = collection.mask(row, check=check)
+    packed_tubes = collection.array(tubes, check=check) if tubes is not None else None
+    # A tube may run a little past the voxels it replaces, into the vessel it leaves.
+    extent = mask if packed_tubes is None else mask | (np.asarray(packed_tubes) > 1)
+    bounds = [np.flatnonzero(extent.any(axis=tuple(i for i in range(3) if i != axis))) for axis in range(3)]
+    del extent
     if not len(bounds[0]):
         return {
             "source": np.empty((0, 3), np.float32),
@@ -194,36 +526,50 @@ def mesh(collection, row, *, cancelled=lambda: False):
     hi = np.minimum(mask.shape, np.array([axis[-1] for axis in bounds]) + 3)
     slices = tuple(slice(a, b) for a, b in zip(lo, hi))
     cropped = mask[slices]
-    probability = "probability" in row and not row.get("edits")
-    values = (
-        collection.array(row["probability"])[slices]
-        if probability
-        else cropped.astype(np.uint8)
-    )
-    if probability and (not np.isfinite(values).all() or not np.array_equal(values >= .5, cropped)):
-        probability = False
-        values = cropped.astype(np.uint8)
-    values = np.pad(values, 1)
+    if tubes is None:
+        values, field = _field_values(collection, row, cropped, slices, display_source, check=check)
+    else:
+        # Thin branches are drawn from their tube field; the remaining voxels keep
+        # their own field. Where that is a binary mask it is softened without
+        # letting go of any voxel, so one half-level contour describes both.
+        tube_field, replaced = unpack(packed_tubes[slices])
+        thick = cropped & ~replaced
+        values, field = _field_values(collection, row, thick, slices, display_source, check=check)
+        if field == "categorical":
+            values = softened_mask(thick)
+        values = without_lone_samples(np.maximum(values.astype(np.float32, copy=False), surface_field(tube_field)), thick)
+        field = "thin-tubes+" + ("smoothed-mask" if field == "categorical" else field)
+        del tube_field, replaced, thick
+    values = _padded_contour_field(values)
     if cancelled():
         raise InterruptedError("Mesh preparation cancelled")
-    raw, faces = _arrays(_poly(values, probability))
-    triangles = raw[faces]
-    areas = np.linalg.norm(
-        np.cross(triangles[:, 1] - triangles[:, 0], triangles[:, 2] - triangles[:, 0]),
-        axis=1,
-    )
-    degenerate = int(np.count_nonzero(areas <= 1e-12))
-    # Exact threshold ties can emit zero-area VTK triangles. They represent no
-    # boundary area; omit only those faces from both versions, retaining vertices.
-    faces = faces[areas > 1e-12]
+    raw, faces, degenerate = _indexed_contour(values, field != "categorical")
     a = affine(row["affine"])
     # Quantize in final source coordinates before all geometry safety checks.
     offset = lo - 1
     raw = (raw + offset).astype(np.float32)
-    smoothed, diagnostics = fair_surface(
-        raw, faces, a, display_kind, mask=np.pad(cropped, 1) if profile == "vessel" else None,
-        mask_origin=offset, native=native, cancelled=cancelled,
-    )
+    if conditioned:
+        smoothed, diagnostics = fair_surface(
+            raw, faces, a, display_kind, mask=np.pad(cropped, 1) if profile == "vessel" else None,
+            mask_origin=offset, native=native, source_shape=mask.shape,
+            categorical=field == "categorical", cancelled=cancelled,
+        )
+        if brain_signal is not None and not diagnostics["restoredComponents"]:
+            from .anatomy_brain_surface import MAX_TRIANGLES, refine_brain_envelope
+
+            if len(faces) <= MAX_TRIANGLES:
+                refined = refine_brain_envelope(
+                    raw, smoothed, faces, a[:3, :3], mask, collection.array(brain_signal), cancelled=cancelled,
+                )
+                if refined is not None:
+                    smoothed, backed_off = refined
+                    version = BRAIN_ENVELOPE_POLICY
+                    diagnostics["backedOffVertices"] += backed_off
+                    diagnostics["maxDisplacementMm"] = np.linalg.norm(
+                        (smoothed - raw) @ a[:3, :3].T, axis=1,
+                    ).max(initial=0.)
+    else:
+        smoothed, diagnostics = raw, {"restoredComponents": 0, "backedOffVertices": 0, "maxDisplacementMm": 0.}
     rejected = diagnostics["restoredComponents"] > 0
     result = {
         "source": raw,
@@ -233,17 +579,24 @@ def mesh(collection, row, *, cancelled=lambda: False):
         "smoothing_rejected": np.array(rejected),
         "restored_components": np.array(diagnostics["restoredComponents"]),
         "backed_off_vertices": np.array(diagnostics["backedOffVertices"]),
-        "policy_version": np.array(version),
+        "policy_version": np.array(version if conditioned else "native-source-isosurface-v1"),
         "fallback_reason": np.array(diagnostics.get("fallbackReason", "")),
         "source_degenerate_faces_removed": np.array(degenerate),
         "max_displacement_mm": np.array(diagnostics["maxDisplacementMm"]),
+        "surface_field": np.array(field),
     }
     if "maxComponentVolumeChangeFraction" in diagnostics:
         result["max_component_volume_change_fraction"] = np.array(diagnostics["maxComponentVolumeChangeFraction"])
         result["volume_restored_components"] = np.array(diagnostics["volumeRestoredComponents"])
     if cancelled():
         raise InterruptedError("Mesh preparation cancelled before cache admission")
-    _save_cache(cache, result)
+    if conditioned:
+        _save_cache(cache, result)
+    else:
+        # The source and display positions are the same array in this mode.
+        # Larger raw meshes prioritize a quick lossless write and reopen.
+        records = {key: value for key, value in result.items() if key != "positions"}
+        _save_cache(cache, records, compressed=len(faces) < 200_000)
     return _display_geometry(collection, row, result, False, started)
 
 
@@ -279,6 +632,7 @@ def vessel_graph(mask, native_affine):
     # Padding represents unassessed exterior for thinning/EDT only, never a
     # negative anatomical finding. Boundary-limited distances are flagged.
     work = np.pad(mask[crop].astype(bool), 1)
+    from skimage.morphology import skeletonize
     skeleton = skeletonize(work, method='lee')
     local_indices = np.argwhere(skeleton)
     if len(local_indices) > 100_000:
@@ -381,7 +735,101 @@ def vessel_graph(mask, native_affine):
     }
 
 
-def inspect_vessel_geometry(collection, layer_id, point=None):
+def source_branch_cache_path(collection, source):
+    return collection.path(f'graphs/{source["data"]["sha256"]}.native-tof-source-branches-v1.json')
+
+
+def read_source_branch_graph(collection, source, path):
+    """Validate prepared branch evidence against the original acquisition and mask."""
+    from .vascular_source_branches import _mask_digest
+    if path.stat().st_size > 64*1024**2:
+        raise ValueError("Source branch attachment exceeds the inspection budget")
+    graph = json.loads(path.read_text())
+    scan = collection.series(source["source_series"])
+    if (graph.get("algorithm") != "native-tof-source-branches-v1"
+            or graph.get("source_scan_sha256") != scan["original"]["sha256"]
+            or graph.get("source_shape") != source["data"]["shape"]
+            or not np.array_equal(graph.get("source_affine_ras_mm"), source["affine"])
+            or graph.get("source_prediction_sha256") != _mask_digest(collection.mask(source))):
+        raise ValueError("Source branch attachment belongs to different anatomy")
+    return graph
+
+
+def _source_branch_query(collection, row, point, displayed_affine):
+    """Reuse the native branch extraction and query paths admitted by this layer."""
+    from scipy.spatial import cKDTree
+
+    source = vascular_cleanup_source(collection, row) or row
+    path = source_branch_cache_path(collection, source)
+    if not path.is_file():
+        from .data_root import atomic_json
+        from .vascular_source_branches import build_source_branches
+
+        source_scan = collection.series(source['source_series'])
+        graph = build_source_branches(collection.mask(source), source['affine'],
+                                      source_scan_sha256=source_scan['original']['sha256'])
+        path.parent.mkdir(exist_ok=True)
+        atomic_json(path, graph)
+    stat = path.stat()
+    cache_key = (row["data"]["sha256"], str(path), stat.st_mtime_ns, displayed_affine.tobytes())
+    cache = getattr(collection, "_attached_vessel_branch_cache", None)
+    if not cache or cache[0] != cache_key:
+        attachment_sha = file_hash(path)
+        graph = read_source_branch_graph(collection, source, path)
+        mask = collection.mask(row).ravel()
+        branches = []
+        points = []
+        cells = []
+        present = {}
+        for branch in graph["branches"]:
+            ids = np.asarray(branch["source_cell_ids"])
+            if not ids.size or ids.dtype.kind not in "ui" or ids.min() < 0 or ids.max() >= mask.size:
+                raise ValueError("Invalid source branch cell binding")
+            if not mask[ids].all():
+                continue
+            indices = np.column_stack(np.unravel_index(ids, tuple(graph["source_shape"])))
+            native_positions = world(affine(row["affine"]), indices)
+            if not np.allclose(native_positions, branch["points_ras_mm"], atol=1e-5, rtol=0):
+                raise ValueError("Source branch coordinates differ from their cells")
+            positions = world(displayed_affine, indices)
+            points.extend(positions)
+            cells.extend(ids.tolist())
+            for offset, cell in enumerate(ids.tolist()):
+                present.setdefault(cell, []).append((len(branches), offset))
+            branches.append((branch, positions))
+        tree = cKDTree(np.asarray(points).reshape(-1, 3))
+        cache = (cache_key, tree, cells, present, branches, attachment_sha)
+        collection._attached_vessel_branch_cache = cache
+    _, tree, cells, present, branch_paths, attachment_sha = cache
+    result = {"source_graph_sha256": attachment_sha, "branches": []}
+    if not cells:
+        return result
+    cursor_distance, index = tree.query(point)
+    cell = cells[index]
+    for branch_index, offset in present[cell]:
+        branch, positions = branch_paths[branch_index]
+        if "nearest" not in result:
+            radius = branch["annotation_radii_mm"][offset]
+            result["nearest"] = {"point_ras_mm": positions[offset].tolist(), "distance_mm": float(cursor_distance),
+                                 "radius_mm": radius, "source_cell_id": cell,
+                                 "radius_limited_by_image_extent": branch["radius_limited_by_image_extent"][offset],
+                                 "radius_limited_by_workspace": branch["radius_limited_by_workspace"][offset]}
+        lengths = np.linalg.norm(np.diff(positions, axis=0), axis=1)
+        midpoint = int(np.searchsorted(np.r_[0., np.cumsum(lengths)], lengths.sum()/2))
+        preview = np.linspace(0, len(positions)-1, min(len(positions), 2048), dtype=int)
+        if any(entry["branch_id"] == branch["id"] for entry in result["branches"]):
+            continue
+        result["branches"].append({"branch_id": branch["id"], "closed": branch["closed"],
+                                   "length_mm": branch["length_mm"], "source_cells": branch["source_cell_ids"],
+                                   "start_ras_mm": positions[0].tolist(), "end_ras_mm": positions[-1].tolist(),
+                                   "midpoint_ras_mm": positions[midpoint].tolist(),
+                                   "preview_ras_mm": positions[preview].tolist(),
+                                   "unsupported_diagonal_edges": branch["edge_local_face_supported"].count(False),
+                                   "connectivity": branch["topology_status"]})
+    return result
+
+
+def inspect_vessel_geometry(collection, layer_id, point=None, display_series=None):
     """Revision-keyed derived graph with source identity and unknown connectivity."""
     from scipy.spatial import cKDTree
     import skimage
@@ -392,7 +840,26 @@ def inspect_vessel_geometry(collection, layer_id, point=None):
     from .anatomy_evidence import is_siam_context
     if is_siam_context(row):
         raise ValueError("SIAM vascular tissue supplies image context only")
-    a = collection.patient_affine(row)
+    if display_series is None:
+        a = collection.patient_affine(row)
+        coordinate_frame = "patient"
+    else:
+        if display_series != row["source_series"]:
+            raise ValueError("Inspect vascular branches on the layer's source acquisition")
+        from .anatomy_display import display_affine
+        try:
+            a, estimated = display_affine(collection, row, preview=True)
+            coordinate_frame = "alignment-preview" if estimated else "patient"
+        except ValueError:
+            collection.require_native_geometry(row)
+            a = affine(row["affine"])
+            coordinate_frame = "independent-source"
+    if point is not None and (np.asarray(point).shape != (3,) or not np.isfinite(point).all()):
+        raise ValueError("Invalid physical query")
+    if point is not None and display_series is not None:
+        branch_query = _source_branch_query(collection, row, point, a)
+        return {"snapshot_id": collection.identity(), "layer_id": layer_id,
+                "coordinate_frame": coordinate_frame, **branch_query}
     key = digest(
         {
             "algorithm": "source-owned-skeleton-26-v4",
@@ -418,6 +885,7 @@ def inspect_vessel_geometry(collection, layer_id, point=None):
         "snapshot_id": collection.identity(),
         "graph_id": key,
         "layer_id": layer_id,
+        "coordinate_frame": coordinate_frame,
         "nodes": len(points),
         "edges": len(edges),
         "components": int(graph["components"]),
@@ -447,8 +915,6 @@ def inspect_vessel_geometry(collection, layer_id, point=None):
         "meaning": "Source-owned derived skeleton; annotation distance is not lumen radius. Diagonal-only contacts, lost components and unassessed branches remain unknown; no flow inference.",
     }
     if point is not None and len(points):
-        if np.asarray(point).shape != (3,) or not np.isfinite(point).all():
-            raise ValueError("Invalid physical query")
         distance, index = cKDTree(points).query(point)
         result["nearest"] = {
             "point_ras_mm": points[index].tolist(),

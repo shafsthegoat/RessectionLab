@@ -54,18 +54,25 @@ test('first microscope entry uses the declared blade optical frame rather than a
 test('microscope optics stay fixed across maneuver actions and preserve user adjustments on reentry',()=>{
   const c=controller(),changes=[],microscope={target:[2.5,1.25,2.75],outward:[0,-1,0],angleDeg:22,azimuthDeg:15,workingDistanceMm:150,fieldMm:18,focusOffsetMm:.5,light:3};
   c.view.slots={left:{position:[90,80,70],quaternion:[0,0,0,1],inserted:true}};c.view.planarBladeManeuver={...c.view.planarBladeManeuver,phase:'indented',opticalFrame:{targetMm:[3,4,5],outward:[1,0,0]}};
-  const settings={operativeView:'surgeon',microscope},before=JSON.stringify(settings);
+  const camera={position:[10,11,12],target:[2.5,.75,2.75]}, inspected={...microscope,inspectionTransparency:true,inspectionCutaway:true};
+  const settings={operativeView:'surgeon',microscope:inspected,camera,obliqueClip:{enabled:true,normal:[0,1,0],offset:0}},before=JSON.stringify(settings);
   const live=SurgeonViewControls({c,settings,onSettings:value=>changes.push(value)});assert.equal(changes.length,0,'action/render changes cannot dispatch optical updates');
-  nodes(live).find(n=>n.type==='button'&&text(n)==='Surgeon / Microscope').props.onClick();assert.equal(changes.length,0,'already enabled entry cannot recenter on the tool or declaration');
-  nodes(live).find(n=>n.type==='button'&&text(n)==='External anatomy view').props.onClick();const external=changes.at(-1);assert.equal(external.microscope,microscope);
+  const select=(tree,label)=>nodes(tree).find(n=>n.type==='button'&&text(n)===label).props.onClick();
+  select(live,'Surgeon / Microscope');
+  const opaque=changes.at(-1),expected={...microscope,inspectionTransparency:false,inspectionCutaway:false};
+  assert.deepEqual(opaque.microscope,expected);assert.deepEqual(opaque.camera,camera);assert.equal(opaque.obliqueClip,undefined);
+  select(SurgeonViewControls({c,settings:opaque,onSettings:value=>changes.push(value)}),'External anatomy view');
+  const external=changes.at(-1);assert.equal(external.operativeView,'external');assert.deepEqual(external.microscope,expected);
   c.view.planarBladeManeuver={...c.view.planarBladeManeuver,phase:'withdrawn',opticalFrame:{targetMm:[100,200,300],outward:[0,0,1]}};
-  const reentry=SurgeonViewControls({c,settings:external,onSettings:value=>changes.push(value)});const count=changes.length;assert.equal(count,1,'reentry render stays pure');nodes(reentry).find(n=>n.type==='button'&&text(n)==='Surgeon / Microscope').props.onClick();
-  const restored=changes.at(-1);assert.equal(restored.microscope,microscope);assert.deepEqual(restored.microscope.target,[2.5,1.25,2.75]);assert.equal(restored.microscope.angleDeg,22);assert.equal(restored.microscope.fieldMm,18);assert.equal(JSON.stringify(settings),before);
+  const count=changes.length,reentry=SurgeonViewControls({c,settings:external,onSettings:value=>changes.push(value)});
+  assert.equal(changes.length,count,'reentry render stays pure');select(reentry,'Surgeon / Microscope');
+  const restored=changes.at(-1);assert.equal(restored.operativeView,'surgeon');assert.deepEqual(restored.microscope,expected);
+  assert.deepEqual(restored.camera.target,[2.5,.75,2.75]);assert.equal(JSON.stringify(settings),before);
 });
 test('ordinary tool scenes retain the existing microscope entry defaults',()=>{
   const c=controller(),changes=[];delete c.view.planarBladeManeuver;c.view.slots={left:{position:[11,12,13],quaternion:[0,0,0,1],inserted:true}};
   const tree=SurgeonViewControls({c,settings:{operativeView:'external'},onSettings:value=>changes.push(value)});nodes(tree).find(n=>n.type==='button'&&text(n)==='Surgeon / Microscope').props.onClick();
-  const m=changes[0].microscope;assert.deepEqual(m.target,[11,12,13]);assert.deepEqual(m.outward,[0,0,-1]);assert.equal(m.angleDeg,0);assert.equal(m.fieldMm,42);
+  const m=changes[0].microscope;assert.deepEqual(m.target,[11,12,13]);assert.deepEqual(m.outward,[0,0,-1]);assert.equal(m.angleDeg,12);assert.equal(m.fieldMm,42);
 });
 const descriptor={sizeMm:[6,.5,9],centerLocalMm:[0,-.25,-4.5],shaft:{a:[0,-.8,-40],b:[0,-.8,-9],radiusMm:.3},inContact:false};
 const tool={id:'brain_retractor',radiusMm:3,shaftRadiusMm:.3,workingLengthMm:40};

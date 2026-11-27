@@ -1,0 +1,1395 @@
+{
+  "schema": "resectionlab.rehearsal-performance-result.v1",
+  "baseline": "a07df30938636547a3e6622fdc12a475a2ac9461",
+  "candidate": "1574c24657c08d2f24561208648e7cf2aa439e72",
+  "measurement": {
+    "clock": "trusted event listener to matching frame GPU fence in the renderer monotonic domain",
+    "warmupsPerArmAndWorkload": 1,
+    "alternatingPairs": 5,
+    "capture": false,
+    "backendProfiling": false,
+    "percentile": "nearest-rank p95",
+    "maximum": "includes all accepted inputs in the five measured runs",
+    "submittedActionStreamHash": "SHA-256 of the ordered result.requested action array, UTF-8 JSON with sorted keys, compact separators and no trailing newline. Includes rejected requests."
+  },
+  "hardware": {
+    "chip_type": "Apple M2 Pro",
+    "machine_model": "Mac14,9",
+    "number_processors": "proc 10:6:4:0",
+    "physical_memory": "16 GB"
+  },
+  "os": [
+    "ProductName:\t\tmacOS",
+    "ProductVersion:\t\t26.5.2",
+    "BuildVersion:\t\t25F84"
+  ],
+  "electron": "44.5.1",
+  "fixtureCatalogueDigest": "0d7690dad946f6dca1b3859d2da1289f07083d07414df604c920546975da16e4",
+  "evidenceRoot": "qc/rehearsal-performance-20261121",
+  "generated": {
+    "tissue": {
+      "orderedWitnessDigest": "badaf9cd1e3315209a81a890bc843a92554007c1823947629977b471dba95f8f",
+      "pairedP95Ms": [
+        {
+          "round": 1,
+          "first": "baseline",
+          "baseline": 247,
+          "candidate": 190.5
+        },
+        {
+          "round": 2,
+          "first": "candidate",
+          "baseline": 248.0999999642372,
+          "candidate": 182.19999998807907
+        },
+        {
+          "round": 3,
+          "first": "baseline",
+          "baseline": 240.19999998807907,
+          "candidate": 181.89999997615814
+        },
+        {
+          "round": 4,
+          "first": "candidate",
+          "baseline": 265.0999999642372,
+          "candidate": 198.69999998807907
+        },
+        {
+          "round": 5,
+          "first": "baseline",
+          "baseline": 257,
+          "candidate": 191.29999995231628
+        }
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "pixelRatio": 2
+      },
+      "originalCaseFileSha256": "a2ce46b66912199e891c761fff64114444ed925cf5b2a9ffbecbf93db2b8ce2a",
+      "caseHash": "sha256:c298887cb67b1034d782d682b01ee03cdaf86ee13237602eb3239ec114d5a710",
+      "parentStateId": "sha256:d88ba614474e8bdc0976618653f0c5a94c6b1535f9f1015daf97d01f854dc80e",
+      "baseline": {
+        "runs": 5,
+        "committed": 165,
+        "rejected": 0,
+        "inputToMatchingGpuMs": {
+          "n": 165,
+          "p50": 63.89999997615814,
+          "p95": 252.19999998807907,
+          "max": 281.89999997615814
+        },
+        "mainHandlerToResultMs": {
+          "n": 165,
+          "p50": 37.332275390625,
+          "p95": 224.29931640625,
+          "max": 262.121826171875
+        },
+        "renderCpuSubmissionMs": {
+          "n": 165,
+          "p50": 0.800000011920929,
+          "p95": 10.100000023841858,
+          "max": 23.30000001192093
+        },
+        "matchingGpuExecutionMs": {
+          "n": 165,
+          "p50": 2.046375,
+          "p95": 4.026499,
+          "max": 7.083708
+        },
+        "mainResultToRenderStartMs": {
+          "n": 165,
+          "p50": 11.486083984375,
+          "p95": 16.83837890625,
+          "max": 20.4677734375
+        },
+        "jogMatchingGpuIntervalMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "launchToReadyMicroscopeMs": {
+          "n": 5,
+          "p50": 2067.766417,
+          "p95": 2291.871833,
+          "max": 2291.871833
+        },
+        "firstMicroscopeCpuSubmissionMs": {
+          "n": 5,
+          "p50": 53,
+          "p95": 53.5,
+          "max": 53.5
+        },
+        "medianSummedAcceptedLatencyMs": 3403.0,
+        "maximumKnownGraphicsBytes": 14910405,
+        "maximumObservedSidecarPending": 2
+      },
+      "candidate": {
+        "runs": 5,
+        "committed": 165,
+        "rejected": 0,
+        "inputToMatchingGpuMs": {
+          "n": 165,
+          "p50": 48.90000003576279,
+          "p95": 190.5,
+          "max": 223.80000001192093
+        },
+        "mainHandlerToResultMs": {
+          "n": 165,
+          "p50": 26.7568359375,
+          "p95": 169.92578125,
+          "max": 206.91357421875
+        },
+        "renderCpuSubmissionMs": {
+          "n": 165,
+          "p50": 0.699999988079071,
+          "p95": 9.300000011920929,
+          "max": 9.900000035762787
+        },
+        "matchingGpuExecutionMs": {
+          "n": 165,
+          "p50": 2.118458,
+          "p95": 2.827125,
+          "max": 6.812874
+        },
+        "mainResultToRenderStartMs": {
+          "n": 165,
+          "p50": 10.364013671875,
+          "p95": 14.751220703125,
+          "max": 16.116455078125
+        },
+        "jogMatchingGpuIntervalMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "launchToReadyMicroscopeMs": {
+          "n": 5,
+          "p50": 2103.322667,
+          "p95": 2229.955375,
+          "max": 2229.955375
+        },
+        "firstMicroscopeCpuSubmissionMs": {
+          "n": 5,
+          "p50": 51.09999996423721,
+          "p95": 53.799999952316284,
+          "max": 53.799999952316284
+        },
+        "medianSummedAcceptedLatencyMs": 2674.2000002264977,
+        "maximumKnownGraphicsBytes": 14910405,
+        "maximumObservedSidecarPending": 2
+      },
+      "inputFixtureSha256": "64ed965204b26c53d636a3118c5d548ecbfb987d02d9006fc7965dca594342c4",
+      "submittedActionStreamSha256": "0e83ef1dc1ef4792153d212d0b5c3122428197714a3b5ed1ed3b008597e7591a",
+      "caseArraySha256": "2639c67cd820f1dba19091c109cb0bfc0d4db74c846bca18d60bbf50a0f9942e",
+      "parentBranch": "configured-start",
+      "parentPosition": 1,
+      "modelComponents": [
+        "bipolarThermalV1",
+        "tissuePhysicsV2",
+        "vascularGraphV1"
+      ]
+    },
+    "cranial": {
+      "orderedWitnessDigest": "ebe8b5869f3bcb5dbeccb543ee6452247bdee391e88bda27357ec12e8de6e85e",
+      "pairedP95Ms": [
+        {
+          "round": 1,
+          "first": "baseline",
+          "baseline": 98.40000003576279,
+          "candidate": 90.40000003576279
+        },
+        {
+          "round": 2,
+          "first": "candidate",
+          "baseline": 98.69999998807907,
+          "candidate": 90.39999997615814
+        },
+        {
+          "round": 3,
+          "first": "baseline",
+          "baseline": 98.30000001192093,
+          "candidate": 91.30000001192093
+        },
+        {
+          "round": 4,
+          "first": "candidate",
+          "baseline": 106.89999997615814,
+          "candidate": 90.69999998807907
+        },
+        {
+          "round": 5,
+          "first": "baseline",
+          "baseline": 98.80000001192093,
+          "candidate": 89.20000004768372
+        }
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "pixelRatio": 2
+      },
+      "originalCaseFileSha256": "0f8a8800558250fa7de1dcdc0f398ec53525b2370308d5eea9cfd0e3d445b269",
+      "caseHash": "sha256:9818506d2f779b8fece10d048e0f21e2357f86851936ad0f5b86ee6f6cfaa1e0",
+      "parentStateId": "sha256:4074b77ec74d0156e08a1c0b39e4d7409fd9531a1f16411a579d68091ab176bf",
+      "baseline": {
+        "runs": 5,
+        "committed": 70,
+        "rejected": 5,
+        "inputToMatchingGpuMs": {
+          "n": 70,
+          "p50": 88.7000000178814,
+          "p95": 98.5,
+          "max": 106.89999997615814
+        },
+        "mainHandlerToResultMs": {
+          "n": 70,
+          "p50": 45.3592529296875,
+          "p95": 58.002197265625,
+          "max": 64.08984375
+        },
+        "renderCpuSubmissionMs": {
+          "n": 70,
+          "p50": 14,
+          "p95": 23,
+          "max": 24.299999952316284
+        },
+        "matchingGpuExecutionMs": {
+          "n": 70,
+          "p50": 2.825291,
+          "p95": 4.39925,
+          "max": 5.457999
+        },
+        "mainResultToRenderStartMs": {
+          "n": 70,
+          "p50": 15.6422119140625,
+          "p95": 20.264404296875,
+          "max": 21.521484375
+        },
+        "jogMatchingGpuIntervalMs": {
+          "n": 371,
+          "p50": 25,
+          "p95": 34,
+          "max": 36.90000003576279,
+          "p99": 35.69999998807907
+        },
+        "launchToReadyMicroscopeMs": {
+          "n": 5,
+          "p50": 11935.872749999999,
+          "p95": 12614.750458,
+          "max": 12614.750458
+        },
+        "firstMicroscopeCpuSubmissionMs": {
+          "n": 5,
+          "p50": 42.10000002384186,
+          "p95": 61.60000002384186,
+          "max": 61.60000002384186
+        },
+        "medianSummedAcceptedLatencyMs": 1233.7000001072884,
+        "maximumKnownGraphicsBytes": 21912581,
+        "maximumObservedSidecarPending": 2
+      },
+      "candidate": {
+        "runs": 5,
+        "committed": 70,
+        "rejected": 5,
+        "inputToMatchingGpuMs": {
+          "n": 70,
+          "p50": 74.15000000596046,
+          "p95": 90.39999997615814,
+          "max": 91.30000001192093
+        },
+        "mainHandlerToResultMs": {
+          "n": 70,
+          "p50": 40.618896484375,
+          "p95": 55.570556640625,
+          "max": 56.99609375
+        },
+        "renderCpuSubmissionMs": {
+          "n": 70,
+          "p50": 5.3499999940395355,
+          "p95": 14.5,
+          "max": 14.899999976158142
+        },
+        "matchingGpuExecutionMs": {
+          "n": 70,
+          "p50": 2.8081665,
+          "p95": 4.099,
+          "max": 5.233333
+        },
+        "mainResultToRenderStartMs": {
+          "n": 70,
+          "p50": 15.244873046875,
+          "p95": 20.81103515625,
+          "max": 21.989990234375
+        },
+        "jogMatchingGpuIntervalMs": {
+          "n": 370,
+          "p50": 25,
+          "p95": 33.60000002384186,
+          "max": 35.89999997615814,
+          "p99": 35.299999952316284
+        },
+        "launchToReadyMicroscopeMs": {
+          "n": 5,
+          "p50": 11984.464750000001,
+          "p95": 12512.685208,
+          "max": 12512.685208
+        },
+        "firstMicroscopeCpuSubmissionMs": {
+          "n": 5,
+          "p50": 46.89999997615814,
+          "p95": 57.19999998807907,
+          "max": 57.19999998807907
+        },
+        "medianSummedAcceptedLatencyMs": 1061.7999999523163,
+        "maximumKnownGraphicsBytes": 21912581,
+        "maximumObservedSidecarPending": 2
+      },
+      "inputFixtureSha256": null,
+      "submittedActionStreamSha256": "c4e45531c02370135c7be157448db1c2ca05573ec590e499d350c91a7792630f",
+      "caseArraySha256": "dd5cd9cc8a0fe625e6d94f75cf9f544d237f9b73c0f7688fc27dc09ba19a5463",
+      "parentBranch": "cranial-opening-0-4e266ce742575955",
+      "parentPosition": 105,
+      "modelComponents": [
+        "attachments",
+        "boneAnchors"
+      ]
+    }
+  },
+  "signedPackage": {
+    "passed": true,
+    "nativeBinarySha256": "9d1edfbf7df20dc42efe4fb5f8cd4a90622c7651e63a5a059fa19e24c74e1f86",
+    "manualKernels": {
+      "continuumTicks": 0,
+      "latticeTicks": 565,
+      "latticeSubsteps": 1916,
+      "legacySweepObstacleCalls": 0,
+      "sweepNativeCalls": 1916,
+      "sweepNativeSamplePoints": 689760,
+      "sweepVectorCalls": 0,
+      "strainVectorCalls": 0,
+      "strainNativeCalls": 646,
+      "strainNativeEdges": 130492,
+      "strainRefinedEdges": 1264,
+      "sweepFallbackReasons": {},
+      "strainFallbackReasons": {}
+    },
+    "stateId": "sha256:bf20294d7129b5c855d3e149edbdd73576995bbbe546bb8a66a5d4d8925d929c",
+    "restart": {
+      "warmPid": 84092,
+      "coldPid": 84396,
+      "stateId": "sha256:bf20294d7129b5c855d3e149edbdd73576995bbbe546bb8a66a5d4d8925d929c",
+      "history": 33
+    },
+    "savedSha256": "7f949c4f1b7e98db2d80a25f2c4bb57a94c572793f7c88a0f92b0fa9212d96ed",
+    "report": "acquired/signed-manual-package/signed-package-proof.json"
+  },
+  "acquiredUcsf": {
+    "comparison": "five alternating pairs; one fresh process per arm per pair; identical sealed recorded branch",
+    "report": "acquired/ucsf-matched-v1/summary.json",
+    "perArm": {
+      "baseline": {
+        "total": 80,
+        "inputToGpuMs": {
+          "samples": 80,
+          "p50": 94.5,
+          "p95": 1618,
+          "max": 1684.3999999761581
+        },
+        "triangleCount": {
+          "samples": 80,
+          "p50": 3394820,
+          "p95": 3395660,
+          "max": 3395660
+        },
+        "ipcMs": {
+          "samples": 80,
+          "p50": 47.34619140625,
+          "p95": 377.262939453125,
+          "max": 420.14404296875
+        },
+        "responseToGpuMs": {
+          "samples": 80,
+          "p50": 45.9619140625,
+          "p95": 1279.85546875,
+          "max": 1317.739013671875
+        },
+        "requestToMeshWorkerResultMs": {
+          "samples": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "cpuSubmissionMs": {
+          "samples": 80,
+          "p50": 1.2000000476837158,
+          "p95": 18.30000001192093,
+          "max": 19.599999964237213
+        }
+      },
+      "candidate": {
+        "total": 80,
+        "inputToGpuMs": {
+          "samples": 80,
+          "p50": 102.5,
+          "p95": 1645.7999999523163,
+          "max": 1702.699999988079
+        },
+        "triangleCount": {
+          "samples": 80,
+          "p50": 3394820,
+          "p95": 3395660,
+          "max": 3395660
+        },
+        "ipcMs": {
+          "samples": 80,
+          "p50": 47.95849609375,
+          "p95": 367.929931640625,
+          "max": 399.26513671875
+        },
+        "responseToGpuMs": {
+          "samples": 80,
+          "p50": 47.221435546875,
+          "p95": 1297.727783203125,
+          "max": 1357.55078125
+        },
+        "requestToMeshWorkerResultMs": {
+          "samples": 60,
+          "p50": 123.19999998807907,
+          "p95": 1153.699999988079,
+          "max": 1167.7000000476837
+        },
+        "cpuSubmissionMs": {
+          "samples": 80,
+          "p50": 1.399999976158142,
+          "p95": 19.399999976158142,
+          "max": 36.60000002384186
+        }
+      }
+    },
+    "sourceFiles": {
+      "ucsfStudy": {
+        "sha256": "fcc7dee29bda0300771ff5b4a6c8c122aa0c00251bad974e1158bb19375b487f",
+        "bytes": 64080581
+      },
+      "ucsfEpisode": {
+        "sha256": "401f46089e0793f27e593e8f77b8d19778d5d5c89d0b75a7c14d2497f471b07d",
+        "bytes": 5285504
+      }
+    },
+    "studySnapshotId": "557b567cecdc3b109cd86873cc74c30c957b35876532a63f882eb8cca62c5844",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "devicePixelRatio": 2
+    }
+  },
+  "displayNormalsExperiment": {
+    "schema": "resectionlab.display-normal-reuse-diagnostic.v1",
+    "mesh": {
+      "positionsSha256": "32bc7db15b448d97ec9803876a32c2cce8a5088ad4a76963a7d61bd6a0c3c5b9",
+      "indicesSha256": "4dd757f480865dbd290a9a3965b7e61cf7381da39794c05fb9dc42656ca6c695",
+      "vertices": 89807,
+      "triangles": 176946,
+      "cutVertices": 89819,
+      "cutTriangles": 176970,
+      "extractedMs": 50.989791999999966,
+      "editCell": 2659930
+    },
+    "adjacency": {
+      "retainedBytes": 4605936,
+      "firstBuildMs": 7.923416999999972,
+      "cutBuildMs": 5.995290999999952,
+      "undoBuildMs": 6.1799590000000535,
+      "extrapolatedBytesForUcsfBrain": 29665780
+    },
+    "exactBuffers": true,
+    "measuredPairsPerPolicy": 5,
+    "evidence": "renderer/display-normal-reuse.json"
+  },
+  "biteGeometry": {
+    "pairs": 1,
+    "phaseSamplesPerBuild": 30,
+    "grayMatter": {
+      "vertices": 805022,
+      "triangles": 1593168
+    },
+    "skull": {
+      "vertices": 650758,
+      "triangles": 1295140
+    },
+    "maxDrawTriangles": 7209324,
+    "matchingPhaseDisplayCells": [
+      380,
+      1847,
+      4741
+    ],
+    "evidence": "acquired/bite-matched-v1/summary.json",
+    "sourceFiles": {
+      "biteStudy": {
+        "sha256": "81ceabd823170c4d0b487c6f490cdf21b760492cec8c6c11d42d512522b3d280",
+        "bytes": 87072866
+      }
+    },
+    "studySnapshotId": "67671949b98d83876f9bed1e7a9b41cf5cb36891e1e506e1144ec060adbc6359",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "devicePixelRatio": 2
+    },
+    "field": {
+      "shape": [
+        155,
+        155,
+        310
+      ],
+      "spacingMm": 0.3125,
+      "labelsSha256": "8a2253d35e903b5935e07ff37b7b5c41e3e7ff85673953e46d4737bc9b9f860e",
+      "targetLayerId": "67cb33c7-3aee-48c9-a6a8-8898c58d6d08-1"
+    }
+  },
+  "stageDiagnostics": {
+    "evidence": "diagnostics-v1/summary.json",
+    "timing": "One separately instrumented full run per case and arm. Inclusive durations in ms. Stage percentiles may have different sample counts.",
+    "tissue": {
+      "baseline": {
+        "framebuffer": {
+          "dpr": 2,
+          "canvasCss": {
+            "width": 1072,
+            "height": 818
+          },
+          "canvasPixels": {
+            "width": 2144,
+            "height": 1636
+          },
+          "drawingBuffer": {
+            "width": 2144,
+            "height": 1636
+          },
+          "drawingBufferPerCssPixel": {
+            "x": 2,
+            "y": 2
+          }
+        },
+        "stageP95Ms": {
+          "electron.responseParse": 0.256,
+          "electron.exposeAssets": 1.533,
+          "python.queue": 0.048,
+          "python.jsonBudget": 3.821,
+          "python.semanticDigest": 10.858,
+          "python.stateIdentity": 2.122,
+          "python.displacementSnapshot": 26.354,
+          "python.deformationTick": 47.988,
+          "python.metrics": 0.484,
+          "python.simulationStep": 215.716,
+          "python.snapshot": 1.235,
+          "python.observe": 1.139,
+          "python.view": 3.357,
+          "python.dispatch": 225.177,
+          "python.serialize": 0.888,
+          "python.writeFlush": 0.089
+        },
+        "actualNativeExecution": {
+          "legacySweepObstacleCalls": 7664,
+          "continuumTicks": 0
+        },
+        "actualNativeBindings": {
+          "residentActionCalls": 0,
+          "displacementSnapshotCalls": 0,
+          "displacementSnapshotFallbackCalls": 0,
+          "displacementSnapshotSuccessfulCalls": 0,
+          "displacementSnapshotFallbackReasons": {
+            "legacy-reference": 5888
+          }
+        }
+      },
+      "candidate": {
+        "framebuffer": {
+          "dpr": 2,
+          "canvasCss": {
+            "width": 1072,
+            "height": 818
+          },
+          "canvasPixels": {
+            "width": 2144,
+            "height": 1636
+          },
+          "drawingBuffer": {
+            "width": 2144,
+            "height": 1636
+          },
+          "drawingBufferPerCssPixel": {
+            "x": 2,
+            "y": 2
+          }
+        },
+        "stageP95Ms": {
+          "electron.responseParse": 0.274,
+          "electron.exposeAssets": 1.607,
+          "python.queue": 0.058,
+          "python.jsonBudget": 2.302,
+          "python.semanticDigest": 10.753,
+          "python.stateIdentity": 2.209,
+          "python.displacementSnapshot": 7.268,
+          "python.deformationTick": 19.821,
+          "python.metrics": 0.616,
+          "python.simulationStep": 166.29,
+          "python.snapshot": 1.32,
+          "python.observe": 1.469,
+          "python.view": 3.584,
+          "python.dispatch": 172.329,
+          "python.serialize": 0.965,
+          "python.writeFlush": 0.145
+        },
+        "actualNativeExecution": {
+          "latticeTicks": 565,
+          "continuumTicks": 0,
+          "latticeSubsteps": 1916,
+          "sweepNativeCalls": 1916,
+          "sweepNativeSamplePoints": 689760,
+          "sweepVectorCalls": 0,
+          "sweepScalarCalls": 0,
+          "sweepFallbackReasons": {},
+          "strainNativeCalls": 646,
+          "strainNativeEdges": 130492,
+          "strainVectorCalls": 0,
+          "strainRefinedEdges": 1264,
+          "strainIdleSubsteps": 1785,
+          "strainFallbackReasons": {}
+        },
+        "actualNativeBindings": {
+          "residentActionCalls": 0,
+          "displacementSnapshotCalls": 5573,
+          "displacementSnapshotFallbackCalls": 0,
+          "displacementSnapshotSuccessfulCalls": 5573,
+          "displacementSnapshotFallbackReasons": {
+            "native-precondition-not-met": 315
+          }
+        }
+      }
+    },
+    "cranial": {
+      "baseline": {
+        "framebuffer": {
+          "dpr": 2,
+          "canvasCss": {
+            "width": 1072,
+            "height": 818
+          },
+          "canvasPixels": {
+            "width": 2144,
+            "height": 1636
+          },
+          "drawingBuffer": {
+            "width": 2144,
+            "height": 1636
+          },
+          "drawingBufferPerCssPixel": {
+            "x": 2,
+            "y": 2
+          }
+        },
+        "stageP95Ms": {
+          "electron.responseParse": 0.518,
+          "electron.exposeAssets": 3.152,
+          "python.queue": 0.07,
+          "python.jsonBudget": 9.859,
+          "python.semanticDigest": 5.458,
+          "python.stateIdentity": 4.032,
+          "python.metrics": 4.479,
+          "python.simulationStep": 21.251,
+          "python.snapshot": 1.88,
+          "python.observe": 8.078,
+          "python.view": 27.322,
+          "python.dispatch": 52.609,
+          "python.serialize": 1.854,
+          "python.writeFlush": 0.357
+        },
+        "actualNativeExecution": {
+          "legacySweepObstacleCalls": 0,
+          "continuumTicks": 0
+        },
+        "actualNativeBindings": {
+          "residentActionCalls": 15,
+          "displacementSnapshotCalls": 0,
+          "displacementSnapshotFallbackCalls": 0,
+          "displacementSnapshotSuccessfulCalls": 0,
+          "displacementSnapshotFallbackReasons": {}
+        }
+      },
+      "candidate": {
+        "framebuffer": {
+          "dpr": 2,
+          "canvasCss": {
+            "width": 1072,
+            "height": 818
+          },
+          "canvasPixels": {
+            "width": 2144,
+            "height": 1636
+          },
+          "drawingBuffer": {
+            "width": 2144,
+            "height": 1636
+          },
+          "drawingBufferPerCssPixel": {
+            "x": 2,
+            "y": 2
+          }
+        },
+        "stageP95Ms": {
+          "electron.responseParse": 0.554,
+          "electron.exposeAssets": 3.417,
+          "python.queue": 0.065,
+          "python.jsonBudget": 6.113,
+          "python.semanticDigest": 4.682,
+          "python.stateIdentity": 2.225,
+          "python.metrics": 3.481,
+          "python.simulationStep": 20.97,
+          "python.snapshot": 1.645,
+          "python.observe": 7.431,
+          "python.view": 13.581,
+          "python.dispatch": 51.722,
+          "python.serialize": 1.771,
+          "python.writeFlush": 0.377
+        },
+        "actualNativeExecution": {
+          "latticeTicks": 0,
+          "continuumTicks": 0,
+          "latticeSubsteps": 0,
+          "sweepNativeCalls": 0,
+          "sweepNativeSamplePoints": 0,
+          "sweepVectorCalls": 0,
+          "sweepScalarCalls": 0,
+          "sweepFallbackReasons": {},
+          "strainNativeCalls": 0,
+          "strainNativeEdges": 0,
+          "strainVectorCalls": 0,
+          "strainRefinedEdges": 0,
+          "strainIdleSubsteps": 0,
+          "strainFallbackReasons": {}
+        },
+        "actualNativeBindings": {
+          "residentActionCalls": 15,
+          "displacementSnapshotCalls": 0,
+          "displacementSnapshotFallbackCalls": 0,
+          "displacementSnapshotSuccessfulCalls": 0,
+          "displacementSnapshotFallbackReasons": {}
+        }
+      }
+    }
+  },
+  "builds": {
+    "frozenUnpackagedBaselineNativeSha256": "304dea4eae193865a3fcb7e87a288ba58f4812174bfa70dcd7c6e9367e719e78",
+    "unpackagedCandidateNativeSha256": "2110ea98eb370c710b40502e80056e6dd7022d90e8178b6afd307d44a2c1baab",
+    "signedCandidateNativeSha256": "9d1edfbf7df20dc42efe4fb5f8cd4a90622c7651e63a5a059fa19e24c74e1f86",
+    "diagnosticBaselineCommit": "91fbb5c5",
+    "signedDistribution": "local ad hoc macOS ARM64",
+    "buildEvidence": "package/desktop-build.json"
+  },
+  "fullWorkloadSettingsEvidence": "paired-v1/plan.json",
+  "appearanceAndRestart": {
+    "evidence": "acceptance-v1/summary.json",
+    "capture": "Four wall-time recordings separate from capture-free latency and settled comparison stills.",
+    "tissue": {
+      "reopen": {
+        "baseline": {
+          "verifiedBoundaryMs": 3054.204375,
+          "canvasMs": 641.792042,
+          "stateIds": [
+            "sha256:03bb2c232b6fa3cfd493e073d5c7a8b4a61e428f9d90a41d16506faef97302dd",
+            "sha256:bf20294d7129b5c855d3e149edbdd73576995bbbe546bb8a66a5d4d8925d929c"
+          ],
+          "historyRows": 33
+        },
+        "candidate": {
+          "verifiedBoundaryMs": 2469.653167,
+          "canvasMs": 644.057458,
+          "stateIds": [
+            "sha256:03bb2c232b6fa3cfd493e073d5c7a8b4a61e428f9d90a41d16506faef97302dd",
+            "sha256:bf20294d7129b5c855d3e149edbdd73576995bbbe546bb8a66a5d4d8925d929c"
+          ],
+          "historyRows": 33
+        }
+      },
+      "stills": [
+        {
+          "name": "retraction",
+          "pixelsCompared": 2121408,
+          "changedPixels": 2,
+          "meanAbsoluteChannelDifference": 4.399593728944801e-06,
+          "maxAbsoluteChannelDifference": 6,
+          "stateId": "sha256:fe5e491036b8e46f7938e9fd7c771041e9436d1b80b6ca204985d75f9e1096ca",
+          "position": 5
+        },
+        {
+          "name": "first-wet",
+          "pixelsCompared": 2121408,
+          "changedPixels": 2,
+          "meanAbsoluteChannelDifference": 4.399593728944801e-06,
+          "maxAbsoluteChannelDifference": 6,
+          "stateId": "sha256:a15306a9212672c148b0cb2cd7f9d1d1d53a321ff5ae0309643638995bc783c1",
+          "position": 12
+        },
+        {
+          "name": "irrigation",
+          "pixelsCompared": 2121408,
+          "changedPixels": 2,
+          "meanAbsoluteChannelDifference": 4.399593728944801e-06,
+          "maxAbsoluteChannelDifference": 6,
+          "stateId": "sha256:577bc6e89914bb8d520ca837dcc3261a870eebefdb1daa21ec06392f5015907d",
+          "position": 26
+        },
+        {
+          "name": "suction",
+          "pixelsCompared": 2121408,
+          "changedPixels": 2,
+          "meanAbsoluteChannelDifference": 4.399593728944801e-06,
+          "maxAbsoluteChannelDifference": 6,
+          "stateId": "sha256:f72ee6291a16cde2383f5a208e36fd3a66406539330b73f6b1b2b30e88836d25",
+          "position": 32
+        },
+        {
+          "name": "withdrawal",
+          "pixelsCompared": 2121408,
+          "changedPixels": 2,
+          "meanAbsoluteChannelDifference": 4.399593728944801e-06,
+          "maxAbsoluteChannelDifference": 6,
+          "stateId": "sha256:bf20294d7129b5c855d3e149edbdd73576995bbbe546bb8a66a5d4d8925d929c",
+          "position": 34
+        }
+      ],
+      "movies": {
+        "baseline": {
+          "file": "recordings/baseline/tissue/interaction.mp4",
+          "durationSeconds": 61.685808124999994,
+          "frames": 585,
+          "matchingCompositorSampleMs": {
+            "n": 33,
+            "p50": 140.72021484375,
+            "p95": 323.76806640625,
+            "max": 338.28955078125
+          }
+        },
+        "candidate": {
+          "file": "recordings/candidate/tissue/interaction.mp4",
+          "durationSeconds": 61.968460542,
+          "frames": 445,
+          "matchingCompositorSampleMs": {
+            "n": 33,
+            "p50": 196.4501953125,
+            "p95": 1209.552490234375,
+            "max": 1349.493896484375
+          }
+        }
+      }
+    },
+    "cranial": {
+      "reopen": {
+        "baseline": {
+          "verifiedBoundaryMs": 5381.737792,
+          "canvasMs": 506.91733300000004,
+          "stateIds": [
+            "sha256:40b4c889644b2b8d411273354d04d84f575bd75850e489c8673082912127e86b",
+            "sha256:37bebdf7af833b881234f6d28045437fc8470661ee75655591532cef66fd6359"
+          ],
+          "historyRows": 14
+        },
+        "candidate": {
+          "verifiedBoundaryMs": 5542.69675,
+          "canvasMs": 602.159708,
+          "stateIds": [
+            "sha256:40b4c889644b2b8d411273354d04d84f575bd75850e489c8673082912127e86b",
+            "sha256:37bebdf7af833b881234f6d28045437fc8470661ee75655591532cef66fd6359"
+          ],
+          "historyRows": 14
+        }
+      },
+      "stills": [
+        {
+          "name": "partial-contact",
+          "pixelsCompared": 2121408,
+          "changedPixels": 0,
+          "meanAbsoluteChannelDifference": 0,
+          "maxAbsoluteChannelDifference": 0,
+          "stateId": "sha256:64dc0073b920d3420cf83ca13eab4bc09e26f68477e248933758d9609875d7ed",
+          "position": 110
+        },
+        {
+          "name": "removal",
+          "pixelsCompared": 2121408,
+          "changedPixels": 0,
+          "meanAbsoluteChannelDifference": 0,
+          "maxAbsoluteChannelDifference": 0,
+          "stateId": "sha256:9a47332fb1b6d747a7631ed88953ceb8b3664a0be4364972105dbcffa2a34738",
+          "position": 111
+        },
+        {
+          "name": "withdrawal",
+          "pixelsCompared": 2121408,
+          "changedPixels": 0,
+          "meanAbsoluteChannelDifference": 0,
+          "maxAbsoluteChannelDifference": 0,
+          "stateId": "sha256:37bebdf7af833b881234f6d28045437fc8470661ee75655591532cef66fd6359",
+          "position": 119
+        }
+      ],
+      "movies": {
+        "baseline": {
+          "file": "recordings/baseline/cranial/interaction.mp4",
+          "durationSeconds": 61.96082400000001,
+          "frames": 611,
+          "matchingCompositorSampleMs": {
+            "n": 14,
+            "p50": 162.3297119140625,
+            "p95": 200.736083984375,
+            "max": 200.736083984375
+          }
+        },
+        "candidate": {
+          "file": "recordings/candidate/cranial/interaction.mp4",
+          "durationSeconds": 61.96178687500001,
+          "frames": 598,
+          "matchingCompositorSampleMs": {
+            "n": 14,
+            "p50": 129.89697265625,
+            "p95": 197.3076171875,
+            "max": 197.3076171875
+          }
+        }
+      }
+    }
+  },
+  "interactionCadence": {
+    "evidence": "interactions-v1/summary.json",
+    "case": "cranial withdrawn endpoint",
+    "measurement": "Three four-second measured gestures per arm and type, plus one warmup. Successful GPU completion polls for submitted frames. No committed action advanced.",
+    "baseline": {
+      "proposal": {
+        "repeats": 3,
+        "deadlineMs": 16.666666666666668,
+        "deliveredInputIntervalMs": {
+          "n": 717,
+          "p50": 16.69999998807907,
+          "p95": 24.5,
+          "max": 26.900000035762787,
+          "p99": 25.30000001192093
+        },
+        "submittedFrameIntervalMs": {
+          "n": 714,
+          "p50": 16.69999998807907,
+          "p95": 24.900000035762787,
+          "max": 27.900000035762787,
+          "p99": 26.099999964237213
+        },
+        "matchingGpuIntervalMs": {
+          "n": 714,
+          "p50": 16.69999998807907,
+          "p95": 25.80000001192093,
+          "max": 35.60000002384186,
+          "p99": 33.5
+        },
+        "completedFramesPerSecondByRun": [
+          59.619,
+          59.615,
+          59.88
+        ]
+      },
+      "camera": {
+        "repeats": 3,
+        "deadlineMs": 16.666666666666668,
+        "deliveredInputIntervalMs": {
+          "n": 717,
+          "p50": 16.69999998807907,
+          "p95": 21.399999976158142,
+          "max": 23.5,
+          "p99": 22.30000001192093
+        },
+        "submittedFrameIntervalMs": {
+          "n": 666,
+          "p50": 16.69999998807907,
+          "p95": 27.899999976158142,
+          "max": 38.90000003576279,
+          "p99": 33.30000001192093
+        },
+        "matchingGpuIntervalMs": {
+          "n": 666,
+          "p50": 16.69999998807907,
+          "p95": 26.19999998807907,
+          "max": 42,
+          "p99": 34.39999997615814
+        },
+        "completedFramesPerSecondByRun": [
+          55.967,
+          55.957,
+          55.831
+        ]
+      }
+    },
+    "candidate": {
+      "proposal": {
+        "repeats": 3,
+        "deadlineMs": 16.666666666666668,
+        "deliveredInputIntervalMs": {
+          "n": 717,
+          "p50": 16.69999998807907,
+          "p95": 17.900000035762787,
+          "max": 24.799999952316284,
+          "p99": 21.600000023841858
+        },
+        "submittedFrameIntervalMs": {
+          "n": 714,
+          "p50": 16.69999998807907,
+          "p95": 17.69999998807907,
+          "max": 25.200000047683716,
+          "p99": 20.600000023841858
+        },
+        "matchingGpuIntervalMs": {
+          "n": 714,
+          "p50": 16.69999998807907,
+          "p95": 25.399999976158142,
+          "max": 33.5,
+          "p99": 26.69999998807907
+        },
+        "completedFramesPerSecondByRun": [
+          59.87,
+          59.619,
+          59.871
+        ]
+      },
+      "camera": {
+        "repeats": 3,
+        "deadlineMs": 16.666666666666668,
+        "deliveredInputIntervalMs": {
+          "n": 717,
+          "p50": 16.69999998807907,
+          "p95": 20.299999952316284,
+          "max": 25.099999964237213,
+          "p99": 22.900000035762787
+        },
+        "submittedFrameIntervalMs": {
+          "n": 666,
+          "p50": 16.69999998807907,
+          "p95": 27.69999998807907,
+          "max": 40.60000002384186,
+          "p99": 33.30000001192093
+        },
+        "matchingGpuIntervalMs": {
+          "n": 666,
+          "p50": 16.69999998807907,
+          "p95": 33.19999998807907,
+          "max": 51.69999998807907,
+          "p99": 34.40000003576279
+        },
+        "completedFramesPerSecondByRun": [
+          55.966,
+          55.967,
+          55.966
+        ]
+      }
+    }
+  },
+  "sustained": {
+    "report": "stress/candidate-v1/stress.json",
+    "coldReport": "stress/candidate-v1/cold.json",
+    "passed": true,
+    "checks": {
+      "parentUndoRedoBranch": true,
+      "loadedTissue": true,
+      "burstAdmissionAndSingleCommit": true,
+      "cameraInputDuringDeformation": true,
+      "cancellationPreservedCheckpointAndLog": true,
+      "cancellationAfterDeformationStarted": true,
+      "insertedExchangeRejectedWithoutCommit": true,
+      "sustainedActionsAndSurfaceBudget": true,
+      "heldSlicesMatchPreviousPublishedStateAndStop": true,
+      "practiceBoundaryIsReadOnlyAndReturnsExactly": true,
+      "protectedSaveRefusedWithoutOverwrite": true,
+      "saveContainsExactCommittedLog": true
+    },
+    "seconds": 180.002,
+    "acceptedMoves": 359,
+    "matchingGpuMs": {
+      "count": 359,
+      "p50": 80.60000002384186,
+      "p95": 112.5,
+      "max": 131.19999998807907,
+      "p99": 122.80000001192093
+    },
+    "windows": [
+      {
+        "startMs": 0,
+        "endMs": 60000,
+        "latencyMs": {
+          "count": 120,
+          "p50": 56,
+          "p95": 72.19999998807907,
+          "max": 80.39999997615814
+        },
+        "ipcMs": {
+          "count": 120,
+          "p50": 33.1775000000016,
+          "p95": 43.80029099999956,
+          "max": 54.123749999998836
+        },
+        "workerQueueMs": {
+          "count": 120,
+          "p50": 0.045666,
+          "p95": 0.069875,
+          "max": 0.105167
+        },
+        "workerDispatchMs": {
+          "count": 120,
+          "p50": 28.089458,
+          "p95": 36.896875,
+          "max": 48.328041
+        },
+        "responseBytes": {
+          "count": 120,
+          "p50": 128399,
+          "p95": 201638,
+          "max": 209762
+        }
+      },
+      {
+        "startMs": 60000,
+        "endMs": 120000,
+        "latencyMs": {
+          "count": 120,
+          "p50": 80.80000001192093,
+          "p95": 96.59999996423721,
+          "max": 97.80000001192093
+        },
+        "ipcMs": {
+          "count": 120,
+          "p50": 50.35508399999526,
+          "p95": 65.00816700000723,
+          "max": 72.6567909999867
+        },
+        "workerQueueMs": {
+          "count": 120,
+          "p50": 0.045375,
+          "p95": 0.070167,
+          "max": 0.086791
+        },
+        "workerDispatchMs": {
+          "count": 120,
+          "p50": 41.927125,
+          "p95": 56.9785,
+          "max": 62.403292
+        },
+        "responseBytes": {
+          "count": 120,
+          "p50": 291156,
+          "p95": 364422,
+          "max": 372524
+        }
+      },
+      {
+        "startMs": 120000,
+        "endMs": 180000,
+        "latencyMs": {
+          "count": 119,
+          "p50": 97.40000003576279,
+          "p95": 122.59999996423721,
+          "max": 131.19999998807907
+        },
+        "ipcMs": {
+          "count": 119,
+          "p50": 62.847833000007086,
+          "p95": 82.46308300000965,
+          "max": 92.85945799999172
+        },
+        "workerQueueMs": {
+          "count": 119,
+          "p50": 0.039375,
+          "p95": 0.074084,
+          "max": 0.090292
+        },
+        "workerDispatchMs": {
+          "count": 119,
+          "p50": 51.611167,
+          "p95": 70.543125,
+          "max": 78.808667
+        },
+        "responseBytes": {
+          "count": 119,
+          "p50": 453872,
+          "p95": 527144,
+          "max": 533971
+        }
+      }
+    ],
+    "residencySamples": 13,
+    "workingSetMiB": {
+      "first": 681.45,
+      "peak": 932.36,
+      "last": 879.22
+    },
+    "maxOutstandingSteps": 1,
+    "maxPendingSidecarRequests": 2,
+    "resources": {
+      "geometries": 40,
+      "textures": 17
+    },
+    "programs": 23,
+    "estimatedGraphicsBytes": {
+      "geometryBytes": 302064,
+      "instanceBytes": 0,
+      "textureBytes": 110605,
+      "targetBytes": 16242792,
+      "totalKnownBytes": 16655461,
+      "meaning": "Uncompressed buffers and known render attachments; excludes driver, programs, default-framebuffer and allocation overhead"
+    },
+    "peakRetiredCacheBytes": 43872,
+    "cameraDuringPhysics": {
+      "ticks": 300,
+      "trustedMovementsInEnvelope": 40,
+      "completedInEnvelope": 45,
+      "gpuIntervalsMs": {
+        "count": 44,
+        "p50": 16.69999998807907,
+        "p95": 25,
+        "max": 27.100000023841858
+      }
+    },
+    "cancelTicks": 59,
+    "orderedHeldSlices": 4,
+    "reopenedHistory": 371,
+    "savedSha256": "134d8c54ee4988c108d4a6c81a91fa1d2b05bc41a40578f1423738e478bf718a",
+    "savedStateId": "sha256:50dc69ed14d3ecef3d835d3aa60087f87b284b551d38fc99bdd327d81639405f",
+    "compactEvidence": "stress/candidate-v1/summary.json"
+  },
+  "coordination": {
+    "coordinator": {
+      "model": "gpt-6.2-astra",
+      "reasoning": "xhigh"
+    },
+    "implementationAndVerification": {
+      "model": "gpt-6.2-sol",
+      "reasoning": "max"
+    },
+    "checkoutPolicy": "Isolated ordinary performance branch and explicitly requested separate worktree; primary branch and edit state left to their owners."
+  },
+  "tissueRecordingRepeat": {
+    "report": "tissue-recordings-apfs-v1/summary.json",
+    "fileIntegrity": "generated-media-integrity-v1.json",
+    "spool": "temporary, APFS, checked removed",
+    "recordings": {
+      "baseline": {
+        "file": "recordings/baseline/tissue/interaction.mp4",
+        "durationSeconds": 61.902818708000005,
+        "frames": 611,
+        "spool": {
+          "path": "/var/folders/sx/jbpz67014sd6x_mnvqlwyh280000gn/T/rslab-manual-vDmcf2/.compositor-JjSQnA",
+          "fileSystem": "apfs",
+          "device": "/dev/disk3s5",
+          "removedWithProfile": true
+        },
+        "sampleSpacingMs": {
+          "n": 610,
+          "p50": 101,
+          "p95": 105,
+          "max": 204,
+          "p99": 133
+        },
+        "matchingCompositorSampleMs": {
+          "n": 33,
+          "p50": 152.7060546875,
+          "p95": 283.65087890625,
+          "max": 303.369384765625
+        },
+        "immediateReadbackUpperBoundMs": {
+          "n": 33,
+          "p50": 104.575927734375,
+          "p95": 269.2041015625,
+          "max": 270.894775390625
+        }
+      },
+      "candidate": {
+        "file": "recordings/candidate/tissue/interaction.mp4",
+        "durationSeconds": 61.892936792,
+        "frames": 611,
+        "spool": {
+          "path": "/var/folders/sx/jbpz67014sd6x_mnvqlwyh280000gn/T/rslab-manual-ErytSf/.compositor-PquwiA",
+          "fileSystem": "apfs",
+          "device": "/dev/disk3s5",
+          "removedWithProfile": true
+        },
+        "sampleSpacingMs": {
+          "n": 610,
+          "p50": 101,
+          "p95": 106,
+          "max": 161,
+          "p99": 125
+        },
+        "matchingCompositorSampleMs": {
+          "n": 33,
+          "p50": 130.89111328125,
+          "p95": 292.475341796875,
+          "max": 300.9052734375
+        },
+        "immediateReadbackUpperBoundMs": {
+          "n": 33,
+          "p50": 83.736328125,
+          "p95": 234.602783203125,
+          "max": 245.90478515625
+        }
+      }
+    }
+  },
+  "verification": {
+    "electronMain": {
+      "passed": 367,
+      "report": "final-electron-main-tests.log"
+    },
+    "viewer": {
+      "passed": 372,
+      "report": "final-viewer-tests.log"
+    },
+    "rendererUi": {
+      "passed": 806,
+      "total": 810,
+      "baselineReproducedFailures": 4,
+      "report": "renderer/known-desktop-failures-baseline.log"
+    },
+    "nativeFocused": {
+      "passed": 92,
+      "report": "kernel/focused-tests-final.log"
+    },
+    "pythonDeformationOccupancyAndPractice": {
+      "passed": 62,
+      "report": "final-python-focused.log"
+    },
+    "responseBudgetAndPractice": {
+      "passed": 70,
+      "report": "state-cost/practice-budget-focused-tests.log"
+    },
+    "knownBaselineRlCancellationTest": "state-cost/rl-cancellation-known-failure-baseline.log",
+    "sampleRestore": "archive-verification.json",
+    "signedApp": "codesign --verify --deep --strict passed after all runs"
+  },
+  "integration": {
+    "latestCheckedOtherBranch": "9f0203299a5a18356766f85dfac849b3a4b8acc5",
+    "dryMergeConflicts": [
+      "desktop/electron/verify-manual-practice.cjs",
+      "desktop/src/viewer/VolumeRenderer.ts",
+      "desktop/src/viewer/incrementalSurface.worker.ts"
+    ],
+    "cavityWorkerResolution": "integration/README.md",
+    "verifierResolution": "integration/verifier/",
+    "combinedDesktopValidated": false
+  },
+  "archive": {
+    "manifest": "SHA256SUMS",
+    "verifiedFiles": 387,
+    "manifestSha256": "e8daa0c9a5264ec4c669845eeb72253c91cfe22f7a4dbc23a50762f43443c7fe",
+    "sampleRestore": "archive-verification.json",
+    "restoredSampleReceiptSha256": "1bf8acf68bfe30174b2d302bc7fde53d266a623e3e1698289ef61c8a340eaa32",
+    "rawIndex": "README.md"
+  }
+}

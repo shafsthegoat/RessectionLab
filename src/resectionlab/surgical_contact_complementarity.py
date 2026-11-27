@@ -46,8 +46,16 @@ def solve_unilateral(matrix,rhs,contact,target,inverse,*,check=lambda:None):
     deficit=b-c@base
     zero=np.max(np.abs(compliance),axis=1)<=tol
     if np.any(zero&(deficit>GAP_TOLERANCE_MM)):raise ValueError('CONTACT_INFEASIBLE_FIXED_POINT')
+    from . import acceleration as _accel
+    accelerated=None
+    if _accel.enabled('contact') and np.max(deficit,initial=0.)>0:
+        from .accel_contact import applies,polished as _exact
+        if applies(minimize):
+            accelerated=_exact(compliance,deficit,gap_tolerance=GAP_TOLERANCE_MM,energy_tolerance=ENERGY_TOLERANCE_NMM,check=check)
     if np.max(deficit,initial=0.)<=0:
         multipliers=np.zeros(m);iterations=0;status=0;polished=False
+    elif accelerated is not None:
+        multipliers,iterations,polished=accelerated;status=0
     else:
         def objective(x):
             check();g=compliance@x-deficit;return float(.5*x@(compliance@x)-x@deficit),g

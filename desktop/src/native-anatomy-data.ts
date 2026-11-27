@@ -1,7 +1,8 @@
 import {studyLayerDisplayKind} from './native-study-state.ts';
 import type {ViewerVolume,VesselDisplayFilter,PatientContext,SurfaceAppearanceSource} from './viewer/contracts';
 import {inverseAffine,rasAffine} from './viewer/coordinates.ts';
-import type {Point3} from './viewer/coordinates';
+import type {Point3,Shape3} from './viewer/coordinates';
+import {CT_EXTERIOR_TEXTURE_LIMIT_BYTES} from './viewer/volumeOpticalDensity.ts';
 import type {ViewerWorkspaceSettings} from './viewer/workspaceSettings';
 import type {ArrayDescriptor,ResectionApi,CasePayload} from './types';
 export type Layer={
@@ -9,21 +10,32 @@ export type Layer={
   probability?:unknown;provenance:unknown;coverage:string;data?:{shape:number[];sha256:string};label_value?:number;
   affine?:number[][];acquisition_grid_spacing_mm?:number[];output_spacing_mm?:number[];
   acquisition_resolution?:string|number[];transform_dependencies?:string[];
+  revision?:number;edits?:unknown[];
   coverage_fields?:{inference_bounds_voxel_inclusive?:number[][];supported_axial_indices?:number[];outside?:string;zero_meaning?:string};
   availability?:string;uncertainty?:unknown;label_ontology?:unknown;ontology?:unknown;score_meaning?:string;
 };
 export type Series={
   id:string;label?:string;modality:string;grid_spacing_mm:number[];timepoint:string;affine?:number[][];data?:{shape:number[]};
+  original?:{sha256:string};
   acquisition_resolution?:string|number[];coverage?:{status?:string;limitations?:Array<{kind:string;basis?:string}>};
+  diffusion_baseline?:{source_asset_id:string;volume_index:number;b_value_s_per_mm2:number};
 };
+export type CtaCoverageDeclaration={series_id:string;layer_id:string;focus_layers:string[];wider_layers?:string[];retired?:boolean};
 export type Document={
   before_acquisition?:{snapshotId:string;revision:number;sources:Array<{id:string;label:string;modality:string;originalSha256:string}>;
     layers:Array<{id:string;label:string;sourceSeries:string;arraySha256:string;labelValue:number;review:string}>};
-  display?:{initial_layers?:string[];cursor_ras_mm?:Point3;entry_ras_mm?:Point3};
+  display?:{initial_layers?:string[];cursor_ras_mm?:Point3;entry_ras_mm?:Point3;
+    cta_arterial_coverage?:CtaCoverageDeclaration|CtaCoverageDeclaration[]};
+  vascular_review?:{schema?:string;posterior_compartment_review?:{disjoint_union_matches_selected?:boolean};
+    field_edge_compartment_review?:{disjoint_union_matches_selected?:boolean};
+    skull_exterior_compartment_review?:{disjoint_union_matches_selected?:boolean};
+    source_disagreement_compartment_review?:{disjoint_union_matches_selected?:boolean}};
   source_assets?:unknown[];patient_id:string;study_timepoint?:string;snapshot_id:string;reference_series:string;
+  preparation_workflow?:string;
   tractography?:Array<{id:string;label:string;source_series:string}>;
   revision:number;layers:Layer[];missing:string[];series:Series[];
   transforms:Record<string,{status:string;parent_series?:string|null;uncertainty_mm?:number|null;method?:string;
+    native_wall_alignment_review?:{centerRasMm:Point3;binding:{brainLayerId:string;vesselLayerId:string}};
     landmarks?:unknown[]|{reviewer:string;moving:Point3[];reference:Point3[];errors_mm:number[]}}>;
 };
 export type EnvironmentRole='brain'|'tumor'|'bone'|'vessels';
@@ -32,16 +44,48 @@ export type AcquisitionContribution={seriesId:string;label:string;modality:strin
   qc:string|null;warnings:string[];disposition:string;reason:string;layerCount:number;emptyLayers:string[];uses:string[];modelInputs:string[];suppliedTracts:string[];asset:boolean};
 export type RegistrationSection={pixels:ArrayDescriptor;size:number;frame:string;movingStatus:string|null;
   center:Point3;u:Point3;v:Point3;spacingMm:number;sourceFromSection?:number[][];voxelFromSection?:number[][];sourceShape?:number[]};
+export interface LocalAlignmentEvidence {
+  snapshotId:string;centerRasMm:Point3;transformStatus:string;fieldWidthMm:number;
+  sampleCount:number;commonCoverageCount:number;movingCoverageCount:number;referenceCoverageCount:number;
+  shiftLimitMm:number;shiftStepMm:number;
+  patches:Array<{centerRasMm:Point3;status:'insufficient_source_coverage'|'weak_image_structure'|'search_boundary'|'competing_matches'|'distinguishable_peak';
+    movingSamplingShiftMm?:Point3;candidateScore?:number;bestScore?:number}>;
+}
+export type NativeVesselBranch={branch_id:string;closed:boolean;length_mm:number;source_cells:number[];
+  start_ras_mm:Point3;end_ras_mm:Point3;midpoint_ras_mm:Point3;preview_ras_mm:Point3[];
+  unsupported_diagonal_edges:number;connectivity:string};
+export type NativeVesselGraph={branches?:NativeVesselBranch[];
+  nearest?:{source_cell_id:number;distance_mm:number;radius_mm:number|null;point_ras_mm:Point3;radius_limited_by_image_extent:boolean;radius_limited_by_workspace?:boolean}};
 export interface SelectedRouteForecast {
   schema:'resectionlab.native-route-forecast.v1';decision:'STOP';stage:'before-access';reason:string;
   preparationActions:number;withdrawalActions:number;targetRemovedMm3:number;nonTargetRemovedMm3:number;
   elapsedSeconds:number;physicalCandidatesExamined:number;requiredEvidence:string[];
 }
-export type EnvironmentOptions={selectedRouteForecast?:SelectedRouteForecast;acquisitions?:AcquisitionContribution[];referenceIssue:string|null;layers:Array<{
-  role:EnvironmentRole;layerId:string;status:'ready'|'estimated_alignment'|'unavailable';reason?:string|null;
+export type NativeWallPair={brainLayerId:string;vesselLayerId:string;scope:'reviewed-crop';centerRasMm:Point3}|
+  {brainLayerId:string;vesselLayerId:string;scope:'cursor'};
+export type EnvironmentOptions={selectedRouteForecast?:SelectedRouteForecast;acquisitions?:AcquisitionContribution[];referenceIssue:string|null;
+  nativeWall?:{referenceIssue:string|null;pairs:NativeWallPair[]};layers:Array<{
+  role:EnvironmentRole;layerId:string;status:'ready'|'estimated_alignment'|'unavailable';reason?:string|null;nativeWallIssue?:string;
+  nativeWallAlignment?:{brainLayerId:string;centerRasMm:Point3};
 }>};
-export type Binding={collectionId:string;document:Document;viewState?:NativeViewState|null};
-export type Draft={layerId:string;undo:number;redo:number;changedVoxels:number}|null;
+export type Binding={collectionId:string;document:Document;viewState?:NativeViewState|null;readOnlyStudy?:boolean};
+export interface NativeWallSourceField {
+  startIJK:Point3;shape:Point3;nativeShape:Point3;affine:number[][];partialCoverage:boolean;
+}
+export interface NativeVesselFieldRequest {
+  collectionId:string;snapshotId:string;seriesId:string;
+  localVesselField:{layerId:string;center:Point3;frame:string};
+}
+export interface NativeWallSourceScan {
+  seriesId:string;modality:string;centerRasMm:Point3;independent:boolean;
+  localField:NativeWallSourceField|null;
+  layers:{id:string;kind:string;label:string}[];
+}
+export interface NativeWallSourceInspection {
+  collectionId:string;snapshotId:string;caseHash:string;centerRasMm:Point3;
+  cropStartIJK:Point3;cropShape:Point3;locallyReviewed:boolean;scans:NativeWallSourceScan[];
+}
+export type Draft={layerId:string;undo:number;redo:number;changedVoxels:number;mode?:'erase-attached-tof'}|null;
 export type Args=Record<string,unknown>;
 export type IntakeKind='nifti'|'dicom'|'labels';
 export type IntakeSelection={
@@ -65,10 +109,17 @@ export interface NativeAnatomyApi {
   openWorkspace?():Promise<Binding|CasePayload|null>;
   startupWorkspace?():Promise<Binding|CasePayload|null>;
   openListedWorkspace?(id:string):Promise<Binding|CasePayload>;
+  inspectNativeWallSource?(args:{caseHash:string;choose?:boolean;requestId?:string}):Promise<NativeWallSourceInspection|null>;
+  closeNativeWallSource?(args:{collectionId:string}):Promise<boolean>;
   anatomySavePackage(args:Args):Promise<{path:string}|null>;
   anatomySaveView(args:Args):Promise<{saved:boolean}>;
   anatomyComponents(args:Args):Promise<ComponentReview>;
-  anatomyGraph(args:Args):Promise<unknown>;
+  anatomyAttachedVesselReview(args:Args):Promise<AttachedVesselReview>;
+  anatomyVesselGapReview(args:Args):Promise<VesselGapReview>;
+  anatomyLocalAlignment(args:Args):Promise<LocalAlignmentEvidence>;
+  anatomyDiffusionBaseline(args:Args):Promise<{document:Document;seriesId:string}>;
+  anatomyCtaArterialCoverage(args:Args):Promise<{document:Document;layerId:string;counts:{wider_only_voxels:number}}>;
+  anatomyGraph(args:Args):Promise<NativeVesselGraph>;
   anatomyCreate(args:Args):Promise<Binding|null>;
   anatomyReconstruct(args:Args):Promise<{document:Document;result:unknown}>;
   anatomyPlan(args:Args):Promise<unknown>;
@@ -86,8 +137,9 @@ export interface NativeAnatomyApi {
   anatomySample(args:Args):Promise<unknown>;
 }
 export type Surface=NonNullable<ViewerVolume['compartments'][number]['surface']>;
-export type ViewPayload=Omit<ViewerVolume,'mri'|'compartments'|'tractography'|'labelSets'|'patientContext'|'headSupport'>&{appearanceSources?:Array<Pick<SurfaceAppearanceSource,'seriesId'|'modality'|'sourceSha256'|'affine'|'nativeAffine'|'nativeShape'>&{signal:ArrayDescriptor}>;headSupport?:ArrayDescriptor;patientContext?:{sources:PatientContext['sources'];affine?:ViewerVolume['affine'];shape?:ViewerVolume['shape'];signal?:ArrayDescriptor};labelSets?:Array<{id:string;data:ArrayDescriptor}>;tractography?:Array<{id:string;label:string;points:ArrayDescriptor;offsets:ArrayDescriptor}>;mri:ArrayDescriptor;modality:string;registrationStatus:string;patientFrameReady?:boolean;alignmentPreviews?:string[];unavailableLayers:string[];compartments:Array<{sourceSeries?:string;alignment?:string;kind?:string;displayKind?:string;sourceIdentity?:string;qa?:import('./viewer/contracts').AnatomyQuality;surfaceDiagnostics?:import('./viewer/surfacePolicy').SurfaceDiagnostics;name:string;color:string;volumeMm3?:number;displayFilter?:VesselDisplayFilter;sourceSupport?:import('./viewer/contracts').TissueDisplaySupport;mask?:ArrayDescriptor;labelSet?:string;labelValue?:number;surface?:{empty:true}|Record<keyof Surface,ArrayDescriptor>}>};
-export async function hydrateAnatomy(payload:ViewPayload,api:ResectionApi,cachedImage?:Float32Array,cached?:Pick<ViewerVolume,'labelSets'|'tractography'|'patientContext'|'headSupport'>,studyLayers?:Layer[],appearanceCache?:Map<string,Float32Array>):Promise<ViewerVolume>{
+type CtExteriorPayload={schema:string;offset:Point3;mask:ArrayDescriptor;signalSha256:string};
+export type ViewPayload=Omit<ViewerVolume,'mri'|'compartments'|'tractography'|'labelSets'|'patientContext'|'headSupport'|'ctExterior'>&{snapshotId:string;sourceField?:NativeWallSourceField;sourceFieldCursorRasMm?:Point3;appearanceSources?:Array<Pick<SurfaceAppearanceSource,'seriesId'|'modality'|'sourceSha256'|'affine'|'nativeAffine'|'nativeShape'|'intensityUnits'>&{signal:ArrayDescriptor}>;headSupport?:ArrayDescriptor;ctExterior?:CtExteriorPayload;patientContext?:PatientContext;labelSets?:Array<{id:string;data:ArrayDescriptor}>;tractography?:Array<{id:string;label:string;points:ArrayDescriptor;offsets:ArrayDescriptor}>;mri:ArrayDescriptor;modality:string;registrationStatus:string;patientFrameReady?:boolean;alignmentPreviews?:string[];unavailableLayers:string[];compartments:Array<{sourceSeries?:string;alignment?:string;kind?:string;displayKind?:string;sourceIdentity?:string;qa?:import('./viewer/contracts').AnatomyQuality;surfaceDiagnostics?:import('./viewer/surfacePolicy').SurfaceDiagnostics;name:string;color:string;volumeMm3?:number;displayFilter?:VesselDisplayFilter;sourceSupport?:import('./viewer/contracts').TissueDisplaySupport;mask?:ArrayDescriptor;tags?:ArrayDescriptor;labelSet?:string;labelValue?:number;surface?:{empty:true}|Record<keyof Surface,ArrayDescriptor>}>};
+export async function hydrateAnatomy(payload:ViewPayload,api:ResectionApi,cachedImage?:Float32Array,cached?:Pick<ViewerVolume,'labelSets'|'tractography'|'headSupport'|'ctExterior'>,studyLayers?:Layer[],appearanceCache?:Map<string,Float32Array>):Promise<ViewerVolume>{
   async function bytes(d:ArrayDescriptor){
     if(!d || d.byteLength>512*1024**2 || d.byteOrder!=='little' || d.order!=='C')throw Error('Unsupported anatomy transfer');
     const b=await api.readAsset(d.assetId);if(b.byteLength!==d.byteLength)throw Error('Incomplete anatomy transfer');
@@ -114,8 +166,11 @@ export async function hydrateAnatomy(payload:ViewPayload,api:ResectionApi,cached
       if(layer.surface.empty!==true||Object.keys(layer.surface).length!==1)throw Error('Invalid empty anatomy surface');
       surface={positions:new Float32Array(),source:new Float32Array(),normals:new Float32Array(),sourceNormals:new Float32Array(),indices:new Uint32Array()};
     }else if(layer.surface){
-      const s=layer.surface;surface={positions:new Float32Array(await bytes(s.positions)),source:new Float32Array(await bytes(s.source)),
-        normals:new Float32Array(await bytes(s.normals)),sourceNormals:new Float32Array(await bytes(s.sourceNormals)),indices:new Uint32Array(await bytes(s.indices))};
+      const s=layer.surface;
+      const source=new Float32Array(await bytes(s.source)),sourceNormals=new Float32Array(await bytes(s.sourceNormals));
+      surface={positions:s.positions.sha256===s.source.sha256?source:new Float32Array(await bytes(s.positions)),source,
+        normals:s.normals.sha256===s.sourceNormals.sha256?sourceNormals:new Float32Array(await bytes(s.normals)),sourceNormals,
+        indices:new Uint32Array(await bytes(s.indices))};
       if(surface.positions.length%3 || surface.indices.length%3 || surface.source.length!==surface.positions.length || surface.normals.length!==surface.positions.length || surface.sourceNormals.length!==surface.positions.length || surface.indices.some(i=>i>=surface!.positions.length/3))throw Error('Invalid indexed anatomy mesh');
     }
     const declaration=studyLayers?.find(row=>row.id===layer.name);
@@ -123,36 +178,83 @@ export async function hydrateAnatomy(payload:ViewPayload,api:ResectionApi,cached
     const displayKind=declaredKind!==declaration?.kind?declaredKind:layer.displayKind??declaredKind;
     const appearanceSource=layer.alignment!=='source-grid preview'&&layer.sourceSeries&&['gray-matter','cerebral-cortex','cerebellar-cortex','brain','bone','skull'].includes(displayKind??layer.kind??'')
       ?appearanceSources.get(layer.sourceSeries):undefined;
-    compartments.push({...layer,displayKind,mask,surface,appearanceSource});
+    // Soft volume tags of a vessel layer whose thin branches the engine drew as tubes.
+    let vesselTagBytes:Uint8Array|undefined;
+    // They are optional: without usable tags the volume smooths the layer's mask instead.
+    if(layer.tags&&layer.tags.dtype==='uint8'&&layer.tags.byteLength===mri.length){
+      const tags=new Uint8Array(await bytes(layer.tags));
+      if(tags.length===mri.length)vesselTagBytes=tags;
+    }
+    compartments.push({...layer,displayKind,mask,surface,appearanceSource,...(vesselTagBytes?{vesselTagBytes}:{})});
   }
   const tractography=[];for(const t of payload.tractography??[]){const resident=cached?.tractography?.find(r=>r.id===t.id);if(resident){tractography.push(resident);continue;}tractography.push({...t,points:new Float32Array(await bytes(t.points)),offsets:new Uint32Array(await bytes(t.offsets))});}
   const labelSets=[];for(const set of payload.labelSets??[]){const resident=cached?.labelSets?.find(r=>r.id===set.id);if(resident){labelSets.push(resident);continue;}const data=new Uint16Array(await bytes(set.data));if(data.length!==mri.length)throw Error("Categorical grid mismatch");labelSets.push({id:set.id,data});}
-  let patientContext:PatientContext|undefined;
-  if(payload.patientContext){
-    const {sources,signal,shape,affine}=payload.patientContext;
-    patientContext={sources};
-    if(signal){
-      if(!shape||!affine||shape.some(n=>!Number.isInteger(n)||n<2||n>192))throw Error('Invalid patient context grid');
-      const known=cached?.patientContext?.field;
-      const data=known?.sha256===signal.sha256?known.signal:new Float32Array(await bytes(signal));
-      if(data.length!==shape.reduce((a,b)=>a*b,1))throw Error('Incomplete patient context');
-      patientContext.field={shape,affine,signal:data,sha256:signal.sha256};
-    }
-  }
+  const bounds=payload.patientContext?.boundsRasMm;
+  if(bounds&&(!Array.isArray(bounds)||bounds.length!==2||bounds.some(point=>!Array.isArray(point)||
+     point.length!==3||!point.every(Number.isFinite))||bounds[0].some((n,i)=>n>=bounds[1][i])))throw Error('Invalid patient bounds');
   let headSupport:ViewerVolume['headSupport'];
   if(payload.headSupport){
     const known=cached?.headSupport;
     headSupport=known?.sha256===payload.headSupport.sha256?known:{sha256:payload.headSupport.sha256,data:new Uint8Array(await bytes(payload.headSupport))};
     if(headSupport.data.length!==mri.length)throw Error('Head support differs from its source grid');
   }
-  return {...payload,mri,compartments,tractography,labelSets,patientContext,headSupport};
+  let ctExterior:ViewerVolume['ctExterior'];
+  if(payload.ctExterior&&mri.byteLength<=CT_EXTERIOR_TEXTURE_LIMIT_BYTES){
+    const {schema,offset,mask,signalSha256}=payload.ctExterior;
+    const shape=mask?.shape as Shape3;
+    if(schema!=='native-ct-exterior-sheet-v1'||!['CT','CTA'].includes(payload.modality)||payload.displayPreview||
+      signalSha256!==payload.mri.sha256||mask?.dtype!=='uint8'||!/^[a-f0-9]{64}$/.test(mask.sha256)||
+      !Array.isArray(offset)||!Array.isArray(shape)||offset.length!==3||shape.length!==3||
+      shape.some((size,i)=>!Number.isSafeInteger(size)||size<1||!Number.isSafeInteger(offset[i])||
+        offset[i]<0||offset[i]+size>payload.shape[i])||mask.byteLength!==shape.reduce((a,b)=>a*b,1))
+      throw Error('Detached CT support differs from its acquired source grid');
+    const previous=cached?.ctExterior;
+    if(previous?.sha256===mask.sha256&&offset.every((x,i)=>x===previous.offset[i]&&shape[i]===previous.shape[i])){
+      ctExterior=previous;
+    }else{
+      const data=new Uint8Array(await bytes(mask));
+      if(data.some(value=>value!==0&&value!==1)||!data.includes(1))throw Error('Invalid detached CT support mask');
+      ctExterior={offset,shape,data,sha256:mask.sha256};
+    }
+  }
+  return {...payload,mri,compartments,tractography,labelSets,headSupport,ctExterior};
 }
 
 export type CranialView = 'planning'|'inspection';
 export interface NativeScanState {cranialView?:CranialView;cursor:Point3|null;visible:Record<string,boolean>;settings:ViewerWorkspaceSettings}
 export interface RetiredClipping {seriesId:string|null;cutaway:import('./viewer/workspaceSettings').ViewerCutaway}
-export interface NativeViewState {schema:'patient-anatomy-view-v1';patientId:string;snapshotId:string;seriesId:string;states:Record<string,NativeScanState>;patientCutaway?:import('./viewer/workspaceSettings').ViewerCutaway;vesselScope?:VesselScope;vesselDisplayVersion?:2;selectedApproachId?:string|null;selectedPlanningTargetId?:string|null;selectedApproachIds?:Record<string,string|null>;selectedStructure?:string|null}
-export interface ComponentReview {reviewId:string;layerId:string;components:Array<{id:number;voxels:number;volumeMm3:number;center:Point3}>}
+export interface NativeViewState {schema:'patient-anatomy-view-v1';patientId:string;snapshotId:string;seriesId:string;states:Record<string,NativeScanState>;scalarTransferBasis?:'selected-acquisition-v1';patientCutaway?:import('./viewer/workspaceSettings').ViewerCutaway;vesselScope?:VesselScope;vesselDetail?:VesselDetail;vesselDisplayVersion?:2|3;selectedApproachId?:string|null;selectedPlanningTargetId?:string|null;selectedApproachIds?:Record<string,string|null>;selectedStructure?:string|null}
+export interface ComponentReview {
+  reviewId:string;layerId:string;snapshotId?:string;
+  components:Array<{id:number;voxels:number;volumeMm3:number;center:Point3}>;
+  focus?:{seriesId:string;nativeIjk:Point3;componentId:number|null;
+    preview?:{window:[number,number];sections:AttachedVesselSection[]}};
+}
+export interface AttachedVesselFinding {
+  id:string;centerIjk:Point3;voxels:number;volumeMm3:number;peakCoreRadiusMm:number;
+  signalP90:number;attachmentSignalP75:number;uncalibratedModelScoreMedian:number;
+}
+export interface AttachedVesselSection {
+  axis:number;index:number;startIjk?:Point3;shape:[number,number];spacingMm:[number,number];image:string;overlay:string;
+}
+export interface AttachedVesselReview {
+  snapshotId:string;reviewId?:string;status:'complete'|'partial'|'unavailable';reason?:string;
+  sourceLayer?:string;sourceSeries?:string;findings?:AttachedVesselFinding[];
+  preview?:{findingId:string;window:[number,number];sections:AttachedVesselSection[]};
+}
+export type VesselGapEvidence='uncertain-image-supported'|'weak-source-image-support'|'source-image-unassessed';
+export interface VesselGapReview {
+  snapshotId:string;reviewId?:string;status:'complete'|'partial'|'unavailable';reason?:string;
+  sourceLayer:string;sourceSeries:string;
+  findings?:Array<{id:string;evidence:VesselGapEvidence;distanceMm:number;stations:number;supportedStations:number}>;
+  preview?:{findingId:string;centerRasMm:Point3;window:[number,number];
+    sections:Array<Omit<AttachedVesselSection,'axis'|'index'>&{title:string}>};
+}
 export function isNativeBinding(value:unknown):value is Binding {return !!value&&typeof value==='object'&&'collectionId' in value&&'document' in value;}
 
-export type VesselScope='brain'|'all'|'intracranial'|'excluded';
+/** 'rooted' is the default connected tree; 'rooted-review' also shows its hidden parts as an overlay. */
+/** Connected-tree detail: 'major' keeps 1 mm and wider (0.5 to 1 mm near a target or corridor); 'fine' keeps 0.5 mm and wider. */
+export type VesselDetail='major'|'fine';
+/** Without a saved choice the acquisition decides: fine branches on CT, major vessels otherwise. */
+export const defaultVesselDetail=(modality?:string):VesselDetail=>modality?.trim().toUpperCase().startsWith('CT')?'fine':'major';
+export type VesselScope='rooted'|'rooted-review'|'brain'|'all'|'intracranial'|'excluded'|'exterior-air';

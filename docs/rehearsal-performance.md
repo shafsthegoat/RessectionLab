@@ -1,5 +1,185 @@
 # Rehearsal performance and remaining gates
 
+## Manual rehearsal on Apple M2 Pro
+
+This work is merged onto the vascular parity line (`shaf/medivis-vascular-parity-20261125`, merge `bcf3be83` on `f2562cae`). The parity line changed the same engine and renderer code after the performance branch was frozen, so the merge re-applies the performance work onto the current code. The first subsection states what the merged line does and what was measured on it. The later subsections record the November 21 comparison on the performance branch. They were not repeated on the merged line unless the first subsection says so.
+
+### Merged line on November 26
+
+The lattice tick runs the batched obstacle sweep and the strain-candidate screen beside the current material profiles, vessel coupling and `sparse-ordering` switch. The cached solver keeps its bond list and adds the bond arrays the kernels read. Two current paths keep their own strain limit and do not use the screen: soft vessel contact, which defines its limit with a batched norm, and the opt-in `deformation-scan` feature. Under soft vessel contact, a substep that proves every node stays in its source voxel still skips the sweep.
+
+The engine's current compiled displacement snapshot stays. It is integrity-checked through the backend entry index and takes stock fields of 256 entries or more. The performance branch's separate snapshot binding, which took 64 entries or more inside the executor boundary, is not carried over. The timing trace reports the current entry point under the same `nativeBindings` names. The tissue control's deformation field never exceeds 90 entries, so all 5,888 snapshot checks in its instrumented run took the Python path, with a p95 of 26.7 ms per action. The November 21 candidate reported 7.3 ms for that stage. A scratch replay that admitted fields of 64 entries or more to the current compiled snapshot reproduced every accepted state and cut snapshot time across the 33 actions from 204.9 to 41.8 ms. That threshold is unchanged here.
+
+Mesh workers diffuse display normals with the pass count each layer uses, three by default and ten for the CTA fairing policy, and the surface cache keys prepared normals by that count. Retained fluid and debris keep their resources between accepted updates and keep the blood-origin colour rule; a change of origin rebuilds the fluid component. Wet-capable materials compile with the dry microscope draw, including the exposure walls. Accepted motion is reused for a fresh receipt only when the displacement inputs are unchanged and the volume has no operative vessel walls or retained exposure bodies, which read further view fields.
+
+Measurements on the same Mac14,9 compare a clean build of the merge with a clean build of its parity parent. Both ran hidden at 1440 × 900 with a 1072 × 818 drawing buffer at device pixel ratio 1, where the November 21 runs used ratio 2. Another session's Python process held one CPU core during these runs, so absolute times are higher than on November 21 and vary more between pairs.
+
+| Tissue and wound, 165 accepted inputs per build | Parity parent p50 / p95 / max (ms) | Merged line p50 / p95 / max (ms) |
+| --- | ---: | ---: |
+| Input to matching GPU fence | 129.7 / 278.3 / 508.2 | 89.9 / 247.1 / 340.3 |
+| Main handler to engine response | 32.9 / 221.6 / 253.4 | 27.6 / 194.3 / 246.3 |
+| CPU frame submission | 0.8 / 21.4 / 250.9 | 0.7 / 9.4 / 46.2 |
+
+The merged line had the lower p95 in each of the five alternating pairs (298.9 / 268.5, 297.4 / 219.0, 308.7 / 288.3, 248.9 / 236.4 and 236.9 / 210.6 ms). Its median was higher in one pair. At the first action that adds free fluid, median CPU submission fell from 26.1 to 4.2 ms. Both builds produced the same ordered accepted states, and their witness digest `badaf9cd…` equals the November 21 digest.
+
+A headless replay of the frozen November 21 tissue receipt checked every outcome and accepted state on the merged line. Over three alternating rounds after one warm-up, the 33 actions summed to 2,291 ms with the scalar sweep and strain loops, 2,048 ms with the NumPy screens and 1,908 ms with the C++ kernels. The native run made 1,916 sweeps over 689,760 sample points and 646 strain screens over 130,492 edges, refined 1,264 edges with the scalar norm, and recorded no fallback. The instrumented desktop run reported the same counts, with Python dispatch p95 at 199.8 ms and simulation p95 at 193.3 ms.
+
+The sustained tissue verifier completed 359 loaded moves in 180 s on the merged build, two physical ticks each, with input-to-matching-GPU p50 / p95 / maximum of 78.7 / 107.8 / 207.4 ms. All twelve of its checks passed, including burst admission, cancellation after deformation started, held slices, protected-save refusal and the saved log. A fresh process reopened the 371-row history exactly. Settled samples before and after held 40 geometries, 17 textures and 23 programs. Summed working sets went from 732 to 768 MiB and peaked at 992 MiB.
+
+On the merged build, Electron main passed 377 tests, the viewer suite 485, the UI suite 837, and the deformation, occupancy and practice files 58. A wider selection of engine, native and bridge files passed 345 tests and failed 13 on both builds, with identical failing tests. The compact numbers are in the [port record](../artifacts/rehearsal-performance-20261121/port-20261126.json).
+
+The cranial opening control does not open on either build. `SurgicalEngine.parameters` reads `self.tools`, which the cranial exit planner's view namespace does not carry. Its comparison, acquired playback, camera and proposed-tool cadence, recordings, matched stills and the signed package were not repeated on the merged line.
+
+To repeat the merged-line comparison, build the two revisions in separate directories and point the runner at local copies of the fixtures:
+
+```sh
+for name in baseline candidate; do git clone --local --no-checkout . "outputs/perf-$name"; done
+git -C outputs/perf-baseline checkout --detach f2562cae
+git -C outputs/perf-candidate checkout --detach bcf3be83
+# In each directory: install or link the Python environment and desktop modules, then
+#   .venv/bin/python setup.py build_ext --inplace && (cd desktop && pnpm build)
+cd outputs/perf-candidate
+node scripts/benchmark_practice_desktop.cjs --baseline ../perf-baseline --baseline-revision f2562cae \
+  --fixture-manifest testcases/outputs/port-fixtures.json --case tissue --output "$PWD/testcases/outputs/port-pairs-tissue"
+```
+
+The fixture manifest names the tissue source, the cranial source and the paired tissue action file. The `--diagnostics` phase needs the timing trace in both builds, so it summarizes only against a baseline that has it.
+
+### November 21 comparison
+
+The performance branch starts at `a07df309`, which includes the accepted-surface motion and cranial practice changes. The comparison uses a production-built renderer, the ordinary Python sidecar and its verified C++ extension. Both sides run on the same 16 GiB Mac with a 1440 × 900 CSS viewport and a 1072 × 818 microscope canvas. Both generated controls used a 2144 × 1636 WebGL drawing buffer at device pixel ratio 2. A trusted input and the completed GPU fence for its accepted frame share the renderer's monotonic clock. The baseline joins the submitted geometry and fence by source, accepted-state hash, display identity and unique frame serial. The candidate also emits numeric model and surface generations. The action receipt ties that frame to the originating request, branch and position. A separate recording samples compositor delivery. Hidden automation cannot measure physical display presentation.
+
+The [machine-readable comparison](../artifacts/rehearsal-performance-20261121/summary.json) records the environment, fixture identities, per-pair results, stage timings, and signed package. The [local storage ledger](local-storage-ledger.md) points to the complete raw measurements, recordings and saved workspaces on the optional data drive.
+
+Long withdrawals repeatedly checked displaced tissue ownership, swept obstacles and edge strain during the required physical microsteps. The candidate keeps the cached SciPy factorization. It batches the four obstacle samples in C++ for supported axis-permutation affines and refines potential strain extrema with the original scalar norm. Bounded native calls copy finite displacement triples for exact occupancy comparisons. The public state digest, material and collision rules still run. Full traces distinguish this hybrid execution on the tissue control from the existing resident native executor on the cranial control.
+
+The first retained fluid also caused a long CPU frame submission. The dry microscope now installs the shader it will need for wet tissue. Unchanged fluid and debris keep their rendering resources between accepted updates. Eligible display normals run in the existing mesh workers. Disposing a source material also retires its transparent rendering variants. The practice response budget uses the existing conservative size check with streaming fallback.
+
+The baseline profiles put repeated per-substep collision and strain work first. These operations could be qualified against the scalar implementation at their existing call boundaries. The first wet cut and redundant effects rebuilds came next because a single CPU submission stalled an accepted frame. Response sizing was a smaller change with a direct bounded fallback. GPU execution on the generated frames took only a few milliseconds at p95. The evidence favored reusing existing render resources and keeping the current graphics backend. A broader metrics cache would need to survive external state mutation. The stock bounded response check gave a smaller measurable gain without introducing that cache.
+
+### Capture-free committed actions
+
+The five paired runs produced the following input-to-matching-GPU measurements. Percentiles pool accepted actions from those runs and use the nearest rank for p95. The five cranial refusals per build preserved the existing state and are reported separately. The primary result includes command processing, admission of the accepted geometry and completion of the corresponding GPU work.
+
+| Generated workload | Accepted inputs per build | Baseline p50 / p95 / max (ms) | Candidate p50 / p95 / max (ms) | p95 change |
+| --- | ---: | ---: | ---: | ---: |
+| Tissue and wound | 165 | 63.9 / 252.2 / 281.9 | 48.9 / 190.5 / 223.8 | −24.5% |
+| Cranial opening | 70 | 88.7 / 98.5 / 106.9 | 74.2 / 90.4 / 91.3 | −8.2% |
+
+Across the complete action stream, the median sum of individual accepted-input latencies fell from 3.403 to 2.674 s (tissue) and 1.234 to 1.062 s (cranial). Both controls improved in each pair. Tissue p95 still exceeded 150 ms by 40.5 ms. Tissue main-handler-to-engine-response p95 fell from 224.3 to 169.9 ms. At the first wet cut, CPU submission in the matched warm runs fell from 22.0–23.3 ms to 0.7–1.0 ms. The several-hundred-millisecond first-use stalls seen in preliminary baseline runs did not recur in the warm comparison. Cranial CPU submission p95 fell from 23.0 to 14.5 ms. Launch-to-ready microscope medians were 2.068 / 2.103 s (tissue baseline/candidate) and 11.936 / 11.984 s (cranial).
+
+The longest candidate withdrawals still spend most of their time executing the repeated instrument microsteps. The profiles include tool-envelope and capsule queries, material occupancy, contact and field updates. These timings nest. For tissue withdrawal 14 the 51 deformation ticks together fell from 77.2 to 27.2 ms in cProfile. A batched NumPy prototype took 36.1 ms. The solve was already factored and cached. Broader occupancy reuse would also have to preserve public mutations and callbacks between cover queries.
+
+A separate instrumented tissue pair correlated all 33 accepted inputs to Python and Electron request IDs. Python dispatch p95 fell from 225.2 to 172.3 ms. Inside it, simulation p95 fell from 215.7 to 166.3 ms, lattice ticks from 48.0 to 19.8 ms, and displacement snapshots from 26.4 to 7.3 ms. The signed build and unpackaged diagnostics exercised the same guarded tissue sweep and strain path. In the unpackaged run, all 5,573 admitted native displacement snapshots succeeded. Another 315 checks took the reference path before native admission. The cranial diagnostic exercised the existing resident executor on all 15 requests. Its median response-size check fell from 9.2 to 5.6 ms.
+
+The signed ARM64 application executed 1,916 native sweeps over 689,760 sampled points and 646 strain reductions over 130,492 edges on the recorded thermal coupon. It refined 1,264 candidate edges with the original scalar norm. No sweep or strain calls fell back on that workload. A second app and engine process recovered its saved 33-action child, exact endpoint and editable controls. Independent rejection, removed-bone, partial-contact, affine, subnormal and signed-zero probes accompanied the full action checks.
+
+
+### Acquired playback
+
+Five fresh pairs on the sealed UCSF-PDGM-0004 recording produced 80 measured seeks per build. The archive, recorded branch, action sequence, accepted states, tools, camera and submitted triangle counts matched across arms. The site remained playback-only. Median / p95 / maximum input-to-matching-GPU latency went from **94.5 / 1,618.0 / 1,684.4 ms** to **102.5 / 1,645.8 / 1,702.7 ms**. This acquired workload regressed by 27.8 ms at p95. A separate traced pair found six seeks through the archived reference executor and zero physical strain or sweep calls. The candidate kept 13,584 displacement checks on the reference path because their native preconditions were unmet. IPC p95 fell from 377.3 to 367.9 ms while response-to-fence p95 increased from 1,279.9 to 1,297.7 ms.
+
+The expensive seeks rebuilt a brain surface with about 1.14 million faces, alongside the separately prepared tumor. A frame submitted up to 3,395,660 triangles across its draw calls. For one candidate brain job, extraction took 352 ms, global conditioning 564 ms and final display normals 185 ms. Worker execution keeps normal diffusion off the UI thread, but complete mesh preparation still controls the accepted-frame tail.
+
+The BITE-09 geometry check used one additional fresh pair, with 30 phase samples in each build. Its gray matter contained 805,022 vertices and 1,593,168 triangles, and its skull contained 650,758 vertices and 1,295,140 triangles. Both builds submitted the same geometry, up to 7,209,324 triangles across draw calls. The three observed route states contained exactly 380, 1,847 and 4,741 display cells. This single pair qualifies source and display parity only.
+
+An ordered adjacency prototype on a 176,946-triangle acquired BITE gray-matter crop matched the full normal buffer for both legacy sinc and implicit conditioning. Complete diffusion stayed near 26 ms with either traversal, and cut/undo graph reconstruction raised the median to about 31 ms. Exact local updates took 0.30–0.52 ms when two dirty normals were known and topology stayed fixed. At the UCSF mesh size, keeping both the graph and intermediate passes would add about 57 MB to a roughly 95 MB worker under a 128 MiB budget. Implicit remeshing also invalidated the dirty indices. The production worker retains full diffusion. These measurements gave no basis for introducing Wasm.
+
+### Camera and proposed-tool input
+
+A withdrawn cranial endpoint received 240 trusted pointer moves at 16.67 ms deadlines per four-second loop. Each gesture used one warm-up and three measured loops per build. Both builds received every move and completed every observed fence. The candidate submitted changed camera matrices during orbit and 225 proposed-pose changes per jog loop. No gesture advanced the accepted surgical state.
+
+| Matched GPU completion intervals | Intervals per build | Baseline p50 / p95 / max (ms) | Candidate p50 / p95 / max (ms) | Candidate completions/s |
+| --- | ---: | ---: | ---: | ---: |
+| Proposed tool | 714 | 16.7 / 25.8 / 35.6 | 16.7 / 25.4 / 33.5 | 59.6–59.9 |
+| Camera orbit | 666 | 16.7 / 26.2 / 42.0 | 16.7 / 33.2 / 51.7 | 56.0 |
+
+The proposed tool met the 33 ms p95 objective at the GPU boundary. Camera missed by 0.2 ms and had a worse tail than baseline. Hidden verification supports these completion rates and recorded compositor samples. It cannot certify 60 physically displayed frames per second.
+
+### Sustained tissue practice
+
+The candidate completed 359 loaded tissue moves in 180.002 s. Each move took two physical ticks. Input-to-matching-GPU p50 / p95 / maximum was 80.6 / 112.5 / 131.2 ms. The p95 rose across the three minutes, from 72.2 to 96.6 to 122.6 ms. Median response size rose from 128 to 291 to 454 kB as the append-only history grew. Worker dispatch p95 rose from 36.9 to 70.5 ms while worker queue p95 stayed near 0.07 ms. Simulation p95 held near 14–15 ms. The response-size check rose from 6.2 to 15.8 ms, view assembly from 6.0 to 11.9 ms, snapshots from 2.5 to 5.8 ms, and serialization from 1.8 to 4.2 ms. Current recorded-frame acknowledgements identify sealed timelines. Extending acknowledgements to evolving editable histories would require recovering an exact prefix across undo, branches, refusals and reopen.
+
+All 13 settled samples showed 40 geometries, 17 textures, 23 programs, 15.88 MiB of known graphics allocations and zero pending IPC requests. The run peaked at one outstanding committed step and two sidecar requests during cancellation. Retired surfaces used at most one entry and 43,872 bytes. Summed working sets rose from 681 to 879 MiB, peaking at 932 MiB. The three-minute observation found stable counted graphics resources and growth in process memory. It cannot establish a process-memory plateau or total GPU driver residency.
+
+During a separate 300-tick deformation, 40 trusted pointer moves and 45 changed-camera GPU completions landed inside the bounded execution window. Their GPU intervals had p50 / p95 / max of 16.7 / 25.0 / 27.1 ms. Six burst attempts hit disabled controls while one action was admitted. Cancellation after 59 ticks kept the accepted state and log intact. Four committed slices from a held control remained ordered and stopped on release. Undo, branch return, protected-save refusal, retry and exact fresh-process recovery all passed for the 371-row final history.
+
+### Appearance, recordings and restart
+
+All three 1392 × 1524 cranial microscope crops were pixel-identical. Each of five tissue crops changed two of 2,121,408 pixels, with maximum channel difference 6 on a 0–255 scale. The two changed pixels occupied the same coordinates on the edge of the generated-sinus legend in every tissue crop. Each pair used the same camera, accepted geometry, physical digest and lighting settings. The hull, normals, picking behavior and accepted instrument pose also have separate numeric tests. Fresh processes restored the same 33-action tissue or 14-action cranial child histories and matched both the preceding and final state.
+
+Four original 1440 × 900 recordings preserve elapsed time (about 62 s each). They sample the hidden compositor independently of the capture-free measurements. In the recorded tissue pass, the first sample carrying the matching accepted state had p95 of 323.8 ms at baseline and 1,209.6 ms on the candidate, with 585 and 445 captured frames respectively. The cranial recording had p95 of 200.7 and 197.3 ms. The tissue recording delay is retained in the evidence. This one capture-instrumented pair does not establish the latency of physical display presentation.
+
+The candidate tissue movie had gaps up to 2.51 s between asynchronous captures; temporary JPEGs were written to the external drive. In a matched follow-up, both arms spooled temporary frames on local APFS and retained only their final films on the evidence drive. Each captured 611 samples in 61.9 s. The first recorded matching-state sample had p50 / p95 / max of 152.7 / 283.7 / 303.4 ms at baseline and 130.9 / 292.5 / 300.9 ms on the candidate. Immediate matching viewport readback p95 improved from 269.2 to 234.6 ms. Both the original and repeat films remain available; GPU latency comparisons use the separate capture-free runs.
+
+### Qualification and integration
+
+The final Electron main suite passed all 367 tests, and the viewer suite passed all 372. The focused native suite passed 92 tests, the practice and response-budget suite passed 70, and a final deformation/occupancy/practice check passed 62. The broader UI suite passed 806 of 810. Its four failures also reproduced on the frozen rehearsal base and concerned two ordinary reopen expectations and two microscope-entry expectations. A separate RL wrapper cancellation test also failed on the frozen base during procedure admission. The actual desktop's cancellation, rollback, retry and cold reopen passed on the candidate.
+
+The local ad-hoc signed ARM64 app passed deep strict signature verification before and after use. Its packaged engine ran the ordinary rehearsal with source, action, physical and state hashes checked at each step. Six wall-time movies were probed and hashed. A film, the signed execution proof and the zipped saved state were copied back from the HDD, decoded or CRC-checked, and matched their original hashes.
+
+The rehearsal and vascular lines advanced after the performance base was frozen. The [merged line](#merged-line-on-november-26) resolves the renderer, engine and manual verifier against them and lists its own checks. The manual verifier keeps the single-pixel-ratio option and native build hashes of the current line beside this branch's frame and recording evidence. The November 21 comparison remains reproducible from the pinned performance build `6a001823`.
+
+### Reproduce the manual workload
+
+These commands reproduce the November 21 comparison. Run them from a checkout of the performance build `6a001823`. Prepare two independent desktop builds with the repository's [local development dependencies](../README.md#local-development). Use a fresh directory for the baseline. Commit `91fbb5c5` contains the diagnostic overlay on `a07df309` and precedes all performance changes. Each build needs its own Python environment, C++ extension, Electron modules and production renderer.
+
+```sh
+baseline="$PWD/outputs/perf-baseline"
+mkdir -p outputs
+git clone --local --no-checkout . "$baseline"
+git -C "$baseline" checkout --detach 91fbb5c5
+# After installing the Python dependencies in each checkout:
+for tree in "$PWD" "$baseline"; do
+  (cd "$tree" && .venv/bin/python setup.py build_ext --inplace)
+  (cd "$tree/desktop" && pnpm install --frozen-lockfile && pnpm build)
+done
+```
+
+On the evidence Mac, select a fresh output name for each command. The runner verifies the mounted drive and fixture hashes. Each process uses a new profile. For another machine with the same three fixture files, pass `--fixture-manifest` as described by the runner's `--help` and use an ignored local output directory. The generated source workspaces are the original thermal coupon and complete cranial opening. Each fresh child starts at the same verified parent and receives the same ordered commands.
+
+```sh
+evidence='/Volumes/shafrir/old coding projects/RessectionLabData/qc/rehearsal-performance-20261121'
+mkdir -p testcases/outputs
+ln -s "$evidence" testcases/outputs/rehearsal-performance-20261121  # once, after mount verification
+node scripts/benchmark_practice_desktop.cjs --baseline "$baseline" --candidate-revision 1574c24657c08d2f24561208648e7cf2aa439e72 --output "$evidence/repeat-pairs"
+node scripts/benchmark_practice_desktop.cjs --baseline "$baseline" --candidate-revision 1574c24657c08d2f24561208648e7cf2aa439e72 --diagnostics --output "$evidence/repeat-stages"
+node scripts/benchmark_practice_desktop.cjs --baseline "$baseline" --candidate-revision 1574c24657c08d2f24561208648e7cf2aa439e72 --acceptance --output "$evidence/repeat-media"
+node scripts/benchmark_practice_desktop.cjs --baseline "$baseline" --candidate-revision 1574c24657c08d2f24561208648e7cf2aa439e72 --recordings --case tissue --output "$evidence/repeat-tissue-films"
+```
+
+The capture-free comparison runs one warm-up per arm and workload, followed by five alternating baseline/candidate pairs. Stage runs enable local monotonic timing and actual native execution counters. The recording and still-capture runs use fresh processes. Production state hashing, payload validation and display admission are active in every run.
+
+
+Build the signed application using the [Electron packaging guide](electron-packaging.md#reproduce-locally). The following checks use the local evidence drive, the verified copies under `testcases/`, and a fresh run name each time. Keep the GPU measurements, package builds and recordings sequential.
+
+```sh
+out="$PWD/testcases/outputs/rehearsal-performance-20261121"
+inputs="$PWD/testcases/outputs/rehearsal-performance-acquired-inputs"
+node scripts/benchmark_acquired_replay.cjs --prepare
+node scripts/benchmark_acquired_replay.cjs ucsf "$baseline" "$out/acquired/repeat-ucsf" 5 1
+node scripts/benchmark_acquired_replay.cjs bite "$baseline" "$out/acquired/repeat-bite" 1 5
+node scripts/benchmark_acquired_replay.cjs ucsf "$baseline" "$out/acquired/repeat-stages" 1 1 --timing
+node scripts/benchmark_practice_desktop.cjs --baseline "$baseline" --candidate-revision 1574c24657c08d2f24561208648e7cf2aa439e72 --interactions --case cranial --output "$evidence/repeat-input"
+RESSECTIONLAB_REHEARSAL_TIMING=1 desktop/node_modules/.bin/electron desktop/electron/verify-practice-stress.cjs "$inputs/bipolar-thermal-source.ressectionlab" "$out/stress/repeat"
+RESSECTIONLAB_REHEARSAL_TIMING=1 desktop/node_modules/.bin/electron desktop/electron/verify-practice-stress.cjs "$inputs/bipolar-thermal-source.ressectionlab" "$out/stress/repeat" --cold
+app="$PWD/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app"
+PACKAGED_EXPECT_NATIVE_SWEEP=1 node scripts/verify_packaged_manual_practice.cjs "$app" "$inputs/bipolar-thermal-source.ressectionlab" "$inputs/paired-actions.json" "$out/acquired/repeat-signed" "$evidence/repeat-pairs/paired/1/baseline/tissue/benchmark.json"
+```
+
+The following reproduces the CPU comparison against the saved accepted actions. Run both variants sequentially. Stage durations from a profiled bridge run include observation overhead and can overlap within the same action.
+
+```sh
+receipt="$evidence/repeat-pairs/paired/1/candidate/tissue/benchmark.json"
+for variant in numpy production; do
+  .venv/bin/python scripts/profile_rehearsal_kernels.py "$receipt" "$out/repeat-$variant.json" --source "$inputs/bipolar-thermal-source.ressectionlab" --variant "$variant" --kernel-counts --profile 4 --profile 7 --profile 11 --profile 14 --profile 19
+done
+.venv/bin/python -m pytest -q tests/test_surgical_deformation_v2.py tests/test_surgical_occupancy_key.py tests/test_surgical_practice.py
+(cd desktop && pnpm test:main && pnpm test:viewer)
+```
+
+## Archived replay measurements
+
 The October 20 episode is optional archived research data. [Restore the complete
 bundle](../scripts/rehearsal_support/README.md) and select
 `RESSECTIONLAB_REHEARSAL_BUNDLE_ROOT` before historical profiler or vascular

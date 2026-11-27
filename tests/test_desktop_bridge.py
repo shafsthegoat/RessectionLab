@@ -70,6 +70,89 @@ def test_case_binary_roundtrip_versions_and_null_clinical_fields(bridge):
         assert compartment["array"]["dtype"] == "uint8"
 
 
+def test_native_vascular_scores_round_trip_and_bind_mesh_to_source_cells(bridge, tmp_path):
+    pytest.importorskip('vtkmodules')
+    from dataclasses import replace
+    from resectionlab.anatomy_geometry import vascular_probability_mesh
+    from resectionlab.imaging import load_case
+    from resectionlab.workspace_bundle import save_workspace
+
+    base = create_synthetic_case((24, 24, 24))
+    scores = np.zeros(base.mri.shape, dtype=np.float32)
+    scores[5:16, 6:10, 8:13] = .9
+    scores[5:16, 10, 8:13] = .35
+    scores[18, 18, 18] = .97
+    mask = scores >= .5
+    mask[18, 18, 18] = False
+    name = 'vessel'
+    affine = np.diag([.30, .30, .42, 1.])
+    case = replace(base, affine=affine, compartments={name: mask}, source_compartments=None,
+                   metadata={'anatomy_layers': {name: {'kind': 'vessel'}}})
+    native = replace(case, vascular_probabilities={name: scores})
+    assert native.semantic_hash != case.semantic_hash
+    assert native.planning_hash == case.planning_hash
+    path = save_case(native, tmp_path / 'score-bound.ressectionlab')
+    cold = load_case(path)
+    np.testing.assert_array_equal(cold.vascular_probabilities[name], scores)
+    path = tmp_path / 'score-bound-workspace.ressectionlab'
+    save_workspace(native, path, sources=[], imaging=None, episode=None, selection=None, artifacts={})
+    result = request(bridge, 'score-case', 'loadCase', {'path': str(path)})
+    assert result['event'] == 'result', result
+    layer = result['result']['compartments'][0]
+    surface = layer['vesselSurface']
+
+    def read(field, dtype):
+        descriptor = surface[field]
+        return np.fromfile(descriptor['path'], dtype=dtype).reshape(descriptor['shape'])
+
+    positions, owners = read('positions', '<f4'), read('sourceCells', '<u4')
+    assert len(owners) == len(positions)
+    assert mask.ravel()[owners].all()
+    assert positions[:, 0].max() < 16
+    raw = vascular_probability_mesh(scores, mask)
+    for provided, physical in zip((positions, read('indices', '<u4'), read('normals', '<f4')), raw):
+        np.testing.assert_array_equal(provided, physical)
+    lighting = read('scoreLighting', '<f4')
+    assert lighting.shape == (len(positions), 4) and np.isfinite(lighting).all()
+    assert np.max(lighting[:, 3]) > 0 and np.all((lighting[:, 3] >= 0) & (lighting[:, 3] <= 1))
+    # This wall crosses the retained .9 -> .35 score edge away from its midpoint.
+    assert positions[:, 1].max() == pytest.approx(9 + (.9 - .5) / (.9 - .35), abs=1e-5)
+    correction = mask.copy()
+    correction[5, 5, 10] = True
+    edited = save_case(native.revised(compartments={name: correction}), tmp_path / 'edited.ressectionlab')
+    result = request(bridge, 'edited-score-case', 'loadCase', {'path': str(edited)})
+    assert result['event'] == 'result', result
+    assert 'vesselSurface' not in result['result']['compartments'][0]
+
+
+def test_vessel_score_lighting_respects_source_components_budget_and_cancellation(monkeypatch):
+    from resectionlab import vascular_surface_lighting as lighting
+
+    mask = np.zeros((12, 12, 12), dtype=bool)
+    mask[3:9, 3:9, 3:9] = True
+    scores = mask.astype(np.float32)
+    positions = np.array([[5., 5., 8.5]], dtype=np.float32)
+    normals = np.array([[0., 0., 1.]], dtype=np.float32)
+    cells = np.array([np.ravel_multi_index((5, 5, 8), mask.shape)], dtype=np.uint32)
+    affine = np.diag([.30, .30, .42, 1.])
+    args = (scores, mask, positions, normals, cells, affine)
+    assert lighting.score_lighting_normals(*args)[0, 3] > 0
+    beside = mask.copy()
+    beside[5, 5, 10] = True
+    assert lighting.score_lighting_normals(beside.astype(np.float32), beside, *args[2:]) is None
+    with monkeypatch.context() as budget:
+        budget.setattr(lighting, '_WORK_BYTES', 0)
+        assert lighting.score_lighting_normals(*args) is None
+
+    def cancelled():
+        raise InterruptedError('lighting preparation cancelled')
+
+    with pytest.raises(InterruptedError, match='lighting preparation cancelled'):
+        lighting.score_lighting_normals(*args, check=cancelled)
+    np.testing.assert_array_equal(scores, mask)
+    np.testing.assert_array_equal(positions, [[5., 5., 8.5]])
+
+
 def test_generate_save_reopen_retains_real_evaluator_records(bridge, tmp_path):
     value = synthetic(bridge)
     generated = request(bridge, "routes", "generateRoutes", {"caseHash": value["caseHash"]})
@@ -105,6 +188,32 @@ def test_stale_saved_workspace_is_withheld(bridge, tmp_path):
     value = request(bridge, "stale-bundle", "loadCase", {"path": str(destination)})["result"]
     assert "workspace" not in value["artifacts"]
     assert value["artifacts"]["withheldWorkspaceReason"] == "saved_workspace_case_version_mismatch"
+
+
+def test_new_practice_save_preserves_a_file_created_while_staging(bridge, tmp_path, monkeypatch):
+    from resectionlab import workspace_bundle
+
+    episode_id = "practice-24087e0d-f6db-4a1a-89c6-e573edf345cf"
+    source = tmp_path / "practice.ressectionlab"
+    case = create_synthetic_case((24, 24, 24))
+    save_case(case, source, artifacts={"surgical_toolbox": {
+        "branchId": episode_id, "practiceEpisodes": {episode_id: {"episodeId": episode_id}},
+    }})
+    opened = request(bridge, "open", "loadCase", {"path": str(source)})["result"]
+    save_workspace = workspace_bundle.save_workspace
+    destination = tmp_path / "shared.ressectionlab"
+
+    def save_during_competing_write(*args, **kwargs):
+        result = save_workspace(*args, **kwargs)
+        destination.write_bytes(b"concurrent workspace")
+        return result
+
+    monkeypatch.setattr(workspace_bundle, "save_workspace", save_during_competing_write)
+    result = request(bridge, "save", "saveCase", {
+        "caseHash": opened["caseHash"], "path": str(destination), "overwrite": True,
+    })
+    assert result["error"]["code"] == "PRACTICE_SAVE_AS"
+    assert destination.read_bytes() == b"concurrent workspace"
 
 
 def test_cancel_and_ping_are_immediate_while_worker_busy(bridge, monkeypatch):

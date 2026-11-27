@@ -16,6 +16,7 @@ import numpy as np
 from scipy import sparse
 from scipy.sparse.linalg import factorized
 
+from . import acceleration as _accel
 from . import surgical_mechanical_exposure as mechanical
 from .core import semantic_digest
 
@@ -191,6 +192,9 @@ def voxel_mesh(scene, cells, blocked=(), *, max_dofs=24000):
 
 def assemble(scene, mesh, materials):
     """Assemble equilibrium and Maxwell-branch stiffness, N/mm."""
+    if _accel.enabled('continuum'):
+        from . import accel_continuum
+        return accel_continuum.assemble(scene, mesh, materials, lambda a: accel_continuum.element_operators(a, element_operators))
     shear, lame, gradients = element_operators(scene.affine)
     branch_count = len(next(iter(materials.values()))['relaxationShearPa'])
     values = [[] for _ in range(1 + branch_count)]; rows = []; cols = []
@@ -296,7 +300,11 @@ def _system(engine, ids, anchors, blocked, p, h, *, excluded_contact_slots=()):
             solve=None
         else:
             history_solve=None
-            solve = factorized(effective[free][:, free].tocsc()) if free.any() else lambda rhs: np.empty(0)
+            if free.any() and _accel.enabled('sparse-ordering'):
+                from .accel_continuum import ordered_factor
+                solve = ordered_factor(effective[free][:, free].tocsc(), factorized)
+            else:
+                solve = factorized(effective[free][:, free].tocsc()) if free.any() else lambda rhs: np.empty(0)
     except RuntimeError as error:
         raise ValueError('CONTINUUM_FACTORIZATION_FAILED: unsupported or ill-conditioned local system') from error
     result = dict(mesh=mesh, matrices=matrices, gradients=gradients, handle=handle,
@@ -367,6 +375,9 @@ def exposure_increment(scene, mesh, gradients, displacement, memories, materials
     invariants provide an inspectable cumulative exposure, with no biological
     threshold, neurological endpoint or calibrated risk conversion.
     """
+    if _accel.enabled('continuum'):
+        from . import accel_continuum
+        return accel_continuum.exposure_increment(scene, mesh, gradients, displacement, memories, materials, h, _gradient, include_peaks=include_peaks)
     gradients = gradients[:8]
     local = displacement.reshape((-1, 3))[mesh.element_nodes]
     gradient = _gradient(scene,local,gradients)
@@ -408,7 +419,11 @@ def record_exposure_step(engine, mesh, gradients, u, memories, materials, h, *, 
 
 
 def _cell_energy(scene, p, cell, displacement, memories):
-    shear, lame, _ = element_operators(scene.affine)
+    if _accel.enabled('continuum'):
+        from .accel_continuum import element_operators as cached
+        shear, lame, _ = cached(scene.affine, element_operators)
+    else:
+        shear, lame, _ = element_operators(scene.affine)
     m = p['materials'][str(int(scene.labels.flat[cell]))]
     energy = 0.
     for mu_pa, field in zip([m['shearPa'], *m['relaxationShearPa']], [displacement, *memories]):

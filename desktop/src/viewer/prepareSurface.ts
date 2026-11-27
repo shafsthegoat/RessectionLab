@@ -8,7 +8,19 @@ import type {Affine,Bounds3,Shape3} from './coordinates';
 import type {SurfaceDiagnostics} from './surfacePolicy';
 import type {SurfaceIntersectionAudit} from './surfaceSafety';
 import type {SurfacePolynomialFilter} from './incrementalSurfaceFilter';
-export interface PreparedSurface {positions:Float32Array;normals:Float32Array;smoothPositions?:Float32Array;smoothNormals?:Float32Array;indices:Uint32Array;diagnostics?:SurfaceDiagnostics;smoothingPrepared?:boolean;representation?:'stable-source-ids';activeBounds?:Bounds3}
+import type {OperativeVesselSurface} from './operativeVesselSurface';
+export interface PreparedSurface {positions:Float32Array;normals:Float32Array;smoothPositions?:Float32Array;smoothNormals?:Float32Array;smoothIndices?:Uint32Array;indices:Uint32Array;diagnostics?:SurfaceDiagnostics;smoothingPrepared?:boolean;representation?:'stable-source-ids'|'operative-vessel';activeBounds?:Bounds3;scoreLighting?:Float32Array;sourceVolumeBoundary?:boolean;vesselClasses?:Uint8Array;
+  /** A centerline-tube wall; it keeps its tube colour and finish through displaced and edited frames. */
+  tubeWall?:boolean}
+export function prepareOperativeVessel({positions,normals,indices,mode,scoreLighting,sourceVolumeBoundary,vesselClasses,tube}:OperativeVesselSurface):PreparedSurface {
+  const raw=mode==='source-cell-boundary';
+  return {positions,normals,indices,representation:'operative-vessel',scoreLighting,sourceVolumeBoundary,vesselClasses,tubeWall:!!tube,diagnostics:{
+    policy:raw?'engine-source-vessel-caps-v1':'engine-native-probability-v1',
+    kind:'vessel',triangles:indices.length/3,maxDisplacementMm:0,restoredComponents:0,
+    ...(raw?{intersectionCheck:'source-restored',surfaceField:'categorical',fallbackReason:'Accepted vessel contact uses source cell faces after this edit.'}:
+      {intersectionCheck:'passed',surfaceField:'native-probability'}),
+  }};
+}
 export function prepareSurface(mask:Uint8Array,shape:Shape3,affine:Affine,kind?:string,smooth=true,reference?:EngineSurfaceReference|null):PreparedSurface {
   const started=performance.now(),result=prepareSurfaceSoup(maskSurface(mask,shape),mask,shape,affine,kind,smooth,reference);
   if(result.diagnostics)result.diagnostics.preparationMs=performance.now()-started;return result;
@@ -26,7 +38,7 @@ export function prepareIndexedSurface(positions:Float32Array,indices:Uint32Array
   if(!smooth)return {positions,indices,normals,smoothingPrepared:false};
   if(reference!==undefined){
     const display=engineImplicitSurface(positions,indices,normals,mask,shape,affine,kind,reference);
-    return {positions,indices,normals,smoothPositions:display.positions,smoothNormals:display.smoothNormals,diagnostics:display.diagnostics,smoothingPrepared:true};
+    return {positions,indices,normals,smoothPositions:display.positions,smoothNormals:display.smoothNormals,smoothIndices:display.smoothIndices,diagnostics:display.diagnostics,smoothingPrepared:true};
   }
   const limits=surfaceKind(kind)==='vessel'?vesselLimits(positions,affine,mask,shape):undefined;
   const display=fairIndexedSurface(positions,indices,affine,kind,limits,audit,filter);

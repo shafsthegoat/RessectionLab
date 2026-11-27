@@ -20,7 +20,8 @@ test('registered label identity and color distinguish the supplied target from t
   const [target,vessels]=operativeLegend(scene,optics);
   assert.equal(target.title,'Supplied enhancing target');
   assert.equal(target.series,'T1CE');
-  assert.equal(target.sourceColor,target.fieldColor);
+  assert.equal(target.sourceColor,'#9863db');
+  assert.notEqual(target.sourceColor,target.fieldColor);
   assert.equal(vessels.title,'vessel estimate');
   assert.equal(vessels.model,'experimental-T1CE');
   assert.equal(vessels.fieldColor,'#ac6579');

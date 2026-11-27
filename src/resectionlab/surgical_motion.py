@@ -12,6 +12,11 @@ import numpy as np
 from scipy.spatial.transform import Rotation, Slerp
 from .geometry import segments_within_distance
 from . import geometry as _contact_geometry, native_backend
+from .surgical_tool_profiles import assembly_segments, profile_segments
+
+
+AXIAL_SWEEP_PROPERTY = 'toolSweepPolicy'
+AXIAL_SWEEP_POLICY = 'axial-dissector-capsule-v2'
 
 
 def _function_state(function):
@@ -334,6 +339,12 @@ def _envelope_helpers_unchanged():
 
 
 def envelopes(tool, parameters, position, quaternion, inflation=0.):
+    if 'operativeToolProfileV1' in parameters:
+        parts = assembly_segments(parameters['operativeToolProfileV1'], parameters.get('jawOpeningMm', 2.),
+                                  parameters.get('operativeToolAssemblyRevision', 1))
+        local = np.asarray([(a,b) for a,b,_,_,_ in parts], dtype=float)
+        points = Rotation.from_quat(quaternion).apply(local.reshape(-1,3)).reshape(local.shape) + position
+        return [(a,b,width+inflation,role) for (a,b),(_,_,width,role,_) in zip(points,parts)]
     if (native_backend.cpp_enabled() and _envelope_helpers_unchanged()
             and type(tool) is dict and type(parameters) is dict
             and _ordinary_vector(position, 3) and _ordinary_vector(quaternion, 4)
@@ -355,7 +366,57 @@ def _swept_envelopes_reference(tool, parameters, start, end):
     return envelopes(tool, parameters, (a + b) / 2, q, inflation)
 
 
+def _full_instrument_sweep(tool, parameters, start, end):
+    """Bound translation, rigid angular travel and jaw travel per capsule.
+
+    A centerline's rigid displacement from its midpoint pose is bounded by
+    2*reach*sin(angle/4). Capsule radius is rotationally invariant. Aperture
+    endpoints interpolate linearly, independently of orientation.
+    """
+    first, last = np.asarray(start['position']), np.asarray(end['position'])
+    jaw = parameters.get('jawOpeningMm',2.)
+    prior = parameters.get('operativeJawSweepFromMm',jaw)
+    translation = np.linalg.norm(last-first)/2
+    q0, q1 = start['quaternion'], end['quaternion']
+    q = q0
+    rotation_factor = 0.
+    if not np.array_equal(q0,q1):
+        rotations = Rotation.from_quat([q0,q1])
+        angle = (rotations[1]*rotations[0].inv()).magnitude()
+        rotation_factor = 2*np.sin(angle/4)
+        q = Slerp([0.,1.],rotations)(.5).as_quat()
+    mid = {**parameters, 'jawOpeningMm':(prior+jaw)/2} if jaw!=prior else parameters
+    result = envelopes(tool,mid,(first+last)/2,q,translation)
+    if not rotation_factor and jaw==prior:
+        return result
+    index = parameters['operativeToolProfileV1']
+    mid_parts = assembly_segments(index,mid['jawOpeningMm'],2)
+    initial = assembly_segments(index,prior,2)
+    final = assembly_segments(index,jaw,2)
+    inflated = []
+    for (a,b,r,role),part,left,right in zip(result,mid_parts,initial,final):
+        reach = max(np.linalg.norm(part[0]),np.linalg.norm(part[1]))
+        jaw_travel = max(np.linalg.norm(np.subtract(left[k],right[k])) for k in (0,1))/2 if left!=right else 0.
+        inflated.append((a,b,r+rotation_factor*reach+jaw_travel,role))
+    return inflated
+
+
 def swept_envelopes(tool, parameters, start, end):
+    if parameters.get('operativeToolAssemblyRevision')==2:
+        return _full_instrument_sweep(tool, parameters, start, end)
+    if 'operativeJawSweepFromMm' in parameters and 'operativeToolProfileV1' in parameters:
+        first = parameters['operativeJawSweepFromMm']
+        last = parameters.get('jawOpeningMm', 2.)
+        if first != last:
+            mid = {k:v for k,v in parameters.items() if k != 'operativeJawSweepFromMm'}
+            mid['jawOpeningMm'] = (first+last)/2
+            # Distal jaw centerlines move at most half the aperture change.
+            # Only articulating components need this extra swept cover.
+            cover = swept_envelopes(tool,mid,start,end)
+            p0 = profile_segments(mid['operativeToolProfileV1'],first)
+            p1 = profile_segments(mid['operativeToolProfileV1'],last)
+            return [(a,b,r+abs(first-last)/4 if old[:2]!=new[:2] else r,role)
+                    for (a,b,r,role),old,new in zip(cover,p0,p1)]
     if not native_backend.cpp_enabled() or not _rotation_helpers_unchanged():
         return _swept_envelopes_reference(tool, parameters, start, end)
     if type(start) is not dict or type(end) is not dict:
@@ -370,6 +431,42 @@ def swept_envelopes(tool, parameters, start, end):
     inflation = np.linalg.norm(b - a) / 2 + 84 * np.sin(angle / 4)
     q = np.frombuffer(q_bytes, dtype=np.float64).copy()
     return envelopes(tool, parameters, (a + b) / 2, q, inflation)
+
+
+def axial_dissector_sweep(tool, parameters, start, end):
+    """Cover near-axial motion of a fixed generic dissector, or use the v1 bound."""
+    if (tool['geometry'] != 'dissector' or {'operativeToolProfileV1',
+            'operativeToolAssemblyRevision', 'operativeJawSweepFromMm',
+            'contactGeometryRevision'} & parameters.keys()):
+        return swept_envelopes(tool, parameters, start, end)
+
+    first, last = np.asarray(start['position']), np.asarray(end['position'])
+    delta = last - first
+    travel = np.linalg.norm(delta)
+    if not 1e-5 <= travel <= .5 or np.abs([first, last]).max() > 4096.:
+        return swept_envelopes(tool, parameters, start, end)
+    rotations = Rotation.from_quat([start['quaternion'], end['quaternion']])
+    angle = (rotations[1] * rotations[0].inv()).magnitude()
+    if angle > 1e-7:
+        return swept_envelopes(tool, parameters, start, end)
+
+    midpoint = Slerp([0., 1.], rotations)(.5)
+    axis = midpoint.apply([0., 0., 1.])
+    axial = np.dot(delta, axis)
+    transverse = np.linalg.norm(delta - axial * axis)
+    if transverse > 1e-6:
+        return swept_envelopes(tool, parameters, start, end)
+
+    # Both rigid centerlines are parallel to the tool axis. Their axial
+    # translations over the interval lie in the extended midpoint segments.
+    # At any time the remaining translation is at most transverse/2. Each
+    # centerline point is within 42 mm of the tip and turns at most angle/2
+    # from the midpoint, giving the same rotational chord bound as v1.
+    # Pad outward for float64 operations in the restricted RAS domain.
+    extension = abs(axial) / 2 * axis
+    pad = transverse / 2 + 84 * np.sin(angle / 4) + 1e-8
+    return [(a - extension, b + extension, radius + pad, part)
+            for a, b, radius, part in envelopes(tool, parameters, (first + last) / 2, midpoint.as_quat())]
 
 
 def _trajectory_quaternion(interpolation, index, count, chunk, rotation_type, slerp_type):

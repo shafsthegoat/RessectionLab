@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import {operativeInstrument} from './operativeInstrument.ts';
 import type {SurgicalTool,SurgicalSlot} from '../surgical-types';
 /** Only the parameters consumed by this display geometry belong in its key.
  * Position, orientation and activation are updated without allocating meshes. */
@@ -8,12 +9,14 @@ export function surgicalToolGeometryKey(tool:SurgicalTool,slot:SurgicalSlot,ghos
     return JSON.stringify([tool.id,'planar-blade-contact-v1',geometry,ghost]);
   }
   return JSON.stringify([tool.id,tool.radiusMm,tool.shaftRadiusMm,tool.workingLengthMm,
-    slot.parameters.radiusMm??tool.radiusMm,slot.parameters.jawOpeningMm??2,slot.parameters.depthMm??2,slot.contactGeometry,ghost]);
+    slot.parameters.radiusMm??tool.radiusMm,slot.parameters.jawOpeningMm??2,slot.parameters.depthMm??2,slot.contactGeometry,tool.physicalProfile,ghost]);
 }
 export function updateSurgicalToolMesh(group:THREE.Group,slot:SurgicalSlot,ghost=false):void {
   group.position.set(...slot.position);group.quaternion.set(...slot.quaternion);
   group.userData.effectiveActive=!ghost&&slot.active;
   group.userData.recordedRpm=slot.parameters.rpm;
+  const indicator=group.userData.profileIndicator as THREE.MeshStandardMaterial|undefined;
+  if(indicator)indicator.emissive.set(!ghost&&slot.active?'#423019':'#000000');
   const accent=group.userData.surgicalAccent as THREE.MeshStandardMaterial|undefined;
   accent?.color.set(ghost?'#95f4ce':group.userData.planarBladeContactGeometry?(slot.planarBladeGeometry?.inContact?SURGICAL_EFFECT_COLORS.contact:'#41677a'):slot.active?'#e0b35d':'#41677a');
 }
@@ -24,6 +27,8 @@ export function updateSurgicalToolAnimation(group:THREE.Group,sourceSeconds:numb
   const bit=group.getObjectByName('instrument:drill-bit');
   const rpm=group.userData.recordedRpm as number|undefined;
   if(bit)bit.rotation.z=active&&typeof rpm==='number'&&Number.isFinite(rpm)&&rpm>0?(sourceSeconds!*rpm/60*2*Math.PI)%(2*Math.PI):0;
+  const profileBurr=group.getObjectByName('instrument:profile-burr');
+  if(profileBurr)profileBurr.rotation.y=active&&typeof rpm==='number'&&Number.isFinite(rpm)?(sourceSeconds!*rpm/60*2*Math.PI)%(2*Math.PI):0;
   // One illustrative close/release per observed interval, not a claimed jaw
   // frequency or additional cutting event. No motion on scrub or pause.
   const opening=!group.userData.physicsContactGeometry&&active&&intervalProgress!==null ? .2+.8*Math.abs(Math.cos(Math.PI*intervalProgress)) : 1;
@@ -35,6 +40,9 @@ export function updateSurgicalToolAnimation(group:THREE.Group,sourceSeconds:numb
 /** Generic research geometry, tip at local origin and working axis along +Z. */
 export function surgicalToolMesh(tool:SurgicalTool,slot:SurgicalSlot,ghost=false){
   if(tool.id==='brain_retractor'&&slot.parameters.planarBladeContactRevision===1&&slot.planarBladeGeometry)return planarBladeToolMesh(tool,slot,ghost);
+  if(tool.physicalProfile&&slot.contactGeometry?.length===tool.physicalProfile.parts.length){
+    const group=operativeInstrument(tool,slot,ghost);updateSurgicalToolMesh(group,slot,ghost);return group;
+  }
   if(slot.contactGeometry&&!ghost)return contactToolMesh(tool,slot);
   const group=new THREE.Group(),radius=slot.parameters.radiusMm??tool.radiusMm;
   group.name=`instrument:${tool.id}`;

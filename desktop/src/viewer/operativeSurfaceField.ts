@@ -77,7 +77,7 @@ export const operativeFilterRadius = (spacingMm: number, thin: boolean) =>
 
 /** Display-only occupancy and edge fractions. The finite two-box filter has
  * a physical width set in mm. The selected source voxels remain untouched. */
-export function operativeSurfaceField(grid: Grid, source: Uint8Array, bounds: VoxelBounds, thin: boolean) {
+export function operativeSurfaceField(grid: Grid, source: Uint8Array, bounds: VoxelBounds, thin: boolean, preserveOccupancy = false) {
   const radius = operativeFilterRadius(grid.spacingMm, thin),
     ghost = radius * 2 + 3;
   const origin = bounds.low.map((v) => v - ghost),
@@ -114,7 +114,7 @@ export function operativeSurfaceField(grid: Grid, source: Uint8Array, bounds: Vo
     window = new Uint8Array(27),
     work = new Uint8Array(27),
     queue = new Uint8Array(27);
-  if (!thin) {
+  if (!thin && !preserveOccupancy) {
     // Consider only the original boundary shell. Move a sample only when a
     // two-voxel-deep solid and exterior support its locally dominant normal.
     // This rejects eroding a thin bridge or filling a narrow fluid gap.

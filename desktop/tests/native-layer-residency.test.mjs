@@ -10,6 +10,29 @@ test('incremental layers retain original arrays and order, including hidden resi
   const next=mergeResidentLayers(base,{...base,compartments:[tumor]},['tumor','vessels']);
   assert.equal(next.mri,base.mri);assert.equal(next.compartments[1],base.compartments[0]);assert.equal(next.compartments[0],tumor);assert.equal(next.labelSets[0],base.labelSets[0]);assert.equal(base.compartments.length,1);
 });
+test('a layer review overlay stays resident beside its layer; stray overlays do not',()=>{
+  const base=source(),overlay={name:'__vessel_review:vessels',mask:new Uint8Array(8),color:'#ffad54'};
+  const tumor={name:'tumor',mask:new Uint8Array(8),color:'#ff00ff'},stray={name:'__vessel_review:retired',mask:new Uint8Array(8),color:'#ffad54'};
+  const next=mergeResidentLayers(base,{...base,compartments:[overlay,tumor,stray]},['tumor','vessels']);
+  assert.deepEqual(next.compartments.map(layer=>layer.name),['tumor','vessels','__vessel_review:vessels']);
+});
+test('derived compartments are kept once even when the order already names them',()=>{
+  const base=source(),mask=new Uint8Array(8);
+  const derived=['__vessel_review:vessels','__vessel_veins:vessels'].map(name=>({name,mask,color:'#ffad54'}));
+  const current={...base,compartments:[base.compartments[0],...derived]};
+  const tumor={name:'tumor',mask,color:'#ff00ff'};
+  const next=mergeResidentLayers(current,{...base,compartments:[tumor]},[...current.compartments.map(l=>l.name),'tumor']);
+  assert.deepEqual(next.compartments.map(l=>l.name),['vessels','__vessel_review:vessels','__vessel_veins:vessels','tumor']);
+});
+test('derived compartments give way before the viewer layer budget is exceeded',async()=>{
+  const {MAX_ANATOMY_LAYERS}=await import('../src/viewer/labelPacking.ts');
+  const base=source(),mask=new Uint8Array(8);
+  const ids=Array.from({length:MAX_ANATOMY_LAYERS},(_,i)=>`layer-${i}`);
+  const incoming=[...ids.map(name=>({name,mask,color:'#ff0000'})),{name:'__vessel_review:layer-0',mask,color:'#ffad54'}];
+  const next=mergeResidentLayers({...base,compartments:[]},{...base,compartments:incoming},ids);
+  assert.equal(next.compartments.length,MAX_ANATOMY_LAYERS);
+  assert.ok(next.compartments.every(l=>!l.name.startsWith('__vessel_review:')));
+});
 test('source, revision, affine and preview replacements cannot enter the resident layer path',()=>{
   const base=source();
   for(const change of [{displayIdentity:'scan/revision/preview/2'},{caseHash:'case-b'},{mri:new Float32Array(8)},{affine:affine.map(row=>row.map(v=>v*2))},{frame:'LPS+'}])assert.throws(()=>mergeResidentLayers(base,{...base,...change},['vessels']),/different displayed source/);
@@ -18,6 +41,23 @@ test('hydration reuses admitted image and shared label grid without asset reads'
   const base=source(),payload={...base,mri:{},labelSets:[{id:'regions',data:{}}],compartments:[{name:'region',labelSet:'regions',labelValue:2,color:'#ffffff'}]};
   const hydrated=await hydrateAnatomy(payload,{readAsset(){throw Error('Resident assets must not transfer')}},base.mri,base);
   assert.equal(hydrated.mri,base.mri);assert.equal(hydrated.labelSets[0],base.labelSets[0]);
+});
+
+test('detached CT support reuses only the exact source-bound native crop',async()=>{
+  const base=source(),signalSha256='a'.repeat(64),sha256='b'.repeat(64);
+  const mask={assetId:'sheet',dtype:'uint8',shape:[2,1,1],byteLength:2,byteOrder:'little',order:'C',sha256};
+  const receipt={schema:'native-ct-exterior-sheet-v1',signalSha256,offset:[0,1,0],mask};
+  const payload={...base,modality:'CTA',mri:{sha256:signalSha256},compartments:[],labelSets:[],ctExterior:receipt};
+  const api={readAsset:async()=>new Uint8Array([1,0])};
+  const view=await hydrateAnatomy(payload,api,base.mri);
+  assert.equal(view.mri,base.mri);
+  assert.deepEqual(view.ctExterior,{offset:[0,1,0],shape:[2,1,1],data:new Uint8Array([1,0]),sha256});
+  const resident=await hydrateAnatomy(payload,{readAsset(){throw Error('Should reuse the checked crop');}},view.mri,view);
+  assert.equal(resident.ctExterior,view.ctExterior);
+  for(const bad of [{...receipt,signalSha256:'c'.repeat(64)},{...receipt,offset:[1,1,0]}]){
+    await assert.rejects(hydrateAnatomy({...payload,ctExterior:bad},api,view.mri),/differs from its acquired source/);
+  }
+  assert.throws(()=>mergeResidentLayers(view,{...view,ctExterior:undefined},[]),/different displayed source/);
 });
 
 test('cortex from a different scan reuses its verified samples with the new physical transform',async()=>{

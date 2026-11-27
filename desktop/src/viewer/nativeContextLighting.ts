@@ -11,13 +11,13 @@ export function setNativeContextLighting(material: MeshStandardMaterial, enabled
 /** Presentation for smoothed native context. The standard material retains the scene lights,
  * roughness and highlights. A restrained falloff gives farther geometry less emphasis
  * using its physical view depth. The volume compositor reuses this material. */
-export function installNativeContextLighting(material: MeshStandardMaterial, bounds: Bounds3, enabled: boolean): void {
+export function installNativeContextLighting(material: MeshStandardMaterial, bounds: Bounds3, enabled: boolean, softTissue=false): void {
   const low = new Vector3(...bounds[0]), high = new Vector3(...bounds[1]);
   const center = {value: low.clone().lerp(high, .5)};
   const radius = {value: Math.max(1, low.distanceTo(high) / 2)};
   const previous = material.onBeforeCompile;
   const previousKey = material.customProgramCacheKey;
-  const lightingKey = () => `native-context-lighting-v2-${previousKey.call(material)}`;
+  const lightingKey = () => `native-context-lighting-v3-${softTissue}-${previousKey.call(material)}`;
   const compileLighting: MeshStandardMaterial['onBeforeCompile'] = (shader, renderer) => {
     previous.call(material, shader, renderer);
     shader.uniforms.uNativeContextCenter = center;
@@ -27,12 +27,19 @@ export function installNativeContextLighting(material: MeshStandardMaterial, bou
     ` + shader.fragmentShader.replace('#include <opaque_fragment>', `
         float centerDepth = -(viewMatrix * vec4(uNativeContextCenter, 1.0)).z;
         float depth = (vViewPosition.z - centerDepth) / uNativeContextRadius;
-        float attenuation = mix(1.0, 0.78, smoothstep(-0.55, 0.60, depth));
+        float attenuation = mix(1.02, 0.71, smoothstep(-0.55, 0.60, depth));
         // Keep the broad camera-relative light for consistent inspection from
         // either side. Blend in the scene's colored light and roughness response.
-        float key = max(0.0, dot(normal, normalize(vec3(-0.46, 0.55, 0.70))));
+        float lightCos = dot(normal, normalize(vec3(-0.46, 0.55, 0.70)));
+        float key = max(0.0, lightCos);
         float fill = max(0.0, dot(normal, normalize(vec3(0.72, -0.22, 0.66))));
-        vec3 inspectionLight = diffuseColor.rgb * (0.13 + 0.72 * key + 0.12 * fill);
+        vec3 inspectionLight = diffuseColor.rgb * (0.075 + 0.76 * key + 0.11 * fill);
+        ${softTissue ? `
+        // A bounded diffuse wrap softens the terminator on tissue. Material
+        // thickness is unknown, so this adds no source-dependent attenuation.
+        float wrap = clamp((lightCos + 0.38) / 1.38, 0.0, 1.0) - key;
+        inspectionLight += diffuseColor.rgb * vec3(0.27, 0.15, 0.12) * wrap;
+        ` : ''}
         vec3 sceneLight = outgoingLight - totalEmissiveRadiance;
         outgoingLight = mix(inspectionLight, sceneLight, 0.32) * attenuation + totalEmissiveRadiance;
       #include <opaque_fragment>`);

@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import type { OperativeModel } from './operativeFieldModel.ts';
 import { operativeVoxelSurface } from './operativeVoxelSurface.ts';
 import { operativeSurface } from './operativeSurface.ts';
+import { prepareDuralRim } from './operativeDuralRim.ts';
 import { estimatedDuralFlap, updateDuralFold } from './operativeDuralFlap.ts';
 
 type Opening = 'bone' | 'dura';
@@ -44,6 +45,7 @@ type Surfaces = {
   detached: THREE.BufferGeometry;
   flap: THREE.BufferGeometry | null;
   membrane?: boolean;
+  rim?: boolean;
 };
 
 export function prepareOperativeOpening(
@@ -79,7 +81,8 @@ export function prepareOperativeOpening(
     const surface = (layer:typeof stationary, name:string) => raw
       ? operativeVoxelSurface(model.field, layer.mask, layer.bounds, row)
       : operativeSurface(model.field, layer.mask, layer.bounds, row, name);
-    const extract = () => surface(stationary, kind);
+    const rim=estimated&&!raw&&row===0?prepareDuralRim(model):null;
+    const extract = () => rim?rim.geometry():surface(stationary,kind);
     const original = extract();
     if (model.field.stations[kind] === null)
       return { intact: original, cut: original, detached: original, flap: null };
@@ -92,8 +95,9 @@ export function prepareOperativeOpening(
       const patch = membrane
         ? estimatedDuralFlap(model.field,moving.mask,moving.bounds,row,flapOrigin,model.duralOpening)
         : surface(moving, movingKind).translate(-flapOrigin.x, -flapOrigin.y, -flapOrigin.z);
-      return { intact: original, cut: kerfed, detached, flap: patch, membrane };
+      return { intact: original, cut: kerfed, detached, flap: patch, membrane, rim:!!rim };
     } finally {
+      rim?.dispose();
       model.applyOpening(kind, 0, false);
     }
   }
@@ -111,6 +115,10 @@ export function prepareOperativeOpening(
     if (model.field.stations[kind] === null) amount = 0;
     const sweep = model.openingState(kind, amount);
     const { lift } = sweep;
+    const rimSide=surfaces.rim?THREE.DoubleSide:initialSide;
+    for(const mesh of [intact,cut])if(mesh.material.side!==rimSide){
+      mesh.material.side=rimSide;mesh.material.needsUpdate=true;
+    }
     const partial = sweep.fraction > 0 && sweep.fraction < 1;
     limit.value = partial ? sweep.angle : -1;
     intact.geometry = lift > 0 ? surfaces.detached : surfaces.intact;
@@ -145,4 +153,29 @@ export function prepareOperativeOpening(
     sections.clear();
   }
   return { update, warm, dispose, kerf:cut };
+}
+
+/** Lift the free geometric flap above the sampled skull before translating
+ * it clear of the aperture. The parked pose is an illustration. The engine
+ * retains its own opening and debris state. */
+export function boneFlapTransfer(model:OperativeModel){
+  const {field,opening}=model,[nx,ny,nz]=field.shape,s=field.spacingMm;
+  const mask=model.layers.boneFlap;
+  if(mask.bounds.low[0]>mask.bounds.high[0])return ()=>[0,0,0] as const;
+  const xs=(i:number)=>field.origin[0]+i*s;
+  const distance=xs(mask.bounds.high[0]+.5)+opening+2*s;
+  const minX=Math.max(0,mask.bounds.low[0]-Math.ceil(distance/s)-1);
+  const maxX=Math.min(nx-1,mask.bounds.high[0]+1);
+  let highest=mask.bounds.high[2];
+  for(let x=minX;x<=maxX;x++)for(let y=Math.max(0,mask.bounds.low[1]-1);y<=Math.min(ny-1,mask.bounds.high[1]+1);y++){
+    const start=(x*ny+y)*nz;
+    for(let z=nz-1;z>highest;z--)if(field.voxels[start+z]&1){highest=z;break;}
+  }
+  // The top and bottom voxel faces are half a cell from their centres.
+  // An extra cell on each side accommodates bounded sheet fairing.
+  const height=(highest-mask.bounds.low[2]+3)*s;
+  return (lift:number)=>[
+    -distance*THREE.MathUtils.smootherstep(lift,.40,1),0,
+    height*THREE.MathUtils.smootherstep(lift,0,.40),
+  ] as const;
 }

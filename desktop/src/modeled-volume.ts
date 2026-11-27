@@ -2,10 +2,14 @@ import type {ViewerVolume} from './viewer/contracts';
 import type {SurgicalRegion,SurgicalView} from './surgical-types';
 import {rasAffine} from './viewer/coordinates.ts';
 import {surfaceKind} from './viewer/surfacePolicy.ts';
+import {displacedBodies,partitionExposureSurfaces} from './viewer/exposureAnatomy.ts';
 import {registerModeledAnatomy} from './viewer/modeledAnatomy.ts';
+import {acceptedVesselSurfaces,bindNativeVesselSurfaces,vesselGeometryToken} from './viewer/operativeVesselSurface.ts';
+import type {OperativeVesselSurface} from './viewer/operativeVesselSurface';
 
 type Layer=ViewerVolume['compartments'][number];
-type Base={surfaceReference:import('./viewer/engineImplicitSurface').EngineSurfaceReference;owner:Uint16Array;regions:SurgicalRegion[];originals:Array<{layer:Layer|undefined;labels:Uint8Array|Uint16Array|undefined}>;priority:Map<number,number>};
+type Base={surfaceReference:import('./viewer/engineImplicitSurface').EngineSurfaceReference;owner:Uint16Array;regions:SurgicalRegion[];originals:Array<{layer:Layer|undefined;labels:Uint8Array|Uint16Array|undefined}>;priority:Map<number,number>;
+  vessels:ReturnType<typeof bindNativeVesselSurfaces>;vesselTopology:Map<string,{topology:string;surface:OperativeVesselSurface}>};
 type State={volume:ViewerVolume;overrides:Map<number,number>;differences:number[]};
 type Cache={mappingKey:string;base:Base;current:State;frames:Map<string,State>};
 const caches=new WeakMap<ViewerVolume,Cache>();
@@ -76,6 +80,9 @@ function validateGrid(source:ViewerVolume,view:SurgicalView){
 function compartment(region:SurgicalRegion,original:Base['originals'][number],mask:Uint8Array,difference:number):Layer {
   const {layer,labels}=original,unchanged=!!layer&&difference===0,sameKind=surfaceKind(layer?.kind)===surfaceKind(region.material);
   return {...(unchanged?layer:{}),name:region.name,color:region.color,kind:region.material,
+    // A cut changes mesh ownership, not the registered acquisition sampled on
+    // its stationary walls. Transported surfaces resolve correspondence locally.
+    ...(layer?.appearanceSource && sameKind ? {appearanceSource:layer.appearanceSource,displayKind:layer.displayKind??layer.kind} : {}),
     mask:unchanged&&layer&&!labels?layer.mask:mask,labelSet:undefined,labelValue:undefined,
     surface:unchanged&&sameKind?layer?.surface:undefined,surfaceDiagnostics:unchanged&&sameKind?layer?.surfaceDiagnostics:undefined,
     sourceIdentity:unchanged?layer?.sourceIdentity:undefined,qa:unchanged?layer?.qa:undefined};
@@ -83,7 +90,13 @@ function compartment(region:SurgicalRegion,original:Base['originals'][number],ma
 function displayVolume(source:ViewerVolume,compartments:Layer[],key:string):ViewerVolume {
   return {...source,displayIdentity:`surgical:${source.caseHash}:${geometryIdentity(key)}`,packedLabels:undefined,labelSets:undefined,compartments};
 }
-function stateKey(view:SurgicalView,coupled:boolean){return JSON.stringify([view.scene.regions,view.removed,view.moved,...(coupled?['coupled-v2']:[])]);}
+function stateKey(view:SurgicalView,coupled:boolean){
+  const vessel=vesselGeometryToken(view);
+  return JSON.stringify([view.scene.regions,view.removed,view.moved,
+    ...((view.cutEdges?.length||view.transectedEdges?.length)?[view.cutEdges??[],view.transectedEdges??[]]:[]),
+    ...(vessel?[vessel]:[]),...(coupled?['coupled-v2']:[]),
+    ...(view.operativeExposureV1?[displacedBodies(view.operativeExposureV1,view.scene.shape,view.scene.affine)]:[])]);
+}
 /** Complete retained reference: independently scan ownership and every mask.
  * Initial installation also captures this pass's private source owner array. */
 export function referenceModeledVolume(source:ViewerVolume,view:SurgicalView,capture?:(base:Base,differences:number[])=>void):ViewerVolume {
@@ -106,7 +119,11 @@ export function referenceModeledVolume(source:ViewerVolume,view:SurgicalView,cap
     const labels=source.labelSets?.find(s=>s.id===layer.labelSet)?.data;
     compartments.push({...layer,labelSet:undefined,labelValue:undefined,mask:labels?Uint8Array.from(labels,n=>Number(n===layer.labelValue)):layer.mask});
   }
-  capture?.({surfaceReference:{owner:original,protectedRegions:regions.filter(r=>['vessel','membrane'].includes(r.material)).map(r=>r.id)},owner:original,regions:structuredClone(regions),originals,priority},differences);
+  const skin=view.operativeExposureV1&&regions.find((_,i)=>originals[i]?.layer?.kind==='scalp')?.id;
+  const nativeBrainRegion=regions.find((region,i)=>(region.material==='brain'||region.material==='soft_tissue')&&
+    originals[i]?.layer?.appearanceSource?.nativeWallCrop)?.id;
+  capture?.({surfaceReference:{owner:original,nativeBrainRegion,...(skin?{exteriorSkinRegion:skin}:{}),protectedRegions:regions.filter(r=>['vessel','membrane'].includes(r.material)).map(r=>r.id)},owner:original,regions:structuredClone(regions),originals,priority,
+    vessels:bindNativeVesselSurfaces(source,original,regions),vesselTopology:new Map()},differences);
   return displayVolume(source,compartments,stateKey(view,coupled));
 }
 function overrides(base:Base,view:SurgicalView,coupled:boolean):Map<number,number>{
@@ -117,6 +134,39 @@ function overrides(base:Base,view:SurgicalView,coupled:boolean):Map<number,numbe
     if(!coupled||(base.priority.get(sourceOwner)??-1)>=(base.priority.get(targetOwner)??-1))values.set(b,sourceOwner);}
   for(const [i,value]of values)if(value===base.owner[i])values.delete(i);
   return values;
+}
+/** Accept only vacant cells from the removal ledger. Displaced tissue keeps
+ * its ordinary surface wherever a moved source or destination enters the
+ * filter footprint. Sparse supports never allocate another full patient grid. */
+function attachCavitySupport(state:State,base:Base,view:SurgicalView){
+  const [nx,ny,nz]=state.volume.shape,yz=ny*nz,blocked=new Set<number>();
+  // Above this budget the source-faithful shared implicit surface remains
+  // available. No voxel or accepted effect is omitted from that surface.
+  const byRegion=new Map<number,number[]>();
+  if(view.removed.length<=4096&&view.moved.length<=4096&&view.removed.length){
+    const moved=new Set(view.moved.flat());
+    for(const index of view.removed){
+      const id=base.owner[index];
+      if(!id||state.overrides.get(index)!==0||base.surfaceReference.protectedRegions.includes(id))continue;
+      if(moved.size){
+        const x=Math.floor(index/yz),y=Math.floor(index/nz)%ny,z=index%nz;
+        scan:for(let a=Math.max(0,x-3);a<=Math.min(nx-1,x+3);a++)
+          for(let b=Math.max(0,y-3);b<=Math.min(ny-1,y+3);b++)
+            for(let c=Math.max(0,z-3);c<=Math.min(nz-1,z+3);c++)
+              if(moved.has(a*yz+b*nz+c)){blocked.add(index);break scan;}
+      }
+      if(!blocked.has(index)){
+        const group=byRegion.get(id)??[];group.push(index);byRegion.set(id,group);
+      }
+    }
+  }
+  state.volume.compartments=state.volume.compartments.map((layer,r)=>{
+    const region=base.regions[r]?.id,indices=byRegion.get(region);
+    if(!indices||indices.length<3)return layer.cavity?{...layer,cavity:undefined}:layer;
+    const cells=Uint32Array.from(new Set(indices)).sort(),old=layer.cavity;
+    if(old?.region===region&&old.cells.length===cells.length&&cells.every((value,i)=>value===old.cells[i]))return layer;
+    return {...layer,cavity:{region,cells}};
+  });
 }
 /** Source ownership is built once per mapping. Follow-up states inspect only
  * the sparse old/new effect union; only changed layer masks receive a private
@@ -159,7 +209,14 @@ export function modeledVolume(source:ViewerVolume,view:SurgicalView):ViewerVolum
     const volume=displayVolume(source,compartments,key);state={volume,overrides:next,differences};cache.current=state;
     measurement={fullBuild:false,sourceCellsScanned:0,copiedMaskBytes,patchedCells:changedCells,baseOwnerBytes:base.owner.byteLength};
   }
-  registerModeledAnatomy(source,state.volume,mappingKey,[...view.removed,...view.moved.flat()],cache.base.surfaceReference);
+  attachCavitySupport(state,cache.base,view);
+  if(view.operativeExposureV1)state.volume.compartments=state.volume.compartments.map((layer,i)=>{
+    const kind=cache.base.originals[i]?.layer?.kind;
+    return kind&&(!layer.generatedFinish||layer.displayKind!==kind)?{...layer,generatedFinish:true,displayKind:kind}:layer;
+  });
+  partitionExposureSurfaces(state.volume,view,cache.base.owner,state.overrides);
+  const base=cache.base,vessels=acceptedVesselSurfaces(base.vessels,base.owner,state.overrides,view,base.vesselTopology);
+  registerModeledAnatomy(source,state.volume,mappingKey,[...view.removed,...view.moved.flat()],base.surfaceReference,vessels);
   cache.frames.set(key,state);if(cache.frames.size>3)cache.frames.delete(cache.frames.keys().next().value!);
   work.set(state.volume,measurement);return state.volume;
 }

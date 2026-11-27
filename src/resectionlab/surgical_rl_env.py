@@ -31,6 +31,7 @@ Historical observations and snapshots cannot be silently migrated. This path
 adds no learning admission and preserves all existing mechanics/RL holds.
 """
 from __future__ import annotations
+from . import acceleration as _accel
 import copy
 from dataclasses import asdict, dataclass, fields
 import json
@@ -121,11 +122,16 @@ class _ProtectedEngine(SurgicalEngine):
         nearby = set()
         if self.rl_config.near_margin_mm and self._protected_ids:
             positions = self._positions()
-            for other_key, other in self.state['slots'].items():
+            batched = None
+            if _accel.enabled('rl-ledger'):
+                from .accel_rl import near_margin_ids
+                batched = near_margin_ids(self, key, p, q, positions, TOOLS)
+            for other_key, other in (self.state['slots'] if batched is None else {}).items():
                 end = {'position': p, 'quaternion': q} if other_key == key else other
                 for a, b, radius, _ in swept_envelopes(TOOLS[other['instrument']], self.parameters(other), other, end):
                     nearby.update(map(int, self.protection.capsule_hits(a, b,
                         radius + self.rl_config.near_margin_mm, positions=positions)))
+            nearby.update(batched or ())
         events = super()._substep(key, op, p, q, active, dt)
         # Shared guard checks finish before reward ledgers can change.
         from .surgical_rl_rewards import deformation_scores
@@ -266,8 +272,8 @@ class SurgicalRLEnv(gym.Env):
         from .surgical_rl_protection import load_protection, restore_protection_contract
         from .imaging import read_case_artifacts
         artifacts = read_case_artifacts(path)
-        if 'nativeStudyReplay' in artifacts:
-            raise ValueError('STUDY_REPLAY_ONLY: a recorded branch cannot be reset into a fresh training environment')
+        if 'nativeStudyReplay' in artifacts or 'practiceEpisodes' in (artifacts.get('surgical_toolbox') or {}):
+            raise ValueError('STUDY_REPLAY_ONLY: a recorded or manual branch cannot be reset into a fresh training environment')
         scene = load_environment(path)
         record = artifacts.get('surgical_toolbox') or {}
         snapshot = record.get('branches', {}).get(record.get('branchId'), {})

@@ -154,28 +154,24 @@ export function sampleTrilinear(
   shape: Shape3,
   voxel: Point3,
 ): number {
-  if (voxel.some((x, i) => x < -1e-6 || x > shape[i] - 1 + 1e-6)) return 0;
-  const v = voxel.map((x, i) =>
-    Math.max(0, Math.min(shape[i] - 1, x)),
-  ) as Point3;
-  const lo = v.map(Math.floor) as Point3,
-    hi = lo.map((x, i) => Math.min(x + 1, shape[i] - 1)) as Point3;
-  const f = v.map((x, i) => x - lo[i]);
-  let value = 0;
-  for (let x = 0; x < 2; x++)
-    for (let y = 0; y < 2; y++)
-      for (let z = 0; z < 2; z++) {
-        value +=
-          data[
-            cIndex(shape, [
-              x ? hi[0] : lo[0],
-              y ? hi[1] : lo[1],
-              z ? hi[2] : lo[2],
-            ])
-          ] *
-          (x ? f[0] : 1 - f[0]) *
-          (y ? f[1] : 1 - f[1]) *
-          (z ? f[2] : 1 - f[2]);
-      }
-  return value;
+  const [nx, ny, nz] = shape;
+  let [x, y, z] = voxel;
+  if (x < -1e-6 || x > nx - 1 + 1e-6 || y < -1e-6 || y > ny - 1 + 1e-6 ||
+      z < -1e-6 || z > nz - 1 + 1e-6) return 0;
+  x = Math.max(0, Math.min(nx - 1, x));
+  y = Math.max(0, Math.min(ny - 1, y));
+  z = Math.max(0, Math.min(nz - 1, z));
+  const x0 = Math.floor(x), y0 = Math.floor(y), z0 = Math.floor(z);
+  const fx = x - x0, fy = y - y0, fz = z - z0;
+  const i = (x0 * ny + y0) * nz + z0;
+  const dx = x0 + 1 < nx ? ny * nz : 0;
+  const dy = y0 + 1 < ny ? nz : 0;
+  const dz = z0 + 1 < nz ? 1 : 0;
+  // The physical sampler is also used once per native cortical vertex.
+  // Row offsets keep the C-order eight-corner interpolation allocation-free.
+  const z00 = data[i] * (1 - fz) + data[i + dz] * fz;
+  const z01 = data[i + dy] * (1 - fz) + data[i + dy + dz] * fz;
+  const z10 = data[i + dx] * (1 - fz) + data[i + dx + dz] * fz;
+  const z11 = data[i + dx + dy] * (1 - fz) + data[i + dx + dy + dz] * fz;
+  return (z00 * (1 - fy) + z01 * fy) * (1 - fx) + (z10 * (1 - fy) + z11 * fy) * fx;
 }

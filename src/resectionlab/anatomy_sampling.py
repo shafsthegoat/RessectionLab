@@ -8,6 +8,17 @@ from .anatomy_evidence import inference_bounds
 from .patient_anatomy import world
 
 
+def native_field_bounds(native, native_shape, field, field_shape):
+    """Native samples that bracket a display field without changing its spacing."""
+    corners = list(product(*[(-.5, size - .5) for size in field_shape]))
+    points = np.round(world(np.linalg.solve(native, field), corners) + .5, 7)
+    shape = np.asarray(native_shape)
+    start = np.floor(points.min(axis=0)).astype(int)
+    stop = np.ceil(points.max(axis=0)).astype(int)
+    partial = bool(np.any(start < 0) or np.any(stop > shape))
+    return np.clip(start, 0, shape), np.clip(stop, 0, shape), partial
+
+
 def _coordinate(matrix, axis, coords):
     return (matrix[axis, 0] * coords[0] + matrix[axis, 1] * coords[1]
             + matrix[axis, 2] * coords[2] + matrix[axis, 3])
@@ -62,7 +73,7 @@ def _sample_values(data, native, source_affine, source_shape, grid, shape, bound
 def sample_layer(collection, row, grid, shape, check, cache, *, frames=None):
     source = collection.series(row["source_series"])
     native, source_affine = frames if frames is not None else (collection.patient_affine(row), collection.patient_affine(source))
-    data = collection.array(row["data"])
+    data = collection.array(row["data"], check=check)
     bounds = inference_bounds(row) or ((0, 0, 0), tuple(size - 1 for size in data.shape))
     slices = row.get("coverage_fields", {}).get("supported_axial_indices")
     if slices is not None:

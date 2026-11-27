@@ -12,5 +12,7 @@ export function rehearsalPresentation(regions:SurgicalRegion[],settings:ViewerWo
 export function initialRehearsalPresentation(regions:SurgicalRegion[],settings:ViewerWorkspaceSettings={}):ViewerWorkspaceSettings {
   const defaults=rehearsalPresentation(regions);
   return {...defaults,...settings,volumeRendering:{...defaults.volumeRendering,...settings.volumeRendering},
-    layerColor:{...defaults.layerColor,...settings.layerColor},layerOpacity:{...defaults.layerOpacity,...settings.layerOpacity}};
+    // Region colors are already the anatomy fallback. Recording them as
+    // overrides would also make them take precedence in the illustrative microscope.
+    layerColor:settings.layerColor,layerOpacity:{...defaults.layerOpacity,...settings.layerOpacity}};
 }

@@ -1,5 +1,6 @@
 import {RecordedStrategyComparison} from './RecordedStrategyComparison';
 import {NativeApproachPanel} from './NativeApproachPanel';
+import {NativeVesselFieldDialog, NativeWallSourceDialog} from './NativeWallSourceDialog';
 import {useSurgical} from "./use-surgical";
 import {caseImageEvidence,caseLayerEvidence,conditionalRehearsalNotice} from './data-case-evidence';
 import {SurgicalPanel} from "./SurgicalPanel";
@@ -9,6 +10,8 @@ import {EngineStudyReference} from './EngineStudyReference';
 import {recordedMicroscope,recordingMatchesStudy,recordingSelectionKey} from './study-engine-presentation';
 import type {VerifiedStudyReplay} from './types';
 import {operativeRouteIssue} from './operative-field';
+import {savedPracticeEpisode} from './practice-input';
+import {defaultSurgeonView} from './viewer/microscope';
 import {rehearsalPresentation,initialRehearsalPresentation} from './rehearsal-presentation';
 import {operativeFieldFrame} from './full-case-presentation';
 import {SurgicalCloseViewControls} from './SurgicalCloseViewControls';
@@ -17,11 +20,11 @@ import {hasSavedFullCaseBranch} from './full-case-workspace';
 import {useRehearsal} from "./use-rehearsal";
 import {RehearsalPanel} from "./RehearsalPanel";
 import type {RehearsalApi} from "./rehearsal-types";
-import {scanLabel} from './native-study-state';
+import {alignmentBannerWarning,scanLabel,vesselDerivedParent,withVesselDerivedSettings,withoutVesselDerivedSettings,withVesselReviewVisibility} from './native-study-state';
 import {useNativeWorkspace} from './use-native-workspace';
 import {NativeSidebar,NativeCorrectionBar,NativeResearch} from './NativeWorkspacePanels';
 import {isNativeBinding} from './native-anatomy-data';
-import type {NativeAnatomyApi} from './native-anatomy-data';
+import type {NativeAnatomyApi,NativeVesselFieldRequest} from './native-anatomy-data';
 import {useDiagnosticLayer} from "./use-diagnostic-layer";
 import { ImagingWorkspacePanel } from "./ImagingWorkspacePanel";
 import { useWorkspaceImaging } from "./use-workspace-imaging";
@@ -569,6 +572,8 @@ export default function App() {
   const [newPatient,setNewPatient]=useState('');
   const [newStudyTimepoint,setNewStudyTimepoint]=useState('preoperative');
   const [payload, setPayload] = useState<CasePayload | null>(null);
+  const [sourceInspectionOpen,setSourceInspectionOpen]=useState(false);
+  const [vesselField,setVesselField]=useState<NativeVesselFieldRequest|null>(null);
   const [caseData, setCaseData] = useState<ViewerCase | null>(null);
   const [visibleLayers, setVisibleLayers] = useState<Record<string, boolean>>(
     {},
@@ -603,12 +608,12 @@ export default function App() {
     : null;
   const operativeIssue=native.binding && (native.planning.targetSelectionIssue ||
     operativeRouteIssue(nativeRoute,native.planning.activeTargetLayerId,native.binding.document.snapshot_id));
-  const showOperative=workbenchTab==='rehearsal' && !!routeKey && operativeKey===routeKey && !operativeIssue && !native.draft;
+  const showOperative=workbenchTab==='rehearsal' && !!routeKey && operativeKey===routeKey && !operativeIssue && !native.draft && !native.scanPreview;
   const linkedOperative=showOperative&&native.patientFrameReady&&!!native.volume&&!native.original;
   const nativeRoutes=linkedOperative&&native.state.cranialView==='inspection'
     ?native.planning.routes.filter(route=>route.selected):native.displayRoutes;
   function openOperative(){
-    if(!routeKey||operativeIssue||native.draft||planningEditsPending)return;
+    if(!routeKey||operativeIssue||native.draft||native.scanPreview||planningEditsPending)return;
     setRecordingSelection(null);setOperativeKey(routeKey);setWorkbenchTab('rehearsal');setCasePanel(true);
   }
   const [rehearsalModel,setRehearsalModel]=useState<'standard'|'legacy'>('standard');
@@ -753,6 +758,11 @@ export default function App() {
   const displayedLayers = native.binding ? native.state.visible : imaging.selected ? imaging.visibleLayers : visibleLayers;
   const setDisplayedLayers = native.binding ? native.setVisible : imaging.selected ? imaging.setVisibleLayers : setVisibleLayers;
   const viewerSettings = native.binding ? native.state.settings : imaging.selected ? imaging.viewer ?? {} : primaryViewer;
+  // Derived vessel parts inherit their layer's opacity for display only; memoised so the viewer
+  // sees one settings object per change, not one per render.
+  const nativeCompartments = native.volume?.compartments, nativeBound = !!native.binding;
+  const displayedViewerSettings = useMemo(() => nativeBound ? withVesselDerivedSettings(viewerSettings, nativeCompartments) : viewerSettings,
+    [nativeBound, viewerSettings, nativeCompartments]);
   const setViewerSettings = native.binding ? native.setSettings : imaging.selected ? imaging.setViewer : setPrimaryViewer;
   const fusionSeries = !imaging.selected && primaryViewer.fusion?.seriesId ? imaging.series.find(s=>s.descriptor.seriesId===primaryViewer.fusion?.seriesId && s.descriptor.registration.overlayPermitted) : null;
   const registeredFusion = useMemo(()=>fusionSeries && payload && fusionSeries.descriptor.registration.sourceToReferenceRasMm ? {
@@ -765,14 +775,15 @@ export default function App() {
     cancel:(requestId:string)=>api.cancel(requestId),
   }:null,[api,native.binding?.collectionId,native.binding?.document.snapshot_id,native.series]);
   const surgical = useSurgical(displayedCase, surgicalApi, workbenchTab === "rehearsal" && rehearsalModel==='standard' && !native.binding && (!payload?.artifacts?.nativeStudyReplay||!imaging.selected),
-    !payload?.artifacts?.nativeStudyReplay && !!(payload?.artifacts?.surgical_toolbox as {archivePreviewAvailable?:boolean}|undefined)?.archivePreviewAvailable);
+    !payload?.artifacts?.nativeStudyReplay && !!(payload?.artifacts?.surgical_toolbox as {archivePreviewAvailable?:boolean}|undefined)?.archivePreviewAvailable,!!payload?.artifacts?.nativeStudyReplay);
   const nativeReference=viewingStudyRecording&&study.patientFrameReady&&!study.original?study.volume:null;
   const recordingReferenceSettings=useMemo(()=>rehearsalPresentation(surgical.view?.scene.regions??[]),[surgical.view?.scene.sceneId]);
   const presentedScene=useRef<string|null>(null);
   useEffect(()=>{
     if(surgical.view&&presentedScene.current!==surgical.view.scene.sceneId){
       presentedScene.current=surgical.view.scene.sceneId;
-      setPrimaryViewer(settings=>initialRehearsalPresentation(surgical.view!.scene.regions,settings));
+      const view=surgical.view;
+      setPrimaryViewer(settings=>defaultSurgeonView(view,initialRehearsalPresentation(view.scene.regions,settings),imaging.selected?null:annotationCenterMm));
     }
   },[surgical.view?.scene.sceneId]);
   const rehearsal = useRehearsal(!native.binding && !imaging.selected ? viewerCase : null,
@@ -801,7 +812,9 @@ export default function App() {
   const publicGoalMarker = useMemo(() => episodeVisible && activeContactView && activeContactView.source.caseHash === payload?.caseHash ? contactGoalMarker(activeContactView,activeContactStep) : null,
     [episodeVisible,activeContactView,activeContactStep,payload?.caseHash]);
   const actorReplayVisible = useRef(false);
-  const fileNavigationBlocked = openingStartupWorkspace || !!native.draft || !api || busy || comparison.pending || engineStopped || readonly;
+  const sourceDialogOpen=sourceInspectionOpen||!!vesselField;
+  const fileNavigationBlocked = openingStartupWorkspace || sourceDialogOpen || !!native.draft || !api || busy || comparison.pending || engineStopped || readonly;
+  const nativeWallSource=(payload?.metadata.surgical_adapter as {nativeWall?:{schema?:string}}|undefined)?.nativeWall;
   const restoreSourceView = () => {
     resetDisplayToPrimary();
     setEpisodeVisible(false);
@@ -845,16 +858,17 @@ export default function App() {
   }, []);
 
   const installCase = useCallback(
-    async (sourceInput: CasePayload, runtime: ResectionApi, requestedGeneration?: number, keepStudySelection?:string) => {
+    async (sourceInput: CasePayload, runtime: ResectionApi, requestedGeneration?: number, keepStudySelection?:string,
+      sourceIsCurrent:()=>boolean=()=>true) => {
       const generation = requestedGeneration ?? ++caseGeneration.current;
-      if (generation !== caseGeneration.current) return false;
+      const isCurrent=()=>mounted.current&&generation===caseGeneration.current&&sourceIsCurrent();
+      if (!isCurrent()) return false;
       setHydrating(true);
       setError(null);
       try {
-        const reopened = await hydrateWorkspace(sourceInput, runtime,
-          () => mounted.current && generation === caseGeneration.current);
+        const reopened = await hydrateWorkspace(sourceInput, runtime,isCurrent);
         const { source, volume: loaded } = reopened;
-        if (!mounted.current || generation !== caseGeneration.current || (keepStudySelection && latestSelectionKey.current!==keepStudySelection))
+        if (!isCurrent() || (keepStudySelection && latestSelectionKey.current!==keepStudySelection))
           return false;
         // Commit only after the complete replacement has hydrated successfully.
         if(!keepStudySelection)native.clear();
@@ -869,8 +883,9 @@ export default function App() {
         clearProposal();
         resetDisplayToPrimary();
         setPayload(source);
+        presentedScene.current=null;
         setCaseData(loaded);
-        const opensFullCase=!!source.artifacts?.surgical_toolbox&&(!!source.artifacts.nativeStudyReplay||hasSavedFullCaseBranch(source.artifacts));
+        const opensFullCase=!!source.artifacts?.surgical_toolbox&&(!!source.artifacts.nativeStudyReplay||hasSavedFullCaseBranch(source.artifacts)||savedPracticeEpisode(source.artifacts));
         setWorkbenchTab(opensFullCase?'rehearsal':'anatomy');
         if(opensFullCase)setCameraMode('instruments');
         setCertifiedReplay(null);
@@ -981,7 +996,7 @@ export default function App() {
         );
         return true;
       } catch (failure) {
-        if (generation === caseGeneration.current)
+        if (isCurrent())
           setError(
             failure instanceof Error ? failure.message : String(failure),
           );
@@ -1112,8 +1127,8 @@ export default function App() {
           if(source&&!disposed){
             if(isNativeBinding(source)){
               setPayload(null);setCaseData(null);
-              await native.install(source);
-              await runtime.workspaceInstalled?.({caseHash:source.collectionId,caseId:source.document.patient_id});
+              const installed=await native.install(source);
+              if(installed&&!disposed)await runtime.workspaceInstalled?.({caseHash:source.collectionId,caseId:source.document.patient_id});
             }else await installCase(source,runtime);
           }
         })
@@ -1255,15 +1270,17 @@ export default function App() {
       if (!source || !mounted.current || generation !== caseGeneration.current) return;
       imaging.invalidate();
       if (isNativeBinding(source)) {
-        await native.install(source);
         setPayload(null);
         setCaseData(null);
         setEpisodeVisible(false);
         setCertifiedReplay(null);
         clearProposal();
         clearPrior();
-        await api.workspaceInstalled?.({caseHash: source.collectionId, caseId: source.document.patient_id});
         setWorkbenchTab('anatomy');
+        setCasePanel(true);
+        const installed=await native.install(source);
+        if (!installed||!mounted.current||generation!==caseGeneration.current) return;
+        await api.workspaceInstalled?.({caseHash: source.collectionId, caseId: source.document.patient_id});
       } else {
         await installCase(source, api, generation);
       }
@@ -1454,14 +1471,14 @@ export default function App() {
   useEffect(() => {
     if (!api) return;
     return api.onEvent((event) => {
-      if (event.event !== "menuAction" || busy || comparison.pending || engineStopped || readonly) return;
+      if (event.event !== "menuAction" || busy || sourceDialogOpen || comparison.pending || engineStopped || readonly) return;
       if (event.action === "openCase") void load("openCase");
       if (event.action === "saveCase" && (payload||native.binding)) void (native.binding?native.save():save());
     });
   }, [
     api,
     native.binding,native.series,native.state,native.draft,
-    busy,
+    busy,sourceDialogOpen,
     engineStopped,
     readonly,
     payload,
@@ -1592,6 +1609,9 @@ export default function App() {
 
   return (
     <div data-native-series={native.binding?native.series:undefined} data-native-view-state={native.binding?JSON.stringify(native.viewState):undefined} className={`app-shell poc-workbench ${native.binding?"native-workspace":""} ${libraryOpen?"library-open":""} ${workbenchTab === "research" && !native.binding ? "research-open" : "anatomy-only"} ${casePanel ? "" : "case-panel-collapsed"}`}>
+      {sourceInspectionOpen&&payload&&nativeApi&&<NativeWallSourceDialog api={nativeApi} caseHash={payload.caseHash}
+        close={()=>setSourceInspectionOpen(false)}/>}
+      {vesselField&&nativeApi&&<NativeVesselFieldDialog api={nativeApi} request={vesselField} close={()=>setVesselField(null)}/>}
       <header className="app-header">
         <div className="brand">
           <Logo />
@@ -1618,7 +1638,7 @@ export default function App() {
         <button
           className="header-button"
           onClick={addData}
-          disabled={fileNavigationBlocked}
+          disabled={fileNavigationBlocked||native.binding?.readOnlyStudy}
         >
           <ArrowUpFromLine size={15} />
           <span>Add data</span>
@@ -1628,7 +1648,7 @@ export default function App() {
           className="header-button save-button"
           onClick={native.binding?()=>native.save():save}
           title={showEngineRecording?'Save recorded procedure and playback position':native.binding?'Save native study and plan':undefined}
-          disabled={(!payload&&!native.binding) || busy || !!native.draft || engineStopped || readonly}
+          disabled={(!payload&&!native.binding) || busy || sourceDialogOpen || !!native.draft || engineStopped || readonly || native.binding?.readOnlyStudy}
         >
           <ArrowDownToLine size={15} />
           <span>Save</span>
@@ -1640,13 +1660,14 @@ export default function App() {
           {id: 'cases', label: 'Cases', name: 'Cases', icon: Files},
           {id: 'data', label: 'Scans', name: 'Scans', icon: Scan},
           {id: 'anatomy', label: 'Anatomy', name: '3D workspace', icon: Layers3},
-          ...(study.binding ? [{id: 'research' as const, label: 'Plan', name: 'Plan & compare', icon: Waypoints}] : []),
-          {id: 'rehearsal', label: 'Rehearse', name: 'Rehearse', icon: Orbit},
+          ...(study.binding&&!native.binding?.readOnlyStudy ? [{id: 'research' as const, label: 'Plan', name: 'Plan & compare', icon: Waypoints}] : []),
+          ...(!native.binding?.readOnlyStudy ? [{id: 'rehearsal' as const, label: 'Rehearse', name: 'Rehearse', icon: Orbit}] : []),
         ] as const).map(item => <button key={item.id}
           className={`rail-button ${activeTab === item.id ? 'selected' : ''}`}
           aria-label={item.name} aria-current={activeTab === item.id ? 'page' : undefined}
           title={planningEditsPending && workbenchTab==='research' && item.id!=='research' ? 'Save or discard the approach edits first' : item.name}
           disabled={(!hasStudy && (item.id === 'data' || item.id === 'anatomy')) ||
+            (native.scanPreview && (item.id==='research'||item.id==='rehearsal')) ||
             (planningEditsPending && workbenchTab==='research' && item.id!=='research')}
           onClick={() => {
             if (item.id === 'rehearsal') {
@@ -1709,6 +1730,18 @@ export default function App() {
         {alignmentUncertain&&<p className="poc-caution" role="status">Derived MRA alignment is reviewed for overlays with unresolved quantitative accuracy. Precise navigation and clinical vascular clearance are unsupported; skull CT is unavailable.</p>}
         {workbenchTab==='rehearsal'?<>
           {native.binding ? <>
+            {!showOperative&&<EnvironmentPreparationPanel key={native.binding.collectionId+"/"+native.binding.document.snapshot_id+"/"+!!native.planning.rehearsalOptions+"/"+routeKey}
+              approach={!operativeIssue&&nativeRoute?.targetLayerId?{approachId:nativeRoute.id,parameterHash:nativeRoute.parameterHash,measurementHash:nativeRoute.measurementHash,
+                targetLayerId:nativeRoute.targetLayerId,snapshotId:nativeRoute.sourceSnapshotId}:undefined}
+              routeName={nativeRoute?.name} measurements={nativeRoute?.measurements}
+              binding={native.binding} options={native.planning.rehearsalOptions} busy={busy||native.scanPreview||!!native.draft||planningEditsPending}
+              sourceEditing={!!native.draft||planningEditsPending}
+              patientCursor={native.patientFrameReady?native.state.cursor:null} onAnatomy={()=>setWorkbenchTab('data')} onPrepare={async (options,sourceIsCurrent)=>{
+                if(!api?.prepareSurgicalEnvironment)throw Error('Restart the app to load environment preparation.');
+                const generation=++caseGeneration.current;
+                const prepared=await api.prepareSurgicalEnvironment(options);
+                if(prepared&&await installCase(prepared,api,generation,undefined,sourceIsCurrent))setWorkbenchTab('rehearsal');
+              }}/>}
             <section className="operative-inspector">
               <h2>Selected approach</h2>
               {nativeRoute&&<strong>{nativeRoute.name}</strong>}
@@ -1742,15 +1775,11 @@ export default function App() {
                 native.planning.approaches.map(route=>[route.id,route.measurementHash,route.assessmentStatus])])}
               compare={api.compareBoundSurgicalReplays} disabled={busy||!!native.draft||planningEditsPending||native.planning.pending}
               request={{collectionId:currentSelection.collectionId,snapshotId:currentSelection.snapshotId,targetLayerId:currentSelection.targetLayerId}}/>}
-            {!showOperative&&<EnvironmentPreparationPanel key={native.binding.collectionId+"/"+native.binding.document.snapshot_id+"/"+!!native.planning.rehearsalOptions+"/"+routeKey}
-            approach={!operativeIssue&&nativeRoute?.targetLayerId?{approachId:nativeRoute.id,parameterHash:nativeRoute.parameterHash,measurementHash:nativeRoute.measurementHash,
-              targetLayerId:nativeRoute.targetLayerId,snapshotId:nativeRoute.sourceSnapshotId}:undefined}
-            routeName={nativeRoute?.name} measurements={nativeRoute?.measurements}
-            binding={native.binding} options={native.planning.rehearsalOptions} busy={busy} onAnatomy={()=>setWorkbenchTab('data')} onPrepare={async options=>{
-            if(!api?.prepareSurgicalEnvironment)throw Error('Restart the app to load environment preparation.');
-            const prepared=await api.prepareSurgicalEnvironment(options);
-            if(prepared&&await installCase(prepared,api))setWorkbenchTab('rehearsal');
-          }}/>}</> : <>
+          </> : <>
+            {nativeApi?.inspectNativeWallSource&&nativeWallSource?.schema==='resectionlab.patient-native-wall.v1'&&
+              <button className="outline-button" disabled={fileNavigationBlocked||!surgical.view||surgical.displayPending} onClick={()=>{
+                surgical.pausePlayback();surgical.pauseFullCase();setSourceInspectionOpen(true);
+              }}>Inspect source study</button>}
             {showEngineRecording&&replayReceipt&&<section className="operative-inspector engine-recording-info" aria-label="Source-verified recorded episode">
               <h2>{viewingStudyRecording?'Study-linked recording':'Saved procedural recording'}</h2>
               <strong>{replayReceipt.recordedApproach?.name??'Recorded engine episode'}</strong>
@@ -1771,7 +1800,7 @@ export default function App() {
             </section>}
             {!payload?.artifacts?.nativeStudyReplay&&<details className="rehearsal-environment"><summary>Environment · {rehearsalModel==='standard'?'standard':'legacy'}</summary><label className="rehearsal-model">Rehearsal model<select aria-label="Rehearsal model" value={rehearsalModel} onChange={e=>{rehearsal.pause();surgical.cancel();setRehearsalModel(e.target.value as typeof rehearsalModel)}}><option value="standard">Standard instrument environment</option><option value="legacy">Legacy bounded episode</option></select></label></details>}
             {rehearsalModel==='standard'?<>
-              {frozenCusaRunning&&<button onClick={()=>void api?.cancelFrozenCusa?.()}>Cancel frozen policy execution</button>}<fieldset disabled={frozenCusaPending} style={{border:0,padding:0,margin:0,minWidth:0}}><SurgicalPanel c={surgical} studyRecording={!!payload?.artifacts?.nativeStudyReplay} planningCursor={displayedCursor} onPlanningCursor={point=>{if(imaging.selected)imaging.setCursor(point);else setCursor(point);}} inspectionNotice={inspectionNotice(viewerSettings)} onRunFrozenCusa={api?.executeFrozenCusa?executeFrozenCusa:undefined} onRunFrozenSector={api?.executeFrozenCusa?(method=>executeFrozenCusa(method,'sector')):undefined} frozenCusaPending={frozenCusaPending} learningReport={payload?.artifacts?.patient_rescue_learning} executionReport={payload?.artifacts?.patient_rescue_ppo_bc??payload?.artifacts?.patient_rescue_bc} cusaLearning={payload?.artifacts?.surgical_toolbox} microscopeControls={<><SurgeonViewControls c={surgical} settings={viewerSettings} onSettings={setViewerSettings}/>{viewerSettings.operativeView!=='surgeon'&&<SurgicalCloseViewControls c={surgical} source={displayedCase} settings={viewerSettings} cursor={displayedCursor} onSettings={setViewerSettings} onCursor={point=>{if(imaging.selected&&point)imaging.setCursor(point);else setCursor(point);}} onFitAnatomy={()=>{setCameraMode('anatomy');setCameraFitRequest(request=>request+1);}}/>}</>} fieldDisplayControls={<label><input type="checkbox" checked={viewerSettings.smoothSurfaces!==false} onChange={e=>setViewerSettings({...viewerSettings,smoothSurfaces:e.target.checked})}/>Smooth 3D surfaces</label>} onFrameField={()=>{if(surgical.view){const field=operativeFieldFrame(surgical.view,imaging.selected?null:annotationCenterMm,viewerSettings,displayedCase);if(field){if(imaging.selected)imaging.setCursor(field.center);else setCursor(field.center);setViewerSettings(field.settings);setMessage(field.anchor==='target'?'Framed supplied annotation.':'Framed accepted instrument in source scan.');}else setMessage('No accepted instrument or supplied annotation lies within this source scan.');}}} anatomyControls={!!surgical.view&&<details className="rehearsal-anatomy"><summary>Anatomy visibility and appearance</summary><button onClick={()=>setViewerSettings(rehearsalPresentation(surgical.view!.scene.regions,viewerSettings))}>Reference appearance</button>
+              {frozenCusaRunning&&<button onClick={()=>void api?.cancelFrozenCusa?.()}>Cancel frozen policy execution</button>}<fieldset disabled={frozenCusaPending} style={{border:0,padding:0,margin:0,minWidth:0}}><SurgicalPanel c={surgical} studyRecording={!!payload?.artifacts?.nativeStudyReplay} planningCursor={displayedCursor} onPlanningCursor={point=>{if(imaging.selected)imaging.setCursor(point);else setCursor(point);}} inspectionNotice={inspectionNotice(viewerSettings)} onRunFrozenCusa={api?.executeFrozenCusa?executeFrozenCusa:undefined} onRunFrozenSector={api?.executeFrozenCusa?(method=>executeFrozenCusa(method,'sector')):undefined} frozenCusaPending={frozenCusaPending} learningReport={payload?.artifacts?.patient_rescue_learning} executionReport={payload?.artifacts?.patient_rescue_ppo_bc??payload?.artifacts?.patient_rescue_bc} cusaLearning={payload?.artifacts?.surgical_toolbox} microscopeControls={<><SurgeonViewControls c={surgical} settings={viewerSettings} onSettings={setViewerSettings} onFitAnatomy={()=>{setCameraMode('anatomy');setCameraFitRequest(request=>request+1);}}/>{viewerSettings.operativeView!=='surgeon'&&<SurgicalCloseViewControls c={surgical} source={displayedCase} settings={viewerSettings} cursor={displayedCursor} onSettings={setViewerSettings} onCursor={point=>{if(imaging.selected&&point)imaging.setCursor(point);else setCursor(point);}} onFitAnatomy={()=>{setCameraMode('anatomy');setCameraFitRequest(request=>request+1);}}/>}</>} fieldDisplayControls={<label><input type="checkbox" checked={viewerSettings.smoothSurfaces!==false} onChange={e=>setViewerSettings({...viewerSettings,smoothSurfaces:e.target.checked})}/>Smooth 3D surfaces</label>} onFrameField={()=>{if(surgical.view){const field=operativeFieldFrame(surgical.view,imaging.selected?null:annotationCenterMm,viewerSettings,displayedCase);if(field){if(imaging.selected)imaging.setCursor(field.center);else setCursor(field.center);setViewerSettings(field.settings);setMessage(field.anchor==='target'?'Framed supplied annotation.':'Framed accepted instrument in source scan.');}else setMessage('No accepted instrument or supplied annotation lies within this source scan.');}}} anatomyControls={!!surgical.view&&<details className="rehearsal-anatomy"><summary>Anatomy visibility and appearance</summary><button onClick={()=>setViewerSettings(rehearsalPresentation(surgical.view!.scene.regions,viewerSettings))}>Reference appearance</button>
                 <AnatomyPanel layers={surgical.view.scene.regions.map(r=>({name:r.name,kind:r.material,color:r.color,provenance:`${r.material} · ${r.target?'declared target':'context anatomy'}`}))} visibleLayers={displayedLayers} onVisibilityChange={setDisplayedLayers} settings={viewerSettings} onSettingsChange={setViewerSettings}/>
               </details>} onImport={async options=>{if(api?.importSurgicalScene){const imported=await api.importSurgicalScene(options);if(imported&&await installCase(imported,api))setWorkbenchTab('rehearsal')}}} available={!!displayedCase} onFixture={()=>void act(async()=>{if(api?.createSurgicalFixture){const fixture=await api.createSurgicalFixture();if(fixture&&await installCase(fixture,api))setWorkbenchTab('rehearsal')}})}/></fieldset>
 
@@ -1779,7 +1808,8 @@ export default function App() {
           </>}
         </>:native.binding?<>
           {workbenchTab==='research'?<NativeApproachPanel workspace={native} onPreview={openOperative} onEditStateChange={setPlanningEditsPending}/>:<NativeSidebar workspace={native} tab={workbenchTab==='data'?'data':'anatomy'}
-            onOpenAnatomy={()=>setWorkbenchTab('anatomy')} onOpenPlan={()=>setWorkbenchTab('research')} onOpenScans={()=>setWorkbenchTab('data')}/>}
+            onOpenAnatomy={()=>setWorkbenchTab('anatomy')} onOpenPlan={()=>setWorkbenchTab('research')} onOpenScans={()=>setWorkbenchTab('data')}
+            onInspectVessel={setVesselField}/>}
         </>:<>
         {workbenchTab!=="research" && <>
             <h1 title={title}>{title}</h1><p className="case-subtitle">{displayedSource ? String(displayedSource.metadata.selected_modality??'Source image') : 'Open a case to begin'}</p>
@@ -1893,7 +1923,7 @@ export default function App() {
             center={imaging.selected ? null : annotationCenterMm}
             onCenter={setCursor}
           />
-          {displayedCase?.compartments.map((layer) => (
+          {displayedCase?.compartments.filter(layer=>vesselDerivedParent(layer.name)===null).map((layer) => (
             <label className="layer-row" key={layer.name}>
               <input
                 type="checkbox"
@@ -2086,7 +2116,7 @@ export default function App() {
         {episodeVisible&&episodeWorkflow==='passive'&&passiveView&&caseData&&passiveView.source.caseHash===caseData.caseHash&&
           <div className="modeled-replay-notice" role="status"><span>GENERATED · two persistent tool poses · state {passiveStep}/5 · declared {passiveView.frames[passiveStep].elapsedGeneratedSeconds.toFixed(1)} s · no patient admission</span>
             <button className="text-button" onClick={restoreSourceView}>Source view <X size={12}/></button></div>}
-        {native.binding&&!showOperative&&native.registration==='alignment preview'&&<div className="workspace-alignment-banner" role="status">Estimated scan alignment <span>{Object.values(native.volume?.alignmentQuality??{}).flatMap(q=>q.warnings)[0]??'Shared structures · verify in Scans before planning'}</span></div>}
+        {native.binding&&!showOperative&&native.registration==='alignment preview'&&<div className="workspace-alignment-banner" role="status">Estimated scan alignment <span>{alignmentBannerWarning(native.volume?.alignmentQuality)??'Shared structures · verify in Scans before planning'}</span></div>}
         <NativeCorrectionBar workspace={native}/>
         <div className={linkedOperative?"viewer-shell has-operative-reference":showEngineRecording?"viewer-shell has-engine-reference":"viewer-shell"}
           data-engine-replay-layout={showEngineRecording?'source-bound':undefined}>
@@ -2097,10 +2127,11 @@ export default function App() {
               approachOverview={linkedOperative}
               surgicalInteraction={!showOperative&&workbenchTab==="rehearsal"?surgical.interaction:undefined}
               rehearsalState={showOperative||surgical.interaction.view?null:rehearsal.viewerState}
-              workspaceSettings={viewerSettings}
+              workspaceSettings={displayedViewerSettings}
               readCamera={native.binding?native.readCamera:undefined}
-              onWorkspaceSettingsChange={setViewerSettings}
+              onWorkspaceSettingsChange={settings=>setViewerSettings(withoutVesselDerivedSettings(settings))}
               sourceLabel={native.binding?native.binding.document.series.find(s=>s.id===native.series)?.modality:String(displayedSource?.metadata.selected_modality??'Image')}
+              sourcePreview={!!native.binding&&native.scanPreview}
               onSliceStroke={native.binding?native.onStroke:undefined}
               registeredFusion={native.binding?null:registeredFusion}
               diagnosticLayer={native.binding?null:diagnostic.view?.layer ?? null}
@@ -2109,13 +2140,16 @@ export default function App() {
               segmentationOnly={!native.binding && displayedSource?.metadata.generated_signal===true}
               publicGoal={!native.binding && display.primaryOverlaysPermitted ? publicGoalMarker : null}
               caseData={linkedOperative?native.volume:surgical.previewVolume??surgical.volume??displayedCase}
-              visibleLayers={displayedLayers}
+              visibleLayers={native.binding?withVesselReviewVisibility(displayedLayers,native.volume?.compartments,native.binding.document.layers as ReadonlyArray<{id:string;rooted_parent?:string}>):displayedLayers}
               overlayOpacity={overlayOpacity}
               cursor={displayedCursor}
               onCursorChange={native.binding ? native.setCursor : imaging.selected ? imaging.setCursor : setCursor}
               routes={native.binding?(native.patientFrameReady?nativeRoutes:[]):display.primaryOverlaysPermitted?viewerRoutes:[]}
               selectedStructure={native.binding?native.selectedStructure:null}
-              onPickStructure={native.binding?native.setSelectedStructure:undefined}
+              vesselTrace={native.binding&&workbenchTab==='anatomy'?native.vesselTrace:null}
+              onPickStructure={native.binding?native.pickStructureWithPoint:undefined}
+              ctaCoverage={native.ctaCoverage&&!surgical.view?{
+                mode:native.ctaCoverageMode,onChange:native.changeCtaCoverage}:undefined}
               structureFocusRequest={native.structureFocusRequest}
               structureFocusPoint={native.structureFocusPoint}
               cameraMode={cameraMode}
@@ -2137,7 +2171,7 @@ export default function App() {
             <button className="outline-button" onClick={()=>setWorkbenchTab('cases')}>Browse cases</button>
           </div>}
           {native.binding&&!displayedCase&&!native.busy&&<div className="welcome-overlay"><h2>{native.binding.document.series.length?'Scan unavailable':'Add your first scan'}</h2><p>{native.message}</p>{native.binding.document.series.length?<button className="primary-button" onClick={()=>native.run(native.refresh)}>Retry</button>:<button className="primary-button" onClick={addData}>Add scans</button>}</div>}
-          {(hydrating||native.busy) && (
+          {(hydrating||(native.busy&&!native.scanPreview)) && (
             <div className="viewer-loading">
               <LoaderCircle size={22} className="spin" />
               <span>{native.binding?native.message:"Preparing source images…"}</span>{native.busy&&<button className="header-button" onClick={native.cancel}>Cancel</button>}
@@ -2383,9 +2417,13 @@ export default function App() {
             ? "Local engine stopped · Reopen the app to reconnect"
             : hydrating
               ? "Transferring source imaging to the local viewer…"
-              : (operation?.message ?? (native.binding?native.message:message))}
+              : native.scanPreview ? native.message : (operation?.message ?? (native.binding?native.message:message))}
         </span>
-        {operation && (
+        {native.scanPreview ? (
+          <button type="button" className="anatomy-preparation-action" onClick={native.busy?native.cancel:native.resumeAnatomy}>
+            {native.busy?'Cancel':'Load anatomy'}
+          </button>
+        ) : operation && (
           <>
             <div className="operation-track">
               <i

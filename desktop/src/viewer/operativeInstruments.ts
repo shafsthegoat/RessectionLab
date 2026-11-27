@@ -6,8 +6,8 @@ import { surgicalToolMesh } from './surgicalGeometry.ts';
 export function operativeInstruments(tipRadius:number, opening:number, fieldDepth:number) {
   const shaftLength=Math.max(opening*1.4,Math.min(fieldDepth+opening*.3,90));
   const metal=new THREE.MeshStandardMaterial({color:'#c5d4da',metalness:.55,roughness:.25});
-  const grip=new THREE.MeshStandardMaterial({color:'#386a83',metalness:.32,roughness:.38});
-  const accent=new THREE.MeshStandardMaterial({color:'#e4b576',metalness:.5,roughness:.32});
+  const grip=new THREE.MeshStandardMaterial({color:'#718086',metalness:.28,roughness:.62});
+  const accent=new THREE.MeshStandardMaterial({color:'#bda889',metalness:.4,roughness:.48});
   function axial(group:THREE.Group, points:number[][], material:THREE.Material) {
     const profile=points.map(([r,z])=>new THREE.Vector2(r,z));
     const mesh=new THREE.Mesh(new THREE.LatheGeometry(profile,28),material);
@@ -37,12 +37,16 @@ export function operativeInstruments(tipRadius:number, opening:number, fieldDept
   tip.name='aspirator-beveled-mouth';
   axial(cusa,[[r,r*3],[r*1.16,r*3.45],[r*1.16,shaftLength],[r,shaftLength]],metal);
   if(shaftLength*.69>r*4.15){
-    const sheath=new THREE.MeshStandardMaterial({color:'#6c8c94',metalness:.08,roughness:.56});
+    const sheath=new THREE.MeshStandardMaterial({color:'#b2bcba',metalness:.38,roughness:.48});
     axial(cusa,[[r*1.15,r*3.7],[r*1.3,r*4.15],[r*1.3,shaftLength*.69],[r*1.45,shaftLength*.71]],sheath);
   }
   axial(cusa,[[r*1.12,shaftLength*.68],[r*1.53,shaftLength*.7],[r*1.53,shaftLength*.85],[r*1.12,shaftLength*.88]],grip);
-  axial(cusa,[[r*1.12,shaftLength*.91],[r*2.1,shaftLength],[r*2.7,shaftLength+r*2],[r*2.7,shaftLength+r*6],[0,shaftLength+r*6]],grip);
-  axial(cusa,[[r*2.55,shaftLength+r*1.8],[r*2.76,shaftLength+r*2],[r*2.76,shaftLength+r*2.45],[r*2.65,shaftLength+r*2.6]],accent);
+  // At a microscope angle an oversized back cap projects over the aperture.
+  // The proximal collar stays close to the shaft, away from the working tip.
+  axial(cusa,[[r*1.12,shaftLength*.91],[r*1.48,shaftLength],[r*1.52,shaftLength+r*2],
+    [r*1.40,shaftLength+r*5.5],[r*1.18,shaftLength+r*6],[0,shaftLength+r*6]],grip);
+  axial(cusa,[[r*1.46,shaftLength+r*1.8],[r*1.57,shaftLength+r*2],
+    [r*1.57,shaftLength+r*2.45],[r*1.49,shaftLength+r*2.6]],accent);
   const generic=(id:string,radius:number,length:number)=>{
     const mesh=surgicalToolMesh({id,name:id,category:'field',geometry:id,materials:[],effect:'illustrative',radiusMm:radius,shaftRadiusMm:radius*.69,workingLengthMm:length},
       {instrument:id,position:[0,0,0],quaternion:[1,0,0,0],active:true,inserted:true,grip:[],parameters:{}});

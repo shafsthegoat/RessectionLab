@@ -19,6 +19,9 @@ def default_profile():
 def enabled(engine): return 'tissuePhysicsV2' in engine.scene.properties
 
 def validate(scene):
+    if 'gliomaMaterialsV1' in scene.properties:
+        from .surgical_glioma_materials import validate as validate_materials
+        validate_materials(scene)
     p = scene.properties.get('tissuePhysicsV2')
     if p is None: return
     if scene.properties.get('tissuePhysics') is not None: raise ValueError('AMBIGUOUS_PHYSICS_VERSION')
@@ -40,11 +43,34 @@ def initialize(engine):
         from .surgical_bipolar_thermal import initialize as initialize_bipolar_thermal
         initialize_bipolar_thermal(engine)
 
-def raster(engine):
-    removed = set(engine.state['removed']); pairs = []
-    for key, displacement in sorted(engine.state.get('deformation', {}).items(), key=lambda item:int(item[0])):
-        cell = int(key)
-        if cell in removed: continue
+def raster(engine, *, include_rods=True):
+    removed = set(engine.state['removed'])
+    excluded = ()
+    if not include_rods:
+        from . import surgical_vessel_rods as rods
+        if rods.enabled(engine):
+            excluded = rods.definitions(engine).index
+    retained = [(int(key), displacement)
+                for key, displacement in sorted(engine.state.get('deformation', {}).items(), key=lambda item: int(item[0]))
+                if int(key) not in removed and int(key) not in excluded]
+    if not retained:
+        return []
+    grid_size = int(np.prod(engine.scene.shape))
+    # The infinity norm of the inverse affine bounds the excursion along
+    # every voxel axis. A displacement bounded by a quarter-cell cannot
+    # reach a rounding face from an integer voxel center. All cells which
+    # could cross a face retain the original matrix-vector rounding order.
+    displacements = np.asarray([row[1] for row in retained])
+    stationary = np.zeros(len(retained), dtype=bool)
+    if displacements.shape == (len(retained), 3) and displacements.dtype == np.float64:
+        inverse_norm = np.linalg.norm(engine.scene.inverse[:3, :3], ord=np.inf)
+        with np.errstate(over='ignore', invalid='ignore'):
+            stationary = np.max(np.abs(displacements), axis=1) * inverse_norm < .25
+    pairs = []
+    for (cell, displacement), unchanged in zip(retained, stationary):
+        if unchanged and 0 <= cell < grid_size:
+            pairs.append([cell, cell])
+            continue
         ijk = np.rint(np.asarray(np.unravel_index(cell, engine.scene.shape)) + engine.scene.inverse[:3,:3] @ displacement).astype(int)
         if np.any(ijk < 0) or np.any(ijk >= engine.scene.shape): raise ValueError('DISPLACEMENT_OUTSIDE_GRID')
         pairs.append([cell, int(np.ravel_multi_index(ijk, engine.scene.shape))])
@@ -59,7 +85,10 @@ def descriptor(engine):
     return {'enabled': True, 'profile': copy.deepcopy(engine.scene.properties['tissuePhysicsV2']),
         'capabilities': {'patientCalibratedPhysiology': False, 'globalPerfusion': False,
             'damageTriggeredVesselWounds': True, 'coupledDeformation': True, 'workLimitedDrilling': True},
-        'brain': continuum_descriptor(engine) or {'model': brain.profile()['model']}, 'bone': bone.descriptor(engine), 'vessel': vessel.descriptor(engine),
+        'brain': continuum_descriptor(engine) or (
+            {'model': engine.scene.properties['gliomaMaterialsV1']['schema'],
+             'assignment': copy.deepcopy(engine.scene.properties['gliomaMaterialsV1'])} if 'gliomaMaterialsV1' in engine.scene.properties
+            else {'model': brain.profile()['model']}), 'bone': bone.descriptor(engine), 'vessel': vessel.descriptor(engine),
         **({'mechanicalExposure': exposure} if exposure is not None else {}),
         **({'bipolarThermal': thermal_descriptor(engine)} if 'bipolarThermalV1' in engine.scene.properties else {}),
         'limits': ['Uncalibrated research mechanics; no clinical outcome prediction.',

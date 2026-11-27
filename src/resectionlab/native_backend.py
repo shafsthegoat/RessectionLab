@@ -16,6 +16,7 @@ import platform
 import sys
 import sysconfig
 import threading
+from contextlib import contextmanager
 import numpy as np
 from types import BuiltinFunctionType, CodeType, FunctionType, WrapperDescriptorType
 
@@ -25,6 +26,8 @@ MAX_PRIMITIVES = 32768
 MAX_BATCH_ITEMS = 64
 MAX_ENGINE_COPY_ITEMS = 262144
 MAX_ENGINE_COPY_DEPTH = 64
+_WALL_SWEEP_VERSIONS = (1, 2)
+_WALL_SWEEP_ENTRY_POINTS = ('make_wall_sweep', 'wall_sweep_clear')
 
 
 class NativeUnavailableError(RuntimeError):
@@ -58,6 +61,8 @@ if _requested not in ('reference', 'cpp', 'auto'):
     raise ValueError(f'{_ENVIRONMENT} must be reference, cpp, or auto')
 _module = None
 _entry_points = ()
+_displacement_snapshot_index = None
+_hinge_separation_index = None
 _embedded_identity = None
 _binary_path = None
 _files = {}
@@ -75,6 +80,7 @@ _identity = {'schema': 'resectionlab-numerical-backend-v1', 'requested': _reques
 
 def _load():
     global _module, _entry_points, _embedded_identity, _binary_path, _file_helpers, _file_methods
+    global _displacement_snapshot_index, _hinge_separation_index
     if _requested == 'reference':
         return
     if importlib.util.find_spec(_MODULE_NAME) is None:
@@ -116,15 +122,27 @@ def _load():
             _files[path] = (_stat(path), expected)
         for path in (binary, manifest_path):
             _files[path] = (_stat(path), _digest(path))
-        _entry_points = tuple((name, getattr(module, name)) for name in
-                              ('capsule_chunk', 'copy_builtin_json', 'segment_predicate', 'copy_engine_graph',
+        sweep_version = build.get('wallSweepVersion')
+        if (sweep_version is not None and (type(sweep_version) is not int or sweep_version not in _WALL_SWEEP_VERSIONS)
+                or getattr(module, 'WALL_SWEEP_VERSION', None) != sweep_version
+                or ((sweep_version is None) != all(not hasattr(module, name) for name in _WALL_SWEEP_ENTRY_POINTS))):
+            raise ValueError('wall sweep capability differs from build manifest')
+        base_entry_points = ('capsule_chunk', 'copy_builtin_json', 'segment_predicate', 'copy_engine_graph',
                                'segment_predicate_batch', 'run_trajectory', 'physical_substep', 'owned_digest',
                                'function_identities', 'occupancy_values', 'canonical_json_digest',
                                'motion_envelopes', 'cranial_cells_partition',
+                               'deformation_sweep', 'deformation_strain_candidates',
                                'simulation_create', 'simulation_identity', 'simulation_clone',
                                'simulation_data', 'simulation_import', 'simulation_step',
                                'simulation_prepare', 'simulation_query', 'simulation_json', 'simulation_stats',
-                               'simulation_json_guard', 'bindings_unchanged'))
+                               'simulation_json_guard', 'bindings_unchanged')
+        capabilities = _WALL_SWEEP_ENTRY_POINTS if sweep_version is not None else ()
+        if hasattr(module, 'wall_hinges_separated'):
+            capabilities += ('wall_hinges_separated',)
+        snapshot_entry = getattr(module, 'displacement_snapshot', None)
+        if snapshot_entry is not None:
+            capabilities += ('displacement_snapshot',)
+        _entry_points = tuple((name, getattr(module, name)) for name in base_entry_points + capabilities)
         if (sys.modules.get(_MODULE_NAME) is not module
                 or Path(module.__spec__.origin).resolve() != binary
                 or any(type(function) is not BuiltinFunctionType
@@ -133,6 +151,9 @@ def _load():
             raise ValueError('invalid native module origin or entrypoint')
         _embedded_identity = module.BUILD_IDENTITY
         _binary_path = str(binary)
+        _displacement_snapshot_index = len(_entry_points) - 1 if snapshot_entry is not None else None
+        _hinge_separation_index = next((i for i, (name, _) in enumerate(_entry_points)
+                                        if name == 'wall_hinges_separated'), None)
         _module = module
         _identity.update(selected='cpp', buildIdentity=build, binaryPath=str(binary),
                          binarySha256=binary_digest, manifestPath=str(manifest_path))
@@ -243,6 +264,61 @@ def cpp_enabled():
     return _module is not None
 
 
+def deformation_kernels():
+    """Pin the checked buffer kernels for one Python deformation tick."""
+    if not cpp_enabled():
+        return None, None, _identity['fallbackReason'] or 'reference-selected'
+    return _module.deformation_sweep, _module.deformation_strain_candidates, None
+
+
+def wall_sweep_available(*, shared_vertex=False):
+    _check_live()
+    minimum = 2 if shared_vertex else 1
+    supported = _module is not None and _identity['buildIdentity'].get('wallSweepVersion', 0) >= minimum
+    if not supported and _requested == 'cpp':
+        raise NativeUnsupportedError('C++ wall sweep requires a wheel with the native wall sweep capability')
+    return supported
+
+
+def make_wall_sweep(rest, vertices, owners, owner_count, *, shared_vertex=False):
+    _check_live()
+    if shared_vertex:
+        return _module.make_wall_sweep(rest, vertices, owners, owner_count, True)
+    return _module.make_wall_sweep(rest, vertices, owners, owner_count)
+
+
+def wall_sweep_clear(source, prior, candidate, static_check):
+    _check_live()
+    return _module.wall_sweep_clear(source, prior, candidate, static_check)
+
+
+def verified_wall_sweep_kernel():
+    _check_live()
+    return _module.wall_sweep_clear
+
+
+def wall_hinges_separated(before, after, quads):
+    index = _hinge_separation_index
+    if index is None:
+        return False
+    _check_live()
+    if (type(index) is not int or not 0 <= index < len(_entry_points)
+            or _entry_points[index][0] != 'wall_hinges_separated'):
+        raise NativeIntegrityError('Native hinge certificate entrypoint changed')
+    return _entry_points[index][1](before, after, quads)
+
+
+def displacement_snapshot(field):
+    index = _displacement_snapshot_index
+    if index is None:
+        return NotImplemented
+    _check_live()
+    if (type(index) is not int or not 0 <= index < len(_entry_points)
+            or _entry_points[index][0] != 'displacement_snapshot'):
+        raise NativeIntegrityError('Native displacement snapshot entrypoint changed')
+    return _entry_points[index][1](field)
+
+
 def reference_call(count=1, *, unsupported=False):
     if unsupported and _requested == 'cpp':
         raise NativeUnsupportedError('C++ geometry configuration is unsupported; select reference explicitly')
@@ -331,16 +407,30 @@ def run_trajectory(*args):
     return _module.run_trajectory(*args)
 
 
-def physical_substep(*args):
-    _check_live(resident_sources=False)
-    _counters['bindingCalls'] += 1
-    _counters['physicalSubstepCalls'] += 1
-    _execution.depth = getattr(_execution, 'depth', 0) + 1
+@contextmanager
+def _substep_file_guard(*, resident_sources):
+    """Check files around one bounded candidate step and bindings at every use."""
+    _check_live(resident_sources=resident_sources)
+    parent_depth = getattr(_execution, 'depth', 0)
+    _execution.depth = parent_depth + 1
     try:
-        return _module.physical_substep(*args)
+        yield
     finally:
-        _execution.depth -= 1
-        _check_live(resident_sources=False)
+        _execution.depth = parent_depth
+        _check_live(resident_sources=resident_sources)
+
+
+def physical_substep(*args):
+    with _substep_file_guard(resident_sources=False):
+        _counters['bindingCalls'] += 1
+        _counters['physicalSubstepCalls'] += 1
+        return _module.physical_substep(*args)
+
+
+def operative_python_substep(advance, *args):
+    """Python owns tissue state; constituent geometry kernels remain native."""
+    with _substep_file_guard(resident_sources=True):
+        return advance(*args)
 
 
 def owned_digest(value, dumps, sha256, fallback):

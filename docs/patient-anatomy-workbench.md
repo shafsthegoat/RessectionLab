@@ -22,13 +22,12 @@ scan and choose **Recalculate alignment** to replace the scout reference and
 rebuild alignment against the diagnostic scan.
 
 Use **Anatomy → Structures** to view registered layers together. The source
-selector changes the linked scan for slice review. A layer can extend beyond
-that scan's field of view in 3D. The study-wide intensity backdrop uses the
-brightest separately windowed contribution at each location. Read quantitative
-signal values on the original scan. An unaligned series stays independently
-inspectable until its transform is resolved. The fused view shares one cutaway
-in patient RAS across aligned scans. Single-scan inspection keeps separate
-cutaway settings for each source. Both settings are saved in the patient study.
+selector changes the acquisition used for 3D scan signal and linked slices.
+Each layer retains its own acquisition geometry and can extend beyond the
+selected scan's field of view. Structures and Vessels share one cutaway in
+patient RAS across aligned scans. Scan keeps a separate cutaway and intensity
+transfer for each acquisition. An unaligned series remains inspectable in its
+own frame. The patient study saves both shared and per-acquisition cutaways.
 In **Plan & compare**, explicitly select a nonempty lesion label. The selection
 binds the mask, source and registration chain. Missing vascular and functional
 coverage remains unassessed. Quantitative comparison needs an admissible
@@ -300,9 +299,17 @@ parent transforms, geometry, or algorithm versions invalidate the cache.
 The default skull mode is opaque exterior. Transparent and cutaway modes change
 both mesh and CT-volume presentation; they never change source anatomy. Legacy
 views without an explicit skull mode migrate to exterior. The default vessel
-scope is **Full source estimate**, preserving all source components and retained
-probability surfaces. Legacy saved scopes migrate once to full source; saved
-preferences with `vesselDisplayVersion: 2` retain explicit scope choices.
+scope is **Connected tree**: vessels reachable from the named roots, with
+detached and thin end parts hidden (never deleted) and available through **Show
+detached and thin parts**; see [the connected display](native-vascular-geometry.md#default-connected-vessel-display).
+**Vessel detail** chooses between **With fine branches** (the default on CT)
+and **Major vessels only** (the default on MR); a saved view keeps the choice.
+Branches thinner than about three voxels are drawn as smooth round tubes, in
+the surface view and in Volume lighting; their voxels in the slices are unchanged.
+**Full source estimate** preserves all source components and retained
+probability surfaces. Unversioned views, and `vesselDisplayVersion: 2` views
+that stored the full source, open on the connected tree; other explicit scopes
+are retained, and version 3 views retain every choice.
 The optional **Skull-supported only** filter uses enclosed, brain-seeded CT cranial rings. A ring must be closed within
 a 2 mm morphological tolerance, avoid the acquisition border, cover at least
 70% of its brain seed, and have no more than three times its area. Supported
@@ -617,6 +624,24 @@ Migration preserves other view preferences and writes the version marker only
 through the existing Save flow. Incremental requests are invalidated before a
 scope replacement, preventing stale filtered layers from entering the new view.
 
+When a validated native score field is available, vascular display filters
+preserve its values around retained anatomy and suppress only excluded
+foreground cells. The mesh remains on the vascular source grid. A cut through
+a branch ends the displayed surface at that boundary. The full-source estimate
+and planning geometry are preserved.
+
+EDEN2020 restricted vascular review companions open with **Source isosurface**.
+The **Conditioned contours** option prepares the bounded fairing on demand.
+The raw contour is the default because the pilot cross-section audit found
+local narrowing in conditioned thin branches. The linked TOF slices remain
+available while reviewing the source contours.
+
+Select a vascular layer on its source acquisition and open **Vessel branch
+inspection** to inspect the path nearest the linked cursor. The panel shows
+the persistent source branch ID and locates its start, midpoint and end.
+The branch trace and **Crop around corridor** are display controls. Collision
+and approach geometry continue to use their existing source membership.
+
 Reproduce the data and actual Electron checks on disposable patient copies:
 
 ```sh
@@ -631,11 +656,27 @@ VESSEL_VERIFY_OUTPUT=../outputs/vessel-display-verification/PATIENT \
 The Electron verifier requires a disposable `ressection-vessel-display-` path
 because it exercises saving and reopening view preferences. It compares both
 scopes in Structures and Volume, captures the linked slices, measures delivered
-rotation frames, and checks that the manifest remains unchanged. Data checks
+rotation frames, and checks that the manifest remains unchanged. It waits for
+the reopened study before acting on it, and its vessel pixel count includes
+the mauve of an unclassified CTA vessel layer. Data checks
 compare the transmitted full-source mask with native-source resampling and
 verify source-array hashes. Residual source-gap candidates, their physical
 coordinates and original-image/probability crops are recorded separately;
 nearby endpoints do not establish that two vessels should connect.
+
+The private EDEN2020 companions use the separate hidden capture command below.
+It records the native superior view and a linked source section in one load.
+The command resumes from its per-subject receipt and skips captured snapshots.
+Source-linked study files open for read-only inspection. Use `--follow-minutes`
+to pick up pending companions as they are published.
+
+```sh
+.venv/bin/python scripts/capture_eden2020_vascular_cohort.py --subject PTNT_4509
+```
+
+Use `--graphs-only` to install an available source graph into its checked cache
+without starting Electron. Graph and screen capture receipts are written under
+the private run's `app/cohort/` directory.
 
 
 Gap-repair verification passed **49 focused Python tests**, **601 desktop tests**

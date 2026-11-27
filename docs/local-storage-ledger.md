@@ -9,7 +9,7 @@ instructions or an explicitly agreed transfer for collaborator workflows.
 - RessectionLab root: `/Volumes/shafrir/old coding projects/RessectionLabData`
 - Volume UUID: `9CC3623C-E38B-3EEE-B6BB-B9A06C193700`
 
-Last location check: **November 19, 2026**. The drive may be disconnected.
+Last location check: **November 25, 2026**. The drive may be disconnected.
 Verify the real mount and `.ressectionlab-data-root.json` before writing; never
 create a substitute mount directory. Ignored `testcases/` links may be dangling
 while it is absent. Ordinary development must not require this private drive;
@@ -29,21 +29,266 @@ The private corrected EDEN CTRL_0866 study and its review receipt are in
 and the refreshed T1-based comparison.
 Its migration row links the acquired source snapshot to this reviewed version.
 
+The restricted EDEN2020 vessel review uses
+`qc/eden2020-glioma-5714812/vascular-reconstruction-20261123-v1/` for private
+case status, native TOF companions, source overlays and app recordings.
+[Reproduce the native workflow](eden2020-integration.md#native-tof-vessel-review).
+
+The native-wall rehearsal and matched TOF comparisons are indexed in
+`qc/eden2020-glioma-5714812/vascular-reconstruction-continuity-20261123-v2/README.md`.
+The index links the model receipts, source-local measurements, portable rehearsal
+and inspected app evidence. The published source scans and v1 companions are reused.
+
+The continuation at
+`qc/eden2020-glioma-5714812/vascular-reconstruction-continuity-20261123-v3/README.md`
+indexes the superficial compartment views, structural context, model trials,
+and calibrated wall audit.
+
+The focused display and rehearsal follow-up at
+`qc/eden2020-glioma-5714812/vascular-reconstruction-continuity-20261123-v4/README.md`
+indexes field-edge and skull comparisons, wider-vessel views, and the
+source-to-operative walkthrough.
+
+The cohort continuation at
+`qc/eden2020-glioma-5714812/vascular-reconstruction-continuity-20261123-v5/README.md`
+links the native exterior screens, matched desktop views and the certified
+PTNT_4509 free-span contact and recoil rehearsal.
+
+The next vascular continuation at
+`qc/eden2020-glioma-5714812/vascular-reconstruction-continuity-20261123-v6/README.md`
+links the cursor-centered vessel depth views, native TOF challenger runs and the
+same-branch support-release and contact walkthrough.
+
+The internal source-review continuation at
+`qc/eden2020-glioma-5714812/vascular-reconstruction-continuity-20261123-v7/README.md`
+links the matched native ventricle views, selected studies, and the private
+fixed-step tests for newly intersecting operative vessel surfaces.
+
+The next continuation at
+`qc/eden2020-glioma-5714812/vascular-reconstruction-continuity-20261123-v8/README.md`
+links the TOF-only Vessel-MAYON comparison and the guarded native-wall
+workspace, replay receipts, and matched app views.
+
+The next native wall continuation at
+`qc/eden2020-glioma-5714812/vascular-reconstruction-continuity-20261123-v9/README.md`
+indexes the 29-case motion screen, matched operative boundary views and film,
+and the separate native surface and recoil experiments.
+
+The next native wall continuation is indexed at
+`qc/eden2020-glioma-5714812/vascular-reconstruction-continuity-20261123-v10/README.md`.
+It links the matched native contact and transection captures, the graph-selected
+cohort workspaces, and the short-edge motion audit.
+
+The November 24 desktop reconstruction comparisons are indexed at
+`qc/integrated-anatomy-20261124-v1/README.md`. The index binds the app captures,
+physical geometry audits, TOF cohort inventory and mechanics controls to their
+source and build receipts. Restricted EDEN images and results stay on the HDD.
+
+The next CT context and native wall checks are indexed at
+`qc/cta-context-20261124-v1/README.md`. The index links the matched scalar and
+optical coverage controls, ordinary CTA view, faint-ringing measurements and
+paired-wall contact benchmark. It also links the CADS-465 high-resolution
+export, the signed macOS checks and the preceding bundle's restore receipt.
+
+The same-CTA TopCoW-014 rehearsal is indexed at
+`qc/topcow014-ordinary-native-wall-20261124-v1/README.md`. It connects the
+qualified local study and source sections to the 12-action contact and
+support-release replay, cold checks and captured walkthrough. The EDEN2020
+attached-region cohort table and source-pane checks are indexed in
+`qc/eden2020-glioma-5714812/vascular-reconstruction-20261123-v1/README.md`.
+
+The next operative and alignment checks are indexed in
+`qc/operative-source-appearance-20261124-v1/README.md` and
+`qc/eden2020-glioma-5714812/local-alignment-evidence-20261124-v1/README.md`.
+The PTNT_0952 exact attached-exterior correction trial is indexed in
+`qc/eden2020-glioma-5714812/attached-exterior-20261124.5pgejhvx/README.md`.
+
+The CT shadow cache, timed matched views and export are indexed in
+`qc/volume-depth-20261124-v1/README.md`. The ordinary TopCoW-012 paired-source
+preparation is indexed in `qc/topcow-paired-landmark-evidence-20261124-v1/README.md`.
+The CT vault-band comparisons, native cutaway export and ordinary CTA orbit
+are indexed in `qc/native-ct-calvarial-shading-20261124-v1/README.md`.
+The paired sliding benchmark and TopCoW-014 replay are indexed in
+`qc/vessel-tissue-sliding-20261124-v1/README.md`. The TopCoW-014 and held-out
+018 contour comparisons are indexed in
+`qc/categorical-vessel-geometry-20261124.1far659v/README.md`.
+
+The paired CTA and MRA index also holds the cold-verified TopCoW-012 v5
+contact and withdrawal, collision screen, source-colour check and operative
+film. Its lattice assembly benchmark records exact accepted-state parity
+and timing on the same contact and withdrawal. The same index has the direct
+endpoint contact and withdrawal replay with its matched legacy-stop control.
+The matched CTA framing
+index is `qc/cta-anterior-frame-20261124.GrMFTrO0/README.md`. The directional
+optical cache and preserved cut controls are at
+`qc/directional-optical-depth-20261124-v1/README.md`.
+The native brain contour comparison is at
+`qc/brain-envelope-geometry-20261124.5di2hjsv/README.md`.
+The isolated native vessel wall section comparison and archived replay checks
+are at `qc/native-vessel-section-tail-20261124-v1/README.md`.
+The jointly conditioned publisher CTA meshes, matched desktop captures and
+whole-mesh source audits are at `qc/native-publisher-wall-20261124-v1/README.md`.
+The bounded follow-up on supplied CTA arteries is indexed at
+`qc/native-vessel-fairing-20261124-v1/README.md`. It includes signed matched
+views, geometry checks and the rejected broader and source-edge trials.
+The acquired CTA cut material and mixed structural MR volume comparisons are
+indexed at `qc/acquired-cta-cut-materials-20261124-v1/README.md`. The matched
+CTA cuts include the wider supplied artery labels and the signed workbench.
+The shared CTA directional light, exact clear-sample controls and signed
+render timings are indexed at `qc/cta-vessel-optical-light-20261124-v1/README.md`.
+The signed mixed MR lesion overlap control, unchanged source views and
+retained registration warning are at `qc/eden-structural-lesion-optics-20261124-v1/README.md`.
+The continuous TopCoW-014 film from acquired CTA intake through supplied-mask
+assembly, the prepared same-CTA cut, and live native-wall instrument actions is
+indexed at `qc/topcow014-continuous-source-rehearsal-20261124-v1/README.md`.
+Its historical tissue qualification is documented in `historical-scope.md`
+beside the film. The signed CTA shadow comparisons, render timings and current
+tissue admission checks are at `qc/cta-reciprocal-light-20261125-v1/README.md`.
+The signed CTA vessel-to-bone contrast comparison and export are at
+`qc/cta-vessel-contrast-20261124-v1/README.md`. The index includes both
+TopCoW CTA cases, acquisition controls, and source-linked cutaways.
+The ordinary signed CTA opening, fixed-camera and saved Full head checks are at
+`qc/cta-arterial-opening-20261124-v1/README.md`. The index binds the cut to all
+loaded arterial surfaces in three TopCoW CTAs and records the broader control,
+linked slices, 2048-pixel export, and the superseded app restore receipt.
+The three native CTA arterial coverage workspaces are in
+`prepared/cta-supplied-arterial-coverage-v1/`. Their signed same-camera
+comparison, exact source union, saved branch view and previous bundle restore
+are indexed at `qc/cta-arterial-coverage-20261124-v1/README.md`.
+The ordinary CTA workbench import, coverage creation, portable reopen and
+source-correction checks are at `qc/cta-workbench-coverage-20261124-v1/README.md`.
+The ordinary native-wall sweep and fixed-tick contact checks are at
+`qc/native-wall-vertex-sweep-20261124-v1/README.md`. The index links the
+TopCoW paired replay, support and recoil measurements, EDEN rest and shear
+controls, and signed app verification.
+The ordinary TopCoW lateral slide and tilt, signed graphics recovery, and
+continuous rehearsal are indexed at `qc/native-wall-rigid-contact-20261124-v1/README.md`.
+The acquired microscope sections, bounded brain-surface checks, and matched
+signed CTA and TOF views are at `qc/acquired-operative-section-20261124-v1/README.md`.
+The signed **Local native wall** selection, cold TopCoW reopens, and current
+restricted EDEN catalog are indexed at `qc/ordinary-native-wall-selection-20261124-v1/README.md`.
+The reciprocal tissue attachments, matched TopCoW mechanics and signed
+walkthrough are indexed at `qc/native-wall-reciprocal-attachment-20261124-v1/README.md`.
+The working-axis recoil constraint, matched instrument envelopes and signed
+native-wall rehearsals are indexed at `qc/native-wall-working-axis-20261124-v1/README.md`.
+The reversible native-wall source inspection, exact scan bindings, paired CTA/MRA
+views, and microscope return checks are indexed at
+`qc/native-wall-source-inspection-20261124-v1/README.md`.
+The bounded native source field, paired full acquisitions, signed return checks,
+and measured load times are indexed at `qc/native-wall-local-field-20261124-v1/README.md`.
+The open vessel contour comparison, exact section and rim measurements, and
+29-crop EDEN audit are indexed at `qc/native-wall-open-contours-20261124-v1/README.md`.
+The ordinary Anatomy source field, matched signed workflow checks and
+section-preserving contour audit are indexed at
+`qc/native-wall-section-stability-20261124-v1/README.md`.
+The ordinary Anatomy load benchmarks, matching signed viewports and
+previous-build restore receipt are indexed at
+`qc/ordinary-vessel-load-20261124-v1/README.md`.
+The signed scan-first Anatomy checks, linked-slice timing, cancellation and
+retry, and previous-build restore receipt are indexed at
+`qc/staged-anatomy-opening-20261124-v1/README.md`.
+The matched native CTA and EDEN depth lighting comparisons are indexed at
+`qc/vessel-contact-depth-20261124-v1/README.md`. The cursor-based native TOF
+fragment review and exact source controls are indexed at
+`qc/native-tof-fragment-focus-20261124-v1/README.md`.
+The contact solver timing and exact native-wall replay checks are indexed at
+`qc/native-wall-engine-performance-20261124-v1/README.md`. The PTNT_4509
+DICOM geometry and withheld local registration are indexed at
+`qc/eden2020-glioma-5714812/ptnt4509-dicom-native-field-20261124.4vlfst3a/README.md`.
+The PTNT_7959 native coverage repair and held-out cavity and registration
+controls are indexed at
+`qc/eden2020-glioma-5714812/ptnt7959-covered-native-field-20261124.exh8pd93/README.md`.
+The blinded single-acquisition PTNT_4509 tissue review is indexed at
+`qc/eden2020-glioma-5714812/same-tof-blinded-tissue-20261124.jw7ec38r/README.md`.
+The adjacent native planes and protected branch comparison for the PTNT_0952
+attached tip are indexed at
+`qc/eden2020-glioma-5714812/attached-exterior-20261124.5pgejhvx/off-center-source-20261124.0y4OaM5l/README.md`.
+The follow-up contact timing, lattice parity and cold replay receipts are at
+`qc/native-wall-lattice-snapshot-20261124-v1/README.md`.
+The overlapping wall clearance checks, paired request timings and replay
+receipts are at `qc/native-wall-overlapping-certification-20261124-v1/README.md`.
+Compiled hinge clearance timing, stress checks and cold replay are at
+`qc/native-wall-compiled-hinge-certificate-20261124-v1/README.md`.
+The ordinary step reply timings, byte-exact committed artifacts and
+cancellation checks are at `qc/ordinary-step-reply-budget-20261124-v1/README.md`.
+The tissue lattice assembly timings, exact matrix comparisons and cold replay
+checks are at `qc/native-wall-tissue-lattice-assembly-20261124-v1/README.md`.
+The independently reviewed PTNT_1288 native tissue and stock branch proximity
+checks are indexed at
+`qc/eden2020-glioma-5714812/eden-dense-native-tissue-survey-20261124.4e5uy7_7/README.md`.
+The acquired profiles through the three persistent PTNT_5387 midfield
+fragments are indexed at
+`qc/eden2020-glioma-5714812/ptnt5387-signed-midfield-source-20261124.BJTrzZ5Z/README.md`.
+The phase-axis control for those islands and the source comparison for the
+PTNT_7195 bar are at
+`qc/eden2020-glioma-5714812/ptnt5387-shared-phase-donor-20261124.xYaTDjpZ/README.md`
+and `qc/eden2020-glioma-5714812/ptnt7195-signed-bar-source-20261124.kLNylPgJ/README.md`.
+The competing structural projections of the PTNT_7195 bar and held distal
+control are at `qc/eden2020-glioma-5714812/ptnt7195-bar-structural-planes-20261124.a0kCzMqa/README.md`.
+The relocated PTNT_9937 field and held-out registration checks are at
+`qc/eden2020-glioma-5714812/ptnt9937-local-review-prospect-20261124.l_xbilva/README.md`.
+The signed native TOF correction, matched score-surface preview and cohort
+picker checks are indexed at `qc/native-tof-local-correction-20261124-v1/README.md`.
+The signed faint vessel context comparisons, physical-cut and pick controls,
+and 2048-pixel exports are indexed at `qc/vessel-slab-context-20261124-v1/README.md`.
+The ordinary EDEN diffusion checks and source-role audit are at
+`qc/ordinary-diffusion-baseline-20261124-v1/README.md`.
+
+The 30-study EDEN completion table is at
+`qc/eden2020-glioma-5714812/cohort-reconciliation-20261124-v1/README.md`.
+The matched GPU recaptures and structural control are indexed at
+`qc/eden2020-glioma-5714812/current-rendered-cohort-20261124.abYhYE2c/README.md`.
+The native TOF context and untouched source controls are at
+`qc/eden2020-glioma-5714812/tof-context-response-20261124/README.md`.
+The matched TOF ray timings and pixel checks are at
+`qc/eden2020-glioma-5714812/tof-ray-performance-20261124/README.md`.
+The residual peripheral TOF source screen and signed slab comparisons are at
+`qc/eden2020-glioma-5714812/residual-peripheral-source-review-20261124-v1/README.md`.
+The ordinary TOF gap inspector, matched acquired source witnesses and labeled
+gap deletion controls are at `qc/native-tof-gap-reconstruction-20261124-v1/README.md`.
+The local structural tissue and held-out fiducial checks are at
+`qc/eden2020-glioma-5714812/mechanical-tissue-evidence-20261124-v1/README.md`.
+The independent native CSF correspondence, alternative stock wall field and
+withheld local registration are indexed at
+`qc/eden2020-glioma-5714812/independent-csf-landmarks-20261124-v1/README.md`.
+The independent native dark-pocket and structural-tensor checks against
+held-out pose perturbations are at
+`qc/eden2020-glioma-5714812/independent-3d-observability-20261124-v1/README.md`.
+The mixed MRI Vessels and compact label comparisons are at
+`qc/mr-vessel-context-20261124.swCjfRex/README.md`.
+The standalone TopCoW-014 optical reference is at
+`qc/integrated-anatomy-20261124-v1/offline-ospray-topcow014-v1/README.md`.
+The matched CTA posterior sheet checks are at
+`qc/ct-exterior-display-20261124.C0XzMdHW/README.md` and the original planes
+at `qc/cta-detached-band-source-review-20261124-v1/source-band-witness.png`.
+The TopCoW-014 paired v5 loading and recoil replay is in the existing
+`qc/topcow014-ordinary-native-wall-20261124-v1/README.md` index. The operative
+source-terrace and crop-face audit is at
+`qc/operative-tissue-staircase-20261124-v1/README.md`.
+Its edited TopCoW-014 witness records guard coverage and the retained source
+shelves during the signed held contact.
+The CADS-465 acquired CT and 3D bone overlay comparison, independent source
+checks and rejected mesh fairing are indexed at
+`qc/cads-native-skull-geometry-20261124-v1/README.md`.
+
 Paths below are relative to the RessectionLab root. This compact ledger covers
 that area, not unrelated personal files elsewhere on the HDD. Presence does not
 establish scientific readiness or a completed build; consult each run's receipts.
 
 | Area | Locations and contents |
 | --- | --- |
+| Rehearsal performance comparison | `qc/rehearsal-performance-20261121/README.md` indexes the paired desktop timings, matched recordings, replay-only acquired controls, native kernel checks and signed app proof. [Results and reproduction](rehearsal-performance.md#manual-rehearsal-on-apple-m2-pro) |
 | Acquired originals | `sources/`: RESECT, UCSF-PDGM, EDEN2020 healthy record 3994749, IXI, IXI vascular record 17393202, Lausanne, meningioma and TopBrain collections, with acquisition provenance. |
 | EDEN projects/work | `prepared/eden2020-synthetic-v1/` and `prepared/eden2020-anatomy-v2/`: original synthetic cohort and completed segmented/organic-tumor projects. `prepared/eden2020-planning-v1/collection.json`: native patient-anatomy studies for CTRL_1277 (primary) and CTRL_0866, retaining native T1/TOF/FLAIR/SWI grids, cached estimates, seven supplied named tract bundles each and separate existing synthetic targets; per-study `source-map.json` records exact reuse and limits. Permanent requested deliverables remain distinct from temporary run output. |
 | EDEN approach comparison | `prepared/eden2020-approach-comparison-goal-v1/collection.json` binds CTRL_1277, CTRL_0866, and CTRL_0933 with variants 01 and 08. The ignored `testcases/approach-comparison-goal-v1/eden-studies` link and per-study source maps locate the packages. Saved evidence workspaces can restage imaging from this collection. Checksum-verified local comparison metadata is backed up at `archive/closed-evidence/eden-approach-comparison-goal-v1-sidecars/`. |
 | Other preparation | `prepared/`: `header-precision/`, `placement-support/`, `recipes/`, `synthetic-fields/`, `topbrain/`. |
 | Case library | `cases/real/`, `cases/synthetic/`, `cases/controls/`: native projects; use their manifests for roles and supported capabilities. |
-| Model assets | `cache/models/`: `synthstrip-v1/`, `poc-vesselfm-base/`, `poc-totalsegmentator/`, `supersynth-source/`; availability, terms and installation state are in local receipts. |
+| Model assets | `cache/models/`: `synthstrip-v1/`, `poc-vesselfm-base/`, `poc-totalsegmentator/`, `supersynth-source/`, `topbrain-2025-native/` (the five TopBrain 2025 container archives from Zenodo record 20158639, CC BY 4.0, unpacked to code and weights with MD5 receipts; the archives themselves are in `topbrain-2025-dockers-zenodo-20158639/`); availability, terms and installation state are in local receipts. |
 | Historical archives | `archive/closed-evidence/`: October 19 rehearsal tar, generated-control tar, October 20 rehearsal, desktop visual evidence and profiler-baseline archives. [Exact newer archive identities/restoration](../manifests/historical-archives-20261116.json). |
-| Retired tracked research artifacts | `archive/closed-evidence/tracked-research-artifacts-20261119-v1/` contains 3,645 files from historical research runs, reviews and source snapshots. [Restore the original paths](#restore-retired-tracked-research-artifacts). |
-| Archived desktop builds | `archive/desktop-builds-20261117/`: older macOS app bundles, packaging inputs and staging directories. `README.md` provides restore commands beside the per-archive checksums, including the November 17 orientation-guide app formerly in `desktop/release/RessectionLab-darwin-arm64`. |
+| Retired tracked research artifacts | `archive/closed-evidence/tracked-research-artifacts-20261119-v1/` contains 3,645 files from historical research runs, reviews and source snapshots. [Restore the original paths](#restore-retired-tracked-research-artifacts). `archive/closed-evidence/tracked-research-artifacts-20261127-v1/` holds the 129 groups (3,123 files) whose only readers were the status and ledger documents retired before pull request #29; its `README.md` has the restore command, and the files also remain in Git at `a0d77a92`. |
+| Archived desktop builds | `archive/desktop-builds-20261117/`, `archive/desktop-builds-20261124/` and `archive/desktop-builds-20261125/` hold older macOS builds, including the orientation guide, native-wall rehearsal, detached CTA context and November 18 Studio builds. Each index provides checksums and restore commands. |
+| November 25 local cleanup | `archive/closed-evidence/local-test-outputs-20261125/README.md` indexes 43 older test and verification folders from `testcases/` and `outputs/`. Files of 1 MB and larger moved to the HDD; smaller reports stay at the original paths beside an `ARCHIVED.md` restore pointer. `archive/local-runtimes-20261125/` holds the unused 3D Slicer copy from `.tools/`. |
+| November 27 local cleanup | `archive/closed-evidence/local-test-outputs-20261127/README.md` indexes nine older output folders from `outputs/` and `testcases/outputs/` and the earlier sidecar build snapshots from `build/electron-sidecar/`. Text reports under 1 MB stay at the original paths beside an `ARCHIVED.md` restore pointer. |
 | Archived sidecar and test runs | `archive/closed-evidence/local-build-and-test-archives-20261117/`: prior orientation-guide sidecar and 16 older vascular test runs. `README.md` links the verified archives and the existing evidence archives used to retire the local restore-test copies. |
 | November 18 operative rehearsal examples | Open `archive/closed-evidence/operative-rehearsal-20261118/README.md` for the BITE-09, UCSF-0005, EDEN CTRL_1277 and synthetic workspaces, recordings and comparison images. Its `SHA256SUMS` covers the archived media, earlier diagnostic captures and test logs. The guide lists the working-study restore paths and identifies the five fixtures kept locally for verification. |
 | November 18 scan-to-engine demonstration | `qc/scan-to-engine-20261118/README.md` links the UCSF-0004 portable geometric study, 53-action engine recording, cold saves, BITE-09 preview, paired CT registration refusal and generated controls. The ignored local `testcases/outputs/scan-to-engine-20261118` link resolves here. |
@@ -68,6 +313,10 @@ establish scientific readiness or a completed build; consult each run's receipts
 | Unattended native anatomy preparation | `prepared/anatomy-preparation-unattended-v1/` holds the ten prepared study copies and their source bindings. `qc/anatomy-preparation-unattended-v1/` holds the frozen plan, interruption and repeat-run evidence, logs, and per-case results. Worker receipts and logs remain in `cache/poc-model-results/`. |
 | Annotated CTA vessel reconstruction | `prepared/annotated-cta-vascular-comparison-v1/` holds the portable 014 and 018 comparisons with the exact right M2 annotations. `qc/annotated-cta-vascular-benchmark-v1/` holds source coverage, frozen settings, measurements, and matched desktop views. [Reproduce the comparison](data-rebuild.md#annotated-cta-vessel-comparison). |
 | IXI077 organic route-conditioned scenario | `prepared/ixi077-organic-rehearsal-v1/IXI-077-T1-MRA-ORGANIC-ROUTE-01-v1/` holds the pristine study, separate exact labels and static screen. `qc/ixi077-organic-conditional-replay-v1/` holds first contour effect and withdrawal with cold backend verification. `qc/hidden-app/ixi077-organic-replay-20261118-v2/` holds the desktop playback proof and captures. |
+| Vascular rendering parity | `qc/medivis-parity-20261125/` holds the matched reference stills and one folder per phase. `phase0-baseline/README.md` indexes today's fixed-camera captures, orbit films, frame timing, wall geometry, held-out vesselFM agreement and blind review scores for TopCoW-014, TopCoW-018, PTNT_4509 and PTNT_9937. `phase1-cinematic/README.md` indexes the path-traced mode's captures, gate runs, convergence table, paired blind review and the backend prototype. `phase2-segmentation/README.md` indexes the three-team predictions and frozen ensemble for TopCoW-014 and 018 (CT and MR) and both EDEN cases (`cases/`, 270 MB of compressed probabilities and label maps), scores, selection files, the append-only held-out log and run logs. `phase3-cleanup/README.md` indexes the default connected-view captures, mesh geometry gates, wiring receipts, before and after orbit films and the display verifier report. `phase4-sim-geometry/README.md` indexes tube-model deviation and audit metrics, their scripts and close-up captures. `phase5-integration/README.md` indexes the path-traced captures and comparison sheets, three-way orbit films, the packaged-build check (`integrated/`: build reports, rehearsal scene, timing runs, stills, films) and both blind reviews (`blind-review/`). `phase6-finer-vessels/README.md` indexes the captures, sheets, geometry and idle frame timing of the finer-vessel view on the two CTAs and four EDEN cases (PTNT_4503 and PTNT_7086 added; their predictions are under `phase2-segmentation/cases/`), the third blind review and the rejected MR threshold. `phase7-smooth-tubes/README.md` indexes the captures in both render modes, sheets, geometry and the fourth blind review of the thin-branch tube drawing. `phase8-new-study/README.md` indexes the proof of the any-study command on Head-CTA-013: the capture before the air rule, the captures in both render modes after it, and the geometry. `RESULT.md` summarises every gate. `visual-assessments.md` is the coordinator's dated reading of app captures against the reference stills. [Plan and measurements](MEDIVIS-PARITY-PLAN.md) |
+| Vessel ensembles of other studies | `cache/vessel-ensembles/` holds what `scripts/topbrain_native.py --study <manifest> study` keeps for any prepared study outside the parity cases: `cases/<study folder>-ct/` or `-mr/` (each model's compressed probabilities and label map, the combined ensemble and its display candidates), `work/` while a run is in progress (deleted when the case is kept), and `logs/` where a run's output was redirected by hand. The frozen rule is `manifests/vascular-ensemble-rule.json` in the repository. Each case is reproducible from its study, the vesselFM run and `cache/models/topbrain-2025-native/`. [Running the vessel pipeline on a new scan](native-vascular-geometry.md#running-the-vessel-pipeline-on-a-new-scan) |
+| Complete operative practice and matched anatomy | `qc/operative-rehearsal-followup-20261121/README.md` indexes the three desktop demonstrations, the prepared membrane-lift case and completed child, before/after geometry, measured tissue and fluid response, and the M2 Pro input benchmarks. |
+| Earlier interactive operative practice | `qc/interactive-operative-practice-20261121/README.md` indexes the editable generated cranial opening, paired tissue/wound control, matched BITE-09 and UCSF-0004 views, separate TopCoW-014 source check and desktop input verification. Source and build identities, checksums and reopen instructions accompany the evidence. |
 | November 19 visual reconstruction and rehearsal | `qc/medivis-visual-fidelity-20261119-v1/README.md` links the BITE-09 cortex/annotated tumor workspace and geometric film, TopCoW-014 arterial classes and independent MRA, CADS-465 direct CT skull, IXI265 internals, and the matched UCSF procedures. The index includes source identities, cross-patient fitting results, hidden desktop comparisons, performance and cold reopens. |
 | BITE-09 reviewed operative demonstration | `qc/bite09-operative-fidelity-20261119-v1/README.md` indexes the two reviewed planning and inspection workspaces, continuous BITE-09 film, matched 9/14/18-second controls, source-plane correction decisions, measured cavity contacts, and the independent TopCoW-014 CTA cutaway. |
 | Fixed-target strategies and patient reconstruction comparison | `qc/patient-strategy-comparison-20261119/README.md` indexes the two UCSF-PDGM-0004 recordings, joined study and result-inspection film, standardized anatomy captures, saved sub-06 CT/MRI study and RESECT Case3 model/annotation comparison. The directory includes source-bound contract checks and a sample restore. |

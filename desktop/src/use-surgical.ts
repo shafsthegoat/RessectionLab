@@ -1,3 +1,4 @@
+import {checkPracticeReceipt,matchesPracticeParent,practiceStartIssue,practiceViewportMode} from './practice-input.ts';
 import {cranialRecordedOverlay} from './cranial-recorded-geometry.ts';
 import {cranialGenerationIssue} from './cranial-workflow-data.ts';
 import {planningOverlayForView} from './interactive-planning-data.ts';
@@ -20,6 +21,8 @@ import {cusaActionParameters} from './cusa-research.ts';
 export {modeledVolume} from './modeled-volume.ts';
 import type {SurgicalAction,SurgicalOutcome,SurgicalApi,SurgicalPose,SurgicalRegion,SurgicalResponse,SurgicalView,SurgicalInteraction} from './surgical-types';
 
+type PracticeStepRequest = {origin:SurgicalResponse;signal?:AbortSignal;receipt:SurgicalResponse|null};
+
 export function validateMapping(regions:SurgicalRegion[]):string|null {
   if(!regions.length)return 'Map at least one source region.';
   if(new Set(regions.map(r=>r.id)).size!==regions.length||new Set(regions.map(r=>r.name)).size!==regions.length)return 'Region IDs and names must be unique.';
@@ -27,7 +30,7 @@ export function validateMapping(regions:SurgicalRegion[]):string|null {
   return null;
 }
 
-export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|null,enabled:boolean,initialArchivePreview=false){
+export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|null,enabled:boolean,initialArchivePreview=false,recordingOnly=false){
   const [result,setResult]=useState<SurgicalResponse|null>(null),[requestPending,setPending]=useState(false),[error,setError]=useState<string|null>(null);
   const [replayRequestPending,setReplayPending]=useState(false);
   const replayPendingLease=useRef<number|null>(null);
@@ -55,7 +58,7 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
   const [fullCaseVersion,setFullCaseVersion]=useState(0);
   const [playbackVersion,setPlaybackVersion]=useState(0);
   function pauseFullCase(){if(fullCaseComputation.current.scenario){fullCaseComputation.current.pause();setFullCaseVersion(n=>n+1);}}
-  const generation=useRef(0),busy=useRef(false),current=useRef({source,api,result,slot,enabled,displayFailed,preview,approachPreview});current.current={source,api,result,slot,enabled,displayFailed,preview,approachPreview};
+  const generation=useRef(0),busy=useRef(false),current=useRef({source,api,result,slot,enabled,displayFailed,preview,approachPreview,recordingOnly});current.current={source,api,result,slot,enabled,displayFailed,preview,approachPreview,recordingOnly};
   const manualRequests=useRef(0);
   const [manualPending,setManualPending]=useState(0);
   const replayOwner=useRef<{source:ViewerVolume;generation:number;branchId:string;authority:string;prefix:boolean}|null>(null);
@@ -70,32 +73,41 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
       ...(owner.prefix?{prefixToken:timelineToken,prefixFieldTokens:timelineStream.current.fieldTokens(source.caseHash,selection.branchId,timelineToken)}:{expectedStateId:backendResult.current?.view.stateId,timelineToken,viewFieldTokens:timelineStream.current.fieldTokens(source.caseHash,selection.branchId,timelineToken)})});
     if(token!==generation.current||!current.current.enabled||current.current.source!==source||replayOwner.current!==owner)throw Error('Recorded replay source changed');
     if(!next||next.caseHash!==source.caseHash||next.branchId!==selection.branchId)throw Error('Recorded replay response differs from its source');
+    checkPracticeReceipt(c.result,next);
     if(owner.prefix)checkedPrefixWireResponse(next);
     if(replayAuthorityKey(next)!==owner.authority)throw Error('Recorded replay response changed authority');
     checkedSurgicalPlaybackWire(next,selection,{caseHash:source.caseHash,branchId:owner.branchId,timelineToken,scene:c.result.view.scene});return next;
   });
   function stopPlayback(){replayOwner.current=null;replayLane.current!.stop();}
   const desired=useRef({result:desiredResult,preview:desiredPreview,previewOutcome:desiredPreviewOutcome});desired.current={result:desiredResult,preview:desiredPreview,previewOutcome:desiredPreviewOutcome};
-  const requestQueue=useRef<SurgicalRequestQueue<{command:string;extra:Record<string,unknown>;caseHash:string;source:ViewerVolume;generation:number}>|null>(null);
+  const requestQueue=useRef<SurgicalRequestQueue<{command:string;extra:Record<string,unknown>;caseHash:string;source:ViewerVolume;generation:number;practiceStep?:PracticeStepRequest}>|null>(null);
   useEffect(()=>{stopPlayback();replayPendingLease.current=null;setReplayPending(false);timelineStream.current.clear();comparisonContext.current.clear();pauseFullCase();generation.current++;requestQueue.current?.invalidate();busy.current=false;backendResult.current=null;acceptedResponseSource.current=null;displayAdmission.current.invalidate();pendingPoseView.current=null;setPlanningOverlay(null);setApproachPreview(null);setResult(null);setDesiredResult(null);setDesiredPreview(null);setDesiredPreviewOutcome(null);setDisplayFailed(false);setPreview(null);setPreviewOutcome(null);setPath([]);setMode('navigate');setSlot('left');setPending(false);setError(null);},[source]);
   useEffect(()=>()=>{stopPlayback();fullCaseComputation.current.pause();generation.current++;requestQueue.current?.invalidate();},[]);
   function acceptedFullCaseState(allowPreview=false){
     const c=current.current;
     return c.enabled&&!!c.source&&acceptedResponseSource.current===c.source&&responseSource.current===c.source&&!!c.result&&
       desired.current.result===c.result&&(allowPreview?(!desired.current.preview||c.preview===desired.current.preview):!desired.current.preview)&&!c.displayFailed&&
-      backendResult.current?.view.stateId===c.result.view.stateId&&backendResult.current?.view.scene.sceneId===c.result.view.scene.sceneId;
+      backendResult.current?.branchId===c.result.branchId&&backendResult.current.position===c.result.position&&
+      backendResult.current.view.stateId===c.result.view.stateId&&backendResult.current?.view.scene.sceneId===c.result.view.scene.sceneId;
   }
   function canStartFullCase(scenario:'primary'|'vascular'){
     const c=current.current;
     return acceptedFullCaseState()&&!busy.current&&!manualRequests.current&&replayPendingLease.current===null&&
       !replayLane.current!.active&&fullCaseScenarioAvailable(c.result,c.source?.caseHash,scenario);
   }
-  async function execute(command:string,extra:Record<string,unknown>,isCurrent:()=>boolean):Promise<boolean>{
-    const c=current.current;if(!c.enabled||!c.source||!c.api?.surgicalRehearsal||busy.current)return false;
+  async function execute(command:string,extra:Record<string,unknown>,isCurrent:()=>boolean,practiceStep?:PracticeStepRequest):Promise<boolean>{
+    const signal=practiceStep?.signal;
+    const c=current.current;if((practiceStep&&c.result!==practiceStep.origin)||signal?.aborted||!c.enabled||!c.source||!c.api?.surgicalRehearsal||busy.current)return false;
     if(prefixCommand(command)&&(responseSource.current!==c.source||acceptedResponseSource.current!==c.source||c.result?.caseHash!==c.source.caseHash)){setError('Inspect this source checkpoint before reconstructing a read-only prefix.');return false;}
     if(command==='plan'&&extra.opponent==='anatomy-cranial-strategy'){
       const issue=cranialGenerationIssue(c.result);
       if(issue||!acceptedFullCaseState()){setError(issue??'Return to the accepted editable checkpoint and cancel any preview before planning cranial strategies.');return false;}
+    }
+    if(command==='practice'){
+      const issue=practiceStartIssue(c.result,c.recordingOnly,!!c.preview);
+      if(issue||!acceptedFullCaseState()||extra.branchId!==c.result?.branchId||extra.position!==c.result?.position||extra.checkpointSeal!==c.result?.practiceAdmission?.checkpointSeal){
+        setError(issue??'The displayed checkpoint changed. Select its verified boundary again.');return false;
+      }
     }
     const authorityIssue=surgicalAuthorityIssue(c.result,command,extra);if(authorityIssue){setError(authorityIssue);return false;}
     if(command==='fullCase'&&(!acceptedFullCaseState()||!['primary','vascular'].includes(String(extra.scenario))||
@@ -111,10 +123,21 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
       if(!c.preview||!p||p.kind!=='preparation'||p.phaseId!==extra.phase||p.candidateId!==extra.candidateId||
         p.reportSeal!==extra.expectedPlanSeal||p.view!==c.preview){setError('Preview this exact preparation checkpoint before installing its branch.');return false;}
     }
+    if(extra.expectedEpisodeId!==undefined&&(extra.expectedEpisodeId!==c.result?.practiceEpisode?.episodeId||!acceptedFullCaseState(command==='preview')||c.result?.readOnly)){
+      setError('The displayed practice episode changed. Return to its accepted endpoint.');return false;
+    }
     const prefixRestart=command==='seekPrefix'&&extra.position===0;
     const token=generation.current;busy.current=true;setPending(true);setPendingCommand(command);setError(null);
     const request={id:'surgical-'+crypto.randomUUID(),cancel:!prefixCommand(command)&&!frameCommand(command)?c.api.cancel:undefined};
     activeRequest.current=request;setCancelling(false);
+    // Cancellation is addressed to this slice. A commit that wins the race
+    // must still reach display admission even after its gesture has ended.
+    const abortSlice=()=>{
+      if(request.cancel)void request.cancel(request.id).catch(error=>{
+        if(activeRequest.current===request&&generation.current===token)setError('The current interval may finish. '+String(error));
+      });
+    };
+    signal?.addEventListener('abort',abortSlice,{once:true});
     try{
       if(prefixRestart)timelineStream.current.clear();
       const branchId=String(extra.branchId??c.result?.branchId??''),timelineToken=frameCommand(command)?timelineStream.current.token(c.source.caseHash,branchId):undefined;
@@ -122,6 +145,9 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
       let next=await c.api.surgicalRehearsal({caseHash:c.source.caseHash,command,...(!prefixCommand(command)?{expectedStateId:backendResult.current?.view.stateId}:{}),...requestExtra,...(request.cancel?{requestId:request.id}:{}),
         ...(command==='seekFrame'?{timelineToken,viewFieldTokens:timelineStream.current.fieldTokens(c.source.caseHash,branchId,timelineToken)}:{})});
       if(token!==generation.current||!current.current.enabled||current.current.source!==c.source)return false;
+      if(c.result?.practiceEpisode&&next&&!command.startsWith('preview'))checkPracticeReceipt(c.result,next);
+      if(command==='practice'&&(!c.result||!next||!matchesPracticeParent(c.result,next)))
+        throw Error('Practice episode does not match the selected parent checkpoint. Reopen the verified state.');
       if(command==='attachProtection'&&!next)return false;
       if(next){if(prefixCommand(command)){
         (command==='seekPrefixFrame'?checkedPrefixWireResponse:checkedPrefixResponse)(next);
@@ -145,8 +171,9 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
       setApproachPreview(null);
       if(command==='preview'){const response=next as unknown as (SurgicalOutcome&{view:SurgicalView})|null;setDesiredPreview(response?.view??null);setDesiredPreviewOutcome(response?{status:response.status,reason:response.reason,completedFraction:response.completedFraction,events:response.events}:null);return !!response;}
       setDesiredPreview(null);setDesiredPreviewOutcome(null);pendingPoseView.current=next?.view??null;responseSource.current=c.source;setDesiredResult(next);
+      if(practiceStep)practiceStep.receipt=next;
       return !!next;
-    }catch(e){if(token===generation.current){timelineStream.current.clear();setError(String(e));}return false;}finally{if(activeRequest.current===request){activeRequest.current=null;setCancelling(false);}if(token===generation.current){busy.current=false;setPending(false);setPendingCommand(null);}}
+    }catch(e){if(token===generation.current){timelineStream.current.clear();if(!(signal?.aborted&&/cancelled/i.test(String(e))))setError(String(e));}return false;}finally{signal?.removeEventListener('abort',abortSlice);if(activeRequest.current===request){activeRequest.current=null;setCancelling(false);}if(token===generation.current){busy.current=false;setPending(false);setPendingCommand(null);}}
   }
   async function cancelComputation(){
     const request=activeRequest.current;if(!request?.cancel||cancelling)return false;
@@ -162,19 +189,28 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
   }
   if(!requestQueue.current)requestQueue.current=new SurgicalRequestQueue(async(item,isCurrent)=>{
     if(item.generation!==generation.current||current.current.source!==item.source)return false;
-    return execute(item.command,item.extra,isCurrent);
+    return execute(item.command,item.extra,isCurrent,item.practiceStep);
   },item=>['seek','seekFrame','seekPrefix','seekPrefixFrame'].includes(item.command));
-  async function run(command:string,extra:Record<string,unknown>={}):Promise<boolean>{
+  async function run(command:string,extra:Record<string,unknown>={},practiceStep?:PracticeStepRequest):Promise<boolean>{
     if(command!=='fullCase')pauseFullCase();
     const c=current.current;if(!c.enabled||!c.source||!c.api?.surgicalRehearsal)return false;
+    if(c.result?.practiceEpisode&&(command==='step'||command==='preview'))extra={...extra,expectedEpisodeId:c.result.practiceEpisode.episodeId};
     const token=generation.current;manualRequests.current++;setManualPending(n=>n+1);setPlaybackVersion(n=>n+1);
     replayOwner.current=null;const barrier=replayLane.current!.barrier();
     try{
       if(barrier)await barrier;
       if(token!==generation.current||current.current.source!==c.source||!current.current.enabled)return false;
-      return await requestQueue.current!.request({command,extra:structuredClone(extra),caseHash:c.source.caseHash,source:c.source,generation:token});
+      return await requestQueue.current!.request({command,extra:structuredClone(extra),caseHash:c.source.caseHash,source:c.source,generation:token,practiceStep});
     }catch(cause){if(current.current.source===c.source)setError(String(cause));return false;}
     finally{manualRequests.current--;setManualPending(n=>n-1);}
+  }
+  async function runPracticeAction(action:SurgicalAction,origin?:SurgicalResponse,signal?:AbortSignal){
+    const c=current.current,r=c.result;
+    if(signal?.aborted||(origin&&origin!==r)||c.recordingOnly||!r?.practiceEpisode||r.practiceEpisode.episodeId!==r.branchId||r.readOnly||r.verification?.readOnly||r.playback||r.position!==r.branches.find(b=>b.id===r.branchId)?.steps||
+      !acceptedFullCaseState()||busy.current||manualRequests.current||replayPendingLease.current!==null||replayLane.current!.active)return null;
+    const step:PracticeStepRequest={origin:r,signal,receipt:null};
+    const ok=await run('step',{action,expectedStateId:r.view.stateId},step);
+    return ok?step.receipt:null;
   }
   function startPlayback(){
     const c=current.current;
@@ -252,7 +288,10 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
   }
   function action(operation:string,params:Record<string,number>=parameters,duration=1):SurgicalAction{return {slot,operation,parameters:cusaActionParameters(view,slot,params),duration,...(['apply','move','hold','grasp','place'].includes(operation)?{path:path.length?path:[pose]}:{})};}
   const recordedOverlay=useMemo(()=>!activePreview?cranialRecordedOverlay(desiredResult,desiredView):undefined,[activePreview,desiredResult,desiredView]);
-  return {result,view,volume,previewVolume,approachPreview:displayedPreview&&approachPreview?.view===displayedPreview?approachPreview:null,pending,pendingCommand:requestPending?pendingCommand:replayRequestPending?(replayOwner.current?.prefix?'seekPrefixFrame':'seekFrame'):pendingCommand,simulationPending:requestPending||replayRequestPending,displayPending,error,slot,pose,path,mode,preview:displayedPreview,previewOutcome,parameters,setPose,setMode,selectSlot,run,action,
+  const readOnly=recordingOnly||!!desiredResult?.readOnly||!!desiredResult?.playback||!!desiredResult?.verification?.readOnly;
+  const viewportMode=readOnly?'navigate':desiredResult?.practiceEpisode?
+    practiceViewportMode(mode,pose,desiredView?.slots[slot],pendingPoseView.current===desiredView):mode;
+  return {result,view,volume,previewVolume,approachPreview:displayedPreview&&approachPreview?.view===displayedPreview?approachPreview:null,pending,pendingCommand:requestPending?pendingCommand:replayRequestPending?(replayOwner.current?.prefix?'seekPrefixFrame':'seekFrame'):pendingCommand,simulationPending:requestPending||replayRequestPending,displayPending,error,slot,pose,path,mode,preview:displayedPreview,previewOutcome,parameters,setPose,setMode,selectSlot,run,action,runPracticeAction,
     fullCaseReadiness:view?boundFullCaseReadiness(result,source?.caseHash):null,canStartFullCase,
     canCancelComputation:requestPending&&!!activeRequest.current?.cancel,cancelling,cancelComputation,
     playbackVersion,startPlayback,runPlayback,stopPlayback,showFlowTransfers,setShowFlowTransfers,setPlaybackDisplay,
@@ -275,6 +314,6 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
     clearPreview,setPlanningOverlay,
     create:(mapping?:SurgicalRegion[])=>{const issue=mapping?validateMapping(mapping):null;if(issue){setError(issue);return Promise.resolve(false);}return run('create',mapping?{mapping}:{});},
     cancel:()=>{clearPreview();setPath([]);const t=result?.view.slots[slot];if(t){setRawPose({position:t.position,quaternion:t.quaternion});setParameters({...t.parameters});}},
-    interaction:{planningOverlay:planningOverlayForView(planningOverlay,result,desiredView)??recordedOverlay,playbackDisplay:!activePreview&&desiredResult?.playback?{...playbackDisplay,playing:playbackDisplay.playing&&replayLane.current!.active,startSeconds:desiredResult.playback.frames[Math.max(0,desiredResult.playback.frameIndex-1)].observedTimeSeconds,endSeconds:desiredResult.playback.observedTimeSeconds}:undefined,view:desiredView,preview:activePreview,recordedFrame:!activePreview&&desiredResult?.playback?{branchId:desiredResult.playback.branchId,position:desiredResult.playback.position,frameIndex:desiredResult.playback.frameIndex}:undefined,flowDisplay:!activePreview&&showFlowTransfers?desiredResult?.playback?.flowDisplay:undefined,outcome:activePreview?desiredPreviewOutcome:desiredResult?.outcome??null,readOnly:!!desiredResult?.playback||!!desiredResult?.verification?.readOnly,effectiveActivation:desiredResult?.playback?.effectiveActivation,pose,path,parameters,selectedSlot:slot,mode:desiredResult?.playback||desiredResult?.verification?.readOnly?'navigate':mode,onPose:setPose,onStroke,onDisplayReady,onDisplayError} as SurgicalInteraction};
+    interaction:{practiceHud:!recordingOnly&&desiredResult?.practiceEpisode&&!activePreview?{episodeId:desiredResult.practiceEpisode.episodeId,...desiredResult.practiceMetrics}:undefined,planningOverlay:planningOverlayForView(planningOverlay,result,desiredView)??recordedOverlay,playbackDisplay:!activePreview&&desiredResult?.playback?{...playbackDisplay,playing:playbackDisplay.playing&&replayLane.current!.active,startSeconds:desiredResult.playback.frames[Math.max(0,desiredResult.playback.frameIndex-1)].observedTimeSeconds,endSeconds:desiredResult.playback.observedTimeSeconds}:undefined,view:desiredView,preview:activePreview,recordedFrame:!activePreview&&desiredResult?.playback?{branchId:desiredResult.playback.branchId,position:desiredResult.playback.position,frameIndex:desiredResult.playback.frameIndex}:undefined,flowDisplay:!activePreview&&showFlowTransfers?desiredResult?.playback?.flowDisplay:undefined,outcome:activePreview?desiredPreviewOutcome:desiredResult?.outcome??null,readOnly,effectiveActivation:desiredResult?.playback?.effectiveActivation,pose,path,parameters,selectedSlot:slot,mode:viewportMode,onPose:setPose,onStroke,onDisplayReady,onDisplayError} as SurgicalInteraction};
 }
 export type SurgicalController=ReturnType<typeof useSurgical>;

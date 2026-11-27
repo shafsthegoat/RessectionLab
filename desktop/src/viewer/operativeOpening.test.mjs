@@ -4,6 +4,7 @@ import * as THREE from 'three';
 import {buildOperativeModel} from './operativeFieldModel.ts';
 import {prepareOperativeOpening} from './operativeOpening.ts';
 import {operativeSurface} from './operativeSurface.ts';
+import {operativeVoxelSurface} from './operativeVoxelSurface.ts';
 import {operativeTissueMaterial,operativeSignalTexture} from './operativeFieldAppearance.ts';
 
 function triangles(geometry){
@@ -127,4 +128,42 @@ test('reflected estimate uses a two-sided source-supported midsurface and raw mo
   opening.update(0,1);assert.equal(flap.geometry,smooth);
   assert.deepEqual(original,Array.from(model.layers.dura.mask));assert.deepEqual(moving,Array.from(model.layers.duraFlap.mask));
   opening.dispose();
+});
+
+test('estimated dural rim and flap meet at source-positive sheet height, with original band available in raw inspection',async()=>{
+  const {prepareDuralRim}=await import('./operativeDuralRim.ts');
+  const {boneFlapTransfer}=await import('./operativeOpening.ts');
+  const n=41,nz=28,voxels=new Uint8Array(n*n*nz);
+  for(let i=0;i<voxels.length;i++){
+    const z=i%nz;
+    voxels[i]=z>=10&&z<=12?2:z>=16&&z<=20?1:0;
+  }
+  const field={shape:[n,n,nz],voxels,origin:[-20,-20,0],spacingMm:1,radiusMm:20,routeRadiusMm:2,
+    entryDepthMm:23,stations:{dura:12,bone:20,brain:null,tumor:null},layers:[{role:'dura',sampledVoxels:100,model:'siam-v2'}]};
+  const model=buildOperativeModel(field),rim=prepareDuralRim(model);
+  assert(rim);
+  const mesh=new THREE.Mesh(rim.geometry(),new THREE.MeshBasicMaterial({side:THREE.DoubleSide}));
+  const ray=new THREE.Raycaster(new THREE.Vector3(0,0,25),new THREE.Vector3(0,0,-1));
+  assert.equal(ray.intersectObject(mesh)[0].point.z,11);
+  const {opening,duralOpening}=model;
+  model.applyOpening('dura',128,true);
+  mesh.geometry.dispose();mesh.geometry=rim.geometry();
+  assert.equal(ray.intersectObject(mesh).length,0);
+  ray.ray.origin.set(-duralOpening-1,0,25);
+  assert.equal(ray.intersectObject(mesh)[0].point.z,11);
+  const raw=operativeVoxelSurface(field,model.layers.dura.mask,model.layers.dura.bounds,0);
+  mesh.geometry.dispose();mesh.geometry=raw;
+  assert.equal(ray.intersectObject(mesh)[0].point.z,12.5);
+  rim.dispose();mesh.geometry.dispose();mesh.material.dispose();
+
+  const park=boneFlapTransfer(model);
+  assert.deepEqual(park(0).map(v=>v||0),[0,0,0]);
+  const lifted=park(.4),parked=park(1);
+  assert.equal(Math.abs(lifted[0]),0);
+  assert(lifted[2]>5);
+  assert.equal(lifted[2],parked[2]);assert(parked[0]+model.layers.boneFlap.bounds.high[0]-20+.5 < -opening);
+  // An uncovered collar cannot conceal a transition from a sheet to a band.
+  const x=20+Math.round(opening+Math.max(2,4*field.spacingMm));
+  for(let z=16;z<=20;z++)voxels[(x*n+20)*nz+z]=0;
+  assert.equal(prepareDuralRim(model),null);
 });

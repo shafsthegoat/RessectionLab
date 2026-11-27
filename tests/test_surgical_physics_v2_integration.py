@@ -31,6 +31,29 @@ def prepare_tool(e, tool):
     accepted(e, action('place', [8., 8., 4.], parameters={'radiusMm': 1.5, 'jawOpeningMm': 0.}))
 
 
+def test_deformation_raster_matches_scalar_on_sheared_grid_and_rounding_faces():
+    from resectionlab.surgical_physics_v2 import raster
+    source = scene('soft_tissue', True)
+    affine = np.array([[.6, -.25, 0, 9], [.4, 1.5, .25, -2], [0, 0, 2, 1], [0, 0, 0, 1.]])
+    e = SurgicalEngine(SurgicalScene(source.labels, affine, source.regions, {}, source.properties))
+    displacements = [[.001, 0., 0.], [0., -.005, .002], [0., 0., 0.]]
+    for sign in (-1, 1):
+        for eps in (0., -.00000000001, .00000000001):
+            displacements.append((affine[:3, :3] @ [sign * (.5 + eps), 0., 0.]).tolist())
+    cells = [int(np.ravel_multi_index((6+i, 10, 10), e.scene.shape)) for i in range(len(displacements))]
+    e.state['deformation'] = {str(c): d for c, d in reversed(list(zip(cells, displacements)))}
+    e.state['removed'] = [cells[1]]
+    expected = []
+    for c, d in zip(cells, displacements):
+        if c not in e.state['removed']:
+            destination = np.rint(np.unravel_index(c, e.scene.shape) + e.scene.inverse[:3, :3] @ d).astype(int)
+            expected.append([c, int(np.ravel_multi_index(destination, e.scene.shape))])
+    assert raster(e) == expected
+    e.state['deformation']['0'] = [-4., 0., 0.]
+    with pytest.raises(ValueError, match='DISPLACEMENT_OUTSIDE_GRID'):
+        raster(e)
+
+
 def test_public_brain_hold_couples_neighbors_and_release_recovers_without_source_edits():
     source = scene('soft_tissue', True); baseline = source.labels.copy(); props = copy.deepcopy(source.properties)
     e = SurgicalEngine(source); prepare_tool(e, 'brain_retractor')

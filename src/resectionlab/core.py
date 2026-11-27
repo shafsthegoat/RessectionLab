@@ -352,6 +352,7 @@ class CaseData:
     prior_proposals: Mapping[str, RegisteredPriorProposal] = field(default_factory=dict)
     functional_evidence: FunctionalEvidence | None = None
     critical_evidence: Mapping[str, CriticalStructureEvidence] = field(default_factory=dict)
+    vascular_probabilities: Mapping[str, NDArray[np.float32]] = field(default_factory=dict)
     _semantic_hash: str = field(init=False, repr=False)
     _planning_hash: str = field(init=False, repr=False)
     _prior_registration_input_hash: str = field(init=False, repr=False)
@@ -387,6 +388,17 @@ class CaseData:
         object.__setattr__(self, "compartments", _compartments(self.compartments, image.shape, "compartments"))
         original = self.compartments if self.source_compartments is None else self.source_compartments
         object.__setattr__(self, "source_compartments", _compartments(original, image.shape, "source_compartments"))
+        if not isinstance(self.vascular_probabilities, Mapping):
+            raise ValueError("Vascular probabilities must map source compartment names to scores")
+        probabilities = {}
+        for name, values in self.vascular_probabilities.items():
+            score = np.asarray(values)
+            if (name not in self.source_compartments or score.shape != image.shape or score.dtype.kind != "f"
+                    or not np.isfinite(score).all() or np.any(score < 0) or np.any(score > 1)
+                    or np.any(score[self.source_compartments[name]] < .5)):
+                raise ValueError("Vascular scores must bind a source compartment on the case grid")
+            probabilities[name] = immutable_array(score.astype(np.float32, copy=False))
+        object.__setattr__(self, "vascular_probabilities", MappingProxyType(probabilities))
         if self.brain_mask is not None:
             object.__setattr__(self, "brain_mask", _mask(self.brain_mask, image.shape, "brain_mask"))
         object.__setattr__(self, "source_refs", refs)
@@ -467,7 +479,8 @@ class CaseData:
         return self._planning_hash
 
     def _array_signature(self) -> tuple[Any, ...]:
-        arrays = [self.mri, self.affine, *self.compartments.values(), *self.source_compartments.values()]
+        arrays = [self.mri, self.affine, *self.compartments.values(), *self.source_compartments.values(),
+                  *self.vascular_probabilities.values()]
         if self.brain_mask is not None:
             arrays.append(self.brain_mask)
         arrays.extend(item.mask for item in self.structural_evidence.values())
@@ -505,6 +518,7 @@ class CaseData:
         result.pop("structural_evidence", None)
         # Registered functional previews are view-only population evidence.
         result.pop("prior_proposals", None)
+        result.pop("vascular_probabilities", None)
         if self.critical_evidence:
             selected = {key: item.to_manifest() for key, item in self.critical_evidence.items()
                         if item.exclusion_reason(self) is None}
@@ -566,6 +580,8 @@ class CaseData:
             result["prior_proposals"] = {key: value.to_manifest() for key, value in self.prior_proposals.items()}
         if self.functional_evidence is not None:
             result["functional_evidence"] = self.functional_evidence.to_manifest()
+        if self.vascular_probabilities:
+            result["vascular_probabilities"] = {key: array_digest(value) for key, value in self.vascular_probabilities.items()}
         if include_hash:
             result["semantic_hash"] = self.semantic_hash
         return result

@@ -3,13 +3,19 @@
 Repository upkeep follows the [maintenance policy](../CONTRIBUTING.md): keep current-use material,
 retire obsolete code/docs/artifacts, and archive useful history outside the tracked tree.
 
-RessectionLab is a local research app. This guide follows the current Electron interface; [project status](../PROJECT_STATUS.md) and the [packaging records](electron-packaging.md) identify which app snapshots have been tested. A modeled geometry check does not establish clinical suitability.
+RessectionLab is a local research app. This guide follows the current Electron interface; [project status](retired-docs-20261126.md) and the [packaging records](electron-packaging.md) identify which app snapshots have been tested. A modeled geometry check does not establish clinical suitability.
 
 ## Open and inspect a study
 
 With no study open, the app shows **Cases**. Search by case, source or anatomy, open a row to load its study, or choose **Details** to inspect its evidence. **New patient study** starts a study with a patient ID and timepoint.
 
 In a native study, **Scans** shows the active acquisition and its source thumbnail. **Anatomy** lists structures by group. Select a row to inspect the layer or change its appearance, and use its eye control to toggle visibility. **Scan** shows the acquired scalar signal with subdued overlays. **Structures** and **Vessels** emphasize the corresponding anatomy. Reopening a saved study restores its recorded view.
+
+For source scans with at least 32 million voxels and selected anatomy layers,
+**Anatomy** opens the linked scan slices while it prepares the 3D surfaces.
+You can move the cursor and adjust contrast during preparation. **Cancel**
+keeps the scan open, and **Load anatomy** resumes preparation from the same
+scan. **Plan** and **Rehearse** become available once the surfaces are ready.
 
 Use the right-hand slice controls to move the linked cursor. In the 3D pane, **Clip → Section at cursor** exposes the source image at the chosen plane. **Exit section** restores the prior cut and plane settings. **Plan** and **Rehearse** show the operations and evidence available for the current study.
 
@@ -30,13 +36,15 @@ selected approach.
 
 In **Anatomy** or **Plan**, choose **Cranial view → Cortex and target · planning** to see the selected tumor and approach against the cortex and head outline. **Internal boundaries · inspection** brings a selected internal structure and the head silhouette forward. The visible structures also have contours on the native slices. The controls for individual layers remain available. The source details distinguish supplied annotations from model estimates.
 
-**Follow operative depth** starts at the saved entry on the registered exterior, holds the opening in view, then turns toward the longitudinal section as the deeper tissue comes into view. The right pane keeps the intact head and source MRI visible. **Inspection cutaway** allows a separate fixed-angle comparison at the same timeline position. Cyan identifies residual target. **Field voxel faces** exposes the exact local display-grid cells used by the geometric demonstration.
+For complementary arterial labels on the same CTA, assign their arterial meanings in **Scans**. Then open **Anatomy → Combine supplied arteries**, mark each input **Focused** or **Wider**, and choose **Build combined arteries**. The display keeps the exact positive cells from both groups. **Focused branches** returns to the selected originals at the current camera and cut. Accepting a correction to an input retires the combination, and the focused layers become available again. Save the study to retain the current view.
+
+**Operative microscope** approaches the saved entry on the registered exterior and keeps the opening in view during deeper work. Choose **External anatomy** to locate it on the surrounding surface or **Inspection cutaway** to see a longitudinal section at the same timeline position. The linked source slice marks the original target in cyan. The residual target in the 3D field has a plum surface and a pale rim. **Field voxel faces** shows the sampled display-grid cells.
 
 To try the geometric workflow on one study, use the reviewed **BITE-09**
 planning workspace. Inspect the supplied tumor on its source MRI in
 **Anatomy**, then use **Show target** in **Plan** to center the slices at the
 planned endpoint. In **Rehearse**, pause at the dural opening or aspiration
-and switch between **Follow operative depth** and **Inspection cutaway**
+and switch between **Operative microscope** and **Inspection cutaway**
 to inspect that moment. The reviewed workspace and walkthrough are indexed
 in the [local storage ledger](local-storage-ledger.md).
 
@@ -60,6 +68,98 @@ subsets require a separate verified implementation. Supplied tract bundles
 can be inspected. Raw DWI, MRV and SWI alone do not produce named tracts,
 veins or sinuses in this build. [MONAI bundle](https://huggingface.co/MONAI/brats_mri_segmentation/blob/main/docs/README.md)
 · [mmFormer subset evaluation](https://arxiv.org/abs/2206.02425).
+
+### Prepare a local native wall
+
+For a study without a selected approach, **Rehearse** opens **Local native wall**
+first when a compatible source pair is available. The panel names the brain
+layer and angiography score layer with their acquisitions. Choose a pair if
+the study has more than one.
+
+New local preparation requires a positive brain-tissue annotation with
+verified original label membership on its acquired grid. This check is
+separate from local registration review and from ordinary layer roles. The
+**Local wall evidence by source** panel shows exclusions. The recorded
+TopCoW-012 and TopCoW-014 local rehearsals retain their historical tissue
+assumptions and can still open and replay. Their brain envelopes require
+additional tissue evidence for a new local preparation.
+
+- **Prepare reviewed local wall** uses the saved RAS center for that exact pair
+  and its local alignment review. The general registration status still applies
+  elsewhere in the study.
+- **Prepare native wall at cursor** uses the linked patient cursor. In
+  **Anatomy**, place it near the vessel on the registered source slices, then
+  return to **Rehearse**. Preparation checks the approximately 24 mm field for
+  acquired coverage, a continuous vessel trace, and surrounding tissue support.
+
+The local field uses the two selected layers. Tumor and bone are unassessed in
+that field. **Standard 1 mm environment** retains the separate role selections
+for wider research work. Save the prepared case and reopen it from **Cases**
+or **Open**. [Native-wall mechanics and assumptions](surgical-physics-v2.md)
+
+From a prepared or reopened rehearsal, use **Inspect source study** to see the
+acquired scans at the saved field. The app verifies the exact study revision,
+acquisitions and selected label and score arrays. If the source has moved,
+choose its original manifest or a portable copy with **Locate source study**.
+**Saved field** opens a native-resolution window around the recorded crop. Its
+contours end openly at the window edges. For a native vessel score layer,
+**Conditioned contour** uses bounded fairing around the original triangles.
+**Source contour** shows the original score crossings at the same camera.
+Both share acquired slices, label overlays and open rim coordinates.
+Conditioning restores source vertices where a sampled section would change
+its connected outline or enclosed voids.
+**Full acquisition** restores the surrounding scan and its ordinary surfaces.
+When preparation used a local alignment review, the angiogram opens in its own
+acquisition frame at the corresponding voxel. Use the linked slices to examine
+the acquired signal, **Volume** to add it to the 3D field, and **Reset to saved
+field** to recenter both views. **Return to rehearsal** restores the open action
+boundary and instrument poses, including unsaved work.
+
+In ordinary **Anatomy**, select a scored vessel layer on its own angiography
+scan and choose **Inspect local vessel field**. The same contour controls open
+at the linked cursor. Alignment previews open the acquired field in independent
+native coordinates. **Return to Anatomy** resumes the full view at its existing
+camera and cursor.
+
+### Practice from an accepted engine state
+
+On Shafrir’s HDD, `qc/operative-rehearsal-followup-20261121/Open complete cranial task.command` opens a fresh working copy of the generated post-scalp cranial case. You can also open `practice/cranial-exposure-99.ressectionlab` from the same collection in **Cases**. Inspect the original target and superior entry in **Plan**, then open **Rehearse**. Use **Verify replay for planning** if the archive opens in preview. At its saved boundary **99**, choose **Practice from this verified state**.
+
+The parent has a 285 mm³ bone opening, a cut membrane perimeter and 27 mm³ of original target. The task begins with the membrane still in place. Expand **Practice task** for the current objective and measured progress. Use the forceps to grasp, lift and extract the detached 49 mm³ patch. Use finite CUSA strokes to clear the target and suction to collect the 236 mm³ of modeled debris around the opening. The endpoint requires zero residual target and debris, an intact retained membrane rim and both tools withdrawn. Use the synchronized field, section and task metrics to check the result. The full recording and editable final workspace are in the same collection. The earlier after-extraction opening is still available at `qc/interactive-operative-practice-20261121/ready/cranial-opening-105.ressectionlab`.
+
+Choose a hand and an instrument. **Pose, stroke and tool settings** provides RAS coordinates, angle, duration and the parameters supported by that instrument. A drag on **Jog instrument** proposes lateral movement. Shift-drag changes depth. With the pad focused, arrow keys nudge by 0.5 mm, Page Down and Page Up change depth, and Shift with an arrow tilts by 2°. **Place tool**, **Move tool** and **Apply tool** submit one checked request. Escape discards a draft. A partial action shows the tip position the engine reached and retains its completed work. A rejection leaves the accepted state available for another proposal.
+
+Switch from **Jog and commit** to **Hold controls** for repeated axial motion or action at the tip. Press a button with the mouse, Space or Enter. Each accepted step advances or retracts up to 0.5 mm, or applies the instrument for 0.1 modeled seconds. The next step waits for the matching state to reach the field. Release, a contact limit, Escape, lost focus, 20 steps or eight seconds stops repetition. An already committed step appears at its accepted endpoint. The HUD reports spatial **Free-field fluid**, the amount retained at each modeled outlet in aggregate under **Outlet reservoir**, and **Retained fluid total**. Only the free field has a displayed position.
+
+The microscope and HUD show the same accepted state. Target percentages use the original target on the engine grid. The square control has no separately declared brain mask, so its non-target brain loss reads **Unknown**. A second generated control, `testcases/cases/generated-bipolar-thermal-controls.ressectionlab`, supports tissue holding, release, modeled vessel wounds, coagulation, irrigation and suction. Select its **configured-start** branch to practice from boundary **1**.
+
+Choose **Withdraw tool**, then **Save** to write the practice episode to its own file. Open that file in a fresh app process to replay its history. Return to its final accepted boundary to resume input. Imported native-study recordings can be opened from the selected plan for synchronized inspection. Their replay permissions and any acquired-source refusal are shown beside the practice action.
+
+The [local storage ledger](local-storage-ledger.md) locates the frozen sources, recordings, state checks and measured response times. [Recreate the cranial control](#reproduce-continuous-rehearsal).
+
+### Rehearse the generated convexity glioma
+
+Open the guided start workspace in the desktop app and choose **Rehearse**. Each cue identifies the hand, tool and purpose. **Preview maneuver** displays the proposed action without advancing the episode. Select **Dismiss preview**, then **Perform maneuver** to commit it. Under **Maneuver settings** you can edit its duration and the final tool-tip position in RAS millimeters. The manual pose, jaw, power and path controls are also available. A different resulting state leaves the remaining practice under manual control. The complete saved episode supports ordinary observed playback, pause and seek.
+
+**Operative exposure** shows which layer is held, reflected, parked or closed, the severed edge count and placed or retrieved materials. Select a grip or closure landmark to copy its RAS position into the proposed tool pose. A bone flap travels with the holder, rests on three declared external supports and returns to its seat for fixation. Stay removal, pad retrieval and tissue approximation are explicit actions. Cortical probing records the available functional evidence. The generated case has no physiological mapping observations.
+
+To generate the source volume, run the public-action policy, verify the cold replay, build the guided start and record the desktop presentation, run this from the checkout using the project Python environment, the installed desktop dependencies, FFmpeg and Node 24.
+
+```sh
+.venv/bin/python scripts/build_glioma_walkthrough.py testcases/outputs/glioma-walkthrough-reproduction
+```
+
+Choose an empty output directory. Shafrir's mounted external QC directory is accessible under `testcases/outputs/glioma-operative-walkthrough-20261121/`. The command creates the guided start, the complete portable episode and `recording/operative-walkthrough.mp4`. Beside the completed case, `complete.json` holds the submitted actions and outcomes, `complete.states.jsonl.gz` contains the full physical state at every accepted boundary including the intact start, and `complete.replay.json` records the uncached verification and their identities. Add `--episode-only` for the executable case and its replay checks. The acquired comparison footage is cataloged on the private drive. [Local evidence locations](local-storage-ledger.md)
+
+The clone includes the 427 public inputs and the edited camera plan. A fresh build assigns its own practice ID and checks every physical state before applying those camera positions. To film the supplied episode directly, keep its companion `complete.json` beside the case and run the command below. The exporter selects the published optics for the matching history. You can also pass a case-bound `--shot-plan` to use your own camera positions and timing.
+
+```sh
+qc=testcases/outputs/glioma-operative-walkthrough-20261121
+.venv/bin/python scripts/build_glioma_walkthrough.py "$qc/new-export" \
+  --record-episode "$qc/episode/complete.ressectionlab"
+```
+
+To change the scripted operator's decisions, generate a source with `scripts/generated_glioma_walkthrough_case.py` and run `scripts/rehearse_glioma_walkthrough.py run` with its source file, `--landmarks` and an empty `--output` directory. The editable policy uses native tool exchanges, contact previews, movements, applications and withdrawals.
 
 ### Watch a recorded engine procedure
 
@@ -103,11 +203,11 @@ The full vascular estimates are available in **Anatomy**. Original scan
 spacing and supplied contours are available in **Scans**.
 
 Use **Show target** in Plan to reveal the selected annotation and center the
-linked slices at the editable endpoint. In a deep geometric rehearsal,
-**Follow operative depth** opens a longitudinal section through the working
-field. Its surrounding grayscale plane comes from the matching acquisition.
-**Exterior** returns to the surface view. The BITE-09 example uses the supplied
-tumor contour and MRI-derived tissue estimates.
+linked slices at the editable endpoint. In a deep geometric rehearsal, choose
+**Inspection cutaway** to open the longitudinal section. The grayscale plane
+comes from the matching acquisition. Choose **Operative microscope** to return
+to the opening. The BITE-09 example uses the supplied tumor contour and
+MRI-derived tissue estimates.
 
 ### Compare two recorded procedures on one target
 

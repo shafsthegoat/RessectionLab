@@ -6,6 +6,7 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {createServer} from 'vite';
 import * as THREE from 'three';
+import {approachClipBox} from './approachView.ts';
 let server,cache,VolumeRenderer,InstrumentDisplayState;
 before(async()=>{
   cache=await fs.mkdtemp(path.join(os.tmpdir(),'native-planning-display-'));
@@ -13,6 +14,26 @@ before(async()=>{
   ({VolumeRenderer}=await server.ssrLoadModule('/src/viewer/VolumeRenderer.ts'));({InstrumentDisplayState}=await server.ssrLoadModule('/src/viewer/inspectionTool.ts'));
 });
 after(async()=>{await server?.close();if(cache)await fs.rm(cache,{recursive:true,force:true});});
+test('temporary corridor crop uses the source physical frame and does not change the measured route',()=>{
+  const route={entry_mm:[10,20,70],target_mm:[14,16,10],tool:{shaft_radius_mm:3,tip_radius_mm:2},window:{radius_mm:12}};
+  const before=structuredClone(route);
+  assert.deepEqual(approachClipBox(route,'LPS+'),{enabled:true,min:[-30,-36,-6],max:[6,0,86]});
+  assert.deepEqual(route,before);
+});
+test('a source branch trace follows display clipping and layer visibility without modifying the mask',()=>{
+  const r=Object.create(VolumeRenderer.prototype),mask=Uint8Array.of(0,1,1,0);
+  const plane=new THREE.Plane(new THREE.Vector3(0,0,1),-2);
+  Object.assign(r,{volume:{compartments:[{name:'vessels',mask}]},scene:new THREE.Scene(),visible:{vessels:true},extraClipPlanes:[plane],requestRender(){}});
+  r.setVesselTrace({layerId:'vessels',points:[[1,2,3],[4,5,6]]});
+  const trace=r.scene.children[0];
+  assert.equal(trace.material.clippingPlanes[0],plane);
+  assert.deepEqual([...trace.geometry.getAttribute('position').array],[1,2,3,4,5,6]);
+  r.visible.vessels=false;r.applyVesselTraceAppearance();
+  assert.equal(trace.visible,false);
+  r.setVesselTrace(null);
+  assert.equal(r.scene.children.length,0);
+  assert.deepEqual([...mask],[0,1,1,0]);
+});
 test('actual renderer displays all three source-frame corridor radii without admitting physical execution',()=>{
   const r=Object.create(VolumeRenderer.prototype),shaders=[{uniforms:{uRouteCount:{value:0},uSelectedRoute:{value:-1},...Object.fromEntries(['uShaftStart','uShaftEnd','uTipEnd'].map(k=>[k,{value:Array.from({length:3},()=>new THREE.Vector3())}])),uRadii:{value:Array.from({length:3},()=>new THREE.Vector2())},uRouteColors:{value:Array.from({length:3},()=>new THREE.Color())}}}];
   Object.assign(r,{volume:{frame:'LPS+'},tools:new THREE.Group(),inspectionTools:new THREE.Group(),recordedTools:new THREE.Group(),instrumentDisplay:new InstrumentDisplayState(),mode:'anatomy',materials:()=>shaders,requestRender(){}});

@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {CranialDepth} from './cranialDepth.ts';
+import {CranialDepth, type CranialBoundary} from './cranialDepth.ts';
 
 export const SURFACE_PEELS=4;
 /** Front-to-back mesh boundary layers for the scan ray marcher. This uses the
@@ -15,7 +15,7 @@ export class SurfaceVolumePass {
     t.depthTexture=new THREE.DepthTexture(1,1,THREE.UnsignedIntType);return t;
   });
   readonly tail=new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,depthBuffer:false});
-  private readonly materials=new Map<THREE.Material,{peel:THREE.Material;tail:THREE.Material;sourceProgramKey:string;boundary?:'head'|'cortex'}>();
+  private readonly materials=new Map<THREE.Material,{peel:THREE.Material;tail:THREE.Material;sourceProgramKey:string;boundary?:CranialBoundary;release:()=>void}>();
   private readonly uniforms={uPreviousSurface:{value:null as THREE.Texture|null},uOpaqueSurface:{value:null as THREE.Texture|null},uSurfaceSize:{value:new THREE.Vector2()},uFirstSurface:{value:true}};
   private readonly corticalContact={
     uHasCorticalBoundary:{value:false},
@@ -72,15 +72,23 @@ export class SurfaceVolumePass {
       this.corticalContact.uHasCorticalBoundary.value=selected.some(s=>s.mesh.userData.cranialBoundary==='cortex');
       this.corticalContact.uCorticalBoundaryDepth.value=this.cranial.targets.get('cortex')?.depthTexture??null;
       for(const s of selected){
-        const boundary=s.mesh.userData.cranialBoundary;
-        const sourceProgramKey=s.material.customProgramCacheKey();
-        let pair=this.materials.get(s.material);
+        const boundary=s.mesh.userData.cranialBoundary,original=s.material;
+        const sourceProgramKey=original.customProgramCacheKey();
+        let pair=this.materials.get(original);
         if(!pair||pair.boundary!==boundary){
-          pair?.peel.dispose();pair?.tail.dispose();
+          pair?.release();
           const contact=s.mesh.userData.corticalContact===true;
-          pair={peel:this.make(s.material,false,contact),tail:this.make(s.material,true,contact),sourceProgramKey,boundary};
+          const peel=this.make(original,false,contact),tail=this.make(original,true,contact);
+          // A cache eviction disposes the original. Its pass-specific programs
+          // have the same lifetime, including across replay and source changes.
+          const release=()=>{
+            original.removeEventListener('dispose',release);this.materials.delete(original);
+            peel.dispose();tail.dispose();
+          };
+          pair={peel,tail,sourceProgramKey,boundary,release};
           if(boundary){this.cranial.install(pair.peel,boundary);this.cranial.install(pair.tail,boundary);}
-          this.materials.set(s.material,pair);
+          this.materials.set(original,pair);
+          original.addEventListener('dispose',release);
         }else if(pair.sourceProgramKey!==sourceProgramKey){
           // The existing clones compile the currently selected source variant.
           pair.sourceProgramKey=sourceProgramKey;
@@ -99,6 +107,11 @@ export class SurfaceVolumePass {
           material.clippingPlanes=source.clippingPlanes;
           material.roughness=source.roughness;
           material.metalness=source.metalness;
+          if(material instanceof THREE.MeshPhysicalMaterial&&source instanceof THREE.MeshPhysicalMaterial){
+            material.specularIntensity=source.specularIntensity;
+            material.clearcoat=source.clearcoat;
+            material.clearcoatRoughness=source.clearcoatRoughness;
+          }
         }
         s.mesh.material=pair.peel;
       }
@@ -114,5 +127,5 @@ export class SurfaceVolumePass {
     }finally{for(const s of selected)s.mesh.material=s.material;for(const o of hidden)o.visible=true;}
     return {count:selected.length?count+1:0,tailIndex:count};
   }
-  dispose(){this.cranial.dispose();this.targets.forEach(t=>t.dispose());this.tail.dispose();for(const p of this.materials.values()){p.peel.dispose();p.tail.dispose();}this.materials.clear();}
+  dispose(){this.cranial.dispose();this.targets.forEach(t=>t.dispose());this.tail.dispose();for(const p of this.materials.values())p.release();}
 }

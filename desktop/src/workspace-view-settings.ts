@@ -9,7 +9,7 @@ export function checkedViewerSettings(source:CasePayload,input:unknown):ViewerWo
   if(!input || typeof input!=='object' || Array.isArray(input))return fail();
   const value=input as ViewerWorkspaceSettings;
   const labels=[...source.compartments.map(layer=>layer.name),...(displayBrainMask(source)?['brain']:[])];
-  if(Object.keys(value).some(key=>!['showOrientationGuide','smoothSurfaces','skullMode','volumeRendering','layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast','clipBox','obliqueClip','sliceOverlay','presentation','sliceFraming','contextStyle','operativeView','microscope','externalCamera','resultInspection','resultCamera'].includes(key)))return fail();
+  if(Object.keys(value).some(key=>!['showOrientationGuide','smoothSurfaces','skullMode','volumeRendering','layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast','clipBox','obliqueClip','sliceOverlay','presentation','sourcedVesselContext','vesselShading','sliceFraming','contextStyle','operativeView','microscope','externalCamera','resultInspection','resultCamera'].includes(key)))return fail();
   if(value.resultInspection!==undefined&&!['both','cavity','residual'].includes(value.resultInspection))return fail();
   if(value.resultCamera!=null&&!validCameraState(value.resultCamera))return fail();
   if(value.showOrientationGuide!==undefined&&typeof value.showOrientationGuide!=='boolean')return fail();
@@ -24,18 +24,22 @@ export function checkedViewerSettings(source:CasePayload,input:unknown):ViewerWo
   }
   if(value.sliceOverlay!==undefined&&!['contour','fill'].includes(value.sliceOverlay))return fail();
   if(value.presentation!==undefined&&!['scan','segmentation','vascular'].includes(value.presentation))return fail();
+  if(value.sourcedVesselContext!==undefined&&typeof value.sourcedVesselContext!=='boolean')return fail();
+  if(value.vesselShading!==undefined&&!['balanced','large','fine','source','cta-contrast'].includes(value.vesselShading))return fail();
   if(value.smoothSurfaces!==undefined&&typeof value.smoothSurfaces!=='boolean')return fail();
   if(value.skullMode!==undefined&&!['exterior','transparent','cutaway'].includes(value.skullMode))return fail();
   if(value.volumeRendering!==undefined){
     const volume=value.volumeRendering as Record<string,unknown>;
-    if(!volume||typeof volume!=='object'||Array.isArray(volume)||Object.keys(volume).some(k=>!['enabled','preset','density','window','points','shadows','isolateLabels'].includes(k))||
+    if(!volume||typeof volume!=='object'||Array.isArray(volume)||Object.keys(volume).some(k=>!['enabled','mode','cinematicBone','preset','density','window','points','shadows','isolateLabels','showCtExteriorSignal','showCtBoneOverlay','balanceTofContext'].includes(k))||
       ('enabled'in volume&&typeof volume.enabled!=='boolean')||
+      ('mode'in volume&&!['standard','cinematic'].includes(volume.mode as string))||
+      ('cinematicBone'in volume&&!['shell','solid'].includes(volume.cinematicBone as string))||
       ('preset'in volume&&!['auto','ct-bone','ct-tissue','ct-angiography','mri'].includes(volume.preset as string))||
       ('density'in volume&&(typeof volume.density!=='number'||!Number.isFinite(volume.density)||volume.density<0||volume.density>2)))return fail();
   }
   const volume=value.volumeRendering;
   if(volume){
-    if(['shadows','isolateLabels'].some(k=>k in volume&&typeof volume[k as 'shadows']!=='boolean'))return fail();
+    if((['shadows','isolateLabels','showCtExteriorSignal','showCtBoneOverlay','balanceTofContext'] as const).some(k=>k in volume&&typeof volume[k]!=='boolean'))return fail();
     if(volume.window&&(!Array.isArray(volume.window)||volume.window.length!==2||!volume.window.every(Number.isFinite)||volume.window[1]<=volume.window[0]))return fail();
     if(volume.points&&(!Array.isArray(volume.points)||volume.points.length<2||volume.points.length>32||volume.points.some((p,i)=>!Array.isArray(p)||p.length!==5||p.some(v=>!Number.isFinite(v)||v<0||v>1)||(i>0&&p[0]<=volume.points![i-1][0]))))return fail();
   }

@@ -285,6 +285,33 @@
   cursor: pointer;
 }
 .rl-source-section-readout button:focus-visible { outline: 1px solid #92edce; outline-offset: 2px; }
+.rl-source-section-readout button[aria-pressed=true] { border-color: #82cfa7; background: #345943; color: #edfff4; }
+.rl-cta-coverage {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  z-index: 3;
+  display: flex;
+  padding: 3px;
+  gap: 3px;
+  border: 1px solid #3b524a;
+  border-radius: 6px;
+  background: rgba(14, 24, 23, .93);
+}
+.rl-cta-coverage button {
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 4px 6px;
+  color: #bcd1c9;
+  background: transparent;
+  font-size: 10px;
+}
+.rl-cta-coverage button[aria-pressed='true'] {
+  border-color: #587e70;
+  background: #29433a;
+  color: #e7f7f0;
+}
+.rl-cta-coverage button:focus-visible { outline: 1px solid #92edce; }
 .rl-viewer .rl-slice-framing { display: block; padding-top: 4px; }
 .rl-viewer .rl-slice-framing > label { display: flex; }
 .rl-viewer .rl-slice-framing select { max-width: none; }

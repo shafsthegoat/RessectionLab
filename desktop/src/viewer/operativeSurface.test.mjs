@@ -309,3 +309,20 @@ test('a protected source sample keeps clearance from the fitted target contour',
         );
       }
 });
+
+test('subcell target conditioning retains original signs across a narrow furrow and a separate focus',async()=>{
+  const {operativeSurfaceField}=await import('./operativeSurfaceField.ts');
+  const {grid,mask,bounds}=sample([23,19,23],.3125,(x,y,z)=>{
+    const solid=x>=3&&x<=15&&y>=2&&y<=15&&z>=3&&z<=18;
+    const channel=y===8&&x>=10&&z===11;
+    return (solid&&!channel)||(x===17&&y===8&&z>=8&&z<=11);
+  });
+  const field=operativeSurfaceField(grid,mask,bounds,false,true);
+  for(let x=0;x<23;x++)for(let y=0;y<19;y++)for(let z=0;z<23;z++){
+    const i=field.base+x*field.yz+y*field.sz+z,bit=mask[(x*19+y)*23+z];
+    assert.equal(field.mask[i],bit);assert.equal(Number(field.smooth[i]>=128),bit);
+  }
+  const mesh=operativeSurface(grid,mask,bounds,0,'tumor');
+  assert.equal(topology(mesh),2);
+  mesh.dispose();
+});

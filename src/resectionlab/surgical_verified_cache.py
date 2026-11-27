@@ -37,7 +37,9 @@ MAX_DISK_ALLOWANCE_BYTES = 8 * 1024**3
 DISK_BUDGET_ENV = 'RESSECTIONLAB_VERIFIED_CACHE_MAX_DISK_BYTES'
 MAX_JSON_BYTES = 128 * 1024**2
 DEFAULT_DIRECTORY = Path(__file__).resolve().parents[2] / 'testcases/outputs/.verified-surgical-cache'
-_MODULES = ('core', 'geometry', 'surgical_scene', 'surgical_engine', 'surgical_tools',
+_MODULES = ('core', 'geometry', 'anatomy_geometry', 'surface_fairing', 'surgical_scene', 'surgical_engine', 'surgical_tools',
+            'surgical_tool_profiles', 'surgical_bone_rest', 'surgical_exterior', 'surgical_operative_exposure',
+            'surgical_exposure_geometry', 'surgical_operative_clip', 'surgical_glioma_materials', 'surgical_specimen_sweep',
             'surgical_motion', 'surgical_effects', 'surgical_flow_display', 'surgical_physics', 'surgical_physics_v2',
             'surgical_drilling_v2', 'surgical_vessels_v2', 'surgical_deformation_v2',
             'surgical_continuum', 'surgical_continuum_solve', 'surgical_planar_contact', 'surgical_planar_maneuver',
@@ -46,6 +48,8 @@ _MODULES = ('core', 'geometry', 'surgical_scene', 'surgical_engine', 'surgical_t
             'surgical_procedure_policy', 'surgical_planning_admission', 'surgical_sequence_outcomes', 'surgical_modeled_outcomes',
             'surgical_vascular_graph', 'surgical_bipolar_thermal',
             'surgical_occupancy', 'surgical_rl_protection', 'surgical_geometry_cache',
+            'surgical_vessel_rods', 'surgical_vessel_surface', 'surgical_vessel_vertex_motion',
+            'surgical_wall_sweep', 'surgical_wall_sweep_reference', 'surgical_wall_contact', 'surgical_vessel_tissue_contact',
             'surgical_verified_cache', 'surgical_cusa_v3', 'surgical_clock', 'surgical_idle_native',
             'build_surgical_idle_native', 'surgical_cranial_stages', 'surgical_membrane_transport',
             'native_backend', 'surgical_native_engine', 'surgical_native_control')
@@ -99,6 +103,13 @@ def _fingerprint():
                 if not value.__module__.startswith('resectionlab.') and key not in declared:
                     continue  # An ordinary imported standard-library helper.
                 functions.append((key, value))
+            elif key in declared and hasattr(value, '__wrapped__'):
+                # lru_cache wraps several physical tool descriptions in a C
+                # callable. Include its loaded Python body in the proof too.
+                wrapped = inspect.unwrap(value)
+                if not inspect.isfunction(wrapped) or wrapped.__module__ != module.__name__:
+                    return None
+                functions.append((key, wrapped))
             elif inspect.isclass(value) and value.__module__ == module.__name__:
                 for member, method in sorted(vars(value).items()):
                     if isinstance(method, (staticmethod, classmethod)):

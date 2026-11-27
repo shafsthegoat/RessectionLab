@@ -1,8 +1,33 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {isCtModality,volumeSettings,volumeTransfer,volumeRayInterval,opticalAlpha,mriBoundaryExtinction} from './volumeTransfer.ts';
+import {DataUtils} from 'three';
+import {canBalanceTofContext,isCtModality,volumeSettings,volumeTransfer,volumeRayInterval,opticalAlpha,mriBoundaryExtinction,VOLUME_TRANSFER_WIDTH,zeroExtinctionLevel} from './volumeTransfer.ts';
+import {balancedTofDensity,buildDirectionalOpticalDepth,buildOpticalDensity,CT_EXTERIOR_AIR_HU,CT_EXTERIOR_TEXTURE_LIMIT_BYTES,ctExteriorDisplaySignal,ctOpticalCoverage,OPTICAL_KEY_LIGHTS,volumeOpticalAtlas} from './volumeOpticalDensity.ts';
+import {inverseAffine,transformPoint} from './coordinates.ts';
 import {checkedViewerSettings} from '../workspace-view-settings.ts';
 const identity=[[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]];
+test('TOF context calibration uses physical ray length and leaves native samples intact',()=>{
+  const shape=[10,10,10],signal=new Float32Array(1000).fill(1),before=signal.slice();
+  const sourceFor=spacing=>{
+    const affine=[[-spacing,0,0,100],[0,spacing,0,-15],[0,0,spacing,12],[0,0,0,1]];
+    return {signal,shape,affine,inverse:inverseAffine(affine)};
+  };
+  const transfer=volumeTransfer('mri',[0,1],{},'TOF');
+  const thin=balancedTofDensity(sourceFor(12),transfer),thick=balancedTofDensity(sourceFor(24),transfer);
+  assert.ok(thin>.018&&thin<.035);
+  assert.ok(thick>.008&&Math.abs(2*thick-thin)<1e-9);
+  assert.equal(balancedTofDensity(sourceFor(6),transfer),.035);
+  assert.equal(balancedTofDensity({...sourceFor(12),support:new Uint8Array(signal.length)},transfer),undefined);
+  assert.equal(balancedTofDensity({...sourceFor(12),signal:new Float32Array(signal.length)},transfer),undefined);
+  assert.deepEqual(signal,before);
+});
+test('only automatic acquired MR angiography can balance vascular context',()=>{
+  for(const modality of ['TOF','MR angiography','3D_TOF_MRA'])assert.equal(canBalanceTofContext(undefined,modality),true);
+  for(const modality of ['T1CE','CTA','TOF diagnostic','generated image signal TOF'])
+    assert.equal(canBalanceTofContext({balanceTofContext:true},modality),false);
+  for(const settings of [{preset:'mri'},{window:[0,1]},{points:[]},{isolateLabels:true}])
+    assert.equal(canBalanceTofContext(settings,'TOF'),false);
+});
 test('volume rays use millimetres on mirrored, anisotropic and oblique grids, including camera inside',()=>{
   assert.deepEqual(volumeRayInterval([-10,1,1],[1,0,0],[3,3,3],identity),[9.5,12.5]);
   assert.deepEqual(volumeRayInterval([1,1,1],[1,0,0],[3,3,3],identity),[0,1.5]);
@@ -31,12 +56,36 @@ test('opacity is invariant to ray sample spacing and presets retain transparent 
   assert.equal(volumeSettings({},'T1CE').preset,'mri');
   assert.equal(volumeSettings({density:99}).density,2);
 });
+test('the fast scalar path skips only interpolated zero extinction before the first visible transfer sample',()=>{
+  const acquired=volumeTransfer('mri',[0,900],undefined,'TOF').data;
+  const width=VOLUME_TRANSFER_WIDTH;
+  const limit=zeroExtinctionLevel(acquired);
+  assert.ok(limit>.2&&limit<.25);
+  for(let i=0;i<width&&i/width<limit;i++){
+    assert.equal(acquired[4*i+3],0);
+    assert.equal(acquired[4*(i+1)+3],0);
+  }
+  const faint=volumeTransfer('mri',[0,900],{points:[
+    [0,1,1,1,.00001], [.2,1,1,1,0], [.6,1,1,1,0], [1,1,1,1,.4],
+  ]},'TOF').data;
+  assert.equal(zeroExtinctionLevel(faint),0);
+});
 test('saved volume choices round-trip detached from source arrays and reject malformed settings',()=>{
   const source={compartments:[],brainMask:null,metadata:{}},input={volumeRendering:{enabled:true,preset:'ct-bone',density:.45}};
   const saved=checkedViewerSettings(source,input);assert.deepEqual(saved,input);
   saved.volumeRendering.density=.1;assert.equal(input.volumeRendering.density,.45);
   for(const volumeRendering of [null,[],{enabled:1},{density:NaN},{density:-1},{density:3},{preset:'CTA-vessels'},{arbitrary:1}])
     assert.throws(()=>checkedViewerSettings(source,{volumeRendering}));
+});
+
+test('the cinematic bone choice is validated and survives saving',()=>{
+  const source={compartments:[],brainMask:null,metadata:{}};
+  for(const cinematicBone of ['shell','solid']){
+    const saved={volumeRendering:{enabled:true,mode:'cinematic',cinematicBone}};
+    assert.deepEqual(checkedViewerSettings(source,saved),saved);
+  }
+  for(const cinematicBone of ['opaque','Solid',true,null,1])
+    assert.throws(()=>checkedViewerSettings(source,{volumeRendering:{mode:'cinematic',cinematicBone}}));
 });
 
 test('explicit skull modes survive settings validation',()=>{
@@ -126,20 +175,189 @@ test('transparent MRI context retains precise extinction and emphasizes physical
   assert.ok(coarse<full*.25,'uniform interior context must recede visibly');
 });
 
-test('unclassified CTA signal is neutral ivory with the original HU extinction and custom transfers intact',()=>{
+test('CTA tapers lower HU haze, gives high HU a cooler tint and honors custom transfer points',()=>{
   const lut=volumeTransfer('ct-angiography',[-1000,2000],undefined,'CTA');
-  const original=[[-1000,0],[80,0],[140,.01],[220,.12],[360,.38],[600,.5],[900,.52],[1800,.8],[3000,1]];
+  const sample=hu=>lut.data.slice(Math.round((hu+1000)/4000*1023)*4,Math.round((hu+1000)/4000*1023)*4+4);
   assert.deepEqual(lut.range,[-1000,3000]);
-  for(let i=0;i<1024;i++){
-    const hu=lut.range[0]+i/1023*(lut.range[1]-lut.range[0]);
-    let knot=0;while(knot<original.length-2&&hu>original[knot+1][0])knot++;
-    const [a,alphaA]=original[knot],[b,alphaB]=original[knot+1],t=Math.max(0,Math.min(1,(hu-a)/(b-a)));
-    assert.ok(Math.abs(lut.data[i*4+3]-(alphaA*(1-t)+alphaB*t))<1e-7,'classification-independent extinction must stay unchanged');
-    const rgb=lut.data.slice(i*4,i*4+3);
-    assert.ok(Math.max(...rgb)-Math.min(...rgb)<.1,'unclassified CTA must not acquire the rust arterial hue');
-  }
+  assert.equal(sample(85)[3],0);
+  assert.ok(sample(220)[3]<.07);
+  const [midR,midG,midB,midExtinction]=sample(360);
+  assert.ok(midExtinction>.30&&midExtinction<.35);
+  assert.ok(midR>midG&&midG>midB&&midB>.32,'mid HU remains warm beige');
+  const [highR,highG,highB,highExtinction]=sample(1800);
+  assert.ok(highExtinction>.8&&highB>highG&&highG>highR);
+  assert.ok(highR>.90&&highB-highR<.08,'mineral HU remains close to neutral');
   const points=[[0,0,0,0,0],[.5,.8,.2,.1,.2],[1,1,.8,.4,.9]],saved=structuredClone(points);
   assert.deepEqual(volumeTransfer('ct-angiography',[-1000,2000],{points},'CTA').data,
     volumeTransfer('ct-bone',[-1000,2000],{points,window:[-1000,3000]},'CTA').data,'explicit saved colors/extinction take precedence over the automatic preset');
   assert.deepEqual(points,saved);
+});
+
+test('coarse shadow density integrates extinction after the nonlinear transfer with source support',()=>{
+  const lut=volumeTransfer('ct-angiography',[-1000,3000],undefined,'CTA');
+  const signal=new Float32Array([-1000,1000]);
+  const source={signal,shape:[2,1,1],affine:identity,inverse:identity};
+  const sampled=buildOpticalDensity(source,lut);
+  assert.deepEqual(sampled.grid,[1,1,1]);
+  // A transfer of the mean HU would produce transparent air/background.
+  assert.ok(sampled.fine[0]>.30&&sampled.fine[0]<.32);
+  assert.equal(sampled.fine[0],sampled.fine[1]);
+  assert.equal(buildOpticalDensity({...source,support:new Uint8Array([0,1])},lut).fine[0],sampled.fine[0]);
+  assert.equal(buildOpticalDensity({...source,support:new Uint8Array([1,0])},lut).fine[0],0);
+  assert.deepEqual(signal,new Float32Array([-1000,1000]));
+});
+
+test('secondary MRI shell density uses the physical derivative from the acquisition affine',()=>{
+  const lut=volumeTransfer('mri',[0,1],undefined,'T1CE');
+  const source=(spacing, signal)=>{
+    const affine=[[0,-2,0,0],[-spacing,0,0,0],[0,0,6,0],[0,0,0,1]];
+    return {signal:new Float32Array(signal),shape:[3,1,1],affine,inverse:inverseAffine(affine)};
+  };
+  const a=buildOpticalDensity(source(4,[.4,.5,.6]),lut);
+  const b=buildOpticalDensity(source(8,[.3,.5,.7]),lut);
+  assert.deepEqual(a.grid,[3,1,1]);
+  assert.ok(Math.abs(a.fine[3]/a.fine[2]-mriBoundaryExtinction(.025))<1e-7);
+  assert.ok(Math.abs(a.fine[3]-b.fine[3])<1e-7);
+});
+
+test('CT shadow cache includes the filtered skull fraction without changing primary extinction',()=>{
+  const lut=volumeTransfer('ct-angiography',[-1000,3000],undefined,'CTA');
+  const affine=[[4,0,0,0],[0,4,0,0],[0,0,4,0],[0,0,0,1]];
+  const signal=Float32Array.of(1000,1000,1000);
+  const source={signal,shape:[3,1,1],affine,inverse:inverseAffine(affine)};
+  const mask=Uint8Array.of(0,1,0),coverage=ctOpticalCoverage(mask,source.shape,affine);
+  assert.deepEqual(coverage,Uint8Array.of(8,239,8));
+  const plain=buildOpticalDensity(source,lut);
+  const masked=buildOpticalDensity(source,lut,{coverage});
+  for(let cell=0;cell<3;cell++){
+    const index=2*cell;
+    assert.equal(plain.fine[index],masked.fine[index]);
+    assert.equal(plain.coarse[index],masked.coarse[index]);
+    assert.ok(Math.abs(masked.fine[index+1]/masked.fine[index]-coverage[cell]/255)<1e-6);
+  }
+  const edge=ctOpticalCoverage(Uint8Array.of(1,0,0),source.shape,affine);
+  assert.deepEqual(edge,Uint8Array.of(247,8,0),'coverage clamps at the acquisition face');
+  assert.deepEqual(mask,Uint8Array.of(0,1,0));
+  assert.deepEqual(signal,Float32Array.of(1000,1000,1000));
+});
+
+test('symmetric CT coverage has a bounded anisotropic footprint and preserves constant fields',()=>{
+  const affine=[[-.35,0,0,0],[0,.75,0,0],[0,0,1.6,0],[0,0,0,1]];
+  const shape=[7,7,7],mask=new Uint8Array(343);
+  const at=(x,y,z)=>(x*7+y)*7+z;
+  mask[at(3,3,3)]=1;
+  const coverage=ctOpticalCoverage(mask,shape,affine);
+  for(const [dx,dy,dz] of [[1,0,0],[0,1,0],[0,0,1],[2,0,0],[0,2,0]]){
+    assert.ok(coverage[at(3+dx,3+dy,3+dz)]>0);
+    assert.equal(coverage[at(3+dx,3+dy,3+dz)],coverage[at(3-dx,3-dy,3-dz)]);
+  }
+  assert.equal(coverage[at(3,3,5)],0);
+  assert.equal(coverage[at(0,3,3)],0);
+  assert.equal(coverage[at(4,4,3)],0);
+  assert.ok(ctOpticalCoverage(mask.fill(1),shape,affine).every(value=>value===255));
+});
+
+test('CT exterior replaces only the exact excluded footprint in a bounded display copy',()=>{
+  const shape=[6,2,2], signal=Float32Array.from({length:24},(_,i)=>400+i);
+  const exterior={offset:[2,1,0],shape:[2,1,2],data:Uint8Array.of(1,0,0,1)};
+  const expected=signal.slice();
+  expected[10]=expected[15]=CT_EXTERIOR_AIR_HU;
+  const derived=ctExteriorDisplaySignal(signal,shape,exterior);
+  assert.notEqual(derived,signal);
+  assert.deepEqual(derived,expected);
+  assert.equal(signal[10],410);
+  assert.equal(signal[15],415);
+  assert.deepEqual(exterior.data,Uint8Array.of(1,0,0,1));
+  const tooLarge={byteLength:CT_EXTERIOR_TEXTURE_LIMIT_BYTES+4,slice(){assert.fail('must not allocate an over-budget copy');}};
+  assert.equal(ctExteriorDisplaySignal(tooLarge,shape,exterior),undefined);
+  assert.equal(ctExteriorDisplaySignal(signal,shape,{...exterior,offset:[5,1,0]}),undefined);
+});
+
+test('all exterior shadow scales use the same air-filled values as the visible CTA',()=>{
+  const affine=[[4,0,0,0],[0,4,0,0],[0,0,4,0],[0,0,0,1]];
+  const shape=[6,2,2], signal=new Float32Array(24).fill(440);
+  const exterior={offset:[2,1,0],shape:[2,1,2],data:Uint8Array.of(1,0,0,1)};
+  const native={signal,shape,affine,inverse:inverseAffine(affine)};
+  const source={...native,signal:ctExteriorDisplaySignal(signal,shape,exterior)};
+  const brighter=signal.slice();
+  brighter[10]=brighter[15]=1800;
+  const alternative={...native,signal:ctExteriorDisplaySignal(brighter,shape,exterior)};
+  const mask=Uint8Array.from(signal,(_,i)=>Number(i%3===0));
+  const context={coverage:ctOpticalCoverage(mask,shape,affine)};
+  for(const preset of ['ct-angiography','ct-bone','ct-tissue']){
+    const transfer=volumeTransfer(preset,[-1000,3000],undefined,'CTA');
+    assert.equal(transfer.data[3],0);
+    assert.ok(transfer.range[0]>=CT_EXTERIOR_AIR_HU);
+    const density=buildOpticalDensity(source,transfer,context);
+    assert.deepEqual(buildOpticalDensity(alternative,transfer,context),density);
+    assert.notDeepEqual(buildOpticalDensity(native,transfer,context),density);
+    for(const i of [10,15])assert.equal(density.fine[i*2],0);
+    assert.ok(density.fine[11*2]>0,'zero within the footprint leaves the source value unchanged');
+    for(const direction of OPTICAL_KEY_LIGHTS){
+      assert.deepEqual(buildDirectionalOpticalDepth(source,shape,density.fine,direction),
+        buildDirectionalOpticalDepth(alternative,shape,buildOpticalDensity(alternative,transfer,context).fine,direction));
+    }
+  }
+});
+
+test('directional extinction integrates physical length on a mirrored, anisotropic and sheared cache grid',()=>{
+  const affine=[[0,-3,0,10],[-2,.2,0,20],[0,.1,4,30],[0,0,0,1]];
+  const shape=[24,22,20], grid=[12,11,10], cell=[5,5,5];
+  const direction=[.18,.94,-.27];
+  const unit=direction.map(v=>v/Math.hypot(...direction));
+  const density=Float32Array.from({length:2*grid.reduce((n,v)=>n*v,1)},(_,index)=>index%2?.05:.18);
+  const source={shape,inverse:inverseAffine(affine)};
+  const depths=buildDirectionalOpticalDepth(source,grid,density,direction);
+  const voxel=cell.map((value,axis)=>(value+.5)*shape[axis]/grid[axis]-.5);
+  const point=transformPoint(affine,voxel);
+  const [,distance]=volumeRayInterval(point,unit,shape,affine);
+  const offset=2*((cell[0]*grid[1]+cell[1])*grid[2]+cell[2]);
+  assert.ok(Math.abs(depths[offset]-.18*distance)<1e-5);
+  assert.ok(Math.abs(depths[offset+1]-.05*distance)<1e-5);
+  const reverse=buildDirectionalOpticalDepth(source,grid,density,unit.map(v=>-v));
+  assert.notEqual(reverse[offset],depths[offset]);
+});
+
+test('directional depth leaves empty paths clear and preserves skull-opacity weighting',()=>{
+  const grid=[6,1,1], extinction=new Float32Array(2*grid[0]);
+  extinction.set([.32,.32],2*3);
+  const plus=buildDirectionalOpticalDepth({shape:grid,inverse:identity},grid,extinction,[1,0,0]);
+  const minus=buildDirectionalOpticalDepth({shape:grid,inverse:identity},grid,extinction,[-1,0,0]);
+  assert.ok(Math.abs(plus[0]-.32)<1e-7,'the intervening cell shadows the positive ray');
+  assert.equal(minus[0],0);
+  assert.equal(plus[8],0,'the same cell behind the ray casts no shadow');
+  assert.equal(plus[0]-plus[1],0,'zero skull opacity cancels the entire skull contribution');
+  assert.ok(Math.abs(plus[0]-.75*plus[1]-.08)<1e-7);
+});
+
+test('transfer row and both optical scales survive atlas packing in source XYZ order',()=>{
+  const lut=volumeTransfer('mri',[0,1],undefined,'TOF');
+  const affine=[[4,0,0,0],[0,4,0,0],[0,0,4,0],[0,0,0,1]];
+  const shape=[56,5,56];
+  const signal=new Float32Array(shape.reduce((n,v)=>n*v,1));
+  const x=19,y=2,z=27;
+  signal[(x*shape[1]+y)*shape[2]+z]=1;
+  const source={signal,shape,affine,inverse:inverseAffine(affine)};
+  const atlas=volumeOpticalAtlas(lut,source);
+  assert.deepEqual(atlas.grid,shape);
+  const read=(col,row,channel)=>DataUtils.fromHalfFloat(atlas.data[4*(row*atlas.width+col)+channel]);
+  const row=1+Math.floor(x/atlas.columns)*shape[1]+y;
+  const col=(x%atlas.columns)*shape[2]+z;
+  assert.ok(Math.abs(read(col,row,0)-lut.data.at(-1))<.0005);
+  assert.ok(Math.abs(read(col,row,1)-lut.data.at(-1)/8)<.0001);
+  assert.equal(read(col+1,row,0),0);
+  assert.ok(read(col+1,row,1)>0);
+  assert.ok(atlas.depthRow>row);
+  const fine=buildOpticalDensity(source,lut).fine;
+  for(const [channel,direction] of OPTICAL_KEY_LIGHTS.entries()){
+    const integrated=buildDirectionalOpticalDepth(source,shape,fine,direction);
+    const index=2*((x*shape[1]+y)*shape[2]+z);
+    const depthAtlasRow=row+atlas.depthRow-1;
+    assert.ok(Math.abs(read(col,depthAtlasRow,channel)-integrated[index])<.003);
+    assert.ok(Math.abs(read(col,depthAtlasRow,channel+2)-integrated[index+1])<.003);
+  }
+  // Preserve an extinction value below the old 8-bit quantization threshold.
+  const faint=lut.data.findIndex((v,i)=>i%4===3&&v>.0007&&v<.001);
+  assert.ok(Math.abs(read((faint-3)/4,0,3)-lut.data[faint])<.000001);
+  assert.equal(volumeOpticalAtlas(lut).data.byteLength,8192);
 });

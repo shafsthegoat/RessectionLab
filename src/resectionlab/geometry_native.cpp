@@ -7,6 +7,8 @@
 #include <cstdint>
 #include <cstring>
 #include <limits>
+#include <memory>
+#include <numeric>
 #include <vector>
 #include <stdexcept>
 #include <tuple>
@@ -17,6 +19,7 @@
 #include "validation_native.hpp"
 #include "simulation_bindings_native.hpp"
 #include "file_identity_native.hpp"
+#include "wall_sweep_native.hpp"
 
 namespace py = pybind11;
 namespace {
@@ -44,6 +47,190 @@ std::vector<T> checked_array(const py::array& value, const std::vector<py::ssize
 void finite_values(const std::vector<double>& values) {
     for (double value : values)
         if (!std::isfinite(value)) throw py::value_error("native geometry metadata must be finite");
+}
+
+py::object displacement_snapshot(py::handle field) {
+    if (!PyDict_CheckExact(field.ptr()) || sizeof(double) != 8) return py::none();
+    const Py_ssize_t size = PyDict_GET_SIZE(field.ptr());
+    const Py_ssize_t row_bytes = 3 * sizeof(double);
+    if (size > PY_SSIZE_T_MAX / row_bytes) return py::none();
+
+    struct Row { py::object key; Triple values; };
+    std::vector<Row> rows;
+    rows.reserve(static_cast<std::size_t>(size));
+    Py_ssize_t position = 0;
+    PyObject *key, *value;
+    while (PyDict_Next(field.ptr(), &position, &key, &value)) {
+        if (!PyUnicode_CheckExact(key) || !PyList_CheckExact(value) || PyList_GET_SIZE(value) != 3)
+            return py::none();
+        Triple values;
+        for (int axis = 0; axis < 3; ++axis) {
+            PyObject* item = PyList_GET_ITEM(value, axis);
+            if (!PyFloat_CheckExact(item)) return py::none();
+            values[axis] = PyFloat_AS_DOUBLE(item);
+            if (!std::isfinite(values[axis])) return py::none();
+        }
+        rows.push_back({py::reinterpret_borrow<py::object>(key), values});
+    }
+    // Keep Python's Unicode ordering and preserve the raw double bytes,
+    // including a change of sign on zero.
+    std::sort(rows.begin(), rows.end(), [](const Row& first, const Row& second) {
+        const int order = PyUnicode_Compare(first.key.ptr(), second.key.ptr());
+        if (order == -1 && PyErr_Occurred()) throw py::error_already_set();
+        return order < 0;
+    });
+    py::tuple keys(size);
+    PyObject* storage = PyBytes_FromStringAndSize(nullptr, size * row_bytes);
+    if (!storage) throw py::error_already_set();
+    auto packed = py::reinterpret_steal<py::bytes>(storage);
+    char* bytes = PyBytes_AS_STRING(storage);
+    for (Py_ssize_t i = 0; i < size; ++i) {
+        keys[i] = rows[i].key;
+        std::memcpy(bytes + i * row_bytes, rows[i].values.data(), row_bytes);
+    }
+    return py::make_tuple(keys, packed);
+}
+
+constexpr char wall_sweep_capsule[] = "resectionlab.wall-sweep.v1";
+
+py::capsule make_wall_sweep(const py::array& rest, const py::array& vertices,
+                            const py::array& owners, std::size_t owner_count, bool shared_vertex) {
+    namespace wall = resectionlab::wall_sweep;
+    if (rest.ndim() != 3 || std::size_t(rest.shape(0)) > wall::max_items || owner_count > wall::max_items)
+        throw py::value_error("Native wall sweep exceeds the source geometry limit");
+    const auto count = rest.shape(0);
+    const auto coordinates = checked_array<double>(rest, {count, 3, 3}, "wall triangles");
+    const auto indices = checked_array<std::int64_t>(vertices, {count, 3}, "wall vertices");
+    const auto bindings = checked_array<std::int64_t>(owners, {count, 3}, "wall owners");
+    auto source = std::make_unique<wall::Wall>();
+    source->owner_count = owner_count;
+    source->check_shared_vertex = shared_vertex;
+    source->faces.resize(std::size_t(count));
+    std::vector<std::int64_t> first_corner(shared_vertex ? 3*count : 0, -1);
+    for (std::int64_t i = 0; i < count; ++i) {
+        auto& face = source->faces[i];
+        for (int j = 0; j < 3; ++j) {
+            const auto owner = bindings[3*i+j], vertex = indices[3*i+j];
+            if (owner < 0 || std::size_t(owner) >= owner_count || vertex < 0 || vertex >= 3*count)
+                throw py::value_error("Native wall sweep requires valid vertex and owner indices");
+            face.rest[j] = wall::load(coordinates.data()+9*i+3*j);
+            if (!wall::bounded(face.rest[j]))
+                throw py::value_error("Native wall sweep requires finite bounded source coordinates");
+            face.vertices[j] = vertex;
+            face.owners[j] = owner;
+            if (shared_vertex) {
+                auto& first = first_corner[vertex];
+                if (first < 0) {
+                    first = 3*i+j;
+                } else {
+                    const auto& previous = source->faces[first/3];
+                    if (first/3 == i || previous.owners[first%3] != owner ||
+                        previous.rest[first%3] != face.rest[j])
+                        throw py::value_error("Native wall sweep requires a single position and owner per shared vertex");
+                }
+            }
+        }
+        face.box = wall::bounds(face.rest);
+    }
+    source->order.resize(std::size_t(count));
+    std::iota(source->order.begin(), source->order.end(), 0);
+    if (count) source->build(0, int(count));
+    py::capsule result(source.get(), wall_sweep_capsule, [](void* pointer) {
+        delete static_cast<wall::Wall*>(pointer);
+    });
+    source.release();
+    return result;
+}
+
+bool wall_sweep_clear(const py::capsule& source, const py::array& prior,
+                      const py::array& candidate, bool static_check) {
+    namespace wall = resectionlab::wall_sweep;
+    if (!PyCapsule_IsValid(source.ptr(), wall_sweep_capsule))
+        throw py::value_error("Native wall sweep source binding is invalid");
+    const auto& topology = *source.get_pointer<const wall::Wall>();
+    const auto size = static_cast<py::ssize_t>(topology.owner_count);
+    const auto before = checked_array<double>(prior, {size, 3}, "prior wall offsets");
+    const auto after = checked_array<double>(candidate, {size, 3}, "candidate wall offsets");
+    for (py::ssize_t i = 0; i < size; ++i) {
+        if (!wall::bounded(wall::load(before.data()+3*i)) || !wall::bounded(wall::load(after.data()+3*i)))
+            throw py::value_error("Native wall sweep requires finite bounded offsets");
+    }
+    if (!static_check && before == after) return true;
+    py::gil_scoped_release release;
+    return wall::Check(topology, before.data(), after.data(), static_check).run();
+}
+
+namespace wall = resectionlab::wall_sweep;
+using Hinge = std::array<wall::Vec, 4>;
+using HingeNormals = std::array<wall::Vec, 2>;
+
+HingeNormals hinge_normals(const Hinge& points) {
+    const auto edge = wall::sub(points[1], points[0]);
+    return {wall::cross(edge, wall::sub(points[2], points[0])),
+            wall::cross(edge, wall::sub(points[3], points[0]))};
+}
+
+bool hinge_bernstein_clear(const Hinge& before, const Hinge& after) {
+    Hinge midpoint;
+    for (std::size_t i = 0; i < midpoint.size(); ++i) {
+        // Match the local certificate's rounded midpoint before taking differences.
+        for (int axis = 0; axis < 3; ++axis)
+            midpoint[i][axis] = (before[i][axis] + after[i][axis]) / 2.;
+    }
+    const auto first = hinge_normals(before), middle = hinge_normals(midpoint), last = hinge_normals(after);
+    HingeNormals unit = middle;
+    for (auto& normal : unit) {
+        const double length = std::max(1e-30, std::sqrt(wall::dot(normal, normal)));
+        for (double& component : normal) component /= length;
+    }
+    const auto axis = wall::sub(unit[0], unit[1]);
+    for (int face = 0; face < 2; ++face) {
+        const double start = wall::dot(first[face], axis);
+        const double center = wall::dot(middle[face], axis);
+        const double end = wall::dot(last[face], axis);
+        const double control = 2. * center - .5 * (start + end);
+        double scale = 1e-30;
+        for (int component = 0; component < 3; ++component) {
+            scale = std::max({scale, std::abs(first[face][component]),
+                              std::abs(middle[face][component]), std::abs(last[face][component])});
+        }
+        // Coordinates are bounded and norm denominators are floored. The
+        // three-term sums, sqrt and division change a unit component by only
+        // a few ulps under alternate reduction order. Allow ample absolute
+        // error on the projections and Bernstein coefficient, scaled by the
+        // original normals so cancellation cannot understate the margin.
+        const double margin = 4096. * std::numeric_limits<double>::epsilon() * scale;
+        const double sign = face == 0 ? 1. : -1.;
+        if (!(sign * start > margin && sign * center > margin && sign * end > margin &&
+              sign * control > margin)) return false;
+    }
+    return true;
+}
+
+bool wall_hinges_separated(const py::array& before, const py::array& after, const py::array& quads) {
+    if (before.ndim() != 2 || quads.ndim() != 2 ||
+        std::size_t(before.shape(0)) > wall::max_items || std::size_t(quads.shape(0)) > wall::max_items)
+        return false;
+    const auto size = before.shape(0), count = quads.shape(0);
+    const auto first = checked_array<double>(before, {size, 3}, "prior hinge vertices");
+    const auto last = checked_array<double>(after, {size, 3}, "candidate hinge vertices");
+    const auto indices = checked_array<int64_t>(quads, {count, 4}, "wall hinges");
+    py::gil_scoped_release release;
+    for (py::ssize_t row = 0; row < count; ++row) {
+        Hinge start, end;
+        for (int corner = 0; corner < 4; ++corner) {
+            const auto vertex = indices[4 * row + corner];
+            if (vertex < 0 || vertex >= size) return false;
+            start[corner] = wall::load(first.data() + 3 * vertex);
+            end[corner] = wall::load(last.data() + 3 * vertex);
+            for (int axis = 0; axis < 3; ++axis) {
+                if (!(std::abs(start[corner][axis]) <= 2. * wall::max_coordinate &&
+                      std::abs(end[corner][axis]) <= 2. * wall::max_coordinate)) return false;
+            }
+        }
+        if (!hinge_bernstein_clear(start, end)) return false;
+    }
+    return true;
 }
 
 double squared_norm(const Triple& value) {
@@ -321,6 +508,15 @@ PYBIND11_MODULE(_geometry_cpp, module) {
     module.attr("BUILD_IDENTITY") = RSL_BUILD_IDENTITY;
     module.attr("MAX_PRIMITIVES") = max_primitives;
     module.attr("MAX_BATCH_ITEMS") = max_items;
+    module.attr("WALL_SWEEP_VERSION") = 2;
+    module.def("displacement_snapshot", &displacement_snapshot);
+    module.def("make_wall_sweep", &make_wall_sweep, py::arg("rest").noconvert(),
+               py::arg("vertices").noconvert(), py::arg("owners").noconvert(), py::arg("owner_count"),
+               py::arg("shared_vertex") = false);
+    module.def("wall_sweep_clear", &wall_sweep_clear, py::arg("source").noconvert(),
+               py::arg("prior").noconvert(), py::arg("candidate").noconvert(), py::arg("static_check"));
+    module.def("wall_hinges_separated", &wall_hinges_separated, py::arg("before").noconvert(),
+               py::arg("after").noconvert(), py::arg("quads").noconvert());
     module.def("capsule_chunk", &capsule_chunk, py::arg("queries").noconvert(),
         py::arg("spans").noconvert(), py::arg("affine").noconvert(), py::arg("spacing").noconvert(),
         py::arg("cell_radius"), py::arg("eps"));

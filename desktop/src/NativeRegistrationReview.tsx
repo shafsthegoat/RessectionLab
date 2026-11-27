@@ -1,6 +1,6 @@
 import {useEffect,useRef,useState} from 'react';
 import type {NativeWorkspace} from './use-native-workspace';
-import type {RegistrationSection} from './native-anatomy-data';
+import type {LocalAlignmentEvidence,RegistrationSection} from './native-anatomy-data';
 import {transformPoint,type Point3} from './viewer/coordinates';
 import {scanLabel} from './native-study-state';
 
@@ -10,6 +10,26 @@ type Pair=Record<Side,Pick>;
 type ImagePlane={geometry:RegistrationSection;image:ImageData};
 const normals:Record<string,Point3>={Axial:[0,0,1],Coronal:[0,1,0],Sagittal:[1,0,0]};
 const product=(a:Point3,b:Point3)=>a.reduce((sum,n,i)=>sum+n*b[i],0);
+const probeLabels={insufficient_source_coverage:'Incomplete source coverage',weak_image_structure:'Weak image structure',
+  search_boundary:'Peak at search limit',competing_matches:'Competing matches',distinguishable_peak:'Distinct local peak'};
+
+function LocalEvidence({value,blocked,onInspect}:{value:LocalAlignmentEvidence;blocked:boolean;onInspect:(point:Point3)=>void}){
+  const overlap=(100*value.commonCoverageCount/value.sampleCount).toFixed(1);
+  const distinct=value.patches.filter(p=>p.status==='distinguishable_peak').length;
+  return <details open>
+    <summary>{value.fieldWidthMm} mm alignment screen</summary>
+    <p>Common acquired coverage {overlap}% · {distinct} of {value.patches.length} distinct local peaks · {value.transformStatus}</p>
+    <p>Image comparisons suggest where to check paired landmarks. Review status is unchanged.</p>
+    <details><summary>Local measurements</summary>
+      {value.patches.map(p=><div key={p.centerRasMm.join(',')}>
+        <strong>[{p.centerRasMm.map(n=>n.toFixed(1)).join(', ')}] RAS mm</strong> · {probeLabels[p.status]}
+        {p.movingSamplingShiftMm&&<span> · moving sample shift [{p.movingSamplingShiftMm.join(', ')}] mm</span>}
+        {p.candidateScore!==undefined&&p.bestScore!==undefined&&<span> · edge agreement {p.candidateScore.toFixed(3)} → {p.bestScore.toFixed(3)}</span>}
+        <button disabled={blocked} onClick={()=>onInspect(p.centerRasMm)}>Load paired slices here</button>
+      </div>)}
+    </details>
+  </details>;
+}
 
 function Slice({plane,label,marks,onPick}:{plane:ImagePlane;label:string;marks:Array<{pick:Pick;name:string}>;onPick:(pick:Pick)=>void}){
   const canvas=useRef<HTMLCanvasElement>(null);
@@ -46,6 +66,8 @@ export function NativeRegistrationReview({workspace:w,blocked}:{workspace:Native
   const [planes,setPlanes]=useState<Record<Side,ImagePlane>|null>(null);
   const [pairs,setPairs]=useState<Pair[]>([]),[pending,setPending]=useState<Partial<Pair>>({});
   const [manual,setManual]=useState(''),[error,setError]=useState('');
+  const [local,setLocal]=useState<LocalAlignmentEvidence|null>(null);
+  const [brainChoice,setBrainChoice]=useState(''),[vesselChoice,setVesselChoice]=useState('');
   if(!moving||!reference||moving.id===reference.id)return null;
   const saved=doc.transforms[moving.id]?.landmarks;
   const route=w.planning.selected;
@@ -58,13 +80,13 @@ export function NativeRegistrationReview({workspace:w,blocked}:{workspace:Native
     if(next.moving&&next.reference){setPairs([...pairs,{moving:next.moving,reference:next.reference}]);setPending({});}
     else setPending(next);
   }
-  function sample(){
-    if(!center)return;
+  function sample(point=center){
+    if(!point)return;
     const normal=normals[axis],api=w.api!;
     setError('');setPlanes(null);
     void w.run(async()=>{
       const take=async(id:string,side:Side)=>{
-        const g=await api.anatomySection({...w.args(),seriesId:id,center:center.map((n,i)=>n+shift[side]*normal[i]),
+        const g=await api.anatomySection({...w.args(),seriesId:id,center:point.map((n,i)=>n+shift[side]*normal[i]),
           normal,spacingMm:.45,registrationReview:true});
         if(!g.sourceFromSection||!g.voxelFromSection||!g.sourceShape)throw Error('Source section geometry unavailable');
         const bytes=await api.readAsset(g.pixels.assetId);
@@ -77,9 +99,30 @@ export function NativeRegistrationReview({workspace:w,blocked}:{workspace:Native
       }catch(e){setError(e instanceof Error?e.message:String(e));}
     });
   }
-  const disabled=blocked||!w.author.trim();
+  function screenLocal(){
+    if(!center)return;
+    setError('');setLocal(null);
+    void w.run(async()=>{
+      try{
+        setLocal(await w.api!.anatomyLocalAlignment({...w.args(),seriesId:w.series,center}));
+      }catch(e){setError(e instanceof Error?e.message:String(e));}
+    });
+  }
+  const visibleLocal=local&&center&&local.snapshotId===doc.snapshot_id&&local.centerRasMm.every((v,i)=>v===center[i])?local:null;
+  const disabled=blocked||w.binding!.readOnlyStudy||!w.author.trim();
+  const localWallReview=doc.transforms[moving.id]?.native_wall_alignment_review;
+  const tissueChoices=doc.layers.filter(layer=>layer.kind==='brain'&&layer.source_series===reference.id&&
+    [undefined,null,'positive_labels_only'].includes((layer.provenance as {evidence_use?:string}|null)?.evidence_use));
+  const scoreChoices=doc.layers.filter(layer=>layer.source_series===moving.id&&
+    !!layer.probability&&['vessels','artery','vein','vessel'].includes(layer.kind));
+  const brainLayerId=brainChoice||tissueChoices[0]?.id,vesselLayerId=vesselChoice||scoreChoices[0]?.id;
   function accept(movingPoints:Point3[],referencePoints:Point3[]){
     return w.change(()=>w.api!.anatomyRegister({...w.args(),seriesId:w.series,action:'review',movingPoints,referencePoints,reviewer:w.author}));
+  }
+  function acceptLocalWall(movingPoints:Point3[],referencePoints:Point3[]){
+    const nativeWallScope={center,brainLayerId,vesselLayerId};
+    return w.change(()=>w.api!.anatomyRegister({...w.args(),seriesId:w.series,action:'reviewNativeWall',
+      movingPoints,referencePoints,reviewer:w.author,nativeWallScope}),{align:false});
   }
   return <div className="registration-review">
     {saved&&!Array.isArray(saved)&&Array.isArray(saved.errors_mm)&&<details><summary>Saved landmark review · {saved.errors_mm.length} pairs</summary>
@@ -92,8 +135,10 @@ export function NativeRegistrationReview({workspace:w,blocked}:{workspace:Native
   </select></label><label>Plane<select value={axis} onChange={e=>{setPlanes(null);setAxis(e.target.value)}}>{Object.keys(normals).map(a=><option key={a}>{a}</option>)}</select></label>
     {(['reference','moving'] as const).map(side=><label key={side}>{side==='moving'?'Moving':'Reference'} slice offset · mm
       <input type="number" step="1" value={shift[side]} onChange={e=>{setPlanes(null);setShift({...shift,[side]:Number(e.target.value)})}}/></label>)}
-    <button disabled={blocked||!center} onClick={sample}>Load paired source slices</button>
+    <button disabled={blocked||!center} onClick={()=>sample()}>Load paired source slices</button>
+    <button disabled={blocked||!center} onClick={screenLocal}>Check local alignment evidence</button>
     {error&&<p role="alert">{error}</p>}
+    {visibleLocal&&<LocalEvidence value={visibleLocal} blocked={blocked} onInspect={sample}/>}
     {planes&&<><p>Click the same anatomical feature in both slices. Purple marks space outside acquisition coverage.</p>
       {(['reference','moving'] as const).map(side=><Slice key={side} plane={planes[side]} label={side+' · '+scanLabel(side==='moving'?moving:reference)}
         marks={[...pairs.map((p,i)=>({pick:p[side],name:String(i+1)})),...(pending[side]?[{pick:pending[side]!,name:String(pairs.length+1)}]:[])]}
@@ -106,5 +151,17 @@ export function NativeRegistrationReview({workspace:w,blocked}:{workspace:Native
     <p>Review requires at least three non-collinear pairs. Residuals measure these landmarks only.</p>
     <details><summary>Enter paired RAS coordinates</summary><textarea aria-label="Paired RAS coordinates" value={manual} onChange={e=>setManual(e.target.value)} placeholder={'{"moving":[],"reference":[]}'}/>
       <button disabled={disabled||!manual.trim()} onClick={()=>{try{const p=JSON.parse(manual);void accept(p.moving,p.reference)}catch{setError('Enter valid JSON with moving and reference coordinate lists.')}}}>Review entered coordinates</button></details>
+    {doc.transforms[moving.id]?.status==='unreviewed'&&brainLayerId&&vesselLayerId&&<details>
+      <summary>Review a local native wall field</summary>
+      <p>Use four non-coplanar landmark pairs near the intended field. The selected source layers and field centre bind the local review.</p>
+      {localWallReview&&<p>Saved local centre [{localWallReview.centerRasMm.map(n=>n.toFixed(1)).join(', ')}] RAS mm.</p>}
+      <label>Brain tissue<select value={brainLayerId} onChange={e=>setBrainChoice(e.target.value)}>{tissueChoices.map(l=><option key={l.id} value={l.id}>{l.label}</option>)}</select></label>
+      <label>Native vascular scores<select value={vesselLayerId} onChange={e=>setVesselChoice(e.target.value)}>{scoreChoices.map(l=><option key={l.id} value={l.id}>{l.label}</option>)}</select></label>
+      <button disabled={disabled||!center||pairs.length<4||!!pending.reference||!!pending.moving}
+        onClick={()=>acceptLocalWall(pairs.map(p=>p.moving.source),pairs.map(p=>p.reference.source))}>Save local wall review</button>
+      <button disabled={disabled||!center||!manual.trim()} onClick={()=>{
+        try{const p=JSON.parse(manual);void acceptLocalWall(p.moving,p.reference)}catch{setError('Enter valid JSON with moving and reference coordinate lists.');}
+      }}>Save local wall review from entered points</button>
+    </details>}
   </div>;
 }

@@ -27,7 +27,7 @@ import sys
 import tempfile
 import threading
 import time
-from types import ModuleType, FunctionType, BuiltinFunctionType
+from types import ModuleType, FunctionType, BuiltinFunctionType, MappingProxyType
 import uuid
 from typing import Any, Callable
 
@@ -39,6 +39,7 @@ from .native_resection import NATIVE_GENERIC_TOOLS
 from .imaging import create_synthetic_case, inspect_nifti, load_case, load_nifti_case, read_case_artifacts, save_case
 from .planning import SearchConfig, generate_candidate_routes
 from .rehearsal_bridge import OPERATIONS as REHEARSAL_OPERATIONS
+from .rehearsal_timing import RehearsalTimingMonitor, RequestTiming
 
 PROTOCOL_VERSION = 1
 MAX_REQUEST_BYTES = 1024 * 1024
@@ -53,7 +54,7 @@ MAX_PRIOR_PROPOSALS = 16
 MAX_AXIS_INSPECTION_VOXELS = 16_000_000
 MAX_AXIS_INSPECTION_METADATA_BYTES = 256 * 1024
 MAX_AXIS_INSPECTION_RESULT_BYTES = 2 * 1024 * 1024
-OPERATIONS = frozenset({'anatomyInspectIntake','anatomyImportBatch','anatomyPrepare','anatomySavePackage','anatomySaveView','anatomyComponents','anatomyGraph','anatomyCreate','anatomyReconstruct','anatomyPlan','anatomyRemoval','anatomySection','anatomyOpen','anatomyView','anatomyEdit','anatomySample','anatomyRegister','anatomyImport','anatomyExport',"ping", "executeDevelopmentEpisode", "executePersistentPassiveEpisode", "executePublicSurfaceContactEpisode", "publicContactFamilyAvailability", "executePublicContactFamilyEpisode", "inspectDevelopmentEpisodeComparison", "evaluateDevelopmentEpisodeVascular", "loadCase", "importNifti", "importDisplaySeries", "importDiagnosticLayer", "importStructuralEvidence", "importPriorProposals", "saveCase", "generateRoutes", "generateNativeRoutes", "inspectRefinement", "inspectAxisPlanning", "inspectObservedLandmarkUpdate", "cancel", "inspectEvidence", "createSyntheticCase", "nativeTraining", "trainPatient", "listRuns", "replayTraining", "evaluateCandidate", "exportCandidate", "shutdown"})
+OPERATIONS = frozenset({'anatomyInspectIntake','anatomyImportBatch','anatomyDiffusionBaseline','anatomyCtaArterialCoverage','anatomyPrepare','anatomySavePackage','anatomySaveView','anatomyComponents','anatomyAttachedVesselReview','anatomyVesselGapReview','anatomyGraph','anatomyCreate','anatomyReconstruct','anatomyPlan','anatomyRemoval','anatomySection','anatomyLocalAlignment','anatomyOpen','anatomyView','anatomyEdit','anatomySample','anatomyRegister','anatomyImport','anatomyExport',"ping", "executeDevelopmentEpisode", "executePersistentPassiveEpisode", "executePublicSurfaceContactEpisode", "publicContactFamilyAvailability", "executePublicContactFamilyEpisode", "inspectDevelopmentEpisodeComparison", "evaluateDevelopmentEpisodeVascular", "loadCase", "importNifti", "importDisplaySeries", "importDiagnosticLayer", "importStructuralEvidence", "importPriorProposals", "saveCase", "generateRoutes", "generateNativeRoutes", "inspectRefinement", "inspectAxisPlanning", "inspectObservedLandmarkUpdate", "cancel", "inspectEvidence", "createSyntheticCase", "nativeTraining", "trainPatient", "listRuns", "replayTraining", "evaluateCandidate", "exportCandidate", "shutdown"})
 from .surgical_bridge import OPERATIONS as SURGICAL_OPERATIONS
 OPERATIONS = OPERATIONS | REHEARSAL_OPERATIONS | SURGICAL_OPERATIONS
 MAX_RUN_JSON_BYTES = 32 * 1024 * 1024
@@ -309,6 +310,22 @@ def _directory(value: Any) -> Path:
     return path.resolve()
 
 
+def _practice_save_identity(destination: Path, episodes: Mapping):
+    """An existing practice save may be replaced only by its own episode."""
+    try:
+        status = destination.stat()
+    except FileNotFoundError:
+        return None
+    try:
+        saved = read_case_artifacts(destination).get("surgical_toolbox", {})
+        same_episode = saved.get("practiceEpisodes") == thaw_json(episodes)
+    except (OSError, ValueError, AttributeError):
+        same_episode = False
+    if not same_episode:
+        raise BridgeError("PRACTICE_SAVE_AS", "Choose a new filename for this practice episode. The selected file belongs to another workspace.")
+    return status
+
+
 class BinaryTransfers:
     """Only generated numeric snapshots live here; source paths are never exposed."""
 
@@ -378,6 +395,7 @@ class _CaseEntry:
     # The public-goal episode is intentionally transient until v2 workspace
     # replay admission exists. Save refuses this current case explicitly.
     public_surface_contact_active: bool = False
+    surgical_environment_dirty: bool = False
 
 
 @dataclass
@@ -389,6 +407,7 @@ class _Request:
     committing: bool = False
     lock: threading.Lock = field(default_factory=threading.Lock)
     _native_stop: Any = field(default=None, init=False, repr=False, compare=False)
+    rehearsal_timing: RequestTiming | None = field(default=None, init=False, repr=False, compare=False)
 
     def __post_init__(self):
         if type(self) is _Request and _Request.check is _NATIVE_REQUEST_CHECK[0] and _Request.check.__code__ is _NATIVE_REQUEST_CHECK[1]:
@@ -467,7 +486,8 @@ class BridgeSession:
 
     @staticmethod
     def _case_array_bytes(case: CaseData) -> int:
-        arrays = [case.mri, case.affine, *case.compartments.values(), *case.source_compartments.values()]
+        arrays = [case.mri, case.affine, *case.compartments.values(), *case.source_compartments.values(),
+                  *case.vascular_probabilities.values()]
         arrays.extend(item.mask for item in case.structural_evidence.values())
         for item in case.critical_evidence.values():
             arrays.extend((item.mask, item.annotation_coverage, item.affine_ras_mm))
@@ -542,13 +562,13 @@ class BridgeSession:
                     episode=None,episode_selection=None,workspace_hash=None,
                     diagnostic_transfer_paths=(),
                     comparison_pair=None,comparison_actor_episode_id=None,
-                    public_surface_contact_active=True)
+                    public_surface_contact_active=True, surgical_environment_dirty=False)
                 extra={}
             else:
                 entry=replace(self.cases[case.semantic_hash],artifacts=freeze_json(artifacts),
                     diagnostic_transfer_paths=(),
                     comparison_pair=None,comparison_actor_episode_id=None,
-                    public_surface_contact_active=False,**restored)
+                    public_surface_contact_active=False, surgical_environment_dirty=False, **restored)
                 extra=self._workspace_payload(entry)
             request.begin_commit()
             self.cases[case.semantic_hash]=entry
@@ -569,6 +589,40 @@ class BridgeSession:
             except ValueError as error:
                 brain_support.update(reviewStatus="supplied_unverified", reason=str(error))
         from .anatomy_qa import mask_quality
+        vessel_surfaces = {}
+        if case.vascular_probabilities:
+            from .surgical_vessel_surface import GEOMETRY_PROPERTY, TUBE_GEOMETRY, case_tube_model, case_wall_geometry
+            from .vascular_surface_lighting import score_lighting_normals
+            from .vessel_tubes import tag_volume
+            for name, scores in case.vascular_probabilities.items():
+                if name not in case.compartments:
+                    continue
+                request.check()
+                mask = case.compartments[name]
+                tubes = case_tube_model(case, name) if case.metadata.get(GEOMETRY_PROPERTY) == TUBE_GEOMETRY else None
+                mesh = case_wall_geometry(case, name, cancelled=request.cancelled.is_set, tube_model=tubes)
+                if mesh is not None and len(mesh[1]):
+                    positions, indices, normals, source_cells = mesh
+                    # Tube walls carry field normals; the score lighting describes crossing walls.
+                    lighting = None if tubes is not None else score_lighting_normals(
+                        scores, mask, positions, normals, source_cells, case.affine, check=request.check)
+                    request.check()
+                    vessel_surfaces[name] = {"positions": self.transfers.array(positions, "float32"),
+                        "indices": self.transfers.array(indices, "uint32"),
+                        "normals": self.transfers.array(normals, "float32"),
+                        "sourceCells": self.transfers.array(source_cells, "uint32")}
+                    if lighting is not None:
+                        vessel_surfaces[name]["scoreLighting"] = self.transfers.array(lighting, "float32")
+                    if tubes is not None:
+                        origin, values = tag_volume(tubes, check=request.check)
+                        tags = np.zeros(mask.shape, np.float32)
+                        tags[tuple(slice(o, o + n) for o, n in zip(origin, values.shape))] = values
+                        vessel_surfaces[name]["vesselTags"] = self.transfers.array(tags, "float32")
+                        # One display class per vertex from its owning edge: 1 vein, 0 artery or unclassified.
+                        world = positions @ case.affine[:3, :3].T + case.affine[:3, 3]
+                        owners = tubes.evaluate(world, reach=4 * float(np.max(case.spacing_mm)), raw=True)[1]
+                        veins = np.array([kind == "vein" for kind in tubes.edge_class] + [False])[owners]
+                        vessel_surfaces[name]["vesselClasses"] = self.transfers.array(veins, "uint8")
         descriptor = {
             "caseId": case.case_id, "caseHash": case.semantic_hash, "planningHash": case.planning_hash,
             "revision": case.revision, "frame": case.frame, "physicalUnits": "mm",
@@ -577,7 +631,8 @@ class BridgeSession:
             "intensityRange": [float(case.mri.min()), float(case.mri.max())],
             "compartments": [{"name": name, "qa": mask_quality(mask, case.semantic_hash+":"+name), "volumeMm3": float(np.count_nonzero(mask) * case.voxel_volume_mm3),
                               "array": self.transfers.array(mask, "uint8"),
-                              "sourceArray": self.transfers.array(case.source_compartments.get(name, mask), "uint8")}
+                              "sourceArray": self.transfers.array(case.source_compartments.get(name, mask), "uint8"),
+                              **({"vesselSurface": vessel_surfaces[name]} if name in vessel_surfaces else {})}
                              for name, mask in case.compartments.items()],
             "brainMask": None if case.brain_mask is None else self.transfers.array(case.brain_mask, "uint8"),
             "brainSupport": brain_support,
@@ -615,6 +670,10 @@ class BridgeSession:
     def prune_transfers(self) -> None:
         """Discard generated arrays belonging to failed or cancelled imports."""
         retained = set(getattr(self, 'anatomy_transfer_paths', ()))
+        retained.update(getattr(self, 'anatomy_vessel_field_paths', ()))
+        inspection = getattr(self, 'native_wall_source', None)
+        if inspection:
+            retained.update(inspection.transfer_paths)
         for cached in self.cases.values():
             from .workspace_imaging import retained_paths
             retained.update(retained_paths(cached.display_series))
@@ -624,6 +683,7 @@ class BridgeSession:
                 retained.add(cached.descriptor["brainMask"]["path"])
             for compartment in cached.descriptor["compartments"]:
                 retained.update((compartment["array"]["path"], compartment["sourceArray"]["path"]))
+                retained.update(array["path"] for array in compartment.get("vesselSurface", {}).values())
             for proposal in cached.descriptor["structuralEvidence"]:
                 retained.add(proposal["array"]["path"])
             for proposal in cached.descriptor["priorProposals"]:
@@ -638,7 +698,16 @@ class BridgeSession:
     @staticmethod
     def _display_artifacts(entry: _CaseEntry) -> dict:
         toolbox = entry.artifacts.get('surgical_toolbox')
-        if isinstance(toolbox, Mapping) and toolbox.get('fullCase'):
+        if isinstance(toolbox, Mapping) and 'practiceEpisodes' in toolbox:
+            # A navigation hint only. The first inspect restores the complete
+            # native history and verifies the parent before displaying a child.
+            result = {key: thaw_json(value) for key, value in entry.artifacts.items()
+                      if key not in ('surgical_toolbox', 'surgical_prior_scenes')}
+            branch = toolbox.get('branchId')
+            result['surgical_toolbox'] = {'schema': 'resectionlab.surgical-toolbox-display.v1',
+                'requiresReplayVerification': True, 'practiceEpisodeId': branch,
+                'branchId': branch, 'position': toolbox.get('position')}
+        elif isinstance(toolbox, Mapping) and toolbox.get('fullCase'):
             # The renderer only needs navigation metadata before admission.
             # Keep full actions/checkpoints privately for verified replay and
             # native round-trip, rather than copying them through JSONL twice.
@@ -1133,7 +1202,8 @@ class BridgeSession:
         if operation in {'generateRoutes','generateNativeRoutes','inspectRefinement','inspectAxisPlanning',
                          'trainPatient','nativeTraining','evaluateCandidate','replayTraining','exportCandidate'}:
             entry = self.cases.get(args.get('caseHash'))
-            if entry is not None and 'nativeStudyReplay' in entry.artifacts:
+            if entry is not None and ('nativeStudyReplay' in entry.artifacts or
+                    'practiceEpisodes' in (entry.artifacts.get('surgical_toolbox') or {})):
                 raise BridgeError('STUDY_REPLAY_ONLY', 'Use the recorded branch for this study. New planning requires a qualified source.')
             if entry is not None and entry.case.metadata.get('anatomy_workbench_only'):
                 raise BridgeError('ANATOMY_ONLY_CASE', 'This case is an anatomical inspection workspace. Its layers are not surgical targets or validated simulation anatomy.')
@@ -1663,15 +1733,18 @@ class BridgeSession:
         if operation == "saveCase":
             _keys(args, {"caseHash", "path", "workspace", "overwrite", "forFrozenExecution"})
             entry = self._get_case(args.get("caseHash"))
+            toolbox = entry.artifacts.get("surgical_toolbox", {})
+            practice = toolbox.get("practiceEpisodes") if isinstance(toolbox, Mapping) else None
             if args.get("forFrozenExecution") and ('nativeStudyReplay' in entry.artifacts or
-                    'cranialPlanningCandidateV1' in entry.case.metadata.get('surgical_properties', {})):
-                raise BridgeError('STUDY_REPLAY_ONLY', 'A recording or inspection workspace cannot start a frozen policy.')
+                    'cranialPlanningCandidateV1' in entry.case.metadata.get('surgical_properties', {}) or practice):
+                raise BridgeError('STUDY_REPLAY_ONLY', 'Recordings, inspection workspaces and manual practice episodes cannot start a frozen policy.')
             if entry.public_surface_contact_active:
                 raise BridgeError("CONTACT_EPISODE_TRANSIENT",
                                   "The current public contact episode cannot yet be saved as a workspace")
             destination = _path(args.get("path"), kind="case", output=True)
             if destination.exists() and args.get("overwrite") is not True:
                 raise BridgeError("DESTINATION_EXISTS", "Save destination already exists; the native dialog must confirm replacement")
+            existing_save = _practice_save_identity(destination, practice) if practice else None
             workspace = args.get("workspace", {})
             if not isinstance(workspace, dict) or len(json.dumps(workspace, allow_nan=False).encode()) > MAX_WORKSPACE_BYTES:
                 raise BridgeError("INVALID_ARGUMENT", "Workspace must be a bounded JSON object")
@@ -1684,7 +1757,8 @@ class BridgeSession:
                 workspace['rehearsalView'] = checked_saved_view(self, entry, workspace['rehearsalView'])
             imaging=view_state(entry.case,list(entry.display_sources.values()),workspace.pop('imaging',entry.imaging_state))
             selection=replay_state(entry.episode,workspace.pop('episodeReplay',entry.episode_selection))
-            artifacts = thaw_json(entry.artifacts)
+            original_artifacts = entry.artifacts
+            artifacts = thaw_json(original_artifacts)
             prior_workspace = artifacts.get("workspace", {})
             if prior_workspace.get("case_hash") != entry.case.semantic_hash:
                 prior_workspace = {}
@@ -1694,6 +1768,11 @@ class BridgeSession:
                 prior_workspace["routes"] = thaw_json(entry.routes)["candidates"]
                 artifacts["route_search"] = thaw_json(entry.routes)
             artifacts["workspace"] = prior_workspace
+            updated = {**original_artifacts, "workspace": freeze_json(prior_workspace)}
+            new_routes = entry.routes is not None and entry.routes is not original_artifacts.get("route_search")
+            if entry.routes is not None:
+                updated["route_search"] = entry.routes
+            saved_artifacts = MappingProxyType(updated)
             request.check()
             progress(0.2, "Saving imaging, source versions, and evaluated routes")
             with tempfile.TemporaryDirectory(prefix=".resection-save-", dir=destination.parent) as temporary:
@@ -1701,10 +1780,40 @@ class BridgeSession:
                 workspace_hash=save_workspace(entry.case,staged,sources=entry.display_sources.values(),
                     imaging=imaging,episode=entry.episode,selection=selection,artifacts=artifacts,
                     originals=entry.originals)
+                if entry.artifacts is not original_artifacts or self.cases.get(entry.case.semantic_hash) is not entry:
+                    raise BridgeError("WORKSPACE_CHANGED", "The open workspace changed while the save was staged.")
                 request.begin_commit()
-                os.replace(staged,destination)
-            entry.artifacts=freeze_json(artifacts);entry.imaging_state=imaging
+                if practice and existing_save is None:
+                    # Reserve a new name after staging. A concurrent save cannot
+                    # turn a new child filename into an overwrite of its parent.
+                    try:
+                        with destination.open("xb"):
+                            pass
+                    except FileExistsError as error:
+                        raise BridgeError("PRACTICE_SAVE_AS", "The filename was taken while saving. Choose another filename.") from error
+                    try:
+                        os.replace(staged, destination)
+                    except OSError:
+                        destination.unlink(missing_ok=True)
+                        raise
+                else:
+                    if existing_save is not None:
+                        now = destination.stat()
+                        if not os.path.samestat(now, existing_save) or now.st_mtime_ns != existing_save.st_mtime_ns:
+                            raise BridgeError("PRACTICE_SAVE_AS", "The selected workspace changed while saving. Choose another filename.")
+                    os.replace(staged, destination)
+            # Only presentation and route-search metadata were written. Keep
+            # the exact immutable simulation archive that the live owner read.
+            owners = getattr(self, 'surgical_sessions', {})
+            key = entry.case.semantic_hash
+            admitted = owners.get(key)
+            if (not new_routes and admitted is not None and len(admitted) == 5
+                    and admitted[0] is None and admitted[3] is original_artifacts):
+                owners[key] = (*admitted[:3], saved_artifacts, admitted[4])
+            entry.artifacts = saved_artifacts
+            entry.imaging_state=imaging
             entry.episode_selection=selection;entry.workspace_hash=workspace_hash
+            entry.surgical_environment_dirty = False
             return {"caseHash":entry.case.semantic_hash,"path":str(destination),"saved":True,"sessionHash":workspace_hash}
         if operation in {"nativeTraining", "trainPatient"}:
             return self._train_patient(args, request, progress)
@@ -1829,8 +1938,9 @@ class BridgeSession:
 class BridgeRuntime:
     """One numerical worker; cancellation, timeouts and ping never wait on it."""
 
-    def __init__(self, transfer_dir: Path, emit: Callable[[dict], None], *, max_cases: int = 2, run_dir: Path | None = None,
-                 observed_source_root: Path | None = None, prefix_worker: dict | None = None):
+    def __init__(self, transfer_dir: Path, emit: Callable[..., None], *, max_cases: int = 2, run_dir: Path | None = None,
+                 observed_source_root: Path | None = None, prefix_worker: dict | None = None,
+                 rehearsal_timing: RehearsalTimingMonitor | None = None):
         self.session = BridgeSession(transfer_dir, max_cases=max_cases, run_dir=run_dir,
                                      observed_source_root=observed_source_root)
         if prefix_worker is not None:
@@ -1842,6 +1952,7 @@ class BridgeRuntime:
                 raise
         self.run_dir = self.session.run_dir
         self.emit = emit
+        self._rehearsal_timing = rehearsal_timing
         self._lock = threading.RLock()
         self._requests: dict[str, _Request] = {}
         self._seen: set[str] = set()
@@ -1855,7 +1966,11 @@ class BridgeRuntime:
             request.terminal = True
             if request.timer:
                 request.timer.cancel()
-            self.emit({"id": request.request_id, "event": event, **payload})
+            message = {"id": request.request_id, "event": event, **payload}
+            if request.rehearsal_timing is not None:
+                self.emit(message, timing=request.rehearsal_timing)
+            else:
+                self.emit(message)
 
     def submit(self, message: Any) -> None:
         request_id = message.get("id") if isinstance(message, dict) else None
@@ -1927,11 +2042,15 @@ class BridgeRuntime:
                 if len(self._requests) >= MAX_PENDING:
                     raise BridgeError("BUSY", "Too many queued numerical jobs")
                 request = _Request(request_id)
+                if self._rehearsal_timing is not None:
+                    request.rehearsal_timing = RequestTiming.for_operation(request_id, operation, copied_args)
                 self._requests[request_id] = request
                 request.timer = threading.Timer(timeout / 1000, self._timeout, args=(request,))
                 request.timer.daemon = True
                 request.timer.start()
                 self.emit({"id": request_id, "event": "started"})
+                if request.rehearsal_timing is not None:
+                    request.rehearsal_timing.queued_ns = time.monotonic_ns()
                 self._executor.submit(self._work, operation, copied_args, request)
         except Exception as exc:
             self.emit({"id": request_id if isinstance(request_id, str) else None, "event": "error",
@@ -1942,13 +2061,26 @@ class BridgeRuntime:
             self._terminal(request, "error", error={"code": "TIMEOUT", "message": "Operation exceeded its declared time budget"})
 
     def _work(self, operation: str, args: dict, request: _Request) -> None:
+        timing = request.rehearsal_timing
+        if timing is not None:
+            timing.add('queue', time.monotonic_ns() - timing.queued_ns)
+
         def progress(fraction: float, message: str, details: dict | None = None) -> None:
             with self._lock:
                 if not request.terminal and not request.cancelled.is_set():
                     self.emit({"id": request.request_id, "event": "progress", "progress": {"fraction": float(fraction), "message": message, **(details or {})}})
         try:
-            result = self.session.execute(operation, args, request, progress)
-            request.check()
+            if timing is None:
+                result = self.session.execute(operation, args, request, progress)
+                request.check()
+            else:
+                with self._rehearsal_timing.sample(timing):
+                    started_ns = time.monotonic_ns()
+                    try:
+                        result = self.session.execute(operation, args, request, progress)
+                        request.check()
+                    finally:
+                        timing.add('dispatch', time.monotonic_ns() - started_ns)
             self._terminal(request, "result", result=result)
         except Exception as exc:
             if request.cancelled.is_set() or getattr(exc, "code", None) == "CANCELLED":
@@ -1956,6 +2088,8 @@ class BridgeRuntime:
             else:
                 self._terminal(request, "error", error={"code": getattr(exc, "code", "OPERATION_FAILED"), "message": str(exc)})
         finally:
+            if timing is not None:
+                timing.write(sys.stderr)
             self.session.prune_transfers()
             with self._lock:
                 self._requests.pop(request.request_id, None)
@@ -1988,6 +2122,7 @@ def main() -> int:
     parser.add_argument("--prefix-worker-source", type=Path)
     parser.add_argument("--prefix-worker-sha256")
     parser.add_argument("--prefix-worker-branch")
+    parser.add_argument("--rehearsal-timing", action="store_true", help=argparse.SUPPRESS)
     args = parser.parse_args()
     prefix_arguments = (args.prefix_worker_role, args.prefix_worker_source,
                         args.prefix_worker_sha256, args.prefix_worker_branch)
@@ -2002,14 +2137,24 @@ def main() -> int:
     # the wire protocol and route all incidental prints to stderr.
     sys.stdout = sys.stderr
     output_lock = threading.Lock()
-    def emit(event: dict) -> None:
+    def emit(event: dict, *, timing: RequestTiming | None = None) -> None:
+        started_ns = time.monotonic_ns() if timing is not None else 0
         encoded = json.dumps(event, separators=(",", ":"), allow_nan=False)
+        serialized_ns = time.monotonic_ns() if timing is not None else 0
         with output_lock:
+            locked_ns = time.monotonic_ns() if timing is not None else 0
             protocol_output.write(encoded + "\n")
             protocol_output.flush()
-    runtime = BridgeRuntime(args.transfer_dir, emit, run_dir=args.run_dir,
-                            observed_source_root=args.observed_source_root, prefix_worker=prefix_worker)
+        if timing is not None:
+            # ensure_ascii is the wire encoder default, so each character is one byte.
+            timing.record_response(event, len(encoded) + 1, started_ns, serialized_ns,
+                                   locked_ns, time.monotonic_ns())
+    timings = RehearsalTimingMonitor() if args.rehearsal_timing else None
+    runtime = None
     try:
+        runtime = BridgeRuntime(args.transfer_dir, emit, run_dir=args.run_dir,
+                               observed_source_root=args.observed_source_root, prefix_worker=prefix_worker,
+                               rehearsal_timing=timings)
         while not runtime._closed:
             line = sys.stdin.buffer.readline(MAX_REQUEST_BYTES + 1)
             if not line:
@@ -2027,7 +2172,12 @@ def main() -> int:
                 continue
             runtime.submit(request)
     finally:
-        runtime.close()
+        try:
+            if runtime is not None:
+                runtime.close()
+        finally:
+            if timings is not None:
+                timings.close()
     return 0
 
 

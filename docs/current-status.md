@@ -3,7 +3,7 @@
 Repository upkeep follows the [maintenance policy](../CONTRIBUTING.md): keep current-use material,
 retire obsolete code/docs/artifacts, and archive useful history outside the tracked tree.
 
-As of November 19, 2026, the maintained application is Electron/React/TypeScript
+As of November 21, 2026, the maintained application is Electron/React/TypeScript
 with the Python engine and optional compiled C++ backend. This tree combines
 the November 16 structure-aware harm and canonical endpoint work (`b80d2e9e`,
 PR #20), repository cleanup and archive restoration support, and the completed
@@ -37,6 +37,22 @@ study keeps eight synthetic targets separate from its healthy anatomy.
 [Use the native workbench](patient-anatomy-workbench.md#prepare-a-patient-study) ·
 [Reproduce the desktop checks](fresh-patient-reproduction.md#desktop-workflow-and-smoke-test) ·
 [Resume the versioned migration](data-rebuild.md#native-study-migration).
+
+## Interactive operative practice
+
+A verified generated checkpoint can start a separate editable episode. The child retains its source, target, physical model, action prefix and original target volume. In Rehearse, mouse or keyboard input proposes an instrument pose. Place, move, activate, apply and withdraw send checked actions to the engine. A contact-limited advance leaves the instrument at its accepted endpoint. Saving and reopening restores the independent episode. [Practice from an accepted state](desktop-workflow.md#practice-from-an-accepted-engine-state)
+
+The complete generated task begins after bone evacuation and the membrane perimeter cut, at boundary 99. Over 121 manual commands, the operator inspects the target and approach, lifts and extracts 49 mm³ of membrane, treats the entire original 27 mm³ target, clears 236 mm³ of kerf debris and withdraws both instruments. A fresh desktop process reproduced all 121 new boundaries, and an independent uncached replay reproduced the 220-action snapshot. **Hold controls** repeats a checked axial move or a short application at the tip as each accepted state reaches the microscope. The deliberate jog and commit controls remain available. The native forceps path preserves the numeric representation of an unguarded jaw request so that placing the instrument and reopening its history give the same state identity. The earlier protected-checkpoint encoding remains readable. [Open and perform the task](desktop-workflow.md#practice-from-an-accepted-engine-state)
+
+The BITE-09 geometric microscope exposes the registered gray-matter estimate through a 14.03 mm dural window. The retained planning surface contributes 4,152 native vertices. The detached estimated membrane and the opening lip now meet on a source-derived sheet. Target conditioning preserved the signs of all source cells through 4,741 geometric cell removals. The earlier five-shell result included a spurious enclosed pocket. The updated mesh has four closed shells, comprising two residual solids and two source-supported voids. The smaller 15-cell focus touched the main component along a voxel edge in the raw mesh. All 91,764 edges of the updated mesh have two incident faces. The whole-residual raw-to-conditioned p95 distance fell from 0.508 to 0.140 mm. [Fixed-camera comparisons and physical measurements](local-storage-ledger.md)
+
+On the recorded UCSF-PDGM-0004 withdrawal, the renderer now reconstructs the junction between removed cells and the original material interface. A half-voxel physical bound and local orientation and intersection checks limit the fit. Raw picking and removal counts still come from the accepted grid. Within the measured cut, sharp-edge curvature fell 26% on brain and 33% on tumor. Raw source, protected vessel buffers and the measured residual of 15,556 mm³ stayed the same. The lower rim and floor appear rounder, while the upper and right walls retain angular edges at this acquisition and engine resolution. The separate TopCoW-014 comparison retains its own named vascular classes. Acquired episodes keep their source-specific inspection permissions.
+
+During local soft-tissue motion, uniquely registered surface points can sample their resting MRI coordinates. Ambiguous correspondences suppress that signal locally. Lighting follows the accepted deformation and recovery. On the generated control, the measured peak correction beyond the raster was 0.233 mm with a 17.15° maximum normal rotation. The generated control has no measured MRI. On a separate source-bound UCSF-PDGM-0007 read-only short hold, 456 displayed vertices moved on a surface with measured T1CE. At the subvoxel displacement tested, the maximum error in the recovered source coordinates was below 0.000007 mm. Free fluid and outlet reservoirs now have separate HUD readouts, with visible wetting confined to the modeled free field. [Geometry, deformation and mixed-fluid recordings](local-storage-ledger.md)
+
+On the generated vascular and tissue control, four held cells reached 0.692 mm peak displacement, falling to 0.066 mm one modeled second after release. Two modeled wound ports emitted 5.979 mm³ before cumulative bipolar contact dose sealed them. Irrigation added 5 mm³ and suction removed 5 mm³. A fresh engine process reproduced the committed history and terminal state. These measurements describe the declared control. Held-out tension RMSE was 0.590 mN against 0.485 mN for zero force. Both frozen 16-to-20 mm stress-stability gates still fail. [Donor benchmark](continuum-donor-transfer.md) · [Stability results](continuum-domain-sensitivity.md). Functional risk on acquired studies remains unknown.
+
+On the M2 Pro with 16 GiB, the matched 1440 × 900 desktop benchmark measured median/p95 input-to-visible time of 90.5/107.5 ms on the cranial control, compared with 79.9/99.3 ms previously. On the 33-command tissue and wound control, native response measured 37.1/224.4 ms and visible response improved from 76.1/329.6 to 64.5/250.4 ms. The wound-case p95 remains above the 150 ms target. Twelve consecutive held cranial steps took 77.2/93.0 ms from each visible proposal to its accepted frame, with 100.0/114.7 ms between accepted frames. GPU execution was 1.59/19.01 ms on the cranial control and 0.65/1.04 ms on the wound control. [Desktop timings and replay evidence](local-storage-ledger.md)
 
 ## Continuous operative rehearsal
 
@@ -214,7 +230,8 @@ outcomes. [Native glioma evidence](approach-comparison-checkpoint.md#native-glio
 | Independent replay/monitor tooling | [Maintained rehearsal support](../scripts/rehearsal_support/README.md) |
 | Source collections and data-root workflow | [Local HDD ledger and access limits](local-storage-ledger.md), [EDEN segmented cohort](eden2020-healthy-synthetic.md), [data rebuild](data-rebuild.md); ignored `testcases/README.md` and HDD `catalog/START-HERE.md` |
 | Experimental features | [Neighboring paths integration contract](neighboring-paths-panel.md), [continuum](voxel-continuum.md), [research planning](research-planning.md), [interactive approaches](interactive-patient-planning.md) |
-| Historical steering, requirements and negative results | [Master plan](../MASTER_PLAN.md), [status narratives](../PROJECT_STATUS.md), [handoff](../IMPLEMENTING_AGENT_HANDOFF.md), [execution ledger](REAL_OBSERVATION_EXECUTION_LEDGER.md) |
+| Historical steering, requirements and negative results | [Master plan](../MASTER_PLAN.md), [experiment log](../EXPERIMENT_LOG.md), [retired steering, handoff and status diaries](retired-docs-20261126.md) |
+| Topic index for agents and new contributors | [AGENTS.md](../AGENTS.md) |
 
 SurgicalEngine remains authoritative. Source ownership/admission, anatomical
 exclusions, cumulative harm, vascular consequences, STOP/withdrawal, residual
@@ -225,6 +242,5 @@ planning/training paths while reproducing earlier work.
 
 The [cleanup execution record](cleanup-execution-20261116.md) explains the verified
 historical archives, checkout reduction, restoration and remaining KEEP decisions.
-The [earlier support pass](cleanup-20261116.md) remains dated context. Neither
-replaces the research goal.
-Earlier status documents retain their dated narratives and requirements.
+Superseded steering prompts, handoffs, status diaries and unlinked one-off notes
+are listed with restore commands in the [retired documentation index](retired-docs-20261126.md).

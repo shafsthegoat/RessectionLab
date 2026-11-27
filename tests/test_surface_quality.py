@@ -45,9 +45,183 @@ def test_physical_intersection_gate_detects_only_new_contacts():
     assert len(intersection_vertices(source, points, faces)) == 6
 
 
+def test_open_native_vessel_fairing_preserves_the_rim_collar_and_tiny_source_crossings():
+    from scipy import ndimage as ndi
+    from resectionlab.anatomy_geometry import _indexed_contour, condition_open_vascular_contour, vascular_mesh_source_cells
+    from resectionlab.patient_anatomy import world
+
+    x, y, z = np.indices((27, 25, 25), dtype=float)
+    radius = np.hypot(y - 8. - .14 * x, z - 8.)
+    scores = (.5 + np.clip((3.1 + .35 * np.sin(.9 * x) - radius) * .22, -.4, .4)).astype(np.float32)
+    scores[13:15, 20, 19] = [.68, .59]
+    mask = scores >= .5
+    original_scores = scores.copy()
+    source, faces, _ = _indexed_contour(scores, probability=True)
+    affine = np.diag([-.55, .62, .8, 1.])
+    display, diagnostic = condition_open_vascular_contour(source, faces, mask, affine)
+
+    edges, uses = np.unique(np.sort(faces[:, [0, 1, 1, 2, 2, 0]].reshape(-1, 2), axis=1), axis=0, return_counts=True)
+    collar = np.isin(np.arange(len(source)), edges[uses == 1])
+    assert collar.any()
+    for _ in range(2):
+        collar[edges[collar[edges].any(axis=1)].ravel()] = True
+    np.testing.assert_array_equal(display[collar], source[collar])
+    labels, _ = ndi.label(mask, structure=np.ones((3, 3, 3), dtype=bool))
+    owners = vascular_mesh_source_cells(source, mask)
+    tiny = labels.ravel()[owners] == labels[13, 20, 19]
+    assert tiny.any()
+    np.testing.assert_array_equal(display[tiny], source[tiny])
+    np.testing.assert_array_equal(scores, original_scores)
+    np.testing.assert_array_equal(mask, original_scores >= .5)
+    assert diagnostic['policy'] == 'native-bounded-open-vessel-v3'
+    assert 0 < diagnostic['maxDisplacementMm'] <= .4 * .7 * .55
+    assert not len(intersection_vertices(world(affine, source), world(affine, display), faces))
+
+
+def test_section_containment_requires_the_entire_void_ring():
+    from resectionlab.vessel_section_stability import _section_roles
+
+    points = np.array([[-2, -2], [2, -2], [2, 2], [-2, 2],
+                       [1, .4], [3, .4], [3, 1], [1, 1],
+                       [-1.5, .4], [-.5, .4], [-.5, 1], [-1.5, 1]])
+    rings = [list(range(i, i + 4)) for i in (0, 4, 8)]
+    roles, hole_count = _section_roles(rings, points)
+    assert roles.tolist() == [1] * 4 + [0] * 4 + [2] * 4
+    assert hole_count == 1
+
+
+def test_section_records_when_all_edges_of_an_enclosed_void_disappear():
+    from resectionlab.vessel_section_stability import Section, _changed_section
+
+    keys = np.arange(8)
+    edges = np.column_stack((keys, keys + 8))
+    source = Section(edges, keys, np.array([1] * 4 + [2] * 4), 1)
+    closed = Section(edges[:4], keys[:4], np.ones(4, dtype=int), 0)
+
+    assert _changed_section(source, closed)
+    assert _changed_section(closed, source)
+
+
+def test_open_section_guard_restores_a_merged_junction_without_reverting_other_moves(monkeypatch):
+    from resectionlab import vessel_section_stability as section
+    from resectionlab.anatomy_geometry import _indexed_contour
+
+    x, y, z = np.indices((25, 25, 21), dtype=float)
+    first, second = [2.4 - np.hypot(x - axis, y - 12) for axis in (7, 17)]
+    bridge = np.minimum.reduce((1.2 - np.abs(y - 12), 5.1 - np.abs(x - 12), z - 10.3))
+    scores = (.5 + np.clip(np.maximum.reduce((first, second, bridge)) * .2, -.4, .4)).astype(np.float32)
+    source, faces, _ = _indexed_contour(scores, probability=True)
+    candidate = source.copy()
+    candidate[np.abs(source[:, 2] - 10.3) < .45, 2] -= .3
+    elsewhere = (source[:, 2] > 14.) & (source[:, 2] < 17.)
+    candidate[elsewhere, 1] += .08
+    plane = np.array([7., 12., 10.15]), np.array([0., 0., 1.])
+    before, _ = section._cut(source, faces, *plane)
+    merged, _ = section._cut(candidate, faces, *plane)
+    assert section._changed_section(before, merged)
+    monkeypatch.setattr(section, '_source_stations', lambda *_: [plane])
+    guarded, diagnostic = section.preserve_open_sections(source, candidate, faces, scores >= .5, np.eye(4), cancelled=lambda: False)
+    after, _ = section._cut(guarded, faces, *plane)
+    assert not section._changed_section(before, after)
+    assert diagnostic['sectionCorrections'] == 1 and diagnostic['sectionRestoredVertices'] > 0
+    np.testing.assert_array_equal(guarded[elsewhere], candidate[elsewhere])
+
+
+def test_native_vascular_wall_reduces_caliber_error_and_keeps_source_owners():
+    pytest.importorskip("vtkmodules")
+    from resectionlab.anatomy_geometry import (
+        conditioned_vascular_probability_mesh, vascular_mesh_source_cells, vascular_probability_mesh,
+    )
+    from resectionlab.patient_anatomy import world
+
+    affine = np.diag([.55, .62, .8, 1.])
+    indices = np.indices((37, 35, 29)).transpose(1, 2, 3, 0)
+    grid = world(affine, indices)
+    origin = np.array([0., 7.5, 7.])
+    direction = np.array([1., .26, .19])
+    direction /= np.linalg.norm(direction)
+
+    def radial_geometry(positions):
+        delta = positions - origin
+        axial = delta @ direction
+        radius = np.linalg.norm(delta - axial[..., None] * direction, axis=-1)
+        return axial, radius
+
+    axial, radius = radial_geometry(grid)
+    # The acquired-grid score represents a known cylinder with periodic radius
+    # error. A second strand is one sample wide and ends at the same cut plane.
+    shaft = (1.4 - radius) / .9 + .13 * np.sin(2.4 * axial)
+    thin = (.36 - np.hypot(grid[..., 1] - 3.1, grid[..., 2] - 3.2)) / .9
+    scores = (.5 + np.clip(np.maximum(shaft, thin), -.47, .47)).astype(np.float32)
+    mask = scores >= .5
+    baseline_scores = scores.copy()
+    wall = conditioned_vascular_probability_mesh(scores, mask, affine)
+    raw, faces, _ = vascular_probability_mesh(scores, mask)
+    np.testing.assert_array_equal(wall.source, raw)
+    np.testing.assert_array_equal(wall.indices, faces)
+    np.testing.assert_array_equal(wall.source_cells, vascular_mesh_source_cells(raw, mask))
+    np.testing.assert_array_equal(scores, baseline_scores)
+    np.testing.assert_array_equal(mask, scores >= .5)
+    assert not wall.source.flags.writeable and not wall.positions.flags.writeable
+    boundary = ((raw <= 0) | (raw >= np.asarray(mask.shape) - 1)).any(axis=1)
+    np.testing.assert_array_equal(wall.positions[boundary], raw[boundary])
+    thin_vertices = raw[:, 1] < 8
+    shaft_interior = ~thin_vertices & (raw[:, 0] > 3) & (raw[:, 0] < 33)
+
+    def radius_error(positions):
+        _, distance = radial_geometry(world(affine, positions[shaft_interior]))
+        return np.sqrt(np.mean((distance - 1.4) ** 2))
+
+    assert radius_error(wall.positions) < .85 * radius_error(raw)
+    assert 0 < wall.diagnostics["maxDisplacementMm"] <= .7 * .55
+    assert wall.diagnostics["restoredComponents"] == 0
+    assert not len(intersection_vertices(world(affine, raw), world(affine, wall.positions), faces))
+    # Crossings owned by the thin strand survive on both sides of its axis.
+    assert ((wall.positions[thin_vertices, 1] < 5) & (raw[thin_vertices, 0] > 3)).any()
+    assert ((wall.positions[thin_vertices, 1] > 5) & (raw[thin_vertices, 0] > 3)).any()
+
+
 def test_packaged_policy_copy_matches_canonical_resource():
     desktop = Path(__file__).resolve().parents[1]/'desktop/src/viewer/surface_policy.json'
     assert json.loads(desktop.read_text()) == POLICY
+
+
+def test_native_wall_retains_only_complete_isolated_source_components():
+    pytest.importorskip('vtkmodules')
+    from resectionlab.anatomy_geometry import conditioned_vascular_probability_mesh
+
+    shape = (25, 25, 23)
+    _, y, z = np.ogrid[:25, :25, :23]
+    scores = np.broadcast_to(np.clip(.5 + (2.45 - np.hypot(y - 12, z - 12)) / 4, 0, 1), shape).astype(np.float32)
+    scores[6:10, 3:6, 5:8] = .42
+    scores[7, 4, 6], scores[8, 4, 6] = .67, .59
+    scores[7, 3, 6], scores[7, 5, 6] = .39, .47
+    scores[:3, 19:22, 12:15] = .42
+    scores[0, 20, 13], scores[1, 20, 13] = .67, .59
+    mask = scores >= .5
+    source_scores, source_mask = scores.copy(), mask.copy()
+    affine = np.diag([.30, .30, .45, 1.])
+    previous = conditioned_vascular_probability_mesh(scores, mask, affine)
+    current = conditioned_vascular_probability_mesh(scores, mask, affine, retain_isolated_components=True)
+    owners = np.ravel_multi_index(([7, 8], [4, 4], [6, 6]), shape)
+    isolated = np.isin(previous.source_cells, owners)
+    assert isolated.any() and np.any(previous.source[isolated] != previous.positions[isolated])
+    assert current.diagnostics['sourceRetainedIsolatedComponents'] == 1
+    np.testing.assert_array_equal(current.positions[isolated], previous.source[isolated])
+    np.testing.assert_array_equal(current.positions[~isolated], previous.positions[~isolated])
+    for name in ('source', 'indices', 'source_cells'):
+        np.testing.assert_array_equal(getattr(current, name), getattr(previous, name))
+    np.testing.assert_array_equal(scores, source_scores)
+    np.testing.assert_array_equal(mask, source_mask)
+
+    # A third original foreground sample was removed. The resulting pair
+    # must keep the accepted edited-wall conditioning.
+    scores[9, 4, 6] = .63
+    edited_previous = conditioned_vascular_probability_mesh(scores, mask, affine)
+    edited_current = conditioned_vascular_probability_mesh(
+        scores, mask, affine, retain_isolated_components=True, native_mask=scores >= .5,
+    )
+    np.testing.assert_array_equal(edited_current.positions, edited_previous.positions)
 
 
 def test_publisher_surface_retains_geometry_after_portable_reopen(tmp_path):
@@ -99,6 +273,97 @@ def test_publisher_surface_retains_geometry_after_portable_reopen(tmp_path):
     restored.path(restored.series('cta')['original']['path']).write_bytes(b'changed acquired source')
     with pytest.raises(ValueError, match='acquired source checksum differs'):
         mesh(restored, layer)
+
+
+def test_publisher_cta_fairing_uses_one_exact_full_mesh_for_named_partitions(tmp_path):
+    import nibabel as nib
+    from resectionlab.anatomy_geometry import _indexed_contour, mesh
+    from resectionlab.anatomy_publisher_surface import POLICY
+    from resectionlab.patient_anatomy import PatientImagingCollection, world
+    from resectionlab.publisher_vessel_fairing import POLICY as GUIDED_POLICY
+    from resectionlab.surface_fairing import PUBLISHER_CTA_POLICY
+
+    frame = np.diag([-.5, .5, .625, 1.])
+    frame[:3, 3] = [12., -18., 25.]
+    shape = (24, 24, 24)
+    x, y, z = np.indices(shape)
+    mask = ((x - 10 + .17 * z)**2 + (y - 13 + .35 * z)**2 < 3.7**2) & (z > 2) & (z < 21)
+    source = tmp_path / 'cta.nii'
+    image = nib.Nifti1Image(np.where(mask, 450., 40.).astype(np.float32), frame)
+    image.header.set_xyzt_units('mm')
+    nib.save(image, source)
+    asset = tmp_path / 'source.vtp'
+    asset.write_bytes(b'source shape for the portable partition control')
+    collection = PatientImagingCollection.create(tmp_path / 'study', 'publisher-fairing-control')
+    scan = collection.add_series(source, series_id='cta', modality='CTA')
+    raw, triangles, _ = _indexed_contour(mask.astype(np.uint8), False)
+    exact = world(frame, raw).astype(np.float32)
+    labels = np.where(mask, np.where(z > 11, 2, 1), 0).astype(np.uint8)
+
+    def add(layer_id, values, label, points, indices):
+        row = collection.add_layer(values, scan['affine'], layer_id=layer_id, source_series='cta',
+                                   kind='artery', role='context', color='#ef7968', label_value=label)
+        row['publisher_surface'] = {
+            'schema': POLICY, 'original': collection.original(asset), 'vertices_ras_mm': collection.put_array(points),
+            'triangles': collection.put_array(indices), 'source_series': 'cta', 'source_sha256': scan['original']['sha256'],
+            'source_affine': scan['affine'], 'mask_sha256': row['data']['sha256'],
+            'mask_label_value': label, 'mask_revision': 0,
+        }
+        return row
+
+    whole = add('whole', mask.astype(np.uint8), 1, exact, triangles)
+    assignments = raw[triangles, 2].mean(axis=1) > 11
+    children = []
+    for side in (False, True):
+        faces = np.flatnonzero(assignments == side).astype(np.uint32)
+        vertices, indices = np.unique(triangles[faces], return_inverse=True)
+        member = add(f'branch-{int(side)}', labels, 1+int(side), exact[vertices], indices.reshape(-1, 3).astype(np.uint32))
+        member['publisher_surface'].update(publisher_vertex_ids=collection.put_array(vertices),
+                                           publisher_face_ids=collection.put_array(faces))
+        children.append((member, vertices, faces))
+    collection.save()
+    assert np.intersect1d(children[0][1], children[1][1]).size > 0
+    actual = mesh(collection, whole)
+    source_only = mesh(collection, whole, conditioned=False)
+    np.testing.assert_array_equal(actual['source'], source_only['positions'])
+    np.testing.assert_array_equal(actual['indices'], triangles[:, ::-1])
+    assert actual['max_displacement_mm'] > 0 and actual['policy_version'] == PUBLISHER_CTA_POLICY
+    assert source_only['policy_version'] == POLICY
+    for member, vertices, faces in children:
+        displayed = mesh(collection, member)
+        assert displayed['cache_hit'] and displayed['policy_version'] == PUBLISHER_CTA_POLICY
+        np.testing.assert_array_equal(displayed['positions'], actual['positions'][vertices])
+        np.testing.assert_array_equal(displayed['normals'], actual['normals'][vertices])
+        np.testing.assert_array_equal(vertices[displayed['indices']], actual['indices'][faces])
+        np.testing.assert_array_equal(source_only['positions'][vertices], mesh(collection, member, conditioned=False)['positions'])
+    member, _, faces = children[0]
+    bogus = {**member, 'publisher_surface': {**member['publisher_surface'],
+                                           'publisher_face_ids': collection.put_array(np.roll(faces, 1))}}
+    assert mesh(collection, bogus)['policy_version'] == POLICY
+
+    neighboring = np.zeros(shape, np.uint8)
+    neighboring[16, 13, 6:19] = 1
+    vein = collection.add_layer(neighboring, scan['affine'], layer_id='nearby-vein', source_series='cta',
+                                kind='vein', role='context', color='#609fdb')
+    path = collection.path(vein['data']['path'])
+    moved_path = path.with_suffix('.temporarily-unavailable')
+    path.rename(moved_path)
+    fallback = mesh(collection, whole)
+    np.testing.assert_array_equal(fallback['positions'], actual['positions'])
+    assert fallback['policy_version'] == PUBLISHER_CTA_POLICY
+    moved_path.rename(path)
+
+    refined = mesh(collection, whole)
+    assert refined['policy_version'] == GUIDED_POLICY
+    assert not np.array_equal(refined['positions'], actual['positions'])
+    np.testing.assert_array_equal(refined['source'], source_only['positions'])
+    np.testing.assert_array_equal(refined['indices'], actual['indices'])
+    for member, vertices, faces in children:
+        displayed = mesh(collection, member)
+        assert displayed['cache_hit'] and displayed['policy_version'] == GUIDED_POLICY
+        np.testing.assert_array_equal(displayed['positions'], refined['positions'][vertices])
+        np.testing.assert_array_equal(displayed['normals'], refined['normals'][vertices])
+        np.testing.assert_array_equal(vertices[displayed['indices']], refined['indices'][faces])
 
 
 def test_empty_native_mesh_has_explicit_descriptor_without_zero_length_transfer(tmp_path):
@@ -201,6 +466,54 @@ def test_whole_anatomy_exterior_reduces_staircase_without_relaxing_source_bounds
     assert np.linalg.norm(updated-source, axis=1).max() <= .7
     assert display_surface_kind({'kind':'context', 'provenance':{'model':'siam-v2','label_ontology':{'value':16}}}) == 'outer-head-tissue'
     assert display_surface_kind({'kind':'context','label_value':16}) == 'context'
+
+
+def test_brain_display_refinement_preserves_raw_geometry_and_crop_faces(tmp_path):
+    pytest.importorskip("vtkmodules")
+    import nibabel as nib
+    from resectionlab.anatomy_brain_surface import BRAIN_ENVELOPE_POLICY
+    from resectionlab.anatomy_geometry import mesh
+    from resectionlab.patient_anatomy import PatientImagingCollection
+
+    spacing = np.array([.65, .8, 1.05])
+    frame = np.diag([*spacing, 1.])
+    center = np.array([24.3, 25.2, 22.8])
+    radius = np.array([18., 18., 19.])
+    native = np.moveaxis(np.indices((58, 57, 49)), 0, -1)
+    distance = ((np.linalg.norm((native - center) * spacing / radius, axis=-1) - 1)
+                * radius.mean())
+    mask = distance <= 0
+    signal = (28 + 65 * np.tanh(-distance / .82)).astype(np.float32)
+    acquired = nib.Nifti1Image(signal, frame)
+    acquired.header.set_xyzt_units("mm")
+    path = tmp_path / "brain-fixture.nii"
+    nib.save(acquired, path)
+    collection = PatientImagingCollection.create(tmp_path / "native", "brain-display-fixture")
+    scan = collection.add_series(path, series_id="t1", modality="T1")
+    row = collection.add_layer(
+        mask.astype(np.uint8), scan["affine"], layer_id="brain", kind="brain", source_series="t1",
+        role="context", color="#91c4b6",
+        provenance={"kind": "image_derived_estimate", "source": scan["original"]["sha256"]},
+    )
+    fallback = mesh(collection, {**row, "provenance": {"kind": "unrelated_fixture"}})
+    refined = mesh(collection, row)
+    assert refined["policy_version"] == BRAIN_ENVELOPE_POLICY
+    np.testing.assert_array_equal(refined["source"], fallback["source"])
+    np.testing.assert_array_equal(refined["indices"], fallback["indices"])
+    np.testing.assert_array_equal(collection.mask(row), mask)
+    np.testing.assert_array_equal(collection.array(scan["data"]), signal)
+    distance_to_face = np.minimum(refined["source"], np.array(mask.shape) - 1 - refined["source"])
+    pinned = (distance_to_face <= 2).any(axis=1)
+    assert pinned.any() and not pinned.all()
+    np.testing.assert_array_equal(refined["positions"][pinned], fallback["positions"][pinned])
+    movement = np.linalg.norm((refined["positions"] - fallback["positions"]) * spacing, axis=1)
+    assert .02 < movement.max() <= .4
+    assert not len(intersection_vertices(
+        fallback["positions"] * spacing, refined["positions"] * spacing, refined["indices"],
+    ))
+    reopened = mesh(collection, row)
+    assert reopened["cache_hit"]
+    np.testing.assert_array_equal(reopened["positions"], refined["positions"])
 
 
 def test_conditioned_skull_surface_keeps_shape_binding_through_portable_reopen(tmp_path):

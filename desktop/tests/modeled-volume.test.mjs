@@ -69,6 +69,21 @@ test('source and mapping changes use a complete independent fallback; invalid na
   assert.throws(()=>modeledVolume(a,view(a,{moved:[[0,-1]]})),/Invalid displacement/);
 });
 
+test('cutting stationary brain retains its registered signal and rebuilds the changed mask',()=>{
+  const s=source();
+  const brain=s.compartments[0];
+  brain.mask.fill(1);
+  brain.kind='brain';
+  brain.appearanceSource={seriesId:'t1',modality:'T1',affine,shape:s.shape,data:s.mri};
+  const initial=modeledVolume(s,view(s));
+  const cut=modeledVolume(s,view(s,{removed:[8]}));
+  assert.equal(cut.compartments[0].mask[8],0);
+  assert.equal(initial.compartments[0].mask[8],1);
+  assert.equal(cut.compartments[0].appearanceSource,brain.appearanceSource);
+  assert.equal(cut.compartments[0].displayKind,'brain');
+  assert.equal(cut.compartments[0].sourceIdentity,undefined);
+});
+
 test('whole membrane patch rendering survives release and clears only after actual extraction',()=>{
   const count=125,mask=new Uint8Array(count);mask[62]=mask[63]=1;
   const region={id:31,name:'source membrane',material:'membrane',color:'#82c8d8',target:false};
@@ -114,4 +129,18 @@ test('real generated standard-physics BridgeSession create DTO satisfies the pri
   const actual=JSON.parse(run.stdout),loaded=await hydrateCase(actual.payload,{readAsset:async id=>new Uint8Array(Buffer.from(actual.assets[id],'base64'))});
   assert.equal(actual.view.physics.profile.schema,'resectionlab.tissue-physics.v2');assert.equal(modeledVolume(loaded,actual.view),loaded);assert.equal(modeledVolumeWork(loaded).baseOwnerBytes,0);assert.equal(actual.view.history.length,0);
   const bad=structuredClone(actual.view);bad.drillingV2.inputEnergyJ=1;assert.throws(()=>modeledVolume(loaded,bad),/unacted source/);
+});
+
+test('cavity display support follows accepted removals and locally yields to moved source or destination cells',()=>{
+  const s=source(600);s.compartments[0].mask.fill(1);
+  const removed=[34,35,36,434,435,436];
+  const original=modeledVolume(s,view(s,{removed}));
+  assert.deepEqual(Array.from(original.compartments[0].cavity.cells),removed);
+  const moved=modeledVolume(s,view(s,{removed,moved:[[33,32]]}));
+  assert.deepEqual(Array.from(moved.compartments[0].cavity.cells),[434,435,436]);
+  assert.equal(modeledVolume(s,view(s,{removed})),original);
+  assert.deepEqual(Array.from(original.compartments[0].cavity.cells),removed);
+  const small=modeledVolume(s,view(s,{removed:[34]}));
+  assert.equal(small.compartments[0].cavity,undefined);
+  assert.equal(small.compartments[0].mask[34],0);
 });

@@ -9,6 +9,14 @@ const sequenceLabels:Record<string,string>={T1CE:'T1 post-contrast',SWI:'Process
 const roleLabels:Record<string,string>={tumor:'Lesion candidate',bone:'Skull / bone',dura:'Dura mater',vessels:'Vessels (unclassified)',artery:'Artery',vein:'Vein',sinus:'Dural venous sinus',context:'Context / unclassified'};
 type LabelRow={value:string;role:string;name?:string};
 type ReviewRow=IntakeSelection&{modality:string;source:string;roles:LabelRow[]};
+type DiffusionAsset={id:string;label?:string;modality:string;storage:string;shape:number[];companions?:{bval?:unknown};original?:{name?:string}};
+
+function isDiffusionAsset(item:unknown):item is DiffusionAsset {
+  if(!item||typeof item!=='object')return false;
+  const row=item as Partial<DiffusionAsset>;
+  return row.storage==='source-asset'&&row.modality==='DWI'&&typeof row.id==='string'&&row.shape?.length===4&&
+    /\.nii(?:\.gz)?$/.test(row.original?.name??'');
+}
 
 export function segmentationRoleMap(rows:LabelRow[]):NonNullable<IntakeItem['roleMap']> {
   const result:NonNullable<IntakeItem['roleMap']>={};
@@ -34,6 +42,7 @@ export function NativeImportPanel({workspace:w,timepoint}:{workspace:NativeWorks
   useEffect(()=>{setRows([]);setConfirmed(false);setError('');setSourcePatientId('')},[b?.collectionId,b?.document.snapshot_id]);
   if(!b||!api)return null;
   const blocked=w.busy||!!w.draft||w.planning.pending;
+  const diffusionAssets=(b.document.source_assets??[]).filter(isDiffusionAsset);
   const chosenSources=rows.filter(row=>row.kind!=='labels'&&row.storage!=='source-asset'&&row.supported!==false);
   const hasIncomplete=rows.some(row=>row.supported===false||(
     row.kind==='labels'?!row.source:row.storage!=='source-asset'&&!row.modality
@@ -145,6 +154,22 @@ export function NativeImportPanel({workspace:w,timepoint}:{workspace:NativeWorks
       <button disabled={!confirmed||!associationReady||hasIncomplete} onClick={importReviewed}>Import selected data</button>
     </fieldset>}
     {error&&<p role="alert">{error}</p>}
+    {diffusionAssets.map(asset=>{
+      const baseline=b.document.series.find(scan=>scan.diffusion_baseline?.source_asset_id===asset.id);
+      const evidence=baseline?.diffusion_baseline;
+      return <div key={asset.id} className="intake-item">
+        <strong>{asset.label??asset.id}</strong>
+        <p className="subtle">{evidence?`Acquired volume ${evidence.volume_index+1} · b = ${evidence.b_value_s_per_mm2} s/mm² · native diffusion grid`:
+          asset.companions?.bval?'Extract a measured low-b volume for native slice inspection.':'Import the matching b-values alongside this NIfTI to inspect a measured low-b volume.'}</p>
+        {baseline?<button disabled={blocked||w.series===baseline.id} onClick={()=>w.selectScan(baseline.id)}>Open diffusion baseline</button>:
+          <button disabled={blocked||!asset.companions?.bval} onClick={()=>w.change(async()=>{
+            w.setMessage('Reading native diffusion baseline…');
+            const result=await api.anatomyDiffusionBaseline({...w.args(),assetId:asset.id});
+            w.setMessage('Native diffusion baseline is available in Scans.');
+            return result;
+          },{align:false})}>Extract diffusion baseline</button>}
+      </div>;
+    })}
     {w.series&&<details><summary>Attach tractography or functional maps</summary>
       <p className="subtle">Source scan {b.document.series.find(s=>s.id===w.series)?.label??w.series}</p>
       <div className="tool-row">{[['tractography','Add tractography…'],['functional','Add functional map…']].map(([kind,label])=><button key={kind} disabled={blocked}

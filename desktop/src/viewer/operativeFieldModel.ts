@@ -1,3 +1,4 @@
+import {retractionField} from './retractionField.ts';
 import type { OperativeField, OperativePhase } from '../operative-field';
 import { registerCavityField, setCavityStep } from './operativeCavityField.ts';
 import { registerOperativeSection } from './operativeSectionContour.ts';
@@ -27,9 +28,7 @@ export function operativeDimensions(field: OperativeField) {
 
 /** Rest-coordinate displacement shared by tissue surfaces and the aspirator contact point. */
 export function retractionOffset(x:number,y:number,z:number,opening:number,brainZ:number):XYZ {
-  const distance=((x-opening*.16)/(opening*.62))**2+(y/(opening*.55))**2+((z-brainZ)/(opening*.85))**2;
-  const weight=Math.exp(-distance*1.65);
-  return [opening*.40*weight,0,-opening*.31*weight];
+  return retractionField(opening,brainZ)(x,y,z).shift;
 }
 
 export function buildOperativeModel(field: OperativeField, pattern: AspirationPattern = 'overlapping') {

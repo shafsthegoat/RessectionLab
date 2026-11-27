@@ -971,6 +971,14 @@ h3 {
   color: #bac4c9;
   padding: 4px 6px;
 }
+.anatomy-preparation-action {
+  flex: none;
+  color: #a7d3ca;
+  font-size: 10px;
+  padding: 4px 6px;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
 .case-panel-collapsed {
   grid-template-columns: 54px 0 minmax(390px, 1fr) 334px;
 }

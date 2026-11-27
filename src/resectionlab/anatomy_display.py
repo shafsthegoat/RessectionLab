@@ -86,6 +86,162 @@ def source_lattice_annotation_preview(collection, row, selected):
         return False
 
 
+def cta_coverage_declarations(document):
+    stored = document.get('display', {}).get('cta_arterial_coverage', [])
+    entries = stored if isinstance(stored, list) else [stored]
+    return [entry for entry in entries if isinstance(entry, dict) and isinstance(entry.get('series_id'), str)
+            and isinstance(entry.get('layer_id'), str) and isinstance(entry.get('focus_layers'), list)]
+
+
+def is_cta_coverage(row):
+    return row.get('provenance', {}).get('kind') == 'derived_annotation_union'
+
+
+def _arterial_binding(row):
+    return {'id': row['id'], 'data_sha256': row['data']['sha256'], 'revision': row['revision'], 'label_value': row['label_value']}
+
+
+def cta_coverage_is_current(collection, row):
+    """Check the snapshot lineage of a combined layer before displaying it."""
+    if not is_cta_coverage(row) or row['kind'] != 'artery' or row.get('edits'):
+        return False
+    source_id = row['source_series']
+    scan = collection.series(source_id)
+    provenance = row['provenance']
+    if scan['modality'] != 'CTA' or provenance.get('source_scan_sha256') != scan['original']['sha256']:
+        return False
+    if row['affine'] != scan['affine'] or row['data']['shape'] != scan['data']['shape']:
+        return False
+    inputs = provenance.get('input_layers')
+    if not isinstance(inputs, list) or len(inputs) < 2:
+        return False
+    available = {item['id']: _arterial_binding(item) for item in collection.document['layers']
+                 if item['source_series'] == source_id and item['kind'] == 'artery' and not is_cta_coverage(item)
+                 and not item.get('edits') and item['affine'] == scan['affine'] and item['data']['shape'] == scan['data']['shape']
+                 and item.get('provenance', {}).get('kind') in {'supplied_annotation', 'observed_source_annotation'}}
+    if any(not isinstance(bound, dict) or not isinstance(bound.get('id'), str) for bound in inputs):
+        return False
+    return len({bound['id'] for bound in inputs}) == len(inputs) and all(available.get(bound['id']) == bound for bound in inputs)
+
+
+def retire_stale_cta_coverage(collection):
+    """Retire derivatives during a write while prior revisions keep their arrays."""
+    document = collection.document
+    stale = {row['id']: row for row in document['layers'] if is_cta_coverage(row) and not cta_coverage_is_current(collection, row)}
+    if not stale:
+        return
+    declarations = cta_coverage_declarations(document)
+    rows = {row['id']: row for row in document['layers'] if row['id'] not in stale}
+    initial = document.get('display', {}).get('initial_layers')
+    for option in declarations:
+        row = stale.get(option.get('layer_id'))
+        if not row:
+            continue
+        focus = [name for name in option.get('focus_layers', []) if name in rows and rows[name]['source_series'] == row['source_series']]
+        option['focus_layers'] = focus
+        option.setdefault('wider_layers', [bound['id'] for bound in row['provenance'].get('input_layers', [])
+                                           if isinstance(bound, dict) and bound.get('id') in rows and bound['id'] not in focus])
+        option['retired'] = True
+        if initial is not None and row['id'] in initial:
+            initial[:] = list(dict.fromkeys(name for layer in initial for name in (focus if layer == row['id'] else [layer])))
+    if initial is not None:
+        initial[:] = [name for name in initial if name not in stale]
+    document['layers'] = list(rows.values())
+
+
+def add_cta_arterial_coverage(collection, series_id, focus_ids, wider_ids, *, check=lambda: None):
+    """Prepare an exact display union of complementary native CTA annotations."""
+    from .anatomy_model_registry import source_volume
+
+    if isinstance(wider_ids, str):
+        wider_ids = [wider_ids]
+    if (not isinstance(series_id, str) or not isinstance(focus_ids, (list, tuple)) or not isinstance(wider_ids, (list, tuple))
+            or not focus_ids or not wider_ids or len(focus_ids) + len(wider_ids) > 128):
+        raise ValueError('Select focused and wider artery layers from one CTA')
+    selected = [*focus_ids, *wider_ids]
+    if any(not isinstance(name, str) or not name for name in selected) or len(set(selected)) != len(selected):
+        raise ValueError('Select distinct focused and wider annotation layers')
+    try:
+        scan = collection.series(series_id)
+        rows = [collection.layer(name) for name in selected]
+    except StopIteration as error:
+        raise ValueError('Select existing layers and an acquired CTA') from error
+    if scan['modality'] != 'CTA' or not source_volume(scan):
+        raise ValueError('Arterial coverage requires an acquired volumetric CTA')
+    collection.require_native_geometry(scan)
+    if file_hash(collection.path(scan['original']['path'])) != scan['original']['sha256']:
+        raise ValueError('The acquired CTA original has changed')
+    collection.array(scan['data'])
+    focused = np.zeros(scan['data']['shape'], dtype=bool)
+    wider = np.zeros_like(focused)
+    previous_path = None
+    for index, row in enumerate(rows):
+        check()
+        provenance = row.get('provenance', {})
+        original = provenance.get('source')
+        if (row['kind'] != 'artery' or row['source_series'] != series_id or row.get('edits')
+                or provenance.get('kind') not in {'supplied_annotation', 'observed_source_annotation'}
+                or row['data']['shape'] != scan['data']['shape'] or row['affine'] != scan['affine']
+                or not isinstance(original, dict) or not isinstance(original.get('path'), str)):
+            raise ValueError(f'{row["id"]} must be a supplied artery on the selected CTA lattice')
+        if not source_lattice_annotation_preview(collection, row, scan):
+            collection.require_native_geometry(row)
+            if file_hash(collection.path(original['path'])) != original.get('sha256'):
+                raise ValueError(f'{row["id"]} no longer matches its supplied annotation')
+        mask = collection.mask(row)
+        if not mask.any():
+            raise ValueError(f'{row["id"]} has no supplied arterial positives')
+        if original['path'] != previous_path:
+            source_values = np.asanyarray(nib.load(collection.path(original['path'])).dataobj)
+            previous_path = original['path']
+        grouping = provenance.get('source_label_values')
+        if grouping is None:
+            if row.get('publisher_surface') and 'publisher_class_id' not in provenance:
+                source_mask = source_values > 0
+            else:
+                source_mask = source_values == row['label_value']
+        else:
+            if (not isinstance(grouping, list) or not grouping
+                    or any(type(value) is not int or value <= 0 for value in grouping)):
+                raise ValueError(f'{row["id"]} has an invalid source label grouping')
+            source_mask = np.isin(source_values, grouping)
+        if not np.array_equal(mask, source_mask):
+            raise ValueError(f'{row["id"]} differs from its supplied arterial positive labels')
+        target = focused if index < len(focus_ids) else wider
+        target |= mask
+    if not np.any(focused & wider) or not np.any(wider & ~focused):
+        raise ValueError('The wider annotation must overlap and extend the focused arterial field')
+    check()
+    inputs = [_arterial_binding(row) for row in rows]
+    counts = {'focus_voxels': int(focused.sum()), 'wider_voxels': int(wider.sum()),
+              'focus_only_voxels': int(np.count_nonzero(focused & ~wider)), 'wider_only_voxels': int(np.count_nonzero(wider & ~focused))}
+    layer_id = f'{series_id}-supplied-arterial-coverage'
+    declarations = cta_coverage_declarations(collection.document)
+    prior = next((row for row in collection.document['layers'] if row['id'] == layer_id), None)
+    prior_option = next((option for option in declarations if option.get('series_id') == series_id), None)
+    option = {'series_id': series_id, 'layer_id': layer_id, 'focus_layers': list(focus_ids), 'wider_layers': list(wider_ids)}
+    if prior:
+        if not is_cta_coverage(prior):
+            raise ValueError('The combined artery layer name is already used')
+        if (cta_coverage_is_current(collection, prior) and prior_option and prior_option.get('focus_layers') == list(focus_ids)
+                and prior['provenance']['input_layers'] == inputs):
+            return prior, counts
+        collection.document['layers'].remove(prior)
+    union = collection.add_layer(
+        (focused | wider).astype(np.uint8), scan['affine'], layer_id=layer_id,
+        source_series=series_id, kind='artery', role='context', color='#aa352b', label='Combined supplied arterial coverage',
+        provenance={'kind': 'derived_annotation_union', 'method': 'Boolean union on the acquired CTA grid',
+                    'source_scan_sha256': scan['original']['sha256'], 'input_layers': inputs, 'evidence_use': 'context_only'},
+    )
+    union['coverage'] = 'Union of supplied arterial annotations; unlabeled vessels remain unassessed.'
+    display = collection.document.setdefault('display', {})
+    display['cta_arterial_coverage'] = [previous for previous in declarations if previous.get('series_id') != series_id] + [option]
+    if 'initial_layers' in display:
+        group = set([layer_id, *selected])
+        display['initial_layers'] = [name for name in display['initial_layers'] if name not in group] + [layer_id]
+    return union, counts
+
+
 def brain_vessel_display(collection, row):
     """Intersect a vessel estimate with a source-bound brain envelope for display.
 
@@ -121,13 +277,13 @@ def brain_vessel_display(collection, row):
     return row, {'scope': 'all', 'reason': 'No aligned brain mask; showing the full vessel estimate', 'sourcePreserved': True}
 
 
-def patient_display_grid(collection, *, preview, check=lambda: None):
-    """Resolve the same registered display lattice for rendering and view validation."""
-    sources, admitted, corners = [], [], []
+def patient_display_context(collection, *, preview, check=lambda: None):
+    """Resolve shared RAS bounds and acquisition provenance without reading voxel arrays."""
+    sources, corners = [], []
     for scan in collection.document["series"]:
         check()
         entry = {"seriesId": scan["id"], "modality": scan["modality"],
-                 "sourceSha256": scan["original"]["sha256"]}
+                 "sourceSha256": scan["original"]["sha256"], "inPatientBounds": False}
         sources.append(entry)
         try:
             frame, estimated = display_affine(collection, scan, preview=preview)
@@ -135,68 +291,21 @@ def patient_display_grid(collection, *, preview, check=lambda: None):
             entry.update(alignment="unavailable", reason=str(exc))
             continue
         entry.update(alignment="estimated" if estimated else collection.document["transforms"][scan["id"]]["status"],
-                     voxelToPatientRasMm=frame.tolist())
+                     voxelToPatientRasMm=frame.tolist(), nativeShape=scan["data"]["shape"])
         if scan.get("synthetic") or re.search(
                 r"diagnostic|segmentation only|analytic signal|generated image signal",
                 scan["modality"], re.I):
-            entry["reason"] = "Source excluded from the 3D intensity context"
+            entry["reason"] = "Acquisition excluded from shared cutaway bounds"
             continue
-        admitted.append((scan, frame, entry))
+        entry["inPatientBounds"] = True
         corners.extend(voxel_edge_corners(scan["data"]["shape"], frame))
     context = {"sources": sources}
-    if not admitted:
-        return context, admitted
+    if not corners:
+        return context
     low, high = np.min(corners, axis=0), np.max(corners, axis=0)
+    # Retain the former display envelope so previously saved RAS cutaways,
+    # including planes at its padded edges, stay valid on the same revision.
     spacing = max(1., float(np.max((high - low) / 192)))
-    shape = tuple(np.clip(np.ceil((high - low) / spacing).astype(int), 2, 192))
-    frame = np.diag([spacing, spacing, spacing, 1.])
-    frame[:3, 3] = low + spacing / 2
-    context.update(affine=frame.tolist(), shape=list(map(int, shape)))
-    return context, admitted
-
-
-def patient_display_context(collection, *, preview, check, original=False):
-    """Window the source signals into a bounded 3D display texture."""
-    context, admitted = patient_display_grid(collection, preview=preview, check=check)
-    if not admitted:
-        return context, None
-    frame, shape = np.asarray(context["affine"]), context["shape"]
-    from .anatomy_siam_display import source_head_support
-    signal = np.zeros(shape, dtype=np.float32)
-    for scan, source, entry in admitted:
-        check()
-        support = None if original else source_head_support(collection, scan, check=check)
-        entry["headSupport"] = support is not None
-        data = collection.array(scan["data"])
-        units = str(scan.get("intensity_units") or scan.get("metadata", {}).get("Units", "")).upper()
-        if re.match(r"^\s*CTA?(?:\b|[-_])", scan["modality"], re.I) and units in {"HU", "HOUNSFIELD", "HOUNSFIELD UNITS"}:
-            entry["windowUnits"] = "HU"
-            window = [0., 1000.]
-        else:
-            entry["windowUnits"] = "source intensity"
-            stride = max(1, data.size // 100000)
-            sample = data.ravel()[::stride]
-            if support is not None:
-                inside = sample[support.ravel()[::stride] != 0]
-                if inside.size:
-                    sample = inside
-            window = [float(min(0., np.percentile(sample, 1))), float(np.percentile(sample, 99))]
-            if window[1] <= window[0]:
-                window[1] = max(window[0] + 1., float(data.max()))
-        entry["displayWindow"] = window
-        transform = np.linalg.inv(source) @ frame
-        for start in range(0, shape[0], 16):
-            check()
-            block = signal[start:start+16]
-            sampled = ndi.affine_transform(data, transform[:3, :3],
-                        offset=transform[:3, 3] + start * transform[:3, 0],
-                        output_shape=block.shape, output=np.float32, order=1, prefilter=False,
-                        mode="constant", cval=window[0])
-            np.clip((sampled - window[0]) / (window[1] - window[0]), 0, 1, out=sampled)
-            if support is not None:
-                covered = ndi.affine_transform(support, transform[:3, :3],
-                            offset=transform[:3, 3] + start * transform[:3, 0],
-                            output_shape=block.shape, output=np.uint8, order=0, prefilter=False)
-                sampled[covered == 0] = 0
-            np.maximum(block, sampled, out=block)
-    return context, signal
+    cells = np.clip(np.ceil((high - low) / spacing), 2, 192)
+    context["boundsRasMm"] = [low.tolist(), (low + cells * spacing).tolist()]
+    return context

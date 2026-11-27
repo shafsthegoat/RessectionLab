@@ -1,10 +1,10 @@
 # Innovation ledger
 
-**October 8 policy update:** the [real-observation supergoal](SUPERGOAL_REAL_OBSERVATIONS.md)
+**October 8 policy update:** the [real-observation supergoal](retired-docs-20261126.md)
 supersedes future-work decisions below that use generated labels, transitions or
 synthetic-trained weights. The actor/critic replay proposal has not run and is
 now ineligible. Retain these historical measurements and decisions as history;
-use the [current execution ledger](REAL_OBSERVATION_EXECUTION_LEDGER.md) for next actions.
+use the [current execution ledger](retired-docs-20261126.md) for next actions.
 
 Decisions follow measured failures and comparisons. No novelty claim is established
 by this ledger. Updated October 5, 2026 UTC; existing patient splits remain fixed.

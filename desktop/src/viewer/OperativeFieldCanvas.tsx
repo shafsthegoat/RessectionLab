@@ -1,3 +1,4 @@
+import {installRetractionMorph} from './retractionMorph';
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
@@ -8,17 +9,19 @@ import type {AspirationPattern} from './operativeAspiration';
 import { operativeVoxelSurface } from './operativeVoxelSurface.ts';
 import { operativeSurface } from './operativeSurface.ts';
 import {duraReflectionAngle} from './operativeDuralFlap.ts';
-import { prepareOperativeOpening } from './operativeOpening.ts';
+import { boneFlapTransfer, prepareOperativeOpening } from './operativeOpening.ts';
 import { operativeInstruments } from './operativeInstruments.ts';
 import { operativeSignalTexture,operativeTissueMaterial } from './operativeFieldAppearance.ts';
 
+import type {CortexWindow} from './operativeCortexWindow';
 import {entryApproachEnd,operativeCameraPose,operativeSourceFit} from './operativeCameraPath.ts';
-import {operativeSectionContext,operativeSectionVisible} from './operativeSectionContext.ts';
+import {microscopeFov} from './microscope.ts';
+import {operativeSectionContext,type OperativeViewChoice} from './operativeSectionContext.ts';
 import type {ViewerVolume} from './contracts';
 import {pickOperativeStructure,type OperativePick} from './operativeFieldPick.ts';
 import {operativeEntryCover,operativeFieldContext,limitToOperativePatch} from './operativeFieldContext.ts';
 
-type Props = {visibleLayers?:Readonly<Record<string,boolean>>;sweepPattern:AspirationPattern;sourceVolume:ViewerVolume|null;collectionId:string;field:OperativeField; phase:OperativePhase; progress:number; withRetraction:boolean; cutaway:boolean; raw:boolean; fitExterior:boolean; depthFraming:boolean; onContext:(layers:string[])=>void;
+type Props = {visibleLayers?:Readonly<Record<string,boolean>>;sweepPattern:AspirationPattern;sourceVolume:ViewerVolume|null;collectionId:string;field:OperativeField; phase:OperativePhase; progress:number; withRetraction:boolean; view:OperativeViewChoice; raw:boolean; onContext:(layers:string[])=>void;
   onVesselDisplay:(display:OperativeModel['vesselDisplay'])=>void};
 
 function fieldScene(host:HTMLDivElement, field:OperativeField, sourceVolume:ViewerVolume|null,collectionId:string,sweepPattern:AspirationPattern,visibleLayers:Props['visibleLayers'],pick:(value:OperativePick|null)=>void,lost:()=>void) {
@@ -33,22 +36,27 @@ function fieldScene(host:HTMLDivElement, field:OperativeField, sourceVolume:View
   renderer.domElement.setAttribute('aria-label','3D operative field. Drag to orbit, scroll to zoom. Arrow keys rotate. Home resets the view. Click tissue to inspect its source. Enter inspects the center.');
   host.appendChild(renderer.domElement);
   host.dataset.aspirationPattern=sweepPattern;
-  const model=buildOperativeModel(field,sweepPattern), scene=new THREE.Scene(), camera=new THREE.OrthographicCamera(-1,1,1,-1,.1,1600);
+  const model=buildOperativeModel(field,sweepPattern), scene=new THREE.Scene();
+  const inspectionCamera=new THREE.OrthographicCamera(-1,1,1,-1,.1,1600);
+  const opticalCamera=new THREE.PerspectiveCamera(34,1,.1,1600);
+  let workingDistanceMm=160;
+  let camera:THREE.OrthographicCamera|THREE.PerspectiveCamera=opticalCamera;
+  inspectionCamera.up.set(0,0,1);
   const patchRadius=Math.min(field.radiusMm,model.opening*1.55);
   const exterior={value:false};
   const context=operativeFieldContext(sourceVolume,field,collectionId,patchRadius);scene.add(context);
   camera.up.set(0,0,1); const direction=new THREE.Vector3(.36,-.91,.90).normalize();
   camera.position.copy(direction).multiplyScalar(400);
-  const controls=new OrbitControls(camera,renderer.domElement);
+  const controls=new OrbitControls<THREE.Camera>(camera,renderer.domElement);
   controls.enablePan=false;controls.enableDamping=false;controls.minZoom=.45;controls.maxZoom=7;
   controls.minPolarAngle=.07;controls.maxPolarAngle=Math.PI*.92;controls.zoomSpeed=.85;
   const room=new RoomEnvironment(), pmrem=new THREE.PMREMGenerator(renderer);
   const environment=pmrem.fromScene(room,.06);
   room.dispose();pmrem.dispose();
   scene.environment=environment.texture;
-  scene.environmentIntensity=.25;
-  scene.add(new THREE.HemisphereLight('#fff7ed','#665b65',.42));
-  const keyLight=new THREE.DirectionalLight('#fff2e4',1.82);
+  scene.environmentIntensity=.20;
+  scene.add(new THREE.HemisphereLight('#fff8f1','#645b60',.36));
+  const keyLight=new THREE.DirectionalLight('#fff5eb',2.05);
   const range=field.radiusMm*1.8;
   keyLight.castShadow=true;
   keyLight.shadow.mapSize.set(1024,1024);
@@ -58,7 +66,7 @@ function fieldScene(host:HTMLDivElement, field:OperativeField, sourceVolume:View
   keyLight.shadow.normalBias=.09;
   keyLight.shadow.bias=-.00022;
   scene.add(keyLight,keyLight.target);
-  const rim=new THREE.DirectionalLight('#d6e8ef',.72);
+  const rim=new THREE.DirectionalLight('#d6e8ef',.43);
   rim.position.set(.78,1,1.15);scene.add(rim);
   const hingeX=model.duralOpening*.74, boneZ=field.stations.bone??0;
   const hingeZ=model.surfaceHeight('dura',hingeX,0)??field.stations.dura??0;
@@ -75,22 +83,30 @@ function fieldScene(host:HTMLDivElement, field:OperativeField, sourceVolume:View
     const mesh=new THREE.Mesh(new THREE.BufferGeometry(),material);
     const role=name==='boneFlap'?'bone':name==='duraFlap'?'dura':name==='vessel'?'vessels':name;
     mesh.userData.sourceLayer={role,offset,detail:['brain','bone','dura','tumor','vessels','lesionContext'].includes(role)?null:name};
-    mesh.name=name;mesh.castShadow=true;mesh.receiveShadow=true;
+    mesh.name=name;mesh.castShadow=name!=='csf'&&name!=='ventricles';mesh.receiveShadow=true;
     scene.add(mesh);return [name,mesh];
   })) as Record<FieldLayer,THREE.Mesh<THREE.BufferGeometry,THREE.MeshStandardMaterial>>;
+  const transferBone=boneFlapTransfer(model);
   const openings={
     bone:prepareOperativeOpening('bone',model,meshes.bone,meshes.boneFlap,
       operativeTissueMaterial('bone',field,texture,new THREE.Vector3(),sectionY),new THREE.Vector3(0,0,boneZ)),
     dura:prepareOperativeOpening('dura',model,meshes.dura,meshes.duraFlap,
       operativeTissueMaterial('dura',field,texture,new THREE.Vector3(),sectionY),new THREE.Vector3(hingeX,0,hingeZ)),
   };
+  const cortex=context.children.find(mesh=>mesh.userData.sourceLayer.cortex) as THREE.Mesh|undefined;
+  const cortexWindow:CortexWindow|undefined=cortex?.userData.sourceLayer.cortex;
   for(const source of context.children){
-    const role=source.userData.sourceLayer.role as 'brain'|'bone';
+    const role=source.userData.sourceLayer.role as 'brain'|'bone'|'grayMatter';
     // Source labels are user data and can be named "brain" or "bone" too.
-    const local=role==='bone'?[meshes.bone,openings.bone.kerf]:[meshes.brain];
+    const local=role==='bone'?[meshes.bone,openings.bone.kerf]:[meshes[role]];
     for(const display of local){
-      limitToOperativePatch(display.material,patchRadius,exterior);
-      if(display.customDepthMaterial)limitToOperativePatch(display.customDepthMaterial,patchRadius,exterior);
+      const surfaceWindow=role==='grayMatter'?cortexWindow:undefined;
+      if(surfaceWindow){
+        display.userData.sourceLayer.cortexLocal=surfaceWindow;
+        display.customDepthMaterial=new THREE.MeshDepthMaterial({depthPacking:THREE.RGBADepthPacking});
+      }
+      limitToOperativePatch(display.material,patchRadius,exterior,surfaceWindow);
+      if(display.customDepthMaterial)limitToOperativePatch(display.customDepthMaterial,patchRadius,exterior,surfaceWindow);
       display.userData.sourceLayer.patchRadius=patchRadius;
       display.userData.sourceLayer.exterior=exterior;
     }
@@ -99,7 +115,7 @@ function fieldScene(host:HTMLDivElement, field:OperativeField, sourceVolume:View
     ?operativeEntryCover(sourceVolume,field,collectionId,visibleLayers):null;
   if(cover)context.add(cover);
   host.dataset.surroundingLayers=JSON.stringify(context.children.map(mesh=>mesh.name));
-  host.dataset.surroundingSources=JSON.stringify(context.children.map(mesh=>mesh.userData.sourceLayer));
+  host.dataset.surroundingSources=JSON.stringify(context.children.map(mesh=>mesh.userData.sourceLayer),(key,value)=>key==='activeFloor'?undefined:value);
   const equipment=operativeInstruments(model.tipRadius,model.opening,field.entryDepthMm);
   Object.values(equipment).forEach(group=>{
     group.traverse(object=>{if(object instanceof THREE.Mesh)object.castShadow=true});
@@ -111,35 +127,27 @@ function fieldScene(host:HTMLDivElement, field:OperativeField, sourceVolume:View
   const entryMarker=host.querySelector<HTMLElement>('.operative-entry-marker');
   const plannedEntry=new THREE.Vector3(0,0,field.entryDepthMm),screenEntry=new THREE.Vector3();
   let markerOpacity=0;
-  // Dissolve the two real presentations of the current pose at the start of
-  // a section turn. Both passes use the same source state and camera, including
-  // during direct seeks, manual orbit and resize.
-  const reveal=document.createElement('canvas');
-  reveal.className='operative-section-reveal';reveal.setAttribute('aria-hidden','true');
-  reveal.hidden=true;host.appendChild(reveal);
-  const reveal2d=reveal.getContext('2d');
-  let activeProps:Props|undefined,exteriorOpacity=0;
+  const lightDirection=new THREE.Vector3();
   const draw=()=>{
     frame=0;
     if(disposed)return;
-    const pxPerMm=host.clientWidth*camera.zoom/(camera.right-camera.left);
+    if(camera===opticalCamera){
+      // Rest the lamp beside the optics as the user orbits the opening.
+      lightDirection.copy(camera.position).sub(controls.target).normalize();
+      keyLight.target.position.copy(controls.target);
+      keyLight.position.copy(controls.target).addScaledVector(lightDirection,range*2.6);
+      keyLight.position.x-=range*.7;keyLight.position.y-=range*.34;
+    }
+    // In perspective the bar measures the optical focus plane.
+    const heightMm=camera instanceof THREE.PerspectiveCamera
+      ?2*camera.position.distanceTo(controls.target)*Math.tan(THREE.MathUtils.degToRad(camera.getEffectiveFOV())/2)
+      :(camera.top-camera.bottom)/camera.zoom;
+    const pxPerMm=host.clientHeight/heightMm;
     if(scale&&pxPerMm>0){
       const mm=[1,2,5,10,20,50,100].filter(mm=>mm*pxPerMm<85).pop()??1;
       scale.style.width=(mm*pxPerMm)+'px';
       scale.textContent=mm+' mm';
     }
-    if(exteriorOpacity>0&&reveal2d&&activeProps){
-      presentStep(activeProps,false);
-      renderer.render(scene,camera);
-      const surface=renderer.domElement;
-      if(reveal.width!==surface.width||reveal.height!==surface.height){
-        reveal.width=surface.width;reveal.height=surface.height;
-      }
-      reveal2d.clearRect(0,0,reveal.width,reveal.height);
-      reveal2d.drawImage(surface,0,0);
-      reveal.style.opacity=String(exteriorOpacity);reveal.hidden=false;
-      presentStep(activeProps,true);
-    }else reveal.hidden=true;
     renderer.render(scene,camera);
     if(entryMarker){
       screenEntry.copy(plannedEntry).project(camera);
@@ -149,14 +157,20 @@ function fieldScene(host:HTMLDivElement, field:OperativeField, sourceVolume:View
       entryMarker.style.top=(50-50*screenEntry.y)+'%';
     }
     renderer.domElement.dataset.camera=JSON.stringify({position:camera.position.toArray(),target:controls.target.toArray(),
-      up:camera.up.toArray(),zoom:camera.zoom,top:camera.top,right:camera.right});
+      up:camera.up.toArray(),zoom:camera.zoom,...(camera instanceof THREE.PerspectiveCamera?{projection:'perspective',fov:camera.fov}:{projection:'orthographic',top:camera.top,right:camera.right})});
   };
   const queue=()=>{if(!frame && !disposed) frame=requestAnimationFrame(draw);};
   controls.addEventListener('change',queue);
   const updateProjection=()=>{
     const half=viewSize*.5;
-    camera.top=half/Math.min(1,aspect);camera.bottom=-camera.top;
-    camera.right=half*Math.max(1,aspect);camera.left=-camera.right;camera.updateProjectionMatrix();
+    if(camera instanceof THREE.PerspectiveCamera){
+      camera.aspect=aspect;camera.far=Math.max(1600,workingDistanceMm*4);
+      camera.fov=microscopeFov({fieldMm:viewSize/Math.min(1,aspect),workingDistanceMm});
+    }else{
+      camera.top=half/Math.min(1,aspect);camera.bottom=-camera.top;
+      camera.right=half*Math.max(1,aspect);camera.left=-camera.right;
+    }
+    camera.updateProjectionMatrix();
   };
   const resize=()=>{
     const w=Math.max(1,host.clientWidth), h=Math.max(1,host.clientHeight);
@@ -177,10 +191,18 @@ function fieldScene(host:HTMLDivElement, field:OperativeField, sourceVolume:View
       direction.applyQuaternion(to.multiply(from.invert()));
     }
     nominalBearing=bearing.clone();
-    controls.target.copy(center);camera.position.copy(center).addScaledVector(direction,400);
+    // The introductory wide field needs a longer stand-off to fit the near
+    // side of the head. Keep the user's dolly ratio as the scope approaches.
+    const dolly=reset?1:camera.position.distanceTo(controls.target)/workingDistanceMm;
+    workingDistanceMm=Math.max(160,3*size);
+    const optical=camera===opticalCamera;
+    controls.minDistance=optical?workingDistanceMm*.48:0;
+    controls.maxDistance=optical?workingDistanceMm*2.2:Infinity;
+    const distance=optical?workingDistanceMm*dolly:400;
+    controls.target.copy(center);camera.position.copy(center).addScaledVector(direction,distance);
     viewSize=size;
     keyLight.target.position.set(0,0,center.z);
-    keyLight.position.set(-range*1.2,-range*1.8,center.z+range*2.6);
+    if(camera===inspectionCamera)keyLight.position.set(-range*1.2,-range*1.8,center.z+range*2.6);
     if(reset)camera.zoom=1;
     controls.update();updateProjection();queue();
   }
@@ -224,14 +246,7 @@ function fieldScene(host:HTMLDivElement, field:OperativeField, sourceVolume:View
     const layer=model.layers[name];
     const surfaceKind=['artery','vein','sinus'].includes(name)?'vessel':name;
     const next=raw?operativeVoxelSurface(field,layer.mask,layer.bounds,row):operativeSurface(field,layer.mask,layer.bounds,row,surfaceKind);
-    const position=next.getAttribute('position');
-    if(position&&field.stations.brain!==null) {
-      const displaced=new Float32Array(position.count*3);
-      for(let i=0;i<position.count;i++){
-        displaced.set(retractionOffset(position.getX(i),position.getY(i),position.getZ(i),opening,brainZ),i*3);
-      }
-      next.morphAttributes.position=[new THREE.BufferAttribute(displaced,3)];next.morphTargetsRelative=true;
-    }
+    if(field.stations.brain!==null)installRetractionMorph(next,opening,brainZ);
     if(original){originalGeometry.set(sourceKey,next);retained.add(next);}
     return next;
   }
@@ -247,33 +262,24 @@ function fieldScene(host:HTMLDivElement, field:OperativeField, sourceVolume:View
     sectionContext=operativeSectionContext(sourceVolume,collectionId,field,sectionPlaneY);
     if(sectionContext)scene.add(sectionContext);
   }
-  if(operativeSectionVisible(field,'brain','follow')||operativeSectionVisible(field,'tumor','follow')){
-    // Prepare this once while the source field is opening, before playback.
-    const row=model.firstSectionRow;
-    for(const item of Object.values(openings))item.warm(row);
-    for(const name of embeddedLayers)fieldGeometry(name,'source',row,false);
-    prepareSectionContext();
-    if(sectionContext)sectionContext.visible=false;
-  }
   let previousStep=-1,removedCells=0,duralProgramReady=false;
-  let previousCutaway:boolean|undefined,previousDepthFraming:boolean|undefined,previousFit=false;
+  let previousCutaway:boolean|undefined,previousView:OperativeViewChoice|undefined;
   function firstOperativePhase(retract:boolean){
     return (['bone','dura','brain','tumor'] as const).find(id=>field.stations[id]!==null&&(id!=='brain'||retract));
   }
   function update(props:Props){
-    const {phase,progress,withRetraction,cutaway,fitExterior,depthFraming}=props;
-    const pose=operativeCameraPose(field,model.opening,sourceFit,phase,progress,withRetraction,cutaway,fitExterior,depthFraming);
+    const {phase,progress,withRetraction,view}=props;
+    const cutaway=view==='section';
+    const pose=operativeCameraPose(field,model.opening,sourceFit,phase,progress,withRetraction,view);
+    camera=view==='operative'?opticalCamera:inspectionCamera;
+    controls.object=camera;
     markerOpacity=pose.marker;
     if(cover){
       const first=firstOperativePhase(withRetraction);
-      const coverOpacity=phase==='overview'||fitExterior?1:phase===first?1-THREE.MathUtils.smootherstep(progress,.29,.43):0;
-      cover.material.opacity=coverOpacity;cover.visible=depthFraming&&!cutaway&&coverOpacity>.001;
+      const coverOpacity=phase==='overview'||view==='exterior'?1:phase===first?1-THREE.MathUtils.smootherstep(progress,.29,.43):0;
+      cover.material.opacity=coverOpacity;cover.visible=!cutaway&&coverOpacity>.001;
       host.dataset.entryCaption=cover.visible?'Outer head · MRI estimate':'';
     }
-    // Resolve the cutaway early in the turn while the operating site is still
-    // seen from above. The rest of the movement orbits the revealed section.
-    exteriorOpacity=cutaway&&depthFraming?1-THREE.MathUtils.smootherstep(pose.sectionBlend,0,.16):0;
-    activeProps=props;
     const removed=presentStep(props,cutaway);
     const flap=meshes.duraFlap;
     if(!duralProgramReady&&flap.geometry.morphAttributes.position?.length){
@@ -282,20 +288,21 @@ function fieldScene(host:HTMLDivElement, field:OperativeField, sourceVolume:View
       renderer.compile(flap,camera,scene);
       duralProgramReady=true;
     }
-    if(sectionContext)sectionContext.material.color.setScalar(depthFraming?.24*pose.sectionBlend:1);
-    setCamera(pose.center,pose.size,pose.bearing,fitExterior&&!previousFit);
-    previousFit=fitExterior;
+    setCamera(pose.center,pose.size,pose.bearing,previousView!==view);
+    previousView=view;
     return removed;
   }
-  function presentStep({phase:next,progress,withRetraction,raw,depthFraming}:Props,cutaway:boolean){
-    if(previousCutaway!==cutaway||(cutaway&&previousDepthFraming!==depthFraming)){
+  function presentStep({phase:next,progress,withRetraction,raw}:Props,cutaway:boolean){
+    if(previousCutaway!==cutaway){
       // Look down the saved approach at intact and opened layers; orbit remains available.
       if(cutaway)prepareSectionContext();
       if(sectionContext)sectionContext.visible=cutaway;
       host.dataset.sectionSource=cutaway&&sectionContext?JSON.stringify(sectionContext.userData.sectionSource):'';
       host.dataset.sectionCaption=cutaway&&sectionContext?sectionContext.name:'';
       exterior.value=!cutaway;context.visible=!cutaway;
-      previousCutaway=cutaway;previousDepthFraming=depthFraming;
+      meshes.csf.material.opacity=cutaway?.42:.075;
+      meshes.ventricles.material.opacity=cutaway?.42:.21;
+      previousCutaway=cutaway;
     }
     sectionY.value=field.origin[1]+(cutaway?model.firstSectionRow-.5:-2)*field.spacingMm;
     const entering=sourceFit&&next===firstOperativePhase(withRetraction);
@@ -304,8 +311,8 @@ function fieldScene(host:HTMLDivElement, field:OperativeField, sourceVolume:View
     for(const kind of ['bone','dura'] as const){
       const {angle,fraction,lift,cutting}=openings[kind].update(cutaway?model.firstSectionRow:0,amounts[kind],raw);
       if(kind==='bone'){
-        meshes.boneFlap.position.set(-opening*1.6*lift,opening*.22*lift,boneZ+opening*(.49*lift+.4*Math.sin(Math.PI*lift)));
-        meshes.boneFlap.rotation.y=-.33*lift;
+        const [dx,dy,dz]=transferBone(lift);
+        meshes.boneFlap.position.set(dx,dy,boneZ+dz);
       }else{
         meshes.duraFlap.position.set(hingeX,0,hingeZ);meshes.duraFlap.rotation.y=lift*duraReflectionAngle;
       }
@@ -320,6 +327,11 @@ function fieldScene(host:HTMLDivElement, field:OperativeField, sourceVolume:View
 
     const retract=withRetraction&&field.stations.brain!==null?phaseAmount(next,actionProgress,'brain'):0;
     const held=smooth((retract-.16)/.84);
+    if(cortexWindow&&cortex?.morphTargetInfluences){
+      cortexWindow.activeFloor.value=!raw&&!cutaway?cortexWindow.floor:cortexWindow.top+field.spacingMm;
+      cortex.morphTargetInfluences[0]=!raw&&!cutaway?held:0;
+      host.dataset.corticalSurface=!raw&&!cutaway?'registered-planning-surface':raw?'raw-field':'conditioned-section';
+    }
     const approaching=entering&&progress<entryApproachEnd;
     equipment.blade.visible=!approaching&&withRetraction && field.stations.brain!==null && (next==='brain'||next==='tumor');
     equipment.blade.position.set(opening*(.16+.40*held),0,brainZ+opening*(.55*(1-smooth(retract/.16))-.31*held));
@@ -348,11 +360,11 @@ function fieldScene(host:HTMLDivElement, field:OperativeField, sourceVolume:View
     renderer.domElement.removeEventListener('pointerdown',pointerDown);renderer.domElement.removeEventListener('pointerup',pointerUp);
     renderer.domElement.removeEventListener('webglcontextlost',contextLost);renderer.domElement.removeEventListener('keydown',onKey);
     const materials=new Set<THREE.Material>();
-    openings.bone.dispose();openings.dura.dispose();
+    openings.bone.dispose();openings.dura.dispose();meshes.grayMatter.customDepthMaterial?.dispose();
     scene.traverse(object=>{if(object instanceof THREE.Mesh){if(!retained.has(object.geometry))object.geometry.dispose();for(const m of Array.isArray(object.material)?object.material:[object.material]) materials.add(m);}});
     retained.forEach(item=>item.dispose());
     materials.forEach(m=>m.dispose());sectionContext?.material.map?.dispose();texture?.dispose();environment.dispose();keyLight.shadow.dispose();
-    scene.clear();renderer.dispose();renderer.forceContextLoss();renderer.domElement.remove();reveal.remove();
+    scene.clear();renderer.dispose();renderer.forceContextLoss();renderer.domElement.remove();
   }
   return {update,dispose,vesselDisplay:model.vesselDisplay,contextLabels:context.children.map(mesh=>[mesh.name,mesh.userData.sourceLayer.appearance?.modality].filter(Boolean).join(' · '))};
 }
@@ -372,7 +384,7 @@ export function OperativeFieldCanvas(props:Props) {
     catch(cause){setError(cause instanceof Error?cause.message:'3D graphics could not be initialized.');}
     return ()=>{scene.current?.dispose();scene.current=null;};
   },[props.field,props.sourceVolume,props.collectionId,props.sweepPattern,props.visibleLayers,props.onVesselDisplay,props.onContext]);
-  useEffect(()=>{if(scene.current)setRemoved(scene.current.update(props));},[props.field,props.sourceVolume,props.collectionId,props.sweepPattern,props.visibleLayers,props.phase,props.progress,props.withRetraction,props.cutaway,props.raw,props.fitExterior,props.depthFraming]);
+  useEffect(()=>{if(scene.current)setRemoved(scene.current.update(props));},[props.field,props.sourceVolume,props.collectionId,props.sweepPattern,props.visibleLayers,props.phase,props.progress,props.withRetraction,props.view,props.raw]);
   return <div ref={host} className="operative-field-canvas">
     {picked&&!error&&<aside className="operative-picked" aria-label="Picked tissue provenance">
       <button aria-label="Close picked tissue" onClick={()=>setPicked(null)}>×</button>

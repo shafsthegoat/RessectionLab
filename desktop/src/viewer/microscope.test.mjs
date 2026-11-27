@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {microscopeCamera,microscopeFov} from './microscope.ts';
+import {defaultSurgeonView,microscopeCamera,microscopeFov} from './microscope.ts';
 import {validCameraState,validMicroscopeSettings,layerAppearance} from './workspaceSettings.ts';
 import {surgicalToolMesh,updateSurgicalToolAnimation} from './surgicalGeometry.ts';
 import * as THREE from 'three';
@@ -32,4 +32,23 @@ test('revised tool working meshes use accepted capsules; jaws never invent a clo
   assert.deepEqual(after.min.toArray(),before.min.toArray());assert.deepEqual(after.max.toArray(),before.max.toArray());
   assert(Math.abs(after.min.x-(1-2-.35))<1e-6);assert(Math.abs(after.max.z-(3+.35))<1e-6);
   assert.deepEqual(mesh.position.toArray(),slot.position);
+});
+
+test('a new rehearsal focuses the source when parked, or the accepted working tip once',()=>{
+  const parked={position:[-6,0,-50],quaternion:[0,0,0,1],inserted:false};
+  const view={slots:{left:parked},scene:{shape:[5,7,9],affine:[[1,0,0,39],[0,2,0,5],[0,0,1,-17],[0,0,0,1]]}};
+  const target=[41,9,-12];
+  const scene=defaultSurgeonView(view,{});
+  assert.deepEqual(scene.microscope.target,[41,11,-13]);
+  const focused=defaultSurgeonView(view,{},target);
+  assert.equal(focused.operativeView,'surgeon');
+  assert.deepEqual(focused.camera.target,target);
+  assert(validMicroscopeSettings(focused.microscope));
+  view.slots.right={...parked,position:[42,8,-10],active:true,inserted:true};
+  assert.strictEqual(defaultSurgeonView(view,focused),focused);
+  const fresh=defaultSurgeonView(view,{},target);
+  assert.deepEqual(fresh.microscope.target,view.slots.right.position);
+  assert.equal(fresh.microscope.inspectionCutaway,false);
+  const saved={operativeView:'external',camera:focused.camera};
+  assert.strictEqual(defaultSurgeonView(view,saved),saved);
 });

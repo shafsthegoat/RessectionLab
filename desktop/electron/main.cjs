@@ -48,10 +48,12 @@ let currentCaseHash;
 let currentCaseName = 'research-case';
 const secondaryDisplayOnly=process.argv.includes('--secondary-display');
 const automationHidden=process.argv.includes('--automation-hidden');
+const nativeManifest=filename=>/^(?:patient-anatomy\.json|vascular-review(?:\.[0-9a-f]{12})?\.anatomy\.json)$/.test(path.basename(filename));
 if((secondaryDisplayOnly||automationHidden)&&process.platform==='darwin')app.setActivationPolicy('accessory');
 let secondaryDisplayId;
 let secondaryDisplayUnavailable=false;
 const casePaths = new Map();
+const unsavedPracticeNames = new Map();
 const studyReplaySources = new Map();
 const {StudyReplayRecorder}=require('./study-engine-recording.cjs');
 const replayRecorder=new StudyReplayRecorder();
@@ -132,7 +134,7 @@ function bindOperations() {
     const filename=await fs.realpath(selected);
     if (!await rehearsalUnsaved.allowNavigation()) return null;
     const portable=filename.endsWith('.rsworkspace');
-    const native=path.basename(filename)==='patient-anatomy.json'||portable;
+    const native=nativeManifest(filename)||portable;
     const readOnlyPackage=caseLibrary.isManagedNativePath(selected)||caseLibrary.isManagedNativePath(filename);
     const result=await engine.request(native?'anatomyOpen':'loadCase',{path:filename,...(portable?{
       workingRoot:path.join(app.getPath('userData'),'patient-studies'),...(readOnlyPackage?{readOnlyPackage:true}:{})
@@ -140,7 +142,7 @@ function bindOperations() {
     rememberReplayMode(result);
     currentCasePath=filename;if(result?.caseHash)casePaths.set(result.caseHash,filename);await caseLibrary.remember(filename);return result;
   };
-  handle('workspaceInstalled', args=>{args=plainArgs(args,['caseHash','caseId']);currentCaseHash=args.caseHash;currentCaseName=String(args.caseId||'research-case').replace(/[^a-zA-Z0-9._-]/g,'-');rehearsalUnsaved.installed();return true;});
+  handle('workspaceInstalled', args=>{args=plainArgs(args,['caseHash','caseId']);currentCaseHash=args.caseHash;currentCaseName=String(args.caseId||'research-case').replace(/[^a-zA-Z0-9._-]/g,'-');unsavedPracticeNames.clear();rehearsalUnsaved.installed();return true;});
   handle('openWorkspace',async()=>{
     const filename=pendingOpenPath||await pick('Open patient workspace',['rsworkspace','ressectionlab','rslab','json']);pendingOpenPath=null;
     return filename?openWorkspace(path.resolve(filename)):null;
@@ -177,15 +179,20 @@ function bindOperations() {
   });
   const anatomyKeys = {
     anatomySaveView: ['viewState','saveArchive'],
-    anatomyComponents: ['layerId'],
-    anatomyGraph: ['layerId','point'],
+    anatomyComponents: ['layerId','focus'],
+    anatomyAttachedVesselReview: ['layerId','seriesId','findingId','reviewId','centerIjk'],
+    anatomyVesselGapReview: ['layerId','seriesId','findingId','reviewId'],
+    anatomyGraph: ['layerId','point','displaySeriesId'],
     anatomyReconstruct: ['seriesId','model','synthsegVersion','brainLayerId'],
     anatomyPlan: ['action','approach','approachId','parameterHash','reviewApproachId','assess','start','end','radiusMm','patchRadiusMm','entryPatch','constraints','targetLayerId','candidateBinding','sensitivityConfig'], anatomyRemoval: ['point','radiusMm','reset'],
     anatomySection: ['seriesId','center','normal','spacingMm','movingId','checkerboard','layers','original','registrationReview'],
-    anatomyView: ['seriesId','layers','original','highlightLayer','highlightComponents','reviewId','previewAlignment','vesselScope','patientModel'],
-    anatomyEdit: ['action','layerId','author','points','radiusMm','threshold','reviewId','componentIds'],
+    anatomyLocalAlignment: ['seriesId','center'],
+    anatomyDiffusionBaseline: ['assetId'],
+    anatomyCtaArterialCoverage: ['seriesId','focusLayerIds','widerLayerIds'],
+    anatomyView: ['seriesId','layers','original','highlightLayer','highlightComponents','reviewId','previewAlignment','vesselScope','vesselDetail','patientModel','vesselSurfaceMode','sourceExtent','localVesselField','requestId'],
+    anatomyEdit: ['action','layerId','author','points','radiusMm','threshold','reviewId','componentIds','findingId','seriesId'],
     anatomySample: ['point','layerId','independentSeries'],
-    anatomyRegister: ['action','seriesId','movingPoints','referencePoints','reviewer'],
+    anatomyRegister: ['action','seriesId','movingPoints','referencePoints','reviewer','nativeWallScope'],
   };
   for (const [operation, keys] of Object.entries(anatomyKeys))
     handle(operation, args => engine.request(operation, plainArgs(args, ['collectionId','snapshotId',...keys]), operation==='anatomyReconstruct'?1800000:300000));
@@ -291,9 +298,26 @@ function bindOperations() {
   });
   handle('prepareSurgicalEnvironment', async args=>{
     if(!await rehearsalUnsaved.allowNavigation())return null;
-    args=plainArgs(args,['collectionId','snapshotId','layers','allowUnreviewedRegistration','approach']);
+    args=plainArgs(args,['collectionId','snapshotId','layers','allowUnreviewedRegistration','approach','nativeWallCenter','vesselGeometry']);
     const result=await engine.request('prepareSurgicalEnvironment',args,300000);rememberReplayMode(result);currentCasePath=null;return result;
   });
+  handle('inspectNativeWallSource', async args=>{
+    args=plainArgs(args,['caseHash','choose','requestId']);
+    if(!currentCaseHash||args.caseHash!==currentCaseHash)throw Error('Open the native-wall rehearsal first');
+    const filename=args.choose===true?await pick('Locate the original native study',['rsworkspace','json']):null;
+    if(args.choose===true&&!filename)return null;
+    if(args.caseHash!==currentCaseHash)return null;
+    const result=await engine.request('inspectNativeWallSource',{
+      caseHash:args.caseHash,...(filename?{path:filename}:{}),
+      ...(Object.hasOwn(args,'requestId')?{requestId:args.requestId}:{}),
+    },300000);
+    if(result&&args.caseHash!==currentCaseHash){
+      await engine.request('closeNativeWallSource',{collectionId:result.collectionId});
+      return null;
+    }
+    return result;
+  });
+  handle('closeNativeWallSource', args=>engine.request('closeNativeWallSource',plainArgs(args,['collectionId'])));
   handle('importSurgicalScene', async args => {
     if (!await rehearsalUnsaved.allowNavigation()) return null;
     args=plainArgs(args,['frame','units','material','resolution','topology','thicknessMm']);
@@ -359,7 +383,7 @@ function bindOperations() {
     }});
   });
   handle('surgicalRehearsal', async args => {
-    args=plainArgs(args, ['includeSequenceOutcome','requestId','caseHash','command','expectedStateId','action','mapping','position','frameIndex','cacheOnly','timelineToken','viewFieldTokens','prefixToken','prefixFieldTokens','branchId','source','sceneIndex','acknowledgeResearchUnknowns','opponent','allowModeledBrainCorridor','scenario','maxActions','initialAccessRadiusMm','exploreExteriorFaces','cumulativeReentry','planningHorizon','beamWidth','policyInput','expectedComparisonSeal','constraints','candidateId','expectedPlanSeal','phase','offsetMm','contextVoxelShift']);
+    args=plainArgs(args, ['expectedEpisodeId','checkpointSeal','includeSequenceOutcome','requestId','caseHash','command','expectedStateId','action','mapping','position','frameIndex','cacheOnly','timelineToken','viewFieldTokens','prefixToken','prefixFieldTokens','branchId','source','sceneIndex','acknowledgeResearchUnknowns','opponent','allowModeledBrainCorridor','scenario','maxActions','initialAccessRadiusMm','exploreExteriorFaces','cumulativeReentry','planningHorizon','beamWidth','policyInput','expectedComparisonSeal','constraints','candidateId','expectedPlanSeal','phase','offsetMm','contextVoxelShift']);
     if(studyReplaySources.has(args.caseHash)&&!['inspect','seek','seekFrame'].includes(args.command))throw Error('STUDY_REPLAY_ONLY: use the recorded branch replay controls');
     if(args.command==='attachProtection'){
       if(!currentCaseHash||args.caseHash!==currentCaseHash||typeof args.expectedStateId!=='string'||!args.expectedStateId||args.source)throw Error('Choose the accepted state in the current workspace before attaching protection');
@@ -368,7 +392,14 @@ function bindOperations() {
       if(currentCaseHash!==caseHash)throw Error('Workspace changed while choosing protection');
       args={...args,protectionPath};
     }
-    const result=await engine.request('surgicalRehearsal',args,surgicalTimeoutMs(args.command));rehearsalUnsaved.changed(args,result);replayRecorder.observe(result);return result;
+    const result=await engine.request('surgicalRehearsal',args,surgicalTimeoutMs(args.command));
+    if(args.command==='practice' && result?.practiceEpisode){
+      const original=casePaths.get(args.caseHash);
+      const stem=original?path.basename(original,path.extname(original)):currentCaseName;
+      const suffix=String(result.practiceEpisode.episodeId).replace(/[^a-zA-Z0-9-]/g,'').slice(-8);
+      unsavedPracticeNames.set(args.caseHash,path.join(original?path.dirname(original):'',`${stem}-practice-${suffix}.ressectionlab`));
+    }
+    rehearsalUnsaved.changed(args,result);replayRecorder.observe(result);return result;
   });
   for (const op of ['createRehearsal','inspectRehearsal','stepRehearsal','compareRehearsal']) {
     handle(op, async args => {const result=await engine.request(op, plainArgs(args, op === 'stepRehearsal'
@@ -418,11 +449,13 @@ function bindOperations() {
   handle('importStructuralEvidence', args => importStructuralEvidence(args, { pick, request: (...requestArgs) => engine.request(...requestArgs) }));
   handle('saveCase', async args => {
     plainArgs(args, ['caseHash', 'workspace']);
-    const selected = await dialog.showSaveDialog(window, { title: 'Save anatomy workspace', defaultPath: casePaths.get(args.caseHash) || currentCaseName+'.ressectionlab', filters: [{ name: 'RessectionLab case', extensions: ['ressectionlab'] }] });
+    const practiceName=unsavedPracticeNames.get(args.caseHash);
+    const selected = await dialog.showSaveDialog(window, { title: practiceName?'Save practice episode':'Save anatomy workspace', defaultPath: practiceName || casePaths.get(args.caseHash) || currentCaseName+'.ressectionlab', filters: [{ name: 'RessectionLab case', extensions: ['ressectionlab'] }] });
     if (selected.canceled || !selected.filePath) return null;
     const result = await engine.request('saveCase', { ...args, path: selected.filePath, overwrite: true });
     currentCasePath = selected.filePath;
     casePaths.set(args.caseHash,selected.filePath);
+    unsavedPracticeNames.delete(args.caseHash);
     rehearsalUnsaved.saved();
     await caseLibrary.remember(selected.filePath);
     return result;
@@ -505,7 +538,7 @@ app.on('second-instance', (_event,argv) => {
   if(argv.includes('--secondary-display')&&!secondaryDisplayOnly){log('Refused secondary-display request for an existing unrestricted window. Close the existing app and relaunch with --secondary-display.');return;}
   if(secondaryDisplayOnly&&(secondaryDisplayUnavailable||!isSecondaryDisplayConnected(screen.getAllDisplays(),screen.getPrimaryDisplay().id,secondaryDisplayId))){window?.hide();log('Secondary display unavailable; ignored second-instance request.');return;}
   const index=argv.findIndex(a=>a==='--case'||a==='--anatomy');
-  const filename=index>=0?argv[index+1]:argv.find(a=>/\.(ressectionlab|rslab)$/.test(a)||a.endsWith('patient-anatomy.json')||a.endsWith('.rsworkspace'));
+  const filename=index>=0?argv[index+1]:argv.find(a=>/\.(ressectionlab|rslab)$/.test(a)||nativeManifest(a)||a.endsWith('.rsworkspace'));
   if(filename){pendingOpenPath=path.resolve(filename);if(window&&!window.isDestroyed())window.webContents.send('research:event',{event:'menuAction',action:'openCase'});}
 
   if (window && !window.isDestroyed()) { if(secondaryDisplayOnly){window.showInactive();}else{if (window.isMinimized()) window.restore(); window.show(); window.focus();} }

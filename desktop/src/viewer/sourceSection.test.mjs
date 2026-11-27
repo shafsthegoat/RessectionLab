@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { followSourceSection, restoreSourceSection, sourceSectionAtCursor, sourceSectionSnapshot } from './sourceSection.ts';
+import { ctaArterialCutaway, followSourceSection, restoreSourceSection, sourceDepthSlabAtCursor, sourceSectionAtCursor, sourceSectionSnapshot } from './sourceSection.ts';
 import { inverseAffine, rasAffine, transformPoint, volumeBounds } from './coordinates.ts';
 
 test('section uses linked RAS millimeters on an oblique LPS source and exposes its camera-facing cut', () => {
@@ -14,6 +14,50 @@ test('section uses linked RAS millimeters on an oblique LPS source and exposes i
   assert.equal(sourceSectionAtCursor(source,cursor,bounds,[-100,0,0]).clipping.flipped,false);
   assert.equal(next.clipBox,source.clipBox); assert.equal(next.obliqueClip,source.obliqueClip); assert.equal(next.volumeRendering,source.volumeRendering);
   assert.deepEqual(source,before);
+});
+
+test('fresh CTA cutaway clears all source and display artery vertices and preserves acquired settings',()=>{
+  const mesh=(z,displayed=z)=>({
+    source:Float32Array.from([38,65,z,64,33,z,55,52,z-12]),
+    positions:Float32Array.from([38,65,displayed,64,33,displayed,55,52,z-12]),
+    indices:Uint32Array.from([0,1,2]),
+  });
+  const skull=mesh(20);
+  skull.source.set([15,10,20,100,109,20,100,10,20]);
+  skull.positions=skull.source;
+  const artery={name:'artery',kind:'artery',sourceSeries:'cta',surface:mesh(50,51)};
+  const volume={displayIdentity:'source',modality:'CTA',frame:'RAS+',shape:[140,140,130],
+    affine:[[.5,0,0,-30],[0,.5,0,-35],[0,0,1,-110],[0,0,0,1]],
+    compartments:[artery,{name:'bone',kind:'bone',sourceSeries:'cta',surface:skull}]};
+  const settings={presentation:'segmentation',volumeRendering:{enabled:true,density:.12,shadows:true},sliceOverlay:'contour'};
+  const visible={artery:true,bone:true};
+  const cut=ctaArterialCutaway(volume,'cta',visible,settings);
+  assert.equal(cut.clipping.value,-51);
+  assert.equal(cut.clipping.flipped,true);
+  assert.equal(cut.showPlane,false);
+  assert.equal(cut.volumeRendering,settings.volumeRendering);
+  assert.ok(cut.camera.position[2]>cut.clipping.value);
+  assert.equal(ctaArterialCutaway({...volume,modality:'TOF'},'cta',visible,settings),undefined);
+  assert.equal(ctaArterialCutaway(volume,'cta',{...visible,bone:false},settings),undefined);
+  assert.equal(ctaArterialCutaway(volume,'different',visible,settings),undefined);
+  const withTarget={...volume,compartments:[
+    ...volume.compartments,{name:'target',kind:'tumor',sourceSeries:'cta',surface:mesh(100)},
+  ]};
+  assert.equal(ctaArterialCutaway(withTarget,'cta',{...visible,target:true},settings),undefined);
+  assert.deepEqual(ctaArterialCutaway(withTarget,'cta',{...visible,target:true},settings,
+    [{id:'target',role:'context',provenance:{kind:'simulated_observation'}}]),cut);
+  const wide=mesh(53);
+  wide.source[8]=-30;
+  assert.equal(ctaArterialCutaway({...volume,compartments:[{...artery,surface:wide},volume.compartments[1]]},
+    'cta',visible,settings),undefined);
+  const points=Float32Array.from(Array.from({length:36},(_,i)=>i%3===2?(i===35?65:35):45));
+  const combined={...artery,name:'combined',surface:{source:points,positions:points.slice(),indices:wide.indices}};
+  const wideView={...volume,compartments:[...volume.compartments,combined]};
+  const options={combinedId:'combined',focusIds:['artery']};
+  assert.deepEqual(ctaArterialCutaway(wideView,'cta',{combined:true,bone:true},settings,[],options),cut);
+  assert.equal(ctaArterialCutaway(wideView,'cta',{combined:true,bone:true},settings,[],{...options,focusIds:['missing']}),undefined);
+  combined.surface.positions[32]=65;
+  assert.equal(ctaArterialCutaway(wideView,'cta',{combined:true,bone:true},settings,[],options),undefined);
 });
 
 test('section follows the linked cursor and chosen axis without changing source window or extra cuts', () => {
@@ -35,4 +79,15 @@ test('exit restores exact previous source-plane and cut state while retaining la
   assert.deepEqual(restoreSourceSection(sourceSectionAtCursor(empty,[1,2,3],[[-10,-10,-10],[10,10,10]]),emptySnapshot),empty);
   settings.clipping.value = 9;
   assert.equal(snapshot.clipping.value,7);
+});
+
+test('a depth slab follows the cursor in physical RAS along one axis and retains the full transverse field', () => {
+  const bounds = [[-85,-70,-8],[89,90,80]];
+  assert.deepEqual(sourceDepthSlabAtCursor([0,12,8],bounds,'axial',44),
+    {enabled:true,min:[-85,-70,-14],max:[89,90,30]});
+  assert.deepEqual(sourceDepthSlabAtCursor([0,12,8],bounds,'coronal',28),
+    {enabled:true,min:[-85,-2,-8],max:[89,26,80]});
+  assert.deepEqual(sourceDepthSlabAtCursor([1,12,9],bounds,'sagittal',20),
+    {enabled:true,min:[-9,-70,-8],max:[11,90,80]});
+  assert.deepEqual(bounds,[[-85,-70,-8],[89,90,80]]);
 });

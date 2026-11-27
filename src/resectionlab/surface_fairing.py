@@ -1,27 +1,41 @@
-"""Bounded fairing of display meshes that keeps the source triangle connectivity.
+"""Bounded physical-space fairing that keeps the source triangle connectivity.
 
-Native views use adaptive context bounds and closed-lesion volume checks. The
-shared profile and Chebyshev recurrence are also used by browser replay.
+Native meshes add adaptive context bounds, closed-lesion volume checks and
+vascular caliber controls. Browser replay shares the base Chebyshev recurrence.
 """
 import json
-from importlib.resources import files
+from importlib import resources
 import numpy as np
 from scipy import ndimage as ndi, sparse
-from scipy.sparse.csgraph import connected_components
 from scipy.spatial import cKDTree
+from . import acceleration as _accel
 
-POLICY = json.loads(files('resectionlab').joinpath('surface_policy.json').read_text())
+POLICY = json.loads(resources.files('resectionlab').joinpath('surface_policy.json').read_text())
 NATIVE_POLICY = POLICY['native']
+NATIVE_VASCULAR_POLICY = POLICY['nativeVascular']
+PUBLISHER_CTA_POLICY = 'source-bound-publisher-cta-fairing-v1'
+OPEN_VASCULAR_POLICY = 'native-bounded-open-vessel-v3'
 
 
 def surface_kind(kind):
     return 'tumor' if kind == 'tumor' else 'vessel' if kind in {'vessel', 'vessels', 'artery', 'vein', 'sinus'} else 'context'
 
 
-def coefficients(kind, *, native_context=False, broad_context=False):
+def coefficients(kind, *, native_context=False, broad_context=False, native_vessel=False,
+                 categorical=False, publisher_cta=False):
     profile = POLICY['profiles'][surface_kind(kind)]
+    if native_vessel:
+        profile = NATIVE_VASCULAR_POLICY
     n, pass_band = (NATIVE_POLICY['contextIterations'], NATIVE_POLICY['contextPassBand']) if native_context else (
         profile['iterations'], profile['passBand'])
+    if native_vessel and categorical:
+        # The coarser label surface needs a narrower spatial filter to preserve
+        # thin categorical ends and rapid changes in caliber.
+        pass_band = profile['categoricalPassBand']
+    if publisher_cta:
+        # The supplied VTP has more vertices per voxel than Surface Nets.
+        # A lower band reaches the acquisition-scale steps in this topology.
+        pass_band = .14
     if broad_context:
         pass_band = NATIVE_POLICY['broadContext']['passBand']
     theta = np.arccos(1-pass_band)
@@ -52,6 +66,11 @@ def intersection_vertices(source, candidate, faces, cancelled=lambda: False):
 
 
 def _intersection_vertices(source, candidate, faces, cancelled, changed_points=None):
+    if _accel.enabled('surface-audit'):
+        from .accel_geometry import intersection_vertices
+        found = intersection_vertices(source, candidate, faces, cancelled, changed_points)
+        if found is not None:
+            return found
     moved = np.any(source != candidate, axis=1)[faces].any(axis=1)
     if not moved.any():
         return np.empty(0, int)
@@ -122,16 +141,86 @@ def retain_normal_displacement(delta, filtered, faces, cancelled):
         block += (1 - keep) * along_normal[:, None] * normal
 
 
-def fair_surface(points, faces, affine, kind, *, mask=None, mask_origin=None, native=False, cancelled=lambda: False):
+def _vascular_displacement_limits(points, mask, origin, spacing, altitude, categorical):
+    """Use positive corners of the native cell, including background-side crossings."""
+    radii = ndi.distance_transform_edt(mask, sampling=spacing)
+    # Follow two inward face steps from positive corners. Crossing an empty
+    # cell could mistake a close branch's caliber for the current branch's.
+    footprint = ndi.generate_binary_structure(3, 1)
+    for _ in range(2):
+        ndi.maximum_filter(radii, footprint=footprint, output=radii)
+        radii[~mask] = 0.
+    local = points - origin
+    low = np.floor(local).astype(int)
+    high = np.ceil(local).astype(int)
+    radius = np.zeros(len(points))
+    crossing_depth = np.full(len(points), np.inf)
+    for corner in np.ndindex(2, 2, 2):
+        ijk = np.where(corner, high, low)
+        np.clip(ijk, 0, np.asarray(mask.shape) - 1, out=ijk)
+        index = tuple(ijk.T)
+        occupied = mask[index]
+        radius = np.maximum(radius, np.where(occupied, radii[index], 0.))
+        if not categorical:
+            distance = np.linalg.norm((ijk - local) * spacing, axis=1)
+            crossing_depth = np.minimum(crossing_depth, np.where(occupied, distance, np.inf))
+    policy = NATIVE_VASCULAR_POLICY
+    cell_width = spacing.max()
+    depth = np.clip(radius / cell_width - 1., 0., 1.)
+    thin_fraction = POLICY['profiles']['vessel']['radiusFraction']
+    fraction = thin_fraction + depth * (policy['radiusFraction'] - thin_fraction)
+    limit = np.minimum(altitude * policy['voxelAltitudes'],
+                       fraction * np.maximum(radius, .5 * altitude))
+    if not categorical:
+        # A weak positive can support a continuous crossing much closer to its
+        # center than its annotation EDT suggests. Keep that support even at
+        # source threshold ties where only a fraction of one sample is resolved.
+        limit = np.minimum(limit, policy['scoreCrossingFraction'] * crossing_depth)
+        fragile = (crossing_depth < altitude * policy['scoreCrossingPinnedAltitudes']) & (depth == 0)
+        limit[fragile] = 0.
+    return limit
+
+
+def _vascular_normal_balance(original, filtered, faces, operator):
+    """Cancel coherent inward drift without translating or rescaling a branch."""
+    triangles = filtered[faces]
+    face_normals = np.cross(triangles[:, 1] - triangles[:, 0], triangles[:, 2] - triangles[:, 0])
+    normals = np.zeros_like(filtered)
+    for corner in range(3):
+        np.add.at(normals, faces[:, corner], face_normals)
+    area = np.linalg.norm(normals, axis=1)
+    normals /= np.maximum(area, 1e-20)[:, None]
+    normal_delta = np.einsum('ij,ij->i', filtered - original, normals)
+    weights = np.column_stack((normal_delta * area, area))
+    for _ in range(NATIVE_VASCULAR_POLICY['balancePasses']):
+        weights = (weights + operator @ weights) * .5
+    drift = weights[:, 0] / np.maximum(weights[:, 1], 1e-20)
+    return filtered - normals * (NATIVE_VASCULAR_POLICY['balanceStrength'] * drift)[:, None]
+
+
+def fair_surface(points, faces, affine, kind, *, mask=None, mask_origin=None, native=False,
+                 source_shape=None, categorical=False, cancelled=lambda: False, publisher_cta=False,
+                 open_field=False):
     points, faces = np.asarray(points, np.float32), np.asarray(faces, np.uint32)
     if points.ndim != 2 or points.shape[1] != 3 or faces.ndim != 2 or faces.shape[1] != 3:
         raise ValueError('Display surfaces require three coordinates and three corners per triangle')
     if not np.isfinite(points).all() or (faces.size and faces.max() >= len(points)):
         raise ValueError('Invalid indexed display surface')
     profile_kind = 'tumor' if native and kind == 'lesion-context' else surface_kind(kind)
+    native_vessel = profile_kind == 'vessel' and mask is not None and source_shape is not None
     native_context = native and profile_kind == 'context'
     broad_context = native_context and broad_context_surface(kind)
     policy_version = NATIVE_POLICY['broadContext']['version'] if broad_context else NATIVE_POLICY['version'] if native else POLICY['version']
+    if native_vessel:
+        policy_version = NATIVE_VASCULAR_POLICY['version']
+    if publisher_cta:
+        if not (native_vessel and categorical):
+            raise ValueError('Publisher CTA fairing requires the aligned native categorical mask')
+        policy_version = PUBLISHER_CTA_POLICY
+    if open_field:
+        if not native_vessel or categorical or publisher_cta:
+            raise ValueError('Open-field fairing requires a native vessel score contour')
+        policy_version = OPEN_VASCULAR_POLICY
     triangle_budget = NATIVE_POLICY['maxContextTriangles'] if native_context else POLICY['maxContextTriangles']
     if profile_kind == 'context' and len(faces) > triangle_budget:
         return points.copy(), {'policy':policy_version, 'kind':'context', 'maxDisplacementMm':0.,
@@ -148,12 +237,16 @@ def fair_surface(points, faces, affine, kind, *, mask=None, mask_origin=None, na
     if profile_kind == 'vessel':
         limit = h/8
         spacing = np.linalg.norm(linear, axis=0)
+        origin = np.zeros(3) if mask_origin is None else np.asarray(mask_origin)
         if mask is not None and np.allclose((linear/spacing).T @ (linear/spacing), np.eye(3), atol=1e-5):
-            radius = ndi.distance_transform_edt(mask, sampling=spacing)
-            ix = np.floor(points-(np.zeros(3) if mask_origin is None else mask_origin)+.5).astype(int)
-            valid = ((ix >= 0) & (ix < np.asarray(mask.shape))).all(1)
-            r = np.zeros(len(points)); r[valid] = radius[tuple(ix[valid].T)]
-            limit = np.minimum(.5*h, .25*np.maximum(r, .5*h))
+            if native_vessel:
+                limit = _vascular_displacement_limits(points, mask, origin, spacing, h, categorical)
+            else:
+                radius = ndi.distance_transform_edt(mask, sampling=spacing)
+                ix = np.floor(points - origin + .5).astype(int)
+                valid = ((ix >= 0) & (ix < np.asarray(mask.shape))).all(1)
+                r = np.zeros(len(points)); r[valid] = radius[tuple(ix[valid].T)]
+                limit = np.minimum(.5*h, .25*np.maximum(r, .5*h))
     # Packed undirected edges avoid allocating and sorting a second Nx2 array
     # for the dense meshes. Counted edges retain the original operator weights.
     n = len(points)
@@ -170,11 +263,20 @@ def fair_surface(points, faces, affine, kind, *, mask=None, mask_origin=None, na
     pinned = degree == 0
     pinned[a[uses != 2]] = True
     pinned[b[uses != 2]] = True
+    if open_field:
+        # Retain the two face rings bordering open and irregular edges.
+        pinned |= (adjacency @ pinned) > 0
+        pinned |= (adjacency @ pinned) > 0
+    if native_vessel:
+        pinned |= ((points <= 0) | (points >= np.asarray(source_shape) - 1)).any(axis=1)
+        fragile = np.broadcast_to(limit == 0, (n,))
+        pinned[faces[fragile[faces].any(axis=1)].ravel()] = True
     del a, b, uses
-    _, components = connected_components(adjacency, directed=False)
+    _, components = sparse.csgraph.connected_components(adjacency, directed=False)
     operator = sparse.diags(1/np.maximum(degree, 1)) @ adjacency
     del adjacency
-    c = coefficients(profile_kind, native_context=native_context, broad_context=broad_context)
+    c = coefficients(profile_kind, native_context=native_context, broad_context=broad_context,
+                     native_vessel=native_vessel, categorical=categorical, publisher_cta=publisher_cta)
     filtered = c[0]*original
     previous, current = original.copy(), np.zeros_like(original)
     for j in range(1, len(c)):
@@ -184,6 +286,9 @@ def fair_surface(points, faces, affine, kind, *, mask=None, mask_origin=None, na
         following[pinned] = original[pinned]
         filtered += c[j]*following
         current, previous = previous, following
+    if native_vessel:
+        filtered = _vascular_normal_balance(original, filtered, faces, operator)
+        filtered[pinned] = original[pinned]
     del operator, previous, current, following
     lesion_volume = native and profile_kind == 'tumor'
     if lesion_volume:
@@ -207,7 +312,7 @@ def fair_surface(points, faces, affine, kind, *, mask=None, mask_origin=None, na
         filtered = centers[components] + (filtered-centers[components])*scale[components, None]
 
     def cap_ratio(delta):
-        ratio = np.linalg.norm(delta, axis=1)/limit
+        ratio = np.linalg.norm(delta, axis=1)/np.maximum(limit, 1e-30)
         if native_context:
             # Constrain continuous movement both in source-cell units and in
             # RAS millimetres. The wide axis gets its own allowance.
@@ -216,9 +321,14 @@ def fair_surface(points, faces, affine, kind, *, mask=None, mask_origin=None, na
         return ratio
 
     delta = filtered-original
+    if publisher_cta:
+        delta *= .8
     if broad_context:
         retain_normal_displacement(delta, filtered, faces, cancelled)
-    filtered = original+delta*np.minimum(1, .999/np.maximum(cap_ratio(delta), 1e-30))[:, None]
+    bounded = np.minimum(1, .999/np.maximum(cap_ratio(delta), 1e-30))
+    if open_field:
+        bounded *= .4  # Preserve the caliber of narrow open-field sections.
+    filtered = original+delta*bounded[:, None]
     del delta
 
     def quantize():

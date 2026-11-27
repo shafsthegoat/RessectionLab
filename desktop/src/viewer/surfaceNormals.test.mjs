@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {indexedSurfaceNormals} from './surfaceNormals.ts';
+import {advectScoreWallLighting,scoreWallLighting} from './displaySurfaceNormals.ts';
 
 // Retained independent array/reduction implementation, including its original
 // arithmetic order. Optimizing normals must not change displayed source shape.
@@ -27,4 +28,21 @@ test('specialized physical normals are byte-identical across mirrored, sheared, 
     assert.deepEqual(points,original);assert.deepEqual(indices,faces);
   }
   assert.deepEqual(indexedSurfaceNormals(new Float32Array(),new Uint32Array(),[[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]]),new Float32Array());
+});
+
+test('native score lighting keeps unsupported or sharply turned vertices on physical lighting',()=>{
+  const affine=[[0,-.3,0,27],[.2,0,0,14],[0,0,.4,11],[0,0,0,1]];
+  const physical=Float32Array.of(0,0,1,0,0,1,0,0,1);
+  const scores=Float32Array.of(.25,0,1,1,.25,0,1,0,0,0,-1,1);
+  const rest=scoreWallLighting(physical,physical,scores,affine);
+  assert.deepEqual(rest.supported,Uint8Array.of(1,0,0));
+  assert.ok(rest.normals[0]>.15);
+  assert.deepEqual(rest.normals.slice(3),physical.slice(3));
+  assert.deepEqual(advectScoreWallLighting(physical,rest.normals,physical,physical,rest.supported,affine),rest.normals);
+  const turned=physical.slice();turned.set([1,0,0]);
+  assert.deepEqual(advectScoreWallLighting(physical,rest.normals,turned,turned,rest.supported,affine),turned);
+  const moved=physical.slice();moved.set([.1,0,1],3);
+  const transported=advectScoreWallLighting(physical,rest.normals,moved,moved,rest.supported,affine);
+  assert.deepEqual(transported.slice(3),moved.slice(3));
+  assert.deepEqual(physical,Float32Array.of(0,0,1,0,0,1,0,0,1));
 });

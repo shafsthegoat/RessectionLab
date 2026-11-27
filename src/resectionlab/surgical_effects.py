@@ -59,15 +59,26 @@ def _blade_edges(engine, cells, p, orientation, params, tool):
     centers need not fit inside its narrow metal thickness. The intersection
     must lie within the recorded working part, never a generic tip sphere.
     """
-    allowed = set(TOOLS[tool]['materials']); labels = engine.scene.labels.ravel()
+    allowed = set(getattr(engine, 'tools', TOOLS)[tool]['materials']); labels = engine.scene.labels.ravel()
     normal = orientation.apply([0.,1.,0.]); result = []
+    edges = None
+    if 'operativeToolProfileV1' in params:
+        from .geometry import point_segment_distances
+        from .surgical_tool_profiles import profile_segments
+        edges = [(np.asarray(a),np.asarray(b),radius) for a,b,radius,role,form in
+                 profile_segments(params['operativeToolProfileV1'],params['jawOpeningMm'])
+                 if role=='working' and form not in ('blunt-toe',)]
     for i,j in _edges(engine,cells):
         if any(engine.by_label[int(labels[c])]['material'] not in allowed for c in (i,j)): continue
         xyz = _current_points(engine,[i,j]); side = (xyz-p)@normal
         if not side.min() <= 0 < side.max(): continue
         intersection = xyz[0] + (xyz[1]-xyz[0]) * (-side[0]/(side[1]-side[0]))
         local = orientation.inv().apply(intersection-p)
-        width = params['jawOpeningMm']/2+.35 if TOOLS[tool]['geometry']=='scissors' else params['radiusMm']+.4
+        if edges is not None:
+            if any(point_segment_distances(local[None,:],a,b)[0] <= radius for a,b,radius in edges):
+                result.append((i,j))
+            continue
+        width = params['jawOpeningMm']/2+.35 if getattr(engine, 'tools', TOOLS)[tool]['geometry']=='scissors' else params['radiusMm']+.4
         if abs(local[0]) <= width and -min(params['depthMm'],5.)-.35 <= local[2] <= .35: result.append((i,j))
     return result
 
@@ -121,7 +132,7 @@ def _bone_components(engine):
 def apply_effect(engine, key, op, cells, p, q, dt):
     initialize_effect_state(engine)
     state = engine.state; slot = state['slots'][key]; name = slot['instrument']
-    effect = TOOLS[name]['effect']; params = engine.parameters(slot)
+    effect = getattr(engine, 'tools', TOOLS)[name]['effect']; params = engine.parameters(slot)
     p = np.asarray(p, float); orientation = Rotation.from_quat(q)
     if name == 'membrane_forceps':
         from .surgical_membrane_transport import grasp
@@ -165,19 +176,23 @@ def apply_effect(engine, key, op, cells, p, q, dt):
         from .surgical_physics import vessel_profile, record_vessel_transections
         profile = vessel_profile(engine) or engine.scene.properties.get('tissuePhysicsV2', {}).get('vessel')
         if 'strands' not in engine.scene.properties and _source_geometry(engine).get('topology') != 'strand' and profile is None: raise ValueError('MISSING_STRAND_PROPERTIES')
+        from . import surgical_vessel_rods as rods
         edges = []
         for strand in engine.scene.properties.get('strands', []):
             eligible = set(strand['cells'])
             edges.extend(_edges(engine, sorted(set(cells) & eligible), eligible))
-        if profile is not None:
+        if rods.enabled(engine):
+            edges = rods.cut_candidates(engine, set(cells), p, orientation.apply([0., 1., 0.]), params['depthMm'])
+        elif profile is not None:
             labels = engine.scene.labels.ravel()
             local_vessels = [i for i in cells if engine.by_label[int(labels[i])]['material'] == 'vessel']
             for i in local_vessels:
                 edges.extend((min(i, j), max(i, j)) for j in _neighbors(engine, i)
                              if labels[j] and j not in engine.state['removed'] and engine.by_label[int(labels[j])]['material'] == 'vessel')
         normal = orientation.apply([0., 1., 0.])
-        edges = [edge for edge in edges
-                 if (lambda side: side.min() <= 0 < side.max())((_current_points(engine, edge) - p) @ normal)]
+        if not rods.enabled(engine):
+            edges = [edge for edge in edges
+                     if (lambda side: side.min() <= 0 < side.max())((_current_points(engine, edge) - p) @ normal)]
         count = _record_edges(engine, 'transectedEdges', edges)
         soft_count = 0
         if state.get('toolMechanicsRevision') in (1, 2):
@@ -347,7 +362,11 @@ def tick_fields(engine, dt):
             if source.get('kind') == 'modeled-vessel-wound': source['emittedMm3'] += amount
             source['reservoirMm3'] = source.get('reservoirMm3', 0.) + amount
             engine.state['fluidAddedMm3'] += amount
-        destination = _free_outlet(engine, source['cell'])
+        outlet = source['cell']
+        if source.get('modelVersion') == graph.MODEL_VERSION and 'gliomaMaterialsV1' in engine.scene.properties:
+            from .surgical_glioma_materials import outlet_cell
+            outlet = outlet_cell(engine, outlet)
+        destination = _free_outlet(engine, outlet)
         if destination is not None:
             amount = source.get('reservoirMm3', 0.)
             if amount:
@@ -533,6 +552,16 @@ def _current_points(engine, cells):
         from .surgical_physics_v2 import raster
         positions = dict(raster(engine))
         points = engine.scene.points([positions.get(i, i) for i in ids])
+        if engine.scene.properties.get('gliomaMaterialsV1', {}).get('vesselMotionModel'):
+            from .surgical_glioma_materials import vessel_displacements
+            from . import surgical_vessel_rods as rods
+            motion = rods.source_points(engine, ids) if rods.enabled(engine) else {}
+            displacement = {} if rods.enabled(engine) else vessel_displacements(engine)
+            for index, cell in enumerate(ids):
+                if cell in motion:
+                    points[index] = motion[cell]
+                elif cell in displacement:
+                    points[index] = engine.scene.points([cell])[0] + displacement[cell]
         if engine.state.get('toolMechanicsRevision') not in (1, 2): return points
     else: points = engine.scene.points(ids)
     locations = {int(cell): index for index, cell in enumerate(ids)}

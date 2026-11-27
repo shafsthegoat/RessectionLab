@@ -60,3 +60,142 @@ def _triple_array(ref, dtype, limit):
     shape = ref.get('shape')
     return (ref.get('dtype') == dtype and isinstance(shape, list) and len(shape) == 2
             and type(shape[0]) is int and 0 < shape[0] <= limit and shape[1] == 3)
+
+
+def _partition_ids(collection, supplied, whole, attachment):
+    """Match a named partition to the same original points and triangles."""
+    vertex_ref = attachment.get('publisher_vertex_ids')
+    face_ref = attachment.get('publisher_face_ids')
+    if not (vertex_ref and face_ref):
+        return None
+    vertices = collection.array(vertex_ref)
+    faces = collection.array(face_ref)
+    if (vertices.dtype != np.uint32 or faces.dtype != np.uint32
+            or vertices.shape != (len(supplied['source']),) or faces.shape != (len(supplied['indices']),)
+            or np.any(vertices >= len(whole['source'])) or np.any(faces >= len(whole['indices']))
+            or not np.array_equal(whole['source'][vertices], supplied['source'])
+            or not np.array_equal(whole['indices'][faces], vertices[supplied['indices']])):
+        return None
+    return vertices
+
+
+def conditioned_publisher_cta(collection, row, supplied, *, cancelled):
+    """Fair the complete indexed VTP once so named class seams remain coincident."""
+    from .anatomy_geometry import normals
+    from .publisher_vessel_fairing import POLICY as GUIDED_POLICY, refine_publisher_vessel
+    from .surface_fairing import fair_surface
+
+    scan = collection.series(row['source_series'])
+    if scan['modality'] != 'CTA' or scan.get('units_status') != 'mm':
+        return supplied
+    if cancelled():
+        raise InterruptedError('Publisher surface preparation cancelled')
+    attachment = row['publisher_surface']
+    partitioned = 'publisher_vertex_ids' in attachment or 'publisher_face_ids' in attachment
+    full, whole = row, supplied
+    partition = None
+    if partitioned:
+        parents = []
+        for layer in getattr(collection, 'document', {}).get('layers', []):
+            binding = layer.get('publisher_surface') or {}
+            if (binding.get('original') == attachment['original']
+                    and binding.get('source_sha256') == attachment['source_sha256']
+                    and layer.get('source_series') == row['source_series']
+                    and 'publisher_vertex_ids' not in binding and 'publisher_face_ids' not in binding):
+                parents.append(layer)
+        if len(parents) != 1:
+            return supplied
+        full, = parents
+    full_attachment = full['publisher_surface']
+    nearby_veins = ()
+    if full['kind'] == 'artery':
+        nearby_veins = tuple(layer for layer in getattr(collection, 'document', {}).get('layers', [])
+                             if layer.get('kind') in {'vein', 'sinus'} and layer.get('source_series') == full['source_series']
+                             and layer.get('affine') == full['affine']
+                             and (layer.get('data') or {}).get('shape') == full['data']['shape'])
+    key = (full['id'], full['revision'], full['data']['sha256'], full['label_value'],
+           full_attachment['vertices_ras_mm']['sha256'], full_attachment['triangles']['sha256'],
+           tuple((layer['id'], layer['revision'], layer['data']['sha256'], layer['label_value']) for layer in nearby_veins))
+    cached = getattr(collection, '_publisher_cta_fairing', None)
+    cache_hit = cached is not None and cached[0] == key
+    if cache_hit and partitioned:
+        collection.array(full_attachment['vertices_ras_mm'])
+        collection.array(full_attachment['triangles'])
+    if not cache_hit:
+        if partitioned:
+            whole = publisher_surface(collection, full, cancelled=cancelled)
+            if whole is None:
+                return supplied
+            partition = _partition_ids(collection, supplied, whole, attachment)
+            if partition is None:
+                return supplied
+        raw, triangles = whole['source'], whole['indices']
+        if len(triangles) < 4 or len(triangles) > 200_000:
+            return supplied
+        mask = collection.mask(full)
+        if not mask.any():
+            return supplied
+        # Add a two-cell halo beyond the VTP and native positive cells.
+        bounds = [np.flatnonzero(mask.any(axis=tuple(i for i in range(3) if i != axis))) for axis in range(3)]
+        lower = np.maximum(0, np.minimum([axis[0] for axis in bounds], np.floor(raw.min(axis=0))).astype(int) - 2)
+        upper = np.minimum(mask.shape, np.maximum([axis[-1] for axis in bounds], np.ceil(raw.max(axis=0))).astype(int) + 3)
+        if np.prod(upper - lower, dtype=np.int64) > 12_000_000:
+            return supplied
+        region = tuple(slice(a, b) for a, b in zip(lower, upper))
+        padded = np.pad(mask[region], 1)
+        frame = affine(full['affine'])
+        positions, audit = fair_surface(raw, triangles, frame, full['kind'],
+                                        mask=padded, mask_origin=lower - 1,
+                                        source_shape=mask.shape, categorical=True, publisher_cta=True,
+                                        cancelled=cancelled)
+        cacheable = True
+        if nearby_veins and audit['intersectionCheck'] == 'passed':
+            # Limit the label queries to a halo wider than the proximity guard.
+            spacing = np.linalg.norm(frame[:3, :3], axis=0)
+            halo = np.ceil(2 / spacing).astype(int) + 1
+            near_lower, near_upper = np.maximum(0, lower - halo), np.minimum(mask.shape, upper + halo)
+            near_region = tuple(slice(a, b) for a, b in zip(near_lower, near_upper))
+
+            def check():
+                if cancelled():
+                    raise InterruptedError('Publisher vessel refinement cancelled')
+
+            positive = []
+            for layer in nearby_veins:
+                check()
+                try:
+                    adjacent = collection.array(layer['data'], check=check)[near_region]
+                except InterruptedError:
+                    raise
+                except (OSError, ValueError):
+                    # Previous arterial conditioning is independent of this optional label.
+                    cacheable = False
+                    break
+                cells = np.argwhere(adjacent == layer['label_value'])
+                if len(cells):
+                    positive.append(cells + near_lower)
+            if cacheable and positive:
+                refined = refine_publisher_vessel(raw, positions, triangles, frame, padded, lower - 1,
+                                                  mask.shape, np.concatenate(positive), cancelled=cancelled)
+                if not np.array_equal(refined, positions):
+                    positions = refined
+                    audit['policy'] = GUIDED_POLICY
+        cached = (key, whole, positions, normals(positions, triangles), audit)
+        if cacheable:
+            collection._publisher_cta_fairing = cached
+    _, whole, positions, vertex_normals, audit = cached
+    if audit['maxDisplacementMm'] == 0.:
+        return supplied
+    if partitioned:
+        if partition is None:
+            partition = _partition_ids(collection, supplied, whole, attachment)
+        if partition is None:
+            return supplied
+        positions = positions[partition]
+        vertex_normals = vertex_normals[partition]
+    source = supplied['source'].astype(np.float32)
+    displacement = (positions - source) @ affine(row['affine'])[:3, :3].T
+    return {**supplied, 'positions': positions, 'normals': vertex_normals, 'shared_publisher_normals': True,
+            'policy_version': audit['policy'], 'cache_hit': cache_hit,
+            'max_displacement_mm': float(np.linalg.norm(displacement, axis=1).max(initial=0.)),
+            'backed_off_vertices': audit['backedOffVertices'], 'restored_components': audit['restoredComponents']}

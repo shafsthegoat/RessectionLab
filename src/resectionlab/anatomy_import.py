@@ -365,7 +365,9 @@ def select_intake_reference(collection):
     current = document.get("reference_series")
     if current is None:
         return None
-    provisional = projection_or_localizer(collection.series(current))
+    reference_source = collection.series(current)
+    baseline_reference = reference_source.get("diffusion_baseline") is not None
+    provisional = baseline_reference or projection_or_localizer(reference_source)
     if not provisional and (collection.published_reference or len(document["transforms"]) != 1):
         return current
     order = ("T1", "T1CE", "T2", "FLAIR", "CT", "CTA", "TOF", "MRA", "MRV",
@@ -388,7 +390,8 @@ def select_intake_reference(collection):
                             or transforms[current]["status"] != "reference"):
             document.setdefault("registration_history", []).extend(
                 {"series_id": series_id, "reference_series": current, "transform": transform,
-                 "invalidation_reason": "Previous reference was a projection or localizer"}
+                 "invalidation_reason": ("Previous reference was a diffusion baseline for inspection"
+                                         if baseline_reference else "Previous reference was a projection or localizer")}
                 for series_id, transform in transforms.items()
             )
         document["transforms"] = {
@@ -678,7 +681,7 @@ def rigid_registration(collection, moving_id, *, cancelled=lambda: False):
         }
 
 
-def review_registration(
+def registration_landmarks(
     collection, series_id, moving_points, reference_points, reviewer
 ):
     if (
@@ -716,24 +719,25 @@ def review_registration(
         indices = world(np.linalg.inv(affine(source["affine"])), points)
         if np.any(indices < 0) or np.any(indices > np.asarray(source["data"]["shape"]) - 1):
             raise ValueError(f"Landmarks outside acquired source coverage in {sid}")
+    return {"moving": m.tolist(), "reference": r.tolist(), "errors_mm": errors.tolist(),
+            "reviewer": reviewer, "meaning": "sampled landmark residuals, not a whole-image error bound"}
+
+
+def review_registration(collection, series_id, moving_points, reference_points, reviewer):
+    landmarks = registration_landmarks(collection, series_id, moving_points, reference_points, reviewer)
+    t = collection.document["transforms"][series_id]
     collection.set_registration(
         series_id,
         t["matrix"],
         status="reviewed",
         method=t["method"],
-        uncertainty_mm=float(errors.max()),
-        landmarks={
-            "moving": m.tolist(),
-            "reference": r.tolist(),
-            "errors_mm": errors.tolist(),
-            "reviewer": reviewer,
-            "meaning": "sampled landmark residuals, not a whole-image error bound",
-        },
+        uncertainty_mm=max(landmarks["errors_mm"]),
+        landmarks=landmarks,
     )
     for key in ("direction", "reference_series", "parent_series", "source_to_parent", "algorithm_version", "input_key", "quality", "transform_digest"):
         if key in t:
             collection.document["transforms"][series_id][key] = t[key]
-    return errors.tolist()
+    return landmarks["errors_mm"]
 
 
 def import_anatomy_derivative(

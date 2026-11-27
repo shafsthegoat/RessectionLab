@@ -75,7 +75,7 @@ def _receipt(case, scene, snapshot, target_id, record):
         'caseHash': case.semantic_hash, 'sceneId': scene.identity, 'branchId': record['branchId'],
         'actions': len(snapshot['actions']), 'actionsHash': semantic_digest(snapshot['actions']),
         'endpointStateId': snapshot['stateId'], 'snapshotHash': semantic_digest(snapshot),
-        'physicsHash': semantic_digest(scene.properties), 'instrumentCatalogHash': semantic_digest(catalog()),
+        'physicsHash': semantic_digest(scene.properties), 'instrumentCatalogHash': semantic_digest(catalog(operative=scene.properties['operativeExposureV1'].get('instrumentGeometryRevision', 1) if 'operativeExposureV1' in scene.properties else False)),
         'endpointSlotsHash': semantic_digest(state['slots']), 'endpointRemovalHash': semantic_digest(state['removed'])}
 
 

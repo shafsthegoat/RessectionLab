@@ -37,8 +37,8 @@ def test_shared_cutaway_saves_and_reopens_independently_of_selected_source(tmp_p
     view_args = {"patientModel": True, "previewAlignment": True}
     mri = call("anatomyView", {**args, **view_args, "seriesId": "mri"})
     assert mri["shape"] == [10, 10, 10]
-    assert mri["patientContext"]["shape"] == [30, 10, 10]
-    assert mri["patientContext"]["affine"] == np.eye(4).tolist()
+    assert mri["sourceSeriesId"] == "mri"
+    assert mri["patientContext"]["boundsRasMm"] == [[-.5, -.5, -.5], [29.5, 9.5, 9.5]]
 
     def scan_view(mode, x):
         return {"cursor": None, "visible": {}, "settings": {"presentation": mode,
@@ -67,12 +67,13 @@ def test_shared_cutaway_saves_and_reopens_independently_of_selected_source(tmp_p
             assert result["viewState"] == state
             restored = reopen("anatomyView", {**args, **view_args, "collectionId": result["collectionId"],
                                              "seriesId": selected})
+            assert restored["sourceSeriesId"] == selected
             if selected == "scout":
                 assert restored["registrationStatus"] == "independent source frame"
                 assert "patientContext" not in restored
                 assert restored["affine"][0][3] == 80
             else:
-                assert restored["patientContext"]["shape"] == [30, 10, 10]
+                assert restored["patientContext"]["boundsRasMm"] == mri["patientContext"]["boundsRasMm"]
     for enabled in (True, False):
         invalid = deepcopy(saved)
         invalid["patientCutaway"]["clipping"].update(value=29.6, enabled=enabled)
@@ -83,7 +84,32 @@ def test_shared_cutaway_saves_and_reopens_independently_of_selected_source(tmp_p
         with pytest.raises(ValueError, match="outside the source image"):
             call("anatomySaveView", {**args, "viewState": invalid})
 
-    # A newly estimated transform can shrink the patient grid. Retire only the
+    # Prior shared transfer controls described normalized intensity. Native
+    # controls for Scan or independent review already refer to one acquisition.
+    legacy = deepcopy(saved)
+    authored = {"enabled": True, "preset": "mri", "window": [0, 1], "density": .16,
+                "shadows": False, "isolateLabels": True,
+                "points": [[0, 0, 0, 0, 0], [1, 1, 1, 1, .5]]}
+    for v in legacy["states"].values():
+        v["settings"]["volumeRendering"] = deepcopy(authored)
+    legacy["states"]["scout"]["settings"]["presentation"] = "vascular"
+    call("anatomySaveView", {**args, "viewState": legacy, "saveArchive": False})
+    migrated = call("anatomyOpen", {"path": str(c.root / "patient-anatomy.json")})
+    args["collectionId"] = migrated["collectionId"]
+    state = migrated["viewState"]
+    assert state["scalarTransferBasis"] == "selected-acquisition-v1"
+    assert state["patientCutaway"] == saved["patientCutaway"]
+    assert state["states"]["mri"]["settings"]["volumeRendering"] == {
+        "enabled": False, "preset": "auto", "density": .16, "shadows": False}
+    assert state["states"]["ct"]["settings"]["volumeRendering"] == authored
+    assert state["states"]["scout"]["settings"]["volumeRendering"] == authored
+    revision = {**legacy, "scalarTransferBasis": "selected-acquisition-v1"}
+    call("anatomySaveView", {**args, "viewState": revision, "saveArchive": False})
+    reopened = call("anatomyOpen", {"path": str(c.root / "patient-anatomy.json")})
+    args["collectionId"] = reopened["collectionId"]
+    assert reopened["viewState"] == revision
+
+    # A newly estimated transform can shrink the shared bounds. Retire only the
     # old preferred planes that would no longer fit and keep the live study open.
     def realign(collection, **_):
         collection.set_registration("ct", np.eye(4), status="unreviewed", method="fixture recalculation")
@@ -98,7 +124,7 @@ def test_shared_cutaway_saves_and_reopens_independently_of_selected_source(tmp_p
     ]
     updated = call("anatomyView", {**args, **view_args, "seriesId": "mri",
                                   "snapshotId": registered["document"]["snapshot_id"]})
-    assert updated["patientContext"]["shape"] == [10, 10, 10]
+    assert updated["patientContext"]["boundsRasMm"] == [[-.5, -.5, -.5], [9.5, 9.5, 9.5]]
     restored = call("anatomyOpen", {"path": str(c.root / "patient-anatomy.json")})["viewState"]
     assert restored["patientCutaway"] == {}
     assert restored["states"]["mri"] == saved["states"]["mri"]
@@ -106,7 +132,7 @@ def test_shared_cutaway_saves_and_reopens_independently_of_selected_source(tmp_p
     assert restored["states"]["ct"]["settings"] == {"presentation": "scan"}
 
 
-def test_unified_patient_context_and_surfaces_survive_linked_scan_switch(tmp_path):
+def test_selected_pixels_and_registered_surfaces_survive_linked_scan_switch(tmp_path, monkeypatch):
     c = PatientImagingCollection.create(tmp_path / "study", "patient")
     shape = (12, 10, 10)
     mask = np.zeros(shape, np.uint8)
@@ -142,22 +168,30 @@ def test_unified_patient_context_and_surfaces_survive_linked_scan_switch(tmp_pat
     def view(series, preview=True):
         return call("anatomyView", {**args, "seriesId": series, "previewAlignment": preview})
 
-    mr, ct = view("mr"), view("ct")
+    original_array = PatientImagingCollection.array
+    reads = []
+    def track_arrays(collection, descriptor, *args, **kwargs):
+        reads.append(descriptor["sha256"])
+        return original_array(collection, descriptor, *args, **kwargs)
+    monkeypatch.setattr(PatientImagingCollection, "array", track_arrays)
+    mr = view("mr")
+    assert c.series("ct")["data"]["sha256"] not in reads
+    assert c.series("other")["data"]["sha256"] not in reads
+    ct = view("ct")
     context = mr["patientContext"]
     assert context == ct["patientContext"]
     assert mr["registrationStatus"] == ct["registrationStatus"] == "alignment preview"
     assert [s["alignment"] for s in context["sources"]] == ["reference", "estimated", "unavailable"]
-    assert context["sources"][1]["displayWindow"] == [0., 1000.]
+    assert [s["inPatientBounds"] for s in context["sources"]] == [True, True, False]
+    assert context["sources"][1]["voxelToPatientRasMm"] == ct["affine"]
+    assert set(context) == {"boundsRasMm", "sources"}
+    assert context["boundsRasMm"] == [[-.5, -.5, -.5], [46.5, 9.5, 9.5]]
     # Only the source-admitted MRI brain can supply a wider operative surface.
     assert [s["seriesId"] for s in mr["appearanceSources"]] == ["mr"]
     assert all(s["seriesId"] != "ct" for s in ct.get("appearanceSources", []))
-    signal = as_array(context["signal"])
-    assert signal[5, 5, 5] == pytest.approx(1.)
-    assert signal[40, 5, 5] == pytest.approx(.8)
-    assert signal[20, 5, 5] == 0 and signal.shape[0] == 47
     for selected, original_max in ((mr, 80), (ct, 800)):
         assert selected["unavailableLayers"] == ["other-structure"]
-        assert as_array(selected["mri"]).max() == original_max
+        assert np.array_equal(as_array(selected["mri"]), mask.astype(np.float32) * original_max)
         assert selected["shape"] == list(shape)
         first, second = selected["compartments"]
         assert first["sourceSeries"] == "mr" and first["alignment"] == "reference"
@@ -176,7 +210,7 @@ def test_unified_patient_context_and_surfaces_survive_linked_scan_switch(tmp_pat
     assert not np.any(sets[second["labelSet"]])
     reviewed = view("mr", False)
     assert reviewed["unavailableLayers"] == ["ct-structure", "other-structure"]
-    assert reviewed["patientContext"]["shape"] == list(shape)
+    assert reviewed["patientContext"]["boundsRasMm"] == [[-.5, -.5, -.5], [11.5, 9.5, 9.5]]
     independent = view("other")
     assert independent["registrationStatus"] == "independent source frame"
     assert "patientContext" not in independent
@@ -260,7 +294,7 @@ def test_projection_metadata_preserves_source_preview_and_excludes_patient_fusio
     primary = call("anatomyView", {**args, "seriesId":"mr"})
     assert primary["unavailableLayers"] == ["projection-label"]
     excluded = primary["patientContext"]["sources"][1]
-    assert "displayWindow" not in excluded and "Projection or localizer" in excluded["reason"]
+    assert not excluded["inPatientBounds"] and "Projection or localizer" in excluded["reason"]
     preview = call("anatomyView", {**args, "seriesId":"tof"})
     assert preview["registrationStatus"] == "independent source frame" and "patientContext" not in preview
     assert np.fromfile(preview["mri"]["path"], np.float32).max() == 40
@@ -268,6 +302,12 @@ def test_projection_metadata_preserves_source_preview_and_excludes_patient_fusio
     assert preview["compartments"][0]["alignment"] == "independent"
     checked_view(c, {"schema":"patient-anatomy-view-v1","snapshotId":c.identity(),"patientId":"patient",
                      "seriesId":"tof","states":{"tof":{"cursor":None,"visible":{},"settings":{}}}})
+    view = {"schema":"patient-anatomy-view-v1","snapshotId":c.identity(),"patientId":"patient",
+            "seriesId":"tof","states":{"tof":{"cursor":None,"visible":{},"settings":{}}}}
+    for detail in ("major", "fine"):
+        checked_view(c, {**view, "vesselDetail": detail})
+    with pytest.raises(ValueError, match="vessel detail"):
+        checked_view(c, {**view, "vesselDetail": "everything"})
 
 def test_sidecar_only_scout_stays_independent_after_import_and_reopen(tmp_path):
     from resectionlab.anatomy_import import import_nifti_series, select_intake_reference
@@ -289,7 +329,7 @@ def test_sidecar_only_scout_stays_independent_after_import_and_reopen(tmp_path):
     assert source_volume(reopened.series("series-b"))
 
 
-def test_head_support_restricts_only_the_3d_native_and_fused_scalar(tmp_path, monkeypatch):
+def test_head_support_restricts_only_the_selected_3d_scalar(tmp_path, monkeypatch):
     from resectionlab import anatomy_siam_display
     c = PatientImagingCollection.create(tmp_path / "study", "patient")
     shape = (10, 10, 10)
@@ -310,11 +350,8 @@ def test_head_support_restricts_only_the_3d_native_and_fused_scalar(tmp_path, mo
     args = {"collectionId": opened["collectionId"], "snapshotId": c.identity(), "patientModel": True, "seriesId":"t1"}
     for original in [False,True,False]:
         view = call("anatomyView", {**args, "original":original})
-        assert view['patientContext']['sources'][0]['headSupport'] is (not original)
+        assert set(view['patientContext']) == {'sources', 'boundsRasMm'}
         assert np.array_equal(np.fromfile(view['mri']['path'],np.float32).reshape(shape), raw)
-        field = np.fromfile(view['patientContext']['signal']['path'],np.float32).reshape(shape)
-        assert field[3, 3, 3] > 0
-        assert (field[8, 8, 8] > 0) == original
         if original:
             assert 'headSupport' not in view
         else:

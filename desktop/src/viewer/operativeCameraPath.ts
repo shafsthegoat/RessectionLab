@@ -1,11 +1,11 @@
 import * as THREE from 'three';
 import type {OperativeField,OperativePhase} from '../operative-field';
-import {operativeSectionVisible} from './operativeSectionContext.ts';
+import type {OperativeViewChoice} from './operativeSectionContext';
 
 const up=new THREE.Vector3(0,0,1);
 const sourceDirection=new THREE.Vector3(.20,-.37,1).normalize();
-const entryDirection=new THREE.Vector3(.06,-.19,1).normalize();
-const sectionDirection=new THREE.Vector3(.16,-1,.56).normalize();
+// View slightly across the shaft while retaining an open line along the planned entry.
+const entryDirection=new THREE.Vector3(.22,-.17,1).normalize();
 export const entryApproachEnd=.55;
 const ease=(value:number)=>THREE.MathUtils.smootherstep(value,0,1);
 type Fit={center:THREE.Vector3;size:number};
@@ -33,19 +33,19 @@ export function operativeSourceFit(group:THREE.Group,plannedEntry?:THREE.Vector3
 }
 
 export function operativeCameraPose(field:OperativeField,opening:number,source:Fit|null,phase:OperativePhase,
-  progress:number,retract:boolean,cutaway:boolean,fitExterior:boolean,follow:boolean) {
-  const stages=(['bone','dura','brain','tumor'] as const).filter(id=>field.stations[id]!==null&&(id!=='brain'||retract));
-  const first=stages[0],firstDeep=stages.find(id=>operativeSectionVisible(field,id,'follow'));
+  progress:number,retract:boolean,view:OperativeViewChoice) {
+  const first=(['bone','dura','brain','tumor'] as const).find(id=>field.stations[id]!==null&&(id!=='brain'||retract));
   const entry=field.stations.bone??field.stations.dura??field.stations.brain??field.stations.tumor??0;
-  const deep=field.stations.tumor??field.stations.brain??entry;
-  const localSize=Math.max(4.8*opening,field.radiusMm*2.06);
+  // Frame the actual aperture with room for the tool and intact rim. The
+  // display sampling crop may be much wider than the operative opening.
+  const localSize=Math.max(3.5*opening,8*field.spacingMm);
   const target=new THREE.Vector3(0,0,entry),bearing=entryDirection.clone();
-  let size=localSize,marker=0,sectionBlend=0;
-  if(fitExterior&&source) return {...source,bearing:sourceDirection,marker:1,sectionBlend:0};
-  if(cutaway&&!follow){
+  let size=localSize,marker=0;
+  if(view==='exterior')return {...(source??{center:target,size}),bearing:sourceDirection,marker:1};
+  if(view==='section'){
     const station=(phase==='overview'?null:field.stations[phase])??entry;
     return {center:new THREE.Vector3(0,0,station),size:Math.max(opening*4,field.radiusMm*1.82),
-      bearing:new THREE.Vector3(.36,-.91,.90).normalize(),marker,sectionBlend:1};
+      bearing:new THREE.Vector3(.36,-.91,.90).normalize(),marker};
   }
   // Bring the entry toward center in screen space while magnification changes.
   const approach=phase==='overview'?0:phase===first?ease(progress/entryApproachEnd):1;
@@ -55,14 +55,5 @@ export function operativeCameraPose(field:OperativeField,opening:number,source:F
     bearing.copy(sourceDirection).lerp(entryDirection,approach).normalize();
     marker=1-ease((approach-.30)/.52);
   }
-  if(cutaway){
-    sectionBlend=phase===firstDeep?ease(progress/(phase==='tumor'?.15:.24)):1;
-    // Hold the same entry, tip and shaft in view through the deep chapters.
-    const sectionZ=THREE.MathUtils.lerp(entry,deep,.52);
-    const sectionSize=Math.max(field.radiusMm*2.05,opening*5.15,Math.abs(entry-deep)*1.4+opening*2.05);
-    target.lerp(new THREE.Vector3(0,0,sectionZ),sectionBlend);
-    bearing.lerp(sectionDirection,sectionBlend).normalize();
-    size=THREE.MathUtils.lerp(size,sectionSize,sectionBlend);
-  }
-  return {center:target,size,bearing,marker,sectionBlend};
+  return {center:target,size,bearing,marker};
 }

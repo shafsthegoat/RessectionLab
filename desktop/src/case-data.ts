@@ -6,6 +6,53 @@ import type {
   ViewerCase,
 } from "./types";
 import {registerSourceInspection} from './modeled-volume.ts';
+import type {SurfaceAppearanceSource} from './viewer/contracts';
+import {surfaceKind} from './viewer/surfacePolicy.ts';
+import {isStructuralMrModality} from './native-study-state.ts';
+
+function validateVesselSurface(surface:NonNullable<CasePayload['compartments'][number]['vesselSurface']>,shape:readonly number[]) {
+  const {positions,normals,indices,sourceCells,scoreLighting,vesselTags,vesselClasses}=surface;
+  for(const [name,descriptor,width,dtype] of [['positions',positions,3,'float32'],['normals',normals,3,'float32'],
+    ['indices',indices,3,'uint32'],['sourceCells',sourceCells,1,'uint32'],['scoreLighting',scoreLighting,4,'float32']] as const){
+    if(name==='scoreLighting'&&descriptor===undefined)continue;
+    if(!descriptor||descriptor.dtype!==dtype||descriptor.byteOrder!=='little'||descriptor.order!=='C'||
+      !descriptor.assetId||!/^[a-f0-9]{64}$/.test(descriptor.sha256)||descriptor.shape.length!==(width===1?1:2)||
+      !Number.isSafeInteger(descriptor.shape[0])||descriptor.shape[0]<=0||(width>1&&descriptor.shape[1]!==width)||
+      descriptor.byteLength!==descriptor.shape[0]*width*4||descriptor.byteLength>128*1024**2)throw Error(`Invalid vessel surface ${name}.`);
+  }
+  if(positions.shape[0]!==normals.shape[0]||positions.shape[0]!==sourceCells.shape[0])throw Error('Vessel surface source cells disagree with its vertices.');
+  if(scoreLighting&&scoreLighting.shape[0]!==positions.shape[0])throw Error('Vessel score lighting disagrees with its vertices.');
+  const voxels=shape.reduce((a,b)=>a*b,1);
+  if(vesselTags&&(vesselTags.dtype!=='float32'||vesselTags.byteOrder!=='little'||vesselTags.order!=='C'||!vesselTags.assetId||
+    !/^[a-f0-9]{64}$/.test(vesselTags.sha256)||vesselTags.shape.length!==3||vesselTags.shape.some((n,i)=>n!==shape[i])||
+    vesselTags.byteLength!==voxels*4))throw Error('Invalid vessel tags.');
+  if(vesselClasses&&(vesselClasses.dtype!=='uint8'||vesselClasses.byteOrder!=='little'||vesselClasses.order!=='C'||!vesselClasses.assetId||
+    !/^[a-f0-9]{64}$/.test(vesselClasses.sha256)||vesselClasses.shape.length!==1||vesselClasses.shape[0]!==positions.shape[0]||
+    vesselClasses.byteLength!==positions.shape[0]))throw Error('Invalid vessel classes.');
+}
+
+async function hydrateVesselSurface(raw:NonNullable<CasePayload['compartments'][number]['vesselSurface']>,api:ResectionApi){
+  async function read(d:ArrayDescriptor){
+    const bytes=await api.readAsset(d.assetId);if(bytes.byteLength!==d.byteLength)throw Error('Incomplete vessel surface transfer.');
+    return bytes.slice().buffer;
+  }
+  const [p,n,i,c,l,t,k]=await Promise.all([read(raw.positions),read(raw.normals),read(raw.indices),read(raw.sourceCells),raw.scoreLighting&&read(raw.scoreLighting),
+    raw.vesselTags&&read(raw.vesselTags),raw.vesselClasses&&read(raw.vesselClasses)]);
+  const positions=new Float32Array(p),normals=new Float32Array(n),indices=new Uint32Array(i),vesselSourceCells=new Uint32Array(c);
+  if(indices.some(i=>i>=vesselSourceCells.length)||!positions.every(Number.isFinite)||!normals.every(Number.isFinite))throw Error('Invalid vessel surface values.');
+  const vesselScoreLighting=l&&new Float32Array(l);
+  if(vesselScoreLighting&&!vesselScoreLighting.every((value,index)=>Number.isFinite(value)&&(index%4!==3||value>=0&&value<=1)))
+    throw Error('Invalid vessel score lighting values.');
+  const vesselTags=t?new Float32Array(t):undefined;
+  if(vesselTags&&!vesselTags.every(value=>value>=0&&value<=1))throw Error('Invalid vessel tag values.');
+  const vesselClasses=k?new Uint8Array(k):undefined;
+  if(vesselClasses&&!vesselClasses.every(value=>value<=1))throw Error('Invalid vessel class values.');
+  const vesselGeometryBinding=[raw.positions.sha256,raw.indices.sha256,raw.sourceCells.sha256].join(':');
+  return {surface:{source:positions,positions,sourceNormals:normals,normals,indices},vesselSourceCells,vesselScoreLighting,vesselGeometryBinding,
+    ...(vesselTags?{vesselTags}:{}),...(vesselClasses?{vesselClasses}:{}),
+    surfaceDiagnostics:{policy:'native-source-isosurface-v1',kind:'vessel',maxDisplacementMm:0,restoredComponents:0,
+      intersectionCheck:'passed',surfaceField:'native-probability',triangles:indices.length/3,sourceSurfaceOnly:true} as const};
+}
 
 export function anatomyColor(name: string): string {
   const key = name.toLowerCase();
@@ -160,6 +207,7 @@ export function validateCaseDescriptor(payload: CasePayload): {
     validateArray(layer.array, "uint8", layer.name);
     if (layer.sourceArray)
       validateArray(layer.sourceArray, "uint8", `${layer.name} source`);
+    if(layer.vesselSurface)validateVesselSurface(layer.vesselSurface,payload.shape);
   });
   if (payload.brainMask)
     validateArray(payload.brainMask, "uint8", "Brain mask");
@@ -195,6 +243,123 @@ export function displayBrainMask(payload:CasePayload):boolean {
 
 const objectRecord = (value: unknown): value is Record<string, unknown> =>
   !!value && typeof value === "object" && !Array.isArray(value);
+const sourceHash = (value: unknown): value is string =>
+  typeof value === "string" && /^[a-f0-9]{64}$/.test(value);
+const affineMatrix = (value: unknown): value is number[][] =>
+  Array.isArray(value) && value.length === 4 && value.every(row =>
+    Array.isArray(row) && row.length === 4 && row.every(Number.isFinite));
+const sameSourceValue = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b);
+
+/** Match the engine's local alignment receipt to the selected source grids.
+ * The composed transform positions the native wall crop in reference RAS. */
+function reviewedCropPatientAffine(adapter: Record<string, unknown>, manifest: Record<string, unknown>,
+  reference: Record<string, unknown>, vascular: Record<string, unknown>, wall: Record<string, unknown>,
+  brainLayerId: unknown, shape: number[]): number[][] | undefined {
+  const review = adapter.nativeWallAlignmentReview;
+  if (!objectRecord(review) || review.schema !== "resectionlab.native-wall-alignment-review.v1" ||
+      !sourceHash(review.digest) || !sameSourceValue(review.cropStartIJK, wall.sourceStartIJK) ||
+      !sameSourceValue(review.cropShape, shape) || !sameSourceValue(review.centerRasMm, wall.centerRasMm) ||
+      !objectRecord(review.binding) || !objectRecord(manifest.transforms) ||
+      typeof reference.id !== "string" || typeof vascular.id !== "string") return;
+  const {binding} = review;
+  const transform = manifest.transforms[vascular.id];
+  const referenceTransform = manifest.transforms[reference.id];
+  if (!objectRecord(transform) || transform.status !== "unreviewed" ||
+      !sameSourceValue(transform.native_wall_alignment_review, review) ||
+      !objectRecord(referenceTransform) || referenceTransform.status !== "reference" ||
+      binding.sourcePatient !== manifest.patient_id || binding.referenceSeries !== reference.id ||
+      binding.vascularSeries !== vascular.id || binding.brainLayerId !== brainLayerId ||
+      binding.vesselLayerId !== wall.layerId || !objectRecord(binding.sources) ||
+      !affineMatrix(binding.matrix) || !sameSourceValue(binding.matrix, transform.matrix) ||
+      !affineMatrix(vascular.affine)) return;
+  const sources = binding.sources;
+  const selected = [[reference.id, reference, transform.reference_sha256], [vascular.id, vascular, transform.source_sha256]] as const;
+  if (selected.some(([id, series, sha]) => {
+    const bound = sources[id];
+    return !objectRecord(bound) || !objectRecord(series.original) || sha !== series.original.sha256 ||
+      bound.originalSha256 !== sha || bound.timepoint !== series.timepoint ||
+      !sameSourceValue(bound.nativeAffine, series.affine) || !sameSourceValue(bound.nativeArray, series.data);
+  })) return;
+  const nativeAffine = vascular.affine;
+  return binding.matrix.map(row => nativeAffine.map((_, column) =>
+    row.reduce((value, coefficient, index) => value + coefficient * nativeAffine[index][column], 0)));
+}
+
+/** Use the acquired reference signal already sampled into the accepted crop. */
+function localWallBrainSignal(payload: CasePayload, mri: Float32Array, affine: ViewerCase["affine"],
+  mask: Uint8Array): SurfaceAppearanceSource | undefined {
+  const adapter = payload.metadata.surgical_adapter;
+  if (payload.frame !== "RAS+" || !objectRecord(adapter) || adapter.type !== "native-patient-research-derivative") return;
+  const {nativeWall: wall, sourceManifest: manifest, sourceLayers} = adapter;
+  if (!objectRecord(wall) || wall.schema !== "resectionlab.patient-native-wall.v1" ||
+      !objectRecord(manifest) || !Array.isArray(manifest.series) || !Array.isArray(manifest.layers) ||
+      !objectRecord(sourceLayers) || !objectRecord(sourceLayers.brain)) return;
+  const brain = sourceLayers.brain;
+  const {sourceSeries, sourceShape, sourceStartIJK, sourceImageSha256} = wall;
+  const referenceId = manifest.reference_series;
+  if (typeof sourceSeries !== "string" || typeof referenceId !== "string" || !sourceHash(sourceImageSha256) ||
+      brain.sampledCoverageCells !== mri.length || !manifest.layers.some(row => objectRecord(row) &&
+        row.id === brain.layerId && row.kind === "brain" && row.source_series === referenceId)) return;
+  const observed = (id: string, sha: string) => payload.sourceRefs?.some(ref =>
+    ref.source_id === id && ref.provenance === "observed" && ref.sha256 === sha);
+  const reference = manifest.series.find(row => objectRecord(row) && row.id === referenceId);
+  const vascular = manifest.series.find(row => objectRecord(row) && row.id === sourceSeries);
+  if (!objectRecord(reference) || !objectRecord(reference.original) || !sourceHash(reference.original.sha256) ||
+      typeof reference.modality !== 'string' ||
+      !(reference.modality === 'CT' || reference.modality === 'CTA' ||
+        (isStructuralMrModality(reference.modality) && !/\b(?:SWI|DWI|DTI|ADC|diffusion|susceptibility)\b/i.test(reference.modality))) ||
+      !observed(referenceId, reference.original.sha256) ||
+      !objectRecord(vascular) || !objectRecord(vascular.original) || vascular.original.sha256 !== sourceImageSha256 ||
+      !observed(sourceSeries, sourceImageSha256) || !objectRecord(vascular.data) || !affineMatrix(vascular.affine) ||
+      !Array.isArray(sourceShape) || sourceShape.length !== 3 || !Array.isArray(sourceStartIJK) || sourceStartIJK.length !== 3 ||
+      !sameSourceValue(vascular.data.shape, sourceShape) || sourceShape.some((size, axis) =>
+        !Number.isSafeInteger(size) || !Number.isSafeInteger(sourceStartIJK[axis]) || sourceStartIJK[axis] < 0 ||
+        sourceStartIJK[axis] + payload.shape[axis] > size)) return;
+  const sourceAffine = sourceSeries === referenceId ? vascular.affine :
+    reviewedCropPatientAffine(adapter, manifest, reference, vascular, wall, brain.layerId, payload.shape);
+  if (!sourceAffine || affine.some((row, axis) => {
+    const native = sourceAffine[axis];
+    return row.some((value, column) => Math.abs(value - (column < 3 ? native[column] :
+        native[3] + sourceStartIJK.reduce((delta, offset, index) => delta + offset * native[index], 0))) > 1e-6);
+  })) return;
+  const surface = payload.compartments.find(layer => layer.name === "vessels")?.vesselSurface;
+  if (!surface || [surface.positions.sha256, surface.indices.sha256, surface.sourceCells.sha256].join(":") !== wall.geometryBinding) return;
+
+  // Window the acquired signal to the actual sampled brain distribution.
+  // The window only controls the albedo of this checked surface.
+  const values: number[] = [];
+  const stride = Math.max(1, Math.ceil(mri.length / 16000));
+  for (let i = 0; i < mri.length; i += stride) if (mask[i]) values.push(mri[i]);
+  values.sort((a, b) => a - b);
+  if (values.length < 64) return;
+  const low = values[Math.floor(values.length * .15)], high = values[Math.floor(values.length * .9)];
+  if (!(high > low)) return;
+  return {seriesId: referenceId, modality: reference.modality, sourceSha256: reference.original.sha256,
+    signalSha256: payload.mri.sha256, shape: payload.shape, affine, data: mri,
+    softTissueWindow: [low, high], nativeWallCrop: true};
+}
+
+/** The bound engine archive carries reference pixels on its own physical grid.
+ * A synthetic lesion can share an acquired background. Its contour is never
+ * evidence of an acquired tumor signal. */
+function recordedBrainSignal(payload: CasePayload, mri: Float32Array, affine: ViewerCase["affine"]): SurfaceAppearanceSource | undefined {
+  const receipt = payload.verifiedStudyReplay ?? payload.artifacts?.nativeStudyReplay;
+  if (!objectRecord(receipt) || receipt.caseHash !== payload.caseHash) return;
+  const toolbox = payload.artifacts?.surgical_toolbox;
+  const exact = objectRecord(toolbox) ? toolbox.exactGridReplay : undefined;
+  const adapter = payload.metadata.surgical_adapter;
+  const manifest = objectRecord(exact) ? exact.sourceManifest : objectRecord(adapter) ? adapter.sourceManifest : undefined;
+  if (!objectRecord(manifest) || !Array.isArray(manifest.series) ||
+      manifest.patient_id !== receipt.patientId || manifest.snapshot_id !== receipt.sourceSnapshotId) return;
+  const series = manifest.series.find(row => objectRecord(row) && row.id === manifest.reference_series);
+  if (!objectRecord(series) || !objectRecord(series.original) || typeof series.id !== "string" ||
+      typeof series.modality !== "string" || !["T1", "T1CE", "T2", "FLAIR"].includes(series.modality)) return;
+  const sha = series.original.sha256;
+  if (typeof sha !== "string" || !/^[a-f0-9]{64}$/.test(sha) ||
+      !payload.sourceRefs?.some(source => source.provenance === "observed" && source.sha256 === sha)) return;
+  return {seriesId: series.id, modality: series.modality, sourceSha256: sha, signalSha256: payload.mri.sha256,
+    shape: payload.shape, affine, data: mri};
+}
 
 function validatePlannedDerivative(payload: CasePayload, marker: Record<string, unknown>) {
   const adapter = payload.metadata.surgical_adapter;
@@ -226,9 +391,10 @@ export async function hydrateCase(
   const { voxelVolumeMm3 } = validateCaseDescriptor(payload);
   const layers = [...(displayBrainMask(payload)?[{name:'brain',array:payload.brainMask!,volumeMm3:null}]:[]),
     ...payload.compartments.map(layer=>({...layer,volumeMm3:layer.volumeMm3 as number|null}))];
-  const [mriBytes, ...maskBytes] = await Promise.all([
+  const [mriBytes, maskBytes, vesselSurfaces] = await Promise.all([
     api.readAsset(payload.mri.assetId),
-    ...layers.map((layer) => api.readAsset(layer.array.assetId)),
+    Promise.all(layers.map((layer) => api.readAsset(layer.array.assetId))),
+    Promise.all(layers.map(layer=>'vesselSurface' in layer&&layer.vesselSurface?hydrateVesselSurface(layer.vesselSurface,api):undefined)),
   ]);
   if (mriBytes.byteLength !== payload.mri.byteLength)
     throw new Error("MRI transfer is incomplete.");
@@ -244,6 +410,7 @@ export async function hydrateCase(
     affine[0] = affine[0].map((value) => -value);
     affine[1] = affine[1].map((value) => -value);
   }
+  const brainSignal = recordedBrainSignal(payload, mri, affine);
   const result: ViewerCase = {
     caseId: payload.caseId,
     caseHash: payload.caseHash,
@@ -270,11 +437,17 @@ export async function hydrateCase(
         1e-5 * Math.max(1, layer.volumeMm3)
       )
         throw new Error(`${layer.name} volume disagrees with its source grid.`);
+      const kind = (payload.metadata.anatomy_layers as Record<string,{kind?:string}>|undefined)?.[layer.name]?.kind;
+      const vessel=vesselSurfaces[index];
+      const appearanceSource = kind === "brain" ? localWallBrainSignal(payload, mri, affine, mask) ?? brainSignal : undefined;
+      if(vessel&&(surfaceKind(kind)!=='vessel'||vessel.vesselSourceCells.some(i=>!mask[i])))throw Error('Vessel surface differs from the declared native mask.');
       return {
         name: layer.name,
-        kind: (payload.metadata.anatomy_layers as Record<string,{kind?:string}>|undefined)?.[layer.name]?.kind,
+        kind,
+        ...(appearanceSource ? {appearanceSource, displayKind: kind} : {}),
         sourceIdentity: `${payload.caseHash}:${layer.name}:${layer.array.sha256}`,
         qa: layer.qa,
+        ...vessel,
         volumeMm3: layer.volumeMm3 ?? selected * voxelVolumeMm3,
         mask,
         color: String((payload.metadata.anatomy_layers as Record<string,{color?:string}>|undefined)?.[layer.name]?.color ?? anatomyColor(layer.name)),

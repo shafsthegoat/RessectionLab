@@ -1,7 +1,37 @@
 import type {Binding, CranialView, Layer, NativeScanState, NativeViewState, VesselScope} from './native-anatomy-data';
 import type {ViewerWorkspaceSettings} from './viewer/workspaceSettings';
+import type {ViewerVolume} from './viewer/contracts';
+import {isCtAngiography,isCtModality,isMrAngiography} from './viewer/volumeTransfer.ts';
+import {vesselDerivedParent} from './native-layer-residency.ts';
 
 export type AnatomyPresentation = 'scan'|'segmentation'|'vascular';
+type PresentationEvidence = {
+  visible: Readonly<Record<string, boolean>>;
+  series: ReadonlyArray<Pick<Binding['document']['series'][number],'id'|'modality'>>;
+};
+const vesselKinds=['artery','vein','sinus','vessel','vessels'];
+const mrModality=(modality:string)=>defaultAnatomyPresentation(modality)==='scan'&&
+  /\b(?:MR|MRI|MRA|TOF|T1(?:CE|W)?|T2W?|FLAIR|SWI|MPRAGE|SPGR)\b/i.test(modality.replaceAll('_',' '));
+const angiographicModality=(modality:string)=>/\b(?:CTA|MRA|TOF)\b|\b(?:CT|MR|MRI)[- _]+angiogra/i.test(modality);
+export const isStructuralMrModality=(modality:string)=>mrModality(modality)&&!angiographicModality(modality.replaceAll('_',' '));
+
+/** Only a single source-bound lesion can use the mixed Vessels overlap view. */
+export function mixedVesselLesion(volume:ViewerVolume|null|undefined,settings:ViewerWorkspaceSettings) {
+  if(!volume?.displayIdentity||settings.presentation!=='vascular'||!settings.sourcedVesselContext||
+    settings.contextStyle!=='shell'||settings.operativeView||!isStructuralMrModality(volume.modality??''))return;
+  const lesions=volume.compartments.filter(layer=>(layer.displayKind??layer.kind)==='tumor');
+  if(lesions.length!==1)return;
+  const [lesion]=lesions;
+  if(lesion.sourceSeries&&['reference','estimated','reviewed','source-provided'].includes(lesion.alignment??''))return lesion;
+}
+
+export function alignmentBannerWarning(quality:ViewerVolume['alignmentQuality']):string|undefined {
+  const entries=Object.values(quality??{});
+  const inverseWarning=[...entries].sort((a,b)=>(b.metrics?.inverse_p95_mm??0)-(a.metrics?.inverse_p95_mm??0))
+    .flatMap(entry=>entry.warnings??[]).find(warning=>warning.startsWith('Forward/reverse disagreement'));
+  return inverseWarning??entries.find(entry=>entry.warnings?.length)?.warnings[0];
+}
+
 /** Only an acquired scalar source can be the initial Scan presentation. */
 export function defaultAnatomyPresentation(modality:string):AnatomyPresentation {
   return /segmentation only|analytic signal|generated image signal|diagnostic/i.test(modality)?'segmentation':'scan';
@@ -34,9 +64,9 @@ export function presentationLayers(study:Binding['document'],seriesId:string,dis
   return study.layers.filter(layer=>layer.source_series===seriesId||(shared(seriesId)&&shared(layer.source_series)));
 }
 
-export function hasAngiographicArteries(layers:Layer[],modality:string,seriesId?:string):boolean {
-  return !!seriesId&&/\b(?:CTA|MRA|TOF)\b|\b(?:CT|MR|MRI)[- _]+angiogra/i.test(modality)&&
-    layers.some(layer=>layer.kind==='artery'&&layer.source_series===seriesId);
+export function hasNativeAngiographicVessels(layers:Layer[],modality:string,seriesId?:string):boolean {
+  return !!seriesId&&angiographicModality(modality)&&
+    layers.some(layer=>vesselKinds.includes(layer.kind)&&layer.source_series===seriesId);
 }
 
 export function initialNativeLayers(study:Binding['document'],seriesId:string,independent:boolean){
@@ -44,42 +74,146 @@ export function initialNativeLayers(study:Binding['document'],seriesId:string,in
   const declared=study.display?.initial_layers;
   // The reference frame's list can omit every native layer of a separately acquired scan.
   const initial=independent&&declared?.length&&!owned.some(layer=>declared.includes(layer.id))?undefined:declared;
-  const available=(independent?owned:presentationLayers(study,seriesId)).filter(layer=>!initial||initial.includes(layer.id));
+  const admitted=independent?owned:presentationLayers(study,seriesId);
+  const available=admitted.filter(layer=>!initial||initial.includes(layer.id));
   const cortex=corticalLayers(available);
   const visible=Object.fromEntries(study.layers.map(layer=>{
     const selected=initial?initial.includes(layer.id):cortex.includes(layer)||!['brain-region','review-region','head-envelope'].includes(layer.kind);
     return [layer.id,selected&&(!independent||layer.source_series===seriesId)];
   }));
-  return {available,cortex,visible};
+  const admittedIds=new Set(admitted.map(layer=>layer.id));
+  const coverage=ctaCoverageDeclarations(study).filter(option=>admittedIds.has(option.layer_id)||option.focus_layers.some(id=>admittedIds.has(id)));
+  if(!initial){
+    for(const option of coverage){
+      const combined=ctaCoverageOptions(study,option.series_id);
+      if(combined)applyCtaCoverageVisibility(visible,combined,true);
+      else if(option.retired){
+        for(const id of option.wider_layers??[])visible[id]=false;
+        for(const id of option.focus_layers)if(admittedIds.has(id))visible[id]=true;
+      }
+    }
+  }
+  const resolved=resolveCtaCoverageVisibility(study,visible);
+  return {available:coverage.length?admitted.filter(layer=>resolved[layer.id]):available,cortex,visible:resolved};
+}
+
+function ctaCoverageDeclarations(study:Binding['document']){
+  const stored=study.display?.cta_arterial_coverage;
+  return Array.isArray(stored)?stored.filter(option=>option&&Array.isArray(option.focus_layers)):
+    stored&&Array.isArray(stored.focus_layers)?[stored]:[];
+}
+
+export function isCtaCoverageLayer(layer:Layer|undefined){
+  return (layer?.provenance as {kind?:string}|null)?.kind==='derived_annotation_union';
+}
+
+export function ctaCoverageInputs(study:Binding['document'],seriesId:string){
+  const series=study.series.find(item=>item.id===seriesId);
+  if(!series?.data?.shape||!series.affine||!isCtAngiography(series.modality))return [];
+  return study.layers.filter(layer=>{
+    const evidence=layer.provenance as {kind?:string;source?:{name?:string;path?:string}}|null;
+    return layer.source_series===seriesId&&layer.kind==='artery'&&layer.availability!=='empty_output'&&!layer.edits?.length&&
+      ['supplied_annotation','observed_source_annotation'].includes(evidence?.kind??'')&&typeof evidence?.source?.path==='string'&&
+      JSON.stringify(layer.data?.shape)===JSON.stringify(series.data?.shape)&&JSON.stringify(layer.affine)===JSON.stringify(series.affine);
+  });
+}
+
+export function ctaCoverageOptions(study:Binding['document'],seriesId:string){
+  const option=ctaCoverageDeclarations(study).find(row=>row.series_id===seriesId&&!row.retired);
+  if(!option)return;
+  const series=study.series.find(row=>row.id===seriesId);
+  if(!series?.original?.sha256||!isCtAngiography(series.modality)||
+    !Array.isArray(option.focus_layers)||!option.focus_layers.length||new Set(option.focus_layers).size!==option.focus_layers.length)return;
+  const layers=new Map(study.layers.filter(row=>row.source_series===seriesId&&row.kind==='artery').map(layer=>[layer.id,layer]));
+  const combined=layers.get(option.layer_id);
+  const record=combined?.provenance as {kind?:string;source_scan_sha256?:string;
+    input_layers?:Array<{id:string;data_sha256:string;revision:number;label_value:number}>}|undefined;
+  if(record?.kind!=='derived_annotation_union'||record.source_scan_sha256!==series.original.sha256||
+    combined?.revision!==0||!Array.isArray(record.input_layers))return;
+  const inputs=record.input_layers;
+  const unchanged=inputs.every(input=>{
+    const layer=input&&layers.get(input.id);
+    return !!layer&&!layer.edits?.length&&layer.data?.sha256===input.data_sha256&&layer.revision===input.revision&&layer.label_value===input.label_value;
+  });
+  if(!unchanged)return;
+  const ids=inputs.map(input=>input.id);
+  const wider=ids.filter(id=>!option.focus_layers.includes(id));
+  if(!wider.length||new Set(ids).size!==ids.length||ids.includes(option.layer_id)||!option.focus_layers.every(id=>ids.includes(id))||
+    (option.wider_layers&&JSON.stringify(wider)!==JSON.stringify(option.wider_layers)))return;
+  return {combinedId:option.layer_id,focusIds:option.focus_layers,widerIds:wider,memberIds:[option.layer_id,...ids]};
+}
+
+export function applyCtaCoverageVisibility(visible:Record<string,boolean>, coverage:NonNullable<ReturnType<typeof ctaCoverageOptions>>,combined:boolean){
+  for(const id of coverage.memberIds)visible[id]=combined?id===coverage.combinedId:coverage.focusIds.includes(id);
+  return visible;
+}
+
+export function resolveCtaCoverageVisibility(study:Binding['document'],visible:Record<string,boolean>){
+  const known=new Set([...study.layers,...(study.tractography??[])].map(layer=>layer.id));
+  const proposed={...visible};
+  for(const option of ctaCoverageDeclarations(study)){
+    if(!proposed[option.layer_id]||ctaCoverageOptions(study,option.series_id))continue;
+    delete proposed[option.layer_id];
+    for(const id of option.wider_layers??[])if(known.has(id))proposed[id]=false;
+    for(const id of option.focus_layers)if(known.has(id))proposed[id]=true;
+  }
+  return Object.fromEntries(Object.entries(proposed).filter(([id])=>known.has(id)));
+}
+
+function peripheralReviewVessels(layer:Layer):boolean {
+  const source=layer.provenance as {method?:string;evidence_use?:string}|null;
+  return ['vesselfm-review-posterior-superficial','vesselfm-review-field-edge','vesselfm-review-skull-exterior','vesselfm-review-source-disagreement'].includes(layer.id)&&
+    source?.evidence_use==='context_only'&&source.method==='Review display group of complete native TOF components';
 }
 
 /** Presentation derivatives only; all selected structures and source masks stay intact. */
-export function anatomyPresentation(settings:ViewerWorkspaceSettings,layers:Binding['document']['layers'],mode:AnatomyPresentation,modality:string,seriesId?:string):ViewerWorkspaceSettings {
+export function anatomyPresentation(settings:ViewerWorkspaceSettings,layers:Layer[],mode:AnatomyPresentation,modality:string,seriesId?:string,evidence?:PresentationEvidence):ViewerWorkspaceSettings {
   if(mode==='scan'&&defaultAnatomyPresentation(modality)!=='scan')mode='segmentation';
-  const scan=mode==='scan',vascular=mode==='vascular',ct=/^\s*CT(?:A)?(?:\b|[-_])/i.test(modality);
+  const scan=mode==='scan',vascular=mode==='vascular',ct=isCtModality(modality);
   const cranial=mode==='segmentation'&&corticalLayers(layers).length>0;
-  const arteries=mode==='segmentation'&&hasAngiographicArteries(layers,modality,seriesId);
+  const nativeVessels=!scan&&hasNativeAngiographicVessels(layers,modality,seriesId);
+  const vesselFocus=vascular||nativeVessels;
+  const ctaVessels=nativeVessels&&isCtAngiography(modality);
+  const nativeTofVessels=vascular&&nativeVessels&&isMrAngiography(modality);
+  const sourceModality=new Map(evidence?.series.map(series=>[series.id,series.modality]));
+  const visibleLayers=evidence?layers.filter(layer=>evidence.visible[layer.id]):[];
+  const sourcedVesselContext=vascular&&!ct&&mrModality(modality)&&
+    visibleLayers.some(layer=>vesselKinds.includes(layer.kind)&&sourceModality.has(layer.source_series)&&!peripheralReviewVessels(layer))&&
+    corticalLayers(visibleLayers).some(layer=>{
+      const acquisition=sourceModality.get(layer.source_series);
+      return !!acquisition&&isStructuralMrModality(acquisition);
+    });
+  const boneLayers=ct&&vesselFocus?layers.filter(layer=>layer.kind==='bone'||layer.kind==='skull'):[];
+  const sameSourceBone=boneLayers.length===1&&seriesId!==undefined&&boneLayers[0].source_series===seriesId;
   const layerOpacity={...settings.layerOpacity},layerColor={...settings.layerColor};
   for(const layer of layers){
     const displayKind=studyLayerDisplayKind(layer);
-    if(cranial&&['gray-matter','cerebral-cortex','cerebellar-cortex'].includes(displayKind)){
-      layerColor[layer.id]='#c69891';layerOpacity[layer.id]=arteries?.18:.66;
+    if((cranial||vascular)&&['gray-matter','cerebral-cortex','cerebellar-cortex'].includes(displayKind)){
+      layerColor[layer.id]=sourcedVesselContext?'#afa6b0':vesselFocus?'#ad9d9e':'#c69891';
+      layerOpacity[layer.id]=sourcedVesselContext?.22:vascular?.11:nativeVessels?.18:.66;
     }else if(cranial&&['head-envelope','outer-head-tissue'].includes(displayKind)){
-      layerColor[layer.id]='#d3dce5';layerOpacity[layer.id]=.78;
+      layerColor[layer.id]='#d3dce5';layerOpacity[layer.id]=nativeVessels?.055:.78;
     }else if(cranial&&['bone','skull','brain','dura','csf'].includes(displayKind)){
       layerOpacity[layer.id]=displayKind==='csf'?.012:.018;
-    }else if(arteries&&['bone','skull','brain'].includes(displayKind)){
-      layerColor[layer.id]=displayKind==='brain'?'#b8a8b6':'#ece2ca';
-      layerOpacity[layer.id]=displayKind==='brain'?.16:.08;
-    }else if(['vessels','vessel','artery','vein','sinus'].includes(layer.kind)){
+    }else if(vesselFocus&&['bone','skull','brain'].includes(displayKind)){
+      const acquisition=sourceModality.get(layer.source_series);
+      const estimatedSkull=sourcedVesselContext&&displayKind!=='brain'&&!!acquisition&&mrModality(acquisition)&&
+        (layer.provenance as {kind?:string}|null)?.kind==='image_derived_estimate';
+      layerColor[layer.id]=displayKind==='brain'?'#a399ad':estimatedSkull?'#8b99a7':ct?'#ded0b6':'#b8af9d';
+      layerOpacity[layer.id]=displayKind==='brain'?(sourcedVesselContext?.035:.07):estimatedSkull?.035:ct?.028:.065;
+    }else if(vesselKinds.includes(layer.kind)){
       const source=layer.provenance as {kind?:string;publisher_class_id?:number}|null;
+      const reviewedEvidence=peripheralReviewVessels(layer);
       const namedArtery=layer.kind==='artery'&&source?.kind==='supplied_annotation'&&
         Number.isInteger(layer.label_value)&&(layer.label_value??0)>0&&source.publisher_class_id===layer.label_value;
-      layerColor[layer.id]=namedArtery&&/^#[0-9a-f]{6}$/i.test(layer.color)?layer.color:'#b75848';
-      layerOpacity[layer.id]=scan?.16:cranial&&layer.kind==='vessels'?.09:1;
-      if(['vein','sinus'].includes(layer.kind)){layerColor[layer.id]='#7187bf';layerOpacity[layer.id]=scan?.08:1;}
+      layerColor[layer.id]=(namedArtery||reviewedEvidence)&&/^#[0-9a-f]{6}$/i.test(layer.color)?layer.color:
+        // One vessel colour: arteries, veins, sinuses and unclassified vessels are not told apart by colour.
+        '#aa352b';
+      layerOpacity[layer.id]=reviewedEvidence?(scan?.08:.32):scan?(['vein','sinus'].includes(layer.kind)?.08:.16):
+        cranial&&layer.kind==='vessels'&&!nativeVessels?.09:1;
     }else if(layer.kind==='tumor'){
-      layerColor[layer.id]='#65bfd3';layerOpacity[layer.id]=scan?.32:1;
+      layerColor[layer.id]=sourcedVesselContext?'#9388a2':'#65bfd3';
+      layerOpacity[layer.id]=sourcedVesselContext?.62:scan?.32:1;
     }else if(['enhancing-tumor','tumor-core','tumor-whole','edema','nonenhancing-tumor','lesion-context'].includes(layer.kind)){
       const annotation=layer.provenance as {kind?:string;method?:string;annotation_value?:number}|null;
       const value=annotation?.kind==='observed_source_annotation'&&annotation.method==='Pinned source BraTS compartment labels'?annotation.annotation_value:null;
@@ -98,11 +232,19 @@ export function anatomyPresentation(settings:ViewerWorkspaceSettings,layers:Bind
     else if(layer.kind==='ventricles')layerOpacity[layer.id]=scan?.055:vascular?.08:.26;
     else if(['brain-region','cerebellar-white-matter','cerebellar-cortex','brainstem'].includes(layer.kind))layerOpacity[layer.id]=scan?.035:vascular?.055:.42;
   }
-  return {...settings,presentation:mode,layout:'3d-focus',sliceOverlay:'contour',sliceFraming:{fit:'anatomy',zoom:1},contextStyle:scan?'uniform':'shell',smoothSurfaces:scan?(settings.smoothSurfaces??true):true,showPlane:false,
-    skullMode:mode==='segmentation'&&!cranial&&!arteries?'exterior':'transparent',layerColor,layerOpacity,
+  return {...settings,presentation:mode,layout:'3d-focus',sliceOverlay:'contour',sliceFraming:{fit:'anatomy',zoom:1},contextStyle:scan?'uniform':'shell',smoothSurfaces:scan||sourcedVesselContext||nativeTofVessels?(settings.smoothSurfaces??true):true,showPlane:false,
+    ...(ctaVessels&&settings.vesselShading===undefined?{vesselShading:'cta-contrast' as const}:{}),
+    skullMode:mode==='segmentation'&&!cranial&&!nativeVessels?'exterior':'transparent',sourcedVesselContext:sourcedVesselContext||undefined,layerColor,layerOpacity,
     // Explicit presentation action only. Saved contrast, opacity and transfer
     // choices are otherwise restored verbatim; source signal is never altered.
-    volumeRendering:{enabled:true,preset:'auto',density:scan?(ct?.26:.28):ct?(vascular?.14:.075):(vascular?.035:.025),shadows:true},
+    volumeRendering:{enabled:!sourcedVesselContext,preset:'auto',density:scan?(ct?.26:.28):ct?(vesselFocus?.12:.075):
+      sourcedVesselContext&&isStructuralMrModality(modality)?.02:nativeVessels?.018:vascular?.035:.025,
+      ...(nativeTofVessels?{balanceTofContext:true}:{}),
+      ...(settings.volumeRendering?.mode==='cinematic'?{mode:'cinematic' as const}:{}),
+      shadows:scan||!ct||sameSourceBone,
+      ...(settings.volumeRendering?.showCtExteriorSignal!==undefined?{showCtExteriorSignal:settings.volumeRendering.showCtExteriorSignal}:{}),
+      ...(settings.volumeRendering?.showCtBoneOverlay!==undefined||scan&&ct
+        ?{showCtBoneOverlay:settings.volumeRendering?.showCtBoneOverlay??false}:{})},
     clipping:settings.clipping?{...settings.clipping,enabled:false}:undefined,
     clipBox:settings.clipBox?{...settings.clipBox,enabled:false}:undefined,
     obliqueClip:settings.obliqueClip?{...settings.obliqueClip,enabled:false}:undefined};
@@ -130,7 +272,7 @@ export function cranialComposition(view:NativeScanState,layers:Layer[],allIds:st
     }else continue;
     visible[layer.id]=true;
   }
-  return {...view,cranialView:mode,visible,settings:{...view.settings,presentation:'segmentation',contextStyle:'shell',
+  return {...view,cranialView:mode,visible,settings:{...view.settings,presentation:'segmentation',contextStyle:'shell',sourcedVesselContext:undefined,
     sliceOverlay:'contour',layerOpacity,layerColor,volumeRendering:{...view.settings.volumeRendering,enabled:false}}};
 }
 
@@ -146,6 +288,7 @@ export function scanLabel(series:{id:string;modality:string;label?:string}):stri
 /** Describe selected contrast without denying angiography in another study scan. */
 export function sourceEvidenceLabel(source:{modality:string}|undefined,series:ReadonlyArray<{modality:string}>):string {
   const modality=source?.modality??'Source';
+  if (modality==='DWI_B0') return 'Acquired diffusion baseline · native slice inspection';
   if (/^CTA\b|CT.*angiogra/i.test(modality)) return 'CTA signal + sourced structures';
   if (/MRA|TOF|angiogra/i.test(modality)) return 'MR angiography · bright signal, no CT bone';
   if (/diagnostic/i.test(modality)) return `${modality} · derived map; planning use excluded`;
@@ -156,7 +299,8 @@ export function sourceEvidenceLabel(source:{modality:string}|undefined,series:Re
 export function nextScanState(current:NativeScanState, saved:NativeScanState,linked=true):NativeScanState {
   return {...saved,...(linked?{cranialView:current.cranialView}:{}),cursor:linked&&current.cursor?[...current.cursor]:saved.cursor?[...saved.cursor]:null,visible:{...current.visible},settings:{...saved.settings,
     ...(linked?{presentation:current.settings.presentation}:{}),
-    ...(linked&&current.settings.presentation&&current.settings.presentation!=='scan'?{camera:current.settings.camera,volumeRendering:current.settings.volumeRendering}:{}),
+    ...(linked?{sourcedVesselContext:current.settings.sourcedVesselContext}:{}),
+    ...(linked&&current.settings.presentation&&current.settings.presentation!=='scan'?{camera:current.settings.camera}:{}),
     sliceOverlay:current.settings.sliceOverlay,contextStyle:current.settings.contextStyle,
     layerColor:current.settings.layerColor,layerOpacity:current.settings.layerOpacity}};
 }
@@ -171,7 +315,56 @@ export function migrateSkullView(view:NativeScanState,layers:Binding['document']
     obliqueClip:view.settings.obliqueClip?{...view.settings.obliqueClip,enabled:false}:undefined}};
 }
 
-/** Legacy scopes were implicit filters; migrate once without changing anatomy. */
+/** The connected tree is the default. Version 2 stored 'all' as its default, so
+ * that value and unversioned legacy views open rooted; explicit filters keep. */
 export function vesselScopeForView(view?:NativeViewState|null):VesselScope {
-  return view?.vesselDisplayVersion===2 ? view.vesselScope??'all' : 'all';
+  if(view?.vesselDisplayVersion===3)return view.vesselScope??'rooted';
+  if(view?.vesselDisplayVersion===2&&view.vesselScope&&!['all','rooted','rooted-review'].includes(view.vesselScope))return view.vesselScope;
+  return 'rooted';
+}
+export const rootedVesselScope=(scope:VesselScope)=>scope==='rooted'||scope==='rooted-review';
+/** Scopes whose shown vessels keep source shading and branch tools: no boundary cut is introduced. */
+export const sourceLikeVesselScope=(scope:VesselScope)=>scope==='all'||scope==='exterior-air'||rootedVesselScope(scope);
+export {vesselReviewPrefix,vesselDerivedPrefixes,vesselDerivedParent} from './native-layer-residency.ts';
+/** Derived vessel compartments (the review overlay and the other-class part of a
+ * layer) are named after their source layer and follow its visibility. They are
+ * never written into saved visibility. */
+export function withVesselReviewVisibility(visible:Record<string,boolean>,compartments?:ReadonlyArray<{name:string}>,
+  studyLayers?:ReadonlyArray<{id:string;rooted_parent?:string}>):Record<string,boolean> {
+  // A model addition is drawn only while every layer it extends, down to the named tree, is.
+  const parents=new Map((studyLayers??[]).flatMap(layer=>layer.rooted_parent?[[layer.id,layer.rooted_parent] as const]:[]));
+  const shown=(id:string)=>{
+    const seen=new Set<string>();
+    for(let current:string|undefined=id;current!==undefined;current=parents.get(current)){
+      if(visible[current]!==true||seen.has(current))return false;
+      seen.add(current);
+    }
+    return true;
+  };
+  const derived=(compartments??[]).flatMap(layer=>{const parent=vesselDerivedParent(layer.name);return parent?[[layer.name,shown(parent)] as const]:[];});
+  const children=[...parents.keys()].filter(id=>id in visible&&visible[id]!==shown(id)).map(id=>[id,false] as const);
+  if(!derived.length&&!children.length)return visible;
+  return {...visible,...Object.fromEntries(children),...Object.fromEntries(derived)};
+}
+/** The viewer reports its whole settings object on any change, including the inherited
+ * entries of derived parts. Those names are not study layers and are never stored. */
+export function withoutVesselDerivedSettings<T extends {layerOpacity?:Record<string,number>;layerColor?:Record<string,string>}>(settings:T):T {
+  const kept=<V,>(values:Record<string,V>|undefined)=>values&&Object.keys(values).some(name=>vesselDerivedParent(name)!==null)
+    ?Object.fromEntries(Object.entries(values).filter(([name])=>vesselDerivedParent(name)===null)):values;
+  const layerOpacity=kept(settings.layerOpacity),layerColor=kept(settings.layerColor);
+  if(layerOpacity===settings.layerOpacity&&layerColor===settings.layerColor)return settings;
+  return {...settings,...(layerOpacity?{layerOpacity}:{}),...(layerColor?{layerColor}:{})};
+}
+/** Derived class parts and overlays inherit their layer's opacity; a vein part follows
+ * the vein rule of the scan presentation. */
+export function withVesselDerivedSettings(settings:import('./viewer/workspaceSettings').ViewerWorkspaceSettings,
+  compartments?:ReadonlyArray<{name:string}>):import('./viewer/workspaceSettings').ViewerWorkspaceSettings {
+  const opacity=settings.layerOpacity??{};
+  const inherited=(compartments??[]).flatMap(layer=>{
+    const parent=vesselDerivedParent(layer.name);
+    if(!parent||layer.name in opacity||typeof opacity[parent]!=='number')return [];
+    const vein=layer.name.startsWith('__vessel_veins:')&&settings.presentation==='scan';
+    return [[layer.name,vein?Math.min(opacity[parent],.08):opacity[parent]] as const];
+  });
+  return inherited.length?{...settings,layerOpacity:{...opacity,...Object.fromEntries(inherited)}}:settings;
 }

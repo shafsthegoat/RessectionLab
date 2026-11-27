@@ -123,6 +123,19 @@ export function followCloseToolFrame(view:SurgicalView,selectedSlot:string,effec
   return {...field,fieldMm:previous.fieldMm,windowClipping,settings:closeToolWindowPresentation({...settings,camera},windowClipping,original,cutaway)};
 }
 
+/** Only free cells have spatial extent. The engine's retained total also
+ * includes fluid waiting at a source without a free outlet. */
+export function surgicalFieldAmounts(view:SurgicalView) {
+  const spatialFluidMm3=Object.values(view.fluid).reduce((total,value)=>total+value,0);
+  const reservoirFluidMm3=view.sources?.reduce((total,source)=>{
+    const amount=source.reservoirMm3;
+    return total+(typeof amount==='number'&&Number.isFinite(amount)?amount:0);
+  },0)??null;
+  const retained=view.metrics.fluidPresentMm3;
+  return {spatialFluidMm3,reservoirFluidMm3,
+    retainedFluidMm3:typeof retained==='number'&&Number.isFinite(retained)?retained:null};
+}
+
 /** Read quantities from the selected recorded state, including during replay. */
 export function fullCaseStateSummary(view:SurgicalView) {
   const finite=(value:unknown):number|null=>typeof value==='number'&&Number.isFinite(value)?value:null;
@@ -131,8 +144,7 @@ export function fullCaseStateSummary(view:SurgicalView) {
   const sources=view.sources?.filter(source=>source.kind==='modeled-vessel-wound'||source.modelVersion===2);
   const wounds=view.vesselsV2?.wounds??view.vesselWounds;
   const faces=view.vesselsV2?.faces??view.vesselConnections;
-  const spatialFluid=Object.values(view.fluid).reduce((a,b)=>a+b,0);
-  const reservoirs=view.sources?.reduce((total,source)=>total+(finite(source.reservoirMm3)??0),0)??null;
+  const {spatialFluidMm3:spatialFluid,reservoirFluidMm3:reservoirs}=surgicalFieldAmounts(view);
   const byLabel=view.metrics.removedByLabelMm3;
   const normalMaterials=new Set(['soft_tissue','membrane','functional_region']);
   const sumLabels=(regions:SurgicalView['scene']['regions'])=>regions.length&&byLabel&&typeof byLabel==='object'?regions.reduce((total,region)=>total+(finite(byLabel[region.name])??0),0):null;

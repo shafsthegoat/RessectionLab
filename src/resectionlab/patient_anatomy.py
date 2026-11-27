@@ -58,9 +58,15 @@ def digest(value):
     ).hexdigest()
 
 
-def file_hash(path):
+def file_hash(path, *, check=None):
     with open(path, "rb") as f:
-        return hashlib.file_digest(f, "sha256").hexdigest()
+        if check is None:
+            return hashlib.file_digest(f, "sha256").hexdigest()
+        digest = hashlib.sha256()
+        while block := f.read(4 * 1024**2):
+            check()
+            digest.update(block)
+        return digest.hexdigest()
 
 
 def affine(value):
@@ -245,14 +251,21 @@ class PatientImagingCollection:
             "dtype": data.dtype.name,
         }
 
-    def array(self, ref):
+    def array(self, ref, *, check=None):
         p = self.path(ref["path"])
-        if p.stat().st_size > MAX_ARRAY + 4096:
+        status = p.stat()
+        if status.st_size > MAX_ARRAY + 4096:
             raise ValueError("Oversized anatomy member")
-        key = (str(p), p.stat().st_mtime_ns, ref["sha256"])
+        key = (str(p), status.st_mtime_ns, ref["sha256"])
         if key not in self._verified:
-            if file_hash(p) != ref["sha256"]:
+            if file_hash(p, check=check) != ref["sha256"]:
                 raise ValueError("Anatomy array checksum differs")
+            if check is not None:
+                # A read can update atime. Modification and identity must stay fixed.
+                newest = p.stat()
+                if (status.st_dev, status.st_ino, status.st_size, status.st_mtime_ns, status.st_ctime_ns) != (
+                        newest.st_dev, newest.st_ino, newest.st_size, newest.st_mtime_ns, newest.st_ctime_ns):
+                    raise ValueError("Anatomy array changed during verification")
             self._verified.add(key)
         a = np.load(p, mmap_mode="r", allow_pickle=False)
         if list(a.shape) != ref["shape"] or a.dtype.name != ref["dtype"]:
@@ -427,8 +440,8 @@ class PatientImagingCollection:
         self.document["layers"].append(row)
         return row
 
-    def mask(self, row):
-        return self.array(row["data"]) == row["label_value"]
+    def mask(self, row, *, check=None):
+        return self.array(row["data"], check=check) == row["label_value"]
 
     def require_native_geometry(self, row, *, allow_header_conflict=False, allow_legacy_annotation_grid=False):
         """Separate native viewing from permission to interpret a grid in RAS mm."""
@@ -554,6 +567,9 @@ class PatientImagingCollection:
         }
 
     def save(self, event="save", *, author="local researcher", expected=None):
+        from .anatomy_display import retire_stale_cta_coverage
+
+        retire_stale_cta_coverage(self)
         # Validate proposed edits/imports before replacing the current manifest.
         PatientImagingCollection(
             self.root, {k: v for k, v in self.document.items() if k != "snapshot_id"}
@@ -663,12 +679,16 @@ class PatientImagingCollection:
         return data
 
     def commit_edit(self, layer_id, mask, *, author, expected, operations):
+        from .vascular_cleanup import ATTACHED_ERASE, ATTACHED_SCORE_SURFACE
+
         if not author.strip():
             raise ValueError("Correction author is required")
         current = json.loads((self.root / "patient-anatomy.json").read_text())
         if current["snapshot_id"] != expected:
             raise ValueError("Patient changed; reload before committing")
         row = self.layer(layer_id)
+        if row.get('provenance', {}).get('kind') == 'derived_annotation_union':
+            raise ValueError('Select an input annotation to make a correction')
         if tuple(mask.shape) != tuple(row["data"]["shape"]):
             raise ValueError("Correction grid changed")
         row.setdefault("original_data", deepcopy(row["data"]))
@@ -677,10 +697,11 @@ class PatientImagingCollection:
         row["label_value"] = 1
         row["revision"] += 1
         row["review_status"] = "edited; anatomical review pending"
-        row["edits"] = [
-            *row.get("edits", []),
-            {"author": author, "operations": operations},
-        ]
+        edit = {"author": author, "operations": operations}
+        if (operations and operations[0]["operation"] == ATTACHED_ERASE
+                and all(op["operation"] in {ATTACHED_ERASE, "undo", "redo"} for op in operations)):
+            edit["surface_policy"] = ATTACHED_SCORE_SURFACE
+        row["edits"] = [*row.get("edits", []), edit]
         row.pop("mesh", None)
         return self.save(
             "commit correction: " + layer_id, author=author, expected=expected

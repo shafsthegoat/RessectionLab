@@ -5,26 +5,34 @@ import type {FieldLayer,OperativeField} from '../operative-field';
 import type {ResectionApi} from '../types';
 import type {ViewerVolume} from './contracts';
 
-/** A sparse planning presentation may never have loaded the source skull. */
-export function missingOperativeSkull(volume:ViewerVolume|null,field:OperativeField,collectionId:string){
+// A sparse planning presentation may have loaded neither the cortical nor skull mesh.
+export function missingOperativeSurfaces(volume:ViewerVolume|null,field:OperativeField,collectionId:string){
   const identity=operativeSourceIdentity(volume);
-  if(!volume||!identity||identity.collectionId!==collectionId||identity.snapshotId!==field.snapshotId)return null;
-  const bones=field.layers.filter(l=>l.role==='bone'&&l.sampledVoxels>0&&!l.detail);
-  if(bones.length!==1||bones[0].adjudication||volume.compartments.some(l=>l.name===bones[0].id))return null;
-  return bones[0];
+  if(!volume||!identity||identity.collectionId!==collectionId||identity.snapshotId!==field.snapshotId)return [];
+  const missing:FieldLayer[]=[];
+  for(const role of ['bone','grayMatter'] as const){
+    const candidates=field.layers.filter(l=>l.sampledVoxels>0&&(role==='bone'?l.role==='bone'&&!l.detail:l.role==='brain'&&l.detail==='grayMatter'));
+    if(candidates.length===1&&!candidates[0].adjudication&&!volume.compartments.some(l=>l.name===candidates[0].id))
+      missing.push(candidates[0]);
+  }
+  return missing;
 }
 
-export async function loadOperativeSkull(api:NativeAnatomyApi&ResectionApi,volume:ViewerVolume,layer:FieldLayer,signal:AbortSignal){
+export async function loadOperativeSurfaces(api:NativeAnatomyApi&ResectionApi,volume:ViewerVolume,layers:FieldLayer[],signal:AbortSignal){
   const identity=operativeSourceIdentity(volume);
   if(!identity)throw Error('The displayed source has no native scan identity.');
   signal.throwIfAborted();
   const {collectionId,seriesId,imageHash,snapshotId}=identity;
-  const result=await api.anatomyView({collectionId,snapshotId,seriesId,layers:[layer.id],original:false,patientModel:true,previewAlignment:true});
+  const result=await api.anatomyView({collectionId,snapshotId,seriesId,layers:layers.map(l=>l.id),original:false,patientModel:true,previewAlignment:true});
   signal.throwIfAborted();
-  if(result.mri.sha256!==imageHash)throw Error('The surrounding skull and displayed scan have different source identities.');
-  const skull=result.compartments.find(item=>item.name===layer.id);
-  if(!skull?.surface||'empty' in skull.surface||!matchingOperativeSource(layer,skull))
-    throw Error('The selected scan has no matching registered skull surface.');
+  if(result.mri.sha256!==imageHash)throw Error('The surrounding surfaces and displayed scan have different source identities.');
+  const matching=result.compartments.filter(item=>{
+    const layer=layers.find(l=>l.id===item.name);
+    return layer&&item.surface&&!('empty' in item.surface)&&matchingOperativeSource(layer,item);
+  });
+  const missing=layers.filter(l=>!matching.some(item=>item.name===l.id));
+  const issue=missing.length?'No matching registered surface for '+missing.map(layer=>layer.label??layer.id).join(', ')+'.':undefined;
+  if(!matching.length)throw Error(issue);
   const signals=new Map(volume.compartments.flatMap(({appearanceSource:s})=>s?[[s.signalSha256,s.data] as const]:[]));
   const reader={...api,readAsset:async(id:string)=>{
     signal.throwIfAborted();
@@ -32,8 +40,8 @@ export async function loadOperativeSkull(api:NativeAnatomyApi&ResectionApi,volum
     signal.throwIfAborted();
     return bytes;
   }};
-  const incoming=await hydrateAnatomy(result,reader,volume.mri,volume,undefined,signals);
+  const incoming=await hydrateAnatomy({...result,compartments:matching},reader,volume.mri,volume,undefined,signals);
   signal.throwIfAborted();
   incoming.displayIdentity=volume.displayIdentity;
-  return mergeResidentLayers(volume,incoming,[...volume.compartments.map(l=>l.name),layer.id]);
+  return {volume:mergeResidentLayers(volume,incoming,[...volume.compartments.map(l=>l.name),...matching.map(l=>l.name)]),issue};
 }

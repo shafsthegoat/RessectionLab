@@ -261,6 +261,15 @@ app.on('browser-window-created',(_event,window)=>{
       report.pairedMra={id:mra.id,shape:mra.data.shape,originalSha256:mra.original.sha256,
         sourceSignal:displayed.sourceSignalFingerprint,arterialLayer:own,independent:true,ctaRestored:true};
     };
+    const publisherDisplayPolicy=(evidence,sourcePolicy='publisher-vtp-ras-mm-v1')=>{
+      const {policy,maxDisplacementMm}=evidence.surfaceDiagnostics??{};
+      assert([sourcePolicy,'source-bound-publisher-cta-fairing-v1'].includes(policy));
+      assert(Number.isFinite(maxDisplacementMm)&&maxDisplacementMm>=0);
+      if(policy===sourcePolicy)assert.equal(maxDisplacementMm,0);
+      if(maxDisplacementMm===0)assert.equal(evidence.sourceMeshSha256,evidence.displayMeshSha256);
+      else assert.notEqual(evidence.sourceMeshSha256,evidence.displayMeshSha256);
+      return policy;
+    };
     const verifyDirect=async()=>{
       const layer=document.layers.find(row=>row.id===direct.layerId);
       const evidence=report.requests.flatMap(request=>request.layers??[]).find(row=>row.name===layer.id);
@@ -269,15 +278,15 @@ app.on('browser-window-created',(_event,window)=>{
       for(const key of ['sourceMeshSha256','displayMeshSha256','indicesSha256','maskSha256']){
         assert(/^[a-f0-9]{64}$/.test(direct.transfer[key]),'Invalid expected transport hash for '+key);
       }
-      assert.deepEqual(transfer,direct.transfer);
-      assert.equal(evidence.sourceMeshSha256,evidence.displayMeshSha256);
+      for(const [key,hash] of Object.entries(direct.transfer)){
+        if(key!=='displayMeshSha256')assert.equal(transfer[key],hash,key);
+      }
+      const displayPolicy=publisherDisplayPolicy(evidence,direct.policy);
       assert.equal(evidence.points,direct.points);
       assert.equal(evidence.triangles,direct.triangles);
-      assert.equal(evidence.surfaceDiagnostics?.policy,direct.policy);
       assert.equal(evidence.surfaceDiagnostics?.publisherSourceSha256,direct.sourceVtp.sha256);
-      assert.equal(evidence.surfaceDiagnostics?.maxDisplacementMm,0);
       const installed=await js(`window.surfaceVerification.surface.find(layer=>layer.name===${JSON.stringify(layer.id)}&&!layer.empty)`);
-      assert.equal(installed?.diagnostics?.policy,direct.policy,'Renderer must install the publisher mesh');
+      assert.equal(installed?.diagnostics?.policy,displayPolicy,'Renderer must install the publisher mesh');
       assert.equal(installed.diagnostics.publisherSourceSha256,direct.sourceVtp.sha256);
       const raw=report.captures['source-oblique'],smooth=report.captures['smooth-oblique'];
       assert([raw,smooth].every(view=>view.gpu.completed&&JSON.parse(view.layers).includes(layer.id)
@@ -300,7 +309,7 @@ app.on('browser-window-created',(_event,window)=>{
       compareSourceFrame(smooth,restored,'Restored publisher layer');
       compareSlices(smooth,restored,'Restored publisher layer');
       report.directSurface={expectationSha256:sha(directFile),layerId:layer.id,
-        sourceVtp:direct.sourceVtp,policy:direct.policy,points:evidence.points,triangles:evidence.triangles,transfer};
+        sourceVtp:direct.sourceVtp,policy:direct.policy,displayPolicy,points:evidence.points,triangles:evidence.triangles,transfer};
       if(directConditioned){
         const rows=directConditioned.refinedComparisons;
         assert.equal(rows.length,2);
@@ -510,9 +519,7 @@ app.on('browser-window-created',(_event,window)=>{
           const surface=rendered[branch.layer];
           assert.equal(surface?.triangles,branch.triangles,branch.layer+' rendered triangle count');
           assert.equal(surface.points,branch.points,branch.layer+' rendered vertex count');
-          assert.equal(surface.sourceMeshSha256,surface.displayMeshSha256);
-          assert.equal(surface.surfaceDiagnostics?.policy,'publisher-vtp-ras-mm-v1');
-          assert.equal(surface.surfaceDiagnostics?.maxDisplacementMm,0);
+          publisherDisplayPolicy(surface);
         }
         assert.equal(rendered[whole.id]?.triangles,branches.branches.reduce((total,row)=>total+row.triangles,0));
         report.publisherBranches={receiptSha256:sha(branchFile),manualColors,triangles:rendered[whole.id].triangles};

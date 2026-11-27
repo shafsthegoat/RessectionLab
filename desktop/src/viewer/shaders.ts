@@ -94,6 +94,7 @@ float fusionSample(vec3 voxel) {
   return mix(mix(c00,c10,f.y),mix(c01,c11,f.y),f.z);
 }
 ivec4 labels(ivec3 voxel) {
+  if (uLayerCount==0) return ivec4(0);
   if (any(lessThan(voxel,ivec3(0))) || any(greaterThanEqual(voxel,ivec3(uShape)))) return ivec4(0);
   int effect=int(round(texelFetch(uRemoved,voxel.zyx,0).r*255.0));
   if (uReplayActive==1 && (effect==1 || effect==2)) return ivec4(0);

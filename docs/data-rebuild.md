@@ -748,6 +748,18 @@ SURFACE_VERIFY_VASCULAR_COMPARISON=1 \
   --anatomy "$archive" --automation-hidden
 ```
 
+### Combined supplied CTA arterial coverage
+
+Use **Anatomy → Combine supplied arteries** after importing both groups on the same CTA. For command-line preparation of a separate workspace, pass one or more native layer IDs from the manifest for each group. Each selected layer must match its supplied positive labels on the exact CTA grid. Either group alone can omit positives contained in the other. The combined display retains all native positive cells from both, and the command leaves the input workspace intact.
+
+```sh
+PYTHONPATH=src .venv/bin/python scripts/prepare_cta_arterial_coverage.py \
+  "$manifest" "$new_workspace_directory" --series "$cta_series_id" \
+  --focus "$focused_layer_id" --wider "$wider_layer_id"
+```
+
+Open the new `patient-anatomy.json` in RessectionLab. The two arterial buttons reuse the current camera and linked scan. The combined layer is display-only. For branch tracing or source-specific measurements select one of the original input layers. The archived coverage receipt records both input counts and the exact union.
+
 ### Meningioma sub-13 native CT and T1 review
 
 Open **Meningioma-sub-13-CT-T1-EVIDENCE-v2** in Cases. The [paired release](https://zenodo.org/records/17486320)
