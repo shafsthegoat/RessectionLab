@@ -54,7 +54,7 @@ MAX_PRIOR_PROPOSALS = 16
 MAX_AXIS_INSPECTION_VOXELS = 16_000_000
 MAX_AXIS_INSPECTION_METADATA_BYTES = 256 * 1024
 MAX_AXIS_INSPECTION_RESULT_BYTES = 2 * 1024 * 1024
-OPERATIONS = frozenset({'anatomyInspectIntake','anatomyImportBatch','anatomyDiffusionBaseline','anatomyCtaArterialCoverage','anatomyPrepare','anatomySavePackage','anatomySaveView','anatomyComponents','anatomyAttachedVesselReview','anatomyVesselGapReview','anatomyGraph','anatomyCreate','anatomyReconstruct','anatomyPlan','anatomyRemoval','anatomySection','anatomyLocalAlignment','anatomyOpen','anatomyView','anatomyEdit','anatomySample','anatomyRegister','anatomyImport','anatomyExport',"ping", "executeDevelopmentEpisode", "executePersistentPassiveEpisode", "executePublicSurfaceContactEpisode", "publicContactFamilyAvailability", "executePublicContactFamilyEpisode", "inspectDevelopmentEpisodeComparison", "evaluateDevelopmentEpisodeVascular", "loadCase", "importNifti", "importDisplaySeries", "importDiagnosticLayer", "importStructuralEvidence", "importPriorProposals", "saveCase", "generateRoutes", "generateNativeRoutes", "inspectRefinement", "inspectAxisPlanning", "inspectObservedLandmarkUpdate", "cancel", "inspectEvidence", "createSyntheticCase", "nativeTraining", "trainPatient", "listRuns", "replayTraining", "evaluateCandidate", "exportCandidate", "shutdown"})
+OPERATIONS = frozenset({'anatomyInspectIntake','anatomyImportBatch','anatomyDiffusionBaseline','anatomyCtaArterialCoverage','anatomyPrepare','anatomySavePackage','anatomySaveView','anatomyComponents','anatomyAttachedVesselReview','anatomyVesselGapReview','anatomyGraph','anatomyCreate','anatomyReconstruct','anatomyPlan','anatomyRemoval','anatomySection','anatomyLocalAlignment','anatomyOpen','anatomyView','anatomyEdit','anatomySample','anatomyRegister','anatomyImport','anatomyExport',"ping", "executeDevelopmentEpisode", "executePersistentPassiveEpisode", "executePublicSurfaceContactEpisode", "publicContactFamilyAvailability", "executePublicContactFamilyEpisode", "inspectDevelopmentEpisodeComparison", "evaluateDevelopmentEpisodeVascular", "loadCase", "importNifti", "importDisplaySeries", "importDiagnosticLayer", "importStructuralEvidence", "importPriorProposals", "saveCase", "generateRoutes", "generateNativeRoutes", "inspectRefinement", "inspectAxisPlanning", "inspectObservedLandmarkUpdate", "cancel", "inspectEvidence", "operativeSourceSurfaces", "createSyntheticCase", "nativeTraining", "trainPatient", "listRuns", "replayTraining", "evaluateCandidate", "exportCandidate", "shutdown"})
 from .surgical_bridge import OPERATIONS as SURGICAL_OPERATIONS
 OPERATIONS = OPERATIONS | REHEARSAL_OPERATIONS | SURGICAL_OPERATIONS
 MAX_RUN_JSON_BYTES = 32 * 1024 * 1024
@@ -1613,6 +1613,17 @@ class BridgeSession:
                     "criticalEvidence": thaw_json(resolve_critical_evidence(case).receipt),
                     "priorProposals": [item.to_manifest() for _, item in sorted(case.prior_proposals.items())],
                     "clinicalDeficitProbability": None, "clinicalRiskReason": "no_validated_clinical_outcome_model"}
+        if operation == "operativeSourceSurfaces":
+            # Read-only display surfaces of this exact case version (surgical_source_surfaces); never an engine input.
+            _keys(args, {"caseHash", "casePath", "assetPath"})
+            entry = self._get_case(args.get("caseHash"))
+            paths = {key: Path(_string(args[key], key)).expanduser() for key in ("casePath", "assetPath")
+                     if args.get(key) is not None}
+            if any(not path.is_absolute() for path in paths.values()):
+                raise BridgeError("INVALID_PATH", "File paths must be absolute")
+            from .surgical_source_surfaces import bridge_result
+            return bridge_result(entry.case, encode=self.transfers.array, case_path=paths.get("casePath"),
+                                 asset_path=paths.get("assetPath"), check=request.check)
         if operation == "importStructuralEvidence":
             _keys(args, {"caseHash", "sourceImagePath", "maskPath", "reportPath", "variant"})
             entry = self._get_case(args.get("caseHash"))
