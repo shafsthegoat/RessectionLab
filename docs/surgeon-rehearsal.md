@@ -1,8 +1,40 @@
-# Surgeon-perspective rehearsal increment
+# Surgeon-perspective rehearsal
 
-Use the existing primary checkout on `shaf/surgeon-physics-rehearsal`. The source
-anatomy, RAS-mm affine and persistent source-cell identities remain authoritative.
-No policy fitting, RL retraining or dataset acquisition is part of this increment.
+The source anatomy, RAS-mm affine and persistent source-cell identities remain
+authoritative. No policy fitting, RL retraining or dataset acquisition is part
+of this work.
+
+## What the surgeon needs the night before
+
+The rehearsal exists to help one surgeon decide seven things about one patient.
+Each change to the rehearsal names the need it serves, and work is ranked by how
+much it helps these decisions. Literature on surgical rehearsal reports gains in
+anatomy, strategy and confidence more than in measured outcome, which is why
+corridor anatomy on the patient's own scan ranks above finer tissue physics.
+
+| Need | Decision | What the rehearsal must show |
+| --- | --- | --- |
+| N1 | Where to put the craniotomy and corridor | The head as positioned, the incision and flap on the real scalp and skull, and the corridor from cortex to tumour |
+| N2 | Where eloquent cortex, tracts and vessels sit relative to that corridor | Named arteries, veins and tract bundles with their distance from the working tip, each marked with its evidence |
+| N3 | What each depth will look like | Scalp, bone, dura, arachnoid and pia, gyri and sulci, white matter, tumour rim and core, drawn from the scan at the depth reached |
+| N4 | How tumour and brain will behave | Tissue that yields, tears or bruises under the instrument, tumour that debulks at a believable rate, and a cavity that forms |
+| N5 | Where bleeding will come from | Bleeding bound to the vessel that was cut, arterial or venous in character, pooling and hiding the field until controlled |
+| N6 | What navigation gets wrong after brain shift | The planned target against the shifted one once the dura is open, with the pointer's registration error |
+| N7 | When to stop | Residual tumour, the estimated distance to a tract, the mapping response and the harm already done, with unknowns left unknown |
+
+Ranked work, highest first:
+
+1. A complete procedure, positioning to closure, on real head anatomy (N1, N2, N3).
+2. The depth picture: the scan carved by the removal, scan-textured cut walls and a smooth cavity (N3).
+3. Tract and vessel distance at the working tip, the stimulation estimate and the stop cues (N2, N7).
+4. Bleeding from the named vessel, pooling, and haemostasis that depends on vessel size (N5).
+5. Brain shift at dural opening with a navigation pointer (N6).
+6. Injury in place of refusal when an unsafe move is made (N4, N7).
+7. Instruments that work at operative rates with two hands (N4).
+8. Interaction speed, which supports every item above.
+
+The gap ledger in [current status](current-status.md#operative-realism-gap-ledger)
+records which of these are closed.
 
 The latest visibly excavating, active-suction example and precise local evidence
 are described in [Operative demonstration](operative-demonstration.md).

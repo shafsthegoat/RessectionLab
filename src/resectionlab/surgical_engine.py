@@ -458,7 +458,11 @@ class SurgicalEngine:
         self._operative_tool_revision = 0
         if self._operative:
             from .surgical_planning_admission import source_classification
-            if self._source_inspection_only or source_classification(scene) != 'generated-engineering':
+            # An acquired host needs its own explicit development-rehearsal
+            # declaration. Planning and training admission stay refused for it.
+            from .surgical_host_rehearsal import declaration as host_rehearsal
+            if self._source_inspection_only or (source_classification(scene) != 'generated-engineering'
+                    and host_rehearsal(scene) is None):
                 raise ValueError('OPERATIVE_EXPOSURE_REQUIRES_GENERATED_SOURCE')
             from .surgical_tools import tools_for_operative_profile
             declaration = scene.properties['operativeExposureV1']

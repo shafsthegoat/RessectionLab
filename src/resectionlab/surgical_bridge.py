@@ -434,6 +434,11 @@ def dispatch(session, operation, args, request, progress):
     source_role = (entry.case.metadata.get('data_case') or {}) if entry is not None else {}
     practice_role_allowed = isinstance(source_role, (dict, MappingProxyType)) and not any(
         source_role.get(k) for k in ('role', 'split', 'family_id'))
+    if not practice_role_allowed and entry is not None:
+        # A declared development rehearsal on an acquired host is the one
+        # attributed source with a manual practice domain of its own.
+        from .surgical_host_rehearsal import development_practice_source
+        practice_role_allowed = development_practice_source(entry.case)
     if command == 'practice' and not practice_role_allowed:
         raise ValueError('Reserved or attributed cohort sources have no manual practice authorization.')
     if command == 'practice' and (entry is None or not raw):

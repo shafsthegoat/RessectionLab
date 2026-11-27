@@ -38,6 +38,36 @@ study keeps eight synthetic targets separate from its healthy anatomy.
 [Reproduce the desktop checks](fresh-patient-reproduction.md#desktop-workflow-and-smoke-test) ·
 [Resume the versioned migration](data-rebuild.md#native-study-migration).
 
+## Operative realism gap ledger
+
+Work on branch `shaf/surgical-realism` aims at one complete, realistic rehearsal,
+positioning to closure. The needs it serves (N1–N7) are listed in the
+[surgeon rehearsal guide](surgeon-rehearsal.md#what-the-surgeon-needs-the-night-before).
+Each gap below was re-checked in code on November 27, 2026. The dated stills and
+films are on the HDD under `qc/surgical-realism-20261127/`.
+
+| Gap | Re-checked finding | Needs | State |
+| --- | --- | --- | --- |
+| 1. Unsafe moves are refused | Partly right. A failed microstep rolls back alone and earlier ones commit as a partial action. Shaft contact, wrong material, blocked withdrawal, traction limits and drill plunge all refuse. One older vessel model accumulates face damage. No tear, avulsion or contusion exists. The RL reward charges −0.1 for a refusal and nothing for a partial. | N4, N7 | Open |
+| 2. Planner and RL see ground truth | Confirmed. Observations sample true occupancy, target and protection. Registration perturbations default to zero and never reach `SurgicalEngine`. No visibility, occlusion, pointer, fluorescence or ultrasound model exists. | N6, N7 | Open |
+| 3. No brain shift | Partly right. Displacement lives only on an active patch of at most 12 mm and 2,000 nodes and is purged each tick. Gravity acts only beside resected cells. CSF loss is not modelled. The model clips instead of tearing. | N6 | Open |
+| 4. Patient vessels have zero flow | Confirmed. Patient vessel walls carry zero conductance, so a cut emits nothing. Four bleeding models exist, none pulsatile. Haemostasis is a power × time counter with no size limit. Every constant is assumed-research. Gravity pooling exists when a position is set. | N5 | Open |
+| 5. Harm is volume | Partly right. The RL reward weights every healthy cell 2. The procedure comparator already ranks by named structure. Motor and language totals stay UNKNOWN. No ischaemic territory. Stimulation echoes its parameters and looks up supplied evidence. | N2, N7 | Open |
+| 6. Acquired cases never run a full procedure | Confirmed. Opening and closure were limited to generated sources, with no pia, arachnoid or CSF. Removal is whole-cell, and the scan volume hides during replay. **In progress:** an acquired host head with a generated tumour now builds an operative scene the engine accepts (see below). | N1, N2, N3 | In progress |
+| 7. Instruments | Mostly confirmed. CUSA removes 2 mm³/s with no amplitude, aspiration or irrigation. Retractor reaction force is computed; drill, craniotome and bipolar force are inputs. Suction never retracts. Cottonoids and haemostats were generated-only. | N4 | Open |
+| 8. Interaction | Partly right. One hand per action; operative and vessel-rod scenes run the Python path. Recorded input-to-visible is 89.9/247.1 ms median/p95 on the merged line. The 427-action episode ran in 295.8 s for 475.2 simulated seconds, so the earlier "5–14× slower than real time" claim has no record. | all | Open |
+| W-A. Positioning and navigation view | The November 21 walkthrough has no positioning step, no orientation landmarks and no navigation view. | N1, N6 | Open |
+| W-B. Operative picture | Flat lighting, a black void, no microscope field, depth of field or wetness, and unreadable HUD text in the film. | N3 | Open |
+| W-C. Opening appearance | Rigid hovering flaps, a kerf drawn as a wide artefact band, floating clips, and a 20 mm opening. | N1, N3 | Open |
+
+No acquired case passes the [procedure policy](supratentorial-procedure-policy.md),
+so the complete rehearsal uses a generated tumour on an acquired host head from
+the [EDEN2020 segmented cohort](eden2020-healthy-synthetic.md). The host keeps
+its real scalp, skull, gyri, vessel estimates and published tract bundles. The
+scene declares itself `hostRehearsalV1`, DEVELOPMENT only: the dura is an
+assumed layer, CSF is free space with a recorded membership, and planning and
+training admission stay refused for it.
+
 ## Interactive operative practice
 
 A verified generated checkpoint can start a separate editable episode. The child retains its source, target, physical model, action prefix and original target volume. In Rehearse, mouse or keyboard input proposes an instrument pose. Place, move, activate, apply and withdraw send checked actions to the engine. A contact-limited advance leaves the instrument at its accepted endpoint. Saving and reopening restores the independent episode. [Practice from an accepted state](desktop-workflow.md#practice-from-an-accepted-engine-state)

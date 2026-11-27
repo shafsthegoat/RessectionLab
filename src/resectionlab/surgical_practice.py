@@ -70,6 +70,22 @@ def _convexity_target(scene, memberships, targets):
     return {'name': 'Glioma core and margin', 'regions': parts, 'annotationHash': semantic_digest(parts)}
 
 
+def _host_target(scene, memberships, targets):
+    # A declared host rehearsal names its generated lesion layers. Each must
+    # still own exactly the cells of its source mask.
+    from .surgical_host_rehearsal import declaration
+    names = [row['name'] for row in declaration(scene)['layers'] if row['role'] in ('tumour_rim', 'tumour_core')]
+    if not names or memberships is None or set(memberships) != set(names) or [r['name'] for r in targets] != names:
+        raise ValueError('The host rehearsal target differs from its declared generated lesion.')
+    parts = []
+    for region in targets:
+        name = region['name']
+        if not np.array_equal(memberships[name], np.flatnonzero(scene.labels.ravel() == region['id'])):
+            raise ValueError('The generated lesion mask differs from its engine membership.')
+        parts.append({'regionId': region['id'], 'name': name, 'annotationHash': scene.source['annotationHashes'][name]})
+    return {'name': 'Generated tumour rim and core', 'regions': parts, 'annotationHash': semantic_digest(parts)}
+
+
 def source_binding(engine, case_hash, snapshot, record):
     scene = engine.scene
     from .surgical_procedure_policy import PROPERTY, procedure_admission
@@ -97,7 +113,9 @@ def source_binding(engine, case_hash, snapshot, record):
     memberships = original_target_memberships(scene)
     targets = [r for r in scene.regions if r.get('target') and r['material'] == 'tumor']
     if engine._operative:
-        target_binding = _convexity_target(scene, memberships, targets)
+        from .surgical_host_rehearsal import declaration as host_rehearsal
+        target_binding = (_host_target if host_rehearsal(scene) is not None else _convexity_target)(
+            scene, memberships, targets)
     else:
         if memberships is None or len(targets) != 1 or len(memberships) != 1:
             raise ValueError('Practice requires one bound treatment target.')
@@ -198,7 +216,7 @@ def metrics(engine, case):
         names = [r['name'] for r in engine.scene.regions if layers.get(r['name'], {}).get('kind') == 'brain']
         if engine._operative:
             brain = np.isin(engine.scene.labels, [r['id'] for r in engine.scene.regions
-                if layers.get(r['name'], {}).get('kind') in ('grayMatter', 'whiteMatter')])
+                if layers.get(r['name'], {}).get('kind') in ('grayMatter', 'whiteMatter', 'tract')])
         elif len(names) == 1:
             brain = case.compartments.get(names[0])
         elif case.semantic_hash == THERMAL and engine.scene.identity == CONTROLS[THERMAL][0]:

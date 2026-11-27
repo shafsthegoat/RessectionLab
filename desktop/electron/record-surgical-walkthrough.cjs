@@ -291,8 +291,13 @@ app.on('browser-window-created',(_,win)=>{
     },pane};
     try{
       wc.setBackgroundThrottling(false);wc.debugger.attach('1.3');
-      await wc.debugger.sendCommand('Emulation.setDeviceMetricsOverride',{width:1920,height:1080,mobile:false,deviceScaleFactor:1});
-      win.setContentSize(1920,1080);
+      // Review stills may use an ordinary desktop or compact window; the film stays widescreen.
+      const [width,height]=plan.windowSize??[1920,1080];
+      assert(Number.isInteger(width)&&Number.isInteger(height)&&width>=1050&&height>=720&&width<=1920&&height<=1080,'Unsupported capture window');
+      assert(plan.reviewBoundaries||(width===1920&&height===1080),'A film uses the 1920 × 1080 frame');
+      report.windowSize=[width,height];
+      await wc.debugger.sendCommand('Emulation.setDeviceMetricsOverride',{width,height,mobile:false,deviceScaleFactor:1});
+      win.setContentSize(width,height);
       await js(`window.walkthrough={submitted:new Map()};
         document.addEventListener('anatomy-frame',({detail:d})=>{
           const w=window.walkthrough;w.submitted.set(d.serial,d);

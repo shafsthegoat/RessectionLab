@@ -24,6 +24,7 @@ def exposure_declaration(
     hemostat_site,
     hinge_axis=(1, 0, 0),
     outward=(0, 0, 1),
+    max_body_cells=20000,
 ):
     """Derive true face-neighbor attachments and immutable gripping/closure landmarks."""
     shape = tuple(shape)
@@ -41,7 +42,7 @@ def exposure_declaration(
     bodies = {}
     for name, source in zip(BODIES, (scalp, bone, dura)):
         ids = sorted(set(map(int, source['cells'])))
-        if len(ids) < 4 or len(ids) > 20000:
+        if len(ids) < 4 or len(ids) > max_body_cells:
             raise ValueError('EXPOSURE_BODY_SIZE')
         layer = set(map(int, bone_material if name == 'bone' else source['layerCells']))
         owned = set(ids)
