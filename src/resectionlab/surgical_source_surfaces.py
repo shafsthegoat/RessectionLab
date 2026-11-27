@@ -88,10 +88,18 @@ DEFAULTS = {
 }
 MARGIN_MM = 10.
 FINISH_ROUNDS = 4
-# The assumed dural sheet: offset inside the inner table, around the craniotomy.
-DURA_OFFSET_MM = .6
-DURA_REACH_MM = 14.
+# The assumed dural sheet: a continuous membrane lining the inner table over the craniotomy and a
+# margin around it. Positions are its outer face, DURA_OFFSET_MM inside the inner table; the
+# membrane is DURA_THICKNESS_MM thick (assumed: no dura is imaged or labelled).
+DURA_OFFSET_MM = .1
+DURA_THICKNESS_MM = .6
+DURA_REACH_MM = 12.
+# The skin covers the whole head the T1 shows (the overview); other surfaces stay in the working box.
+SKIN_HEAD_MARGIN_MM = 4.
 VESSEL_CLASS = {0: 'unknown', 1: 'artery', 2: 'vein'}
+# Cortical surface vessels below the model's mask threshold: a connected extension of the mask.
+VESSEL_LOW_THRESHOLD = .3
+VESSEL_SURFACE_BAND_MM = (-1., 3.)
 TRACT_STREAMLINES = 160
 TRACT_STEP_MM = 2.
 
@@ -174,6 +182,35 @@ def sampling_grid(affine, shape, *, step, margin=MARGIN_MM):
     count = tuple(int(math.floor((n - 1 + 2 * cells) * spacing / step)) + 1 for n in shape)
     local = np.diag([step / spacing] * 3 + [1.])
     local[:3, 3] = -cells
+    return count, affine @ local
+
+
+def covering_grid(affine, shape, *, step, mask, mask_affine, margin=SKIN_HEAD_MARGIN_MM, limit=None):
+    """A grid aligned with the working grid, ``step`` mm apart, covering ``mask`` (on ``mask_affine``) plus
+    ``margin`` mm and at least the working box plus ``MARGIN_MM``; ``limit`` (affine, shape) bounds it to
+    another image's field of view."""
+    spacing = float(np.linalg.norm(affine[:3, 0]))
+    inverse = np.linalg.inv(affine)
+
+    def extent(cells, source_affine):
+        world = np.asarray(cells, float) @ source_affine[:3, :3].T + source_affine[:3, 3]
+        ijk = world @ inverse[:3, :3].T + inverse[:3, 3]
+        return ijk.min(axis=0), ijk.max(axis=0)
+
+    corners = lambda lo, hi: np.array(np.meshgrid(*[[a, b] for a, b in zip(lo, hi)], indexing='ij')).reshape(3, -1).T
+    found = np.argwhere(mask)
+    lo, hi = extent(corners(found.min(axis=0), found.max(axis=0)), mask_affine)
+    lo, hi = lo - margin / spacing, hi + margin / spacing
+    if limit is not None:
+        limit_affine, limit_shape = limit
+        fov_lo, fov_hi = extent(corners([0, 0, 0], np.array(limit_shape) - 1), limit_affine)
+        lo, hi = np.maximum(lo, fov_lo), np.minimum(hi, fov_hi)
+    box = MARGIN_MM / spacing
+    lo = np.minimum(lo, -box)
+    hi = np.maximum(hi, np.array(shape) - 1 + box)
+    count = tuple(int(math.floor((b - a) * spacing / step)) + 1 for a, b in zip(lo, hi))
+    local = np.diag([step / spacing] * 3 + [1.])
+    local[:3, 3] = lo
     return count, affine @ local
 
 
@@ -555,6 +592,36 @@ def _skin_field_from_t1(t1, t1_affine, t1_spacing, head, head_affine, sigma, gri
 
 # ----------------------------------------------------------------------------- vessels and tracts
 
+def _cortical_extension(mask, probability, crop, labels, label_spacing, intracranial_margin, sample):
+    """Voxels the model scores at or above ``VESSEL_LOW_THRESHOLD`` (below its mask threshold) that lie on the
+    cortical surface (``VESSEL_SURFACE_BAND_MM`` from the head-model brain boundary, positive outside) and are
+    connected (26-neighbourhood) to the selected mask, within ``crop``. Hysteresis on the model's own score:
+    nothing is added that the probability does not support or that does not join an existing vessel."""
+    brain = np.isin(labels, list(BRAIN_IDS))
+    signed = label_distance(brain, label_spacing)
+    sub_mask = mask[crop]
+    candidate = (probability[crop] >= VESSEL_LOW_THRESHOLD) & ~sub_mask
+    cells = np.argwhere(candidate)
+    full = cells + np.array([c.start for c in crop])
+    lo, hi = VESSEL_SURFACE_BAND_MM
+    depth = sample(full, signed, np.float32(1e3))
+    keep = (depth >= lo) & (depth <= hi) & sample(full, intracranial_margin, False)
+    candidate[:] = False
+    candidate[tuple(cells[keep].T)] = True
+    components, count = ndimage.label(sub_mask | candidate, np.ones((3, 3, 3)))
+    joined = np.zeros(count + 1, bool)
+    joined[np.unique(components[sub_mask])] = True
+    joined[0] = False
+    added_sub = candidate & joined[components]
+    added = np.zeros(mask.shape, bool)
+    added[crop] = added_sub
+    return {'mask': added, 'voxels': int(added_sub.sum()), 'candidateVoxels': int(keep.sum()),
+            'threshold': VESSEL_LOW_THRESHOLD, 'surfaceBandMm': list(VESSEL_SURFACE_BAND_MM),
+            'method': ('hysteresis on the vessel model score: voxels scoring at least '
+                       f'{VESSEL_LOW_THRESHOLD} (the mask is the 0.5 level) within {lo} to {hi} mm of the head-model '
+                       'brain boundary, kept only where 26-connected to the selected mask')}
+
+
 def vessel_assets(context, paths, *, check=lambda: None):
     """Centreline tubes of the vessel model in its own frame, exported in host RAS."""
     from . import vessel_tubes as tubes
@@ -571,34 +638,48 @@ def vessel_assets(context, paths, *, check=lambda: None):
     raw_components = int(ndimage.label(mask, np.ones((3, 3, 3)))[1])
     selection = 'raw vessel model mask'
     classes = None
+    # Crop to the working box plus margin, in the vessel model's own grid.
+    grid_shape, grid_affine = sampling_grid(context['affine'], context['shape'], step=1., margin=MARGIN_MM)
+    crop = _crop_bounds(host_affine, mask.shape, grid_shape, grid_affine, pad=2)
+    added = np.zeros(mask.shape, bool)
+    extension = None
     if paths.get('headLabels'):
         labels, label_affine, label_spacing = _load_nifti(paths['headLabels'], np.int32)
         intracranial = np.isin(labels, list(BRAIN_IDS | CSF_IDS))
         margin = ndimage.distance_transform_edt(~intracranial, sampling=label_spacing) <= 2.
-        cells = np.argwhere(mask)
-        world = cells @ host_affine[:3, :3].T + host_affine[:3, 3]
         inverse = np.linalg.inv(label_affine)
-        index = np.rint(world @ inverse[:3, :3].T + inverse[:3, 3]).astype(int)
-        valid = np.all((index >= 0) & (index < labels.shape), axis=1)
-        keep = np.zeros(len(cells), bool)
-        keep[valid] = margin[tuple(index[valid].T)]
+
+        def label_index(cells):
+            world = cells @ host_affine[:3, :3].T + host_affine[:3, 3]
+            index = np.rint(world @ inverse[:3, :3].T + inverse[:3, 3]).astype(int)
+            return index, np.all((index >= 0) & (index < labels.shape), axis=1)
+
+        def sample(volume, cells, fill):
+            index, valid = label_index(cells)
+            out = np.full(len(cells), fill, volume.dtype)
+            out[valid] = volume[tuple(index[valid].T)]
+            return out
+
+        cells = np.argwhere(mask)
         mask = np.zeros_like(mask)
-        mask[tuple(cells[keep].T)] = True
+        mask[tuple(cells[sample(margin, cells, False)].T)] = True
         selection = 'vessel model mask within 2 mm of the head-model intracranial tissue and CSF'
+        if probability is not None:
+            extension = _cortical_extension(mask, probability, crop, labels, label_spacing, margin,
+                                            lambda cells, volume, fill: sample(volume, cells, fill))
+            added = extension.pop('mask')
+            mask |= added
         # A vessel cell takes the head model's artery or vein class within 1.5 mm, the nearer one if both.
+        cells = np.argwhere(mask)
         code = np.full(len(cells), 3, np.uint8)
         reach = {}
         for value, kind in ((1, ARTERY_ID), (2, VEIN_ID)):
             distance = ndimage.distance_transform_edt(labels != kind, sampling=label_spacing)
-            reach[value] = np.full(len(cells), np.inf)
-            reach[value][valid] = distance[tuple(index[valid].T)]
+            reach[value] = sample(distance, cells, np.inf)
         code[(reach[1] <= 1.5) & (reach[1] <= reach[2])] = 1
         code[(reach[2] <= 1.5) & (reach[2] < reach[1])] = 2
         classes = np.zeros(mask.shape, np.uint8)
         classes[tuple(cells.T)] = code
-    # Crop to the working box plus margin, in the vessel model's own grid.
-    grid_shape, grid_affine = sampling_grid(context['affine'], context['shape'], step=1., margin=MARGIN_MM)
-    crop = _crop_bounds(host_affine, mask.shape, grid_shape, grid_affine, pad=2)
     sub = mask[crop]
     if not sub.any():
         return None, {}
@@ -609,12 +690,19 @@ def vessel_assets(context, paths, *, check=lambda: None):
     rotation = forward[:3, :3]
     to_host = lambda p: np.asarray(p, float) @ rotation.T + forward[:3, 3]
     points = to_host(model.points)
-    offsets, polyline, radii, kinds = [0], [], [], []
+    offsets, polyline, radii, kinds, support = [0], [], [], [], []
+    added_sub = added[crop]
+    local_inverse = np.linalg.inv(local)
     for samples, edge_radius, kind in zip(model.edges, model.edge_radii, model.edge_class):
         polyline.append(points[samples])
         radii.append(np.asarray(edge_radius, float))
         offsets.append(offsets[-1] + len(samples))
         kinds.append({'artery': 1, 'vein': 2}.get(kind, 0))
+        # 1: most of the centreline runs through voxels below the mask threshold (the cortical extension).
+        ijk = np.rint(np.asarray(model.points)[samples] @ local_inverse[:3, :3].T + local_inverse[:3, 3]).astype(int)
+        valid = np.all((ijk >= 0) & (ijk < added_sub.shape), axis=1)
+        fraction = float(added_sub[tuple(ijk[valid].T)].mean()) if valid.any() else 0.
+        support.append(1 if fraction > .5 else 0)
     polyline = np.concatenate(polyline)
     radii = np.concatenate(radii)
     inverse = np.linalg.inv(context['affine'])
@@ -645,6 +733,7 @@ def vessel_assets(context, paths, *, check=lambda: None):
         'vessels.centrelineOffsets': np.asarray(offsets, np.uint32),
         'vessels.segmentKind': np.asarray(kinds, np.uint8),
         'vessels.segmentInsideBox': np.asarray(segment_inside, np.uint8),
+        'vessels.segmentSupport': np.asarray(support, np.uint8),
         'vessels.wallPositions': wall_points.astype(np.float32),
         'vessels.wallNormals': wall_normals.astype(np.float32),
         'vessels.wallTriangles': wall.faces.astype(np.uint32),
@@ -671,7 +760,12 @@ def vessel_assets(context, paths, *, check=lambda: None):
             'centrelineMm': round(float(sum(lengths)), 1), 'centrelineInsideBoxMm': round(inside_length, 1),
             'centrelineMmByKind': {k: round(v, 1) for k, v in sorted(kind_length.items())},
             'radiusMm': {'median': round(float(np.median(radii)), 3), 'p95': round(float(np.percentile(radii, 95)), 3)},
+            'addedCentrelineMm': round(float(sum(l for l, s in zip(lengths, support) if s)), 1),
+            'addedSegments': int(sum(support)),
         },
+        'corticalExtension': extension,
+        'segmentSupport': ('per segment: 0 the model mask (score at least 0.5), 1 the connected cortical extension '
+                           '(most of its centreline in voxels scoring below 0.5)'),
         'wall': {'vertices': int(len(wall_points)), 'triangles': int(len(wall.faces)),
                  'gridStepMm': wall.receipt.get('gridStepMm'),
                  'segmentIndex': 'owning centreline segment; the segment count means a junction ball'},
@@ -749,6 +843,8 @@ def build_assets(operative_case, host_paths, *, check=lambda: None, log=lambda m
     def add(name, points, faces, normals, provenance, *, mask_for_deviation, deviation_affine, extra=None):
         roles = dict((n, r) for n, r, _ in SURFACES)[name]
         body = dict((n, b) for n, _, b in SURFACES)[name]
+        # Bind the positions as stored (float32), so a reader rounding them finds the same cells.
+        points = np.asarray(points, np.float32).astype(np.float64)
         cells, owners = bind_cells(points, context, roles)
         key = 'surface.' + name
         arrays[key + '.positions'] = points.astype(np.float32)
@@ -783,6 +879,10 @@ def build_assets(operative_case, host_paths, *, check=lambda: None, log=lambda m
         mask = masks[name]
         if name == 'skin' and host_paths.get('t1'):
             t1, t1_affine, t1_spacing = _load_nifti(host_paths['t1'], np.float32)
+            # The whole head the T1 shows, so an overview is a complete head; vertices outside the
+            # working grid are bound to no engine cell.
+            grid_shape, grid_affine = covering_grid(affine, shape, step=settings['step'], mask=mask,
+                                                    mask_affine=label_affine, limit=(t1_affine, t1.shape))
             field, level = _skin_field_from_t1(t1, t1_affine, t1_spacing, mask, label_affine, settings['sigma'],
                                                grid_shape, grid_affine)
             points, faces, normals, dropped = _surface(mask, label_affine, label_spacing, grid_shape, grid_affine,
@@ -794,6 +894,9 @@ def build_assets(operative_case, host_paths, *, check=lambda: None, log=lambda m
                           'method': ('isointensity of the acquired T1 half-way between scalp and air intensities, '
                                      'inside a 3 mm shell of the head-model skin boundary; Taubin relaxed and held '
                                      f'within {settings["constraint"]} mm of the head-model boundary'),
+                          'extent': ('the whole head in the T1 field of view (head model plus '
+                                     f'{SKIN_HEAD_MARGIN_MM} mm); only vertices inside the working grid are bound to '
+                                     'engine cells'),
                           'level': round(level, 4), 'gridStepMm': settings['step'], 'smoothingRounds': settings['rounds'],
                           'constraintMm': settings['constraint'], 'droppedPieces': dropped, 'guide': head_source}
         else:
@@ -826,12 +929,16 @@ def build_assets(operative_case, host_paths, *, check=lambda: None, log=lambda m
 
     # The assumed dural sheet: the inner table around the craniotomy, offset inward.
     inner_points, inner_faces, inner_normals = meshes['skullInner']
-    dura_points, dura_faces = _dural_sheet(context, inner_points, inner_faces, inner_normals)
+    dura_points, dura_faces, dura_receipt = _dural_sheet(context, inner_points, inner_faces, inner_normals)
     dura_normals = vertex_normals(dura_points, dura_faces) if len(dura_faces) else np.zeros_like(dura_points)
     add('dura', dura_points, dura_faces, dura_normals,
         {**head_source, 'origin': 'assumed', 'smoothingSigmaMm': DEFAULTS['skullInner']['sigma'],
-         'method': (f'inner-table surface within {DURA_REACH_MM} mm of the dural and bone flaps, offset '
-                    f'{DURA_OFFSET_MM} mm inward; no dura is imaged or labelled')},
+         'method': (f'one continuous sheet lining the near inner table within {DURA_REACH_MM} mm of the bone and '
+                    f'dural flap footprints, interior holes closed, outer face {DURA_OFFSET_MM} mm inside the '
+                    'inner table; no dura is imaged or labelled'),
+         'thicknessMm': DURA_THICKNESS_MM, 'thickness': 'assumed membrane thickness (0.5 to 0.8 mm in adults)',
+         'sheet': dura_receipt,
+         'flap': 'split by the dura body footprint outline (bodyEdgeMm zero level), hinge from the engine body'},
         mask_for_deviation=masks['skullInner'], deviation_affine=label_affine)
 
     if host_paths.get('tumourLabels'):
@@ -945,32 +1052,104 @@ def _frame_agreement(context, labels, label_affine):
     return result
 
 
+def boundary_loops(faces):
+    """Closed boundary loops of a triangle mesh, as vertex lists in boundary-edge order."""
+    edges, uses = _unique_edges(faces)
+    single = {tuple(edge) for edge in edges[uses == 1]}
+    following = {}
+    for tri in faces:
+        for a, b in ((tri[0], tri[1]), (tri[1], tri[2]), (tri[2], tri[0])):
+            if (min(a, b), max(a, b)) in single:
+                following[int(a)] = int(b)
+    loops, seen = [], set()
+    for start in following:
+        if start in seen:
+            continue
+        loop, vertex = [], start
+        while vertex is not None and vertex not in seen:
+            seen.add(vertex)
+            loop.append(vertex)
+            vertex = following.get(vertex)
+        if vertex == start and len(loop) >= 3:
+            loops.append(loop)
+    return loops
+
+
+def fill_interior_holes(points, faces):
+    """Close every boundary loop but the longest with a fan about its centroid; returns points, faces, holes closed."""
+    loops = boundary_loops(faces)
+    if len(loops) <= 1:
+        return points, faces, 0
+    perimeter = [float(np.linalg.norm(np.diff(points[loop + loop[:1]], axis=0), axis=1).sum()) for loop in loops]
+    outer = int(np.argmax(perimeter))
+    new_points, new_faces = [points], [faces]
+    count = len(points)
+    for index, loop in enumerate(loops):
+        if index == outer:
+            continue
+        new_points.append(points[loop].mean(axis=0, keepdims=True))
+        # A boundary edge a→b of a kept triangle; the hole is closed by b→a→centre.
+        ring = np.asarray(loop + loop[:1])
+        new_faces.append(np.column_stack([ring[1:], ring[:-1], np.full(len(loop), count)]))
+        count += 1
+    return np.vstack(new_points), np.vstack(new_faces).astype(np.int64), len(loops) - 1
+
+
 def _dural_sheet(context, points, faces, normals):
-    """Inner-table faces near the dural and bone flaps, moved ``DURA_OFFSET_MM`` inward."""
+    """The assumed dura: one continuous sheet lining the near inner table over the craniotomy and a margin.
+
+    Inner-table faces whose columns lie within ``DURA_REACH_MM`` of the bone and dural flap footprints,
+    that face outward (the near table) and lie at the depth of the flaps, joined into the largest piece
+    with every interior hole closed, relaxed a few rounds and moved ``DURA_OFFSET_MM`` inward. Its
+    flap is split by the dura body's footprint outline (``bodyEdgeMm``), the same outline the engine's
+    dura body was cut along.
+    """
+    empty = np.zeros((0, 3)), np.zeros((0, 3), np.int64), {}
     if not len(faces):
-        return np.zeros((0, 3)), np.zeros((0, 3), np.int64)
+        return empty
     affine, shape = context['affine'], context['shape']
     region = context['bodies']['dura']['mask'] | context['bodies']['bone']['mask']
+    if not region.any():
+        return empty
     columns = region.any(axis=2)
     spacing = float(np.linalg.norm(affine[:3, 0]))
     lateral = ndimage.distance_transform_edt(~columns, sampling=spacing)
-    dura = _role_mask(context, ('dura',))
-    depth = ndimage.distance_transform_edt(~dura, sampling=spacing)
     inverse = np.linalg.inv(affine)
     ijk = points @ inverse[:3, :3].T + inverse[:3, 3]
     within = ndimage.map_coordinates(lateral, ijk[:, :2].T, order=1, mode='nearest') <= DURA_REACH_MM
-    cell = np.rint(ijk).astype(int)
-    inside = np.all((cell >= 0) & (cell < np.array(shape)), axis=1)
-    near = np.zeros(len(points), bool)
-    near[inside] = depth[tuple(cell[inside].T)] <= 3.
-    keep = within & near
+    # The near table faces out of the head (the grid's third axis points outward at the entry).
+    outward = np.array(context["exposure"].get("exteriorNormalRas") or affine[:3, 2], float)
+    outward /= np.linalg.norm(outward)
+    facing = normals @ outward > .2
+    k = np.nonzero(region.any(axis=(0, 1)))[0]
+    depth = (ijk[:, 2] >= k.min() - 20. / spacing) & (ijk[:, 2] <= k.max() + 10. / spacing)
+    keep = within & facing & depth
     chosen = faces[keep[faces].all(axis=1)]
+    if not len(chosen):
+        return empty
     used = np.zeros(len(points), bool)
     used[chosen.ravel()] = True
     index = np.cumsum(used) - 1
-    moved = points[used] - DURA_OFFSET_MM * normals[used]
-    sheet_points, sheet_faces, _ = drop_small_components(moved, index[chosen], minimum_area_mm2=50.)
-    return sheet_points, sheet_faces
+    sheet, sheet_faces = points[used], index[chosen]
+    # The largest piece only (a stray patch of the opposite wall of a sulcus-like fold is not dura).
+    count, labels = connected_components(sparse.coo_matrix(
+        (np.ones(2 * len(sheet_faces)), (sheet_faces[:, :2].ravel(), sheet_faces[:, 1:].ravel())),
+        shape=(len(sheet),) * 2), directed=False)
+    piece = labels[sheet_faces[:, 0]]
+    largest = np.bincount(piece, minlength=count).argmax()
+    sheet_faces = sheet_faces[piece == largest]
+    used = np.zeros(len(sheet), bool)
+    used[sheet_faces.ravel()] = True
+    index = np.cumsum(used) - 1
+    sheet, sheet_faces = sheet[used], index[sheet_faces]
+    sheet, sheet_faces, closed = fill_interior_holes(sheet, sheet_faces)
+    # Relax the closures and the selection's jagged rim into the sheet (the rim stays pinned).
+    sheet = constrained_taubin(sheet, sheet_faces, rounds=6)
+    sheet_normals = vertex_normals(sheet, sheet_faces)
+    sheet = sheet - DURA_OFFSET_MM * sheet_normals
+    receipt = {'holesClosed': int(closed), 'boundaryLoops': len(boundary_loops(sheet_faces)),
+               'reachMm': DURA_REACH_MM, 'offsetMm': DURA_OFFSET_MM, 'thicknessMm': DURA_THICKNESS_MM}
+    return sheet, sheet_faces, receipt
 
 
 # ----------------------------------------------------------------------------- asset file

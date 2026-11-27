@@ -50,6 +50,8 @@ export interface OperativeSourceAsset {
   outlines: Partial<Record<SourceBodyName, {outer: SourceOutline; inner?: SourceOutline}>>;
   vessels: SourceVessels | null;
   tracts: SourceTract[];
+  /** Assumed thickness of the dural membrane (mm), when the asset declares one. */
+  duraThicknessMm?: number;
   bytes: number;
   loadMs: number;
 }
@@ -96,7 +98,7 @@ export async function loadOperativeSourceSurfaces(api: Api, caseHash: string): P
     bytes += d.byteLength;
     if (bytes > MAX_SOURCE_BYTES) throw Error('Source-surface asset exceeds the desktop limit');
     queue.push(async () => {
-      // The main process returns the checked bytes directly; a transfer asset is read the usual way.
+      // Each array is a transfer asset; the main process checks its bytes against the engine's digest.
       const raw = d.data ?? (await api.readAsset(d.assetId!));
       if (raw.byteLength !== d.byteLength) throw Error(`Incomplete source-surface transfer ${key}`);
       const Type = ARRAY_TYPES[dtype];
@@ -109,12 +111,15 @@ export async function loadOperativeSourceSurfaces(api: Api, caseHash: string): P
     !Array.isArray(affine) || affine.length !== 4 || !affine.every((row) => Array.isArray(row) && row.length === 4 && row.every(Number.isFinite)))
     throw Error('Invalid source-surface working grid');
   const surfaces = new Map<SourceSurfaceName, SourceSurface>();
+  let duraThicknessMm: number | undefined;
   for (const raw of (header.surfaces as unknown[]) ?? []) {
     const entry = record(raw, 'surface'), name = entry.name as SourceSurfaceName;
     if (!SOURCE_SURFACE_NAMES.includes(name)) continue;
     const keys = record(entry.arrays, `${name} arrays`) as Record<string, string>;
     const body = entry.body === 'scalp' || entry.body === 'bone' || entry.body === 'dura' ? entry.body : null;
-    const surface = {name, layers: (entry.layers as string[]) ?? [], body, origin: String(record(entry.provenance, 'provenance').origin ?? 'unknown')} as SourceSurface;
+    const provenance = record(entry.provenance, 'provenance');
+    const surface = {name, layers: (entry.layers as string[]) ?? [], body, origin: String(provenance.origin ?? 'unknown')} as SourceSurface;
+    if (name === 'dura' && typeof provenance.thicknessMm === 'number' && provenance.thicknessMm > 0 && provenance.thicknessMm < 3) duraThicknessMm = provenance.thicknessMm;
     read(keys.positions, 'float32', 3, (v) => (surface.positions = v));
     read(keys.normals, 'float32', 3, (v) => (surface.normals = v));
     read(keys.triangles, 'uint32', 3, (v) => (surface.triangles = v));
@@ -171,7 +176,7 @@ export async function loadOperativeSourceSurfaces(api: Api, caseHash: string): P
     while (next < queue.length) await queue[next++]();
   }));
   const asset: OperativeSourceAsset = {caseHash, assetName: String(reply.assetName ?? ''), scope: String(header.scope ?? ''),
-    grid: {shape, affine}, surfaces, outlines, vessels, tracts, bytes, loadMs: 0};
+    grid: {shape, affine}, surfaces, outlines, vessels, tracts, duraThicknessMm, bytes, loadMs: 0};
   validateSourceAsset(asset);
   asset.loadMs = performance.now() - started;
   return {status: 'available', caseHash, asset};

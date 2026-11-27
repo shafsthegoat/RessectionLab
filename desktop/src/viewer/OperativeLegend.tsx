@@ -8,10 +8,12 @@ import type {ViewerWorkspaceSettings} from './workspaceSettings';
 /** Layer keys and contour comparison. In the microscope view they fold into
  * one "Layers" disclosure so the operative image keeps the space; a picked
  * layer's inspection stays visible outside the fold. */
-export function OperativeLegend({scene,settings,cursor,picked,onPick,onSmooth,visible,sourceVolumeBoundary,collapsible}:{
+export function OperativeLegend({scene,settings,cursor,picked,onPick,onSmooth,visible,sourceVolumeBoundary,collapsible,unknownVesselColor}:{
   scene:SurgicalView['scene'];settings:ViewerWorkspaceSettings;cursor:Point3;
   picked:string|null;onPick:(name:string|null)=>void;onSmooth:(smooth:boolean)=>void;visible:Record<string,boolean>;
   sourceVolumeBoundary?:boolean;collapsible?:boolean;
+  /** Source-surface vessel tubes without an artery or vein class: their drawn colour (the kind stays UNKNOWN). */
+  unknownVesselColor?:string;
 }){
   const rows=useMemo(()=>operativeLegend(scene,settings),[scene.sceneId,settings.layerColor,settings.operativeView,settings.microscope?.tissueStyle]);
   const selected=rows.find(r=>r.name===picked);
@@ -29,6 +31,9 @@ export function OperativeLegend({scene,settings,cursor,picked,onPick,onSmooth,vi
       <button aria-pressed={!smooth} onClick={()=>onSmooth(false)}>Source edges</button>
       <button aria-pressed={smooth} onClick={()=>onSmooth(true)}>Conditioned edges</button>
     </div>
+    {unknownVesselColor&&<span className="operative-source-boundary-key" title="Vessel model tubes the head model does not class as artery or vein">
+      <i aria-hidden="true" style={{background:unknownVesselColor}}/>Vessel · kind UNKNOWN
+    </span>}
     {sourceVolumeBoundary&&<span className="operative-source-boundary-key">
       <i aria-hidden="true" style={{background:vesselSourceBoundaryColor}}/>Source volume boundary
     </span>}

@@ -1012,7 +1012,7 @@ export class VolumeRenderer {
     const plane=settings?.operativeView==='surgeon'&&microscope?.inspectionCutaway&&this.extraClipPlanes?.length===1&&this.hostScene()?this.extraClipPlanes[0]:null;
     if(!plane&&!this.sectionCap)return;
     if(!this.sectionCap){this.sectionCap=new SectionCap();this.scene.add(this.sectionCap.mesh);}
-    this.sectionCap.update(plane,this.volume,this.affine,new THREE.Vector3(...(microscope?.target??[0,0,0])));
+    this.sectionCap.update(plane,this.volume,this.affine,new THREE.Vector3(...(microscope?.target??[0,0,0])),plane?this.sourceScene?.capInput():null);
   }
   private readonly hostGroupCache=new WeakMap<EngineSurfaceReference,number[][]>();
   /** Region ids of the brain and head-wall groups, read from where each layer's cells sit in the undeformed owner grid. */

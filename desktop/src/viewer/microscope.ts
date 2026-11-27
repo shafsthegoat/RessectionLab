@@ -52,7 +52,26 @@ export function exposureOverviewCamera(view:SurgicalView,fovDeg=34):ViewerCamera
   const reference=Math.abs(outward.z)>.95?new THREE.Vector3(0,1,0):new THREE.Vector3(0,0,1);
   const right=new THREE.Vector3().crossVectors(reference,outward).normalize();
   // Rotate toward the reference so the head below the opening stays in view.
-  const direction=outward.clone().applyAxisAngle(right,-THREE.MathUtils.degToRad(28)).normalize();
+  let direction=outward.clone().applyAxisAngle(right,-THREE.MathUtils.degToRad(28)).normalize();
+  // An inserted instrument's handpiece leaves the opening outward; the camera turns
+  // about the normal away from it so the handpiece does not fill the foreground.
+  const handles=Object.values(view.slots??{}).filter(slot=>slot?.inserted&&slot.quaternion?.length===4)
+    .map(slot=>new THREE.Vector3(0,0,-1).applyQuaternion(new THREE.Quaternion(...slot.quaternion).normalize()));
+  if(handles.length){
+    const clearance=(d:THREE.Vector3)=>Math.min(...handles.map(h=>d.angleTo(h)));
+    const minimum=THREE.MathUtils.degToRad(55);
+    if(clearance(direction)<minimum){
+      let best=direction,score=-Infinity;
+      for(let k=0;k<16;k++)for(const tilt of [28,36,44]){
+        const candidate=direction.clone().applyAxisAngle(outward,k*Math.PI/8);
+        const turned=outward.clone().applyAxisAngle(new THREE.Vector3().crossVectors(outward,candidate).normalize(),THREE.MathUtils.degToRad(tilt));
+        // Prefer clearing the handpiece, then staying near the default view.
+        const value=Math.min(clearance(turned),minimum)*4-turned.angleTo(direction)*.5;
+        if(value>score){score=value;best=turned;}
+      }
+      direction=best.normalize();
+    }
+  }
   const distance=.86*radius/Math.sin(THREE.MathUtils.degToRad(fovDeg/2));
   const up=reference.clone().addScaledVector(direction,-reference.dot(direction)).normalize();
   return {target:centre.toArray() as Point3,position:centre.clone().addScaledVector(direction,distance).toArray() as Point3,up:up.toArray() as Point3};

@@ -8,36 +8,7 @@ const { app, BrowserWindow, dialog, ipcMain, session, Menu, screen } = require('
 const {secondaryWindowOptions,isSecondaryDisplayConnected}=require('./secondary-display.cjs');
 const {surgicalTimeoutMs}=require('./surgical-timeout.cjs');
 const {runFrozenCusa,loadFrozenWorkspace}=require('./frozen-cusa.cjs');
-const {randomUUID,createHash}=require('node:crypto');
-const zlib=require('node:zlib');
-/** The payload bytes of selected .npy members of a NumPy .npz (zip, stored or deflated, zip64 sizes). */
-async function readNpz(file,wanted){
-  const zip=await fs.readFile(file),out=new Map();
-  let end=-1;for(let i=zip.length-22;i>=Math.max(0,zip.length-65557);i--)if(zip.readUInt32LE(i)===0x06054b50){end=i;break;}
-  if(end<0)throw Error('Source-surface asset is not a zip archive');
-  let count=zip.readUInt16LE(end+10),offset=zip.readUInt32LE(end+16);
-  if(offset===0xffffffff||count===0xffff){const locator=end-20;if(zip.readUInt32LE(locator)!==0x07064b50)throw Error('Unsupported zip64 archive');
-    const record=Number(zip.readBigUInt64LE(locator+8));count=Number(zip.readBigUInt64LE(record+32));offset=Number(zip.readBigUInt64LE(record+48));}
-  for(let n=0;n<count;n++){
-    if(zip.readUInt32LE(offset)!==0x02014b50)throw Error('Corrupt source-surface archive');
-    const method=zip.readUInt16LE(offset+10),nameLength=zip.readUInt16LE(offset+28),extraLength=zip.readUInt16LE(offset+30),commentLength=zip.readUInt16LE(offset+32);
-    let compressed=zip.readUInt32LE(offset+20),size=zip.readUInt32LE(offset+24),local=zip.readUInt32LE(offset+42);
-    const name=zip.toString('utf8',offset+46,offset+46+nameLength);
-    for(let e=offset+46+nameLength;e<offset+46+nameLength+extraLength;){const id=zip.readUInt16LE(e),length=zip.readUInt16LE(e+2);
-      if(id===1){let f=e+4;if(size===0xffffffff){size=Number(zip.readBigUInt64LE(f));f+=8;}if(compressed===0xffffffff){compressed=Number(zip.readBigUInt64LE(f));f+=8;}if(local===0xffffffff)local=Number(zip.readBigUInt64LE(f));}
-      e+=4+length;}
-    offset+=46+nameLength+extraLength+commentLength;
-    if(!wanted.has(name))continue;
-    if(zip.readUInt32LE(local)!==0x04034b50)throw Error('Corrupt source-surface archive');
-    const start=local+30+zip.readUInt16LE(local+26)+zip.readUInt16LE(local+28),raw=zip.subarray(start,start+compressed);
-    const npy=method===0?raw:method===8?zlib.inflateRawSync(raw):null;
-    if(!npy||npy.length!==size||npy.toString('latin1',0,6)!=='\x93NUMPY')throw Error('Unsupported source-surface array '+name);
-    const headerLength=npy[6]===1?npy.readUInt16LE(8):npy.readUInt32LE(8),body=(npy[6]===1?10:12)+headerLength;
-    if(/'fortran_order':\s*True/.test(npy.toString('latin1',0,body)))throw Error('Unsupported source-surface array order '+name);
-    out.set(name,new Uint8Array(npy.buffer,npy.byteOffset+body,npy.length-body).slice());
-  }
-  return out;
-}
+const {randomUUID}=require('node:crypto');
 const path = require('node:path');
 const fs = require('node:fs/promises');
 const os = require('node:os');
@@ -500,24 +471,13 @@ function bindOperations() {
   });
   handle('inspectEvidence', args => engine.request('inspectEvidence', plainArgs(args, ['caseHash'])));
   // Read-only display surfaces beside the opened case file; the renderer never names a path.
-  // The engine checks the asset (case, host, grid, every array digest); its transfer
-  // files do not outlive the request, so the arrays are read here from the same file
-  // and each must match the engine's digest.
+  // The engine checks the asset (case, host, grid, every array digest) and keeps its
+  // transfer files until the next case install; the renderer reads each array as a
+  // transfer asset, whose bytes the asset registry checks against the engine's digest.
   handle('operativeSourceSurfaces', async args => {
     args=plainArgs(args, ['caseHash']);
     const casePath=casePaths.get(args.caseHash)??currentCasePath;
-    const result=await engine.request('operativeSourceSurfaces', {caseHash:args.caseHash,...(casePath&&path.isAbsolute(casePath)?{casePath}:{})}, 120000);
-    if(result?.status!=='available')return result;
-    const assetName=String(result.assetName||'');
-    if(!casePath||path.basename(assetName)!==assetName||!assetName.endsWith('.npz'))throw Error('Source-surface asset location is not beside the case');
-    const entries=await readNpz(path.join(path.dirname(casePath),assetName),new Set(Object.keys(result.arrays).map(key=>key+'.npy')));
-    const arrays={};
-    for(const [key,descriptor] of Object.entries(result.arrays)){
-      const bytes=entries.get(key+'.npy'),digest=String(descriptor.sha256).replace(/^sha256:/,'');
-      if(!bytes||bytes.byteLength!==descriptor.byteLength||createHash('sha256').update(bytes).digest('hex')!==digest)throw Error('Source-surface array '+key+' differs from the checked asset');
-      arrays[key]={...descriptor,data:bytes};
-    }
-    return {...result,arrays};
+    return engine.request('operativeSourceSurfaces', {caseHash:args.caseHash,...(casePath&&path.isAbsolute(casePath)?{casePath}:{})}, 120000);
   });
   handle('trainPatient', args => engine.request('trainPatient', plainArgs(args, ['caseHash', 'budgetSeconds', 'seed', 'routeId', 'resumeRunId']), 300000));
   handle('listRuns', args => engine.request('listRuns', plainArgs(args, ['caseHash'])));

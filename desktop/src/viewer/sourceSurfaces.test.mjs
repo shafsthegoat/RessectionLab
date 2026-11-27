@@ -252,3 +252,153 @@ test('small gaps in the assumed dura sheet are closed and its outer edge is left
   assert.equal(filled.triangles.length, kept.length + 12);
   assert.equal(filled.positions.length, positions.length + 3);
 });
+
+test('kerf walls carry their depth for layered cut faces and the scalp wound edge gapes', () => {
+  const {positions, normals, triangles} = sheet();
+  const loop = Float32Array.from([5, 5, 6.4, 17, 5, 6.4, 17, 17, 6.4, 5, 17, 6.4]);
+  const inner = new PlanarLoop(loop, [0, 0, 1]);
+  const value = Float32Array.from({length: positions.length / 3}, (_, v) => inner.query(positions.subarray(3 * v, 3 * v + 3)).distance);
+  const {fixed} = splitSheet(positions, normals, triangles, value, 1.1);
+  const straight = kerfWall(fixed, inner, [0, 0, 1]);
+  for (let v = 0; v < straight.positions.length / 6; v++) {
+    assert.equal(straight.cutDepth[2 * v], 0);
+    assert.ok(Math.abs(straight.cutDepth[2 * v + 1] - 4) < 1e-4 && Math.abs(straight.cutTotal[2 * v] - 4) < 1e-4);
+  }
+  // With a bevel, each bottom vertex steps toward the inner outline (the skin retracts more than the galea).
+  const gaping = kerfWall(fixed, inner, [0, 0, 1], 0, 0.8);
+  let moved = 0;
+  for (let v = 0; v < gaping.positions.length / 6; v++) {
+    const top = gaping.positions.subarray(6 * v, 6 * v + 3), bottom = gaping.positions.subarray(6 * v + 3, 6 * v + 6);
+    const step = Math.hypot(bottom[0] - top[0], bottom[1] - top[1]);
+    assert.ok(step <= 0.8 + 1e-5 && Math.abs(bottom[2] - 6.4) < 1e-4);
+    const before = -inner.query(top).distance, after = -inner.query(bottom).distance;
+    if (step > 0.5) { moved++; assert.ok(after < before - 0.4, `vertex ${v} ${before} ${after}`); }
+  }
+  assert.ok(moved > 0);
+});
+
+test('a thin sheet edge wall drops the membrane thickness down its normal', async () => {
+  const {sheetEdgeWall} = await import('./sourceSurfaceGeometry.ts');
+  const {positions, normals, triangles} = sheet();
+  const value = Float32Array.from({length: positions.length / 3}, (_, v) => positions[3 * v] - 10.3);
+  const {flap} = splitSheet(positions, normals, triangles, value, 0.3);
+  const wall = sheetEdgeWall(flap, 0.6);
+  assert.ok(wall.indices.length > 0);
+  for (let v = 0; v < wall.positions.length / 6; v++) {
+    assert.ok(Math.abs(wall.positions[6 * v + 2] - wall.positions[6 * v + 5] - 0.6) < 1e-5);
+    assert.equal(wall.cutDepth[2 * v], 0);
+    assert.ok(Math.abs(wall.cutTotal[2 * v + 1] - 0.6) < 1e-6);
+  }
+});
+
+test('cut-face layers keep adult proportions and the finishes key their own programs', async () => {
+  const {cutFaceBands, cutFaceFinish, duraSheetFinish, boneSurfaceFinish} = await import('./sourceCutFace.ts');
+  const bone = cutFaceBands('bone', 6);
+  // Outer table about 2 mm, inner table about 1.2 mm, diploe between.
+  assert.ok(bone.outer > 1.5 && bone.outer < 2.3 && 6 - bone.inner > 0.9 && 6 - bone.inner < 1.6 && bone.inner > bone.outer);
+  const thin = cutFaceBands('bone', 2);
+  assert.ok(thin.outer < thin.inner && thin.inner < 2);
+  const scalp = cutFaceBands('scalp', 6);
+  assert.ok(scalp.outer >= 1.5 && scalp.outer <= 2.2 && scalp.inner > 4 && scalp.inner < 6);
+  for (const [install, pattern] of [[(m) => cutFaceFinish(m, 'bone'), /cut-face-bone/], [duraSheetFinish, /dura-sheet/], [boneSurfaceFinish, /bone-surface/]]) {
+    const material = new THREE.MeshStandardMaterial();
+    install(material);
+    install(material);
+    assert.match(material.customProgramCacheKey(), pattern);
+    assert.equal(material.customProgramCacheKey().match(pattern).length, 1);
+    // The shader compiles its replacements into the standard program.
+    const shader = {uniforms: {}, vertexShader: THREE.ShaderLib.standard.vertexShader, fragmentShader: THREE.ShaderLib.standard.fragmentShader};
+    material.onBeforeCompile(shader, null);
+    assert.ok(!shader.fragmentShader.includes('undefined'));
+    assert.equal((shader.vertexShader.match(/attribute vec3 finishRestOffset/g) ?? []).length <= 1, true);
+  }
+});
+
+test('vessels of unknown kind are drawn red-violet, distinct from arteries and veins and not neutral', async () => {
+  const {SOURCE_VESSEL_COLORS} = await import('./operativeSourceScene.ts');
+  const hsl = (hex) => new THREE.Color(hex).getHSL({});
+  const unknown = hsl(SOURCE_VESSEL_COLORS.unknown), artery = hsl(SOURCE_VESSEL_COLORS.artery), vein = hsl(SOURCE_VESSEL_COLORS.vein);
+  assert.ok(unknown.s > 0.25, 'saturated enough to read as a vessel');
+  // Red-violet: hue between magenta and red, away from the artery red and the vein blue.
+  assert.ok(unknown.h > 0.85 && unknown.h < 0.98, `hue ${unknown.h}`);
+  assert.ok(Math.abs(unknown.h - artery.h) > 0.05 && Math.abs(unknown.h - vein.h) > 0.2);
+});
+
+test('the source scene draws the dural cut edge and moves it with the reflected leaf', () => {
+  const dura = sheet(21, 9.4), bone = sheet(21, 11.4);
+  const ras = (p) => voxelToRas(p, affine);
+  const rasNormals = (n) => { const out = new Float32Array(n.length); for (let i = 0; i < n.length; i += 3) for (let a = 0; a < 3; a++) out[i + a] = affine[a][0] * n[i] + affine[a][1] * n[i + 1] + affine[a][2] * n[i + 2]; return out; };
+  const cellOf = (p) => Int32Array.from({length: p.length / 3}, (_, v) => id(...[0, 1, 2].map((a) => Math.round(p[3 * v + a]))));
+  const edge = Float32Array.from({length: dura.positions.length / 3}, (_, v) => dura.positions[3 * v] - 10.3);
+  const surfaces = new Map([
+    ['dura', {name: 'dura', layers: ['Dura (assumed)'], body: 'dura', origin: 'assumed', positions: ras(dura.positions), normals: rasNormals(dura.normals), triangles: dura.triangles,
+      cells: cellOf(dura.positions), ownerCells: cellOf(dura.positions), bodyCode: Uint8Array.from(edge, (e) => (e > 0 ? 3 : 0)), bodyEdgeMm: edge}],
+    ['skullOuter', {name: 'skullOuter', layers: ['Skull cortical bone'], body: 'bone', origin: 'estimated', positions: ras(bone.positions), normals: rasNormals(bone.normals), triangles: bone.triangles,
+      cells: cellOf(bone.positions), ownerCells: cellOf(bone.positions), bodyCode: new Uint8Array(bone.positions.length / 3), bodyEdgeMm: new Float32Array(bone.positions.length / 3).fill(-50)}],
+  ]);
+  const asset = {caseHash: 'h', assetName: 'a.npz', grid: {shape, affine}, surfaces, outlines: {}, vessels: null, tracts: [], duraThicknessMm: 0.7, loadMs: 0};
+  const layers = [{name: 'Dura (assumed)', displayKind: 'dura'}, {name: 'Skull cortical bone', displayKind: 'skull'}];
+  const scene = new OperativeSourceScene(asset, layers, [0, 0, 1], () => new THREE.MeshStandardMaterial());
+  assert.ok(scene.group.getObjectByName('source-surface:skullOuter').material.userData.boneSurface);
+  assert.ok(scene.group.getObjectByName('source-surface:dura').material.userData.duraSheet);
+  const cells = [];
+  for (let x = 11; x < 21; x++) for (let y = 1; y < 22; y++) cells.push(id(x, y, 9));
+  const rest = cells.map((cell) => sourceCenter(cell, shape, affine));
+  const body = (centersMm) => ({cells, centersMm, cutCells: [], seamEdges: [], cutCount: 1, edgeCount: 1});
+  const lift = rest.map((p) => [p[0], p[1], p[2] + 4]);
+  const view = (centersMm) => ({scene: {shape, affine, regions: []}, removed: [],
+    operativeExposureV1: {bodies: {scalp: body(rest), bone: body(rest), dura: body(centersMm)}}});
+  scene.update(view(lift));
+  scene.appearance(() => true, () => {}, false, []);
+  const flapEdge = scene.group.getObjectByName('source-kerf-wall:dura:flap'), fixedEdge = scene.group.getObjectByName('source-kerf-wall:dura:fixed');
+  assert.ok(flapEdge?.visible && fixedEdge?.visible);
+  assert.equal(flapEdge.material.userData.cutFace, 'dura');
+  const total = fixedEdge.geometry.getAttribute('cutTotal').array;
+  assert.ok(Math.abs(total[0] - 0.7) < 1e-5, 'the asset thickness is drawn');
+  // The flap's edge rides 4 mm up with the reflected leaf.
+  const z = flapEdge.geometry.getAttribute('position').array;
+  for (let v = 0; v < z.length / 3; v += 2) assert.ok(Math.abs(z[3 * v + 2] - 13.4 - 0.2) < 1e-3, `edge vertex ${v} at ${z[3 * v + 2]}`);
+  scene.dispose();
+});
+
+test('the whole-head skin outside the working grid is split off as static context', async () => {
+  const {splitOutsideGrid} = await import('./operativeSourceScene.ts');
+  const {positions, normals, triangles} = sheet(5);
+  // The first two rows of vertices lie outside the grid.
+  const cells = Int32Array.from({length: positions.length / 3}, (_, v) => (Math.floor(v / 5) < 2 ? -1 : v));
+  const surface = {name: 'skin', layers: [], body: 'scalp', origin: 'acquired', positions, normals, triangles, cells, ownerCells: cells};
+  const {inside, outside} = splitOutsideGrid(surface);
+  assert.equal(inside.positions, positions, 'per-vertex bindings still index the same vertices');
+  assert.equal(inside.triangles.length + outside.triangles.length, triangles.length);
+  for (let i = 0; i < inside.triangles.length; i += 3) assert.ok([0, 1, 2].some((k) => cells[inside.triangles[i + k]] >= 0));
+  assert.equal(outside.positions.length / 3, 10);
+  assert.ok(Math.max(...outside.triangles) < 10);
+  assert.equal(splitOutsideGrid({...surface, cells: Int32Array.from(cells, (c, v) => v)}).outside, null);
+});
+
+test('a dural leaf folds by the engine bend profile, joined at its hinge and turned fully beyond the bend', async () => {
+  const {hingeFoldProfile, foldVertices, foldAngle} = await import('./sourceSurfaceGeometry.ts');
+  // Engine cells of a one-cell sheet at z = 0, hinge along y at x = 0, turned up toward +z:
+  // 0 at the hinge, ramping to 1.4 rad over 4 mm, then rigid.
+  const turn = (d) => 1.4 * Math.min(1, d / 4);
+  const rest = [], current = [];
+  for (let x = 0.5; x < 20; x += 1) for (let y = -5; y <= 5; y += 1) {
+    const a = turn(x);
+    rest.push({x, y, z: 0});
+    current.push({x: x * Math.cos(a), y, z: x * Math.sin(a)});
+  }
+  const fold = hingeFoldProfile(rest, current, [0, 0, 0], [0, 1, 0], [0, 0, 1]);
+  assert.ok(fold && fold.perp[0] > 0.99);
+  assert.equal(foldAngle(fold, -2), 0);
+  assert.ok(Math.abs(Math.abs(foldAngle(fold, 15)) - 1.4) < 1e-6);
+  assert.ok(Math.abs(Math.abs(foldAngle(fold, 2)) - 0.7) < 0.12);
+  const identity = [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]];
+  const vertices = Float32Array.from([-1, 0, 0, 0, 2, 0, 12, 0, 0]), normals = Float32Array.from([0, 0, 1, 0, 0, 1, 0, 0, 1]);
+  const out = new Float32Array(9), outNormals = new Float32Array(9);
+  foldVertices(fold, vertices, normals, identity, out, outNormals);
+  // Behind the hinge nothing moves; far out the leaf is turned 1.4 rad up, like the engine cells.
+  assert.deepEqual([...out.subarray(0, 6)], [-1, 0, 0, 0, 2, 0]);
+  assert.ok(Math.abs(out[6] - 12 * Math.cos(1.4)) < 1e-4 && Math.abs(out[8] - 12 * Math.sin(1.4)) < 1e-4);
+  // Its inner (formerly brain-facing) side now faces back over the hinge.
+  assert.ok(outNormals[6] < -0.9);
+});

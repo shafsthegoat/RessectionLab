@@ -10,6 +10,7 @@ import {EngineOperatedSection} from './EngineOperatedSection';
 import {OperativeSourceLocator} from './OperativeSourceLocator';
 import {OperativeDepthSection} from './OperativeDepthSection';
 import {OperativeLegend} from './OperativeLegend';
+import {SOURCE_VESSEL_COLORS} from './operativeSourceScene';
 import {planningSliceSegments,planningSphereSliceRadius,planningSliceMemberships} from '../interactive-planning-data';
 import {surgicalEffectMarkers,clipSurgicalMarkersToSlab,surgicalMarkerRadiusPx} from './surgicalGeometry';
 import {modeledSourceIdentity,modeledAnatomy} from './modeledAnatomy';
@@ -489,7 +490,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   const sourceNote=!sourceCaseHash||!sourceSurfaces?null:sourceSurfaces.status==='loading'?'Loading source surfaces':
     sourceSurfaces.status==='unavailable'?`Source surfaces unavailable (${sourceSurfaces.reason}) · drawn from 1 mm engine cells`:
     sourceRefusal?`Source surfaces unavailable (${sourceRefusal}) · drawn from 1 mm engine cells`:
-    `Source surfaces${sourceSurfaces.asset.vessels?' · unknown-kind vessels neutral':''}`;
+    `Source surfaces${sourceSurfaces.asset.vessels?' · UNKNOWN-kind vessels violet':''}`;
   useEffect(()=>{engine.current?.setNavigationMode(navigationMode);},[ready,graphicsGeneration,caseData,navigationMode]);
   useEffect(()=>{engine.current?.setSurfaceSmoothing(smoothSurfaces);},[ready,graphicsGeneration,caseData,smoothSurfaces]);
   useEffect(()=>{engine.current?.setVolumeRendering(settings.volumeRendering,signalName);},[ready,graphicsGeneration,caseData,settings.volumeRendering,signalName]);
@@ -1119,7 +1120,8 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
           </div>}
           {surgicalView&&!fieldPresentation&&<OperativeLegend scene={surgicalView.scene} settings={settings} cursor={currentCursor} collapsible={settings.operativeView==='surgeon'}
             visible={visibleLayers} picked={pickedLayer?.sceneId===surgicalView.scene.sceneId?pickedLayer.name:null}
-            onPick={inspectRegion} onSmooth={setSmoothSurfaces} sourceVolumeBoundary={sourceVolumeBoundary||acquiredBrainSection||undefined}/>}
+            onPick={inspectRegion} onSmooth={setSmoothSurfaces} sourceVolumeBoundary={sourceVolumeBoundary||acquiredBrainSection||undefined}
+            unknownVesselColor={sourceSurfaces?.status==='available'&&sourceSurfaces.asset.vessels&&!sourceRefusal?SOURCE_VESSEL_COLORS.unknown:undefined}/>}
           {!fieldPresentation&&settings.operativeView==='surgeon'&&settings.microscope&&geometrySource&&geometry&&surgicalView&&
             (!displayedSurgical?.preview||displayedSurgical.recordedFrame)&&
             <OperativeSourceLocator source={geometrySource} bounds={geometry.bounds} inverse={geometry.inverse}

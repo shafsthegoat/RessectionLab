@@ -29,15 +29,16 @@ test('the craniotomy outline follows the bone flap rim and lies on the skin',()=
   assert.equal(craniotomyOutline(flap.slice(0,3),owner,shape,identity,[0,0,1]),undefined);
 });
 
-test('a parked tool is hidden in the microscope, faint outside it and restored when inserted',()=>{
+test('a parked tool is hidden in the microscope and the external views and shown again when inserted',()=>{
   const material=new THREE.MeshStandardMaterial({opacity:1});
   const group=new THREE.Group();group.add(new THREE.Mesh(new THREE.BoxGeometry(),material));
   presentParkedTool(group,true,true);
   assert.equal(group.visible,false);
+  // Parked tools stay out of the external views too (the overview frame), materials untouched.
   presentParkedTool(group,true,false);
-  assert.equal(group.visible,true);assert(material.transparent&&material.opacity<.2);
+  assert.equal(group.visible,false);assert.equal(material.opacity,1);
   presentParkedTool(group,false,false);
-  assert.equal(material.opacity,1);assert.equal(material.transparent,false);assert.equal(material.depthWrite,true);
+  assert.equal(group.visible,true);assert.equal(material.opacity,1);assert.equal(material.transparent,false);assert.equal(material.depthWrite,true);
 });
 
 test('crop-section shading is installed once and keys its own program',()=>{

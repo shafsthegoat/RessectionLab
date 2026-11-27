@@ -42,34 +42,11 @@ export function installCropSection(material: THREE.Material, shape: Shape3) {
 }
 
 /** A parked (not inserted) instrument stays in the scene for collision and
- * replay but must not dominate a view of the head: hidden from the microscope
- * field and drawn faint in external views. Inserted tools are unchanged. */
-export function presentParkedTool(group: THREE.Object3D, parked: boolean, surgeon: boolean) {
-  group.visible = !(parked && surgeon);
-  group.traverse((object) => {
-    const mesh = object as THREE.Mesh;
-    if (!mesh.isMesh) return;
-    const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
-    for (const material of materials) {
-      const saved = material.userData.parkedRestore as {opacity: number; transparent: boolean; depthWrite: boolean} | undefined;
-      if (parked) {
-        if (!saved) material.userData.parkedRestore = {opacity: material.opacity, transparent: material.transparent, depthWrite: material.depthWrite};
-        const restore = material.userData.parkedRestore;
-        material.opacity = restore.opacity * 0.07;
-        if (!material.transparent) {
-          material.transparent = true;
-          material.needsUpdate = true;
-        }
-      } else if (saved) {
-        material.opacity = saved.opacity;
-        if (material.transparent !== saved.transparent) {
-          material.transparent = saved.transparent;
-          material.needsUpdate = true;
-        }
-        delete material.userData.parkedRestore;
-      }
-    }
-  });
+ * replay but is not drawn over the head: hidden from the microscope field and
+ * from the external views (a faint ghost handpiece in the overview read as a
+ * real instrument). Inserted tools are unchanged. `_surgeon` is kept for callers. */
+export function presentParkedTool(group: THREE.Object3D, parked: boolean, _surgeon?: boolean) {
+  group.visible = !parked;
 }
 
 /** The planned bone flap outline carried out to the skin along the exterior

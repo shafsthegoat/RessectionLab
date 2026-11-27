@@ -106,6 +106,17 @@ test('the external overview looks along the declared exterior normal and fits th
   const radius=Math.hypot(50,50,40);
   assert(length*Math.sin(17*Math.PI/180)>=.85*radius);
   assert.equal(exposureOverviewCamera({scene:view.scene,operativeExposureV1:{}}),undefined);
+  // An inserted handpiece leaving the opening toward the default eye: the camera turns away from it.
+  const outward=[-.6,0,.8],eye=d.map(v=>v/length);
+  // The tool's handle is its local -z; a quaternion taking -z onto the default eye direction.
+  const handle=new THREE.Vector3(...eye),q=new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0,0,-1),handle);
+  const turned=exposureOverviewCamera({...view,slots:{right:{inserted:true,quaternion:q.toArray()}}});
+  const t=turned.position.map((v,i)=>v-turned.target[i]),tl=Math.hypot(...t);
+  assert(Math.acos(t.reduce((s,v,i)=>s+v*eye[i],0)/tl)>50*Math.PI/180);
+  // Still looking at the opening from outside it.
+  assert(t.reduce((s,v,i)=>s+v*outward[i],0)>.6*tl);
+  // A parked (not inserted) tool does not move the overview.
+  assert.deepEqual(exposureOverviewCamera({...view,slots:{right:{inserted:false,quaternion:q.toArray()}}}),camera);
 });
 
 test('removal carving lists accepted cells and displaced operative bodies only',async()=>{

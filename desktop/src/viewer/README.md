@@ -121,9 +121,9 @@ When the opened host-rehearsal case has an `operative-source-surfaces.npz`
 beside its file (built by `scripts/build_operative_source_surfaces.py` for that
 exact case version), Rehearse reads it through the read-only
 `operativeSourceSurfaces` operation (`../operative-source-surfaces.ts`; the
-engine checks case, host, grid and every array digest, and the main process
-reads the arrays from that same file and matches each to the engine's digest,
-because the engine's transfer files do not outlive the request) and
+engine checks case, host, grid and every array digest and keeps the arrays'
+transfer files until the next case install, and the renderer reads each as a
+transfer asset whose bytes the main process checks against that digest) and
 draws skin, outer and inner skull, dura, cortex, white matter, tumour, vessel
 tube walls and tract streamlines from it instead of the voxel meshes of those
 layers (`operativeSourceScene.ts`). The meshes stay in source-voxel
@@ -135,13 +135,23 @@ count and pick:
   move with that body's engine cells by the per-cell rigid transforms of the
   voxel flap (`ExposureBodyTransport`, tent-weighted over the eight
   surrounding body cells, else the nearest within 4 cells). Once a body has
-  moved, its sheet is split along the outline with a kerf of 0.9 mm (scalp),
-  2 mm (bone) or 0.6 mm (dura); vertices near the outline's hinge points are
-  not split, so a hinged flap stays joined to its base. Scalp and bone cut
-  faces are closed by a smooth wall from the outer surface's cut edge straight
-  down the exterior normal to the inner outline (cut-scalp and diploe tones);
-  the scalp flap's underside is the outer table under its outline, carried
-  with it. Before a body moves, its outline shows the planned incision or
+  moved, its sheet is split along the outline with a kerf of 2.2 mm (scalp:
+  the wound edge's retraction), 2 mm (bone) or 0.6 mm (dura); vertices near
+  the outline's hinge points are not split, so a hinged flap stays joined to
+  its base. Scalp and bone cut faces are closed by a smooth wall from the
+  outer surface's cut edge straight down the exterior normal to the inner
+  outline; the fixed scalp edge slopes 0.8 mm (skin retracts more than galea).
+  Each wall carries its depth below the cut (`cutDepth`, `cutTotal`) and
+  `sourceCutFace.ts` draws its layers from it: on bone two pale cortical
+  bands (outer table about a third, inner about a fifth of the measured
+  thickness) round a red-brown cancellous diploe; on scalp epidermis, dermis,
+  lobulated fat, a white galea and pericranium. These are illustrative
+  proportions, not segmented layers. The dura's cut edge is a 0.6 mm wall
+  (the asset's assumed thickness) down its normal. Bone surfaces carry a
+  subtle mottling and foramina in rest coordinates (the parked flap keeps
+  them); the dura is pale with a fine grain and its back face (the inner
+  surface of a reflected leaf) paler still. The scalp flap's underside is the
+  outer table under its outline, carried with it in a galeal tone. Before a body moves, its outline shows the planned incision or
   craniotomy (violet) and, as the engine reports seam edges, the cut part in a
   dark seam line. Per-cell bone dust is not drawn over the kerf wall.
 - Removed brain, tumour and vessel cells, plus CUSA's pending fraction, form a
@@ -157,12 +167,20 @@ count and pick:
   in removed tissue fall through to the next surface.
 - Wound markers sit on the nearest tube centreline point, and the tip
   proximity readout measures to the tube walls and streamlines of the asset.
-  Vessels of unknown kind (most of the vessel model) are drawn in a neutral
-  colour, which the field readout states.
+  Vessels of unknown kind (most of the vessel model) keep the kind UNKNOWN in
+  the legend (**Vessel · kind UNKNOWN**) and the field readout but are drawn in
+  a muted red-violet, distinct from classified arteries (red) and veins
+  (blue), so the cortical vessels read as vessels.
 
-The assumed dura sheet (the inner table where the engine's dura lies within
-3 mm) is drawn 0.8 mm outward and its gaps under 40 mm in perimeter are
-closed for display. Tract streamlines show only with source-label colours or
+The assumed dura is one continuous sheet (the near inner table within 12 mm
+of the bone and dural flap footprints, interior holes closed, outer face
+0.1 mm inside the table, 0.6 mm thick, all declared in the asset); its flap is
+split by the dura body's footprint outline and folds with the engine's per-cell
+transforms like the scalp flap. It is drawn 0.2 mm outward to clear the
+cortical vessels on the pia; any gap under 40 mm in perimeter (older assets)
+is closed for display. The skin covers the whole head the T1 shows, so the
+external overview is a complete head; only vertices inside the working grid
+are bound to engine cells. Tract streamlines show only with source-label colours or
 inspection transparency; the large static sheets (skin, skull, white matter)
 cast no shadow under the near-coaxial lamp, which keeps the settled
 microscope frame near 30 ms at 1440 × 900.
@@ -179,7 +197,14 @@ The working grid's crop faces are drawn in one neutral section colour. The
 planned bone flap outline is marked on the intact skin in violet until the
 scalp is incised. **Head axes** above the body guide show R, A and S of the
 scene frame as the camera sees them. Parked (not inserted) instruments are
-hidden in the microscope and drawn faint outside it. **Inspection cutaway**
+hidden in the microscope and in the external views; **External scalp
+overview** turns about the exterior normal away from an inserted handpiece so
+it does not fill the foreground. With source surfaces, **Inspection cutaway**
+caps the cut from the smooth surfaces (`sourceSectionCap.ts`): columns run
+from outside inward, each surface crossing enters or leaves its tissue, each
+point is filled with the scan intensity lightly tinted by its tissue and the
+cut surfaces are drawn as boundary lines; opened flap footprints and the
+cavity stay open. Without them it
 caps the cut plane with the layer owning each point, shaded by the scan
 intensity, and adds a longitudinal section along the microscope axis with the
 layers met from the skin listed by depth; unlabelled space (CSF is not

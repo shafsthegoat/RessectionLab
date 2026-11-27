@@ -23,23 +23,34 @@ import type {Affine, Point3, Shape3} from './coordinates';
 import {ExposureBodyTransport} from './exposureBodySurface.ts';
 import {bodyIsDisplaced, sourceCenter} from './exposureAnatomy.ts';
 import {placeInSourceFrame} from './sceneGeometry.ts';
+import {inverseAffine as inverseAffineOf} from './coordinates.ts';
 import {tractColor} from './tractDisplay.ts';
-import {bindToBody, directionToVoxel, fillSmallHoles, kerfWall, normalsToVoxel, PlanarLoop, partAttribute, rasToVoxel, splitSheet, transportVertices, voxelToRas,
-  type BodyBinding, type MeshPart} from './sourceSurfaceGeometry.ts';
+import {bindToBody, directionToVoxel, fillSmallHoles, foldVertices, hingeFoldProfile, kerfWall, normalsToVoxel, PlanarLoop, partAttribute, rasToVoxel, sheetEdgeWall, splitSheet, transportVertices, voxelToRas,
+  type BodyBinding, type HingeFold, type MeshPart} from './sourceSurfaceGeometry.ts';
+import {boneSurfaceFinish, cutFaceFinish, duraSheetFinish, type CutFaceKind} from './sourceCutFace.ts';
 import {cavityField, cavitySurface, removalOccupancy, sampleCavity, CAVITY_LEVEL, type CavityField} from './sourceCavityField.ts';
+import type {SourceCapInput} from './sectionCap.ts';
+import {CAP_SURFACES, type CapRegion, type CapSurfaceName} from './sourceSectionCap.ts';
 
 export type SourceRole = 'surface' | 'vessel' | 'cavity' | 'wall' | 'underside';
 export type SourceMaterialFactory = (layer: string, kind: string, role: SourceRole) => THREE.MeshStandardMaterial;
 
-/** Vessel colours by the asset's segment kind; unknown kind stays neutral. */
-export const SOURCE_VESSEL_COLORS = {artery: '#b33a2e', vein: '#3f4f86', unknown: '#9b8580'} as const;
-/** Kerf half-widths (mm) on each side of a body outline once the body has moved. */
-export const KERF_HALF_MM: Record<SourceBodyName, number> = {scalp: 0.45, bone: 1.0, dura: 0.3};
+/** Vessel colours by the asset's segment kind. A tube the asset could not classify
+ * keeps the label UNKNOWN but is drawn in a muted red-violet, distinct from
+ * classified arteries (red) and veins (blue), so the cortical vessels stay visible. */
+export const SOURCE_VESSEL_COLORS = {artery: '#b33a2e', vein: '#3f4f86', unknown: '#8a4560'} as const;
+/** Kerf half-widths (mm) on each side of a body outline once the body has moved.
+ * The scalp's is the wound edge's retraction: skin tension opens an incision. */
+export const KERF_HALF_MM: Record<SourceBodyName, number> = {scalp: 1.1, bone: 1.0, dura: 0.3};
+/** The fixed scalp edge slopes: its skin retracts this much more than its galea (mm). */
+export const SCALP_GAPE_BEVEL_MM = 0.8;
+/** Assumed dural membrane thickness drawn on its cut edge (mm), when the asset gives none. */
+export const DURA_THICKNESS_MM = 0.6;
 const SEAM_COLORS: Record<SourceBodyName, string> = {scalp: '#5d2420', bone: '#5e5040', dura: '#6e3a36'};
 const PLANNED_COLOR = '#4b2f78';
 const STATIC_SHADOWLESS = new Set(['white', 'skullInner', 'skin', 'skullOuter']);
-/** Display-only outward offset of the assumed dura sheet (mm). */
-export const DURA_DISPLAY_LIFT_MM = 0.8;
+/** Display-only outward offset of the assumed dura sheet (mm): clears the cortical vessels lying on the pia. */
+export const DURA_DISPLAY_LIFT_MM = 0.2;
 
 type Piece = {mesh: THREE.Mesh; layer: string; kind: string; cells: Int32Array; group: 'brain' | 'vessel' | 'head'};
 type Flap = {
@@ -48,7 +59,7 @@ type Flap = {
 };
 type BodyDisplay = {
   intact: Piece[]; fixed: Piece[]; flaps: Flap[]; built: boolean;
-  transport?: ExposureBodyTransport; members?: string; displaced: boolean;
+  transport?: ExposureBodyTransport; members?: string; displaced: boolean; fold?: HingeFold;
   lines: THREE.Group; lineKey?: string;
 };
 
@@ -190,6 +201,41 @@ export function closeDuraGaps(surface: SourceSurface): SourceSurface {
     bodyEdgeMm: extend(surface.bodyEdgeMm, (loop) => loop.reduce((sum, v) => sum + surface.bodyEdgeMm![v], 0) / loop.length)};
 }
 
+/** A surface's triangles with every vertex outside the working grid (`cells` −1), compacted, and the
+ * surface without them (vertex arrays unchanged, so every per-vertex binding still indexes them). */
+export function splitOutsideGrid(surface: SourceSurface) {
+  const t = surface.triangles, kept: number[] = [], out: number[] = [];
+  for (let i = 0; i < t.length; i += 3) {
+    const outside = surface.cells[t[i]] < 0 && surface.cells[t[i + 1]] < 0 && surface.cells[t[i + 2]] < 0;
+    (outside ? out : kept).push(t[i], t[i + 1], t[i + 2]);
+  }
+  if (!out.length) return {inside: surface, outside: null};
+  const map = new Map<number, number>(), positions: number[] = [], normals: number[] = [];
+  const triangles = Uint32Array.from(out, (v) => {
+    let index = map.get(v);
+    if (index === undefined) {
+      map.set(v, (index = map.size));
+      positions.push(surface.positions[3 * v], surface.positions[3 * v + 1], surface.positions[3 * v + 2]);
+      normals.push(surface.normals[3 * v], surface.normals[3 * v + 1], surface.normals[3 * v + 2]);
+    }
+    return index;
+  });
+  return {inside: {...surface, triangles: Uint32Array.from(kept)},
+    outside: {positions: Float32Array.from(positions), normals: Float32Array.from(normals), triangles}};
+}
+
+/** Triangles grouped by the `size` mm cube their centroid falls in. */
+export function tileTriangles(positions: Float32Array, triangles: Uint32Array, size: number) {
+  const tiles = new Map<string, number[]>();
+  for (let t = 0; t < triangles.length; t += 3) {
+    const key = [0, 1, 2].map((a) => Math.floor((positions[3 * triangles[t] + a] + positions[3 * triangles[t + 1] + a] + positions[3 * triangles[t + 2] + a]) / (3 * size))).join(',');
+    let list = tiles.get(key);
+    if (!list) tiles.set(key, (list = []));
+    list.push(triangles[t], triangles[t + 1], triangles[t + 2]);
+  }
+  return [...tiles.values()].map((list) => Uint32Array.from(list));
+}
+
 export class OperativeSourceScene {
   readonly group = new THREE.Group();
   readonly cavity = new CavityClip();
@@ -213,6 +259,8 @@ export class OperativeSourceScene {
   private regionName = new Map<number, string>();
   readonly timings: Record<string, number> = {};
   readonly vesselSummary: {unknownMm: number; arteryMm: number; veinMm: number};
+  /** Thickness of the assumed dural membrane drawn on its cut edge (the asset's, else the default). */
+  private readonly duraThicknessMm: number;
 
   private readonly material: SourceMaterialFactory;
   constructor(asset: OperativeSourceAsset, layers: ReadonlyArray<{name: string; kind?: string; displayKind?: string}>, outwardRas: Point3,
@@ -225,6 +273,7 @@ export class OperativeSourceScene {
     this.group.name = 'operative-source-surfaces';
     this.outwardRas = new THREE.Vector3(...outwardRas).normalize();
     this.outwardVoxel = directionToVoxel(outwardRas, this.affine);
+    this.duraThicknessMm = asset.duraThicknessMm ?? DURA_THICKNESS_MM;
     const byName = new Map(layers.map((l) => [l.name, l]));
     const kindOf = (name: string, fallback: string) => byName.get(name)?.displayKind ?? byName.get(name)?.kind ?? fallback;
     const layerFor = (surface: SourceSurface) => surface.layers.find((name) => byName.has(name)) ?? surface.layers[0] ?? surface.name;
@@ -235,7 +284,17 @@ export class OperativeSourceScene {
     // Head layers the skin and skull replace (soft tissue between scalp and bone).
     const extracranial = layers.filter((l) => ['galea', 'extracranial', 'tissue'].includes(l.displayKind ?? ''));
     if (asset.surfaces.has('skin') && asset.surfaces.has('skullOuter')) for (const l of extracranial) this.replaced.add(l.name);
-    for (const raw of asset.surfaces.values()) this.surfaces.set(raw.name, raw.name === 'dura' ? closeDuraGaps(raw) : raw);
+    let skinContext: {positions: Float32Array; normals: Float32Array; triangles: Uint32Array} | null = null;
+    for (const raw of asset.surfaces.values()) {
+      let surface = raw.name === 'dura' ? closeDuraGaps(raw) : raw;
+      // The whole-head skin: the part wholly outside the working grid is static context (the overview's
+      // complete head), drawn as its own mesh so the microscope culls it and a flap split never visits it.
+      if (surface.name === 'skin') {
+        const parts = splitOutsideGrid(surface);
+        if (parts.outside) { surface = parts.inside; skinContext = parts.outside; }
+      }
+      this.surfaces.set(raw.name, surface);
+    }
     for (const surface of this.surfaces.values()) {
       // The assumed dura sheet is coarser than the cortex, whose crowns would show through it: draw it a little outward.
       const lift = surface.name === 'dura' ? DURA_DISPLAY_LIFT_MM : 0;
@@ -251,6 +310,23 @@ export class OperativeSourceScene {
       if (surface.body) {
         const display = this.bodyDisplay(surface.body);
         display.intact.push(piece);
+      }
+      if (surface.name === 'skin' && skinContext) {
+        // In 60 mm tiles, so a microscope field culls the far head.
+        const voxelPositions = rasToVoxel(skinContext.positions, this.affine), voxelNormals = normalsToVoxel(skinContext.normals, this.affine);
+        for (const tile of tileTriangles(skinContext.positions, skinContext.triangles, 60)) {
+          // Compact each tile so its bounds (and buffers) are its own.
+          const map = new Map<number, number>(), p: number[] = [], q: number[] = [];
+          const indices = Uint32Array.from(tile, (v) => {
+            let i = map.get(v);
+            if (i === undefined) { map.set(v, (i = map.size)); p.push(voxelPositions[3 * v], voxelPositions[3 * v + 1], voxelPositions[3 * v + 2]); q.push(voxelNormals[3 * v], voxelNormals[3 * v + 1], voxelNormals[3 * v + 2]); }
+            return i;
+          });
+          const context = this.piece(geometryOf(Float32Array.from(p), Float32Array.from(q), indices), layer, kind, 'surface', new Int32Array(map.size).fill(-1), 'head');
+          context.mesh.name = 'source-surface:skin-context';
+          context.mesh.castShadow = false;
+          context.mesh.receiveShadow = false;
+        }
       }
     }
     const v = asset.vessels;
@@ -302,6 +378,8 @@ export class OperativeSourceScene {
       if (attribute.count < count || top >= attribute.count) console.error(`source surface ${layer}/${kind}/${role}: attribute ${name} has ${attribute.count} of ${count} vertices, index reaches ${top}`);
     const material = this.material(layer, kind, role);
     if (group !== 'head' || role === 'cavity') this.cavity.install(material);
+    if (role === 'surface' && kind === 'skull') boneSurfaceFinish(material);
+    if (role === 'surface' && kind === 'dura') duraSheetFinish(material);
     const mesh = new THREE.Mesh(geometry, material);
     placeInSourceFrame(mesh, this.affine);
     mesh.castShadow = true;
@@ -359,21 +437,26 @@ export class OperativeSourceScene {
       const flapPiece = this.flapPiece(flap, partAttribute(flap, edge), intact.layer, intact.kind, 'surface', cellsOfPart(flap, surface.ownerCells.map((c, i) => (c >= 0 ? c : surface.cells[i])) as Int32Array), body, view, (i) => flap.source[i] < 0 || edge[flap.source[i]] > 0);
       flapPiece.piece.mesh.name = `source-flap:${surface.name}`;
       display.flaps.push(flapPiece);
-      // Cut faces: a smooth wall from the outer surface's cut edge down to the inner outline.
-      const outerSurface = name === 'scalp' ? surface.name === 'skin' : name === 'bone' ? surface.name === 'skullOuter' : false;
-      if (outerSurface && innerLoop) {
-        const wallLayer = name === 'bone' ? (this.layerOfKind('diploe') ?? intact.layer) : (this.layerOfKind('galea') ?? intact.layer);
-        const wallKind = name === 'bone' ? 'diploe' : 'extracranial'; // the cut scalp shows dermis and fat, not galea
+      // Cut faces: a smooth wall from the outer surface's cut edge down to the inner outline
+      // (scalp and bone), or the membrane's own thickness (dura), drawn with its tissue layers.
+      const outerSurface = name === 'scalp' ? surface.name === 'skin' : name === 'bone' ? surface.name === 'skullOuter' : name === 'dura';
+      if (outerSurface && (innerLoop || name === 'dura')) {
+        const wallLayer = name === 'bone' ? (this.layerOfKind('diploe') ?? intact.layer) : name === 'dura' ? intact.layer : (this.layerOfKind('galea') ?? intact.layer);
+        const wallKind = name === 'bone' ? 'diploe' : name === 'dura' ? 'dura' : 'extracranial'; // the cut scalp shows dermis and fat, not galea
+        const faceKind: CutFaceKind = name === 'bone' ? 'bone' : name === 'dura' ? 'dura' : 'scalp';
+        const spacing = Math.hypot(this.affine[0][0], this.affine[1][0], this.affine[2][0]) || 1;
         for (const [part, side] of [[fixed, 'fixed'], [flap, 'flap']] as const) {
           if (!part.cutEdges.length) continue;
-          const wall = kerfWall(part, innerLoop, this.outwardVoxel);
+          const wall = name === 'dura' ? sheetEdgeWall(part, this.duraThicknessMm / spacing)
+            : kerfWall(part, innerLoop!, this.outwardVoxel, 0, name === 'scalp' && side === 'fixed' ? SCALP_GAPE_BEVEL_MM / spacing : 0);
           const geometry = new THREE.BufferGeometry();
           geometry.setAttribute('position', new THREE.BufferAttribute(wall.positions, 3));
           geometry.setIndex(new THREE.BufferAttribute(wall.indices, 1));
           geometry.computeVertexNormals();
           const normalsWall = geometry.getAttribute('normal').array as Float32Array;
+          let piece: Piece;
           if (side === 'fixed') {
-            const piece = this.piece(geometryOf(wall.positions, normalsWall, wall.indices), wallLayer, wallKind, 'wall', voxelCells(wall.positions, this.shape), 'head');
+            piece = this.piece(geometryOf(wall.positions, normalsWall, wall.indices), wallLayer, wallKind, 'wall', voxelCells(wall.positions, this.shape), 'head');
             piece.mesh.name = `source-kerf-wall:${name}:fixed`;
             display.fixed.push(piece);
           } else {
@@ -382,7 +465,12 @@ export class OperativeSourceScene {
             const flapWall = this.flapPiece(wallPart, null, wallLayer, wallKind, 'wall', voxelCells(wall.positions, this.shape), body, view, () => true);
             flapWall.piece.mesh.name = `source-kerf-wall:${name}:flap`;
             display.flaps.push(flapWall);
+            piece = flapWall.piece;
           }
+          const target = piece.mesh.geometry;
+          target.setAttribute('cutDepth', new THREE.BufferAttribute(wall.cutDepth.map((v) => v * spacing), 1));
+          target.setAttribute('cutTotal', new THREE.BufferAttribute(wall.cutTotal.map((v) => v * spacing), 1));
+          cutFaceFinish(piece.mesh.material as THREE.MeshStandardMaterial, faceKind);
           geometry.dispose();
         }
       }
@@ -470,7 +558,12 @@ export class OperativeSourceScene {
       const members = body.cells.join(',');
       if (display.members !== members) { display.transport = new ExposureBodyTransport(body, view.scene); display.members = members; }
       const changed = display.transport!.update(body.centersMm);
-      if (displaced) for (const flap of display.flaps) this.moveFlap(flap, display.transport!, changed, removed, body);
+      // The dural leaf folds about the engine's hinge by the bend the engine gave its cells (a sheet
+      // one cell thick: per-cell frames tear it at the hinge); other bodies follow their cells.
+      const fold = name === 'dura' && changed && body.hingeAxis && body.hingeOriginMm
+        ? hingeFoldProfile(display.transport!.rest, display.transport!.current, body.hingeOriginMm, body.hingeAxis, this.outwardRas.toArray()) : null;
+      if (fold) display.fold = fold;
+      if (displaced) for (const flap of display.flaps) this.moveFlap(flap, display.transport!, changed, removed, body, display.fold);
       this.updateLines(name, display, body, view, exposure);
     }
     this.updateCavity(view, removed);
@@ -478,11 +571,12 @@ export class OperativeSourceScene {
     this.timings.updateMs = performance.now() - started;
   }
 
-  private moveFlap(flap: Flap, transport: ExposureBodyTransport, changed: boolean, removed: ReadonlySet<number>, body: OperativeExposureBody) {
+  private moveFlap(flap: Flap, transport: ExposureBodyTransport, changed: boolean, removed: ReadonlySet<number>, body: OperativeExposureBody, fold?: HingeFold) {
     const geometry = flap.piece.mesh.geometry;
     const position = geometry.getAttribute('position') as THREE.BufferAttribute, normal = geometry.getAttribute('normal') as THREE.BufferAttribute;
     if (changed || !flap.piece.mesh.userData.transported) {
-      transportVertices(flap.binding, transport, flap.restRas, flap.restNormalsRas, this.affine, position.array as Float32Array, normal.array as Float32Array);
+      if (fold) foldVertices(fold, flap.restRas, flap.restNormalsRas, this.affine, position.array as Float32Array, normal.array as Float32Array);
+      else transportVertices(flap.binding, transport, flap.restRas, flap.restNormalsRas, this.affine, position.array as Float32Array, normal.array as Float32Array);
       const offset = geometry.getAttribute('finishRestOffset') as THREE.BufferAttribute, o = offset.array as Float32Array, p = position.array as Float32Array;
       for (let i = 0; i < o.length; i++) o[i] = flap.restVoxel[i] - p[i];
       position.needsUpdate = normal.needsUpdate = offset.needsUpdate = true;
@@ -580,6 +674,50 @@ export class OperativeSourceScene {
       }
     }
     this.timings.cavityMs = performance.now() - started;
+  }
+
+  private capCache?: SourceCapInput;
+  private outlineLoops = new Map<SourceBodyName, PlanarLoop>();
+  /** The inspection cutaway's view of these surfaces: rest geometry, opened flap footprints and the cavity. */
+  capInput(): SourceCapInput {
+    const displaced = (['scalp', 'bone', 'dura'] as const).map((name) => !!this.bodies.get(name)?.displaced);
+    const key = 'source:' + displaced.join(',') + ':' + this.cavityKey;
+    if (this.capCache?.key === key) return this.capCache;
+    const loop = (name: SourceBodyName) => {
+      let found = this.outlineLoops.get(name);
+      const outline = this.asset.outlines[name]?.outer;
+      if (!found && outline) this.outlineLoops.set(name, (found = new PlanarLoop(rasToVoxel(outline.points, this.affine), this.outwardVoxel)));
+      return found;
+    };
+    const m = inverseAffineOf(this.affine);
+    const voxelOf = (p: Point3): Point3 => [0, 1, 2].map((a) => m[a][0] * p[0] + m[a][1] * p[1] + m[a][2] * p[2] + m[a][3]) as Point3;
+    const bodyIndex: Record<SourceBodyName, number> = {scalp: 0, bone: 1, dura: 2};
+    // Inside a moved body's outline (within its kerf) its layer is gone.
+    const opened = (name: SourceBodyName, voxel: Point3) => {
+      if (!displaced[bodyIndex[name]]) return false;
+      const outline = loop(name);
+      return !!outline && !outline.farOutside(voxel, KERF_HALF_MM[name] + 1) && outline.query(voxel).distance > -KERF_HALF_MM[name];
+    };
+    const removed = (voxel: Point3) => this.cavity.removed(voxel);
+    const regionBody: Partial<Record<CapRegion, SourceBodyName>> = {scalp: 'scalp', bone: 'bone', intracranial: 'dura'};
+    const lineBody: Partial<Record<CapSurfaceName | 'dura', SourceBodyName>> = {skin: 'scalp', skullOuter: 'bone', skullInner: 'bone', dura: 'dura'};
+    const surfaces = CAP_SURFACES.flatMap((name) => {
+      const s = this.surfaces.get(name);
+      return s ? [{name, positions: s.positions, normals: s.normals, triangles: s.triangles}] : [];
+    });
+    const dura = this.surfaces.get('dura');
+    this.capCache = {key, outward: this.outwardRas.toArray() as Point3, surfaces,
+      lineSurfaces: dura ? [{name: 'dura', positions: dura.positions, normals: dura.normals, triangles: dura.triangles}] : [],
+      closed: (ras, region) => {
+        const voxel = voxelOf(ras), body = regionBody[region];
+        if (body) return !opened(body, voxel);
+        return !removed(voxel);
+      },
+      lineKept: (ras, surface) => {
+        const voxel = voxelOf(ras), body = lineBody[surface];
+        return body ? !opened(body, voxel) : !removed(voxel);
+      }};
+    return this.capCache;
   }
 
   /** Meshes of brain tissue that move with a brain-shift field (by layer name), for the scenario display. */

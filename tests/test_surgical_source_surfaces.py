@@ -174,7 +174,9 @@ def test_vertices_map_back_to_their_cell_and_layer(built):
         cells, owners = mesh['cells'], mesh['ownerCells']
         ijk = np.rint(mesh['positions'].astype(float) @ inverse[:3, :3].T + inverse[:3, 3]).astype(int)
         inside = cells >= 0
-        assert inside.mean() > .8  # the rest lies in the 10 mm margin around the grid
+        # The rest lies in the 10 mm margin around the grid (the skin covers the whole head).
+        assert inside.mean() > (.5 if name == 'skin' else .8)
+        assert np.all(cells[~inside] == -1) and np.all(owners[~inside] == -1)
         assert np.array_equal(np.ravel_multi_index(ijk[inside].T, shape), cells[inside])
         owned = owners >= 0
         assert owned[inside].mean() > .95, name
@@ -196,7 +198,8 @@ def test_flap_patches_bind_to_their_bodies_with_smooth_outlines(built):
         mesh = _surface(built['asset'], name)
         positions = mesh['positions'].astype(float)
         lateral = np.linalg.norm((positions - entry) - np.outer((positions - entry) @ outward, outward), axis=1)
-        centre = lateral < 5.
+        # The near side only: the whole-head skin also passes behind the entry on the far side of the head.
+        centre = (lateral < 5.) & ((positions - entry) @ outward > -30.)
         assert centre.any() and np.all(mesh['body'][centre] == code), name
         assert np.all(mesh['bodyEdgeMm'][centre] > 5.), name
         far = lateral > 60.
@@ -299,5 +302,72 @@ def test_bridge_operation_reports_unavailable_then_returns_the_asset(built, tmp_
         assert np.array_equal(raw, built['asset']['arrays']['surface.pial.positions'])
         assert result['arrays']['surface.pial.triangles']['dtype'] == 'uint32'
         assert result['arrays']['surface.skin.cells']['dtype'] == 'int32'
+        # The renderer reads the arrays after the reply: they outlive the request's pruning
+        # and are released when the next case is installed.
+        from pathlib import Path
+        kept = [Path(row['path']) for row in result['arrays'].values()]
+        session.prune_transfers()
+        assert all(path.exists() for path in kept)
+        call('loadCase', {'path': str(case_path)})
+        session.prune_transfers()
+        assert not any(path.exists() for path in kept)
     finally:
         session.close()
+
+
+def test_dura_is_one_continuous_sheet_with_assumed_thickness(built):
+    rows = {row['name']: row for row in built['asset']['header']['surfaces']}
+    dura = rows['dura']['provenance']
+    assert dura['origin'] == 'assumed' and .5 <= dura['thicknessMm'] <= .8
+    assert dura['sheet']['boundaryLoops'] == 1
+    mesh = _surface(built['asset'], 'dura')
+    assert len(surfaces.boundary_loops(mesh['triangles'].astype(np.int64))) == 1
+    # It lines the inner table (radius 60 mm on the sphere) just inside it.
+    r = np.linalg.norm(mesh['positions'], axis=1)
+    assert abs(np.median(r) - (60. - dura['sheet']['offsetMm'])) < .9
+
+
+def test_interior_holes_are_closed_and_the_outer_rim_kept():
+    n = 8
+    points = np.array([[i, j, 0.] for i in range(n) for j in range(n)])
+    faces = []
+    for i in range(n - 1):
+        for j in range(n - 1):
+            if (i, j) in ((3, 3), (3, 4), (4, 3), (4, 4)):
+                continue
+            a, b = i * n + j, (i + 1) * n + j
+            faces += [[a, b, a + 1], [a + 1, b, b + 1]]
+    faces = np.array(faces)
+    assert len(surfaces.boundary_loops(faces)) == 2
+    filled, new_faces, closed = surfaces.fill_interior_holes(points, faces)
+    assert closed == 1 and len(filled) == len(points) + 1
+    assert len(surfaces.boundary_loops(new_faces)) == 1
+    # The closure keeps the sheet's winding (all normals still +z).
+    a, b, c = (filled[new_faces[:, k]] for k in range(3))
+    assert np.all(np.cross(b - a, c - a)[:, 2] > 0)
+
+
+def test_cortical_vessel_extension_adds_only_connected_supported_voxels():
+    shape = (40, 20, 20)
+    affine = np.eye(4)
+    labels = np.zeros(shape, np.int32)
+    labels[:, :, :10] = 3  # cortex below z = 10
+    mask = np.zeros(shape, bool)
+    mask[5:20, 10, 11] = True  # a vessel on the cortical surface
+    probability = np.where(mask, .9, .05).astype(np.float32)
+    probability[20:30, 10, 11] = .35  # its faint continuation: connected, supported
+    probability[5:15, 3, 11] = .35  # a separate faint line: not connected
+    probability[20:30, 15, 18] = .35  # isolated and 8 mm above the cortex
+    crop = tuple(slice(0, n) for n in shape)
+    margin = np.ones(shape, bool)
+
+    def sample(cells, volume, fill):
+        out = np.full(len(cells), fill, volume.dtype)
+        out[:] = volume[tuple(np.asarray(cells).T)]
+        return out
+
+    extension = surfaces._cortical_extension(mask, probability, crop, labels, [1., 1., 1.], margin, sample)
+    added = extension['mask']
+    assert added[20:30, 10, 11].all()
+    assert not added[5:15, 3, 11].any() and not added[20:30, 15, 18].any()
+    assert extension['voxels'] == 10 and extension['threshold'] < .5
