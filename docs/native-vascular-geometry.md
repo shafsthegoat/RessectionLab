@@ -141,6 +141,46 @@ that the shown display has no component without a root.
   acquisition decides: fine on CT, major on MR. On the hero CTAs the calibre
   rule itself hides almost nothing (0 to 34 voxels at about 0.5 mm spacing),
   so the detail mainly switches the fine-branch layer.
+- **Thin branches as tubes.** A shown vessel thinner than about three voxels
+  is redrawn as a smooth round tube (`resectionlab.vessel_display_tubes`,
+  `thin-vessel-display-tubes-v1`), because a mask that thin follows the
+  lattice in steps and changes width from slice to slice. Each display row's
+  shown voxels, with the part of the tree they extend within 2.5 mm, are
+  thinned to a centerline. Every centerline voxel gets a radius from the
+  vessel volume it owns over its length of centerline, averaged along the
+  graph. Positions are relaxed along the graph while each stays within half a
+  voxel of the voxel it came from, so lattice steps straighten and a real bend
+  is not cut. Where the radius is below 1.5 mean voxel spacings the vessel is
+  a tube: a soft field, one half at the radius, never thinner than 0.9 half
+  voxel diagonals (0.49 mm on the 0.55 × 0.55 × 0.75 mm hero CTAs, 0.28 mm on
+  0.3 × 0.3 × 0.45 mm TOF). That is the thinnest tube the grid shows unbroken;
+  both drawings take the wall at the 0.35 level, about a fifth of a voxel
+  outside the radius, where the width ripples by about 4 percent as the tube
+  crosses the lattice (simulated on ideal lines; on stepped test lines under
+  10 percent, where the smoothed one-voxel mask drawn before breaks or varies
+  at least two and a half times as much). A one-voxel vessel is therefore
+  drawn about two voxels across: thin branches read bolder than their
+  measured calibre, and `atMinimumRadius` in the receipt counts them. A thin
+  twig of the centerline shorter than three smallest radii is a thinning
+  artefact of a lumpy mask and is not drawn, and voxels left between tubes in
+  face-connected groups of fewer than eight are leftovers of those branches
+  and are not drawn as voxels (`prunedTwigVoxels`, `leftoverVoxels`). Thick
+  vessels keep their voxels, and a tube runs four centerline steps into the
+  thick vessel or parent tree it leaves. The display mask does not change, so slices, picking and the
+  connectivity receipts read the same voxels. The surface of a layer with
+  tubes is one half-level contour of the tube field joined to the remaining
+  voxels' own field: their score field where the layer has one, otherwise
+  their mask smoothed but held above one half at every voxel and below it
+  everywhere else, so face-connected voxels stay one surface; this replaces
+  that layer's stepped label surface (thick walls move by less than a voxel).
+  A single lattice sample that alone touches the level is not contoured. Volume
+  lighting receives prepared soft tags: the remaining voxels smoothed as a
+  mask is, joined to the tube field. The packed field is stored beside the
+  study with the rest of the connected display, and the receipt
+  (`rooting.tubes`, `own` and `split` for the layer's two class parts) gives
+  the replaced voxels, tube length, drawn radii and pruned twigs. If drawing
+  the tubes fails, that part keeps its voxel drawing and the receipt says why.
+  `rooted_vessel_layer(..., smooth=False)` gives the voxel drawing.
 - **Colour.** Every vessel is drawn in one red, in the standard and Volume
   lighting paths (owner's decision, 2026-11-26). Arteries and veins are still
   told apart in the receipt, and when a layer holds both classes its

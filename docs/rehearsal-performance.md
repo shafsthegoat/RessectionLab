@@ -2,7 +2,7 @@
 
 ## Manual rehearsal on Apple M2 Pro
 
-This work is merged onto the vascular parity line (`shaf/rehearsal-performance-port-20261126`, merge `bcf3be83` on `f2562cae`). The parity line changed the same engine and renderer code after the performance branch was frozen, so the merge re-applies the performance work onto the current code. The first subsection states what the merged line does and what was measured on it. The later subsections record the November 21 comparison on the performance branch. They were not repeated on the merged line unless the first subsection says so.
+This work is merged onto the vascular parity line (`shaf/medivis-vascular-parity-20261125`, merge `bcf3be83` on `f2562cae`). The parity line changed the same engine and renderer code after the performance branch was frozen, so the merge re-applies the performance work onto the current code. The first subsection states what the merged line does and what was measured on it. The later subsections record the November 21 comparison on the performance branch. They were not repeated on the merged line unless the first subsection says so.
 
 ### Merged line on November 26
 

@@ -374,7 +374,7 @@ def _context_mask(collection, row, layers, frame, *, check=lambda: None):
     return union, used, reasons
 
 
-def rooted_vessel_layer(collection, row, *, review=False, detail=None, check=lambda: None, _depth=0):
+def rooted_vessel_layer(collection, row, *, review=False, detail=None, smooth=True, check=lambda: None, _depth=0):
     """Root-reachable display derivative of one vessel layer, with its receipt.
 
     Returns ``(display row, receipt, review row or None, class row or None)``.
@@ -384,7 +384,10 @@ def rooted_vessel_layer(collection, row, *, review=False, detail=None, check=lam
     in that class's colour. The review row (only when ``review`` is set) holds
     the detached and level-of-detail-hidden source voxels. The source layer,
     its labels and the manifest are never changed. ``detail`` is "major" or
-    "fine" (see ``VESSEL_DETAILS``); without it the acquisition decides.
+    "fine" (see ``VESSEL_DETAILS``); without it the acquisition decides. With
+    ``smooth`` the display rows also carry the packed tube field of their thin
+    branches under ``DISPLAY_TUBES`` (see ``vessel_display_tubes``): surfaces
+    and volume tags draw those branches as round tubes; the mask is unchanged.
     """
     if row["kind"] not in ROOTED_VESSEL_KINDS:
         return row, None, None, None
@@ -454,6 +457,9 @@ def rooted_vessel_layer(collection, row, *, review=False, detail=None, check=lam
                                   "these image-derived fine branches are shown at the fine vessel detail", detail=detail,
                                   key="detailHidden")
     policy = RootingPolicy() if detail == "major" else replace(RootingPolicy(), always_mm=RootingPolicy().local_mm)
+    from .vessel_display_tubes import DISPLAY_TUBES, TubeDisplay, thin_tubes
+
+    tube_rule = TubeDisplay() if smooth else None
     identity = {
         "version": ROOTED_DISPLAY, "policy": asdict(policy), "rawDataSha256": row["data"]["sha256"],
         "label": row["label_value"], "kind": row["kind"], "affine": row["affine"],
@@ -465,6 +471,7 @@ def rooted_vessel_layer(collection, row, *, review=False, detail=None, check=lam
                     for layer in tumours],
         "bones": sorted(layer["data"]["sha256"] for layer in bones),
         "parent": None if parent_rows is None else [part["data"]["sha256"] for part in parent_rows],
+        "tubes": None if tube_rule is None else asdict(tube_rule),
     }
     key = digest(identity)
     if not hasattr(collection, "_rooted_display_cache"):
@@ -537,6 +544,28 @@ def rooted_vessel_layer(collection, row, *, review=False, detail=None, check=lam
         own = display & ~other
         shown = collection.put_array(own.astype(np.uint8))
         split = collection.put_array(other.astype(np.uint8)) if other.any() else None
+        # Thin branches are redrawn as smooth tubes, for display only; each class keeps its own.
+        tubes = split_tubes = None
+        if tube_rule is not None:
+            spacing = np.linalg.norm(affine(row["affine"])[:3, :3], axis=0)
+            drawn = {}
+            for name, part, rest in (("own", own, other), ("split", other, own)):
+                if not part.any():
+                    continue
+                beside = rest if tree is None else rest | tree
+                try:
+                    packed, tube_receipt = thin_tubes(part, spacing, context=beside if beside.any() else None,
+                                                      rule=tube_rule, check=check)
+                except InterruptedError:
+                    raise
+                except Exception as error:
+                    # A display refinement must not cost the connected tree: the branches stay voxel-drawn.
+                    check()  # A cancellation still cancels.
+                    packed, tube_receipt = None, {"version": tube_rule.version, "failed": f"{type(error).__name__}: {error}"}
+                drawn[name] = (None if packed is None else collection.put_array(packed), tube_receipt)
+                del packed
+            tubes, split_tubes = (drawn.get(name, (None, None))[0] for name in ("own", "split"))
+            details["tubes"] = {name: item[1] for name, item in drawn.items()}
         hidden_mask = result.review | result.lod_hidden
         hidden = collection.put_array(hidden_mask.astype(np.uint8)) if hidden_mask.any() else None
         del display, own, other
@@ -569,8 +598,8 @@ def rooted_vessel_layer(collection, row, *, review=False, detail=None, check=lam
             **({"corridorsUnavailable": corridor_reason} if corridor_reason else {}),
             "rooting": details,
         }
-        entry = {"arrays": [data for data in (shown, split, hidden) if data], "shown": shown, "split": split,
-                 "hidden": hidden, "receipt": receipt}
+        entry = {"arrays": [data for data in (shown, split, hidden, tubes, split_tubes) if data], "shown": shown,
+                 "split": split, "hidden": hidden, "tubes": tubes, "splitTubes": split_tubes, "receipt": receipt}
         # A temporarily missing label original must not pin a label-less view for the session.
         if not (named_binding and named_reason):
             cache[key] = entry
@@ -587,17 +616,24 @@ def rooted_vessel_layer(collection, row, *, review=False, detail=None, check=lam
     display = {**deepcopy(row), "data": entry["shown"], "label_value": 1, "color": VESSEL_CLASS_COLORS[own_class],
                "edits": [{"display_only": ROOTED_DISPLAY, "scope": scope}]}
     display.pop("probability", None)
+    display.pop(DISPLAY_TUBES, None)
+    if entry.get("tubes"):
+        display[DISPLAY_TUBES] = entry["tubes"]
     class_row = None
     if entry["split"] is not None:
         class_row = {**deepcopy(row), "data": entry["split"], "label_value": 1, "kind": other_class,
                      "color": VESSEL_CLASS_COLORS[other_class],
                      "edits": [{"display_only": ROOTED_DISPLAY, "class": other_class}]}
         class_row.pop("probability", None)
+        class_row.pop(DISPLAY_TUBES, None)
+        if entry.get("splitTubes"):
+            class_row[DISPLAY_TUBES] = entry["splitTubes"]
     hidden_row = None
     if review and entry["hidden"] is not None:
         hidden_row = {**deepcopy(row), "data": entry["hidden"], "label_value": 1, "color": ROOTED_REVIEW_COLOR,
                       "edits": [{"display_only": ROOTED_DISPLAY, "review": True}]}
         hidden_row.pop("probability", None)
+        hidden_row.pop(DISPLAY_TUBES, None)
     return display, receipt, hidden_row, class_row
 
 

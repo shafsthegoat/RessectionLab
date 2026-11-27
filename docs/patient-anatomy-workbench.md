@@ -304,6 +304,8 @@ detached and thin end parts hidden (never deleted) and available through **Show
 detached and thin parts**; see [the connected display](native-vascular-geometry.md#default-connected-vessel-display).
 **Vessel detail** chooses between **With fine branches** (the default on CT)
 and **Major vessels only** (the default on MR); a saved view keeps the choice.
+Branches thinner than about three voxels are drawn as smooth round tubes, in
+the surface view and in Volume lighting; their voxels in the slices are unchanged.
 **Full source estimate** preserves all source components and retained
 probability surfaces. Unversioned views, and `vesselDisplayVersion: 2` views
 that stored the full source, open on the connected tree; other explicit scopes

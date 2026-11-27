@@ -435,7 +435,11 @@ def mesh(collection, row, *, cancelled=lambda: False, display_source=None, condi
                 or display_source["data"]["shape"] != row["data"]["shape"]):
             raise ValueError("Vascular display filtering requires the source lattice")
         if display_source["data"] == row["data"] and display_source["label_value"] == row["label_value"]:
-            return mesh(collection, display_source, cancelled=cancelled, conditioned=conditioned,
+            # The display kept every source voxel; it still carries its own thin-branch tubes.
+            from .vessel_display_tubes import DISPLAY_TUBES
+
+            same = {**display_source, DISPLAY_TUBES: row[DISPLAY_TUBES]} if DISPLAY_TUBES in row else display_source
+            return mesh(collection, same, cancelled=cancelled, conditioned=conditioned,
                         cache_directory=cache_directory, mask=mask, check=check)
     if display_source is None and row.get("publisher_surface") is not None:
         from .anatomy_publisher_surface import conditioned_publisher_cta, publisher_surface
@@ -472,6 +476,12 @@ def mesh(collection, row, *, cancelled=lambda: False, display_source=None, condi
             "data": display_source["data"], "probability": display_source.get("probability"),
             "label": display_source["label_value"], "edited": bool(display_source.get("edits")),
         }
+    from .vessel_display_tubes import (DISPLAY_TUBES, SURFACE, WALL_LEVEL, softened_mask, surface_field, unpack,
+                                       without_lone_samples)
+
+    tubes = row.get(DISPLAY_TUBES) if profile == "vessel" else None
+    if tubes is not None:
+        identity["display_tubes"] = {"field": tubes, "wall_level": WALL_LEVEL, "surface": SURFACE}
     directory = collection.root / "meshes" if cache_directory is None else cache_directory
     conditioned_cache = directory / f"{digest(identity)}.npz"
     legacy_source_cache = directory / f"{digest({**identity, 'source_only': True})}.npz"
@@ -496,7 +506,11 @@ def mesh(collection, row, *, cancelled=lambda: False, display_source=None, condi
         return _display_geometry(collection, row, result, True, started)
     if mask is None:
         mask = collection.mask(row, check=check)
-    bounds = [np.flatnonzero(mask.any(axis=tuple(i for i in range(3) if i != axis))) for axis in range(3)]
+    packed_tubes = collection.array(tubes, check=check) if tubes is not None else None
+    # A tube may run a little past the voxels it replaces, into the vessel it leaves.
+    extent = mask if packed_tubes is None else mask | (np.asarray(packed_tubes) > 1)
+    bounds = [np.flatnonzero(extent.any(axis=tuple(i for i in range(3) if i != axis))) for axis in range(3)]
+    del extent
     if not len(bounds[0]):
         return {
             "source": np.empty((0, 3), np.float32),
@@ -512,7 +526,20 @@ def mesh(collection, row, *, cancelled=lambda: False, display_source=None, condi
     hi = np.minimum(mask.shape, np.array([axis[-1] for axis in bounds]) + 3)
     slices = tuple(slice(a, b) for a, b in zip(lo, hi))
     cropped = mask[slices]
-    values, field = _field_values(collection, row, cropped, slices, display_source, check=check)
+    if tubes is None:
+        values, field = _field_values(collection, row, cropped, slices, display_source, check=check)
+    else:
+        # Thin branches are drawn from their tube field; the remaining voxels keep
+        # their own field. Where that is a binary mask it is softened without
+        # letting go of any voxel, so one half-level contour describes both.
+        tube_field, replaced = unpack(packed_tubes[slices])
+        thick = cropped & ~replaced
+        values, field = _field_values(collection, row, thick, slices, display_source, check=check)
+        if field == "categorical":
+            values = softened_mask(thick)
+        values = without_lone_samples(np.maximum(values.astype(np.float32, copy=False), surface_field(tube_field)), thick)
+        field = "thin-tubes+" + ("smoothed-mask" if field == "categorical" else field)
+        del tube_field, replaced, thick
     values = _padded_contour_field(values)
     if cancelled():
         raise InterruptedError("Mesh preparation cancelled")

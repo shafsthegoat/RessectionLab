@@ -33,7 +33,7 @@ function targetBytes(targets:VolumeTargets) {
 const sourceIds=new WeakMap<object,number>();
 let nextSourceId=0;
 function sourceIdentity(source:CinematicTagLayer['source']){
-  const array=source.kind==='mask'?source.mask:source.kind==='labels'?source.labels:source.probability;
+  const array=source.kind==='mask'?source.mask:source.kind==='tags'?source.tags:source.kind==='labels'?source.labels:source.probability;
   let id=sourceIds.get(array);
   if(id===undefined){id=++nextSourceId;sourceIds.set(array,id);}
   return source.kind==='labels'?`${id}:${source.value}`:id;
@@ -533,7 +533,9 @@ export class ScanVolumeRenderer {
       const labels=layer.labelSet?this.labelSets?.find(set=>set.id===layer.labelSet)?.data:undefined;
       if(layer.labelSet&&(!labels||layer.labelValue===undefined))continue;
       const tags=layer.vesselTags?.length===layer.mask.length?layer.vesselTags:undefined;
-      layers.push({cls,source:tags?{kind:'probability',probability:tags}:labels?{kind:'labels',labels,value:layer.labelValue!}:{kind:'mask',mask:layer.mask}});
+      const prepared=layer.vesselTagBytes?.length===layer.mask.length?layer.vesselTagBytes:undefined;
+      layers.push({cls,source:tags?{kind:'probability',probability:tags}:labels?{kind:'labels',labels,value:layer.labelValue!}:
+        prepared?{kind:'tags',tags:prepared}:{kind:'mask',mask:layer.mask}});
       names.push(layer.name);
     }
     const key=JSON.stringify(names.map((name,i)=>[name,layers[i].cls,sourceIdentity(layers[i].source)]));

@@ -42,7 +42,9 @@ export type CinematicTagClass = 0 | 1;
 export type CinematicTagSource =
   | {kind: 'mask'; mask: Uint8Array}
   | {kind: 'labels'; labels: Uint16Array; value: number}
-  | {kind: 'probability'; probability: Float32Array};
+  | {kind: 'probability'; probability: Float32Array}
+  /** Prepared soft tags, 0 to 255, used as they are (a layer whose thin branches the engine drew as tubes). */
+  | {kind: 'tags'; tags: Uint8Array};
 export interface CinematicTagLayer {cls: CinematicTagClass; source: CinematicTagSource}
 
 /** Arteries and unclassified vessels share the first class; veins and sinuses the second. */
@@ -248,7 +250,7 @@ const gaussian = (() => {
 type Box = {min: Point3; max: Point3};
 
 function memberAt(source: CinematicTagSource, i: number) {
-  return source.kind === 'mask' ? source.mask[i] !== 0 :
+  return source.kind === 'mask' ? source.mask[i] !== 0 : source.kind === 'tags' ? source.tags[i] >= 128 :
     source.kind === 'labels' ? source.labels[i] === source.value : source.probability[i] >= .5;
 }
 
@@ -293,8 +295,9 @@ function* smoothChannel(data: Uint8Array, shape: Point3, channels: number, chann
 }
 
 /** Build soft tags, per-class ramps and per-brick tag maxima. A layer with a
- * float probability uses that value directly; binary masks and categorical
- * labels are smoothed. Ramps are the midpoint of the median intensity in the
+ * float probability or prepared tags uses those values directly; binary masks
+ * and categorical labels are smoothed first, on their own, and the rest of
+ * their class channel is joined to the result unsmoothed. Ramps are the midpoint of the median intensity in the
  * tag core and in a one-voxel shell outside it, so no unit is assumed. */
 export function* cinematicTagSteps(signal: Float32Array, shape: Point3, layers: readonly CinematicTagLayer[],
   range: [number, number]): Generator<void, CinematicTags> {
@@ -311,7 +314,8 @@ export function* cinematicTagSteps(signal: Float32Array, shape: Point3, layers: 
   if (!channels) return {data: null, channels, channelOf, classes, maxTag};
   for (const layer of layers) {
     const source = layer.source;
-    const length = source.kind === 'mask' ? source.mask.length : source.kind === 'labels' ? source.labels.length : source.probability.length;
+    const length = source.kind === 'mask' ? source.mask.length : source.kind === 'tags' ? source.tags.length :
+      source.kind === 'labels' ? source.labels.length : source.probability.length;
     if (length !== count) throw Error('A vessel layer does not match the acquired grid');
   }
   const data = new Uint8Array(count * channels);
@@ -323,38 +327,42 @@ export function* cinematicTagSteps(signal: Float32Array, shape: Point3, layers: 
     if (channel < 0) continue;
     const members = layers.filter(layer => layer.cls === cls);
     const box: Box = {min: [nx, ny, nz], max: [-1, -1, -1]};
-    let smooth = false;
-    for (const {source} of members) {
-      if (source.kind !== 'probability') smooth = true;
-      for (let x = 0; x < nx; x++) {
-        for (let y = 0; y < ny; y++) {
-          const row = (x * ny + y) * nz;
-          for (let z = 0; z < nz; z++) {
-            const i = row + z;
-            let value = 0;
-            if (source.kind === 'mask') value = source.mask[i] ? 255 : 0;
-            else if (source.kind === 'labels') value = source.labels[i] === source.value ? 255 : 0;
-            else {
-              const p = source.probability[i];
-              value = p > 0 ? Math.round(Math.min(1, p) * 255) : 0;
+    // Binary sources first, smoothed on their own; continuous sources (a float
+    // probability, prepared tags) are joined afterwards and stay as supplied.
+    for (const continuous of [false, true]) {
+      for (const {source} of members) {
+        if ((source.kind === 'probability' || source.kind === 'tags') !== continuous) continue;
+        for (let x = 0; x < nx; x++) {
+          for (let y = 0; y < ny; y++) {
+            const row = (x * ny + y) * nz;
+            for (let z = 0; z < nz; z++) {
+              const i = row + z;
+              let value = 0;
+              if (source.kind === 'mask') value = source.mask[i] ? 255 : 0;
+              else if (source.kind === 'tags') value = source.tags[i];
+              else if (source.kind === 'labels') value = source.labels[i] === source.value ? 255 : 0;
+              else {
+                const p = source.probability[i];
+                value = p > 0 ? Math.round(Math.min(1, p) * 255) : 0;
+              }
+              if (!value) continue;
+              const q = i * channels + channel;
+              if (value > data[q]) data[q] = value;
+              if (x < box.min[0]) box.min[0] = x; if (x > box.max[0]) box.max[0] = x;
+              if (y < box.min[1]) box.min[1] = y; if (y > box.max[1]) box.max[1] = y;
+              if (z < box.min[2]) box.min[2] = z; if (z > box.max[2]) box.max[2] = z;
             }
-            if (!value) continue;
-            const q = i * channels + channel;
-            if (value > data[q]) data[q] = value;
-            if (x < box.min[0]) box.min[0] = x; if (x > box.max[0]) box.max[0] = x;
-            if (y < box.min[1]) box.min[1] = y; if (y > box.max[1]) box.max[1] = y;
-            if (z < box.min[2]) box.min[2] = z; if (z > box.max[2]) box.max[2] = z;
+            if ((work += nz) >= CINEMATIC_STEP_WORK) { work = 0; yield; }
           }
-          if ((work += nz) >= CINEMATIC_STEP_WORK) { work = 0; yield; }
         }
       }
+      if (box.max[0] < 0) continue;
+      // Smoothing spreads two voxels.
+      const padded: Box = {min: box.min.map(v => Math.max(0, v - 2)) as Point3,
+        max: box.max.map((v, axis) => Math.min(shape[axis] - 1, v + 2)) as Point3};
+      boxes[cls] = padded;
+      if (!continuous) yield* smoothChannel(data, shape, channels, channel, padded);
     }
-    if (box.max[0] < 0) continue;
-    // Smoothing spreads two voxels; probability maps are already continuous.
-    const padded: Box = {min: box.min.map(v => Math.max(0, v - 2)) as Point3,
-      max: box.max.map((v, axis) => Math.min(shape[axis] - 1, v + 2)) as Point3};
-    boxes[cls] = padded;
-    if (smooth) yield* smoothChannel(data, shape, channels, channel, padded);
   }
   // Classify core and shell voxels.
   const scale = HISTOGRAM_BINS / Math.max(range[1] - range[0], 1e-6);

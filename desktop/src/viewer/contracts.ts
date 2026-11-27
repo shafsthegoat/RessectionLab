@@ -84,6 +84,8 @@ export interface ViewerVolume {
     vesselTags?:Float32Array;
     /** Per wall vertex: 1 vein, 0 artery or unclassified, from the stored tube model's edge classes. */
     vesselClasses?:Uint8Array;
+    /** Prepared soft vessel tags, 0 to 255, per voxel of this grid: the layer with its thin branches drawn as tubes. */
+    vesselTagBytes?:Uint8Array;
   }>;
 }
 

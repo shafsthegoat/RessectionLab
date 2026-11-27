@@ -138,7 +138,7 @@ export interface NativeAnatomyApi {
 }
 export type Surface=NonNullable<ViewerVolume['compartments'][number]['surface']>;
 type CtExteriorPayload={schema:string;offset:Point3;mask:ArrayDescriptor;signalSha256:string};
-export type ViewPayload=Omit<ViewerVolume,'mri'|'compartments'|'tractography'|'labelSets'|'patientContext'|'headSupport'|'ctExterior'>&{snapshotId:string;sourceField?:NativeWallSourceField;sourceFieldCursorRasMm?:Point3;appearanceSources?:Array<Pick<SurfaceAppearanceSource,'seriesId'|'modality'|'sourceSha256'|'affine'|'nativeAffine'|'nativeShape'|'intensityUnits'>&{signal:ArrayDescriptor}>;headSupport?:ArrayDescriptor;ctExterior?:CtExteriorPayload;patientContext?:PatientContext;labelSets?:Array<{id:string;data:ArrayDescriptor}>;tractography?:Array<{id:string;label:string;points:ArrayDescriptor;offsets:ArrayDescriptor}>;mri:ArrayDescriptor;modality:string;registrationStatus:string;patientFrameReady?:boolean;alignmentPreviews?:string[];unavailableLayers:string[];compartments:Array<{sourceSeries?:string;alignment?:string;kind?:string;displayKind?:string;sourceIdentity?:string;qa?:import('./viewer/contracts').AnatomyQuality;surfaceDiagnostics?:import('./viewer/surfacePolicy').SurfaceDiagnostics;name:string;color:string;volumeMm3?:number;displayFilter?:VesselDisplayFilter;sourceSupport?:import('./viewer/contracts').TissueDisplaySupport;mask?:ArrayDescriptor;labelSet?:string;labelValue?:number;surface?:{empty:true}|Record<keyof Surface,ArrayDescriptor>}>};
+export type ViewPayload=Omit<ViewerVolume,'mri'|'compartments'|'tractography'|'labelSets'|'patientContext'|'headSupport'|'ctExterior'>&{snapshotId:string;sourceField?:NativeWallSourceField;sourceFieldCursorRasMm?:Point3;appearanceSources?:Array<Pick<SurfaceAppearanceSource,'seriesId'|'modality'|'sourceSha256'|'affine'|'nativeAffine'|'nativeShape'|'intensityUnits'>&{signal:ArrayDescriptor}>;headSupport?:ArrayDescriptor;ctExterior?:CtExteriorPayload;patientContext?:PatientContext;labelSets?:Array<{id:string;data:ArrayDescriptor}>;tractography?:Array<{id:string;label:string;points:ArrayDescriptor;offsets:ArrayDescriptor}>;mri:ArrayDescriptor;modality:string;registrationStatus:string;patientFrameReady?:boolean;alignmentPreviews?:string[];unavailableLayers:string[];compartments:Array<{sourceSeries?:string;alignment?:string;kind?:string;displayKind?:string;sourceIdentity?:string;qa?:import('./viewer/contracts').AnatomyQuality;surfaceDiagnostics?:import('./viewer/surfacePolicy').SurfaceDiagnostics;name:string;color:string;volumeMm3?:number;displayFilter?:VesselDisplayFilter;sourceSupport?:import('./viewer/contracts').TissueDisplaySupport;mask?:ArrayDescriptor;tags?:ArrayDescriptor;labelSet?:string;labelValue?:number;surface?:{empty:true}|Record<keyof Surface,ArrayDescriptor>}>};
 export async function hydrateAnatomy(payload:ViewPayload,api:ResectionApi,cachedImage?:Float32Array,cached?:Pick<ViewerVolume,'labelSets'|'tractography'|'headSupport'|'ctExterior'>,studyLayers?:Layer[],appearanceCache?:Map<string,Float32Array>):Promise<ViewerVolume>{
   async function bytes(d:ArrayDescriptor){
     if(!d || d.byteLength>512*1024**2 || d.byteOrder!=='little' || d.order!=='C')throw Error('Unsupported anatomy transfer');
@@ -178,7 +178,14 @@ export async function hydrateAnatomy(payload:ViewPayload,api:ResectionApi,cached
     const displayKind=declaredKind!==declaration?.kind?declaredKind:layer.displayKind??declaredKind;
     const appearanceSource=layer.alignment!=='source-grid preview'&&layer.sourceSeries&&['gray-matter','cerebral-cortex','cerebellar-cortex','brain','bone','skull'].includes(displayKind??layer.kind??'')
       ?appearanceSources.get(layer.sourceSeries):undefined;
-    compartments.push({...layer,displayKind,mask,surface,appearanceSource});
+    // Soft volume tags of a vessel layer whose thin branches the engine drew as tubes.
+    let vesselTagBytes:Uint8Array|undefined;
+    // They are optional: without usable tags the volume smooths the layer's mask instead.
+    if(layer.tags&&layer.tags.dtype==='uint8'&&layer.tags.byteLength===mri.length){
+      const tags=new Uint8Array(await bytes(layer.tags));
+      if(tags.length===mri.length)vesselTagBytes=tags;
+    }
+    compartments.push({...layer,displayKind,mask,surface,appearanceSource,...(vesselTagBytes?{vesselTagBytes}:{})});
   }
   const tractography=[];for(const t of payload.tractography??[]){const resident=cached?.tractography?.find(r=>r.id===t.id);if(resident){tractography.push(resident);continue;}tractography.push({...t,points:new Float32Array(await bytes(t.points)),offsets:new Uint32Array(await bytes(t.offsets))});}
   const labelSets=[];for(const set of payload.labelSets??[]){const resident=cached?.labelSets?.find(r=>r.id===set.id);if(resident){labelSets.push(resident);continue;}const data=new Uint16Array(await bytes(set.data));if(data.length!==mri.length)throw Error("Categorical grid mismatch");labelSets.push({id:set.id,data});}

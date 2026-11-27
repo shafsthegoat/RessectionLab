@@ -129,6 +129,7 @@ drives the hidden desktop harness and `resectionlab.vascular_parity`.
 | 4 Sim geometry | Centerline and radius implicit tubes shared by drawing, collision, rods and tags | Deviation at most 0.5 voxel; no self-intersection; tools displace vessels | gates met on TopCoW 2026-11-26 behind the tube geometry option; see results |
 | 5 Integration | Volume, tubes, tools and clipping in the packaged build; films and pull request | All earlier gates; blind scores at least 4 | run 2026-11-26: frame budget met in the packaged build; TOF-A blind gate met; CTA-A blind gate not met after two attempts; volume-lit vessels do not follow a tool press; see results |
 | 6 Finer vessels (added after decision 6) | Thin branches followed in the CTA signal; detached model vessels joined along signal; one vessel colour; two more EDEN cases | The Phase 5 blind gates; zero floating components | run 2026-11-26: zero floating pieces on six cases; TOF-A blind gate holds; CTA-A blind gate not met on the third attempt; the Phase 1 frame budget holds on CTA-A after a renderer change (1.35 to 1.41 s settle); see results |
+| 7 Smooth thin vessels (owner's choice after the third blind review) | Branches thinner than about three voxels drawn as round tubes from a relaxed centerline, in the surface view and in Volume lighting | The Phase 5 blind gates; zero floating components; the Phase 1 frame budget | run 2026-11-27: zero floating pieces on six cases; frame budget holds on CTA-A (11.0 ms, 1.38 s); TOF-A blind gate holds; CTA-A ranked first of four versions but its blind gate is not met on the fourth attempt (3, 4, 3, 3, 3, 3); see results |
 
 A phase that fails its gate twice keeps its best version behind a toggle and
 goes to Shafrir. Gates are not lowered.
@@ -633,7 +634,87 @@ otherwise idle GPU completed. On the two added TOF cases the axial-cut preset
 frames almost nothing, because the cut sits at the skull base where the tree
 is thinnest; the other presets frame them well.
 
-## Handoff, 2026-11-26
+## Phase 7 results: smooth thin vessels
+
+Evidence: `qc/medivis-parity-20261125/phase7-smooth-tubes/README.md`.
+
+After the third blind review named lumpy, beaded thin branches as the gap on
+CTA-A, the owner chose to smooth them. A branch thinner than about three
+voxels is now drawn as a round tube along a relaxed centerline with a
+gradually changing radius (`resectionlab.vessel_display_tubes`; rule in
+[acquired vascular geometry](native-vascular-geometry.md)). The display mask,
+the receipts and every source layer are unchanged; the surface view contours
+the tube field with the remaining voxels, and Volume lighting receives
+prepared soft tags. The rule was fixed on CTA-A and applied unchanged to the
+other five cases.
+
+| | CTA-A | CTA-B | TOF-A | TOF-B | PTNT_4503 | PTNT_7086 |
+| --- | --- | --- | --- | --- | --- | --- |
+| Shown voxels redrawn as tubes | 31,457 (31%) | 15,646 (19%) | 31,708 (8%) | 36,660 (10%) | 42,813 (10%) | 40,287 (9%) |
+| Tube length | 4.2 m | 1.7 m | 1.8 m | 2.3 m | 2.4 m | 2.5 m |
+| Smallest drawn radius (0.9 half voxel diagonals) | 0.49 mm | 0.46 mm | 0.28 mm | 0.28 mm | 0.28 mm | 0.28 mm |
+| Centerline voxels at that smallest radius, of those drawn | 973 of 5,698 | 417 of 2,618 | 272 of 4,654 | 878 of 5,948 | 272 of 5,985 | 754 of 6,276 |
+| Twig and leftover voxels not drawn | 70, 22 | 30, 11 | 5, 40 | 12, 8 | 7, 10 | 5, 5 |
+| Floating mesh pieces in the default view | 0 of 1 | 0 of 5 | 0 of 1 | 0 of 2 | 0 of 3 | 0 of 1 |
+| Major named vessel lost | none | none | none | none | none | none |
+| Frame interval p95 / settle, volume lighting, one idle run | 11.0 ms / 1.38 s | 10.2 ms / 1.86 s | 10.2 ms / 1.24 s | 10.2 ms / 1.15 s | 10.3 ms / 1.32 s | 10.2 ms / 1.35 s |
+
+In the standard mode the frame interval and settle are as in Phase 3 (CTA-A
+18.3 ms and 0.54 s against 18.5 ms and 0.55 s; TOF-A 16.6 ms and 0.17 s). The
+tube step takes under a second per layer on the CTAs and two to four seconds
+on the largest TOF layer, once per study; the result is stored with the
+connected display. Open mesh edges on CTA-A fell from 4,188 to 68.
+
+Limits that come from the voxel grid, not from the rule: a tube cannot be
+drawn thinner than about one voxel diagonal across without beading, so on
+CTA-A's 0.55 × 0.55 × 0.75 mm grid the thinnest branches are drawn about 1 mm
+wide, bolder than they are; and the drawn width still ripples by a few
+percent as a tube crosses the lattice.
+
+Two changes to how the surface gate counts pieces, both needed to measure a
+tube drawing at all and both covered by tests: a piece of one layer now joins
+another where its vertices lie inside the other's drawn surface (the field
+that surface was contoured from), not only inside its voxels, since a thin
+tube entering a thin tube has no voxel overlap to find; and the softened mask
+that draws a layer's remaining voxels keeps every voxel inside its surface.
+Three kinds of contour speck that the first runs counted as floating pieces
+were removed at their cause (a one-voxel neck lost to smoothing, single
+samples touching the level, and voxels left standing between tubes).
+
+**Blind review, fourth attempt.** Same protocol with four sets per case:
+Phase 0, the Phase 5 final set, the Phase 6 set and this phase.
+
+| | Crispness | Depth | Clutter | Connectivity | Realism | Usefulness |
+| --- | --- | --- | --- | --- | --- | --- |
+| CTA-A Phase 7 | 3 | 4 | 3 | 3 | 3 | 3 |
+| CTA-A Phase 6, same reviewer | 2 | 4 | 2 | 3 | 3 | 3 |
+| CTA-A Phase 5, same reviewer | 3 | 4 | 4 | 3 | 3 | 2 |
+| CTA-A Phase 0, same reviewer | 2 | 2 | 2 | 3 | 2 | 2 |
+| TOF-A Phases 5, 6 and 7 (identical to the reviewer) | 4 | 4 | 4 | 4 | 3 | 4 |
+
+The reviewer ranked the Phase 7 CTA-A set first and one point above Phase 6
+on crispness and clutter, and named the remaining gap: thin branches
+"slightly too thick and knobbly, with small free stubs", where the reference's
+are thin, smooth and continuous to their tips. The CTA-A gate (4 on all six)
+is not met on the fourth attempt. The TOF-A gate holds (clutter 4,
+connectivity 4); its gap to the reference is material and lighting, a dim
+dark red against black. This reviewer scored every CTA-A set lower than the
+third reviewer did, so the comparison that counts is within the review.
+
+**Coordinator's reading of the captures** (`visual-assessments.md`). In the
+sagittal cut and the skull base, branches that were ragged and broken in
+Phase 6 are continuous, evenly wide, glossy tubes. They are bolder than the
+reference's fine branches, short connectors at junctions still read as
+knobs, and clipped views still end vessels in flat discs. Standard mode
+shows the same tubes.
+
+**Not done or not verified.** The packaged build. A control in the app for
+the voxel drawing (`rooted_vessel_layer(..., smooth=False)` exists in the
+engine only). Tubes thinner than the grid allows, which would need the tubes
+drawn analytically rather than through the voxel tag volume. The rehearsal
+tube model still comes from the named tree.
+
+## Handoff, 2026-11-27
 
 State of the gates:
 
@@ -642,16 +723,17 @@ State of the gates:
 | 1 | Interaction p95 at most 16.7 ms, settle at most 1.5 s on CTA-A | met (10.9 ms, 1.42 s worst of three packaged runs in Phase 5; 11.1 ms, 1.41 s worst of four development-tree runs with the Phase 6 fine branches) |
 | 1 | Blind crispness and depth at least 4 | met with an opaque skull or a cut (4, 4); 3, 3 with the see-through skull |
 | 2 | Better Dice, clDice and Betti than vesselFM alone on the held-out cases | Dice, clDice, component count and patch Betti met on both; whole-volume loop count on CTA-B not met (9 against 7); TOF-B scored on a TopCoW MRA stand-in |
-| 3 | Zero floating components by default; no named major vessel lost | met on the drawn meshes of all four cases |
+| 3 | Zero floating components by default; no named major vessel lost | met on the drawn meshes of all six cases, with the tube drawing of Phase 7 |
 | 4 | Deviation at most 0.5 voxel; no self-intersection; tools displace vessels | met on TopCoW behind the tube geometry option, in standard mode |
 | 5 | Phase 1 frame budget with volume, tubes, tools and clipping in the packaged build | met |
-| 5 | Blind at least 4 on all criteria for CTA-A | not met after three attempts (4, 4, 3, 3, 3, 3; then 3, 4, 3, 3, 3, 4 with the finer vessels of Phase 6) |
-| 5 | Blind at least 4 on clutter and connectivity for TOF-A | met on the second and third attempts (4, 4) |
+| 5 | Blind at least 4 on all criteria for CTA-A | not met after four attempts (4, 4, 3, 3, 3, 3; then 3, 4, 3, 3, 3, 4 with the finer vessels of Phase 6; then 3, 4, 3, 3, 3, 3 with the tubes of Phase 7, ranked first of four versions by a stricter reviewer) |
+| 5 | Blind at least 4 on clutter and connectivity for TOF-A | met on the second, third and fourth attempts (4, 4) |
 | 5 | All earlier gates hold | not in the path-traced mode during rehearsal: vessels do not follow a tool press |
 
 What ships by default: the connected, rooted vessel tree from the model
 ensemble in standard mode, in one vessel colour, with the review toggle; on CT
-with the image-derived fine branches (Vessel detail). Behind settings: the
+with the image-derived fine branches (Vessel detail); thin branches drawn as
+smooth tubes. Behind settings: the
 path-traced mode (Volume lighting) with its Bone choice, and the tube geometry
 option for rehearsal cases.
 
@@ -662,11 +744,12 @@ follows cuts and displacement; the surgeon view in the path-traced mode.
 Open decisions 1 to 8 above need Shafrir. At Shafrir's request this branch
 now also carries the later commits of
 `shaf/interactive-operative-practice-20261121` (opt-in acceleration paths and
-the README rewrite), merged without conflict. `shaf/rehearsal-performance-20261121`
-was not merged: its ten commits conflict with this branch in twelve files (42
-places), mostly in `surgical_deformation_v2.py` and `VolumeRenderer.ts`,
-where both lines changed the same internals in different ways (for example
-the cached solver tuple and the displacement snapshot entry point). That is a
-port to be verified with that branch's own benchmarks, not a mechanical
-merge. The pull request to `main` itself was not merged.
+the README rewrite), merged without conflict, and the ten commits of
+`shaf/rehearsal-performance-20261121`, merged by hand on 2026-11-26 where the
+two lines had changed the same internals of the deformation engine and the
+renderer; [rehearsal performance](rehearsal-performance.md) records what was
+kept from each side, the paired timing against the pre-merge code, and the
+checks of that branch that were not run again (acquired playback, camera
+cadence, recordings, the signed package). The pull request to `main` itself
+was not merged.
 

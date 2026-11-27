@@ -81,6 +81,23 @@ MAX_DISPLAY_COMPARTMENTS = 128
 _DERIVED = "__derived:"
 
 
+def _tube_tags(c, row, mask, source, shape, displayed, transfer):
+    """Soft volume tags of a display row whose thin branches are drawn as tubes, on the displayed grid."""
+    from .vessel_display_tubes import DISPLAY_TUBES, display_tags
+
+    tubes = row.get(DISPLAY_TUBES)
+    if tubes is None:
+        return {}
+    try:
+        tags = resample(display_tags(mask, c.array(tubes)), source, shape, displayed, order=1)
+        return {"tags": transfer(np.clip(np.rint(tags), 0, 255).astype(np.uint8), "uint8")}
+    except InterruptedError:
+        raise
+    except Exception:
+        # Without prepared tags the volume smooths the layer's mask, as it did before.
+        return {}
+
+
 def _overlay_record(c, row, name, color, source, shape, displayed, transfer, cancelled, *, mask=None):
     """A display-only overlay compartment; it never enters layers, revisions or planning."""
     geometry = mesh(c, row, cancelled=cancelled)
@@ -91,6 +108,7 @@ def _overlay_record(c, row, name, color, source, shape, displayed, transfer, can
     mask = c.mask(row) if mask is None else mask
     return {"name": name, "color": color,
             "mask": transfer(resample(mask.astype(np.uint8), source, shape, displayed, order=0), "uint8"),
+            **_tube_tags(c, row, mask, source, shape, displayed, transfer),
             "surface": {"positions": transfer(positions, "float32"), "source": transfer(raw, "float32"),
                         "normals": transfer(normals(positions, indices), "float32"),
                         "sourceNormals": transfer(normals(raw, indices), "float32"),
@@ -639,6 +657,7 @@ def dispatch(session, operation, args, request, progress):
                 **({"sourceSupport": source_support} if source_support else {}),
                 **({"boneAdjudication": bone_review} if bone_review else {}),
                 **({"labelSet": set_id, "labelValue": row["label_value"]} if shared else {"mask": transfer(mask, "uint8")}),
+                **({} if shared else _tube_tags(c, row, native_mask, source, shape, displayed, transfer)),
                 **({"volumeMm3": source_volume} if source_volume is not None else {}),
             }
             record["surface"] = _surface_assets(geometry, np.linalg.inv(displayed) @ source, source_surface_only, transfer)

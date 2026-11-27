@@ -323,6 +323,30 @@ def test_the_mesh_gate_joins_a_branch_that_enters_the_tree_but_not_one_that_only
     assert alone['floating'] == 1
 
 
+def test_the_mesh_gate_joins_a_tube_that_enters_another_tube_and_not_one_that_stops_short(tmp_path):
+    from resectionlab.anatomy_geometry import mesh
+    from resectionlab.vessel_display_tubes import DISPLAY_TUBES, thin_tubes
+    c = study(tmp_path)
+    roots = np.zeros(SHAPE, bool); roots[4:6, 12, 12] = True
+    parent = np.zeros(SHAPE, bool); parent[4:36, 12, 12] = True      # One voxel wide.
+    enters = np.zeros(SHAPE, bool); enters[20, 13:22, 12] = True     # Starts beside the parent.
+    short = np.zeros(SHAPE, bool); short[20, 17:22, 12] = True       # Starts two millimetres away.
+    rows = {}
+    for name, data, beside in (('parent', parent, None), ('enters', enters, parent), ('short', short, parent)):
+        row = c.add_layer(data.astype(np.uint8), FRAME, layer_id=name, source_series='scan', kind='artery', role='context',
+                          color='#aa352b')
+        packed, _ = thin_tubes(data, (.5, .5, .5), context=beside)
+        rows[name] = {**row, DISPLAY_TUBES: c.put_array(packed)}
+    surfaces = {name: mesh(c, row) for name, row in rows.items()}
+    assert all(str(surface['surface_field']).startswith('thin-tubes+') for surface in surfaces.values())
+    for child, floating in (('enters', 0), ('short', 1)):
+        gate = parity.mesh_floating([('parent', surfaces['parent']), (child, surfaces[child])], roots, SHAPE,
+                                    [parity.drawn_solid(c, rows['parent']), parity.drawn_solid(c, rows[child])])
+        assert gate['floating'] == floating and gate['pieces'] == 1 + floating, child
+    # A part without tubes is still judged by its voxels.
+    assert parity.drawn_solid(c, c.layer('parent')).dtype == bool
+
+
 def test_capture_recipes_ask_for_the_rooted_view(tmp_path):
     c = study(tmp_path)
     case = {'series': 'scan', 'anchor': [5., 5., 5.], 'vessels': ['supplied-veins']}
@@ -439,6 +463,75 @@ def test_the_major_detail_hides_a_thin_end_branch_that_the_fine_detail_shows(tmp
     assert not c.mask(major)[tip].any() and c.mask(review)[tip].all()
     assert receipt['rooting']['lod']['voxels'] >= 4 and receipt['rooting']['policy']['always_mm'] == 1.0
     assert c.mask(major)[20:26, 15:20, 10:14].all()
+
+
+def test_a_thin_branch_is_drawn_as_a_tube_in_the_surface_and_the_volume_tags_while_its_mask_stays(tmp_path):
+    from resectionlab.anatomy_bridge import _tube_tags, open_anatomy_manifest
+    from resectionlab.anatomy_geometry import mesh
+    from resectionlab.vessel_display_tubes import DISPLAY_TUBES, unpack
+    score = additions()
+    score[22, 16, 14:23] = 0.8  # One voxel (0.5 mm) wide, leaving the connected piece.
+    folder = ensemble(tmp_path)
+    save(folder / 'vesselfm_candidate_probability.nii.gz', score)
+    c = study(tmp_path)
+    ids = parity.wire_ensemble(c, 'scan', folder)['layers']
+    extra = c.layer(ids[1])
+    tip = (22, 16, slice(17, 23))
+    smooth, receipt, _, _ = rooted_vessel_layer(c, extra)
+    plain, plain_receipt, _, _ = rooted_vessel_layer(c, extra, smooth=False)
+    # The same voxels either way: tubes change the drawing, not the display mask.
+    assert np.array_equal(c.mask(smooth), c.mask(plain)) and c.mask(smooth)[tip].all()
+    assert DISPLAY_TUBES not in plain and 'tubes' not in plain_receipt['rooting']
+    tubes = receipt['rooting']['tubes']['own']
+    assert tubes['replacedVoxels'] >= 6 and tubes['tubeLengthMm'] > 2
+    field, replaced = unpack(c.array(smooth[DISPLAY_TUBES]))
+    assert replaced[tip].all() and (field[tip] >= .5).all()
+    assert not replaced[20:26, 15:19, 10:14].any(), 'the 2 mm piece keeps its voxels'
+    # The thick tree alone has nothing thin, so it carries no tube field.
+    tree, tree_receipt, _, _ = rooted_vessel_layer(c, c.layer(ids[0]))
+    assert DISPLAY_TUBES not in tree and tree_receipt['rooting']['tubes']['own']['replacedVoxels'] == 0
+    # Surface: one contour of the tube field joined to the remaining voxels' own field.
+    drawn, stepped = mesh(c, smooth), mesh(c, plain)
+    assert str(drawn['surface_field']).startswith('thin-tubes+') and str(stepped['surface_field']) == 'categorical'
+    assert len(drawn['indices']) and not np.array_equal(drawn['source'], stepped['source'])
+    # The raw contour and the faired surface the app shows: a round wall about one voxel out, not a square prism.
+    for points in (drawn['source'], drawn['positions']):
+        world = points[(points[:, 2] > 18) & (points[:, 2] < 21)]
+        radial = np.hypot(world[:, 0] - 22, world[:, 1] - 16)
+        assert len(radial) >= 12 and radial.std() < .12 and .8 < radial.mean() < 1.2
+    # The thick piece is contoured from its softened mask now; it stays within a voxel of the stepped surface.
+    from scipy.spatial import cKDTree
+    piece = drawn['positions'][(drawn['positions'][:, 1] < 15.5) & (drawn['positions'][:, 2] < 13.5)]
+    assert len(piece) > 50 and cKDTree(stepped['positions']).query(piece)[0].max() < 1.
+    # A display that keeps every source voxel still draws its tubes (the mesh takes the source row's field).
+    source = {key: value for key, value in smooth.items() if key != DISPLAY_TUBES} | {'edits': []}
+    same = mesh(c, smooth, display_source=source)
+    assert str(same['surface_field']).startswith('thin-tubes+')
+    # A failure while drawing tubes costs only the tubes.
+    import resectionlab.vessel_display_tubes as tube_module
+    with pytest.MonkeyPatch.context() as patch:
+        patch.setattr(tube_module, 'thin_tubes', lambda *args, **kwargs: (_ for _ in ()).throw(RuntimeError('no skeleton')))
+        fresh = open_anatomy_manifest(c.root / 'patient-anatomy.json')
+        for stored in (c.root / 'display-cache').glob('rooted-vessel-display-cache-*.json'):
+            stored.unlink()
+        fallback, failed, _, _ = rooted_vessel_layer(fresh, fresh.layer(ids[1]))
+        assert DISPLAY_TUBES not in fallback and np.array_equal(fresh.mask(fallback), c.mask(smooth))
+        assert 'no skeleton' in failed['rooting']['tubes']['own']['failed']
+        for stored in (c.root / 'display-cache').glob('rooted-vessel-display-cache-*.json'):
+            stored.unlink()
+    # Volume tags on the displayed grid.
+    tags = c.array(_tube_tags(c, smooth, c.mask(smooth), FRAME, SHAPE, FRAME, lambda data, dtype: c.put_array(data.astype(dtype)))['tags'])
+    assert tags.dtype == np.uint8 and tags.shape == SHAPE and (tags[tip] >= 128).all() and tags[5, 20, 20] == 0
+    assert _tube_tags(c, plain, c.mask(plain), FRAME, SHAPE, FRAME, None) == {}
+    # Reopening reads the stored display, tubes included; a missing tube array prepares it again.
+    rooted_vessel_layer(c, extra)
+    reopened = open_anatomy_manifest(c.root / 'patient-anatomy.json')
+    again, same_receipt, _, _ = rooted_vessel_layer(reopened, reopened.layer(ids[1]))
+    assert again[DISPLAY_TUBES] == smooth[DISPLAY_TUBES] and same_receipt == receipt
+    (c.root / smooth[DISPLAY_TUBES]['path']).unlink()
+    rebuilt = open_anatomy_manifest(c.root / 'patient-anatomy.json')
+    restored, _, _, _ = rooted_vessel_layer(rebuilt, rebuilt.layer(ids[1]))
+    assert restored[DISPLAY_TUBES] == smooth[DISPLAY_TUBES] and (c.root / smooth[DISPLAY_TUBES]['path']).is_file()
 
 
 def test_a_fourth_layer_in_a_chain_shows_nothing(tmp_path):

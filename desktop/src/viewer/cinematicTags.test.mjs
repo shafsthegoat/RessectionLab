@@ -96,6 +96,42 @@ test('a float probability replaces the smoothed mask without being changed',()=>
   assert.deepEqual(fromLabels.data,fromMask.data);
 });
 
+test('prepared tags are used as they are, unsmoothed, with members at half and above',()=>{
+  const {shape,signal,arteries}=phantom();
+  // A prepared field: full inside the artery, a soft value on a few voxels beside it, a stray low value far away.
+  const prepared=Uint8Array.from(arteries,v=>v?255:0);
+  const beside=index(shape,13,8,5),far=index(shape,2,0,0);
+  prepared[beside]=140;prepared[far]=40;
+  const copy=prepared.slice();
+  const {tags}=build(signal,shape,[{cls:0,source:{kind:'tags',tags:prepared}}]);
+  assert.deepEqual(prepared,copy,'the source is not written');
+  assert.deepEqual(tags.data,prepared,'values pass through without smoothing');
+  const fromMask=build(signal,shape,[{cls:0,source:{kind:'mask',mask:arteries}}]).tags;
+  assert.notDeepEqual(fromMask.data,tags.data);
+  assert.ok(fromMask.data[index(shape,13,8,5)]>0&&fromMask.data[index(shape,13,8,5)]<140,'a mask is smoothed instead');
+  // Members are the voxels at half and above: the soft voxel counts, the stray one does not.
+  assert.equal(tags.classes[0].members,arteries.reduce((sum,v)=>sum+v,0)+1);
+  assert.ok(Math.abs(tags.classes[0].coreMedian-400)<2);
+  assert.throws(()=>build(signal,shape,[{cls:0,source:{kind:'tags',tags:prepared.slice(1)}}]),/acquired grid/);
+});
+
+test('a mask sharing a class with prepared tags is smoothed on its own and leaves them as supplied',()=>{
+  const shape=[27,19,11],count=27*19*11,signal=new Float32Array(count).fill(40);
+  const prepared=new Uint8Array(count),mask=new Uint8Array(count);
+  // A prepared tube along x at y = 5, a binary vessel along x at y = 13: far enough apart not to overlap.
+  for(let x=0;x<27;x++){prepared[index(shape,x,5,5)]=200;prepared[index(shape,x,6,5)]=90;mask[index(shape,x,13,5)]=1;signal[index(shape,x,5,5)]=signal[index(shape,x,13,5)]=400;}
+  const {tags}=build(signal,shape,[{cls:0,source:{kind:'tags',tags:prepared}},{cls:0,source:{kind:'mask',mask}}]);
+  for(const x of [3,13,23]){
+    assert.equal(tags.data[index(shape,x,5,5)],200);assert.equal(tags.data[index(shape,x,6,5)],90);
+    assert.equal(tags.data[index(shape,x,4,5)],0,'prepared tags are not spread');
+    const centre=tags.data[index(shape,x,13,5)],beside=tags.data[index(shape,x,12,5)];
+    assert.ok(centre>90&&centre<140&&beside>10&&beside<60,`the mask is smoothed (${centre}, ${beside})`);
+  }
+  // Order of the layers does not matter.
+  const swapped=build(signal,shape,[{cls:0,source:{kind:'mask',mask}},{cls:0,source:{kind:'tags',tags:prepared}}]).tags;
+  assert.deepEqual(swapped.data,tags.data);
+});
+
 test('without core-shell contrast the tag alone bounds vessel opacity',()=>{
   const {shape,arteries}=phantom();
   const flat=new Float32Array(arteries.length).fill(100);

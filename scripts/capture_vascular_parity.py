@@ -426,14 +426,26 @@ def _inside(mask, points):
     return inside
 
 
+def drawn_solid(collection, row):
+    """What a part's surface encloses: its displayed voxels, or with thin-branch tubes the field it was contoured from."""
+    from resectionlab.vessel_display_tubes import DISPLAY_TUBES, surface_field, unpack
+    mask = collection.mask(row)
+    if row.get(DISPLAY_TUBES) is None:
+        return mask
+    field, replaced = unpack(collection.array(row[DISPLAY_TUBES]))
+    return np.maximum((mask & ~replaced).astype(np.float32), surface_field(field))
+
+
 def mesh_floating(surfaces, roots, shape, masks=None):
     """Floating pieces of the drawn vessel surface, counted on the meshes the desktop receives.
 
     ``surfaces`` are (name, mesh) pairs. Pieces of different parts that share a
     vertex position (touching surfaces) are one piece; so are pieces of
-    different parts where a vertex of one lies inside the displayed voxels of
-    the other (``masks``, one per part, or callables loading it), joined to
-    that part's nearest vertex.
+    different parts where a vertex of one lies inside the other (``masks``,
+    one per part, or callables loading it), joined to that part's nearest
+    vertex. A boolean mask means inside the displayed voxels; a float array is
+    the field the part's surface was contoured from, and inside means at or
+    above one half there (a part whose thin branches are drawn as tubes).
     A piece floats when no vertex lies within one voxel of a root-label voxel.
     Independent of the rooting code, so it can come out non-zero.
     """
@@ -468,7 +480,12 @@ def mesh_floating(surfaces, roots, shape, masks=None):
         others = np.flatnonzero(owner != part)
         if mask is None or not len(own) or not len(others):
             continue
-        inside = others[_inside(np.asarray(mask() if callable(mask) else mask, bool), points[others])]
+        solid = np.asarray(mask() if callable(mask) else mask)
+        if solid.dtype.kind == 'f':
+            inside = others[ndi.map_coordinates(solid, points[others].T, order=1, mode='constant') >= .5]
+        else:
+            inside = others[_inside(solid.astype(bool), points[others])]
+        del solid
         if len(inside):
             links.append(np.column_stack([inside, own[cKDTree(points[own]).query(points[inside])[1]]]))
     links = np.concatenate(links)
@@ -864,7 +881,7 @@ def geometry(root, name, case, label, *, ensemble=None, scope='rooted'):
     parts = [part for vessel in vessels for part in displayed_surface(collection, vessel, scope)]
     # The gate counts pieces of the drawn surfaces, independently of the rooting code.
     result['floating_mesh'] = mesh_floating([(name, surface) for name, _, surface in parts], roots, mask.shape,
-                                            [lambda row=row: collection.mask(row) for _, row, _ in parts])
+                                            [lambda row=row: drawn_solid(collection, row) for _, row, _ in parts])
     from scipy import ndimage as ndi
     faces6, count6 = ndi.label(mask)
     rooted6 = set(np.unique(faces6[roots & mask]).tolist()) - {0} if roots is not None else set()
