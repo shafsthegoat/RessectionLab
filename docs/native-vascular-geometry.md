@@ -70,7 +70,7 @@ The desktop opens vessel layers as a **Connected tree** (`vesselScope:
 'rooted'`). `resectionlab.vascular_rooting.root_vessels` derives it per layer;
 nothing in the source mask, labels or manifest changes. Every source voxel is
 in exactly one of three outputs: shown, review (components that reach no root
-and were not bridged) or hidden by level of detail. Bridge voxels are a fourth,
+and were not bridged, and on CT the voxels in air) or hidden by level of detail. Bridge voxels are a fourth,
 separate output with their own provenance. Tests check the exact partition and
 that the shown display has no component without a root.
 
@@ -91,6 +91,18 @@ that the shown display has no component without a root.
   the component) and an extent of at least 10 mm (the other carotid tree or a
   separate posterior circulation); the receipt records the fallback, each
   accepted root and each refused entering component with its calibre.
+- **Air on CT.** With the acquired CT on the layer's grid, a source voxel below
+  -300 HU is not a vessel, whatever named or scored it. It goes to review before
+  components are found, so it is not a root and joins or bridges nothing; a
+  bridge or fill voxel below -300 HU is vetoed like one in bone. The receipt
+  counts these voxels under `air`, and a named label with voxels in air is
+  listed as partly in review with its `inAir` count. A model run on a whole
+  head names and scores voxels in the mastoid cells, the sinuses and the air
+  around the head. On Head-CTA-013 the rule moves 4,099 of 76,390 named voxels
+  to review, most of them pieces outside the head that carried the
+  straight-sinus root label; on TopCoW-014 and TopCoW-018 no named voxel is in
+  air and the shown display is identical with and without the rule (same
+  array hashes on all three layers).
 - **Bridging.** A detached component of at least 0.5 mm³ is joined when a
   geodesic path of at most 3 mm (voxel centre to centre) reaches the shown tree
   through voxels that are all supported. A voxel is supported when its signal
@@ -103,8 +115,9 @@ that the shown display has no component without a root.
   difference exceeds three robust noise widths of that shell. The search
   window always contains this neighbourhood, and a test checks that the
   decision and the recorded contrast are unchanged in a larger window. A supported voxel is then vetoed when its signal is
-  above twice the local contrast, above 700 HU on CT, or inside a same-grid
-  bone or skull layer, so probability cannot carry a bridge through bone. A
+  above twice the local contrast, above 700 HU or below -300 HU on CT, or inside
+  a same-grid bone or skull layer, so probability cannot carry a bridge through
+  bone or air. A
   fragment joins only tree voxels of its own class (artery or vein, from named
   labels or the layer kind); an unclassified fragment may join either. The
   search window covers only the fragment voxels within 3 mm of the tree, padded

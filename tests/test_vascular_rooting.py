@@ -500,3 +500,111 @@ def test_bridges_are_face_connected_paths():
     mask = tree | fragment
     result = root_vessels(mask, spacing=SPACING, signal=scan(mask, gap))
     assert result.shown[fragment].all() and ndi.label(result.display)[1] == 1
+
+
+def test_ct_voxels_in_air_are_review_and_root_join_or_bridge_nothing():
+    # A named trunk in tissue, a blob outside the head that a model gave the same root label, and a piece
+    # joined to the trunk only through voxels in air.
+    trunk, blob, far = along(1, 10, 1.0), along(22, 27, 1.0), along(13, 18, 1.0)
+    link = along(10, 13, 0.6) & ~trunk & ~far
+    mask = trunk | blob | far | link
+    signal = scan(mask)
+    signal[blob] = -950
+    signal[link] = -700
+    named = np.where(trunk | blob, 36, 0).astype(np.uint8)
+    result = root_vessels(mask, spacing=SPACING, signal=signal, named=named, scheme='topbrain-v1-ct', modality='CT')
+    partition_holds(result, mask)
+    assert result.shown[trunk].all() and not result.display[blob | link | far].any()
+    assert result.review[blob | link | far].all()
+    receipt = result.receipt
+    assert receipt['air'] == {'floorHu': -300.0, 'voxels': int((blob | link).sum()),
+                              'volumeMm3': round(float((blob | link).sum()) * 0.25 ** 3, 4), 'rule': receipt['air']['rule']}
+    assert receipt['input']['voxels'] == int(mask.sum()) and receipt['partitionExact']
+    assert receipt['review']['voxels'] == int((blob | link | far).sum()) and receipt['review']['components'] == 1
+    assert receipt['display']['floatingComponents'] == 0 and np.array_equal(result.air, blob | link)
+    row, = receipt['namedLabels']
+    assert (row['voxels'], row['shown'], row['review'], row['inAir'], row['status']) == (
+        int((trunk | blob).sum()), int(trunk.sum()), int(blob.sum()), int(blob.sum()), 'partly-review')
+    # Without the acquired CT, or on MR, nothing is known about air and the blob stays a root.
+    for options in ({'modality': 'CT'}, {'modality': 'CT', 'probability': np.where(mask, 0.9, 0).astype(np.float32)}):
+        kept = root_vessels(mask, spacing=SPACING, named=named, scheme='topbrain-v1-ct', **options)
+        assert kept.shown[blob].all() and 'air' not in kept.receipt
+    mr = root_vessels(mask, spacing=SPACING, signal=signal, modality='TOF')
+    assert 'air' not in mr.receipt and mr.shown[mask].sum() > trunk.sum()
+
+
+def test_a_ct_bridge_is_not_carried_through_air_by_probability():
+    tree, fragment, gap = bridge_case()
+    mask = tree | fragment
+    probability = np.where(mask | gap, 0.9, 0).astype(np.float32)
+    joined = root_vessels(mask, spacing=SPACING, signal=scan(mask, gap), probability=probability, modality='CT')
+    assert joined.shown[fragment].all() and joined.receipt['air']['voxels'] == 0
+    refused = root_vessels(mask, spacing=SPACING, signal=scan(mask, gap, gap_value=-900.0), probability=probability,
+                           modality='CT')
+    assert refused.review[fragment].all() and not refused.bridge.any()
+    partition_holds(refused, mask)
+
+
+def test_a_ct_mask_wholly_in_air_shows_nothing_and_a_label_wholly_in_air_is_listed():
+    mask = along(1, 10, 1.0)
+    signal = np.full(mask.shape, -1000.0, np.float32)
+    named = np.where(mask, 40, 0).astype(np.uint8)
+    result = root_vessels(mask, spacing=SPACING, signal=signal, named=named, scheme='topbrain-v1-ct', modality='CT')
+    assert not result.display.any() and np.array_equal(result.review, mask)
+    assert result.receipt['review']['voxels'] == int(mask.sum()) == result.receipt['input']['voxels']
+    assert 'lies in air' in result.receipt['review']['reason'] and 'lies in air' in result.receipt['roots']['reason']
+    assert [(row['name'], row['status'], row['inAir']) for row in result.receipt['namedLabels']] == [
+        ('SSS', 'review', int(mask.sum()))]
+
+
+def test_a_ct_corner_join_is_not_filled_through_air():
+    trunk, segment = corner_case()
+    mask = trunk | segment
+    signal = scan(mask)
+    between = np.zeros(mask.shape, bool); between[18:22, 12:16, 12:16] = True
+    signal[between & ~mask] = -900
+    filled = root_vessels(mask, spacing=(.5, .5, .5), signal=signal)
+    assert filled.shown[segment].all() and filled.bridge.sum() == 2
+    result = root_vessels(mask, spacing=(.5, .5, .5), signal=signal, modality='CT')
+    partition_holds(result, mask)
+    assert result.review[segment].all() and result.shown[trunk].all() and not result.bridge.any()
+    assert result.receipt['connectivity']['droppedComponents'] == 1 and result.receipt['air']['voxels'] == 0
+
+
+
+@pytest.mark.parametrize('dtype', [np.float64, np.float32, np.int16])
+def test_the_air_floor_is_one_voxel_set_whatever_the_scan_dtype(dtype, tmp_path):
+    # Voxels a hair below the floor in float64 are exactly on it in float32: they must be either air or
+    # bridgeable, never both (that broke the partition).
+    tree, fragment, gap = bridge_case()
+    mask = tree | fragment | gap
+    signal = scan(mask).astype(np.float64)
+    signal[gap] = -300 - 1e-9 if dtype is np.float64 else -301
+    signal = signal.astype(dtype)
+    probability = np.where(mask, 0.9, 0).astype(np.float32)
+    result = root_vessels(mask, spacing=SPACING, signal=signal, probability=probability, modality='CT')
+    partition_holds(result, mask)
+    assert not (result.bridge & mask).any()
+    in_air = signal.astype(np.float32) < -300
+    assert result.receipt['air']['voxels'] == int((mask & in_air).sum())
+    # A memory-mapped scan gives the same answer as the array in memory.
+    path = tmp_path / 'scan.dat'
+    mapped = np.memmap(path, dtype=signal.dtype, mode='w+', shape=signal.shape)
+    mapped[:] = signal
+    mapped.flush()
+    again = root_vessels(mask, spacing=SPACING, signal=np.memmap(path, dtype=signal.dtype, mode='r', shape=signal.shape),
+                         probability=probability, modality='CT')
+    assert np.array_equal(again.shown, result.shown) and np.array_equal(again.review, result.review)
+
+
+def test_a_model_addition_in_air_does_not_extend_its_tree():
+    tree = along(1, 10, 1.0)
+    branch = along(10, 16, 0.75) & ~tree          # touches the tree, in tissue
+    airy = tube((5, 8, 9), (5, 8, 14), 0.75) & ~tree   # touches the tree, in air
+    mask = tree | branch | airy
+    signal = scan(mask)
+    signal[airy] = -900
+    result = root_vessels(mask, spacing=SPACING, signal=signal, root_mask=tree, modality='CT')
+    partition_holds(result, mask)
+    assert result.shown[branch].all() and result.review[airy].all() and np.array_equal(result.air, airy)
+    assert result.receipt['review']['components'] == 0 and result.receipt['review']['voxels'] == int(airy.sum())

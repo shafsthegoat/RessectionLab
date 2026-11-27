@@ -8,7 +8,8 @@ voxels are a fourth, separate output that never enters a source label.
     Input voxels 26-connected to a root, directly or through an accepted bridge,
     and kept by the calibre level of detail.
 ``review``
-    Input voxels of components that reach no root and were not bridged.
+    Input voxels of components that reach no root and were not bridged, and on
+    CT the input voxels that lie in air.
 ``lod_hidden``
     Input voxels of thin terminal subtrees hidden by the level of detail.
 ``bridge``
@@ -18,6 +19,12 @@ voxels are a fourth, separate output that never enters a source label.
 Roots are the named basilar, internal carotid and vertebral arteries, and on CT
 the vein of Galen, straight sinus and superior sagittal sinus. Without named
 labels the largest component is the tree, and the receipt says so.
+
+Air on CT. With the acquired CT, an input voxel below ``ct_air_hu`` is not a
+vessel whatever named or scored it: it goes to review before components are
+found, so it cannot be a root, join pieces or carry a bridge. A model run on a
+whole head names and scores voxels in the mastoid cells, the sinuses and the
+air around the head; a brain-only field of view rarely shows this.
 
 Bridging rule. An unattached component of at least ``min_fragment_mm3`` is
 re-attached when a path from it to the shown tree exists whose centre-to-centre
@@ -149,6 +156,9 @@ class RootingPolicy:
     # Absolute CT veto: enhanced lumen stays below about 450 HU on the hero
     # CTAs; mineralised skull is above 575 HU in 95 percent of its voxels.
     ct_ceiling_hu: float = 700.0
+    # Absolute CT floor: air. The fine-branch rule uses the same level
+    # (vessel_fine_growth); a lumen voxel that is two fifths air is not lumen.
+    ct_air_hu: float = -300.0
     bridge_rounds: int = 3
     max_bridge_radius_mm: float = 1.0
     max_fragments: int = 20_000
@@ -182,6 +192,8 @@ class RootedVessels:
     lod_hidden: np.ndarray
     classes: np.ndarray
     receipt: dict
+    # On CT with the acquired signal: the input voxels in air, a subset of review.
+    air: np.ndarray | None = None
 
     @property
     def display(self):
@@ -354,8 +366,8 @@ def _support(local_mask, signal, probability, spacing, policy, *, ct=False, bone
 
     A voxel is supported by acquired signal or by model probability, and then
     vetoed when its signal is brighter than the contrast ceiling, above the CT
-    ceiling in HU, or inside a supplied bone mask: probability cannot carry a
-    bridge through bone. The lumen level is the median signal of ``lumen_voxels``
+    ceiling or below the CT air floor in HU, or inside a supplied bone mask:
+    probability cannot carry a bridge through bone or air. The lumen level is the median signal of ``lumen_voxels``
     and the background the median of the 1 to 3 mm shell outside the mask, both
     inside ``ball`` (a fixed physical neighbourhood the window always contains).
     """
@@ -367,7 +379,7 @@ def _support(local_mask, signal, probability, spacing, policy, *, ct=False, bone
     if signal is not None:
         values = np.asarray(signal, np.float32)
         if ct:
-            veto |= values > policy.ct_ceiling_hu
+            veto |= (values > policy.ct_ceiling_hu) | (values < policy.ct_air_hu)
         outside = ndi.distance_transform_edt(~local_mask, sampling=spacing)
         shell = (outside > policy.shell_inner_mm) & (outside <= policy.shell_outer_mm) & ball
         del outside
@@ -514,10 +526,54 @@ def root_vessels(mask, *, affine=None, spacing=None, named=None, scheme=None, mo
     layer_class = LAYER_CLASSES[layer_kind]
     receipt = {'version': VERSION, 'policy': asdict(policy),
                'grid': {'shape': list(mask.shape), 'spacingMm': spacing.round(6).tolist()}}
+    # Air on CT leaves the mask here; `source` keeps the input for the partition.
+    source, air, air_count = mask, None, 0
+    if ct and signal is not None and mask.any():
+        low, high = _crop_bounds(mask, (0, 0, 0))
+        box = tuple(slice(int(a), int(b)) for a, b in zip(low, high))
+        # Compared as float32, like the bridge and fill vetoes: one voxel set whatever the scan's dtype.
+        in_air = mask[box] & (np.asarray(_load_crop(signal, box), np.float32) < policy.ct_air_hu)
+        air_count = int(in_air.sum())
+        if air_count:
+            air = np.zeros(mask.shape, bool)
+            air[box] = in_air
+            mask = mask & ~air
+        del in_air
+        check()
+
+    def with_air(result):
+        """Add the air voxels to the review output and say so in the receipt."""
+        if ct and signal is not None:
+            receipt['air'] = {
+                'floorHu': policy.ct_air_hu, 'voxels': air_count, 'volumeMm3': round(air_count * voxel_mm3, 4),
+                'rule': 'Input voxels below the floor in the acquired CT are in review: they are not roots and '
+                        'join or bridge nothing. They are counted in the review voxels and volume, not in its '
+                        'components.'}
+        if air is None:
+            return result
+        result.review = result.review | air
+        result.air = air
+        if not mask.any():
+            reason = 'Every voxel of this vessel mask lies in air on the acquired CT.'
+            receipt['roots'] = {**receipt['roots'], 'reason': reason}
+            receipt['review'] = {**receipt['review'], 'reason': reason}
+        receipt['input'] = {**receipt['input'], 'voxels': receipt['input']['voxels'] + air_count,
+                            'volumeMm3': round(float((receipt['input']['voxels'] + air_count) * voxel_mm3), 4)}
+        receipt['review'] = {**receipt['review'], 'voxels': receipt['review']['voxels'] + air_count,
+                             'volumeMm3': round(float((receipt['review']['voxels'] + air_count) * voxel_mm3), 4)}
+        if named is not None:
+            receipt['namedLabels'] = _named_air(receipt['namedLabels'], np.asarray(named)[air], scheme)
+        receipt['partitionExact'] = bool(
+            receipt['partitionExact'] and not (result.bridge & air).any()
+            and np.array_equal(result.shown | result.review | result.lod_hidden, source))
+        if not receipt['partitionExact']:
+            raise AssertionError('Rooted display violated its partition invariant')
+        return result
+
     if not mask.any():
         empty = np.zeros(mask.shape, bool)
         receipt.update(_empty_receipt(scheme))
-        return RootedVessels(empty, empty.copy(), empty.copy(), empty.copy(), np.zeros(mask.shape, np.uint8), receipt)
+        return with_air(RootedVessels(empty, empty.copy(), empty.copy(), empty.copy(), np.zeros(mask.shape, np.uint8), receipt))
 
     pad = np.ceil((policy.max_gap_mm + policy.shell_outer_mm + 1) / spacing).astype(int)
     lo, hi = _crop_bounds(mask, pad)
@@ -844,7 +900,7 @@ def root_vessels(mask, *, affine=None, spacing=None, named=None, scheme=None, mo
     })
     if not partition or floating:
         raise AssertionError('Rooted display violated its partition or connectivity invariant')
-    return result
+    return with_air(result)
 
 
 def _deepest(labels, objects, component, spacing):
@@ -884,7 +940,7 @@ def _face_connect(display, seed, mask, origin, spacing, policy, *, signal, proba
         level = value(signal, point)
         if level is None:
             return False
-        if ct and level > policy.ct_ceiling_hu:
+        if ct and (level > policy.ct_ceiling_hu or level < policy.ct_air_hu):
             return True
         key = tuple(anchor)
         if key not in stats:
@@ -1182,6 +1238,20 @@ def _named_report(named, scheme, mask, components, bridged_voxels, shown, review
                      'unrootedComponents': loose, 'bridgedComponents': bridged,
                      'reviewComponents': loose - bridged, 'status': status})
     return rows
+
+
+def _named_air(rows, labels, scheme):
+    """Named rows with the voxels of each label that lie in air counted as review."""
+    rows = {row['label']: dict(row) for row in rows}
+    values, counts = np.unique(labels[labels > 0], return_counts=True)
+    for value, count in zip(values.tolist(), counts.tolist()):
+        row = rows.setdefault(value, {
+            'label': int(value), 'name': scheme.names[value], 'class': CLASS_NAMES[scheme.label_class(value)],
+            'voxels': 0, 'shown': 0, 'bridgedVoxels': 0, 'review': 0, 'lodHidden': 0,
+            'unrootedComponents': 0, 'bridgedComponents': 0, 'reviewComponents': 0, 'status': 'review'})
+        row.update(voxels=row['voxels'] + count, review=row['review'] + count, inAir=count)
+        row['status'] = 'review' if row['review'] == row['voxels'] else 'partly-review'
+    return [rows[value] for value in sorted(rows)]
 
 
 def _empty_receipt(scheme):

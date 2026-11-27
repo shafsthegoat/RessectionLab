@@ -745,6 +745,8 @@ def _addition_receipt(details, result, own, parent, wall=None):
     if wall["crust"] is not None:
         rest = result.review.copy()
         rest[wall["box"]] &= ~wall["crust"]
+    if result.air is not None:
+        rest = rest & ~result.air  # Voxels in air are review voxels, not detached pieces (see the `air` receipt).
     detached = int(ndi.label(rest, CONNECTIVITY)[1])
     del rest
     crust_voxels = wall["voxels"]
