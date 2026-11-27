@@ -93,7 +93,11 @@ export function operativeInstrument(tool:SurgicalTool,slot:SurgicalSlot,ghost:bo
       if(form==='side-cutter'||form==='driver-bit'){
         const cutter=metalwork(frame,new THREE.CylinderGeometry(r*.87,r,length,form==='driver-bit'?6:8),body);
         cutter.rotation.y=Math.PI/8;
-        if(form==='side-cutter')for(let j=0;j<3;j++)cylinder(frame,r*.94,.11,bevel,length*(j/4-.3));
+        // One flute band per ~1.6 mm of cutter, at least three. The 5 mm
+        // revision 1 cutter keeps its three bands; the 14 mm revision 3
+        // router flute carries the same pitch along its full checked length.
+        const bands=Math.max(3,Math.round(length/1.6));
+        if(form==='side-cutter')for(let j=0;j<bands;j++)cylinder(frame,r*.94,.11,bevel,length*(j/(bands+1)-.3));
       }else{
         // Tapered and beveled steel edge, constructed in the authored X/Z
         // plane so a change in the shaft's roll also turns the cutting plane.

@@ -9,6 +9,13 @@ PROPERTY = 'operativeExposureV1'
 SCHEMA = 'resectionlab.operative-exposure.v1'
 BODIES = ('scalp', 'bone', 'dura')
 MAX_ANGLE = math.radians(115)
+# Opt-in fold reference of a scalp or dural body: the deep face at the hinge.
+FOLD_REFERENCE = 'hinge-deep-face-v1'
+# assumed-research: with that reference the flap is first lifted this far off
+# its bed over the first degrees of reflection, as when it is elevated in the
+# subgaleal or subdural plane before it is turned back.
+FOLD_ELEVATION_MM = 2.0
+FOLD_ELEVATION_RAD = math.radians(6.)
 
 
 def exposure_declaration(
@@ -171,6 +178,21 @@ def rest(engine, name):
             exterior = levels[inverse]
         lookup = {int(i): k for k, i in enumerate(ids)}
         hinge_band = max((along[lookup[c]] for c, _ in config['hingeEdges']), default=0.0)
+        if name != 'bone' and config.get('foldReference') == FOLD_REFERENCE:
+            # A thick sheet on a curved head rolls about its attached deep face.
+            # Each slice across the hinge bends about the deep-face height of
+            # its own hinge column, so the flap's curvature and thickness turn
+            # with the roll: the deep layer lifts away from the calvarium and
+            # the outer layers stay forward of the hinge when the bend length
+            # exceeds the thickness times the reflection angle.
+            hinge = np.asarray(sorted({lookup[c] for c, _ in config['hingeEdges']}), dtype=np.int64)
+            slices, inverse = np.unique(np.round(across[hinge], 7), return_inverse=True)
+            base = np.full(len(slices), np.inf)
+            np.minimum.at(base, inverse, heights[hinge])
+            # The hinge line follows the head's curvature across the flap; a
+            # quadratic fit keeps a single voxel step from tilting one slice.
+            degree = min(2, len(slices) - 1)
+            exterior = np.polyval(np.polyfit(slices, base, degree), across) if degree > 0 else np.full(len(ids), base[0])
         cache[name] = (
             ids,
             pos,
@@ -217,6 +239,12 @@ def centers(engine, name, state=None, indices=None):
     layer_theta = theta * fraction**2 * (3.0 - 2.0 * fraction)
     radial = hinge_band + length / a * sn + tail * cs - z * np.sin(layer_theta)
     height = length / a * (1 - cs) + tail * sn + z * np.cos(layer_theta) + exterior
+    if cfg.get('foldReference') == FOLD_REFERENCE:
+        # The flap is first elevated off its bed in the dissection plane, then
+        # rolled: a lift that grows over the first degrees and tapers to zero
+        # at the attached hinge, so no cell slides along a bump of its bed.
+        ramp = fraction**2 * (3.0 - 2.0 * fraction)
+        height = height + FOLD_ELEVATION_MM * min(1.0, abs(a) / FOLD_ELEVATION_RAD) * ramp
     return origin + np.outer(x, axis) + np.outer(radial, f) + np.outer(height, n)
 
 

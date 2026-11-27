@@ -70,20 +70,19 @@ def _convexity_target(scene, memberships, targets):
     return {'name': 'Glioma core and margin', 'regions': parts, 'annotationHash': semantic_digest(parts)}
 
 
-def _host_target(scene, memberships, targets):
-    # A declared host rehearsal names its generated lesion layers. Each must
-    # still own exactly the cells of its source mask.
-    from .surgical_host_rehearsal import declaration
-    names = [row['name'] for row in declaration(scene)['layers'] if row['role'] in ('tumour_rim', 'tumour_core')]
-    if not names or memberships is None or set(memberships) != set(names) or [r['name'] for r in targets] != names:
-        raise ValueError('The host rehearsal target differs from its declared generated lesion.')
+def _operative_target(scene, memberships, targets):
+    # Any other operative scene binds its own tumour target regions, whatever
+    # its source class. Each region must still own exactly its source mask.
+    names = [region['name'] for region in targets]
+    if not names or memberships is None or not set(names) <= set(memberships):
+        raise ValueError('An operative practice target needs tumour target regions with source memberships.')
     parts = []
     for region in targets:
         name = region['name']
         if not np.array_equal(memberships[name], np.flatnonzero(scene.labels.ravel() == region['id'])):
-            raise ValueError('The generated lesion mask differs from its engine membership.')
+            raise ValueError('A tumour target mask differs from its engine membership.')
         parts.append({'regionId': region['id'], 'name': name, 'annotationHash': scene.source['annotationHashes'][name]})
-    return {'name': 'Generated tumour rim and core', 'regions': parts, 'annotationHash': semantic_digest(parts)}
+    return {'name': ' and '.join(names), 'regions': parts, 'annotationHash': semantic_digest(parts)}
 
 
 def source_binding(engine, case_hash, snapshot, record):
@@ -113,8 +112,9 @@ def source_binding(engine, case_hash, snapshot, record):
     memberships = original_target_memberships(scene)
     targets = [r for r in scene.regions if r.get('target') and r['material'] == 'tumor']
     if engine._operative:
-        from .surgical_host_rehearsal import declaration as host_rehearsal
-        target_binding = (_host_target if host_rehearsal(scene) is not None else _convexity_target)(
+        # Only the frozen convexity phantoms keep their legacy binding, so
+        # their recorded practice checkpoints still verify.
+        target_binding = (_convexity_target if case_hash in CONVEXITY_CASES else _operative_target)(
             scene, memberships, targets)
     else:
         if memberships is None or len(targets) != 1 or len(memberships) != 1:

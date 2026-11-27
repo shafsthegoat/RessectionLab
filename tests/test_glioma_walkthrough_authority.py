@@ -24,12 +24,14 @@ def pose(position):
     return {'position': list(position), 'quaternion': [1., 0., 0., 0.]}
 
 
-def test_acquired_provenance_refuses_generated_exposure(anatomy):
+def test_acquired_provenance_operates_on_the_same_exposure(anatomy):
+    # The engine operates on any reconstruction; the acquired marker is provenance, not a gate.
     scene, _ = anatomy
     marked = SurgicalScene(scene.labels, scene.affine, scene.regions,
-                           {**scene.source, 'patientId': 'unadmitted-source-check'}, scene.properties)
-    with pytest.raises(ValueError, match='OPERATIVE_EXPOSURE_REQUIRES_GENERATED_SOURCE'):
-        SurgicalEngine(marked)
+                           {**scene.source, 'patientId': 'acquired-source-check'}, scene.properties)
+    engine = SurgicalEngine(marked)
+    assert engine.step(action('inspect'))['status'] == 'accepted'
+    assert engine._operative_tool_revision == SurgicalEngine(scene)._operative_tool_revision
 
 
 def test_intact_opening_refuses_direct_placement_and_swept_access(anatomy):

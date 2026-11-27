@@ -16,8 +16,27 @@ PROFILE_IDS = (
     'micro_scissors', 'tumor_forceps', 'bone_flap_holder', 'irrigation', 'cortical_probe',
     'subcortical_probe', 'membrane_forceps', 'raney_clip_applier', 'dressing_forceps',
     'needle_driver', 'fixation_driver',
+    # Anatomy-scale distal profiles, appended for instrument geometry revision 3.
+    'scalpel_long_blade', 'craniotome_router',
 )
 PROFILE_INDEX = {name: index for index, name in enumerate(PROFILE_IDS, 1)}
+# Instrument geometry revision 3 keeps every revision 2 device except these two,
+# whose distal working lengths reach through real scalp and skull thickness.
+REVISION_3_PROFILES = {'scalpel': 'scalpel_long_blade', 'craniotome': 'craniotome_router'}
+# assumed-research: a No. 10/No. 22 class blade presents roughly 20-30 mm of
+# cutting edge. 22 mm is assigned so the full scalp (up to 11 mm on the 1 mm
+# host grid) lies on the edge with the shaft outside the tissue.
+LONG_BLADE_EDGE_MM = 22.
+# assumed-research: footed craniotome routers carry a side-cutting flute long
+# enough for the full calvarial thickness. 14 mm is assigned to clear the
+# 3-10 mm host skull with the guard post inside the cut trough.
+ROUTER_FLUTE_MM = 14.
+
+
+def operative_profile(instrument, revision):
+    """Profile index of one operative instrument under an instrument geometry revision."""
+    name = REVISION_3_PROFILES.get(instrument, instrument) if revision == 3 else instrument
+    return PROFILE_INDEX[name]
 
 
 def profile_segments(index, aperture_mm):
@@ -47,6 +66,20 @@ def profile_segments(index, aperture_mm):
         axial(-5,0,.75,'side-cutter')
         part((1.55,0,-5),(1.55,0,.7),.34,'guard-post','shaft')
         part((1.55,0,.7),(-.55,0,.7),.36,'guard-foot','shaft')
+    elif name == 'craniotome_router':
+        # The revision 1 cutter, post and foot, with the flute and post lengthened.
+        flute = -ROUTER_FLUTE_MM
+        shaft(flute, .85)
+        axial(flute,0,.75,'side-cutter')
+        part((1.55,0,flute),(1.55,0,.7),.34,'guard-post','shaft')
+        part((1.55,0,.7),(-.55,0,.7),.36,'guard-foot','shaft')
+    elif name == 'scalpel_long_blade':
+        # The revision 1 bevel pair scaled along the edge; the belly keeps its offset.
+        heel = -LONG_BLADE_EDGE_MM
+        joint = heel*2.4/5.8
+        shaft(heel)
+        part((0,0,heel),(-.55,0,joint),.48,'blade-heel')
+        part((-.55,0,joint),(0,0,0),.42,'blade-point')
     elif name == 'cusa':
         shaft(0)
         axial(0,0,1.5,'aspiration-lumen')
@@ -135,6 +168,9 @@ ASSEMBLIES = {
     'needle_driver':(180.,65.,2.1,'spring'),
     'dural_scissors':(170.,65.,2.1,'ring'),
     'micro_scissors':(155.,62.,1.7,'spring'),
+    # Revision 3 distal profiles mount on the unchanged handle and handpiece.
+    'scalpel_long_blade':(143.,43.,4.2,'flat'),
+    'craniotome_router':(172.,70.,9.,'motor'),
 }
 
 

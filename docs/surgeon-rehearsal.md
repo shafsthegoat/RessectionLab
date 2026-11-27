@@ -39,6 +39,43 @@ records which of these are closed.
 The latest visibly excavating, active-suction example and precise local evidence
 are described in [Operative demonstration](operative-demonstration.md).
 
+## Complete procedure on a host head
+
+`scripts/build_host_glioma_rehearsal.py HOST DIR` builds a working grid from any
+prepared study with scalp or skin, skull, cortex, white matter and a tumour
+layer; `scripts/rehearse_host_glioma.py run DIR/host-rehearsal.ressectionlab
+--landmarks DIR/landmarks.json --output NEW` drives the whole procedure through
+the desktop bridge in the operating-table frame, saving a named checkpoint after
+each step (`--resume` continues one), and `audit NEW/complete.ressectionlab
+--require-complete` replays it uncached. The motions live in
+`scripts/host_rehearsal_actions.py` and the aspirator plan in
+`scripts/host_resection_plan.py`.
+
+The scalp is cut full thickness with the 22 mm blade along a horseshoe seam,
+stepping finely beside bone and re-cutting any attached column, gripped 4 mm
+inside its rim and rolled back 100 degrees about its base onto a retaining
+stay. No scalp-edge Raney clip is placed: the host declares no scalp vascular
+source, so scalp-edge bleeding is not simulated. A lateral burr hole is drilled
+through the full local thickness, the guarded router follows the inner table
+all round with its foot in the assumed epidural plane (dwelling where thick bone
+is ahead), and the free flap is carried to its three-pad rest. Closed scissors
+divide the dural seam at the depth of its deepest cells and the dura is folded
+back on a stay. The exposed cortex is stimulated at the planned corticotomy
+(result unknown: no functional evidence exists). The aspirator opens an 8 mm
+corticotomy with vertical strokes, then debulks the tumour in 2 mm layers
+through it, each line of approach checked against a prediction of what has been
+cleared and each stroke turning at most 15 degrees between positions. After the
+corridor the tip ball never touches vessel, dural or bony cells, and touches
+non-target brain only within 7 mm above the tumour in its own column: through
+one corticotomy a straight aspirator cannot undercut a tumour that widens below
+its top without opening that roof, and the run reports what it removed. The
+cavity wall is then worked at 0.4 power on a 1 mm raster. The cavity is
+irrigated and suctioned and a counted cottonoid is placed and retrieved. No
+wound port exists for bipolar sealing. Closure returns the dura and scalp about
+their hinges and sutures their anchors, and replaces and fixes the bone flap.
+The provenance and assumptions of the host anatomy are listed in the
+[toolbox API](surgical-toolbox-api.md#generated-scalp-bone-and-dura-exposure).
+
 In Rehearse, **Surgeon / Microscope** installs a fixed optical camera with angle,
 working distance, field size, focus-plane offset and operative light controls.
 Tools never drive it after initial placement. Opaque retained anatomy occludes

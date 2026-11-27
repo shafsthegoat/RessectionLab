@@ -25,8 +25,8 @@ TOOLS = {
 }
 
 
-from .surgical_tool_profiles import (ASSEMBLIES, PROFILE_INDEX, assembly_geometry_hash,
-                                    assembly_segments, profile_geometry_hash)
+from .surgical_tool_profiles import (ASSEMBLIES, PROFILE_IDS, PROFILE_INDEX, assembly_geometry_hash,
+                                    assembly_segments, operative_profile, profile_geometry_hash)
 
 
 OPERATIVE_TOOLS = {**TOOLS,
@@ -45,22 +45,27 @@ def tools_for_operative_profile(enabled):
 
 
 def operative_tool_parameters(instrument, params, revision=1):
+    # Revision 3 is the revision 2 whole-device assembly with anatomy-scale
+    # distal profiles for the scalpel and craniotome.
     return {**params, 'radiusMm': OPERATIVE_TOOLS[instrument]['radiusMm'],
-            'operativeToolProfileV1': PROFILE_INDEX[instrument],
-            **({'operativeToolAssemblyRevision':2} if revision==2 else {})}
+            'operativeToolProfileV1': operative_profile(instrument, revision),
+            **({'operativeToolAssemblyRevision':2} if revision in (2, 3) else {})}
 
 
 def catalog(operative=False):
     if operative:
-        revision = 2 if operative==2 else 1
+        revision = operative if operative in (2, 3) and operative is not True else 1
         rows = []
         for name,tool in OPERATIVE_TOOLS.items():
-            index = PROFILE_INDEX[name]
+            index = operative_profile(name, revision)
+            assembly = 1 if revision == 1 else 2
             profile = {'revision':revision,
-                       'geometryHash':assembly_geometry_hash(index) if revision==2 else profile_geometry_hash(index),
-                       'parts':[part[4] for part in assembly_segments(index,2.,revision)]}
-            if revision==2:
-                total,working,*_ = ASSEMBLIES[name]
+                       'geometryHash':assembly_geometry_hash(index) if assembly==2 else profile_geometry_hash(index),
+                       'parts':[part[4] for part in assembly_segments(index,2.,assembly)]}
+            if revision == 3:
+                profile['profileId'] = PROFILE_IDS[index-1]
+            if assembly==2:
+                total,working,*_ = ASSEMBLIES[PROFILE_IDS[index-1]]
                 profile['totalLengthMm'] = total
                 rows.append(dict(tool,id=name,workingLengthMm=working,approximation='fixed whole-instrument research profile in mm',physicalProfile=profile))
             else:

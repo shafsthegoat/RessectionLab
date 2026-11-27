@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""Build an operative rehearsal scene on a segmented host head with a generated tumour.
+"""Build an operative rehearsal scene on a prepared, segmented head study with a tumour layer.
 
-The host is a prepared EDEN2020 segmented synthetic study. The output is a new
-development case on a working grid with the operative site uppermost, plus the
-landmarks the rehearsal driver uses. Source arrays are never modified.
+The host is any prepared study whose layers declare scalp or skin, skull,
+cerebral cortex, white matter and a tumour (acquired, estimated, supplied or
+generated; a missing layer is named in the error). The output is a new case on
+a working grid with the operative site uppermost, plus the landmarks the
+rehearsal driver uses. Source arrays are never modified.
 
   build_host_glioma_rehearsal.py HOST.ressectionlab DIRECTORY [--outward R A S] [--bone-radius-mm 22]
 """
@@ -22,7 +24,7 @@ from resectionlab.surgical_host_rehearsal import build_host_rehearsal
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('host', type=Path, help='Prepared segmented synthetic host study')
+    parser.add_argument('host', type=Path, help='Prepared segmented host study')
     parser.add_argument('directory', type=Path, help='Directory for host-rehearsal.ressectionlab and landmarks.json')
     parser.add_argument('--outward', type=float, nargs=3, metavar=('R', 'A', 'S'),
                         help='Outward RAS direction of the approach; default is the shortest convexity corridor')

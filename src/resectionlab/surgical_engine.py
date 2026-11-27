@@ -457,17 +457,18 @@ class SurgicalEngine:
         self.tools = TOOLS
         self._operative_tool_revision = 0
         if self._operative:
-            from .surgical_planning_admission import source_classification
-            # An acquired host needs its own explicit development-rehearsal
-            # declaration. Planning and training admission stay refused for it.
+            # An operative exposure runs on any reconstruction, whatever its
+            # source class. Only an inspection-only source, which forbids every
+            # native action, is refused. A host provenance declaration, when
+            # present, must be well formed; it records evidence, not permission.
+            if self._source_inspection_only:
+                raise ValueError('SOURCE_INSPECTION_ONLY: an inspection-only source cannot open an operative exposure')
             from .surgical_host_rehearsal import declaration as host_rehearsal
-            if self._source_inspection_only or (source_classification(scene) != 'generated-engineering'
-                    and host_rehearsal(scene) is None):
-                raise ValueError('OPERATIVE_EXPOSURE_REQUIRES_GENERATED_SOURCE')
+            host_rehearsal(scene)
             from .surgical_tools import tools_for_operative_profile
             declaration = scene.properties['operativeExposureV1']
             revision = declaration.get('instrumentGeometryRevision', 1) if isinstance(declaration, dict) else None
-            if type(revision) is not int or revision not in (1, 2):
+            if type(revision) is not int or revision not in (1, 2, 3):
                 raise ValueError('OPERATIVE_INSTRUMENT_GEOMETRY_REVISION_REQUIRED')
             if (not scene.properties.get('tissuePhysicsV2') or cranial_stages is not None or
                     any(contract in scene.properties for contract in ('planarBladeManeuverV1', 'cranialMillingV1', 'cranialAccessV1'))):

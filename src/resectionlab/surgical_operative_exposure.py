@@ -26,6 +26,10 @@ def initialize(engine):
     config = engine.scene.properties[PROPERTY]
     if config.get('schema') != SCHEMA or set(config.get('bodies', {})) != set(BODIES):
         raise ValueError('OPERATIVE_EXPOSURE_INVALID_DECLARATION')
+    footprint = config.get('accessDepthFootprintMm')
+    if footprint is not None and (type(footprint) not in (int, float) or not math.isfinite(footprint)
+                                  or footprint <= 0):
+        raise ValueError('OPERATIVE_EXPOSURE_INVALID_DECLARATION')
     seen = set()
     bodies = {}
     for name in BODIES:
@@ -83,7 +87,10 @@ def initialize(engine):
             distance = cKDTree(engine.scene.points(sorted(ring))).query(
                 engine.scene.points(sorted(corridor))
             )[0]
-            if distance.max() > 2.55:
+            # A thick, curved skull can reach below a thin flap edge; such a
+            # scene declares how far from the ring its cutter trough extends.
+            reach = declaration.get('bladeCorridorReachMm', 2.55)
+            if type(reach) not in (int, float) or not 0 < reach <= 5.0 or distance.max() > reach:
                 raise ValueError('OPERATIVE_EXPOSURE_OFF_PATH_BONE_CORRIDOR')
         for left, right in declaration['seamEdges'] + declaration['hingeEdges']:
             if (
@@ -838,9 +845,16 @@ def check_motion(engine, key, op, p, q):
         'scalpel',
     ):
         dura = _source(engine, 'dura')
-        depth = (p - dura['restCenterMm']) @ np.asarray(dura['outward'])
+        outward = np.asarray(dura['outward'])
+        offset = p - dura['restCenterMm']
+        depth = offset @ outward
         if depth < -0.5 and not _access(engine):
-            raise ValueError('OPERATIVE_INTRACRANIAL_ACCESS_CLOSED')
+            # On a curved head the scalp beyond the craniotomy lies below the
+            # dural plane. A scene may bound the depth test to the footprint
+            # of the craniotomy, where intact bone is the only barrier.
+            footprint = engine.scene.properties[PROPERTY].get('accessDepthFootprintMm')
+            if footprint is None or np.linalg.norm(offset - depth * outward) <= footprint:
+                raise ValueError('OPERATIVE_INTRACRANIAL_ACCESS_CLOSED')
     objs = [o for o in engine.state[PROPERTY]['objects'] if o['status'] != 'retrieved']
     if not objs:
         return
