@@ -115,6 +115,62 @@ drawn), and subarachnoid space reaching a crop face is not exterior air, so
 white matter under it takes the cortex cover. The fairing adds about 1.5 s of
 worker time for a 1-million-vertex cortex.
 
+### Source-resolution surfaces
+
+When the opened host-rehearsal case has an `operative-source-surfaces.npz`
+beside its file (built by `scripts/build_operative_source_surfaces.py` for that
+exact case version), Rehearse reads it through the read-only
+`operativeSourceSurfaces` operation (`../operative-source-surfaces.ts`; the
+engine checks case, host, grid and every array digest, and the main process
+reads the arrays from that same file and matches each to the engine's digest,
+because the engine's transfer files do not outlive the request) and
+draws skin, outer and inner skull, dura, cortex, white matter, tumour, vessel
+tube walls and tract streamlines from it instead of the voxel meshes of those
+layers (`operativeSourceScene.ts`). The meshes stay in source-voxel
+coordinates of the working grid, so materials, the scan-intensity shading,
+brain shift and injury marks apply unchanged. The engine keeps every cell,
+count and pick:
+
+- Inside a body outline (`bodyEdgeMm` > 0) the scalp, bone and dura vertices
+  move with that body's engine cells by the per-cell rigid transforms of the
+  voxel flap (`ExposureBodyTransport`, tent-weighted over the eight
+  surrounding body cells, else the nearest within 4 cells). Once a body has
+  moved, its sheet is split along the outline with a kerf of 0.9 mm (scalp),
+  2 mm (bone) or 0.6 mm (dura); vertices near the outline's hinge points are
+  not split, so a hinged flap stays joined to its base. Scalp and bone cut
+  faces are closed by a smooth wall from the outer surface's cut edge straight
+  down the exterior normal to the inner outline (cut-scalp and diploe tones);
+  the scalp flap's underside is the outer table under its outline, carried
+  with it. Before a body moves, its outline shows the planned incision or
+  craniotomy (violet) and, as the engine reports seam edges, the cut part in a
+  dark seam line. Per-cell bone dust is not drawn over the kerf wall.
+- Removed brain, tumour and vessel cells, plus CUSA's pending fraction, form a
+  half-cell lattice field blurred with σ = 0.25 cell
+  (`sourceCavityField.ts`); fragments of those surfaces whose rest position
+  lies where the field exceeds 0.5 are discarded, and that level set is drawn
+  as the cavity wall (surface nets), kept only where brain tissue remains
+  just outside it and shaded by the case scan. Tests hold the wall within half
+  a cell of the engine's removed boundary.
+- A pick on a source surface resolves to the engine cell of the nearest vertex
+  of the hit triangle (`ownerCells`, else `cells`): the cursor goes to that
+  cell's current centre and the layer is the engine owner of that cell. Hits
+  in removed tissue fall through to the next surface.
+- Wound markers sit on the nearest tube centreline point, and the tip
+  proximity readout measures to the tube walls and streamlines of the asset.
+  Vessels of unknown kind (most of the vessel model) are drawn in a neutral
+  colour, which the field readout states.
+
+The assumed dura sheet (the inner table where the engine's dura lies within
+3 mm) is drawn 0.8 mm outward and its gaps under 40 mm in perimeter are
+closed for display. Tract streamlines show only with source-label colours or
+inspection transparency; the large static sheets (skin, skull, white matter)
+cast no shadow under the near-coaxial lamp, which keeps the settled
+microscope frame near 30 ms at 1440 × 900.
+
+Without the asset, or when it belongs to another case version or grid, the
+field readout says **Source surfaces unavailable** with the reason and the
+voxel drawing is used.
+
 The settled microscope image falls off darker beyond
 1.08 radii of the bone flap outline (to 40% before tone mapping by about two
 radii), so scalp and drapes recede and the eye goes to the opening.

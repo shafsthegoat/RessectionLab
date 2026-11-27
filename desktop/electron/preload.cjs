@@ -131,6 +131,7 @@ contextBridge.exposeInMainWorld('resectionApi', Object.freeze({
   inspectAxisPlanning: args => ipcRenderer.invoke('research:inspectAxisPlanning', args || {}),
   inspectObservedLandmarkUpdate: args => ipcRenderer.invoke('research:inspectObservedLandmarkUpdate', args || {}),
   inspectEvidence: args => ipcRenderer.invoke('research:inspectEvidence', args || {}),
+  operativeSourceSurfaces: args => ipcRenderer.invoke('research:operativeSourceSurfaces', args || {}),
   trainPatient: args => ipcRenderer.invoke('research:trainPatient', args || {}),
   listRuns: args => ipcRenderer.invoke('research:listRuns', args || {}),
   replayTraining: args => ipcRenderer.invoke('research:replayTraining', args || {}),

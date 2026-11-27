@@ -2,7 +2,7 @@ import {surgicalFieldAmounts} from '../full-case-presentation';
 import {PracticeHud} from './PracticeHud';
 import {ScenarioReadout} from './ScenarioReadout';
 import {scenarioReadout,latestNavigation} from '../operative-scenarios';
-import {tipProximity,type ProximityLayer} from './tipProximity';
+import {sourceTipProximity,tipProximity,type ProximityLayer} from './tipProximity';
 import {analyticShift,sampleRatios,TaperInterpolator,shiftAt} from './brainShiftField';
 import {membraneTransport} from './membraneTransport';
 import {resultMembership} from './resultInspectionData';
@@ -68,6 +68,7 @@ import {
   structuralProposalReviewLabel,
 } from "./structuralProposal";
 import {operativeAnatomyTitle} from "./operativeProvenance";
+import {loadOperativeSourceSurfaces,type SourceSurfaceStatus} from "../operative-source-surfaces";
 import "./viewer.css";
 import "./operativePresentation.css";
 
@@ -466,6 +467,29 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     },onDisplayError:(view,message)=>{if(engine.current!==renderer)return;setModelDisplayPending(false);setModelDisplayError(message);requested.onDisplayError?.(view,message);}}:null);
     if(!admitted)setModelDisplayPending(false);
   },[ready,graphicsGeneration,caseData,props.surgicalInteraction,props.engineInspection,settings.operativeView]);
+  // Source-resolution surfaces of a host rehearsal, read once per case version; the voxel drawing stays when unavailable.
+  const hostOperative=!!props.surgicalInteraction?.view?.operativeExposureV1&&!!geometrySource?.compartments.some(layer=>layer.provenance);
+  const sourceCaseHash=hostOperative?geometrySource?.caseHash??null:null;
+  const [sourceSurfaces,setSourceSurfaces]=useState<SourceSurfaceStatus|null>(null);
+  useEffect(()=>{
+    if(!sourceCaseHash){setSourceSurfaces(null);return;}
+    if(sourceSurfaces?.caseHash===sourceCaseHash)return;
+    const api=window.resectionApi;let live=true;
+    setSourceSurfaces({status:'loading',caseHash:sourceCaseHash});
+    if(!api){setSourceSurfaces({status:'unavailable',caseHash:sourceCaseHash,code:'NO_API',reason:'no local engine'});return;}
+    loadOperativeSourceSurfaces(api,sourceCaseHash).then(result=>{if(live)setSourceSurfaces(result);},
+      cause=>{if(live)setSourceSurfaces({status:'unavailable',caseHash:sourceCaseHash,code:'SOURCE_SURFACES_INVALID',reason:cause instanceof Error?cause.message:String(cause)});});
+    return()=>{live=false;};
+  },[sourceCaseHash]);
+  const [sourceRefusal,setSourceRefusal]=useState<string|null>(null);
+  useEffect(()=>{
+    const asset=sourceSurfaces?.status==='available'&&sourceSurfaces.caseHash===sourceCaseHash?sourceSurfaces.asset:null;
+    setSourceRefusal(engine.current?.setSourceSurfaces(asset)??null);
+  },[ready,graphicsGeneration,caseData,sourceSurfaces,sourceCaseHash]);
+  const sourceNote=!sourceCaseHash||!sourceSurfaces?null:sourceSurfaces.status==='loading'?'Loading source surfaces':
+    sourceSurfaces.status==='unavailable'?`Source surfaces unavailable (${sourceSurfaces.reason}) · drawn from 1 mm engine cells`:
+    sourceRefusal?`Source surfaces unavailable (${sourceRefusal}) · drawn from 1 mm engine cells`:
+    `Source surfaces${sourceSurfaces.asset.vessels?' · unknown-kind vessels neutral':''}`;
   useEffect(()=>{engine.current?.setNavigationMode(navigationMode);},[ready,graphicsGeneration,caseData,navigationMode]);
   useEffect(()=>{engine.current?.setSurfaceSmoothing(smoothSurfaces);},[ready,graphicsGeneration,caseData,smoothSurfaces]);
   useEffect(()=>{engine.current?.setVolumeRendering(settings.volumeRendering,signalName);},[ready,graphicsGeneration,caseData,settings.volumeRendering,signalName]);
@@ -813,9 +837,11 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     const taper=new TaperInterpolator(surgicalView.brainShiftV1.latticeSamples,sampleRatios(shift,surgicalView.brainShiftV1.latticeSamples));
     return (p:Point3)=>{const d=shiftAt(shift,taper,p);return [p[0]-d[0],p[1]-d[1],p[2]-d[2]] as Point3;};
   },[surgicalView?.brainShiftV1]);
-  const proximity=useMemo(()=>surgicalView&&proximityLayers.length&&geometrySource?tipProximity(surgicalView.slots,displayedSurgical?.selectedSlot,proximityLayers,
+  const sourceAsset=sourceSurfaces?.status==='available'&&!sourceRefusal?sourceSurfaces.asset:null;
+  const proximity=useMemo(()=>surgicalView&&sourceAsset?sourceTipProximity(surgicalView.slots,displayedSurgical?.selectedSlot,sourceAsset,{toSource:shiftField??undefined}):
+    surgicalView&&proximityLayers.length&&geometrySource?tipProximity(surgicalView.slots,displayedSurgical?.selectedSlot,proximityLayers,
     geometrySource.shape,geometrySource.affine,{removed:new Set(surgicalView.removed),toSource:shiftField??undefined}):null,
-    [surgicalView,proximityLayers,geometrySource,displayedSurgical?.selectedSlot,shiftField]);
+    [surgicalView,proximityLayers,geometrySource,displayedSurgical?.selectedSlot,shiftField,sourceAsset]);
   const scenarioLines=useMemo(()=>scenarioReadout(surgicalView,proximity),[surgicalView,proximity]);
   // A new navigation reading moves the linked slices to the position the navigation system reports.
   const navigationReading=latestNavigation(surgicalView);
@@ -1087,6 +1113,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
             <b>{surgicalView.operativeExposureV1?operativeAnatomyTitle(geometrySource?.compartments??[]):'Operative field'}</b>
             <span>{displayedSurgical?.preview?'Preview':modelDisplayPending?'Preparing accepted state':settings.microscope?.inspectionTransparency||settings.microscope?.inspectionCutaway?'Inspection only · anatomy exposed by view':settings.operativeView==='surgeon'?'Opaque microscope':Object.values(settings.layerOpacity??{}).some(o=>o<1)?'Inspection only · transparent anatomy':'External scalp overview'}</span>
             <span>{Object.values(surgicalView.slots).filter(s=>s.inserted).map(s=>s.instrument.replaceAll('_',' ')).join(' · ')}</span>
+            {sourceNote&&<span className="source-surface-note">{sourceNote}</span>}
             {acquiredBrainSection?<span>Gray end faces mark the source volume boundary</span>:
               sourceVolumeBoundary&&<span>Gray vessel ends mark the source volume boundary</span>}
           </div>}

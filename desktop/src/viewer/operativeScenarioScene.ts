@@ -30,14 +30,14 @@ export function mappingSites(view:SurgicalView|undefined,limit=8){
 }
 
 /** Open wounds with display positions (wound cells' centre, carried by the displayed brain shift). */
-export function woundEmitters(view:SurgicalView|undefined,displace?:(p:Pt)=>Pt){
+export function woundEmitters(view:SurgicalView|undefined,displace?:(p:Pt)=>Pt,snapped=false){
   const state=view?.vesselBleedingV1 as VesselBleedingState|undefined;
   if(!view||!state)return [];
   return Object.values(state.wounds??{}).filter((w:BleedingWound)=>w.sealFraction<1&&w.cells?.length).map(w=>{
     const points=w.cells.map(c=>ras(view.scene.affine,c,view.scene.shape));
     const centre=[0,1,2].map(a=>points.reduce((s,p)=>s+p[a],0)/points.length) as Pt;
     const arterial=w.kind==='artery'||w.kind==='uncertain';
-    return {id:w.id,position:displace?displace(centre):centre,arterial,kindUnknown:w.kind==='uncertain',rateMm3PerSecond:w.rateMm3PerSecond,calibreMm:w.calibreMm??1};
+    return {id:w.id,position:displace?displace(centre):centre,arterial,kindUnknown:w.kind==='uncertain',rateMm3PerSecond:w.rateMm3PerSecond,calibreMm:w.calibreMm??1,snapped};
   });
 }
 
@@ -88,6 +88,9 @@ export class OperativeScenarioScene {
   private arterial:THREE.Object3D[]=[];
   readonly marks=new TissueMarks();
   private markedLayers=new Set<string>();
+  /** With source vessel tubes, a wound marker sits on the nearest tube centreline point. */
+  private woundSnap?:(p:Pt)=>Pt;
+  setWoundSnap(snap?:(p:Pt)=>Pt){this.woundSnap=snap;}
   constructor(){this.group.name='scenario:operative';this.sites.name='scenario:mapping-sites';this.wounds.name='scenario:wound-emitters';this.contours.name='scenario:target-contours';this.group.add(this.sites,this.wounds,this.contours);}
 
   /** Pulse arterial emitters; returns the delay to the next frame while one is open, else null. */
@@ -143,7 +146,9 @@ export class OperativeScenarioScene {
   private updateWounds(view:SurgicalView|undefined,displace:((p:Pt)=>Pt)|undefined,inward?:Pt){
     disposeChildren(this.wounds);this.arterial=[];
     const outward=new THREE.Vector3(...(inward??view?.operativeExposureV1?.exteriorNormalRas?.map(v=>-v)??[0,0,-1] as Pt)).negate().normalize();
-    for(const wound of woundEmitters(view,displace)){
+    const snap=this.woundSnap;
+    const place=snap?(p:Pt)=>{const q=snap(p);return displace?displace(q):q;}:displace;
+    for(const wound of woundEmitters(view,place,!!snap)){
       const size=Math.max(.8,Math.min(3,wound.calibreMm*1.2));
       if(wound.arterial){
         // A jet from the wound along the opening's outward normal, pulsing at the declared heart rate.

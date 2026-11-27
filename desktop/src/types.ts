@@ -533,6 +533,8 @@ export interface ResectionApi extends TrainingApi {
   inspectAxisPlanning?(args: InspectAxisPlanningRequest): Promise<InspectAxisPlanningResult>;
   inspectObservedLandmarkUpdate?(args: InspectObservedLandmarkRequest): Promise<ObservedLandmarkResult>;
   inspectEvidence(args?: Record<string, unknown>): Promise<unknown>;
+  /** Read-only source-resolution display surfaces beside the opened host-rehearsal case. */
+  operativeSourceSurfaces?(args: { caseHash: string }): Promise<unknown>;
   cancel(requestId: string): Promise<unknown>;
   readAsset(assetId: string): Promise<Uint8Array>;
   onEvent(callback: (event: BridgeEvent) => void): () => void;

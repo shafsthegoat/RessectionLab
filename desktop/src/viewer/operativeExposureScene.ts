@@ -213,6 +213,14 @@ export class OperativeExposureScene {
   private markers = new THREE.Group();
   private fixtures = new Map<string, {model: THREE.Group; key: string}>();
   private outward = up.clone();
+  /** Source surfaces draw the flaps, seams and planned outline themselves; only fixtures stay here. */
+  private sourceActive = false;
+  setSourceSurfaces(active: boolean) {
+    if (this.sourceActive === active) return;
+    this.sourceActive = active;
+    for (const display of this.bodies.values()) if (display.seam) display.seam.visible = !active;
+    if (this.outline) this.outline.mesh.visible = this.outline.intact && this.outline.shown && !active;
+  }
   private source?: Uint16Array;
   private view?: SurgicalView;
   private volume?: ViewerVolume;
@@ -354,7 +362,7 @@ export class OperativeExposureScene {
       // The marking belongs to the intact skin; it goes once the scalp is incised or reflected.
       const scalp = state.bodies.scalp;
       this.outline.intact = !scalp.cutCells.length && !bodyIsDisplaced(scalp, view.scene.shape, view.scene.affine);
-      this.outline.mesh.visible = this.outline.intact && this.outline.shown;
+      this.outline.mesh.visible = this.outline.intact && this.outline.shown && !this.sourceActive;
     }
     if (this.view === view && this.volume === volume) return;
     this.source = owner;
@@ -465,7 +473,10 @@ export class OperativeExposureScene {
       if (changed || display.seamKey !== seamKey) {
         if (display.seam) discard(display.seam);
         display.seam = body.seamEdges.length ? seams(name, body, display.transport, view, this.outward) : undefined;
-        if (display.seam) this.markers.add(display.seam);
+        if (display.seam) {
+          display.seam.visible = !this.sourceActive;
+          this.markers.add(display.seam);
+        }
         display.seamKey = seamKey;
       }
     }
@@ -510,7 +521,7 @@ export class OperativeExposureScene {
   appearance(volume: ViewerVolume, settings: ViewerWorkspaceSettings, isVisible: (name: string) => boolean) {
     if (this.outline) {
       this.outline.shown = isVisible(this.outline.skin) && settings.microscope?.tissueStyle !== 'labels';
-      this.outline.mesh.visible = this.outline.intact && this.outline.shown;
+      this.outline.mesh.visible = this.outline.intact && this.outline.shown && !this.sourceActive;
     }
     if (this.exterior) {
       // A covered face takes the colour its covering layer has in this view.

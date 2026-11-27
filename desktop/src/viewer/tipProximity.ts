@@ -54,3 +54,31 @@ export function tipProximity(slots:Record<string,SlotLike>,selected:string|undef
   const pick=(group:ProximityLayer['group'])=>{const row=found.find(r=>r.group===group);return row?{name:row.name,distanceMm:row.distanceMm}:null;};
   return {tip:tip.position,slot:tip.slot,instrument:tip.instrument,tract:pick('tract'),vessel:pick('vessel'),searchMm};
 }
+
+/** Source-surface variant: distances from the tip to the asset's vessel tube
+ * walls (centreline distance less the fitted radius, kind named, unknown kind
+ * said so) and to its tract streamline points. Same estimate status: the
+ * tubes and streamlines are model estimates; the tip is carried back through
+ * the displayed brain shift. */
+export interface SourceProximityInput {
+  vessels:{centrelinePoints:Float32Array;centrelineRadii:Float32Array;centrelineOffsets:Uint32Array;segmentKind:Uint8Array}|null;
+  tracts:ReadonlyArray<{bundle:string;points:Float32Array}>;
+}
+export function sourceTipProximity(slots:Record<string,SlotLike>,selected:string|undefined,source:SourceProximityInput,
+  options:{searchMm?:number;toSource?:(p:Point3)=>Point3}={}):TipProximity|null {
+  const tip=workingTip(slots,selected);
+  if(!tip)return null;
+  const searchMm=options.searchMm??20,p=options.toSource?options.toSource(tip.position):tip.position;
+  let vessel:{name:string;distanceMm:number}|null=null;
+  const v=source.vessels;
+  if(v)for(let s=0;s<v.segmentKind.length;s++)for(let i=v.centrelineOffsets[s];i<v.centrelineOffsets[s+1];i++){
+    const d=Math.hypot(v.centrelinePoints[3*i]-p[0],v.centrelinePoints[3*i+1]-p[1],v.centrelinePoints[3*i+2]-p[2])-v.centrelineRadii[i];
+    if(d<=searchMm&&(!vessel||d<vessel.distanceMm))vessel={name:v.segmentKind[s]===1?'Artery':v.segmentKind[s]===2?'Vein':'Vessel (kind unknown)',distanceMm:Math.max(0,d)};
+  }
+  let tract:{name:string;distanceMm:number}|null=null;
+  for(const t of source.tracts)for(let i=0;i<t.points.length;i+=3){
+    const d=Math.hypot(t.points[i]-p[0],t.points[i+1]-p[1],t.points[i+2]-p[2]);
+    if(d<=searchMm&&(!tract||d<tract.distanceMm))tract={name:t.bundle,distanceMm:d};
+  }
+  return {tip:tip.position,slot:tip.slot,instrument:tip.instrument,tract,vessel,searchMm};
+}

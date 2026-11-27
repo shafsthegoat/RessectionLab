@@ -1174,7 +1174,7 @@ export default function App() {
         );
         return;
       }
-      if (["cancel", "ping", "inspectEvidence"].includes(event.op ?? ""))
+      if (["cancel", "ping", "inspectEvidence", "operativeSourceSurfaces"].includes(event.op ?? ""))
         return;
       if (event.event === "started")
         setOperation({
