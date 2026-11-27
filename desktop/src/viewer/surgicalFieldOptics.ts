@@ -24,6 +24,21 @@ function woundOnlyField(view:SurgicalView):boolean{
   // carries a mixture with unknown per-cell proportions.
   return typeof added==='number'&&typeof blood==='number'&&blood>0&&Math.abs(added-blood)<=1e-10*Math.max(1,added);
 }
+/** Share of the retained field that is blood. With `vesselBleedingV1` the
+ * inventory mixes blood and irrigation without per-cell proportions, so the
+ * field takes the overall share of deposited blood in the fluid added. */
+export function bloodShare(view:SurgicalView):number{
+  if(woundOnlyField(view))return 1;
+  const deposited=view.vesselBleedingV1?.depositedMm3,added=view.metrics?.fluidAddedMm3;
+  if(typeof deposited!=='number'||!(deposited>0)||typeof added!=='number'||!(added>0))return 0;
+  return Math.min(1,deposited/added);
+}
+/** Pooled blood hides what lies under it until suctioned: opaque once blood dominates the field. */
+export function fieldLiquidAppearance(share:number){
+  const blood=new THREE.Color('#7e1f1a'),clear=new THREE.Color('#a8bdc1');
+  const opaque=share>=.5;
+  return {color:clear.lerp(blood,Math.min(1,share*1.6)),opacity:opaque?1:.57+.4*share,opaque};
+}
 /** Moist lumen wall of a centerline-tube vessel: a broad soft film highlight
  * along the tube with a faint tighter glint from the wall beneath. */
 export const wetVesselFinish={roughness:.24,specularIntensity:.42,clearcoat:1,clearcoatRoughness:.3,sheen:0};
@@ -58,15 +73,16 @@ export function applyTubeVesselColor(mesh:THREE.Mesh,classes?:Uint8Array){
   if(material.vertexColors!==mixed){material.vertexColors=mixed;material.needsUpdate=true;}
 }
 
-function fieldComponent(scene:SurgicalView['scene'],entries:FieldSample[],capacity:number,liquid:boolean,bloodOnly=false) {
+function fieldComponent(scene:SurgicalView['scene'],entries:FieldSample[],capacity:number,liquid:boolean,share=0) {
   if(!entries.length)return null;
   const joined=liquid?joinedFreeField(entries,scene.shape,capacity):null;
   const [,ny,nz]=scene.shape;
   // Isolated deposits remain volume-scaled. Adjacent free cells share one
   // neutral optical surface. A confined or overfilled cell adds no extra reach.
   const geometry=liquid?new THREE.SphereGeometry(.5,12,8):new THREE.IcosahedronGeometry(.5);
-  const material=new THREE.MeshStandardMaterial({color:liquid?(bloodOnly?'#8d3933':'#a8bdc1'):'#bbaa8b',roughness:liquid?.14:.86,
-    metalness:0,transparent:liquid,opacity:liquid?(bloodOnly?.80:.57):1,depthWrite:!liquid});
+  const look=fieldLiquidAppearance(share);
+  const material=new THREE.MeshStandardMaterial({color:liquid?look.color:'#bbaa8b',roughness:liquid?.14:.86,
+    metalness:0,transparent:liquid&&!look.opaque,opacity:liquid?look.opacity:1,depthWrite:!liquid||look.opaque});
   const objects:Array<THREE.Mesh<THREE.BufferGeometry,THREE.MeshStandardMaterial>>=[];
   if(joined){
     const pool=new THREE.Mesh(joined.geometry,material.clone());pool.name='field:free-surface';
@@ -126,7 +142,7 @@ export class SurgicalFieldResources {
   private sourceCaseHash?:string;
   private fluidLedger?:SurgicalView['fluid'];
   private debrisLedger?:SurgicalView['debris'];
-  private bloodOnly=false;
+  private bloodShare=0;
   private fluid:FieldComponent=null;
   private debris:FieldComponent=null;
   private wet?:ReturnType<typeof wetTexture>;
@@ -137,8 +153,8 @@ export class SurgicalFieldResources {
   update(view:SurgicalView,sourceCaseHash?:string):Field {
     const sameGrid=this.scene&&this.sourceCaseHash===sourceCaseHash&&sameSurgicalGrid(this.scene,view.scene);
     // The fluid colour follows the declared origin, which can change with the same ledger.
-    const bloodOnly=woundOnlyField(view);
-    const updateFluid=!sameGrid||this.bloodOnly!==bloodOnly||!sameFieldEntries(this.fluidLedger,view.fluid);
+    const share=bloodShare(view);
+    const updateFluid=!sameGrid||Math.abs(this.bloodShare-share)>.02||!sameFieldEntries(this.fluidLedger,view.fluid);
     const updateDebris=!sameGrid||!sameFieldEntries(this.debrisLedger,view.debris);
     if(updateFluid||updateDebris){
       const grid=new THREE.Matrix4().fromArray(view.scene.affine.flat()).transpose();
@@ -147,7 +163,7 @@ export class SurgicalFieldResources {
       const fluid=updateFluid?samples(view.fluid,view.scene.shape):null;
       let newFluid:FieldComponent=null,newDebris:FieldComponent=null,wet:ReturnType<typeof wetTexture>|undefined;
       try{
-        if(fluid?.length){newFluid=fieldComponent(view.scene,fluid,capacity,true,bloodOnly);wet=wetTexture(fluid,capacity);}
+        if(fluid?.length){newFluid=fieldComponent(view.scene,fluid,capacity,true,share);wet=wetTexture(fluid,capacity);}
         if(updateDebris)newDebris=fieldComponent(view.scene,samples(view.debris,view.scene.shape),capacity,false);
       }catch(error){releaseComponent(newFluid);releaseComponent(newDebris);wet?.texture?.dispose();throw error;}
       if(fluid){
@@ -166,9 +182,9 @@ export class SurgicalFieldResources {
         this.current={group,texture:this.wet?.texture??null,worldToCell:grid.invert(),origin:this.wet?.origin??new THREE.Vector3()};
       }else {this.current?.group.removeFromParent();this.current=null;}
     }else this.work.unchanged++;
-    this.scene=view.scene;this.sourceCaseHash=sourceCaseHash;this.fluidLedger=view.fluid;this.debrisLedger=view.debris;this.bloodOnly=bloodOnly;
+    this.scene=view.scene;this.sourceCaseHash=sourceCaseHash;this.fluidLedger=view.fluid;this.debrisLedger=view.debris;this.bloodShare=share;
     if(this.current)this.current.group.userData.fieldSummary={stateId:view.stateId,
-      ...(view.operativeExposureV1?{fluidOrigin:bloodOnly?'vascular sources only':'mixed or unknown'}:{}),fluidCells:this.fluid?.cells??0,debrisCells:this.debris?.cells??0,
+      ...(view.operativeExposureV1?{fluidOrigin:share>=1?'vascular sources only':share>0?`mixed, ${Math.round(100*share)}% blood overall`:'mixed or unknown'}:{}),fluidCells:this.fluid?.cells??0,debrisCells:this.debris?.cells??0,
       fluidMm3:this.fluid?.mm3??0,debrisMm3:this.debris?.mm3??0,wetTextureBytes:this.wet?.bytes??0,joinedFluidCells:this.fluid?.joinedFluidCells??0};
     return this.current;
   }
@@ -176,7 +192,7 @@ export class SurgicalFieldResources {
   clear(){
     releaseComponent(this.fluid);releaseComponent(this.debris);this.wet?.texture?.dispose();this.current?.group.removeFromParent();
     this.fluid=null;this.debris=null;this.wet=undefined;this.current=null;
-    this.scene=undefined;this.sourceCaseHash=undefined;this.fluidLedger=undefined;this.debrisLedger=undefined;this.bloodOnly=false;
+    this.scene=undefined;this.sourceCaseHash=undefined;this.fluidLedger=undefined;this.debrisLedger=undefined;this.bloodShare=0;
   }
 }
 

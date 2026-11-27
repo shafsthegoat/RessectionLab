@@ -1,13 +1,15 @@
 import {useMemo} from 'react';
 import {surgicalFieldAmounts} from '../full-case-presentation';
 import type {SurgicalInteraction, SurgicalView} from '../surgical-types';
+import type {ScenarioLine} from '../operative-scenarios';
+import {ScenarioReadout} from './ScenarioReadout';
 
 const finite = (n: unknown): n is number => typeof n === 'number' && Number.isFinite(n);
 const quantity = (n: unknown, unit: string) => finite(n) ? `${+n.toFixed(2)} ${unit}` : 'Unknown';
 
 /** Render the receipt installed with the visible scene, including during
  * display preparation when a newer backend state may already exist. */
-export function PracticeHud({view, interaction, membrane}: {view:SurgicalView; interaction:SurgicalInteraction; membrane?:string|null}) {
+export function PracticeHud({view, interaction, membrane, scenarios=[]}: {view:SurgicalView; interaction:SurgicalInteraction; membrane?:string|null; scenarios?:readonly ScenarioLine[]}) {
   const hud = interaction.practiceHud;
   const field=useMemo(()=>surgicalFieldAmounts(view),[view]);
   if (!hud) return null;
@@ -43,5 +45,6 @@ export function PracticeHud({view, interaction, membrane}: {view:SurgicalView; i
       {finite(view.metrics.brainMaxDisplacementMm) && <div><dt>Max tissue shift</dt><dd>{quantity(view.metrics.brainMaxDisplacementMm,'mm')}</dd></div>}
     </dl>
     {finite(fraction) && <span>{+fraction.toFixed(1)}% removed of {quantity(total,'mm³')} original target</span>}
+    <ScenarioReadout lines={scenarios}/>
   </section>;
 }

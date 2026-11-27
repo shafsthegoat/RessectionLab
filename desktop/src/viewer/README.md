@@ -132,6 +132,54 @@ worked cell as partly occupied, so the displayed wall recedes into it within
 the existing half-cell display bound instead of stepping a whole cell at a
 time. Removal, counts and picking stay with the engine's whole cells.
 
+CUSA V4 (`cusaV4`) keeps the same per-cell pending layout; the bridge sends
+its progress through the same `cusaProgressV1` field, with each cell's
+threshold set by its tissue kind's relative rate.
+
+### Opt-in operative scenarios
+
+Scenes that declare the engine's scenario properties are drawn from the view
+fields those properties add; nothing here changes cells, counts or picking
+(`operativeScenarioScene.ts`, `brainShiftField.ts`, `../operative-scenarios.ts`).
+Their lines join the existing operative readout (or the practice HUD) and each
+names what it is.
+
+- **Brain shift** (`brainShiftV1`): the shifting layers (the declaration's
+  region ids, sent by the bridge with the resolved cortical surface depth) are
+  displaced in the vertex stage, shadows included, by the engine's analytic
+  field. The renderer evaluates the depth and lateral decay exactly and takes
+  the rigid-support taper and pull-back from the engine's lattice samples
+  (Gaussian-weighted, fading outside the sampled domain), on a 2-voxel lattice
+  texture. On the generated convexity case the field is within 0.06 mm of the
+  engine at the median cell and 0.5 mm at the 90th percentile; the largest
+  error is at cells the engine pulled back from rigid material. Dura and bone
+  stay put, so the CSF gap opens under the dura. The planned target (violet)
+  and the target where the scenario moved it (amber) are drawn as outlines
+  through tissue. Linked slices keep the preoperative image.
+- **Navigation** (`navigationV1`): a new pointer reading moves the linked
+  cursor to the position the navigation system reports. The readout gives the
+  label the image shows there and the reported distance to the planned tumour,
+  then, on a separate **Rehearsal truth** line, the navigation error and how
+  far the tumour edge moved.
+- **Mapping** (`functionalMappingV1`): each stimulation site gets a tag (amber
+  where the model estimates a response, grey otherwise, a hollow ring for
+  UNKNOWN) and the latest carries its estimated reach. The readout states
+  "Model estimate … response likely, CST within ~X mm (±U)", or that no
+  response is not evidence of safety, or UNKNOWN with the engine's reason.
+- **Bleeding** (`vesselBleedingV1`): open arterial wounds (and wounds of
+  UNKNOWN kind, which the engine bleeds at the arterial law) show a jet that
+  pulses at the model's heart rate (about 9 frames a second while one is open
+  in the microscope; static with reduced motion); every open wound shows
+  welling blood. The retained fluid takes the overall share of deposited blood
+  as its colour and becomes opaque once blood dominates, hiding the field until
+  suctioned.
+- **Injury** (`surgicalInjuryV1`): contused cells darken toward plum and walls
+  of lacerated (torn-out) cells take a ragged dark-red margin, sampled at the
+  tissue's rest position.
+- **Tip proximity**: the nearest tract and vessel to the working tip, from the
+  layer masks on the scene grid (removed cells skipped, the tip carried back
+  through the displayed brain shift), within 20 mm, labelled estimated.
+
 The settled surgeon view in the illustrative material adds microscope optics:
 the lamp sits close to the viewing axis, brain, tumour and dura carry a moist
 glint toward the eyepiece, the image keeps sharp within 5 mm of the focus

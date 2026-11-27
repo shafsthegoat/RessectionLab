@@ -33,6 +33,7 @@ import {FullCaseRehearsalPanel} from './FullCaseRehearsalPanel';
 import {PlanarBladeManeuverPanel} from './PlanarBladeManeuverPanel';
 import {SurgicalOutcomeSummary,amount} from './SurgicalOutcomeSummary';
 import {summarizeSurgicalEvents} from './surgical-types.ts';
+import {mappingText,scenarioReadout,type MappingObservation} from './operative-scenarios.ts';
 const materials=['unknown','bone','soft_tissue','tumor','membrane','vessel','fluid','functional_region'];
 /** Closed native details still mount their children. Defer large read-only
  * records until opened so replay does not reconcile thousands of hidden rows. */
@@ -74,6 +75,7 @@ const displayValue=(value:unknown):string=>value===undefined||value===null?'Not 
 function StimulationObservation({observation,preview}:{observation:Record<string,unknown>;preview:boolean}){
   const evidence=Array.isArray(observation.evidence)?observation.evidence:[];
   return <section aria-label="Latest stimulation observation" className="surgical-preview"><strong>{preview?'Preview':'Latest recorded'} stimulation observation</strong>
+    {observation.kind==='model-estimate'&&<p>{mappingText(observation as unknown as MappingObservation)}</p>}
     <dl>{[['Probe',observation.probe],['Result',observation.result??'unknown'],['Coverage',observation.coverage??'unknown'],['Uncertainty',observation.uncertainty??'not supplied'],['Position · RAS mm',observation.position],['Contact cells',Array.isArray(observation.cells)?observation.cells.length:undefined]].map(([label,value])=><div key={String(label)}><dt>{String(label)}</dt><dd>{displayValue(value)}</dd></div>)}</dl>
     <p>Stimulus: {Object.entries((observation.parameters??{}) as Record<string,unknown>).map(([key,value])=>`${parameterSpecs[key]?.label??key}: ${displayValue(value)}`).join(' · ')||'Parameters not supplied'}</p>
     {evidence.length?<details><summary>Supplied evidence · {evidence.length} records</summary><ol>{evidence.map((record,i)=><li key={i}>{record&&typeof record==='object'?<dl>{Object.entries(record).map(([key,value])=><div key={key}><dt>{key.replaceAll('_',' ')}</dt><dd>{displayValue(value)}</dd></div>)}</dl>:displayValue(record)}</li>)}</ol></details>:<p>No matching supplied functional evidence. Unknown does not establish a negative stimulation response.</p>}
@@ -304,7 +306,9 @@ export function SurgicalPanel({c,studyRecording=false,onFixture,onImport,availab
     </section>}
     </details></section>
     {latestOutcome&&!importantOutcome&&<details><summary>{c.preview?'Preview action events':'Last action result'} · {latestOutcome.status}</summary><ActionResult outcome={latestOutcome} title={c.preview?'Preview result':observed?'Recorded action endpoint result':'Last action result'}/></details>}
-    {observation&&<StimulationObservation observation={observation} preview={!!c.preview}/>}
+    {observation&&observation.kind!=='navigation'&&<StimulationObservation observation={observation} preview={!!c.preview}/>}
+    {observation?.kind==='navigation'&&<section aria-label="Latest navigation reading" className="surgical-preview"><strong>{c.preview?'Preview':'Latest'} navigation reading</strong>
+      {scenarioReadout(displayed).filter(line=>line.key.startsWith('nav')).map(line=><p key={line.key}>{line.text}</p>)}</section>}
 
     </div>
     <details className="workflow-checkpoint-burdens" open={!practice&&(workflowStage==='rehearse'||!!v.planarBladeManeuver)} hidden={!v.planarBladeManeuver&&workflowStage!=='compare'&&workflowStage!=='rehearse'}><summary>Checkpoint and preview burdens</summary><SurgicalOutcomeSummary c={c}/></details>

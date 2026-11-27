@@ -1,5 +1,9 @@
 import {surgicalFieldAmounts} from '../full-case-presentation';
 import {PracticeHud} from './PracticeHud';
+import {ScenarioReadout} from './ScenarioReadout';
+import {scenarioReadout,latestNavigation} from '../operative-scenarios';
+import {tipProximity,type ProximityLayer} from './tipProximity';
+import {analyticShift,sampleRatios,TaperInterpolator,shiftAt} from './brainShiftField';
 import {membraneTransport} from './membraneTransport';
 import {resultMembership} from './resultInspectionData';
 import {EngineOperatedSection} from './EngineOperatedSection';
@@ -796,12 +800,40 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     displayedInspection?.caseHash === caseData.caseHash ? displayedInspection : null;
   const membrane=surgicalView&&!displayedSurgical?.preview?membraneTransport(surgicalView):null;
   const fieldAmounts=useMemo(()=>surgicalView?surgicalFieldAmounts(surgicalView):null,[surgicalView]);
+  // Tract and vessel proximity at the working tip, estimated from the layer masks on the scene grid.
+  const proximityLayers=useMemo(()=>{
+    if(!surgicalView||!geometrySource||!geometrySource.shape.every((n,i)=>n===surgicalView.scene.shape[i]))return [];
+    const vessels=new Set(surgicalView.scene.regions.filter(r=>r.material==='vessel').map(r=>r.name));
+    return geometrySource.compartments.flatMap((layer):ProximityLayer[]=>layer.displayKind==='tract'||/\(tract\)\s*$/i.test(layer.name)?[{name:layer.name,mask:layer.mask,group:'tract'}]:
+      vessels.has(layer.name)?[{name:layer.name,mask:layer.mask,group:'vessel'}]:[]);
+  },[geometrySource,surgicalView?.scene]);
+  const shiftField=useMemo(()=>{
+    const shift=analyticShift(surgicalView?.brainShiftV1);
+    if(!shift||!surgicalView?.brainShiftV1)return null;
+    const taper=new TaperInterpolator(surgicalView.brainShiftV1.latticeSamples,sampleRatios(shift,surgicalView.brainShiftV1.latticeSamples));
+    return (p:Point3)=>{const d=shiftAt(shift,taper,p);return [p[0]-d[0],p[1]-d[1],p[2]-d[2]] as Point3;};
+  },[surgicalView?.brainShiftV1]);
+  const proximity=useMemo(()=>surgicalView&&proximityLayers.length&&geometrySource?tipProximity(surgicalView.slots,displayedSurgical?.selectedSlot,proximityLayers,
+    geometrySource.shape,geometrySource.affine,{removed:new Set(surgicalView.removed),toSource:shiftField??undefined}):null,
+    [surgicalView,proximityLayers,geometrySource,displayedSurgical?.selectedSlot,shiftField]);
+  const scenarioLines=useMemo(()=>scenarioReadout(surgicalView,proximity),[surgicalView,proximity]);
+  // A new navigation reading moves the linked slices to the position the navigation system reports.
+  const navigationReading=latestNavigation(surgicalView);
+  const navigationKey=navigationReading&&surgicalView?`${surgicalView.scene.sceneId}:${navigationReading.index}:${navigationReading.reading.reportedImageRasMm.join(',')}`:null;
+  const lastNavigationKey=useRef<string|null>(null);
+  useEffect(()=>{
+    if(!navigationKey||!navigationReading||navigationKey===lastNavigationKey.current)return;
+    lastNavigationKey.current=navigationKey;
+    const point=navigationReading.reading.reportedImageRasMm;
+    onCursorChange(geometry?clampCursor(point,geometry.bounds):point);
+  },[navigationKey]);
   const operativeMeasurements=surgicalView&&fieldAmounts&&<>
             {!showEngineSection&&membrane&&<span>{membrane}</span>}
             <span>Owned target removed {Number(surgicalView.metrics.targetRemovedMm3).toFixed(1)} mm³ · Whole target remaining {surgicalView.originalTargetResidualMm3==null?'unknown':`${surgicalView.originalTargetResidualMm3.toFixed(1)} mm³`}</span>
             <span>CUSA pending work {Number(surgicalView.metrics.cusaPendingCapacityMm3??0).toFixed(2)} mm³ · suction {Number(surgicalView.metrics.fluidRemovedMm3??0).toFixed(2)} mm³</span>
             <span>Free-field fluid {fieldAmounts.spatialFluidMm3.toFixed(2)} mm³ · outlet reservoir {fieldAmounts.reservoirFluidMm3?.toFixed(2)??'unknown'} mm³ · retained total {fieldAmounts.retainedFluidMm3?.toFixed(2)??'unknown'} mm³</span>
             <span>Source grid {surgicalView.scene.resolutionMm.map(n=>n.toFixed(1)).join(' × ')} mm</span>
+            <ScenarioReadout lines={scenarioLines}/>
   </>;
   const clearInspection = () => {
     inspectionSelection.current.clear(inspectionTool ?? null);
@@ -1068,7 +1100,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
           {!fieldPresentation&&settings.operativeView==='surgeon'&&settings.microscope?.inspectionCutaway&&geometrySource&&geometry&&
             surgicalView?.operativeExposureV1&&!displayedSurgical?.preview&&
             <OperativeDepthSection source={geometrySource} inverse={geometry.inverse} microscope={settings.microscope} stateId={surgicalView.stateId}/>}
-          {!fieldPresentation&&displayedSurgical?.practiceHud&&surgicalView&&<PracticeHud interaction={displayedSurgical} view={surgicalView} membrane={membrane}/>}
+          {!fieldPresentation&&displayedSurgical?.practiceHud&&surgicalView&&<PracticeHud interaction={displayedSurgical} view={surgicalView} membrane={membrane} scenarios={scenarioLines}/>}
           {!fieldPresentation&&!displayedSurgical?.practiceHud&&settings.operativeView==='surgeon'&&surgicalView&&(showEngineSection?
             <details className="engine-frame-metrics" data-operative-readout-state={surgicalView.stateId}>
               <summary>{membrane??'Engine'} · {Number(surgicalView.metrics.elapsedSeconds).toFixed(1)} s</summary>

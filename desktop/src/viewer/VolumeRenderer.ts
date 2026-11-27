@@ -13,6 +13,7 @@ import type {SurfaceDiagnostics} from './surfacePolicy';
 import {applyTubeVesselColor,applyWetVesselFinish,SurgicalFieldResources,SurgicalWetting} from "./surgicalFieldOptics";
 import {surgicalToolMesh,surgicalEffectGroup,surgicalToolGeometryKey,updateSurgicalToolMesh,updateSurgicalToolAnimation} from "./surgicalGeometry";
 import {surgicalFlowGroup,updateSurgicalFlowAnimation} from './surgicalFlowGeometry';
+import {OperativeScenarioScene} from './operativeScenarioScene';
 import type {SurgicalInteraction} from "../surgical-types";
 import {InteractionSession, InteractionBudget, RefreshBudget, FenceWindow, nextTask, pollSoon} from './interactionBudget';
 import {SliceFrameCache} from './sliceFrameCache';
@@ -896,7 +897,7 @@ export class VolumeRenderer {
       installNativeContextLighting(pair.mesh.material as THREE.MeshStandardMaterial, this.patientBounds??this.bounds,
         this.surfaceSmoothing && this.workspaceSettings.operativeView !== 'surgeon',softTissue);
     }
-    this.surfaceGeometry.set(layer.name,{source:pair.source,smooth:pair.smooth,smoothingPrepared:pair.smoothingPrepared});this.surfaces.set(layer.name,pair.mesh);this.anatomy.add(pair.mesh);
+    this.surfaceGeometry.set(layer.name,{source:pair.source,smooth:pair.smooth,smoothingPrepared:pair.smoothingPrepared});this.surfaces.set(layer.name,pair.mesh);this.anatomy.add(pair.mesh);this.scenarios?.syncSurfaces(this.surfaces,this.affine);
     this.applyVesselTraceAppearance();
     this.applyStructureHighlight();
   }
@@ -1195,7 +1196,7 @@ export class VolumeRenderer {
     // Native pre-mapping pairs do not match modeled baseline/undo masks. Keep
     // their CPU surface cache for source restoration, but release GPU/BVH here.
     for(const [name,pair]of stage.prepared){const old=oldVolume.compartments.find(l=>l.name===name);if(old)this.retireSurface(old,!stage.initialMapping);
-      this.preparedSourceLayers.add(name);if(pair){pair.mesh.geometry=this.surfaceSmoothing?pair.smooth:pair.source;pair.mesh.visible=this.visible[name]!==false;this.surfaceGeometry.set(name,{source:pair.source,smooth:pair.smooth,smoothingPrepared:pair.smoothingPrepared});this.surfaces.set(name,pair.mesh);this.anatomy.add(pair.mesh);}}
+      this.preparedSourceLayers.add(name);if(pair){pair.mesh.geometry=this.surfaceSmoothing?pair.smooth:pair.source;pair.mesh.visible=this.visible[name]!==false;this.surfaceGeometry.set(name,{source:pair.source,smooth:pair.smooth,smoothingPrepared:pair.smoothingPrepared});this.surfaces.set(name,pair.mesh);this.anatomy.add(pair.mesh);this.scenarios?.syncSurfaces(this.surfaces,this.affine);}}
     this.volume=stage.next;this.motionVolume=undefined;this.installedModelGeneration=stage.generation;
     if(stage.packed){
       if(replacement)this.labelTexture=replacement;
@@ -1829,6 +1830,17 @@ export class VolumeRenderer {
     return [...this.surfaces].flatMap(([layer,mesh])=>mesh.visible&&mesh.geometry.userData.operativeVessel?
       [{layer,...mesh.geometry.userData.operativeVessel}]:[]);
   }
+  private scenarios?:OperativeScenarioScene;
+  private scenarioPulse?:ReturnType<typeof setTimeout>;
+  /** Opt-in engine scenarios (brain shift, mapping, wounds, injury) drawn from the view. */
+  private updateScenarios(view:SurgicalView|undefined){
+    const wanted=!!view&&!!(view.brainShiftV1||view.vesselBleedingV1||view.surgicalInjuryV1||view.observations?.some(o=>o.kind==='model-estimate'));
+    if(!wanted&&!this.scenarios)return;
+    if(!this.scenarios){this.scenarios=new OperativeScenarioScene();}
+    if(!this.scenarios.group.parent&&this.scene)this.scene.add(this.scenarios.group);
+    this.scenarios.update(wanted?view:undefined,this.affine,this.surfaces);
+    this.scenarios.setClipping([...this.extraClipPlanes,...(this.clipPlane?[this.clipPlane]:[])]);
+  }
   private fieldOptics:ReturnType<SurgicalFieldResources['update']>=null;
   private surgicalFieldResources?:SurgicalFieldResources;
   private surgicalWetting?:SurgicalWetting;
@@ -1869,6 +1881,7 @@ export class VolumeRenderer {
         mesh.userData.corticalSignalEnabled.value=this.showCorticalSignal(mesh);
     }
     const motionStarted=performance.now(),motionApplied=this.updateAcceptedSurfaces(incomingView??undefined),motionMs=performance.now()-motionStarted;
+    this.updateScenarios(incomingView??undefined);
     this.updatePlanarPartition(incomingView);
     if(!this.replayActive)this.scanVolume?.setRemoval?.(incomingView?displayRemovalCells(incomingView):null);
     const exposureOwner=incomingView?.operativeExposureV1&&modeledAnatomy(this.volume)?.surfaceReference?.owner;
@@ -3017,6 +3030,8 @@ export class VolumeRenderer {
       operativeVesselSurfaces:this.displayedOperativeVessels(),
       picking:this.picking?.stats()??null}}));
     if(surgicalAnimationActive)this.needsFrame=true;
+    const pulse=this.scenarios?.tick(performance.now(),!!this.microscopeTissueView());
+    if(pulse!=null&&!this.scenarioPulse)this.scenarioPulse=setTimeout(()=>{this.scenarioPulse=undefined;this.requestRender(false);},pulse);
     const gl=this.renderer.getContext() as WebGL2RenderingContext;
     if(this.disposed||this.graphicsLost){this.rendering=false;return;}
     let sync:WebGLSync|null=null;

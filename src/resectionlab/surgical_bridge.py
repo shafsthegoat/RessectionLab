@@ -91,26 +91,76 @@ def cusa_progress_display(engine):
     """
     from fractions import Fraction
     state = getattr(engine, 'state', None)
-    pending = ((state.get('cusaV3') if isinstance(state, dict) else None) or {}).get('progressExact') or {}
+    if not isinstance(state, dict):
+        return None
+    # cusaV4, when declared, replaces V3 with the same per-cell progress layout.
+    v4 = state.get('cusaV4')
+    pending = ((v4 if v4 is not None else state.get('cusaV3')) or {}).get('progressExact') or {}
     if not pending:
         return None
     cells = sorted(int(key) for key in pending)
     volume = Fraction.from_float(float(engine.scene.voxel_mm3))
-    resistance = None
-    if 'gliomaMaterialsV1' in engine.scene.properties:
-        from .surgical_glioma_materials import material_values
-        resistance = material_values(engine, cells, 'referenceCapacityPerSolidVolume')
+    if v4 is not None:
+        from . import surgical_cusa_v4 as cusa_v4
+        profile = cusa_v4.profile(engine)
+        thresholds = []
+        for cell in cells:
+            rate = profile['relativeRate'].get(cusa_v4._kind(engine, profile, cell) or '', 0.)
+            thresholds.append(volume / Fraction.from_float(float(rate)) if rate > 0 else None)
+    else:
+        resistance = None
+        if 'gliomaMaterialsV1' in engine.scene.properties:
+            from .surgical_glioma_materials import material_values
+            resistance = material_values(engine, cells, 'referenceCapacityPerSolidVolume')
+        thresholds = [volume if resistance is None else volume * Fraction.from_float(float(resistance[index]))
+                      for index in range(len(cells))]
     fractions = []
-    for index, cell in enumerate(cells):
-        threshold = volume if resistance is None else volume * Fraction.from_float(float(resistance[index]))
-        fractions.append(round(min(1., max(0., float(Fraction(*pending[str(cell)]) / threshold))), 4))
-    return {'schema': 'resectionlab.cusa-progress-display.v1', 'cells': cells, 'fraction': fractions}
+    for cell, threshold in zip(cells, thresholds):
+        value = 0. if threshold is None else float(Fraction(*pending[str(cell)]) / threshold)
+        fractions.append(round(min(1., max(0., value)), 4))
+    return {'schema': 'resectionlab.cusa-progress-display.v1', 'cells': cells, 'fraction': fractions,
+            'model': 'cusaV4' if v4 is not None else 'cusaV3'}
+
+
+def brain_shift_display(engine):
+    """Resolved scenario geometry the renderer needs to evaluate the engine's analytic field per vertex.
+
+    ``view()['brainShiftV1']`` already carries the declaration, opening frame
+    and lattice samples; this adds the declared shifting region ids and the
+    resolved cortical surface depth of the same cached field. Display only.
+    """
+    declared = engine.__dict__.get('_brain_shift')
+    if declared is None:
+        return None
+    from .surgical_brain_shift import geometry
+    geo = geometry(engine.scene, declared)
+    return {'regionIds': list(declared['regionIds']), 'surfaceDepthMm': float(geo.surface),
+            'cellMm': float(geo.cell_mm)}
+
+
+def injury_display(engine):
+    """Contused and lacerated source cells of ``surgicalInjuryV1`` for drawing; counts stay with the engine."""
+    state = getattr(engine, 'state', None)
+    record = state.get('injuryV1') if isinstance(state, dict) else None
+    if record is None:
+        return None
+    return {'schema': 'resectionlab.surgical-injury-display.v1', 'contused': sorted(map(int, record['contused'])),
+            'lacerated': sorted(map(int, record['lacerated'])), 'vesselInjured': sorted(map(int, record['vesselInjured'])),
+            'totalsMm3': copy.deepcopy(record['totalsMm3']), 'avulsions': len(record['avulsions']),
+            'events': [{k: copy.deepcopy(v) for k, v in event.items() if k != 'cellIds'} for event in record['events'][-6:]],
+            'eventCount': len(record['events'])}
 
 
 def _with_display_fields(engine, view):
     progress = cusa_progress_display(engine)
     if progress is not None:
         view['cusaProgressV1'] = progress
+    shift = brain_shift_display(engine)
+    if shift is not None and isinstance(view.get('brainShiftV1'), dict):
+        view['brainShiftV1'] = {**view['brainShiftV1'], 'display': shift}
+    injured = injury_display(engine)
+    if injured is not None:
+        view['surgicalInjuryV1'] = injured
     return view
 
 

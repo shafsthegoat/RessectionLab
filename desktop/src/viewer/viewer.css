@@ -505,6 +505,11 @@
 @media(max-width:1100px){.rl-primary-tools{gap:5px}.rl-primary-tools button{padding:7px 8px;font-size:11px}}
 .operative-readout{position:absolute;left:14px;bottom:34px;z-index:4;display:grid;gap:3px;padding:9px 12px;background:rgba(12,17,17,.82);border:1px solid rgba(225,214,190,.25);border-radius:6px;color:#e8e2d3;font-size:10px;line-height:1.4;pointer-events:none;font-variant-numeric:tabular-nums}
 .operative-readout strong{font-size:11px;color:#f1e1be}
+.operative-scenarios{display:grid;gap:2px;margin-top:2px;padding-top:4px;border-top:1px solid rgba(225,214,190,.18)}
+.operative-scenarios [data-tone=truth]{color:#cdbb98;font-style:italic}
+.operative-scenarios [data-tone=unknown]{color:#bfc4c3}
+.operative-scenarios [data-tone=bleeding]{color:#eaa79c}
+.operative-scenarios [data-tone=injury]{color:#d9a0c0}
 .rl-viewer-anatomy-image:has(.rl-body-guide:not([hidden])) .operative-readout{left:calc(clamp(104px,20%,144px) + 24px);right:14px;max-width:430px;box-sizing:border-box}
 .operative-source-locator { position:absolute; top:12px; right:12px; z-index:3; width:clamp(88px,16%,140px); margin:0; padding:4px; border:1px solid #58655c; border-radius:5px; background:#101715ed; color:#dee6dc; font:10px/1.25 system-ui; text-align:center; pointer-events:none; }
 .operative-source-locator div { position:relative; }
