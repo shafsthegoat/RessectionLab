@@ -163,7 +163,9 @@ tract, the response law and the unknowns.
 **Response law (model estimate).** A `cortical_probe` or `subcortical_probe`
 measures the distance from the tip to the nearest retained cell of each tract.
 It uses one k-d tree per scene, cached outside the scene object, and skips
-removed cells. A motor response is estimated when the effective current reaches
+removed cells. Under an active `brainShiftV1` scenario every tract cell is
+measured at its current (shifted) voxel, from
+`surgical_brain_shift.current_cells`, with one cached tree per shift level. A motor response is estimated when the effective current reaches
 the distance threshold. The law and its references:
 
 - `distance_mm = 1.42 + 0.81 × current_mA` is **owner-supplied**. The project
@@ -171,13 +173,23 @@ the distance threshold. The law and its references:
   confirmed. No citation is bound to it. It decides the result.
 - The commonly taught rule of roughly 1 mm per mA is a second,
   **assumed-research** reference. It only widens the stated uncertainty.
+- The reference setting is a declared field of the property,
+  `stimulationReference` (`declaration(..., stimulation_reference=...)`), one
+  of two **assumed-research** presets: `high-frequency-monopolar-train`
+  (400 Hz, 500 µs pulses, trains of about five, as in subcortical motor
+  mapping; the default, because the response law is stated for monopolar
+  stimulation) and `low-frequency-bipolar` (60 Hz, 500 µs per phase). A
+  property without the field assumes the default and says so.
 - Effective current is `amplitude × pulse-width factor × frequency factor`, both
   **assumed-research**. The pulse-width factor is the Weiss/Lapicque form,
-  `(1 + c/500 µs)/(1 + c/PW)` with chronaxie `c` = 200 µs, bounded to
-  [0.25, 1.4]. The frequency factor is `(f/60 Hz)^0.1`, bounded to [0.8, 1.2].
-  The reference setting is 500 µs and 60 Hz. Both factors are monotone.
-  A pulse width or frequency that is not supplied takes the reference value,
-  and the row records that it did.
+  `(1 + c/PW_ref)/(1 + c/PW)` with chronaxie `c` = 200 µs, bounded to
+  [0.25, 1]. The frequency factor is `(f/f_ref)^0.1`, bounded to [0.8, 1].
+  Both factors are monotone and capped at 1: a setting stronger than the
+  declared reference never extends reach beyond the law at that reference.
+  A pulse width or frequency that is not supplied takes the preset's reference
+  value, and the row records that it did. Every row's `stimulationReference`
+  names the preset, whether it was declared or assumed, and, for the bipolar
+  preset, that the monopolar law is applied outside its stated technique.
 
 The probe row has `kind: 'model-estimate'` (`category: 'mapping'`). It carries
 the parameters, the estimated distance to each tract, the result for each
@@ -207,7 +219,8 @@ evidence.
 each tract and each vessel kind (artery, vein, unclassified): removed volume,
 the minimum centre-to-centre distance from the resection cavity, and retained
 cells in the 0–2 mm and 2–5 mm bands. The cavity is the removed cells outside
-bone and membrane. With the property, the consequence vector adds
+bone and membrane. Cavity, tract and vessel cells are taken at their current
+(shifted) positions when a brain shift is active. With the property, the consequence vector adds
 `functional:<tract>:removedMm3` (min) and `functional:<tract>:minDistanceMm`
 (max). Distances are capped at `maxSearchMm`; the cap means "at least this far,
 or no cavity yet". The vector also adds a separate `functionalModelEstimate`
@@ -220,7 +233,8 @@ unchanged. `ProtectionSet.report()` keeps admission unchanged. It adds
 mapping declaration.
 
 **Limits.** Tractography is not function. Every response is a model estimate
-from a declared relation, not an observed stimulation. Distances use the
-undeformed source cell centres, so brain shift is not modelled. No response
+from a declared relation, not an observed stimulation. Distances follow the
+brain-shift scenario at whole-voxel destinations; local tract deformation is
+not modelled. No response
 does not mean safe tissue. No deficit probability is produced
 (`clinical_deficit_probability` stays `null`).

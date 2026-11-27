@@ -202,6 +202,72 @@ See [supported domain, measured results and reproduction](planar-blade-maneuver.
 This integration retains the standalone kernel's failed 5% cycle-work sensitivity
 gates and establishes no physiological or patient-prediction qualification.
 
+## Opt-in selective CUSA and suction traction
+
+Two scene properties make the CUSA and the Frazier suction behave more like the
+instruments a neurosurgeon holds. Each is opt-in; scenes without them keep
+identical state ids, events and refusals. Scenes with either run the Python
+reference transition. Both add the action parameters `amplitude` (0–1),
+`aspiration` (0–1), `irrigation` (0–30 mL/min) and `duty` (0–1); other scenes
+still refuse them as unsupported.
+
+**`cusaV4`** (`surgical_cusa_v4.py`) replaces CUSA V3 when declared: amplitude-,
+aspiration- and irrigation-dependent fragmentation that is fastest in tumour
+core and slowest in white matter and tracts, spares vessel walls and membranes
+below a sparing amplitude and breaches them after a calibre-dependent dwell
+above it, leaves debris when aspiration cannot keep up and loses efficiency
+when the tip runs dry. Constants, provenance, the law and its limits are in
+[the CUSA contact model](cusa-contact-model.md#tissue-selective-cusa-v4).
+
+**`suctionTractionV1`** (`surgical_suction_traction.py`, requires
+`tissuePhysicsV2`) lets an active `frazier_suction` work as the second hand.
+
+- When the active tip touches soft tissue or tumour, and no placed cottonoid
+  covers it, the touched (unprotected, unheld) cells become a coupled hold
+  through `surgical_deformation_v2.begin_hold`, the brain retractor's mechanism.
+  Moving the active suction (`move` with the switch on) moves the hold target, so
+  the gripped patch follows as gentle traction or counter-traction.
+- Hold force = `aspiration × maxVacuumMmHg × 133.322 Pa/mmHg × π (tipLumenDiameterMm/2)²`:
+  0.084 N at full aspiration, 0.042 N at the default 0.5.
+- After each lattice step the hold load is the hold-spring load,
+  `holdStiffnessNPerMm × Σ(asked − current displacement)` over the held cells.
+  It releases the patch with `suction_hold_released` when the load exceeds the
+  hold force (`hold-force-exceeded`) or the switch is off (`vacuum-off`). A torn-off
+  patch is not re-gripped in the same action until the tip has lost contact.
+  `release` also lets go, and `withdraw` requires it first.
+- In `surgicalInjuryV1` injury mode a `hold-force-exceeded` release records a
+  traction avulsion (`surgical_injury.tear`, code `SUCTION_HOLD_EXCEEDED`,
+  attachment `suction-patch:<slot>`) and marks the gripped cells contused.
+- Over a placed cottonoid (an `operativeExposureV1` object of kind `cottonoid`,
+  not held, within its radius plus half a voxel diagonal) the suction takes
+  fluid and debris through it and holds nothing (`suction_through_cottonoid`).
+- Fluid and debris uptake keep the ordinary suction law (`flowMm3PerSecond`).
+- **Reaction estimates.** On these scenes every action ends with one read-only
+  `tissue_reaction_estimate` event per coupled hold (retractor or suction):
+  `reactionN` (vector), `magnitudeN`, the slot's `inputForceN` and the basis.
+  It reads the hold-spring load and changes no dynamics or state. Tools whose
+  force is only an input (`forceN` for dissector, bipolar or vessel contact) have
+  no lattice reaction to report, so they get no estimate.
+
+| Constant | Value | Provenance |
+| --- | ---: | --- |
+| `maxVacuumMmHg` | 200 mmHg at full aspiration | assumed-research; not a device specification |
+| `tipLumenDiameterMm` | 2 mm (fine, about 10 French, Frazier lumen) | assumed-research |
+| `defaultAspiration` | 0.5 | assumed-research |
+| Hold stiffness, lattice and caps | `tissuePhysicsV2.brain` profile | existing uncalibrated lattice (`holdStiffnessNPerMm` 0.02, `maxDisplacementMm` 3) |
+
+State lives in `state['suctionTractionV1']` (`holds`, `releases`,
+`regripBlocked`, `throughCottonoidSeconds`, `peakLoadN`); metrics add
+`suctionHolds`, `suctionReleases`, `suctionThroughCottonoidSeconds` and
+`suctionPeakLoadN`. Limits: no seal quality, porosity or tip angle; the suction
+never aspirates brain itself; release is a force threshold on the lattice load,
+not pial tearing mechanics; on the generated lattice the load rises steeply once
+the patch nears its strain limit, so release is close to a traction distance of
+about 1.5 mm and full vacuum holds only slightly further than half vacuum; a
+cottonoid is a centre and radius with no absorbency. The reaction estimate
+describes the action's end state, not its peak (`peakLoadN` keeps the suction
+peak).
+
 ## Current limits
 
 Mechanics are conservative capsule contact, whole-cell removal, graph cuts, and lattice displacement. Energy is a local scalar, not a calibrated thermal or physiological model. Mesh seams retain connectivity records without remeshing faces or opening a physical aperture. Native mesh seam cutting after lattice displacement rejects explicitly because vertices are not remapped by that deformation model. These outputs support inspection and deterministic engineering tests, not clinical safety or outcome estimates.

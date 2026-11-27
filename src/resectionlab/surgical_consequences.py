@@ -869,9 +869,13 @@ def validate_saved_comparison(scene, record, report, *, declaration=None):
         residual = initial_target - sum(int(source[c]) in targets for c in cells) * scene.voxel_mm3
         if vector['schema'] != EVIDENCE_VECTOR_SCHEMA and vector.get('residualTargetMm3') != residual:
             raise ValueError('Consequence residual target differs from source inventory')
+        # Injury mode: lacerated target cells are gone (residual excludes them)
+        # but are not treatment; they count in neither target nor non-target.
+        lacerated = set(snapshot['checkpoint']['state'].get('injuryV1', {}).get('lacerated', ()))
         for entries, scope in [(cells, 'cumulative'), (set(cells) - set(base_cells), 'incremental')]:
-            target = sum(int(source[c]) in targets for c in entries) * scene.voxel_mm3
-            for name, value in [('targetRemovedMm3', target), ('nonTargetRemovedMm3', len(entries) * scene.voxel_mm3 - target)]:
+            removed_target = sum(int(source[c]) in targets for c in entries)
+            target = sum(int(source[c]) in targets and c not in lacerated for c in entries) * scene.voxel_mm3
+            for name, value in [('targetRemovedMm3', target), ('nonTargetRemovedMm3', len(entries) * scene.voxel_mm3 - removed_target * scene.voxel_mm3)]:
                 if vector['dimensions'][name][scope] != value:
                     raise ValueError('Consequence source occupancy differs')
         # Check the selected checkpoint's content and every nominal model ledger,

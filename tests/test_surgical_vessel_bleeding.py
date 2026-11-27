@@ -167,15 +167,68 @@ def test_vein_wells_steadily_and_follows_position_head():
     assert wound(raised)['rateMm3PerSecond'] == pytest.approx(murray(1., 'vein', head))
 
 
-def test_uncertain_vessel_uses_venous_law_and_stays_labelled():
+def test_uncertain_vessel_bleeds_at_the_arterial_law_with_a_venous_lower_bound():
     e = cut('Vessel (angiography)')
+    q = e.scene.properties[vb.PROPERTY]['parameters']
+    w = wound(e); before, t0 = w['lossMm3'], e.state[vb.PROPERTY]['elapsedSeconds']
+    lower_before = w['venousLawLowerBoundLossMm3']
     act(e, 'inspect', duration=.1)
-    w = wound(e)
+    w = wound(e); t1 = e.state[vb.PROPERTY]['elapsedSeconds']
     assert w['kind'] == 'uncertain' and w['kindBasis'] == 'no artery, vein or sinus label'
-    assert w['rateMm3PerSecond'] == pytest.approx(murray(1., 'vein'))
+    assert w['kindStatus'] == 'UNKNOWN' and w['emittedLaw'].startswith('arterial')
+    # Emitted at the arterial (conservative) law, pulsed; the venous law is the recorded lower bound.
+    assert w['lossMm3'] - before == pytest.approx(murray(1.) * vb.pulse_integral(q, t0, t1), rel=1e-9)
+    assert w['venousLawLowerBoundMm3PerSecond'] == pytest.approx(murray(1., 'vein'))
+    assert w['venousLawLowerBoundLossMm3'] - lower_before == pytest.approx(murray(1., 'vein') * .1)
     m = e.metrics()['vesselPhysicsV2'][vb.PROPERTY]
     assert m['openVesselWoundsByKind'] == {'artery': 0, 'vein': 0, 'sinus': 0, 'uncertain': 1}
     assert m['bloodLossByKindMm3']['uncertain'] == pytest.approx(m['bloodLossMm3'])
+    unknown = m['vesselKindUnknown']
+    assert unknown['kind'] == 'UNKNOWN' and unknown['wounds'] == 1
+    assert unknown['lossMm3'] == pytest.approx(m['bloodLossMm3'])
+    assert unknown['venousLawLowerBoundLossMm3'] == pytest.approx(w['venousLawLowerBoundLossMm3'])
+    assert 0 < unknown['bloodLossLowerBoundMm3'] < m['bloodLossMm3']
+    # Declared artery and vein wounds carry no bracket.
+    assert 'kindStatus' not in wound(cut())
+    assert cut().metrics()['vesselPhysicsV2'][vb.PROPERTY]['vesselKindUnknown']['wounds'] == 0
+
+
+def test_flow_is_capped_at_the_reference_vessel_and_total_cerebral_blood_flow():
+    q = vb.default_parameters()
+    reference = 717. * .21 * 1000. / 60.
+    # A 6 mm "artery" fully opened would give 1,482 mL/min by uncapped Murray scaling.
+    assert reference * (6. / 2.8) ** 3 * 60. / 1000. == pytest.approx(1482., abs=1.)
+    assert vb.mean_flow_mm3_per_second(q, 'artery', 6., 1.) == pytest.approx(reference)
+    assert vb.mean_flow_mm3_per_second(q, 'artery', 2., 1.) == pytest.approx(murray(2.))
+    e = cut('Large artery', 3)
+    w = wound(e)
+    assert w['calibreMm'] == 3. and w['calibre'] == 'above-reference' and w['flowCalibreMm'] == 2.8
+    m = e.metrics()['vesselPhysicsV2'][vb.PROPERTY]
+    assert m['aboveReferenceCalibreWounds'] == [w['id']]
+    assert e.observe()['physics']['vessel'][vb.PROPERTY]['segmentsAboveReferenceCalibre'] == ['large-artery-1']
+    # Several wounds on one segment never exceed that segment's reference flow.
+    s = {'wounds': {f'vessel-bleeding:{i}': {'kind': 'artery', 'segment': 'a'} for i in range(3)}}
+    order = sorted(s['wounds'])
+    caps = vb._flow_caps(q, s, order, {k: reference for k in order})
+    assert sum(reference * caps[k] for k in order) == pytest.approx(reference)
+    # Many arterial segments together never exceed total cerebral blood flow.
+    s = {'wounds': {f'vessel-bleeding:{i}': {'kind': 'artery', 'segment': str(i)} for i in range(8)}}
+    order = sorted(s['wounds'])
+    caps = vb._flow_caps(q, s, order, {k: reference for k in order})
+    assert sum(reference * caps[k] for k in order) == pytest.approx(717. * 1000. / 60.)
+
+
+def test_venous_wound_above_the_heart_is_dry_but_flagged_for_air_entry():
+    e = cut('Cortical vein')
+    act(e, 'withdraw')
+    assert not e.metrics()['vesselPhysicsV2'][vb.PROPERTY]['venousAirEntryRiskUnmodelled']
+    position(e, {'modelVersion': 1, 'preset': 'supine', 'siteHeightAboveHeartMm': 300.,
+                 'heightEstimateSource': 'synthetic test'})
+    act(e, 'inspect', duration=.1)
+    s = e.state[vb.PROPERTY]
+    assert s['venousHeadFactor'] == 0. and wound(e)['rateMm3PerSecond'] == 0.
+    assert wound(e)['venousAirEntryRiskUnmodelled'] is True and s['venousAirEntryRiskUnmodelled'] is True
+    assert e.metrics()['vesselPhysicsV2'][vb.PROPERTY]['venousAirEntryRiskUnmodelled'] is True
 
 
 def test_partial_transection_opens_a_lumen_fraction_of_a_large_artery():

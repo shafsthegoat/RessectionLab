@@ -602,6 +602,24 @@ def shifted_raster(engine, *, include_rods=True, local_only=False):
     return [[cell, pairs[cell]] for cell in sorted(pairs)]
 
 
+def current_cells(engine, cells):
+    """Current raster cell of each SOURCE cell for the engine's present state.
+
+    Identity when no scenario shift is active (no declaration, before onset or
+    at level 0). Under a shift each source maps to its forward destination,
+    removed sources included, so a wound, an outlet or a tract cell is found
+    where the tissue now lies. Local lattice displacement is not composed here.
+    """
+    cells = np.asarray(cells, dtype=np.int64).ravel()
+    shift = active_map(engine)
+    return cells.copy() if shift is None else shift.forward(cells)
+
+
+def current_points(engine, cells):
+    """RAS millimetre centres of ``current_cells``."""
+    return engine.scene.points(current_cells(engine, cells))
+
+
 def forward_pairs(engine, cells):
     """Scenario destinations of the given source cells, excluding removed ones."""
     shift = active_map(engine)

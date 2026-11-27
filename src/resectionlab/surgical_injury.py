@@ -9,7 +9,8 @@ physically meaningful:
   or vessel accumulates a contusion dose (contact seconds x force proxy); a
   cell whose dose passes the threshold is ``contused`` and stays in place; a
   cell the rigid part travels through beyond the laceration distance is
-  ``lacerated`` and removed, the removal attributed to injury;
+  ``lacerated`` and removed, the removal attributed to injury (it stays in the
+  cavity but earns no target-treatment credit; see ``removal_share``);
 * a cutting or aspirating working part on material it is not meant to treat
   (CUSA or scalpel on a vessel, drill or craniotome on dura or brain) lacerates
   the contacted cells at once; vessel cells are recorded by id as vessel
@@ -246,6 +247,28 @@ def protected(engine, message, cells, key):
     record['protectedCells'][mechanism] = sorted(set(known) | set(new))
     kind = 'protected_clearance' if 'clearance' in mechanism else 'protected_structure_injury'
     _event(engine, record, kind, 'PROTECTED_STRUCTURE', new, key, mechanism=mechanism)
+
+
+def removal_share(engine):
+    """Lacerated removed cells and the injury share of the removal ledgers.
+
+    A lacerated cell is gone (it stays in ``state['removed']`` and the cavity),
+    but tearing tissue is injury, not treatment: the engine excludes these
+    cells from ``targetRemovedMm3``. ``removedByLabelMm3`` stays all-cause and
+    ``injuryLaceratedByLabelMm3`` is its injury share, so
+    total removed = targetRemovedMm3 + injuryLaceratedTargetMm3 + nonTargetRemovedMm3.
+    """
+    record = engine.state['injuryV1']
+    volume = engine.scene.voxel_mm3
+    labels = engine.scene.labels.ravel()
+    cells = frozenset(record['lacerated']).intersection(engine.state['removed'])
+    by_label, target = {}, 0
+    for cell in sorted(cells):
+        region = engine.by_label[int(labels[cell])]
+        by_label[region['name']] = by_label.get(region['name'], 0.) + volume
+        target += bool(region.get('target'))
+    return cells, {'injuryLaceratedTargetMm3': target * volume,
+                   'injuryLaceratedByLabelMm3': {name: by_label[name] for name in sorted(by_label)}}
 
 
 def metrics(engine):

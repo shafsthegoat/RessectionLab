@@ -13,14 +13,23 @@ source; most are labelled assumed-research.
   wound model is superseded) when contact tears a face.
 * Arterial flow scales from the middle cerebral artery by Murray's law,
   Q proportional to d^3, times the fraction of the lumen the wound opens, and
-  pulses at the heart rate. Venous, sinus and uncertain wounds well steadily
-  at the venous-to-arterial pressure ratio, changed by the hydrostatic head of
-  the declared patient position.
+  pulses at the heart rate. The calibre used for flow is capped at the
+  reference diameter (such wounds are marked ``calibre: 'above-reference'``),
+  each segment's arterial flow at the reference vessel flow and all concurrent
+  vessel bleeding at total cerebral blood flow. Venous and sinus wounds well
+  steadily at the venous-to-arterial pressure ratio, changed by the
+  hydrostatic head of the declared patient position; a site above the heart
+  floors at zero flow and is flagged ``venousAirEntryRiskUnmodelled``.
+* A vessel of unknown kind (``uncertain``) reports a bracketed estimate: it
+  emits at the arterial law (the conservative magnitude for an unidentified
+  angiographic vessel) and records the venous-law value as the lower bound.
 * Newly exposed tumour faces ooze per square millimetre, decaying with time,
   until bipolar or a placed haemostatic dressing stops them.
 * Blood enters the ordinary per-cell fluid inventory, so suction, irrigation,
   overflow and gravity pooling keep working. Blocked outlets hold blood in a
-  per-wound reservoir until an outlet opens, so mass is conserved.
+  per-wound reservoir until an outlet opens, so mass is conserved. Under an
+  active ``brainShiftV1`` scenario, outlets, ooze and dressing coverage use the
+  wound's current (shifted) position, not its preoperative source cell.
 * Bipolar seals a wound only when its electrodes touch the wound and enough
   activation-seconds are delivered; vessels above a calibre limit seal only
   partly and slowly, sinuses not at all. A wet field cools the tips, raising
@@ -42,7 +51,9 @@ from scipy import ndimage
 PROPERTY = 'vesselBleedingV1'
 SCHEMA = 'resectionlab.vessel-bleeding.v1'
 KINDS = ('artery', 'vein', 'sinus', 'uncertain')
-VENOUS_KINDS = ('vein', 'sinus', 'uncertain')
+# An unknown kind emits at the arterial law; its venous-law value is the lower bound.
+ARTERIAL_LAW_KINDS = ('artery', 'uncertain')
+VENOUS_KINDS = ('vein', 'sinus')
 
 # 1 mL = 1000 mm3 and 1 min = 60 s, so 1 mL/min = 1000/60 mm3/s.
 ML_PER_MIN_TO_MM3_PER_S = 1000. / 60.
@@ -88,7 +99,10 @@ LIMITS = (
     'No ischaemic territory: cutting a vessel does not starve tissue downstream in this model.',
     'Calibres below the grid spacing are unknown; the estimate is floored at one voxel.',
     'No coagulopathy, systemic blood volume, blood pressure response or haemorrhagic shock.',
-    'Arterial wound flow is the normal segment flow by Murray scaling, not a pressure-driven orifice law.',
+    'Arterial wound flow is the normal segment flow by Murray scaling, not a pressure-driven orifice law; it is '
+    'capped at the reference vessel flow per segment and at total cerebral blood flow overall.',
+    'A site above the heart floors venous flow at zero; air entry is flagged, not modelled.',
+    'A vessel of unknown kind bleeds at the arterial law with the venous law as a recorded lower bound.',
     'No distal back-bleeding or collateral supply; one wound per local breach of a segment.',
     'The fluid inventory mixes blood and irrigation; a wet field cannot tell which is present.',
     'Bipolar sealing uses delivered activation-seconds; tissue temperature does not drive it.',
@@ -219,7 +233,7 @@ def declare_mask(mask, affine, *, name='vessel', kind='uncertain'):
         raise ValueError('VESSEL_BLEEDING_REQUIRES_VESSEL_CELLS')
     segments = _segments_from_mask(mask, affine, name, kind, 'declared for an unlabelled vessel mask', None)
     return _property(segments, 'Segments are connected components of a vessel mask without artery/vein labels; '
-                     'they bleed with the venous law and stay labelled uncertain.')
+                     'they stay labelled uncertain and bleed at the arterial law with a venous-law lower bound.')
 
 
 def _number(value, name, integer=False):
@@ -389,14 +403,29 @@ def _local_calibre(engine, cell, segment):
     return float(diameter), 'local-thickness'
 
 
-def mean_flow_mm3_per_second(parameters, kind, calibre_mm, opening, venous_head=1.):
-    """Unsealed interval-mean wound flow in mm3/s before pulsation, sealing and tamponade."""
+def reference_flow_mm3_per_second(parameters):
+    """Reference (MCA) vessel flow: mL/min -> mm3/s by x1000/60."""
     q = parameters
-    # Reference MCA flow: mL/min -> mm3/s by x1000/60.
-    reference = q['totalCerebralBloodFlowMlPerMin'] * q['middleCerebralArteryFlowFraction'] * ML_PER_MIN_TO_MM3_PER_S
-    # Murray (1926): segment flow proportional to diameter cubed.
-    full = reference * (calibre_mm / q['referenceM1DiameterMm']) ** 3 * opening
-    if kind == 'artery':
+    return q['totalCerebralBloodFlowMlPerMin'] * q['middleCerebralArteryFlowFraction'] * ML_PER_MIN_TO_MM3_PER_S
+
+
+def total_flow_mm3_per_second(parameters):
+    """Total cerebral blood flow in mm3/s: the cap on all concurrent vessel bleeding."""
+    return parameters['totalCerebralBloodFlowMlPerMin'] * ML_PER_MIN_TO_MM3_PER_S
+
+
+def mean_flow_mm3_per_second(parameters, kind, calibre_mm, opening, venous_head=1.):
+    """Unsealed interval-mean wound flow in mm3/s before pulsation, sealing, tamponade and caps.
+
+    ``uncertain`` returns the arterial-law value (its conservative bound); call
+    with ``'vein'`` for its venous-law lower bound.
+    """
+    q = parameters
+    # Murray (1926): segment flow proportional to diameter cubed, not
+    # extrapolated beyond the reference vessel the law is scaled from.
+    calibre = min(calibre_mm, q['referenceM1DiameterMm'])
+    full = reference_flow_mm3_per_second(q) * (calibre / q['referenceM1DiameterMm']) ** 3 * opening
+    if kind in ARTERIAL_LAW_KINDS:
         return full
     # Low-pressure welling: same lumen, venous driving pressure under a linear resistance.
     return full * q['corticalVenousPressureMmHg'] / q['meanArterialPressureMmHg'] * venous_head
@@ -442,6 +471,10 @@ def _update_wound_geometry(engine, wound):
     q = _parameters(engine)
     calibres = [local_calibre(engine, c, wound['segmentIndex']) for c in wound['cells'][:8]]
     wound['calibreMm'], wound['calibreBasis'] = max(calibres)
+    if wound['calibreMm'] > q['referenceM1DiameterMm']:
+        # Murray scaling is not extrapolated: flow uses the reference diameter.
+        wound['calibre'] = 'above-reference'
+        wound['flowCalibreMm'] = q['referenceM1DiameterMm']
     lumen = math.pi * wound['calibreMm'] ** 2 / 4
     wound['openingFraction'] = min(1., wound['breachAreaMm2'] / lumen)
     full = q['bipolarFullSealCalibreMm']
@@ -472,6 +505,10 @@ def _open_sites(engine, s, sites):
                 'breachAreaMm2': 0., 'openedAtSeconds': s['elapsedSeconds'], 'sealFraction': 0.,
                 'coagulationDoseActivationSeconds': 0., 'charReopened': False, 'tamponadeFraction': 0.,
                 'rateMm3PerSecond': 0., 'lossMm3': 0.}
+            if segment['kind'] == 'uncertain':
+                # Bracketed estimate: emitted at the arterial law, venous law recorded as the lower bound.
+                target.update(kindStatus='UNKNOWN', emittedLaw='arterial (conservative bound)',
+                              venousLawLowerBoundMm3PerSecond=0., venousLawLowerBoundLossMm3=0.)
         target['cells'] = sorted(set(target['cells']) | set(cells))
         target['faces'] = sorted({tuple(f) for f in target['faces']} | {tuple(f) for f in faces})
         target['faces'] = [list(f) for f in target['faces']]
@@ -561,8 +598,13 @@ def _scan_ooze(engine, s):
 
 
 def _outlet(engine, occupancy, cells):
-    """Nearest free cell: a wound cell, its face neighbours, then a bounded Chebyshev search."""
+    """Nearest free cell: a wound cell, its face neighbours, then a bounded Chebyshev search.
+
+    ``cells`` are source cells; the search starts from their current (shifted) cells.
+    """
+    from .surgical_brain_shift import current_cells
     from .surgical_effects import _free_outlet
+    cells = sorted(set(current_cells(engine, cells).tolist()))
     for cell in sorted(cells):
         if not occupancy[cell]:
             return cell
@@ -620,15 +662,39 @@ def _dressing_cover(engine):
 
 
 def _covered(engine, cover, cells):
+    """Which source cells a placed dressing covers, measured at their current (shifted) positions."""
     if not cover or not cells:
         return np.zeros(len(cells), bool)
-    cells = list(cells); points = engine.scene.points(cells)
+    from .surgical_brain_shift import current_points
+    cells = list(cells); points = current_points(engine, cells)
     hit = np.zeros(len(cells), bool)
     for centre, radius, source in cover:
         hit |= np.linalg.norm(points - centre, axis=1) <= radius
         if source is not None:
             hit |= np.asarray(cells) == source
     return hit
+
+
+def _flow_caps(q, s, order, means):
+    """Scale factors keeping each segment's arterial-law flow within the reference vessel flow
+    (Zarrinkoob 2015: 21% of 717 mL/min) and all concurrent vessel bleeding within total CBF."""
+    caps = {k: 1. for k in order}
+    reference = reference_flow_mm3_per_second(q)
+    by_segment = {}
+    for k in order:
+        if s['wounds'][k]['kind'] in ARTERIAL_LAW_KINDS:
+            by_segment.setdefault(s['wounds'][k]['segment'], []).append(k)
+    for segment in sorted(by_segment):
+        total = sum(means[k] for k in by_segment[segment])
+        if total > reference:
+            for k in by_segment[segment]:
+                caps[k] = reference / total
+    total = sum(means[k] * caps[k] for k in order)
+    limit = total_flow_mm3_per_second(q)
+    if total > limit:
+        for k in order:
+            caps[k] *= limit / total
+    return caps
 
 
 def _release_stuck(engine, s):
@@ -677,15 +743,36 @@ def tick(engine, dt):
     if flow is not None and not flow.active:
         flow = None
     rate = 0.
-    for identifier in sorted(s['wounds'], key=lambda k: int(k.split(':')[1])):
+    order = sorted(s['wounds'], key=lambda k: int(k.split(':')[1]))
+    means = {}
+    for identifier in order:
         wound = s['wounds'][identifier]
         contact = sorted(_wound_contact_cells(engine, wound)) or wound['cells']
+        covered = _covered(engine, cover, contact).any() if cover else False
         wound['tamponadeFraction'] = (q['dressingVenousTamponadeFraction'] if wound['kind'] in VENOUS_KINDS
-                                      and _covered(engine, cover, contact).any() else 0.)
+                                      and covered else 0.)
         mean = mean_flow_mm3_per_second(q, wound['kind'], wound['calibreMm'], wound['openingFraction'], head)
-        factor = (1 - wound['sealFraction']) * (1 - wound['tamponadeFraction'])
-        duration = pulse_integral(q, t0, t1) if wound['kind'] == 'artery' else dt
-        amount = max(0., mean * factor * duration)
+        means[identifier] = max(0., mean * (1 - wound['sealFraction']) * (1 - wound['tamponadeFraction']))
+        if wound['kind'] == 'uncertain':
+            # Lower bound of the bracket: the venous law with its head and dressing tamponade.
+            low = mean_flow_mm3_per_second(q, 'vein', wound['calibreMm'], wound['openingFraction'], head)
+            tamponade = q['dressingVenousTamponadeFraction'] if covered else 0.
+            wound['venousLawLowerBoundMm3PerSecond'] = max(0., low * (1 - wound['sealFraction']) * (1 - tamponade))
+            wound['venousLawLowerBoundLossMm3'] += wound['venousLawLowerBoundMm3PerSecond'] * dt
+        if head <= 0 and wound['kind'] in VENOUS_KINDS + ('uncertain',) and wound['sealFraction'] < 1:
+            # Zero venous flow above the heart is kept, but it is not a dry, safe field.
+            wound['venousAirEntryRiskUnmodelled'] = True
+            s['venousAirEntryRiskUnmodelled'] = True
+    caps = _flow_caps(q, s, order, means)
+    for identifier in order:
+        wound = s['wounds'][identifier]
+        cap = caps.get(identifier, 1.)
+        if cap < 1:
+            wound['flowCapFactor'] = cap
+        else:
+            wound.pop('flowCapFactor', None)
+        duration = pulse_integral(q, t0, t1) if wound['kind'] in ARTERIAL_LAW_KINDS else dt
+        amount = max(0., means[identifier] * cap * duration)
         wound['rateMm3PerSecond'] = amount / dt
         wound['lossMm3'] += amount; rate += amount / dt
         s['segmentLossMm3'][wound['segment']] = s['segmentLossMm3'].get(wound['segment'], 0.) + amount
@@ -710,7 +797,10 @@ def tick(engine, dt):
             per_outlet.setdefault((entry[2], int(key)), 0.)
             per_outlet[(entry[2], int(key))] += amount
             s['tumourOozeMm3'] += amount; s['bloodLossMm3'] += amount; rate += amount / dt
-        for (outlet, cell), amount in sorted(per_outlet.items()):
+        from .surgical_brain_shift import current_cells
+        for (source_outlet, cell), amount in sorted(per_outlet.items()):
+            # The recorded outlet is the removed source cell; blood appears where it lies now.
+            outlet = int(current_cells(engine, [source_outlet])[0])
             if not occupancy[outlet]:
                 k = str(outlet)
                 engine.state['fluid'][k] = engine.state['fluid'].get(k, 0.) + amount
@@ -810,7 +900,23 @@ def metrics(engine):
             'bleedingRateMm3PerSecond': s['rateMm3PerSecond'],
             'oozingTumourCells': sum(1 for e in s['oozeCells'].values() if not e[3] and e[1] > 0),
             'blockedBleedingReservoirMm3': held, 'depositedBloodMm3': s['depositedMm3'],
-            'bloodConservationResidualMm3': s['bloodLossMm3'] - s['depositedMm3'] - held}
+            'bloodConservationResidualMm3': s['bloodLossMm3'] - s['depositedMm3'] - held,
+            'vesselKindUnknown': _unknown_kind_summary(s),
+            'aboveReferenceCalibreWounds': sorted(w['id'] for w in s['wounds'].values()
+                                                  if w.get('calibre') == 'above-reference'),
+            'venousAirEntryRiskUnmodelled': bool(s.get('venousAirEntryRiskUnmodelled', False))}
+
+
+def _unknown_kind_summary(s):
+    """Bracket for wounds on vessels of unknown kind: emitted (arterial law) and venous-law lower bound."""
+    wounds = [w for w in s['wounds'].values() if w['kind'] == 'uncertain']
+    emitted = sum(w['lossMm3'] for w in wounds)
+    lower = sum(w.get('venousLawLowerBoundLossMm3', 0.) for w in wounds)
+    return {'kind': 'UNKNOWN', 'wounds': len(wounds), 'emittedLaw': 'arterial (conservative bound)',
+            'lossMm3': emitted, 'venousLawLowerBoundLossMm3': lower,
+            'rateMm3PerSecond': sum(w['rateMm3PerSecond'] for w in wounds if w['sealFraction'] < 1),
+            'venousLawLowerBoundRateMm3PerSecond': sum(w.get('venousLawLowerBoundMm3PerSecond', 0.) for w in wounds),
+            'bloodLossLowerBoundMm3': s['bloodLossMm3'] - emitted + lower}
 
 
 def descriptor(engine):
@@ -820,5 +926,10 @@ def descriptor(engine):
     return {'model': SCHEMA, 'parameters': copy.deepcopy(p['parameters']), 'sources': copy.deepcopy(p['sources']),
             'segmentCount': len(p['segments']),
             'segmentsByKind': {kind: sum(seg['kind'] == kind for seg in p['segments']) for kind in KINDS},
+            'segmentsAboveReferenceCalibre': sorted(
+                seg['id'] for seg in p['segments']
+                if seg['calibreMm']['maximum'] > p['parameters']['referenceM1DiameterMm']),
+            'flowCapsMm3PerSecond': {'perArterialSegment': reference_flow_mm3_per_second(p['parameters']),
+                                     'allConcurrentVesselBleeding': total_flow_mm3_per_second(p['parameters'])},
             'calibreEstimator': CALIBRE_ESTIMATOR, 'oozeFields': list(OOZE_FIELDS),
             'summary': metrics(engine), 'limits': list(LIMITS)}

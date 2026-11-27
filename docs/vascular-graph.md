@@ -160,7 +160,10 @@ component of each vessel region, with run-length cell lists. A segment's kind
 comes from the region's `vesselKind` or its name: artery, vein, sinus, else
 uncertain. Angiography-only masks (`declare_mask`, or
 `qualifying_properties(..., vessel_bleeding=True)` for a native wall) stay
-uncertain. Calibre is the local thickness at the wound (Hildebrand and
+uncertain. An uncertain wound is a bracketed estimate: it bleeds at the
+arterial law (the conservative magnitude, since angiography mostly shows
+arteries), records `kindStatus: 'UNKNOWN'` and keeps the venous-law value as
+`venousLawLowerBoundMm3PerSecond` and `venousLawLowerBoundLossMm3`. Calibre is the local thickness at the wound (Hildebrand and
 Rüegsegger 1997, J Microsc 185:67-75): the largest inscribed sphere of the
 segment containing the cell, as `2R - s` with `s` the voxel spacing. The
 estimate is floored at `s` and labelled `grid-floor`. A 1 mm grid cannot
@@ -171,10 +174,18 @@ cells is transected, cut or torn by contact. Its opening fraction is the breach
 area over the lumen area `π d²/4`, capped at 1. Arterial flow is
 `Q = 717 mL/min × 0.21 × (d / 2.8 mm)³ × opening` (mL/min × 1000/60 = mm³/s),
 modulated by `1 + (PI/2) sin(2π f t)` and integrated exactly over each substep.
-A 1 mm artery bleeds 114 mm³/s on average. Veins, sinuses and uncertain
-vessels well steadily at that flow times the venous-to-arterial pressure ratio
-(10/90). The site-minus-heart hydrostatic pressure of a declared
-`patientPosition` adds to the 10 mmHg venous pressure, floored at zero.
+A 1 mm artery bleeds 114 mm³/s on average. Murray scaling is not extrapolated
+past the reference vessel: the calibre used for flow is capped at 2.8 mm (the
+wound is marked `calibre: 'above-reference'`), the arterial wounds of one
+segment together are capped at the reference flow (0.21 × 717 mL/min), and all
+concurrent vessel bleeding at total cerebral blood flow (717 mL/min); a wound
+scaled down records `flowCapFactor`. Veins and sinuses well steadily at that
+flow times the venous-to-arterial pressure ratio (10/90). The site-minus-heart
+hydrostatic pressure of a declared `patientPosition` adds to the 10 mmHg venous
+pressure, floored at zero. A site above the heart therefore gives zero venous
+flow; the open venous wound and the metrics then carry
+`venousAirEntryRiskUnmodelled: true`, because a dry field there is not a safe
+one and air entry is not modelled.
 Exposed tumour faces ooze `0.004 mm³ s⁻¹ mm⁻²`, decaying with a 1800 s time
 constant. For a 14 cm³ spherical cavity this gives about 40 mL/h on the smooth
 2,800 mm² surface. The grid surface is about 1.5 times larger, giving about
@@ -185,6 +196,10 @@ wound or within two voxels of it. Suction, irrigation, overflow and gravity
 pooling therefore act on it unchanged. A wound with no free outlet holds its
 blood in a reservoir until one opens. `bloodLossMm3` equals the deposited
 volume plus the held volume, and losses are kept per segment and per kind.
+Under an active `brainShiftV1` scenario the wound, ooze outlet and dressing
+coverage are taken at their current positions: each source cell is mapped by
+`surgical_brain_shift.current_cells` to its shifted destination before the
+outlet search, so blood appears where the cut vessel now lies.
 
 The bipolar seals a wound only where the electrodes touch it, after
 `2 × max(1, (d/1.5)²)` activation-seconds. A vessel no wider than 1.5 mm seals
@@ -199,8 +214,12 @@ which also reduces venous wound flow by 0.7.
 
 Metrics appear as `metrics()['vesselPhysicsV2']['vesselBleedingV1']`: blood
 loss total, by kind and by segment, tumour ooze, open wounds by kind, the
-largest uncontrolled calibre, the current rate and the conservation residual.
-The physics descriptor lists every parameter with its source.
+largest uncontrolled calibre, the current rate, the conservation residual,
+`vesselKindUnknown` (emitted loss and rate of uncertain wounds with their
+venous-law lower bounds and `bloodLossLowerBoundMm3`), `aboveReferenceCalibreWounds`
+and `venousAirEntryRiskUnmodelled`. The physics descriptor lists every
+parameter with its source, the segments above the reference calibre and the
+two flow caps.
 
 | Parameter | Value | Source |
 | --- | --- | --- |
@@ -227,8 +246,9 @@ The physics descriptor lists every parameter with its source.
 Limits: the model has no ischaemic territory, so a cut vessel starves no
 tissue. Calibres below the grid resolution are unknown. There is no
 coagulopathy, systemic blood volume or haemorrhagic shock. Arterial flow is
-the normal segment flow, not an orifice law, and there is no distal
-back-bleeding. Blood and irrigation share one inventory. Sealing uses delivered
+the normal segment flow, capped as above, not an orifice law, and there is no
+distal back-bleeding. Air entry at a venous site above the heart is flagged,
+not modelled. Blood and irrigation share one inventory. Sealing uses delivered
 activation, not tissue temperature. Only tumour, not brain, oozes.
 `SurgicalEngine.metrics()` and `view()` do not yet expose the property at top
 level.

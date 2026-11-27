@@ -27,7 +27,7 @@ PROPERTY = 'functionalMappingV1'
 SCHEMA = 'resectionlab.functional-mapping.v1'
 FAMILIES = ('motor', 'language', 'vision', 'other')
 VESSEL_KINDS = ('artery', 'vein', 'unclassified')
-_PROPERTY_KEYS = {'tracts', 'awakeScenario', 'maxSearchMm', 'ischaemicTerritory', 'note'}
+_PROPERTY_KEYS = {'tracts', 'awakeScenario', 'maxSearchMm', 'ischaemicTerritory', 'note', 'stimulationReference'}
 
 # Function family by whole-word tract-name token (plural 's' dropped). Tract
 # anatomy is not function: the family says which mapping task could test it.
@@ -53,16 +53,37 @@ RESPONSE_LAW = {
         'source': 'Commonly taught rule of roughly 1 mm per mA; no citation is bound here.'},
     'decision': 'The owner-supplied relation decides the result; the secondary reference only widens the stated uncertainty.',
 }
+# The reference stimulation setting is a declared field of the property
+# (``stimulationReference``), one of two named presets. Both are
+# assumed-research summaries of common practice, not a cited protocol.
+STIMULATION_PRESETS = {
+    'high-frequency-monopolar-train': {
+        'technique': 'monopolar (cathodal) short high-frequency train, the usual subcortical motor-mapping setting',
+        'referenceFrequencyHz': 400., 'referencePulseWidthUs': 500., 'trainPulses': 5,
+        'typicalRange': 'trains of about 4-5 pulses at 250-500 Hz with 0.5 ms pulses',
+        'provenance': 'assumed-research'},
+    'low-frequency-bipolar': {
+        'technique': 'bipolar low-frequency (Penfield) stimulation at 50-60 Hz',
+        'referenceFrequencyHz': 60., 'referencePulseWidthUs': 500., 'trainPulses': None,
+        'typicalRange': '50-60 Hz biphasic trains, about 0.5 ms per phase',
+        'provenance': 'assumed-research'},
+}
+# The response law below is stated for monopolar stimulation, so its preset is the default.
+DEFAULT_STIMULATION_REFERENCE = 'high-frequency-monopolar-train'
 # assumed-research: effective current through charge per phase (Weiss/Lapicque
 # strength-duration form, threshold charge = rheobase * (pulse width + chronaxie))
-# and a bounded temporal-summation factor for the train frequency. Monotone and
-# bounded; neither constant is calibrated against patient stimulation.
+# and a bounded temporal-summation factor for the train frequency, both relative
+# to the declared reference preset. Monotone and bounded above by 1: a setting
+# stronger than the reference never extends reach beyond what the response law
+# gives at that reference. Neither constant is calibrated against patient stimulation.
 CHARGE_SCALING = {
-    'referencePulseWidthUs': 500., 'referenceFrequencyHz': 60., 'chronaxieUs': 200.,
-    'pulseWidthFactorBounds': [.25, 1.4], 'frequencyExponent': .1, 'frequencyFactorBounds': [.8, 1.2],
+    'referenceSetting': 'the declared stimulationReference preset (default ' + DEFAULT_STIMULATION_REFERENCE + ')',
+    'chronaxieUs': 200.,
+    'pulseWidthFactorBounds': [.25, 1.], 'frequencyExponent': .1, 'frequencyFactorBounds': [.8, 1.],
     'pulseWidthFactor': '(1 + chronaxie/referencePulseWidth) / (1 + chronaxie/pulseWidth), clipped to its bounds',
     'frequencyFactor': '(frequency/referenceFrequency) ** frequencyExponent, clipped to its bounds',
     'effectiveCurrent': 'amplitude * pulseWidthFactor * frequencyFactor',
+    'noExtrapolation': 'Both factors are capped at 1: reach is never extrapolated beyond the declared reference.',
     'provenance': 'assumed-research',
 }
 DEFAULT_MAX_SEARCH_MM = 20.  # assumed-research: tract coverage around the tip.
@@ -72,7 +93,8 @@ PATIENT_OUTCOME = {'status': 'unknown', 'deficitProbability': None,
                    'reason': 'no_validated_clinical_outcome_model: tract distance and removal are not deficit probabilities.'}
 LIMITS = ('Tractography is not function: a tract region is an estimate fitted from a published baseline tract.',
           'Every response is a model estimate from a declared distance-current relation, never an observed stimulation.',
-          'Distances use undeformed source cell centres; brain shift and tract deformation are not modelled.',
+          'Distances use current cell centres: under an active brainShiftV1 scenario each tract, vessel and cavity '
+          'cell is measured at its shifted destination voxel; local tract deformation is not modelled.',
           'No response does not establish absence of function. Language and vision need an awake patient performing tasks.',
           'No deficit probability is produced, and ischaemic territory is not simulated (unknown).')
 
@@ -80,9 +102,11 @@ _CACHE = {}
 _CACHE_LIMIT = 8
 
 
-def declaration(tracts=None, *, awake=False, max_search_mm=DEFAULT_MAX_SEARCH_MM):
+def declaration(tracts=None, *, awake=False, max_search_mm=DEFAULT_MAX_SEARCH_MM,
+                stimulation_reference=DEFAULT_STIMULATION_REFERENCE):
     """The property value a caller adds to a scene to opt in."""
-    result = {'ischaemicTerritory': 'unknown', 'awakeScenario': bool(awake), 'maxSearchMm': float(max_search_mm)}
+    result = {'ischaemicTerritory': 'unknown', 'awakeScenario': bool(awake), 'maxSearchMm': float(max_search_mm),
+              'stimulationReference': stimulation_reference}
     if tracts is not None:
         result['tracts'] = copy.deepcopy(list(tracts))
     return result
@@ -124,7 +148,15 @@ def _validate(scene):
     search = value.get('maxSearchMm', DEFAULT_MAX_SEARCH_MM)
     if type(search) not in (int, float) or not math.isfinite(search) or search <= 0:
         raise ValueError('FUNCTIONAL_MAPPING_MAX_SEARCH_MM_MUST_BE_POSITIVE')
+    if value.get('stimulationReference', DEFAULT_STIMULATION_REFERENCE) not in STIMULATION_PRESETS:
+        raise ValueError('FUNCTIONAL_MAPPING_STIMULATION_REFERENCE: one of ' + ', '.join(sorted(STIMULATION_PRESETS)))
     return value
+
+
+def stimulation_reference(value):
+    """The declared reference preset row; ``declared`` is False when the default was assumed."""
+    name = value.get('stimulationReference', DEFAULT_STIMULATION_REFERENCE)
+    return {'preset': name, 'declared': 'stimulationReference' in value, **copy.deepcopy(STIMULATION_PRESETS[name])}
 
 
 def _tract_rows(scene, value):
@@ -165,6 +197,9 @@ class _Model:
         self.value = value
         self.max_search = float(value.get('maxSearchMm', DEFAULT_MAX_SEARCH_MM))
         self.awake = value.get('awakeScenario', False)
+        self.reference = stimulation_reference(value)
+        # k-d trees of current (shifted) positions, one set per brain-shift level.
+        self._shifted = {}
         from .surgical_rl_protection import cell_radius
         self.grid_mm = cell_radius(scene.affine)
         self.voxel = scene.voxel_mm3
@@ -195,8 +230,24 @@ class _Model:
                             for kind, row in sorted(self.vessels.items())},
                 'awakeScenario': self.awake, 'maxSearchMm': self.max_search, 'gridUncertaintyMm': self.grid_mm,
                 'responseLaw': copy.deepcopy(RESPONSE_LAW), 'chargeScaling': copy.deepcopy(CHARGE_SCALING),
+                'stimulationReference': copy.deepcopy(self.reference),
+                'stimulationPresets': copy.deepcopy(STIMULATION_PRESETS),
                 'ischaemicTerritory': dict(ISCHAEMIC_TERRITORY), 'patientOutcome': dict(PATIENT_OUTCOME),
                 'limits': list(LIMITS)}
+
+    def tree(self, engine, row):
+        """k-d tree of ``row['_cells']`` at their current positions (the static tree without a shift)."""
+        from .surgical_brain_shift import active_map, current_points
+        shift = active_map(engine)
+        if shift is None or row['_tree'] is None:
+            return row['_tree']
+        key = (id(row), float(shift.scale), tuple(shift.direction.tolist()))
+        tree = self._shifted.get(key)
+        if tree is None:
+            if len(self._shifted) >= 64:
+                self._shifted.pop(next(iter(self._shifted)))
+            tree = self._shifted[key] = cKDTree(current_points(engine, row['_cells']))
+        return tree
 
 
 def _model(scene):
@@ -233,11 +284,13 @@ def _nearest_retained(tree, cells, point, removed, upper):
         k *= 4
 
 
-def effective_current(amplitude, pulse_width_us, frequency_hz):
+def effective_current(amplitude, pulse_width_us, frequency_hz, reference=DEFAULT_STIMULATION_REFERENCE):
+    """Amplitude scaled to the declared reference preset; never above the amplitude itself."""
     s = CHARGE_SCALING
-    pw = (1 + s['chronaxieUs'] / s['referencePulseWidthUs']) / (1 + s['chronaxieUs'] / pulse_width_us)
+    preset = STIMULATION_PRESETS[reference]
+    pw = (1 + s['chronaxieUs'] / preset['referencePulseWidthUs']) / (1 + s['chronaxieUs'] / pulse_width_us)
     pw = min(max(pw, s['pulseWidthFactorBounds'][0]), s['pulseWidthFactorBounds'][1])
-    f = (frequency_hz / s['referenceFrequencyHz']) ** s['frequencyExponent']
+    f = (frequency_hz / preset['referenceFrequencyHz']) ** s['frequencyExponent']
     f = min(max(f, s['frequencyFactorBounds'][0]), s['frequencyFactorBounds'][1])
     return amplitude * pw * f, pw, f
 
@@ -256,16 +309,17 @@ def stimulation_observation(engine, probe, position, cells, parameters):
     removed = set(map(int, engine.state['removed']))
     tracts = []
     for row in model.tracts:
-        distance = _nearest_retained(row['_tree'], row['_cells'], point, removed, model.max_search)
+        # Tract cells are measured where they lie now (shifted under brainShiftV1).
+        distance = _nearest_retained(model.tree(engine, row), row['_cells'], point, removed, model.max_search)
         tracts.append({'id': row['id'], 'regionName': row['regionName'], 'family': row['family'],
                        'provenance': row['provenance'],
                        'estimatedDistanceMm': distance,
                        'coverage': 'within declared search' if distance is not None else
                                    f'no retained cell within {model.max_search:g} mm (outside coverage)'})
-    s = CHARGE_SCALING
+    reference = model.reference
     amplitude = parameters.get('amplitudeMa')
-    pulse_width = parameters.get('pulseWidthUs', s['referencePulseWidthUs'])
-    frequency = parameters.get('frequencyHz', s['referenceFrequencyHz'])
+    pulse_width = parameters.get('pulseWidthUs', reference['referencePulseWidthUs'])
+    frequency = parameters.get('frequencyHz', reference['referenceFrequencyHz'])
     assumed = [name for name in ('pulseWidthUs', 'frequencyHz') if name not in parameters]
     stimulus = None
     if amplitude is None:
@@ -275,7 +329,8 @@ def stimulation_observation(engine, probe, position, cells, parameters):
     current = reach = secondary = None
     factors = {}
     if stimulus is None:
-        current, pw_factor, f_factor = effective_current(float(amplitude), float(pulse_width), float(frequency))
+        current, pw_factor, f_factor = effective_current(float(amplitude), float(pulse_width), float(frequency),
+                                                         reference['preset'])
         reach, secondary = reach_mm(current)
         factors = {'pulseWidthFactor': pw_factor, 'frequencyFactor': f_factor}
     disagreement = None if reach is None else abs(reach - secondary)
@@ -330,6 +385,15 @@ def stimulation_observation(engine, probe, position, cells, parameters):
         'kind': 'model-estimate', 'category': 'mapping', 'probe': probe,
         'position': point.tolist(), 'cells': sorted(map(int, cells)),
         'parameters': dict(parameters), 'parametersAssumedAtReference': assumed,
+        'stimulationReference': {
+            'preset': reference['preset'], 'declared': reference['declared'],
+            'referenceFrequencyHz': reference['referenceFrequencyHz'],
+            'referencePulseWidthUs': reference['referencePulseWidthUs'], 'provenance': reference['provenance'],
+            'statement': (('Declared' if reference['declared'] else 'Assumed (not declared)') + ' reference preset '
+                          + reference['preset'] + '; reach is not extrapolated beyond the law at this reference.'
+                          + ('' if reference['preset'] == DEFAULT_STIMULATION_REFERENCE else
+                             ' The response law was stated for monopolar stimulation; applying it at this '
+                             'bipolar reference extrapolates the technique.'))},
         'coverage': (f'declared tract estimates within {model.max_search:g} mm of the tip'
                      if any(t['estimatedDistanceMm'] is not None for t in tracts) else 'unknown'),
         'evidence': [], 'result': result,
@@ -393,14 +457,16 @@ def structure_harm(engine):
     removed_mask = np.zeros(scene.labels.size, bool)
     removed_mask[np.asarray(engine.state['removed'], dtype=np.int64)] = True
     cavity = _cavity(engine)
-    cavity_tree = cKDTree(scene.points(cavity)) if len(cavity) else None
+    # Cavity, tract and vessel cells are all measured at their current (shifted) positions.
+    from .surgical_brain_shift import current_points
+    cavity_tree = cKDTree(current_points(engine, cavity)) if len(cavity) else None
     cap = model.max_search
     tracts = {}
     for row in model.tracts:
-        stats = _band_stats(row['_tree'], row['_cells'], removed_mask, cavity_tree, model.voxel, cap)
+        stats = _band_stats(model.tree(engine, row), row['_cells'], removed_mask, cavity_tree, model.voxel, cap)
         tracts[row['id']] = {'family': row['family'], 'regionName': row['regionName'],
                              'provenance': row['provenance'], **stats}
-    vessels = {kind: _band_stats(row['_tree'], row['_cells'], removed_mask, cavity_tree, model.voxel, cap)
+    vessels = {kind: _band_stats(model.tree(engine, row), row['_cells'], removed_mask, cavity_tree, model.voxel, cap)
                for kind, row in sorted(model.vessels.items())}
     families = {}
     for family in FAMILIES:

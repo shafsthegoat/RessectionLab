@@ -217,8 +217,9 @@ def summarize_engine_outcomes(engine: SurgicalEngine, *, baseline: SurgicalEngin
     metrics=engine.metrics()
     baseline_metrics=base.metrics()
     target=_target_distribution(scene,target_ids,removed,baseline_removed,use_cache=use_geometry_cache)
+    # Removed target source cells are all-cause; injury mode reports lacerated ones apart from treatment.
     if target['status']=='measured' and not math.isclose(target['removedMm3'],
-            metrics['targetRemovedMm3'],abs_tol=1e-7):
+            metrics['targetRemovedMm3']+metrics.get('injuryLaceratedTargetMm3',0.),abs_tol=1e-7):
         raise ValueError('Target source cells disagree with authoritative engine metrics')
     non_volume=sum(row['removedMm3'] for row in non_target)
     if not math.isclose(non_volume,metrics['nonTargetRemovedMm3'],abs_tol=1e-7):

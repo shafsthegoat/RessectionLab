@@ -217,6 +217,101 @@ def test_replay_snapshot_and_restore_reproduce_shift_state_ids(case, monkeypatch
     assert np.array_equal(np.asarray(restored.occupancy()), occupancy)
 
 
+@pytest.fixture(scope='module')
+def realism(case):
+    """The shifted case with bleeding and stimulation mapping declared as well."""
+    from resectionlab import surgical_functional_mapping as fm
+    from resectionlab import surgical_vessel_bleeding as vb
+    base, scene, _ = case
+    return with_properties(base, brainShiftV1=scene.properties['brainShiftV1'],
+                           **{vb.PROPERTY: vb.declare(base.labels, base.regions, base.affine),
+                              fm.PROPERTY: fm.declaration([{'region': 'Subcortical white matter', 'family': 'motor',
+                                                            'id': 'wm'}])})
+
+
+def settled_engine(scene):
+    engine = SurgicalEngine(scene)
+    open_access(engine)
+    assert engine.step(inspect(1.5))['status'] == 'accepted' and engine.state['brainShiftV1']['level'] == 2
+    return engine
+
+
+def most_shifted(scene, current, label):
+    cells = np.flatnonzero(scene.labels.ravel() == label)
+    return int(cells[np.argmax(np.linalg.norm(current.displacement_mm(cells), axis=1))])
+
+
+def test_current_cells_is_identity_without_a_shift_and_the_forward_map_with_one(case, settled):
+    base, scene, _ = case
+    cells = np.flatnonzero(scene.labels.ravel() == 9)[:50]
+    for engine in (SurgicalEngine(base), SurgicalEngine(scene)):
+        assert shift.current_cells(engine, cells).tolist() == cells.tolist()
+        assert np.array_equal(shift.current_points(engine, cells), scene.points(cells))
+    current = shift.active_map(settled)
+    assert shift.current_cells(settled, cells).tolist() == current.forward(cells).tolist() != cells.tolist()
+
+
+def test_bleeding_and_dressing_use_the_wound_position_after_brain_shift(realism):
+    from resectionlab import surgical_vessel_bleeding as vb
+    engine = settled_engine(realism)
+    current = shift.active_map(engine)
+    artery = most_shifted(realism, current, 11)
+    moved = realism.points([artery])[0] + current.displacement_mm([artery])[0]
+    assert np.linalg.norm(current.displacement_mm([artery])[0]) > 4.
+    engine.state['removed'] = sorted(set(engine.state['removed']) | {artery})
+    before = dict(engine.state['fluid'])
+    assert engine.step(inspect(0.2))['status'] == 'accepted'
+    added = {int(k): v - before.get(k, 0.) for k, v in engine.state['fluid'].items() if v - before.get(k, 0.) > 1e-9}
+    wound = next(iter(engine.state[vb.PROPERTY]['wounds'].values()))
+    assert wound['cells'] == [artery] and added
+    # Blood appears at the cut vessel where it now lies, not at its preoperative cell.
+    largest = max(added, key=added.get)
+    assert np.linalg.norm(realism.points([largest])[0] - moved) <= 1.0
+    assert np.linalg.norm(realism.points([largest])[0] - realism.points([artery])[0]) > 3.
+    # A dressing laid on the shifted vein wound tamponades it.
+    vein_engine = settled_engine(realism)
+    vein = most_shifted(realism, current, 12)
+    vein_engine.state['removed'] = sorted(set(vein_engine.state['removed']) | {vein})
+    vein_engine.step(inspect(0.1))
+    site = realism.points([vein])[0] + current.displacement_mm([vein])[0]
+    vein_engine.state['operativeExposureV1']['objects'].append(
+        {'id': 'hemostat-test', 'kind': 'hemostat', 'status': 'placed', 'heldBy': None,
+         'positionMm': site.tolist(), 'radiusMm': .95})
+    vein_engine.step(inspect(0.1))
+    wound = next(iter(vein_engine.state[vb.PROPERTY]['wounds'].values()))
+    assert wound['kind'] == 'vein' and wound['tamponadeFraction'] == pytest.approx(.7)
+
+
+def test_stimulation_and_structure_harm_measure_the_shifted_tract(realism):
+    from resectionlab import surgical_functional_mapping as fm
+    from scipy.spatial import cKDTree
+    engine = settled_engine(realism)
+    current = shift.active_map(engine)
+    wm = np.flatnonzero(realism.labels.ravel() == 8)
+    now = realism.points(current.forward(wm))
+    # The highest white-matter cell among those that sag the most.
+    sag = np.round(np.linalg.norm(current.displacement_mm(wm), axis=1), 1)
+    cell = int(wm[np.lexsort((-np.column_stack(np.unravel_index(wm, realism.shape))[:, 2], -sag))[0]])
+    preop = realism.points([cell])[0]
+    # The tract has sagged away from its preoperative site: the probe there is about the sag from it.
+    row = fm.stimulation_observation(engine, 'subcortical', preop, [cell], {'amplitudeMa': 1.})
+    expected = float(np.min(np.linalg.norm(now - preop, axis=1)))
+    assert expected > 3. and row['families']['motor']['estimatedDistanceMm'] == pytest.approx(expected)
+    # A probe resting on the tract where it now lies reports it within the grid.
+    tip = realism.points(current.forward([cell]))[0]
+    row = fm.stimulation_observation(engine, 'subcortical', tip, [cell], {'amplitudeMa': 2.})
+    assert row['families']['motor']['estimatedDistanceMm'] == 0.
+    # Structure harm measures cavity and tract cells at their current positions.
+    tumour = np.flatnonzero(realism.labels.ravel() == 10)
+    engine.state['removed'] = sorted(set(engine.state['removed']) | set(tumour.tolist()))
+    harm = fm.structure_harm(engine)['tracts']['wm']
+    shifted = cKDTree(realism.points(current.forward(tumour))).query(now)[0]
+    unshifted = cKDTree(realism.points(tumour)).query(realism.points(wm))[0]
+    assert harm['minDistanceMm'] == pytest.approx(shifted.min())
+    assert harm['band0To2Mm']['cells'] == int(np.count_nonzero(shifted <= 2. + 1e-9))
+    assert harm['band0To2Mm']['cells'] != int(np.count_nonzero(unshifted <= 2. + 1e-9))
+
+
 def test_declaration_is_validated(case):
     base, scene, _ = case
     declared = copy.deepcopy(scene.properties['brainShiftV1'])

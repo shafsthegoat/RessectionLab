@@ -81,6 +81,10 @@ def advance_instruments(engine, key, op, p, q, active, dt, working_cells, eligib
         compliant = rods.compliant_cells(engine, contacts) if rods.allows_tip_contact(
             engine, hand, op if acting else 'apply') else set()
         permitted.update(compliant)
+        if effective and slot['instrument'] == 'cusa':
+            from . import surgical_cusa_v4 as cusa_v4
+            if cusa_v4.enabled(engine):
+                permitted.update(cusa_v4.spared_contacts(engine, contacts))
         if effective and tool['materials'] and any(
                 engine.by_label[int(engine.scene.labels.flat[cell])]['material'] not in tool['materials']
                 for cell in contacts - permitted):

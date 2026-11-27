@@ -85,7 +85,8 @@ def _stock(engine):
             for name in ('tissuePhysicsV2', 'brainContinuumV1', 'vascularGraphV1',
                          'bipolarThermalV1', 'planarBladeManeuverV1', 'retractorSurfaceContactV1',
                          'surgicalProcedurePolicyV1', 'operativeExposureV1', 'gliomaMaterialsV1',
-                         'surgicalInjuryV1', 'brainShiftV1', 'navigationV1', 'functionalMappingV1')):
+                         'surgicalInjuryV1', 'brainShiftV1', 'navigationV1', 'functionalMappingV1',
+                         'cusaV4', 'suctionTractionV1')):
         return False
     if not _numeric_qualified():
         return False

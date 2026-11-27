@@ -120,19 +120,47 @@ def test_higher_current_reaches_further():
     assert far['estimatedReachMm'] > near['estimatedReachMm']
 
 
-def test_pulse_width_and_frequency_scale_effective_current_monotonically():
-    currents = [fm.effective_current(4., width, 60.)[0] for width in (50., 100., 200., 500., 800., 1000.)]
+def test_pulse_width_and_frequency_scale_effective_current_monotonically_up_to_the_reference():
+    low = 'low-frequency-bipolar'
+    currents = [fm.effective_current(4., width, 60., low)[0] for width in (50., 100., 200., 500., 800., 1000.)]
     assert currents == sorted(currents) and currents[3] == 4.
-    rates = [fm.effective_current(4., 500., f)[0] for f in (5., 20., 60., 120., 250., 500.)]
+    rates = [fm.effective_current(4., 500., f, low)[0] for f in (5., 20., 60., 120., 250., 500.)]
     assert rates == sorted(rates) and rates[2] == 4.
-    assert fm.effective_current(4., 1e-3, 1e-3)[0] >= 4. * .25 * .8 and fm.effective_current(4., 1000., 500.)[0] <= 4. * 1.4 * 1.2
+    # No extrapolation: a setting stronger than the declared reference never reaches further.
+    assert currents[3:] == [4.] * 3 and rates[2:] == [4.] * 4
+    assert fm.effective_current(4., 1e-3, 1e-3)[0] >= 4. * .25 * .8 and fm.effective_current(4., 1000., 5000.)[0] == 4.
+    # The default reference is the high-frequency monopolar train, not 60 Hz.
+    assert fm.effective_current(4., 500., 400.)[0] == 4. and fm.effective_current(4., 500., 60.)[0] < 4.
     e = fresh(scene())
-    results = [probe(e, amplitudeMa=4.3, pulseWidthUs=w)['result'] for w in (200., 500., 1000.)]
-    assert results == ['model_estimate_no_response', 'model_estimate_no_response', 'model_estimate_response']
-    results = [probe(e, amplitudeMa=4.3, frequencyHz=f)['result'] for f in (20., 60., 250.)]
-    assert results == ['model_estimate_no_response', 'model_estimate_no_response', 'model_estimate_response']
+    results = [probe(e, amplitudeMa=4.5, pulseWidthUs=w)['result'] for w in (200., 500., 1000.)]
+    assert results == ['model_estimate_no_response', 'model_estimate_response', 'model_estimate_response']
+    results = [probe(e, amplitudeMa=4.5, frequencyHz=f)['result'] for f in (20., 60., 400., 1000.)]
+    assert results == ['model_estimate_no_response', 'model_estimate_no_response',
+                       'model_estimate_response', 'model_estimate_response']
     assert probe(e, amplitudeMa=0.)['result'] == 'unknown'
     assert probe(e)['families']['motor']['reason'].startswith('No stimulation current')
+
+
+def test_stimulation_reference_is_a_declared_preset_stated_in_each_row():
+    assert set(fm.STIMULATION_PRESETS) == {'high-frequency-monopolar-train', 'low-frequency-bipolar'}
+    assert all(p['provenance'] == 'assumed-research' for p in fm.STIMULATION_PRESETS.values())
+    assert 50. <= fm.STIMULATION_PRESETS['low-frequency-bipolar']['referenceFrequencyHz'] <= 60.
+    assert fm.STIMULATION_PRESETS['high-frequency-monopolar-train']['referenceFrequencyHz'] >= 250.
+    row = probe(fresh(scene()), amplitudeMa=4.)
+    reference = row['stimulationReference']
+    assert reference['preset'] == 'high-frequency-monopolar-train' and reference['declared']
+    assert reference['referenceFrequencyHz'] == 400. and reference['provenance'] == 'assumed-research'
+    bipolar = fm.declaration(stimulation_reference='low-frequency-bipolar')
+    row = probe(fresh(scene(extra={'functionalMappingV1': bipolar})), amplitudeMa=4.)
+    assert row['stimulationReference']['preset'] == 'low-frequency-bipolar'
+    assert 'extrapolates the technique' in row['stimulationReference']['statement']
+    legacy = {k: v for k, v in fm.declaration().items() if k != 'stimulationReference'}
+    row = probe(fresh(scene(extra={'functionalMappingV1': legacy})), amplitudeMa=4.)
+    assert row['stimulationReference']['preset'] == fm.DEFAULT_STIMULATION_REFERENCE
+    assert not row['stimulationReference']['declared'] and row['stimulationReference']['statement'].startswith('Assumed')
+    assert fm.declare(scene())['stimulationReference']['preset'] == fm.DEFAULT_STIMULATION_REFERENCE
+    with pytest.raises(ValueError, match='STIMULATION_REFERENCE'):
+        fm.declare(scene(extra={'functionalMappingV1': {**legacy, 'stimulationReference': 'sixty-hertz'}}))
 
 
 def test_removed_tract_cells_are_ignored_for_distance():

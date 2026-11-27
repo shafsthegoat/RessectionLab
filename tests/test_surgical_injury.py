@@ -262,6 +262,30 @@ def test_outcome_and_consequence_ledgers_add_injury_only_with_property():
     assert vector['dimensions']['injury:laceratedMm3']['incremental'] == engine.metrics()['injuryLaceratedMm3']
 
 
+def test_lacerated_tumour_is_removed_but_earns_no_treatment_credit():
+    from resectionlab.surgical_consequences import consequence_vector
+    # A passive dissector forced down through the lesion tears it; it does not treat it.
+    actions = [*tool('left', 'dissector', (11.5, 16.5, 4)), move('left', (11.5, 16.5, 12.5), 3.), move('left', (11.5, 16.5, 4))]
+    engine = SurgicalEngine(scene('injury')); run(engine, actions)
+    labels = engine.scene.labels.ravel()
+    lacerated = set(injury_state(engine)['lacerated'])
+    torn_tumour = sum(labels[c] == 5 for c in lacerated)
+    assert torn_tumour > 0 and lacerated <= set(engine.state['removed'])
+    metrics = engine.metrics()
+    assert metrics['targetRemovedMm3'] == 0. and metrics['injuryLaceratedTargetMm3'] == torn_tumour
+    # The cavity keeps the torn cells; the ledgers add up with an explicit injury share.
+    assert metrics['removedByLabelMm3']['lesion'] == torn_tumour == metrics['injuryLaceratedByLabelMm3']['lesion']
+    total = len(engine.state['removed']) * engine.scene.voxel_mm3
+    assert metrics['targetRemovedMm3'] + metrics['injuryLaceratedTargetMm3'] + metrics['nonTargetRemovedMm3'] == total
+    assert sum(metrics['removedByLabelMm3'].values()) == total
+    assert sum(metrics['injuryLaceratedByLabelMm3'].values()) == metrics['injuryLaceratedMm3']
+    vector = consequence_vector(engine, engine.fresh())
+    assert vector['dimensions']['targetRemovedMm3']['cumulative'] == 0.
+    # Guarded mode keeps the plain ledger and adds no injury share.
+    guarded = SurgicalEngine(scene('guarded')); run(guarded, actions)
+    assert guarded.metrics()['injuryLaceratedTargetMm3'] == 0. and guarded.metrics()['injuryLaceratedByLabelMm3'] == {}
+
+
 def test_traction_tear_helper_raises_in_guarded_mode_and_records_in_injury_mode():
     from resectionlab.surgical_injury import tear
     with pytest.raises(ValueError, match='OPERATIVE_REFLECTION_TRACTION_LIMIT'):

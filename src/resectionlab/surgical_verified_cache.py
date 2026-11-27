@@ -54,7 +54,9 @@ _MODULES = ('core', 'geometry', 'anatomy_geometry', 'surface_fairing', 'surgical
             'build_surgical_idle_native', 'surgical_cranial_stages', 'surgical_membrane_transport',
             'native_backend', 'surgical_native_engine', 'surgical_native_control',
             'surgical_injury', 'surgical_functional_mapping',
-            'surgical_brain_shift', 'surgical_navigation')
+            'surgical_brain_shift', 'surgical_navigation',
+            'surgical_cusa_v4', 'surgical_suction_traction',
+            'surgical_position')
 
 
 def _code_signature(code):

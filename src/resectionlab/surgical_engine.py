@@ -28,6 +28,11 @@ from .surgical_tools import TOOLS, catalog
 from .surgical_cusa_v3 import profile as cusa_profile
 from . import surgical_clock
 from . import surgical_injury as injury
+from . import surgical_cusa_v4 as cusa_v4
+from . import surgical_suction_traction as suction_traction
+
+# Opt-in instrument laws with no compiled ledger; such scenes run the reference.
+_REFERENCE_INSTRUMENT_PROPERTIES = (cusa_v4.PROPERTY, suction_traction.PROPERTY)
 
 SCHEMA = 'resectionlab.surgical-toolbox.v1'
 MAX_STEPS = 8192
@@ -529,6 +534,9 @@ class SurgicalEngine:
         initialize_effect_state(self)
         if self._injury is not None:
             injury.initialize(self)
+        # Opt-in selective CUSA and suction traction; absent, nothing changes.
+        cusa_v4.initialize(self)
+        suction_traction.initialize(self)
         self._cranial_stages = None
         self._cranial_stage_bone_prefix = None
         self._cranial_stage_permission = None
@@ -854,6 +862,9 @@ class SurgicalEngine:
                   'amplitudeMa': (0., 20.), 'frequencyHz': (0., 500.), 'pulseWidthUs': (0., 1000.)}
         if self.scene.properties.get('tissuePhysicsV2'):
             limits.update(rpm=(0., 80000.), forceN=(0., 20.), duty=(0., 1.))
+        if any(name in self.scene.properties for name in _REFERENCE_INSTRUMENT_PROPERTIES):
+            limits.update(amplitude=(0., 1.), aspiration=(0., 1.), duty=(0., 1.),
+                          irrigation=(0., cusa_v4.IRRIGATION_LIMIT_ML_PER_MINUTE))
         if set(parameters) - set(limits): raise ValueError('Unsupported instrument parameters')
         for name, value in parameters.items():
             if type(value) not in (int, float) or not math.isfinite(value) or not limits[name][0] <= value <= limits[name][1]:
@@ -940,6 +951,8 @@ class SurgicalEngine:
         if result['status'] != 'rejected':
             from .surgical_effects import finalize_action
             finalize_action(candidate)
+            if cusa_v4.PROPERTY in candidate.state:
+                cusa_v4.reconcile_removed(candidate)
             if check is not None: check()
             result['elapsedSeconds'] = candidate.state['elapsedSeconds'] - before_time
             # Finalization is the last state mutation. Reuse this exact digest
@@ -1029,8 +1042,12 @@ class SurgicalEngine:
         jaw_target = params['jawOpeningMm']
         articulate = self.state.get('toolMechanicsRevision') in (1, 2) and tool['geometry'] in ('forceps','scissors') and previous_jaw != jaw_target
         if articulate: slot['parameters']['jawOpeningMm'] = previous_jaw
-        cusa_v3 = slot['instrument'] == 'cusa' and cusa_profile(self) is not None
-        if cusa_v3:
+        # cusa_v3 marks the contact-limited CUSA; cusaV4, when declared, replaces V3.
+        selective = slot['instrument'] == 'cusa' and cusa_v4.enabled(self)
+        cusa_v3 = slot['instrument'] == 'cusa' and (selective or cusa_profile(self) is not None)
+        if selective:
+            cusa_v4.validate_parameters(params, cusa_v4.profile(self))
+        elif cusa_v3:
             from .surgical_cusa_v3 import validate_parameters
             validate_parameters(params)
         progress_reason = ('BONE_CUTTING_IN_PROGRESS' if slot['instrument'] == 'cranial_drill' and self.scene.properties.get('tissuePhysicsV2')
@@ -1097,7 +1114,8 @@ class SurgicalEngine:
         if any(np.linalg.norm(np.subtract(q['position'], p['position'])) > 250 for p, q, _ in segments):
             raise ValueError('PATH_TOO_LONG')
         if (native_backend._module is not None and not self._operative and not vessel_rods.enabled(self)
-                and self.__dict__.get('_injury') is None and self.__dict__.get('_navigation') is None):
+                and self.__dict__.get('_injury') is None and self.__dict__.get('_navigation') is None
+                and not any(name in self.scene.properties for name in _REFERENCE_INSTRUMENT_PROPERTIES)):
             done, reason, contact_position, path_fraction = native_backend.run_trajectory(
                 self, key, op, segments, active, duration, total, articulate,
                 jaw_target, previous_jaw, progress_reason, cusa_v3, check, events)
@@ -1177,6 +1195,9 @@ class SurgicalEngine:
                 hold['origin'] = self.state['slots'][key]['position'][:]
         if active and not events:
             events.append({'kind': 'no_material_effect', 'reason': 'No compatible structure intersected by the working tip'})
+        if suction_traction.enabled(self):
+            # Read-only end-of-action reaction on each coupled hold; dynamics unchanged.
+            events.extend(suction_traction.reaction_estimates(self))
         events.insert(0, {'kind': op, 'instrument': tool['name'], 'slot': key})
         fraction = done / total if path_fraction is None else path_fraction
         if not reason and points and active and progress_reason:
@@ -1298,7 +1319,8 @@ class SurgicalEngine:
                 return native_backend.operative_python_substep(self._physical_substep_reference, key, op, p, q, active, dt)
             # Injury mode has no compiled ledger; it runs the reference substep.
             if (vessel_rods.enabled(self) or self.__dict__.get('_injury') is not None
-                    or self.__dict__.get('_navigation') is not None):
+                    or self.__dict__.get('_navigation') is not None
+                    or any(name in self.scene.properties for name in _REFERENCE_INSTRUMENT_PROPERTIES)):
                 return self._physical_substep_reference(key, op, p, q, active, dt)
             return native_backend.physical_substep(self, key, op, p, q, active, dt)
         return self._physical_substep_reference(key, op, p, q, active, dt)
@@ -1340,10 +1362,14 @@ class SurgicalEngine:
             bipolar_heat.begin_step(self)
             if active and slot['instrument'] == 'cranial_drill':
                 p, _ = drill.contact_limited_pose(self, previous, p, params['radiusMm'])
-        cusa_v3 = slot['instrument'] == 'cusa' and cusa_profile(self) is not None
+        selective = slot['instrument'] == 'cusa' and cusa_v4.enabled(self)
+        cusa_v3 = slot['instrument'] == 'cusa' and (selective or cusa_profile(self) is not None)
         if cusa_v3 and active:
-            from .surgical_cusa_v3 import contact_limited_pose
-            p, _ = contact_limited_pose(self, previous, p, params['radiusMm'])
+            if selective:
+                p, _ = cusa_v4.contact_limited_pose(self, previous, p, params['radiusMm'])
+            else:
+                from .surgical_cusa_v3 import contact_limited_pose
+                p, _ = contact_limited_pose(self, previous, p, params['radiusMm'])
         profile_contact = self._operative or (self.state.get('toolMechanicsRevision') in (1, 2)
             and tool['effect'] not in ('remove', 'suction', 'irrigate', 'probe'))
         tip_cells = [] if self._operative else self.touched(previous, p, params['radiusMm'])
@@ -1388,6 +1414,9 @@ class SurgicalEngine:
         compliant = vessel_rods.compliant_cells(self, working_cells) if vessel_rods.allows_tip_contact(self, key, op) else set()
         if compliant:
             special_contacts.update(compliant)
+        if selective and active:
+            # The selective tip may rest on vessel wall or membrane; V4 decides.
+            special_contacts.update(cusa_v4.spared_contacts(self, working_cells))
         # Physical refusals below go through injury.admit: guarded mode raises
         # the same code; injury mode records contusion/laceration/vessel injury
         # and the motion continues, while rigid contact still raises.
@@ -1505,6 +1534,8 @@ class SurgicalEngine:
             other_eligible = [i for i in other_cells if self.by_label[int(self.scene.labels.ravel()[i])]['material'] in other_tool['materials']]
             compliant_other = vessel_rods.compliant_cells(self, other_cells) if vessel_rods.allows_tip_contact(
                 self, other_key, 'apply') else set()
+            if other['instrument'] == 'cusa' and cusa_v4.enabled(self):
+                compliant_other = compliant_other | cusa_v4.spared_contacts(self, other_cells)
             if other_tool['materials'] and set(other_cells) - set(other_eligible) - compliant_other:
                 injury.admit(self, 'OTHER_ACTIVE_TOOL_UNSUPPORTED_MATERIAL:' + other_key, set(other_cells) - set(other_eligible) - compliant_other,
                              other_key, 'apply', dt, self.parameters(other), active=True)
@@ -1557,6 +1588,9 @@ class SurgicalEngine:
                     brain.tick(self, dt, vessel_tool_motion=tool_motion, vessel_tool_clock_hand=key)
                 else:
                     brain.tick(self, dt, vessel_tool_motion=tool_motion)
+            if suction_traction.enabled(self):
+                # A suction patch lets go when vacuum is off or traction exceeds its hold.
+                events.extend(suction_traction.after_tick(self, key))
             if vessel_rods.working_axis_constraint_enabled(self):
                 vessel_rods.require_working_axes_clear(self)
             elif compliant:
@@ -1622,7 +1656,12 @@ class SurgicalEngine:
             handled = interact(self, key, op, p, q, True, dt, cells)
             if handled is not None:
                 return handled
+        if slot['instrument'] == 'frazier_suction' and suction_traction.enabled(self):
+            return suction_traction.apply(self, key, op, cells, p, q, dt)
         if tool['effect'] == 'remove':
+            if slot['instrument'] == 'cusa' and cusa_v4.enabled(self):
+                contacts = self.touched(p, p, self.parameters(slot)['radiusMm'])
+                return cusa_v4.apply(self, contacts, dt, self.parameters(slot), position=p, key=key)
             if slot['instrument'] == 'cusa' and cusa_profile(self) is not None:
                 from .surgical_cusa_v3 import apply
                 contacts = self.touched(p, p, self.parameters(slot)['radiusMm'])
@@ -1665,11 +1704,16 @@ class SurgicalEngine:
         for i in self.state['removed']:
             name = self.by_label[int(self.scene.labels.ravel()[i])]['name']
             by_label[name] = by_label.get(name, 0.) + self.scene.voxel_mm3
-        target = sum(self.scene.voxel_mm3 for i in self.state['removed'] if self.by_label[int(self.scene.labels.ravel()[i])].get('target'))
+        # Injury mode: lacerated cells stay removed (cavity) but earn no treatment credit.
+        lacerated, injury_share = injury.removal_share(self) if 'injuryV1' in self.state else (frozenset(), {})
+        target = sum(self.scene.voxel_mm3 for i in self.state['removed'] if i not in lacerated and self.by_label[int(self.scene.labels.ravel()[i])].get('target'))
         from .surgical_cusa_v3 import metrics as cusa_metrics
         from .surgical_vessel_bleeding import metrics as bleeding_metrics
-        return {**physics_metrics(self), **v2_metrics(self), **(cusa_metrics(self) if 'cusaV3' in self.state else {}), **(bleeding_metrics(self) if 'vesselBleedingV1' in self.state else {}), 'removedByLabelMm3': by_label, 'targetRemovedMm3': target,
-                'nonTargetRemovedMm3': len(self.state['removed']) * self.scene.voxel_mm3 - target,
+        return {**physics_metrics(self), **v2_metrics(self), **(cusa_metrics(self) if 'cusaV3' in self.state else {}), **(bleeding_metrics(self) if 'vesselBleedingV1' in self.state else {}),
+                **(cusa_v4.metrics(self) if cusa_v4.PROPERTY in self.state else {}),
+                **(suction_traction.metrics(self) if suction_traction.PROPERTY in self.state else {}), 'removedByLabelMm3': by_label, 'targetRemovedMm3': target,
+                'nonTargetRemovedMm3': len(self.state['removed']) * self.scene.voxel_mm3 - target - injury_share.get('injuryLaceratedTargetMm3', 0.),
+                **injury_share,
                 'elapsedSeconds': self.state['elapsedSeconds'], 'travelMm': self.state['travelMm'],
                 'contactCellSeconds': sum(self.state['contact'].values()), 'debrisMm3': self.state['debrisMm3'],
                 'fluidAddedMm3': self.state['fluidAddedMm3'], 'fluidRemovedMm3': self.state['fluidRemovedMm3'],
@@ -1711,6 +1755,9 @@ class SurgicalEngine:
         if 'cusaV3' in self.state:
             from .surgical_cusa_v3 import descriptor
             physics['cusaV3'] = descriptor(self)
+        for module in (cusa_v4, suction_traction):
+            if module.PROPERTY in self.state:
+                physics[module.PROPERTY] = module.descriptor(self)
         cranial = {}
         if self._cranial_access is not None:
             from .surgical_bone_transport import describe
@@ -1773,6 +1820,7 @@ class SurgicalEngine:
                 **({vessel_rods.FIELD: vessel_rods.view(self)} if vessel_rods.enabled(self) else {}),
                 **({'bipolarThermalV1': copy.deepcopy(self.state['bipolarThermalV1'])} if 'bipolarThermalV1' in self.state else {}),
                 **({'cusaV3': copy.deepcopy(self.state['cusaV3'])} if 'cusaV3' in self.state else {}),
+                **{name: copy.deepcopy(self.state[name]) for name in _REFERENCE_INSTRUMENT_PROPERTIES if name in self.state},
                 **self._scenario_view(),
                 **planar_view}
 
