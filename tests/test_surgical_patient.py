@@ -598,7 +598,9 @@ def test_local_native_wall_desktop_contact_and_replay_keep_the_installed_geometr
         assert set(receipt['branches']) == {branch['branch_id'] for branch in source_graph['branches']}
         case_args = {'caseHash': payload['caseHash']}
         state = call(session, 'surgicalRehearsal', {**case_args, 'command': 'inspect'})
-        assert not state['planningAdmission']['available']
+        # Owner decision 2026-11-27: acquired anatomy is admitted and labelled.
+        assert state['planningAdmission']['available']
+        assert state['planningAdmission']['sourceClass'] == 'patient-or-unverified'
         actions = [{'operation': 'exchange', 'instrument': 'dissector', 'duration': .08},
                    {'operation': 'place', 'pose': {'position': [0., 0., 6.], 'quaternion': [1., 0., 0., 0.]}, 'duration': .08},
                    {'operation': 'move', 'pose': {'position': [0., 0., 3.], 'quaternion': [1., 0., 0., 0.]}, 'duration': .4}]

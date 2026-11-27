@@ -5,8 +5,10 @@ chosen from the scan frame and declared access. No MRI intensity threshold is a
 target estimator. Contact is reported, with zero history-dependent cost because
 the frozen six-channel policy does not yet observe prior contact history.
 This historical geometric adapter cannot execute the versioned supratentorial
-procedure/harm task. Explicit policy bindings, including patient metadata, are
-refused before loading/native execution; use SurgicalRLEnv evaluation instead.
+procedure/harm task. Explicit policy bindings are refused before loading/native
+execution; use SurgicalRLEnv evaluation instead. Since the owner decision of
+2026-11-27 any source class, including acquired patient anatomy, may use the
+legacy geometry task; its source-bound evidence record labels the class.
 """
 from __future__ import annotations
 
@@ -55,6 +57,15 @@ PROCEDURE_POLICY_INCOMPATIBLE = (
     "the versioned supratentorial procedure, structure harm budgets or complete-sequence "
     "outcomes; use the evaluation-only SurgicalRLEnv adapter")
 GENERATED_LEGACY_ADMISSION_SCHEMA = 'resectionlab.generated-native-legacy-admission.v1'
+ACQUIRED_LEGACY_ADMISSION_SCHEMA = 'resectionlab.acquired-native-legacy-admission.v1'
+NATIVE_LEGACY_EVIDENCE_INVALID = 'NATIVE_LEGACY_SOURCE_EVIDENCE_INVALID'
+_LEGACY_EVIDENCE = {
+    GENERATED_LEGACY_ADMISSION_SCHEMA: ('generated-engineering',
+        'Explicit generated-source legacy geometry task; no patient qualification.'),
+    ACQUIRED_LEGACY_ADMISSION_SCHEMA: ('patient-or-unverified',
+        'Acquired or unverified source admitted to the legacy geometry task by the 2026-11-27 owner decision; '
+        'no clinical qualification; supplied anatomy only, missing anatomy unknown.'),
+}
 
 
 def _reject_procedure_policy(policy):
@@ -63,40 +74,50 @@ def _reject_procedure_policy(policy):
 
 
 def generated_legacy_planning_evidence(case):
-    """Explicit engineering declaration from actual generated CaseData inputs.
+    """Source-bound legacy geometry-task declaration from actual CaseData inputs.
 
-    This authorizes only the historical geometry task, never patient planning
-    or the procedure harm model. Observed references cannot use this adapter.
+    Any source class is admitted (owner decision 2026-11-27); the record labels
+    it. Generated cases keep their exact historic record and schema. This
+    never authorizes the procedure harm model.
     """
     from .surgical_planning_admission import require_case_planning_admission
-    require_case_planning_admission(case)
+    admission = require_case_planning_admission(case)
+    schema = (GENERATED_LEGACY_ADMISSION_SCHEMA if admission['sourceClass'] == 'generated-engineering'
+              else ACQUIRED_LEGACY_ADMISSION_SCHEMA)
+    source_class, provenance = _LEGACY_EVIDENCE[schema]
     affine = np.asarray(case.affine)
     if case.frame == 'LPS+':
         affine = np.diag([-1., -1., 1., 1.]) @ affine
-    return {'schema': GENERATED_LEGACY_ADMISSION_SCHEMA, 'sourceClass': 'generated-engineering',
+    return {'schema': schema, 'sourceClass': source_class,
         'sourceCaseHash': case.semantic_hash,
         'sourceReferencesHash': semantic_digest([ref.to_dict() for ref in case.source_refs]),
         'sourceImageHash': array_digest(np.asarray(case.mri, np.float32)),
         'sourceAffineHash': array_digest(np.asarray(affine, np.float64)),
-        'provenance': 'Explicit generated-source legacy geometry task; no patient qualification.'}
+        'provenance': provenance}
 
 
 def _require_native_planning_source(case):
-    from .surgical_planning_admission import REQUIRED, _acquired_markers
+    """Check a supplied legacy evidence record; the source class is only its label.
+
+    Owner decision 2026-11-27: neither acquired markers nor a missing record
+    refuse the task. An unrecorded direct source is admitted and labelled
+    patient-or-unverified (see native_source_class). A supplied record must
+    bind this exact image and frame, and acquired markers forbid a generated
+    label, so no source can be relabelled generated-engineering.
+    """
     provenance = case.support_provenance
-    acquired = {'patient', 'sourcePatient', 'patientId', 'sourceManifest', 'sourceCollectionHash',
-        'source_patient', 'source_manifest', 'source_collection_hash', 'public_manifest_sha256',
-        'public_source_bindings'}
-    if acquired.intersection(provenance) or _acquired_markers(thaw_json(provenance)):
-        raise ValueError(REQUIRED + ': acquired native source cannot use the historical spatial learner')
-    if case.track == 'synthetic_scan':
-        return
     evidence = provenance.get('generatedLegacyPlanningEvidence')
+    if evidence is None:
+        return
+    marked = _native_acquired_markers(provenance)
+    if case.track == 'synthetic_scan' and not marked:
+        return  # Unchanged historical synthetic-scan behaviour.
+    schema = evidence.get('schema') if isinstance(evidence, Mapping) else None
     if (isinstance(evidence, Mapping) and
             set(evidence) == {'schema', 'sourceClass', 'sourceCaseHash', 'sourceReferencesHash',
                 'sourceImageHash', 'sourceAffineHash', 'provenance'} and
-            evidence.get('schema') == GENERATED_LEGACY_ADMISSION_SCHEMA and
-            evidence.get('sourceClass') == 'generated-engineering' and
+            schema in _LEGACY_EVIDENCE and evidence.get('sourceClass') == _LEGACY_EVIDENCE[schema][0] and
+            not (marked and schema == GENERATED_LEGACY_ADMISSION_SCHEMA) and
             evidence.get('sourceImageHash') == array_digest(case.structural_intensity) and
             evidence.get('sourceAffineHash') == array_digest(case.affine_ras_mm) and
             all(type(evidence.get(key)) is str and evidence[key].startswith('sha256:') and
@@ -104,7 +125,25 @@ def _require_native_planning_source(case):
                 for key in ('sourceCaseHash', 'sourceReferencesHash')) and
             type(evidence.get('provenance')) is str and evidence['provenance'].strip()):
         return
-    raise ValueError(REQUIRED + ': direct native anatomy requires explicit generated legacy evidence; annotation-assisted and inference-only tracks do not consume the procedure harm contract')
+    if marked and schema == GENERATED_LEGACY_ADMISSION_SCHEMA:
+        raise ValueError(NATIVE_LEGACY_EVIDENCE_INVALID + ': acquired source markers contradict a generated legacy label')
+    raise ValueError(NATIVE_LEGACY_EVIDENCE_INVALID + ': the supplied legacy evidence record does not bind this source case, image and frame')
+
+
+def _native_acquired_markers(provenance):
+    from .surgical_planning_admission import _acquired_markers
+    acquired = {'patient', 'sourcePatient', 'patientId', 'sourceManifest', 'sourceCollectionHash',
+        'source_patient', 'source_manifest', 'source_collection_hash', 'public_manifest_sha256',
+        'public_source_bindings'}
+    return bool(acquired.intersection(provenance)) or _acquired_markers(thaw_json(provenance))
+
+
+def native_source_class(case):
+    """Reported source class of a native case; a label, never an admission gate."""
+    evidence = case.support_provenance.get('generatedLegacyPlanningEvidence')
+    if isinstance(evidence, Mapping) and evidence.get('schema') in _LEGACY_EVIDENCE:
+        return _LEGACY_EVIDENCE[evidence['schema']][0]
+    return 'patient-or-unverified'
 
 
 OPENING_TOOLS = (
@@ -707,6 +746,8 @@ class NativeSpatialTask:
                 or not 1 <= max_steps <= MAX_NATIVE_SPATIAL_STEPS):
             raise ValueError(f"A typed native source and horizon1–{MAX_NATIVE_SPATIAL_STEPS} are required")
         _require_native_planning_source(case)
+        # Reported label only; it is deliberately outside the decision-model hash.
+        self.source_class = native_source_class(case)
         if case.proposal_config is not None and case.proposal_config.obstruction_page_size is not None:
             from .paged_obstruction import PagedObstructionTask
             from .focused_paged_task import FocusedPagedObstructionTask

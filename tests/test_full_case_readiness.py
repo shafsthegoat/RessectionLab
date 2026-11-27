@@ -41,14 +41,16 @@ def _inspect(engine):
     assert engine.step({'slot': 'right', 'operation': 'inspect', 'duration': .2})['status'] == 'accepted'
 
 
-def test_protection_does_not_make_unqualified_anatomical_source_ready_for_planning():
+def test_unqualified_anatomical_source_with_the_same_protection_is_ready_like_generated():
+    # Owner decision 2026-11-27: source class is a label, not a readiness blocker.
+    from resectionlab.surgical_planning_admission import planning_admission
     scene = _scene(source='unqualified-anatomical-source')
     engine = SurgicalEngine(scene, protection=_protection(scene), guard_config=GuardConfig())
     before = engine.snapshot()
     result = full_case_readiness(engine)
-    assert result['status'] == 'blocked'
-    assert result['availableActions'] == ['inspect', 'replay']
-    assert result['blockers'][0]['code'] == 'PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'
+    assert result['status'] == 'ready' and not result['blockers']
+    assert result['availableActions'] == ['inspect', 'replay', 'primary', 'vascular']
+    assert planning_admission(engine.scene, engine.protection)['sourceClass'] == 'patient-or-unverified'
     assert result['recovery'] is None and engine.snapshot() == before
 
 

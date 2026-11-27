@@ -29,6 +29,51 @@ def test_runtime_binds_inventory_engine_config_and_uncharged_prefix():
         training_admission(changed)
 
 
+def acquired_copy(task):
+    """Same anatomy, policy structure and inventory on an acquired-class source."""
+    from resectionlab.core import semantic_digest
+    from resectionlab.surgical_procedure_policy import PROPERTY, procedure_source_binding
+    from resectionlab.surgical_scene import SurgicalScene
+    from resectionlab.surgical_sequential_task import GeneratedTask
+    scene = task.scene
+    source = {**scene.source, 'patientId': 'acquired-routing-probe'}
+    raw = json.loads(json.dumps(scene.properties[PROPERTY]).replace(
+        '"reviewStatus": "generated-engineering"', '"reviewStatus": "unreviewed"'))
+    raw['sourceBinding'] = procedure_source_binding(SurgicalScene(scene.labels, scene.affine, scene.regions, source, {}))
+    raw.pop('policyHash'); raw['policyHash'] = semantic_digest(raw)
+    acquired = SurgicalScene(scene.labels, scene.affine, scene.regions, source, {**scene.properties, PROPERTY: raw})
+    return GeneratedTask(acquired, task.skills, {**task.audit, 'sourceSceneId': acquired.identity}, task.config)
+
+
+def test_acquired_class_scene_is_admitted_to_finite_skill_training_and_labelled():
+    # Owner decision 2026-11-27: the same declared task on acquired-class anatomy
+    # is admitted; the admission records its class and role, never refuses it.
+    task = generated_task(0); acquired = acquired_copy(task)
+    generated = training_admission(task)
+    assert generated['sourceClass'] == 'generated-engineering' and generated['patientTraining'] is False
+    assert generated['sourceRole']['role'] == 'GENERATED_CONTROL'
+    admitted = training_admission(acquired)
+    assert admitted['available'] and admitted['sourceClass'] == 'patient-or-unverified'
+    assert admitted['patientTraining'] is True and admitted['sourceRole']['role'] == 'UNKNOWN'
+    work = min((s for s in task.skills if s.kind == 'work'), key=lambda s: s.route[1][2])
+    left, right = task.initial_engine(), acquired.initial_engine()
+    a, b = execute_skill(task, left, work), execute_skill(acquired, right, work)
+    assert a['attemptsConsumed'] == b['attemptsConsumed']
+    assert sorted(left.state['removed']) == sorted(right.state['removed'])
+    mislabelled = copy.copy(acquired); mislabelled.scene = replace_policy_review(acquired.scene, 'generated-engineering')
+    with pytest.raises(ValueError, match='PROCEDURE_GENERATED_LABEL_ON_NONGENERATED_SOURCE'):
+        training_admission(mislabelled)
+
+
+def replace_policy_review(scene, status):
+    from resectionlab.core import semantic_digest
+    from resectionlab.surgical_procedure_policy import PROPERTY
+    from resectionlab.surgical_scene import SurgicalScene
+    raw = copy.deepcopy(scene.properties[PROPERTY]); raw['evidence']['reviewStatus'] = status
+    raw.pop('policyHash'); raw['policyHash'] = semantic_digest(raw)
+    return SurgicalScene(scene.labels, scene.affine, scene.regions, scene.source, {**scene.properties, PROPERTY: raw})
+
+
 @pytest.mark.parametrize('limit',[1,2,3])
 def test_partial_skill_attempt_limit_retains_exact_prefix_and_matches_adapter(limit):
     config=replace(COMMON_CONFIG,max_attempts=limit)

@@ -6,7 +6,6 @@ from scipy.spatial.transform import Rotation
 
 from .native_backend import MAX_BATCH_ITEMS
 from .surgical_joint_cranial_exit import _commands, _last_place, joint_exit_complete
-from .surgical_planning_admission import source_classification
 from .surgical_staged_exit import _duration
 from .surgical_tools import TOOLS
 
@@ -17,12 +16,12 @@ def kerf_cleanup_actions(engine, hand, *, check=lambda: None):
     A station may approach only along the source entry normal into removed kerf.
     Each dwell uses the full stock tip footprint and the field mass it could collect.
     An exterior withdrawal separates stations whose direct transit crosses material.
+    Any source class with a planar kerf qualifies (owner decision 2026-11-27).
     """
     access = engine._cranial_access
     debris = engine.state['debris']
     slot = engine.state['slots'][hand]
-    if (access is None or not debris or len(debris) > 512 or slot['instrument'] != 'cusa'
-            or source_classification(engine.scene) != 'generated-engineering'):
+    if access is None or not debris or len(debris) > 512 or slot['instrument'] != 'cusa':
         return []
     cells = {int(key) for key in debris}
     if not cells <= set(access.kerf_cells).intersection(engine.state['removed']):

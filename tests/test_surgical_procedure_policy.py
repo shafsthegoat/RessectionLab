@@ -1,4 +1,8 @@
-"""Generated source declarations test permission; no acquired anatomy claims."""
+"""Generated source declarations test permission; no acquired anatomy claims.
+
+Since the 2026-11-27 owner decision an acquired-class source with the same
+structural declaration is admitted and labelled; it is never refused for class.
+"""
 import copy
 
 import numpy as np
@@ -99,7 +103,8 @@ def test_incomplete_intracranial_and_structure_negative_coverage_stays_unknown()
 
 @pytest.mark.parametrize('change,reason', [
     (lambda raw: raw['workDomain'].update(origin='planner-proposed-tunnel'), 'PROCEDURE_INDEPENDENT_EVIDENCE_REQUIRED'),
-    (lambda raw: raw['evidence'].update(reviewStatus='unreviewed'), 'PROCEDURE_SOURCE_REVIEW_REQUIRED'),
+    (lambda raw: raw['evidence'].update(reviewStatus=''), 'PROCEDURE_REVIEW_STATUS_LABEL_REQUIRED'),
+    (lambda raw: raw['structures']['cortex'].pop('reviewStatus'), 'PROCEDURE_REVIEW_STATUS_LABEL_REQUIRED'),
     (lambda raw: raw.update(maximumStructureRemovalMm3={'brainstem': 0., 'cerebellum': 1.}), 'PROCEDURE_EXPLICIT_NEURAL_BUDGET_REQUIRED'),
 ])
 def test_no_self_admitted_domain_or_relaxed_critical_budget(change, reason):
@@ -204,16 +209,45 @@ def test_critical_membership_hidden_by_target_ownership_still_blocks_the_complet
     assert sequence_outcome(engine)['dimensions']['targetRemovedMm3']['cumulative'] == 0.
 
 
-@pytest.mark.parametrize('review', ['generated-engineering', 'reviewed'])
-def test_acquired_adapter_cannot_self_assert_generated_or_reviewed_coverage(review):
-    scene = source(); raw = copy.deepcopy(scene.properties[PROPERTY]); raw['evidence']['reviewStatus'] = review
-    provenance = {**scene.source, 'adapter': {'type': 'native-patient-research-derivative', 'sourcePatient': 'supplied'}}
-    temporary = SurgicalScene(scene.labels, scene.affine, scene.regions, provenance, {})
+def relabelled(raw, status):
+    """Replace every declared review label; structure and cells are unchanged."""
+    raw = copy.deepcopy(raw)
+    for row in (raw['evidence'], raw['workDomain'], *raw['structures'].values(),
+                *raw['entryRegions'].values(), *raw['permittedCompartments'].values()):
+        row['reviewStatus'] = status
+    return raw
+
+
+def acquired_scene(original, marker, status='unreviewed'):
     from resectionlab.surgical_procedure_policy import procedure_source_binding
-    raw['sourceBinding'] = procedure_source_binding(temporary)
+    provenance = {**original.source, **marker}
+    unbound = SurgicalScene(original.labels, original.affine, original.regions, provenance, {})
+    raw = relabelled(original.properties[PROPERTY], status)
+    raw['sourceBinding'] = procedure_source_binding(unbound)
     raw['policyHash'] = semantic_digest({k: v for k, v in raw.items() if k != 'policyHash'})
-    acquired = SurgicalScene(scene.labels, scene.affine, scene.regions, provenance, {PROPERTY: raw})
-    assert procedure_admission(acquired)['blockers'][0]['code'] == 'PROCEDURE_ACQUIRED_SOURCE_QUALIFICATION_UNAVAILABLE'
+    return SurgicalScene(original.labels, original.affine, original.regions, provenance, {PROPERTY: raw})
+
+
+def test_unreviewed_label_on_generated_source_is_admitted_and_carried_into_protection():
+    scene = revised(source(), lambda raw: raw.update(relabelled(raw, 'unreviewed')))
+    assert procedure_admission(scene)['available']
+    engine = SurgicalEngine(scene)
+    rows = {a.structure_id: a.review_status for a in engine.protection.annotations}
+    assert rows['brainstem'] == rows['procedure-forbidden-or-unknown'] == 'unreviewed'
+
+
+@pytest.mark.parametrize('review', ['generated-engineering', 'reviewed', 'unreviewed', 'estimated'])
+def test_acquired_adapter_is_admitted_with_its_label_but_cannot_claim_generated(review):
+    adapter = {'adapter': {'type': 'native-patient-research-derivative', 'sourcePatient': 'supplied'}}
+    acquired = acquired_scene(source(), adapter, review)
+    result = procedure_admission(acquired)
+    if review == 'generated-engineering':
+        # A generated label would misstate this source's provenance.
+        assert result['blockers'][0]['code'] == 'PROCEDURE_GENERATED_LABEL_ON_NONGENERATED_SOURCE'
+        return
+    assert result['available'] and not result['blockers']
+    engine = SurgicalEngine(acquired)
+    assert {a.review_status for a in engine.protection.annotations} == {review}
 
 
 @pytest.mark.parametrize('marker', [
@@ -222,25 +256,26 @@ def test_acquired_adapter_cannot_self_assert_generated_or_reviewed_coverage(revi
     {'adapter': {'patientId': 'supplied'}}, {'adapter': {'patient_id': 'supplied'}}, {'adapter': {'source_patient': 'supplied'}},
     *[{'adapter': {'type': kind}} for kind in ('nifti', 'nifti-import', 'mesh', 'mesh-derived', 'native-patient')],
 ])
-def test_freshly_bound_policy_cannot_override_shared_patient_source_class(marker):
+def test_freshly_bound_policy_on_patient_marked_source_is_admitted_and_keeps_its_class(marker):
+    # Owner decision 2026-11-27: the class is reported, never a refusal; the
+    # structural procedure declaration is what admission still checks.
     from resectionlab.surgical_planning_admission import planning_admission
-    from resectionlab.surgical_procedure_policy import procedure_source_binding
-    original = source()
-    provenance = {**original.source, **marker}
-    unbound = SurgicalScene(original.labels, original.affine, original.regions, provenance, {})
-    raw = copy.deepcopy(original.properties[PROPERTY])
-    raw['sourceBinding'] = procedure_source_binding(unbound)
-    raw['policyHash'] = semantic_digest({k: v for k, v in raw.items() if k != 'policyHash'})
-    contradictory = SurgicalScene(original.labels, original.affine, original.regions, provenance, {PROPERTY: raw})
+    contradictory = acquired_scene(source(), marker)
     admitted = planning_admission(contradictory)
-    assert admitted['sourceClass'] == 'patient-or-unverified' and not admitted['available']
-    reason = 'PROCEDURE_ACQUIRED_SOURCE_QUALIFICATION_UNAVAILABLE'
-    assert procedure_admission(contradictory)['blockers'][0]['code'] == reason
-    with pytest.raises(ValueError, match=reason):
-        SurgicalEngine(contradictory)
+    assert admitted['sourceClass'] == 'patient-or-unverified' and admitted['available']
+    assert admitted['scope'] == 'procedure-aware' and not admitted['blockers']
+    assert admitted['sourceRole']['role'] == 'UNKNOWN' and admitted['sourceRole']['verified'] is False
+    assert procedure_admission(contradictory)['available']
+    engine = SurgicalEngine(contradictory)
+    assert engine.snapshot()['procedurePolicy']['policyHash'] == contradictory.properties[PROPERTY]['policyHash']
     from resectionlab.surgical_rl_env import SurgicalRLEnv
-    with pytest.raises(ValueError, match=reason):
-        SurgicalRLEnv(contradictory)
+    env = SurgicalRLEnv(contradictory)
+    _, info = env.reset(seed=3)
+    assert info['source_class'] == 'patient-or-unverified' and info['procedure_admission']['available']
+    assert env.target_basis == 'owned_target_labels'
+    # A generated review label on this class remains a provenance contradiction.
+    mislabelled = acquired_scene(source(), marker, 'generated-engineering')
+    assert procedure_admission(mislabelled)['blockers'][0]['code'] == 'PROCEDURE_GENERATED_LABEL_ON_NONGENERATED_SOURCE'
 
 
 def test_observable_memberships_are_explicit_frozen_source_sets_and_protection_is_idempotent():
@@ -253,15 +288,17 @@ def test_observable_memberships_are_explicit_frozen_source_sets_and_protection_i
     assert engine.fresh().snapshot() == engine.snapshot()
 
 
-def test_observed_source_reference_cannot_be_promoted_by_generated_case_metadata():
+@pytest.mark.parametrize('status', ['generated-engineering', 'unreviewed'])
+def test_observed_source_reference_cannot_be_promoted_by_generated_case_metadata(status):
     from dataclasses import replace
     from resectionlab.core import SourceRef, thaw_json
+    from resectionlab.surgical_planning_admission import planning_admission
     from resectionlab.surgical_scene import from_case
     from resectionlab.surgical_procedure_policy import procedure_source_binding
     from test_structure_aware_cranial_planning import procedure_case
     case, _, record = procedure_case()
     metadata = thaw_json(case.metadata)
-    raw = metadata['surgical_properties'].pop(PROPERTY)
+    raw = relabelled(metadata['surgical_properties'].pop(PROPERTY), status)
     observed = SourceRef('observed-acquired-image', 'file:///preserved/acquired-image.nii.gz',
         '1'*64, provenance='observed')
     spoof = replace(case, source_refs=(observed,), metadata=metadata)
@@ -271,15 +308,21 @@ def test_observed_source_reference_cannot_be_promoted_by_generated_case_metadata
     metadata['surgical_properties'][PROPERTY] = raw
     spoof = replace(spoof, metadata=metadata)
     scene = from_case(spoof, record['mapping'])
+    # Generated case metadata cannot promote the observed reference: it stays acquired.
     assert scene.source['procedurePolicySourceClass'] == 'acquired-or-unknown'
-    reason = 'PROCEDURE_ACQUIRED_SOURCE_QUALIFICATION_UNAVAILABLE'
-    assert procedure_admission(scene)['blockers'][0]['code'] == reason
-    with pytest.raises(ValueError, match=reason):
-        SurgicalEngine(scene)
+    assert planning_admission(scene)['sourceClass'] == 'patient-or-unverified'
+    if status == 'generated-engineering':
+        reason = 'PROCEDURE_GENERATED_LABEL_ON_NONGENERATED_SOURCE'
+        assert procedure_admission(scene)['blockers'][0]['code'] == reason
+        with pytest.raises(ValueError, match=reason):
+            SurgicalEngine(scene)
+        return
+    assert procedure_admission(scene)['available']
+    assert SurgicalEngine(scene).snapshot()['procedurePolicy']['policyHash'] == raw['policyHash']
     pytest.importorskip('gymnasium')
     from resectionlab.surgical_rl_env import SurgicalRLEnv
-    with pytest.raises(ValueError, match=reason):
-        SurgicalRLEnv(scene)
+    env = SurgicalRLEnv(scene)
+    assert env.source_class == 'patient-or-unverified' and env.target_basis == 'original_annotation'
 
 
 @pytest.mark.parametrize('case', ['neural', 'cut', 'bone', 'time', 'tissue'])

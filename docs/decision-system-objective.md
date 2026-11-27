@@ -69,9 +69,10 @@ below. It enforces independently supplied entry/compartment/coverage assumptions
 and cumulative source harm limits before selection or reward, retains separate
 neural/bone/structure Pareto alternatives, and permits useful work followed by
 STOP with residual. The full original-target denominator and unavailable
-functional outcomes remain explicit. Acquired task admission requires evidence
-not present in existing cases and therefore refuses; historical research
-workflows retain their separately identified semantics.
+functional outcomes remain explicit. Since the owner decision of 2026-11-27,
+planning, search and RL admit any source class under the same structural
+requirements and report it as a label; historical research workflows retain
+their separately identified semantics.
 
 The desktop executes `App → useSurgical → Electron IPC → Python surgical_bridge →
 SurgicalEngine`. The engine owns material checks, complete-tool swept geometry,
@@ -91,7 +92,7 @@ Four separate concepts currently run:
 |Feasibility|`SurgicalEngine`, `surgical_rl_protection`, `surgical_task_domain`, checked staged skills|Hard native constraints plus declared tissue/action/computation limits. Missing anatomy remains unknown.|
 |Planning preference|`surgical_staged_planning`, `surgical_sequence_search`, `surgical_two_tool`, `surgical_preparation_planning`|Staged baseline maximizes immediate target mm³. New lookahead retains target/non-target/time Pareto outcomes and recommends lexicographically: more target, less non-target, less modeled time. Two-tool comparison minimizes seconds after its progress gate; preparation comparison charges the whole prefix and suffix.|
 |Episode reward|`surgical_rl_rewards.RewardTracker/compute_reward`|Illustrative engineering return, separate from treatment outcome and feasibility. No training occurs in this milestone.|
-|Policy training loss|Existing policy-specific BC/PPO fitting code|An optimization objective over observations/returns; no anatomical or outcome certificate. Acquired vascular, continuum and heat modes remain gated. Declared generated graphs support separate supply and drainage costs.|
+|Policy training loss|Existing policy-specific BC/PPO fitting code|An optimization objective over observations/returns; no anatomical or outcome certificate. Continuum and heat modes remain gated. Declared graphs with supply/drainage regions support separate costs on any source class (2026-11-27).|
 
 Default reward weights are target +1, healthy removal −2, bone −0.05,
 deformation −1, bleeding −1 and protected damage −5 per 1,000 mm³ of their

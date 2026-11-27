@@ -41,15 +41,21 @@ def _zones(scene, cells):
 
 
 def _source_role(case):
+    """Record the declared train/evaluation role; never refuse the source for it.
+
+    Owner decision 2026-11-27: a reserved, conflicting or undeclared role is
+    recorded verbatim so a later evaluation can exclude this task's results.
+    Nothing here promotes a declaration: TRAIN remains TRAIN, TEST remains TEST.
+    """
     data = case.metadata.get('data_case', {})
     role, split = data.get('role'), data.get('split')
-    if role in ('TRAIN', 'DEVELOPMENT') and split == role:
+    if role is None and split is None:
+        if case.metadata.get('generated') is True and case.metadata.get('is_synthetic') is True:
+            return 'GENERATED_CONTROL'
+        return 'UNDECLARED'
+    if type(role) is str and role and split == role:
         return role
-    if role is not None or split is not None:
-        raise ValueError('DECLARED_UNRESERVED_SOURCE_ROLE_REQUIRED')
-    if case.metadata.get('generated') is True and case.metadata.get('is_synthetic') is True:
-        return 'GENERATED_CONTROL'
-    raise ValueError('DECLARED_UNRESERVED_SOURCE_ROLE_REQUIRED')
+    return f'CONFLICTING:{role}/{split}'
 
 
 def freeze_patient_task(case, engine, *, role_root=None):
@@ -57,6 +63,7 @@ def freeze_patient_task(case, engine, *, role_root=None):
 
     TRAIN remains TRAIN. No task construction can promote a reserved case,
     infer missing critical anatomy, erase a prefix cost or relax physical bounds.
+    The source role and its evidence are recorded, not eligibility blockers.
     """
     engine.scene.require_cache_source()
     if engine.scene.source.get('caseHash') != case.semantic_hash:
@@ -69,8 +76,6 @@ def freeze_patient_task(case, engine, *, role_root=None):
     baseline = sequence_outcome(engine)
     domain = reviewed_domain(engine.scene)
     blockers = []
-    if role_evidence['status'] == 'unavailable':
-        blockers.append(role_evidence['reason'])
     if engine.guard_report()['missingRequired']:
         blockers.append('MISSING_CRITICAL_ANNOTATIONS')
     # Match the engine's mandatory critical-presence floor. An editable empty

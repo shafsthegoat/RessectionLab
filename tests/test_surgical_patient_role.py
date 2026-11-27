@@ -1,4 +1,7 @@
-"""Metadata changes cannot grant a reserved original a development role."""
+"""Metadata changes cannot grant a reserved original a development role.
+
+Since the 2026-11-27 owner decision a reserved role is recorded, not refused.
+"""
 from dataclasses import replace
 import hashlib
 import json
@@ -37,10 +40,29 @@ def test_actual_original_pixels_frame_and_predecode_role_are_joined(tmp_path):
     assert patient_role_evidence(case)['status'] == 'unavailable'
 
 
-def test_reserved_family_relabelled_train_is_refused_before_decoding_registered_pixels(tmp_path, monkeypatch):
-    case, _ = fixture(tmp_path, registered='EVAL')
+@pytest.mark.parametrize('registered,frozen', [('EVAL', True), ('TRAIN', False)])
+def test_reserved_family_relabelled_train_is_recorded_without_decoding_registered_pixels(
+        tmp_path, monkeypatch, registered, frozen):
+    case, _ = fixture(tmp_path, registered=registered)
+    if not frozen:
+        path = tmp_path/'catalog'/'topbrain'/'014-selective-extraction.json'
+        receipt = json.loads(path.read_text())
+        receipt['family']['role_frozen_before_new_image_decode'] = False
+        path.write_text(json.dumps(receipt))
     monkeypatch.setattr(nib, 'load', lambda *_: pytest.fail('Reserved pixels must not be decoded'))
-    with pytest.raises(ValueError, match='reserved'):
+    result = patient_role_evidence(case, tmp_path)
+    # The receipt's role is recorded verbatim; the case's TRAIN claim is not adopted.
+    assert result['status'] == 'reserved_or_unproven_source' and result['role'] == registered
+    assert result['roleFrozenBeforeDecode'] is frozen and result['pixelsVerified'] is False
+    assert result['family'] == 'TopCoW:014' and 'exclude' in result['evaluationUse'].lower()
+
+
+def test_receipt_for_another_family_is_an_identity_failure(tmp_path):
+    case, _ = fixture(tmp_path)
+    path = tmp_path/'catalog'/'topbrain'/'014-selective-extraction.json'
+    receipt = json.loads(path.read_text()); receipt['family']['family_id'] = 'TopCoW:015'
+    path.write_text(json.dumps(receipt))
+    with pytest.raises(ValueError, match='different family'):
         patient_role_evidence(case, tmp_path)
 
 

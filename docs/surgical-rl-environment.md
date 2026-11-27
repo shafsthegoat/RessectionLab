@@ -4,13 +4,13 @@
 
 ## Current admission and episode version
 
-New episodes require explicit generated engineering provenance or admission to
-the source-bound procedure task. Patient-derived or unverified anatomy cannot
-fall back to legacy RL by omitting the policy. `from_patient()` therefore refuses
-unqualified patient sources; existing protection masks or research acknowledgements
-do not supply that qualification. Native engine archives remain inspectable and
-replayable. The historical spatial learner also refuses patient anatomy because
-it does not consume the procedure harm contract.
+Since the owner decision of 2026-11-27, new episodes accept any source class,
+including acquired patient anatomy, under the same structural requirements
+(a declared target and, when present, a valid procedure declaration). `info`
+reports `source_class`, `source_role` and `target_basis` so results can be
+excluded from later evaluation. Native engine archives remain inspectable and
+replayable. The historical spatial learner still declines procedure-policy
+scenes because it does not consume the procedure harm contract.
 
 The procedure adapter is **evaluation-only v4**. Its fixed action codec appends
 `stop` after the unchanged twelve legacy operations; read `env.operations` or the
@@ -26,8 +26,7 @@ remain active. See the [next experiment proposal](motor-risk-and-planning-evalua
 The [older verification receipt](surgical-rl-verification.json) records historical
 source hashes and software trajectories. Its patient episodes do not establish
 current planning admission or completed patient tasks. The recipes and patient
-API example below describe that historical verifier, which now refuses an
-unqualified patient source before starting a new episode.
+API example below describe that historical verifier.
 
 ## Historical verification recipe
 

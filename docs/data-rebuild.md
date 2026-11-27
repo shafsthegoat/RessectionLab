@@ -274,7 +274,10 @@ with `PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING`. The full-case check
 also requires supplied brainstem and critical-structure coverage. The scene
 stays at zero actions. The result is `qc/isles0146-cta-guarded-refusal-v1.json`.
 The desktop's unmodified setup independently refuses the same guarded
-planning command and preserves its zero-action state.
+planning command and preserves its zero-action state. That receipt records the
+earlier behaviour: since the 2026-11-27 owner decision, planning admits this
+source and labels it `patient-or-unverified`, so `--guarded-rehearsal` needs
+updating before it is rerun.
 
 ```sh
 .venv/bin/python scripts/build_new_cta_gliomas.py --guarded-rehearsal

@@ -191,6 +191,11 @@ ready for RL or upgrades the original patient profile.
 
 ## Contracts and available skills
 
+Since the owner decision of 2026-11-27, `SurgicalRLEnv` and finite-skill
+training admission accept any source class. `info` reports `source_class`,
+`source_role` and `target_basis`, so results on acquired or reserved sources can
+be excluded from later evaluation.
+
 `SurgicalRLEnv` uses `resectionlab.surgical-rl.v2`. Relative to v1, observations
 explicitly add `local_spacing_mm`, normalized remaining step/time/invalid-action
 `budgets`, and physical `cleanup` ledgers. Candidate geometry consumes the

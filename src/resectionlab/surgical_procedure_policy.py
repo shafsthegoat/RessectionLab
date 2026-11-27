@@ -78,6 +78,15 @@ def _evidence(row, name):
         raise ValueError('PROCEDURE_INDEPENDENT_EVIDENCE_REQUIRED: ' + name)
 
 
+def _review_label(row, where, generated_source):
+    status = row.get('reviewStatus')
+    if type(status) is not str or not status.strip() or len(status) > 100:
+        raise ValueError('PROCEDURE_REVIEW_STATUS_LABEL_REQUIRED: ' + where)
+    if status == 'generated-engineering' and not generated_source:
+        raise ValueError('PROCEDURE_GENERATED_LABEL_ON_NONGENERATED_SOURCE: ' + where)
+    return status
+
+
 def _finite_nonnegative(value):
     return type(value) in (float, int) and math.isfinite(value) and value >= 0
 
@@ -132,12 +141,13 @@ def make_procedure_policy(scene, *, policy_id, evidence, structures,
 def _validated(scene):
     """Return a checked immutable-source declaration or raise a specific code."""
     scene.require_cache_source()
-    # Admission and policy validation must classify the same immutable source.
-    # Do this before the parsed-policy cache, including its CaseData proof.
-    from .surgical_planning_admission import source_classification
+    # Owner decision 2026-11-27: an acquired source is validated under exactly
+    # the same structural rules as a generated one. Its class is a label that
+    # planning admission reports. The CaseData proof is still checked before
+    # the parsed-policy cache, so a changed binding cannot reuse it.
+    from .surgical_planning_admission import validate_source_binding
     from .surgical_treatment_intent import PRESERVATION_SELECTION_RULE, validate_preservation_preference
-    if PROPERTY in scene.properties and source_classification(scene) != 'generated-engineering':
-        raise ValueError('PROCEDURE_ACQUIRED_SOURCE_QUALIFICATION_UNAVAILABLE')
+    validate_source_binding(scene)
     cached = getattr(scene, '_procedure_policy_parsed', None)
     if cached is not None:
         return cached
@@ -162,9 +172,13 @@ def _validated(scene):
     if raw['selectionRule'] == PRESERVATION_SELECTION_RULE or 'preservationPreference' in raw:
         validate_preservation_preference(raw.get('preservationPreference'))
     _evidence(raw.get('evidence'), 'procedure assumptions and intracranial/observed coverage')
-    if raw['evidence'].get('reviewStatus') not in ('reviewed', 'generated-engineering'):
-        raise ValueError('PROCEDURE_SOURCE_REVIEW_REQUIRED')
-    review_status = raw['evidence']['reviewStatus']
+    # Review status is a declared provenance label (reviewed, unreviewed,
+    # estimated, assumed, generated-engineering, ...), carried into protection
+    # and reports. It is not a permission. A generated label on a source that is
+    # not generated would misstate provenance, so that contradiction is refused.
+    from .surgical_planning_admission import GENERATED, source_classification
+    generated_source = source_classification(scene) == GENERATED
+    _review_label(raw['evidence'], 'procedure evidence', generated_source)
     intracranial = _cells(raw.get('intracranialCells'), scene, 'intracranial_coverage', nonempty=True)
     observed = _cells(raw.get('observedCells'), scene, 'observed_coverage', nonempty=True)
     if not intracranial <= observed:
@@ -187,8 +201,7 @@ def _validated(scene):
         if type(name) is not str or not 0 < len(name) <= 100 or ':' in name:
             raise ValueError('PROCEDURE_STRUCTURE_ID_INVALID')
         _evidence(row, name)
-        if row.get('reviewStatus') != review_status:
-            raise ValueError('PROCEDURE_STRUCTURE_REVIEW_REQUIRED: ' + name)
+        _review_label(row, name, generated_source)
         cells = _cells(row.get('cells'), scene, name, nonempty=name in REQUIRED_STRUCTURES)
         structure_cells[name] = cells
         coverage = _cells(row.get('coverageCells'), scene, name + '_coverage', nonempty=True)

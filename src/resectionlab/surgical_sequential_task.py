@@ -366,11 +366,16 @@ def generated_preservation_task(parent, *, preservation_metrics, config=COMMON_C
 
 
 def training_admission(task):
-    """Narrow generated-only admission, distinct from general primitive RL."""
-    from .surgical_planning_admission import source_classification, require_planning_admission
-    require_planning_admission(task.scene)
+    """Finite-skill training admission for any source class, distinct from general primitive RL.
+
+    Owner decision 2026-11-27: an acquired scene with the same declared task,
+    inventory and policy structure is admitted. The admission records the source
+    class and train/evaluation role so learning outputs can be excluded later.
+    """
+    from .surgical_planning_admission import GENERATED, require_planning_admission
+    planning = require_planning_admission(task.scene)
     declaration = task.scene.properties.get(TASK_PROPERTY)
-    if (source_classification(task.scene) != 'generated-engineering' or declaration is None or
+    if (declaration is None or
             declaration.get('schema') != SCHEMA or declaration.get('configHash') != task.config.fingerprint or
             declaration.get('exteriorWithdrawalPlaneRasMm')!=60. or
             declaration.get('inventory') != [asdict(s) for s in task.skills] or
@@ -397,7 +402,9 @@ def training_admission(task):
                 raise ValueError('GENERATED_FINITE_SKILL_TRAINING_INVENTORY_REFUSED')
     return dict(schema='resectionlab.generated-finite-skill-training-admission.v1', available=True,
         scope=SCHEMA, sourceSceneId=task.scene.identity, configHash=task.config.fingerprint,
-        generalPrimitiveTraining=False, patientTraining=False, dynamicPhysicsTraining=False)
+        sourceClass=planning['sourceClass'], sourceRole=copy.deepcopy(planning['sourceRole']),
+        generalPrimitiveTraining=False, patientTraining=planning['sourceClass'] != GENERATED,
+        dynamicPhysicsTraining=False)
 
 
 def observation(task, engine, *, attempts=0, invalid=0, selections=0):

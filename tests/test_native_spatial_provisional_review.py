@@ -76,7 +76,8 @@ def test_reviewed_model_support_still_requires_admitted_weight_lineage():
     case = source.revised(brain_mask=approved.mask, structural_evidence={approved.evidence_id: approved})
     with pytest.raises(DataPolicyError, match="WEIGHT_LINEAGE_UNVERIFIED"):
         planning_brain_support(case)
-    with pytest.raises(ValueError, match='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'):
+    # The acquired case is admitted (2026-11-27); model lineage still refuses.
+    with pytest.raises(DataPolicyError, match="WEIGHT_LINEAGE_UNVERIFIED"):
         native_spatial_task_from_case(case, access=access(), tools=OPENING_TOOLS)
     assert case.structural_evidence[proposal.evidence_id].review_status == "accepted"
 
@@ -88,12 +89,12 @@ def test_explicit_selection_cannot_admit_unverified_model_or_change_source():
     assert _validate_provisional_proposal_binding(case, proposal, declaration) is None
     with pytest.raises(DataPolicyError, match="WEIGHT_LINEAGE_UNVERIFIED"):
         _provisional_proposal_support(case, declaration)
-    with pytest.raises(ValueError, match='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'):
+    with pytest.raises(DataPolicyError, match="WEIGHT_LINEAGE_UNVERIFIED"):
         native_spatial_task_from_case(case, access=access(), tools=OPENING_TOOLS,
             research_support_acknowledgment=declaration)
     assert case.to_manifest() == before and case.brain_mask is None and proposal.review is None
     assert planning_brain_support(case)[0] is None
-    with pytest.raises(ValueError, match='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'):
+    with pytest.raises(ValueError, match='ESSENTIAL_EVIDENCE_MISSING'):
         native_spatial_task_from_case(case, access=access(), tools=OPENING_TOOLS)
 
 

@@ -99,10 +99,26 @@ def test_empty_required_list_cannot_skip_review_of_mandatory_brainstem(required)
 
 
 @pytest.mark.parametrize('role', ['EVAL', 'TEST', 'FROZEN_ASSESSMENT'])
-def test_synthetic_descendant_cannot_relabel_reserved_family_as_development(role):
+def test_synthetic_descendant_records_reserved_family_role_without_relabelling(role):
+    # Owner decision 2026-11-27: the role is recorded for later evaluation
+    # exclusion, never refused and never promoted to a development role.
     case, engine = source(role=role)
-    with pytest.raises(ValueError, match='UNRESERVED_SOURCE_ROLE'):
-        freeze_patient_task(case, engine)
+    task = freeze_patient_task(case, engine)
+    assert task['sourceRole'] == role
+    assert not any('ROLE' in blocker for blocker in task['eligibilityBlockers'])
+    conflicting = replace(case, metadata={**thaw_json(case.metadata),
+        'data_case': {'family_id': 'GENERATED:frozen-task', 'role': 'TRAIN', 'split': role}})
+    assert freeze_patient_task(conflicting, SurgicalEngine(from_case(conflicting)))['sourceRole'] == f'CONFLICTING:TRAIN/{role}'
+
+
+def test_unavailable_role_evidence_is_recorded_not_an_eligibility_blocker():
+    case, engine = source()
+    acquired = replace(case, metadata={k: v for k, v in thaw_json(case.metadata).items()
+                                       if k not in ('generated', 'is_synthetic', 'data_case')})
+    task = freeze_patient_task(acquired, SurgicalEngine(from_case(acquired)))
+    assert task['sourceRole'] == 'UNDECLARED'
+    assert task['sourceRoleEvidence'] == {'status': 'unavailable', 'reason': 'SOURCE_ROLE_EVIDENCE_REQUIRED'}
+    assert 'SOURCE_ROLE_EVIDENCE_REQUIRED' not in task['eligibilityBlockers']
 
 
 def test_resealing_weaker_caps_or_source_target_goals_cannot_change_frozen_task():

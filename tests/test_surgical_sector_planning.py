@@ -76,24 +76,28 @@ def test_source_sector_capacity_refuses_before_any_native_traversal():
 
 
 @pytest.mark.skipif(not FRESH_0007.is_file(), reason='Ignored fresh-development case is unavailable')
-def test_historical_patient_sector_comparison_requires_procedure_policy():
+def test_historical_patient_sector_comparison_is_admitted_and_labelled():
+    # Owner decision 2026-11-27: acquired sources plan under the same contract.
+    from resectionlab.surgical_planning_admission import planning_admission
     _, artifacts, _ = load_workspace(FRESH_0007)
     record = artifacts['surgical_toolbox']; scene = load_environment(FRESH_0007)
     intact = SurgicalEngine.restore(scene, record['branches']['main'])
     before = intact.snapshot()
-    with pytest.raises(ValueError, match='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'):
-        compare_sector_strategies(intact, record['planning'], record['branches'], acknowledge_unknowns=True)
+    admission = planning_admission(intact.scene, intact.protection)
+    assert admission['available'] and admission['sourceClass'] == 'patient-or-unverified'
+    branches, report = compare_sector_strategies(intact, record['planning'], record['branches'], acknowledge_unknowns=True)
+    assert report['optionCount'] == len(branches) == 12 and report['passedCount'] >= 1
     assert intact.snapshot() == before
 
 
 @pytest.mark.skipif(not FRESH_0007.is_file(), reason='Ignored fresh-development case is unavailable')
-def test_historical_patient_sector_observation_requires_procedure_policy():
+def test_historical_patient_sector_observation_is_admitted():
     _, artifacts, _ = load_workspace(FRESH_0007)
     record = artifacts['surgical_toolbox']; scene = load_environment(FRESH_0007)
     intact = SurgicalEngine.restore(scene, record['branches']['main'])
     before = intact.snapshot()
-    with pytest.raises(ValueError, match='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'):
-        intact_strategy_observation(intact, record['planning']['alternatives'][0])
+    observed = intact_strategy_observation(intact, record['planning']['alternatives'][0])
+    assert {'boundary', 'observation', 'options', 'remainingNativeActions'} <= set(observed)
     assert intact.snapshot() == before
 
 
@@ -272,17 +276,27 @@ def test_cleanup_budget_is_probed_before_admitting_sector_macro():
 
 
 @pytest.mark.skipif(not FRESH_0005.is_file(), reason='Ignored fresh-development case is unavailable')
-def test_patient_comparison_refuses_before_any_preview_or_native_transition(monkeypatch):
+def test_patient_comparison_is_admitted_before_any_preview_or_native_transition(monkeypatch):
+    from resectionlab import surgical_planning_admission as admission_module
     _, artifacts, _ = load_workspace(FRESH_0005)
     record = artifacts['surgical_toolbox']; scene = load_environment(FRESH_0005)
     intact = SurgicalEngine.restore(scene, record['branches']['main'])
     before = intact.snapshot()
-    def forbidden(*_args, **_kwargs):
-        pytest.fail('Patient admission refusal executed native or preview work')
-    monkeypatch.setattr(SurgicalEngine, 'preview', forbidden)
-    monkeypatch.setattr(SurgicalEngine, 'step', forbidden)
-    with pytest.raises(ValueError, match='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'):
+    order = []
+    admit = admission_module.require_planning_admission
+    def recorded(*args, **kwargs):
+        result = admit(*args, **kwargs); order.append(('admission', result['sourceClass'])); return result
+    class Reached(Exception):
+        pass
+    def native(*_args, **_kwargs):
+        order.append(('native',)); raise Reached()
+    monkeypatch.setattr(admission_module, 'require_planning_admission', recorded)
+    monkeypatch.setattr(SurgicalEngine, 'preview', native)
+    monkeypatch.setattr(SurgicalEngine, 'step', native)
+    with pytest.raises(Reached):
         compare_sector_strategies(intact, record['planning'], record['branches'], acknowledge_unknowns=True)
+    # Labelled admission precedes the first native call; the source is unchanged.
+    assert order[0] == ('admission', 'patient-or-unverified') and ('native',) in order
     assert intact.snapshot() == before
 
 

@@ -114,22 +114,31 @@ def test_generated_graph_reward_charges_both_shared_exposures_after_checked_with
             compute_reward(before, after, {'status': 'accepted'})
 
 
-@pytest.mark.parametrize('missing', ['regions', 'generated-coverage', 'generated-source'])
-def test_graph_reward_holds_unqualified_domains(missing):
+@pytest.mark.parametrize('variant', ['regions', 'acquired-coverage', 'acquired-source'])
+def test_graph_reward_requires_declared_interfaces_for_any_source_class(variant):
+    # Owner decision 2026-11-27: acquired graphs and sources are admitted; only
+    # a graph without declared supply/drainage interfaces is still held.
+    from resectionlab.surgical_planning_admission import planning_admission
     from resectionlab.surgical_rl_rewards import RewardTracker
     from resectionlab.surgical_scene import SurgicalScene
     from test_surgical_vascular_graph import profile
     declaration = profile()
-    if missing == 'regions':
+    if variant == 'regions':
         declaration['regions'] = []
-    if missing == 'generated-coverage':
+    if variant == 'acquired-coverage':
         declaration['coverage']['status'] = 'partial-acquired'
     source = graph_fixture(declaration).scene
-    if missing == 'generated-source':
+    if variant == 'acquired-source':
         source = SurgicalScene(source.labels, source.affine, source.regions,
             {'kind': 'generated-control', 'patientId': 'test'}, source.properties)
-    with pytest.raises(ValueError, match='VASCULAR_GRAPH_RL_HOLD'):
-        RewardTracker(SurgicalEngine(source), graph_evaluation=True)
+    if variant == 'regions':
+        with pytest.raises(ValueError, match='VASCULAR_GRAPH_RL_HOLD'):
+            RewardTracker(SurgicalEngine(source), graph_evaluation=True)
+        return
+    tracker = RewardTracker(SurgicalEngine(source), graph_evaluation=True)
+    assert tracker.graph_evaluation
+    expected = 'patient-or-unverified' if variant == 'acquired-source' else 'generated-engineering'
+    assert planning_admission(source)['sourceClass'] == expected
 
 
 def test_explicit_generated_graph_rl_env_measures_and_replays_refusals():
@@ -171,3 +180,27 @@ def test_explicit_generated_graph_rl_env_measures_and_replays_refusals():
     _, restored = env.restore(record)
     assert restored['stateId'] == record['stateId']
     assert restored['metrics'] == record['measurements']
+    assert restored['source_class'] == 'generated-engineering'
+    assert restored['source_role']['role'] == 'GENERATED_CONTROL'
+    assert env.action_contract['vascularReward']['source'] == 'declared generated graph; no acquired physiology'
+
+
+def test_acquired_graph_rl_env_is_admitted_and_labelled():
+    from resectionlab.surgical_rl_env import SurgicalRLEnv, RLConfig
+    from resectionlab.surgical_rl_rewards import GeneratedGraphRewardConfig
+    from resectionlab.surgical_scene import SurgicalScene
+    from test_surgical_vascular_graph import profile
+    declaration = profile(); declaration['coverage']['status'] = 'partial-acquired'
+    fixture = graph_fixture(declaration).scene
+    labels = fixture.labels.copy()
+    labels[7, 4, 4] = 3
+    scene = SurgicalScene(labels, fixture.affine,
+        [*fixture.regions, {'id': 3, 'name': 'acquired target', 'material': 'tumor', 'target': True}],
+        {**fixture.source, 'patientId': 'acquired-routing-probe'}, fixture.properties)
+    env = SurgicalRLEnv(scene, config=RLConfig(require_critical_coverage=False),
+                        reward_config=GeneratedGraphRewardConfig())
+    _, info = env.reset(seed=1)
+    assert info['source_class'] == 'patient-or-unverified'
+    assert info['source_role'] == {'role': 'UNKNOWN', 'basis': 'undeclared', 'verified': False}
+    assert env.action_contract['vascularReward']['source'] == (
+        'declared partial-acquired graph on a patient-or-unverified source; no acquired physiology')

@@ -3,10 +3,12 @@
 `surgicalProcedurePolicyV1` declares one research tumor-resection workflow before
 search. It supports generated engineering controls starting after scalp access
 or at an explicitly supplied post-access checkpoint. Earlier costs are unknown;
-neither start represents completed skull-to-exit surgery. Acquired sources are
-currently unsupported (`PROCEDURE_ACQUIRED_SOURCE_QUALIFICATION_UNAVAILABLE`):
-existing receipts do not yet bind complete intracranial and critical coverage to
-this task. A review string or research acknowledgement cannot supply that join.
+neither start represents completed skull-to-exit surgery. Since the owner
+decision of 2026-11-27, an acquired source carrying the same declaration is
+admitted under the same structural checks, and the admission reports its source
+class (`patient-or-unverified`) and declared review labels. A
+`generated-engineering` label on a non-generated source is refused as a
+provenance contradiction. No existing acquired case carries such a declaration.
 
 On the November 18 four-channel UCSF-PDGM-0004 study, the selected left-superior
 path ends at the intact admission boundary. The geometric comparison evaluated

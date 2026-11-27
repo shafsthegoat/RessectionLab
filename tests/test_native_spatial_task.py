@@ -165,7 +165,8 @@ def test_full_head_or_unreviewed_support_never_becomes_working_anatomy(support, 
             planning_brain_support(case)
     else:
         assert planning_brain_support(case)[0] is None
-    with pytest.raises(ValueError, match='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'):
+    # The acquired source is admitted (2026-11-27); the missing support itself refuses.
+    with pytest.raises(ValueError, match='BRAIN_MASK_REVIEW_REQUIRED' if support else 'ESSENTIAL_EVIDENCE_MISSING'):
         native_spatial_task_from_case(case, access=make_native_opening_task().case.access, tools=OPENING_TOOLS)
 
 
@@ -173,7 +174,8 @@ def test_inference_only_requires_explicit_nominal_target_for_teacher():
     case = annotated_source()
     # A research assumption alone cannot relabel supplied anatomy as an image
     # model. This unit source explicitly declares its artificial model output.
-    with pytest.raises(ValueError, match='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'):
+    # Admitted acquired source; reference annotations still cannot feed a scan track.
+    with pytest.raises(ValueError, match='Scan tracks require declared scan-derived estimates'):
         native_spatial_task_from_case(case, access=make_native_opening_task().case.access,
             tools=OPENING_TOOLS, track="inference_only")
     source = NativeSpatialCase(case.mri, case.brain_mask, case.compartments["provided_target"], case.affine,
@@ -306,13 +308,13 @@ def test_provisional_support_rejects_unverified_model_before_task_creation(monke
     monkeypatch.setattr(native_task_module, "NativeSpatialTask", forbidden_task)
     with pytest.raises(DataPolicyError, match="WEIGHT_LINEAGE_UNVERIFIED"):
         _provisional_proposal_support(case, acknowledgment)
-    with pytest.raises(ValueError, match='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'):
+    with pytest.raises(DataPolicyError, match="WEIGHT_LINEAGE_UNVERIFIED"):
         native_spatial_task_from_case(case, access=access, tools=OPENING_TOOLS,
             research_support_acknowledgment=acknowledgment)
     assert case.brain_mask is None and item.review is None and item.review_status == "review_required"
     assert case.semantic_hash == original_hash and case.planning_hash == original_planning_hash
     assert planning_brain_support(case)[0] is None
-    with pytest.raises(ValueError, match='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'):
+    with pytest.raises(ValueError, match='ESSENTIAL_EVIDENCE_MISSING'):
         native_spatial_task_from_case(case, access=access, tools=OPENING_TOOLS)
 
 
@@ -355,7 +357,8 @@ def test_provisional_support_refuses_missing_or_promotional_declarations(change)
     if change != 'track':
         with pytest.raises(ValueError, match=expected[change]):
             _provisional_proposal_support(case, acknowledgment)
-    with pytest.raises(ValueError, match='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'):
+    # The acquired case reaches the same declaration check (admitted 2026-11-27).
+    with pytest.raises(ValueError, match=expected[change]):
         native_spatial_task_from_case(case, access=make_native_opening_task().case.access, tools=OPENING_TOOLS,
             track="inference_only" if change == "track" else "annotation_assisted",
             research_support_acknowledgment=acknowledgment)

@@ -78,10 +78,11 @@ class RewardTracker:
         graph = engine.scene.properties.get('vascularGraphV1')
         self.graph_evaluation = graph_evaluation
         if graph_evaluation:
-            from .surgical_planning_admission import source_classification
-            if (not graph or source_classification(engine.scene) != 'generated-engineering'
-                    or graph['coverage']['status'] != 'generated-control' or not graph['regions']):
-                raise ValueError('VASCULAR_GRAPH_RL_HOLD: generated anatomy and declared supply/drainage interfaces required')
+            # Any source class with a declared graph and supply/drainage regions;
+            # the graph's own coverage status (generated-control or
+            # partial-acquired) stays its provenance label.
+            if not graph or not graph['regions']:
+                raise ValueError('VASCULAR_GRAPH_RL_HOLD: a declared vascular graph with supply/drainage interfaces is required')
         elif graph is not None:
             raise ValueError('VASCULAR_GRAPH_RL_HOLD: this consumer requires the generated graph reward contract')
         if 'surgicalProcedurePolicyV1' in engine.scene.properties and procedure_evaluation is not True:

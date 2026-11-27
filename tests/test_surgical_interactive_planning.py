@@ -1,4 +1,8 @@
-"""Patient planning refuses; historical geometry parsing/inspection stays available."""
+"""Patient planning is admitted and labelled; historical geometry stays inspectable.
+
+Owner decision 2026-11-27: source class never refuses planning. Missing evidence
+is still reported by name.
+"""
 import copy
 from pathlib import Path
 
@@ -36,13 +40,18 @@ def acquired():
 @pytest.mark.parametrize('source', [{'kind': 'generated control'}, {'kind': 'generated control', 'adapter': None},
     {'kind': 'generated control', 'adapter': 'unsupported'}, {'kind': 'generated control', 'adapter': ['unsupported']}])
 def test_source_gate_does_not_promote_generated_anatomy(source):
+    from resectionlab.surgical_planning_admission import planning_admission
     labels = np.zeros((12, 12, 12), np.uint16); labels[5:7, 5:7, 5:7] = 1
     engine = SurgicalEngine(SurgicalScene(labels, np.eye(4),
         [{'id': 1, 'name': 'tumor', 'material': 'tumor', 'target': True}],
         source, {}))
+    # Admitted but still labelled acquired; the planner then needs the same
+    # declared task as any engineering source.
+    assert planning_admission(engine.scene)['sourceClass'] == 'patient-or-unverified'
     availability = interactive_planning_availability(engine)
     assert not availability['available'] and availability['defaults'] is None
-    with pytest.raises(ValueError, match='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'):
+    assert 'documented UCSF' in availability['reason']
+    with pytest.raises(ValueError, match='documented UCSF'):
         generate_interactive_approaches(engine, {})
 
 
@@ -67,14 +76,16 @@ def test_explicit_engineering_source_still_requires_supported_interactive_source
         generate_interactive_approaches(engine, {})
 
 
-def test_historical_patient_exposure_cannot_authorize_new_planning(acquired):
+def test_historical_patient_exposure_is_admitted_for_new_planning_with_its_label(acquired):
+    from resectionlab.surgical_planning_admission import planning_admission
     before = acquired.snapshot()
+    assert planning_admission(acquired.scene, acquired.protection)['sourceClass'] == 'patient-or-unverified'
     availability = interactive_planning_availability(acquired)
-    assert not availability['available']
-    assert availability['defaults'] is availability['evidence'] is None
-    assert 'PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING' in availability['reason']
-    with pytest.raises(ValueError, match='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'):
-        generate_interactive_approaches(acquired, _historical_constraints())
+    assert availability['available'] and availability['defaults'] is not None
+    assert availability['evidence']['sourcePatient'] == 'UCSF-PDGM-0007'
+    assert set(availability['evidence']['unknownEvidence']) >= {'vessels', 'functional'}
+    report = generate_interactive_approaches(acquired, _historical_constraints())
+    assert report['schema'] == 'resectionlab.interactive-source-approaches.v1' and 'reportSeal' in report
     assert acquired.snapshot() == before
 
 
@@ -98,12 +109,13 @@ def test_target_and_entry_must_use_actual_source_bounds(acquired):
 
 
 @pytest.mark.parametrize('required', [[], ['vessels'], ['functional', 'shift']])
-def test_required_evidence_requests_cannot_bypass_patient_admission(acquired, required):
+def test_required_evidence_requests_report_missing_patient_evidence_by_name(acquired, required):
     constraints = _historical_constraints()
     constraints['requiredEvidence'] = required
     before = acquired.snapshot()
-    with pytest.raises(ValueError, match='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'):
-        generate_interactive_approaches(acquired, constraints)
+    report = generate_interactive_approaches(acquired, constraints)
+    # Unsupplied anatomy is named, never treated as present or zero risk.
+    assert report.get('missingRequiredEvidence', []) == required
     assert acquired.snapshot() == before
 
 

@@ -145,7 +145,11 @@ class SurgicalRLEnv(gym.Env):
     def __init__(self,scene,*,protection=None,config=None,reward_config=None,render_mode=None,
             cranial_stages=None):
         from .surgical_planning_admission import require_planning_admission
-        require_planning_admission(scene, protection)
+        admitted = require_planning_admission(scene, protection)
+        # Any source class is admitted (owner decision 2026-11-27). Its class and
+        # train/evaluation role are recorded in every info for later exclusion.
+        self.source_class = admitted['sourceClass']
+        self.source_role = copy.deepcopy(admitted['sourceRole'])
         self.scene = scene
         self.config = config or RLConfig()
         self.reward_config = reward_config or RewardConfig()
@@ -184,17 +188,18 @@ class SurgicalRLEnv(gym.Env):
         target = np.asarray([i for i in target if int(i) not in self._protected],np.int64)
         self.initial_target_mm3 = len(target) * scene.voxel_mm3
         if not len(target): raise ValueError('No unprotected explicitly designated tumor is available')
+        self.target_basis = 'owned_target_labels'
         if self.procedure_enabled:
             from .surgical_scene import original_target_memberships
             memberships = original_target_memberships(scene)
             if memberships is not None:
                 target = np.unique(np.concatenate(list(memberships.values())))
-            elif (scene.source.get('evidenceClass') == 'generated-engineering' or
-                    scene.source.get('kind') in ('generated-control', 'engineering-control')):
+                self.target_basis = 'original_annotation'
+            else:
+                # Any source class: without bound original memberships the
+                # declared target labels are the denominator, and say so.
                 target = np.flatnonzero(np.isin(scene.labels,
                     [r['id'] for r in scene.regions if r.get('target')]))
-            else:
-                raise ValueError('UNSUPPORTED_PROCEDURE_PLAN: ORIGINAL_TARGET_MEMBERSHIPS_UNAVAILABLE')
             self.initial_target_mm3 = len(target) * scene.voxel_mm3
         self.target_center = scene.points(target).mean(axis=0)
         self.protection_id = semantic_digest({'report':self.protection.report(),'cells':self.protection.cells.tolist()})
@@ -202,9 +207,12 @@ class SurgicalRLEnv(gym.Env):
         self.action_contract = {'id':ACTION_CONTRACT,'radiusCapsMm':self._radius_caps.copy(),
             'radiusChanges':'withdrawn, inactive and released only'}
         if self.graph_evaluation:
+            coverage = (scene.properties.get('vascularGraphV1') or {}).get('coverage', {}).get('status')
+            generated_graph = self.source_class == 'generated-engineering' and coverage == 'generated-control'
             self.action_contract['vascularReward'] = {
                 'schema': 'resectionlab.generated-interface-deficit-reward.v1',
-                'source': 'declared generated graph; no acquired physiology',
+                'source': ('declared generated graph; no acquired physiology' if generated_graph else
+                    f'declared {coverage} graph on a {self.source_class} source; no acquired physiology'),
                 'mechanicsRevision': 2, 'aggregation': 'maximum cumulative seconds per interface type',
                 'scope': 'Engineering supply/drainage exposure; tissue perfusion and functional outcomes unknown.'}
         if self.procedure_enabled:
@@ -669,6 +677,8 @@ class SurgicalRLEnv(gym.Env):
 
     def _info(self,outcome=None,terms=None):
         return {'schema':self.schema,'environmentId':self.environment_id,'stateId':self.engine.state_id,
+            'source_class':self.source_class,'source_role':copy.deepcopy(self.source_role),
+            'target_basis':self.target_basis,
             'action_contract':copy.deepcopy(self.action_contract),
             'config':asdict(self.config),'reward_config':asdict(self.reward_config),
             'metrics':self.measurements.copy(),'reward_terms':dict(terms or {}),'total_reward':self.total_reward,

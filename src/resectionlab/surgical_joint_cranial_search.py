@@ -55,15 +55,19 @@ def assess_original_target_progress(engine, *, original_target_cells=None, credi
     if original_target_cells is None:
         if memberships is not None:
             target = frozenset(int(c) for cells in memberships.values() for c in cells)
-        elif (scene.source.get('evidenceClass') == 'generated-engineering' or
-                scene.source.get('kind') in ('generated-control', 'engineering-control')):
+        else:
+            # Any source class (owner decision 2026-11-27): without bound
+            # original memberships the declared target labels are the
+            # denominator. The basis names the source class it fell back on.
+            from .surgical_planning_admission import GENERATED, source_classification
             labels = [r['id'] for r in scene.regions if r.get('target')]
             target = frozenset(map(int, np.flatnonzero(np.isin(scene.labels, labels))))
-            basis = 'generated_owned_target_labels_fallback'
-        else:
-            return {'targetBasis': 'unavailable', 'originalTargetCells': None,
-                'residualOriginalTargetCells': None, 'originalTargetTreatmentFraction': None,
-                'completedProgressRequirement': False, 'reasons': ['ORIGINAL_TARGET_MEMBERSHIPS_UNAVAILABLE']}
+            if not target:
+                return {'targetBasis': 'unavailable', 'originalTargetCells': None,
+                    'residualOriginalTargetCells': None, 'originalTargetTreatmentFraction': None,
+                    'completedProgressRequirement': False, 'reasons': ['DECLARED_TARGET_UNAVAILABLE']}
+            basis = ('generated_owned_target_labels_fallback'
+                     if source_classification(scene) == GENERATED else 'owned_target_labels_fallback')
     else:
         target = frozenset(map(int, original_target_cells))
         if memberships is None:

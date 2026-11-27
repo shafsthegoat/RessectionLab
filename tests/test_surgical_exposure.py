@@ -84,17 +84,17 @@ def planning_intact(intact):
     return intact
 
 
-def test_generated_native_exposure_fixture_refuses_new_projection_before_work(intact, monkeypatch):
+def test_patient_style_native_exposure_fixture_is_admitted_and_projects_without_work(intact, monkeypatch):
+    # Owner decision 2026-11-27: the acquired-class fixture is admitted and labelled.
     from resectionlab.surgical_planning_admission import planning_admission
     engine, _ = intact; before = engine.snapshot()
     admission_result = planning_admission(engine.scene, engine.protection)
-    assert not admission_result['available'] and admission_result['sourceClass'] == 'patient-or-unverified'
+    assert admission_result['available'] and admission_result['sourceClass'] == 'patient-or-unverified'
     def forbidden(*_args, **_kwargs):
-        pytest.fail('Unsupported native fixture executed native or preview work')
+        pytest.fail('Exposure projection executed native or preview work')
     monkeypatch.setattr(SurgicalEngine, 'step', forbidden)
     monkeypatch.setattr(SurgicalEngine, 'preview', forbidden)
-    with pytest.raises(ValueError, match='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'):
-        exposure.project_exposure(engine)
+    assert exposure.project_exposure(engine) is not None
     assert engine.snapshot() == before
 
 

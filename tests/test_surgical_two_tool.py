@@ -36,19 +36,20 @@ def qualified(prepared):
     return case, engine, record, controls
 
 
-def test_patient_style_generated_native_fixture_cannot_authorize_new_two_tool_planning(prepared, monkeypatch):
+def test_patient_style_native_fixture_is_admitted_to_two_tool_planning_with_its_label(prepared, monkeypatch):
+    # Owner decision 2026-11-27: admitted and labelled; missing controls still refuse by name.
     from resectionlab.surgical_planning_admission import planning_admission
     _, engine, _, _ = prepared[0]
     before = engine.snapshot()
     admission_result = planning_admission(engine.scene, engine.protection)
-    assert not admission_result['available'] and admission_result['sourceClass'] == 'patient-or-unverified'
+    assert admission_result['available'] and admission_result['sourceClass'] == 'patient-or-unverified'
     available = defaults(engine)
-    assert not available['available'] and available['defaults'] is None
+    assert available['available'] and available['defaults'] is not None
     def forbidden(*_args, **_kwargs):
-        pytest.fail('Unsupported native fixture executed native or preview work')
+        pytest.fail('Missing two-tool controls executed native or preview work')
     monkeypatch.setattr(SurgicalEngine, 'step', forbidden)
     monkeypatch.setattr(SurgicalEngine, 'preview', forbidden)
-    with pytest.raises(ValueError, match='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'):
+    with pytest.raises(ValueError, match='TWO_TOOL_TASK: exact geometry, duration and progress controls required'):
         generate_comparison(engine, {})
     assert engine.snapshot() == before
 

@@ -109,8 +109,9 @@ def test_ipc_comparison_does_not_mutate_saved_desktop_timeline(tmp_path):
     try:
         hashes = [session._install_case(entry.case, entry.artifacts, _Request('loadCase'))['caseHash'] for entry in (before, after)]
         original = [thaw_json(session._get_case(key).artifacts) for key in hashes]
-        with pytest.raises(ValueError, match='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'):
-            call(session, 'compareSurgicalAnatomy', {'beforeCaseHash': hashes[0], 'afterCaseHash': hashes[1]})
+        # Owner decision 2026-11-27: the acquired pair is admitted and compared.
+        compared = call(session, 'compareSurgicalAnatomy', {'beforeCaseHash': hashes[0], 'afterCaseHash': hashes[1]})
+        assert {'before', 'after', 'delta', 'maskChanges', 'limitations'} <= set(compared)
         from resectionlab.surgical_anatomy_comparison import _bound_inputs
         _, _, changes, _ = _bound_inputs(before, after, ['vessels'])
         assert changes['vessels']['addedCells'] == 12 and changes['brain']['changedCells'] == 0

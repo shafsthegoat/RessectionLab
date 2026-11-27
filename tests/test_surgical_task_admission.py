@@ -83,7 +83,10 @@ def planning_prepared(prepared):
 
 
 @pytest.mark.parametrize('index', [0, 1])
-def test_native_source_contract_does_not_authorize_patient_style_planning(prepared, index):
+def test_native_source_contract_admits_patient_style_planning_with_its_label(prepared, index):
+    # Owner decision 2026-11-27: the acquired-class task is admitted and labelled;
+    # malformed planning controls still refuse before any native work.
+    from resectionlab.surgical_planning_admission import planning_admission
     case, e, record, _ = prepared[index]
     before = e.snapshot(); contract = record['taskAdmission']
     assert admission.validate_admission(e, contract)
@@ -92,10 +95,10 @@ def test_native_source_contract_does_not_authorize_patient_style_planning(prepar
     assert set(contract['sourceEvidence']['unknownEvidence']) == set(admission.UNKNOWN_ROLES)
     assert contract['sourceEvidence']['anatomy']['brain']['reviewStatus'] == 'unreviewed'
     assert contract['task']['inputContract'] == admission.INPUT_CONTRACT
+    assert planning_admission(e.scene, e.protection)['sourceClass'] == 'patient-or-unverified'
     available = interactive_planning_availability(e)
-    assert not available['available'] and available['defaults'] is None
-    assert 'PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING' in available['reason']
-    with pytest.raises(ValueError, match='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'):
+    assert available['available'] and available['defaults'] is not None and available['admission'] == contract
+    with pytest.raises(ValueError, match='target contains unsupported fields'):
         generate_interactive_approaches(e, {})
     assert e.snapshot() == before and case.semantic_hash == e.scene.source['caseHash']
 
@@ -254,16 +257,20 @@ def test_first_contact_refuses_earlier_constraints_with_correct_reason(obstacle,
     assert route is None and rejection['reason'] == reason
 
 
-def test_native_task_required_evidence_cannot_bypass_procedure_policy(prepared):
+def test_native_task_required_evidence_is_reported_missing_by_name(prepared):
     _, e, _, _ = prepared[0]
     before = e.snapshot()
-    with pytest.raises(ValueError, match='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'):
-        generate_interactive_approaches(e, {'requiredEvidence': ['functional']})
+    constraints = copy.deepcopy(interactive_planning_availability(e)['defaults'])
+    constraints['requiredEvidence'] = sorted({*constraints['requiredEvidence'], 'functional'})
+    report = generate_interactive_approaches(e, constraints)
+    # The admitted acquired source does not supply functional evidence: named, never assumed.
+    assert 'functional' in json.dumps(report.get('missingRequiredEvidence', report))
+    assert not report.get('routes')
     assert e.snapshot() == before
 
 
 
-def test_native_task_workspace_reopens_without_authorizing_new_planning(prepared, tmp_path):
+def test_native_task_workspace_reopens_and_admits_labelled_planning(prepared, tmp_path):
     from resectionlab.desktop_bridge import BridgeSession, _Request
     case, e, record, _ = prepared[0]
     before = e.snapshot()
@@ -273,10 +280,12 @@ def test_native_task_workspace_reopens_without_authorizing_new_planning(prepared
     try:
         loaded = call('loadCase', path=str(path))
         opened = call('surgicalRehearsal', caseHash=loaded['caseHash'], command='inspect')
-        assert not opened['interactivePlanningAvailability']['available']
-        assert opened['interactivePlanningAvailability']['defaults'] is None
-        assert 'PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING' in opened['interactivePlanningAvailability']['reason']
-        with pytest.raises(ValueError, match='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'):
+        # Admitted and labelled (2026-11-27); malformed controls still refuse.
+        assert opened['planningAdmission']['available']
+        assert opened['planningAdmission']['sourceClass'] == 'patient-or-unverified'
+        assert opened['interactivePlanningAvailability']['available']
+        assert opened['interactivePlanningAvailability']['defaults'] is not None
+        with pytest.raises(ValueError, match='target contains unsupported fields'):
             call('surgicalRehearsal', caseHash=loaded['caseHash'], command='generateApproaches',
                 expectedStateId=opened['view']['stateId'], constraints={}, acknowledgeResearchUnknowns=True)
         saved = tmp_path/'saved.ressectionlab'; call('saveCase', caseHash=loaded['caseHash'], path=str(saved))

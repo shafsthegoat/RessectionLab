@@ -1,5 +1,8 @@
-"""Patient-like source cannot opt out of anatomical planning safeguards.
+"""Every source class reaches planning under the same structural requirements.
 
+Owner decision 2026-11-27: planning, search and the RL environment operate on
+any reconstruction, including acquired patient anatomy. Source class is a
+reported label, never a refusal; provenance tampering is still refused.
 Tiny generated arrays test provenance routing, not acquired anatomy or outcomes.
 """
 import copy
@@ -83,13 +86,41 @@ def generators(engine):
     }
 
 
+class _ReachedNative(Exception):
+    pass
+
+
+def _outcome(call):
+    """Comparable result of one public call with native work intercepted.
+
+    A refusal compares by its code (text before the first colon), so a task
+    contract that names a different missing structural field still matches.
+    """
+    try:
+        result = call()
+    except _ReachedNative:
+        return ('native-work',)
+    except Exception as error:
+        return ('raised', type(error).__name__, str(error).split(':')[0])
+    return ('returned', type(result).__name__)
+
+
+def _forbid_native(monkeypatch):
+    def reached(*args, **kwargs):
+        raise _ReachedNative()
+    monkeypatch.setattr(SurgicalEngine, 'preview', reached)
+    monkeypatch.setattr(SurgicalEngine, 'step', reached)
+    return reached
+
+
 @pytest.mark.parametrize('kind', SOURCE_KINDS)
-def test_missing_procedure_cannot_fall_back_to_legacy_rl(kind):
+def test_missing_procedure_falls_back_to_labelled_legacy_rl_for_any_source(kind):
     from resectionlab.surgical_rl_env import RLConfig, SurgicalRLEnv
-    scene = source(kind)
-    with pytest.raises(ValueError, match='PROCEDURE'):
-        # Disabling the old brainstem guard must not disable source admission.
-        SurgicalRLEnv(scene, config=RLConfig(require_critical_coverage=False))
+    env = SurgicalRLEnv(source(kind), config=RLConfig(require_critical_coverage=False))
+    _, info = env.reset(seed=5)
+    assert not env.procedure_enabled and not env.evaluation_only
+    assert info['source_class'] == env.source_class == 'patient-or-unverified'
+    assert info['source_role']['verified'] is False and info['target_basis'] == 'owned_target_labels'
 
 
 @pytest.mark.parametrize('kind', SOURCE_KINDS)
@@ -97,15 +128,18 @@ def test_missing_procedure_cannot_fall_back_to_legacy_rl(kind):
                                   'preparation', 'preparation-suggest', 'sectors', 'sector-macro',
                                   'staged', 'rescue', 'two-tool', 'full-director', 'full-slice',
                                   'precision-reentry', 'recover-cusa'))
-def test_all_public_generators_refuse_before_native_work_or_state_change(monkeypatch, kind, name):
+def test_all_public_generators_treat_every_source_class_like_generated(monkeypatch, kind, name):
+    from resectionlab.surgical_planning_admission import REQUIRED, planning_admission
     engine = SurgicalEngine(source(kind))
+    generated = SurgicalEngine(source('direct-generated'))
+    admission = planning_admission(engine.scene, engine.protection)
+    assert admission['available'] and admission['sourceClass'] == 'patient-or-unverified'
+    assert planning_admission(generated.scene)['sourceClass'] == 'generated-engineering'
     before = copy.deepcopy(engine.snapshot())
-    def forbidden(*args, **kwargs):
-        pytest.fail('Unqualified source reached native planning work')
-    monkeypatch.setattr(SurgicalEngine, 'preview', forbidden)
-    monkeypatch.setattr(SurgicalEngine, 'step', forbidden)
-    with pytest.raises(ValueError, match='PROCEDURE'):
-        generators(engine)[name]()
+    _forbid_native(monkeypatch)
+    actual, expected = _outcome(generators(engine)[name]), _outcome(generators(generated)[name])
+    # Only the structural inputs decide; the class never changes the result.
+    assert actual == expected and REQUIRED not in str(actual)
     assert engine.snapshot() == before
 
 
@@ -125,39 +159,53 @@ def test_explicit_generated_engineering_retains_legacy_rl(kind):
     env.reset(seed=5)
     assert not env.procedure_enabled and not env.evaluation_only
     assert env.engine.scene.identity == env.scene.identity
+    assert env.source_class == 'generated-engineering' and env.source_role['role'] == 'GENERATED_CONTROL'
 
 
 @pytest.mark.parametrize('kind', ('observed-case', 'generated-metadata-spoof', 'mixed-source-case'))
-def test_native_case_adapter_cannot_omit_procedure_policy_to_bypass_boundary(monkeypatch, kind):
-    from resectionlab.native_spatial_task import native_spatial_task_from_case
+def test_native_case_adapter_admits_acquired_case_with_acquired_label(monkeypatch, kind):
+    from resectionlab.native_spatial_task import (ACQUIRED_LEGACY_ADMISSION_SCHEMA,
+        generated_legacy_planning_evidence, native_spatial_task_from_case)
     from resectionlab import structural_evidence
-    def forbidden(*args, **kwargs):
-        pytest.fail('Unqualified native case reached anatomical support preparation')
-    monkeypatch.setattr(structural_evidence, 'planning_brain_support', forbidden)
-    with pytest.raises(ValueError, match='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'):
-        native_spatial_task_from_case(source(kind, as_case=True), access=None, tools=())
+    case = source(kind, as_case=True)
+    evidence = generated_legacy_planning_evidence(case)
+    # Generated metadata cannot relabel an observed reference as generated.
+    assert evidence['schema'] == ACQUIRED_LEGACY_ADMISSION_SCHEMA
+    assert evidence['sourceClass'] == 'patient-or-unverified' and evidence['sourceCaseHash'] == case.semantic_hash
+    reached = []
+    def support(*args, **kwargs):
+        reached.append(True)
+        return None, {}
+    monkeypatch.setattr(structural_evidence, 'planning_brain_support', support)
+    with pytest.raises(ValueError, match='ESSENTIAL_EVIDENCE_MISSING'):
+        native_spatial_task_from_case(case, access=None, tools=())
+    assert reached == [True]
 
 
 @pytest.mark.parametrize('kind', SOURCE_KINDS)
-def test_public_projection_cannot_erase_patient_provenance_before_planning(kind):
+def test_public_projection_treats_patient_provenance_like_generated(monkeypatch, kind):
     from resectionlab.surgical_planning_observation import project_observation
     engine = SurgicalEngine(source(kind)); before = engine.snapshot()
-    with pytest.raises(ValueError, match='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'):
-        project_observation(engine, {}, [])
+    generated = SurgicalEngine(source('direct-generated'))
+    _forbid_native(monkeypatch)
+    actual = _outcome(lambda: project_observation(engine, {}, []))
+    assert actual == _outcome(lambda: project_observation(generated, {}, []))
+    assert actual == ('raised', 'ValueError', 'PLANNING_OBSERVATION')
     assert engine.snapshot() == before
 
 
 @pytest.mark.parametrize('track', ('annotation_assisted', 'inference_only'))
-def test_direct_native_constructor_refuses_unqualified_anatomical_tracks_before_engine(monkeypatch, track):
+def test_direct_native_constructor_admits_an_unrecorded_source_as_unverified(track):
+    # Owner decision 2026-11-27: a direct source without a CaseData record is
+    # admitted; it cannot prove a generated class, so it is labelled unverified.
     from resectionlab import native_spatial_task
     from test_patient_planning_admission import fixture_contract
     generated, _ = fixture_contract()
     source = replace(generated, track=track)
-    def forbidden(*args, **kwargs):
-        pytest.fail('Unqualified direct native task reached physical engine initialization')
-    monkeypatch.setattr(native_spatial_task, 'NativeResectionEngine', forbidden)
-    with pytest.raises(ValueError, match='PROCEDURE'):
-        native_spatial_task.NativeSpatialTask(source, max_steps=2)
+    assert 'generatedLegacyPlanningEvidence' not in source.support_provenance
+    task = native_spatial_task.NativeSpatialTask(source, max_steps=2)
+    assert task.source_class == 'patient-or-unverified'
+    assert task.observation().action_ids
 
 
 def test_generated_case_native_adapter_retains_exact_generated_legacy_evidence():
@@ -174,14 +222,35 @@ def test_generated_case_native_adapter_retains_exact_generated_legacy_evidence()
     evidence = task.case.support_provenance['generatedLegacyPlanningEvidence']
     assert dict(evidence) == generated_legacy_planning_evidence(generated)
     assert evidence['sourceCaseHash'] == generated.semantic_hash
+    assert evidence['schema'] == 'resectionlab.generated-native-legacy-admission.v1'
+    assert evidence['provenance'] == 'Explicit generated-source legacy geometry task; no patient qualification.'
     assert task.case.track == 'annotation_assisted' and task.observation().action_ids
     assert not task.supported_procedure_policy
 
 
+def test_acquired_case_native_adapter_builds_the_same_task_with_an_acquired_label():
+    from resectionlab.native_spatial_task import (
+        OPENING_TOOLS, make_native_opening_task, native_spatial_task_from_case,
+    )
+    from test_native_spatial_task import annotated_source
+    acquired = annotated_source()
+    generated = replace(acquired, source_refs=(SourceRef('generated', 'synthetic://native-boundary',
+        provenance='simulated'),), metadata={**dict(acquired.metadata), 'generated': True, 'is_synthetic': True})
+    access = make_native_opening_task().case.access
+    task = native_spatial_task_from_case(acquired, access=access, tools=OPENING_TOOLS)
+    reference = native_spatial_task_from_case(generated, access=access, tools=OPENING_TOOLS)
+    evidence = task.case.support_provenance['generatedLegacyPlanningEvidence']
+    assert evidence['sourceClass'] == 'patient-or-unverified' and evidence['sourceCaseHash'] == acquired.semantic_hash
+    # Action ids embed the source hash; the inventory itself is the same size.
+    assert len(task.observation().action_ids) == len(reference.observation().action_ids) > 0
+
+
 @pytest.mark.parametrize('track', ('annotation_assisted', 'inference_only', 'synthetic_scan'))
 @pytest.mark.parametrize('marker', ('public-manifest', 'native-adapter', 'patient-key', 'acquired-class'))
-def test_native_acquired_markers_win_over_generated_legacy_declaration(track, marker):
-    from resectionlab.native_spatial_task import NativeSpatialTask, generated_legacy_planning_evidence
+def test_native_acquired_markers_win_over_generated_label_but_admit_acquired_evidence(track, marker):
+    from resectionlab.core import array_digest
+    from resectionlab.native_spatial_task import (ACQUIRED_LEGACY_ADMISSION_SCHEMA, NativeSpatialTask,
+        generated_legacy_planning_evidence)
     from test_patient_planning_admission import fixture_contract
     native, _ = fixture_contract()
     evidence = generated_legacy_planning_evidence(source('generated-case', as_case=True))
@@ -191,10 +260,18 @@ def test_native_acquired_markers_win_over_generated_legacy_declaration(track, ma
         'patient-key': {'patient': 'routing-probe'},
         'acquired-class': {'procedurePolicySourceClass': 'acquired-or-unknown'},
     }[marker]
-    native = replace(native, track=track, support_provenance={
+    mislabelled = replace(native, track=track, support_provenance={
         **provenance, 'generatedLegacyPlanningEvidence': evidence})
-    with pytest.raises(ValueError, match='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING: acquired native source'):
-        NativeSpatialTask(native, max_steps=2)
+    with pytest.raises(ValueError, match='NATIVE_LEGACY_SOURCE_EVIDENCE_INVALID: acquired source markers'):
+        NativeSpatialTask(mislabelled, max_steps=2)
+    acquired = {**evidence, 'schema': ACQUIRED_LEGACY_ADMISSION_SCHEMA, 'sourceClass': 'patient-or-unverified',
+        'sourceImageHash': array_digest(native.structural_intensity),
+        'sourceAffineHash': array_digest(native.affine_ras_mm),
+        'provenance': 'Acquired source bound to this exact image and frame'}
+    admitted = replace(native, track=track, support_provenance={**provenance, 'generatedLegacyPlanningEvidence': acquired})
+    task = NativeSpatialTask(admitted, max_steps=2)
+    assert task.source_class == 'patient-or-unverified'
+    assert task.case.support_provenance['generatedLegacyPlanningEvidence']['sourceClass'] == 'patient-or-unverified'
 
 
 def test_native_cannot_borrow_unrelated_generated_source_declaration():
@@ -204,56 +281,54 @@ def test_native_cannot_borrow_unrelated_generated_source_declaration():
     unrelated = generated_legacy_planning_evidence(source('generated-case', as_case=True))
     native = replace(native, track='annotation_assisted', support_provenance={
         'generatedLegacyPlanningEvidence': unrelated})
-    with pytest.raises(ValueError, match='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'):
+    with pytest.raises(ValueError, match='NATIVE_LEGACY_SOURCE_EVIDENCE_INVALID'):
         NativeSpatialTask(native, max_steps=2)
 
 
 @pytest.mark.parametrize('kind', SOURCE_KINDS)
 @pytest.mark.parametrize('search', ('sequence', 'joint'))
-def test_direct_checked_searches_refuse_before_proposals_or_physical_work(monkeypatch, kind, search):
+def test_direct_checked_searches_treat_every_source_class_like_generated(monkeypatch, kind, search):
     from resectionlab.surgical_sequence_search import checked_sequence_search
     from resectionlab.surgical_joint_cranial_search import checked_joint_sequence_search
     engine = SurgicalEngine(source(kind)); before = engine.snapshot()
-    def forbidden(*args, **kwargs):
-        pytest.fail('Unqualified direct search reached proposals or native work')
-    monkeypatch.setattr(SurgicalEngine, 'step', forbidden)
-    monkeypatch.setattr(SurgicalEngine, 'preview', forbidden)
-    with pytest.raises(ValueError, match='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'):
+    generated = SurgicalEngine(source('direct-generated'))
+    reached = _forbid_native(monkeypatch)
+    def run(target):
         if search == 'sequence':
-            checked_sequence_search(engine, {}, propose=forbidden, motion=forbidden,
+            return lambda: checked_sequence_search(target, {}, propose=reached, motion=reached,
                 hand='left', radius=1., limits=None, meter=None)
-        else:
-            checked_joint_sequence_search(engine, propose=forbidden, limits=None, goal=None)
+        return lambda: checked_joint_sequence_search(target, propose=reached, limits=None, goal=None)
+    assert _outcome(run(engine)) == _outcome(run(generated))
     assert engine.snapshot() == before
 
 
 @pytest.mark.parametrize('kind', SOURCE_KINDS)
 @pytest.mark.parametrize('patient_position', (0, 1))
-def test_forest_admits_all_sources_before_first_root_can_execute(monkeypatch, kind, patient_position):
+def test_forest_admits_all_sources_and_reaches_the_same_structural_check(monkeypatch, kind, patient_position):
     from resectionlab.surgical_joint_cranial_forest import OpeningComparisonBudget, search_opening_forest
-    generated = SurgicalEngine(source('direct-generated'))
-    patient = SurgicalEngine(source(kind))
-    engines = [generated]; engines.insert(patient_position, patient)
-    before = [e.snapshot() for e in engines]
-    def forbidden(*args, **kwargs):
-        pytest.fail('Unqualified forest reached native work')
-    monkeypatch.setattr(SurgicalEngine, 'step', forbidden)
-    monkeypatch.setattr(SurgicalEngine, 'preview', forbidden)
-    budget = OpeningComparisonBudget(10, 10., export_reserve=0)
-    with pytest.raises(ValueError, match='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'):
-        search_opening_forest([{'engine': e} for e in engines], budget=budget)
-    assert [e.snapshot() for e in engines] == before
-    assert budget.calls == 0
+    def forest(patient_kind):
+        generated = SurgicalEngine(source('direct-generated'))
+        patient = SurgicalEngine(source(patient_kind))
+        engines = [generated]; engines.insert(patient_position, patient)
+        before = [e.snapshot() for e in engines]
+        budget = OpeningComparisonBudget(10, 10., export_reserve=0)
+        result = _outcome(lambda: search_opening_forest([{'engine': e} for e in engines], budget=budget))
+        assert [e.snapshot() for e in engines] == before and budget.calls == 0
+        return result
+    _forbid_native(monkeypatch)
+    assert forest(kind) == forest('direct-generated')
 
 
 @pytest.mark.parametrize('mutation', ('erase', 'replace'))
-def test_case_provenance_proof_cannot_be_erased_or_replaced_to_authorize_patient(mutation):
+def test_case_provenance_proof_cannot_be_erased_or_replaced_to_relabel_patient(mutation):
     from resectionlab.surgical_planning_admission import planning_admission
     scene = source('generated-metadata-spoof')
     if mutation == 'erase':
         del scene._planning_source_evidence
         del scene._planning_source_proof
-        assert not planning_admission(scene)['available']
+        # Admitted, and erasing the proof cannot promote the label.
+        result = planning_admission(scene)
+        assert result['available'] and result['sourceClass'] == 'patient-or-unverified'
     else:
         old = scene._planning_source_evidence
         scene._planning_source_evidence = ('generated-engineering', *old[1:])
