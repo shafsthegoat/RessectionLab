@@ -26,7 +26,7 @@ import nibabel as nib
 import numpy as np
 from scipy import ndimage as ndi
 
-from resectionlab.data_root import ROOT_ENV, atomic_json, checked_root, safe_path
+from resectionlab.data_root import ROOT_ENV, atomic_json, checked_root, safe_path, sha256_file
 from resectionlab.vascular_parity import agreement, betti, dice, floating_components
 from resectionlab.vessel_ensemble import (
     COMBINERS, ConnectedAddition, SoftSegmentation, average, combine, named_label_map, require_same_grid,
@@ -51,6 +51,7 @@ PACKAGE_METADATA = ('METADATA', 'LICENSE', 'LICENSE.txt', 'LICENSE.md', 'COPYING
                     'top_level.txt', 'RECORD')
 BLOCK = 8 * 1024**2
 READ_BUFFER = 64 * 1024**2
+SCRATCH = '.network-slices.tmp'   # beside a stage's output while a large scan is predicted
 
 
 class HashingReader:
@@ -210,6 +211,54 @@ CASES = {
 }
 PHASE = 'qc/medivis-parity-20261125/phase2-segmentation'
 WORK = f'{PHASE}/work'
+# Any other prepared study (registered with --study) keeps its results here, apart from the parity evidence.
+STORE = 'cache/vessel-ensembles'
+RULE = Path(__file__).resolve().parents[1] / 'manifests' / 'vascular-ensemble-rule.json'
+
+
+def kept_folder(root, case):
+    """Where a case's retained team and ensemble folders live."""
+    return safe_path(root, f"{CASES[case]['store']}/cases/{case}" if CASES[case].get('store') else f'{PHASE}/cases/{case}')
+
+
+def made_from(case):
+    """What a result of this case must have been made from: the image path, and for a registered study the
+    content hash and series of that file."""
+    return {key: CASES[case][key] for key in ('image', 'sha256', 'series') if CASES[case].get(key)}
+
+
+def require_made_from(record_path, case):
+    """Refuse a kept or unfinished result that was made from another file than the case's: a study folder of the
+    same name elsewhere, another series of the study, or a study prepared again from a new file. A record is held
+    to the hash and series when it has them and to the image path otherwise; an ensemble written before it
+    recorded its source is held to the team predictions kept beside it."""
+    record_path = Path(record_path)
+    record = json.loads(record_path.read_text())
+    wanted = made_from(case)
+
+    def same_source(path, made):
+        keys = [key for key in ('sha256', 'series') if key in wanted and key in made] or ['image']
+        for key in keys:
+            if made.get(key) != wanted[key]:
+                raise SystemExit(f'{path} was made from another file ({key} {made.get(key)}, from {made.get("image")}) than '
+                                 f'{case} now names ({wanted[key]}, {wanted["image"]}). Results are kept by study folder '
+                                 'name: move the old folder aside, or rename one study folder, and run again')
+
+    if 'image' not in record:
+        teams = [record_path.parents[1] / team / 'predict.json' for team in record.get('teams', [])]
+        teams = [path for path in teams if path.is_file()]
+        if not teams and CASES[case].get('store'):
+            raise SystemExit(f'{record_path} does not say which file it was made from; move it aside and run again')
+        for path in teams:
+            same_source(path, json.loads(path.read_text()))
+        return record
+    same_source(record_path, record)
+    return record
+
+
+def work_folder(root, case):
+    """Where a case's rebuildable work files live while it runs."""
+    return safe_path(root, f"{CASES[case]['store']}/work/{case}" if CASES[case].get('store') else f'{WORK}/{case}')
 UZH_MODELS = 'opt/app/trained_models/'
 UZH_PARTS = {
     'AM': 'Dataset525_topbrain_AM_case_01_27_wReg/Tr_rot30_DiffClusterSM_TopK_ceW_TopBrainAM_13fgCls_cowPT_LRx0p1__nnUNetPlans__3d_fullres',
@@ -374,8 +423,8 @@ class NpzChannels:
 
 def case_folder(root, case, name):
     """A team or ensemble folder: the work copy while it exists, otherwise the retained copy."""
-    work = safe_path(root, f'{WORK}/{case}/{name}')
-    return work if work.is_dir() else safe_path(root, f'{PHASE}/cases/{case}/{name}')
+    work = work_folder(root, case) / name
+    return work if work.is_dir() else kept_folder(root, case) / name
 
 
 def source_image(root, case):
@@ -507,21 +556,76 @@ def trilinear_input(predictor, channels_czyx, spacing):
     return torch.from_numpy(np.stack([trilinear(channel, shape) for channel in data])), properties
 
 
-def source_channels(predictor, logits, properties, style):
-    """Softmax in network space, then each channel resampled to the image, uncropped (background 1) and
-    transposed back, in SimpleITK (z, y, x) order. Resampling probabilities rather than logits keeps memory to
-    one channel at a time; it can move the argmax only where classes are nearly tied."""
-    import torch
+class NetworkProbabilities:
+    """Network-space class probabilities held in memory: the logits, softmaxed in place."""
+
+    buffer = 'memory'
+
+    def __init__(self, logits):
+        import torch
+        for start in range(0, logits.shape[1], 8):
+            logits[:, start:start + 8] = torch.softmax(logits[:, start:start + 8].float(), 0).half()
+        self.values, self.heads = logits, int(logits.shape[0])
+
+    def channel(self, index):
+        return self.values[index].float().numpy()
+
+    def close(self):
+        self.values = None
+
+
+class SliceProbabilities:
+    """Network-space class probabilities of a scan too large for memory: a scratch file written one finished
+    slice at a time (every class of that slice together) and read back one class at a time, with plain file
+    reads because memory maps crawl on the external exFAT disk."""
+
+    buffer = 'drive'
+
+    def __init__(self, path, heads, shape):
+        self.path, self.heads, self.shape, self.written = Path(path), int(heads), tuple(int(v) for v in shape), 0
+        self.plane = self.shape[1] * self.shape[2] * 2
+        self.stream = self.path.open('wb', buffering=READ_BUFFER)
+
+    def write(self, classes):
+        """One slice: float16 (classes, y, x)."""
+        classes = np.ascontiguousarray(classes, np.float16)
+        if classes.shape != (self.heads, *self.shape[1:]):
+            raise ValueError('Slice shape differs from the scratch file')
+        self.stream.write(classes.tobytes())
+        self.written += 1
+
+    def finish(self):
+        self.stream.close()
+        if self.written != self.shape[0]:
+            raise ValueError(f'{self.path.name}: wrote {self.written} of {self.shape[0]} slices')
+        return self
+
+    def channel(self, index):
+        values = np.empty(self.shape, np.float32)
+        with self.path.open('rb', buffering=READ_BUFFER) as stream:
+            for position in range(self.shape[0]):
+                stream.seek((position * self.heads + index) * self.plane)
+                values[position] = np.fromfile(stream, np.float16, self.plane // 2).reshape(self.shape[1:])
+        return values
+
+    def close(self):
+        if not self.stream.closed:
+            self.stream.close()
+        self.path.unlink(missing_ok=True)
+
+
+def source_channels(predictor, probabilities, properties, style):
+    """Each network-space class probability resampled to the image, uncropped (background 1) and transposed
+    back, in SimpleITK (z, y, x) order. Resampling probabilities rather than logits keeps memory to one
+    channel at a time; it can move the argmax only where classes are nearly tied."""
     from acvl_utils.cropping_and_padding.bounding_boxes import bounding_box_to_slice
     plans, configuration = predictor.plans_manager, predictor.configuration_manager
-    for start in range(0, logits.shape[1], 8):
-        logits[:, start:start + 8] = torch.softmax(logits[:, start:start + 8].float(), 0).half()
     cropped = tuple(int(v) for v in properties['shape_after_cropping_and_before_resampling'])
     spacing = [properties['spacing'][i] for i in plans.transpose_forward]
     current = configuration.spacing if len(configuration.spacing) == len(cropped) else [spacing[0], *configuration.spacing]
     slicer = bounding_box_to_slice(properties['bbox_used_for_cropping'])
-    for channel in range(logits.shape[0]):
-        values = logits[channel].float().numpy()
+    for channel in range(probabilities.heads):
+        values = probabilities.channel(channel)
         if style == 'nnunet':
             values = configuration.resampling_fn_probabilities(values[None], cropped, current, spacing)[0]
         else:
@@ -531,9 +635,10 @@ def source_channels(predictor, logits, properties, style):
         yield full.transpose(plans.transpose_backward)
 
 
-def predict_logits(predictor, data):
-    """nnU-Net's Gaussian sliding window with every checkpoint evaluated per tile and the mean added to one shared
-    float16 buffer. nnU-Net sums whole-volume fold predictions instead, which needs a second volume of logits."""
+def sliding_window(predictor, data):
+    """nnU-Net's Gaussian sliding window with every checkpoint evaluated per tile. Returns the output heads, the
+    padded shape, the slices that undo the padding, the tile weight, and the tiles in nnU-Net's order as
+    (slicer, float16 mean logits times the weight)."""
     import copy
     import torch
     from acvl_utils.cropping_and_padding.padding import pad_nd_image
@@ -549,46 +654,139 @@ def predict_logits(predictor, data):
     predictor.list_of_parameters = []
     patch = tuple(predictor.configuration_manager.patch_size)
     padded, revert = pad_nd_image(data, patch, 'constant', {'value': 0}, True, None)
-    logits = torch.zeros((predictor.label_manager.num_segmentation_heads, *padded.shape[1:]), dtype=torch.half)
-    weights = torch.zeros(padded.shape[1:], dtype=torch.half)
     gaussian = compute_gaussian(patch, sigma_scale=1. / 8, value_scaling_factor=10, device=torch.device('cpu'))
+
+    def tiles():
+        with torch.inference_mode():
+            for slicer in predictor._internal_get_sliding_window_slicers(padded.shape[1:]):
+                tile = padded[slicer][None].to(predictor.device)
+                total = None
+                for network in networks:
+                    output = network(tile)[0].float()
+                    if not torch.isfinite(output).all():
+                        raise RuntimeError(f'Non-finite logits from the network at tile {slicer}')
+                    total = output if total is None else total + output
+                yield slicer, (total / len(networks)).cpu().half() * gaussian
+
+    return predictor.label_manager.num_segmentation_heads, tuple(padded.shape[1:]), revert, gaussian, tiles()
+
+
+def predict_logits(predictor, data):
+    """Every tile's mean over the checkpoints added to one shared float16 buffer in memory. nnU-Net sums
+    whole-volume fold predictions instead, which needs a second volume of logits."""
+    import torch
+    heads, shape, revert, gaussian, tiles = sliding_window(predictor, data)
+    logits = torch.zeros((heads, *shape), dtype=torch.half)
+    weights = torch.zeros(shape, dtype=torch.half)
     with torch.inference_mode():
-        for slicer in predictor._internal_get_sliding_window_slicers(padded.shape[1:]):
-            tile = padded[slicer][None].to(predictor.device)
-            total = None
-            for network in networks:
-                output = network(tile)[0].float()
-                if not torch.isfinite(output).all():
-                    raise RuntimeError(f'Non-finite logits from the network at tile {slicer}')
-                total = output if total is None else total + output
-            logits[slicer] += (total / len(networks)).cpu().half() * gaussian
+        for slicer, weighted in tiles:
+            logits[slicer] += weighted
             weights[slicer[1:]] += gaussian
         logits /= weights
         if not torch.isfinite(logits).all():
             raise RuntimeError('Non-finite logits in float16 accumulation')
-    del networks
     return logits[(slice(None), *revert[1:])]
+
+
+def predict_banded(predictor, data, scratch):
+    """The same accumulation for a scan whose logits do not fit in memory. Tiles arrive ordered along the first
+    axis, so only one patch depth of logits is held: once the tiles move on, the slices behind them are complete
+    and are divided by their weights, checked, softmaxed and written to `scratch`. The arithmetic per voxel, and
+    so every value, is the one `predict_logits` and `NetworkProbabilities` give."""
+    import torch
+    heads, shape, revert, gaussian, tiles = sliding_window(predictor, data)
+    depth = gaussian.shape[0]
+    kept = [range(*part.indices(size)) for part, size in zip(revert[1:], shape)]
+    inside = (slice(None), *revert[2:])
+    band = torch.zeros((heads, depth, *shape[1:]), dtype=torch.half)
+    weights = torch.zeros((depth, *shape[1:]), dtype=torch.half)
+    store = SliceProbabilities(scratch, heads, [len(axis) for axis in kept])
+    base = None
+
+    def finish(count):
+        """Write the first `count` slices of the band, then move the rest to its start."""
+        for start in range(0, count, 8):
+            stop = min(start + 8, count)
+            part = band[:, start:stop] / weights[start:stop]
+            if not torch.isfinite(part).all():
+                raise RuntimeError('Non-finite logits in float16 accumulation')
+            part = torch.softmax(part.float(), 0).half()
+            for offset in range(stop - start):
+                if base + start + offset in kept[0]:
+                    store.write(part[:, offset][inside].numpy())
+        for buffer in (*band, weights):
+            buffer[:depth - count] = buffer[count:].clone()
+            buffer[depth - count:] = 0
+
+    try:
+        with torch.inference_mode():
+            for slicer, weighted in tiles:
+                first = slicer[1].start
+                if first < (base or 0) or (base is None and first) or slicer[1].stop - first != depth:
+                    raise RuntimeError('Tiles are not ordered along the first axis')
+                base = 0 if base is None else base
+                if first > base:
+                    finish(first - base)
+                    base = first
+                local = (slicer[0], slice(0, depth), *slicer[2:])
+                band[local] += weighted
+                weights[local[1:]] += gaussian
+            if base is None or base + depth != shape[0]:
+                raise RuntimeError('The tiles do not reach the end of the first axis')
+            finish(depth)
+        return store.finish()
+    except BaseException:
+        store.close()
+        raise
+
+
+def memory_buffer_limit():
+    """The largest float16 logit buffer kept in memory: two fifths of the machine's physical memory."""
+    return int(os.sysconf('SC_PAGE_SIZE') * os.sysconf('SC_PHYS_PAGES') * 0.4)
+
+
+def network_probabilities(predictor, data, scratch, limit=None, band_limit=None):
+    """Softmaxed network-space probabilities: in memory when the logits fit under `limit` bytes, banded through
+    a scratch file otherwise. Both give the same values. A band that would not fit either is refused
+    (`band_limit` raises that bound, for tests)."""
+    patch = tuple(predictor.configuration_manager.patch_size)
+    shape = [max(size, edge) for size, edge in zip(data.shape[1:], patch)]
+    if len(patch) != len(shape):
+        raise ValueError('Only 3D configurations are run')
+    heads, limit = predictor.label_manager.num_segmentation_heads, memory_buffer_limit() if limit is None else limit
+    if 2 * heads * int(np.prod(shape)) <= limit:
+        return NetworkProbabilities(predict_logits(predictor, data))
+    band = 2 * heads * patch[0] * shape[1] * shape[2]
+    if band > max(limit, band_limit or 0):
+        raise SystemExit(f'This scan needs {band / 2**30:.1f} GiB for one band of logits ({heads} classes, {patch[0]} x '
+                         f'{shape[1]} x {shape[2]}) and this machine allows {limit / 2**30:.1f} GiB: crop the scan in '
+                         'plane or use a machine with more memory')
+    return predict_banded(predictor, data, scratch)
 
 
 def run_stage(predictor, data, properties, style, back, output, keep=None):
     """Predict one stage, write its source-order class probabilities, and return any kept (z, y, x) channel."""
     import torch
     started = time.monotonic()
-    logits = predict_logits(predictor, data)
+    scratch = Path(output).with_name(Path(output).stem + SCRATCH)
+    probabilities = network_probabilities(predictor, data, scratch)
     seconds = time.monotonic() - started
     mps = int(torch.mps.driver_allocated_memory()) if predictor.device.type == 'mps' else None
     del data
     kept, writer = None, None
-    for channel, values in enumerate(source_channels(predictor, logits, properties, style)):
-        if channel == keep:
-            kept = values.copy()
-        oriented = to_source(values, back)
-        writer = writer or NpyWriter(output, (logits.shape[0], *oriented.shape))
-        writer.write(oriented)
-    del logits
+    try:
+        for channel, values in enumerate(source_channels(predictor, probabilities, properties, style)):
+            if channel == keep:
+                kept = values.copy()
+            oriented = to_source(values, back)
+            writer = writer or NpyWriter(output, (probabilities.heads, *oriented.shape))
+            writer.write(oriented)
+    finally:
+        probabilities.close()
     if predictor.device.type == 'mps':
         torch.mps.empty_cache()
-    return writer.close(), kept, {'network_seconds': round(seconds, 1), 'mps_driver_bytes_after_network': mps}
+    return writer.close(), kept, {'network_seconds': round(seconds, 1), 'mps_driver_bytes_after_network': mps,
+                                  'logit_buffer': probabilities.buffer}
 
 
 def argmax_labels(probabilities, labels):
@@ -757,12 +955,14 @@ def predict(root, team, case, device='mps'):
     modality = CASES[case]['modality']
     spec = TEAMS[team][modality]
     rootfs = verified_rootfs(root, spec['image'])
-    work = safe_path(root, f'{WORK}/{case}/{team}')
+    work = work_folder(root, case) / team
     work.mkdir(parents=True, exist_ok=True)
     for stale in ('predict.json', 'labels.nii.gz', 'probabilities.npy'):
         (work / stale).unlink(missing_ok=True)
+    for stale in work.glob('*' + SCRATCH):   # left by a run that was killed
+        stale.unlink()
     image, values, spacing, back = source_image(root, case)
-    record = {'team': team, 'case': case, 'modality': modality, 'device': device, 'image': CASES[case]['image'],
+    record = {'team': team, 'case': case, 'modality': modality, 'device': device, **made_from(case),
               'unpacked_image': spec['image'], 'pipeline': spec['pipeline'], 'source_shape': list(image.shape),
               'affine': image.affine.tolist(), 'labels': list(TOPBRAIN_LABELS[modality]), 'stages': [],
               'precision': 'float16 network, float32 transposed convolutions',
@@ -811,14 +1011,71 @@ ROOTS = {'ct': (1, 4, 6, 23, 24, 35, 36, 40), 'mr': (1, 4, 6, 23, 24, 35, 36)}
 EDEN_COHORT = 'prepared/Eden 2020 ResectionLab Projects (restricted)'
 
 
+ANGIOGRAPHY = {'CTA': 'ct', 'TOF': 'mr', 'MRA': 'mr'}
+
+
+def retained_vesselfm(root):
+    """Retained vesselFM run folders by the sha256 of the file they ran on."""
+    runs = {}
+    for record in sorted(safe_path(root, 'cache/poc-model-results').glob('*/vesselfm-base/*/inference.json')):
+        if record.name.startswith('._'):
+            continue
+        document = json.loads(record.read_text())
+        if document.get('status', 'succeeded') == 'succeeded' and document.get('probability'):
+            gaussian = document.get('model', {}).get('parameters', {}).get('blend') == 'gaussian'
+            if gaussian or document['input'].get('sha256') not in runs:   # the folder with a gaussian-blend run wins
+                runs[document['input'].get('sha256')] = record.parents[1]
+    return runs
+
+
+def study_case(document, folder_name, series_id=None):
+    """``(case name, series row, modality)`` for the angiographic series of a prepared study document."""
+    rows = [row for row in document.get('series', []) if row.get('modality') in ANGIOGRAPHY and row.get('original')]
+    if series_id is not None:
+        rows = [row for row in rows if row['id'] == series_id]
+    if len(rows) != 1:
+        found = ', '.join(f"{row['id']} ({row['modality']})" for row in rows) or 'none'
+        raise SystemExit(f'{folder_name}: need exactly one acquired CTA, TOF or MRA series; found {found}. Name one with --series')
+    modality = ANGIOGRAPHY[rows[0]['modality']]
+    # A series named on the command line is part of the name, so two series of one study are two cases.
+    clean = [re.sub(r'[^A-Za-z0-9_.-]+', '-', part).strip('-.') for part in (folder_name, *([series_id] if series_id else []))]
+    if not all(clean):
+        raise SystemExit(f'{folder_name!r} gives no usable case name')
+    name = '-'.join(clean)
+    return f'{name}-{modality}', rows[0], modality
+
+
+def register_study(root, manifest, series_id=None):
+    """Add any prepared study on the drive to the case table: its one acquired CTA, TOF or MRA file and the retained
+    vesselFM run of that same file. Results go under ``STORE``. Returns the case name."""
+    manifest = Path(manifest)
+    manifest = safe_path(root, manifest.resolve().relative_to(Path(root).resolve()) if manifest.is_absolute() else manifest)
+    if not manifest.is_file():
+        raise SystemExit(f'No study document at {manifest}')
+    case, series, modality = study_case(json.loads(manifest.read_text()), manifest.parent.name, series_id)
+    image = safe_path(root, manifest.parent.relative_to(root) / series['original']['path'])
+    if not image.is_file() or sha256_file(image) != series['original']['sha256']:
+        raise SystemExit(f'{case}: {image.name} is missing or is not the file the study document records')
+    run = retained_vesselfm(root).get(series['original']['sha256'])
+    if run is None:
+        raise SystemExit(f'{case}: no retained vesselFM run of {image.name}. Run the vessel model on this series in the app '
+                         '(Anatomy, vesselFM) with probabilities retained, then run this again')
+    flags = ['--study', str(manifest.relative_to(root))] + (['--series', series_id] if series_id else [])
+    entry = {'modality': modality, 'reference': None, 'image': str(image.relative_to(root)), 'sha256': series['original']['sha256'],
+             'store': STORE, 'flags': flags, 'manifest': str(manifest.relative_to(root)), 'series': series['id']}
+    if case in CASES and CASES[case] != entry:
+        raise SystemExit(f'{case} is already the name of another case')
+    CASES[case] = entry
+    VESSELFM[case] = str(run.relative_to(root))
+    if 'gaussian' not in vesselfm_runs(root, case):
+        raise SystemExit(f'{case}: the retained vesselFM run is not a gaussian-blend run of this file')
+    return case
+
+
 def register_eden(root, patients):
     """Add EDEN patients (restricted, local only) to the case table: the acquired TOF original named by the
     patient's prepared study, and the retained vesselFM run of that same file."""
-    runs = {}
-    for record in sorted(safe_path(root, 'cache/poc-model-results').glob('anatomy-*/vesselfm-base/*/inference.json')):
-        document = json.loads(record.read_text())
-        if document.get('status', 'succeeded') == 'succeeded' and document.get('probability'):
-            runs.setdefault(document['input'].get('sha256'), record.parents[1])
+    runs = retained_vesselfm(root)
     added = []
     for patient in patients:
         case = f'{patient}-mr'
@@ -842,31 +1099,49 @@ def register_eden(root, patients):
 
 def run_cases(root, cases, teams=('UZH', 'ARG', 'KDH'), device='mps'):
     """Each case in turn: every team that has not finished (one process each, so memory is returned), the frozen
-    combined ensemble with the frozen vesselFM rule, then retain. A case already retained is skipped."""
+    combined ensemble with the frozen vesselFM rule, then retain. A case already retained is skipped. A registered
+    study uses the committed rule; kept and unfinished results must have been made from the case's own file."""
     import subprocess
     import sys
-    combiner = frozen_combiner(root)
+    studies = [case for case in cases if CASES[case].get('store')]
+    rule = study_rule(root) if studies else None
+    if studies and tuple(teams) != tuple(rule['teams']):
+        raise SystemExit(f'A registered study runs the teams of {RULE.name}: {rule["teams"]}')
+    combiner = rule['combiner'] if len(studies) == len(cases) else frozen_combiner(root)
     if combiner is None:
         raise SystemExit('Run select-combiner first')
     name = combined_name(combiner, list(teams))
     done = []
     for case in cases:
-        if safe_path(root, f'{PHASE}/cases/{case}/{name}/ensemble.json').is_file():
+        kept = kept_folder(root, case) / name / 'ensemble.json'
+        if kept.is_file():
+            require_made_from(kept, case)
             print(f'{case}: already retained', flush=True)
             done.append(case)
             continue
-        patient = ['--eden', case[:-3]] if case.startswith('PTNT_') else []
+        patient = CASES[case].get('flags') or (['--eden', case[:-3]] if case.startswith('PTNT_') else [])
         for team in teams:
-            if safe_path(root, f'{WORK}/{case}/{team}/predict.json').is_file():
+            finished = work_folder(root, case) / team / 'predict.json'
+            if finished.is_file():
+                require_made_from(finished, case)
                 continue
             print(f'{case}: {team} starting {time.strftime("%H:%M:%S")}', flush=True)
             subprocess.run([sys.executable, __file__, *patient, 'predict', team, case, '--device', device], check=True,
                            stdout=subprocess.DEVNULL)
-        folder, record = ensemble(root, case, list(teams), None, combiner)
+        addition = dict(rule['connectedAddition']) if CASES[case].get('store') else None
+        folder, record = ensemble(root, case, list(teams), addition, combiner)
         print(f'{case}: ensemble {record["named_voxels"]:,} named voxels, {record["added_voxels"]:,} added', flush=True)
         retain(root, case)
         done.append(case)
     return done
+
+
+def committed_rule():
+    """The frozen ensemble rule as committed with the code (manifests/vascular-ensemble-rule.json)."""
+    document = json.loads(RULE.read_text())
+    if document.get('schema') != 'vascular-ensemble-frozen-rule-v1':
+        raise SystemExit(f'{RULE.name} is not a frozen vessel ensemble rule')
+    return document
 
 
 def frozen_addition(root):
@@ -874,6 +1149,17 @@ def frozen_addition(root):
     if not selection.is_file():
         raise SystemExit('No frozen vesselFM rule: run select on the development cases first')
     return {key: value for key, value in json.loads(selection.read_text())['selected'].items() if key in ('low', 'high')}
+
+
+def study_rule(root):
+    """The rule a registered study is run with: the committed copy. Where the drive holds the selections it was
+    copied from, they must still equal it."""
+    rule = committed_rule()
+    for name, key, read in (('combiner-selection.json', 'combiner', frozen_combiner),
+                            ('addition-selection.json', 'connectedAddition', frozen_addition)):
+        if safe_path(root, f'{PHASE}/{name}').is_file() and read(root) != rule[key]:
+            raise SystemExit(f'{PHASE}/{name} differs from {RULE.name}; settle which is current before running a study')
+    return rule
 
 
 def vesselfm_runs(root, case):
@@ -884,7 +1170,10 @@ def vesselfm_runs(root, case):
         if document.get('status', 'succeeded') != 'succeeded' or not document.get('probability'):
             continue
         source = nib.load(safe_path(root, CASES[case]['image']))
-        if Path(document['input']['path']).resolve() != safe_path(root, CASES[case]['image']).resolve():
+        # The same file: by content where the case records its hash (a study may have moved), else by path.
+        same = (document['input'].get('sha256') == CASES[case]['sha256'] if CASES[case].get('sha256')
+                else Path(document['input']['path']).resolve() == safe_path(root, CASES[case]['image']).resolve())
+        if not same:
             continue
         modality = {'CTA': 'ct', 'MRA': 'mr'}.get(document['input']['modality'])
         if modality != CASES[case]['modality']:
@@ -898,7 +1187,7 @@ def vesselfm_runs(root, case):
 
 def team_probabilities(root, case, team):
     folder = case_folder(root, case, team)
-    record = json.loads((folder / 'predict.json').read_text())
+    record = require_made_from(folder / 'predict.json', case)  # Never combine a prediction of another file.
     values = (ChannelArray(folder / 'probabilities.npy') if (folder / 'probabilities.npy').is_file()
               else NpzChannels(folder / 'probabilities.npz'))
     return SoftSegmentation(record['modality'], record['labels'], values, record['affine'])
@@ -919,7 +1208,7 @@ def ensemble(root, case, teams, addition=None, combiner=None):
     for member in members:
         require_same_grid(image.shape, image.affine, member.shape, member.affine)
     name = f'ensemble-{"-".join(teams)}' if combiner is None else combined_name(combiner, teams)
-    folder = safe_path(root, f'{WORK}/{case}/{name}')
+    folder = work_folder(root, case) / name
     folder.mkdir(parents=True, exist_ok=True)
     writer = NpyWriter(folder / 'probabilities.npy', members[0].probabilities.shape)
     if combiner is None:
@@ -932,7 +1221,7 @@ def ensemble(root, case, teams, addition=None, combiner=None):
         save_nifti(values.astype(np.float32), image, folder / f'{name}_probability.nii.gz')
     named = named_label_map(mean)
     save_nifti(named, image, folder / 'named_labels.nii.gz')
-    record = {'case': case, 'modality': modality, 'teams': list(teams), 'labels': list(mean.labels),
+    record = {'case': case, **made_from(case), 'modality': modality, 'teams': list(teams), 'labels': list(mean.labels),
               'vein_labels': list(VEIN_LABELS[modality]), 'named_voxels': int((named > 0).sum()),
               'combiner': combiner or {'method': 'mean'}}
     record = add_vesselfm(root, case, folder, record, named, groups['vessel'], addition)
@@ -1321,6 +1610,19 @@ def select_vesselfm(root):
             'grid': VESSELFM_GRID, 'trials': trials, 'selected': selected}
 
 
+def wire_study(root, case, folder):
+    """Make a retained ensemble the displayed vessels of the study its case was registered from."""
+    import importlib.util
+    spec = importlib.util.spec_from_file_location('capture_vascular_parity', Path(__file__).with_name('capture_vascular_parity.py'))
+    wiring = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(wiring)
+    manifest = safe_path(root, CASES[case]['manifest'])
+    collection = wiring.open_anatomy_manifest(manifest)
+    receipt = wiring.wire_ensemble(collection, CASES[case]['series'], folder, manifest=manifest,
+                                   source=str(folder.relative_to(root)))
+    return {key: receipt.get(key) for key in ('changed', 'layers', 'added', 'retired', 'binding')}
+
+
 def frozen_vesselfm(root):
     selection = safe_path(root, f'{PHASE}/vesselfm-tuning.json')
     return json.loads(selection.read_text())['selected'] if selection.is_file() else None
@@ -1428,8 +1730,8 @@ def report(root):
 
 def retain(root, case):
     """Keep compressed soft probabilities, label maps and records under cases/<case>/; drop rebuildable work files."""
-    work = safe_path(root, f'{WORK}/{case}')
-    kept = safe_path(root, f'{PHASE}/cases/{case}')
+    work = work_folder(root, case)
+    kept = kept_folder(root, case)
     for folder in sorted(path for path in work.iterdir() if path.is_dir() and not path.name.startswith('._')):
         target = kept / folder.name
         target.mkdir(parents=True, exist_ok=True)
@@ -1444,9 +1746,11 @@ def retain(root, case):
             with (target / 'stage2.npz.partial').open('wb') as stream:
                 np.savez_compressed(stream, probabilities=np.load(folder / 'stage2.npy', mmap_mode='r'))
             os.replace(target / 'stage2.npz.partial', target / 'stage2.npz')
-        for item in folder.iterdir():
-            if item.suffix in ('.json', '.gz') and not item.name.startswith('._'):
-                shutil.copyfile(item, target / item.name)
+        # The record that marks a folder as kept (ensemble.json, predict.json) is copied last, so an
+        # interrupted copy is not mistaken for a kept case.
+        items = [item for item in folder.iterdir() if item.suffix in ('.json', '.gz') and not item.name.startswith('._')]
+        for item in sorted(items, key=lambda item: (item.name in ('ensemble.json', 'predict.json'), item.name)):
+            shutil.copyfile(item, target / item.name)
         print(f'{case}/{folder.name} kept', flush=True)
     shutil.rmtree(work, ignore_errors=True)
     return kept
@@ -1455,17 +1759,32 @@ def retain(root, case):
 def main():
     early = argparse.ArgumentParser(add_help=False)
     early.add_argument('--eden', action='append', default=[])
-    patients = early.parse_known_args()[0].eden
-    root = checked_root(None if os.environ.get(ROOT_ENV) else HDD_ROOT, expected_uuid=HDD_UUID) if patients else None
+    early.add_argument('--study', action='append', default=[])
+    early.add_argument('--series')
+    known = early.parse_known_args()[0]
+    patients, studies = known.eden, known.study
+    root = (checked_root(None if os.environ.get(ROOT_ENV) else HDD_ROOT, expected_uuid=HDD_UUID)
+            if patients or studies else None)
     if patients:
         register_eden(root, patients)
+    if known.series and len(studies) != 1:
+        raise SystemExit('--series names the series of exactly one --study')
+    study_cases = [register_study(root, study, known.series) for study in studies]
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--eden', action='append', default=[], metavar='PTNT_0000',
                         help='Register this EDEN patient (restricted, local only) as case PTNT_0000-mr; repeatable')
+    parser.add_argument('--study', action='append', default=[], metavar='MANIFEST',
+                        help='Register any prepared study on the data drive by its patient-anatomy.json or review '
+                             'manifest (path under the data root); its case is <study folder>-ct or -mr; repeatable')
+    parser.add_argument('--series', help='With one --study that has several angiographic series: the series id to use')
     sub = parser.add_subparsers(dest='command', required=True)
     displaying = sub.add_parser('display-additions', help='Write the display-only vessel candidates beside an ensemble')
     displaying.add_argument('case', nargs='+')
     displaying.add_argument('--ensemble', default='combined-base-UZH-ARG-KDH')
+    studying = sub.add_parser('study', help='For each --study: run the three models and the frozen ensemble, write the '
+                              'display candidates, and make the result the study\'s displayed vessels')
+    studying.add_argument('--device', choices=['mps', 'cpu'], default='mps')
+    studying.add_argument('--no-wire', action='store_true', help='Leave the study document unchanged')
     running = sub.add_parser('run', help='Predict every team, build the frozen combined ensemble and retain, per case')
     running.add_argument('case', nargs='+')
     running.add_argument('--device', choices=['mps', 'cpu'], default='mps')
@@ -1503,10 +1822,22 @@ def main():
     merging.add_argument('image', choices=list(ARCHIVES))
     args = parser.parse_args()
     root = root or checked_root(None if os.environ.get(ROOT_ENV) else HDD_ROOT, expected_uuid=HDD_UUID)
-    if args.command == 'run':
+    if args.command == 'study':
+        if not study_cases:
+            raise SystemExit('study needs at least one --study MANIFEST')
+        rule = study_rule(root)
+        run_cases(root, study_cases, teams=tuple(rule['teams']), device=args.device)
+        name = combined_name(rule['combiner'], rule['teams'])
+        for case in study_cases:
+            folder = kept_folder(root, case) / name
+            require_made_from(folder / 'ensemble.json', case)
+            print(case, 'ensemble at', folder.relative_to(root), flush=True)
+            if not args.no_wire:
+                print(case, json.dumps(wire_study(root, case, folder)), flush=True)
+    elif args.command == 'run':
         unknown = [case for case in args.case if case not in CASES]
         if unknown:
-            raise SystemExit(f'Unknown cases {unknown}; register EDEN patients with --eden')
+            raise SystemExit(f'Unknown cases {unknown}; register EDEN patients with --eden or a study with --study')
         print(run_cases(root, args.case, device=args.device))
     elif args.command == 'display-additions':
         for case in args.case:

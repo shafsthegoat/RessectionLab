@@ -26,7 +26,7 @@ from resectionlab.anatomy_bridge import open_anatomy_manifest
 from resectionlab.anatomy_geometry import mesh, vascular_cleanup_source
 from resectionlab.data_root import atomic_json, checked_root, safe_path, sha256_file
 from resectionlab.patient_anatomy import affine, digest, world
-from resectionlab.vascular_cleanup import rooted_vessel_layer
+from resectionlab.vascular_cleanup import rooted_named_labels, rooted_vessel_layer
 from resectionlab.vascular_parity import (
     agreement, betti, floating_components, image_sharpness, source_deviation, surface_quality,
 )
@@ -85,6 +85,10 @@ HERO = {
         'anchor': [-1.52, 21.22, -22.08], 'phase2': 'PTNT_7086-mr',
     },
 }
+# Any other prepared study: topbrain_native.py keeps its ensembles here, as <study folder>-ct or -mr.
+STUDY_STORE = Path('cache/vessel-ensembles/cases')
+# From the internal carotid centroid of the named labels (4 and 6 in both schemes) to the view anchor, in mm.
+ANCHOR_SHIFT = (-0.2, -3.4, -3.6)
 # View direction is from the camera toward the anchor, in patient RAS.
 PRESETS = {
     'anterior': {'from': [0, 1, 0.12], 'up': [0, 0, 1], 'distance': 1.75},
@@ -233,6 +237,9 @@ def wire_ensemble(collection, series_id, folder, *, manifest=None, source=None):
     series = collection.series(series_id)
     if modality not in ('ct', 'mr') or image_modality(series['modality']) != modality:
         raise ValueError(f'A {modality} ensemble cannot be wired to a {series["modality"]} scan')
+    original = (series.get('original') or {}).get('sha256')
+    if meta.get('sha256') and original and meta['sha256'] != original:
+        raise ValueError(f'{folder} was made from another file ({meta["sha256"][:12]}) than this series ({original[:12]})')
     scheme = f'topbrain-v1-{modality}'
     files = {name: folder / f'{name}.nii.gz' for name in ENSEMBLE_FILES if (folder / f'{name}.nii.gz').is_file()}
     if not {'named_labels', 'vessel_probability'} <= set(files):
@@ -387,10 +394,16 @@ def ensemble_layers(collection, folder):
     return [row['id'] for row in rows]
 
 
+def ensemble_folder(case, ensemble):
+    """An ensemble folder of a case, relative to the data root: with the parity evidence for the cases run
+    there (``phase2``), or wherever the case says its ensembles are kept (``ensembles``)."""
+    return Path(case['ensembles']) / ensemble if case.get('ensembles') else PHASE2 / case['phase2'] / ensemble
+
+
 def displayed_vessels(collection, case, ensemble=None, root=None):
     if not ensemble:
         return list(case['vessels'])
-    folder = safe_path(root, PHASE2 / case['phase2'] / ensemble) if root else Path(ensemble)
+    folder = safe_path(root, ensemble_folder(case, ensemble)) if root else Path(ensemble)
     ids = ensemble_layers(collection, folder)
     if not set(ids) <= set(collection.document.get('display', {}).get('initial_layers', [])):
         raise LookupError(f'The wired layers are not the study default; re-run wire --ensemble {Path(ensemble).name}')
@@ -583,6 +596,53 @@ def named_review(receipts, *, display=None, reference=None, spacing=None):
 def anchor(case):
     """Frozen circle-of-Willis level. Cameras must not move when a reconstruction changes."""
     return np.asarray(case['anchor'], float)
+
+
+def study_anchor(collection, series_id, tree):
+    """The view anchor of a study without a fixed one: the centroid of the internal carotid labels of its wired
+    tree, shifted as on the fixed cases; the centroid of the whole tree when neither carotid is named."""
+    scan = collection.series(series_id)
+    named, _, _, reason = rooted_named_labels(collection, tree, scan)
+    if named is None:
+        raise LookupError(f'The wired tree has no usable named labels: {reason}')
+    named = np.asarray(named)
+    voxels = np.argwhere(np.isin(named, (4, 6)))
+    carotid = bool(len(voxels))
+    if not carotid:
+        voxels = np.argwhere(named > 0)
+    if not len(voxels):
+        raise LookupError('The wired tree is empty')
+    centre = world(affine(scan['affine']), voxels.mean(0)[None])[0]
+    return [round(float(value), 2) for value in (centre + ANCHOR_SHIFT if carotid else centre)]
+
+
+def study_entry(root, manifest, series_id=None, ensemble=None, cohort_view=False):
+    """``(name, case)`` for any prepared study on the drive, named and resolved as ``topbrain_native.py --study``
+    does. With ``ensemble`` the anchor comes from the tree wired from that folder, so wire the study first.
+    ``cohort_view`` opens it through the review view, as the restricted cohort studies are captured."""
+    import importlib.util
+    spec = importlib.util.spec_from_file_location('topbrain_native', Path(__file__).with_name('topbrain_native.py'))
+    native = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(native)
+    manifest = Path(manifest)
+    manifest = safe_path(root, manifest.resolve().relative_to(Path(root).resolve()) if manifest.is_absolute() else manifest)
+    if not manifest.is_file():
+        raise SystemExit(f'No study document at {manifest}')
+    name, series, _ = native.study_case(json.loads(manifest.read_text()), manifest.parent.name, series_id)
+    if name in HERO or name in {case['phase2'] for case in HERO.values()}:
+        raise SystemExit(f'{name} is a fixed case; capture it with --case')
+    case = {'title': f'{manifest.parent.name}, not used for any choice', 'held_out': True,
+            'manifest': str(manifest.relative_to(root)), 'series': series['id'], 'vessels': [], 'reference': None,
+            'ensembles': str(STUDY_STORE / name), 'cohort_view': bool(cohort_view)}
+    if ensemble:
+        collection = open_anatomy_manifest(manifest)
+        folder = safe_path(root, ensemble_folder(case, ensemble))
+        trees = [collection.layer(layer) for layer in ensemble_layers(collection, folder)]
+        trees = [row for row in trees if row.get('named_labels')]
+        if len(trees) != 1:
+            raise LookupError(f'{name}: expected one wired tree with named labels, found {len(trees)}')
+        case['anchor'] = study_anchor(collection, series['id'], trees[0])
+    return name, case
 
 
 def displayed_surface(collection, layer_id, scope='all'):
@@ -820,7 +880,6 @@ def reference_labels(root, case, shape, frame):
 def display_roots(collection, layer_ids, shape, receipts=None, display=None):
     """Root voxels from the named labels bound to the displayed layers; without
     any, the seed voxels of the unnamed fallback roots recorded in the receipts; else None."""
-    from resectionlab.vascular_cleanup import rooted_named_labels
     roots = None
     for layer_id in layer_ids:
         layer = collection.layer(layer_id)
@@ -937,7 +996,9 @@ def sheet(root, label, references, compare=None):
     output = evidence(root, label) / 'sheets'
     output.mkdir(parents=True, exist_ok=True)
     cell = (560, 420)
-    for name in HERO:
+    captured = evidence(root, label) / 'captures'
+    others = sorted(item.name for item in captured.iterdir() if item.is_dir() and item.name not in HERO) if captured.is_dir() else []
+    for name in [*HERO, *others]:   # the fixed cases, then any study captured with --study
         rows, used = [], []
         for preset in PRESETS:
             folders = [evidence(root, item) / 'captures' / name for item in labels]
@@ -967,6 +1028,12 @@ def main():
     parser.add_argument('command', choices=['wire', 'unwire', 'capture', 'geometry', 'sheet'])
     parser.add_argument('--label', help='Evidence folder under the parity root, such as phase0-baseline')
     parser.add_argument('--case', action='append', choices=list(HERO))
+    parser.add_argument('--study', metavar='MANIFEST', help='Instead of --case: any prepared study on the data drive, by its '
+                        'patient-anatomy.json or review manifest, as given to topbrain_native.py --study. Its ensembles are '
+                        f'read from {STUDY_STORE}/<study folder>-ct|-mr, and capture and geometry need --ensemble')
+    parser.add_argument('--series', help='With --study that has several angiographic series: the series id to use')
+    parser.add_argument('--cohort-view', action='store_true', help='With --study: open the study through the review view '
+                        'without the default-state capture, as the restricted cohort studies are captured')
     parser.add_argument('--compare', action='append', help='Earlier labels to place before this one on a sheet')
     parser.add_argument('--references', type=Path, help='Folder of reference frames named after each preset')
     parser.add_argument('--volume-mode', choices=['cinematic'], help='Capture with this volume render mode instead of the default view')
@@ -981,24 +1048,34 @@ def main():
     parser.add_argument('--height', type=int, default=960)
     args = parser.parse_args()
     root = checked_root(HDD_ROOT, expected_uuid=HDD_UUID)
-    cases = args.case or list(HERO)
+    table, cases = HERO, args.case or list(HERO)
+    if args.study:
+        if args.case:
+            parser.error('--study replaces --case')
+        if args.command in {'capture', 'geometry'} and not args.ensemble:
+            parser.error(f'{args.command} --study needs --ensemble')
+        name, entry = study_entry(root, args.study, args.series,
+                                  args.ensemble if args.command in {'capture', 'geometry'} else None, args.cohort_view)
+        table, cases = {**HERO, name: entry}, [name]
+    elif args.series or args.cohort_view:
+        parser.error('--series and --cohort-view go with --study')
     if args.command in {'wire', 'unwire'}:
         if args.command == 'wire' and not args.ensemble:
             parser.error('wire needs --ensemble')
         failures = 0
         for name in cases:
-            manifest = safe_path(root, HERO[name]['manifest'])
+            manifest = safe_path(root, table[name]['manifest'])
             try:
                 collection = open_anatomy_manifest(manifest)
                 if args.command == 'unwire':
                     receipt = unwire(collection, manifest=manifest)
                 else:
-                    relative = PHASE2 / HERO[name]['phase2'] / args.ensemble
+                    relative = ensemble_folder(table[name], args.ensemble)
                     folder = safe_path(root, relative)
                     if not (folder / 'ensemble.json').is_file():
                         print(name, 'no ensemble at', relative, flush=True)
                         continue
-                    receipt = wire_ensemble(collection, HERO[name]['series'], folder, manifest=manifest, source=str(relative))
+                    receipt = wire_ensemble(collection, table[name]['series'], folder, manifest=manifest, source=str(relative))
                     receipt['undo'] = receipt['undo'].replace('<case>', name)
                     if receipt['changed']:
                         record = evidence(root, 'phase3-cleanup') / 'wiring' / f"{name}-{receipt['binding']}-{receipt['snapshot']['after'][:12]}.json"
@@ -1018,18 +1095,18 @@ def main():
     mesh_failures = []
     for name in cases:
         if args.command == 'capture' and args.add:
-            added, skipped = add_presets(root, name, HERO[name], args.label, requested_presets(args.add))
+            added, skipped = add_presets(root, name, table[name], args.label, requested_presets(args.add))
             print(name, 'added', ', '.join(added) or 'none', '; skipped',
                   ', '.join(f'{preset} ({why})' for preset, why in skipped.items()) or 'none', flush=True)
             continue
         if args.command == 'capture':
-            metrics = capture(root, name, HERO[name], args.label, width=args.width, height=args.height,
+            metrics = capture(root, name, table[name], args.label, width=args.width, height=args.height,
                               volume_mode=args.volume_mode, ensemble=args.ensemble, scope=args.scope)
             timing = metrics.get('interaction', {})
             print(name, 'frame interval p95', timing.get('frameIntervalMs', {}).get('p95'), 'ms; settle',
                   (timing.get('settle') or {}).get('milliseconds'), 'ms', flush=True)
         else:
-            result = geometry(root, name, HERO[name], args.label, ensemble=args.ensemble, scope=args.scope)
+            result = geometry(root, name, table[name], args.label, ensemble=args.ensemble, scope=args.scope)
             drawn = result['floating_mesh']
             print(name, 'mesh floating', drawn['floating'], 'of', drawn['pieces'], 'pieces; voxel floating',
                   result['floating']['floating'], 'of', result['floating'].get('components'), 'components; betti', result['betti'],

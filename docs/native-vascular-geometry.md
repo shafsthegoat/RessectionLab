@@ -255,10 +255,107 @@ with a 1.89 GB peak footprint for the whole check. In stage B the hero TOF
 studies get named MR labels, whose ICA, vertebral and basilar roots replace
 this fallback.
 
-### Phase 2 model layers in the hero studies
+### Running the vessel pipeline on a new scan
 
-`scripts/capture_vascular_parity.py wire --ensemble <folder>` adds a Phase 2
-ensemble to each hero study that has one: a `vessels` layer with the named
+One command takes any prepared study on the data drive from its acquired
+angiogram to the connected vessel view. It holds no case names: the six
+studies used to build it and a new one go through the same code.
+
+```bash
+PYTHONPATH=src nnUNet_compile=false PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.6 PYTORCH_MPS_LOW_WATERMARK_RATIO=0.5 .tools/poc-model-runtime/venv/bin/python scripts/topbrain_native.py --study prepared/<collection>/<study>/patient-anatomy.json study
+```
+
+What the study needs first:
+
+- It was prepared by the app (Scans, then Anatomy), so its
+  `patient-anatomy.json` lists exactly one acquired CTA, TOF or MRA series.
+  With several, name one with `--series <id>`.
+- The vessel model (vesselFM) was run on that series in the app with its
+  probabilities retained. The command finds the run by the file's sha256 and
+  refuses a study without one.
+- The data drive is mounted, with the unpacked TopBrain models under
+  `cache/models/topbrain-2025-native/` ([ledger](local-storage-ledger.md)).
+
+What it does, in order:
+
+1. Runs the three TopBrain 2025 models on the acquired file (CT pipelines on
+   CT, MR pipelines on MR), one process per model.
+2. Combines them with the frozen rule in
+   [`manifests/vascular-ensemble-rule.json`](../manifests/vascular-ensemble-rule.json)
+   (teams, base model per modality, vesselFM addition thresholds). The rule is
+   read from the repository; if the selection files on the drive exist and
+   differ, the command stops instead of choosing.
+3. Writes the display candidates and keeps the compressed result under
+   `cache/vessel-ensembles/cases/<study folder>-ct/` or `-mr/` on the drive
+   (`<study folder>-<series id>-ct/` when `--series` was given). A case already
+   kept is not predicted again. Every record carries the sha256 and series of
+   the file it was made from: kept or half-finished results from another file
+   (a study folder of the same name elsewhere, or a study prepared again) are
+   refused, not reused, when a case is run, when predictions are combined and
+   when an ensemble is wired into a study.
+4. Makes the result the study's displayed vessels (the layers in the next
+   section). `--no-wire` skips this step. Source files are never changed, and
+   earlier vessel layers stay in the study, selectable.
+
+Everything after that is computed when the study is opened and needs nothing
+per case: rooting, calibre and bridging rules, the fine branches on CT, the
+thin-branch tubes, and both render modes.
+
+Limits to expect on a scan unlike the six used so far:
+
+- **Time and memory.** On an M2 Pro with 16 GB the three models took 16, 13
+  and 7 minutes on a brain-only CTA (TopCoW-014), 20 to 70 minutes each on the
+  time-of-flight cases, and 65, 69 and 55 minutes on a whole-head CTA
+  (Head-CTA-013, 512 × 512 × 289 at 0.58 mm): about three and a quarter hours
+  for that scan. A scan whose network logits would not fit in two fifths of the
+  machine's memory is predicted in bands along its first axis through a
+  scratch file beside the output; the values are the same as in memory
+  (`predict_banded`, tested against `predict_logits`). A scan so wide in plane
+  that one band would not fit either is refused with the size it needs. On
+  Head-CTA-013 two of the three models needed bands (peak memory 7.1 and
+  8.5 GB); the first attempt without them was killed for memory.
+- **Whole-head CT.** The models were trained on brain-only fields of view. On
+  a whole head they also mark air and tissue outside the brain. The display
+  keeps voxels in air out of the tree (see "Air on CT" above), not soft tissue:
+  on Head-CTA-013 one 13 mm³ piece in the scalp that a model named as superior
+  sagittal sinus is still drawn as its own root. No size rule removes it,
+  because TopCoW-018 has a real 40 mm³ straight-sinus piece of the same kind.
+- **CT needs Hounsfield units.** The candidates (below 700 HU) and the fine
+  branches (60 to 450 HU, clear of bone and air) use absolute values, and so
+  does the air rule of the display (-300 HU). A CT stored with another scaling
+  loses those additions, and one whose tissue reads below -300 has its whole
+  tree sent to review: the `air` count in the layer's receipt shows it.
+- **MR gets no fine branches**, and its vesselFM candidates keep the stricter
+  thresholds.
+- **Roots.** The default view grows from the internal carotid, vertebral and
+  basilar arteries and the major sinuses as the models name them. A field of
+  view without any of them falls back to the largest components and says so in
+  the receipt.
+- **No annotation, no score.** A new scan has no reference labels, so the
+  command reports counts and receipts, not accuracy. Read the result in the
+  app, and use the amber review overlay to see what was held back.
+
+To check a new study the way the six were checked, measure and capture it with
+the same harness (hidden app, evidence on the drive):
+
+```bash
+PYTHONPATH=src .venv/bin/python scripts/capture_vascular_parity.py geometry --study prepared/<collection>/<study>/patient-anatomy.json --ensemble combined-base-UZH-ARG-KDH --label phase8-<name>
+```
+
+```bash
+PYTHONPATH=src .venv/bin/python scripts/capture_vascular_parity.py capture --study prepared/<collection>/<study>/patient-anatomy.json --ensemble combined-base-UZH-ARG-KDH --label phase8-<name>
+```
+
+`geometry` prints the floating pieces and the named vessels left in review;
+`capture` writes the default view and the fixed cameras, with frame timing.
+Add `--volume-mode cinematic` (and another label) for Volume lighting, and
+`--cohort-view` for a restricted cohort study.
+
+### Model layers in a study
+
+`scripts/topbrain_native.py --study <manifest> study` (any prepared study) and
+`scripts/capture_vascular_parity.py wire --ensemble <folder>` (the fixed
+comparison studies) both add a model ensemble to a study: a `vessels` layer with the named
 TopBrain labels (`named_labels: {data, scheme}`, the CT map only on CT studies
 and the MR map only on MR) and the soft vessel probability, plus the vesselFM
 score as a separate unnamed layer whose `rooted_parent` is that tree. When the

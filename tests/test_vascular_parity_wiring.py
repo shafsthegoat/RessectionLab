@@ -573,3 +573,59 @@ def test_the_connected_display_is_kept_beside_the_study_and_reused_on_reopen(tmp
     fresh = open_anatomy_manifest(c.root / 'patient-anatomy.json')
     repaired, _, _, _ = rooted_vessel_layer(fresh, fresh.layer(tree))
     assert len(calls) == 2 and repaired['data'] == first['data'] and json.loads(stored[0].read_text())['result']
+
+
+def test_any_prepared_study_becomes_a_capture_case_with_an_anchor_from_its_wired_tree(tmp_path):
+    c = study(tmp_path)
+    built = ensemble(tmp_path)
+    folder = tmp_path / parity.STUDY_STORE / 'study-ct' / built.name
+    folder.parent.mkdir(parents=True)
+    built.rename(folder)
+    manifest = c.root / 'patient-anatomy.json'
+    name, case = parity.study_entry(tmp_path, manifest)
+    assert name == 'study-ct' and 'anchor' not in case and case['series'] == 'scan' and case['held_out']
+    assert case['manifest'] == 'study/patient-anatomy.json' and case['reference'] is None
+    assert parity.ensemble_folder(case, built.name) == parity.STUDY_STORE / 'study-ct' / built.name
+    with pytest.raises(LookupError, match='No layers wired'):
+        parity.study_entry(tmp_path, manifest, ensemble=built.name)
+    ids = parity.wire_ensemble(c, 'scan', folder)['layers']
+    name, case = parity.study_entry(tmp_path, 'study/patient-anatomy.json', ensemble=built.name)
+    # R-ICA voxels 2..19, 10..13, 10..13 at 0.5 mm.
+    assert case['anchor'] == pytest.approx(np.array([5.25, 5.75, 5.75]) + parity.ANCHOR_SHIFT, abs=.011)
+    assert parity.displayed_vessels(Collection(c.root), case, built.name, tmp_path) == ids
+    assert all(row['seriesId'] == 'scan' for row in parity.recipes(Collection(c.root), case, {'settings': {}}, ids, None, 'rooted'))
+    with pytest.raises(SystemExit, match='No study document'):
+        parity.study_entry(tmp_path, 'elsewhere/patient-anatomy.json')
+    assert case['cohort_view'] is False and parity.study_entry(tmp_path, manifest, cohort_view=True)[1]['cohort_view'] is True
+    # A study folder named like a fixed case is captured as that case, not as a second one of the same name.
+    fixed = tmp_path / 'TopCoW-014'
+    fixed.mkdir()
+    (fixed / 'patient-anatomy.json').write_text(manifest.read_text())
+    with pytest.raises(SystemExit, match='fixed case'):
+        parity.study_entry(tmp_path, fixed / 'patient-anatomy.json')
+
+
+def test_a_study_without_a_named_carotid_is_centred_on_its_whole_tree(tmp_path):
+    c = study(tmp_path)
+    named = np.where(labels() == 4, 1, labels()).astype(np.uint8)     # the carotid named as the basilar: still a root
+    folder = ensemble(tmp_path, named=named)
+    wired = parity.wire_ensemble(c, 'scan', folder)['layers'][0]
+    tree = Collection(c.root).layer(wired)
+    centre = np.argwhere(named > 0).mean(0) * .5
+    assert parity.study_anchor(Collection(c.root), 'scan', tree) == pytest.approx(centre, abs=.011)
+
+
+
+def test_an_ensemble_made_from_another_file_is_not_wired(tmp_path):
+    c = study(tmp_path)
+    folder = ensemble(tmp_path)
+    original = c.series('scan')['original']['sha256']
+    record = folder / 'ensemble.json'
+    meta = json.loads(record.read_text())
+    record.write_text(json.dumps({**meta, 'sha256': '0' * 64}))
+    before = (c.root / 'patient-anatomy.json').read_bytes()
+    with pytest.raises(ValueError, match='made from another file'):
+        parity.wire_ensemble(c, 'scan', folder)
+    assert (c.root / 'patient-anatomy.json').read_bytes() == before
+    record.write_text(json.dumps({**meta, 'sha256': original}))
+    assert parity.wire_ensemble(Collection(c.root), 'scan', folder)['changed']

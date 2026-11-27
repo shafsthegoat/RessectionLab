@@ -86,16 +86,17 @@ drives the hidden desktop harness and `resectionlab.vascular_parity`.
 5. **Python suite baseline.** At `9b079d28` the full suite has 571 failures
    and 515 errors from data-policy gates and absent local data, none in vessel
    code. The saved list is the reference: phases must add no new failure.
-6. **CTA-A blind gate not met after three attempts.** After the second
-   failure Shafrir chose to show finer vessels (2026-11-26); see Phase 6
-   results. The third review scores the richer tree 3, 4, 3, 3, 3, 4
-   (crispness, depth, clutter, connectivity, realism, usefulness) and ranks it
-   above the Phase 5 set (4, 4, 4, 3, 3, 3 from the same reviewer): usefulness
-   rose, crispness and clutter fell because the thin branches are lumpy and
-   beaded. The reviewer's main remaining gap is vessel surface quality.
-   Shafrir decides whether to work on how thin branches are drawn (a smooth
-   tube model or tag for 1 to 2 voxel vessels), to try a head-and-neck CTA, or
-   to accept the result. The path-traced mode stays behind its setting.
+6. **CTA-A blind gate: accepted as it stands by Shafrir on 2026-11-26.** The
+   gate (4 on all six criteria) was not met in four attempts. After the
+   second failure Shafrir chose to show finer vessels (Phase 6: 3, 4, 3, 3, 3,
+   4 for crispness, depth, clutter, connectivity, realism, usefulness), and
+   after the third to smooth the thin branches (Phase 7: 3, 4, 3, 3, 3, 3 from
+   a stricter reviewer, ranked first of four versions). Having seen the tube
+   drawing, Shafrir accepted the result as close enough to the reference and
+   asked instead that the system work on future scans without case-specific
+   code; see "Applying it to a new scan" below. The gate is recorded as not
+   met and accepted, not as met. The path-traced mode stays behind its
+   setting.
 7. **Path-traced vessels do not follow a tool press.** In rehearsal the
    path-traced mode draws vessels from a tag volume sent once per case, so the
    wall mesh dents under a tool only in standard mode. Rehearsal should stay in
@@ -129,7 +130,8 @@ drives the hidden desktop harness and `resectionlab.vascular_parity`.
 | 4 Sim geometry | Centerline and radius implicit tubes shared by drawing, collision, rods and tags | Deviation at most 0.5 voxel; no self-intersection; tools displace vessels | gates met on TopCoW 2026-11-26 behind the tube geometry option; see results |
 | 5 Integration | Volume, tubes, tools and clipping in the packaged build; films and pull request | All earlier gates; blind scores at least 4 | run 2026-11-26: frame budget met in the packaged build; TOF-A blind gate met; CTA-A blind gate not met after two attempts; volume-lit vessels do not follow a tool press; see results |
 | 6 Finer vessels (added after decision 6) | Thin branches followed in the CTA signal; detached model vessels joined along signal; one vessel colour; two more EDEN cases | The Phase 5 blind gates; zero floating components | run 2026-11-26: zero floating pieces on six cases; TOF-A blind gate holds; CTA-A blind gate not met on the third attempt; the Phase 1 frame budget holds on CTA-A after a renderer change (1.35 to 1.41 s settle); see results |
-| 7 Smooth thin vessels (owner's choice after the third blind review) | Branches thinner than about three voxels drawn as round tubes from a relaxed centerline, in the surface view and in Volume lighting | The Phase 5 blind gates; zero floating components; the Phase 1 frame budget | run 2026-11-27: zero floating pieces on six cases; frame budget holds on CTA-A (11.0 ms, 1.38 s); TOF-A blind gate holds; CTA-A ranked first of four versions but its blind gate is not met on the fourth attempt (3, 4, 3, 3, 3, 3); see results |
+| 7 Smooth thin vessels (owner's choice after the third blind review) | Branches thinner than about three voxels drawn as round tubes from a relaxed centerline, in the surface view and in Volume lighting | The Phase 5 blind gates; zero floating components; the Phase 1 frame budget | run 2026-11-26: zero floating pieces on six cases; frame budget holds on CTA-A (11.0 ms, 1.38 s); TOF-A blind gate holds; CTA-A ranked first of four versions but its blind gate is not met on the fourth attempt (3, 4, 3, 3, 3, 3); see results |
+| 8 Any prepared study (owner's request on accepting decision 6) | One command from a prepared angiogram to the connected view, with no case names in the code; proof on a scan not used before | Runs to the end on the new scan on the 16 GB machine; zero floating components; no named major vessel lost; the six cases unchanged | run 2026-11-27 on Head-CTA-013: met after two fixes the scan exposed (memory, and vessels named in air); see "Applying it to a new scan" |
 
 A phase that fails its gate twice keeps its best version behind a toggle and
 goes to Shafrir. Gates are not lowered.
@@ -714,7 +716,66 @@ engine only). Tubes thinner than the grid allows, which would need the tubes
 drawn analytically rather than through the voxel tag volume. The rehearsal
 tube model still comes from the named tree.
 
-## Handoff, 2026-11-27
+## Applying it to a new scan
+
+Shafrir accepted the CTA-A result on 2026-11-26 and asked that the system
+work on future scans. The pipeline now takes any prepared study:
+`scripts/topbrain_native.py --study <manifest> study` runs the three models,
+combines them with the frozen rule committed in
+`manifests/vascular-ensemble-rule.json`, keeps the result on the drive under
+`cache/vessel-ensembles/` and makes it the study's displayed vessels. The
+steps, what a study needs first, and the limits are in
+[the vessel geometry guide](native-vascular-geometry.md#running-the-vessel-pipeline-on-a-new-scan).
+Rooting, bridging, fine branches, tubes and both render modes were already
+computed per study when it is opened.
+
+**Proof on a scan not used before.** Head-CTA-013 is a public whole-head CTA
+(512 × 512 × 289 at 0.58 × 0.58 × 0.63 mm) that no threshold or rule was set
+on. Its field of view is the whole head, not the brain-only crop of the
+TopCoW cases, and its arterial contrast is weaker (internal carotids about
+200 HU). It exposed two faults, both fixed in general code:
+
+1. **Memory.** The second model was killed: its logits for this grid need
+   about 18 GB. A scan whose logits exceed two fifths of the machine's memory
+   is now predicted in bands along its first axis through a scratch file.
+   Tests show the banded values equal the in-memory ones exactly, and the six
+   earlier cases stay under the limit and take the unchanged path.
+2. **Vessels named in air.** On a whole head the models also mark the mastoid
+   cells and the air beside the head, and some of those pieces carry a root
+   label, so they were drawn as floating blobs outside the skull
+   (`phase8-new-study-before/`). On CT the display now sends every vessel
+   voxel below -300 HU to review before it looks for roots, and no bridge
+   crosses air. On CTA-A and CTA-B the shown voxels are identical with and
+   without the rule.
+
+Kept results are also bound to the scan file by its hash, so a result is
+never reused for another file in a folder of the same name.
+
+**Result** (`phase8-new-study/`, `phase8-new-study-volume/`):
+
+| Measure | Head-CTA-013 |
+| --- | --- |
+| Model time, three models | 65, 69 and 55 minutes; peak memory 11.5 GB without bands, 7.1 and 8.5 GB with |
+| Named tree | 76,390 voxels; 4,099 in air moved to review |
+| Shown by default | 87,127 voxels: named tree, 1,509 of vesselFM candidates, 14,824 of fine branches |
+| Floating pieces on the drawn meshes | 0 of 5 |
+| Major named vessels lost | none; seven are partly in review, from their voxels in air and detached pieces |
+| Frame interval p95 and settle, standard mode | 18.5 ms, 0.45 s (CTA-A in standard mode: 18.5 ms in Phase 3) |
+| Frame interval p95 and settle, Volume lighting | 10.5 ms, 1.87 s (CTA-A 11.0 ms, 1.38 s; CTA-B 10.2 ms, 1.86 s). The settle budget of 1.5 s names CTA-A; this grid has more than four times its voxels |
+
+**Coordinator's reading of the captures.** In standard mode the tree reads like the TopCoW cases: a continuous circle of Willis, both middle cerebral trees to the cortex, the vertebral loops at the skull base and the sagittal sinus, with nothing outside the skull except one small piece at the left scalp. The straight sinus and the right vertebral artery are separate rooted pieces, as the scan shows them. In Volume lighting the sagittal cut is the closest of all seven studies to the reference frames, because the field of view is a whole head. With the see-through skull the head holder and table show as faint sheets around the head: the bone and soft-tissue transfer was tuned on brain-only scans.
+
+**Not done or not verified.** No annotation exists for this scan, so nothing
+here is an accuracy score. In Volume lighting the head holder shows through
+the see-through skull. One 13 mm³ piece in the scalp that a model named
+as superior sagittal sinus is still drawn as its own root; no size rule
+separates it from a real 40 mm³ straight-sinus piece on CTA-B, so none was
+added. The rule against air does not remove soft tissue outside the brain.
+MR studies and a second new CT were not run through the new command; the
+four time-of-flight cases went through the same functions under their fixed
+names. A blind review was not run on this scan.
+
+## Handoff, 2026-11-26
 
 State of the gates:
 
@@ -726,7 +787,7 @@ State of the gates:
 | 3 | Zero floating components by default; no named major vessel lost | met on the drawn meshes of all six cases, with the tube drawing of Phase 7 |
 | 4 | Deviation at most 0.5 voxel; no self-intersection; tools displace vessels | met on TopCoW behind the tube geometry option, in standard mode |
 | 5 | Phase 1 frame budget with volume, tubes, tools and clipping in the packaged build | met |
-| 5 | Blind at least 4 on all criteria for CTA-A | not met after four attempts (4, 4, 3, 3, 3, 3; then 3, 4, 3, 3, 3, 4 with the finer vessels of Phase 6; then 3, 4, 3, 3, 3, 3 with the tubes of Phase 7, ranked first of four versions by a stricter reviewer) |
+| 5 | Blind at least 4 on all criteria for CTA-A | not met after four attempts, and accepted as it stands by Shafrir on 2026-11-26 (4, 4, 3, 3, 3, 3; then 3, 4, 3, 3, 3, 4 with the finer vessels of Phase 6; then 3, 4, 3, 3, 3, 3 with the tubes of Phase 7, ranked first of four versions by a stricter reviewer) |
 | 5 | Blind at least 4 on clutter and connectivity for TOF-A | met on the second, third and fourth attempts (4, 4) |
 | 5 | All earlier gates hold | not in the path-traced mode during rehearsal: vessels do not follow a tool press |
 

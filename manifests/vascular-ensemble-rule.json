@@ -1,0 +1,43 @@
+{
+  "schema": "vascular-ensemble-frozen-rule-v1",
+  "frozen": "2026-11-26",
+  "description": "The vessel ensemble rule as frozen on the development cases (TopCoW-014 CT and MR) and applied unchanged to every other scan. scripts/topbrain_native.py reads the selection files on the data drive when they are present and this copy otherwise, and refuses to run a study if the two differ.",
+  "teams": [
+    "UZH",
+    "ARG",
+    "KDH"
+  ],
+  "combiner": {
+    "method": "base",
+    "teams": [
+      "UZH",
+      "ARG",
+      "KDH"
+    ],
+    "weights": {
+      "ct": {
+        "UZH": 0.982616576474862,
+        "ARG": 0.9613082077398787,
+        "KDH": 0.9315731937720612
+      },
+      "mr": {
+        "UZH": 0.9819954235078345,
+        "ARG": 0.9885833374631899,
+        "KDH": 0.9815640342483393
+      }
+    },
+    "base": {
+      "ct": "UZH",
+      "mr": "ARG"
+    }
+  },
+  "connectedAddition": {
+    "low": 0.7,
+    "high": 0.9
+  },
+  "source": {
+    "combiner-selection.json": "c49ebb84443203ffcb9a9b0eb1a8394b2c21224f1f1087460d485a5c1fd9966b",
+    "addition-selection.json": "458387534e9f7411af99697b99af6e1e6ac3d16307a1fc607f017aa199b25e69",
+    "folder": "qc/medivis-parity-20261125/phase2-segmentation"
+  }
+}
