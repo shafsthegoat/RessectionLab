@@ -117,7 +117,16 @@ def _position(value):
     return point
 
 
-def _ordered_contacts(engine, cells, position):
+def _candidate_contacts(engine, cells, tip, removed=None):
+    """Retained soft/tumor cells of ``cells`` that the current tip also touches, unsorted.
+
+    ``tip()`` returns the touched list at the tip position; it runs after the
+    candidates are validated, as before. ``removed``, when given, is
+    ``set(engine.state['removed'])`` for a search over unchanged state. Only
+    the removed cells present in the set are passed to difference_update; it
+    discards the same entries and makes the same resize decision, so the set
+    keeps the same members and iteration order.
+    """
     labels = engine.scene.labels.ravel()
     ids = set()
     for cell in cells:
@@ -125,9 +134,20 @@ def _ordered_contacts(engine, cells, position):
             raise ValueError('INVALID_CUSA_V3_SOURCE_CELL')
         ids.add(int(cell))
     # A caller cannot turn a swept/remote candidate set into a removal eraser.
-    ids.intersection_update(engine.touched(position, position, TIP_RADIUS_MM))
-    ids.difference_update(engine.state['removed'])
-    ids = [cell for cell in ids if labels[cell] and engine.by_label[int(labels[cell])]['material'] in ('soft_tissue', 'tumor')]
+    ids.intersection_update(tip())
+    if removed is None:
+        ids.difference_update(engine.state['removed'])
+    else:
+        ids.difference_update([cell for cell in ids if cell in removed])
+    return [cell for cell in ids if labels[cell] and engine.by_label[int(labels[cell])]['material'] in ('soft_tissue', 'tumor')]
+
+
+def _ordered_contacts(engine, cells, position):
+    ids = _candidate_contacts(engine, cells, lambda: engine.touched(position, position, TIP_RADIUS_MM))
+    return _sorted_contacts(engine, ids, position)
+
+
+def _sorted_contacts(engine, ids, position):
     positions = {cell: center for cell, center in zip(ids, engine.scene.points(ids))}
     for hold in engine.state['holds'].values():
         if 'target' not in hold:
@@ -217,6 +237,12 @@ def contact_limited_pose(engine, start, requested, radius=TIP_RADIUS_MM):
     validate(profile(engine))
     validate_parameters({'radiusMm': radius})
     start, requested = _position(start), _position(requested)
+    from .surgical_drilling_v2 import _stock_contact_queries
+    if (_stock_contact_queries(engine)
+            and not engine.scene.properties.get('gliomaMaterialsV1', {}).get('vesselMotionModel')):
+        found = _stock_contact_limited_pose(engine, start, requested)
+        if found is not None:
+            return found
     def contacts(point):
         return _ordered_contacts(engine, engine.touched(point, point, TIP_RADIUS_MM), point)
     initial = contacts(start)
@@ -238,6 +264,62 @@ def contact_limited_pose(engine, start, requested, radius=TIP_RADIUS_MM):
             return high, contacts(high)
         low = high
     return requested.copy(), []
+
+
+def _stock_contact_limited_pose(engine, start, requested):
+    """The search above, with the same points, comparisons and results, for stock queries.
+
+    The search changes no state, so one occupancy owner and one removed-cell
+    set serve every probe, and each probe resolves its tip cover once (the
+    reference resolves it twice, identically). The scan and bisection only
+    test whether a probe has contacts; the sorted contacts are built only for
+    the returned pose. Returns None, before any result is formed, when the
+    occupancy owner is not the stock one; the caller then runs the reference.
+    """
+    from .surgical_drilling_v2 import _stock_contact_owner
+    from .surgical_engine import _DRILL_CONTACT_QUERY_ORIGINALS
+    owner = None
+    removed = set(engine.state['removed'])
+
+    def touched(point):
+        nonlocal owner
+        # touched's order: geometry first, then occupancy.
+        cells = engine.cells(point, point, TIP_RADIUS_MM)
+        if owner is None:
+            owner = engine.occupancy()
+            if not _stock_contact_owner(owner, _DRILL_CONTACT_QUERY_ORIGINALS[3][2]):
+                raise _NotStock
+        return owner.material_ids(cells)
+
+    def candidates(point):
+        tip = touched(point)
+        return _candidate_contacts(engine, tip, lambda: tip, removed)
+
+    try:
+        initial = candidates(start)
+        if initial:
+            return start.copy(), _sorted_contacts(engine, initial, start)
+        distance = float(np.linalg.norm(requested - start))
+        steps = max(1, math.ceil(distance / (float(engine.scene.spacing.min()) / 4)))
+        low = start.copy()
+        for index in range(1, steps + 1):
+            high = start + (requested - start) * (index / steps)
+            if candidates(high):
+                for _ in range(32):
+                    mid = (low + high) / 2
+                    if candidates(mid):
+                        high = mid
+                    else:
+                        low = mid
+                return high, _sorted_contacts(engine, candidates(high), high)
+            low = high
+        return requested.copy(), []
+    except _NotStock:
+        return None
+
+
+class _NotStock(Exception):
+    pass
 
 
 def metrics(engine):

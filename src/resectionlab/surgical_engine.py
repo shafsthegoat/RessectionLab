@@ -16,6 +16,8 @@ import itertools
 from array import array
 from itertools import repeat as _strict_int_repeat
 from operator import is_ as _strict_int_is
+from operator import is_ as _flat_is
+from itertools import repeat as _flat_repeat
 from types import FunctionType as _copy_function_type, CodeType as _copy_code_type
 import numpy as np
 from scipy.spatial.transform import Rotation, Slerp
@@ -158,6 +160,50 @@ def _owned_digest(value):
     return _owned_digest_reference(value)
 
 
+_STOCK_SEMANTIC_DIGEST = semantic_digest
+
+
+def _thaw_owned(value):
+    """``thaw_json(freeze_json(value))`` without passing ordinary subgraphs through Python.
+
+    A real-head state holds a few NumPy scalars among tens of thousands of
+    built-in values, which sent every state id through freeze/thaw of the
+    whole state. Exact dicts with exact string keys and exact lists are
+    rebuilt here in freeze_json's order. A subgraph the exact built-in copier
+    accepts is the same JSON as its freeze/thaw copy and cannot raise there;
+    every other node, including the first one freeze_json would reject, goes
+    through freeze/thaw itself, so conversions and errors are unchanged.
+    """
+    from .core import freeze_json, thaw_json
+    kind = type(value)
+    if kind is dict or kind is list:
+        copied = native_backend.native_json_copy(value, _digest_fallback)
+        if copied is not _digest_fallback:
+            return copied
+        if kind is list:
+            return [_thaw_owned(item) for item in value]
+        if all(type(key) is str for key in value):
+            return {key: _thaw_owned(item) for key, item in value.items()}
+    return thaw_json(freeze_json(value))
+
+
+def _owned_semantic_digest(value):
+    """``semantic_digest(value)`` for an owned state graph with a few unusual leaves.
+
+    The detached copy is an exact built-in graph, so the canonical encoder
+    semantic_digest uses first gives the digest of its JSON dump; when that
+    encoder is unavailable or declines, the dump below is the one
+    semantic_digest makes.
+    """
+    copied = _thaw_owned(value)
+    if native_backend._module is not None:
+        result = native_backend.canonical_digest(copied, json.dumps, hashlib.sha256, _digest_fallback)
+        if result is not _digest_fallback:
+            return result
+    payload = json.dumps(copied, sort_keys=True, separators=(',', ':'), allow_nan=False)
+    return 'sha256:' + hashlib.sha256(payload.encode('utf-8')).hexdigest()
+
+
 def _owned_digest_reference(value):
     """Canonical hash of synchronously owned engine JSON, without detaching it.
 
@@ -186,6 +232,9 @@ def _owned_digest_reference(value):
                 pending.append(item)
             elif not (child_kind is float or child_kind is int or child_kind is str or
                       child_kind is bool or child_kind is type(None)):
+                # A replaced module-level semantic_digest keeps receiving the graph.
+                if semantic_digest is _STOCK_SEMANTIC_DIGEST:
+                    return _owned_semantic_digest(value)
                 return semantic_digest(value)
     try:
         payload = json.dumps(value, sort_keys=True, separators=(',', ':'), allow_nan=False)
@@ -278,6 +327,46 @@ def _copy_engine_data(value, memo=None):
     memo = {} if memo is None else memo
     copied = native_engine_copy(value, memo, _engine_copy_fallback)
     return _copy_engine_data_reference(value, memo) if copied is _engine_copy_fallback else copied
+
+
+def _copy_engine_data_split(value, memo=None):
+    """``_copy_engine_data`` for a large graph the bounded native copy declines as a whole.
+
+    A saved record or a real-head state is declined for its size or for a few
+    NumPy scalars, which sent all of it through the Python reference copy.
+    Containers are rebuilt here exactly as the reference rebuilds them (same
+    memo entries, same order), and each child is again offered to the native
+    copy, whose result for an admitted child is the reference result.
+    """
+    memo = {} if memo is None else memo
+    kind = type(value)
+    if _copy_atomic_type(kind):
+        return value
+    if id(value) in memo:
+        return memo[id(value)]
+    copied = native_engine_copy(value, memo, _engine_copy_fallback)
+    if copied is not _engine_copy_fallback:
+        return copied
+    if kind is list and not all(_copy_atomic_type(type(item)) for item in value) and not (
+            len(value) == 8 and all(type(row) is list and len(row) == 3 and type(row[0]) is float and
+                                    type(row[1]) is float and type(row[2]) is float for row in value)):
+        result = []
+        memo[id(value)] = result
+        result.extend(_copy_engine_data_split(item, memo) for item in value)
+        return result
+    if (kind is dict and all(_copy_atomic_type(type(key)) for key in value)
+            and not all(_copy_atomic_type(type(item)) for item in value.values())):
+        result = {}
+        memo[id(value)] = result
+        for key, item in value.items():
+            result[key] = _copy_engine_data_split(item, memo)
+        return result
+    return _copy_engine_data_reference(value, memo)
+
+
+def _detached(value):
+    """``copy.deepcopy(value)`` of engine data; with stock deepcopy hooks, by the split native copy."""
+    return _copy_engine_data_split(value) if _engine_copy_hooks_unchanged() else copy.deepcopy(value)
 
 
 def _copy_engine_data_reference(value, memo=None):
@@ -390,6 +479,22 @@ def _capsules_separated(first, second, predicate):
     return bool((gap > ra[:, None] + rb[None] + (1e-9 + _SEPARATION_SLACK_MM)).all())
 
 
+def _flat_scalar_map(value):
+    """An exact dict of exact str keys to exact int or float values.
+
+    The same test as ``all(type(key) is str and type(amount) in (int, float))``
+    by type identity, run in C over the keys and values of a map that grows
+    with every bone or tissue cell the drill has touched.
+    """
+    if type(value) is not dict:
+        return False
+    if not all(map(_flat_is, map(type, value), _flat_repeat(str))):
+        return False
+    amounts = value.values()
+    return (sum(map(_flat_is, map(type, amounts), _flat_repeat(int)))
+            + sum(map(_flat_is, map(type, amounts), _flat_repeat(float)))) == len(value)
+
+
 def _microstep_checkpoint(state):
     """Copy rollback state, preserving aliases and independently owned fields.
 
@@ -415,8 +520,7 @@ def _microstep_checkpoint(state):
             flat = type(value) is list and (_try_removed_native(value) is True or
                 all(map(_strict_int_is, map(type, value), _strict_int_repeat(int))))
         else:
-            flat = type(value) is dict and all(type(key) is str and type(amount) in (int, float)
-                                               for key, amount in value.items())
+            flat = _flat_scalar_map(value)
         if flat:
             memo[id(value)] = value.copy()
     drilling = state.get('drillingV2')
@@ -425,8 +529,7 @@ def _microstep_checkpoint(state):
             value = drilling.get(name)
             if id(value) in memo:
                 continue
-            if type(value) is dict and all(type(key) is str and type(amount) in (int, float)
-                                           for key, amount in value.items()):
+            if _flat_scalar_map(value):
                 memo[id(value)] = value.copy()
     # Preserve caller-installed deepcopy hooks and the established flat-field admission.
     if _engine_copy_hooks_unchanged():
@@ -1869,7 +1972,7 @@ class SurgicalEngine:
                 'holds': copy.deepcopy(self.state['holds']),
                 'contact': list(map(int, self.state['contact'])), 'thermal': copy.deepcopy(self.state['thermal']),
                 **({'vesselBleedingV1': copy.deepcopy(self.state['vesselBleedingV1'])} if 'vesselBleedingV1' in self.state else {}),
-                'fluid': copy.deepcopy(self.state['fluid']), 'history': copy.deepcopy(self.history) if include_history else [],
+                'fluid': copy.deepcopy(self.state['fluid']), 'history': _detached(self.history) if include_history else [],
                 **{name: _copy_engine_data(self.state.get(name)) for name in ('cutEdges', 'separatedAttachments',
                     'transectedEdges', 'flapComponents', 'debris', 'sources', 'meshCutEdges', 'meshSeams',
                     'vesselConnections', 'vesselWounds', 'deformation', 'deformationModel', 'drillingV2', 'vesselsV2') if name not in omitted},
@@ -1903,14 +2006,16 @@ class SurgicalEngine:
             if sync(self):
                 return native_backend._module.simulation_data(self.__dict__['_resident'], 'snapshot')
         legacy = self._historical_guard_partials()
-        return {'schema': SCHEMA, 'sceneId': self.scene.identity, 'actions': copy.deepcopy(self.actions), 'stateId': self.state_id,
+        # One digest serves both fields; nothing changes the state in between.
+        state_id = self.state_id
+        return {'schema': SCHEMA, 'sceneId': self.scene.identity, 'actions': _detached(self.actions), 'stateId': state_id,
                 **({'procedurePolicy': copy.deepcopy(self._procedure_policy)} if self._procedure_policy is not None else {}),
                 **({'hardConstraintPolicy': 'atomic-protection-v1',
                     **({'legacyGuardPartialActions': sorted(legacy)} if legacy else {})}
                    if self._protected_ids else {}),
                 **({'protectionContract': copy.deepcopy(self._protection_contract)} if self._protection_contract else {}),
                 **({'cranialStagesContract': self._cranial_stages.as_dict()} if self._cranial_stages is not None else {}),
-                'checkpoint': {'position': len(self.actions), 'stateId': self.state_id, 'state': copy.deepcopy(self.state)}}
+                'checkpoint': {'position': len(self.actions), 'stateId': state_id, 'state': _detached(self.state)}}
 
     @classmethod
     def restore(cls, scene, record, *, check=None, use_cache=False, force_verify=False, verified_cache=None, on_boundary=None,

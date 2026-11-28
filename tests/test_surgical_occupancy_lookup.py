@@ -135,3 +135,31 @@ def test_engine_held_and_released_cells_use_integer_lookup_with_unchanged_owners
     engine.state['removed'].append(second)
     final, _ = check([], [])
     assert final.material_ids(query) == [static]
+
+
+def test_small_cover_lookup_matches_array_paths_including_order_types_and_public_edits(monkeypatch):
+    rng = np.random.default_rng(11)
+    labels = (rng.random(4000) < .6).astype(np.uint16)
+    cleared = set(map(int, rng.choice(4000, 900, replace=False)))
+    moved = {int(target): int(source) + 1 for target, source in rng.choice(4000, (700, 2))}
+    memberships = {int(target): sorted(map(int, rng.choice(4000, 3))) for target in rng.choice(4000, 300)}
+    small = MaterialOccupancy(labels, cleared, moved, memberships)
+    array = MaterialOccupancy(labels, cleared, moved, memberships)
+    monkeypatch.setattr(array, '_small_query', lambda ids, sparse: False)
+    for size in (0, 1, 7, 64, 65, 300):
+        for _ in range(20):
+            query = rng.integers(0, 4000, size)
+            np.testing.assert_array_equal(small[query], array[query])
+            assert small[query].dtype == array[query].dtype
+            expected = array.material_ids(query)
+            actual = small.material_ids(query)
+            assert actual == expected and list(map(type, actual)) == list(map(type, expected))
+    # Edits to the public mappings stay visible to the per-cell lookups.
+    query = rng.integers(0, 4000, 50)
+    for owner in (small, array):
+        owner.moved[int(query[0])] = 17
+        owner.memberships[int(query[1])] = [5, 3]
+        owner.cleared = frozenset(owner.cleared | {int(query[2])})
+        owner._integer_cleared = owner.cleared
+    np.testing.assert_array_equal(small[query], array[query])
+    assert small.material_ids(query) == array.material_ids(query)

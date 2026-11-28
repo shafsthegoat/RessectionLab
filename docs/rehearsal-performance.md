@@ -2,7 +2,37 @@
 
 ## Manual rehearsal on Apple M2 Pro
 
-This work is merged onto the vascular parity line (`shaf/medivis-vascular-parity-20261125`, merge `bcf3be83` on `f2562cae`). The parity line changed the same engine and renderer code after the performance branch was frozen, so the merge re-applies the performance work onto the current code. The first subsection states what the merged line does and what was measured on it. The later subsections record the November 21 comparison on the performance branch. They were not repeated on the merged line unless the first subsection says so.
+This work is merged onto the vascular parity line (`shaf/medivis-vascular-parity-20261125`, merge `bcf3be83` on `f2562cae`). The parity line changed the same engine and renderer code after the performance branch was frozen, so the merge re-applies the performance work onto the current code. The first subsection records the later real-head engine work. The second states what the merged line does and what was measured on it. The later subsections record the November 21 comparison on the performance branch. They were not repeated on the merged line unless the second subsection says so.
+
+### Real-head engine actions on November 27
+
+The real-head operative scene (151 × 151 × 167 cells with `operativeExposureV1`, `tissuePhysicsV2` and `cusaV3`) runs every action through the Python reference substep, about 56 to 150 substeps an action. Its time went to per-substep lookups rather than physics. These changes cut it without changing any result:
+
+- An occupancy lookup of a small cover reads each cell from the live moved and membership maps. Before, each lookup copied the 17,700-entry moved map in C++ and sorted the membership keys.
+- The CUSA contact search (`contact_limited_pose`) uses one occupancy owner and one removed-cell set for the whole search. It resolves each probe's cover once, not twice, and sorts contacts only for the pose it returns.
+- A state id no longer passes the whole state through `freeze_json`/`thaw_json` because of two NumPy scalars in the exposure objects. It fell from 21 to 8 ms.
+- The bone-rest tool check uses the engine's exact bounding-box screen, and the rollback checkpoint runs its type checks in C.
+- The engine snapshot, the view history, the bridge's step timeline and its saved record use the split native copy instead of `copy.deepcopy`. The snapshot computes its state id once.
+
+On one M2 Pro, with other rehearsal processes running, each comparison ran both trees side by side. Every boundary state id and outcome status matched the recorded episode.
+
+| Measurement | Before | After |
+| --- | ---: | ---: |
+| Engine replay of actions 700–800 from a saved boundary | 116.8 s | 60.6 s |
+| Engine replay of actions 0–264 | 226.2 s | 126.3 s |
+| Bridge step on actions 265–464, median / p95 | 1,106 / 3,858 ms | 647 / 1,732 ms |
+| Cold open of the 264-action workspace, empty cache | 248.7 s | 133.9 s |
+
+The full 1,509-action replay took 808 s of engine time and reproduced all 1,510 state ids. A cold open of that workspace with an empty cache took 917 s and published one verified entry. The earlier measurements were 2,590 s and 2,662 s, under a different load. The 264-action ratio projects about 1,700 s before the change under this load. The bridge results and saved records of 60 consecutive steps were byte-identical between the trees.
+
+The remaining cost is mostly in these places:
+
+- `surgical_exposure_geometry.moved` takes 6 ms for each occupancy rebuild, which happens about eight times an action while the CUSA removes cells. It could cache each body's moved pairs by pose and filter by the removed set.
+- The flap-carry collision loop `_clear_body` computes `_distance` over every body cell for each sample. A bounding-box screen could skip most of those calls.
+- The bridge's JSON budget walk takes about 106 ms a step over a 3.9 MB result.
+- The native capsule covers of the instrument assembly.
+- The microstep rollback copy.
+- File-integrity checks on native calls made outside the substep guard.
 
 ### Merged line on November 26
 

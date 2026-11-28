@@ -60,6 +60,11 @@ def initialize(engine):
 
 
 def check_tool(engine, swept):
+    # The engine's exact bounding-box screen: True only when every capsule pair
+    # is provably farther apart than pair_conflict's threshold.
+    from .surgical_engine import _capsules_separated
+    if _capsules_separated(swept, engine._bone_rest, pair_conflict):
+        return
     if pair_conflict(swept, engine._bone_rest):
         raise ValueError('OPERATIVE_BONE_REST_TOOL_COLLISION')
 

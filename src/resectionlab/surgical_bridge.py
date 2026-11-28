@@ -10,7 +10,7 @@ from types import MappingProxyType
 import numpy as np
 from .core import CaseData, SourceRef, freeze_json, thaw_json, semantic_digest
 from .surgical_scene import from_case, engineering_scene
-from .surgical_engine import SurgicalEngine
+from .surgical_engine import SurgicalEngine, _detached
 from . import surgical_practice as practice
 from .surgical_replay_cache import SurgicalReplayCache
 
@@ -1286,7 +1286,7 @@ def dispatch(session, operation, args, request, progress):
             if record['branchId'] != source_branch_id:
                 inherit_root(record['branchId'], source_branch_id)
             record['position'] = len(engine.actions)
-            record.setdefault('timeline', {})[record['branchId']] = copy.deepcopy(engine.history)
+            record.setdefault('timeline', {})[record['branchId']] = _detached(engine.history)
     elif command in ('undo', 'redo', 'seek', 'selectBranch'):
         if command == 'selectBranch':
             if args['branchId'] not in record['branches']: raise ValueError('Unknown branch')
@@ -1516,7 +1516,7 @@ def dispatch(session, operation, args, request, progress):
         # outcomes only to discard them repeats the original ancestry cost.
         persisted_record = copy.deepcopy({name: value for name, value in record.items() if name != 'timeline'})
     else:
-        persisted_record = copy.deepcopy(record)
+        persisted_record = _detached(record)
     artifacts[ARTIFACT] = persisted_record
     if destination:
         artifacts['sourceIdentity'] = identity

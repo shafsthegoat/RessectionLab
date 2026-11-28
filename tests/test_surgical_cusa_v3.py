@@ -269,3 +269,28 @@ def test_affine_voxel_volume_sets_clearance_threshold_and_json_pending_state_res
     contact(engine, cells, .125, position=position)
     assert engine.state['removed'] == cells
     assert conserved(engine)['cusaAspiratedSolidMm3'] == .5
+
+
+def test_stock_contact_search_matches_the_reference_search(monkeypatch):
+    import resectionlab.surgical_cusa_v3 as module
+    points = [(9, 9, 9), (9, 10, 9), (10, 9, 10), (8, 9, 11), (9, 8, 12)]
+    starts = [(9., 9., 2.), (9.3, 8.7, 3.1), (12.2, 12.4, 4.)]
+    requests = [(9., 9., 12.), (9.1, 9.2, 15.), (8.4, 8.9, 12.6), (9.4, 9.5, 2.5)]
+    engine, cells = fixture(points)
+    engine.state['removed'] = [cells[1]]
+    engine.state['deformation'] = {str(cells[2]): [.25, -.5, .125]}
+    reference = SurgicalEngine(engine.scene)
+    reference.state = copy.deepcopy(engine.state)
+    monkeypatch.setattr(module, '_stock_contact_limited_pose', lambda *args: None)
+    expected = [contact_limited_pose(reference, np.array(a), np.array(b)) for a in starts for b in requests]
+    monkeypatch.undo()
+    calls = []
+    original = module._stock_contact_limited_pose
+    monkeypatch.setattr(module, '_stock_contact_limited_pose',
+                        lambda *args: calls.append(original(*args)) or calls[-1])
+    actual = [contact_limited_pose(engine, np.array(a), np.array(b)) for a in starts for b in requests]
+    assert len(calls) == len(actual) and all(found is not None for found in calls)
+    for (pose, contacts), (reference_pose, reference_contacts) in zip(actual, expected):
+        assert pose.tobytes() == reference_pose.tobytes() and contacts == reference_contacts
+    assert any(contacts for _, contacts in actual) and any(not contacts for _, contacts in actual)
+    assert engine.state == reference.state
